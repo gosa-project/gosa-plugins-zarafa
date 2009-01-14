@@ -354,23 +354,24 @@
     <tr>
      <td>
       {render acl=$sambaPwdMustChangeACL  checkbox=$multiple_support checked=$use_password_expires}
-      <input id="password_expires" type=checkbox name="password_expires" value="1" {$flagsC} class="center">
+      <input id="password_expires" type=checkbox name="password_expires" value="1" {$flagsC} class="center"
+	 	onClick="document.mainform.submit();">
       {/render}
       <label for="password_expires">{t}Password expires on{/t}</label>
      </td>
      <td>
       {render acl=$sambaPwdMustChangeACL}
-      <select name=day onChange="createResult(this.form,this.form.sambaPwdMustChange);">
+      <select name=day onChange="createResult(this.form,this.form.sambaPwdMustChange); document.mainform.submit();">
        {html_options values=$days output=$days selected=$day}
       </select>
       {/render}
       {render acl=$sambaPwdMustChangeACL}
-      <select name=month onChange="populate(this.form,this.form.sambaPwdMustChange);">
+      <select name=month onChange="populate(this.form,this.form.sambaPwdMustChange); document.mainform.submit();">
        {html_options options=$months selected=$month}
       </select>
       {/render}
       {render acl=$sambaPwdMustChangeACL}
-      <select name=year onChange="populate(this.form,this.form.sambaPwdMustChange);">
+      <select name=year onChange="populate(this.form,this.form.sambaPwdMustChange); document.mainform.submit();">
        {html_options values=$years output=$years selected=$year}
       </select>
       {/render}
