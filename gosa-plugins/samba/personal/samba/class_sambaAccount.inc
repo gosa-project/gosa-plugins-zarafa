@@ -691,6 +691,45 @@ class sambaAccount extends plugin
       $smarty->assign("tsloginstate","");
     }
 
+    /* Create additional info for sambaKickOffTime and sambaPwdMustChange. 
+       e.g. Display effective kickoff time. Domain policy + user settings. 
+     */
+    $additional_info_KickoffTime = "";
+    $additional_info_PwdMustChange = "";
+
+    /* Calculate effective max Password Age 
+        This can only be calculated if sambaPwdLastSet ist set. 
+     */
+    $this->attrs['sambaPwdLastSet'][0] = time() - (60 *60);
+    if(isset($this->attrs['sambaPwdLastSet'][0])){
+      $last = $this->attrs['sambaPwdLastSet'][0];
+
+      $sid = $this->get_domain_info();
+      if(isset($sid['sambaMaxPwdAge'][0])){
+        $d = ($last + $sid['sambaMaxPwdAge'][0]) - time();
+
+        /* A negative value means the password is outdated 
+         */
+        if($d < 0){
+          $additional_info_PwdMustChange = sprintf(_("Invalid by domain policiy, since %s."),
+              date("d.m.Y H:i:s",$last + $sid['sambaMaxPwdAge'][0]));
+        }else{
+          if($this->password_expires && ($last + $sid['sambaMaxPwdAge'][0]) > $this->sambaPwdMustChange){
+            $additional_info_PwdMustChange = sprintf(_("Invalid by user policiy, on %s."),
+                date("d.m.Y H:i:s",  $this->sambaPwdMustChange));
+          }else{
+             $additional_info_PwdMustChange = sprintf(_("Invalid by domain policiy, on %s."),
+                date("d.m.Y H:i:s",  ($last + $sid['sambaMaxPwdAge'][0])));
+          }
+        }
+      }
+    }
+    
+    $additional_info_KickoffTime = "asdf";
+
+    $smarty->assign("additional_info_KickoffTime",$additional_info_KickoffTime);
+    $smarty->assign("additional_info_PwdMustChange",$additional_info_PwdMustChange);
+
     /* Show main page */
     $smarty->assign("multiple_support",$this->multiple_support_active);
     if ($this->samba3){
@@ -708,6 +747,29 @@ class sambaAccount extends plugin
 
     return ($display);
   }
+
+
+  /*! \brief  Returns the samba Domain object, selected in the samba tab.   
+   */
+  function get_domain_info()
+  {
+    /* Only search once, return last result if available
+     */
+    if(!isset($this->cache['DOMAIN'][$this->sambaDomainName])){
+      $this->cache['DOMAIN'][$this->sambaDomainName] = array();
+      if(!empty($this->sambaDomainName) && isset($this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName])){
+        $cfg = $this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName];
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->search("(&(objectClass=sambaDomain)(sambaSID=".$cfg['SID']."))",array("*"));
+        if($ldap->count()){
+          $this->cache['DOMAIN'][$this->sambaDomainName] = $ldap->fetch();
+        }
+      }
+    }
+    return($this->cache['DOMAIN'][$this->sambaDomainName]);
+  }
+
 
 
   function get_samba_information()

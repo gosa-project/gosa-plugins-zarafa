@@ -374,6 +374,7 @@
        {html_options values=$years output=$years selected=$year}
       </select>
       {/render}
+	  <br>{$additional_info_PwdMustChange}
      </td>
     </tr>
     <tr>
@@ -402,6 +403,7 @@
       <input type="hidden" name="sambaPwdMustChange" value="{$sambaPwdMustChange}">
       <input type="hidden" name="sambaPwdCanChange" value="{$sambaPwdMustChange}">
       <input type="hidden" name="sambaKickoffTime" value="{$sambaKickoffTime}">
+	  <br>{$additional_info_KickoffTime}
      </td>
     </tr>
     <tr>
