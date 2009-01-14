@@ -762,15 +762,21 @@ class sambaAccount extends plugin
       }
     }
   
-    /* Get user infos 
+    /* Get user infos
      */
     foreach($user_attributes as $attr){
-      if(isset($this->$attr) && $this->$attr != ""){
-        $$attr = $this->$attr;
-      }elseif(isset($this->attrs[$attr])){
+      if(isset($this->attrs[$attr])){
         $$attr = $this->attrs[$attr][0];
       }
     }
+    if($this->password_expires){
+      $sambaPwdMustChange = $this->sambaPwdMustChange;
+    }
+    if($this->kickoff_time_set){
+      $sambaKickoffTime = $this->sambaKickoffTime;
+    }
+    $sambaPwdCanChange = $this->sambaPwdCanChange;
+
 
     /* DOMAIN Attributes 
      */
@@ -939,7 +945,7 @@ class sambaAccount extends plugin
       "\n<tr><td>"._("Last logon").":                    </td><td>".$sambaLogonTime."</td></tr>".
       "\n<tr><td>"._("Last logoff").":                   </td><td>".$sambaLogoffTime."</td></tr>".
       "\n<tr><td>"._("Automatic logoff").":              </td><td>".$sambaKickoffTime."</td></tr>".
-      "\n<tr><td>"._("Password expires").":              </td><td>".$sambaKickoffTime."</td></tr>".
+      "\n<tr><td>"._("Password expires").":              </td><td>".$sambaPwdMustChange."</td></tr>".
       "\n<tr><td>"._("Password change available").":     </td><td>".$sambaPwdCanChange."</td></tr>".
       "\n</table>";
     return($str);

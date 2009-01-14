@@ -320,113 +320,101 @@
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
-  <td style="width:50%; vertical-align:top;">
-{render acl=$sambaPwdCanChangeACL  checkbox=$multiple_support checked=$use_allow_pwchange}
-   <input id="allow_pwchange" type=checkbox name="allow_pwchange" value="1" {$flagsP} class="center">
-{/render}
-   <label for="allow_pwchange">{t}Allow user to change password from client{/t}</label>
-   <br>
-{render acl=$sambaAcctFlagsNACL  checkbox=$multiple_support checked=$use_no_password_required}
-   <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN} class="center">
-{/render}
-   <label for="no_password_required">{t}Login from windows client requires no password{/t}</label>
-   <br>
-{render acl=$sambaAcctFlagsLACL  checkbox=$multiple_support checked=$use_temporary_disable}
-   <input id="temporary_disable" type=checkbox name="temporary_disable" value="1" {$flagsD} class="center">
-{/render}
-   <label for="temporary_disable">{t}Lock samba account{/t}</label>
-   <br>
-{render acl=$sambaPwdMustChangeACL  checkbox=$multiple_support checked=$use_password_expires}
-   <input id="password_expires" type=checkbox name="password_expires" value="1" {$flagsC} class="center">
-{/render}
-   <label for="password_expires">{t}Password expires on{/t}</label>
-{render acl=$sambaPwdMustChangeACL} 
-   <select name=day onChange="createResult(this.form,this.form.sambaPwdMustChange);">
-    {html_options values=$days output=$days selected=$day}
-   </select>
-{/render}
-{render acl=$sambaPwdMustChangeACL} 
-   <select name=month onChange="populate(this.form,this.form.sambaPwdMustChange);">
-    {html_options options=$months selected=$month}
-   </select>
-{/render}
-{render acl=$sambaPwdMustChangeACL} 
-   <select name=year onChange="populate(this.form,this.form.sambaPwdMustChange);">
-    {html_options values=$years output=$years selected=$year}
-   </select>
-{/render}
-   <br>
-{render acl=$sambaLogonTimeACL  checkbox=$multiple_support checked=$use_logon_time_set}
-   <input id="logon_time_set" type=checkbox name="logon_time_set" value="1" {$flagsT} class="center">
-{/render}
-   <label for="logon_time_set">{t}Limit Logon Time{/t}</label>
-{render acl=$sambaLogonTimeACL}
-   <select name=sambaLogonTime_day onChange="createResult_sambaLogonTime(this.form,this.form.sambaLogonTime);">
-   {html_options values=$sambaLogonTime_days output=$sambaLogonTime_days selected=$sambaLogonTime_day}
-   </select>
-{/render}
-{render acl=$sambaLogonTimeACL}
-   <select name=sambaLogonTime_month onChange="populate_sambaLogonTime(this.form,this.form.sambaLogonTime);">
-   {html_options options=$sambaLogonTime_months output=$sambaLogonTime_months selected=$sambaLogonTime_month}
-   </select>
-{/render}
-{render acl=$sambaLogonTimeACL}
-   <select name=sambaLogonTime_year onChange="populate_sambaLogonTime(this.form,this.form.sambaLogonTime);">
-   {html_options values=$sambaLogonTime_years output=$sambaLogonTime_years selected=$sambaLogonTime_year}
-   </select>
-{/render}
-   <br>
-{render acl=$sambaLogoffTimeACL  checkbox=$multiple_support checked=$use_logoff_time_set}
-   <input id="logoff_time_set" type=checkbox name="logoff_time_set" value="1" {$flagsO} class="center">
-{/render}
-   <label for="logoff_time_set">{t}Limit Logoff Time{/t}</label>
-{render acl=$sambaLogoffTimeACL}
-   <select name=sambaLogoffTime_day onChange="createResult_sambaLogoffTime(this.form,this.form.sambaLogoffTime);">
-   {html_options values=$sambaLogoffTime_days output=$sambaLogoffTime_days selected=$sambaLogoffTime_day}
-   </select>
-{/render}
-{render acl=$sambaLogoffTimeACL}
-   <select name=sambaLogoffTime_month onChange="populate_sambaLogoffTime(this.form,this.form.sambaLogoffTime);">
-   {html_options options=$sambaLogoffTime_months output=$sambaLogoffTime_months selected=$sambaLogoffTime_month}
-   </select>
-{/render}
-{render acl=$sambaLogoffTimeACL}
-   <select name=sambaLogoffTime_year onChange="populate_sambaLogoffTime(this.form,this.form.sambaLogoffTime);">
-   {html_options values=$sambaLogoffTime_years output=$sambaLogoffTime_years selected=$sambaLogoffTime_year}
-   </select>
-{/render}
-   <br>
-   
-{render acl=$sambaKickoffTimeACL  checkbox=$multiple_support checked=$use_kickoff_time_set}
-   <input id="kickoff_time_set" type=checkbox name="kickoff_time_set" value="1" {$flagsK} class="center">
-{/render}
-   <label for="kickoff_time_set">{t}Account expires after{/t}</label>
-{render acl=$sambaKickoffTimeACL}
-   <select name=sambaKickoffTime_day onChange="createResult_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
-   {html_options values=$sambaKickoffTime_days output=$sambaKickoffTime_days selected=$sambaKickoffTime_day}
-   </select>
-{/render}
-{render acl=$sambaKickoffTimeACL}
-   <select name=sambaKickoffTime_month onChange="populate_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
-   {html_options options=$sambaKickoffTime_months output=$sambaKickoffTime_months selected=$sambaKickoffTime_month}
-   </select>
-{/render}
-{render acl=$sambaKickoffTimeACL}
-   <select name=sambaKickoffTime_year onChange="populate_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
-   {html_options values=$sambaKickoffTime_years output=$sambaKickoffTime_years selected=$sambaKickoffTime_year}
-   </select>
-{/render}
-   <br>
-   <input type="hidden" name="sambaPwdMustChange" value="{$sambaPwdMustChange}">
-   <input type="hidden" name="sambaLogonTime" value="{$sambaLogonTime}">
-   <input type="hidden" name="sambaLogoffTime" value="{$sambaLogoffTime}">
-   <input type="hidden" name="sambaKickoffTime" value="{$sambaKickoffTime}">
-<br>
-{render acl=$sambaLogonHoursACL mode=read_active  checkbox=$multiple_support checked=$use_SetSambaLogonHours}
-   {t}Samba logon times{/t}&nbsp;<input type='submit' name='SetSambaLogonHours' value='{t}Edit settings...{/t}'>
-{/render}
+  <td colspan=2 style="width:50%; vertical-align:top;">
 
-  </td>	
+   <!-- Samba policies -->
+   <table>
+    <tr>
+     <td colspan=2>
+      {render acl=$sambaAcctFlagsNACL  checkbox=$multiple_support checked=$use_no_password_required}
+       <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN} class="center">
+      {/render}
+      <label for="no_password_required">{t}Login from windows client requires no password{/t}</label>
+     </td>
+    </tr>
+    <tr>
+     <td  colspan=2 style="width:50%; vertical-align:top;">
+      {render acl=$sambaPwdCanChangeACL  checkbox=$multiple_support checked=$use_allow_pwchange}
+       <input id="allow_pwchange" type=checkbox name="allow_pwchange" value="1" {$flagsP} class="center">
+      {/render}
+      <label for="allow_pwchange">{t}Allow user to change password from client{/t}</label>
+     </td>   
+    </tr>
+    <tr>
+     <td colspan=2>
+      {render acl=$sambaAcctFlagsLACL  checkbox=$multiple_support checked=$use_temporary_disable}
+       <input id="temporary_disable" type=checkbox name="temporary_disable" value="1" {$flagsD} class="center">
+      {/render}
+      <label for="temporary_disable">{t}Lock samba account{/t}</label>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      {render acl=$sambaPwdMustChangeACL  checkbox=$multiple_support checked=$use_password_expires}
+      <input id="password_expires" type=checkbox name="password_expires" value="1" {$flagsC} class="center">
+      {/render}
+      <label for="password_expires">{t}Password expires on{/t}</label>
+     </td>
+     <td>
+      {render acl=$sambaPwdMustChangeACL}
+      <select name=day onChange="createResult(this.form,this.form.sambaPwdMustChange);">
+       {html_options values=$days output=$days selected=$day}
+      </select>
+      {/render}
+      {render acl=$sambaPwdMustChangeACL}
+      <select name=month onChange="populate(this.form,this.form.sambaPwdMustChange);">
+       {html_options options=$months selected=$month}
+      </select>
+      {/render}
+      {render acl=$sambaPwdMustChangeACL}
+      <select name=year onChange="populate(this.form,this.form.sambaPwdMustChange);">
+       {html_options values=$years output=$years selected=$year}
+      </select>
+      {/render}
+     </td>
+    </tr>
+    <tr>
+     <td>
+      {render acl=$sambaKickoffTimeACL  checkbox=$multiple_support checked=$use_kickoff_time_set}
+       <input id="kickoff_time_set" type=checkbox name="kickoff_time_set" value="1" {$flagsK} class="center">
+      {/render}
+      <label for="kickoff_time_set">{t}Account expires after{/t}</label>
+	 </td>
+     <td>
+      {render acl=$sambaKickoffTimeACL}
+       <select name=sambaKickoffTime_day onChange="createResult_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
+        {html_options values=$sambaKickoffTime_days output=$sambaKickoffTime_days selected=$sambaKickoffTime_day}
+       </select>
+      {/render}
+      {render acl=$sambaKickoffTimeACL}
+       <select name=sambaKickoffTime_month onChange="populate_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
+        {html_options options=$sambaKickoffTime_months output=$sambaKickoffTime_months selected=$sambaKickoffTime_month}
+       </select>
+      {/render}
+      {render acl=$sambaKickoffTimeACL}
+       <select name=sambaKickoffTime_year onChange="populate_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
+        {html_options values=$sambaKickoffTime_years output=$sambaKickoffTime_years selected=$sambaKickoffTime_year}
+       </select>
+      {/render}
+      <input type="hidden" name="sambaPwdMustChange" value="{$sambaPwdMustChange}">
+      <input type="hidden" name="sambaPwdCanChange" value="{$sambaPwdMustChange}">
+      <input type="hidden" name="sambaKickoffTime" value="{$sambaKickoffTime}">
+     </td>
+    </tr>
+    <tr>
+     <td colspan=2>&nbsp;</td>
+    </tr>
+    <tr>
+     <td colspan=2>
+      {render acl=$sambaLogonHoursACL mode=read_active  checkbox=$multiple_support checked=$use_SetSambaLogonHours}
+       {t}Samba logon times{/t}&nbsp;<input type='submit' name='SetSambaLogonHours' value='{t}Edit settings...{/t}'>
+      {/render}
+     </td>
+    </tr>
+   </table>
+   <!-- /Samba policies -->
+
+  </td>
   <td style="border-left:1px solid #A0A0A0">
    &nbsp;
   </td>
