@@ -694,13 +694,11 @@ class sambaAccount extends plugin
     /* Create additional info for sambaKickOffTime and sambaPwdMustChange. 
        e.g. Display effective kickoff time. Domain policy + user settings. 
      */
-    $additional_info_KickoffTime = "";
     $additional_info_PwdMustChange = "";
 
     /* Calculate effective max Password Age 
         This can only be calculated if sambaPwdLastSet ist set. 
      */
-    $this->attrs['sambaPwdLastSet'][0] = time() - (60 *60);
     if(isset($this->attrs['sambaPwdLastSet'][0])){
       $last = $this->attrs['sambaPwdLastSet'][0];
 
@@ -711,23 +709,19 @@ class sambaAccount extends plugin
         /* A negative value means the password is outdated 
          */
         if($d < 0){
-          $additional_info_PwdMustChange = sprintf(_("Invalid by domain policiy, since %s."),
+          $additional_info_PwdMustChange = sprintf(_("The password is outdated since %s, by domain policy."),
               date("d.m.Y H:i:s",$last + $sid['sambaMaxPwdAge'][0]));
         }else{
           if($this->password_expires && ($last + $sid['sambaMaxPwdAge'][0]) > $this->sambaPwdMustChange){
-            $additional_info_PwdMustChange = sprintf(_("Invalid by user policiy, on %s."),
+            $additional_info_PwdMustChange = sprintf(_("The password is valid till %s, by user policy."),
                 date("d.m.Y H:i:s",  $this->sambaPwdMustChange));
           }else{
-             $additional_info_PwdMustChange = sprintf(_("Invalid by domain policiy, on %s."),
+             $additional_info_PwdMustChange = sprintf(_("The password is valid till %s, by domain policy."),
                 date("d.m.Y H:i:s",  ($last + $sid['sambaMaxPwdAge'][0])));
           }
         }
       }
     }
-    
-    $additional_info_KickoffTime = "asdf";
-
-    $smarty->assign("additional_info_KickoffTime",$additional_info_KickoffTime);
     $smarty->assign("additional_info_PwdMustChange",$additional_info_PwdMustChange);
 
     /* Show main page */

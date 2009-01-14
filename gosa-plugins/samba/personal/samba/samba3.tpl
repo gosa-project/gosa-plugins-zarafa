@@ -374,9 +374,15 @@
        {html_options values=$years output=$years selected=$year}
       </select>
       {/render}
-	  <br>{$additional_info_PwdMustChange}
      </td>
     </tr>
+	{if $additional_info_PwdMustChange}
+    <tr>
+     <td colspan=2 style='padding-left: 10px;'>
+	  <i>({$additional_info_PwdMustChange})</i>
+     </td>
+    </tr>
+	{/if}
     <tr>
      <td>
       {render acl=$sambaKickoffTimeACL  checkbox=$multiple_support checked=$use_kickoff_time_set}
@@ -403,7 +409,6 @@
       <input type="hidden" name="sambaPwdMustChange" value="{$sambaPwdMustChange}">
       <input type="hidden" name="sambaPwdCanChange" value="{$sambaPwdMustChange}">
       <input type="hidden" name="sambaKickoffTime" value="{$sambaKickoffTime}">
-	  <br>{$additional_info_KickoffTime}
      </td>
     </tr>
     <tr>
