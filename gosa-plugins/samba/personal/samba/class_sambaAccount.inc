@@ -76,6 +76,7 @@ class sambaAccount extends plugin
   var $mungedObject;
 
   /* Helper */
+  var $cache = array();
   var $show_ws_dialog= FALSE;
   var $logon_time_set= 0;
   var $logoff_time_set= 0;
@@ -806,14 +807,10 @@ class sambaAccount extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     if(!empty($this->sambaDomainName) && isset($this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName])){
-      $cfg = $this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName];
-      $ldap->search("(&(objectClass=sambaDomain)(sambaSID=".$cfg['SID']."))",array("*"));
-      if($ldap->count() >= 1){
-        $attrs = $ldap->fetch();
-        foreach($domain_attributes as $attr){
-          if(isset($attrs[$attr])){
-            $$attr = $attrs[$attr][0];
-          }
+      $attrs = $this->get_domain_info();
+      foreach($domain_attributes as $attr){
+        if(isset($attrs[$attr])){
+          $$attr = $attrs[$attr][0];
         }
       }
     }
