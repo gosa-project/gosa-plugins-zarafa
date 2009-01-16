@@ -96,7 +96,7 @@ class mailMethodKolab extends mailMethodCyrus
     $ret['CAT']['mail']= _("Mails"); 
     $ret['CAT']['task']= _("Tasks"); 
     $ret['CAT']['journal']= _("Journals"); 
-    $ret['CAT']['calendar']= _("Calendar"); 
+    $ret['CAT']['event']= _("Calendar"); 
     $ret['CAT']['contact']= _("Contacts"); 
     $ret['CAT']['note']= _("Notes"); 
 
@@ -109,7 +109,7 @@ class mailMethodKolab extends mailMethodCyrus
 
     $ret['SUB_CAT']['task']['default']     = _("Default"); 
     $ret['SUB_CAT']['journal']['default']  = _("Default"); 
-    $ret['SUB_CAT']['calendar']['default'] = _("Default"); 
+    $ret['SUB_CAT']['event']['default']    = _("Default"); 
     $ret['SUB_CAT']['contact']['default']  = _("Default"); 
     $ret['SUB_CAT']['note']['default']     = _("Default"); 
 
