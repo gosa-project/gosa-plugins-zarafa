@@ -107,11 +107,11 @@ class mailMethodKolab extends mailMethodCyrus
     $ret['SUB_CAT']['mail']['sentitems']  = _("Sent"); 
     $ret['SUB_CAT']['mail']['junkemail']  = _("SPAM"); 
 
-    $ret['SUB_CAT']['task']['defailt']     = _("Default"); 
-    $ret['SUB_CAT']['journal']['defailt']  = _("Default"); 
-    $ret['SUB_CAT']['calendar']['defailt'] = _("Default"); 
-    $ret['SUB_CAT']['contact']['defailt']  = _("Default"); 
-    $ret['SUB_CAT']['note']['defailt']     = _("Default"); 
+    $ret['SUB_CAT']['task']['default']     = _("Default"); 
+    $ret['SUB_CAT']['journal']['default']  = _("Default"); 
+    $ret['SUB_CAT']['calendar']['default'] = _("Default"); 
+    $ret['SUB_CAT']['contact']['default']  = _("Default"); 
+    $ret['SUB_CAT']['note']['default']     = _("Default"); 
 
     return($ret);
   }
