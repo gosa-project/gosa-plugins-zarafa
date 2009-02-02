@@ -47,7 +47,7 @@ if ( $cleanup ){
 
   /* Page header*/
   if (get_object_info() != ""){
-    $display= print_header( get_template_path('images/macros.png'), 
+    $display= print_header( get_template_path('plugins/gofon/images/macros.png'), 
                             _("Phone macro management"), 
                             "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> 
                             ".LDAP::fix(get_object_info()));
