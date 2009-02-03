@@ -110,19 +110,21 @@ class gosa_logview extends plugin
       $smarty->assign("$type", $this->$type);
     }
 
-    /**** 
-     * Check if defined servers 
-     *  and mysql extension 
-     ****/
-    if (!isset($this->config->data['SERVERS']['LOGGING']) || !count($this->config->data['SERVERS']['LOGGING'])){
-      msg_dialog::display(_("Warning"), msgPool::noserver("GOsa log"), WARNING_DIALOG);
-      return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
-    }
-    
-    if(!is_callable("mysql_connect")){
-      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
-      return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
-    }
+  /**** 
+   * Check if defined servers 
+   *  and mysql extension 
+   ****/
+  if (!isset($this->config->data['SERVERS']['LOGGING']) || !count($this->config->data['SERVERS']['LOGGING'])){
+    msg_dialog::display(_("Warning"), msgPool::noserver("GOsa log"), WARNING_DIALOG);
+    $smarty->assign("servers", array());
+    return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
+  }
+  
+  if(!is_callable("mysql_connect")){
+    msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+    $smarty->assign("servers", array());
+    return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
+  }
 
     /****
      * Get Configurations 
