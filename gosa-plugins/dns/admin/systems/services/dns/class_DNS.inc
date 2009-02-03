@@ -335,7 +335,7 @@ class DNS
     $ret['RECORDS']   = array();
     $ret['dNSClass']  = "IN";
     $ret['zoneName']  = "";
-    $ret['dNSTTL']    = "7440";
+    $ret['dNSTTL']    = "";
     $ret['exists']    = false;
 
     $ldap = $config->get_ldap_link();
@@ -537,7 +537,9 @@ class DNS
      */
     $baseObj =  array();
     $baseObj['objectClass']       = array("top","dNSZone");
-    $baseObj['dNSTTL']            = $newEntry['dNSTTL'];
+    if(!empty($newEntry['dNSTTL'])){
+      $baseObj['dNSTTL']            = $newEntry['dNSTTL'];
+    }
     $baseObj['dNSClass']          = $newEntry['dNSClass'];
     $baseObj['zoneName']          = $zoneName; 
     $baseObj['relativeDomainName']= $newName; 
