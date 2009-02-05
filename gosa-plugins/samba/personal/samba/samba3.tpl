@@ -151,6 +151,7 @@
   <td style="vertical-align:top;">
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_inherit}
    <input class="center" type=checkbox id="inherit" name="inherit" {if $inheritstate} checked {/if}
+    {$tsloginstate}
 	onClick="changeState('CtxInitialProgram');
  		 changeState('CtxWorkDirectory');"
 	
@@ -162,7 +163,7 @@
      <td><label for="CtxInitialProgram">{t}Initial program{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxInitialProgram}
-      <input id="CtxInitialProgram" name="CtxInitialProgram" size=35 maxlength=60 value="{$CtxInitialProgram}" {$inheritstate}>
+      <input id="CtxInitialProgram" name="CtxInitialProgram" size=35 maxlength=60 value="{$CtxInitialProgram}" {$inheritstate} {$tsloginstate}>
 {/render}
      </td>
     </tr>
@@ -170,7 +171,7 @@
      <td><label for="CtxWorkDirectory">{t}Working directory{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxWorkDirectory}
-      <input id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	value='{$CtxWorkDirectory}' {$inheritstate}>
+      <input id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	value='{$CtxWorkDirectory}' {$inheritstate} {$tsloginstate}>
 {/render}
      </td>
     </tr>
@@ -285,7 +286,7 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_shadow}
-      <select id="shadow" size="1" name="shadow" >
+      <select id="shadow" size="1" name="shadow" {$tsloginstate}>
        {html_options options=$shadow selected=$shadowmode}
       </select>
 {/render}
@@ -295,7 +296,7 @@
      <td><label for="brokenconn">{t}On broken or timed out{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_brokenconn}
-      <select id="brokenconn" size="1" name="brokenconn">
+      <select id="brokenconn" size="1" name="brokenconn" {$tsloginstate}>
        {html_options options=$brokenconn selected=$brokenconnmode}
       </select>
 {/render}
@@ -305,7 +306,7 @@
      <td><label for="reconn">{t}Reconnect if disconnected{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_reconn}
-      <select id="reconn" size="1" name="reconn">
+      <select id="reconn" size="1" name="reconn" {$tsloginstate}>
        {html_options options=$reconn selected=$reconnmode}
       </select>
 {/render}
