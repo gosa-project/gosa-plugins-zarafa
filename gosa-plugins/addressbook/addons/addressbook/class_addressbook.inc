@@ -1,5 +1,22 @@
 <?php
 
+
+class addressbook_internal extends plugin{
+
+  static function plInfo()
+  {
+    /* Adapt addressbook settings and mofiy required settings. 
+     */
+    $attrs = addressbook::plInfo(); 
+    $attrs['plShortName']   = _("Addressbook")." - "._("GOsa");
+    $attrs['plDescription'] = _("Addressbook")." - "._("GOsa related objects");
+    $attrs['plSelfModify']  = TRUE;
+    $attrs['plPriority']    = 2;
+    $attrs['plCategory']    = array("addressbook");
+    return($attrs);
+  }
+}
+
 class addressbook extends plugin
 {
 	/* Definitions */
@@ -820,8 +837,8 @@ class addressbook extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName" => _("Addressbook"),
-          "plDescription" => _("Addressbook entry acls"),
+          "plShortName" => _("Addressbook")." - "._("Addressbook entries"),
+          "plDescription" => _("Addressbook")." - "._("Addressbook related objects"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 0,
