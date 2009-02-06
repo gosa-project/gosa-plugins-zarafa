@@ -850,6 +850,16 @@ class mailgroup extends plugin
       }
     }
 
+    /* Check if this mail address is already in use */
+    $ldap->cd($this->config->current['BASE']);
+    $filter = "(&(!(objectClass=gosaUserTemplate))(!(cn=".$this->cn."))".
+	    "(objectClass=gosaMailAccount)".
+	    "(|(mail=".$mail.")(alias=".$mail.")(gosaMailAlternateAddress=".$mail.")))";
+    $ldap->search($filter,array("cn"));
+    if ($ldap->count() != 0){
+	    $message[]= msgPool::duplicated(_("Mail address"));
+    }
+
     /* Check rejectsize for integer */
     if ($this->gosaMailMaxSize != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailMaxSize)){
