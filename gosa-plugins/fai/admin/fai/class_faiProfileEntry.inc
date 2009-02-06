@@ -29,7 +29,7 @@ class faiProfileEntry extends plugin
                         "FAIhook"           => "faiHook",
                         "FAIvariable"       => "faiVariable",
                         "FAIpartitionTable" => "faiPartitionTable",
-                        "FAIpackageList"    => "faiPackageList");
+                        "FAIpackageList"    => "faiPackage");
 
     /* Read out all objects from fai tree */
     $ldap= $this->config->get_ldap_link();
