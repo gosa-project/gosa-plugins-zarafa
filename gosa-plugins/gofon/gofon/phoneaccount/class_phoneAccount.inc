@@ -78,6 +78,7 @@ class phoneAccount extends plugin
     }
     if(isset($this->attrs['mail'][0])){
       $this->mailAddress = $this->attrs['mail'][0];
+      $this->has_mailAccount = true;
     }
     if(isset($this->attrs['pager'][0])){
       $this->pager = $this->attrs['pager'][0];
