@@ -780,23 +780,38 @@ class addressbook extends plugin
     }
   }
 
-  
+ 
   /* Return entry acls */
   function get_entry_acls($dn,$attr = "")
   {
     $acls = "";
-  
-    /* Use addressbook acls */
-    if(preg_match("/".preg_quote($this->abobjectclass, '/')."/",$dn))  {
+    $combineACLs = TRUE;
+
+    /* If combineACLs is set to false:
+       Differentiate between user and addressbook acls, thus leads into two object categories.
+        - real GOsa users
+        - and addressbook entries
+       To view addressbook entries (e.g. ou=addressbook,) you just require permissions on the ldap base for 'addressbook'.
+       To view real GOsa users you have to additionally add user permissions.
+
+       You can enable this option, to use only addressbook acls (default).
+     */
+    if($combineACLs){
       $dn = preg_replace("/".preg_quote($this->abobjectclass, '/').",/","",$dn);
       $acls = $this->ui->get_permissions($dn,"addressbook/addressbook",$attr);
-    }
-    
-    /* Use Organizational Person acls */
-    else{
-      $acls = $this->ui->get_permissions($dn,"users/user",$attr);
-    }
+    }else{
 
+      /* Use addressbook acls */
+      if(preg_match("/".preg_quote($this->abobjectclass, '/')."/",$dn))  {
+        $dn = preg_replace("/".preg_quote($this->abobjectclass, '/').",/","",$dn);
+        $acls = $this->ui->get_permissions($dn,"addressbook/addressbook",$attr);
+      }
+
+      /* Use Organizational Person acls */
+      else{
+        $acls = $this->ui->get_permissions($dn,"users/user",$attr);
+      }
+    }
     return($acls);
   }
 
