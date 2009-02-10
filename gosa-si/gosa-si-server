@@ -2412,8 +2412,10 @@ sub create_fai_release_db {
 			attrs  => [],
 			filter => "(&(objectClass=organizationalUnit)(ou=fai))",
 		);
-		if($mesg->{'resultCode'} == 0 &&
-			$mesg->count != 0) {
+		if(($mesg->code == 0) && ($mesg->count != 0))
+		{
+			daemon_log("$session_id DEBUG: create_fai_release_db: count " . $mesg->count,8);
+
 			# Walk through all possible FAI container ou's
 			my @sql_list;
 			my $timestamp= &get_time();
@@ -2439,13 +2441,15 @@ sub create_fai_release_db {
 				}
 			}
 
-			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",8);
+			daemon_log("$session_id DEBUG: create_fai_release_db: Inserting ".scalar @sql_list." entries to DB",8);
 			if(@sql_list) {
 				unshift @sql_list, "VACUUM";
 				unshift @sql_list, "DELETE FROM $table_name";
 				$fai_release_db->exec_statementlist(\@sql_list);
 			}
-			daemon_log("$session_id DEBUG: Done with inserting",7);
+			daemon_log("$session_id DEBUG: create_fai_release_db: Done with inserting",7);
+		} else {
+			daemon_log("$session_id INFO: create_fai_release_db: error: " . $mesg->code ,5);
 		}
 		daemon_log("$session_id INFO: create_fai_release_db: finished",5);
 	}
@@ -2508,9 +2512,11 @@ sub resolve_fai_classes {
 		foreach my $entry (@{$mesg->{entries}}) {
 			if($entry->exists('cn')) {
 				my $tmp_dn= $entry->dn();
+				$tmp_dn= substr( $tmp_dn, 0, length($tmp_dn)
+					- length($fai_base) - 1 );
 
 				# Skip classname and ou dn parts for class
-				my $tmp_release = ($1) if $tmp_dn =~ /^[^,]+,[^,]+,(.*?),$fai_base$/;
+				my $tmp_release = ($1) if $tmp_dn =~ /^[^,]+,[^,]+,(.*?)$/;
 
 				# Skip classes without releases
 				if((!defined($tmp_release)) || length($tmp_release)==0) {
@@ -2545,7 +2551,9 @@ sub resolve_fai_classes {
 				}
 			} elsif (!$entry->exists('cn')) {
 				my $tmp_dn= $entry->dn();
-				my $tmp_release = ($1) if $tmp_dn =~ /^(.*?),$fai_base$/;
+				$tmp_dn= substr( $tmp_dn, 0, length($tmp_dn)
+					- length($fai_base) - 1 );
+				my $tmp_release = ($1) if $tmp_dn =~ /^(.*?)$/;
 
 				# Skip classes without releases
 				if((!defined($tmp_release)) || length($tmp_release)==0) {
@@ -2973,7 +2981,7 @@ sub get_package {
         unlink($dest);
         daemon_log("$session_id DEBUG: delete file '$dest'", 5); 
     } else {
-        daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
+        daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' into '$dest' failed!", 1);
     }
     return 0;
 }
