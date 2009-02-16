@@ -36,6 +36,11 @@ class mailMethodKolab extends mailMethodCyrus
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");
 
+  /* Handle account removal like a master/slave kolab setup.
+   * The kolabDeleteflag will be added for each server.
+   */
+  protected $masterSlave = TRUE;
+
   protected $acl_map = array(
       "lrsw"     => "read",
       "lrswp"    => "post",
@@ -44,7 +49,7 @@ class mailMethodKolab extends mailMethodCyrus
       "lrswipcd" => "write",
       "lrswipcda"=> "admin",
       "lrswipkxtecda"=> "full-admin",
-      " "         => "none");
+      " "         => "none"); 
   public function fixAttributesOnLoad()
   {
     mailMethodCyrus::fixAttributesOnLoad();
@@ -78,7 +83,19 @@ class mailMethodKolab extends mailMethodCyrus
     $this->parent->attrs['objectClass'] = array_merge( $this->parent->attrs['objectClass'],$ocs);
     $this->parent->attrs['objectClass'] = array_unique($this->parent->attrs['objectClass']);
     $this->parent->attrs['gosaSharedFolderTarget'] =array();
-    $this->parent->attrs['kolabDeleteFlag'] = $this->parent->gosaMailServer;
+
+
+    /* If the mail setup includes Master and Slave Kolab Server, then we have to remove the 
+     *  mailAccount from server, by adding a kolabDeleteflag for each server.
+     * */
+    if($this->masterSlave){
+      $this->parent->attrs['kolabDeleteflag'] = array();
+      foreach($this->getKolabHost() as $md){
+        $this->parent->attrs['kolabDeleteflag'][] = $md;
+      }
+    }else{
+      $this->parent->attrs['kolabDeleteflag'] = $this->parent->gosaMailServer;
+    }
     if($this->folderTypesEnabled()){
       $this->parent->attrs['kolabFolderType'] =array();
     }
@@ -232,6 +249,36 @@ class mailMethodKolab extends mailMethodCyrus
       }
     }
     return(TRUE);
+  }
+
+
+
+  /*! \brief   Returns all kolabHost entries from the k=kolab object.
+      @return  See \brief
+   */
+  public function getKolabHost()
+  {
+    $host = array();
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=kolab)(k=kolab)(kolabHost=*))",array("kolabHost"));
+
+    if($ldap->count() == 1){
+      $attrs = $ldap->fetch();
+      for($i=0; $i <$attrs['kolabHost']['count']; $i ++ ){
+        $host[] = $attrs['kolabHost'][$i];
+      }
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>Found: ".trim(implode($host,", "),", ")."</b>",
+          "Revceiving 'Mail hosts for kolab22'.");
+    }elseif($ldap->count() == 0){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>No mailHost entries found. Check k=kolab and mailHost</b>",
+          "Revceiving 'Mail hosts for kolab22'.");
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>Found more than one kolab configuration object. Giving up.</b>",
+          "Revceiving 'Mail hosts for kolab22'.");
+    }
+
+    return($host);
   }
 }
 
