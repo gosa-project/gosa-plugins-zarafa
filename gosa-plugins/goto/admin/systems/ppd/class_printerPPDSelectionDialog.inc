@@ -113,6 +113,9 @@ class printerPPDSelectionDialog extends plugin
         }
       }
     }
+    
+    /* Sort the list alphabetically */
+    asort($list);
  
     if((isset($_GET['act']))&&($_GET['act']=="open"))  {
       
