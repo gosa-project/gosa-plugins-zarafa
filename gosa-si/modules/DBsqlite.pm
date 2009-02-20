@@ -1,34 +1,47 @@
 package GOSA::DBsqlite;
 
-
 use strict;
 use warnings;
+use Carp;
 use DBI;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Time::HiRes qw(usleep);
-
+use Fcntl ':flock'; # import LOCK_* constants
 
 my $col_names = {};
 
 sub new {
-    my $class = shift;
-    my $db_name = shift;
+	my $class = shift;
+	my $db_name = shift;
 
-    my $lock = $db_name.".si.lock";
+	my $lock = $db_name.".si.lock";
 	# delete existing lock - instance should be running only once
 	if(stat($lock)) {
-		&main::daemon_log("DEBUG: Removed existing lock $lock.", 7);
+		&main::daemon_log("DEBUG: Removed existing lock file $lock.", 7);
 		unlink($lock);
 	}
-    my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
-    my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
-    $self->{dbh} = $dbh;
-    $self->{db_name} = $db_name;
-    $self->{db_lock} = $lock;
+	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
+	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
+	$self->{dbh} = $dbh;
+	$self->{db_name} = $db_name;
+	$self->{db_lock} = $lock;
+	bless($self,$class);
+	return($self);
+}
 
-    bless($self,$class);
-    return($self);
+
+sub lock {
+	my $self = shift;
+	open($self->{db_lock_handle}, ">>".($self->{db_lock})) unless ref $self->{db_lock_handle};
+	flock($self->{db_lock_handle},LOCK_EX);
+	seek($self->{db_lock_handle}, 0, 2);
+}
+
+
+sub unlock {
+	my $self = shift;
+	flock($self->{db_lock_handle},LOCK_UN);
 }
 
 
@@ -46,6 +59,7 @@ sub create_table {
 	$col_names->{ $table_name } = $col_names_ref;
 	my $col_names_string = join("', '", @col_names);
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
+	$self->lock();
 	eval {
 		my $res = $self->{dbh}->do($sql_statement);
 	};
@@ -58,6 +72,7 @@ sub create_table {
 			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 		}
 	}
+	$self->unlock();
 
 	return 0;
 }
@@ -94,6 +109,7 @@ sub add_dbentry {
 
 		# check wether primkey is unique in table, otherwise return errorflag
 		my $sql_statement = "SELECT * FROM $table $prim_statement";
+		$self->lock();
 		eval {
 			$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
 		};
@@ -106,6 +122,7 @@ sub add_dbentry {
 				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 			}
 		}
+		$self->unlock();
 
 	}
 
@@ -140,6 +157,7 @@ sub add_dbentry {
 			$sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
 		}
 		my $db_res;
+		$self->lock();
 		eval {
 			$db_res = $self->{dbh}->do($sql_statement);
 		};
@@ -152,12 +170,13 @@ sub add_dbentry {
 				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 			}
 		}
+		$self->unlock();
 
 		if( $db_res != 1 ) {
 			return (4, $sql_statement);
 		} 
 
-	# entry already exists -> run update
+		# entry already exists -> run update
 	} else  {
 		my @update_l;
 		while( my ($pram, $val) = each %{$arg} ) {
@@ -177,28 +196,29 @@ sub add_dbentry {
 
 
 sub update_dbentry {
-    my ($self, $sql)= @_;
-    my $db_answer= &exec_statement($self, $sql); 
-    return $db_answer;
+	my ($self, $sql)= @_;
+	my $db_answer= &exec_statement($self, $sql); 
+	return $db_answer;
 }
 
 
 sub del_dbentry {
-    my ($self, $sql)= @_;;
-    my $db_res= &exec_statement($self, $sql);
-    return $db_res;
+	my ($self, $sql)= @_;;
+	my $db_res= &exec_statement($self, $sql);
+	return $db_res;
 }
 
 
 sub get_table_columns {
-    my $self = shift;
-    my $table = shift;
-    my @column_names;
-    
+	my $self = shift;
+	my $table = shift;
+	my @column_names;
+
 	if(exists $col_names->{$table}) {
 		@column_names = @{$col_names->{$table}};
 	} else {
 		my @res;
+		$self->lock();
 		eval {
 			@res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
 		};
@@ -211,75 +231,77 @@ sub get_table_columns {
 				&main::daemon_log("ERROR: pragma table_info('$table') failed with $@", 1);
 			}
 		}
+		$self->unlock();
 
 		foreach my $column (@res) {
 			push(@column_names, @$column[1]);
 		}
 	}
-    return \@column_names;
+	return \@column_names;
 
 }
 
 
 sub select_dbentry {
-    my ($self, $sql)= @_;
-    my $error= 0;
-    my $answer= {};
-    my $db_answer= &exec_statement($self, $sql); 
-    my @column_list;
+	my ($self, $sql)= @_;
+	my $error= 0;
+	my $answer= {};
+	my $db_answer= &exec_statement($self, $sql); 
+	my @column_list;
 
-    # fetch column list of db and create a hash with column_name->column_value of the select query
-    $sql =~ /SELECT ([\S\s]*?) FROM ([\S]*?)( |$)/g;
-    my $selected_cols = $1;
-    my $table = $2;
+	# fetch column list of db and create a hash with column_name->column_value of the select query
+	$sql =~ /SELECT ([\S\s]*?) FROM ([\S]*?)( |$)/g;
+	my $selected_cols = $1;
+	my $table = $2;
 
-    # all columns are used for creating answer
-    if ($selected_cols eq '*') {
-        @column_list = @{ &get_table_columns($self, $table) };    
+	# all columns are used for creating answer
+	if ($selected_cols eq '*') {
+		@column_list = @{ &get_table_columns($self, $table) };    
 
-    # specific columns are used for creating answer
-    } else {
-        # remove all blanks and split string to list of column names
-        $selected_cols =~ s/ //g;          
-        @column_list = split(/,/, $selected_cols);
-    }
+		# specific columns are used for creating answer
+	} else {
+		# remove all blanks and split string to list of column names
+		$selected_cols =~ s/ //g;          
+		@column_list = split(/,/, $selected_cols);
+	}
 
-    # create answer
-    my $hit_counter = 0;
-    my $list_len = @column_list;
-    foreach my $hit ( @{$db_answer} ){
-        $hit_counter++;
-        for ( my $i = 0; $i < $list_len; $i++) {
-            $answer->{ $hit_counter }->{ $column_list[$i] } = @{ $hit }[$i];
-        }
-    }
+	# create answer
+	my $hit_counter = 0;
+	my $list_len = @column_list;
+	foreach my $hit ( @{$db_answer} ){
+		$hit_counter++;
+		for ( my $i = 0; $i < $list_len; $i++) {
+			$answer->{ $hit_counter }->{ $column_list[$i] } = @{ $hit }[$i];
+		}
+	}
 
-    return $answer;  
+	return $answer;  
 }
 
 
 sub show_table {
-    my $self = shift;
-    my $table_name = shift;
+	my $self = shift;
+	my $table_name = shift;
 
-    my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
-    my $res= &exec_statement($self, $sql_statement);
-    my @answer;
-    foreach my $hit (@{$res}) {
-        push(@answer, "hit: ".join(', ', @{$hit}));
-    }
+	my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
+	my $res= &exec_statement($self, $sql_statement);
+	my @answer;
+	foreach my $hit (@{$res}) {
+		push(@answer, "hit: ".join(', ', @{$hit}));
+	}
 
-    return join("\n", @answer);
+	return join("\n", @answer);
 }
 
 
 sub exec_statement {
-    my $self = shift;
-    my $sql_statement = shift;
-    my @db_answer;
+	my $self = shift;
+	my $sql_statement = shift;
+	my @db_answer;
 
+	$self->lock();
 	eval {
-    	@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+		@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
 	};
 	if($@) {
 		$self->{dbh}->do("ANALYZE");
@@ -290,13 +312,14 @@ sub exec_statement {
 			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 		}
 	}
+	$self->unlock();
 	# TODO : maybe an error handling and an erro feedback to invoking function
 	#my $error = @$self->{dbh}->err;
 	#if ($error) {
 	#	my $error_string = @$self->{dbh}->errstr;
 	#}
 
-    return \@db_answer;
+	return \@db_answer;
 }
 
 
@@ -307,6 +330,7 @@ sub exec_statementlist {
 
 	foreach my $sql (@$sql_list) {
 		if(defined($sql) && length($sql) > 0) {
+			$self->lock();
 			eval {
 				my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
 				push @db_answer, @answer;
@@ -321,6 +345,7 @@ sub exec_statementlist {
 					&main::daemon_log("ERROR: $sql failed with $@", 1);
 				}
 			}
+			$self->unlock();
 		} else {
 			next;
 		}
@@ -331,15 +356,15 @@ sub exec_statementlist {
 
 
 sub count_dbentries {
-    my ($self, $table)= @_;
-    my $error= 0;
-    my $answer= -1;
-    
-    my $sql_statement= "SELECT * FROM $table";
-    my $db_answer= &select_dbentry($self, $sql_statement); 
+	my ($self, $table)= @_;
+	my $error= 0;
+	my $answer= -1;
 
-    my $count = keys(%{$db_answer});
-    return $count;
+	my $sql_statement= "SELECT * FROM $table";
+	my $db_answer= &select_dbentry($self, $sql_statement); 
+
+	my $count = keys(%{$db_answer});
+	return $count;
 }
 
 
