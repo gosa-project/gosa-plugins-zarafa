@@ -628,7 +628,7 @@ sub new_syslog_config {
 	}
 
 	my $entry= $ldap_res->entry(0);
-    my $dn = &Net::LDAP::Util::escape_dn_value($entry->dn);
+    my $filter_dn = &Net::LDAP::Util::escape_filter_value($entry->dn);
 	my $syslog_server = $entry->get_value("gotoSyslogServer");
 
     # If no syslog server is specified at host, just have a look at the object group of the host
@@ -637,7 +637,7 @@ sub new_syslog_config {
         my $ldap_res = $ldap_handle->search( base   => $ldap_base,
                 scope  => 'sub',
                 attrs => ['gotoSyslogServer'],
-                filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+                filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
             &main::daemon_log("$session_id ".$ldap_res->error, 1);
             return;
@@ -649,7 +649,7 @@ sub new_syslog_config {
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: gotoSyslogServer".
-                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$dn))", 1);
+                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
             return;
         }
 
@@ -662,6 +662,7 @@ sub new_syslog_config {
         &main::daemon_log("$session_id WARNING: no syslog server specified for this host '$mac_address'", 3);
         return;
     }
+
  
     # Add syslog server to 'syslog_config' message
     my $syslog_msg_hash = &create_xml_hash("new_syslog_config", $server_address, $mac_address);
@@ -703,7 +704,7 @@ sub new_ntp_config {
 	}
 
 	my $entry= $ldap_res->entry(0);
-    my $dn = &Net::LDAP::Util::escape_dn_value($entry->dn);
+    my $filter_dn = &Net::LDAP::Util::escape_filter_value($entry->dn);
 	my @ntp_servers= $entry->get_value("gotoNtpServer");
 
     # If no ntp server is specified at host, just have a look at the object group of the host
@@ -712,7 +713,7 @@ sub new_ntp_config {
         my $ldap_res = $ldap_handle->search( base   => $ldap_base,
                 scope  => 'sub',
                 attrs => ['gotoNtpServer'],
-                filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+                filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
             &main::daemon_log("$session_id ".$ldap_res->error, 1);
             return;
@@ -724,7 +725,7 @@ sub new_ntp_config {
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: gotoNtpServer".
-                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$dn))", 1);
+                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
             return;
         }
 
@@ -803,13 +804,14 @@ sub new_ldap_config {
 	}
 
 	my $entry= $mesg->entry(0);
-	my $dn= $entry->dn;
+	my $filter_dn= &Net::LDAP::Util::escape_filter_value($entry->dn);
 	my @servers= $entry->get_value("gotoLdapServer");
 	my $unit_tag= $entry->get_value("gosaUnitTag");
 	my @ldap_uris;
 	my $server;
 	my $base;
 	my $release;
+    my $dn= $entry->dn;
 
 	# Fill release if available
 	my $FAIclass= $entry->get_value("FAIclass");
@@ -819,13 +821,12 @@ sub new_ldap_config {
 
 	# Do we need to look at an object class?
 	if (not @servers){
-          my $escaped_dn = &Net::LDAP::Util::escape_dn_value($dn);
 	        $mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
-			filter => "(&(objectClass=gosaGroupOfNames)(member=$escaped_dn))");
+			filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
 		if($mesg->code) {
-			&main::daemon_log("$session_id ERROR: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$dn))': ".$mesg->error, 1);
+			&main::daemon_log("$session_id ERROR: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$filter_dn))': ".$mesg->error, 1);
 			return;
 		}
 
@@ -835,7 +836,7 @@ sub new_ldap_config {
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: dn, gotoLdapServer, FAIclass".
-                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$escaped_dn))", 1);
+                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
             return;
         }
 
@@ -987,7 +988,6 @@ sub hardware_config {
 	
 	} else {
 		my $entry= $mesg->entry(0);
-		my $dn= $entry->dn;
 		if (defined($entry->get_value("gotoHardwareChecksum"))) {
 			if (! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
 				$entry->replace(gotoHardwareChecksum => $gotoHardwareChecksum);
