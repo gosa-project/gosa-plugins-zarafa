@@ -62,15 +62,14 @@ class printerPPDDialog extends plugin
         if(!file_exists($this->pathToPPD.$this->pathToModified.$ppdfile)){
           msg_dialog::display(_("PPD error"), sprintf(_("Cannot open PPD '%s'!"), $ppdfile), ERROR_DIALOG);
         }else{
-          $res  = $this->ppdManager->loadDescription($this->pathToPPD.$this->pathToModified.$ppdfile);
-          if($res){
-            $tmp = split("\n",$res);
-            $tmp3 = array(); 
-            $tmp3['name']   = trim(preg_replace("/^\-/","",trim($tmp[1])));
-            $tmp3['link']   = $ppdfile;
-            $tmp3['ppd']    = $res;
+          $ppdDesc = $this->ppdManager->loadDescription($this->pathToPPD.$this->pathToModified.$ppdfile);
+          if($ppdDesc){            
+            $selectedPPD = array(); 
+            $selectedPPD['name']   = $ppdDesc['name'];
+            $selectedPPD['link']   = $ppdfile;
+            $selectedPPD['ppd']    = $ppdDesc;
           }    
-          $this->selectedPPD = $tmp3;
+          $this->selectedPPD = $selectedPPD;
         }
       }
     }
@@ -197,12 +196,11 @@ class printerPPDDialog extends plugin
       msg_dialog::display(_("PPD error"), msgPool::cannotReadFile($AbsoluteSourceName), ERROR_DIALOG);
       return;
     }
-    $res  = $this->ppdManager->loadDescription($AbsoluteSourceName);
-    if($res){
-      $tmp = split("\n",$res);
-      $Name   = trim(preg_replace("/^\-/","",trim($tmp[1])));
-      $Vendor = trim($tmp[0]);
-      $Model  = trim(preg_replace("/".$Vendor."/","",$Name));
+    $ppdDesc  = $this->ppdManager->loadDescription($AbsoluteSourceName);
+    if($ppdDesc){
+      $Name   = $ppdDesc['name'];
+      $Vendor = $ppdDesc['manufacturer'];
+      $Model  = $ppdDesc['model'];
     }    
 
     $PrinterName  = $this->cn."-".preg_replace("/[^a-z0-9-_\.]/i","_",$Name);
@@ -251,12 +249,11 @@ class printerPPDDialog extends plugin
     $this->getPrinterReload();
 
     /* Get Description from ppd, & parse out some informations */   
-    $res  = @$this->ppdManager->loadDescription($_PathOnHdd);
-    if($res){
-      $tmp = split("\n",$res);
-      $name   = trim(preg_replace("/^\-/","",trim($tmp[1])));
-      $vendor = trim($tmp[0]);
-      $model  = trim(preg_replace("/".$vendor."/","",$name));
+    $ppdDesc  = @$this->ppdManager->loadDescription($_PathOnHdd);
+    if($ppdDesc){
+      $name   = $ppdDesc['name'];
+      $vendor = $ppdDesc['manufacturer'];
+      $model  = $ppdDesc['model'];
     }    
 
     /* Check if parse was successfull */
@@ -342,18 +339,18 @@ class printerPPDDialog extends plugin
 
       /* Sort all available files, and create header (Vendor index) */
       foreach($tmp as $file=>$ppd){
-
+ 		
         if(preg_match("#".$this->pathToModified."#",$file)) continue;
 
-        $tmp2 = split("\n",$ppd);
-        if(!isset($this->ppdListHeader[$tmp2[0]])){
-          $this->ppdListHeader[$tmp2[0]]=0;
+        if(!isset($this->ppdListHeader[$ppd['manufacturer']])){
+          $this->ppdListHeader[$ppd['manufacturer']]=0;
         }
-        $tmp3['name']   =preg_replace("/^ -/","",$tmp2[1]." - ".$tmp2[2]);
+       
+        $tmp3['name']   =$ppd['name'];
         $tmp3['link']   =$file;
         $tmp3['ppd']    =$ppd;
-        $this->ppdListHeader[$tmp2[0]]++;
-        $this->ppdList[$tmp2[0]][preg_replace("/^ -/","",$tmp2[1]." - ".$tmp2[2])]=$tmp3;
+        $this->ppdListHeader[$ppd['manufacturer']]++;
+        $this->ppdList[$ppd['manufacturer']][$ppd['name']]=$tmp3;
       }
     }
   }
@@ -400,11 +397,11 @@ class printerPPDDialog extends plugin
   {
     $str = "none";
     if(!empty($this->selectedPPD)){
-      $str = $this->ppdManager->loadDescription($this->pathToPPD.$this->pathToModified.$this->selectedPPD['link']);
+      $ppdDesc = $this->ppdManager->loadDescription($this->pathToPPD.$this->pathToModified.$this->selectedPPD['link']);
+      $str = $ppdDesc['name'];
     }
     return($str) ; 
   }
-
 
   /* Display all options from the selected ppd file */
   function generateProperties()

@@ -512,7 +512,8 @@ class printgeneric extends plugin
         if((!file_exists($path.$this->gotoPrinterPPD))){
           $smarty->assign("driverInfo", "<b>".sprintf(_("Your currently selected PPD file '%s' doesn't exist."),$path.$this->gotoPrinterPPD)."</b>");
         }else{
-          $smarty->assign("driverInfo", $ppdManager->loadDescription($path.$this->gotoPrinterPPD));
+          $ppdDesc = $ppdManager->loadDescription($path.$this->gotoPrinterPPD);
+          $smarty->assign("driverInfo", $ppdDesc['name']);
         }
       }else{
         $smarty->assign("driverInfo", _("Not defined"));
