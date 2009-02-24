@@ -145,12 +145,19 @@ class termservice extends plugin
     /* Additional values will be extracted from CONFIG_DIR.keyboardLayouts */
     $this->XKbLayouts = array("de"=> "de","en" =>"en", "es" => "es", "us" =>"us", "fr" => "fr");
     $this->XKbVariants= array("nodeadkeys"=>"nodeadkeys", "basic"=>"basic");
-    $this->MouseTypes = array("ImPS/2"=>"ImPS/2","PS/2"=>"PS/2", "explorerps/2"=>"explorerps/2",
-                              "Microsoft"=>"Microsoft","Logitech"=>"Logitech");
-    $this->MousePorts = array("/dev/ttyS0"=>"/dev/ttyS0",
-                              "/dev/ttyS1"=>"/dev/ttyS1","/dev/psaux"=>"/dev/psaux", 
-                              "/dev/input/mice"=>"/dev/input/mice");
- 
+
+    $this->MouseTypes= array("auto" => "auto", 
+                             "explorerps/2" => "explorerps/2",
+                             "ImPS/2" => "ImPS/2",
+                             "PS/2" => "PS/2", 
+                             "Microsoft" => "Microsoft",
+                             "Logitech" => "Logitech",);
+
+    $this->MousePorts= array("/dev/input/mice" => "/dev/input/mice",
+                             "/dev/mouse" => "/dev/mouse",
+                             "/dev/psaux" => "/dev/psaux",
+                             "/dev/ttyS0" => "/dev/ttyS0",
+                             "/dev/ttyS1" => "/dev/ttyS1");
 
     /* Try to read additional keyboard layouts
      */
@@ -276,10 +283,10 @@ class termservice extends plugin
             $this->XKbVariants= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XKbVariants;
             break;
           case 'gotoXMouseType':
-            $this->MouseTypes= array('AUTO' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->MouseTypes;
+            $this->MouseTypes= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->MouseTypes;
             break;
           case 'gotoXMouseport':
-            $this->MousePorts= array('AUTO' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->MousePorts;
+            $this->MousePorts= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->MousePorts;
             break;
         }
       }
