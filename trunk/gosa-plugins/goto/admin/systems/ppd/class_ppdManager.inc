@@ -291,10 +291,8 @@ class ppdManager
 
 	function loadDescription($ppdFile)
 	{
-		$model= "";
-		$manufacturer= "";
-
-		
+		$ppdDesc = array();
+				
 		/* Only parse complete PPD file again, if it was changed */
 		$modified = filemtime($ppdFile);
 		if(isset($this->cachedList[$ppdFile]) && isset($this->timestamps[$ppdFile]) && $modified == $this->timestamps[$ppdFile]){
@@ -315,26 +313,31 @@ class ppdManager
 
 			/* Extract interesting informations */
 			if (preg_match('/^\*Manufacturer:/i', $line)){
-				$manufacturer= preg_replace('/^\*Manufacturer:\s+"?([^"]+)"?.*$/i', '\1', $line);
+				$ppdDesc['manufacturer'] = trim(preg_replace('/^\*Manufacturer:\s+"?([^"]+)"?.*$/i', '\1', $line));
 			}
 			if (preg_match('/^\*ModelName:/i', $line)){
-				$model= preg_replace('/^\*ModelName:\s+"?([^"]+)"?.*$/i', '\1', $line);
+				$ppdDesc['model'] = trim(preg_replace('/^\*ModelName:\s+"?([^"]+)"?.*$/i', '\1', $line));
 			}
 
 			/* Got everything we need? Skip rest for speed reasons... */
-			if ($model != '' && $manufacturer != ''){
+			if (isset($ppdDesc['manufacturer'])  && isset($ppdDesc['model'])){
 				break;
 			}
 		}
 		gzclose ($fh);
 
+		/* If model contains manufacturer strip it */
+		$ppdDesc['model'] = str_replace($ppdDesc['manufacturer']." ", '', $ppdDesc['model']);
+		
 		/* Write out a notice that the PPD file seems to be broken if we can't
 		   extract any usefull informations */
-		if ($model == '' || $manufacturer == ''){
+		if ($ppdDesc['manufacturer'] == '' || $ppdDesc['model'] == ''){
 			trigger_error(sprintf(_('Parsing PPD file %s failed - no information found.'), $ppdFile), E_USER_WARNING);
 		}
 
-		return ($manufacturer.' - '.$model);
+		$ppdDesc['name'] = $ppdDesc['manufacturer'] . " - " . $ppdDesc['model'];
+		
+		return $ppdDesc;
 	}
 
 
