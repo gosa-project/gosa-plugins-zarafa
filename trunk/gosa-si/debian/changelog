@@ -1,0 +1,43 @@
+gosa-si (2.6.1-1) etch; urgency=low
+
+  * New upstream version.
+  * Fixes several bugs
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Fri, 05 Dec 2008 15:25:55 +0100
+
+gosa-si (1.3-1) etch; urgency=low
+
+  * User messages handling for server-server communication implemented
+
+ -- Andreas Rettenberger <rettenbe@gonicus.de>  Thu, 06 Nov 2008 15:58:25 +0100
+
+gosa-si (1.2-2) etch; urgency=low
+
+  * Removed broken mysql module from package 
+
+ -- Cajus Pollmeier <pollmeier@gonicus.de>  Tue, 14 Oct 2008 09:49:05 +0200
+
+gosa-si (1.2-1) etch; urgency=low
+
+  * New upstream version
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Tue, 02 Sep 2008 16:24:08 +0200
+
+gosa-si (1.1-1) etch; urgency=low
+
+  * New upstream version
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Mon, 01 Sep 2008 11:48:32 +0200
+
+gosa-si (1.0-2) etch; urgency=low
+
+  * Fixed perl mime dependencies.
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Thu, 07 Aug 2008 14:56:10 +0200
+
+gosa-si (1.0-1) etch; urgency=low
+
+  * New upstream version
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Thu, 07 Aug 2008 14:29:58 +0200
+

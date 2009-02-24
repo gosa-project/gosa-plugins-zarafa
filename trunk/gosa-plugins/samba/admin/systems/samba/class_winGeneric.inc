@@ -1,0 +1,323 @@
+<?php
+
+class wingeneric extends plugin
+{
+  /* Generic terminal attributes */
+  var $interfaces= array();
+
+  /* Needed values and lists */
+  var $base= "";
+  var $cn= "";
+  var $description= "";
+  var $orig_dn= "";
+  var $shadowLastChange="";
+  var $uidNumber="";
+  var $gidNumber="";
+  var $loginShell="";
+  var $gecos="";
+  var $shadowMin="";
+  var $shadowWarning="";
+  var $shadowInactive="";
+  var $uid="";
+  var $sn="";
+  var $givenName="";
+  var $homeDirectory="";
+  var $sambaSID="";
+  var $sambaPrimaryGroupSID="";
+  var $displayName="";
+  var $sambaPwdMustChange="";
+  var $sambaNTPassword="";
+  var $sambaPwdLastSet="";
+  var $sambaAcctFlags="";
+  var $netConfigDNS;
+
+  var $orig_cn;
+  var $orig_base;
+
+  /* attribute list for save action */
+  var $ignore_account= TRUE;
+  var $attributes   = array("cn", "description","shadowLastChange",
+                            "uidNumber","gidNumber","loginShell","gecos","shadowMin","shadowWarning",
+                            "shadowInactive","uid","cn","sn","givenName","homeDirectory","sambaSID",
+                            "sambaPrimaryGroupSID","displayName", "sambaPwdMustChange",
+                            "sambaNTPassword","sambaPwdLastSet","sambaAcctFlags");
+  var $objectclasses= array("posixAccount","person","organizationalPerson","inetOrgPerson","gosaAccount","shadowAccount","sambaSamAccount","top");
+
+  var $view_logged = FALSE;
+
+  function wingeneric (&$config, $dn= NULL, $parent= NULL)
+  {
+    plugin::plugin ($config, $dn, $parent);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
+    $this->netConfigDNS->objectclasses=array("ipHost","ieee802Device");
+    $this->netConfigDNS->MACisMust = FALSE;
+    $this->netConfigDNS->IPisMust = TRUE;
+
+    /* Set base */
+    if ($this->dn == "new"){
+      $ui= get_userinfo();
+      $this->base= dn2base($ui->dn);
+      $this->cn= "";
+    } else {
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_winstations_ou(), '/')."/", "", $this->dn);
+    }
+
+    $this->cn= preg_replace("/\\\$\$/","",$this->cn);
+
+    /* Save dn for later references */
+    $this->orig_dn= $this->dn;
+    $this->orig_base= $this->base;
+    $this->orig_cn= $this->cn;
+  }
+
+
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
+  }
+
+
+  function execute()
+  {
+    /* Call parent execute */
+    plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      new log("view","winworkstation/".get_class($this),$this->dn);
+    }
+
+
+    /* Do we represent a valid phone? */
+    if (!$this->is_account && $this->parent === NULL){
+      $display= "<img alt=\"\" src=\"images/small-error.png\" align=middle>&nbsp;<b>".
+        msgPool::noValidExtension(_("network"))."</b>";
+      return($display);
+    }
+
+    /* Base select dialog */
+    $once = true;
+    foreach($_POST as $name => $value){
+      if(preg_match("/^chooseBase/",$name) && $once){
+        $once = false;
+        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog->setCurrentBase($this->base);
+      }
+    }
+
+    /* Dialog handling */
+    if(is_object($this->dialog)){
+      /* Must be called before save_object */
+      $this->dialog->save_object();
+
+      if($this->dialog->isClosed()){
+        $this->dialog = false;
+      }elseif($this->dialog->isSelected()){
+
+        /* A new base was selected, check if it is a valid one */
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$this->dialog->isSelected()])){
+          $this->base = $this->dialog->isSelected();
+        }
+
+        $this->dialog= false;
+      }else{
+        return($this->dialog->execute());
+      }
+    }
+
+    /* Fill templating stuff */
+    $smarty= get_smarty();
+    $smarty->assign("bases"   , $this->get_allowed_bases());
+    
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+    /* Assign attributes */
+    foreach ($this->attributes as $attr){
+      $smarty->assign("$attr", $this->$attr);
+    }
+    
+    $smarty->assign("base_select", $this->base);
+
+    /* Show main page */
+    $str = $this->netConfigDNS->execute();
+    if(is_object($this->netConfigDNS->dialog)){
+      return($str);
+    }
+    $smarty->assign("netconfig", $str);
+    return($smarty->fetch (get_template_path('wingeneric.tpl', TRUE,dirname(__FILE__))));
+  }
+
+  function remove_from_parent()
+  {
+    $this->netConfigDNS->remove_from_parent();
+    $ldap= $this->config->get_ldap_link();
+    $ldap->rmdir($this->dn);
+    new log("remove","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+    }
+    $this->handle_post_events("remove");
+
+    /* Delete references to object groups */
+    $ldap->cd ($this->config->current['BASE']);
+    $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".LDAP::prepare4filter($this->dn)."))", array("cn"));
+    while ($ldap->fetch()){
+      $og= new ogroup($this->config, $ldap->getDN());
+      unset($og->member[$this->dn]);
+      $og->save ();
+    }
+  }
+
+
+  /* Save data to object */
+  function save_object()
+  {
+    /* Create a base backup and reset the
+       base directly after calling plugin::save_object();
+       Base will be set seperatly a few lines below */
+    $base_tmp = $this->base;
+    plugin::save_object();
+    $this->base = $base_tmp;
+
+    $this->netConfigDNS->save_object();
+
+    /* Set new base if allowed */
+    $tmp = $this->get_allowed_bases();
+    if(isset($_POST['base'])){
+      if(isset($tmp[$_POST['base']])){
+        $this->base= $_POST['base'];
+      }
+    }
+  }
+
+
+  /* Check supplied data */
+  function check()
+  {
+    /* Call common method to give check the hook */
+    $message= plugin::check();
+    $message= array_merge($message, $this->netConfigDNS->check());
+    $this->dn= "cn=".$this->uid.",".get_ou('sambaMachineAccountRDN').$this->base;
+
+    if(!$this->acl_is_createable()){
+      $message[]= msgPool::permCreate();
+    }
+
+    if ($this->orig_dn != $this->dn){
+      $ldap= $this->config->get_ldap_link();
+      $ldap->cd ($this->base);
+      $ldap->search ("(cn=".$this->cn.")", array("cn"));
+      if ($ldap->count() != 0){
+        while ($attrs= $ldap->fetch()){
+          if(preg_match("/cn=dhcp,/",$attrs['dn'])){
+            continue;
+          }
+          if ($attrs['dn'] != $this->orig_dn){
+            $message[]= msgPool::duplicated(_("Name"));
+            break;
+          }
+        }
+      }
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->orig_dn != "new" && $this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
+    }
+
+    return ($message);
+  }
+
+
+  /* Save to LDAP */
+  function save()
+  {
+    plugin::save();
+
+    /* Remove all empty values */
+    if ($this->orig_dn == 'new'){
+      $attrs= array();
+      foreach ($this->attrs as $key => $val){
+        if (is_array($val) && count($val) == 0){
+          continue;
+        }
+        $attrs[$key]= $val;
+      }
+      $this->attrs= $attrs;
+    }
+
+    if(($this->gosaUnitTag) && (!in_array_ics("gosaAdministrativeUnitTag",$this->attrs['objectClass']))){
+      $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
+    }
+
+    /* Write back to ldap */
+    $ldap= $this->config->get_ldap_link();
+    if ($this->orig_dn == 'new'){
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
+      $ldap->cd($this->dn);
+      $ldap->add($this->attrs);
+      new log("create","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      $this->handle_post_events("add");
+    } else {
+      if ($this->orig_dn != $this->dn){
+        $this->move($this->orig_dn, $this->dn);
+      }
+
+      $ldap->cd($this->dn);
+      $this->cleanup();
+      $ldap->modify ($this->attrs); 
+      new log("modify","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      $this->handle_post_events("modify");
+    }
+
+    $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->cn);
+    $this->netConfigDNS->save();
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
+
+    /* Optionally execute a command after we're done */
+    $this->postcreate();
+  }
+
+  /* Return plugin informations for acl handling
+  #FIXME FAIscript seams to ununsed within this class... */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Win generic"),
+          "plDescription" => _("Windows workstation generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("winworkstation" => array("description"  => _("Win workstation"),
+                                                          "objectClass"  => "gotoWorkstation")),
+          "plProvidedAcls"=> array(
+            "cn"                  => _("Name"),
+            "base"                => _("Base"),
+            "description"         => _("Description"))
+          ));
+  }
+
+
+}
+
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+?>

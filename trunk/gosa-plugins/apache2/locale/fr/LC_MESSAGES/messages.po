@@ -1,0 +1,148 @@
+# translation of messages.po to french
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Benoit Mortier <benoit.mortier@opensides.be>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
+"PO-Revision-Date: 2008-08-12 12:32+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: french <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: admin/systems/services/apache2/servApacheVhost.tpl:1
+msgid "Apache VHosts"
+msgstr "Hôtes virtuels Apache"
+
+#: admin/systems/services/apache2/servApacheVhost.tpl:8
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:54
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:98
+msgid "Add"
+msgstr "Ajouter"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:298
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:317
+msgid "Up"
+msgstr "En haut"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:299
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:318
+msgid "Down"
+msgstr "En Bas"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:300
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:319
+msgid "Delete"
+msgstr "Supprimer"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:358
+msgid "Name"
+msgstr "Nom"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:365
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:7
+msgid "Virtual host name"
+msgstr "Nom de l'hôte de virtuel"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
+msgid "Only lowercase strings are allowed as Virtual Host Name."
+msgstr ""
+"Seul les chaînes en miniscule sont permises dans les noms d'hôtes virtuels."
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
+msgid "e.g. example.com"
+msgstr "ex: exemple.com"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:372
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:13
+msgid "Document root"
+msgstr "Document racine"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:378
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:19
+msgid "Admin mail address"
+msgstr "Adresse de messagerie de l'administrateur"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:387
+msgid "Server alias"
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:397
+msgid "Script alias"
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:61
+#: admin/systems/services/apache2/class_servApacheVhost.inc:284
+#: admin/systems/services/apache2/class_servApacheVhost.inc:297
+msgid "Apache service"
+msgstr "Service Apache"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:237
+#: admin/systems/services/apache2/class_servApacheVhost.inc:248
+#: admin/systems/services/apache2/class_servApacheVhost.inc:271
+msgid "LDAP error"
+msgstr "Erreur LDAP"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+msgid "Apache virtual host service"
+msgstr "Service de nom d'hôte virtuel apache"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+msgid "Services"
+msgstr "Services"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:306
+msgid "Virtual hosts"
+msgstr "Hôtes virtuels"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:1
+msgid "Generic"
+msgstr "Informations"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:30
+msgid "Server Alias"
+msgstr ""
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:42
+msgid "URL Alias"
+msgstr ""
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:45
+msgid "Directory Path"
+msgstr "Chemin du répertoire"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:74
+msgid "Script Alias"
+msgstr ""
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:86
+msgid "Alias Directory"
+msgstr ""
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:89
+msgid "Script Directory"
+msgstr ""
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:112
+msgid "Save"
+msgstr "Sauver"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:113
+msgid "Cancel"
+msgstr "Annuler"
+
+#: admin/systems/services/apache2/class_apacheUtils.inc:194
+#, php-format
+msgid ""
+"Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
+"or example.com'."
+msgstr ""
+"Nom d'hôte virtuel inconnu '%s'. Le nom d'hôte virtuel doit être comme ceci "
+"'www.exemple.com ou exemple.com'"

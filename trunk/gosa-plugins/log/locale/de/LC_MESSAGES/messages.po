@@ -1,0 +1,242 @@
+# translation of messages.po to Deutsch
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+#
+#
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-19 08:33+0100\n"
+"PO-Revision-Date: 2008-04-03 14:22+0200\n"
+"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:27
+#: admin/systems/services/log/class_gosaLogServer.inc:55
+msgid "GOsa MySQL logging service"
+msgstr "GOsa MySQL-Protokoll-Dienst"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:68
+#: admin/systems/services/log/class_gosaLogServer.inc:101
+#: addons/logview/gosa_log_contents.tpl:84
+msgid "User"
+msgstr "Benutzer"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:71
+#: admin/systems/services/log/class_gosaLogServer.inc:102
+#: admin/systems/services/log/gosaLogServer.tpl:20
+msgid "Password"
+msgstr "Passwort"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:74
+#: admin/systems/services/log/class_gosaLogServer.inc:100
+#: admin/systems/services/log/gosaLogServer.tpl:4
+msgid "Database"
+msgstr "Datenbank"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:91
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "GOsa logging service"
+msgstr "GOsa Protokoll-Dienst"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "Services"
+msgstr "Dienste"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:103
+msgid "Allow view of entries on this server"
+msgstr "Erlaube Anzeigen von Einträgen auf diesem Server"
+
+#: admin/systems/services/log/gosaLogServer.tpl:1
+msgid "GOsa logging database"
+msgstr "GOsa Protokoll-Datenbank"
+
+#: admin/systems/services/log/gosaLogServer.tpl:12
+msgid "Database user"
+msgstr "Datenbank-Benutzer"
+
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+msgid "Filter"
+msgstr "Filter"
+
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+msgid "Show hosts"
+msgstr "Zeige Rechner"
+
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
+msgstr "Aktion"
+
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr "Zeit-Intervall"
+
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr "Suche nach"
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr "Zu suchende Zeichenkette"
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr "Regelsatz"
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr "Suchen"
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr "Datum"
+
+#: addons/logview/gosa_log_contents.tpl:85
+msgid "Object type"
+msgstr "Objekttyp"
+
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
+msgstr "Objekt"
+
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr "Nachricht"
+
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr "Die Suche verlief ergebnislos..."
+
+#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
+#: addons/logview/class_gosa_logview.inc:6
+msgid "System logs"
+msgstr "Systemprotokolle"
+
+#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+msgid "This does something"
+msgstr "Dies tut etwas"
+
+#: addons/logview/class_logview.inc:79
+#: addons/logview/class_gosa_logview.inc:118
+msgid "Warning"
+msgstr "Warnung"
+
+#: addons/logview/class_logview.inc:83
+#: addons/logview/class_gosa_logview.inc:123
+msgid "Configuration error"
+msgstr "Konfigurationsfehler"
+
+#: addons/logview/class_logview.inc:83
+#: addons/logview/class_gosa_logview.inc:123
+#, php-format
+msgid "Missing %s PHP extension!"
+msgstr "Fehlende %s PHP-Erweiterung!"
+
+#: addons/logview/class_logview.inc:95 addons/logview/class_logview.inc:102
+#: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
+#: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
+#: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
+#: addons/logview/class_gosa_logview.inc:149
+#: addons/logview/class_gosa_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:235
+#: addons/logview/class_gosa_logview.inc:286
+msgid "Error"
+msgstr "Fehler"
+
+#: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
+#: addons/logview/class_gosa_logview.inc:167
+#: addons/logview/class_gosa_logview.inc:182
+msgid "All"
+msgstr "Alle"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "one hour"
+msgstr "eine Stunde"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "6 hours"
+msgstr "6 Stunden"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "12 hours"
+msgstr "12 Stunden"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "24 hours"
+msgstr "24 Stunden"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:73
+msgid "2 days"
+msgstr "2 Tage"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:73
+msgid "one week"
+msgstr "eine Woche"
+
+#: addons/logview/class_logview.inc:159
+#: addons/logview/class_gosa_logview.inc:74
+msgid "2 weeks"
+msgstr "2 Wochen"
+
+#: addons/logview/class_logview.inc:159
+#: addons/logview/class_gosa_logview.inc:74
+msgid "one month"
+msgstr "ein Monat"
+
+#: addons/logview/class_logview.inc:412
+msgid "Log view"
+msgstr "Protokollanzeige"
+
+#: addons/logview/class_logview.inc:413
+msgid "Log view addon"
+msgstr "Protokollanzeige-Erweiterung"
+
+#: addons/logview/main.inc:49
+msgid "System log view"
+msgstr "Systemprotokolle"
+
+#: addons/logview/class_gosa_logview.inc:201
+msgid "You have insufficient permissions to view syslog entries."
+msgstr ""
+"Sie haben keine ausreichenden Zugriffsrechte, um das Systemprotokoll "
+"einzusehen."
+
+#: addons/logview/class_gosa_logview.inc:236
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
+"Fehlende Protokollierungstabelle (%s.%s). Aktualisieren Sie Ihr GOsa "
+"Protokolldatenbank-Schema."
+
+#: addons/logview/contents.tpl:20
+msgid "Log level"
+msgstr "Priorität"
+
+#: addons/logview/contents.tpl:82
+msgid "Level"
+msgstr "Level"
+
+#: addons/logview/contents.tpl:83
+msgid "Hostname"
+msgstr "Hostname"

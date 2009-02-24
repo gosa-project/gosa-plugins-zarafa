@@ -1,0 +1,3 @@
+update-locale       /usr/bin
+update-pdf-help     /usr/bin
+dh-make-gosa        /usr/bin

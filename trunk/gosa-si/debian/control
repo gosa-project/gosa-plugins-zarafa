@@ -1,0 +1,79 @@
+Source: gosa-si
+Section: gonicus/utils
+Priority: optional
+Maintainer: Cajus Pollmeier <cajus@debian.org>
+Standards-Version: 3.7.2.2
+Build-Depends: debhelper(>= 4.2.32), dpatch
+
+Package: gosa-si-common
+Architecture: any
+Depends: libconfig-inifiles-perl, libcrypt-rijndael-perl, libxml-simple-perl, libdata-dumper-simple-perl, libmime-perl | libmime-tools-perl, libdbd-sqlite3-perl, libnet-ldap-perl, libnetaddr-ip-perl, libpoe-perl, libnet-dns-perl, libnet-pcap-perl, libconvert-asn1-perl, libdigest-hmac-perl, libnet-ip-perl, libdigest-sha1-perl, libnet-mac-vendor-perl, libpoe-component-pcap-perl, libnet-arp-perl, libdatetime-perl, libjson-rpc-perl, libxml-quote-perl
+Suggests: gosa-si-server, gosa-si-client
+Description: GOsa support infrastructure
+ This package provides common library functionality used by the
+ infrastructure server and client packages.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
+Package: gosa-si-server
+Architecture: any
+Depends: gosa-si-common, libcrypt-smbhash-perl
+Suggests: gosa, gosa-si-server-postfix, gosa-si-server-dak
+Description: GOsa support infrastructure server
+ This package provides everything you need in order to deploy a simple
+ or distributed GOsa support infrastructure. It can be used to trigger
+ certain actions or retrieve information from clients.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
+Package: gosa-si-client
+Architecture: any
+Depends: gosa-si-common, hwinfo, libdatetime-perl
+Suggests: fai-progress, gosa-si-client-krb5
+Description: GOsa support infrastructure client
+ This package lets you join to a GOsa support infrastructure as a
+ client in order to provide information or to act on events.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
+Package: gosa-si-server-postfix
+Architecture: any
+Depends: gosa-si-server, postfix
+Description: GOsa support infrastructure postfix module
+ This package controls postfix mail queues.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
+Package: gosa-si-client-krb5
+Architecture: any
+Depends: gosa-si-client, libauthen-krb5-perl, libauthen-krb5-admin-perl
+Description: GOsa support infrastructure kerberos module
+ This package controls keberos setups and enables administrators
+ to maintain accounts and keys.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
+Package: gosa-si-server-dak
+Architecture: any
+Depends: gosa-si-server, dak
+Description: GOsa support infrastructure dak module
+ This package controls Debian archive kit setups and enables
+ administrators to manage queue and keyring related issues.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
+Package: gosa-si-server-opsi
+Architecture: any
+Depends: gosa-si-server
+Description: GOsa support infrastructure opsi module
+ This package controls OPSI windows software deployment.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+

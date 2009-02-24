@@ -1,0 +1,1263 @@
+#!/usr/bin/perl
+#===============================================================================
+#
+#         FILE:  gosa-server
+#
+#        USAGE:  gosa-si-client
+#
+#  DESCRIPTION:
+#
+#      OPTIONS:  ---
+# REQUIREMENTS:  libnetaddr-ip-perl
+#         BUGS:  ---
+#        NOTES:
+#       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
+#      COMPANY:
+#      VERSION:  1.0
+#      CREATED:  12.09.2007 08:54:41 CEST
+#     REVISION:  ---
+#===============================================================================
+
+my $client_version = '$HeadURL$:$Rev$';
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Config::IniFiles;
+use POSIX;
+use Time::HiRes qw( gettimeofday );
+
+use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
+use IO::Socket::INET;
+use NetAddr::IP;
+use Data::Dumper;
+use Crypt::Rijndael;
+use GOSA::GosaSupportDaemon;
+use Digest::MD5  qw(md5_hex md5 md5_base64);
+use MIME::Base64;
+use XML::Simple;
+use File::Basename;
+use File::Spec;
+
+# Workaround: need pure perl to make it work with UTF-8 :-(
+$XML::Simple::PREFERRED_PARSER= "XML::SAX::PurePerl";
+
+my $client_headURL;
+my $client_revision;
+my $client_status;
+my $event_dir = "/usr/lib/gosa-si/client/events";
+use lib "/usr/lib/gosa-si/client/events";
+
+my (%cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
+my ($server_ip, $server_port, $server_timeout, $server_domain, $server_key_lifetime);
+my ($client_port, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
+my $xml;
+my $event_hash;
+my $default_server_key;
+my @servers;
+my $gotoHardwareChecksum;
+my $gosa_si_client_fifo;
+my %files_to_watch;
+$verbose= 1;
+
+# globalise variables which are used in imported events
+our $global_kernel;
+our $cfg_file;
+our $opts_file;
+our $server_address;
+our $client_address;
+our $client_ip;
+our $client_mac_address;
+our $client_dnsname;
+our $client_force_hostname;
+our $server_key;
+
+# default variables
+our $REGISTERED = 0;
+
+# path to fifo for non-gosa-si-client messages to gosa-si-server
+$gosa_si_client_fifo = "/var/run/gosa-si-client.socket";
+%files_to_watch = (fifo => $gosa_si_client_fifo); 
+
+# in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
+# not successful until now
+my $delay_set_time = 10;
+our $prg= basename($0);
+
+# all n seconds the client reports logged_in users to gosa-si-server
+my $trigger_logged_in_users_report_delay = 600;
+
+# all n seconds the client reports messages seen by user
+my $trigger_seen_messages_delay = 30;
+
+# directory where all log files from installation are stored
+my $fai_log_dir = "/var/log/fai"; 
+
+%cfg_defaults = (
+"general" =>
+    {"log-file"           => [\$log_file, "/var/run/".$prg.".log"],
+    "pid-file"            => [\$pid_file, "/var/run/".$prg.".pid"],
+    "opts-file"            => [\$opts_file, "/var/run/".$prg.".opts"],
+    },
+"client" => 
+    {"port"        => [\$client_port, "20083"],
+     "ip"          => [\$client_ip, "0.0.0.0"],
+     "mac-address" => [\$client_mac_address, "00:00:00:00:00:00"],
+     "server-domain"      => [\$server_domain, ""],
+     "ldap"               => [\$ldap_enabled, 1],
+     "ldap-config"        => [\$ldap_config, "/etc/ldap/ldap.conf"],
+     "pam-config"         => [\$pam_config, "/etc/pam_ldap.conf"],
+     "nss-config"         => [\$nss_config, "/etc/libnss-ldap.conf"],
+     "fai-logpath"        => [\$fai_logpath, "/var/log/fai/fai.log"],
+     "force-hostname"	  => [\$client_force_hostname, "false"],
+    },
+"server" => {
+    "ip"          => [\$server_ip, "127.0.0.1"],
+    "port"         => [\$server_port, "20081"],
+    "key"          => [\$server_key, ""],
+    "timeout"      => [\$server_timeout, 10],
+    "key-lifetime" => [\$server_key_lifetime, 600], 
+    },
+
+);
+
+
+#=== FUNCTIONS = functions =====================================================
+
+sub usage {
+    print STDERR << "EOF" ;
+usage: $prg [-hvf] [-c config]
+
+           -h        : this (help) message
+           -c <file> : config file
+           -f        : foreground, process will not be forked to background
+           -v        : be verbose (multiple to increase verbosity)
+ 
+EOF
+    print "\n" ;
+}
+
+#===  FUNCTION  ================================================================
+#         NAME: check_cmdline_param
+#   PARAMETERS: 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub check_cmdline_param () {
+    my $err_config;
+    my $err_counter = 0;
+	if(not defined($cfg_file)) {
+		$cfg_file = "/etc/gosa-si/client.conf";
+		if(! -r $cfg_file) {
+			$err_config = "please specify a config file";
+			$err_counter += 1;
+		}
+    }
+    if( $err_counter > 0 ) {
+        &usage( "", 1 );
+        if( defined( $err_config)) { print STDERR "$err_config\n"}
+        print STDERR "\n";
+        exit( -1 );
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME: check_pid
+#   PARAMETERS:
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub check_pid {
+    $pid = -1;
+    # Check, if we are already running
+    if( open(LOCK_FILE, "<$pid_file") ) {
+        $pid = <LOCK_FILE>;
+        if( defined $pid ) {
+            chomp( $pid );
+            if( -f "/proc/$pid/stat" ) {
+                my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
+                if( $0 eq $stat ) {
+                    close( LOCK_FILE );
+                    exit -1;
+                }
+            }
+        }
+        close( LOCK_FILE );
+        unlink( $pid_file );
+    }
+
+    # create a syslog msg if it is not to possible to open PID file
+    if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
+        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
+        if (open(LOCK_FILE, '<', $pid_file)
+                && ($pid = <LOCK_FILE>))
+        {
+            chomp($pid);
+            $msg .= "(PID $pid)\n";
+        } else {
+            $msg .= "(unable to read PID)\n";
+        }
+        if( ! ($foreground) ) {
+            openlog( $0, "cons,pid", "daemon" );
+            syslog( "warning", $msg );
+            closelog();
+        }
+        else {
+            print( STDERR " $msg " );
+        }
+        exit( -1 );
+    }
+}
+
+
+sub sig_int_handler {
+    my ($signal) = @_;
+	
+    daemon_log("shutting down gosa-si-client", 1);
+    system("kill `ps -C gosa-si-client -o pid=`");
+}
+$SIG{INT} = \&sig_int_handler;
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  logging
+#   PARAMETERS:  level - string - default 'info' 
+#                msg - string - 
+#                facility - string - default 'LOG_DAEMON' 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub daemon_log {
+# log into log_file
+    my( $msg, $level ) = @_;
+    if(not defined $msg) { return }
+    if(not defined $level) { $level = 1 }
+    if(defined $log_file){
+        open(LOG_HANDLE, ">>$log_file");
+        if(not defined open( LOG_HANDLE, ">>$log_file" )) {
+            print STDERR "cannot open $log_file: $!";
+            return 
+        }
+        chomp($msg);
+        if($level <= $verbose){
+            my ($seconds, $minutes, $hours, $monthday, $month,
+                    $year, $weekday, $yearday, $sommertime) = localtime(time);
+            $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+            $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+            $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+            my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+            $month = $monthnames[$month];
+            $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+            $year+=1900;
+
+            my $log_msg = "$month $monthday $hours:$minutes:$seconds $prg $msg\n";
+            print LOG_HANDLE $log_msg;
+            if( $foreground ) { 
+                print STDERR $log_msg;
+            }
+        }
+        close( LOG_HANDLE );
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_mac 
+#   PARAMETERS:  interface name (i.e. eth0)
+#      RETURNS:  (mac address) 
+#  DESCRIPTION:  Uses ioctl to get mac address directly from system.
+#===============================================================================
+sub get_mac {
+	my $ifreq= shift;
+	my $result;
+	if ($ifreq && length($ifreq) > 0) { 
+		if($ifreq eq "all") {
+			if(defined($server_ip)) {
+				$result = &get_local_mac_for_remote_ip($server_ip);
+			} 
+			elsif ($client_mac_address && length($client_mac_address) > 0 && !($client_mac_address eq "00:00:00:00:00:00")){
+				$result = &client_mac_address;
+			} 
+			else {
+				$result = "00:00:00:00:00:00";
+			}
+		} else {
+			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
+
+			# A configured MAC Address should always override a guessed value
+			if ($client_mac_address and length($client_mac_address) > 0 and not($client_mac_address eq "00:00:00:00:00:00")) {
+				$result= $client_mac_address;
+			}
+			else {
+				socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+					or die "socket: $!";
+
+				if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
+					my ($if, $mac)= unpack 'h36 H12', $ifreq;
+
+					if (length($mac) > 0) {
+						$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+						$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
+						$result = $mac;
+					}
+				}
+			}
+		}
+	}
+	return $result;
+}
+
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_local_mac_for_remote_ip
+#   PARAMETERS:  none (takes server_ip from global variable)
+#      RETURNS:  (ip address from interface that is used for communication) 
+#  DESCRIPTION:  Uses ioctl to get routing table from system, checks which entry
+#                matches (defaultroute last).
+#===============================================================================
+sub get_local_mac_for_remote_ip {
+	my $server_ip= shift;
+	my $result= "00:00:00:00:00:00";
+
+	if($server_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
+		my $PROC_NET_ROUTE= ('/proc/net/route');
+
+		open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+			or die "Could not open $PROC_NET_ROUTE";
+
+		my @ifs = <PROC_NET_ROUTE>;
+
+		close(PROC_NET_ROUTE);
+
+		# Eat header line
+		shift @ifs;
+		chomp @ifs;
+		foreach my $line(@ifs) {
+			my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+			my $destination;
+			my $mask;
+			my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+			$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+			($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+			$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+			if(new NetAddr::IP($server_ip)->within(new NetAddr::IP($destination, $mask))) {
+				# destination matches route, save mac and exit
+				$result= &get_mac($Iface);
+				last;
+			}
+		}
+	} else {
+		daemon_log("get_local_mac_for_remote_ip was called with a non-ip parameter: $server_ip", 1);
+	}
+	return $result;
+}
+
+
+sub generate_hw_digest {
+	my $hw_data;
+	foreach my $line (split /\n/, `cat /proc/bus/pci/devices`) {
+		$hw_data.= sprintf "%s", $line =~ /[^\s]+\s([^\s]+)\s.*/;
+	}
+	return(md5_base64($hw_data));
+}
+
+
+sub create_ciphering {
+    my ($passwd) = @_;
+	if((!defined($passwd)) || length($passwd)==0) {
+		$passwd = "";
+	}
+    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+    $my_cipher->set_iv($iv);
+    return $my_cipher;
+}
+
+
+sub encrypt_msg {
+    my ($msg, $key) = @_;
+    my $my_cipher = &create_ciphering($key);
+    my $len;
+    {
+	    use bytes;
+	    $len= 16-length($msg)%16;
+    }
+    $msg = "\0"x($len).$msg;
+    $msg = $my_cipher->encrypt($msg);
+    chomp($msg = &encode_base64($msg));
+    # there are no newlines allowed inside msg
+    $msg=~ s/\n//g;
+    return $msg;
+}
+
+
+sub decrypt_msg {
+
+    my ($msg, $key) = @_ ;
+    $msg = &decode_base64($msg);
+    my $my_cipher = &create_ciphering($key);
+    $msg = $my_cipher->decrypt($msg); 
+    $msg =~ s/\0*//g;
+    return $msg;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  send_msg_hash_to_target
+#   PARAMETERS:  msg_hash - hash - xml_hash created with function create_xml_hash
+#                PeerAddr string - socket address to send msg
+#                PeerPort string - socket port, if not included in socket address
+#      RETURNS:  nothing
+#  DESCRIPTION:  ????
+#===============================================================================
+sub send_msg_hash_to_target {
+    my ($msg_hash, $address, $encrypt_key) = @_ ;
+    my $msg = &create_xml_string($msg_hash);
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $error = &send_msg_to_target($msg, $address, $encrypt_key, $header);
+    
+    return $error;
+}
+
+
+sub send_msg_to_target {
+    my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
+    my $error = 0;
+
+    if( $msg_header ) { $msg_header = "'$msg_header'-"; }
+    else { $msg_header = ""; }
+
+    # Memorize own source address
+    $msg =~ /<source>(\S+)<\/source>/;
+    my $own_source_address = $1;
+
+    # encrypt xml msg
+    my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
+
+    # opensocket
+    my $socket = &open_socket($address);
+    if( !$socket ) {
+        daemon_log("WARNING: cannot send ".$msg_header."msg to $address , host not reachable", 3);
+        if ($REGISTERED == 1) {
+            $REGISTERED = 0;        # if server is not available, cause reregistering
+            daemon_log("INFO: cause reregistering at gosa-si-server", 5); 
+            $global_kernel->yield('register_at_gosa_si_server');
+
+        }
+        $error++;
+    }
+    
+    # send xml msg
+    if( $error == 0 ) {
+        print $socket $crypted_msg.";$own_source_address\n";
+        daemon_log("INFO: send ".$msg_header."msg to $address", 5);
+        daemon_log("DEBUG: message:\n$msg", 9);
+    }
+
+    # close socket in any case
+    if( $socket ) {
+        close $socket;
+    }
+
+    return $error;
+}
+
+
+sub write_to_file {
+    my ($string, $file) = @_;
+    my $error = 0;
+
+    if( not defined $file || not -f $file ) {
+        &main::daemon_log("ERROR: $prg: check '-f file' failed: $file", 1);
+        $error++;
+    }
+    if( not defined $string || 0 == length($string)) {
+        &main::daemon_log("ERROR: $prg: empty string to write to file '$file'", 1);
+        $error++;
+    }
+    
+    if( $error == 0 ) {
+
+        chomp($string);
+    
+        if (open(FILE, ">> $file")){
+          print FILE $string."\n";
+          close(FILE);
+        }
+    }
+
+    return;    
+}
+
+
+sub open_socket {
+    my ($PeerAddr, $PeerPort) = @_ ;
+    if(defined($PeerPort)){
+        $PeerAddr = $PeerAddr.":".$PeerPort;
+    }
+    my $socket;
+    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr,
+            Porto => "tcp",
+            Type => SOCK_STREAM,
+            Timeout => 5,
+            );
+    if(not defined $socket) {
+        return;
+    }
+    &daemon_log("DEBUG: open_socket: $PeerAddr", 7);
+    return $socket;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  register_at_server
+#   PARAMETERS:  
+#      RETURNS:  
+#  DESCRIPTION:  
+#===============================================================================
+sub register_at_gosa_si_server {
+  my ($kernel) = $_[KERNEL];
+  my $try_to_register = 0;
+  
+  	# if client is already registered, stop registration process	
+  	if ($REGISTERED) {
+		$kernel->delay('register_at_gosa_si_server');
+
+	# client is not registered, start registration process
+	} else {
+	  	# clear all other triggered events and wait till registration was successful
+    	$kernel->delay('trigger_new_key');
+
+    	# create new passwd and ciphering object for client-server communication
+    	$server_key = &create_passwd();
+
+    	my $events = join( ",", keys %{$event_hash} );
+    	while(1) {
+            $try_to_register++;
+
+ 			# after one complete round through all server, stop trying to register           
+            if( $try_to_register > @servers )  { last; }
+
+            # fetch first gosa-si-server from @servers
+            # append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
+            # a registration never occured
+            my $server = shift(@servers);
+            push( @servers, $server );
+
+            # Check if our ip is resolvable - if not: don't try to register
+			if(!(defined($server) && $server =~ m/^[0-9\.]*?:.*$/)) {
+				&main::daemon_log("ERROR: Server with address '".defined($server)?$server:""."' is invalid!", 1);
+				if (length(@servers) == 1) {
+					&main::daemon_log("ERROR: No valid servers found!", 1);
+					exit(1);
+				}
+			}
+
+      		# Check if our ip is resolvable - if not: don't try to register
+      		my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+      		my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
+            if(!defined($dnsname)) {
+                if( defined($client_force_hostname) && $client_force_hostname eq "true") {
+                    $dnsname = `hostname`;
+                } else {
+                    &write_to_file("goto-error-dns:$ip", $fai_logpath);
+                    &main::daemon_log("ERROR: ip is not resolvable, no registration possible. Write 'goto-error-dns:$ip' to $fai_logpath", 1);
+                    exit(1);
+                }
+            }
+
+      		# create registration msg
+			my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+			my $local_mac = &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+			my $register_hash = &create_xml_hash("here_i_am", $local_ip.":".$client_port, $server);
+			&add_content2xml_hash($register_hash, "new_passwd", $server_key);
+			&add_content2xml_hash($register_hash, "mac_address", $local_mac);
+			&add_content2xml_hash($register_hash, "events", $events);
+            &add_content2xml_hash($register_hash, "client_status", $client_status);
+            &add_content2xml_hash($register_hash, "client_revision", $client_revision);
+			&add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
+            &add_content2xml_hash($register_hash, "key_lifetime", $server_key_lifetime);
+
+			# Add $HOSTNAME from ENV if force-hostname is set
+			if( defined($client_force_hostname) && $client_force_hostname eq "true") {
+				if(defined($ENV{HOSTNAME}) && length($ENV{HOSTNAME}) >0 ) {
+					&add_content2xml_hash($register_hash, "force-hostname", $ENV{HOSTNAME});
+				} else {
+					&main::daemon_log("force-hostname was set to true, but no \$HOSTNAME was found in Environment!",0);
+				}
+			}
+
+      		# send xml hash to server with general server passwd
+			my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
+
+	  		# if delivery of registration msg succeed
+			if($res eq "0") {
+        		# reset try_to_register
+				$try_to_register = 0;
+
+        		# Set fixed client address and mac address
+				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+				$client_address= "$client_ip:$client_port";
+				$client_mac_address = $local_mac;
+				$client_dnsname = $dnsname;
+                last;
+
+	  		# delivery of registration msg failed	
+			} else {
+        		# wait 1 sec until trying to register again
+				sleep(1);
+				next;
+			}
+
+    } # end of while
+	# one circle through all servers finished and no registration succeed
+	if ( $try_to_register >= @servers )  {
+			&write_to_file("gosa-si-no-server-available", $fai_logpath);
+			$kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+	
+	# delivery of registraion msg succeed, waiting for server response
+	} else {
+			daemon_log("INFO: waiting for msg 'register_at_gosa_si_server'",5);
+			$kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+			# clear old settings and set it again
+			$kernel->delay('trigger_new_key');
+			$kernel->delay_set('trigger_new_key', $server_key_lifetime);
+	}
+
+  }
+  return;
+}
+    
+
+sub check_key_and_xml_validity {
+    my ($crypted_msg, $module_key) = @_;
+
+    my $msg;
+    my $msg_hash;
+    eval{
+        $msg = &decrypt_msg($crypted_msg, $module_key);
+        &main::daemon_log("decrypted_msg: \n$msg", 9);
+
+        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+
+        ##############
+        # check header
+        my $header_l = $msg_hash->{'header'};
+        if( 1 != @{$header_l} ) {
+            die 'no or more headers specified';
+        }
+        my $header = @{$header_l}[0];
+        if( 0 == length $header) {
+            die 'header has length 0';
+        }
+
+        ##############
+        # check source
+        my $source_l = $msg_hash->{'source'};
+        if( 1 != @{$source_l} ) {
+            die 'no or more than 1 sources specified';
+        }
+        my $source = @{$source_l}[0];
+        if( 0 == length $source) {
+            die 'source has length 0';
+        }
+        unless( $source =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ) {
+            die "source '$source' is neither a complete ip-address with port nor 'GOSA'";
+        }
+        
+        ##############
+        # check target  
+        my $target_l = $msg_hash->{'target'};
+        if( 1 != @{$target_l} ) {
+            die 'no or more than 1 targets specified ';
+        }
+        my $target = @{$target_l}[0];
+        if( 0 == length $target) {
+            die 'target has length 0 ';
+        }
+        unless( $target =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ){
+            die "source is neither a complete ip-address with port nor 'GOSA'";
+        }
+    };
+    if($@) {
+        &main::daemon_log("WARNING: do not understand the message or msg is not gosa-si envelope conform:", 5);
+        &main::daemon_log("$@", 8);
+        $msg = undef;
+        $msg_hash = undef;
+    }
+
+    return ($msg, $msg_hash);
+}
+
+
+sub check_outgoing_xml_validity {
+    my ($msg) = @_;
+
+    my $msg_hash;
+    eval{
+        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+
+        ##############
+        # check header
+        my $header_l = $msg_hash->{'header'};
+        if( 1 != @{$header_l} ) {
+            die 'no or more than one headers specified';
+        }
+        my $header = @{$header_l}[0];
+        if( 0 == length $header) {
+            die 'header has length 0';
+        }
+
+        ##############
+        # check source
+        my $source_l = $msg_hash->{'source'};
+        if( 1 != @{$source_l} ) {
+            die 'no or more than 1 sources specified';
+        }
+        my $source = @{$source_l}[0];
+        if( 0 == length $source) {
+            die 'source has length 0';
+        }
+        unless( $source =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ||
+                $source =~ /^GOSA$/i ) {
+            die "source '$source' is neither a complete ip-address with port";
+        }
+        
+        ##############
+        # check target  
+        my $target_l = $msg_hash->{'target'};
+        if( 1 != @{$target_l} ) {
+            die "no or more than one targets specified";
+        }
+        foreach my $target (@$target_l) {
+            if( 0 == length $target) {
+                die "target has length 0";
+            }
+            unless( $target =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ) {
+                die "target '$target' is not a complete ip-address with port or a valid target name";
+            }
+        }
+    };
+    if($@) {
+        daemon_log("WARNING: outgoing msg is not gosa-si envelope conform", 5);
+        daemon_log("$@ $msg", 8);
+        $msg_hash = undef;
+    }
+    return ($msg_hash);
+}
+
+
+sub trigger_new_key {
+    my ($kernel) = $_[KERNEL] ;   
+
+    my $msg = "<xml><header>new_key</header><source>$client_address</source><target>$client_address</target></xml>";
+    &send_msg_to_target($msg, $client_address, $server_key, 'new_key');
+
+    $kernel->delay_set('trigger_new_key', $server_key_lifetime);
+}
+
+
+sub trigger_logged_in_users_report {
+    my ($kernel) = $_[KERNEL] ;  
+
+    # just do if client is registered already
+    if( $REGISTERED ) {
+        my $result = qx(/usr/bin/users);
+		my @logged_in_user_list;
+		if( defined $result ) {
+			chomp($result);
+			@logged_in_user_list = split(/\s/, $result);
+		}
+		
+        system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si-client.socket"); 
+        $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
+    } else {
+        # try it in 10 sec again
+        $kernel->delay_set('trigger_logged_in_users_report', 10);
+    }
+}
+
+
+sub trigger_seen_messages {
+    my ($kernel) = $_[KERNEL] ;
+
+    # Select all files under /tmp with prefix 'goto_notify'
+    my $goto_dir = "/tmp";
+    opendir(DIR, $goto_dir);
+    my @goto_files = grep { /^goto_notify_/ && -f "$goto_dir/$_" } readdir(DIR);
+    closedir DIR;
+
+    # Check if file has 'seen' tag
+    foreach my $goto_file (@goto_files) {
+        open(FILE, "$goto_dir/$goto_file");
+        my @lines = <FILE>;
+        close FILE;
+
+        my $source;
+        my $target;
+        my $usr;
+        my $subject;
+        my $message;
+        my $seen = 0;
+        chomp(@lines);
+        foreach my $line (@lines) {
+            if ($line =~ /^source:([\S\s]*)$/) {
+                $source = $1
+            }
+            if ($line =~ /^target:([\S\s]*)$/) {
+                $target = $1;
+            }
+            if ($line =~ /^usr:([\S\s]*)$/) {
+                $usr = $1;
+            }
+            if ($line =~ /^subject:([\S\s]*)$/) {
+                $subject = $1;
+            }
+            if ($line =~ /^message:([\S\s]*)$/) {
+                $message = $1;
+            }
+            if ($line =~ /^seen$/) {
+                $seen++;	
+            }
+        }
+
+        # Send 'confirm_usr_msg' back to msg-hosting server
+        if ($seen) {
+            my %data = ('usr'=>$usr, 'subject'=>$subject, 'message'=>$message);
+            my $confirm_msg = &build_msg("confirm_usr_msg", $target, $source, \%data);
+            my $send_error = &send_msg_to_target($confirm_msg, $server_address, $server_key);
+
+            # Delete file
+            if (not $send_error) {
+                system("rm $goto_dir/$goto_file");
+            }
+        }
+    }
+
+    $kernel->delay_set('trigger_seen_messages', $trigger_seen_messages_delay);
+
+    return;
+}
+
+
+sub generic_file_error {
+    my ( $heap, $operation, $errno, $error_string, $wheel_id ) =
+      @_[ HEAP, ARG0, ARG1, ARG2, ARG3 ];
+
+    my $service = $heap->{services}->{$wheel_id};
+    daemon_log("ERROR: '$service' watcher $operation error $errno: $error_string", 1);
+    daemon_log("ERROR: shutting down '$service' file watcher", 1);
+
+    delete $heap->{services}->{$wheel_id};
+    delete $heap->{watchers}->{$wheel_id};
+    return;
+}
+
+
+sub fifo_got_record {
+    my $file_record = $_[ARG0];
+    my $header;
+    my $content = "";
+    daemon_log("DEBUG: fifo got record: $file_record", 7); 
+
+    $file_record =~ /^(\S+)[ ]?([\s\S]+)?$/;
+    if( defined $1 ) {
+        $header = $1;
+    } else {
+        return;
+    }
+
+    if( defined $2 ) {
+        $content = $2;
+    }
+
+    my $clmsg_hash = &create_xml_hash("CLMSG_$header", $client_address, $server_address, $content);
+    &add_content2xml_hash($clmsg_hash, "macaddress", $client_mac_address);
+    my $utc_ts = &main::get_utc_time(); 
+    &add_content2xml_hash($clmsg_hash, "timestamp", $utc_ts);
+    my $clmsg = &create_xml_string($clmsg_hash);
+    &send_msg_to_target($clmsg, $server_address, $server_key, "CLMSG_$header");
+
+    # if installation finished, save all log files 
+    if ($file_record eq "TASKBEGIN finish") {
+        &save_fai_log($fai_log_dir); 
+    }
+
+    return;
+}
+
+
+sub save_fai_log {
+    my ($fai_log_dir) = @_ ;
+    my $FAI_DIR;
+
+	# Directory for log files after a softupdate
+    my $log_dir = File::Spec->catdir($fai_log_dir, "localhost/last");
+
+    if (not -d $log_dir) { 
+		# Directory for log files after a new installation
+		$log_dir = "/tmp/fai";
+		if (not -d $log_dir) {
+				daemon_log("ERROR: cannot open directory $log_dir", 1);
+				return; 
+		}
+    }
+
+    opendir($FAI_DIR, "$log_dir");
+    my @log_files = readdir($FAI_DIR);
+    closedir($FAI_DIR);   
+
+    my @log_list;
+    foreach my $log_file (@log_files) {
+        if( $log_file eq "." || $log_file eq ".." ) { next; }
+
+        my $log = "log_file:$log_file:";
+        $log_file = File::Spec->catfile( $log_dir, $log_file );
+
+        if (not -f $log_file) {
+            daemon_log("ERROR: cannot read $log_file", 1);
+            next;
+        }
+
+        open(FILE, "<$log_file");
+        my @lines = <FILE> ;
+        close (FILE);
+        my $log_string = join("", @lines); 
+        $log .= &encode_base64($log_string);
+        push(@log_list, $log); 
+    }
+
+    my $all_log_string = join("\n", @log_list); 
+    my $msg_hash = &create_xml_hash("CLMSG_save_fai_log", $client_address, $server_address, $all_log_string);
+    &add_content2xml_hash($msg_hash, "macaddress", $client_mac_address);
+    my $msg = &create_xml_string($msg_hash);
+    &send_msg_to_target($msg, $server_address, $server_key, "CLMSG_save_fai_log");
+
+}
+
+
+sub sig_handler {
+	my ($kernel, $signal) = @_[KERNEL, ARG0] ;
+	daemon_log("0 INFO got signal '$signal'", 1); 
+	$kernel->sig_handled();
+	return;
+}
+
+
+sub _start {
+    my ($kernel, $heap) = @_[KERNEL, HEAP];
+    $kernel->alias_set('client_session');
+    $global_kernel = $kernel;       # this is used to throw events at each point of the skript
+ 
+    $kernel->sig(USR1 => "sig_handler");
+
+    # force a registration at a gosa-si-server
+    $kernel->yield('register_at_gosa_si_server');
+    
+    # install all file watcher defined
+    while( my($name, $file) = each %files_to_watch ) {
+        my $watcher = POE::Wheel::FollowTail->new(
+            Filename   => $file,
+            InputEvent => $name."_record",
+        #    ResetEvent => "file_reset",
+            ErrorEvent => "file_error",
+            );
+#	$heap->{tail} = POE::Wheel::Run->new(
+#		Program     => [ "/usr/bin/tail", "-f", $file ],
+#		StdoutEvent => $file_name."_record",
+#	);
+        $heap->{services}->{ $watcher->ID } = $name;
+        $heap->{watchers}->{ $watcher->ID } = $watcher;
+    }
+    $kernel->yield('trigger_logged_in_users_report'); 
+    $kernel->yield('trigger_seen_messages');
+}
+
+
+sub _default {
+    daemon_log("ERROR: can not handle incoming msg with header '$_[ARG0]'", 1);
+    return;
+}
+
+
+sub server_input {
+    my ($kernel, $heap, $input, $wheel) = @_[KERNEL, HEAP, ARG0, ARG1];
+    my $remote_ip = $heap->{'remote_ip'},
+    my $error = 0;
+    my $answer;
+    
+
+    daemon_log("INFO: Incoming msg from '$remote_ip'", 5);
+    daemon_log("DEBUG: Incoming msg:\n$input\n", 9);
+
+    my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
+    if( (!$msg) || (!$msg_hash) ) {
+        daemon_log("WARNING: Deciphering of incoming msg failed", 3);
+        if($server_address =~ /$remote_ip/) {
+            # got a msg from gosa-si-server which can not be decrypted, may the secrete not up-to-date
+            # cause a reregistering with a new secrete handshake
+            daemon_log("WARNING: Message from gosa-si-server could not be understood, cause reregistering at server", 3);
+
+			# if client is alread in a registration process, that means not registered, do nothing
+			# if not, cause re-registration
+			if (not $REGISTERED) {
+				&daemon_log("WARNING: gosa-si-client is already in a registration process so ignore this message", 3);
+			} else {
+				$REGISTERED = 0;
+				$kernel->post('client_session', 'register_at_gosa_si_server');
+			}
+        }
+        $error++;
+    }
+
+
+    ######################
+    # process incoming msg
+    if( $error == 0 ) {
+        my $header = @{$msg_hash->{header}}[0];
+        my $source = @{$msg_hash->{source}}[0];
+
+        if( exists $event_hash->{$header} ) {
+
+            # a event exists with the header as name
+            daemon_log("INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+            no strict 'refs';
+            $answer = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
+        }
+        else {
+            daemon_log("WARNING: no event '$header' found in event modules under $event_dir", 3);
+        }
+    }
+
+    ########
+    # answer
+    if( $answer ) {
+
+        #check gosa-si envelope validity
+        my $answer_hash = &check_outgoing_xml_validity($answer);
+
+        if( $answer_hash ) {
+            # answer is valid            
+
+            # preprocessing
+            if( $answer =~ "<header>registered</header>") {
+                # set registered flag to true to stop sending further registered msgs
+                $REGISTERED = 1;
+            } 
+            else {
+                $answer =~ /<header>(\S+)<\/header>/;
+                &send_msg_to_target($answer, $server_address, $server_key, $1);
+            }
+
+            # postprocessing
+            if( $answer =~ "<header>new_key</header>") {
+                # set new key to global variable
+                $answer =~ /<new_key>(\S*?)<\/new_key>/;
+                my $new_key = $1;
+                $server_key = $new_key;
+            }
+        }
+
+    }
+
+    return;
+}
+
+
+#==== MAIN = main ==============================================================
+#  parse commandline options
+Getopt::Long::Configure( "bundling" );
+GetOptions("h|help" => \&usage,
+           "c|config=s" => \$cfg_file,
+           "f|foreground" => \$foreground,
+           "v|verbose+" => \$verbose,
+           );
+
+#  read and set config parameters
+&check_cmdline_param ;
+&read_configfile($cfg_file, %cfg_defaults);
+&check_pid;
+
+
+# forward error messages to logfile
+if ( ! $foreground ) {
+  open( STDIN,  '+>/dev/null' );
+  open( STDOUT, '+>&STDIN'    );
+  open( STDERR, '+>&STDIN'    );
+}
+
+# Just fork, if we are not in foreground mode
+if( ! $foreground ) { 
+    chdir '/'                 or die "Can't chdir to /: $!";
+    $pid = fork;
+    setsid                    or die "Can't start a new session: $!";
+    umask 0;
+} else { 
+    $pid = $$; 
+}
+
+# Do something useful - put our PID into the pid_file
+if( 0 != $pid ) {
+    open( LOCK_FILE, ">$pid_file" );
+    print LOCK_FILE "$pid\n";
+    close( LOCK_FILE );
+    if( !$foreground ) { 
+        exit( 0 ) 
+    };
+}
+
+# parse head url and revision from svn
+my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
+$client_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
+$client_headURL = defined $1 ? $1 : 'unknown' ;
+$client_revision = defined $2 ? $2 : 'unknown' ;
+if ($client_headURL =~ /\/tag\// || 
+        $client_headURL =~ /\/branches\// ) {
+    $client_status = "stable"; 
+} else {
+    $client_status = "developmental" ;
+}
+
+# Prepare log file
+my $root_uid = getpwnam('root');
+my $adm_gid = getgrnam('adm');
+chmod(0640, $log_file);
+chown($root_uid, $adm_gid, $log_file);
+
+
+daemon_log(" ", 1);
+daemon_log("$prg started!", 1);
+daemon_log("INFO: status: $client_status", 1);
+daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 1); 
+
+# delete old DBsqlite lock files
+system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
+
+# detect ip and mac address and complete host address
+$client_address = $client_ip.":".$client_port;
+my $network_interface= &get_interface_for_ip($client_ip);
+$client_mac_address= &get_mac($network_interface);
+daemon_log("INFO: ip address detected: $client_ip", 1);
+daemon_log("INFO: gosa-si-client mac address detected: $client_mac_address", 1);
+
+
+# import events
+my ($error, $result, $tmp_hash) = &import_events($event_dir);
+while (my ($module, $mod_event_hash) = each %$tmp_hash) {
+    while (my ($event_name, $nothing) = each %$mod_event_hash) {
+        $event_hash->{$event_name} = $module;
+    }
+}
+
+foreach my $log_line (@$result) {
+    if ($log_line =~ / succeed: /) {
+        &main::daemon_log("0 DEBUG: $log_line", 7);
+    } else {
+        &main::daemon_log("0 ERROR: $log_line", 1);
+    }
+}
+
+
+# compute hardware checksum
+$gotoHardwareChecksum= &generate_hw_digest();
+daemon_log("INFO: gotoHardwareChecksum detected: $gotoHardwareChecksum", 1);
+
+
+# create socket for incoming xml messages
+POE::Component::Server::TCP->new(
+    Alias => 'gosa-si-client',
+	Port => $client_port,
+	ClientInput => \&server_input,
+);
+daemon_log("INFO: start socket for incoming xml messages at port '$client_port' ", 1);
+
+
+# prepare variables
+if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
+if (defined $server_ip && defined $server_port) {
+    $server_address = $server_ip.":".$server_port;
+}
+$xml = new XML::Simple();
+$default_server_key = $server_key;
+
+
+# add gosa-si-server address from config file at first position of server list
+my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
+my $server_check = (defined($server_check_cfg))?$server_check_cfg->val( "server", "ip"):undef;
+if( defined $server_check ) {
+	unshift(@servers, $server_address);
+	my $servers_string = join(", ", @servers);
+	daemon_log("INFO: found servers in configuration file: $servers_string", 1);
+} else {
+	my @tmp_servers;
+	if ( !$server_domain) {
+		# Try our DNS Searchlist
+		my @domain_list = &get_dns_domains();
+		my $tmp_domains;
+		my $error_string;
+		for my $domain (@domain_list) {
+			chomp($domain);
+			($tmp_domains, $error_string) = &get_server_addresses($domain);
+			if(@$tmp_domains) {
+				for my $tmp_server(@$tmp_domains) {
+					push @tmp_servers, $tmp_server;
+				}
+			}
+		}
+		if (0 == @tmp_servers) {
+			my $log_string = "no gosa-si-server found!";
+			$log_string .= "\n\tdetermined domains out of /etc/resolv.conf: ".join(", ", @domain_list) if (@domain_list);
+			$log_string .= "\n\tdetermined server addresses in domains: ".join(", ",@$tmp_domains) if (defined($tmp_domains));
+			daemon_log("ERROR: $log_string", 1) if (defined($log_string));
+			daemon_log("ERROR: $error_string", 1) if (defined($error_string));
+			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
+			kill 2, $$;
+		}
+	} else {
+		@tmp_servers = &get_server_addresses($server_domain);
+		if( 0 == @tmp_servers ) {
+			daemon_log("ERROR: no gosa-si-server found in DNS for domain '$server_domain'",1);
+			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
+			kill 2, $$;
+		} 
+	}
+
+	foreach my $server (@tmp_servers) { 
+		unshift(@servers, $server); 
+	}
+	my $servers_string = join(", ", @servers);
+	daemon_log("INFO: found servers in DNS: $servers_string", 1);
+}
+
+
+# open fifo for non-gosa-si-client-msgs to gosa-si-server
+POSIX::mkfifo("$gosa_si_client_fifo", "0600");
+
+
+POE::Session->create(
+	inline_states => {
+		_start => \&_start, 
+        _default => \&_default,
+        sig_handler => \&sig_handler,
+        register_at_gosa_si_server => \&register_at_gosa_si_server,
+
+        # trigger periodical tasks
+        trigger_new_key => \&trigger_new_key,
+        trigger_logged_in_users_report => \&trigger_logged_in_users_report,
+        trigger_seen_messages => \&trigger_seen_messages,
+        
+        # handle records from each defined file differently
+        fifo_record => \&fifo_got_record,
+
+        # handle file resets and errors the same way for each file
+        file_reset => \&generic_file_reset,
+        file_error => \&generic_file_error,
+	}
+);
+
+POE::Kernel->run();
+exit;
+

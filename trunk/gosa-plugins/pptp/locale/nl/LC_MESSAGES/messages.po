@@ -1,0 +1,57 @@
+# translation of messages.po to Dutch
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004.
+#
+# Translator:
+# Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-19 08:36+0100\n"
+"PO-Revision-Date: 2006-06-02 16:58+0100\n"
+"Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
+"Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:26
+#: personal/connectivity/pptp/class_pptpAccount.inc:177
+msgid "PPTP"
+msgstr "PPTP"
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:27
+msgid "This does something"
+msgstr "Dit doet iets"
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:102
+#: personal/connectivity/pptp/class_pptpAccount.inc:158
+#, fuzzy
+msgid "LDAP error"
+msgstr "LDAP fout:"
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/pptp.tpl:3
+msgid "PPTP account"
+msgstr "PPTP account"
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Verbindingen"
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:182
+msgid "My account"
+msgstr "Mijn account"
+
+#, fuzzy
+#~ msgid "Removing of user/PPTP account with dn '%s' failed."
+#~ msgstr "Het verwijderen van het PPTP account is mislukt"
+
+#, fuzzy
+#~ msgid "Saving of user/PPTP account with dn '%s' failed."
+#~ msgstr "Het opslaan van het PPTP account is mislukt"
