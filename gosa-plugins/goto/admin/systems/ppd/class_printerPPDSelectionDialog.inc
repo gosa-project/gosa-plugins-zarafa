@@ -106,7 +106,8 @@ class printerPPDSelectionDialog extends plugin
     $list = array();
     foreach($this->list as $cat => $ppds){
       foreach($ppds as $ppd){
-        if(preg_match("/^".str_replace("*",".*",$regex)."/i",$ppd['ppd'])){
+       $name = $ppd['ppd']['name'];
+        if(preg_match("/^".str_replace("*",".*",$regex)."/i",$name)){
           if(is_readable($ppd['link'])){
             $list[$ppd['link']] = $ppd;
           }
@@ -142,6 +143,7 @@ class printerPPDSelectionDialog extends plugin
     if(empty($this->Vendor)){
       foreach($this-> header as $key => $entry){
         $div ->AddEntry (array(
+                 
               array("string"=>sprintf($linkopen,base64_encode($key),$key),"attach"=>"style='border-right:0px;'")
               ));
       }
@@ -150,7 +152,8 @@ class printerPPDSelectionDialog extends plugin
             array("string"=>sprintf($linkopen,"",".. ["._("back")."]"),"attach"=>"style='border-right:0px;'")
             ));
       foreach($list as $key => $ppd){
-        if(preg_match("/^".$this->Vendor."/",$ppd['ppd'])){
+       $name = $ppd['ppd']['name'];
+        if(preg_match("/^".$this->Vendor."/", $name)){
 
           if(is_writeable($ppd['link'])){
             $del_str = sprintf($dellink,base64_encode($key));
@@ -159,7 +162,7 @@ class printerPPDSelectionDialog extends plugin
           }
 
           $div ->AddEntry (array(
-                                  array("string"=>sprintf($uselink,base64_encode($key),$ppd['ppd'])),
+                                  array("string"=>sprintf($uselink,base64_encode($key),$name)),
                                   array("string"=>$del_str,"attach"=>"style='border-right:0px;'")
 
                 ));
