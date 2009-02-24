@@ -1019,9 +1019,9 @@ class mailAccount extends plugin
             }
           }
         }else{
-         echo "Check sieve management here";
           @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, 
               "User uses an own sieve script, skipping sieve update.".$str."</b>","");
+          $this->sieve_management->save();
         }
       }
     }
