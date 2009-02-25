@@ -622,7 +622,7 @@ class termservice extends plugin
           "ati", "atimisc", "chips", "cirrus", "cyrix", "fbdev", "fglrx",
           "i128", "i740", "i810", "intel", "imstt", "mga", "neomagic", "newport", "nsc",  "nv", "nvidia",
           "r128", "radeon", "rendition", "s3", "s3virge", "savage", "siliconmotion",
-          "sis", "tdfx", "tga", "trident", "tseng", "vesa", "vga", "vmware") as $driver){
+          "sis", "tdfx", "tga", "trident", "tseng", "vboxvideo", "vesa", "vga", "vmware") as $driver){
         $drivers[] = $driver;
       }
     }
