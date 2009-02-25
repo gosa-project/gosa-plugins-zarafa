@@ -785,7 +785,7 @@ class printgeneric extends plugin
     }
 
     /* If no ppd is selected, remove this attribute */
-    if(!empty($this->gotoPrinterPPD) && $this->initially_was_account) {
+    if(!empty($this->gotoPrinterPPD)) {
       $this->gotoPrinterPPD = $method.str_replace("//","/",$server_name."/ppd/".$this->gotoPrinterPPD);
     }else{
       $this->gotoPrinterPPD = array();
