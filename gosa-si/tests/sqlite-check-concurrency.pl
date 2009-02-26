@@ -15,13 +15,14 @@ my %threads;
 my $count= 10;
 my $db_name= "./test.sqlite";
 my $lock = $db_name.".si.lock";
-if(stat($lock)) {
-	unlink($lock);
-}
 
-if(stat($db_name)) {
-	unlink($db_name)
-}
+#if(stat($lock)) {
+#	unlink($lock);
+#}
+#
+#if(stat($db_name)) {
+#	unlink($db_name)
+#}
 
 for(my $i=0;$i<$count;$i++) {
 	$threads{$i}= threads->create(\&check_database);
@@ -68,7 +69,7 @@ sub unlock {
 sub run_test {
 	my $self= shift;
 	my $table_name= shift;
-	my $sql= "CREATE TABLE IF NOT EXISTS $table_name (id INTEGER, value VARCHAR(255))";
+	my $sql= "CREATE TABLE IF NOT EXISTS $table_name (id INTEGER PRIMARY KEY, status VARCHAR(255) DEFAULT 'none')";
 	$self->lock();
 	eval {
 		$self->{dbh}->do($sql);
@@ -79,7 +80,7 @@ sub run_test {
 	$self->unlock();
 
 	for(my $i=0;$i<100;$i++) {
-		$sql= "INSERT INTO $table_name VALUES ($i, 'test $i')";
+		$sql= "INSERT INTO $table_name (id, status) VALUES (null, 'test $i')";
 		$self->lock();
 		eval {
 			$self->{dbh}->do($sql);
