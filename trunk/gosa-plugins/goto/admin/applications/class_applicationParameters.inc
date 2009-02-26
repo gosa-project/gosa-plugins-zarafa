@@ -7,9 +7,6 @@ class applicationParameters extends plugin
 
   /* attribute list for save action */
   var $attributes= array("gosaApplicationParameter");
-  var $objectclasses= array();
-
-  var $CopyPasteVars = array("option_name","option_value");
 
   function applicationParameters (&$config, $dn= NULL, $parent= NULL)
   {
@@ -226,6 +223,18 @@ class applicationParameters extends plugin
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events('modify');
+  }
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    $source_o = new applicationParameters($this->config,$source['dn']);
+    $this->option_name = $source_o->option_name;
+    $this->option_value = $source_o->option_value;
+
+    /* Set is_account state so that the save function is called properly */
+    $this->is_account = TRUE;
   }
 
   /* Return plugin informations for acl handling
