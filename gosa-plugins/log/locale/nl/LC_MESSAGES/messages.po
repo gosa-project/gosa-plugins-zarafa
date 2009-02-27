@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-19 08:33+0100\n"
+"POT-Creation-Date: 2009-02-27 10:06+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -141,13 +141,13 @@ msgid "Warning"
 msgstr "Waarschuwing"
 
 #: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_gosa_logview.inc:124
 #, fuzzy
 msgid "Configuration error"
 msgstr "Configuratie bestand"
 
 #: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_gosa_logview.inc:124
 #, fuzzy, php-format
 msgid "Missing %s PHP extension!"
 msgstr "Verwijder printer mogelijkheden"
@@ -156,16 +156,16 @@ msgstr "Verwijder printer mogelijkheden"
 #: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
 #: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
 #: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
-#: addons/logview/class_gosa_logview.inc:149
-#: addons/logview/class_gosa_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:235
-#: addons/logview/class_gosa_logview.inc:286
+#: addons/logview/class_gosa_logview.inc:151
+#: addons/logview/class_gosa_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:237
+#: addons/logview/class_gosa_logview.inc:288
 msgid "Error"
 msgstr "Fout"
 
 #: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:167
-#: addons/logview/class_gosa_logview.inc:182
+#: addons/logview/class_gosa_logview.inc:169
+#: addons/logview/class_gosa_logview.inc:184
 msgid "All"
 msgstr "Alle"
 
@@ -223,12 +223,12 @@ msgstr "Omlaag verplaatsen"
 msgid "System log view"
 msgstr "Systeem log weergave"
 
-#: addons/logview/class_gosa_logview.inc:201
+#: addons/logview/class_gosa_logview.inc:203
 #, fuzzy
 msgid "You have insufficient permissions to view syslog entries."
 msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
 
-#: addons/logview/class_gosa_logview.inc:236
+#: addons/logview/class_gosa_logview.inc:238
 #, php-format
 msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""

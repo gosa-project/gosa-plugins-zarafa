@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-19 08:33+0100\n"
+"POT-Creation-Date: 2009-02-27 10:06+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -136,13 +136,13 @@ msgid "Warning"
 msgstr "Ostrzeżenie"
 
 #: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_gosa_logview.inc:124
 #, fuzzy
 msgid "Configuration error"
 msgstr "Plik konfiguracyjny"
 
 #: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_gosa_logview.inc:124
 #, fuzzy, php-format
 msgid "Missing %s PHP extension!"
 msgstr "Rozszerzenie inwentarza"
@@ -151,16 +151,16 @@ msgstr "Rozszerzenie inwentarza"
 #: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
 #: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
 #: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
-#: addons/logview/class_gosa_logview.inc:149
-#: addons/logview/class_gosa_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:235
-#: addons/logview/class_gosa_logview.inc:286
+#: addons/logview/class_gosa_logview.inc:151
+#: addons/logview/class_gosa_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:237
+#: addons/logview/class_gosa_logview.inc:288
 msgid "Error"
 msgstr "Błąd"
 
 #: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:167
-#: addons/logview/class_gosa_logview.inc:182
+#: addons/logview/class_gosa_logview.inc:169
+#: addons/logview/class_gosa_logview.inc:184
 msgid "All"
 msgstr "Wszystkie"
 
@@ -218,12 +218,12 @@ msgstr "Przesuń w dół"
 msgid "System log view"
 msgstr "Podgląd logu systemowego"
 
-#: addons/logview/class_gosa_logview.inc:201
+#: addons/logview/class_gosa_logview.inc:203
 #, fuzzy
 msgid "You have insufficient permissions to view syslog entries."
 msgstr "Brak uprawnień do usunięcia tej bloklisty."
 
-#: addons/logview/class_gosa_logview.inc:236
+#: addons/logview/class_gosa_logview.inc:238
 #, php-format
 msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""

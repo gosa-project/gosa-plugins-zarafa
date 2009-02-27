@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-19 08:30+0100\n"
+"POT-Creation-Date: 2009-02-27 10:06+0100\n"
 "PO-Revision-Date: 2008-07-28 08:22+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -58,8 +58,8 @@ msgstr "Optionen"
 #: admin/ogroups/gofon/class_phonequeue.inc:305
 #: admin/ogroups/gofon/class_phonequeue.inc:929
 #: gofon/phoneaccount/generic.tpl:58
-#: gofon/phoneaccount/class_phoneAccount.inc:1273
-#: gofon/phoneaccount/class_phoneAccount.inc:1612
+#: gofon/phoneaccount/class_phoneAccount.inc:1277
+#: gofon/phoneaccount/class_phoneAccount.inc:1616
 #: gofon/conference/generic.tpl:68
 #: gofon/conference/class_phoneConferenceGeneric.inc:782
 msgid "Home server"
@@ -191,13 +191,13 @@ msgid "Ring instead of playing background music"
 msgstr "Klingelton statt Hintergrund-Musik"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/phoneaccount/class_phoneAccount.inc:134
+#: gofon/phoneaccount/class_phoneAccount.inc:135
 #: gofon/conference/class_phoneConferenceGeneric.inc:103
 msgid "Obsolete entry"
 msgstr "Veralteter Eintrag"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/phoneaccount/class_phoneAccount.inc:134
+#: gofon/phoneaccount/class_phoneAccount.inc:135
 #: gofon/conference/class_phoneConferenceGeneric.inc:103
 #, php-format
 msgid ""
@@ -270,8 +270,8 @@ msgstr "Asterisk"
 #: admin/ogroups/gofon/class_phonequeue.inc:378
 #: admin/ogroups/gofon/class_phonequeue.inc:732
 #: gofon/macro/class_gofonMacro.inc:392 gofon/macro/class_gofonMacro.inc:471
-#: gofon/phoneaccount/class_phoneAccount.inc:363
-#: gofon/phoneaccount/class_phoneAccount.inc:972
+#: gofon/phoneaccount/class_phoneAccount.inc:364
+#: gofon/phoneaccount/class_phoneAccount.inc:973
 #: gofon/conference/class_phoneConferenceGeneric.inc:430
 #: gofon/fonreports/class_fonreport.inc:166
 #: gofon/fonreports/class_fonreport.inc:176
@@ -303,12 +303,13 @@ msgstr "Telefonnummer"
 #: admin/systems/gofon/class_phoneGeneric.inc:272
 #: gofon/macro/class_gofonMacro.inc:458 gofon/macro/class_gofonMacro.inc:467
 #: gofon/macro/class_gofonMacro.inc:505
-#: gofon/phoneaccount/class_phoneAccount.inc:958
-#: gofon/phoneaccount/class_phoneAccount.inc:1077
-#: gofon/phoneaccount/class_phoneAccount.inc:1350
-#: gofon/phoneaccount/class_phoneAccount.inc:1422
-#: gofon/phoneaccount/class_phoneAccount.inc:1432
-#: gofon/phoneaccount/class_phoneAccount.inc:1466
+#: gofon/phoneaccount/class_phoneAccount.inc:959
+#: gofon/phoneaccount/class_phoneAccount.inc:1075
+#: gofon/phoneaccount/class_phoneAccount.inc:1081
+#: gofon/phoneaccount/class_phoneAccount.inc:1354
+#: gofon/phoneaccount/class_phoneAccount.inc:1426
+#: gofon/phoneaccount/class_phoneAccount.inc:1436
+#: gofon/phoneaccount/class_phoneAccount.inc:1470
 #: gofon/conference/class_phoneConferenceGeneric.inc:260
 #: gofon/conference/class_phoneConferenceGeneric.inc:264
 #: gofon/fonreports/class_fonreport.inc:176
@@ -327,8 +328,8 @@ msgstr "Fehler"
 #: gofon/macro/class_gofonMacroParameters.inc:401
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
-#: gofon/phoneaccount/class_phoneAccount.inc:1377
-#: gofon/phoneaccount/class_phoneAccount.inc:1513
+#: gofon/phoneaccount/class_phoneAccount.inc:1381
+#: gofon/phoneaccount/class_phoneAccount.inc:1517
 #: gofon/conference/class_phoneConferenceGeneric.inc:718
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
@@ -340,12 +341,12 @@ msgstr "Telefonnummer"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:918
 #: gofon/phoneaccount/class_phoneAccount.inc:6
-#: gofon/phoneaccount/class_phoneAccount.inc:911
-#: gofon/phoneaccount/class_phoneAccount.inc:924
-#: gofon/phoneaccount/class_phoneAccount.inc:936
-#: gofon/phoneaccount/class_phoneAccount.inc:940
-#: gofon/phoneaccount/class_phoneAccount.inc:943
-#: gofon/phoneaccount/class_phoneAccount.inc:1597
+#: gofon/phoneaccount/class_phoneAccount.inc:912
+#: gofon/phoneaccount/class_phoneAccount.inc:925
+#: gofon/phoneaccount/class_phoneAccount.inc:937
+#: gofon/phoneaccount/class_phoneAccount.inc:941
+#: gofon/phoneaccount/class_phoneAccount.inc:944
+#: gofon/phoneaccount/class_phoneAccount.inc:1601
 msgid "Phone"
 msgstr "Telefon"
 
@@ -655,7 +656,7 @@ msgid "Phone generic"
 msgstr "Telefon (Allgemein)"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:513
-#: gofon/phoneaccount/class_phoneAccount.inc:1611
+#: gofon/phoneaccount/class_phoneAccount.inc:1615
 msgid "Phone hardware"
 msgstr "Telefon-Hardware"
 
@@ -713,7 +714,7 @@ msgid "List of macros"
 msgstr "Liste der Makros"
 
 #: gofon/macro/headpage.tpl:20 gofon/macro/class_gofonMacroParameters.inc:374
-#: gofon/phoneaccount/class_phoneAccount.inc:1504
+#: gofon/phoneaccount/class_phoneAccount.inc:1508
 #: gofon/conference/headpage.tpl:20
 msgid "Information"
 msgstr "Information"
@@ -827,10 +828,10 @@ msgid "Macro is empty!"
 msgstr "Das Makro ist leer!"
 
 #: gofon/macro/class_gofonMacro.inc:471
-#: gofon/phoneaccount/class_phoneAccount.inc:363
-#: gofon/phoneaccount/class_phoneAccount.inc:371
-#: gofon/phoneaccount/class_phoneAccount.inc:972
-#: gofon/phoneaccount/class_phoneAccount.inc:1471
+#: gofon/phoneaccount/class_phoneAccount.inc:364
+#: gofon/phoneaccount/class_phoneAccount.inc:372
+#: gofon/phoneaccount/class_phoneAccount.inc:973
+#: gofon/phoneaccount/class_phoneAccount.inc:1475
 #: gofon/fonreports/class_fonreport.inc:166
 #: gofon/fonreports/class_fonreport.inc:169
 msgid "Configuration error"
@@ -1034,13 +1035,13 @@ msgid "Voicemail context"
 msgstr "Voicemail-Kontext"
 
 #: gofon/phoneaccount/generic.tpl:93 gofon/phoneaccount/paste_generic.tpl:32
-#: gofon/phoneaccount/class_phoneAccount.inc:1277
-#: gofon/phoneaccount/class_phoneAccount.inc:1280
+#: gofon/phoneaccount/class_phoneAccount.inc:1281
+#: gofon/phoneaccount/class_phoneAccount.inc:1284
 msgid "Voicemail PIN"
 msgstr "Voicemail-PIN"
 
 #: gofon/phoneaccount/generic.tpl:103 gofon/phoneaccount/paste_generic.tpl:40
-#: gofon/phoneaccount/class_phoneAccount.inc:1285
+#: gofon/phoneaccount/class_phoneAccount.inc:1289
 msgid "Phone PIN"
 msgstr "Telefon-PIN"
 
@@ -1058,52 +1059,52 @@ msgstr ""
 "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
 "Dialog zu ändern"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:172
+#: gofon/phoneaccount/class_phoneAccount.inc:173
 msgid "automatic"
 msgstr "automatisch"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:208
+#: gofon/phoneaccount/class_phoneAccount.inc:209
 msgid "no macro"
 msgstr "kein Makro"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:236
+#: gofon/phoneaccount/class_phoneAccount.inc:237
 msgid "undefined"
 msgstr "nicht definiert"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:489
-#: gofon/phoneaccount/class_phoneAccount.inc:496
-#: gofon/phoneaccount/class_phoneAccount.inc:514
-#: gofon/phoneaccount/class_phoneAccount.inc:521
+#: gofon/phoneaccount/class_phoneAccount.inc:490
+#: gofon/phoneaccount/class_phoneAccount.inc:497
+#: gofon/phoneaccount/class_phoneAccount.inc:515
+#: gofon/phoneaccount/class_phoneAccount.inc:522
 msgid "Abort saving entries to keep the database consistent."
 msgstr ""
 "Das Speichern der Einträge abbrechen, um die Datenbank konsistent zu halten."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:935
+#: gofon/phoneaccount/class_phoneAccount.inc:936
 msgid "Remove phone account"
 msgstr "Telefon-Konto entfernen"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:939
-#: gofon/phoneaccount/class_phoneAccount.inc:942
+#: gofon/phoneaccount/class_phoneAccount.inc:940
+#: gofon/phoneaccount/class_phoneAccount.inc:943
 msgid "Create phone account"
 msgstr "Telefon-Konto erstellen"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:940
+#: gofon/phoneaccount/class_phoneAccount.inc:941
 msgid "User uid"
 msgstr "Benutzer uid"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:958
+#: gofon/phoneaccount/class_phoneAccount.inc:959
 msgid "Selected macro is not available anymore!"
 msgstr "Das gewählte Makro ist nirgendwo verfügbar!"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:982
+#: gofon/phoneaccount/class_phoneAccount.inc:983
 msgid "Parameter"
 msgstr "Parameter"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1126
+#: gofon/phoneaccount/class_phoneAccount.inc:1130
 msgid "Choose your private phone"
 msgstr "Wählen Sie Ihr privates Telefon"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1269
+#: gofon/phoneaccount/class_phoneAccount.inc:1273
 msgid ""
 "There must be at least one server with an asterisk database to create a "
 "phone account."
@@ -1111,27 +1112,27 @@ msgstr ""
 "Es muss mindestens ein Server mit einer Asterisk-Datenbank bestehen, um ein "
 "Telefon-Konto zu erstellen."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1277
+#: gofon/phoneaccount/class_phoneAccount.inc:1281
 msgid "Between 1-4 charactes"
 msgstr "1-4 Zeichen"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1303
+#: gofon/phoneaccount/class_phoneAccount.inc:1307
 #, php-format
 msgid "macro parameter %s"
 msgstr "Makro-Parameter %s"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1504
+#: gofon/phoneaccount/class_phoneAccount.inc:1508
 #, php-format
 msgid "User '%s' has been removed from phone queue '%s'."
 msgstr "Benutzer '%s' aus Warteschlange '%s' entfernt."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1541
-#: gofon/phoneaccount/class_phoneAccount.inc:1543
+#: gofon/phoneaccount/class_phoneAccount.inc:1545
+#: gofon/phoneaccount/class_phoneAccount.inc:1547
 #, php-format
 msgid "The specified telephonenumber '%s' is already assigned to '%s'."
 msgstr "Die angegebene Telefonnummer '%s' wird bereits von '%s' verwendet."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1589
+#: gofon/phoneaccount/class_phoneAccount.inc:1593
 #, php-format
 msgid ""
 "The previously selected asterisk home server (%s) is no longer available. "
@@ -1140,60 +1141,60 @@ msgstr ""
 "Der zuvor ausgewählte Asterisk Home-Server ('%s') ist nicht mehr verfügbar."
 "Entfernen wurde abgebrochen."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1598
+#: gofon/phoneaccount/class_phoneAccount.inc:1602
 msgid "Phone account settings"
 msgstr "Telefon-Konto-Einstellungen"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1602
+#: gofon/phoneaccount/class_phoneAccount.inc:1606
 msgid "My account"
 msgstr "Mein Konto"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1609
+#: gofon/phoneaccount/class_phoneAccount.inc:1613
 #: gofon/conference/class_phoneConferenceGeneric.inc:793
 msgid "Telephone number"
 msgstr "Telefonnummer"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1610
+#: gofon/phoneaccount/class_phoneAccount.inc:1614
 msgid "Macro settings"
 msgstr "Makro-Einstellungen"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1613
+#: gofon/phoneaccount/class_phoneAccount.inc:1617
 msgid "Phone context"
 msgstr "Telefon-Kontext"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1614
+#: gofon/phoneaccount/class_phoneAccount.inc:1618
 msgid "Voice mail context"
 msgstr "Voicemail-Kontext"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1615
+#: gofon/phoneaccount/class_phoneAccount.inc:1619
 msgid "Telephone pin"
 msgstr "Telefon-PIN"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1616
+#: gofon/phoneaccount/class_phoneAccount.inc:1620
 msgid "Voicemail pin"
 msgstr "Voicemail-PIN"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1698
+#: gofon/phoneaccount/class_phoneAccount.inc:1702
 msgid "There is currently no asterisk server defined!"
 msgstr "Es ist momentan kein Asterisk-Server definiert!"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1702
+#: gofon/phoneaccount/class_phoneAccount.inc:1706
 msgid "Asterisk server is invalid!"
 msgstr "Der Asterisk-Server ist ungültig!"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1708
+#: gofon/phoneaccount/class_phoneAccount.inc:1712
 msgid "Voicemail PIN must be 4 characters long!"
 msgstr "Die Voicemail-PIN muss 4 Zeichen lang sein!"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1711
+#: gofon/phoneaccount/class_phoneAccount.inc:1715
 msgid "Voicemail PIN contains invalid characters!"
 msgstr "Die Voicemail-PIN enthält ungültige Zeichen!"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1716
+#: gofon/phoneaccount/class_phoneAccount.inc:1720
 msgid "Phone pin contains invalid characters!"
 msgstr "Die Telefon-PIN enthält ungültige Zeichen!"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1723
+#: gofon/phoneaccount/class_phoneAccount.inc:1727
 #, php-format
 msgid "The parameter %s contains invalid char. '!,#' is used as delimiter"
 msgstr ""

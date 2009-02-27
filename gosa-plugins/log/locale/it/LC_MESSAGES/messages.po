@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-19 08:33+0100\n"
+"POT-Creation-Date: 2009-02-27 10:06+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -138,13 +138,13 @@ msgid "Warning"
 msgstr "Attenzione"
 
 #: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_gosa_logview.inc:124
 #, fuzzy
 msgid "Configuration error"
 msgstr "File di configurazione"
 
 #: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_gosa_logview.inc:124
 #, fuzzy, php-format
 msgid "Missing %s PHP extension!"
 msgstr "Elimina foto"
@@ -153,16 +153,16 @@ msgstr "Elimina foto"
 #: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
 #: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
 #: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
-#: addons/logview/class_gosa_logview.inc:149
-#: addons/logview/class_gosa_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:235
-#: addons/logview/class_gosa_logview.inc:286
+#: addons/logview/class_gosa_logview.inc:151
+#: addons/logview/class_gosa_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:237
+#: addons/logview/class_gosa_logview.inc:288
 msgid "Error"
 msgstr ""
 
 #: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:167
-#: addons/logview/class_gosa_logview.inc:182
+#: addons/logview/class_gosa_logview.inc:169
+#: addons/logview/class_gosa_logview.inc:184
 msgid "All"
 msgstr ""
 
@@ -220,12 +220,12 @@ msgstr "Dominio"
 msgid "System log view"
 msgstr ""
 
-#: addons/logview/class_gosa_logview.inc:201
+#: addons/logview/class_gosa_logview.inc:203
 #, fuzzy
 msgid "You have insufficient permissions to view syslog entries."
 msgstr "Non hai il permesso di cambiare la tua password."
 
-#: addons/logview/class_gosa_logview.inc:236
+#: addons/logview/class_gosa_logview.inc:238
 #, php-format
 msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""
