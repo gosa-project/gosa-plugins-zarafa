@@ -16,11 +16,6 @@ sub new {
 	my $db_name = shift;
 
 	my $lock = $db_name.".si.lock";
-	# delete existing lock - instance should be running only once
-	if(stat($lock)) {
-		&main::daemon_log("DEBUG: Removed existing lock file $lock.", 7);
-		unlink($lock);
-	}
 	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
 	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
 	$self->{dbh} = $dbh;
@@ -330,6 +325,7 @@ sub exec_statementlist {
 
 	foreach my $sql (@$sql_list) {
 		if(defined($sql) && length($sql) > 0) {
+			# Obtain a new lock for each statement to not block the db for a too long time
 			$self->lock();
 			eval {
 				my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
