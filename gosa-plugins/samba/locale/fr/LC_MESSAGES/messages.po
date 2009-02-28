@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-27 10:16+0100\n"
-"PO-Revision-Date: 2008-12-03 23:18+0100\n"
+"PO-Revision-Date: 2009-02-28 14:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -93,18 +93,16 @@ msgid "Information"
 msgstr "Information"
 
 #: personal/samba/samba3.tpl:68
-#, fuzzy
 msgid "Show information"
 msgstr "Montrer les informations"
 
 #: personal/samba/samba3.tpl:70
 msgid "Hide"
-msgstr ""
+msgstr "Cacher"
 
 #: personal/samba/samba3.tpl:72
-#, fuzzy
 msgid "Show"
-msgstr "Afficher %s"
+msgstr "Afficher"
 
 #: personal/samba/samba3.tpl:86
 msgid "Terminal Server"
@@ -184,8 +182,7 @@ msgstr "Options d'accès"
 #: personal/samba/samba3.tpl:336 personal/samba/samba2.tpl:72
 #: personal/samba/class_sambaAccount.inc:1528
 msgid "Login from windows client requires no password"
-msgstr ""
-"L'identification sur une station windows ne nécessite pas de mot de passe"
+msgstr "L'identification sur une station windows ne nécessite pas de mot de passe"
 
 #: personal/samba/samba3.tpl:344 personal/samba/samba2.tpl:67
 msgid "Allow user to change password from client"
@@ -309,19 +306,19 @@ msgid "from previous client only"
 msgstr "du client précédent seulement"
 
 #: personal/samba/class_sambaAccount.inc:713
-#, fuzzy, php-format
+#, php-format
 msgid "The password is outdated since %s, by domain policy."
-msgstr "Le nouveau mot de passe ne comporte pas suffisamment de caractères."
+msgstr "Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
 
 #: personal/samba/class_sambaAccount.inc:717
-#, fuzzy, php-format
+#, php-format
 msgid "The password is valid till %s, by user policy."
-msgstr "L'option password differ n'est pas une valeur numérique."
+msgstr "Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
 
 #: personal/samba/class_sambaAccount.inc:720
 #, php-format
 msgid "The password is valid till %s, by domain policy."
-msgstr ""
+msgstr "Le mot de passe est valide jusqu'au %s, selon la politique du domaine."
 
 #: personal/samba/class_sambaAccount.inc:840
 #: personal/samba/class_sambaAccount.inc:846
@@ -333,7 +330,7 @@ msgstr ""
 #: personal/samba/class_sambaAccount.inc:892
 #: personal/samba/class_sambaAccount.inc:900
 msgid "default"
-msgstr ""
+msgstr "défaut"
 
 #: personal/samba/class_sambaAccount.inc:846
 #: personal/samba/class_sambaAccount.inc:852
@@ -347,7 +344,7 @@ msgstr "Ouvert"
 #: personal/samba/class_sambaAccount.inc:862
 #: personal/samba/class_sambaAccount.inc:870
 msgid "seconds"
-msgstr ""
+msgstr "secondes"
 
 #: personal/samba/class_sambaAccount.inc:876
 #: personal/samba/class_sambaAccount.inc:880
@@ -357,19 +354,17 @@ msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:878
 msgid "forever"
-msgstr ""
+msgstr "indéfiniment"
 
 #: personal/samba/class_sambaAccount.inc:892
 #: personal/samba/class_sambaAccount.inc:900
-#, fuzzy
 msgid "off"
-msgstr "Eteint"
+msgstr "Éteint"
 
 #: personal/samba/class_sambaAccount.inc:894
 #: personal/samba/class_sambaAccount.inc:902
-#, fuzzy
 msgid "on"
-msgstr "En bas"
+msgstr "Allumé"
 
 #: personal/samba/class_sambaAccount.inc:910
 #: personal/samba/class_sambaAccount.inc:918
@@ -379,103 +374,90 @@ msgstr "En bas"
 #: personal/samba/class_sambaAccount.inc:950
 #: personal/samba/class_sambaAccount.inc:958
 #: personal/samba/class_sambaAccount.inc:966
-#, fuzzy
 msgid "unset"
-msgstr "remise à zéro"
+msgstr "non configuré"
 
 #: personal/samba/class_sambaAccount.inc:968
 msgid "immediately"
-msgstr ""
+msgstr "immédiatement"
 
 #: personal/samba/class_sambaAccount.inc:974
 msgid "days"
-msgstr ""
+msgstr "jours"
 
 #: personal/samba/class_sambaAccount.inc:975
-#, fuzzy
 msgid "hours"
-msgstr "Heure"
+msgstr "heures"
 
 #: personal/samba/class_sambaAccount.inc:982
 #, fuzzy
 msgid "Domain attributes"
-msgstr "Attribut de connexion"
+msgstr "Attribut domaines"
 
 #: personal/samba/class_sambaAccount.inc:983
 #: personal/samba/class_sambaAccount.inc:984
-#, fuzzy
 msgid "Min password length"
-msgstr "Niveau de sécurité du mot de passe"
+msgstr "Taille minimale du mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:985
-#, fuzzy
 msgid "Password history"
-msgstr "Format de stockage des mots de passe"
+msgstr "Historique des mots de passe"
 
 #: personal/samba/class_sambaAccount.inc:986
-#, fuzzy
 msgid "Force password change"
-msgstr "Forcer le changement de mot de passe au la connexion"
+msgstr "Forcer le changement de mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:987
 msgid "Maximum password age"
-msgstr ""
+msgstr "Durée de vie maximale du mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:988
 msgid "Minimum password age"
-msgstr ""
+msgstr "Durée de vie minimale du mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:989
 msgid "Lockout duration"
-msgstr ""
+msgstr "La durée de blocage"
 
 #: personal/samba/class_sambaAccount.inc:990
 msgid "Bad lockout attempt"
 msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:991
-#, fuzzy
 msgid "Disconnect time"
-msgstr "Déconnexion"
+msgstr "Forcer la déconnexion"
 
 #: personal/samba/class_sambaAccount.inc:992
-#, fuzzy
 msgid "Refuse machine password change"
-msgstr "Changement de mot de passe"
+msgstr "Refuser le changement de mot de passe de la machine"
 
 #: personal/samba/class_sambaAccount.inc:994
-#, fuzzy
 msgid "User attributes"
-msgstr "Attribut de connexion"
+msgstr "Attributs de l'utilisateur"
 
 #: personal/samba/class_sambaAccount.inc:995
-#, fuzzy
 msgid "Last failed login"
-msgstr "Dernière connexion"
+msgstr "Dernière connexion ayant échouée"
 
 #: personal/samba/class_sambaAccount.inc:996
-#, fuzzy
 msgid "Logon attempts"
-msgstr "Attribut de connexion"
+msgstr "Nombre de tentative de connexion"
 
 #: personal/samba/class_sambaAccount.inc:997
-#, fuzzy
 msgid "Last password update"
-msgstr "Nouveau mot de passe"
+msgstr "Dernière mise à jour du mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:998
 msgid "Last logon"
 msgstr "Dernière connexion"
 
 #: personal/samba/class_sambaAccount.inc:999
-#, fuzzy
 msgid "Last logoff"
-msgstr "Dernière connexion"
+msgstr "Dernière déconnexion"
 
 #: personal/samba/class_sambaAccount.inc:1000
-#, fuzzy
 msgid "Automatic logoff"
-msgstr "Automatique"
+msgstr "Déconnexion Automatique"
 
 #: personal/samba/class_sambaAccount.inc:1001
 #: personal/samba/class_sambaAccount.inc:1531
@@ -483,9 +465,8 @@ msgid "Password expires"
 msgstr "Le mot de passe expirera le"
 
 #: personal/samba/class_sambaAccount.inc:1002
-#, fuzzy
 msgid "Password change available"
-msgstr "Le changement du mot de passe n'est pas autorisé"
+msgstr "Le changement du mot est disponible"
 
 #: personal/samba/class_sambaAccount.inc:1061
 msgid "Home drive"
@@ -508,12 +489,10 @@ msgstr "Avertissement"
 
 #: personal/samba/class_sambaAccount.inc:1280
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr ""
-"Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
+msgstr "Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
 
 #: personal/samba/class_sambaAccount.inc:1304
-msgid ""
-"Cannot convert primary group to samba group: group cannot be identified!"
+msgid "Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 "Impossible de convertir le groupe primaire en un groupe primaire samba : le "
 "groupe ne peut être identifié !"
@@ -593,3 +572,4 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 #: personal/samba/samba3_workstations.tpl:31
 msgid "Regular expression for matching addresses"
 msgstr "Expression régulière pour sélectionner les adresses correspondantes"
+

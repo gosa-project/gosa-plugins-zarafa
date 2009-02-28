@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-27 10:06+0100\n"
-"PO-Revision-Date: 2008-12-21 11:59+0100\n"
+"PO-Revision-Date: 2009-02-28 14:05+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,9 +17,7 @@ msgstr ""
 #: admin/systems/services/kolab/class_servKolab.inc:107
 #, php-format
 msgid "Include data from %s days in the past when creating free/busy lists"
-msgstr ""
-"Inclure les données des %s jours précédents lors de la création d'une liste "
-"de disponibilités"
+msgstr "Inclure les données des %s jours précédents lors de la création d'une liste de disponibilités"
 
 #: admin/systems/services/kolab/class_servKolab.inc:112
 #, php-format
@@ -78,7 +76,7 @@ msgstr "Réseaux privilégiés"
 #: admin/systems/services/kolab/class_servKolab.inc:327
 #: admin/systems/services/kolab/servkolab.tpl:27
 msgid "Mail domains"
-msgstr ""
+msgstr "Domaines de messagerie"
 
 #: admin/systems/services/kolab/class_servKolab.inc:419
 #: admin/systems/services/kolab/class_servKolab.inc:430
@@ -231,8 +229,7 @@ msgstr "Machine utilisée pour relayer les mails"
 
 #: admin/systems/services/kolab/servkolab.tpl:235
 msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr ""
-"Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
+msgstr "Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:112
 #: personal/mail/kolab/class_mail-methods-kolab.inc:120
@@ -296,8 +293,7 @@ msgstr ""
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:244
 msgid "Waiting for kolab to remove mail properties..."
-msgstr ""
-"En attente de kolab pour la suppression des paramètres de messagerie..."
+msgstr "En attente de kolab pour la suppression des paramètres de messagerie..."
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:247
 msgid "Please remove the mail settings first!"
@@ -386,8 +382,7 @@ msgstr "Anonyme"
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
 msgid "Free Busy future"
-msgstr ""
-"Nombre de jours dans le futur à calculer pour l'option de disponibilité"
+msgstr "Nombre de jours dans le futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:359
 #: personal/connectivity/kolab/class_kolabAccount.inc:362
@@ -429,3 +424,4 @@ msgstr "Restriction de taille des messages"
 #: personal/connectivity/kolab/class_kolabAccount.inc:524
 msgid "Free busy information"
 msgstr "Information de disponibilité"
+
