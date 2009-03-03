@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-03-03 14:38+0100\n"
 "PO-Revision-Date: 2009-02-28 14:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -14,59 +14,55 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/systems/samba/wingeneric.tpl:6
-msgid "Machine name"
-msgstr "Nom de la machine"
+#: personal/samba/sambaLogonHours.tpl:22
+msgid "Specify the hours this user is allowed to log in"
+msgstr "Indiquez les heures auquel l'utilisateur est autorisé à se connecter"
 
-#: admin/systems/samba/wingeneric.tpl:17
-#: admin/systems/samba/class_winGeneric.inc:314
-msgid "Base"
-msgstr ""
+#: personal/samba/sambaLogonHours.tpl:28
+msgid "Hour"
+msgstr "Heure"
 
-#: admin/systems/samba/wingeneric.tpl:20
-msgid "Choose subtree to place group in"
-msgstr "Sélectionnez la branche où sera placée le groupe"
-
-#: admin/systems/samba/wingeneric.tpl:26
-msgid "Select a base"
-msgstr "Sélectionnez une base"
-
-#: admin/systems/samba/wingeneric.tpl:35
-#: admin/systems/samba/class_winGeneric.inc:315
-msgid "Description"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:102
-msgid "network"
-msgstr "réseau"
-
-#: admin/systems/samba/class_winGeneric.inc:169
-#: admin/systems/samba/class_winGeneric.inc:292
-#: personal/samba/class_sambaAccount.inc:1043
-#: personal/samba/class_sambaAccount.inc:1414
-msgid "LDAP error"
-msgstr "Erreur LDAP"
-
-#: admin/systems/samba/class_winGeneric.inc:228
-#: admin/systems/samba/class_winGeneric.inc:313
-msgid "Name"
-msgstr "Nom"
-
-#: admin/systems/samba/class_winGeneric.inc:304
-msgid "Win generic"
-msgstr "Informations Windows"
-
-#: admin/systems/samba/class_winGeneric.inc:305
-msgid "Windows workstation generic"
-msgstr "Station de travail Windows générique"
-
-#: admin/systems/samba/class_winGeneric.inc:310
-msgid "Win workstation"
-msgstr "Station de travail Windows"
-
-#: personal/samba/samba3.tpl:6 personal/samba/samba2.tpl:6
+#: personal/samba/samba2.tpl:6 personal/samba/samba3.tpl:6
 msgid "Generic"
 msgstr "Informations"
+
+#: personal/samba/samba2.tpl:13
+msgid "Samba home"
+msgstr "Répertoire de l'utilisateur samba"
+
+#: personal/samba/samba2.tpl:37 personal/samba/samba3.tpl:44
+msgid "Script path"
+msgstr "Chemin du Script"
+
+#: personal/samba/samba2.tpl:45 personal/samba/samba3.tpl:52
+#: personal/samba/samba3.tpl:139 personal/samba/class_sambaAccount.inc:1069
+#: personal/samba/class_sambaAccount.inc:1575
+msgid "Profile path"
+msgstr "Chemin du Profile"
+
+#: personal/samba/samba2.tpl:59 personal/samba/samba3.tpl:323
+msgid "Access options"
+msgstr "Options d'accès"
+
+#: personal/samba/samba2.tpl:67 personal/samba/samba3.tpl:344
+msgid "Allow user to change password from client"
+msgstr ""
+"Autoriser les utilisateurs à changer de mot de passe à partir d'une station "
+"cliente"
+
+#: personal/samba/samba2.tpl:72 personal/samba/samba3.tpl:336
+#: personal/samba/class_sambaAccount.inc:1528
+msgid "Login from windows client requires no password"
+msgstr ""
+"L'identification sur une station windows ne nécessite pas de mot de passe"
+
+#: personal/samba/samba2.tpl:77
+msgid "Temporary disable samba account"
+msgstr "Désactiver temporairement le compte Samba"
+
+#: personal/samba/samba2.tpl:87 personal/samba/samba3.tpl:361
+msgid "Password expires on"
+msgstr "Le mot de passe expirera le"
 
 #: personal/samba/samba3.tpl:13 personal/samba/samba3.tpl:126
 #: personal/samba/class_sambaAccount.inc:1068
@@ -77,16 +73,6 @@ msgstr "Répertoire Home"
 #: personal/samba/samba3.tpl:26 personal/samba/class_sambaAccount.inc:1522
 msgid "Domain"
 msgstr "Domaine"
-
-#: personal/samba/samba3.tpl:44 personal/samba/samba2.tpl:37
-msgid "Script path"
-msgstr "Chemin du Script"
-
-#: personal/samba/samba3.tpl:52 personal/samba/samba3.tpl:139
-#: personal/samba/samba2.tpl:45 personal/samba/class_sambaAccount.inc:1069
-#: personal/samba/class_sambaAccount.inc:1575
-msgid "Profile path"
-msgstr "Chemin du Profile"
 
 #: personal/samba/samba3.tpl:65
 msgid "Information"
@@ -175,28 +161,9 @@ msgstr "Sur interrompu ou temps d'attente dépassé"
 msgid "Reconnect if disconnected"
 msgstr "Reconnexion si déconnecté"
 
-#: personal/samba/samba3.tpl:323 personal/samba/samba2.tpl:59
-msgid "Access options"
-msgstr "Options d'accès"
-
-#: personal/samba/samba3.tpl:336 personal/samba/samba2.tpl:72
-#: personal/samba/class_sambaAccount.inc:1528
-msgid "Login from windows client requires no password"
-msgstr "L'identification sur une station windows ne nécessite pas de mot de passe"
-
-#: personal/samba/samba3.tpl:344 personal/samba/samba2.tpl:67
-msgid "Allow user to change password from client"
-msgstr ""
-"Autoriser les utilisateurs à changer de mot de passe à partir d'une station "
-"cliente"
-
 #: personal/samba/samba3.tpl:352 personal/samba/class_sambaAccount.inc:1529
 msgid "Lock samba account"
 msgstr "Verrouiller le compte Samba"
-
-#: personal/samba/samba3.tpl:361 personal/samba/samba2.tpl:87
-msgid "Password expires on"
-msgstr "Le mot de passe expirera le"
 
 #: personal/samba/samba3.tpl:393
 msgid "Account expires after"
@@ -222,21 +189,29 @@ msgstr "Utilisé par tout les utilisateurs"
 msgid "Used by some users"
 msgstr "Utilisé par certains utilisateurs"
 
-#: personal/samba/sambaLogonHours.tpl:22
-msgid "Specify the hours this user is allowed to log in"
-msgstr "Indiquez les heures auquel l'utilisateur est autorisé à se connecter"
+#: personal/samba/samba3_workstations.tpl:6
+msgid "Select workstations to add"
+msgstr "Sélectionner les stations à ajouter"
 
-#: personal/samba/sambaLogonHours.tpl:28
-msgid "Hour"
-msgstr "Heure"
+#: personal/samba/samba3_workstations.tpl:20
+msgid "Filters"
+msgstr "Filtres"
 
-#: personal/samba/samba2.tpl:13
-msgid "Samba home"
-msgstr "Répertoire de l'utilisateur samba"
+#: personal/samba/samba3_workstations.tpl:26
+msgid "Display workstations of department"
+msgstr "Afficher les stations d'un département"
 
-#: personal/samba/samba2.tpl:77
-msgid "Temporary disable samba account"
-msgstr "Désactiver temporairement le compte Samba"
+#: personal/samba/samba3_workstations.tpl:27
+msgid "Choose the department the search will be based on"
+msgstr "Sélectionner le département où sera effectuée la recherche"
+
+#: personal/samba/samba3_workstations.tpl:31
+msgid "Regular expression for matching addresses"
+msgstr "Expression régulière pour sélectionner les adresses correspondantes"
+
+#: personal/samba/main.inc:136 personal/samba/class_sambaAccount.inc:1510
+msgid "Samba settings"
+msgstr "Configuration Samba"
 
 #: personal/samba/class_sambaAccount.inc:24
 #: personal/samba/class_sambaAccount.inc:221
@@ -308,12 +283,14 @@ msgstr "du client précédent seulement"
 #: personal/samba/class_sambaAccount.inc:713
 #, php-format
 msgid "The password is outdated since %s, by domain policy."
-msgstr "Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
+msgstr ""
+"Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
 
 #: personal/samba/class_sambaAccount.inc:717
 #, php-format
 msgid "The password is valid till %s, by user policy."
-msgstr "Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
+msgstr ""
+"Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
 
 #: personal/samba/class_sambaAccount.inc:720
 #, php-format
@@ -468,6 +445,13 @@ msgstr "Le mot de passe expirera le"
 msgid "Password change available"
 msgstr "Le changement du mot est disponible"
 
+#: personal/samba/class_sambaAccount.inc:1043
+#: personal/samba/class_sambaAccount.inc:1414
+#: admin/systems/samba/class_winGeneric.inc:169
+#: admin/systems/samba/class_winGeneric.inc:292
+msgid "LDAP error"
+msgstr "Erreur LDAP"
+
 #: personal/samba/class_sambaAccount.inc:1061
 msgid "Home drive"
 msgstr "Répertoire Home"
@@ -489,17 +473,15 @@ msgstr "Avertissement"
 
 #: personal/samba/class_sambaAccount.inc:1280
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr "Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
+msgstr ""
+"Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
 
 #: personal/samba/class_sambaAccount.inc:1304
-msgid "Cannot convert primary group to samba group: group cannot be identified!"
+msgid ""
+"Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 "Impossible de convertir le groupe primaire en un groupe primaire samba : le "
 "groupe ne peut être identifié !"
-
-#: personal/samba/class_sambaAccount.inc:1510 personal/samba/main.inc:136
-msgid "Samba settings"
-msgstr "Configuration Samba"
 
 #: personal/samba/class_sambaAccount.inc:1514
 msgid "My account"
@@ -553,23 +535,45 @@ msgstr ""
 "Le gestionnaire d'utilisateurs windows accepte seulement huit clients. Vous "
 "en avez spécifiés plus de huit."
 
-#: personal/samba/samba3_workstations.tpl:6
-msgid "Select workstations to add"
-msgstr "Sélectionner les stations à ajouter"
+#: admin/systems/samba/class_winGeneric.inc:102
+msgid "network"
+msgstr "réseau"
 
-#: personal/samba/samba3_workstations.tpl:20
-msgid "Filters"
-msgstr "Filtres"
+#: admin/systems/samba/class_winGeneric.inc:228
+#: admin/systems/samba/class_winGeneric.inc:313
+msgid "Name"
+msgstr "Nom"
 
-#: personal/samba/samba3_workstations.tpl:26
-msgid "Display workstations of department"
-msgstr "Afficher les stations d'un département"
+#: admin/systems/samba/class_winGeneric.inc:304
+msgid "Win generic"
+msgstr "Informations Windows"
 
-#: personal/samba/samba3_workstations.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr "Sélectionner le département où sera effectuée la recherche"
+#: admin/systems/samba/class_winGeneric.inc:305
+msgid "Windows workstation generic"
+msgstr "Station de travail Windows générique"
 
-#: personal/samba/samba3_workstations.tpl:31
-msgid "Regular expression for matching addresses"
-msgstr "Expression régulière pour sélectionner les adresses correspondantes"
+#: admin/systems/samba/class_winGeneric.inc:310
+msgid "Win workstation"
+msgstr "Station de travail Windows"
 
+#: admin/systems/samba/class_winGeneric.inc:314
+#: admin/systems/samba/wingeneric.tpl:17
+msgid "Base"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:315
+#: admin/systems/samba/wingeneric.tpl:35
+msgid "Description"
+msgstr ""
+
+#: admin/systems/samba/wingeneric.tpl:6
+msgid "Machine name"
+msgstr "Nom de la machine"
+
+#: admin/systems/samba/wingeneric.tpl:20
+msgid "Choose subtree to place group in"
+msgstr "Sélectionnez la branche où sera placée le groupe"
+
+#: admin/systems/samba/wingeneric.tpl:26
+msgid "Select a base"
+msgstr "Sélectionnez une base"
