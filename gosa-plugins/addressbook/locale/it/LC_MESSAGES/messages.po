@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:05+0100\n"
+"POT-Creation-Date: 2009-03-03 14:53+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -25,105 +25,213 @@ msgstr "Terminal Server"
 msgid "Missing parameters!"
 msgstr "Nome applicazione"
 
-#: addons/addressbook/address_info.tpl:18
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr ""
+
+#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
+#: addons/addressbook/class_addressbook.inc:468
+#: addons/addressbook/class_addressbook.inc:472
+#: addons/addressbook/class_addressbook.inc:588
+msgid "Dial"
+msgstr ""
+
+#: addons/addressbook/address_edit.tpl:7
+msgid "Choose the department to store entry in"
+msgstr ""
+
 #: addons/addressbook/address_edit.tpl:24
+#: addons/addressbook/address_info.tpl:18
 msgid "Personal"
 msgstr "Personale"
 
-#: addons/addressbook/address_info.tpl:24
+#: addons/addressbook/address_edit.tpl:30
+#, fuzzy
+msgid "Last name"
+msgstr "Scegli il tuo numero di telefono personale"
+
+#: addons/addressbook/address_edit.tpl:33
+#, fuzzy
+msgid "First name"
+msgstr "Liste di blocco"
+
+#: addons/addressbook/address_edit.tpl:48
+#: addons/addressbook/class_addressbook.inc:865
+#: addons/addressbook/address_info.tpl:32
+msgid "Initials"
+msgstr "Iniziali"
+
+#: addons/addressbook/address_edit.tpl:60
+#: addons/addressbook/address_info.tpl:40
+msgid "Personal title"
+msgstr "Titolo onorifico"
+
+#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
+#: addons/addressbook/address_info.tpl:53
+msgid "Private"
+msgstr "Privato"
+
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+msgid "Address"
+msgstr "Indirizzo"
+
+#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
+#: addons/addressbook/class_addressbook.inc:706
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
+msgid "Phone"
+msgstr "Telefono"
+
+#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
+#: addons/addressbook/class_addressbook.inc:715
+#: addons/addressbook/address_info.tpl:75
+msgid "Mobile"
+msgstr "Cellulare"
+
+#: addons/addressbook/address_edit.tpl:118
+#: addons/addressbook/class_addressbook.inc:730
+#: addons/addressbook/address_info.tpl:83
+msgid "Email"
+msgstr "Indirizzo email"
+
+#: addons/addressbook/address_edit.tpl:134
+#: addons/addressbook/address_info.tpl:99
+msgid "Organizational"
+msgstr "Organizzazione"
+
+#: addons/addressbook/address_edit.tpl:143
+#: addons/addressbook/address_info.tpl:109
+msgid "Company"
+msgstr "Azienda"
+
+#: addons/addressbook/address_edit.tpl:155
+#: addons/addressbook/class_addressbook.inc:860
+#: addons/addressbook/address_info.tpl:117
+msgid "Department"
+msgstr "Dipartimento"
+
+#: addons/addressbook/address_edit.tpl:167
+#: addons/addressbook/address_info.tpl:125
+msgid "City"
+msgstr "Città"
+
+#: addons/addressbook/address_edit.tpl:179
+#: addons/addressbook/address_info.tpl:133
+msgid "Postal code"
+msgstr "CAP"
+
+#: addons/addressbook/address_edit.tpl:191
+#: addons/addressbook/address_info.tpl:141
+msgid "Country"
+msgstr "Paese"
+
+#: addons/addressbook/address_edit.tpl:233
+#: addons/addressbook/address_info.tpl:171
+msgid "FAX"
+msgstr "FAX"
+
+#: addons/addressbook/address_edit.tpl:246
+#: addons/addressbook/class_addressbook.inc:718
+#: addons/addressbook/class_addressbook.inc:858
+#: addons/addressbook/address_info.tpl:179
+msgid "Pager"
+msgstr "Pager"
+
+#: addons/addressbook/contents.tpl:14
 #: addons/addressbook/class_addressbook.inc:648
 #: addons/addressbook/class_addressbook.inc:688
 #: addons/addressbook/class_addressbook.inc:698
 #: addons/addressbook/class_addressbook.inc:725
-#: addons/addressbook/contents.tpl:14
+#: addons/addressbook/address_info.tpl:24
 msgid "Name"
 msgstr "Cognome"
 
-#: addons/addressbook/address_info.tpl:32
-#: addons/addressbook/class_addressbook.inc:865
-#: addons/addressbook/address_edit.tpl:48
-msgid "Initials"
-msgstr "Iniziali"
+#: addons/addressbook/contents.tpl:14
+#: addons/addressbook/class_addressbook.inc:712
+msgid "Fax"
+msgstr "Fax"
 
-#: addons/addressbook/address_info.tpl:40
-#: addons/addressbook/address_edit.tpl:60
-msgid "Personal title"
-msgstr "Titolo onorifico"
+#: addons/addressbook/contents.tpl:15
+msgid "Contact"
+msgstr "Contatto"
 
-#: addons/addressbook/address_info.tpl:53
-#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
-msgid "Private"
-msgstr "Privato"
+#: addons/addressbook/contents.tpl:33
+msgid "Information"
+msgstr "Informazioni"
 
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-msgid "Address"
-msgstr "Indirizzo"
+#: addons/addressbook/contents.tpl:37
+msgid ""
+"The telephone list plugin provides list and search facilities for the people "
+"in your site. You may want to specify the asterisk [*] like in 'Go*us' to "
+"find 'Gonicus'. Use the filters below to narrow down your search."
+msgstr ""
+"Il plugin della lista telefonica permette di cercare le persone nel sito. "
+"Puoi utilizzare l'asterisco [*] come carattere jolly. Usa i filtri sotto per "
+"caratterizzaze la ricerca."
 
-#: addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-#: addons/addressbook/class_addressbook.inc:706
-#: addons/addressbook/address_edit.tpl:94
-#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
-msgid "Phone"
-msgstr "Telefono"
+#: addons/addressbook/contents.tpl:42
+msgid "Actions"
+msgstr "Azioni"
 
-#: addons/addressbook/address_info.tpl:75
-#: addons/addressbook/class_addressbook.inc:715
-#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
-msgid "Mobile"
-msgstr "Cellulare"
+#: addons/addressbook/contents.tpl:48
+msgid "Add entry"
+msgstr "Aggiungi contatto"
 
-#: addons/addressbook/address_info.tpl:83
-#: addons/addressbook/class_addressbook.inc:730
-#: addons/addressbook/address_edit.tpl:118
-msgid "Email"
-msgstr "Indirizzo email"
+#: addons/addressbook/contents.tpl:54
+msgid "Edit entry"
+msgstr "Modifica contatto"
 
-#: addons/addressbook/address_info.tpl:99
-#: addons/addressbook/address_edit.tpl:134
-msgid "Organizational"
-msgstr "Organizzazione"
+#: addons/addressbook/contents.tpl:58
+msgid "Remove entry"
+msgstr "Elimina contatto"
 
-#: addons/addressbook/address_info.tpl:109
-#: addons/addressbook/address_edit.tpl:143
-msgid "Company"
-msgstr "Azienda"
+#: addons/addressbook/contents.tpl:65
+msgid "Filters"
+msgstr "Filtri"
 
-#: addons/addressbook/address_info.tpl:117
-#: addons/addressbook/class_addressbook.inc:860
-#: addons/addressbook/address_edit.tpl:155
-msgid "Department"
-msgstr "Dipartimento"
+#: addons/addressbook/contents.tpl:75
+msgid "Select to see regular users"
+msgstr ""
 
-#: addons/addressbook/address_info.tpl:125
-#: addons/addressbook/address_edit.tpl:167
-msgid "City"
-msgstr "Città"
+#: addons/addressbook/contents.tpl:75
+msgid "Show organizational entries"
+msgstr "Mostra contatti di organizzazioni"
 
-#: addons/addressbook/address_info.tpl:133
-#: addons/addressbook/address_edit.tpl:179
-msgid "Postal code"
-msgstr "CAP"
+#: addons/addressbook/contents.tpl:76
+msgid "Select to see users in addressbook"
+msgstr ""
 
-#: addons/addressbook/address_info.tpl:141
-#: addons/addressbook/address_edit.tpl:191
-msgid "Country"
-msgstr "Paese"
+#: addons/addressbook/contents.tpl:76
+msgid "Show addressbook entries"
+msgstr "Mostra contatti della rubrica"
 
-#: addons/addressbook/address_info.tpl:171
-#: addons/addressbook/address_edit.tpl:233
-msgid "FAX"
-msgstr "FAX"
+#: addons/addressbook/contents.tpl:84
+msgid "Display results for department"
+msgstr "Mostra risultati per dipartimento"
 
-#: addons/addressbook/address_info.tpl:179
-#: addons/addressbook/class_addressbook.inc:718
-#: addons/addressbook/class_addressbook.inc:858
-#: addons/addressbook/address_edit.tpl:246
-msgid "Pager"
-msgstr "Pager"
+#: addons/addressbook/contents.tpl:87
+msgid "Choose the department the search will be based on"
+msgstr "Scegli il dipartimento di base per la ricerca"
+
+#: addons/addressbook/contents.tpl:97
+msgid "Match object"
+msgstr "Oggetto corrispondente"
+
+#: addons/addressbook/contents.tpl:100
+msgid "Choose the object that will be searched in"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:109
+msgid "Search for"
+msgstr "Cerca"
+
+#: addons/addressbook/contents.tpl:112
+msgid "Search string"
+msgstr "Ricerca"
 
 #: addons/addressbook/remove.tpl:2
 msgid "Warning"
@@ -143,23 +251,12 @@ msgstr ""
 "Quindi - Se sei sicuro - premi <i>Rimuovi</i> per continuare o <i>Annulla</"
 "i> per abortire."
 
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr ""
-
-#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
-#: addons/addressbook/class_addressbook.inc:468
-#: addons/addressbook/class_addressbook.inc:472
-#: addons/addressbook/class_addressbook.inc:588
-msgid "Dial"
-msgstr ""
-
-#: addons/addressbook/class_addressbook.inc:11
+#: addons/addressbook/main.inc:43 addons/addressbook/class_addressbook.inc:11
 #: addons/addressbook/class_addressbook.inc:12
 #: addons/addressbook/class_addressbook.inc:23
 #: addons/addressbook/class_addressbook.inc:841
 #: addons/addressbook/class_addressbook.inc:842
-#: addons/addressbook/class_addressbook.inc:847 addons/addressbook/main.inc:43
+#: addons/addressbook/class_addressbook.inc:847
 msgid "Addressbook"
 msgstr "Rubrica"
 
@@ -264,11 +361,6 @@ msgstr ""
 msgid "Telephone number"
 msgstr "Numero di telefono"
 
-#: addons/addressbook/class_addressbook.inc:712
-#: addons/addressbook/contents.tpl:14
-msgid "Fax"
-msgstr "Fax"
-
 #: addons/addressbook/class_addressbook.inc:738
 msgid ""
 "Cannot create a unique DN for your entry. Please fill more formular fields."
@@ -349,98 +441,6 @@ msgstr ""
 #: addons/addressbook/class_addressbook.inc:868
 msgid "Common name"
 msgstr "Nome comune"
-
-#: addons/addressbook/address_edit.tpl:7
-msgid "Choose the department to store entry in"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:30
-#, fuzzy
-msgid "Last name"
-msgstr "Scegli il tuo numero di telefono personale"
-
-#: addons/addressbook/address_edit.tpl:33
-#, fuzzy
-msgid "First name"
-msgstr "Liste di blocco"
-
-#: addons/addressbook/contents.tpl:15
-msgid "Contact"
-msgstr "Contatto"
-
-#: addons/addressbook/contents.tpl:33
-msgid "Information"
-msgstr "Informazioni"
-
-#: addons/addressbook/contents.tpl:37
-msgid ""
-"The telephone list plugin provides list and search facilities for the people "
-"in your site. You may want to specify the asterisk [*] like in 'Go*us' to "
-"find 'Gonicus'. Use the filters below to narrow down your search."
-msgstr ""
-"Il plugin della lista telefonica permette di cercare le persone nel sito. "
-"Puoi utilizzare l'asterisco [*] come carattere jolly. Usa i filtri sotto per "
-"caratterizzaze la ricerca."
-
-#: addons/addressbook/contents.tpl:42
-msgid "Actions"
-msgstr "Azioni"
-
-#: addons/addressbook/contents.tpl:48
-msgid "Add entry"
-msgstr "Aggiungi contatto"
-
-#: addons/addressbook/contents.tpl:54
-msgid "Edit entry"
-msgstr "Modifica contatto"
-
-#: addons/addressbook/contents.tpl:58
-msgid "Remove entry"
-msgstr "Elimina contatto"
-
-#: addons/addressbook/contents.tpl:65
-msgid "Filters"
-msgstr "Filtri"
-
-#: addons/addressbook/contents.tpl:75
-msgid "Select to see regular users"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:75
-msgid "Show organizational entries"
-msgstr "Mostra contatti di organizzazioni"
-
-#: addons/addressbook/contents.tpl:76
-msgid "Select to see users in addressbook"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:76
-msgid "Show addressbook entries"
-msgstr "Mostra contatti della rubrica"
-
-#: addons/addressbook/contents.tpl:84
-msgid "Display results for department"
-msgstr "Mostra risultati per dipartimento"
-
-#: addons/addressbook/contents.tpl:87
-msgid "Choose the department the search will be based on"
-msgstr "Scegli il dipartimento di base per la ricerca"
-
-#: addons/addressbook/contents.tpl:97
-msgid "Match object"
-msgstr "Oggetto corrispondente"
-
-#: addons/addressbook/contents.tpl:100
-msgid "Choose the object that will be searched in"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:109
-msgid "Search for"
-msgstr "Cerca"
-
-#: addons/addressbook/contents.tpl:112
-msgid "Search string"
-msgstr "Ricerca"
 
 #~ msgid "Cancel"
 #~ msgstr "Annulla"
