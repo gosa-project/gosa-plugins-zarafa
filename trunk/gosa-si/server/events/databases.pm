@@ -106,13 +106,7 @@ sub count_db {
         $db = $main::fai_release_db;
     }
 
-
-    # prepare sql statement and execute query
-		my $res_hash = $db->select_dbentry("SELECT count() FROM $table");
-		my $count = 0;
-		if(defined($res_hash) && defined($res_hash->{1}) && defined($res_hash->{1}->{'count()'})) {
-			$count = $res_hash->{1}->{'count()'};
-		}
+		my $count = $db->count_dbentries($table);
     my $out_xml= "<xml><header>answer</header><source>$target</source><target>$source</target><count>$count</count><session_id>$session_id</session_id></xml>";
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {

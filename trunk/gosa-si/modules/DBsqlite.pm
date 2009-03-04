@@ -370,12 +370,14 @@ sub exec_statementlist {
 sub count_dbentries {
 	my ($self, $table)= @_;
 	my $error= 0;
-	my $answer= -1;
+	my $count= -1;
 
-	my $sql_statement= "SELECT * FROM $table";
+	my $sql_statement= "SELECT count() FROM $table";
 	my $db_answer= &select_dbentry($self, $sql_statement); 
+	if(defined($db_answer) && defined($db_answer->{1}) && defined($db_answer->{1}->{'count()'})) {
+		$count = $db_answer->{1}->{'count()'};
+	}
 
-	my $count = keys(%{$db_answer});
 	return $count;
 }
 
