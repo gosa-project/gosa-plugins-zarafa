@@ -80,7 +80,7 @@ sub query_db {
     return @out_msg_l;
 }
     
-sub count_fai_releas{ return &count_db( @_ ); }    
+sub count_fai_release{ return &count_db( @_ ); }    
 sub count_fai_server{ return &count_db( @_ ); }
 sub count_packages_list{ return &count_db( @_ ); }
 sub count_jobdb{ return &count_db( @_ ); }
@@ -103,14 +103,10 @@ sub count_db {
         $db = $main::fai_server_db;
     } elsif( $header =~ /count_fai_release/ ) {
         $table = $main::fai_release_tn;
-        $db = $main::fai_server_db;
+        $db = $main::fai_release_db;
     }
 
-
-    # prepare sql statement and execute query
-    my $res_hash = $db->select_dbentry("SELECT * FROM $table");
-
-    my $count = keys(%{$res_hash});
+		my $count = $db->count_dbentries($table);
     my $out_xml= "<xml><header>answer</header><source>$target</source><target>$source</target><count>$count</count><session_id>$session_id</session_id></xml>";
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {

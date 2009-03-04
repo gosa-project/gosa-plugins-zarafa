@@ -456,10 +456,10 @@ sub here_i_am {
         $nu_clients --;
     }
 
-    # number of actual activ clients
+    # number of current active clients
     my $act_nu_clients = $nu_clients;
 
-    &main::daemon_log("$session_id INFO: number of actual activ clients: $act_nu_clients", 5);
+    &main::daemon_log("$session_id INFO: number of current active clients: $act_nu_clients", 5);
     &main::daemon_log("$session_id INFO: number of maximal allowed clients: $max_clients", 5);
 
     if($max_clients <= $act_nu_clients) {
