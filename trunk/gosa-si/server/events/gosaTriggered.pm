@@ -848,6 +848,7 @@ sub trigger_activate_new {
       );
       if($ldap_mesg->count == 1) {
         $ogroup_entry= $ldap_mesg->pop_entry();
+        &main::daemon_log("$session_id DEBUG: A GosaGroupOfNames with cn '$ogroup' was found in base '".$main::ldap_base."'!", 5);
       } elsif ($ldap_mesg->count == 0) {
         &main::daemon_log("$session_id ERROR: A GosaGroupOfNames with cn '$ogroup' was not found in base '".$main::ldap_base."'!", 1);
         $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
@@ -901,8 +902,7 @@ sub trigger_activate_new {
             return undef;
         } else {
           &main::daemon_log("$session_id INFO: System with mac address '$mac' was moved to base '".$main::ldap_base."'! Re-queuing job.", 4);
-          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".(&calc_timestamp(&get_time(), 'plus', 10))."' WHERE id = $jobdb_id");
+          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting', timestamp = '".(&calc_timestamp(&get_time(), 'plus', 10))."' WHERE id = $jobdb_id");
           return undef;
         }
       }
@@ -936,6 +936,8 @@ sub trigger_activate_new {
           my $oclass_result = $ldap_entry->update($ldap_handle);
           if ($oclass_result->code() != 0) {
             &main::daemon_log("$session_id ERROR: Adding the ObjectClass '$oclass' failed (code '".$oclass_result->code()."') with '".$oclass_result->{'errorMessage'}."'!", 1);
+          } else {
+            &main::daemon_log("$session_id DEBUG: Adding the ObjectClass '$oclass' to '".($ldap_entry->dn())."' succeeded!", 5);
           }
         }
       }
@@ -949,6 +951,8 @@ sub trigger_activate_new {
           my $replace_result = $ldap_entry->update($ldap_handle);
           if ($replace_result->code() != 0) {
             &main::daemon_log("$session_id ERROR: Setting the FAIstate to install failed with code '".$replace_result->code()."') and message '".$replace_result->{'errorMessage'}."'!", 1);
+          } else {
+            &main::daemon_log("$session_id DEBUG: Setting the FAIstate to install for '".($ldap_entry->dn())."' succeeded!", 5);
           }
         }
       } else {
@@ -958,6 +962,8 @@ sub trigger_activate_new {
         my $add_result = $ldap_entry->update($ldap_handle);
         if ($add_result->code() != 0) {
           &main::daemon_log("$session_id ERROR: Setting the FAIstate to install failed with code '".$add_result->code()."') and message '".$add_result->{'errorMessage'}."'!", 1);
+        } else {
+          &main::daemon_log("$session_id DEBUG: Setting the FAIstate to install for '".($ldap_entry->dn())."' succeeded!", 5);
         }
       }
 
@@ -967,8 +973,7 @@ sub trigger_activate_new {
       # $ldap_entry = Net::LDAP::Entry->new();
       # $ldap_entry->dn("cn=$mac,$base");
       &main::daemon_log("$session_id WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".(&calc_timestamp(&get_time(), 'plus', 10))."' WHERE id = $jobdb_id");
+      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting', timestamp = '".(&calc_timestamp(&get_time(), 'plus', 60))."' WHERE id = $jobdb_id");
       return undef;
     } else {
       &main::daemon_log("$session_id ERROR: More than one system with mac address '$mac' was found in base '".$main::ldap_base."'!", 1);
@@ -986,6 +991,8 @@ sub trigger_activate_new {
       my $ogroup_result = $ogroup_entry->update($ldap_handle);
       if ($ogroup_result->code() != 0) {
         &main::daemon_log("$session_id ERROR: Updating the ObjectGroup '$ogroup' failed (code '".$ogroup_result->code()."') with '".$ogroup_result->{'errorMessage'}."'!", 1);
+      } else {
+        &main::daemon_log("$session_id DEBUG: Updating the ObjectGroup '$ogroup' for member '".($ldap_entry->dn())."' succeeded!", 5);
       }
     } else {
       &main::daemon_log("$session_id DEBUG: System with mac address '$mac' is already a member of ObjectGroup '$ogroup'.", 5);
@@ -1001,6 +1008,7 @@ sub trigger_activate_new {
         if ($activate_result->code() != 0) {
           &main::daemon_log("$session_id ERROR: Activating system '".$ldap_entry->dn()."' failed (code '".$activate_result->code()."') with '".$activate_result->{'errorMessage'}."'!", 1);
         } else {
+          &main::daemon_log("$session_id DEBUG: Activating system '".$ldap_entry->dn()."' succeeded!", 5);
           $activate_client = 1;
         }
       } else {
@@ -1014,11 +1022,13 @@ sub trigger_activate_new {
       if ($activate_result->code() != 0) {
         &main::daemon_log("$session_id ERROR: Activating system '".$ldap_entry->dn()."' failed (code '".$activate_result->code()."') with '".$activate_result->{'errorMessage'}."'!", 1);
       } else {
+        &main::daemon_log("$session_id DEBUG: Activating system '".$ldap_entry->dn()."' succeeded!", 5);
         $activate_client = 1;
       }
     }
 
     if($activate_client == 1) {
+        &main::daemon_log("$session_id DEBIG: Activating system with mac address '$mac'!", 5);
 
         # Create delivery list
         my @out_msg_l;
@@ -1034,10 +1044,9 @@ sub trigger_activate_new {
         # Return delivery list of messages
         return @out_msg_l;
 
-    }  else {
+    } else {
       &main::daemon_log("$session_id WARNING: Activating system with mac address '$mac' failed! Re-queuing job.", 4);
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".(&calc_timestamp(&get_time(), 'plus', 10))."' WHERE id = $jobdb_id");
+      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting',  timestamp = '".(&calc_timestamp(&get_time(), 'plus', 60))."' WHERE id = $jobdb_id");
     }
     return undef;
 }
