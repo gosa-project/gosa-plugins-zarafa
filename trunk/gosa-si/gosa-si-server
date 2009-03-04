@@ -212,6 +212,8 @@ our $client_fai_log_dir = "/var/log/fai";
 my @msgs_to_decrypt = qw();
 my $max_children = 2;
 
+# Allow 50 POE Childs
+sub MAX_CONCURRENT_TASKS () { 50 }
 
 # loop delay for job queue to look for opsi jobs
 my $job_queue_opsi_delay = 10;
