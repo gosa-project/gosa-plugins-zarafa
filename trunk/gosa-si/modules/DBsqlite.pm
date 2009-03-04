@@ -57,15 +57,19 @@ sub create_table {
 	my $table_name = shift;
 	my $col_names_ref = shift;
 	my @col_names;
+	my @col_names_creation;
 	foreach my $col_name (@$col_names_ref) {
+		# Save full column description for creation of database
+		push(@col_names_creation, $col_name);
 		my @t = split(" ", $col_name);
 		$col_name = $t[0];
+		# Save column name internally for select_dbentry
 		push(@col_names, $col_name);
 	}
-
+	
 	$col_names->{ $table_name } = $col_names_ref;
-	my $col_names_string = join("', '", @col_names);
-	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
+	my $col_names_string = join(", ", @col_names_creation);
+	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	$self->lock();
 	eval {
 		my $res = $self->{dbh}->do($sql_statement);
@@ -159,7 +163,7 @@ sub add_dbentry {
 
 		my $sql_statement;
 		if($create_id==1) {
-			$sql_statement = "INSERT INTO $table ('id', ".join(", ", @col_list).") VALUES ((select coalesce(max(id), 0)+1 from $table), ".join(", ", @val_list).")";
+			$sql_statement = "INSERT INTO $table (id, ".join(", ", @col_list).") VALUES (null, ".join(", ", @val_list).")";
 		} else {
 			$sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
 		}

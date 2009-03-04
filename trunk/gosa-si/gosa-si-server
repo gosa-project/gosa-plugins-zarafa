@@ -127,7 +127,7 @@ my $watch_for_new_jobs_in_progress = 0;
 our $incoming_db;
 our $incoming_tn = 'incoming';
 my $incoming_file_name;
-my @incoming_col_names = ("id INTEGER PRIMARY KEY auto_increment",
+my @incoming_col_names = ("id INTEGER PRIMARY KEY",
 	"timestamp VARCHAR(14) DEFAULT 'none'", 
 	"headertag VARCHAR(255) DEFAULT 'none'",
 	"targettag VARCHAR(255) DEFAULT 'none'",
@@ -140,7 +140,7 @@ my @incoming_col_names = ("id INTEGER PRIMARY KEY auto_increment",
 our $job_db;
 our $job_queue_tn = 'jobs';
 my $job_queue_file_name;
-my @job_queue_col_names = ("id INTEGER PRIMARY KEY auto_increment",
+my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 	"timestamp VARCHAR(14) DEFAULT 'none'", 
 	"status VARCHAR(255) DEFAULT 'none'", 
 	"result TEXT",
