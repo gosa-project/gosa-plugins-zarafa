@@ -1376,8 +1376,8 @@ sub process_task {
     
     # set timestamp of incoming client uptodate, so client will not 
     # be deleted from known_clients because of expiration
-    my $act_time = &get_time();
-    my $sql = "UPDATE $known_clients_tn SET timestamp='$act_time' WHERE hostname='$source'"; 
+    my $cur_time = &get_time();
+    my $sql = "UPDATE $known_clients_tn SET timestamp='$cur_time' WHERE hostname='$source'"; 
     my $res = $known_clients_db->exec_statement($sql);
 
     ######################
@@ -2061,7 +2061,7 @@ sub watch_for_old_known_clients {
     my $sql_statement = "SELECT * FROM $known_clients_tn";
     my $res = $known_clients_db->select_dbentry( $sql_statement );
 
-    my $act_time = int(&get_time());
+    my $cur_time = int(&get_time());
 
     while ( my ($hit_num, $hit) = each %$res) {
         my $expired_timestamp = int($hit->{'timestamp'});
@@ -2076,7 +2076,7 @@ sub watch_for_old_known_clients {
 
         $dt->add( seconds => 2 * int($hit->{'keylifetime'}) );
         $expired_timestamp = $dt->ymd('').$dt->hms('');
-        if ($act_time > $expired_timestamp) {
+        if ($cur_time > $expired_timestamp) {
             my $hostname = $hit->{'hostname'};
             my $del_sql = "DELETE FROM $known_clients_tn WHERE hostname='$hostname'"; 
             my $del_res = $known_clients_db->exec_statement($del_sql);
@@ -3347,6 +3347,7 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
     }
 }
 
+
 # Creating tables
 $messaging_db->create_table($messaging_tn, \@messaging_col_names);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
@@ -3358,7 +3359,6 @@ $foreign_clients_db->create_table($foreign_clients_tn, \@foreign_clients_col_nam
 $known_clients_db->create_table($known_clients_tn, \@known_clients_col_names);
 $incoming_db->create_table($incoming_tn, \@incoming_col_names);
 $job_db->create_table($job_queue_tn, \@job_queue_col_names);
-
 
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
@@ -3418,7 +3418,7 @@ my $all_foreign_server = join(", ", @foreign_server_list);
 daemon_log("0 INFO: found foreign server in config file and DNS: '$all_foreign_server'", 5);
 
 # add all found foreign servers to known_server
-my $act_timestamp = &get_time();
+my $cur_timestamp = &get_time();
 foreach my $foreign_server (@foreign_server_list) {
 
 	# do not add myself to known_server_db
@@ -3429,10 +3429,10 @@ foreach my $foreign_server (@foreign_server_list) {
             primkey=>['hostname'],
             hostname=>$foreign_server,
             macaddress=>"",
-            status=>'not_jet_registered',
+            status=>'not_yet_registered',
             hostkey=>"none",
             loaded_modules => "none", 
-            timestamp=>$act_timestamp,
+            timestamp=>$cur_timestamp,
             } );
 }
 
