@@ -18,6 +18,18 @@ sub new {
 	my $lock = $db_name.".si.lock";
 	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
 	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
+	my $sth = $dbh->prepare("pragma integrity_check");
+     $sth->execute();
+	my @ret = $sth->fetchall_arrayref();
+	if(length(@ret)==1 && $ret[0][0][0] eq 'ok') {
+		&main::daemon_log("DEBUG: Database image $db_name is ok", 7);
+	} else {
+		&main::daemon_log("ERROR: Database image $db_name is malformed, creating new database.", 1);
+		$sth->finish();
+		$dbh->disconnect();
+		unlink($db_name);
+	  $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
+	}
 	$self->{dbh} = $dbh;
 	$self->{db_name} = $db_name;
 	$self->{db_lock} = $lock;
