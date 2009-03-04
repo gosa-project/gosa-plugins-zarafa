@@ -62,12 +62,12 @@ sub create_table {
 		# Save full column description for creation of database
 		push(@col_names_creation, $col_name);
 		my @t = split(" ", $col_name);
-		$col_name = $t[0];
+		my $column_name = $t[0];
 		# Save column name internally for select_dbentry
-		push(@col_names, $col_name);
+		push(@col_names, $column_name);
 	}
 	
-	$col_names->{ $table_name } = $col_names_ref;
+	$col_names->{ $table_name } = \@col_names;
 	my $col_names_string = join(", ", @col_names_creation);
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	$self->lock();
@@ -386,6 +386,7 @@ sub move_table {
 	my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
 	my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
 
+	$self->lock();
 	eval {
 		$self->{dbh}->do($sql_statement_drop);
 	};
@@ -411,6 +412,7 @@ sub move_table {
 			&main::daemon_log("ERROR: $sql_statement_alter failed with $@", 1);
 		}
 	}
+	$self->unlock();
 
 	return;
 } 
