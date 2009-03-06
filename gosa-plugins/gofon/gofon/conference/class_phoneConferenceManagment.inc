@@ -436,19 +436,22 @@ class phoneConferenceManagment extends plugin
    */
   function reload()
   {
-    $Base             = get_ou('phoneConferenceRDN').$this->DivListConference->selectedBase;
     $SubSearch        = $this->DivListConference->SubSearch;
     $Regex            = $this->DivListConference->Regex;
-    $Flags            = GL_SIZELIMIT ; 
+    $Flags            = GL_SIZELIMIT ;
     $Filter           = "(&(|(cn=".$Regex.")(description=".$Regex."))(objectClass=goFonConference))";
     $Attrs            = array("cn","goFonConferenceOwner","goFonPIN","telephoneNumber");
- 
+
     if($SubSearch){
       $Flags |= GL_SUBSEARCH;
+      $Base  = $this->DivListConference->selectedBase;
+      $this->conferences= get_list($Filter, "gofonconference", $Base, $Attrs, $Flags);
+    }else{
+      $Base  = get_ou('phoneConferenceRDN').$this->DivListConference->selectedBase;
+      $this->conferences= get_list($Filter, "gofonconference", $Base, $Attrs, $Flags);
     }
-
-    $this->conferences= get_list($Filter, "gofonconference", $Base, $Attrs, $Flags);
   }
+
 
   function remove_from_parent()
   {
