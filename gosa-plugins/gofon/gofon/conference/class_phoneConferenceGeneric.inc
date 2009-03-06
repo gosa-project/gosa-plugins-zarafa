@@ -494,9 +494,28 @@ class conference extends plugin
         $parameter .= $this->$attrs;
       }
 
+      /* 
+       * ringing
+       * set language()=...
+       * wait 2
+       * answer
+       * wait 2
+       * meetme...
+       * hangup
+       * */
+
       $i=1;
       $EXT=array();
       $context="GOsa";
+
+      // Ringing
+      $EXT[$i]['exten']   =$this->telephoneNumber;
+      $EXT[$i]['context'] =$context;
+      $EXT[$i]['priority']=$i;
+      $EXT[$i]['app']     ="ringing";
+      $EXT[$i]['appdata'] ="";
+      $i++;      
+
       // Set Language to German
       $EXT[$i]['exten']   =$this->telephoneNumber;
       $EXT[$i]['context'] = $context;
@@ -505,17 +524,23 @@ class conference extends plugin
       $EXT[$i]['appdata'] ="LANGUAGE()=".$this->language;
       $i++;      
 
+      // Recordingformat for conference
       if($this->goFonConferenceOption_r == "r"){
-
-        // Recordingformat for conference
         $EXT[$i]['exten']   =$this->telephoneNumber;
         $EXT[$i]['context'] =$context;
         $EXT[$i]['priority']= $i;
         $EXT[$i]['app']     ="Setvar";
         $EXT[$i]['appdata'] ="MEETME_RECORDINGFORMAT=".$this->goFonConferenceOptionFormat;
         $i++;      
-
       }
+
+      // Wait for 2 seconds
+      $EXT[$i]['exten']   =$this->telephoneNumber;
+      $EXT[$i]['context'] =$context;
+      $EXT[$i]['priority']=$i;
+      $EXT[$i]['app']     ="wait";
+      $EXT[$i]['appdata'] ="2";
+      $i++;      
 
       // Answer Call
       $EXT[$i]['exten']   =$this->telephoneNumber;
@@ -525,12 +550,19 @@ class conference extends plugin
       $EXT[$i]['appdata'] ="";
       $i++;      
 
+      // Wait for 2 seconds
+      $EXT[$i]['exten']   =$this->telephoneNumber;
+      $EXT[$i]['context'] =$context;
+      $EXT[$i]['priority']=$i;
+      $EXT[$i]['app']     ="wait";
+      $EXT[$i]['appdata'] ="2";
+      $i++;      
+
       // Start Conference 
       $EXT[$i]['exten']   =$this->telephoneNumber;
       $EXT[$i]['context'] =$context;
       $EXT[$i]['priority']=$i;
       $EXT[$i]['app']     ="MeetMe";
-
       if(empty($this->goFonPIN)) {
         $EXT[$i]['appdata'] =$this->telephoneNumber."|".$parameter;
       }else{
@@ -538,14 +570,23 @@ class conference extends plugin
       }
       $i++; 
 
-      // Start Conference 
+      // Hanup command
+      $EXT[$i]['exten']   =$this->telephoneNumber;
+      $EXT[$i]['context'] =$context;
+      $EXT[$i]['priority']=$i;
+      $EXT[$i]['app']     ="hangup";
+      $EXT[$i]['appdata'] ="";
+      $i++;      
+
+      // Map name to number 
       $EXT[$i]['exten']   =$this->cn;
       $EXT[$i]['context'] =$context;
       $EXT[$i]['priority']=1;
       $EXT[$i]['app']     ="Goto";
       $EXT[$i]['appdata'] =$this->telephoneNumber."|1";
-      $SQL=array();
 
+
+      $SQL=array();
       foreach($EXT as $keytop => $valtop){
         $s_keys = "";
         $s_values = ""; 
