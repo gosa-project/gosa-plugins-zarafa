@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-27 10:06+0100\n"
-"PO-Revision-Date: 2008-12-04 14:31+0100\n"
+"PO-Revision-Date: 2009-03-06 20:47+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1627,8 +1627,7 @@ msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:106
 #, php-format
-msgid ""
-"Cannot determine a valid department for this object. Setting base to '%s'!"
+msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
@@ -1652,8 +1651,7 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:271
 msgid "This is a workstation template, printer tab is disabled."
-msgstr ""
-"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:276
 msgid "This is a terminal template, printer tab is disabled."
@@ -2385,7 +2383,7 @@ msgstr "En écriture seulement"
 
 #: admin/systems/goto/gotoLpdEnable.tpl:100
 msgid "Bit rate"
-msgstr ""
+msgstr "Débit"
 
 #: admin/systems/goto/gotoLpdEnable.tpl:110
 msgid "Flow control"
@@ -2402,13 +2400,11 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:234
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr ""
-"Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
+msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:247
 #, php-format
-msgid ""
-"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
 "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version "
 "sera '%s' !"
@@ -2586,8 +2582,7 @@ msgstr "Station de travail Windows"
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
@@ -2834,8 +2829,7 @@ msgstr "Impossible de lire le PPD '%s' !"
 #: admin/systems/ppd/class_printerPPDDialog.inc:121
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr ""
-"Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
+msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:140
 #: admin/systems/ppd/class_printerPPDDialog.inc:338
@@ -2856,8 +2850,7 @@ msgstr "Ecrasement du PPD existant"
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr ""
-"Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
+msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:462
 msgid "Section"
@@ -3100,13 +3093,11 @@ msgstr "Etat du déploiement des systèmes"
 #: addons/goto/class_gotomasses.inc:270
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
-"Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
+msgstr "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:360
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
+msgstr "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
 
 #: addons/goto/class_gotomasses.inc:361
 msgid "List of queued jobs"
@@ -3257,8 +3248,7 @@ msgstr "Déploiement de système"
 
 #: addons/goto/class_gotomasses.inc:911
 msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
-"Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
+msgstr "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
 
 #: addons/goto/log_view.tpl:7
 msgid "Available logs"
@@ -3521,8 +3511,7 @@ msgid "Progress"
 msgstr "Progression"
 
 #: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
 msgstr ""
 "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle "
 "contiennent. Voulez vous continuer ?"
@@ -3530,8 +3519,7 @@ msgstr ""
 #: addons/goto/class_goto_import_file.inc:131
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
-"L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
+msgstr "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
 
 #: personal/environment/class_environment.inc:9
 #: personal/environment/class_environment.inc:433
@@ -3589,8 +3577,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:364
 #, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -3856,5 +3843,5 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
-msgstr ""
-"Expression régulière concordant avec les noms des périphériques hotplug"
+msgstr "Expression régulière concordant avec les noms des périphériques hotplug"
+
