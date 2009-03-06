@@ -324,11 +324,17 @@ sub daemon_log {
     if(not defined $msg) { return }
     if(not defined $level) { $level = 1 }
     if(defined $log_file){
-        open(LOG_HANDLE, ">>$log_file");
-        if(not defined open( LOG_HANDLE, ">>$log_file" )) {
+        my $open_log_fh = sysopen(LOG_HANDLE, $log_file, O_WRONLY | O_CREAT | O_APPEND , 0440);
+        if(not $open_log_fh) {
             print STDERR "cannot open $log_file: $!";
-            return 
+            return;
         }
+        # check owner and group of log_file and update settings if necessary
+        my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime, $mtime, $ctime, $blksize, $blocks) = stat($log_file);
+        if((not $uid eq $root_uid) || (not $gid eq $adm_gid)) {
+            chown($root_uid, $adm_gid, $log_file);
+        }
+
         chomp($msg);
         #$msg =~s/\n//g;   # no newlines are allowed in log messages, this is important for later log parsing
         if($level <= $verbose){
@@ -3238,11 +3244,12 @@ if ($server_headURL =~ /\/tag\// ||
 } else {
     $server_status = "developmental" ;
 }
-
-# Prepare log file
+# Prepare log file and set permissions
 $root_uid = getpwnam('root');
 $adm_gid = getgrnam('adm');
-chmod(0640, $log_file);
+open(FH, ">>$log_file");
+close FH;
+chmod(0440, $log_file);
 chown($root_uid, $adm_gid, $log_file);
 chown($root_uid, $adm_gid, "/var/lib/gosa-si");
 
@@ -3293,56 +3300,56 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
         # connect to gosa-si job queue
         unlink($job_queue_file_name);  ## just for debugging
         $job_db = GOSA::DBsqlite->new($job_queue_file_name);
-        chmod(0660, $job_queue_file_name);
+        chmod(0640, $job_queue_file_name);
         chown($root_uid, $adm_gid, $job_queue_file_name);
         
         # connect to known_clients_db
         unlink($known_clients_file_name);   ## just for debugging
         $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
-        chmod(0660, $known_clients_file_name);
+        chmod(0640, $known_clients_file_name);
         chown($root_uid, $adm_gid, $known_clients_file_name);
         
         # connect to foreign_clients_db
         unlink($foreign_clients_file_name);
         $foreign_clients_db = GOSA::DBsqlite->new($foreign_clients_file_name);
-        chmod(0660, $foreign_clients_file_name);
+        chmod(0640, $foreign_clients_file_name);
         chown($root_uid, $adm_gid, $foreign_clients_file_name);
         
         # connect to known_server_db
         unlink($known_server_file_name);
         $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
-        chmod(0660, $known_server_file_name);
+        chmod(0640, $known_server_file_name);
         chown($root_uid, $adm_gid, $known_server_file_name);
         
         # connect to login_usr_db
         unlink($login_users_file_name);
         $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
-        chmod(0660, $login_users_file_name);
+        chmod(0640, $login_users_file_name);
         chown($root_uid, $adm_gid, $login_users_file_name);
         
         # connect to fai_server_db
         unlink($fai_server_file_name);
         $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
-        chmod(0660, $fai_server_file_name);
+        chmod(0640, $fai_server_file_name);
         chown($root_uid, $adm_gid, $fai_server_file_name);
         
         # connect to fai_release_db
         unlink($fai_release_file_name);
         $fai_release_db = GOSA::DBsqlite->new($fai_release_file_name);
-        chmod(0660, $fai_release_file_name);
+        chmod(0640, $fai_release_file_name);
         chown($root_uid, $adm_gid, $fai_release_file_name);
         
         # connect to packages_list_db
         #unlink($packages_list_file_name);
         unlink($packages_list_under_construction);
         $packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
-        chmod(0660, $packages_list_file_name);
+        chmod(0640, $packages_list_file_name);
         chown($root_uid, $adm_gid, $packages_list_file_name);
         
         # connect to messaging_db
         unlink($messaging_file_name);
         $messaging_db = GOSA::DBsqlite->new($messaging_file_name);
-        chmod(0660, $messaging_file_name);
+        chmod(0640, $messaging_file_name);
         chown($root_uid, $adm_gid, $messaging_file_name);
     }
 }

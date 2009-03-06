@@ -101,9 +101,11 @@ sub save_fai_log {
         my ($log_file, $log_string) = split(":", $log);
         my $client_fai_log_file = File::Spec->catfile( $client_fai_log_dir, $log_file);
 
-	open(my $LOG_FILE, ">$client_fai_log_file"); 
-        print $LOG_FILE &decode_base64($log_string);
-        close($LOG_FILE);
+		open(my $LOG_FILE, ">$client_fai_log_file"); 
+		print $LOG_FILE &decode_base64($log_string);
+		close($LOG_FILE);
+		chown($main::root_uid, $main::adm_gid, $client_fai_log_file);
+		chmod(0440, $client_fai_log_file);
 
     }
     return;
