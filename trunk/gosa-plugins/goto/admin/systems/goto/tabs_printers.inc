@@ -5,6 +5,7 @@ class printtabs extends tabs
 
   function printtabs($config, $data, $dn,$category)
   {
+    tabs::tabs($config, $data, $dn,$category);
 
     /* Save dn */
     $this->dn= $dn;
