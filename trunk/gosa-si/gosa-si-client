@@ -38,6 +38,7 @@ use MIME::Base64;
 use XML::Simple;
 use File::Basename;
 use File::Spec;
+use Fcntl;
 
 # Workaround: need pure perl to make it work with UTF-8 :-(
 $XML::Simple::PREFERRED_PARSER= "XML::SAX::PurePerl";
@@ -51,6 +52,7 @@ use lib "/usr/lib/gosa-si/client/events";
 my (%cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
 my ($server_ip, $server_port, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_port, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
+my ($root_uid, $adm_gid);
 my $xml;
 my $event_hash;
 my $default_server_key;
@@ -234,11 +236,17 @@ sub daemon_log {
     if(not defined $msg) { return }
     if(not defined $level) { $level = 1 }
     if(defined $log_file){
-        open(LOG_HANDLE, ">>$log_file");
-        if(not defined open( LOG_HANDLE, ">>$log_file" )) {
+		my $open_log_fh = sysopen(LOG_HANDLE, $log_file, O_WRONLY | O_CREAT | O_APPEND , 0440);
+        if(not $open_log_fh) {
             print STDERR "cannot open $log_file: $!";
-            return 
+            return;
         }
+        # check owner and group of log_file and update settings if necessary
+        my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime, $mtime, $ctime, $blksize, $blocks) = stat($log_file);
+        if((not $uid eq $root_uid) || (not $gid eq $adm_gid)) {
+            chown($root_uid, $adm_gid, $log_file);
+        }
+
         chomp($msg);
         if($level <= $verbose){
             my ($seconds, $minutes, $hours, $monthday, $month,
@@ -1121,11 +1129,12 @@ if ($client_headURL =~ /\/tag\// ||
     $client_status = "developmental" ;
 }
 
-# Prepare log file
-my $root_uid = getpwnam('root');
-my $adm_gid = getgrnam('adm');
-chmod(0640, $log_file);
-chown($root_uid, $adm_gid, $log_file);
+# Determine root uid and adm gid, used for creating log files
+$root_uid = getpwnam('root');
+$adm_gid = getgrnam('adm');
+if(not defined $adm_gid){
+	$adm_gid = getgrnam('root');
+}
 
 
 daemon_log(" ", 1);

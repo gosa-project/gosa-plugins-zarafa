@@ -43,6 +43,9 @@ sub lock {
 	open($self->{db_lock_handle}, ">>".($self->{db_lock})) unless ref $self->{db_lock_handle};
 	flock($self->{db_lock_handle},LOCK_EX);
 	seek($self->{db_lock_handle}, 0, 2);
+
+	chown($main::root_uid, $main::adm_gid, $self->{db_lock_handle});
+	chmod(0640, $self->{db_lock_handle});
 }
 
 

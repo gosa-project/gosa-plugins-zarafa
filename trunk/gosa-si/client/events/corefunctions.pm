@@ -117,8 +117,8 @@ sub registered {
     my $hostname= $main::client_dnsname;
     $hostname =~ s/\..*$//;
     $hostname =~ tr/A-Z/a-z/;
-    open($opts_file_FH, ">$main::opts_file");
-    print $opts_file_FH "MAC=\"$main::client_mac_address\"\n";
+ 	sysopen($opts_file_FH, $main::opts_file, O_RDWR | O_CREAT | O_TRUNC , 0644);
+	print $opts_file_FH "MAC=\"$main::client_mac_address\"\n";
     print $opts_file_FH "IPADDRESS=\"$main::client_ip\"\n";
     print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
     print $opts_file_FH "FQDN=\"$main::client_dnsname\"\n";
@@ -443,6 +443,10 @@ sub new_ldap_config {
 	    close(file1);
 	    daemon_log("wrote $cfg_name", 5);
     }
+
+    # Set permissions and ownership structure
+    chown(0, 0, $cfg_name);
+    chmod(0600, $cfg_name);
 
     return;
 }
