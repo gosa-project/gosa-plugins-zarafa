@@ -297,6 +297,15 @@ class phoneAccount extends plugin
 
     $this->a_old_telenums = $this->phoneNumbers;
 
+
+    /* Check table definitions
+     */
+    if(!phoneAccount::checkRealtimeTables($cur_cfg)){
+      msg_dialog::display(_("Warning"),
+          sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+          WARNING_DIALOG);
+    }
+
     /* Get voicemail PIN from MySQL DB 
      * Because every user can change his PIN directly from the phone
      *  without any update to the ldap
@@ -323,7 +332,11 @@ class phoneAccount extends plugin
 
         $res = mysql_query($query_tmp);
         $vp  = mysql_fetch_assoc($res);
-  
+        if(!isset($vp['context'])){
+          $this->is_modified= TRUE;
+          msg_dialog::display(_("Warning"), sprintf(_("Could not identify telephone extension in database, please try to save again. Activate debugging if error remains.")), WARNING_DIALOG);
+        } 
+ 
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query_tmp, "Database query");
         if((isset($vp['password']))&&(!empty($vp['password']))){
           $this->goFonPINVoice = $vp['password'];
@@ -341,6 +354,55 @@ class phoneAccount extends plugin
     if(is_callable("mysql_close")&&(isset($r_con))&&($r_con)){
       @mysql_close($r_con) ;
     }
+  }
+
+
+  /* Transaction will only work with InnoDB tables 
+   */
+  public static function checkRealtimeTables($config)
+  {
+    $ret =TRUE;
+
+    // Connect to DB server
+    if( (is_callable("mysql_pconnect"))&&
+        (isset($config))&&
+        (isset($config['SERVER']))&&
+        (isset($config['LOGIN']))&&
+        (isset($config['PASSWORD']))){
+
+      $r_con =  @mysql_pconnect($config['SERVER'],$config['LOGIN'],$config['PASSWORD']);
+      if($r_con){
+        $r_db  =  @mysql_select_db($config['DB'],$r_con);
+
+        /* Validate Table Type - it must be InnoDB to be able to use transactions 
+         */
+        $inno_tables = array("SIP_TABLE","EXT_TABLE","VOICE_TABLE","QUEUE_TABLE","QUEUE_MEMBER_TABLE"); 
+        foreach($inno_tables as $inno_table){
+          $sql = "show table status like '".$config[$inno_table]."';";
+          $res = mysql_query($sql);
+          $vp  = mysql_fetch_assoc($res);
+          if(!preg_match("/^InnoDB$/i",$vp['Engine'])){
+
+            /* Not an InnoDB Table type, try to modify type. 
+             */
+            $sql = "ALTER TABLE `".$config[$inno_table]."` ENGINE = INNODB; ";
+            $res = mysql_query($sql);
+            if(!$res){
+              @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$sql."</b>", 
+                  "<b>FAILED!</b>. Transactions will not work!");
+              $ret = FALSE;
+            }else{
+              @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$sql."</b>", 
+                  "<i>Table '".$config[$inno_table]."' is now of type InnoDB, this enables transactions.</i>");
+            }
+          }else{
+            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"",
+                "<i>Table type of '".$config[$inno_table]."' OK, using transactions!</i>");
+          }
+        }
+      }
+    }
+    return($ret);
   }
 
 
@@ -525,6 +587,7 @@ class phoneAccount extends plugin
       }
     }
 
+
     /* Save means that we must save changes, not only test  */
     if($save == true){
     
@@ -538,12 +601,18 @@ class phoneAccount extends plugin
       if($old_connection){
         $query  = "SELECT id,name,callerid FROM ".$a_Remove['SIP_TABLE']." WHERE name='".$this->uid."';";
         $rid    = mysql_query($query,$old_connection);
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, 
+            "<i>Reguest callerid to be able to identify the user.</i>");
 
         /* Old entry found, remove it */
         $query_a = array();
         if(mysql_affected_rows($old_connection)){
           $result = mysql_fetch_assoc($rid);
+
+          /* Set mode to strict
+             Strict disallows the addition of entries that do not match the targets field length.
+           */
+          $query_a[]= "SET @@sql_mode = STRICT_ALL_TABLES;";
           $query_a[]= "DELETE FROM ".$a_Remove['SIP_TABLE']." WHERE name='".$this->uid."';";
           $query_a[]= "DELETE FROM ".$a_Remove['VOICE_TABLE']." WHERE customer_id='".$result['callerid']."';";
           $query_a[]= "DELETE FROM ".$a_Remove['EXT_TABLE']." WHERE exten='".$this->uid."';";
@@ -551,14 +620,38 @@ class phoneAccount extends plugin
             $query_a[]= "DELETE FROM ".$a_Remove['EXT_TABLE']." WHERE exten='".$s_telenums."';";
           }
 
-          foreach($query_a as $qry){
-	          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$qry, "Database query");
-            if(!mysql_query($qry,$old_connection)){
-              trigger_error(mysql_error($old_connection));
+          /* Start transaction, to be able to rollback 
+           */
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Removing entry from old server---</b>","");
+
+          mysql_query("begin;",$old_connection);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>begin;</b>","<i>Starting transaction!</i>");
+
+          foreach($query_a as $query){
+            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "");
+            if(!mysql_query($query,$old_connection)){
+              $err = mysql_error($old_connection);
+              @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"\n".$err, "<b>FAILED</b>");
+              msg_dialog::display(_("Error"), 
+                  msgPool::mysqlerror($err,__CLASS__)."&nbsp;".
+                  "\n<p>"._("Please activate debugging for details!")."</p>",
+                  ERROR_DIALOG);
+
+              mysql_query("rollback;",$old_connection);
+              @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>rollback;</b>", "<b>ERROR</b> Rollback transaction!");
+              @mysql_close($old_connection);
+              return(false);
             } 
           }
+
+          /* Let changes get active, everything was fine;
+           */ 
+          mysql_query("commit;",$old_connection);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>commit;</b>", "");
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Transaction sucessful!---</b>", "");
         }
       }
+
 
       /********************** 
        * Update / Insert sip_users entry  
@@ -572,9 +665,14 @@ class phoneAccount extends plugin
 
       /* Check if there is already an entry in sip_users for this uid */
       $SQL_query_array = array();
+
+      /* Enforce strict mode, ensures inout validation, e.g. target field length 
+       */
+      $SQL_query_array[] = "SET @@sql_mode = STRICT_ALL_TABLES;";
+
       $query = "SELECT * FROM ".$a_New['SIP_TABLE']." WHERE name='".$this->uid."';\n"; 
       $rid = mysql_query($query,$new_connection);
-      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Receive current mysql entries.");
       if(mysql_affected_rows($new_connection)){
 
         /********************** 
@@ -606,12 +704,11 @@ class phoneAccount extends plugin
           $SQL_query_array[] = $query;
         }
       } else {
- 
+
         /********************** 
          * Insert sip_users entry 
          **********************/
         //generate SIP entry
-        $sip_data_array['id']           = "";
         $sip_data_array['name']         = $this->uid;
         $sip_data_array['accountcode']  = NULL;          
         $sip_data_array['amaflags']     = NULL;
@@ -668,13 +765,12 @@ class phoneAccount extends plugin
        **********************/
 
       $customer_id = $newnums[$i_new_key];
-
       $query  = "SELECT id,name,callerid FROM ".$a_New['SIP_TABLE']." WHERE name='".$this->uid."';";
-
       $rid    = mysql_query($query,$new_connection);
-      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Receive callerid");
       $result = mysql_fetch_assoc($rid);
-  
+
       $old_customer_id = ""; 
       if($result){
         $old_customer_id = $result['callerid'];
@@ -692,16 +788,16 @@ class phoneAccount extends plugin
 
       /* Check if there is already an entry in sip_users for this uid */
       $query_tmp = "SELECT * FROM ".$a_New['VOICE_TABLE']." WHERE customer_id='".$old_customer_id."';\n";
-
-
       $rid = mysql_query($query_tmp,$new_connection);
-      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query_tmp, "Database query");
+
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query_tmp, "Check if voicemail entry exists");
       if(mysql_affected_rows($new_connection)){
 
         /********************** 
          * Update Voice mail entry  
          **********************/
 
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"", "<i>Voicemail entry exists, adding updating to queue.</i>");
         $result = mysql_fetch_assoc($rid)  ;
 
         foreach($voice_data_array as $name => $value){
@@ -725,8 +821,9 @@ class phoneAccount extends plugin
         /********************** 
          * Insert Voice mail entry  
          **********************/
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"", "<i>No voicemail entry found, add 'create' to queue.</i>");
         $voice_data_array['context'] = $this->voice_context;
-  
+
         /* There is currently no voice mail entry for this user. 
          * We should create one 
          */
@@ -743,32 +840,26 @@ class phoneAccount extends plugin
         $SQL_query_array[] ="INSERT INTO ".$a_New['VOICE_TABLE']." (".$s_voi_keys.") VALUES (".$s_voi_values.");";
       }
 
-     
+
       /********************** 
        * Remove/Insert extension entries
        **********************/
-      
-      /* Remove old entries */
-      $query = array();
-      $query[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$this->uid."\";";
+
+      /* Initiate transaction 
+       */
+      $SQL_query_array[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$this->uid."\";";
       $oldnums= array();
       foreach($oldnums as $s_telenums){
-        $query[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$s_telenums."\";";
+        $SQL_query_array[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$s_telenums."\";";
       }
       foreach($newnums as $s_telenums){
-        $query[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$s_telenums."\";";
+        $SQL_query_array[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$s_telenums."\";";
       }
-      foreach($query as $qry){
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$qry, "Database query");
-        if(!mysql_query($qry,$new_connection)){
-          trigger_error(mysql_error($new_connection));
-        } 
-      }
- 
+
       /********************** 
        * Insert extension entries
        **********************/
- 
+
       // Get selected Macro Parameter and create parameter entry 
       if(isset($this->macroarray[$this->macro])){
         foreach($this->macroarray[$this->macro] as $key => $val ){
@@ -776,7 +867,7 @@ class phoneAccount extends plugin
         }
         $s_parameter = preg_replace("/\|$/","",$s_parameter);
       }
-     
+
       $i = 0; 
       $EXT = array();
       if(!is_numeric($this->uid)){
@@ -794,7 +885,7 @@ class phoneAccount extends plugin
         /* Hint Entry */
         $EXT[$i]['context'] = 'GOsa';
         $EXT[$i]['exten']   = $s_telenums;
-        $EXT[$i]['priority']= "Hint";
+        $EXT[$i]['priority']= 0;
         $EXT[$i]['app']     = 'SIP/'.$this->uid;
         $i ++;  
         /* SetCID */
@@ -842,14 +933,35 @@ class phoneAccount extends plugin
         $SQL_syn ="";
       }
 
-      // Perform queries ...
+      /* Start transaction, to be able to rollback 
+       */
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Insert/Update new entry---</b>","");
+
+      mysql_query("begin;",$new_connection);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>begin;</b>","<i>Starting transaction!</i>");
+
       foreach($SQL_query_array as $query){
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-        if(!@mysql_query($query,$new_connection)){
-          $this->generate_error =  msgPool::dbquery("GOfon",@mysql_error($old_connection));
-          return false;
-        }
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "");
+        if(!mysql_query($query,$new_connection)){
+          $err = mysql_error($new_connection);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"\n".$err, "<b>FAILED</b>");
+          msg_dialog::display(_("Error"), 
+              msgPool::mysqlerror($err,__CLASS__)."&nbsp;".
+              "\n<p>"._("Please activate debugging for details!")."</p>",
+              ERROR_DIALOG);
+
+          mysql_query("rollback;",$new_connection);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>rollback;</b>", "<b>ERROR</b> Rollback transaction!");
+          @mysql_close($new_connection);
+          return(false);
+        } 
       }
+     
+      /* Let changes get active, everything was fine;
+       */ 
+      mysql_query("commit;",$new_connection);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>commit;</b>", "Perform transaction!");
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Transaction sucessful!---</b>", "");
     }
     @mysql_close($new_connection);
     return true;
@@ -1070,10 +1182,7 @@ class phoneAccount extends plugin
 
     /* Add phone number */
     if (isset($_POST["add_phonenumber"]) && $_POST['phonenumber']){
-
-      if(strlen(trim($_POST["phonenumber"])) > 5 ){
-        msg_dialog::display(_("Error"), msgPool::toobig("Phone number",99999), ERROR_DIALOG);
-      }elseif (tests::is_phone_nr($_POST['phonenumber'])){
+      if (tests::is_phone_nr($_POST['phonenumber'])){
         $number= trim($_POST["phonenumber"]);
         $this->phoneNumbers[$number]= $number;
         $this->is_modified= TRUE;
@@ -1290,8 +1399,9 @@ class phoneAccount extends plugin
     }
 
     if ($this->initially_was_account != $this->is_account || $this->is_modified){
-      if(!$this->generate_mysql_entension_entries()){
-        $message[] = $this->generate_error;
+      $str = $this->generate_mysql_entension_entries(true);
+      if(empty($str)){
+        msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
       }
     }
 
@@ -1348,11 +1458,11 @@ class phoneAccount extends plugin
 
     $this->attrs['goFonForwarding']=array();
 
-    if ($this->initially_was_account != $this->is_account || $this->is_modified){
-      $str = $this->generate_mysql_entension_entries(true);
-      if(empty($str)){
-        msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
-      }
+    /*
+     */
+    $str = $this->generate_mysql_entension_entries(true);
+    if(!$str){
+      msg_dialog::display(_("Error"),_("An error occured while updating the database entries, activate debugging for details.") , ERROR_DIALOG);
     }
 
     if($this->attrs['goFonMacro']==""){
@@ -1439,7 +1549,7 @@ class phoneAccount extends plugin
       }
 
       $SQL="";
-
+      $SQL[]= "SET @@sql_mode = STRICT_ALL_TABLES;";
 
       $first_num = false;
       // Delete old entries
@@ -1460,17 +1570,44 @@ class phoneAccount extends plugin
         $callerid = $result['callerid'];
       }
 
+      /* Set mode to strict
+         Strict disallows the addition of entries that do not match the targets field length.
+       */
       $SQL[] = "DELETE FROM ".$a_SETUP['VOICE_TABLE']." WHERE customer_id='".$callerid."';";
       $SQL[] = "DELETE FROM ".$a_SETUP['EXT_TABLE']." WHERE exten='".$this->uid."';\n";
       $SQL[] = "DELETE FROM ".$a_SETUP['SIP_TABLE']." WHERE name='".$this->uid."';\n";
 
+      /* Start transaction, to be able to rollback
+       */
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Removing entry from server---</b>","");
+
+      mysql_query("begin;",$r_con);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>begin;</b>","<i>Starting transaction!</i>");
+
       foreach($SQL as $query){
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-        if(!@mysql_query($query,$r_con)){
-          msg_dialog::display(_("Error"), msgPool::dbquery("GOfon",@mysql_error()), ERROR_DIALOG);
-          return false;
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "");
+
+        if(!mysql_query($query,$r_con)){
+          $err = mysql_error($r_con);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"\n".$err, "<b>FAILED</b>");
+          msg_dialog::display(_("Error"),
+              msgPool::mysqlerror($err,__CLASS__)."&nbsp;".
+              "\n<p>"._("Please activate debugging for details!")."</p>",
+              ERROR_DIALOG);
+
+          mysql_query("rollback;",$r_con);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>rollback;</b>", "<b>ERROR</b> Rollback transaction!");
+          @mysql_close($r_con);
+          return(false);
         }
       }
+
+      /* Let changes get active, everything was fine;
+       */
+      mysql_query("commit;",$old_connection);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>commit;</b>", "");
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Transaction sucessful!---</b>", "");
+
     }else{
       msg_dialog::display(_("Configuration error"), msgPool::missingext("php-mysql"), WARNING_DIALOG);
       return false;
