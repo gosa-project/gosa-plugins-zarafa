@@ -7,7 +7,7 @@ use DBI;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Time::HiRes qw(usleep);
-use Fcntl ':flock'; # import LOCK_* constants
+use Fcntl qw/:DEFAULT :flock/; # import LOCK_* constants
 
 my $col_names = {};
 
@@ -40,18 +40,20 @@ sub new {
 
 sub lock {
 	my $self = shift;
-	open($self->{db_lock_handle}, ">>".($self->{db_lock})) unless ref $self->{db_lock_handle};
-	flock($self->{db_lock_handle},LOCK_EX);
+	if(not ref $self->{db_lock_handle}) {
+		sysopen($self->{db_lock_handle}, $self->{db_lock}, O_RDWR|O_CREAT, 0600) or &main::daemon_log("0 ERROR: Opening the lockfile for database ".$self->{db_name}." failed with $!", 1);
+	}
+	flock($self->{db_lock_handle}, LOCK_EX);
 	seek($self->{db_lock_handle}, 0, 2);
-
-	chown($main::root_uid, $main::adm_gid, $self->{db_lock_handle});
-	chmod(0640, $self->{db_lock_handle});
 }
 
 
 sub unlock {
 	my $self = shift;
-	flock($self->{db_lock_handle},LOCK_UN);
+	if(not ref $self->{db_lock_handle}) {
+		&main::daemon_log("0 BIG ERROR: Lockfile for databse ".$self->{db_name}."got closed within critical section!", 1);
+	}
+	flock($self->{db_lock_handle}, LOCK_UN);
 }
 
 
