@@ -1192,7 +1192,10 @@ class phoneAccount extends plugin
 
     /* Add phone number */
     if (isset($_POST["add_phonenumber"]) && $_POST['phonenumber']){
-      if (tests::is_phone_nr($_POST['phonenumber'])){
+
+      if(strlen(trim($_POST["phonenumber"])) > 5 ){
+        msg_dialog::display(_("Error"), msgPool::toobig("Phone number",99999), ERROR_DIALOG);
+      }elseif (tests::is_phone_nr($_POST['phonenumber'])){
         $number= trim($_POST["phonenumber"]);
         $this->phoneNumbers[$number]= $number;
         $this->is_modified= TRUE;
