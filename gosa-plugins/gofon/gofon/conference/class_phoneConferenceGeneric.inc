@@ -447,6 +447,7 @@ class conference extends plugin
     }
 
     /* Connect to current database to be able to add new entries */
+    $SQL=array();
     $cfg_Current  = $this->goFonHomeServers[$this->goFonHomeServer] ;
     $res_cur      =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
     $db_cur       =  @mysql_select_db($cfg_Current['DB'],$res_cur);
@@ -454,6 +455,16 @@ class conference extends plugin
     /********************
      * Remove entries that could cause trouble  
      ********************/
+
+
+    /* Check table definitions
+     */
+    if($save && !phoneAccount::checkRealtimeTables($cfg_Current)){
+      msg_dialog::display(_("Warning"),
+          sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+          WARNING_DIALOG);
+    }
+
 
     /* If the current home server is different to the initial home server,
      *  there may be already some entries with the given telephoneNumber and/or cn.
@@ -468,17 +479,9 @@ class conference extends plugin
         return(msgPool::dbquery("GOfon", @mysql_error($res_cur),$cfg_Current['SERVER']));
       }
       if($save && mysql_affected_rows($res_cur)) {
-        $SQL = "DELETE FROM ".$cfg_Current['EXT_TABLE']." 
+        $SQL[] = "DELETE FROM ".$cfg_Current['EXT_TABLE']." 
           WHERE   (exten='".$this->telephoneNumber."') 
           OR    (exten='".$this->cn."')";
-
-        /* Query and ensure that everything went fine */
-        $res =  @mysql_query($SQL,$res_cur);
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$SQL, "Database query");
-        if(!$res){
-          new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
-          return(msgPool::dbquery("GOfon", @mysql_error($res_cur),$cfg_Current['SERVER']));
-        }
       }
     }
 
@@ -586,7 +589,6 @@ class conference extends plugin
       $EXT[$i]['appdata'] =$this->telephoneNumber."|1";
 
 
-      $SQL=array();
       foreach($EXT as $keytop => $valtop){
         $s_keys = "";
         $s_values = ""; 
@@ -598,10 +600,38 @@ class conference extends plugin
         $s_values =preg_replace("/\,$/","",$s_values); 
         $SQL[]="INSERT INTO ".$cfg_Current['EXT_TABLE']." (".$s_keys.") VALUES (".$s_values.");"; 
       }
-      foreach($SQL as $sqlsyn){
-        mysql_query($sqlsyn,$res_cur);
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$sqlsyn, "Database query");
+
+
+
+      /* Start transaction, to be able to rollback
+       */
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Updating/Inserting entries---</b>","");
+
+      mysql_query("begin;",$res_cur);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>begin;</b>","<i>Starting transaction!</i>");
+
+      foreach($SQL as $query){
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "");
+        if(!mysql_query($query,$res_cur)){
+          $err = mysql_error($res_cur);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"\n".$err, "<b>FAILED</b>");
+          msg_dialog::display(_("Error"),
+              msgPool::mysqlerror($err,__CLASS__)."&nbsp;".
+              "\n<p>"._("Please activate debugging for details!")."</p>",
+              ERROR_DIALOG);
+
+          mysql_query("rollback;",$res_cur);
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>rollback;</b>", "<b>ERROR</b> Rollback transaction!");
+          @mysql_close($res_cur);
+          return(false);
+        }
       }
+
+      /* Let changes get active, everything was fine;
+       */
+      mysql_query("commit;",$res_cur);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>commit;</b>", "");
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Transaction sucessful!---</b>", "");
     } 
 
     @mysql_close($res_cur);
