@@ -298,14 +298,6 @@ class phoneAccount extends plugin
     $this->a_old_telenums = $this->phoneNumbers;
 
 
-    /* Check table definitions
-     */
-    if(!phoneAccount::checkRealtimeTables($cur_cfg)){
-      msg_dialog::display(_("Warning"),
-          sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
-          WARNING_DIALOG);
-    }
-
     /* Get voicemail PIN from MySQL DB 
      * Because every user can change his PIN directly from the phone
      *  without any update to the ldap
@@ -599,6 +591,15 @@ class phoneAccount extends plugin
        * If there is an old entry, get callerid and remove voicemail and extensions 
        */
       if($old_connection){
+
+        /* Check table definitions
+         */
+        if(!phoneAccount::checkRealtimeTables($a_Remove)){
+          msg_dialog::display(_("Warning"),
+              sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+              WARNING_DIALOG);
+        }
+
         $query  = "SELECT id,name,callerid FROM ".$a_Remove['SIP_TABLE']." WHERE name='".$this->uid."';";
         $rid    = mysql_query($query,$old_connection);
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, 
@@ -656,6 +657,15 @@ class phoneAccount extends plugin
       /********************** 
        * Update / Insert sip_users entry  
        **********************/
+
+      /* Check table definitions
+       */
+      if(!phoneAccount::checkRealtimeTables($a_New)){
+        msg_dialog::display(_("Warning"),
+            sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+            WARNING_DIALOG);
+      }
+
 
       /* Set the first given phone number as callerid */
       reset($newnums);        
@@ -1528,6 +1538,14 @@ class phoneAccount extends plugin
       $a_SETUP = $this->goFonHomeServers[$this->init_HomeServer];
       $s_parameter  ="";
 
+      /* Check table definitions
+       */
+      if(!phoneAccount::checkRealtimeTables($a_SETUP)){
+        msg_dialog::display(_("Warning"),
+            sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+            WARNING_DIALOG);
+      }
+
       // Connect to DB server
       $r_con =  @mysql_pconnect($a_SETUP['SERVER'],$a_SETUP['LOGIN'],$a_SETUP['PASSWORD']);
 
@@ -1604,7 +1622,7 @@ class phoneAccount extends plugin
 
       /* Let changes get active, everything was fine;
        */
-      mysql_query("commit;",$old_connection);
+      mysql_query("commit;",$r_con);
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>commit;</b>", "");
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Transaction sucessful!---</b>", "");
 
