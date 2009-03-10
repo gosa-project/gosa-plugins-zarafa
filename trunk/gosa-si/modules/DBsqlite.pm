@@ -19,7 +19,7 @@ sub new {
 	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
 	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
 	my $sth = $dbh->prepare("pragma integrity_check");
-     $sth->execute();
+	$sth->execute();
 	my @ret = $sth->fetchall_arrayref();
 	if(length(@ret)==1 && $ret[0][0][0] eq 'ok') {
 		&main::daemon_log("DEBUG: Database image $db_name is ok", 7);
@@ -28,7 +28,7 @@ sub new {
 		$sth->finish();
 		$dbh->disconnect();
 		unlink($db_name);
-	  $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
+		$dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
 	}
 	$self->{dbh} = $dbh;
 	$self->{db_name} = $db_name;
@@ -45,15 +45,19 @@ sub lock {
 	}
 	flock($self->{db_lock_handle}, LOCK_EX);
 	seek($self->{db_lock_handle}, 0, 2);
+	&main::daemon_log("0 DEBUG: Got lock for database ".$self->{db_name}, 7);
+	return;
 }
 
 
 sub unlock {
 	my $self = shift;
 	if(not ref $self->{db_lock_handle}) {
-		&main::daemon_log("0 BIG ERROR: Lockfile for databse ".$self->{db_name}."got closed within critical section!", 1);
+		&main::daemon_log("0 BIG ERROR: Lockfile for database ".$self->{db_name}."got closed within critical section!", 1);
 	}
 	flock($self->{db_lock_handle}, LOCK_UN);
+	&main::daemon_log("0 DEBUG: Released lock for database ".$self->{db_name}, 7);
+	return;
 }
 
 
@@ -74,13 +78,25 @@ sub create_table {
 	
 	$col_names->{ $table_name } = \@col_names;
 	my $col_names_string = join(", ", @col_names_creation);
-	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	$self->lock();
+	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	eval {
 		my $res = $self->{dbh}->do($sql_statement);
 	};
 	if($@) {
-		$self->{dbh}->do("ANALYZE");
+		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+		eval {
+			$self->{dbh}->do("ANALYZE");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
+		}
+		eval {
+			$self->{dbh}->do("VACUUM");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
+		}
 		eval {
 			my $res = $self->{dbh}->do($sql_statement);
 		};
@@ -127,19 +143,23 @@ sub add_dbentry {
 		my $sql_statement = "SELECT * FROM $table $prim_statement";
 		$self->lock();
 		eval {
-			$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
+			my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
+			$sth->execute() or &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
+			$res = @{ $sth->fetchall_arrayref() };
 		};
 		if($@) {
+			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 			$self->{dbh}->do("ANALYZE");
 			eval {
-				$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
+				my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
+				$sth->execute() or &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
+				$res = @{ $sth->fetchall_arrayref() };
 			};
 			if($@) {
 				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 			}
 		}
 		$self->unlock();
-
 	}
 
 	# primkey is unique or no primkey specified -> run insert
@@ -175,12 +195,26 @@ sub add_dbentry {
 		my $db_res;
 		$self->lock();
 		eval {
-			$db_res = $self->{dbh}->do($sql_statement);
+			my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
+			$db_res = $sth->execute() or &main::daemon("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
 		};
 		if($@) {
-			$self->{dbh}->do("ANALYZE");
+			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 			eval {
-				$db_res = $self->{dbh}->do($sql_statement);
+				$self->{dbh}->do("ANALYZE");
+			};
+			if($@) {
+				&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
+			}
+			eval {
+				$self->{dbh}->do("VACUUM");
+			};
+			if($@) {
+				&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
+			}
+			eval {
+				my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
+				$db_res = $sth->execute() or &main::daemon("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
 			};
 			if($@) {
 				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
@@ -234,22 +268,7 @@ sub get_table_columns {
 		@column_names = @{$col_names->{$table}};
 	} else {
 		my @res;
-		$self->lock();
-		eval {
-			@res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
-		};
-		if($@) {
-			$self->{dbh}->do("ANALYZE");
-			eval {
-				@res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
-			};
-			if($@) {
-				&main::daemon_log("ERROR: pragma table_info('$table') failed with $@", 1);
-			}
-		}
-		$self->unlock();
-
-		foreach my $column (@res) {
+		foreach my $column ( &exec_statement ( "pragma table_info('$table')" ) ) {
 			push(@column_names, @$column[1]);
 		}
 	}
@@ -317,12 +336,29 @@ sub exec_statement {
 
 	$self->lock();
 	eval {
-		@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+		my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
+		my $res = $sth->execute() or  &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
+		@db_answer = @{$sth->fetchall_arrayref()};
+		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 7);
 	};
 	if($@) {
-		$self->{dbh}->do("ANALYZE");
+		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 		eval {
-			@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+			$self->{dbh}->do("ANALYZE");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
+		}
+		eval {
+			$self->{dbh}->do("VACUUM");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
+		}
+		eval {
+			my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
+			$sth->execute() or &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
+			@db_answer = @{$sth->fetchall_arrayref()};
 		};
 		if($@) {
 			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
@@ -340,35 +376,35 @@ sub exec_statement {
 
 
 sub exec_statementlist {
-	my $self = shift;
-	my $sql_list = shift;
-	my @db_answer;
+    my $self = shift;
+    my $sql_list = shift;
+    my @db_answer;
 
-	foreach my $sql (@$sql_list) {
-		if(defined($sql) && length($sql) > 0) {
-			# Obtain a new lock for each statement to not block the db for a too long time
-			$self->lock();
-			eval {
-				my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
-				push @db_answer, @answer;
-			};
-			if($@) {
-				$self->{dbh}->do("ANALYZE");
-				eval {
-					my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
-					push @db_answer, @answer;
-				};
-				if($@) {
-					&main::daemon_log("ERROR: $sql failed with $@", 1);
-				}
-			}
-			$self->unlock();
-		} else {
-			next;
-		}
-	}
+    foreach my $sql (@$sql_list) {
+        if(defined($sql) && length($sql) > 0) {
+            # Obtain a new lock for each statement to not block the db for a too long time
+            $self->lock();
+            eval {
+                my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+                push @db_answer, @answer;
+            };
+            if($@) {
+                $self->{dbh}->do("ANALYZE");
+                eval {
+                    my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+                    push @db_answer, @answer;
+                };
+                if($@) {
+                    &main::daemon_log("ERROR: $sql failed with $@", 1);
+                }
+            }
+            $self->unlock();
+        } else {
+            next;
+        }
+    }
 
-	return \@db_answer;
+    return \@db_answer;
 }
 
 
@@ -398,7 +434,18 @@ sub move_table {
 		$self->{dbh}->do($sql_statement_drop);
 	};
 	if($@) {
-		$self->{dbh}->do("ANALYZE");
+		eval {
+			$self->{dbh}->do("ANALYZE");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
+		}
+		eval {
+			$self->{dbh}->do("VACUUM");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
+		}
 		eval {
 			$self->{dbh}->do($sql_statement_drop);
 		};
@@ -411,7 +458,18 @@ sub move_table {
 		$self->{dbh}->do($sql_statement_alter);
 	};
 	if($@) {
-		$self->{dbh}->do("ANALYZE");
+		eval {
+			$self->{dbh}->do("ANALYZE");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
+		}
+		eval {
+			$self->{dbh}->do("VACUUM");
+		};
+		if($@) {
+			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
+		}
 		eval {
 			$self->{dbh}->do($sql_statement_alter);
 		};
