@@ -1185,7 +1185,7 @@ class mailgroup extends plugin
    */
   function addForwarder($address)
   {
-    if(empty($address)) continue;
+    if(empty($address)) return;
     $this->gosaMailForwardingAddress[]= $address;
     $this->gosaMailForwardingAddress= array_unique($this->gosaMailForwardingAddress);
 
@@ -1205,7 +1205,7 @@ class mailgroup extends plugin
    */
   function delForwarder($addresses)
   {
-    if(empty($address)) continue;
+    if(empty($addresses)) return;
     $this->gosaMailForwardingAddress= array_remove_entries ($addresses,
         $this->gosaMailForwardingAddress);
 
