@@ -15,17 +15,18 @@ sub new {
 	my $class = shift;
 	my $db_name = shift;
 
-	my $lock = $db_name.".si.lock";
+	#my $lock = $db_name.".si.lock";
+	my $lock = $db_name;
 	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
-	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
+	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1, PrintError => 0});
 	my $sth = $dbh->prepare("pragma integrity_check");
 	$sth->execute();
 	my @ret = $sth->fetchall_arrayref();
+	$sth->finish();
 	if(length(@ret)==1 && $ret[0][0][0] eq 'ok') {
 		&main::daemon_log("DEBUG: Database image $db_name is ok", 7);
 	} else {
 		&main::daemon_log("ERROR: Database image $db_name is malformed, creating new database.", 1);
-		$sth->finish();
 		$dbh->disconnect();
 		unlink($db_name);
 		$dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
@@ -40,18 +41,30 @@ sub new {
 
 sub lock {
 	my $self = shift;
-	if(not ref $self->{db_lock_handle}) {
-		sysopen($self->{db_lock_handle}, $self->{db_lock}, O_RDWR|O_CREAT, 0600) or &main::daemon_log("0 ERROR: Opening the lockfile for database ".$self->{db_name}." failed with $!", 1);
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::lock was called static! Statement was '$self'!", 1);
+		return;
 	}
-	flock($self->{db_lock_handle}, LOCK_EX);
-	seek($self->{db_lock_handle}, 0, 2);
-	&main::daemon_log("0 DEBUG: Got lock for database ".$self->{db_name}, 7);
+	if(not ref $self->{db_lock_handle}) {
+		sysopen($self->{db_lock_handle}, $self->{db_lock}, O_RDWR) or &main::daemon_log("0 ERROR: Opening the database ".$self->{db_name}." failed with $!", 1);
+	}
+	my $lock_result = flock($self->{db_lock_handle}, LOCK_EX);
+	if($lock_result==1) {
+		seek($self->{db_lock_handle}, 0, 2);
+		&main::daemon_log("0 DEBUG: Acquired lock for database ".$self->{db_name}, 7);
+	} else {
+		&main::daemon_log("0 ERROR: Could not acquire lock for database ".$self->{db_name}, 1);
+	}
 	return;
 }
 
 
 sub unlock {
 	my $self = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::unlock was called static! Statement was '$self'!", 1);
+		return;
+	}
 	if(not ref $self->{db_lock_handle}) {
 		&main::daemon_log("0 BIG ERROR: Lockfile for database ".$self->{db_name}."got closed within critical section!", 1);
 	}
@@ -63,6 +76,10 @@ sub unlock {
 
 sub create_table {
 	my $self = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::create_table was called static! Statement was '$self'!", 1);
+		return;
+	}
 	my $table_name = shift;
 	my $col_names_ref = shift;
 	my @col_names;
@@ -78,33 +95,8 @@ sub create_table {
 	
 	$col_names->{ $table_name } = \@col_names;
 	my $col_names_string = join(", ", @col_names_creation);
-	$self->lock();
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
-	eval {
-		my $res = $self->{dbh}->do($sql_statement);
-	};
-	if($@) {
-		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
-		eval {
-			$self->{dbh}->do("ANALYZE");
-		};
-		if($@) {
-			&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
-		}
-		eval {
-			$self->{dbh}->do("VACUUM");
-		};
-		if($@) {
-			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
-		}
-		eval {
-			my $res = $self->{dbh}->do($sql_statement);
-		};
-		if($@) {
-			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
-		}
-	}
-	$self->unlock();
+	my $res = $self->exec_statement($sql_statement);
 
 	return 0;
 }
@@ -117,8 +109,8 @@ sub add_dbentry {
 
 	# if dbh not specified, return errorflag 1
 	my $table = $arg->{table};
-	if( not defined $table ) { 
-		return 1 ; 
+	if( not defined $table ) {
+		return 1 ;
 	}
 
 	# if timestamp is not provided, add timestamp   
@@ -141,25 +133,7 @@ sub add_dbentry {
 
 		# check wether primkey is unique in table, otherwise return errorflag
 		my $sql_statement = "SELECT * FROM $table $prim_statement";
-		$self->lock();
-		eval {
-			my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
-			$sth->execute() or &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
-			$res = @{ $sth->fetchall_arrayref() };
-		};
-		if($@) {
-			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
-			$self->{dbh}->do("ANALYZE");
-			eval {
-				my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
-				$sth->execute() or &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
-				$res = @{ $sth->fetchall_arrayref() };
-			};
-			if($@) {
-				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
-			}
-		}
-		$self->unlock();
+		$res = @{ $self->exec_statement($sql_statement) };
 	}
 
 	# primkey is unique or no primkey specified -> run insert
@@ -170,11 +144,9 @@ sub add_dbentry {
 		my $create_id=0;
 		foreach my $col_name (@{$col_names}) {
 			if($col_name eq "id" && (! exists $arg->{$col_name})) {
-				#&main::daemon_log("0 DEBUG: id field found without value! Creating autoincrement statement!", 7);
 				$create_id=1;
 			}
 		}
-
 		# assign values to column name variables
 		my @col_list;
 		my @val_list;
@@ -184,7 +156,7 @@ sub add_dbentry {
 				push(@col_list, "'".$col_name."'");
 				push(@val_list, "'".$arg->{$col_name}."'");
 			}
-		}    
+		}
 
 		my $sql_statement;
 		if($create_id==1) {
@@ -193,38 +165,53 @@ sub add_dbentry {
 			$sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
 		}
 		my $db_res;
+		my $success=0;
 		$self->lock();
 		eval {
-			my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
-			$db_res = $sth->execute() or &main::daemon("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
+			my $sth = $self->{dbh}->prepare_cached($sql_statement);
+			$db_res = $sth->execute();
+			$sth->finish();
+			&main::daemon_log("0 ERROR: Execution of statement '$sql_statement' succeeded!", 7);
+			$success = 1;
 		};
 		if($@) {
-			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 			eval {
 				$self->{dbh}->do("ANALYZE");
-			};
-			if($@) {
-				&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
-			}
-			eval {
 				$self->{dbh}->do("VACUUM");
 			};
-			if($@) {
-				&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
-			}
+		}
+		if($success==0) {
 			eval {
-				my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
-				$db_res = $sth->execute() or &main::daemon("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
+				my $sth = $self->{dbh}->prepare_cached($sql_statement);
+				$db_res = $sth->execute();
+				$sth->finish();
+				&main::daemon_log("0 ERROR: Execution of statement '$sql_statement' succeeded!", 7);
+				$success = 1;
 			};
 			if($@) {
-				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+				eval {
+					$self->{dbh}->do("ANALYZE");
+					$self->{dbh}->do("VACUUM");
+				};
+			}
+		}
+		if($success==0) {
+			eval {
+				my $sth = $self->{dbh}->prepare_cached($sql_statement);
+				$db_res = $sth->execute();
+				$sth->finish();
+				&main::daemon_log("0 ERROR: Execution of statement '$sql_statement' succeeded!", 7);
+				$success = 1;
+			};
+			if($@) {
+				&main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $@", 1);
 			}
 		}
 		$self->unlock();
 
 		if( $db_res != 1 ) {
 			return (4, $sql_statement);
-		} 
+		}
 
 		# entry already exists -> run update
 	} else  {
@@ -243,24 +230,34 @@ sub add_dbentry {
 
 	return 0;
 }
-
-
 sub update_dbentry {
 	my ($self, $sql)= @_;
-	my $db_answer= &exec_statement($self, $sql); 
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::update_dbentry was called static! Statement was '$self'!", 1);
+		return;
+	}
+	my $db_answer= $self->exec_statement($sql); 
 	return $db_answer;
 }
 
 
 sub del_dbentry {
 	my ($self, $sql)= @_;;
-	my $db_res= &exec_statement($self, $sql);
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::del_dbentry was called static! Statement was '$self'!", 1);
+		return;
+	}
+	my $db_res= $self->exec_statement($sql);
 	return $db_res;
 }
 
 
 sub get_table_columns {
 	my $self = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::get_table_columns was called static! Statement was '$self'!", 1);
+		return;
+	}
 	my $table = shift;
 	my @column_names;
 
@@ -268,7 +265,7 @@ sub get_table_columns {
 		@column_names = @{$col_names->{$table}};
 	} else {
 		my @res;
-		foreach my $column ( &exec_statement ( "pragma table_info('$table')" ) ) {
+		foreach my $column ( $self->exec_statement ( "pragma table_info('$table')" ) ) {
 			push(@column_names, @$column[1]);
 		}
 	}
@@ -279,9 +276,13 @@ sub get_table_columns {
 
 sub select_dbentry {
 	my ($self, $sql)= @_;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::select_dbentry was called static! Statement was '$self'!", 1);
+		return;
+	}
 	my $error= 0;
 	my $answer= {};
-	my $db_answer= &exec_statement($self, $sql); 
+	my $db_answer= $self->exec_statement($sql); 
 	my @column_list;
 
 	# fetch column list of db and create a hash with column_name->column_value of the select query
@@ -291,7 +292,7 @@ sub select_dbentry {
 
 	# all columns are used for creating answer
 	if ($selected_cols eq '*') {
-		@column_list = @{ &get_table_columns($self, $table) };    
+		@column_list = @{ $self->get_table_columns($table) };    
 
 		# specific columns are used for creating answer
 	} else {
@@ -316,10 +317,14 @@ sub select_dbentry {
 
 sub show_table {
 	my $self = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::show_table was called static! Statement was '$self'!", 1);
+		return;
+	}
 	my $table_name = shift;
 
 	my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
-	my $res= &exec_statement($self, $sql_statement);
+	my $res= $self->exec_statement($sql_statement);
 	my @answer;
 	foreach my $hit (@{$res}) {
 		push(@answer, "hit: ".join(', ', @{$hit}));
@@ -332,89 +337,120 @@ sub show_table {
 sub exec_statement {
 	my $self = shift;
 	my $sql_statement = shift;
-	my @db_answer;
 
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called static! Statement was '$self'!", 1);
+		return;
+	}
+	if(not defined($sql_statement) or length($sql_statement) == 0) {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called with empty statement!", 1);
+		return;
+	}
+
+	my @db_answer;
+	my $success= 0;
 	$self->lock();
+	# Give three chances to the sqlite database
+	# 1st chance
 	eval {
-		my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
-		my $res = $sth->execute() or  &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
+		my $sth = $self->{dbh}->prepare_cached($sql_statement);
+		my $res = $sth->execute();
 		@db_answer = @{$sth->fetchall_arrayref()};
+		$sth->finish();
+		$success=1;
 		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 7);
 	};
 	if($@) {
-		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 		eval {
 			$self->{dbh}->do("ANALYZE");
-		};
-		if($@) {
-			&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
-		}
-		eval {
 			$self->{dbh}->do("VACUUM");
 		};
-		if($@) {
-			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
-		}
-		eval {
-			my $sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed with $!", 1);
-			$sth->execute() or &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed with $!", 1);
-			@db_answer = @{$sth->fetchall_arrayref()};
-		};
-		if($@) {
-			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
-		}
 	}
-	$self->unlock();
+	if($success) {
+		$self->unlock();
+		return \@db_answer ;
+	}
+	
+	# 2nd chance
+	eval {
+		DBI->trace(2) if($main::verbose >= 7);
+		my $sth = $self->{dbh}->prepare_cached($sql_statement);
+		my $res = $sth->execute();
+		@db_answer = @{$sth->fetchall_arrayref()};
+		$sth->finish();
+		DBI->trace(0);
+		$success=1;
+		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 7);
+	};
+	if($@) {
+		eval {
+			$self->{dbh}->do("ANALYZE");
+			$self->{dbh}->do("VACUUM");
+		};
+		DBI->trace(0);
+	}
+	if($success) {
+		$self->unlock();
+		return \@db_answer ;
+	}
+
+	# 3rd chance
+	eval {
+		DBI->trace(2) if($main::verbose >= 7);
+		my $sth = $self->{dbh}->prepare_cached($sql_statement);
+		my $res = $sth->execute();
+		@db_answer = @{$sth->fetchall_arrayref()};
+		$sth->finish();
+		DBI->trace(0);
+		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 7);
+	};
+	if($@) {
+		DBI->trace(0);
+		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+	}
 	# TODO : maybe an error handling and an erro feedback to invoking function
 	#my $error = @$self->{dbh}->err;
 	#if ($error) {
 	#	my $error_string = @$self->{dbh}->errstr;
 	#}
 
+	$self->unlock();
 	return \@db_answer;
 }
 
 
 sub exec_statementlist {
-    my $self = shift;
-    my $sql_list = shift;
-    my @db_answer;
+	my $self = shift;
+	my $sql_list = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statementlist was called static!", 1);
+		return;
+	}
+	my @db_answer;
 
-    foreach my $sql (@$sql_list) {
-        if(defined($sql) && length($sql) > 0) {
-            # Obtain a new lock for each statement to not block the db for a too long time
-            $self->lock();
-            eval {
-                my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
-                push @db_answer, @answer;
-            };
-            if($@) {
-                $self->{dbh}->do("ANALYZE");
-                eval {
-                    my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
-                    push @db_answer, @answer;
-                };
-                if($@) {
-                    &main::daemon_log("ERROR: $sql failed with $@", 1);
-                }
-            }
-            $self->unlock();
-        } else {
-            next;
-        }
-    }
+	foreach my $sql_statement (@$sql_list) {
+		if(defined($sql_statement) && length($sql_statement) > 0) {
+			push @db_answer, $self->exec_statement($sql_statement);
+		} else {
+			next;
+		}
+	}
 
-    return \@db_answer;
+	return \@db_answer;
 }
 
 
 sub count_dbentries {
 	my ($self, $table)= @_;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::count_dbentries was called static!", 1);
+		return;
+	}
 	my $error= 0;
 	my $count= -1;
 
 	my $sql_statement= "SELECT count() FROM $table";
-	my $db_answer= &select_dbentry($self, $sql_statement); 
+	my $db_answer= $self->select_dbentry($sql_statement); 
 	if(defined($db_answer) && defined($db_answer->{1}) && defined($db_answer->{1}->{'count()'})) {
 		$count = $db_answer->{1}->{'count()'};
 	}
@@ -425,15 +461,25 @@ sub count_dbentries {
 
 sub move_table {
 	my ($self, $from, $to) = @_;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::move_table was called static!", 1);
+		return;
+	}
 
 	my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
 	my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
 
+	&main::daemon_log("INFO move_table called successfully! Exiting!",1 );
+	
 	$self->lock();
 	eval {
+		$self->{dbh}->begin_work();
 		$self->{dbh}->do($sql_statement_drop);
+		$self->{dbh}->do($sql_statement_alter);
+		$self->{dbh}->commit();
 	};
 	if($@) {
+		$self->{dbh}->rollback();
 		eval {
 			$self->{dbh}->do("ANALYZE");
 		};
@@ -445,19 +491,17 @@ sub move_table {
 		};
 		if($@) {
 			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
-		}
-		eval {
-			$self->{dbh}->do($sql_statement_drop);
-		};
-		if($@) {
-			&main::daemon_log("ERROR: $sql_statement_drop failed with $@", 1);
 		}
 	}
 
 	eval {
+		$self->{dbh}->begin_work();
+		$self->{dbh}->do($sql_statement_drop);
 		$self->{dbh}->do($sql_statement_alter);
+		$self->{dbh}->commit();
 	};
 	if($@) {
+		$self->{dbh}->rollback();
 		eval {
 			$self->{dbh}->do("ANALYZE");
 		};
@@ -470,12 +514,17 @@ sub move_table {
 		if($@) {
 			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
 		}
-		eval {
-			$self->{dbh}->do($sql_statement_alter);
-		};
-		if($@) {
-			&main::daemon_log("ERROR: $sql_statement_alter failed with $@", 1);
-		}
+	}
+	
+	eval {
+		$self->{dbh}->begin_work();
+		$self->{dbh}->do($sql_statement_drop);
+		$self->{dbh}->do($sql_statement_alter);
+		$self->{dbh}->commit();
+	};
+	if($@) {
+		$self->{dbh}->rollback();
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::move_table crashed! Operation failed with $@", 1);
 	}
 	$self->unlock();
 
