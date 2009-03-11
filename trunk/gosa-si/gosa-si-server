@@ -28,7 +28,7 @@ use Getopt::Long;
 use Config::IniFiles;
 use POSIX;
 
-use Fcntl;
+use Fcntl qw/:flock/;
 use IO::Socket::INET;
 use IO::Handle;
 use IO::Select;
@@ -352,7 +352,10 @@ sub daemon_log {
             my $name = $prg;
 
             my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
+			flock(LOG_HANDLE, LOCK_EX);
+			seek(LOG_HANDLE, 0, 2);
             print LOG_HANDLE $log_msg;
+			flock(LOG_HANDLE, LOCK_UN);
             if( $foreground ) { 
                 print STDERR $log_msg;
             }
