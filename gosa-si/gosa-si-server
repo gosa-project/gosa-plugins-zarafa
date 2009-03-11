@@ -1325,8 +1325,7 @@ sub msg_to_decrypt {
 
 
 sub next_task {
-    my ($session, $heap, $task) = @_[SESSION, HEAP, ARG0];
-	my $ldap_handle = &get_ldap_handle();
+    my ($session, $heap, $task, $ldap_handle) = @_[SESSION, HEAP, ARG0, ARG1];
     my $running_task = POE::Wheel::Run->new(
             Program => sub { process_task($session, $heap, $task, $ldap_handle) },
             StdioFilter => POE::Filter::Reference->new(),
@@ -2125,7 +2124,10 @@ sub watch_for_next_tasks {
         my $message_id = $hit->{'id'};
         my $session_id = $hit->{'sessionid'};
         &daemon_log("$session_id DEBUG: start processing for message with incoming id: '$message_id'", 7);
-        $kernel->yield('next_task', $hit);
+
+		my $ldap_handle = &get_ldap_handle();
+		if (not defined $ldap_handle) { next; }
+        $kernel->yield('next_task', $hit, $ldap_handle);
 
         my $sql = "DELETE FROM $incoming_tn WHERE id=$message_id";
         my $res = $incoming_db->exec_statement($sql);
@@ -2802,15 +2804,7 @@ sub create_packages_list_db {
 	}
 
 	if (not defined $session_id) { $session_id = 0; }
-#	if (not defined $ldap_handle) { 
-#		$ldap_handle= &get_ldap_handle();
-#
-#		if (not defined $ldap_handle) {
-#			daemon_log("$session_id ERROR: no ldap_handle available to create_packages_list_db", 1);
-#    			unlink($packages_list_under_construction);
-#			return;
-#		}
-#	}
+
 	if (not defined $sources_file) { 
 		&main::daemon_log("$session_id INFO: no sources_file given for creating packages list so trigger creation of it", 5); 
 		$sources_file = &create_sources_list($session_id);
