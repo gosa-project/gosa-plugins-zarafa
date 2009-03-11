@@ -109,7 +109,7 @@ sub get_mac {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($msg, $msg_hash, $session_id) = @_ ;
+    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
     my @msg_l;
     my @out_msg_l;
@@ -117,10 +117,10 @@ sub process_incoming_msg {
     &main::daemon_log("$session_id DEBUG: GosaPackages: msg to process '$header'", 7);
     
     if ($header =~ /^job_/) {
-        @msg_l = &process_job_msg($msg, $msg_hash, $session_id);
+        @msg_l = &process_job_msg($msg, $msg_hash, $session_id, $ldap_handle);
     } 
     elsif ($header =~ /^gosa_/) {
-        @msg_l = &process_gosa_msg($msg, $msg_hash, $session_id);
+        @msg_l = &process_gosa_msg($msg, $msg_hash, $session_id, $ldap_handle);
     } 
     else {
         &main::daemon_log("$session_id ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix", 1);
@@ -152,7 +152,7 @@ sub process_incoming_msg {
 
 
 sub process_gosa_msg {
-    my ($msg, $msg_hash, $session_id) = @_ ;
+    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_ ;
     my $out_msg;
     my @out_msg_l = ('nohandler');
     my $sql_events;
@@ -169,7 +169,7 @@ sub process_gosa_msg {
         # a event exists with the header as name
         &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
         no strict 'refs';
-        @out_msg_l = &{$event2module_hash->{$header}."::$header"}( $msg, $msg_hash, $session_id );
+        @out_msg_l = &{$event2module_hash->{$header}."::$header"}( $msg, $msg_hash, $session_id, $ldap_handle );
 
     # check client registered events
     } else {
@@ -217,7 +217,7 @@ sub process_gosa_msg {
 
 
 sub process_job_msg {
-    my ($msg, $msg_hash, $session_id)= @_ ;    
+    my ($msg, $msg_hash, $session_id, $ldap_handle)= @_ ;    
     my $out_msg;
     my $error = 0;
 
@@ -260,23 +260,17 @@ sub process_job_msg {
         }
 
     } else {   # Try to determine plain_name via ladp search
-        my $ldap_handle = &main::get_ldap_handle($session_id); 
-        if( not defined $ldap_handle ) {
-            &main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
-            $plain_name = "none"; 
+        my $mesg = $ldap_handle->search(
+                base => $main::ldap_base,
+                scope => 'sub',
+                attrs => ['cn'],
+                filter => "(macAddress=$macaddress)");
+        if($mesg->code || ($mesg->count!=1)) {
+            &main::daemon_log($mesg->error, 1);
+            $plain_name = "none";
         } else {
-            my $mesg = $ldap_handle->search(
-                    base => $main::ldap_base,
-                    scope => 'sub',
-                    attrs => ['cn'],
-                    filter => "(macAddress=$macaddress)");
-            if($mesg->code || ($mesg->count!=1)) {
-                &main::daemon_log($mesg->error, 1);
-                $plain_name = "none";
-            } else {
-                my $entry= $mesg->entry(0);
-                $plain_name = $entry->get_value("cn");
-            }
+            my $entry= $mesg->entry(0);
+            $plain_name = $entry->get_value("cn");
         }
     }
 	

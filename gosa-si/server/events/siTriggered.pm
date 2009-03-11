@@ -123,7 +123,7 @@ sub got_ping {
 
 
 sub detected_hardware {
-	my ($msg, $msg_hash, $session_id) = @_;
+	my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
 	my $address = $msg_hash->{source}[0];
 	my $header = $msg_hash->{header}[0];
 	my $gotoHardwareChecksum= $msg_hash->{detected_hardware}[0]->{gotoHardwareChecksum};
@@ -145,12 +145,6 @@ sub detected_hardware {
 		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
 		return;
 	}
-	# Build LDAP connection
-  	my $ldap_handle = &main::get_ldap_handle($session_id);
-	if( not defined $ldap_handle ) {
-		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
-		return;
-	} 
 
 	# Perform search
 	$mesg = $ldap_handle->search(

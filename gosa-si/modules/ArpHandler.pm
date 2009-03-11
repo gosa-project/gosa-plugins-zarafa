@@ -78,9 +78,8 @@ sub local_read_configfile {
 }
 
 sub get_module_info {
-	my @info = (undef,
-		undef,
-	);
+    my ($ldap_handle) = @_;
+	my @info = (undef, undef);
 
 	&local_read_configfile();
 	# Don't start if some of the modules are missing
@@ -94,7 +93,6 @@ sub get_module_info {
 				&main::daemon_log("Loading OUI cache file suceeded!", 6);
 			}
 		}
-		my $ldap_handle = &main::get_ldap_handle();
 
 		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
 		if ((!defined($arp_interface)) || $arp_interface eq 'all') {

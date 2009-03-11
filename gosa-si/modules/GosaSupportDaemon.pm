@@ -524,7 +524,7 @@ sub import_events {
 
     if ($error == 0) {
         while (defined (my $event = readdir ($DIR))) {
-            if( $event eq "." || $event eq ".." ) { next; }  
+            if( $event eq "." || $event eq ".." || ($event =~ /^\.pm$/)) { next; }  
 
 			# Check config file to exclude disabled event plugins (i.e. Opsi)
 			if ($event eq "opsi_com.pm" &&  $main::opsi_enabled ne "true")  { 

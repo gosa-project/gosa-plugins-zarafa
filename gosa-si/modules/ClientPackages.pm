@@ -24,10 +24,8 @@ BEGIN{}
 END {}
 
 my ($server_ip, $server_port, $ClientPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
-#my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
-#my $no_bus;
 my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 my $mesg;
 
@@ -147,6 +145,7 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 	} else {
 		&main::daemon_log("0 INFO: Using gosaUnitTag from config-file: $main::gosa_unit_tag",5);
 	}
+    &main::release_ldap_handle($ldap_handle);
 }
 
 
@@ -263,7 +262,7 @@ sub get_mac {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($msg, $msg_hash, $session_id) = @_ ;
+    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_ ;
     my $error = 0;
     my $host_name;
     my $host_key;
@@ -291,13 +290,13 @@ sub process_incoming_msg {
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
-                @out_msg_l = &here_i_am($msg, $msg_hash, $session_id)
+                @out_msg_l = &here_i_am($msg, $msg_hash, $session_id, $ldap_handle)
             } else {
                 # a event exists with the header as name
                 if( exists $event2module_hash->{$header} ) {
                     &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
                     no strict 'refs';
-                    @out_msg_l = &{$event2module_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
+                    @out_msg_l = &{$event2module_hash->{$header}."::$header"}($msg, $msg_hash, $session_id, $ldap_handle);
 
                 # if no event handler is implemented   
                 } else {
@@ -418,7 +417,7 @@ sub new_key {
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
 sub here_i_am {
-    my ($msg, $msg_hash, $session_id) = @_;
+    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
     my @out_msg_l;
     my $out_hash;
     my $source = @{$msg_hash->{source}}[0];
@@ -498,7 +497,7 @@ sub here_i_am {
 
     # give the new client his ldap config
     # Workaround: Send within the registration response, if the client will get an ldap config later
-	my $new_ldap_config_out = &new_ldap_config($source, $session_id);
+	my $new_ldap_config_out = &new_ldap_config($source, $session_id, $ldap_handle);
 	if($new_ldap_config_out && (!($new_ldap_config_out =~ /error/))) {
 		&add_content2xml_hash($out_hash, "ldap_available", "true");
 	} elsif($new_ldap_config_out && $new_ldap_config_out =~ /error/){
@@ -519,19 +518,19 @@ sub here_i_am {
     }
 
     # Send client hardware configuration
-	my $hardware_config_out = &hardware_config($msg, $msg_hash, $session_id);
+	my $hardware_config_out = &hardware_config($msg, $msg_hash, $session_id, $ldap_handle);
 	if( $hardware_config_out ) {
 		push(@out_msg_l, $hardware_config_out);
 	}
 
     # Send client ntp server
-    my $ntp_config_out = &new_ntp_config($mac_address, $session_id);
+    my $ntp_config_out = &new_ntp_config($mac_address, $session_id, $ldap_handle);
     if ($ntp_config_out) {
         push(@out_msg_l, $ntp_config_out);
     }
 
     # Send client syslog server
-    my $syslog_config_out = &new_syslog_config($mac_address, $session_id);
+    my $syslog_config_out = &new_syslog_config($mac_address, $session_id, $ldap_handle);
     if ($syslog_config_out) {
         push(@out_msg_l, $syslog_config_out);
     }
@@ -597,15 +596,8 @@ sub who_has_i_do {
 
 
 sub new_syslog_config {
-    my ($mac_address, $session_id) = @_;
+    my ($mac_address, $session_id, $ldap_handle) = @_;
     my $syslog_msg;
-
-	# Build LDAP connection
-    my $ldap_handle = &main::get_ldap_handle($session_id);
-	if( not defined $ldap_handle ) {
-		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
-		return;
-	}
 
 	# Perform search
     my $ldap_res = $ldap_handle->search( base   => $ldap_base,
@@ -673,15 +665,8 @@ sub new_syslog_config {
 
 
 sub new_ntp_config {
-    my ($address, $session_id) = @_;
+    my ($address, $session_id, $ldap_handle) = @_;
     my $ntp_msg;
-
-	# Build LDAP connection
-    my $ldap_handle = &main::get_ldap_handle($session_id);
-	if( not defined $ldap_handle ) {
-		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
-		return;
-	}
 
 	# Perform search
     my $ldap_res = $ldap_handle->search( base   => $ldap_base,
@@ -756,7 +741,7 @@ sub new_ntp_config {
 #  DESCRIPTION:  send to address the ldap configuration found for dn gotoLdapServer
 #===============================================================================
 sub new_ldap_config {
-	my ($address, $session_id) = @_ ;
+	my ($address, $session_id, $ldap_handle) = @_ ;
 
 	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address' OR macaddress LIKE '$address'";
 	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
@@ -775,13 +760,6 @@ sub new_ldap_config {
 		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
 		return;
 	}
-
-	# Build LDAP connection
-    my $ldap_handle = &main::get_ldap_handle($session_id);
-	if( not defined $ldap_handle ) {
-		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
-		return;
-	} 
 
 	# Perform search
     $mesg = $ldap_handle->search( base   => $ldap_base,
@@ -928,7 +906,7 @@ sub new_ldap_config {
 #  DESCRIPTION:  
 #===============================================================================
 sub hardware_config {
-	my ($msg, $msg_hash, $session_id) = @_ ;
+	my ($msg, $msg_hash, $session_id, $ldap_handle) = @_ ;
 	my $address = @{$msg_hash->{source}}[0];
 	my $header = @{$msg_hash->{header}}[0];
 	my $gotoHardwareChecksum = @{$msg_hash->{gotoHardwareChecksum}}[0];
@@ -948,13 +926,6 @@ sub hardware_config {
 		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
 		return;
 	}
-
-	# Build LDAP connection
-    my $ldap_handle = &main::get_ldap_handle($session_id);
-	if( not defined $ldap_handle ) {
-		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
-		return;
-	} 
 
 	# Perform search
 	$mesg = $ldap_handle->search(
