@@ -610,7 +610,7 @@ sub check_outgoing_xml_validity {
         }
 
 				# Check if source contains hostname instead of ip address
-				if(not $source =~ /^[a-z0-9\.]+:\d+$/i) {
+				if($source =~ /^[a-z][a-z0-9\.]+:\d+$/i) {
 						my ($hostname,$port) = split(/:/, $source);
 						my $ip_address = inet_ntoa(scalar gethostbyname($hostname));
 						if(defined($ip_address) && $ip_address =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ && $port =~ /^\d+$/) {
