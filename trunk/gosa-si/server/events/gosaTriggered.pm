@@ -851,13 +851,11 @@ sub trigger_activate_new {
         &main::daemon_log("$session_id DEBUG: A GosaGroupOfNames with cn '$ogroup' was found in base '".$main::ldap_base."'!", 5);
       } elsif ($ldap_mesg->count == 0) {
         &main::daemon_log("$session_id ERROR: A GosaGroupOfNames with cn '$ogroup' was not found in base '".$main::ldap_base."'!", 1);
-        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".(&calc_timestamp(&get_time(), 'plus', 10))."' WHERE id = $jobdb_id");
+        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting', timestamp = '".(&calc_timestamp(&get_time(), 'plus', 60))."' WHERE id = $jobdb_id");
         return undef;
       } else {
         &main::daemon_log("$session_id ERROR: More than one ObjectGroups with cn '$ogroup' was found in base '".$main::ldap_base."'!", 1);
-        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".(&calc_timestamp(&get_time(), 'plus', 10))."' WHERE id = $jobdb_id");
+        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting', timestamp = '".(&calc_timestamp(&get_time(), 'plus', 60))."' WHERE id = $jobdb_id");
         return undef;
       }
 
