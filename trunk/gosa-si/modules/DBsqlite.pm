@@ -180,7 +180,7 @@ sub add_dbentry {
 			my $sth = $self->{dbh}->prepare_cached($sql_statement);
 			$db_res = $sth->execute();
 			$sth->finish();
-			&main::daemon_log("0 ERROR: Execution of statement '$sql_statement' succeeded!", 7);
+			&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
 			$success = 1;
 		};
 		if($@) {
@@ -194,7 +194,7 @@ sub add_dbentry {
 				my $sth = $self->{dbh}->prepare_cached($sql_statement);
 				$db_res = $sth->execute();
 				$sth->finish();
-				&main::daemon_log("0 ERROR: Execution of statement '$sql_statement' succeeded!", 7);
+				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
 				$success = 1;
 			};
 			if($@) {
@@ -209,7 +209,7 @@ sub add_dbentry {
 				my $sth = $self->{dbh}->prepare_cached($sql_statement);
 				$db_res = $sth->execute();
 				$sth->finish();
-				&main::daemon_log("0 ERROR: Execution of statement '$sql_statement' succeeded!", 7);
+				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
 				$success = 1;
 			};
 			if($@) {
