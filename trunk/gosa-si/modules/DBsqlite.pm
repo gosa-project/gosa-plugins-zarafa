@@ -82,6 +82,7 @@ sub create_table {
 	}
 	my $table_name = shift;
 	my $col_names_ref = shift;
+	my $index_names_ref = shift || undef;
 	my @col_names;
 	my @col_names_creation;
 	foreach my $col_name (@$col_names_ref) {
@@ -97,6 +98,14 @@ sub create_table {
 	my $col_names_string = join(", ", @col_names_creation);
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	my $res = $self->exec_statement($sql_statement);
+	
+	# Add indices
+	if(defined($index_names_ref) and ref($index_names_ref) eq 'ARRAY') {
+		foreach my $index_name (@$index_names_ref) {
+			$self->exec_statement("CREATE ".(($index_name eq 'id')?'UNIQUE':'')." INDEX IF NOT EXISTS $index_name on $table_name ($index_name);");
+		}
+	}
+
 
 	return 0;
 }
