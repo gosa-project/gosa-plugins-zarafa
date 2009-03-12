@@ -177,7 +177,7 @@ sub add_dbentry {
 		my $success=0;
 		$self->lock();
 		eval {
-			my $sth = $self->{dbh}->prepare_cached($sql_statement);
+			my $sth = $self->{dbh}->prepare($sql_statement);
 			$db_res = $sth->execute();
 			$sth->finish();
 			&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
@@ -191,7 +191,7 @@ sub add_dbentry {
 		}
 		if($success==0) {
 			eval {
-				my $sth = $self->{dbh}->prepare_cached($sql_statement);
+				my $sth = $self->{dbh}->prepare($sql_statement);
 				$db_res = $sth->execute();
 				$sth->finish();
 				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
@@ -206,7 +206,7 @@ sub add_dbentry {
 		}
 		if($success==0) {
 			eval {
-				my $sth = $self->{dbh}->prepare_cached($sql_statement);
+				my $sth = $self->{dbh}->prepare($sql_statement);
 				$db_res = $sth->execute();
 				$sth->finish();
 				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
@@ -362,7 +362,7 @@ sub exec_statement {
 	# Give three chances to the sqlite database
 	# 1st chance
 	eval {
-		my $sth = $self->{dbh}->prepare_cached($sql_statement);
+		my $sth = $self->{dbh}->prepare($sql_statement);
 		my $res = $sth->execute();
 		@db_answer = @{$sth->fetchall_arrayref()};
 		$sth->finish();
@@ -383,7 +383,7 @@ sub exec_statement {
 	# 2nd chance
 	eval {
 		DBI->trace(2) if($main::verbose >= 7);
-		my $sth = $self->{dbh}->prepare_cached($sql_statement);
+		my $sth = $self->{dbh}->prepare($sql_statement);
 		my $res = $sth->execute();
 		@db_answer = @{$sth->fetchall_arrayref()};
 		$sth->finish();
@@ -406,7 +406,7 @@ sub exec_statement {
 	# 3rd chance
 	eval {
 		DBI->trace(2) if($main::verbose >= 7);
-		my $sth = $self->{dbh}->prepare_cached($sql_statement);
+		my $sth = $self->{dbh}->prepare($sql_statement);
 		my $res = $sth->execute();
 		@db_answer = @{$sth->fetchall_arrayref()};
 		$sth->finish();
