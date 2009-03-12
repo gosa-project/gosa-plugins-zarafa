@@ -32,8 +32,8 @@ class goTerminalServer extends goService{
       }
     }
     $this->gotoSessionType = $tmp;
-    #$this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
-    $this->gotoSessionTypes= array("LDM","XDCMP", "SHELL", "RDP", "TELNET"); 
+    #$this->gotoSessionTypes= array("LDM","XDMCP","RDP","CITRIX"); 
+    $this->gotoSessionTypes= array("LDM","XDMCP", "SHELL", "RDP", "TELNET"); 
   }
 
 
@@ -152,8 +152,8 @@ class goTerminalServer extends goService{
       }
     }
     $this->gotoSessionType = $tmp;
-    #$this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
-    $this->gotoSessionTypes= array("LDM","XDCMP", "SHELL", "TELNET"); 
+    #$this->gotoSessionTypes= array("LDM","XDMCP","RDP","CITRIX"); 
+    $this->gotoSessionTypes= array("LDM","XDMCP", "SHELL", "TELNET"); 
   }
 
 
