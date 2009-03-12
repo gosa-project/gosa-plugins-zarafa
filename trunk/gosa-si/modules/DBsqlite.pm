@@ -106,7 +106,6 @@ sub create_table {
 		}
 	}
 
-
 	return 0;
 }
 
@@ -382,7 +381,7 @@ sub exec_statement {
 	
 	# 2nd chance
 	eval {
-		DBI->trace(2) if($main::verbose >= 7);
+		DBI->trace(6) if($main::verbose >= 7);
 		my $sth = $self->{dbh}->prepare($sql_statement);
 		my $res = $sth->execute();
 		@db_answer = @{$sth->fetchall_arrayref()};
@@ -405,7 +404,7 @@ sub exec_statement {
 
 	# 3rd chance
 	eval {
-		DBI->trace(2) if($main::verbose >= 7);
+		DBI->trace(6) if($main::verbose >= 7);
 		my $sth = $self->{dbh}->prepare($sql_statement);
 		my $res = $sth->execute();
 		@db_answer = @{$sth->fetchall_arrayref()};
@@ -477,15 +476,15 @@ sub move_table {
 
 	my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
 	my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
+	my $success = 0;
 
-	&main::daemon_log("INFO move_table called successfully! Exiting!",1 );
-	
 	$self->lock();
 	eval {
 		$self->{dbh}->begin_work();
 		$self->{dbh}->do($sql_statement_drop);
 		$self->{dbh}->do($sql_statement_alter);
 		$self->{dbh}->commit();
+		$success = 1;
 	};
 	if($@) {
 		$self->{dbh}->rollback();
@@ -503,38 +502,46 @@ sub move_table {
 		}
 	}
 
-	eval {
-		$self->{dbh}->begin_work();
-		$self->{dbh}->do($sql_statement_drop);
-		$self->{dbh}->do($sql_statement_alter);
-		$self->{dbh}->commit();
-	};
-	if($@) {
-		$self->{dbh}->rollback();
+	if($success == 0) {
 		eval {
-			$self->{dbh}->do("ANALYZE");
+			$self->{dbh}->begin_work();
+			$self->{dbh}->do($sql_statement_drop);
+			$self->{dbh}->do($sql_statement_alter);
+			$self->{dbh}->commit();
+			$success = 1;
 		};
 		if($@) {
-			&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
-		}
-		eval {
-			$self->{dbh}->do("VACUUM");
-		};
-		if($@) {
-			&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
+			$self->{dbh}->rollback();
+			eval {
+				$self->{dbh}->do("ANALYZE");
+			};
+			if($@) {
+				&main::daemon_log("ERROR: 'ANALYZE' on database '".$self->{db_name}."' failed with $@", 1);
+			}
+			eval {
+				$self->{dbh}->do("VACUUM");
+			};
+			if($@) {
+				&main::daemon_log("ERROR: 'VACUUM' on database '".$self->{db_name}."' failed with $@", 1);
+			}
 		}
 	}
 	
-	eval {
-		$self->{dbh}->begin_work();
-		$self->{dbh}->do($sql_statement_drop);
-		$self->{dbh}->do($sql_statement_alter);
-		$self->{dbh}->commit();
-	};
-	if($@) {
-		$self->{dbh}->rollback();
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::move_table crashed! Operation failed with $@", 1);
+	if($success == 0) {
+		eval {
+			$self->{dbh}->begin_work();
+			$self->{dbh}->do($sql_statement_drop);
+			$self->{dbh}->do($sql_statement_alter);
+			$self->{dbh}->commit();
+			$success = 1;
+		};
+		if($@) {
+			$self->{dbh}->rollback();
+			&main::daemon_log("0 ERROR: GOSA::DBsqlite::move_table crashed! Operation failed with $@", 1);
+		}
 	}
+
+	&main::daemon_log("0 INFO: GOSA::DBsqlite::move_table: Operation successful!", 7);
 	$self->unlock();
 
 	return;
