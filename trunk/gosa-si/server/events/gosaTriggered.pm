@@ -202,7 +202,7 @@ sub recreate_packages_list_db {
 		my $res = $main::job_db->exec_statement($sql_statement);
 	}
 
-	&main::create_packages_list_db;
+	&main::create_packages_list_db(undef, undef, $session_id);
 
 	my @out_msg_l = ( $out_msg );
 	return @out_msg_l;
