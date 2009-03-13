@@ -446,7 +446,7 @@ sub new_ldap_config {
 
     # Set permissions and ownership structure
     chown(0, 0, $cfg_name);
-    chmod(0600, $cfg_name);
+    chmod(0644, $cfg_name);
 
     return;
 }
