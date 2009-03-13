@@ -205,21 +205,11 @@ class divListGroup extends MultiSelectWindow
 
     $ui = get_userinfo();
 
-    /* Fetch all application menu entries 
-     */
-    $base = get_groups_ou().$this->selectedBase;
     $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($base);
-    $ldap->search("(objectClass=gotoMenuEntry)",array("dn"));
-    $configured_apps = array();
-    while($entry = $ldap->fetch()){
-      $dn = preg_replace("/^.*(cn=[^,]+,".preg_quote(get_groups_ou(), '/').")/","\\1",$entry['dn']);
-      $configured_apps[$dn] = $dn;
-    }
 
     // Test Every Entry and generate divlist Array
     foreach($groups as $key => $val){
-    
+        
       /* Create action icons - copy & paste icons */
       $acl = $ui->get_permissions($val['dn'],"groups/group");
       $acl_all  = $ui->has_complete_category_acls($val['dn'],"groups");
@@ -246,16 +236,26 @@ class divListGroup extends MultiSelectWindow
 
       $posix=$mail=$samba=$appl=$phone=$enviro=$empty;
 
+      /* Set ldap base to dn of this group */
+      $ldap->cd ($val['dn']);
+
+      /* Set ldap size limit to 1, because we only need one entry */
+      $ldap->set_size_limit(1);
+
+      /* Search for applications. */
+      $ldap->search("(objectClass=gotoMenuEntry)",array("dn"));
+      $entry = $ldap->fetch();
+
+      if (isset($entry['dn'])) {
+        $appl  = $applimg;
+      }
+
       if(isset($val['objectClass'])){
         if(in_array("posixGroup",           $val['objectClass']))   $posix = $posiximg;
         if(in_array("gosaMailAccount",      $val['objectClass']))   $mail  = $mailimg;
         if(in_array("sambaGroupMapping",    $val['objectClass']))   $samba = $sambaimg;
         if(in_array("goFonPickupGroup",     $val['objectClass']))   $phone = $phoneimg;
         if(in_array("gotoEnvironment",      $val['objectClass']))   $enviro= $envimg;
-      }
-
-      if(isset($configured_apps[$val['dn']])){
-          $appl  = $applimg;
       }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'";
