@@ -1742,9 +1742,9 @@ sub watch_for_new_jobs {
 		$watch_for_new_jobs_in_progress = 1;
 		my ($kernel,$heap) = @_[KERNEL, HEAP];
 
-		# check gosa job quaeue for jobs with executable timestamp
+		# check gosa job queue for jobs with executable timestamp
 		my $timestamp = &get_time();
-		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST(timestamp AS UNSIGNED)) < $timestamp ORDER BY timestamp";
+		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE siserver='localhost' AND status='waiting' AND (CAST(timestamp AS UNSIGNED)) < $timestamp ORDER BY timestamp";
 		my $res = $job_db->exec_statement( $sql_statement );
 
 		# Merge all new jobs that would do the same actions
@@ -2156,14 +2156,12 @@ sub get_ldap_handle {
 	if (not defined $ldap_handle) {
 		daemon_log("$session_id INFO: ldap handle for $caller_text not available");
 	}
-	daemon_log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	return $ldap_handle;
 }
 
 sub release_ldap_handle {
 	my ($ldap_handle) = @_ ;
 	$ldap_pool->free($ldap_handle);
-	daemon_log("0 INFO: ldap handle released!\n-------------------------------------------------------------------------------");
 	return;
 }
 
