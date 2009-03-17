@@ -342,7 +342,7 @@ sub set_last_system {
             # Set gotoLastSystem information
             my $last_system_dn = $ldap_entry->get_value('gotoLastSystem');
             if ((defined $last_system_dn) && ($last_system_dn eq $system_dn)) {
-                &main::daemon_log("$session_id INFO: no new 'gotoLastSystem' inforamtion for ladp entry 'uid=$user', do nothing!", 5);
+                &main::daemon_log("$session_id INFO: no new 'gotoLastSystem' information for ldap entry 'uid=$user', do nothing!", 5);
             } elsif ((defined $last_system_dn) && ($last_system_dn ne $system_dn)) {
                 $ldap_entry->replace ( 'gotoLastSystem' => $system_dn );
                 &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystem'='$system_dn' at ldap entry 'uid=$user'!",5);
@@ -357,7 +357,7 @@ sub set_last_system {
             # Attention: only write information if last_system_dn and system_dn differs
             my $last_system_login = $ldap_entry->get_value('gotoLastSystemLogin');
             if ((defined $last_system_login) && ($last_system_dn eq $system_dn)) {
-                &main::daemon_log("$session_id INFO: no new 'gotoLastSystemLogin' inforamtion for ladp entry 'uid=$user', do nothing!", 5);
+                &main::daemon_log("$session_id INFO: no new 'gotoLastSystemLogin' information for ldap entry 'uid=$user', do nothing!", 5);
             } elsif ((defined $last_system_login) && ($last_system_dn ne $system_dn)) {
                 $ldap_entry->replace ( 'gotoLastSystemLogin' => $timestamp );
                 &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystemLogin'='$timestamp' at ldap entry 'uid=$user'!", 5);
