@@ -336,7 +336,7 @@ sub daemon_log {
         my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime, $mtime, $ctime, $blksize, $blocks) = stat($log_file);
         if((not $uid eq $root_uid) || (not $gid eq $adm_gid)) {
             chown($root_uid, $adm_gid, $log_file);
-        }
+		}
 
         chomp($msg);
         #$msg =~s/\n//g;   # no newlines are allowed in log messages, this is important for later log parsing
@@ -407,7 +407,7 @@ sub check_pid {
             if( -f "/proc/$pid/stat" ) {
                 my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
                 if( $stat ) {
-					daemon_log("ERROR: Already running",1);
+					print STDERR "\nERROR: Already running!\n";
                     close( LOCK_FILE );
                     exit -1;
                 }
