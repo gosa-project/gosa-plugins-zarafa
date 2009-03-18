@@ -7,14 +7,13 @@ class worktabs extends tabs
 
   function worktabs($config, $data, $dn,$category)
   {
-    tabs::tabs($config, $data, $dn,$category);    
-
     /* Save dn */
     $this->dn= $dn;
     $this->config= $config;
 
     $baseobject= NULL;
 
+    $this->acl_category = $category;
     foreach ($data as $tab){
 
       if(!class_available($tab['CLASS'])) continue;
