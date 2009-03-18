@@ -5,13 +5,14 @@ class printtabs extends tabs
 
   function printtabs($config, $data, $dn,$category)
   {
-    tabs::tabs($config, $data, $dn,$category);
-
     /* Save dn */
     $this->dn= $dn;
     $this->config= $config;
 
     $baseobject= NULL;
+
+    /* Set acl_category */
+    $this->acl_category = $category;
 
     foreach ($data as $tab){
       if(!class_available($tab['CLASS'])) continue;
