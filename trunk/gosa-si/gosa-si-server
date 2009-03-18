@@ -3204,6 +3204,10 @@ GetOptions("h|help" => \&usage,
         "no-arp+" => \$no_arp,
            );
 
+# Prepare UID / GID as daemon_log may need it quite early
+$root_uid = getpwnam('root');
+$adm_gid = getgrnam('adm');
+
 #  read and set config parameters
 &check_cmdline_param ;
 &read_configfile($cfg_file, %cfg_defaults);
@@ -3251,8 +3255,6 @@ if ($server_headURL =~ /\/tag\// ||
 }
 
 # Prepare log file and set permissons
-$root_uid = getpwnam('root');
-$adm_gid = getgrnam('adm');
 open(FH, ">>$log_file");
 close FH;
 chmod(0440, $log_file);
