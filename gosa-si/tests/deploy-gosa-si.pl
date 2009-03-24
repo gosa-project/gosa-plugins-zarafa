@@ -20,8 +20,13 @@
 
 use strict;
 use warnings;
+use File::Spec;
+use Data::Dumper;
 
-my $gosa_path = "/home/rettenbe/gonicus/Projekte/gosa/trunk/gosa-si/"; 
+my $test_path = File::Spec->rel2abs(File::Spec->curdir());
+my @gosa_dir = File::Spec->splitdir($test_path);
+pop(@gosa_dir);
+my $gosa_path = File::Spec->catdir(@gosa_dir);
 
 my %copies = (
         "/usr/sbin/gosa-si-server" => "gosa-si-server",
@@ -66,6 +71,7 @@ while( my($new_file, $file_name) = each %copies ) {
     my $del_cmd = "rm -rf $new_file"; 
     print STDERR "$del_cmd\n";
     system($del_cmd);
+    
     
     my $ln_cmd = "ln -s ".$gosa_path.$file_name." $new_file"; 
     print STDERR "$ln_cmd\n"; 
