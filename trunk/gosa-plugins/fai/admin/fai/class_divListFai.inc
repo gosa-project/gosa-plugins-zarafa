@@ -248,8 +248,13 @@ class divListFai extends MultiSelectWindow
       $name = "";
       $icon_list = "";
       $opsi_only = TRUE;
+      $locked = TRUE;
       foreach($objects as $type => $type_data){
         if(isset($value[$type])){
+          if(!preg_match("/^freeze/", $value[$type]['FAIstate'])){
+            /* at least one FAI object of this name is not frozen. */
+            $locked = FALSE;
+          }
           $name = $value[$type]['cn'];
           $icon_list .= "<input type='image' src='".$type_data['IMG']."' title='".$type_data['NAME']."' 
             alt='".$type_data['KZL']."' class='center' name='edit_".$key."_".$type."'>\n";
@@ -282,8 +287,12 @@ class divListFai extends MultiSelectWindow
 
         $actions.= "<input type='image' name='group_edit_".$key."' class='center'
           src='images/lists/edit.png'>";
-        $actions.= "<input type='image' name='group_remove_".$key."' class='center'
-          src='images/lists/trash.png'>";
+        if($locked) {
+          $actions.= "<img src='images/lists/locked.png' alt='F' class='center'>";
+        }else{
+          $actions.= "<input type='image' name='group_remove_".$key."' class='center'
+            src='images/lists/trash.png'>";
+        }
       }
 
       /* Create list 
