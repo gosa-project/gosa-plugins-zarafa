@@ -572,7 +572,21 @@ sub trigger_action_activate {
 
 sub trigger_action_localboot {
     my ($msg, $msg_hash, $session_id) = @_;
+    my $macaddress= $msg_hash->{macaddress}[0];
+    my $target= $msg_hash->{target}[0];
+    my @out_msg_l;
     $msg =~ s/<header>gosa_trigger_action_localboot<\/header>/<header>trigger_action_localboot<\/header>/;
+
+    # Check for running jobs. In that case return a message to GOsa that running jobs have to be deleted/aborted
+    # befor trigger_action_localboot could be effective. Running jobs usually sets FAIstate and GOtomode to
+    # what they need again and again and overwrite the 'trigger_action_localboot' setting
+    my $job_sql= "SELECT * FROM $main::job_queue_tn WHERE macaddress='$macaddress'";
+    my $job_res = $main::job_db->select_dbentry($job_sql);
+    my $job_res_count = keys(%$job_res);
+    if ($job_res_count) {
+        push(@out_msg_l, "<xml><header>answer</header><source>$target</source><target>GOSA</target><answer1>existing_job_in_queue</answer1></xml>");
+    }
+
     &main::change_fai_state('localboot', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
@@ -581,7 +595,7 @@ sub trigger_action_localboot {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    my @out_msg_l = ($msg);  
+    push(@out_msg_l, $msg);  
     return @out_msg_l;
 }
 
