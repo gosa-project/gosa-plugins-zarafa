@@ -33,6 +33,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('DeviceManagement');
 }else{
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    session::un_set ('DeviceManagement');
+  }
 
   /* Create DeviceManagement object on demand */
   if (!session::is_set('DeviceManagement')){
@@ -49,11 +53,6 @@ if ( $cleanup ){
     $display= print_header(get_template_path($DeviceManagement->plIcon), _("Hotplug device management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(get_object_info()));
   } else {
     $display= print_header(get_template_path($DeviceManagement->plIcon), _("Hotplug device management"));
-  }
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('DeviceManagement');
   }
 
   /* Show and save dialog */

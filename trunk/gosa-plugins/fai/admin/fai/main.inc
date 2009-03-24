@@ -33,6 +33,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('FAI');
 }else{
+	/* Reset requested? */
+	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+		session::un_set ('FAI');
+	}
 
 	/* Create usermanagement object on demand */
 	if (!session::is_set('FAI')){
@@ -44,10 +48,6 @@ if ( $cleanup ){
 	$FAI->save_object();
 	$output= $FAI->execute();
 
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('FAI');
-	}
 	/* Page header*/
 	if (get_object_info() != ""){
 		$display= print_header(get_template_path($FAI->plIcon), _("Software deployment"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(get_object_info()));

@@ -14,6 +14,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('blocklist');
 }else{
+	/* Reset requested? */
+	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+		session::un_set ('blocklist');
+	}
 
 	/* Create blocklist object on demand */
 	if (!session::is_set('blocklist')){
@@ -24,11 +28,6 @@ if ( $cleanup ){
 	$blocklist = session::get('blocklist');
 	$blocklist->save_object();
 	$output= $blocklist->execute();
-
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('blocklist');
-	}
 
 	/* Page header*/
 	if (get_object_info() != ""){

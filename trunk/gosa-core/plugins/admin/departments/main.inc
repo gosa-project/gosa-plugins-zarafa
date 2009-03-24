@@ -35,6 +35,11 @@ if ( $cleanup ){
   session::un_set('department');
 }else{
 
+	/* Reset requested? */
+	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+		session::un_set ('department');
+	}
+
 	/* Create usermanagement object on demand */
 	if (!session::is_set('department')){
 		session::set('department',new departmentManagement($config, $ui));
@@ -52,10 +57,6 @@ if ( $cleanup ){
 		$display= print_header(get_template_path('plugins/departments/images/plugin.png'), _("Department management"));
 	}
 
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('department');
-	}
 
 	$display.= $output;
 	session::set('department',$department);

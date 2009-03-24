@@ -33,7 +33,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('applicationManagement');
 }else{
-
+	/* Reset requested? */
+	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+		session::un_set ('applicationManagement');
+	}
 
 	/* Create applicationManagement object on demand */
 	if (!session::is_set('applicationManagement')){
@@ -48,11 +51,6 @@ if ( $cleanup ){
 		$display= print_header(get_template_path($applicationManagement->plIcon), _("Application management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(get_object_info()));
 	} else {
 		$display= print_header(get_template_path($applicationManagement->plIcon), _("Application management"));
-	}
-
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('applicationManagement');
 	}
 
 	/* Show and save dialog */

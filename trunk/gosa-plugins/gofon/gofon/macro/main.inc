@@ -33,7 +33,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('macroManagement');
 }else{
-
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    session::un_set ('macroManagement');
+  }
 
   /* Create macroManagement object on demand */
   if (!session::is_set('macroManagement')){
@@ -53,11 +56,6 @@ if ( $cleanup ){
                             ".LDAP::fix(get_object_info()));
   } else {
     $display= print_header(get_template_path('plugins/gofon/images/macros.png'), _("Phone macro management"));
-  }
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('macroManagement');
   }
 
   /* Show and save dialog */

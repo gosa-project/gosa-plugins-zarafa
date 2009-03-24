@@ -34,7 +34,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('systems');
 }else{
-
+	/* Reset requested? */
+	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+		session::un_set ('systems');
+	}
 
 	/* Create usermanagement object on demand */
 	if (!session::is_set('systems')){
@@ -43,11 +46,6 @@ if ( $cleanup ){
 	$systems = session::get('systems');
 	$systems->save_object();
 	$output= $systems->execute();
-
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('systems');
-	}
 
 	/* Page header*/
 	if (get_object_info() != ""){

@@ -37,6 +37,11 @@ if ( $cleanup ){
 
 	$display= "No headpage yet for this module";
 
+	/* Reset requested? */
+	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+		session::un_set ('macl');
+	}
+
 	/* Create usermanagement object on demand */
 	if (!session::is_set('macl')){
 		session::set('macl',new aclManagement($config, $ui));
@@ -54,10 +59,6 @@ if ( $cleanup ){
 		$display= print_header(get_template_path('plugins/acl/images/plugin.png'), _("ACL management"));
 	}
 
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('macl');
-	}
 
 	$display.= $output;
 	session::set('macl',$macl);

@@ -32,6 +32,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('MimeTypeManagement');
 }else{
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    session::un_set ('MimeTypeManagement');
+  }
 
   /* Create MimeTypeManagement object on demand */
   if (!session::is_set('MimeTypeManagement')){
@@ -48,11 +52,6 @@ if ( $cleanup ){
     $display= print_header(get_template_path($MimeTypeManagement->plIcon), _("Mimetype management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(get_object_info()));
   } else {
     $display= print_header(get_template_path($MimeTypeManagement->plIcon), _("Mimetype management"));
-  }
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('MimeTypeManagement');
   }
 
   /* Show and save dialog */

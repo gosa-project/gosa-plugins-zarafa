@@ -33,7 +33,10 @@ if ($remove_lock){
 if ( $cleanup ){
   session::un_set('conference');
 }else{
-
+	/* Reset requested? */
+	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+		session::un_set ('conference');
+	}
 
 	/* Create usermanagement object on demand */
 	if (!session::is_set('conference')){
@@ -48,11 +51,6 @@ if ( $cleanup ){
 		$display= print_header(get_template_path('plugins/gofon/images/conference.png'), _("Conference management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(get_object_info()));
 	} else {
 		$display= print_header(get_template_path('plugins/gofon/images/conference.png'), _("Conference management"));
-	}
-
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('conference');
 	}
 
 	/* Show and save dialog */
