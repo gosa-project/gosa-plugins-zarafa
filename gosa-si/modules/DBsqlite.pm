@@ -272,8 +272,7 @@ sub get_table_columns {
 	if(exists $col_names->{$table}) {
 		@column_names = @{$col_names->{$table}};
 	} else {
-		my @res;
-		foreach my $column ( $self->exec_statement ( "pragma table_info('$table')" ) ) {
+		foreach my $column ( @{$self->exec_statement ( "pragma table_info('$table')" )} ) {
 			push(@column_names, @$column[1]);
 		}
 	}
