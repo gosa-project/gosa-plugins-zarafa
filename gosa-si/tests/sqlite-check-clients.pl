@@ -27,7 +27,8 @@ print "START\n";
 my $res;
 my $db_name;
 
-    
+sub daemon_log {}
+
 $db_name = "/var/lib/gosa-si/clients.db";
 if (-e $db_name) {
     print "\n############################################################\n";

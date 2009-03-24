@@ -23,6 +23,7 @@ use warnings;
 use GOSA::DBsqlite;
 
 
+sub daemon_log {}
 print "START\n";
 my $res;
 my $db_name;

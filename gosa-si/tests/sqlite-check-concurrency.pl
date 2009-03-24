@@ -10,6 +10,9 @@ use Time::HiRes qw(usleep);
 use Fcntl ':flock';
 use threads;
 
+
+sub daemon_log {}
+
 my %threads;
 # Count of threads, if > 1 it corrupts the db
 my $count= 10;

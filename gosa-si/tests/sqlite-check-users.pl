@@ -23,11 +23,10 @@ use warnings;
 use GOSA::DBsqlite;
 use Data::Dumper;
 
+sub daemon_log {}
 print "START\n";
 my $res;
 my $db_name;
-
-    
 
 
 $db_name = "/var/lib/gosa-si/users.db";
