@@ -72,8 +72,8 @@ while( my($new_file, $file_name) = each %copies ) {
     print STDERR "$del_cmd\n";
     system($del_cmd);
     
-    
-    my $ln_cmd = "ln -s ".$gosa_path.$file_name." $new_file"; 
+    my $abs_file = File::Spec->catfile($gosa_path, $file_name);
+    my $ln_cmd = "ln -s $abs_file $new_file"; 
     print STDERR "$ln_cmd\n"; 
     system($ln_cmd);
     
