@@ -1250,7 +1250,9 @@ sub msg_to_decrypt {
 						$msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
 					}
 					my $error= &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
-print STDERR "/n$error/n/n"; 
+					if ($error) {
+						&daemon_log("$session_id ERROR: some problems (error=$error) occurred while trying to send msg to registration server: $msg", 1); 
+					}
 				}
 				$done = 1;
 				&daemon_log("$session_id DEBUG: target is a client address in foreign_clients -> forward to registration server", 7);
