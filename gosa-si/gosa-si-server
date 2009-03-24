@@ -1249,7 +1249,8 @@ sub msg_to_decrypt {
 					if ($source eq "GOSA") {
 						$msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
 					}
-					&send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
+					my $error= &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
+print STDERR "/n$error/n/n"; 
 				}
 				$done = 1;
 				&daemon_log("$session_id DEBUG: target is a client address in foreign_clients -> forward to registration server", 7);
@@ -2149,12 +2150,12 @@ sub get_ldap_handle {
 	if ($subroutine eq "(eval)") {
 		$caller_text = "eval block within file '$file' for '$evalText'"; 
 	}
-	daemon_log("$session_id INFO: new ldap handle for $caller_text required");
+	daemon_log("$session_id INFO: new ldap handle for $caller_text required", 9);
 
 	my $ldap_handle = $ldap_pool->get();
 	
 	if (not defined $ldap_handle) {
-		daemon_log("$session_id INFO: ldap handle for $caller_text not available");
+		daemon_log("$session_id ERROR: ldap handle for $caller_text not available", 1);
 	}
 	return $ldap_handle;
 }
