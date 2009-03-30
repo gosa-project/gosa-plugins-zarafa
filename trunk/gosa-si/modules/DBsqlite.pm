@@ -15,7 +15,6 @@ sub new {
 	my $class = shift;
 	my $db_name = shift;
 
-	#my $lock = $db_name.".si.lock";
 	my $lock = $db_name;
 	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
 	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1, PrintError => 0});
@@ -86,16 +85,11 @@ sub create_table {
 	my @col_names;
 	my @col_names_creation;
 	foreach my $col_name (@$col_names_ref) {
-		# Save full column description for creation of database
-		push(@col_names_creation, $col_name);
-		my @t = split(" ", $col_name);
-		my $column_name = $t[0];
-		# Save column name internally for select_dbentry
-		push(@col_names, $column_name);
+		push(@col_names, $col_name);
 	}
 	
 	$col_names->{ $table_name } = \@col_names;
-	my $col_names_string = join(", ", @col_names_creation);
+	my $col_names_string = join(", ", @col_names);
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	my $res = $self->exec_statement($sql_statement);
 	
@@ -270,15 +264,17 @@ sub get_table_columns {
 	my @column_names;
 
 	if(exists $col_names->{$table}) {
-		@column_names = @{$col_names->{$table}};
+		foreach my $col_name (@{$col_names->{$table}}) {
+			push @column_names, ($1) if $col_name =~ /^(.*?)\s.*$/;
+		}
 	} else {
 		my @res;
 		foreach my $column ( $self->exec_statement ( "pragma table_info('$table')" ) ) {
 			push(@column_names, @$column[1]);
 		}
 	}
-	return \@column_names;
 
+	return \@column_names;
 }
 
 
