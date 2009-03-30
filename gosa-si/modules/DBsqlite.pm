@@ -271,7 +271,7 @@ sub get_table_columns {
 		}
 	} else {
 		my @res;
-		foreach my $column ( $self->exec_statement ( "pragma table_info('$table')" ) ) {
+		foreach my $column ( @{ $self->exec_statement ( "pragma table_info('$table')" ) } ) {
 			push(@column_names, @$column[1]);
 		}
 	}
