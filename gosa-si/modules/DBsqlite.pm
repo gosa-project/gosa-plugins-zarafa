@@ -15,7 +15,6 @@ sub new {
 	my $class = shift;
 	my $db_name = shift;
 
-	#my $lock = $db_name.".si.lock";
 	my $lock = $db_name;
 	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
 	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1, PrintError => 0});
@@ -51,7 +50,7 @@ sub lock {
 	my $lock_result = flock($self->{db_lock_handle}, LOCK_EX);
 	if($lock_result==1) {
 		seek($self->{db_lock_handle}, 0, 2);
-		&main::daemon_log("0 DEBUG: Acquired lock for database ".$self->{db_name}, 9);
+		&main::daemon_log("0 DEBUG: Acquired lock for database ".$self->{db_name}, 8);
 	} else {
 		&main::daemon_log("0 ERROR: Could not acquire lock for database ".$self->{db_name}, 1);
 	}
@@ -69,7 +68,7 @@ sub unlock {
 		&main::daemon_log("0 BIG ERROR: Lockfile for database ".$self->{db_name}."got closed within critical section!", 1);
 	}
 	flock($self->{db_lock_handle}, LOCK_UN);
-	&main::daemon_log("0 DEBUG: Released lock for database ".$self->{db_name}, 9);
+	&main::daemon_log("0 DEBUG: Released lock for database ".$self->{db_name}, 8);
 	return;
 }
 
@@ -86,16 +85,11 @@ sub create_table {
 	my @col_names;
 	my @col_names_creation;
 	foreach my $col_name (@$col_names_ref) {
-		# Save full column description for creation of database
-		push(@col_names_creation, $col_name);
-		my @t = split(" ", $col_name);
-		my $column_name = $t[0];
-		# Save column name internally for select_dbentry
-		push(@col_names, $column_name);
+		push(@col_names, $col_name);
 	}
 	
 	$col_names->{ $table_name } = \@col_names;
-	my $col_names_string = join(", ", @col_names_creation);
+	my $col_names_string = join(", ", @col_names);
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	my $res = $self->exec_statement($sql_statement);
 	
@@ -208,7 +202,7 @@ sub add_dbentry {
 				my $sth = $self->{dbh}->prepare($sql_statement);
 				$db_res = $sth->execute();
 				$sth->finish();
-				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 9);
+				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
 				$success = 1;
 			};
 			if($@) {
@@ -238,6 +232,8 @@ sub add_dbentry {
 
 	return 0;
 }
+
+
 sub update_dbentry {
 	my ($self, $sql)= @_;
 	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
@@ -270,14 +266,17 @@ sub get_table_columns {
 	my @column_names;
 
 	if(exists $col_names->{$table}) {
-		@column_names = @{$col_names->{$table}};
+		foreach my $col_name (@{$col_names->{$table}}) {
+			push @column_names, ($1) if $col_name =~ /^(.*?)\s.*$/;
+		}
 	} else {
-		foreach my $column ( @{$self->exec_statement ( "pragma table_info('$table')" )} ) {
+		my @res;
+		foreach my $column ( $self->exec_statement ( "pragma table_info('$table')" ) ) {
 			push(@column_names, @$column[1]);
 		}
 	}
-	return \@column_names;
 
+	return \@column_names;
 }
 
 
@@ -341,14 +340,95 @@ sub show_table {
 }
 
 
-sub exec_statement {
+sub recreate_database {
 	my $self = shift;
-	my $sql_statement = shift;
-
 	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
 		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called static! Statement was '$self'!", 1);
 		return;
 	}
+	
+	my $table_content;
+
+	# Query all tables
+	eval {
+		my $sth = $self->{dbh}->prepare("select name from sqlite_master where type='table';");
+		$sth->execute();
+		my ($tables) = @{$sth->fetchall_arrayref()};
+		foreach my $table (@$tables) {
+			if(defined($col_names->{$table})) {
+				# Schema definition for table exists, recreation is possible
+				my @column_names;
+				foreach my $column (@{$col_names->{$table}}) {
+					push @column_names, ($1) if $column =~ /(.*?)\s.*/;
+				}
+				my $column_query = join(',',@column_names);
+				my $sql = "SELECT $column_query FROM $table";
+				my $sth = $self->{dbh}->prepare($sql);
+				$sth->execute();
+				while (my @row = $sth->fetchrow_array()) {
+					push @{$table_content->{$table}}, @row;
+				}
+				$sth->finish;
+			}
+		}
+
+		# Delete the database file
+		$self->{dbh}->disconnect();
+		unlink($self->{db_name});
+
+		# Create a new database file
+		my $dbh = DBI->connect("dbi:SQLite:dbname=".$self->{db_name}, "", "", {RaiseError => 1, AutoCommit => 1});
+		$self->{dbh} = $dbh;
+
+		# Fill with contents
+		foreach my $table (@$tables) {
+			# Create schema
+			my $sql = "CREATE TABLE IF NOT EXISTS $table (".join(", ", @{$col_names->{$table}}).")";
+			my $sth = $self->{dbh}->prepare($sql);
+			$sth->execute();
+
+			# Insert Dump
+			if(defined($table_content->{$table})) {
+				&main::daemon_log("0 DEBUG: Filling table ".$self->{db_name}.".$table with dump.", 7);
+				my %insert_hash;
+				my $i=0;
+				foreach my $row ($table_content->{$table}) {
+					foreach my $column (@{$col_names->{$table}}) {
+						my $column_name = $1 if $column =~ /(.*?)\s.*/;
+						$insert_hash{$column_name} = defined(@$row[$i])?@$row[$i]:undef;
+						$i++;
+					}
+					my @values;
+					my $column_query = join(",",keys %insert_hash);
+					foreach my $column(keys %insert_hash) {
+						push @values, $insert_hash{$column};
+					}
+					my $value_query = join("', '", @values);
+					my $sql = "INSERT INTO $table ($column_query) VALUES ('$value_query')";
+					my $sth = $self->{dbh}->prepare($sql);
+					$sth->execute;
+				}
+			} else {
+				&main::daemon_log("0 DEBUG: Table ".$self->{db_name}.".$table was empty.", 7);
+			}
+		}
+	};
+	if($@) {
+		print STDERR Dumper($@);
+	}
+	
+	return;
+}
+
+
+sub exec_statement {
+	my $self = shift;
+	my $sql_statement = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called static! Statement was '$self'!", 1);
+		return;
+	}
+
 	if(not defined($sql_statement) or length($sql_statement) == 0) {
 		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called with empty statement!", 1);
 		return;
@@ -377,24 +457,19 @@ sub exec_statement {
 		$self->unlock();
 		return \@db_answer ;
 	}
-	
+
 	# 2nd chance
 	eval {
-		DBI->trace(6) if($main::verbose >= 7);
+		usleep(200);
 		my $sth = $self->{dbh}->prepare($sql_statement);
 		my $res = $sth->execute();
 		@db_answer = @{$sth->fetchall_arrayref()};
 		$sth->finish();
-		DBI->trace(0);
 		$success=1;
 		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 9);
 	};
 	if($@) {
-		eval {
-			$self->{dbh}->do("ANALYZE");
-			$self->{dbh}->do("VACUUM");
-		};
-		DBI->trace(0);
+		$self->recreate_database();
 	}
 	if($success) {
 		$self->unlock();
@@ -403,6 +478,7 @@ sub exec_statement {
 
 	# 3rd chance
 	eval {
+		usleep(200);
 		DBI->trace(6) if($main::verbose >= 7);
 		my $sth = $self->{dbh}->prepare($sql_statement);
 		my $res = $sth->execute();
