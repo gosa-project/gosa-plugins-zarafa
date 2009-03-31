@@ -7,9 +7,7 @@ class workstartup extends plugin
   var $gotoLdap_inherit   = FALSE;
 
   /* Generic terminal attributes */
-	# This is disabled as long there is no possiblilty to set these parameters
-  #var $bootmode             = "G";
-  var $bootmode             = "";
+  var $bootmode             = "G";
   var $gotoBootKernel       = "default-inherited";
   var $gotoKernelParameters = "";
   var $gotoLdapServer       = "default-inherited";
@@ -785,6 +783,21 @@ class workstartup extends plugin
         if ($tmp == ""){
           break;
         }
+      }
+    }
+
+    if ($this->gotoKernelParameters == "") {
+      /* Add semi automatic values if empty */
+      // FIXME: LDAP Server may not be set here...
+      $this->gotoKernelParameters= "ldap=".base64_encode($this->gotoLdapServer);
+      
+      switch ($this->bootmode){
+        case "D":
+          $this->gotoKernelParameters.= " debug";
+        break;
+        case "G":
+          $this->gotoKernelParameters.= " splash=silent";
+        break;
       }
     }
 
