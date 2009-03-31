@@ -1033,6 +1033,11 @@ sub trigger_activate_new {
 
         # Set job to done
         $main::job_db->exec_statement("UPDATE jobs SET status = 'done' WHERE id = $jobdb_id");
+    
+        # If a client gets a 'set_activated_for_installation' msg, always deliver a fresh 'new_ldap_config'
+        # just for backup and robustness purposes
+        my $ldap_out_msg = &ClientPackages::new_ldap_config($mac, $session_id);
+        push(@out_msg_l, $ldap_out_msg);
 
         # create set_activated_for_installation message for delivery
         my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
