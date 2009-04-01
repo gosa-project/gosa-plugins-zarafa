@@ -44,7 +44,7 @@ sub lock {
 		&main::daemon_log("0 ERROR: GOSA::DBsqlite::lock was called static! Statement was '$self'!", 1);
 		return;
 	}
-	if(not ref $self->{db_lock_handle}) {
+	if(not ref $self->{db_lock_handle} or not fileno $self->{db_lock_handle}) {
 		sysopen($self->{db_lock_handle}, $self->{db_lock}, O_RDWR) or &main::daemon_log("0 ERROR: Opening the database ".$self->{db_name}." failed with $!", 1);
 	}
 	my $lock_result = flock($self->{db_lock_handle}, LOCK_EX);
@@ -509,6 +509,9 @@ sub exec_statementlist {
 		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statementlist was called static!", 1);
 		return;
 	}
+
+	return undef if (ref($sql_list) ne 'ARRAY' or @{ $sql_list } == 0);
+
 	my @db_answer;
 
 	foreach my $sql_statement (@$sql_list) {
