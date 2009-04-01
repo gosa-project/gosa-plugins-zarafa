@@ -1791,8 +1791,7 @@ sub watch_for_new_jobs {
 					my $res_2 = $job_db->exec_statement( $sql_statement_2 );
 					if(defined($res_2) and defined @{$res_2}[0]) {
 						# Set status from goto-activation to 'waiting' and update timestamp
-						$job_db->exec_statement("UPDATE $job_queue_tn SET status='waiting' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
-						$job_db->exec_statement("UPDATE $job_queue_tn SET timestamp='".&calc_timestamp(&get_time(), 'plus', 30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
+						$job_db->exec_statement("UPDATE $job_queue_tn SET status='waiting', timestamp='".&calc_timestamp(&get_time(), 'plus', 30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
 					}
 				}
 				next;
