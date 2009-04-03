@@ -469,7 +469,10 @@ sub exec_statement {
 		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 9);
 	};
 	if($@) {
-		$self->recreate_database();
+		eval {
+			$self->{dbh}->do("ANALYZE");
+			$self->{dbh}->do("VACUUM");
+		};
 	}
 	if($success) {
 		$self->unlock();
