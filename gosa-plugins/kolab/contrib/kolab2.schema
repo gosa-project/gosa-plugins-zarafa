@@ -1,4 +1,4 @@
-# $Id: kolab2.schema,v 1.27 2007/10/17 17:57:13 thomas Exp $
+# $Id: kolab2.schema,v 1.35 2009/02/09 15:32:37 thomas Exp $
 # (c) 2003, 2004 Tassilo Erlewein <tassilo.erlewein@erfrakon.de>
 # (c) 2003-2007  Martin Konold <martin.konold@erfrakon.de>
 # (c) 2003 Achim Frank <achim.frank@erfrakon.de>
@@ -317,6 +317,15 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.18
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{512} )
 
+# Create the user mailbox on the kolabHomeServer only.
+# Default is no.
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.19
+  NAME 'kolabHomeServerOnly'
+  DESC 'Create the user mailbox on the kolabHomeServer only'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 
+  SINGLE-VALUE )
+
 # kolabFolderType describes the kind of Kolab folder
 # as defined in the kolab format specification. 
 # We will annotate all folders with an entry 
@@ -405,6 +414,11 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.510
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
+attributetype ( 1.3.6.1.4.1.19414.2.1.511
+  NAME 'postfix-message-size-limit'
+  EQUALITY integerMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
 ##########################
 # cyrus imapd attributes #
 ##########################
@@ -473,6 +487,31 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.609
   NAME 'cyrus-quotawarn'
   EQUALITY integerMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
+# enable smmap support
+attributetype ( 1.3.6.1.4.1.19414.2.1.610
+  NAME 'cyrus-smmap'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+# enable fulldirhash support
+attributetype ( 1.3.6.1.4.1.19414.2.1.611
+  NAME 'cyrus-fulldirhash'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+# enable hashimapspool support
+attributetype ( 1.3.6.1.4.1.19414.2.1.612
+  NAME 'cyrus-hashimapspool'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+# enable squatter support
+attributetype ( 1.3.6.1.4.1.19414.2.1.613
+  NAME 'cyrus-squatter'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
 
 #############################
 # apache and php attributes #
@@ -562,6 +601,7 @@ objectclass ( 1.3.6.1.4.1.19414.2.2.1
         postfix-virtual $
         postfix-enable-virus-scan $
         postfix-allow-unauthenticated $
+        postfix-message-size-limit $
         cyrus-quotawarn $
         cyrus-autocreatequota $
         cyrus-admins $
@@ -570,6 +610,10 @@ objectclass ( 1.3.6.1.4.1.19414.2.2.1
         cyrus-imaps $
         cyrus-pop3s $
         cyrus-sieve $
+        cyrus-smmap $
+        cyrus-fulldirhash $
+        cyrus-hashimapspool $
+        cyrus-squatter $
         apache-http $
         apache-allow-unauthenticated-fb $
         kolabfilter-verify-from-header $
@@ -623,6 +667,7 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.2
   MAY ( c $
         alias $
         kolabHomeServer $
+        kolabHomeServerOnly $
         kolabHomeMTA $
         unrestrictedMailSize $
         kolabDelegate $
@@ -631,16 +676,16 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.2
         kolabInvitationPolicy $
         kolabFreeBusyFuture $
         calFBURL $
-	kolabVacationBeginDateTime $
-	kolabVacationEndDateTime $
-	kolabVacationResendInterval $
-	kolabVacationAddress $
-	kolabVacationReplyToUCE $
-	kolabVacationReactDomain $
-	kolabForwardAddress $
-	kolabForwardKeepCopy $
+        kolabVacationBeginDateTime $
+        kolabVacationEndDateTime $
+        kolabVacationResendInterval $
+        kolabVacationAddress $
+        kolabVacationReplyToUCE $
+        kolabVacationReactDomain $
+        kolabForwardAddress $
+        kolabForwardKeepCopy $
         kolabForwardUCE $
-	kolabAllowSMTPRecipient $
+        kolabAllowSMTPRecipient $
         kolabDeleteflag $
         kolabComment ) )
 
