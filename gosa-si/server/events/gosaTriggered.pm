@@ -519,7 +519,7 @@ sub trigger_action_faireboot {
     # set job to status 'done', job will be deleted automatically
     my $sql_statement = "UPDATE $main::job_queue_tn ".
         "SET status='done', modified='1'".
-        "WHERE (macaddress='$macaddress' AND status='processing')";
+        "WHERE (macaddress LIKE '$macaddress' AND status='processing')";
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
     my $res = $main::job_db->update_dbentry( $sql_statement );
 
@@ -580,7 +580,7 @@ sub trigger_action_localboot {
     # Check for running jobs. In that case return a message to GOsa that running jobs have to be deleted/aborted
     # befor trigger_action_localboot could be effective. Running jobs usually sets FAIstate and GOtomode to
     # what they need again and again and overwrite the 'trigger_action_localboot' setting
-    my $job_sql= "SELECT * FROM $main::job_queue_tn WHERE macaddress='$macaddress'";
+    my $job_sql= "SELECT * FROM $main::job_queue_tn WHERE macaddress LIKE '$macaddress'";
     my $job_res = $main::job_db->select_dbentry($job_sql);
     my $job_res_count = keys(%$job_res);
     if ($job_res_count) {

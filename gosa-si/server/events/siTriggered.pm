@@ -239,7 +239,7 @@ sub detected_hardware {
 	}
 
 	# if there is a job in job queue for this host and this macaddress, delete it, cause its no longer used
-	my $del_sql = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND headertag='$header')";
+	my $del_sql = "DELETE FROM $main::job_queue_tn WHERE (macaddress LIKE '$macaddress' AND headertag='$header')";
 	my $del_res = $main::job_db->exec_statement($del_sql);
 
 	return ;
