@@ -328,6 +328,7 @@ sub daemon_log {
     my( $msg, $level ) = @_;
     if(not defined $msg) { return }
     if(not defined $level) { $level = 1 }
+		if($level > $verbose) { return }
     if(defined $log_file){
         my $open_log_fh = sysopen(LOG_HANDLE, $log_file, O_WRONLY | O_CREAT | O_APPEND , 0440);
         if(not $open_log_fh) {
