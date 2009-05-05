@@ -4,55 +4,95 @@ use strict;
 use warnings;
 use Carp;
 use DBI;
-use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Time::HiRes qw(usleep);
 use Fcntl qw/:DEFAULT :flock/; # import LOCK_* constants
 
-my $col_names = {};
+our $col_names = {};
 
 sub new {
 	my $class = shift;
 	my $db_name = shift;
 
-	my $lock = $db_name;
+	my $lock = $db_name.".si.lock";
 	my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
 	my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1, PrintError => 0});
-	my $sth = $dbh->prepare("pragma integrity_check");
-	$sth->execute();
-	my @ret = $sth->fetchall_arrayref();
-	$sth->finish();
-	if(length(@ret)==1 && $ret[0][0][0] eq 'ok') {
-		&main::daemon_log("DEBUG: Database image $db_name is ok", 7);
-	} else {
-		&main::daemon_log("ERROR: Database image $db_name is malformed, creating new database.", 1);
-		$dbh->disconnect();
-		unlink($db_name);
-		$dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
-	}
+	
 	$self->{dbh} = $dbh;
 	$self->{db_name} = $db_name;
 	$self->{db_lock} = $lock;
 	bless($self,$class);
+
+	my $sth = $self->{dbh}->prepare("pragma integrity_check");
+	   $sth->execute();
+	my @ret = $sth->fetchall_arrayref();
+	   $sth->finish();
+	if(length(@ret)==1 && $ret[0][0][0] eq 'ok') {
+		&main::daemon_log("0 DEBUG: Database disk image '".$self->{db_name}."' is ok.", 7);
+	} else {
+		&main::daemon_log("0 ERROR: Database disk image '".$self->{db_name}."' is malformed, creating new database!", 1);
+		$self->{dbh}->disconnect() or &main::daemon_log("0 ERROR: Could not disconnect from database '".$self->{db_name}."'!", 1);
+		$self->{dbh}= undef;
+		unlink($db_name);
+	}
 	return($self);
+}
+
+
+sub connect {
+	my $self = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::connect was called static! Argument was '$self'!", 1);
+		return;
+	}
+		
+	$self->{dbh} = DBI->connect("dbi:SQLite:dbname=".$self->{db_name}, "", "", {PrintError => 0, RaiseError => 1, AutoCommit => 1}) or 
+	  &main::daemon_log("0 ERROR: Could not connect to database '".$self->{db_name}."'!", 1);
+
+	return;
+}
+
+
+sub disconnect {
+	my $self = shift;
+	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::disconnect was called static! Argument was '$self'!", 1);
+		return;
+	}
+
+	eval {
+		$self->{dbh}->disconnect();
+	};
+  if($@) {
+		&main::daemon_log("ERROR: Could not disconnect from database '".$self->{db_name}."'!", 1);
+	}
+
+	$self->{dbh}= undef;
+
+	return;
 }
 
 
 sub lock {
 	my $self = shift;
 	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::lock was called static! Statement was '$self'!", 1);
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::lock was called static! Argument was '$self'!", 1);
 		return;
 	}
+
 	if(not ref $self->{db_lock_handle} or not fileno $self->{db_lock_handle}) {
-		sysopen($self->{db_lock_handle}, $self->{db_lock}, O_RDWR) or &main::daemon_log("0 ERROR: Opening the database ".$self->{db_name}." failed with $!", 1);
+		sysopen($self->{db_lock_handle}, $self->{db_lock}, O_RDWR | O_CREAT, 0600) or &main::daemon_log("0 ERROR: Opening the database ".$self->{db_name}." failed with $!", 1);
 	}
-	my $lock_result = flock($self->{db_lock_handle}, LOCK_EX);
-	if($lock_result==1) {
+get_lock:
+	my $lock_result = flock($self->{db_lock_handle}, LOCK_EX | LOCK_NB);
+	if(not $lock_result) {
+		&main::daemon_log("0 ERROR: Could not acquire lock for database ".$self->{db_name}, 1);
+		usleep(250+rand(500));
+		goto get_lock;
+	} else {
 		seek($self->{db_lock_handle}, 0, 2);
 		&main::daemon_log("0 DEBUG: Acquired lock for database ".$self->{db_name}, 8);
-	} else {
-		&main::daemon_log("0 ERROR: Could not acquire lock for database ".$self->{db_name}, 1);
+		$self->connect();
 	}
 	return;
 }
@@ -61,7 +101,7 @@ sub lock {
 sub unlock {
 	my $self = shift;
 	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::unlock was called static! Statement was '$self'!", 1);
+		&main::daemon_log("0 ERROR: GOSA::DBsqlite::unlock was called static! Argument was '$self'!", 1);
 		return;
 	}
 	if(not ref $self->{db_lock_handle}) {
@@ -69,6 +109,7 @@ sub unlock {
 	}
 	flock($self->{db_lock_handle}, LOCK_UN);
 	&main::daemon_log("0 DEBUG: Released lock for database ".$self->{db_name}, 8);
+	$self->disconnect();
 	return;
 }
 
@@ -340,87 +381,6 @@ sub show_table {
 }
 
 
-sub recreate_database {
-	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called static! Statement was '$self'!", 1);
-		return;
-	}
-	
-	my $table_content;
-
-	# Query all tables
-	eval {
-		my $sth = $self->{dbh}->prepare("select name from sqlite_master where type='table';");
-		$sth->execute();
-		my ($tables) = @{$sth->fetchall_arrayref()};
-		foreach my $table (@$tables) {
-			if(defined($col_names->{$table})) {
-				# Schema definition for table exists, recreation is possible
-				my @column_names;
-				foreach my $column (@{$col_names->{$table}}) {
-					push @column_names, ($1) if $column =~ /(.*?)\s.*/;
-				}
-				my $column_query = join(',',@column_names);
-				my $sql = "SELECT $column_query FROM $table";
-				my $sth = $self->{dbh}->prepare($sql);
-				$sth->execute();
-				while (my @row = $sth->fetchrow_array()) {
-					push @{$table_content->{$table}}, @row;
-				}
-				$sth->finish;
-			}
-		}
-
-		# Delete the database file
-		$self->{dbh}->disconnect();
-		unlink($self->{db_name});
-
-		# Create a new database file
-		my $dbh = DBI->connect("dbi:SQLite:dbname=".$self->{db_name}, "", "", {RaiseError => 1, AutoCommit => 1});
-		$self->{dbh} = $dbh;
-
-		# Fill with contents
-		foreach my $table (@$tables) {
-			# Create schema
-			my $sql = "CREATE TABLE IF NOT EXISTS $table (".join(", ", @{$col_names->{$table}}).")";
-			my $sth = $self->{dbh}->prepare($sql);
-			$sth->execute();
-
-			# Insert Dump
-			if(defined($table_content->{$table})) {
-				&main::daemon_log("0 DEBUG: Filling table ".$self->{db_name}.".$table with dump.", 7);
-				my %insert_hash;
-				my $i=0;
-				foreach my $row ($table_content->{$table}) {
-					foreach my $column (@{$col_names->{$table}}) {
-						my $column_name = $1 if $column =~ /(.*?)\s.*/;
-						$insert_hash{$column_name} = defined(@$row[$i])?@$row[$i]:undef;
-						$i++;
-					}
-					my @values;
-					my $column_query = join(",",keys %insert_hash);
-					foreach my $column(keys %insert_hash) {
-						push @values, $insert_hash{$column};
-					}
-					my $value_query = join("', '", @values);
-					my $sql = "INSERT INTO $table ($column_query) VALUES ('$value_query')";
-					my $sth = $self->{dbh}->prepare($sql);
-					$sth->execute;
-				}
-			} else {
-				&main::daemon_log("0 DEBUG: Table ".$self->{db_name}.".$table was empty.", 7);
-			}
-		}
-	};
-	if($@) {
-		print STDERR Dumper($@);
-	}
-	
-	return;
-}
-
-
 sub exec_statement {
 	my $self = shift;
 	my $sql_statement = shift;
@@ -451,6 +411,7 @@ sub exec_statement {
 		eval {
 			$self->{dbh}->do("ANALYZE");
 			$self->{dbh}->do("VACUUM");
+			$self->{dbh}->do("pragma integrity_check");
 		};
 	}
 	if($success) {
@@ -469,7 +430,11 @@ sub exec_statement {
 		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 9);
 	};
 	if($@) {
-		$self->recreate_database();
+		eval {
+			$self->{dbh}->do("ANALYZE");
+			$self->{dbh}->do("VACUUM");
+			$self->{dbh}->do("pragma integrity_check");
+		};
 	}
 	if($success) {
 		$self->unlock();
