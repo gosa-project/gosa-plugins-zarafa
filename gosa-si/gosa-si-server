@@ -50,8 +50,6 @@ use GOSA::GosaSupportDaemon;
 use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
-use ResourcePool;
-use ResourcePool::Factory::Net::LDAP;
 
 # revision number of server and program name
 my $server_headURL;
@@ -77,7 +75,7 @@ my ($server);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
 my ($messaging_db_loop_delay);
 my ($procid, $pid);
-my ($arp_fifo, $ldap_pool, $ldap_factory);
+my $arp_fifo;
 my ($xml);
 my $sources_list;
 my $max_clients;
@@ -104,7 +102,7 @@ our $gosa_address;
 our $no_arp;
 our $forground;
 our $cfg_file;
-our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn, $ldap_version, $max_ldap_handle, $precreate_ldap_handle);
+our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn, $ldap_version);
 our ($mysql_username, $mysql_password, $mysql_database, $mysql_host);
 our $known_modules;
 our $root_uid;
@@ -448,15 +446,12 @@ sub check_pid {
 #                state is on is imported by "require 'file';"
 #===============================================================================
 sub import_modules {
-    daemon_log(" ", 1);
-
     if (not -e $modules_path) {
         daemon_log("0 ERROR: cannot find directory or directory is not readable: $modules_path", 1);   
     }
 
     opendir (DIR, $modules_path) or die "ERROR while loading modules from directory $modules_path : $!\n";
 
-	my $ldap_handle = &get_ldap_handle;
     while (defined (my $file = readdir (DIR))) {
         if (not $file =~ /(\S*?).pm$/) {
             next;
@@ -474,7 +469,7 @@ sub import_modules {
             daemon_log("$@", 1);
 	    exit;
 		} else {
-			my $info = eval($mod_name.'::get_module_info($ldap_handle)');
+			my $info = eval($mod_name.'::get_module_info()');
 			# Only load module if get_module_info() returns a non-null object
 			if( $info ) {
 				my ($input_address, $input_key, $event_hash) = @{$info};
@@ -483,7 +478,6 @@ sub import_modules {
 			}
 		}
     }   
-	&release_ldap_handle($ldap_handle); 
     close (DIR);
 }
 
@@ -1327,16 +1321,15 @@ sub msg_to_decrypt {
 
 
 sub next_task {
-    my ($session, $heap, $task, $ldap_handle) = @_[SESSION, HEAP, ARG0, ARG1];
+    my ($session, $heap, $task) = @_[SESSION, HEAP, ARG0, ARG1];
     my $running_task = POE::Wheel::Run->new(
-            Program => sub { process_task($session, $heap, $task, $ldap_handle) },
+            Program => sub { process_task($session, $heap, $task) },
             StdioFilter => POE::Filter::Reference->new(),
             StdoutEvent  => "task_result",
             StderrEvent  => "task_debug",
             CloseEvent   => "task_done",
             );
     $heap->{task}->{ $running_task->ID } = $running_task;
-	$heap->{ldap_handle}->{$running_task->ID} = $ldap_handle;
 }
 
 sub handle_task_result {
@@ -1374,7 +1367,7 @@ sub handle_task_done {
 sub process_task {
     no strict "refs";
     #CHECK: Not @_[...]?
-    my ($session, $heap, $task, $ldap_handle) = @_;
+    my ($session, $heap, $task) = @_;
     my $error = 0;
     my $answer_l;
     my ($answer_header, @answer_target_l, $answer_source);
@@ -1405,7 +1398,7 @@ sub process_task {
     if( $error == 0) {
         daemon_log("$session_id INFO: Incoming msg (session_id=$session_id) with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
         daemon_log("$session_id DEBUG: Processing module ".$module, 7);
-        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id, $ldap_handle);
+        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 < @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
@@ -1886,7 +1879,6 @@ sub watch_for_new_messages {
 										attrs => ['memberUid'],
 										filter => "cn=$group_name",
 										);
-						&release_ldap_handle($ldap_handle);
 						if ($mesg->count) {
 								my @entries = $mesg->entries;
 								foreach my $entry (@entries) {
@@ -1900,6 +1892,7 @@ sub watch_for_new_messages {
 						if ($mesg->code) {
 								daemon_log("M ERROR: unable to translate group '$group_name' to user list for message delivery: $mesg->error", 1);
 						}
+						&release_ldap_handle($ldap_handle);
 				# ldap handle error ?		
 				} else {
 					daemon_log("M ERROR: unable to translate group '$group_name' to user list for message delivery: no ldap handle available", 1);
@@ -2127,9 +2120,7 @@ sub watch_for_next_tasks {
         my $session_id = $hit->{'sessionid'};
         &daemon_log("$session_id DEBUG: start processing for message with incoming id: '$message_id'", 7);
 
-		my $ldap_handle = &get_ldap_handle();
-		if (not defined $ldap_handle) { next; }
-        $kernel->yield('next_task', $hit, $ldap_handle);
+        $kernel->yield('next_task', $hit);
 
         my $sql = "DELETE FROM $incoming_tn WHERE id=$message_id";
         my $res = $incoming_db->exec_statement($sql);
@@ -2146,115 +2137,118 @@ sub get_ldap_handle {
 	if (not defined $session_id ) { $session_id = 0 };
 	if ($session_id =~ /[^0-9]*/) { $session_id = 0 };
 
-	(my $package, my $file, my $row, my $subroutine, my $hasArgs, my $wantArray, my $evalText, my $isRequire) = caller(1);
-	my $caller_text = "subroutin $subroutine";
+	my ($package, $file, $row, $subroutine, $hasArgs, $wantArray, $evalText, $isRequire) = caller(1);
+	my $caller_text = "subroutine $subroutine";
 	if ($subroutine eq "(eval)") {
 		$caller_text = "eval block within file '$file' for '$evalText'"; 
 	}
-	daemon_log("$session_id INFO: new ldap handle for $caller_text required", 9);
+	daemon_log("$session_id INFO: new ldap handle for '$caller_text' required!", 1);
 
-	my $ldap_handle = $ldap_pool->get();
-	
-	if (not defined $ldap_handle) {
-		daemon_log("$session_id ERROR: ldap handle for $caller_text not available", 1);
+get_handle:
+	my $ldap_handle = Net::LDAP->new( $ldap_uri );
+	if (not ref $ldap_handle) {
+		daemon_log("$session_id ERROR: Connection to LDAP URI '$ldap_uri' failed! Retrying!", 1);
+		usleep(1000);
+		goto get_handle;
+	} else {
+		daemon_log("$session_id DEBUG: Connection to LDAP URI '$ldap_uri' established.", 6);
 	}
+
+	$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password) or &daemon_log("$session_id ERROR: Could not bind as '$ldap_admin_dn' to LDAP URI '$ldap_uri'!", 1);
 	return $ldap_handle;
 }
 
+
 sub release_ldap_handle {
 	my ($ldap_handle) = @_ ;
-	$ldap_pool->free($ldap_handle);
+	if(ref $ldap_handle) {
+	  $ldap_handle->disconnect();
+  }
+	&main::daemon_log("0 DEBUG: Released a ldap handle!", 6);
 	return;
 }
 
 
 sub change_fai_state {
-    my ($st, $targets, $session_id) = @_;
-    $session_id = 0 if not defined $session_id;
-    # Set FAI state to localboot
-    my %mapActions= (
-        reboot    => '',
-        update    => 'softupdate',
-        localboot => 'localboot',
-        reinstall => 'install',
-        rescan    => '',
-        wake      => '',
-        memcheck  => 'memcheck',
-        sysinfo   => 'sysinfo',
-        install   => 'install',
-    );
+	my ($st, $targets, $session_id) = @_;
+	$session_id = 0 if not defined $session_id;
+	# Set FAI state to localboot
+	my %mapActions= (
+		reboot    => '',
+		update    => 'softupdate',
+		localboot => 'localboot',
+		reinstall => 'install',
+		rescan    => '',
+		wake      => '',
+		memcheck  => 'memcheck',
+		sysinfo   => 'sysinfo',
+		install   => 'install',
+	);
 
-    # Return if this is unknown
-    if (!exists $mapActions{ $st }){
-        daemon_log("$session_id ERROR: unknown action '$st', can not translate ot FAIstate", 1); 
-      return;
-    }
+	# Return if this is unknown
+	if (!exists $mapActions{ $st }){
+		daemon_log("$session_id ERROR: unknown action '$st', can not translate ot FAIstate", 1); 
+		return;
+	}
 
-    my $state= $mapActions{ $st };
+	my $state= $mapActions{ $st };
 
-    #if( defined($ldap_handle) ) {
+	# Build search filter for hosts
+	my $search= "(&(objectClass=GOhard)";
+	foreach (@{$targets}){
+		$search.= "(macAddress=$_)";
+	}
+	$search.= ")";
 
-      # Build search filter for hosts
-        my $search= "(&(objectClass=GOhard)";
-        foreach (@{$targets}){
-            $search.= "(macAddress=$_)";
-        }
-        $search.= ")";
-
-      # If there's any host inside of the search string, procress them
-        if (!($search =~ /macAddress/)){
-            daemon_log("$session_id ERROR: no macAddress found in filter statement for LDAP search: '$search'", 1);    
-            return;
-        }
+	# If there's any host inside of the search string, procress them
+	if (!($search =~ /macAddress/)){
+		daemon_log("$session_id ERROR: no macAddress found in filter statement for LDAP search: '$search'", 1);    
+		return;
+	}
 
 	my $ldap_handle = &get_ldap_handle($session_id);
-      # Perform search for Unit Tag
-      my $mesg = $ldap_handle->search(
-          base   => $ldap_base,
-          scope  => 'sub',
-          attrs  => ['dn', 'FAIstate', 'objectClass'],
-          filter => "$search"
-          );
+	# Perform search for Unit Tag
+	my $mesg = $ldap_handle->search(
+		base   => $ldap_base,
+		scope  => 'sub',
+		attrs  => ['dn', 'FAIstate', 'objectClass'],
+		filter => "$search"
+	);
 
-	  if ($mesg->count) {
-		  my @entries = $mesg->entries;
-		  if (0 == @entries) {
-				  daemon_log("$session_id ERROR: ldap search failed: ldap_base=$ldap_base, filter=$search", 1); 
-		  }
+	if ($mesg->count) {
+		my @entries = $mesg->entries;
+		if (0 == @entries) {
+			daemon_log("$session_id ERROR: ldap search failed: ldap_base=$ldap_base, filter=$search", 1); 
+		}
 
-		  foreach my $entry (@entries) {
-			  # Only modify entry if it is not set to '$state'
-			  if ($entry->get_value("FAIstate") ne "$state"){
-				  daemon_log("$session_id INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
-				  my $result;
-				  my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
-				  if (exists $tmp{'FAIobject'}){
-					  if ($state eq ''){
-						  $result= $ldap_handle->modify($entry->dn, changes => [ delete => [ FAIstate => [] ] ]);
-					  } else {
-						  $result= $ldap_handle->modify($entry->dn, changes => [ replace => [ FAIstate => $state ] ]);
-					  }
-				  } elsif ($state ne ''){
-					  $result= $ldap_handle->modify($entry->dn, changes => [ add => [ objectClass => 'FAIobject' ], add => [ FAIstate => $state ] ]);
-				  }
+		foreach my $entry (@entries) {
+			# Only modify entry if it is not set to '$state'
+			if ($entry->get_value("FAIstate") ne "$state"){
+				daemon_log("$session_id INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
+				my $result;
+				my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
+				if (exists $tmp{'FAIobject'}){
+					if ($state eq ''){
+						$result= $ldap_handle->modify($entry->dn, changes => [ delete => [ FAIstate => [] ] ]);
+					} else {
+						$result= $ldap_handle->modify($entry->dn, changes => [ replace => [ FAIstate => $state ] ]);
+					}
+				} elsif ($state ne ''){
+					$result= $ldap_handle->modify($entry->dn, changes => [ add => [ objectClass => 'FAIobject' ], add => [ FAIstate => $state ] ]);
+				}
 
-				  # Errors?
-				  if ($result->code){
-					  daemon_log("$session_id Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
-				  }
-			  } else {
-				  daemon_log("$session_id DEBUG FAIstate at host '".$entry->dn."' already at state '$st'", 7); 
-			  }  
-		  }
-	  } else {
+				# Errors?
+				if ($result->code){
+					daemon_log("$session_id Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+				}
+			} else {
+				daemon_log("$session_id DEBUG FAIstate at host '".$entry->dn."' already at state '$st'", 7); 
+			}  
+		}
+	} else {
 		daemon_log("$session_id ERROR: LDAP search failed: ldap_base=$ldap_base, filter=$search", 1);
-	  }
-	  &release_ldap_handle($ldap_handle);		  
-
-    # if no ldap handle defined
-    #} else {
-    #    daemon_log("$session_id ERROR: no LDAP handle defined for update FAIstate", 1); 
-    #}
+	}
+	&release_ldap_handle($ldap_handle);		  
 
 	return;
 }
@@ -2279,6 +2273,7 @@ sub change_goto_state {
 
       # If there's any host inside of the search string, procress them
       if (!($search =~ /macAddress/)){
+	      &release_ldap_handle($ldap_handle);
         return;
       }
 
@@ -2331,29 +2326,24 @@ sub run_recreate_packages_db {
 sub run_create_fai_server_db {
     my ($kernel, $session, $heap, $table_name) = @_[KERNEL, SESSION, HEAP, ARG0];
     my $session_id = $session->ID;
-	my $ldap_handle = &get_ldap_handle();
-	if (not defined $ldap_handle) {
-		$kernel->delay_set('create_fai_server_db', 1, $table_name);
-		return;
-	}
     my $task = POE::Wheel::Run->new(
-            Program => sub { &create_fai_server_db($table_name,$kernel, undef, $session_id, $ldap_handle) },
+            Program => sub { &create_fai_server_db($table_name,$kernel, undef, $session_id) },
             StdoutEvent  => "session_run_result",
             StderrEvent  => "session_run_debug",
             CloseEvent   => "session_run_done",
             );
 
     $heap->{task}->{ $task->ID } = $task;
-	$heap->{ldap_handle}->{$task->ID} = $ldap_handle;
     return;
 }
 
 
 sub create_fai_server_db {
-	my ($table_name, $kernel, $dont_create_packages_list, $session_id, $ldap_handle) = @_;
+	my ($table_name, $kernel, $dont_create_packages_list, $session_id) = @_;
 	my $result;
 
 	if (not defined $session_id) { $session_id = 0; }
+	my $ldap_handle = &get_ldap_handle($session_id);
 	if(defined($ldap_handle)) {
 		daemon_log("$session_id INFO: create_fai_server_db: start", 5);
 		my $mesg= $ldap_handle->search(
@@ -2383,6 +2373,7 @@ sub create_fai_server_db {
 			}
 		}
 		daemon_log("$session_id INFO: create_fai_server_db: finished", 5);
+		&release_ldap_handle($ldap_handle);
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
 		if(not defined($dont_create_packages_list)) {
@@ -2397,32 +2388,26 @@ sub create_fai_server_db {
 sub run_create_fai_release_db {
 	my ($kernel, $session, $heap, $table_name) = @_[KERNEL, SESSION, HEAP, ARG0];
 	my $session_id = $session->ID;
-	my $ldap_handle = &get_ldap_handle();
-	if (not defined $ldap_handle) {
-		$kernel->delay_set('create_fai_release_db', 1, $table_name);
-		return;
-	}
 	my $task = POE::Wheel::Run->new(
-		Program => sub { &create_fai_release_db($table_name, $session_id, $ldap_handle) },
+		Program => sub { &create_fai_release_db($table_name, $session_id) },
 		StdoutEvent  => "session_run_result",
 		StderrEvent  => "session_run_debug",
 		CloseEvent   => "session_run_done",
 	);
 
 	$heap->{task}->{ $task->ID } = $task;
-	$heap->{ldap_handle}->{$task->ID} = $ldap_handle;
 	return;
 }
 
 
 sub create_fai_release_db {
-	my ($table_name, $session_id, $ldap_handle) = @_;
+	my ($table_name, $session_id) = @_;
 	my $result;
 
 	# used for logging
 	if (not defined $session_id) { $session_id = 0; }
 
-	#my $ldap_handle = &get_ldap_handle();
+	my $ldap_handle = &get_ldap_handle($session_id);
 	if(defined($ldap_handle)) {
 		daemon_log("$session_id INFO: create_fai_release_db: start",5);
 		my $mesg= $ldap_handle->search(
@@ -2461,6 +2446,7 @@ sub create_fai_release_db {
 			}
 
 			daemon_log("$session_id DEBUG: create_fai_release_db: Inserting ".scalar @sql_list." entries to DB",8);
+	    &release_ldap_handle($ldap_handle);
 			if(@sql_list) {
 				unshift @sql_list, "VACUUM";
 				unshift @sql_list, "DELETE FROM $table_name";
@@ -2472,7 +2458,6 @@ sub create_fai_release_db {
 		}
 		daemon_log("$session_id INFO: create_fai_release_db: finished",5);
 	}
-	#&release_ldap_handle($ldap_handle);
 	return $result;
 }
 
@@ -2725,7 +2710,7 @@ sub session_run_done {
 
 
 sub create_sources_list {
-	my $session_id = shift;
+	my $session_id = shift || 0;
 	my $result="/tmp/gosa_si_tmp_sources_list";
 
 	# Remove old file
@@ -2741,14 +2726,13 @@ sub create_sources_list {
 		return undef;
 	}
 	if(defined($main::ldap_server_dn) and length($main::ldap_server_dn) > 0) {
-		my $ldap_handle = &get_ldap_handle();
+		my $ldap_handle = &get_ldap_handle($session_id);
 		my $mesg=$ldap_handle->search(
 			base	=> $main::ldap_server_dn,
 			scope	=> 'base',
 			attrs	=> 'FAIrepository',
 			filter	=> 'objectClass=FAIrepositoryServer'
 		);
-		&release_ldap_handle($ldap_handle);
 		if($mesg->count) {
 			foreach my $entry(@{$mesg->{'entries'}}) {
 				foreach my $value(@{$entry->get_value('FAIrepository', asref => 1)}) {
@@ -2760,6 +2744,7 @@ sub create_sources_list {
 				}
 			}
 		}
+		&release_ldap_handle($ldap_handle);
 	} else {
 		if (defined $main::ldap_server_dn){
 			&main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$main::ldap_server_dn', abort create_sources_list", 1); 
@@ -3273,17 +3258,6 @@ daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 daemon_log("status: $server_status", 1);
 daemon_log($server_status_hash->{$server_status}.": $server_revision", 1); 
-
-# Create a pool of LDAP handles
-$ldap_factory =  ResourcePool::Factory::Net::LDAP->new($ldap_uri, version => $ldap_version);
-$ldap_factory->bind($ldap_admin_dn, password=>$ldap_admin_password);
-$ldap_pool = ResourcePool->new($ldap_factory,
-		Max         => $max_ldap_handle,
-		#MaxTry      => 1,
-		#SleepOnFail	=> [0, 0, 1, 1],
-		PreCreate	=> $precreate_ldap_handle,
-);
-
 
 # Buildup data bases
 {
