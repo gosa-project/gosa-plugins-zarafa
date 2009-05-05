@@ -123,7 +123,7 @@ sub got_ping {
 
 
 sub detected_hardware {
-	my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
+	my ($msg, $msg_hash, $session_id) = @_;
 	my $address = $msg_hash->{source}[0];
 	my $header = $msg_hash->{header}[0];
 	my $gotoHardwareChecksum= $msg_hash->{detected_hardware}[0]->{gotoHardwareChecksum};
@@ -147,6 +147,7 @@ sub detected_hardware {
 	}
 
 	# Perform search
+	my $ldap_handle = &main::get_ldap_handle();
 	$mesg = $ldap_handle->search(
 		base   => $ldap_base,
 		scope  => 'sub',
@@ -189,6 +190,7 @@ sub detected_hardware {
 		if(defined($res->{'errorMessage'}) &&
 			length($res->{'errorMessage'}) >0) {
 			&main::daemon_log("ERROR: can not add entries to LDAP: ".$res->{'errorMessage'}, 1);
+			&main::release_ldap_handle($ldap_handle);
 			return;
 		} else {
 			# Fill $mesg again
@@ -241,6 +243,7 @@ sub detected_hardware {
 	# if there is a job in job queue for this host and this macaddress, delete it, cause its no longer used
 	my $del_sql = "DELETE FROM $main::job_queue_tn WHERE (macaddress LIKE '$macaddress' AND headertag='$header')";
 	my $del_res = $main::job_db->exec_statement($del_sql);
+  &main::release_ldap_handle($ldap_handle);
 
 	return ;
 }

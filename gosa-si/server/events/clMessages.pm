@@ -117,7 +117,7 @@ sub save_fai_log {
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 sub LOGIN {
-    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
+    my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
@@ -125,7 +125,7 @@ sub LOGIN {
     my $error_str;
 
     # Invoke set_last_system; message sets ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
-	$res = &set_last_system($msg, $msg_hash, $session_id, $ldap_handle);
+	$res = &set_last_system($msg, $msg_hash, $session_id);
 
     # Add user to login_users_db
     my %add_hash = ( table=>$main::login_users_tn, 
@@ -174,7 +174,7 @@ sub LOGOUT {
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 sub CURRENTLY_LOGGED_IN {
-    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
+    my ($msg, $msg_hash, $session_id) = @_;
     my ($sql_statement, $db_res);
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -186,7 +186,7 @@ sub CURRENTLY_LOGGED_IN {
     }
 
     # Invoke set_last_system; message sets ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
-	my $res = &set_last_system($msg, $msg_hash, $session_id, $ldap_handle);
+	my $res = &set_last_system($msg, $msg_hash, $session_id);
     
     # fetch all user currently assigned to the client at login_users_db
     my %currently_logged_in_user = (); 
@@ -261,7 +261,7 @@ sub CURRENTLY_LOGGED_IN {
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 sub set_last_system {
-	my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
+	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
@@ -307,6 +307,7 @@ sub set_last_system {
 	}
 
 	# Get system info
+	my $ldap_handle=&main::get_ldap_handle($session_id);
 	my $ldap_mesg= $ldap_handle->search(
 					base => $main::ldap_base,
 					scope => 'sub',
@@ -315,6 +316,7 @@ sub set_last_system {
 	if ($ldap_mesg->count == 0) {
 		&main::daemon_log("$session_id ERROR: no system with mac address='$mac' was found in base '".
 						$main::ldap_base."', setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
+		&main::release_ldap_handle($ldap_handle);
 		return;
 	}
 
@@ -381,6 +383,7 @@ sub set_last_system {
             }
 		}
 	}
+	&main::release_ldap_handle($ldap_handle);
 
 	return;
 }
@@ -507,7 +510,7 @@ sub TASKSKIP {
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 sub TASKBEGIN {
-    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
+    my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
@@ -580,6 +583,7 @@ sub TASKBEGIN {
 			# in case of no and more than one running jobs in queue, add one single job
 			# resolve plain name for host $macaddress
 			my $plain_name;
+			my $ldap_handle=&main::get_ldap_handle($session_id);
 			my $mesg = $ldap_handle->search(
 					base => $main::ldap_base,
 					scope => 'sub',
@@ -592,6 +596,7 @@ sub TASKBEGIN {
 				&main::daemon_log($mesg->error, 1);
 				$plain_name = "none";
 			}
+			&main::release_ldap_handle($ldap_handle);
 
             # In any case add a new job to job queue
 			&main::daemon_log("$session_id DEBUG: add job to queue for host '$macaddress'", 7); 

@@ -78,7 +78,6 @@ sub local_read_configfile {
 }
 
 sub get_module_info {
-    my ($ldap_handle) = @_;
 	my @info = (undef, undef);
 
 	&local_read_configfile();

@@ -262,7 +262,7 @@ sub get_mac {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_ ;
+    my ($msg, $msg_hash, $session_id) = @_ ;
     my $error = 0;
     my $host_name;
     my $host_key;
@@ -282,21 +282,19 @@ sub process_incoming_msg {
     if( 0 == length @target_l){     
         &main::daemon_log("$session_id ERROR: no target specified for msg $header", 1);
         $error++;
-    }
-
-    if( 1 == length @target_l) {
+    } elsif( 1 == length @target_l) {
         my $target = $target_l[0];
 		if(&server_matches($target)) {
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
-                @out_msg_l = &here_i_am($msg, $msg_hash, $session_id, $ldap_handle)
+                @out_msg_l = &here_i_am($msg, $msg_hash, $session_id)
             } else {
                 # a event exists with the header as name
                 if( exists $event2module_hash->{$header} ) {
                     &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
                     no strict 'refs';
-                    @out_msg_l = &{$event2module_hash->{$header}."::$header"}($msg, $msg_hash, $session_id, $ldap_handle);
+                    @out_msg_l = &{$event2module_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
 
                 # if no event handler is implemented   
                 } else {
@@ -344,12 +342,7 @@ sub process_incoming_msg {
                 &main::daemon_log("$session_id ERROR: client '$target' is not registered for event '$header', processing is aborted", 1); 
                 @out_msg_l = ();
             }
-
-
-
-
-        }
-		else {
+        } else {
 			&main::daemon_log("INFO: msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
 			push(@out_msg_l, $msg);
 		}
@@ -417,7 +410,7 @@ sub new_key {
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
 sub here_i_am {
-    my ($msg, $msg_hash, $session_id, $ldap_handle) = @_;
+    my ($msg, $msg_hash, $session_id) = @_;
     my @out_msg_l;
     my $out_hash;
     my $source = @{$msg_hash->{source}}[0];
@@ -497,7 +490,7 @@ sub here_i_am {
 
     # give the new client his ldap config
     # Workaround: Send within the registration response, if the client will get an ldap config later
-	my $new_ldap_config_out = &new_ldap_config($source, $session_id, $ldap_handle);
+	my $new_ldap_config_out = &new_ldap_config($source, $session_id);
 	if($new_ldap_config_out && (!($new_ldap_config_out =~ /error/))) {
 		&add_content2xml_hash($out_hash, "ldap_available", "true");
 	} elsif($new_ldap_config_out && $new_ldap_config_out =~ /error/){
@@ -518,19 +511,19 @@ sub here_i_am {
     }
 
     # Send client hardware configuration
-	my $hardware_config_out = &hardware_config($msg, $msg_hash, $session_id, $ldap_handle);
+	my $hardware_config_out = &hardware_config($msg, $msg_hash, $session_id);
 	if( $hardware_config_out ) {
 		push(@out_msg_l, $hardware_config_out);
 	}
 
     # Send client ntp server
-    my $ntp_config_out = &new_ntp_config($mac_address, $session_id, $ldap_handle);
+    my $ntp_config_out = &new_ntp_config($mac_address, $session_id);
     if ($ntp_config_out) {
         push(@out_msg_l, $ntp_config_out);
     }
 
     # Send client syslog server
-    my $syslog_config_out = &new_syslog_config($mac_address, $session_id, $ldap_handle);
+    my $syslog_config_out = &new_syslog_config($mac_address, $session_id);
     if ($syslog_config_out) {
         push(@out_msg_l, $syslog_config_out);
     }
@@ -596,8 +589,9 @@ sub who_has_i_do {
 
 
 sub new_syslog_config {
-    my ($mac_address, $session_id, $ldap_handle) = @_;
+    my ($mac_address, $session_id) = @_;
     my $syslog_msg;
+    my $ldap_handle=&main::get_ldap_handle();
 
 	# Perform search
     my $ldap_res = $ldap_handle->search( base   => $ldap_base,
@@ -606,6 +600,7 @@ sub new_syslog_config {
 		filter => "(&(objectClass=GOhard)(macaddress=$mac_address))");
 	if($ldap_res->code) {
 		&main::daemon_log("$session_id ".$ldap_res->error, 1);
+        &main::release_ldap_handle($ldap_handle);
 		return;
 	}
 
@@ -616,6 +611,7 @@ sub new_syslog_config {
                 "\n\tscope: sub".
                 "\n\tattrs: gotoSyslogServer".
                 "\n\tfilter: (&(objectClass=GOhard)(macaddress=$mac_address))", 1);
+        &main::release_ldap_handle($ldap_handle);
 		return;
 	}
 
@@ -632,6 +628,7 @@ sub new_syslog_config {
                 filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
             &main::daemon_log("$session_id ".$ldap_res->error, 1);
+            &main::release_ldap_handle($ldap_handle);
             return;
         }
 
@@ -642,6 +639,7 @@ sub new_syslog_config {
                     "\n\tscope: sub".
                     "\n\tattrs: gotoSyslogServer".
                     "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
+            &main::release_ldap_handle($ldap_handle);
             return;
         }
 
@@ -652,6 +650,7 @@ sub new_syslog_config {
     # Return if no syslog server specified
     if (not defined $syslog_server) {
         &main::daemon_log("$session_id WARNING: no syslog server specified for this host '$mac_address'", 3);
+        &main::release_ldap_handle($ldap_handle);
         return;
     }
 
@@ -660,13 +659,15 @@ sub new_syslog_config {
     my $syslog_msg_hash = &create_xml_hash("new_syslog_config", $server_address, $mac_address);
     &add_content2xml_hash($syslog_msg_hash, "server", $syslog_server);
 
+    &main::release_ldap_handle($ldap_handle);
     return &create_xml_string($syslog_msg_hash);
 }
 
 
 sub new_ntp_config {
-    my ($address, $session_id, $ldap_handle) = @_;
+    my ($address, $session_id) = @_;
     my $ntp_msg;
+    my $ldap_handle=&main::get_ldap_handle();
 
 	# Perform search
     my $ldap_res = $ldap_handle->search( base   => $ldap_base,
@@ -675,6 +676,7 @@ sub new_ntp_config {
 		filter => "(&(objectClass=GOhard)(macaddress=$address))");
 	if($ldap_res->code) {
 		&main::daemon_log("$session_id ".$ldap_res->error, 1);
+        &main::release_ldap_handle($ldap_handle);
 		return;
 	}
 
@@ -685,6 +687,7 @@ sub new_ntp_config {
                 "\n\tscope: sub".
                 "\n\tattrs: gotoNtpServer".
                 "\n\tfilter: (&(objectClass=GOhard)(macaddress=$address))", 1);
+        &main::release_ldap_handle($ldap_handle);
 		return;
 	}
 
@@ -701,6 +704,7 @@ sub new_ntp_config {
                 filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
             &main::daemon_log("$session_id ".$ldap_res->error, 1);
+            &main::release_ldap_handle($ldap_handle);
             return;
         }
 
@@ -711,6 +715,7 @@ sub new_ntp_config {
                     "\n\tscope: sub".
                     "\n\tattrs: gotoNtpServer".
                     "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
+            &main::release_ldap_handle($ldap_handle);
             return;
         }
 
@@ -721,6 +726,7 @@ sub new_ntp_config {
     # Return if no ntp server specified
     if ((not @ntp_servers) || (@ntp_servers == 0)) {
         &main::daemon_log("$session_id WARNING: no ntp server specified for this host '$address'", 3);
+        &main::release_ldap_handle($ldap_handle);
         return;
     }
  
@@ -730,6 +736,7 @@ sub new_ntp_config {
         &add_content2xml_hash($ntp_msg_hash, "server", $ntp_server);
     }
 
+    &main::release_ldap_handle($ldap_handle);
     return &create_xml_string($ntp_msg_hash);
 }
 
@@ -741,7 +748,7 @@ sub new_ntp_config {
 #  DESCRIPTION:  send to address the ldap configuration found for dn gotoLdapServer
 #===============================================================================
 sub new_ldap_config {
-	my ($address, $session_id, $ldap_handle) = @_ ;
+	my ($address, $session_id) = @_ ;
 
 	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address' OR macaddress LIKE '$address'";
 	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
@@ -750,24 +757,27 @@ sub new_ldap_config {
 	my $hit_counter = keys %{$res};
 	if( not $hit_counter == 1 ) {
 		&main::daemon_log("$session_id ERROR: more or no hit found in known_clients_db by query '$sql_statement'", 1);
+        return;
 	}
 
     $address = $res->{1}->{hostname};
 	my $macaddress = $res->{1}->{macaddress};
 	my $hostkey = $res->{1}->{hostkey};
-
+	
 	if (not defined $macaddress) {
 		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
 		return;
 	}
 
 	# Perform search
+    my $ldap_handle=&main::get_ldap_handle();
     $mesg = $ldap_handle->search( base   => $ldap_base,
 		scope  => 'sub',
 		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag', 'FAIclass'],
 		filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
 	if($mesg->code) {
 		&main::daemon_log("$session_id ".$mesg->error, 1);
+        &main::release_ldap_handle($ldap_handle);
 		return;
 	}
 
@@ -778,6 +788,7 @@ sub new_ldap_config {
                 "\n\tscope: sub".
                 "\n\tattrs: dn, gotoLdapServer".
                 "\n\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress))", 1);
+        &main::release_ldap_handle($ldap_handle);
 		return;
 	}
 
@@ -805,6 +816,7 @@ sub new_ldap_config {
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
 		if($mesg->code) {
 			&main::daemon_log("$session_id ERROR: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$filter_dn))': ".$mesg->error, 1);
+            &main::release_ldap_handle($ldap_handle);
 			return;
 		}
 
@@ -815,6 +827,7 @@ sub new_ldap_config {
                     "\n\tscope: sub".
                     "\n\tattrs: dn, gotoLdapServer, FAIclass".
                     "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
+            &main::release_ldap_handle($ldap_handle);
             return;
         }
 
@@ -877,12 +890,14 @@ sub new_ldap_config {
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
 			&main::daemon_log($mesg->error, 1);
+            &main::release_ldap_handle($ldap_handle);
 			return "error-unit-tag-count-0";
 		}
 
 		# Sanity check
 		if ($mesg->count != 1) {
 			&main::daemon_log("WARNING: cannot find administrative unit for client with tag $unit_tag", 1);
+            &main::release_ldap_handle($ldap_handle);
 			return "error-unit-tag-count-".$mesg->count;
 		}
 
@@ -893,6 +908,7 @@ sub new_ldap_config {
 		# Append unit Tag
 		$data{'unit_tag'}= $unit_tag;
 	}
+    &main::release_ldap_handle($ldap_handle);
 
 	# Send information
 	return &build_msg("new_ldap_config", $server_address, $address, \%data);
@@ -906,7 +922,7 @@ sub new_ldap_config {
 #  DESCRIPTION:  
 #===============================================================================
 sub hardware_config {
-	my ($msg, $msg_hash, $session_id, $ldap_handle) = @_ ;
+	my ($msg, $msg_hash, $session_id) = @_ ;
 	my $address = @{$msg_hash->{source}}[0];
 	my $header = @{$msg_hash->{header}}[0];
 	my $gotoHardwareChecksum = @{$msg_hash->{gotoHardwareChecksum}}[0];
@@ -928,6 +944,7 @@ sub hardware_config {
 	}
 
 	# Perform search
+    my $ldap_handle=&main::get_ldap_handle();
 	$mesg = $ldap_handle->search(
 		base   => $ldap_base,
 		scope  => 'sub',
@@ -967,6 +984,7 @@ sub hardware_config {
 				}
 			} else {
 				# Nothing to do
+                &main::release_ldap_handle($ldap_handle);
 				return;
 			}
 		} 
@@ -980,6 +998,8 @@ sub hardware_config {
 		$data{'goto_admin'}= $goto_admin;
 		$data{'goto_secret'}= $goto_secret;
 	}
+
+    &main::release_ldap_handle($ldap_handle);
 
 	# Send information
 	return &build_msg("detect_hardware", $server_address, $address, \%data);
