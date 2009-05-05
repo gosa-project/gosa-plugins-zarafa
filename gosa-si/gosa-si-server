@@ -2140,7 +2140,7 @@ sub get_ldap_handle {
 	if ($subroutine eq "(eval)") {
 		$caller_text = "eval block within file '$file' for '$evalText'"; 
 	}
-	daemon_log("$session_id INFO: new ldap handle for '$caller_text' required!", 1);
+	daemon_log("$session_id INFO: new ldap handle for '$caller_text' required!", 7);
 
 get_handle:
 	my $ldap_handle = Net::LDAP->new( $ldap_uri );
