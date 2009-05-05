@@ -58,6 +58,7 @@ my $server_headURL;
 my $server_revision;
 my $server_status;
 our $prg= basename($0);
+our $verbose= 0;
 
 my $db_module = "DBsqlite";
 {
@@ -101,7 +102,6 @@ our $server_address;
 our $server_mac_address;
 our $gosa_address;
 our $no_arp;
-our $verbose;
 our $forground;
 our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn, $ldap_version, $max_ldap_handle, $precreate_ldap_handle);
@@ -109,10 +109,6 @@ our ($mysql_username, $mysql_password, $mysql_database, $mysql_host);
 our $known_modules;
 our $root_uid;
 our $adm_gid;
-
-
-# specifies the verbosity of the daemon_log
-$verbose = 0 ;
 
 # if foreground is not null, script will be not forked to background
 $foreground = 0 ;
