@@ -707,7 +707,6 @@ sub input_from_known_client {
 
         if( (!$msg) || (!$msg_hash) ) {
             &daemon_log("$session_id DEGUG: input_from_known_client: deciphering raise error", 7);
-            &daemon_log("$@", 8);
             next;
         }
         else {
