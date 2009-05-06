@@ -255,13 +255,13 @@ class termgroup extends plugin
     }
 
     $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
-          "instant_update" => _("Instant update"),
-          "update" => _("Scheduled update"),
+          "update" => _("Software update"),
           "wake" => _("Wake"),
           "reinstall" => _("Reinstall"),
-          "rescan" => _("Rescan hardware"),
-          "memcheck" => _("Memory test"),
-          "sysinfo"  => _("System analysis")));
+          "rescan" => _("Rescan hardware")
+#          "memcheck" => _("Memory test"),
+#          "sysinfo"  => _("System analysis")
+        ));
 
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
     $smarty->assign("modes", $this->modes);
