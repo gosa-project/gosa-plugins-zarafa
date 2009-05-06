@@ -548,7 +548,14 @@ sub TASKBEGIN {
 
 	# other TASKBEGIN msgs
     } else {
-		# select processing jobs for host
+		# TASKBEGIN msgs do only occour during a softupdate or a reinstallation
+		# of a host. Set all waiting update- or reinstall-jobs for host to
+		# processing so they can be handled correctly by the rest of the function.
+		my $waiting_sql = "UPDATE $main::job_queue_tn SET status='processing' WHERE status='waiting' AND macaddress LIKE '$macaddress' AND (headertag='trigger_action_update' OR headertag='trigger_action_reinstall')"; 
+		&main::daemon_log("$session_id DEBUB: $waiting_sql", 7);
+		my $waiting_res = $main::job_db->update_dbentry($waiting_sql);
+
+		# Select processing jobs for host
 		my $sql_statement = "SELECT * FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
 		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
 		my $res = $main::job_db->select_dbentry($sql_statement);
@@ -556,17 +563,15 @@ sub TASKBEGIN {
 		# there is exactly one job entry in queue for this host
 		if (keys(%$res) == 1) {
 			&main::daemon_log("$session_id DEBUG: there is already one processing job in queue for host '$macaddress', run an update for this entry", 7);
-			my $sql_statement = "UPDATE $main::job_queue_tn ".
-                "SET result='$header $content', modified='1', siserver='localhost' ".
-                "WHERE status='processing' AND macaddress LIKE '$macaddress'";
+			my $sql_statement = "UPDATE $main::job_queue_tn SET result='$header $content', modified='1', siserver='localhost' WHERE status='processing' AND macaddress LIKE '$macaddress'";
 			my $err = $main::job_db->update_dbentry($sql_statement);
 			if (not defined  $err) {
 				&main::daemon_log("$session_id ERROR: cannot update job_db entry: ".Dumper($err), 1);
 			}
 			
-		# there is no entry or more than one enties
+		# There is no entry in queue or more than one entries in queue for this host
 		} else {
-			# in case of more than one running jobs in queue, delete all jobs
+			# In case of more than one running jobs in queue, delete all jobs
 			if (keys(%$res) > 1) {
 				&main::daemon_log("$session_id DEBUG: there are more than one processing job in queue for host '$macaddress', ".
 								"delete entries", 7); 
@@ -580,8 +585,9 @@ sub TASKBEGIN {
 
 			}
 		
-			# in case of no and more than one running jobs in queue, add one single job
-			# resolve plain name for host $macaddress
+			# In case of no and more than one running jobs in queue, add one single job
+
+			# Resolve plain name for host $macaddress
 			my $plain_name;
 			my $ldap_handle=&main::get_ldap_handle($session_id);
 			my $mesg = $ldap_handle->search(
