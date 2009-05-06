@@ -548,6 +548,14 @@ sub TASKBEGIN {
 
 	# other TASKBEGIN msgs
     } else {
+		
+		# TASKBEGIN msgs do only occour during a softupdate or a reinstallation 
+		# of a host. Set all waiting update- or reinstall-jobs for host to 
+		# processing so they can be handled correctly by the rest of the function. 
+		my $waiting_sql = "UPDATE $main::job_queue_tn SET status='processing' WHERE status='waiting' AND macaddress LIKE '$macaddress' AND (headertag='trigger_action_update' OR headertag='trigger_action_reinstall')";  
+		&main::daemon_log("$session_id DEBUB: $waiting_sql", 7); 
+		my $waiting_res = $main::job_db->update_dbentry($waiting_sql); 
+
 		# select processing jobs for host
 		my $sql_statement = "SELECT * FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
 		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
