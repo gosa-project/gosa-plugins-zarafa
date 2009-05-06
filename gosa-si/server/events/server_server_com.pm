@@ -49,7 +49,7 @@ sub information_sharing {
             # Add each user to login_users_db
             foreach my $new_user_info (@$new_user_list) {
                 my ($client, $user) = split(/;/, $new_user_info);
-                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'");
+                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'", 5);
                 my %add_hash = ( table=>$main::login_users_tn, 
                         primkey=> ['client', 'user'],
                         client=>$client,
@@ -81,7 +81,7 @@ sub information_sharing {
             # Add each user to login_users_db
             foreach my $user_db_info (@$user_db_list) {
                 my ($client, $user) = split(/;/, $user_db_info);
-                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'");
+                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'", 5);
                 my %add_hash = ( table=>$main::login_users_tn, 
                         primkey=> ['client', 'user'],
                         client=>$client,
