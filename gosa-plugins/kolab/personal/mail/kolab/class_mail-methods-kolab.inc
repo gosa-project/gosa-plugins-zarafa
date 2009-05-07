@@ -29,6 +29,13 @@ class mailMethodKolab extends mailMethodCyrus
   protected $user_prefix    = 'user.';
   protected $share_prefix   = 'shared\\.';
 
+  /* gosaSharedFolderTarget settings, 
+      E.g. 
+        AccountID = 'shared/herberts.folder@gonicus.de' 
+        'kolab+' will result in gosaSharedFolderTarget: kolab+shared/herberts.folder@gonicus.de
+   */
+  protected $gosaSharedPrefix = 'kolab+';  
+
   /* Account ID creation */
   protected $user_id    = "%prefix%%uattrib%";  
   protected $share_id   = "%prefix%%cn%@%domain%";
@@ -64,7 +71,8 @@ class mailMethodKolab extends mailMethodCyrus
     /* The folderType is set by ::setFolderType(...) */
     $this->parent->attrs['kolabFolderType'] = array();
     if($this->type == "group"){ 
-      $this->parent->attrs['gosaSharedFolderTarget'] = "kolab+shared.".$this->parent->mail;
+      $this->parent->attrs['gosaSharedFolderTarget'] = 
+        $this->gosaSharedPrefix.$this->account_id;
     }
   }
 
