@@ -52,7 +52,7 @@ class gosaSupportDaemon
     @param boolean  Connect Directly connect to daemon socket.
     @param float    Timeout The timelimit for all socket actions.
    */
-  public function __construct($connect=TRUE,$timeout=10)
+  public function __construct($connect=TRUE,$timeout=15)
   {
     #FIXME: bad idea about referencing global variables from within classes
     global $config;
@@ -1192,7 +1192,7 @@ class gosaSupportDaemon
   {
     if (tests::is_mac($target)){
       /* Get communication object */
-      $d= new gosaSupportDaemon(TRUE,0.5);
+      $d= new gosaSupportDaemon(TRUE,2);
       $answer= $d->_send("<xml><header>gosa_ping</header><source>GOSA</source><target>$target</target></xml>", TRUE);
       return (count($answer) ? TRUE:FALSE);
     }
