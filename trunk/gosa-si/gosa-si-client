@@ -803,7 +803,7 @@ sub trigger_seen_messages {
     # Select all files under /tmp with prefix 'goto_notify'
     my $goto_dir = "/tmp";
     opendir(DIR, $goto_dir);
-    my @goto_files = grep { /^goto_notify_/ && -f "$goto_dir/$_" } readdir(DIR);
+    my @goto_files = grep { /.goto_notify$/ && -f "$goto_dir/$_" } readdir(DIR);
     closedir DIR;
 
     # Check if file has 'seen' tag
