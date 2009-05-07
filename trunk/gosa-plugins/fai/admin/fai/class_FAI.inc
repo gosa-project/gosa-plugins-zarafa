@@ -640,6 +640,9 @@ class FAI
     $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $dn));
     $ldap->cd($dn);
 
+    $ui= get_userinfo();
+    FAI::tag_attrs($attrs, $dn, $ui->gosaUnitTag);
+
     $ldap->cat($dn,array("dn"));
     if($ldap->count()){
 
@@ -1233,6 +1236,33 @@ class FAI
     }
     return("");
   }
+
+
+  static function tag_attrs(&$at, $dn= "", $tag= "", $show= false)
+  {                                                        
+    /* Remove tags that may already be here... */                         
+    remove_objectClass("gosaAdministrativeUnitTag", $at);                 
+    if (isset($at['gosaUnitTag'])){                                       
+        unset($at['gosaUnitTag']);                                        
+    }                                                                     
+
+    /* Set tag? */
+    if ($tag != ""){
+      add_objectClass("gosaAdministrativeUnitTag", $at);
+      $at['gosaUnitTag']= $tag;                         
+    }                                                   
+
+    /* Initially this object was tagged. 
+       - But now, it is no longer inside a tagged department. 
+       So force the remove of the tag.                        
+       (objectClass was already removed obove)                
+     */                                                       
+    if($tag == ""){                     
+      $at['gosaUnitTag'] = array();                           
+    }                                                         
+  }                                                           
+
+
 }
 
 
