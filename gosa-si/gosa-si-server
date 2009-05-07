@@ -895,7 +895,7 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("$session_id WARNING: cannot send ".$header."msg to $address , host not reachable", 3);
+        daemon_log("$session_id WARNING: cannot send ".$header."msg to '$address' , host not reachable", 3);
         $error++;
     }
     
