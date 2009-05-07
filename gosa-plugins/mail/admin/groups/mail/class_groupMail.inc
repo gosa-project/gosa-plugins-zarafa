@@ -829,8 +829,8 @@ class mailgroup extends plugin
     }
 
     /* Mail address checks */
+    $mail = $this->mail;
     if(!(!$this->mailMethod->isModifyableMail() && $this->initially_was_account)){
-      $mail = $this->mail;
       if($this->mailMethod->domainSelectionEnabled() || $this->mailMethod->mailEqualsCN()){
         $mail.= "@".$this->mailDomainPart;
       }
