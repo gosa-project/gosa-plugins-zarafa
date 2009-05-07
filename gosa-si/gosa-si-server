@@ -889,19 +889,23 @@ sub send_msg_to_target {
 		$msg =~ s/<source>(0\.0\.0\.0):(\d*?)<\/source>/<source>$remote_ip:$2<\/source>/s;
 	}
 
+	# Memorize own source address
+    $msg =~ /<source>(\S+)<\/source>/;
+    my $own_source_address = $1;
+
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
 
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("$session_id WARNING: cannot send ".$header."msg to '$address' , host not reachable", 3);
+        daemon_log("$session_id WARNING: cannot send ".$header."msg to '$address' , host not reachable! Message: '$msg'", 3);
         $error++;
     }
     
     if( $error == 0 ) {
         # send xml msg
-        print $socket $crypted_msg."\n";
+        print $socket $crypted_msg.";$own_source_address\n";
 
         daemon_log("$session_id INFO: send ".$header."msg to $address", 5);
         daemon_log("$session_id DEBUG: message:\n$msg", 9);
@@ -1078,13 +1082,13 @@ sub msg_to_decrypt {
 	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
 		# if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
 		# could not understand a msg from its server the client cause a re-registering process
-        my $remote_ip = $heap->{'remote_ip'};
+		daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
+						"' to cause a re-registering of the client if necessary", 3);
+		my $remote_ip = $heap->{'remote_ip'};
         my $remote_port = $heap->{'remote_port'};
         my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source><target>$msg_source</target></xml>";
         my ($test_error, $test_error_string) = &send_msg_to_target($ping_msg, "$msg_source", "dummy-key", "gosa_ping", $session_id);
 
-		daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
-			"' to cause a re-registering of the client if necessary", 3);
 		$error++;
 	}
 

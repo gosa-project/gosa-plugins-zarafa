@@ -1005,11 +1005,13 @@ sub server_input {
     my $error = 0;
     my $answer;
     
-
     daemon_log("INFO: Incoming msg from '$remote_ip'", 5);
     daemon_log("DEBUG: Incoming msg:\n$input\n", 9);
 
-    my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
+	# Cut of ip and port from msgs tail
+	my ($encrypted_msg, $msg_source) = split(/;/, $input);
+
+    my ($msg, $msg_hash) = &check_key_and_xml_validity($encrypted_msg, $server_key);
     if( (!$msg) || (!$msg_hash) ) {
         daemon_log("WARNING: Deciphering of incoming msg failed", 3);
         if($server_address =~ /$remote_ip/) {
