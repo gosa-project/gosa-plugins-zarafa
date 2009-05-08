@@ -695,7 +695,7 @@ sub input_from_known_client {
     my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
         my $host_name = $hit->{hostname};
-        if( not $host_name =~ /^$remote_ip:\d*$/) {
+        if( not $host_name =~ /^$remote_ip/) {
                 next;
 		}
         my $host_key = $hit->{hostkey};
@@ -3157,8 +3157,6 @@ sub cleanup_and_extract {
 
 sub register_at_foreign_servers {   
     my ($kernel) = $_[KERNEL];
-
-	# Set current delay of register_at_foreign_servers to 0
 
 	# Update status and update-time of all si-server with expired update_time and 
 	# block them for race conditional registration processes of other si-servers.
