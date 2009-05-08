@@ -152,12 +152,23 @@ sub new_server {
     my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
     my @loaded_modules = exists $msg_hash->{'loaded_modules'} ? @{$msg_hash->{'loaded_modules'}} : qw();
 
-    # sanity check
+	# Ignor message if I'm already within a registration process for server $source
+	my $check_statement = "SELECT * FROM $main::known_server_tn WHERE status='new_server' AND hostname='$source'"; 
+	&main::daemon_log("$session_id DEBUG $check_statement", 7);
+	my $check_res = $main::known_server_db->select_dbentry($check_statement);
+	my $blocking_process = keys(%$check_res);
+	if ($blocking_process)
+	{
+		return;
+	}
+
+    # Sanity check
     if (ref $key eq 'HASH') {
         &main::daemon_log("$session_id ERROR: 'new_server'-message from host '$source' contains no key!", 1);
         return;
     }
-    # add foreign server to known_server_db
+    # Add foreign server to known_server_db
+	my $new_update_time = &calc_timestamp(&get_time(), 'plus', $main::foreign_servers_register_delay);
     my $func_dic = {table=>$main::known_server_tn,
         primkey=>['hostname'],
         hostname => $source,
@@ -166,6 +177,7 @@ sub new_server {
         hostkey => $key,
         loaded_modules => join(',', @loaded_modules),
         timestamp=>&get_time(),
+		update_time=>$new_update_time,
     };
     my $res = $main::known_server_db->add_dbentry($func_dic);
     if (not $res == 0) {
@@ -244,8 +256,9 @@ sub confirm_new_server {
     my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
     my @loaded_modules = exists $msg_hash->{'loaded_modules'} ? @{$msg_hash->{'loaded_modules'}} : qw();
 
+	my $new_update_time = &calc_timestamp(&get_time(), 'plus', $main::foreign_servers_register_delay);
     my $sql = "UPDATE $main::known_server_tn".
-        " SET status='$header', hostkey='$key', loaded_modules='".join(",",@loaded_modules)."', macaddress='$mac'".
+        " SET status='$header', hostkey='$key', loaded_modules='".join(",",@loaded_modules)."', macaddress='$mac', update_time='$new_update_time'".
         " WHERE hostname='$source'"; 
     my $res = $main::known_server_db->update_dbentry($sql);
 
@@ -259,10 +272,10 @@ sub confirm_new_server {
         push(@sql_list, $del_sql);
 
         my $sql = "INSERT INTO $main::foreign_clients_tn VALUES ("
-            ."'".$client_details[0]."',"   # hostname
-            ."'".$client_details[1]."',"   # macaddress
-            ."'".$source."',"              # regserver
-            ."'".&get_time()."')";         # timestamp
+            ."'".$client_details[0]."',"   	# hostname
+            ."'".$client_details[1]."',"   	# macaddress
+            ."'".$source."',"              	# regserver
+            ."'".&get_time()."')";			# timestamp
         push(@sql_list, $sql);
     }
     if (@sql_list) {

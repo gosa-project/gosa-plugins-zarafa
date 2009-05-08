@@ -154,7 +154,7 @@ my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 our $known_server_db;
 our $known_server_tn = "known_server";
 my $known_server_file_name;
-my @known_server_col_names = ("hostname VARCHAR(255)", "macaddress VARCHAR(17)", "status VARCHAR(255)", "hostkey VARCHAR(255)", "loaded_modules TEXT", "timestamp VARCHAR(14)");
+my @known_server_col_names = ("hostname VARCHAR(255)", "macaddress VARCHAR(17)", "status VARCHAR(255)", "hostkey VARCHAR(255)", "loaded_modules TEXT", "timestamp VARCHAR(14)", "update_time VARCHAR(14)");
 
 # holds all registrated clients
 our $known_clients_db;
@@ -1080,15 +1080,26 @@ sub msg_to_decrypt {
 	}
 	# an error occurred
 	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-		# if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
-		# could not understand a msg from its server the client cause a re-registering process
-		daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
-						"' to cause a re-registering of the client if necessary", 3);
-		my $remote_ip = $heap->{'remote_ip'};
-        my $remote_port = $heap->{'remote_port'};
-        my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source><target>$msg_source</target></xml>";
-        my ($test_error, $test_error_string) = &send_msg_to_target($ping_msg, "$msg_source", "dummy-key", "gosa_ping", $session_id);
-
+		# If an incoming msg could not be decrypted (maybe a wrong key), decide if msg comes from a client 
+		# or a server.  In case of a client, send a ping. If the client could not understand a msg from its 
+		# server the client cause a re-registering process. In case of a server, decrease update_time in kown_server_db
+		# and trigger a re-registering process for servers
+		if (defined $msg_source && $msg_source =~ /^\d+:$server_port$/)
+		{
+			daemon_log("$session_id WARNING: Cannot understand incoming msg from server '$msg_source'. Cause re-registration process for servers.", 3);
+			my $update_statement = "UPDATE $known_server_tn SET update_time='19700101000000' WHERE hostname='$msg_source'"; 
+			daemon_log("$session_id DEBUG: $update_statement", 7);
+			my $upadte_res = $known_server_db->exec_statement($update_statement);
+			$kernel->yield("register_at_foreign_servers");
+		}
+		else
+		{
+			daemon_log("$session_id WARNING: Cannot understand incoming msg from client '".$heap->{remote_ip}."'. Send ping-msg to cause a re-registering of the client if necessary", 3);
+			my $remote_ip = $heap->{'remote_ip'};
+			my $remote_port = $heap->{'remote_port'};
+			my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source><target>$msg_source</target></xml>";
+			my ($test_error, $test_error_string) = &send_msg_to_target($ping_msg, "$msg_source", "dummy-key", "gosa_ping", $session_id);
+		}
 		$error++;
 	}
 
@@ -3140,54 +3151,93 @@ sub cleanup_and_extract {
 sub register_at_foreign_servers {   
     my ($kernel) = $_[KERNEL];
 
-    # hole alle bekannten server aus known_server_db
-    my $server_sql = "SELECT * FROM $known_server_tn";
-    my $server_res = $known_server_db->exec_statement($server_sql);
+	# Set current delay of register_at_foreign_servers to 0
 
-    # no entries in known_server_db
-    if (not ref(@$server_res[0]) eq "ARRAY") { 
-        # TODO
-    }
+	# Update status and update-time of all si-server with expired update_time and 
+	# block them for race conditional registration processes of other si-servers.
+	my $act_time = &get_time();
+	my $block_statement = "UPDATE $known_server_tn SET status='new_server',update_time='19700101000000' WHERE (CAST(update_time AS UNSIGNED))<$act_time ";
+	&daemon_log("0 DEBUG: $block_statement", 5);
+	my $block_res = $known_server_db->exec_statement($block_statement);
 
-    # detect already connected clients
+	# Fetch all si-server from db where update_time is younger than act_time
+	my $fetch_statement = "SELECT * FROM $known_server_tn WHERE update_time='19700101000000'"; 
+	&daemon_log("0 DEBUG: $fetch_statement", 5);
+	my $fetch_res = $known_server_db->exec_statement($fetch_statement);
+
+    # Detect already connected clients. Will be added to registration msg later. 
     my $client_sql = "SELECT * FROM $known_clients_tn"; 
     my $client_res = $known_clients_db->exec_statement($client_sql);
 
-    # send my server details to all other gosa-si-server within the network
-    foreach my $hit (@$server_res) {
+	# Send registration messag to all fetched si-server
+    foreach my $hit (@$fetch_res) {
         my $hostname = @$hit[0];
         my $hostkey = &create_passwd;
 
-        # add already connected clients to registration message 
+        # Add already connected clients to registration message 
         my $myhash = &create_xml_hash('new_server', $server_address, $hostname);
         &add_content2xml_hash($myhash, 'key', $hostkey);
         map(&add_content2xml_hash($myhash, 'client', @{$_}[0].",".@{$_}[4]), @$client_res);
 
-        # add locally loaded gosa-si modules to registration message
+        # Add locally loaded gosa-si modules to registration message
         my $loaded_modules = {};
         while (my ($package, $pck_info) = each %$known_modules) {
-						next if ((!defined(@$pck_info[2])) || (!(ref (@$pck_info[2]) eq 'HASH')));
-						foreach my $act_module (keys(%{@$pck_info[2]})) {
-							$loaded_modules->{$act_module} = ""; 
-						}
-        }
-
+			next if ((!defined(@$pck_info[2])) || (!(ref (@$pck_info[2]) eq 'HASH')));
+			foreach my $act_module (keys(%{@$pck_info[2]})) {
+				$loaded_modules->{$act_module} = ""; 
+			}
+		}
         map(&add_content2xml_hash($myhash, "loaded_modules", $_), keys(%$loaded_modules));
 
-        # add macaddress to registration message
+        # Add macaddress to registration message
         my ($host_ip, $host_port) = split(/:/, $hostname);
         my $local_ip = &get_local_ip_for_remote_ip($host_ip);
         my $network_interface= &get_interface_for_ip($local_ip);
         my $host_mac = &get_mac_for_interface($network_interface);
         &add_content2xml_hash($myhash, 'macaddress', $host_mac);
         
-        # build registration message and send it
+        # Build registration message and send it
         my $foreign_server_msg = &create_xml_string($myhash);
         my $error = &send_msg_to_target($foreign_server_msg, $hostname, $ServerPackages_key, "new_server", 0); 
     }
-    
-    $kernel->delay_set("register_at_foreign_servers", $foreign_servers_register_delay); 
-    return;
+
+
+	# After n sec perform a check of all server registration processes
+    $kernel->delay_set("control_server_registration", 2); 
+
+	return;
+}
+
+
+sub control_server_registration {
+	my ($kernel) = $_[KERNEL];
+	
+	# Check if all registration processes succeed or not
+	my $select_statement = "SELECT * FROM $known_server_tn WHERE status='new_server'"; 
+	&daemon_log("0 DEBUG $select_statement", 5);
+	my $select_res = $known_server_db->exec_statement($select_statement);
+
+	# If at least one registration process failed, maybe in case of a race condition
+	# with a foreign registration process
+	if (@$select_res > 0) 
+	{
+		# Release block statement 'new_server' to make the server accessible
+		# for foreign registration processes
+		my $update_statement = "UPDATE $known_server_tn SET status='waiting' WHERE status='new_server'";	
+		&daemon_log("0 DEBUG: $update_statement", 5);
+		my $update_res = $known_server_db->exec_statement($update_statement);
+
+		# Set a random delay to avoid the registration race condition
+		my $new_foreign_servers_register_delay = int(rand(4))+1;
+		$kernel->delay_set("register_at_foreign_servers", $new_foreign_servers_register_delay);
+	}
+	# If all registration processes succeed
+	else
+	{
+		$kernel->delay_set("register_at_foreign_servers", $foreign_servers_register_delay);
+	}
+
+	return;
 }
 
 
@@ -3441,6 +3491,7 @@ foreach my $foreign_server (@foreign_server_list) {
             hostkey=>"none",
             loaded_modules => "none", 
             timestamp=>$cur_timestamp,
+			update_time=>'19700101000000',
             } );
 }
 
@@ -3488,6 +3539,7 @@ POE::Session->create(
 	inline_states => {
 		_start => \&session_start,
         register_at_foreign_servers => \&register_at_foreign_servers,
+		control_server_registration => \&control_server_registration,
         sig_handler => \&sig_handler,
         next_task => \&next_task,
         task_result => \&handle_task_result,
