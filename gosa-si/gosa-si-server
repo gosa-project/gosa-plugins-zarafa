@@ -3020,9 +3020,9 @@ sub get_package {
     # This is ugly, but I've no time to take a look at "how it works in perl"
     if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
         system("gunzip -cd '$dest' > '$dest.in'");
-        daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 5);
+        daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 7);
         unlink($dest);
-        daemon_log("$session_id DEBUG: delete file '$dest'", 5); 
+        daemon_log("$session_id DEBUG: delete file '$dest'", 7); 
     } else {
         daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' into '$dest' failed!", 1);
     }
@@ -3157,12 +3157,12 @@ sub register_at_foreign_servers {
 	# block them for race conditional registration processes of other si-servers.
 	my $act_time = &get_time();
 	my $block_statement = "UPDATE $known_server_tn SET status='new_server',update_time='19700101000000' WHERE (CAST(update_time AS UNSIGNED))<$act_time ";
-	&daemon_log("0 DEBUG: $block_statement", 5);
+	&daemon_log("0 DEBUG: $block_statement", 7);
 	my $block_res = $known_server_db->exec_statement($block_statement);
 
 	# Fetch all si-server from db where update_time is younger than act_time
 	my $fetch_statement = "SELECT * FROM $known_server_tn WHERE update_time='19700101000000'"; 
-	&daemon_log("0 DEBUG: $fetch_statement", 5);
+	&daemon_log("0 DEBUG: $fetch_statement", 7);
 	my $fetch_res = $known_server_db->exec_statement($fetch_statement);
 
     # Detect already connected clients. Will be added to registration msg later. 
@@ -3214,7 +3214,7 @@ sub control_server_registration {
 	
 	# Check if all registration processes succeed or not
 	my $select_statement = "SELECT * FROM $known_server_tn WHERE status='new_server'"; 
-	&daemon_log("0 DEBUG $select_statement", 5);
+	&daemon_log("0 DEBUG $select_statement", 7);
 	my $select_res = $known_server_db->exec_statement($select_statement);
 
 	# If at least one registration process failed, maybe in case of a race condition
@@ -3224,7 +3224,7 @@ sub control_server_registration {
 		# Release block statement 'new_server' to make the server accessible
 		# for foreign registration processes
 		my $update_statement = "UPDATE $known_server_tn SET status='waiting' WHERE status='new_server'";	
-		&daemon_log("0 DEBUG: $update_statement", 5);
+		&daemon_log("0 DEBUG: $update_statement", 7);
 		my $update_res = $known_server_db->exec_statement($update_statement);
 
 		# Set a random delay to avoid the registration race condition
