@@ -184,7 +184,7 @@ class workservice extends plugin
     $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
     if ($ldap->count() == 1){
       $map= array("gotoXResolution", "gotoXColordepth", "gotoXKbModel", "gotoXKbLayout",
-                  "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport");
+                  "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport", "gotoXDriver");
       $attrs= $ldap->fetch();
 
       foreach ($map as $name){
@@ -193,6 +193,9 @@ class workservice extends plugin
         }
         
         switch ($name){
+          case 'gotoXDriver':
+            $this->XDrivers= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XDrivers;
+            break;
           case 'gotoXResolution':
             $this->XResolutions= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XResolutions;
             break;
@@ -478,8 +481,13 @@ class workservice extends plugin
           "i128", "i740", "i810", "intel", "imstt", "mga", "neomagic", "newport", "nsc",  "nv", "nvidia",
           "r128", "radeon", "rendition", "s3", "s3virge", "savage", "siliconmotion",
           "sis", "tdfx", "tga", "trident", "tseng", "vesa", "vga", "vmware");
+    } 
+    $tmp = array();
+    foreach($drivers as $name){
+      $tmp[$name] = $name;
     }
-    return($drivers);
+
+    return($tmp);
   }
 
 
