@@ -804,6 +804,24 @@ class printgeneric extends plugin
     /* save ppd configuration */
     if($this->PPDdialogToSave && is_object($this->PPDdialogToSave)){
       $this->PPDdialogToSave->save_ppd();
+
+      /* Rename the generated ppd to match the gzip ending '.gz', if necessary.
+      */
+      $path = $this->config->get_cfg_value("ppdPath");
+      if(!preg_match("/\/$/",$path)){
+        $path = $path."/";
+      }
+      $ppdManager= new ppdManager($path);
+      if($ppdManager->useGzip && !preg_match('/\.gz$/',$this->gotoPrinterPPD)){
+        if(rename($path.$this->gotoPrinterPPD,$path.$this->gotoPrinterPPD.'.gz')){
+          $this->gotoPrinterPPD .= '.gz';
+        }
+      }elseif(!$ppdManager->useGzip && preg_match('/\.gz$/',$this->gotoPrinterPPD)){
+        $new_ppd = preg_replace('/\.gz$/','',$this->gotoPrinterPPD);
+        if(rename($path.$this->gotoPrinterPPD,$path.$new_ppd)){
+          $this->gotoPrinterPPD = $new_ppd; 
+        }
+      }
     }
     if($this->orig_dn != $this->dn){
       if(!empty($this->gotoPrinterPPD)) {
