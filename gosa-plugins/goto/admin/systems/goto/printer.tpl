@@ -46,7 +46,7 @@
        <td><LABEL for="l">{t}Printer location{/t}</LABEL></td>
        <td>
 {render acl=$lACL}
-        <input id="l" name="l" size=25 maxlength=80 value="{$l}">
+        <input id="l" name="l" size=30 maxlength=80 value="{$l}">
 {/render}
        </td>
      </tr>
@@ -54,10 +54,19 @@
        <td><LABEL for="labeledURI">{t}Printer URL{/t}</LABEL>{$must}</td>
        <td>
 {render acl=$labeledURIACL}
-        <input id="labeledURI" name="labeledURI" size=25 maxlength=80 value="{$labeledURI}">
+        <input id="labeledURI" name="labeledURI" size=30 maxlength=80 value="{$labeledURI}">
 {/render}
        </td>
      </tr>
+{if $displayServerPath && 0}
+    <tr>
+     <td>{t}PPD Provider{/t}
+     </td>
+     <td>
+      <input size=30 type='text' value='{$ppdServerPart}' name='ppdServerPart'>
+     </td>
+    </tr>
+{/if}
    </table>
    <table summary="">
     <tr> 

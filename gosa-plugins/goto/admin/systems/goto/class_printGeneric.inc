@@ -26,6 +26,8 @@ class printgeneric extends plugin
   var $AdminMembers     =array();
   var $AdminMemberKeys  =array();
 
+  var $ppdServerPart   = "";
+
   var $PPDdialogToSave  = NULL;
   var $BelongsTo        = "unknown"; //  Specifies if this is a standalone printer, or belongs to a terminal / WS
 
@@ -106,6 +108,28 @@ class printgeneric extends plugin
         msg_dialog::display(_("Internal error"), sprintf(_("Cannot determine a valid department for this object. Setting base to '%s'!"), session::get('CurrentMainBase')) , WARNING_DIALOG);
         $this->base  = session::get('CurrentMainBase');
       }
+    }
+
+    /* If no ppd is selected, remove this attribute */
+    if(!empty($this->gotoPrinterPPD) && $this->initially_was_account) {
+      $this->ppdServerPart = preg_replace("/^(http.*ppd)\/.*$/i","\\1",$this->gotoPrinterPPD);
+    }else{
+
+      /* Detect PPD server part */
+      if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
+        $method="https://";
+      }else{
+        $method="http://";
+      }
+     
+      /* Get servername */
+      $server = $_SERVER['SERVER_NAME'];
+      if(tests::is_ip($server)){  
+        $server_name = @gethostbyaddr($server);
+      }else{
+        $server_name = @gethostbyaddr(gethostbyname($server));
+      }
+      $this->ppdServerPart  = $method.str_replace("//","/",$server_name."/ppd");
     }
 
     /* Extract selected ppd */
@@ -253,7 +277,6 @@ class printgeneric extends plugin
       $this->view_logged = TRUE;
       new log("view","printer/".get_class($this),$this->dn);
     }
-
 
     /* If type of printer couldn't be detected (because of missing parent object in construction) 
      * hide this tab.
@@ -410,13 +433,33 @@ class printgeneric extends plugin
       if($this->PPDdialogToSave && is_object($this->PPDdialogToSave)){
         $this->dialog = $this->PPDdialogToSave;
       }else{
-        $this->dialog = new printerPPDDialog($this->config, $this->dn,$this->gotoPrinterPPD);
+  
+        if(is_array($this->gotoPrinterPPD)){
+          $this->dialog = new printerPPDDialog($this->config, $this->dn,"");
+        }else{
+          $this->dialog = new printerPPDDialog($this->config, $this->dn,$this->gotoPrinterPPD);
+        }
         $this->dialog->cn= $this->cn;
       }
     }
 
     /* remove ppd */
     if(isset($_POST['RemoveDriver'])){
+      /* Detect PPD server part */
+      if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
+        $method="https://";
+      }else{
+        $method="http://";
+      }
+     
+      /* Get servername */
+      $server = $_SERVER['SERVER_NAME'];
+      if(tests::is_ip($server)){  
+        $server_name = @gethostbyaddr($server);
+      }else{
+        $server_name = @gethostbyaddr(gethostbyname($server));
+      }
+      $this->ppdServerPart  = $method.str_replace("//","/",$server_name."/ppd");
       $this->gotoPrinterPPD = array();
       $this->PPDdialogToSave = NULL;
     }
@@ -508,6 +551,7 @@ class printgeneric extends plugin
       }
 
       $ppdManager= new ppdManager($path);
+      $smarty->assign("displayServerPath",true);
       if(!empty($this->gotoPrinterPPD)){
         if((!file_exists($path.$this->gotoPrinterPPD))){
           $smarty->assign("driverInfo", "<b>".sprintf(_("Your currently selected PPD file '%s' doesn't exist."),$path.$this->gotoPrinterPPD)."</b>");
@@ -517,10 +561,14 @@ class printgeneric extends plugin
         }
       }else{
         $smarty->assign("driverInfo", _("Not defined"));
+        $smarty->assign("displayServerPath",false);
       }
     }else{
       $smarty->assign("driverInfo",_("Can't get ppd informations."));
+      $smarty->assign("displayServerPath",true);
     }
+    $smarty->assign("ppdServerPart",$this->ppdServerPart);
+    
 
     /* Create user & admin user list */
     $list=$this->generateList();
@@ -630,6 +678,10 @@ class printgeneric extends plugin
     $base_tmp = $this->base;
     plugin::save_object();
     $this->base = $base_tmp;
+
+    if(isset($_POST['ppdServerPart'])){
+      $this->ppdServerPart = get_post('ppdServerPart');
+    }
 
     if(is_object($this->netConfigDNS)){
       $this->netConfigDNS->save_object();
@@ -770,23 +822,9 @@ class printgeneric extends plugin
       }
     }
 
-    if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
-      $method="https://";
-    }else{
-      $method="http://";
-    }
-   
-    /* Get servername */
-    $server = $_SERVER['SERVER_NAME'];
-    if(tests::is_ip($server)){  
-      $server_name = gethostbyaddr($server);
-    }else{
-      $server_name = gethostbyaddr(gethostbyname($server));
-    }
-
     /* If no ppd is selected, remove this attribute */
     if(!empty($this->gotoPrinterPPD) && $this->initially_was_account) {
-      $this->gotoPrinterPPD = $method.str_replace("//","/",$server_name."/ppd/".$this->gotoPrinterPPD);
+      $this->gotoPrinterPPD = $this->ppdServerPart.'/'.$this->gotoPrinterPPD;
     }else{
       $this->gotoPrinterPPD = array();
     }
