@@ -241,7 +241,7 @@ class termservice extends plugin
         "gotoXColordepth", 
         "gotoXKbModel", 
         "gotoXKbLayout",
-#        "gotoXDriver",
+        "gotoXDriver",
         "gotoXdmcpServer",
         "gotoXKbVariant",
         "gotoXMouseType", 
@@ -256,9 +256,9 @@ class termservice extends plugin
         }
 
         switch ($name){
-#         case 'gotoXDriver': 
-#           $this->XDrivers = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XDrivers;
-#           break;
+         case 'gotoXDriver': 
+           $this->XDrivers = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XDrivers;
+           break;
           case 'gotoXMethod': 
             $this->XMethods = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XMethods;
             if(isset($attrs['gotoXdmcpServer'])){
@@ -626,7 +626,12 @@ class termservice extends plugin
         $drivers[] = $driver;
       }
     }
-    return($drivers);
+
+    $tmp = array();
+    foreach($drivers as $name){
+      $tmp[$name] = $name;
+    }
+    return($tmp);
   }
 
   function send_goto_reload()

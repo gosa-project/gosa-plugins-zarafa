@@ -689,7 +689,7 @@ class termgeneric extends plugin
 
     /* Set workstation service attributes to inherited */
     if($this->member_of_ogroup && isset($this->parent->by_object['termservice'])){
-      foreach(array("gotoXKbLayout","gotoXKbModel","gotoXKbVariant",
+      foreach(array("gotoXKbLayout","gotoXKbModel","gotoXKbVariant","gotoXDriver",
             "gotoXResolution","gotoXColordepth","gotoXMouseType","gotoXMouseport") as $name){
         $this->parent->by_object['termservice']->$name = "default";
       }
@@ -699,9 +699,8 @@ class termgeneric extends plugin
     if($this->member_of_ogroup && isset($this->parent->by_object['termstartup'])){
       $this->parent->by_object['termstartup']->gotoBootKernel = "default-inherited";
       $this->parent->by_object['termstartup']->gotoLdapServer = "default-inherited";
-
-      $this->parent->by_object['workstartup']->gotoLdap_inherit = TRUE;
-      $this->parent->by_object['workstartup']->gotoLdapServers = array();
+      $this->parent->by_object['termstartup']->gotoLdap_inherit = TRUE;
+      $this->parent->by_object['termstartup']->gotoLdapServers = array();
     }
   }
 }
