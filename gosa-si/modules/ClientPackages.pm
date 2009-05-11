@@ -152,6 +152,31 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 my $server_address = "$server_ip:$server_port";
 $main::server_address = $server_address;
 
+{
+  # Check if ou=incoming exists
+  # TODO: This should be transferred to a module init-function
+  my $ldap_handle = &main::get_ldap_handle();
+  if( defined($ldap_handle) ) {
+    &main::daemon_log("0 DEBUG: Searching for ou=incoming container for new clients", 9);
+    # Perform search
+    my $mesg = $ldap_handle->search(
+      base   => $ldap_base,
+      scope  => 'one',
+      filter => "(&(ou=incoming)(objectClass=organizationalUnit))"
+    );
+    if(not defined($mesg->count) or $mesg->count == 0) {
+            my $incomingou = Net::LDAP::Entry->new();
+            $incomingou->dn('ou=incoming,'.$ldap_base);
+            $incomingou->add('objectClass' => 'organizationalUnit');
+            my $result = $incomingou->update($ldap_handle);
+            if($result != 0) {
+                &main::daemon_log("0 ERROR: Problem adding ou=incoming: '".$result->errorMessage."'!", 1);
+            }
+    }
+  }
+  &main::release_ldap_handle($ldap_handle);
+}
+
 
 ### functions #################################################################
 
