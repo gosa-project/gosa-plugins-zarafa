@@ -99,7 +99,7 @@
      <td>
 {render acl=$gotoXDriverACL}
       <select id="gotoXDriver" name="gotoXDriver" title="{t}Choose graphic driver that is needed by the installed graphic board{/t}" >
-       {html_options values=$XDrivers output=$XDrivers selected=$gotoXDriver_select}
+       {html_options options=$XDrivers selected=$gotoXDriver_select}
       </select>
 {/render}
      </td>
