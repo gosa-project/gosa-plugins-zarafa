@@ -1072,8 +1072,15 @@ sub msg_to_decrypt {
 
 	# msg is from a gosa-si-server
 	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-		#($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $heap->{'remote_ip'}, $session_id);
-		($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $msg_source, $session_id);
+		if (not defined $msg_source) 
+		{
+			# Only needed, to be compatible with older gosa-si-server versions
+			($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $heap->{'remote_ip'}, $session_id);
+		}
+		else
+		{
+			($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $msg_source, $session_id);
+		}
 	}
 	# msg is from a gosa-si-client
 	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
@@ -1104,7 +1111,8 @@ sub msg_to_decrypt {
 		}
 		else
 		{
-			daemon_log("$session_id ERROR: incoming message contains no msg source. Processing aborted: $tmp_next_msg", 1);
+			my $foreign_host = defined $msg_source ? $msg_source : $heap->{'remote_ip'};
+			daemon_log("$session_id ERROR: incoming message from host '$foreign_host' cannot be understood. Processing aborted: $tmp_next_msg", 1);
 		}
 
 		$error++;
