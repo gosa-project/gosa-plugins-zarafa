@@ -6,6 +6,7 @@ use Carp;
 use DBI;
 use GOSA::GosaSupportDaemon;
 use Time::HiRes qw(usleep);
+use Data::Dumper;
 use Fcntl qw/:DEFAULT :flock/; # import LOCK_* constants
 
 our $col_names = {};
@@ -128,8 +129,15 @@ sub create_table {
 	foreach my $col_name (@$col_names_ref) {
 		push(@col_names, $col_name);
 	}
-	
 	$col_names->{ $table_name } = \@col_names;
+	
+	# Not activated yet
+	# Check schema
+	# if($self->check_schema($table_name)) {
+	# 	$self->exec_statement("DROP TABLE $table_name");
+	# 	&main::daemon_log("WARNING: Schema of table $table_name has changed! Table will be recreated!", 3);
+	# }
+
 	my $col_names_string = join(", ", @col_names);
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	my $res = $self->exec_statement($sql_statement);
@@ -143,6 +151,49 @@ sub create_table {
 
 	return 0;
 }
+
+
+# sub check_schema {
+# 	my $self = shift;
+# 	my $result = 1;
+# 	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+# 		&main::daemon_log("0 ERROR: GOSA::DBsqlite::check_schema was called static! Argument was '$self'!", 1);
+# 		return $result;
+# 	}
+# 
+# 	my $table_name = shift || undef;
+# 	my $table_columns;
+# 
+# 	if($table_name and $col_names->{$table_name}) {
+# 		# Query the table_info from database
+# 		foreach my $column ( @{ $self->exec_statement ( "pragma table_info('$table_name')" ) } ) {
+# 			my $column_name = @$column[1];
+# 			my $data_type   = @$column[2];
+# 			$table_columns->{$column_name}= $data_type;
+# 		}
+# 
+# 		foreach my $column (@{$col_names->{$table_name}}) {
+# 			my ($column_name, $datatype) = split(/\s/, $column);
+# 			if(exists($table_columns->{$column_name})) {
+# 				if(lc $datatype eq lc $table_columns->{$column_name}) {
+# 					next;
+# 				} else {
+# 					&main::daemon_log("WARNING: Column '$column_name' has wrong datatype!", 1);
+# 					$result = 0;
+# 				}
+# 			} else {
+# 				$result = 0;
+# 				&main::daemon_log("WARNING: Column '$column_name' is missing!", 1);
+# 				#&main::daemon_log("DEBUG Columns are not equal! Column '".$self->{db_name}.".$column_name' is missing!", 0);
+# 				#my $sql_statement = "ALTER TABLE $table_name ADD COLUMN $column_name $datatype";
+# 				#$self->exec_statement($sql_statement);
+# 				# The ALTER TABLE statement sucks completely in SQLite, so just recreate the table
+# 			}
+# 		}
+# 	}
+# 
+# 	return $result;
+# }
 
 
 sub add_dbentry {
