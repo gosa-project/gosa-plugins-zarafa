@@ -169,8 +169,8 @@ $main::server_address = $server_address;
             $incomingou->dn('ou=incoming,'.$ldap_base);
             $incomingou->add('objectClass' => 'organizationalUnit');
             my $result = $incomingou->update($ldap_handle);
-            if($result != 0) {
-                &main::daemon_log("0 ERROR: Problem adding ou=incoming: '".$result->errorMessage."'!", 1);
+            if($result->code != 0) {
+                &main::daemon_log("0 ERROR: Problem adding ou=incoming: '".$result->error()."'!", 1);
             }
     }
   }
