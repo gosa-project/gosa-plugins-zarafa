@@ -34,7 +34,7 @@ BEGIN{
 END{}
 
 my ($timeout, $mailto, $mailfrom, $user, $group);
-my ($arp_enabled, $arp_interface, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
+my ($arp_enabled, $arp_interface, $arp_update, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my $hosts_database={};
 my $ldap;
 
@@ -43,6 +43,7 @@ my %cfg_defaults =
     "ArpHandler" => {
         "enabled"             => [\$arp_enabled,         "true"],
         "interface"           => [\$arp_interface,       "all"],
+        "update-entries"      => [\$arp_update,          "false"],
     },
     "server" => {
         "ldap-uri"            => [\$ldap_uri,            ""],
@@ -171,7 +172,7 @@ sub got_packet {
     if(!exists($hosts_database->{$packet->{source_haddr}})) {
 		my $dnsname= gethostbyaddr(inet_aton($packet->{source_ipaddr}), AF_INET) || $packet->{source_ipaddr};
 		my $ldap_result=&get_host_from_ldap($packet->{source_haddr});
-		if(exists($ldap_result->{dn})) {
+		if(exists($ldap_result->{dn}) and $arp_update eq "true") {
 			$hosts_database->{$packet->{source_haddr}}=$ldap_result;
 			$hosts_database->{$packet->{source_haddr}}->{dnsname}= $dnsname;
 			if(!exists($ldap_result->{ipHostNumber})) {
@@ -210,7 +211,7 @@ sub got_packet {
 		}
 		$hosts_database->{$packet->{source_haddr}}->{device}= $capture_device;
 	} else {
-		if(!($hosts_database->{$packet->{source_haddr}}->{ipHostNumber} eq $packet->{source_ipaddr})) {
+		if(($arp_update eq "true") and !($hosts_database->{$packet->{source_haddr}}->{ipHostNumber} eq $packet->{source_ipaddr})) {
 			&main::daemon_log(
 				"IP Address change of MAC ".$packet->{source_haddr}.
 				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
