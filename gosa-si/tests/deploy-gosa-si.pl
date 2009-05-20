@@ -62,6 +62,7 @@ my %copies = (
         "/usr/lib/gosa-si/client/events/gosaTriggered.pm"  => "client/events/gosaTriggered.pm",
         "/usr/lib/gosa-si/client/events/installation.pm"   => "client/events/installation.pm",
         "/usr/lib/gosa-si/client/events/mailqueue.pm"      => "client/events/mailqueue.pm",
+        "/usr/lib/gosa-si/client/events/load_reporter.pm"  => "client/events/load_reporter.pm",
 );
 
 while( my($new_file, $file_name) = each %copies ) {

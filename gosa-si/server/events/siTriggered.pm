@@ -6,13 +6,16 @@ my @events = (
     "detected_hardware",
     "trigger_wake",
     "reload_ldap_config",
+	"get_terminal_server",
     );
 @EXPORT = @events;
 
 use strict;
 use warnings;
+use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Socket;
+
 
 
 BEGIN {}
@@ -38,32 +41,69 @@ my %cfg_defaults = (
 &GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 
-sub get_events {
-    return \@events;
+sub get_terminal_server
+{
+	my ($msg, $msg_hash, $session_id) = @_ ;
+	my $source = @{$msg_hash->{source}}[0];
+	my @out_msg_l;
+
+	# Send get_load message to all si-clients at terminal server specified in LDAP
+	my $ldap_handle = &main::get_ldap_handle();
+	if (defined $ldap_handle) 
+	{
+		my $ldap_mesg = $ldap_handle->search(
+				base => $ldap_base,
+				scope => 'sub',
+				attrs => ['macAddress'],
+				filter => "objectClass=goTerminalServer",
+				);
+		if ($ldap_mesg->count) 
+		{	
+			# Parse all LDAP results to a sql compliant where statement
+			my @entries = $ldap_mesg->entries;
+			@entries = map ($_->get_value("macAddress"), @entries);
+			@entries = map ("macaddress LIKE '$_'", @entries);
+
+			my ($hit, $hash, $db_res, $out_msg);
+			# Check known clients if a terminal server is active
+			$db_res = $main::known_clients_db->select_dbentry("SELECT * FROM $main::known_clients_tn WHERE ".join(" AND ", @entries));
+			while (($hit, $hash) = each %$db_res) 
+			{
+				$out_msg = &create_xml_string(&create_xml_hash('get_load', $source, $hash->{macaddress}));
+				push(@out_msg_l, $out_msg);
+			}
+			# Check foreign_clients if a terminal server is active
+			$db_res = $main::foreign_clients_db->select_dbentry("SELECT * FROM $main::foreign_clients_tn WHERE ".join(" AND ", @entries));
+			while (($hit, $hash) = each %$db_res) 
+			{
+				$out_msg = &create_xml_string(&create_xml_hash('get_load', $source, $hash->{macaddress}));
+				push(@out_msg_l, $out_msg);
+			}
+
+### JUST FOR DEBUGGING # CAN BE DELETED AT ANY TIME ###########################
+			my $db_res = $main::foreign_clients_db->select_dbentry("SELECT * FROM $main::foreign_clients_tn WHERE macaddress LIKE '00:01:6c:9d:b9:fa'");
+			while (($hit, $hash) = each %$db_res) 
+			{
+				$out_msg = &create_xml_string(&create_xml_hash('get_load', $source, $hash->{macaddress}));
+				push(@out_msg_l, $out_msg);
+			}
+### JUST FOR DEBUGGING # CAN BE DELETED AT ANY TIME ###########################
+		}
+		# Translating errors ?
+		if ($ldap_mesg->code) 
+		{
+			&main::daemon_log("0 ERROR: Cannot fetch terminal server from LDAP: \n\tbase='$ldap_base'\n\tscope='sub'\n\tattrs='['macAddress']'\n\tfilter='objectClass=goTerminalServer'", 1);
+		}
+	}
+	&main::release_ldap_handle($ldap_handle);
+
+    return @out_msg_l;
 }
 
 
-#sub read_configfile {
-#    my ($cfg_file, %cfg_defaults) = @_;
-#    my $cfg;
-#
-#    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
-#        if( -r $cfg_file ) {
-#            $cfg = Config::IniFiles->new( -file => $cfg_file );
-#        } else {
-#            &main::daemon_log("ERROR: siTriggered.pm couldn't read config file!", 1);
-#        }
-#    } else {
-#        $cfg = Config::IniFiles->new() ;
-#    }
-#    foreach my $section (keys %cfg_defaults) {
-#        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-#            my $pinfo = $cfg_defaults{ $section }{ $param };
-#            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
-#        }
-#    }
-#}
-
+sub get_events {
+    return \@events;
+}
 
 sub reload_ldap_config {
     my ($msg, $msg_hash, $session_id) = @_;

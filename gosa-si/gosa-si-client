@@ -58,8 +58,7 @@ my $event_hash;
 my $default_server_key;
 my @servers;
 my $gotoHardwareChecksum;
-my $gosa_si_client_fifo;
-my %files_to_watch;
+my $system_com;
 $verbose= 1;
 
 # globalise variables which are used in imported events
@@ -73,13 +72,15 @@ our $client_mac_address;
 our $client_dnsname;
 our $client_force_hostname;
 our $server_key;
+our $terminal_server_hash;
 
 # default variables
 our $REGISTERED = 0;
 
 # path to fifo for non-gosa-si-client messages to gosa-si-server
-$gosa_si_client_fifo = "/var/run/gosa-si-client.socket";
-%files_to_watch = (fifo => $gosa_si_client_fifo); 
+my $fai_com_fifo = "/var/run/gosa-si-client-fai-com.socket";
+my $system_com_fifo = "/var/run/gosa-si-client-system-com.socket";
+my %files_to_watch = (fai_fifo => $fai_com_fifo, system_fifo => $system_com_fifo); 
 
 # in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
 # not successful until now
@@ -112,6 +113,7 @@ my $fai_log_dir = "/var/log/fai";
      "nss-config"         => [\$nss_config, "/etc/libnss-ldap.conf"],
      "fai-logpath"        => [\$fai_logpath, "/var/log/fai/fai.log"],
      "force-hostname"	  => [\$client_force_hostname, "false"],
+	 "system-com"		  => [\$system_com, "disabled"],
     },
 "server" => {
     "ip"          => [\$server_ip, "127.0.0.1"],
@@ -796,6 +798,20 @@ sub trigger_logged_in_users_report {
     }
 }
 
+sub trigger_set_terminal_server
+{
+	# Function is defined in load_reporter.pm
+	if (exists $event_hash->{set_terminal_server}) 
+	{
+		no strict 'refs';
+		&{$event_hash->{set_terminal_server}."::set_terminal_server"};
+	}
+	else
+	{
+		&daemon_log("0 ERROR: load_reporter.pm needs function set_terminal_server to write terminal server load information to client. Processing aborted!", 1);
+	}
+	return;
+}
 
 sub trigger_seen_messages {
     my ($kernel) = $_[KERNEL] ;
@@ -873,7 +889,7 @@ sub generic_file_error {
 }
 
 
-sub fifo_got_record {
+sub fai_fifo_got_record {
     my $file_record = $_[ARG0];
     my $header;
     my $content = "";
@@ -903,6 +919,42 @@ sub fifo_got_record {
     }
 
     return;
+}
+
+
+sub system_fifo_got_record {
+	my ($kernel, $socket_com_record) = @_[KERNEL, ARG0];
+	$socket_com_record =~ /^(\S+)\s?([\s\S]*)$/; 
+	my $function = $1; 
+	my $content = $2;
+
+	if( exists $event_hash->{$function} ) 
+	{
+		# a event exists with the header as name
+		daemon_log("INFO: found event '$function' at event-module '".$event_hash->{$function}."'", 5);
+		no strict 'refs';
+		my $answer = &{$event_hash->{$function}."::$function"}($content, $kernel);
+		&post_processing_and_sending($answer)
+	}
+	else 
+	{
+		daemon_log("ERROR: Got input '$socket_com_record' from socket '$system_com_fifo'", 1);
+		daemon_log("ERROR: No event '$function' found in event modules under '$event_dir'.", 1);
+	}
+
+#	# Sanity check of fifo record
+#
+#	# Create record message
+#	my $lr_msg_hash = &create_xml_hash("load_report", $client_address, $server_address, $file_record);
+#	&add_content2xml_hash($lr_msg_hash, "macaddress", $client_mac_address);
+#    my $utc_ts = &main::get_utc_time();
+#    &add_content2xml_hash($lr_msg_hash, "timestamp", $utc_ts);
+#    my $lr_msg = &create_xml_string($lr_msg_hash);
+#
+#	# Report message to si-server
+#    &send_msg_to_target($lr_msg, $server_address, $server_key, "load_report");
+	
+	return;
 }
 
 
@@ -978,13 +1030,8 @@ sub _start {
         my $watcher = POE::Wheel::FollowTail->new(
             Filename   => $file,
             InputEvent => $name."_record",
-        #    ResetEvent => "file_reset",
             ErrorEvent => "file_error",
             );
-#	$heap->{tail} = POE::Wheel::Run->new(
-#		Program     => [ "/usr/bin/tail", "-f", $file ],
-#		StdoutEvent => $file_name."_record",
-#	);
         $heap->{services}->{ $watcher->ID } = $name;
         $heap->{watchers}->{ $watcher->ID } = $watcher;
     }
@@ -1052,36 +1099,47 @@ sub server_input {
 
     ########
     # answer
-    if( $answer ) {
-
-        #check gosa-si envelope validity
-        my $answer_hash = &check_outgoing_xml_validity($answer);
-
-        if( $answer_hash ) {
-            # answer is valid            
-
-            # preprocessing
-            if( $answer =~ "<header>registered</header>") {
-                # set registered flag to true to stop sending further registered msgs
-                $REGISTERED = 1;
-            } 
-            else {
-                $answer =~ /<header>(\S+)<\/header>/;
-                &send_msg_to_target($answer, $server_address, $server_key, $1);
-            }
-
-            # postprocessing
-            if( $answer =~ "<header>new_key</header>") {
-                # set new key to global variable
-                $answer =~ /<new_key>(\S*?)<\/new_key>/;
-                my $new_key = $1;
-                $server_key = $new_key;
-            }
-        }
-
-    }
+	&post_processing_and_sending($answer);
 
     return;
+}
+
+sub post_processing_and_sending
+{
+	my ($answer) = @_ ;
+
+	# Do nothing if answer does not exists
+	if (not defined $answer) { return; }
+
+	# Check gosa-si envelope validity
+	my $answer_hash = &check_outgoing_xml_validity($answer);
+
+	if( $answer_hash ) 
+	{
+		# Answer is valid            
+		# Pre-sending
+		if( $answer =~ "<header>registered</header>") 
+		{
+			# Set registered flag to true to stop sending further registered msgs
+			$REGISTERED = 1;
+		} 
+		else 
+		{
+			$answer =~ /<header>(\S+)<\/header>/;
+			&send_msg_to_target($answer, $server_address, $server_key, $1);
+		}
+
+		# Post-sending
+		if( $answer =~ "<header>new_key</header>") 
+		{
+			# Set new key to global variable
+			$answer =~ /<new_key>(\S*?)<\/new_key>/;
+			my $new_key = $1;
+			$server_key = $new_key;
+		}
+	}
+
+	return;
 }
 
 
@@ -1251,9 +1309,16 @@ if( defined $server_check ) {
 }
 
 
-# open fifo for non-gosa-si-client-msgs to gosa-si-server
-POSIX::mkfifo("$gosa_si_client_fifo", "0600");
+# Open a new fifo for FAI messages to gosa-si-server
+if (-p $fai_com_fifo) { unlink $fai_com_fifo }
+POSIX::mkfifo("$fai_com_fifo", "0600");
 
+# Open a new fifo for system communication, 
+if (-p $system_com_fifo) { unlink $system_com_fifo }
+if ($system_com eq "enabled") 
+{ 
+	POSIX::mkfifo("$system_com_fifo", "0600"); 
+}
 
 POE::Session->create(
 	inline_states => {
@@ -1266,9 +1331,13 @@ POE::Session->create(
         trigger_new_key => \&trigger_new_key,
         trigger_logged_in_users_report => \&trigger_logged_in_users_report,
         trigger_seen_messages => \&trigger_seen_messages,
+
+		# trigger non periodical tasks
+		trigger_set_terminal_server => \&trigger_set_terminal_server,
         
         # handle records from each defined file differently
-        fifo_record => \&fifo_got_record,
+        fai_fifo_record => \&fai_fifo_got_record,
+		system_fifo_record => \&system_fifo_got_record,
 
         # handle file resets and errors the same way for each file
         file_reset => \&generic_file_reset,
