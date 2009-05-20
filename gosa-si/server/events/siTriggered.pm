@@ -54,7 +54,7 @@ sub get_terminal_server
 		my $ldap_mesg = $ldap_handle->search(
 				base => $ldap_base,
 				scope => 'sub',
-				attrs => ['macAddress'],
+				attrs => ['macAddress', 'cn', 'ipHostNumber'],
 				filter => "objectClass=goTerminalServer",
 				);
 		if ($ldap_mesg->count) 
@@ -81,18 +81,39 @@ sub get_terminal_server
 			}
 
 ### JUST FOR DEBUGGING # CAN BE DELETED AT ANY TIME ###########################
-			my $db_res = $main::foreign_clients_db->select_dbentry("SELECT * FROM $main::foreign_clients_tn WHERE macaddress LIKE '00:01:6c:9d:b9:fa'");
-			while (($hit, $hash) = each %$db_res) 
-			{
-				$out_msg = &create_xml_string(&create_xml_hash('get_load', $source, $hash->{macaddress}));
-				push(@out_msg_l, $out_msg);
-			}
+#			my $db_res = $main::known_clients_db->select_dbentry("SELECT * FROM $main::known_clients_tn WHERE macaddress LIKE '00:01:6c:9d:b9:fa'");
+#			while (($hit, $hash) = each %$db_res) 
+#			{
+#				$out_msg = &create_xml_string(&create_xml_hash('get_load', $source, $hash->{macaddress}));
+#				push(@out_msg_l, $out_msg);
+#			}
 ### JUST FOR DEBUGGING # CAN BE DELETED AT ANY TIME ###########################
+
+			# Found terminal server but no running clients on them
+			if (@out_msg_l == 0) 
+			{
+				&main::daemon_log("$session_id ERROR: Found no running clients (known_clients_db, foreign_clients_db) on the following determined terminal server", 1);
+				my @entries = $ldap_mesg->entries;
+				foreach my $ts (@entries) 
+				{
+					my $ip = (defined $ts->get_value("ipHostNumber")) ? "   ip='".$ts->get_value("ipHostNumber")."'" : "" ;
+					my $cn = (defined $ts->get_value("cn")) ? "   cn='".$ts->get_value("cn")."'" : "" ;
+					my $mac = (defined $ts->get_value("macAddress")) ? "   macAddress='".$ts->get_value("macAddress")."'" : "" ;
+					&main::daemon_log("$session_id ERROR: ".$cn.$mac.$ip , 1);
+				}
+			}
+
 		}
+		# No terminal server found in LDAP
+		if ($ldap_mesg->count == 0) 
+		{
+			&main::daemon_log("$session_id ERROR: No terminal server found in LDAP: \n\tbase='$ldap_base'\n\tscope='sub'\n\tattrs='['macAddress']'\n\tfilter='objectClass=goTerminalServer'", 1);
+		}
+
 		# Translating errors ?
 		if ($ldap_mesg->code) 
 		{
-			&main::daemon_log("0 ERROR: Cannot fetch terminal server from LDAP: \n\tbase='$ldap_base'\n\tscope='sub'\n\tattrs='['macAddress']'\n\tfilter='objectClass=goTerminalServer'", 1);
+			&main::daemon_log("$session_id ERROR: Cannot fetch terminal server from LDAP: \n\tbase='$ldap_base'\n\tscope='sub'\n\tattrs='['macAddress']'\n\tfilter='objectClass=goTerminalServer'", 1);
 		}
 	}
 	&main::release_ldap_handle($ldap_handle);
