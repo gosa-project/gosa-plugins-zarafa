@@ -883,15 +883,14 @@ sub send_msg_to_target {
         $header = "";
     }
 
+	# Memorize own source address
+	my $own_source_address = &get_local_ip_for_remote_ip(sprintf("%s", $address =~ /^([0-9\.]*?):.*$/));
+	$own_source_address .= ":".$server_port;
+
 	# Patch the source ip
 	if($msg =~ /<source>0\.0\.0\.0:\d*?<\/source>/) {
-		my $remote_ip = &get_local_ip_for_remote_ip(sprintf("%s", $address =~ /^([0-9\.]*?):.*$/));
-		$msg =~ s/<source>(0\.0\.0\.0):(\d*?)<\/source>/<source>$remote_ip:$2<\/source>/s;
+		$msg =~ s/<source>(0\.0\.0\.0):(\d*?)<\/source>/<source>$own_source_address<\/source>/s;
 	}
-
-	# Memorize own source address
-    $msg =~ /<source>(\S+)<\/source>/;
-    my $own_source_address = $1;
 
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
@@ -1174,25 +1173,6 @@ sub msg_to_decrypt {
 			}
 		}
 
-		# target is a client address in known_clients -> process here
-		if (not $done) {
-			$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
-			$res = $known_clients_db->select_dbentry($sql);
-			if (keys(%$res) > 0) {
-				$done = 1; 
-				my $hostname = $res->{1}->{'hostname'};
-				$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
-				my $local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
-				if ($source eq "GOSA") {
-					$msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
-				}
-				&daemon_log("$session_id DEBUG: target is a client address in known_clients -> process here", 7);
-
-			} else {
-				$not_found_in_known_clients_db = 1;
-			}
-		}
-
 		# target ist own address with forward_to_gosa-tag not pointing to myself -> process here
 		if (not $done) {
 			my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
@@ -1249,6 +1229,25 @@ sub msg_to_decrypt {
 				}
 			}
 
+		}
+
+		# target is a client address in known_clients -> forward to client
+		if (not $done) {
+			$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
+			$res = $known_clients_db->select_dbentry($sql);
+			if (keys(%$res) > 0) {
+				$done = 1; 
+				my $key = $res->{1}->{'hostkey'};
+				my $error= &send_msg_to_target($msg, $target, $key, $header, $session_id);
+				if ($error) {
+					&daemon_log("$session_id ERROR: some problems (error=$error) occurred while trying to send msg to client: $msg", 1);
+				}
+
+				&daemon_log("$session_id DEBUG: target is a client address in known_clients -> forward to client", 7);
+
+			} else {
+				$not_found_in_known_clients_db = 1;
+			}
 		}
 
 		# target is a client address in foreign_clients -> forward to registration server
