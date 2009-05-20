@@ -77,3 +77,13 @@ Description: GOsa support infrastructure opsi module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
 
+Package: gosa-si-client-loadreporter
+Architecture: any
+Depends: gosa-si-client
+Description: GOsa support infrastructure system load reporter module
+ This package controls the obtaining of system load values form other
+ gosa-si-clients running on a terminal server.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
