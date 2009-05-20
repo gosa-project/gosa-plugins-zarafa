@@ -78,7 +78,7 @@ our $terminal_server_hash;
 our $REGISTERED = 0;
 
 # path to fifo for non-gosa-si-client messages to gosa-si-server
-my $fai_com_fifo = "/var/run/gosa-si-client-fai-com.socket";
+my $fai_com_fifo = "/var/run/gosa-si-client.socket";
 my $system_com_fifo = "/var/run/gosa-si-client-system-com.socket";
 my %files_to_watch = (fai_fifo => $fai_com_fifo, system_fifo => $system_com_fifo); 
 
