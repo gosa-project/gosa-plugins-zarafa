@@ -46,10 +46,10 @@ sub information_sharing {
             &main::daemon_log("$session_id ERROR: 'new_user'-tag in incoming msg has no content!", 1);
 
         } else {
+			my @user_list;
             # Add each user to login_users_db
             foreach my $new_user_info (@$new_user_list) {
                 my ($client, $user) = split(/;/, $new_user_info);
-                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'", 5);
                 my %add_hash = ( table=>$main::login_users_tn, 
                         primkey=> ['client', 'user'],
                         client=>$client,
@@ -58,10 +58,16 @@ sub information_sharing {
                         regserver=>$source,
                         ); 
                 my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
-                if ($res != 0)  {
+                if ($res != 0)  
+				{
                     &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $error_str", 1);
                 }
+				else
+				{
+					push(@user_list, "'$user' at '$client'");
+				}
             }
+			&main::daemon_log("$session_id INFO: server '$source' reports the following logged in user: ".join(", ", @user_list), 5);
         }
     }
 
@@ -79,9 +85,9 @@ sub information_sharing {
             my $res = $main::login_users_db->exec_statement($sql);
 
             # Add each user to login_users_db
+			my @user_list;
             foreach my $user_db_info (@$user_db_list) {
                 my ($client, $user) = split(/;/, $user_db_info);
-                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'", 5);
                 my %add_hash = ( table=>$main::login_users_tn, 
                         primkey=> ['client', 'user'],
                         client=>$client,
@@ -93,7 +99,12 @@ sub information_sharing {
                 if ($res != 0)  {
                     &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $error_str", 1);
                 }
+				else
+				{
+					push(@user_list, "'$user' at '$client'");
+				}
             }
+			&main::daemon_log("$session_id INFO: server '$source' reports the following logged in user: ".join(", ", @user_list), 5);
         }
     }
 
