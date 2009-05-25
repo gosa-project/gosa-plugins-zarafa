@@ -905,7 +905,6 @@ sub send_msg_to_target {
     if( $error == 0 ) {
         # send xml msg
         print $socket $crypted_msg.";$own_source_address\n";
-
         daemon_log("$session_id INFO: send ".$header."msg to $address", 5);
         daemon_log("$session_id DEBUG: message:\n$msg", 9);
         
@@ -3530,9 +3529,17 @@ POE::Component::Server::TCP->new(
 	ClientInput => sub {
 		my ($kernel, $input, $heap, $session) = @_[KERNEL, ARG0, HEAP, SESSION];
         my $session_id = $session->ID;
-        my $remote_ip = $heap->{'remote_ip'};
+		$input =~ /;([\d\.]*:[\d]*)$/ ;
+		if (defined $1) 
+		{
+			&daemon_log("$session_id DEBUG: incoming message from '$1'", 7);
+		}
+		else
+		{
+			my $remote_ip = $heap->{'remote_ip'};
+			&daemon_log("$session_id DEBUG: incoming message from '$remote_ip'", 7);
+		}
 		push(@msgs_to_decrypt, $input);
-        &daemon_log("$session_id DEBUG: incoming message from '$remote_ip'", 7);
 		$kernel->yield("msg_to_decrypt");
 	},
 	InlineStates => {
