@@ -2173,7 +2173,7 @@ get_handle:
 	my $ldap_handle = Net::LDAP->new( $ldap_uri );
 	if (not ref $ldap_handle) {
 		daemon_log("$session_id ERROR: Connection to LDAP URI '$ldap_uri' failed! Retrying!", 1);
-		usleep(1000);
+		usleep(100000);
 		goto get_handle;
 	} else {
 		daemon_log("$session_id DEBUG: Connection to LDAP URI '$ldap_uri' established.", 6);
