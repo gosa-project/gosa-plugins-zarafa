@@ -477,7 +477,7 @@ msgstr ""
 #: admin/systems/class_divListSystem.inc:430
 #: admin/systems/class_divListSystem.inc:431
 #, php-format
-msgid "Number of listed '%s'"
+msgid "Number of listed %s"
 msgstr ""
 
 #: admin/systems/class_divListSystem.inc:427

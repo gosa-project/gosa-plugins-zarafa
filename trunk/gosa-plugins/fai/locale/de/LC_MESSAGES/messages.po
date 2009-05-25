@@ -1280,8 +1280,8 @@ msgstr "PK"
 #: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
 #: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
 #, php-format
-msgid "Number of listed '%s'"
-msgstr "Anzahl der angezeigten '%s'"
+msgid "Number of listed %s"
+msgstr "Anzahl der angezeigten %s"
 
 #: admin/fai/class_divListFai.inc:313
 msgid "profiles"

@@ -497,8 +497,8 @@ msgstr "Von %s geerbt"
 #: admin/systems/class_divListSystem.inc:430
 #: admin/systems/class_divListSystem.inc:431
 #, php-format
-msgid "Number of listed '%s'"
-msgstr "Anzahl der angezeigten '%s'"
+msgid "Number of listed %s"
+msgstr "Anzahl der angezeigten %s"
 
 #: admin/systems/class_divListSystem.inc:427
 msgid "printers"

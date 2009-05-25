@@ -319,16 +319,16 @@ class divListFai extends MultiSelectWindow
        $num_deps = count($this->Added_Departments);
      }
 
-     $profile_str    = sprintf(_("Number of listed '%s'"),_("profiles"));
-     $partition_str  = sprintf(_("Number of listed '%s'"),_("partitions"));
-     $script_str     = sprintf(_("Number of listed '%s'"),_("scripts"));
-     $hook_str       = sprintf(_("Number of listed '%s'"),_("hooks"));
-     $variable_str   = sprintf(_("Number of listed '%s'"),_("variables"));
-     $template_str   = sprintf(_("Number of listed '%s'"),_("templates"));
-     $package_str    = sprintf(_("Number of listed '%s'"),_("packages"));   
-     $dep_str        = sprintf(_("Number of listed '%s'"),_("departments"));
-     $opsi_netboot   = sprintf(_("Number of listed '%s'"),_("netboot products"));
-     $opsi_local     = sprintf(_("Number of listed '%s'"),_("localboot products"));
+     $profile_str    = sprintf(_("Number of listed %s"),_("profiles"));
+     $partition_str  = sprintf(_("Number of listed %s"),_("partitions"));
+     $script_str     = sprintf(_("Number of listed %s"),_("scripts"));
+     $hook_str       = sprintf(_("Number of listed %s"),_("hooks"));
+     $variable_str   = sprintf(_("Number of listed %s"),_("variables"));
+     $template_str   = sprintf(_("Number of listed %s"),_("templates"));
+     $package_str    = sprintf(_("Number of listed %s"),_("packages"));   
+     $dep_str        = sprintf(_("Number of listed %s"),_("departments"));
+     $opsi_netboot   = sprintf(_("Number of listed %s"),_("netboot products"));
+     $opsi_local     = sprintf(_("Number of listed %s"),_("localboot products"));
 
      $str = "<img class=\"center\" src=\"".$objects['FAIprofile']['IMG']."\"
        title=\"".$profile_str."\" alt=\"".$profile_str."\">&nbsp;".$cnts['FAIprofile']."&nbsp;&nbsp;&nbsp;&nbsp;";
