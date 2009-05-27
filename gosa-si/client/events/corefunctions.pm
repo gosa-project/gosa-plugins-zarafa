@@ -1,413 +1,413 @@
-		package corefunctions;
-		use Exporter;
-		@ISA = qw(Exporter);
-		my @events = (
-			"get_events",
-			"registered",
-			'new_syslog_config',
-			"new_ntp_config",
-			"new_ldap_config",
-			"new_key",
-			"generate_hw_digest",     # no implementations
-			"detect_hardware",
-			"confirm_new_key",
-			"ping",
-			"import_events",    # no implementations
-			);
-		@EXPORT = @events;
+package corefunctions;
+use Exporter;
+@ISA = qw(Exporter);
+my @events = (
+	"get_events",
+	"registered",
+	'new_syslog_config',
+	"new_ntp_config",
+	"new_ldap_config",
+	"new_key",
+	"generate_hw_digest",     # no implementations
+	"detect_hardware",
+	"confirm_new_key",
+	"ping",
+	"import_events",    # no implementations
+	);
+@EXPORT = @events;
 
-		use strict;
-		use warnings;
-		use Fcntl;
-		use GOSA::GosaSupportDaemon;
-		use File::Basename;
+use strict;
+use warnings;
+use Fcntl;
+use GOSA::GosaSupportDaemon;
+use File::Basename;
 
-		my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
+my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 
-		my $chrony_file = "/etc/chrony/chrony.conf";
-		my $syslog_file = "/etc/syslog.conf";
+my $chrony_file = "/etc/chrony/chrony.conf";
+my $syslog_file = "/etc/syslog.conf";
 
-		my %cfg_defaults = (
-			"client" => {
-				"ldap" => [\$ldap_enabled, 1],
-				"offline-ldap" => [\$offline_enabled, 0],
-				"ldap-config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
-				"pam-config" => [\$pam_config, "/etc/pam_ldap.conf"],
-				"nss-config" => [\$nss_config, "/etc/libnss-ldap.conf"],
-				"fai-logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
-			},
-		);
+my %cfg_defaults = (
+	"client" => {
+		"ldap" => [\$ldap_enabled, 1],
+		"offline-ldap" => [\$offline_enabled, 0],
+		"ldap-config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
+		"pam-config" => [\$pam_config, "/etc/pam_ldap.conf"],
+		"nss-config" => [\$nss_config, "/etc/libnss-ldap.conf"],
+		"fai-logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
+	},
+);
 
-		BEGIN {}
+BEGIN {}
 
-		END {}
+END {}
 
-		### Start ######################################################################
+### Start ######################################################################
 
-		&main::read_configfile($main::cfg_file, %cfg_defaults);
+&main::read_configfile($main::cfg_file, %cfg_defaults);
 
 
-		my $server_address = $main::server_address;
-		my $server_key = $main::server_key;
-		my $client_mac_address = $main::client_mac_address;
+my $server_address = $main::server_address;
+my $server_key = $main::server_key;
+my $client_mac_address = $main::client_mac_address;
 
-		sub write_to_file {
-			my ($string, $file) = @_;
-			my $error = 0;
+sub write_to_file {
+	my ($string, $file) = @_;
+	my $error = 0;
 
-			if( not defined $file || not -f $file ) {
-				&main::daemon_log("ERROR: $0: check '-f file' failed: $file", 1);
-				$error++;
-			}
-			if( not defined $string || 0 == length($string)) {
-				&main::daemon_log("ERROR: $0: empty string to write to file '$file'", 1);
-				$error++;
-			}
+	if( not defined $file || not -f $file ) {
+		&main::daemon_log("ERROR: $0: check '-f file' failed: $file", 1);
+		$error++;
+	}
+	if( not defined $string || 0 == length($string)) {
+		&main::daemon_log("ERROR: $0: empty string to write to file '$file'", 1);
+		$error++;
+	}
+	
+	if( $error == 0 ) {
+
+		chomp($string);
 			
-			if( $error == 0 ) {
+		if( not -f $file ) {
+			open (FILE, "$file");
+			close(FILE);
+		}
+		open(FILE, ">> $file") or &main::daemon_log("ERROR in corefunctions.pm: can not open '$file' to write '$string'", 1);;
+		print FILE $string."\n";
+		close(FILE);
+	}
 
-				chomp($string);
-					
-				if( not -f $file ) {
-					open (FILE, "$file");
-					close(FILE);
-				}
-				open(FILE, ">> $file") or &main::daemon_log("ERROR in corefunctions.pm: can not open '$file' to write '$string'", 1);;
-				print FILE $string."\n";
-				close(FILE);
+	return;    
+}
+
+
+sub get_events {
+	return \@events;
+}
+
+sub daemon_log {
+	my ($msg, $level) = @_ ;
+	&main::daemon_log($msg, $level);
+	return;
+}
+
+sub registered {
+	my ($msg, $msg_hash) = @_ ;
+
+	my $header = @{$msg_hash->{'header'}}[0];
+	if( $header eq "registered" ) {
+		my $source = @{$msg_hash->{'source'}}[0];
+		&main::daemon_log("INFO: registration at $source", 1);
+		$main::server_address = $source;
+	}
+
+	# set globaly variable client_address
+	my $target =  @{$msg_hash->{'target'}}[0];
+	$main::client_address = $target;
+
+	# set registration_flag to true 
+	my $out_hash = &create_xml_hash("registered", $main::client_address, $main::server_address);
+	 # Write the MAC address to file
+	if(stat($main::opts_file)) { 
+			unlink($main::opts_file);
+	}
+
+	my $opts_file_FH;
+	my $hostname= $main::client_dnsname;
+	$hostname =~ s/\..*$//;
+	$hostname =~ tr/A-Z/a-z/;
+	sysopen($opts_file_FH, $main::opts_file, O_RDWR | O_CREAT | O_TRUNC , 0644);
+	print $opts_file_FH "MAC=\"$main::client_mac_address\"\n";
+	print $opts_file_FH "IPADDRESS=\"$main::client_ip\"\n";
+	print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
+	print $opts_file_FH "FQDN=\"$main::client_dnsname\"\n";
+	if(defined(@{$msg_hash->{'ldap_available'}}) &&
+			   @{$msg_hash->{'ldap_available'}}[0] eq "true") {
+		print $opts_file_FH "LDAP_AVAILABLE=\"true\"\n";
+	}
+	if(defined(@{$msg_hash->{'error'}})) {
+		my $errormsg= @{$msg_hash->{'error'}}[0];
+		print $opts_file_FH "GOSA_SI_ERROR=\"$errormsg\"\n";
+		&write_to_file($errormsg, $fai_logpath);
+	}
+	close($opts_file_FH);
+	 
+	my $out_msg = &create_xml_string($out_hash);
+	return $out_msg;
+}
+
+sub server_leaving {
+	my ($msg_hash) = @_ ;
+	my $source = @{$msg_hash->{'source'}}[0]; 
+	my $header = @{$msg_hash->{'header'}}[0];
+	
+	daemon_log("gosa-si-server $source is going down, cause registration procedure", 1);
+	$main::server_address = "none";
+	$main::server_key = "none";
+
+	# reinitialization of default values in config file
+	&main::read_configfile;
+	
+	# registrated at new daemon
+	&main::register_at_server();
+	   
+	return;   
+}
+
+
+## @method new_syslog_config
+# Update or add syslog messages forwarding to specified syslog server.
+# @param msg - STRING - xml message with tag server
+# @param msg_hash - HASHREF - message information parsed into a hash
+sub new_syslog_config {
+	my ($msg, $msg_hash) = @_ ;
+
+	# Sanity check of incoming message
+	if ((not exists $msg_hash->{'server'}) || (not @{$msg_hash->{'server'}} == 1) ) {
+		&main::daemon_log("ERROR: 'new_syslog_config'-message does not contain a syslog server: $msg", 1);
+		return;
+	}
+
+	# Fetch the new syslog server from incoming message
+	my $syslog_server = @{$msg_hash->{'server'}}[0];
+	&main::daemon_log("INFO: found syslog server: ".join(", ", $syslog_server), 5); 
+	my $found_server_flag = 0;
+	
+	# Sanity check of /etc/syslog.conf
+	if (not -f $syslog_file) {
+		&main::daemon_log("ERROR: file '$syslog_file' does not exist, cannot do syslog reconfiguration!", 1);
+		return;
+	}
+	
+	# Substitute existing server with new syslog server
+	open (FILE, "<$syslog_file");
+	my @file = <FILE>;
+	close FILE;
+	my $syslog_server_line = "*.*\t@".$syslog_server."\n"; 
+	foreach my $line (@file) {
+		if ($line =~ /^\*\.\*\s+@/) {
+			$line = $syslog_server_line;
+			$found_server_flag++;
+		}
+	}
+	
+	# Append new server if no old server configuration found
+	if (not $found_server_flag) {
+		push(@file, "\n#\n# syslog server configuration written by GOsa-si\n#\n");
+		push(@file, $syslog_server_line);
+	}
+	
+	# Write changes to file and close it
+	open (FILE, "+>$syslog_file");
+	print FILE join("", @file); 
+	close FILE;
+	&main::daemon_log("INFO: wrote new configuration file: $syslog_file", 5);
+
+	# Restart syslog deamon
+	my $res = qx(/etc/init.d/sysklogd restart);
+	&main::daemon_log("INFO: restart syslog daemon: $res", 5);
+
+	return;
+}
+
+
+## @method new_ntp_config
+# Updates the server options in /etc/chrony/chrony.conf and restarts the chrony service
+# @param msg - STRING - xml message with tag server
+# @param msg_hash - HASHREF - message information parsed into a hash
+sub new_ntp_config {
+	my ($msg, $msg_hash) = @_ ;
+
+	# Sanity check of incoming message
+	if ((not exists $msg_hash->{'server'}) || (not @{$msg_hash->{'server'}} >= 1) ) {
+		&main::daemon_log("ERROR: 'new_ntp_config'-message does not contain a ntp server: $msg", 1);
+		return;
+	}
+
+	# Fetch the new ntp server from incoming message
+	my $ntp_servers = $msg_hash->{'server'};
+	&main::daemon_log("INFO: found ntp server: ".join(", ", @$ntp_servers), 5); 
+	my $ntp_servers_string = "server\t".join("\nserver\t", @$ntp_servers)."\n";
+	my $found_server_flag = 0;
+
+	# Sanity check of /etc/chrony/chrony.conf
+	if (not -f $chrony_file) {
+		&main::daemon_log("ERROR: file '$chrony_file' does not exist, cannot do ntp reconfiguration!", 1);
+		return;
+	}
+
+	# Substitute existing server with new ntp server
+	open (FILE, "<$chrony_file");
+	my @file = <FILE>;
+	close FILE;
+	my @new_file;
+	foreach my $line (@file) {
+		if ($line =~ /^server\s+/) {
+			if ($found_server_flag) {	
+				$line =~ s/^server\s+[\S]+\s+$//;
+			} else {
+				$line =~ s/^server\s+[\S]+\s+$/$ntp_servers_string/;
 			}
+			$found_server_flag++;
+		}
+		push(@new_file, $line);
+	}
 
-			return;    
+	# Append new server if no old server configuration found
+	if (not $found_server_flag) {
+		push(@new_file, "\n# ntp server configuration written by GOsa-si\n");
+		push(@new_file, $ntp_servers_string);
+	}
+
+	# Write changes to file and close it
+	open (FILE, ">$chrony_file");
+	print FILE join("", @new_file); 
+	close FILE;
+	&main::daemon_log("INFO: wrote new configuration file: $chrony_file", 5);
+
+	# Restart chrony deamon
+	my $res = qx(/etc/init.d/chrony force-reload);
+	&main::daemon_log("INFO: restart chrony daemon: $res", 5);
+
+	return;
+}
+
+
+sub new_ldap_config {
+	my ($msg, $msg_hash) = @_ ;
+
+	if( $ldap_enabled != 1 ) {
+		return;
+	}
+
+	my $element;
+	my @ldap_uris;
+	my $ldap_base;
+	my @ldap_options;
+	my @pam_options;
+	my @nss_options;
+	my $goto_admin;
+	my $goto_secret;
+	my $admin_base= "";
+	my $department= "";
+	my $release= "";
+	my $unit_tag;
+
+	# Transform input into array
+	while ( my ($key, $value) = each(%$msg_hash) ) {
+		if ($key =~ /^(source|target|header)$/) {
+				next;
 		}
 
-
-		sub get_events {
-			return \@events;
-		}
-
-		sub daemon_log {
-			my ($msg, $level) = @_ ;
-			&main::daemon_log($msg, $level);
-			return;
-		}
-
-		sub registered {
-			my ($msg, $msg_hash) = @_ ;
-
-			my $header = @{$msg_hash->{'header'}}[0];
-			if( $header eq "registered" ) {
-				my $source = @{$msg_hash->{'source'}}[0];
-				&main::daemon_log("INFO: registration at $source", 1);
-				$main::server_address = $source;
-			}
-
-			# set globaly variable client_address
-			my $target =  @{$msg_hash->{'target'}}[0];
-			$main::client_address = $target;
-
-			# set registration_flag to true 
-			my $out_hash = &create_xml_hash("registered", $main::client_address, $main::server_address);
-			 # Write the MAC address to file
-			if(stat($main::opts_file)) { 
-					unlink($main::opts_file);
-			}
-
-			my $opts_file_FH;
-			my $hostname= $main::client_dnsname;
-			$hostname =~ s/\..*$//;
-			$hostname =~ tr/A-Z/a-z/;
-			sysopen($opts_file_FH, $main::opts_file, O_RDWR | O_CREAT | O_TRUNC , 0644);
-			print $opts_file_FH "MAC=\"$main::client_mac_address\"\n";
-			print $opts_file_FH "IPADDRESS=\"$main::client_ip\"\n";
-			print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
-			print $opts_file_FH "FQDN=\"$main::client_dnsname\"\n";
-			if(defined(@{$msg_hash->{'ldap_available'}}) &&
-					   @{$msg_hash->{'ldap_available'}}[0] eq "true") {
-				print $opts_file_FH "LDAP_AVAILABLE=\"true\"\n";
-			}
-			if(defined(@{$msg_hash->{'error'}})) {
-				my $errormsg= @{$msg_hash->{'error'}}[0];
-				print $opts_file_FH "GOSA_SI_ERROR=\"$errormsg\"\n";
-				&write_to_file($errormsg, $fai_logpath);
-			}
-			close($opts_file_FH);
-			 
-			my $out_msg = &create_xml_string($out_hash);
-			return $out_msg;
-		}
-
-		sub server_leaving {
-			my ($msg_hash) = @_ ;
-			my $source = @{$msg_hash->{'source'}}[0]; 
-			my $header = @{$msg_hash->{'header'}}[0];
-			
-			daemon_log("gosa-si-server $source is going down, cause registration procedure", 1);
-			$main::server_address = "none";
-			$main::server_key = "none";
-
-			# reinitialization of default values in config file
-			&main::read_configfile;
-			
-			# registrated at new daemon
-			&main::register_at_server();
-			   
-			return;   
-		}
-
-
-		## @method new_syslog_config
-		# Update or add syslog messages forwarding to specified syslog server.
-		# @param msg - STRING - xml message with tag server
-		# @param msg_hash - HASHREF - message information parsed into a hash
-		sub new_syslog_config {
-			my ($msg, $msg_hash) = @_ ;
-
-			# Sanity check of incoming message
-			if ((not exists $msg_hash->{'server'}) || (not @{$msg_hash->{'server'}} == 1) ) {
-				&main::daemon_log("ERROR: 'new_syslog_config'-message does not contain a syslog server: $msg", 1);
-				return;
-			}
-
-			# Fetch the new syslog server from incoming message
-			my $syslog_server = @{$msg_hash->{'server'}}[0];
-			&main::daemon_log("INFO: found syslog server: ".join(", ", $syslog_server), 5); 
-			my $found_server_flag = 0;
-			
-			# Sanity check of /etc/syslog.conf
-			if (not -f $syslog_file) {
-				&main::daemon_log("ERROR: file '$syslog_file' does not exist, cannot do syslog reconfiguration!", 1);
-				return;
-			}
-			
-			# Substitute existing server with new syslog server
-			open (FILE, "<$syslog_file");
-			my @file = <FILE>;
-			close FILE;
-			my $syslog_server_line = "*.*\t@".$syslog_server."\n"; 
-			foreach my $line (@file) {
-				if ($line =~ /^\*\.\*\s+@/) {
-					$line = $syslog_server_line;
-					$found_server_flag++;
-				}
-			}
-			
-			# Append new server if no old server configuration found
-			if (not $found_server_flag) {
-				push(@file, "\n#\n# syslog server configuration written by GOsa-si\n#\n");
-				push(@file, $syslog_server_line);
-			}
-			
-			# Write changes to file and close it
-			open (FILE, "+>$syslog_file");
-			print FILE join("", @file); 
-			close FILE;
-			&main::daemon_log("INFO: wrote new configuration file: $syslog_file", 5);
-
-			# Restart syslog deamon
-			my $res = qx(/etc/init.d/sysklogd restart);
-			&main::daemon_log("INFO: restart syslog daemon: $res", 5);
-
-			return;
-		}
-
-
-		## @method new_ntp_config
-		# Updates the server options in /etc/chrony/chrony.conf and restarts the chrony service
-		# @param msg - STRING - xml message with tag server
-		# @param msg_hash - HASHREF - message information parsed into a hash
-		sub new_ntp_config {
-			my ($msg, $msg_hash) = @_ ;
-
-			# Sanity check of incoming message
-			if ((not exists $msg_hash->{'server'}) || (not @{$msg_hash->{'server'}} >= 1) ) {
-				&main::daemon_log("ERROR: 'new_ntp_config'-message does not contain a ntp server: $msg", 1);
-				return;
-			}
-
-			# Fetch the new ntp server from incoming message
-			my $ntp_servers = $msg_hash->{'server'};
-			&main::daemon_log("INFO: found ntp server: ".join(", ", @$ntp_servers), 5); 
-			my $ntp_servers_string = "server\t".join("\nserver\t", @$ntp_servers)."\n";
-			my $found_server_flag = 0;
-
-			# Sanity check of /etc/chrony/chrony.conf
-			if (not -f $chrony_file) {
-				&main::daemon_log("ERROR: file '$chrony_file' does not exist, cannot do ntp reconfiguration!", 1);
-				return;
-			}
-
-			# Substitute existing server with new ntp server
-			open (FILE, "<$chrony_file");
-			my @file = <FILE>;
-			close FILE;
-			my @new_file;
-			foreach my $line (@file) {
-				if ($line =~ /^server\s+/) {
-					if ($found_server_flag) {	
-						$line =~ s/^server\s+[\S]+\s+$//;
-					} else {
-						$line =~ s/^server\s+[\S]+\s+$/$ntp_servers_string/;
-					}
-					$found_server_flag++;
-				}
-				push(@new_file, $line);
-			}
-
-			# Append new server if no old server configuration found
-			if (not $found_server_flag) {
-				push(@new_file, "\n# ntp server configuration written by GOsa-si\n");
-				push(@new_file, $ntp_servers_string);
-			}
-
-			# Write changes to file and close it
-			open (FILE, ">$chrony_file");
-			print FILE join("", @new_file); 
-			close FILE;
-			&main::daemon_log("INFO: wrote new configuration file: $chrony_file", 5);
-
-			# Restart chrony deamon
-			my $res = qx(/etc/init.d/chrony force-reload);
-			&main::daemon_log("INFO: restart chrony daemon: $res", 5);
-
-			return;
-		}
-
-
-		sub new_ldap_config {
-			my ($msg, $msg_hash) = @_ ;
-
-			if( $ldap_enabled != 1 ) {
-				return;
-			}
-
-			my $element;
-			my @ldap_uris;
-			my $ldap_base;
-			my @ldap_options;
-			my @pam_options;
-			my @nss_options;
-			my $goto_admin;
-			my $goto_secret;
-			my $admin_base= "";
-			my $department= "";
-			my $release= "";
-			my $unit_tag;
-
-			# Transform input into array
-			while ( my ($key, $value) = each(%$msg_hash) ) {
-				if ($key =~ /^(source|target|header)$/) {
+		foreach $element (@$value) {
+				if ($key =~ /^ldap_uri$/) {
+						push (@ldap_uris, $element);
 						next;
 				}
-
-				foreach $element (@$value) {
-						if ($key =~ /^ldap_uri$/) {
-								push (@ldap_uris, $element);
-								next;
-						}
-						if ($key =~ /^ldap_base$/) {
-								$ldap_base= $element;
-								next;
-						}
-						if ($key =~ /^goto_admin$/) {
-								$goto_admin= $element;
-								next;
-						}
-						if ($key =~ /^goto_secret$/) {
-								$goto_secret= $element;
-								next;
-						}
-						if ($key =~ /^ldap_cfg$/) {
-								push (@ldap_options, "$element");
-								next;
-						}
-						if ($key =~ /^pam_cfg$/) {
-								push (@pam_options, "$element");
-								next;
-						}
-						if ($key =~ /^nss_cfg$/) {
-								push (@nss_options, "$element");
-								next;
-						}
-						if ($key =~ /^admin_base$/) {
-								$admin_base= $element;
-								next;
-						}
-						if ($key =~ /^department$/) {
-								$department= $element;
-								next;
-						}
-						if ($key =~ /^unit_tag$/) {
-								$unit_tag= $element;
-								next;
-						}
-						if ($key =~ /^release$/) {
-								$release= $element;
-								next;
-						}
+				if ($key =~ /^ldap_base$/) {
+						$ldap_base= $element;
+						next;
 				}
-			}
+				if ($key =~ /^goto_admin$/) {
+						$goto_admin= $element;
+						next;
+				}
+				if ($key =~ /^goto_secret$/) {
+						$goto_secret= $element;
+						next;
+				}
+				if ($key =~ /^ldap_cfg$/) {
+						push (@ldap_options, "$element");
+						next;
+				}
+				if ($key =~ /^pam_cfg$/) {
+						push (@pam_options, "$element");
+						next;
+				}
+				if ($key =~ /^nss_cfg$/) {
+						push (@nss_options, "$element");
+						next;
+				}
+				if ($key =~ /^admin_base$/) {
+						$admin_base= $element;
+						next;
+				}
+				if ($key =~ /^department$/) {
+						$department= $element;
+						next;
+				}
+				if ($key =~ /^unit_tag$/) {
+						$unit_tag= $element;
+						next;
+				}
+				if ($key =~ /^release$/) {
+						$release= $element;
+						next;
+				}
+		}
+	}
 
-			# Unit tagging enabled?
-			if (defined $unit_tag){
-					push (@pam_options, "pam_filter gosaUnitTag=$unit_tag");
-					push (@nss_options, "nss_base_passwd  $admin_base?sub?gosaUnitTag=$unit_tag");
-					push (@nss_options, "nss_base_group   $admin_base?sub?gosaUnitTag=$unit_tag");
-			}
+	# Unit tagging enabled?
+	if (defined $unit_tag){
+			push (@pam_options, "pam_filter gosaUnitTag=$unit_tag");
+			push (@nss_options, "nss_base_passwd  $admin_base?sub?gosaUnitTag=$unit_tag");
+			push (@nss_options, "nss_base_group   $admin_base?sub?gosaUnitTag=$unit_tag");
+	}
 
-			# Setup ldap.conf
-			my $file1;
-			my $file2;
-			open(file1, "> $ldap_config");
-			print file1 "# This file was automatically generated by gosa-si-client. Do not change.\n";
-			print file1 "URI";
-			foreach $element (@ldap_uris) {
-				print file1 " $element";
-			}
-			print file1 "\nBASE $ldap_base\n";
-			foreach $element (@ldap_options) {
-				print file1 "$element\n";
-			}
-			close (file1);
-			daemon_log("wrote $ldap_config", 5);
+	# Setup ldap.conf
+	my $file1;
+	my $file2;
+	open(file1, "> $ldap_config");
+	print file1 "# This file was automatically generated by gosa-si-client. Do not change.\n";
+	print file1 "URI";
+	foreach $element (@ldap_uris) {
+		print file1 " $element";
+	}
+	print file1 "\nBASE $ldap_base\n";
+	foreach $element (@ldap_options) {
+		print file1 "$element\n";
+	}
+	close (file1);
+	daemon_log("wrote $ldap_config", 5);
 
-			# Setup pam_ldap.conf / libnss-ldap.conf
-			open(file1, "> $pam_config");
-			open(file2, "> $nss_config");
-			print file1 "# This file was automatically generated by gosa-si-client. Do not change.\n";
-			print file2 "# This file was automatically generated by gosa-si-client. Do not change.\n";
-			print file1 "uri";
-			print file2 "uri";
-			foreach $element (@ldap_uris) {
-				print file1 " $element";
-				print file2 " $element";
-			}
-			print file1 "\nbase $ldap_base\n";
-			print file2 "\nbase $ldap_base\n";
-			foreach $element (@pam_options) {
-				print file1 "$element\n";
-			}
-			foreach $element (@nss_options) {
-				print file2 "$element\n";
-			}
-			close (file2);
-			daemon_log("wrote $nss_config", 5);
-			close (file1);
-			daemon_log("wrote $pam_config", 5);
+	# Setup pam_ldap.conf / libnss-ldap.conf
+	open(file1, "> $pam_config");
+	open(file2, "> $nss_config");
+	print file1 "# This file was automatically generated by gosa-si-client. Do not change.\n";
+	print file2 "# This file was automatically generated by gosa-si-client. Do not change.\n";
+	print file1 "uri";
+	print file2 "uri";
+	foreach $element (@ldap_uris) {
+		print file1 " $element";
+		print file2 " $element";
+	}
+	print file1 "\nbase $ldap_base\n";
+	print file2 "\nbase $ldap_base\n";
+	foreach $element (@pam_options) {
+		print file1 "$element\n";
+	}
+	foreach $element (@nss_options) {
+		print file2 "$element\n";
+	}
+	close (file2);
+	daemon_log("wrote $nss_config", 5);
+	close (file1);
+	daemon_log("wrote $pam_config", 5);
 
-			# Create goto.secrets if told so - for compatibility reasons
-			if (defined $goto_admin){
-				open(file1, "> /etc/goto/secret");
-					close(file1);
-					chown(0,0, "/etc/goto/secret");
-					chmod(0600, "/etc/goto/secret");
-				open(file1, "> /etc/goto/secret");
-					print file1 "GOTOADMIN=\"$goto_admin\"\nGOTOSECRET=\"$goto_secret\"\n";
-					close(file1);
-					daemon_log("wrote /etc/goto/secret", 5);
-			}
+	# Create goto.secrets if told so - for compatibility reasons
+	if (defined $goto_admin){
+		open(file1, "> /etc/goto/secret");
+			close(file1);
+			chown(0,0, "/etc/goto/secret");
+			chmod(0600, "/etc/goto/secret");
+		open(file1, "> /etc/goto/secret");
+			print file1 "GOTOADMIN=\"$goto_admin\"\nGOTOSECRET=\"$goto_secret\"\n";
+			close(file1);
+			daemon_log("wrote /etc/goto/secret", 5);
+	}
 
-			# Write shell based config
-			my $cfg_name= "/etc/ldap/ldap-shell.conf";
+	# Write shell based config
+	my $cfg_name= "/etc/ldap/ldap-shell.conf";
 
     # Get first LDAP server
     my $ldap_server= $ldap_uris[0];
@@ -590,11 +590,13 @@ sub detect_hardware {
 
     &write_to_file('goto-hardware-detection-stop', $fai_logpath);
    
-    return &main::send_msg_hash_to_target(
+    &main::send_msg_hash_to_target(
 		&main::create_xml_hash("detected_hardware", $main::client_address, $main::server_address, $result),
 		$main::server_address, 
 		$main::server_key,
 	);
+
+	return;
 }
 
 
