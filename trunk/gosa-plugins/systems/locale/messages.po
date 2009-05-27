@@ -512,10 +512,6 @@ msgstr ""
 msgid "Restart"
 msgstr ""
 
-#: admin/systems/services/class_goService.inc:280
-msgid "Cannot remove share - it is still in use by these objects: %s"
-msgstr ""
-
 #: admin/systems/class_serverService.inc:351
 msgid "Information"
 msgstr ""

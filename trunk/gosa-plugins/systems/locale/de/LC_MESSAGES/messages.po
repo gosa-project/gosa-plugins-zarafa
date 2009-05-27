@@ -280,10 +280,6 @@ msgstr "Leerer Dienst"
 msgid "Configuration error"
 msgstr "Konfigurationsfehler"
 
-#: admin/systems/services/class_goService.inc:280
-msgid "Cannot remove share - it is still in use by these objects: %s"
-msgstr "Freigabe kann nicht entfernt werden - sie wird noch von diesen Objekten benutzt: %s"
-
 #: admin/systems/services/ServiceAddDialog.tpl:3
 msgid "Adding a new service to the current server"
 msgstr "Hinzufügen eines neues Dienstes zum gewählten Server"
