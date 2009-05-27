@@ -1358,6 +1358,10 @@ msgstr ""
 msgid "share"
 msgstr ""
 
+#: admin/systems/services/shares/class_goShareServer.inc:237
+msgid "Cannot remove share - it is still in use by these objects: %s"
+msgstr ""
+
 #: admin/systems/services/shares/class_goShareServer.inc:390
 msgid "File service - Shares"
 msgstr ""

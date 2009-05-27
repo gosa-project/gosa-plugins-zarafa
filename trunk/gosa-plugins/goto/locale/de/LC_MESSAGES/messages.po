@@ -825,6 +825,10 @@ msgstr "Hotplug"
 msgid "Type"
 msgstr "Typ"
 
+#: admin/systems/services/shares/class_goShareServer.inc:237
+msgid "Cannot remove share - it is still in use by these objects: %s"
+msgstr "Freigabe kann nicht entfernt werden - sie wird noch von diesen Objekten benutzt: %s"
+
 #: admin/devices/class_deviceGeneric.inc:265
 msgid "Vendor"
 msgstr "Hersteller"
