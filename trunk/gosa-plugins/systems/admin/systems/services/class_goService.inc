@@ -257,6 +257,29 @@ class goService extends plugin{
       $this->$flag = $attrs[$flag][0];
     }
   }
+
+  function allow_remove()
+  {
+  /* Check if the service is still in use */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $cn = $ldap->getCn($this->dn);
+    $ldap->search("(&(|(objectClass=posixGroup)(objectClass=posixAccount))(gotoShare=$cn|*))", array("dn"));
+
+    if($ldap->count()){
+      /* Number of entries shown in warning */
+      $i    = 3;
+      $str  = '<p>';
+      while(($attrs = $ldap->fetch()) && $i >= 0){
+        $i --;
+        if(isset($attrs['dn'])){
+          $str .= '<i>' . $attrs['dn']."</i><br/>";
+        }
+      }
+      $str .= '</p>';
+      return(sprintf(_("Cannot remove share - it is still in use by these objects: %s"), $str));
+      }
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
