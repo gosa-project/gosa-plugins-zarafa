@@ -7,8 +7,6 @@ gosaTriggered.pm
 
 use GOSA::GosaSupportDaemon;
 
-use Data::Dumper;
-
 use MIME::Base64
 
 =head1 DESCRIPTION
@@ -48,7 +46,6 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
-use Data::Dumper;
 use MIME::Base64;
 use File::Temp qw/ tempfile/;
 

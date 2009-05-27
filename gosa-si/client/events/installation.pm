@@ -6,7 +6,6 @@ my @events = qw(get_events set_activated_for_installation);
 
 use strict;
 use warnings;
-use Data::Dumper;
 use Fcntl;
 
 BEGIN {}

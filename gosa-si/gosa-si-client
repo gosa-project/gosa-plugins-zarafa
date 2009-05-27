@@ -30,7 +30,6 @@ use Time::HiRes qw( gettimeofday );
 use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
 use IO::Socket::INET;
 use NetAddr::IP;
-use Data::Dumper;
 use Crypt::Rijndael;
 use GOSA::GosaSupportDaemon;
 use Digest::MD5  qw(md5_hex md5 md5_base64);
@@ -1258,7 +1257,6 @@ if (defined $server_ip && defined $server_port) {
 }
 $xml = new XML::Simple();
 $default_server_key = $server_key;
-
 
 # add gosa-si-server address from config file at first position of server list
 my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );

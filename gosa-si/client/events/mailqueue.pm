@@ -41,7 +41,6 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
-use Data::Dumper;
 use MIME::Base64;
 
 BEGIN {}

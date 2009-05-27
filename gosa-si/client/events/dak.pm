@@ -17,7 +17,6 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
-use Data::Dumper;
 use MIME::Base64;
 
 BEGIN {}
@@ -94,7 +93,6 @@ sub get_dak_keyring {
 
     my $i=0;
     foreach my $key (@keys) {
-        #    &main::daemon_log(Dumper($key));
         &add_content2xml_hash($out_hash, "answer".$i++, $key);
     }
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];

@@ -19,7 +19,6 @@ my @events = (
 
 use strict;
 use warnings;
-use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Authen::Krb5;
 use Authen::Krb5::Admin qw(:constants);

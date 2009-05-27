@@ -18,7 +18,6 @@
 
 		use strict;
 		use warnings;
-		use Data::Dumper;
 		use Fcntl;
 		use GOSA::GosaSupportDaemon;
 		use File::Basename;

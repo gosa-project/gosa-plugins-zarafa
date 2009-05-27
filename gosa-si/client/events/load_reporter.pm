@@ -13,7 +13,6 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
-use Data::Dumper;
 
 BEGIN {}
 END {}
