@@ -3538,8 +3538,7 @@ POE::Component::Server::TCP->new(
 	ClientInput => sub {
 		my ($kernel, $input, $heap, $session) = @_[KERNEL, ARG0, HEAP, SESSION];
         my $session_id = $session->ID;
-		$input =~ /;([\d\.]*:[\d]*)$/ ;
-		if (defined $1) 
+		if ($input =~ /;([\d\.]+:[\d]+)$/) 
 		{
 			&daemon_log("$session_id DEBUG: incoming message from '$1'", 7);
 		}
