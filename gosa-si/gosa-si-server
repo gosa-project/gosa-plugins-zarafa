@@ -887,10 +887,10 @@ sub send_msg_to_target {
 	my $own_source_address = &get_local_ip_for_remote_ip(sprintf("%s", $address =~ /^([0-9\.]*?):.*$/));
 	$own_source_address .= ":".$server_port;
 
-	# Patch the source ip
-	if($msg =~ /<source>0\.0\.0\.0:\d*?<\/source>/) {
-		$msg =~ s/<source>(0\.0\.0\.0):(\d*?)<\/source>/<source>$own_source_address<\/source>/s;
-	}
+	# Patch 0.0.0.0 source to real address
+	$msg =~ s/<source>(0\.0\.0\.0):(\d*?)<\/source>/<source>$own_source_address<\/source>/s;
+	# Patch GOSA source to real address and add forward_to_gosa tag
+	$msg =~ s/<source>GOSA<\/source>/<source>$own_source_address<\/source> <forward_to_gosa>$own_source_address,$session_id<\/forward_to_gosa>/ ;
 
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
@@ -898,7 +898,7 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("$session_id WARNING: cannot send ".$header."msg to '$address' , host not reachable! Message: '$msg'", 3);
+        daemon_log("$session_id ERROR: Cannot open socket to host '$address'. Message processing aborted!", 1);
         $error++;
     }
     
@@ -1186,10 +1186,18 @@ sub msg_to_decrypt {
 			}
 		}
 
+		# If header has a 'job_' prefix, do always process message locally
+		# which means put it into job queue
+		if ((not $done) && ($header =~ /job_/))
+		{
+			$done = 1;
+			&daemon_log("$session_id DEBUG: Header has a 'job_' prefix. Put it into job queue. -> process here", 7);
+		}
+
 		# if message should be processed here -> add message to incoming_db
 		if ($done) {
-			# if a job or a gosa message comes from a foreign server, fake module to GosaPackages
-			# so gosa-si-server knows how to process this kind of messages
+			# if a 'job_' or a 'gosa_' message comes from a foreign server, fake module from
+			# ServerPackages to GosaPackages so gosa-si-server knows how to process this kind of messages
 			if ($header =~ /^gosa_/ || $header =~ /^job_/) {
 				$module = "GosaPackages";
 			}
@@ -1235,15 +1243,16 @@ sub msg_to_decrypt {
 			$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
 			$res = $known_clients_db->select_dbentry($sql);
 			if (keys(%$res) > 0) {
-				$done = 1; 
-				my $key = $res->{1}->{'hostkey'};
-				my $error= &send_msg_to_target($msg, $target, $key, $header, $session_id);
-				if ($error) {
-					&daemon_log("$session_id ERROR: some problems (error=$error) occurred while trying to send msg to client: $msg", 1);
-				}
-
 				&daemon_log("$session_id DEBUG: target is a client address in known_clients -> forward to client", 7);
-
+				$done = 1; 
+				my $hostkey = $res->{1}->{'hostkey'};
+				my $hostname = $res->{1}->{'hostname'};
+				$msg =~ s/<target>\S*<\/target>/<target>$hostname<\/target>/;
+				$msg =~ s/<header>gosa_/<header>/;
+				my $error= &send_msg_to_target($msg, $hostname, $hostkey, $header, $session_id);
+				if ($error) {
+					&daemon_log("$session_id ERROR: Some problems occurred while trying to send msg to client '$hostkey': $msg", 1);
+				}
 			} else {
 				$not_found_in_known_clients_db = 1;
 			}
@@ -1269,7 +1278,7 @@ sub msg_to_decrypt {
 					}
 					my $error= &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
 					if ($error) {
-						&daemon_log("$session_id ERROR: some problems (error=$error) occurred while trying to send msg to registration server: $msg", 1); 
+						&daemon_log("$session_id ERROR: some problems occurred while trying to send msg to registration server: $msg", 1); 
 					}
 				}
 				$done = 1;
@@ -3368,25 +3377,25 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
         chown($root_uid, $adm_gid, $job_queue_file_name);
         
         # connect to known_clients_db
-        unlink($known_clients_file_name);
+        #unlink($known_clients_file_name);
         $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
         chmod(0640, $known_clients_file_name);
         chown($root_uid, $adm_gid, $known_clients_file_name);
         
         # connect to foreign_clients_db
-        unlink($foreign_clients_file_name);
+        #unlink($foreign_clients_file_name);
         $foreign_clients_db = GOSA::DBsqlite->new($foreign_clients_file_name);
         chmod(0640, $foreign_clients_file_name);
         chown($root_uid, $adm_gid, $foreign_clients_file_name);
         
         # connect to known_server_db
-        unlink($known_server_file_name);
+        #unlink($known_server_file_name);
         $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
         chmod(0640, $known_server_file_name);
         chown($root_uid, $adm_gid, $known_server_file_name);
         
         # connect to login_usr_db
-        unlink($login_users_file_name);
+        #unlink($login_users_file_name);
         $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
         chmod(0640, $login_users_file_name);
         chown($root_uid, $adm_gid, $login_users_file_name);
@@ -3410,7 +3419,7 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
         chown($root_uid, $adm_gid, $packages_list_file_name);
         
         # connect to messaging_db
-        unlink($messaging_file_name);
+        #unlink($messaging_file_name);
         $messaging_db = GOSA::DBsqlite->new($messaging_file_name);
         chmod(0640, $messaging_file_name);
         chown($root_uid, $adm_gid, $messaging_file_name);
