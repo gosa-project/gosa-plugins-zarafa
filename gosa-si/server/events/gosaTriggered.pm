@@ -17,8 +17,6 @@ my @events = (
     "set_activated_for_installation",
     "new_key_for_client",
     "detect_hardware",
-    "get_login_usr",
-    "get_login_client",
     "trigger_action_localboot",
     "trigger_action_faireboot",
     "trigger_action_reboot",
@@ -213,12 +211,12 @@ sub get_login_usr_for_client {
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
-        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    # If $client is a mac address 
-    if ($client =~ /^\w\w:\w\w:\w\w:\w\w:\w\w:\w\w$/i) 
+    # If $client is a mac address
+    if ($client =~ /^\w\w:\w\w:\w\w:\w\w:\w\w:\w\w$/i)
     {
         # Search for hostname of $client within known_clients_db
         my $sql = "SELECT * FROM $main::known_clients_tn WHERE macaddress LIKE '$client'";
@@ -276,7 +274,7 @@ sub get_client_for_login_usr {
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
-        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
@@ -290,7 +288,6 @@ sub get_client_for_login_usr {
     $out_msg .= "</xml>";
 
     return ( $out_msg );
-
 }
 
 

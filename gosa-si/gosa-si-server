@@ -105,6 +105,7 @@ our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn, $ldap_version);
 our ($mysql_username, $mysql_password, $mysql_database, $mysql_host);
 our $known_modules;
+our $known_functions;
 our $root_uid;
 our $adm_gid;
 
@@ -1027,7 +1028,7 @@ sub update_jobdb_status_for_send_msgs {
             } 
         } 
     } else { 
-        &daemon_log("$session_id DEBUG: cannot update job status, msg has no jobdb_id-tag: $answer", 7); 
+        &daemon_log("$session_id DEBUG: cannot update job status, msg has no jobdb_id-tag.", 7); 
     }
 }
 
@@ -1172,7 +1173,7 @@ sub msg_to_decrypt {
 			}
 		}
 
-		# target ist own address with forward_to_gosa-tag not pointing to myself -> process here
+		# target is own address with forward_to_gosa-tag not pointing to myself -> process here
 		if (not $done) {
 			my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
 			my $gosa_at;
@@ -1182,6 +1183,27 @@ sub msg_to_decrypt {
 				if ($gosa_at ne $local_address) {
 					$done = 1;
 					&daemon_log("$session_id DEBUG: target is own address with forward_to_gosa-tag not pointing to myself -> process here", 7); 
+				}
+			}
+		}
+
+		# Target is a client address and there is a processing function within a plugin -> process loaclly
+		if (not $done)
+		{
+			# Check if target is a client address
+			$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
+			$res = $known_clients_db->select_dbentry($sql);
+			if ((keys(%$res) > 0) ) 
+			{
+				my $hostname = $res->{1}->{'hostname'};
+				my $reduced_header = $header;
+				$reduced_header =~ s/gosa_//;
+				# Check if there is a processing function within a plugin
+				if (exists $known_functions->{$reduced_header}) 
+				{
+					$msg =~ s/<target>\S*<\/target>/<target>$hostname<\/target>/;
+					$done = 1;
+					&daemon_log("$session_id DEBUG: Target is client address with processing function within a plugin -> process here", 7);
 				}
 			}
 		}
@@ -1242,9 +1264,10 @@ sub msg_to_decrypt {
 		if (not $done) {
 			$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
 			$res = $known_clients_db->select_dbentry($sql);
-			if (keys(%$res) > 0) {
-				&daemon_log("$session_id DEBUG: target is a client address in known_clients -> forward to client", 7);
+			if (keys(%$res) > 0) 
+			{
 				$done = 1; 
+				&daemon_log("$session_id DEBUG: target is a client address in known_clients -> forward to client", 7);
 				my $hostkey = $res->{1}->{'hostkey'};
 				my $hostname = $res->{1}->{'hostname'};
 				$msg =~ s/<target>\S*<\/target>/<target>$hostname<\/target>/;
@@ -1253,7 +1276,9 @@ sub msg_to_decrypt {
 				if ($error) {
 					&daemon_log("$session_id ERROR: Some problems occurred while trying to send msg to client '$hostkey': $msg", 1);
 				}
-			} else {
+			} 
+			else 
+			{
 				$not_found_in_known_clients_db = 1;
 			}
 		}
@@ -3522,6 +3547,21 @@ foreach my $foreign_server (@foreign_server_list) {
 
 # Check wether all modules are gosa-si valid passwd check
 &password_check;
+
+# Create functions hash
+#print STDERR Dumper $known_modules;
+while (my ($module, @mod_info) = each %$known_modules) 
+{
+#print STDERR Dumper $module;
+	while (my ($plugin, $functions) = each %{$mod_info[0][2]})
+	{
+#print STDERR Dumper $functions;
+		while (my ($function, $nothing) = each %$functions )
+		{
+			$known_functions->{$function} = $nothing;
+		}
+	}
+}
 
 # Prepare for using Opsi 
 if ($opsi_enabled eq "true") {
