@@ -36,14 +36,15 @@ class faiProfile extends plugin
     $tmp2 = array();
     foreach($tmp as $class){
       if(!empty($class)){
-        $tmp2[trim($class)] = trim($class);
+        $class = trim($class);
+        $tmp2[] = $class;
       }
     }
 
     /* Sort assigned classes */ 
     if(is_array($tmp2)){
       foreach($tmp2 as $class){
-        $this->FAIclasses[$class]=$class;
+        $this->FAIclasses[]=$class;
       }
     }
 
@@ -95,27 +96,6 @@ class faiProfile extends plugin
     $this->old_cn   = $this->cn;
   }
 
-
-  /* Combine new array, used for up down buttons */
-  function combineArrays($ar0,$ar1,$ar2)
-  {
-    $ret = array();
-    if(is_array($ar0))
-      foreach($ar0 as $ar => $a){
-        $ret[$ar]=$a;
-      }
-    if(is_array($ar1))
-      foreach($ar1 as $ar => $a){
-        $ret[$ar]=$a;
-      }
-    if(is_array($ar2))
-      foreach($ar2 as $ar => $a){
-        $ret[$ar]=$a;
-      }
-    return($ret);
-  }
-
-
   function acl_base_for_current_object($dn)
   {
     if($dn == "new" || $dn == ""){
@@ -133,46 +113,47 @@ class faiProfile extends plugin
   function getpos($atr,$attrs)
   {
     $i = 0;
-    foreach($attrs as $attr => $name)    {
-      $i++;
-      if($attr == $atr){
+    foreach($attrs as $value) {
+      if($atr == $value) {
         return($i);
       }
+      $i++;
     }
-    return(-1);
   }
 
   /* Transports the given Arraykey one position up*/
   function ArrayUp($atr,$attrs)
   {
-    $ret = $attrs;
-    $pos = $this->getpos($atr,$attrs) ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == 1))){
-      $before = array_slice($attrs,0,($pos-2));
-      $mitte  = array_reverse(array_slice($attrs,($pos-2),2));
-      $unten  = array_slice($attrs,$pos);
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
+    $index = $this->getpos($atr,$attrs);
+    $res = $attrs;
+
+    for($i=0;$i<count($attrs);$i++) {
+      if ($i==$index) {
+        $left_index = $index - 1;
+        $res[$left_index] = $attrs[$index];
+        $res[$index] = $attrs[$left_index];
+      }
     }
-    return($ret);
+
+    return($res);
   }
 
 
   /* Transports the given Arraykey one position down*/
   function ArrayDown($atr,$attrs)
   {
-    $ret = $attrs;
-    $pos = $this->getpos($atr,$attrs) ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == $cn))){
-      $before = array_slice($attrs,0,($pos-1));
-      $mitte  = array_reverse(array_slice($attrs,($pos-1),2));
-      $unten  = array_slice($attrs,($pos+1));
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
+    $index = $this->getpos($atr,$attrs);
+    $res = $attrs;
+
+    for($i=0;$i<count($attrs);$i++) {
+      if ($i==$index) {
+        $left_index = ($index+1);
+        $res[$left_index] = $attrs[$index];
+        $res[$index] = $attrs[$left_index];
+      }
     }
-    return($ret);
+
+    return($res);
   }
 
   /* class one position up */
@@ -263,7 +244,7 @@ class faiProfile extends plugin
         }else{
           $ret = $this->dialog->save();
           foreach($ret as $class){
-            $this->FAIclasses[$class] =$class; 
+            $this->FAIclasses[] =$class; 
           }
           $this->is_dialog=false;
           unset($this->dialog);
@@ -300,12 +281,21 @@ class faiProfile extends plugin
     $actions = "<input type='image' src='images/lists/trash.png' title='"._("Remove class from profile")."' name='DEL_%KEY%'>"; 
     
     /* Up down buttons */
-    $linkupdown = "&nbsp;<input type='image' name='sortup_%s'   alt='up'    title='"._("Up")."'   src='images/lists/sort-up.png' align='top' >";
-    $linkupdown.= "<input type='image' name='sortdown_%s' alt='down'  title='"._("Down")."' src='images/lists/sort-down.png' >";
-
+    $linkup = " &nbsp;<input type='image' name='sortup_%s'   alt='up'    title='"._("Up")."'   src='images/lists/sort-up.png' align='top' >";
+    $linkdown = " &nbsp;<input type='image' name='sortdown_%s' alt='down'  title='"._("Down")."' src='images/lists/sort-down.png' >";
     /* Append fai classes to divlist */
     if($this->acl_is_readable("FAIclass")){
+      $i = 1;
       foreach($this->FAIclasses as $usedClass){
+        if($i==1) {
+          $linkupdown = "&nbsp;&nbsp;&nbsp;&nbsp;" . $linkdown;
+        } elseif ($i<count($this->FAIclasses)) {
+          $linkupdown = $linkup . $linkdown;    
+        }
+        else {
+          $linkupdown = $linkup;
+        }
+
         $str = "&nbsp;";
         $act = "";
 
@@ -325,6 +315,7 @@ class faiProfile extends plugin
           $field3 = array("string"=>"&nbsp;", "attach"=>"style='border-right:none;'");
         }
         $divlist->AddEntry(array($field1,$field2,$field3));
+        $i++;
       }
     }
 
@@ -450,14 +441,15 @@ class faiProfile extends plugin
     $tmp2 = array();
     foreach($tmp as $class){
       if(!empty($class)){
-        $tmp2[trim($class)] = trim($class);
+        $class = trim($class);
+        $tmp2[] = $class;
       }
     }
 
     /* Sort assigned classes */
     if(is_array($tmp2)){
       foreach($tmp2 as $class){
-        $this->FAIclasses[$class]=$class;
+        $this->FAIclasses[]=$class;
       }
     }
   }
