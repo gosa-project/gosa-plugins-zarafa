@@ -26,10 +26,10 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_delete_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase><id>3</id></phrase></clause></where></xml>";
 
     # smbhash
-    #$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
+    #$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>rettenbe</password></xml>";
 
     # Reload ldap config
-    #$data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</source><target>00:01:6c:9d:b9:fa</target></xml>";
+    #$data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</source><target>00:0C:29:4C:4B:0C</target></xml>";
 
     # jobdb update  
     #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase> <id>1</id></phrase></clause></where> <update><timestamp>19700101000000</timestamp></update></xml>";
@@ -55,36 +55,32 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_clear_jobdb</header> <source>GOSA</source> <target>GOSA</target></xml>";
 
     # set gosa-si-client to 'activated'
-    #$data = "<xml> <header>job_set_activated_for_installation</header> <target>10.89.1.31:20083</target> <source>GOSA</source> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>22220101000000</timestamp></xml>";
+    #$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> <macaddress>00:0C:29:4C:4B:0C</macaddress><timestamp>22220101000000</timestamp></xml>";
 
 
     # trigger jobs at client
     #$data = "<xml> <header>gosa_trigger_goto_settings_reload</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
-    #$data = "<xml> <header>gosa_detect_hardware</header> <target>10.89.1.31:20083</target> <source>GOSA</source> </xml>";
-    #$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
-    #$data = "<xml> <header>job_trigger_action_wake</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp></xml>";
-    #$data = "<xml> <header>gosa_trigger_action_faireboot</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
-    #$data = "<xml> <header>gosa_trigger_action_reboot</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
-    #$data = "<xml> <header>gosa_trigger_action_halt</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
-    #$data = "<xml> <header>job_trigger_action_reinstall</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> <timestamp>19700101000000</timestamp> </xml>";
-$data = "<xml><header>job_trigger_action_reinstall</header><source>GOSA</source><target>00:50:56:06:1c:7d</target><macaddress>00:50:56:06:1c:7d</macaddress></xml>";
-    #$data = "<xml> <header>job_trigger_action_instant_update</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp> </xml>";
+    #$data = "<xml> <header>gosa_detect_hardware</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_trigger_action_wake</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source></xml>";
+    #$data = "<xml> <header>gosa_trigger_action_faireboot</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_trigger_action_reboot</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_trigger_action_halt</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_trigger_action_reinstall</header> <source>GOSA</source> <target>00:0C:29:4C:4B:0C</target> <macaddress>00:0C:29:4C:4B:0C</macaddress> </xml>";
+    #$data = "<xml> <header>gosa_trigger_action_instant_update</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_new_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
 
     # get_login_usr_for_client
-    #$data = "<xml> <header>gosa_get_login_usr_for_client</header> <target>GOSA</target> <source>GOSA</source> <client>00:01:6c:9d:b9:fa</client></xml>";
+    #$data = "<xml> <header>gosa_get_login_usr_for_client</header> <target>GOSA</target> <source>GOSA</source> <client>00:0C:29:4C:4B:0C</client></xml>";
 
     # get_client_for_login_usr
     #$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>rettenbe</usr></xml>";
 
     # List all si-server providing opsi
-    #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>10.89.1.31:20081</target> <module_name>mailqueue_com</module_name> </xml>";
-    #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>linux-cl-2:20081</target> <module_name>mailqueue_com</module_name> </xml>";
+    $data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>00:0C:29:4C:4B:0C</target> <module_name>mailqueue_com</module_name> </xml>";
 
     # Send messages to a user and displayed message via konch
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
-    #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
-    #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>rettenbe</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
     
     #$data = "<xml> <header>gosa_set_last_system</header> <target>10.89.1.31:20082</target> <source>GOSA</source> <mac_address>00:01:6c:9d:b9:fa</mac_address> <last_system>1.2.3.4</last_system> <last_system_login>20081212000000</last_system_login> </xml>";
 
@@ -115,7 +111,7 @@ $data = "<xml><header>job_trigger_action_reinstall</header><source>GOSA</source>
     #$data = "<xml> <header>gosa_krb5_modify_principal</header> <target>00:01:6c:9d:b9:fa</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
 
     #$data = "<xml><header>gosa_query_fai_server</header><source>GOSA</source> <target>10.89.1.131:20081</target></xml>";
-    #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:aa:16</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_ping</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fb</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_get_dak_keyring</header> <target>GOSA</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:0c:29:02:e5:4d</target> <macaddress>00:0c:29:02:e5:4d</macaddress><timestamp>29700101000000</timestamp> </xml>";
@@ -210,11 +206,11 @@ $data = "<xml><header>job_trigger_action_reinstall</header><source>GOSA</source>
 
     ##############################
     # NTP reload
-    #$data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:11:25:4B:8C:E5</macaddress> </xml>"; 
+    #$data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:0C:29:4C:4B:0C</macaddress> </xml>"; 
 
     ##############################
     # SYSLOG reload
-    #$data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> </xml>"; 
+    #$data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:0C:29:4C:4B:0C</macaddress> </xml>"; 
 
 
 

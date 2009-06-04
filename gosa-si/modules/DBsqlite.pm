@@ -29,7 +29,7 @@ sub new {
 	my @ret = $sth->fetchall_arrayref();
 	   $sth->finish();
 	if(length(@ret)==1 && $ret[0][0][0] eq 'ok') {
-		&main::daemon_log("0 DEBUG: Database disk image '".$self->{db_name}."' is ok.", 7);
+		&main::daemon_log("0 DEBUG: Database disk image '".$self->{db_name}."' is ok.", 74);
 	} else {
 		&main::daemon_log("0 ERROR: Database disk image '".$self->{db_name}."' is malformed, creating new database!", 1);
 		$self->{dbh}->disconnect() or &main::daemon_log("0 ERROR: Could not disconnect from database '".$self->{db_name}."'!", 1);
@@ -92,7 +92,7 @@ get_lock:
 		goto get_lock;
 	} else {
 		seek($self->{db_lock_handle}, 0, 2);
-		&main::daemon_log("0 DEBUG: Acquired lock for database ".$self->{db_name}, 8);
+		&main::daemon_log("0 DEBUG: Acquired lock for database ".$self->{db_name}, 74);
 		$self->connect();
 	}
 	return;
@@ -109,7 +109,7 @@ sub unlock {
 		&main::daemon_log("0 BIG ERROR: Lockfile for database ".$self->{db_name}."got closed within critical section!", 1);
 	}
 	flock($self->{db_lock_handle}, LOCK_UN);
-	&main::daemon_log("0 DEBUG: Released lock for database ".$self->{db_name}, 8);
+	&main::daemon_log("0 DEBUG: Released lock for database ".$self->{db_name}, 74);
 	$self->disconnect();
 	return;
 }
@@ -151,49 +151,6 @@ sub create_table {
 
 	return 0;
 }
-
-
-# sub check_schema {
-# 	my $self = shift;
-# 	my $result = 1;
-# 	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-# 		&main::daemon_log("0 ERROR: GOSA::DBsqlite::check_schema was called static! Argument was '$self'!", 1);
-# 		return $result;
-# 	}
-# 
-# 	my $table_name = shift || undef;
-# 	my $table_columns;
-# 
-# 	if($table_name and $col_names->{$table_name}) {
-# 		# Query the table_info from database
-# 		foreach my $column ( @{ $self->exec_statement ( "pragma table_info('$table_name')" ) } ) {
-# 			my $column_name = @$column[1];
-# 			my $data_type   = @$column[2];
-# 			$table_columns->{$column_name}= $data_type;
-# 		}
-# 
-# 		foreach my $column (@{$col_names->{$table_name}}) {
-# 			my ($column_name, $datatype) = split(/\s/, $column);
-# 			if(exists($table_columns->{$column_name})) {
-# 				if(lc $datatype eq lc $table_columns->{$column_name}) {
-# 					next;
-# 				} else {
-# 					&main::daemon_log("WARNING: Column '$column_name' has wrong datatype!", 1);
-# 					$result = 0;
-# 				}
-# 			} else {
-# 				$result = 0;
-# 				&main::daemon_log("WARNING: Column '$column_name' is missing!", 1);
-# 				#&main::daemon_log("DEBUG Columns are not equal! Column '".$self->{db_name}.".$column_name' is missing!", 0);
-# 				#my $sql_statement = "ALTER TABLE $table_name ADD COLUMN $column_name $datatype";
-# 				#$self->exec_statement($sql_statement);
-# 				# The ALTER TABLE statement sucks completely in SQLite, so just recreate the table
-# 			}
-# 		}
-# 	}
-# 
-# 	return $result;
-# }
 
 
 sub add_dbentry {
@@ -265,7 +222,7 @@ sub add_dbentry {
 			my $sth = $self->{dbh}->prepare($sql_statement);
 			$db_res = $sth->execute();
 			$sth->finish();
-			&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 9);
+			&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 74);
 			$success = 1;
 		};
 		if($@) {
@@ -279,7 +236,7 @@ sub add_dbentry {
 				my $sth = $self->{dbh}->prepare($sql_statement);
 				$db_res = $sth->execute();
 				$sth->finish();
-				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 9);
+				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 74);
 				$success = 1;
 			};
 			if($@) {
@@ -294,7 +251,7 @@ sub add_dbentry {
 				my $sth = $self->{dbh}->prepare($sql_statement);
 				$db_res = $sth->execute();
 				$sth->finish();
-				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 7);
+				&main::daemon_log("0 DEBUG: Execution of statement '$sql_statement' succeeded!", 74);
 				$success = 1;
 			};
 			if($@) {
@@ -456,7 +413,7 @@ sub exec_statement {
 		@db_answer = @{$sth->fetchall_arrayref()};
 		$sth->finish();
 		$success=1;
-		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 9);
+		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 74);
 	};
 	if($@) {
 		eval {
@@ -478,7 +435,7 @@ sub exec_statement {
 		@db_answer = @{$sth->fetchall_arrayref()};
 		$sth->finish();
 		$success=1;
-		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 9);
+		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 74);
 	};
 	if($@) {
 		eval {
@@ -501,7 +458,7 @@ sub exec_statement {
 		@db_answer = @{$sth->fetchall_arrayref()};
 		$sth->finish();
 		DBI->trace(0);
-		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 9);
+		&main::daemon_log("0 DEBUG: $sql_statement succeeded.", 74);
 	};
 	if($@) {
 		DBI->trace(0);

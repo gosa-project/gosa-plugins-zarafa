@@ -528,7 +528,7 @@ sub import_events {
 
 			# Check config file to exclude disabled event plugins (i.e. Opsi)
 			if ($event eq "opsi_com.pm" &&  $main::opsi_enabled ne "true")  { 
-				&main::daemon_log("WARNING: opsi-module is installed but not enabled in config file, please set under section '[OPSI]': 'enabled=true'", 3);	
+				&main::daemon_log("0 WARNING: opsi-module is installed but not enabled in config file, please set under section '[OPSI]': 'enabled=true'", 3);	
 				next; 
 			}
 

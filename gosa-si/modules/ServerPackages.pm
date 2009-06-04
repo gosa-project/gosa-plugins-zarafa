@@ -23,7 +23,7 @@ END {}
 my ($error, $result, $event_hash) = &import_events($event_dir);
 foreach my $log_line (@$result) {
     if ($log_line =~ / succeed: /) {
-        &main::daemon_log("0 DEBUG: ServerPackages - $log_line", 7);
+        &main::daemon_log("0 INFO: ServerPackages - $log_line", 5);
     } else {
         &main::daemon_log("0 ERROR: ServerPackages - $log_line", 1);
     }
@@ -64,10 +64,10 @@ sub process_incoming_msg {
     $msg =~ s/<header>gosa_(\w+)<\/header>|<header>job_(\w+)<\/header>/<header>$1<\/header>/;
     
 
-    &main::daemon_log("$session_id DEBUG: ServerPackages: msg to process '$header'", 7);
+    &main::daemon_log("$session_id DEBUG: ServerPackages: msg to process '$header'", 26);
     if( exists $event2module_hash->{$header} ) {
         # a event exists with the header as name
-        &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
+        &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 26);
         no strict 'refs';
         @out_msg_l = &{$event2module_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
 

@@ -62,7 +62,7 @@ my ($error, $result, $event_hash) = &import_events($event_dir);
 
 foreach my $log_line (@$result) {
     if ($log_line =~ / succeed: /) {
-        &main::daemon_log("0 DEBUG: ClientPackages - $log_line", 7);
+        &main::daemon_log("0 INFO: ClientPackages - $log_line", 5);
     } else {
         &main::daemon_log("0 ERROR: ClientPackages - $log_line", 1);
     }
@@ -157,7 +157,7 @@ $main::server_address = $server_address;
   # TODO: This should be transferred to a module init-function
   my $ldap_handle = &main::get_ldap_handle();
   if( defined($ldap_handle) ) {
-    &main::daemon_log("0 DEBUG: Searching for ou=incoming container for new clients", 9);
+    &main::daemon_log("0 INFO: Searching for ou=incoming container for new clients", 5);
     # Perform search
     my $mesg = $ldap_handle->search(
       base   => $ldap_base,
@@ -303,14 +303,14 @@ sub process_incoming_msg {
     # skip PREFIX
     $header =~ s/^CLMSG_//;
 
-    &main::daemon_log("$session_id DEBUG: ClientPackages: msg to process: $header", 7);
+    &main::daemon_log("$session_id DEBUG: ClientPackages: msg to process: $header", 26);
 
     if( 0 == length @target_l){     
         &main::daemon_log("$session_id ERROR: no target specified for msg $header", 1);
         $error++;
     } elsif( 1 == length @target_l) {
         my $target = $target_l[0];
-		if(&server_matches($target)) {
+		if(&server_matches($target, $session_id)) {
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
@@ -318,7 +318,7 @@ sub process_incoming_msg {
             } else {
                 # a event exists with the header as name
                 if( exists $event2module_hash->{$header} ) {
-                    &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
+                    &main::daemon_log("$session_id DEBUG: found event '$header' at event-module '".$event2module_hash->{$header}."'", 26);
                     no strict 'refs';
                     @out_msg_l = &{$event2module_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
 
@@ -369,7 +369,7 @@ sub process_incoming_msg {
                 @out_msg_l = ();
             }
         } else {
-			&main::daemon_log("INFO: msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
+			&main::daemon_log("DEBUG: msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 26);
 			push(@out_msg_l, $msg);
 		}
     }
@@ -469,16 +469,16 @@ sub here_i_am {
     my $db_res= $main::known_clients_db->select_dbentry( $sql_statement );
     
     if ( 1 == keys %{$db_res} ) {
-        &main::daemon_log("$session_id WARNING: $source is already known as a client", 1);
-        &main::daemon_log("$session_id WARNING: values for $source are being overwritten", 1);   
+        &main::daemon_log("$session_id WARNING: $source is already known as a client", 3);
+        &main::daemon_log("$session_id WARNING: values for $source are being overwritten", 3);   
         $nu_clients --;
     }
 
     # number of current active clients
     my $act_nu_clients = $nu_clients;
 
-    &main::daemon_log("$session_id INFO: number of current active clients: $act_nu_clients", 5);
-    &main::daemon_log("$session_id INFO: number of maximal allowed clients: $max_clients", 5);
+    &main::daemon_log("$session_id DEBUG: number of current active clients: $act_nu_clients", 26);
+    &main::daemon_log("$session_id DEBUG: number of maximal allowed clients: $max_clients", 26);
 
     if($max_clients <= $act_nu_clients) {
         my $out_hash = &create_xml_hash("denied", $server_address, $source);
@@ -506,7 +506,7 @@ sub here_i_am {
                                                 } );
 
     if ($res != 0)  {
-        &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $res");
+        &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $res",1);
         return;
     }
     
@@ -526,7 +526,7 @@ sub here_i_am {
 		"SET status='error', result='$new_ldap_config_out' ".
 		"WHERE status='processing' AND macaddress LIKE '$mac_address'";
 		my $res = $main::job_db->update_dbentry($sql_statement);
-		&main::daemon_log("$session_id DEBUG: $sql_statement RESULT: $res", 7);         
+		&main::daemon_log("$session_id DEBUG: $sql_statement RESULT: $res", 26);         
 	}
     my $register_out = &create_xml_string($out_hash);
     push(@out_msg_l, $register_out);
@@ -559,8 +559,7 @@ sub here_i_am {
     my $mymsg = &build_msg('new_foreign_client', $main::server_address, "KNOWN_SERVER", \%mydata);
     push(@out_msg_l, $mymsg);
 
-    &main::daemon_log("$session_id INFO: register client $source ($mac_address)", 5);
-    &main::daemon_log("$session_id INFO: client version: $client_status - $client_revision", 5); 
+    &main::daemon_log("$session_id INFO: register client $source ($mac_address), $client_status - $client_revision", 5);
     return @out_msg_l;
 }
 
@@ -578,7 +577,7 @@ sub who_has {
     # what is your search pattern
     my $search_pattern = @{$msg_hash->{who_has}}[0];
     my $search_element = @{$msg_hash->{$search_pattern}}[0];
-    &main::daemon_log("who_has-msg looking for $search_pattern $search_element", 7);
+    #&main::daemon_log("who_has-msg looking for $search_pattern $search_element", 7);
 
     # scanning known_clients for search_pattern
     my @host_addresses = keys %$main::known_clients;
@@ -625,7 +624,7 @@ sub new_syslog_config {
 		attrs => ['gotoSyslogServer'],
 		filter => "(&(objectClass=GOhard)(macaddress=$mac_address))");
 	if($ldap_res->code) {
-		&main::daemon_log("$session_id ".$ldap_res->error, 1);
+		&main::daemon_log("$session_id ERROR: new_syslog_config: ldap search: ".$ldap_res->error, 1);
         &main::release_ldap_handle($ldap_handle);
 		return;
 	}
@@ -653,7 +652,7 @@ sub new_syslog_config {
                 attrs => ['gotoSyslogServer'],
                 filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
-            &main::daemon_log("$session_id ".$ldap_res->error, 1);
+            &main::daemon_log("$session_id ERROR: new_syslog_config: ldap search: ".$ldap_res->error, 1);
             &main::release_ldap_handle($ldap_handle);
             return;
         }
@@ -701,7 +700,7 @@ sub new_ntp_config {
 		attrs => ['gotoNtpServer'],
 		filter => "(&(objectClass=GOhard)(macaddress=$address))");
 	if($ldap_res->code) {
-		&main::daemon_log("$session_id ".$ldap_res->error, 1);
+		&main::daemon_log("$session_id ERROR: new_ntp_config: ldap search: ".$ldap_res->error, 1);
         &main::release_ldap_handle($ldap_handle);
 		return;
 	}
@@ -729,7 +728,7 @@ sub new_ntp_config {
                 attrs => ['gotoNtpServer'],
                 filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
-            &main::daemon_log("$session_id ".$ldap_res->error, 1);
+            &main::daemon_log("$session_id ERROR: new_ntp_config: ldap search: ".$ldap_res->error, 1);
             &main::release_ldap_handle($ldap_handle);
             return;
         }
@@ -782,7 +781,7 @@ sub new_ldap_config {
 	# check hit
 	my $hit_counter = keys %{$res};
 	if( not $hit_counter == 1 ) {
-		&main::daemon_log("$session_id ERROR: more or no hit found in known_clients_db by query '$sql_statement'", 1);
+		&main::daemon_log("$session_id ERROR: new_ldap_config: more or no hit found in known_clients_db by query '$sql_statement'", 1);
         return;
 	}
 
@@ -791,7 +790,7 @@ sub new_ldap_config {
 	my $hostkey = $res->{1}->{hostkey};
 	
 	if (not defined $macaddress) {
-		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
+		&main::daemon_log("$session_id ERROR: new_ldap_config: no mac address found for client $address", 1);
 		return;
 	}
 
@@ -802,7 +801,7 @@ sub new_ldap_config {
 		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag', 'FAIclass'],
 		filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
 	if($mesg->code) {
-		&main::daemon_log("$session_id ".$mesg->error, 1);
+		&main::daemon_log("$session_id ERROR: new_ldap_config: ldap search: ".$mesg->error, 1);
         &main::release_ldap_handle($ldap_handle);
 		return;
 	}
@@ -841,14 +840,14 @@ sub new_ldap_config {
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
 		if($mesg->code) {
-			&main::daemon_log("$session_id ERROR: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$filter_dn))': ".$mesg->error, 1);
+			&main::daemon_log("$session_id ERROR: new_ldap_config: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$filter_dn))': ".$mesg->error, 1);
             &main::release_ldap_handle($ldap_handle);
 			return;
 		}
 
 		# Sanity check
         if ($mesg->count != 1) {
-            &main::daemon_log("$session_id ERROR: client with mac address $macaddress not found/unique/active - not sending ldap config".
+            &main::daemon_log("$session_id ERROR: new_ldap_config: client with mac address $macaddress not found/unique/active - not sending ldap config".
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: dn, gotoLdapServer, FAIclass".
@@ -915,14 +914,14 @@ sub new_ldap_config {
 			filter => "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$unit_tag))");
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
-			&main::daemon_log($mesg->error, 1);
+			&main::daemon_log("$session_id ERROR: new_ldap_config: ldap search: ".$mesg->error, 1);
             &main::release_ldap_handle($ldap_handle);
 			return "error-unit-tag-count-0";
 		}
 
 		# Sanity check
 		if ($mesg->count != 1) {
-			&main::daemon_log("WARNING: cannot find administrative unit for client with tag $unit_tag", 1);
+			&main::daemon_log("WARNING: cannot find administrative unit for client with tag $unit_tag", 3);
             &main::release_ldap_handle($ldap_handle);
 			return "error-unit-tag-count-".$mesg->count;
 		}
@@ -959,13 +958,13 @@ sub hardware_config {
 	# check hit
 	my $hit_counter = keys %{$res};
 	if( not $hit_counter == 1 ) {
-		&main::daemon_log("$session_id ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+		&main::daemon_log("$session_id ERROR: hardware_config: more or no hit found in known_clients_db by query by '$address'", 1);
 	}
 	my $macaddress = $res->{1}->{macaddress};
 	my $hostkey = $res->{1}->{hostkey};
 
 	if (not defined $macaddress) {
-		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
+		&main::daemon_log("$session_id ERROR: hardware_config: no mac address found for client $address", 1);
 		return;
 	}
 
@@ -978,7 +977,7 @@ sub hardware_config {
 	);
 
 	if($mesg->count() == 0) {
-		&main::daemon_log("Host was not found in LDAP!", 1);
+		&main::daemon_log("$session_id INFO: Host was not found in LDAP!", 5);
 
 		# set status = hardware_detection at jobqueue if entry exists
 		# TODO
@@ -1032,7 +1031,7 @@ sub hardware_config {
 }
 
 sub server_matches {
-	my $target = shift;
+    my ($target, $session_id) = @_ ;
 	my $target_ip = ($1) if $target =~ /^([0-9\.]*?):.*$/;
 	if(!defined($target_ip) or length($target_ip) == 0) {
 		return;
@@ -1076,7 +1075,7 @@ sub server_matches {
 			}
 		}
 	} else {
-		&main::daemon_log("Target ip $target_ip does not match Server ip $server_ip",1);
+		&main::daemon_log("$session_id INFO: Target ip $target_ip does not match Server ip $server_ip",5);
 	}
 
 	return $result;

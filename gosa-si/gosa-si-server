@@ -315,7 +315,10 @@ usage: $prg [-hvf] [-c config] [-d number]
                            2 : sending messages
                            4 : encrypting/decrypting messages
                            8 : verification if a message complies gosa-si requirements
-                          16 :
+                          16 : message processing
+                          32 : ldap connectivity
+                          64 : database status and connectivity
+                         128 : main process 
  
 EOF
     print "\n" ;
@@ -1014,8 +1017,8 @@ sub send_msg_to_target {
 
 sub update_jobdb_status_for_send_msgs {
     my ($session_id, $answer, $error) = @_;
-    &daemon_log("$session_id DEBUG: try to update job status", 7); 
     if( $answer =~ /<jobdb_id>(\d+)<\/jobdb_id>/ ) {
+		&daemon_log("$session_id DEBUG: try to update job status", 138); 
         my $jobdb_id = $1;
     
         $answer =~ /<header>(.*)<\/header>/;
@@ -1033,7 +1036,6 @@ sub update_jobdb_status_for_send_msgs {
                     ||($job_header eq "trigger_action_halt") 
                     ) {
                 my $sql_statement = "UPDATE $job_queue_tn SET status='done' WHERE id=$jobdb_id";
-                &daemon_log("$session_id DEBUG: $sql_statement", 7); 
                 my $res = $job_db->update_dbentry($sql_statement);
                 
             # Reactivate jobs, jobs need to deliver their message
@@ -1049,7 +1051,6 @@ sub update_jobdb_status_for_send_msgs {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id=$jobdb_id";
-                &daemon_log("$session_id DEBUG: $sql_statement", 7); 
                 my $res = $job_db->update_dbentry($sql_statement);
             }
 
@@ -1069,14 +1070,13 @@ sub update_jobdb_status_for_send_msgs {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='done' ".
                     "WHERE id=$jobdb_id AND status='processed'";
-                &daemon_log("$session_id DEBUG: $sql_statement", 7); 
                 my $res = $job_db->update_dbentry($sql_statement);
             } else { 
-                &daemon_log("$session_id DEBUG: sending message succeed but cannot update job status.", 7); 
+                &daemon_log("$session_id DEBUG: sending message succeed but cannot update job status.", 138); 
             } 
         } 
     } else { 
-        &daemon_log("$session_id DEBUG: cannot update job status, msg has no jobdb_id-tag.", 7); 
+        &daemon_log("$session_id DEBUG: cannot update job status, msg has no jobdb_id-tag.", 138); 
     }
 }
 
@@ -1091,7 +1091,6 @@ sub reactivate_job_with_delay {
     my $res = $job_db->update_dbentry($sql);
     daemon_log("$session_id INFO: '$header'-job will be reactivated at '$delay_timestamp' ".
             "cause client '$target' is currently not available", 5);
-    daemon_log("$session_id $sql", 7);                             
     return;
 }
 
@@ -1504,17 +1503,19 @@ sub process_task {
     # process incoming msg
     if( $error == 0) {
         daemon_log("$session_id INFO: Incoming msg (session_id=$session_id) with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
-        daemon_log("$session_id DEBUG: Processing module ".$module, 7);
+        daemon_log("$session_id DEBUG: Processing module ".$module, 26);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 < @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
+			my @headers; 
             while ($answer_str =~ /<header>(\w+)<\/header>/g) {
-                daemon_log("$session_id INFO: got answer message with header '$1'", 5);
+				push(@headers, $1);
             }
-            daemon_log("$session_id DEBUG: $module: got answer from module: \n".$answer_str,9);
+			daemon_log("$session_id INFO: got answer message(s) with header: '".join("', '", @headers)."'", 5);
+            daemon_log("$session_id DEBUG: $module: got answer from module: \n".$answer_str,26);
         } else {
-            daemon_log("$session_id DEBUG: $module: got no answer from module!" ,7);
+            daemon_log("$session_id DEBUG: $module: got no answer from module!" ,26);
         }
 
     }
@@ -2049,7 +2050,6 @@ sub watch_for_delivery_messages {
 
     # select outgoing messages
     my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( flag='p' AND direction='out' )";
-    #&daemon_log("0 DEBUG: $sql", 7);
     my $res = $messaging_db->exec_statement( $sql_statement );
     
     # build out msg for each    usr
@@ -2061,7 +2061,6 @@ sub watch_for_delivery_messages {
 
         # resolve usr -> host where usr is logged in
         my $sql = "SELECT * FROM $login_users_tn WHERE (user='$receiver')"; 
-        #&daemon_log("0 DEBUG: $sql", 7);
         my $res = $login_users_db->exec_statement($sql);
 
         # receiver is logged in nowhere
@@ -2151,21 +2150,18 @@ sub watch_for_done_messages {
     my ($kernel,$heap) = @_[KERNEL, HEAP];
 
     my $sql = "SELECT * FROM $messaging_tn WHERE (flag='p' AND direction='in')"; 
-    #&daemon_log("0 DEBUG: $sql", 7);
     my $res = $messaging_db->exec_statement($sql); 
 
     foreach my $hit (@{$res}) {
         my $msg_id = @{$hit}[0];
 
         my $sql = "SELECT * FROM $messaging_tn WHERE (id='$msg_id' AND direction='out' AND (NOT flag='s'))"; 
-        #&daemon_log("0 DEBUG: $sql", 7); 
         my $res = $messaging_db->exec_statement($sql);
 
         # not all usr msgs have been seen till now
         if ( ref(@$res[0]) eq "ARRAY") { next; }
         
         $sql = "DELETE FROM $messaging_tn WHERE (id='$msg_id')"; 
-        #&daemon_log("0 DEBUG: $sql", 7);
         $res = $messaging_db->exec_statement($sql);
     
     }
@@ -2224,7 +2220,7 @@ sub watch_for_next_tasks {
         }
         my $message_id = $hit->{'id'};
         my $session_id = $hit->{'sessionid'};
-        &daemon_log("$session_id DEBUG: start processing for message with incoming id: '$message_id'", 7);
+        &daemon_log("$session_id DEBUG: start processing for message with incoming id: '$message_id'", 11);
 
         $kernel->yield('next_task', $hit);
 
@@ -2248,7 +2244,7 @@ sub get_ldap_handle {
 	if ($subroutine eq "(eval)") {
 		$caller_text = "eval block within file '$file' for '$evalText'"; 
 	}
-	daemon_log("$session_id INFO: new ldap handle for '$caller_text' required!", 7);
+	daemon_log("$session_id DEBUG: new ldap handle for '$caller_text' required!", 42);
 
 get_handle:
 	my $ldap_handle = Net::LDAP->new( $ldap_uri );
@@ -2257,7 +2253,7 @@ get_handle:
 		usleep(100000);
 		goto get_handle;
 	} else {
-		daemon_log("$session_id DEBUG: Connection to LDAP URI '$ldap_uri' established.", 6);
+		daemon_log("$session_id DEBUG: Connection to LDAP URI '$ldap_uri' established.", 42);
 	}
 
 	$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password) or &daemon_log("$session_id ERROR: Could not bind as '$ldap_admin_dn' to LDAP URI '$ldap_uri'!", 1);
@@ -2266,11 +2262,13 @@ get_handle:
 
 
 sub release_ldap_handle {
-	my ($ldap_handle) = @_ ;
+	my ($ldap_handle, $session_id) = @_ ;
+	if (not defined $session_id ) { $session_id = 0 };
+
 	if(ref $ldap_handle) {
 	  $ldap_handle->disconnect();
   }
-	&main::daemon_log("0 DEBUG: Released a ldap handle!", 6);
+	&main::daemon_log("$session_id DEBUG: Released a ldap handle!", 42);
 	return;
 }
 
@@ -2348,13 +2346,13 @@ sub change_fai_state {
 					daemon_log("$session_id Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
 				}
 			} else {
-				daemon_log("$session_id DEBUG FAIstate at host '".$entry->dn."' already at state '$st'", 7); 
+				daemon_log("$session_id DEBUG FAIstate at host '".$entry->dn."' already at state '$st'", 42); 
 			}  
 		}
 	} else {
 		daemon_log("$session_id ERROR: LDAP search failed: ldap_base=$ldap_base, filter=$search", 1);
 	}
-	&release_ldap_handle($ldap_handle);		  
+	&release_ldap_handle($ldap_handle, $session_id);		  
 
 	return;
 }
@@ -2414,7 +2412,7 @@ sub change_goto_state {
 	  }
 
     }
-	&release_ldap_handle($ldap_handle);
+	&release_ldap_handle($ldap_handle, $session_id);
 	return;
 }
 
@@ -2524,7 +2522,7 @@ sub create_fai_release_db {
 		);
 		if(($mesg->code == 0) && ($mesg->count != 0))
 		{
-			daemon_log("$session_id DEBUG: create_fai_release_db: count " . $mesg->count,8);
+			daemon_log("$session_id DEBUG: create_fai_release_db: count " . $mesg->count,138);
 
 			# Walk through all possible FAI container ou's
 			my @sql_list;
@@ -2551,14 +2549,14 @@ sub create_fai_release_db {
 				}
 			}
 
-			daemon_log("$session_id DEBUG: create_fai_release_db: Inserting ".scalar @sql_list." entries to DB",8);
+			daemon_log("$session_id DEBUG: create_fai_release_db: Inserting ".scalar @sql_list." entries to DB",138);
 	    &release_ldap_handle($ldap_handle);
 			if(@sql_list) {
 				unshift @sql_list, "VACUUM";
 				unshift @sql_list, "DELETE FROM $table_name";
 				$fai_release_db->exec_statementlist(\@sql_list);
 			}
-			daemon_log("$session_id DEBUG: create_fai_release_db: Done with inserting",7);
+			daemon_log("$session_id DEBUG: create_fai_release_db: Done with inserting",138);
 		} else {
 			daemon_log("$session_id INFO: create_fai_release_db: error: " . $mesg->code, 5);
 		}
@@ -2608,14 +2606,14 @@ sub resolve_fai_classes {
 	my $fai_filter= "(|(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))(objectClass=FAIbranch))";
 	my $fai_classes;
 
-	daemon_log("$session_id DEBUG: Searching for FAI entries in base $fai_base",7);
+	daemon_log("$session_id DEBUG: Searching for FAI entries in base $fai_base", 138);
 	my $mesg= $ldap_handle->search(
 		base   => $fai_base,
 		scope  => 'sub',
 		attrs  => ['cn','objectClass','FAIstate'],
 		filter => $fai_filter,
 	);
-	daemon_log("$session_id DEBUG: Found ".$mesg->count()." FAI entries",7);
+	daemon_log("$session_id DEBUG: Found ".$mesg->count()." FAI entries", 138);
 
 	if($mesg->{'resultCode'} == 0 &&
 		$mesg->count != 0) {
@@ -3249,12 +3247,10 @@ sub register_at_foreign_servers {
 	# block them for race conditional registration processes of other si-servers.
 	my $act_time = &get_time();
 	my $block_statement = "UPDATE $known_server_tn SET status='new_server',update_time='19700101000000' WHERE (CAST(update_time AS UNSIGNED))<$act_time ";
-	&daemon_log("0 DEBUG: $block_statement", 7);
 	my $block_res = $known_server_db->exec_statement($block_statement);
 
 	# Fetch all si-server from db where update_time is younger than act_time
 	my $fetch_statement = "SELECT * FROM $known_server_tn WHERE update_time='19700101000000'"; 
-	&daemon_log("0 DEBUG: $fetch_statement", 7);
 	my $fetch_res = $known_server_db->exec_statement($fetch_statement);
 
     # Detect already connected clients. Will be added to registration msg later. 
@@ -3306,7 +3302,6 @@ sub control_server_registration {
 	
 	# Check if all registration processes succeed or not
 	my $select_statement = "SELECT * FROM $known_server_tn WHERE status='new_server'"; 
-	&daemon_log("0 DEBUG $select_statement", 7);
 	my $select_res = $known_server_db->exec_statement($select_statement);
 
 	# If at least one registration process failed, maybe in case of a race condition
@@ -3316,7 +3311,6 @@ sub control_server_registration {
 		# Release block statement 'new_server' to make the server accessible
 		# for foreign registration processes
 		my $update_statement = "UPDATE $known_server_tn SET status='waiting' WHERE status='new_server'";	
-		&daemon_log("0 DEBUG: $update_statement", 7);
 		my $update_res = $known_server_db->exec_statement($update_statement);
 
 		# Set a random delay to avoid the registration race condition

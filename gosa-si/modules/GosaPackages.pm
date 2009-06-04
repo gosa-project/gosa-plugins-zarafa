@@ -37,7 +37,7 @@ $main::server_address = $main::server_ip.":".$main::server_port;
 my ($error, $result, $event_hash) = &import_events($event_dir);
 foreach my $log_line (@$result) {
     if ($log_line =~ / succeed: /) {
-        &main::daemon_log("0 DEBUG: GosaPackages - $log_line", 7);
+        &main::daemon_log("0 INFO: GosaPackages - $log_line", 5);
     } else {
         &main::daemon_log("0 ERROR: GosaPackages - $log_line", 1);
     }
@@ -114,7 +114,7 @@ sub process_incoming_msg {
     my @msg_l;
     my @out_msg_l;
 
-    &main::daemon_log("$session_id DEBUG: GosaPackages: msg to process '$header'", 7);
+    &main::daemon_log("$session_id DEBUG: GosaPackages: msg to process '$header'", 26);
     
     if ($header =~ /^job_/) {
         @msg_l = &process_job_msg($msg, $msg_hash, $session_id);
@@ -167,7 +167,7 @@ sub process_gosa_msg {
     # check local installed events
     if( exists $event2module_hash->{$header} ) {
         # a event exists with the header as name
-        &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
+        &main::daemon_log("$session_id DEBUG: found event '$header' at event-module '".$event2module_hash->{$header}."'", 26);
         no strict 'refs';
         @out_msg_l = &{$event2module_hash->{$header}."::$header"}( $msg, $msg_hash, $session_id );
 
@@ -186,7 +186,7 @@ sub process_gosa_msg {
 
             # client is registered for this event, deliver this message to client
             if (($client_events =~ /^$header,/) || ($client_events =~ /,$header,/) || ($client_events =~ /,$header$/)) {
-                &main::daemon_log("$session_id INFO: client '$target' is registerd for event '$header', forward message to client.", 5);
+                &main::daemon_log("$session_id DEBUg: client '$target' is registerd for event '$header', forward message to client.", 26);
                 @out_msg_l = ( $msg );
 
             # client is not registered for this event, set error
