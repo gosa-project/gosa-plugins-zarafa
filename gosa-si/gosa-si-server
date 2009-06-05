@@ -3629,9 +3629,14 @@ POE::Component::Server::TCP->new(
 	ClientInput => sub {
 		my ($kernel, $input, $heap, $session) = @_[KERNEL, ARG0, HEAP, SESSION];
         my $session_id = $session->ID;
-		if ($input =~ /;([\d\.]+:[\d]+)$/) 
+		if ($input =~ /;([\d\.]+):([\d]+)$/) 
 		{
-			&daemon_log("$session_id DEBUG: incoming message from '$1'", 11);
+			# Messages from other servers should be blocked if config option is set
+			if (($2 eq $server_port) && ($serverPackages_enabled eq "false"))
+			{
+				return;
+			}
+			&daemon_log("$session_id DEBUG: incoming message from '$1:$2'", 11);
 		}
 		else
 		{
