@@ -90,7 +90,7 @@ our (%cfg_defaults, $log_file, $pid_file,
     $server_ip, $server_port, $ClientPackages_key, $dns_lookup,
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_timeout,
-    $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
+    $serverPackages_enabled, $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
     $wake_on_lan_passwd, $job_synchronization, $modified_jobs_loop_delay,
     $arp_enabled, $arp_interface,
     $opsi_enabled, $opsi_server, $opsi_admin, $opsi_password,
@@ -269,6 +269,7 @@ my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
     "user-date-of-expiry" => [\$logged_in_user_date_of_expiry, 600],
     },
 "ServerPackages"=> {
+	"enabled" => [\$serverPackages_enabled, "true"],
     "address"      => [\$foreign_server_string, ""],
     "dns-lookup"            => [\$dns_lookup, "true"],
     "domain"  => [\$server_domain, ""],
@@ -512,6 +513,13 @@ sub import_modules {
         if( $file =~ /ArpHandler.pm/ ) {
             if( $arp_enabled eq "false" ) { next; }
         }
+
+		# ServerPackages switch
+		if ($file eq "ServerPackages.pm" && $serverPackages_enabled eq "false") 
+		{
+			$dns_lookup = "false";
+			next; 
+		}
         
         eval { require $file; };
         if ($@) {
@@ -656,7 +664,7 @@ sub check_outgoing_xml_validity {
         }
 
 		# Check if source contains hostname instead of ip address
-		if($source =~ /^[a-z][\w-\.]+:\d+$/i) {
+		if($source =~ /^[a-z][\w\-\.]+:\d+$/i) {
 			my ($hostname,$port) = split(/:/, $source);
 			my $ip_address = inet_ntoa(scalar gethostbyname($hostname));
 			if(defined($ip_address) && $ip_address =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ && $port =~ /^\d+$/) {
@@ -3242,6 +3250,79 @@ sub cleanup_and_extract {
 }
 
 
+sub prepare_server_registration 
+{
+	# Add foreign server from cfg file
+	my @foreign_server_list;
+	if ($foreign_server_string ne "") {
+	    my @cfg_foreign_server_list = split(",", $foreign_server_string);
+	    foreach my $foreign_server (@cfg_foreign_server_list) {
+	        push(@foreign_server_list, $foreign_server);
+	    }
+	
+	    daemon_log("0 INFO: found foreign server in config file: ".join(", ", @foreign_server_list), 5);
+	}
+	
+	# Perform a DNS lookup for server registration if flag is true
+	if ($dns_lookup eq "true") {
+	    # Add foreign server from dns
+	    my @tmp_servers;
+	    if (not $server_domain) {
+	        # Try our DNS Searchlist
+	        for my $domain(get_dns_domains()) {
+	            chomp($domain);
+	            my ($tmp_domains, $error_string) = &get_server_addresses($domain);
+	            if(@$tmp_domains) {
+	                for my $tmp_server(@$tmp_domains) {
+	                    push @tmp_servers, $tmp_server;
+	                }
+	            }
+	        }
+	        if(@tmp_servers && length(@tmp_servers)==0) {
+	            daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
+	        }
+	    } else {
+	        @tmp_servers = &get_server_addresses($server_domain);
+	        if( 0 == @tmp_servers ) {
+	            daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
+	        }
+	    }
+	
+	    daemon_log("0 INFO: found foreign server via DNS ".join(", ", @tmp_servers), 5);    
+	
+	    foreach my $server (@tmp_servers) { 
+	        unshift(@foreign_server_list, $server); 
+	    }
+	} else {
+	    daemon_log("0 INFO: DNS lookup for server registration is disabled", 5);
+	}
+	
+	# eliminate duplicate entries
+	@foreign_server_list = &del_doubles(@foreign_server_list);
+	my $all_foreign_server = join(", ", @foreign_server_list);
+	daemon_log("0 INFO: found foreign server in config file and DNS: '$all_foreign_server'", 5);
+	
+	# add all found foreign servers to known_server
+	my $cur_timestamp = &get_time();
+	foreach my $foreign_server (@foreign_server_list) {
+	
+		# do not add myself to known_server_db
+		if (&is_local($foreign_server)) { next; }
+		######################################
+	
+	    my $res = $known_server_db->add_dbentry( {table=>$known_server_tn, 
+	            primkey=>['hostname'],
+	            hostname=>$foreign_server,
+	            macaddress=>"",
+	            status=>'not_yet_registered',
+	            hostkey=>"none",
+	            loaded_modules => "none", 
+	            timestamp=>$cur_timestamp,
+				update_time=>'19700101000000',
+	            } );
+	}
+}
+
 sub register_at_foreign_servers {   
     my ($kernel) = $_[KERNEL];
 
@@ -3459,7 +3540,7 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
         chown($root_uid, $adm_gid, $foreign_clients_file_name);
         
         # connect to known_server_db
-        #unlink($known_server_file_name);
+        unlink($known_server_file_name);   # do not delete, gosa-si-server should be forced to check config file and dns at each start
         $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
         chmod(0640, $known_server_file_name);
         chown($root_uid, $adm_gid, $known_server_file_name);
@@ -3496,7 +3577,6 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
     }
 }
 
-
 # Creating tables
 $messaging_db->create_table($messaging_tn, \@messaging_col_names);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
@@ -3512,95 +3592,20 @@ $job_db->create_table($job_queue_tn, \@job_queue_col_names);
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
 
-
-# foreign servers 
-my @foreign_server_list;
-
-# add foreign server from cfg file
-if ($foreign_server_string ne "") {
-    my @cfg_foreign_server_list = split(",", $foreign_server_string);
-    foreach my $foreign_server (@cfg_foreign_server_list) {
-        push(@foreign_server_list, $foreign_server);
-    }
-
-    daemon_log("0 INFO: found foreign server in config file: ".join(", ", @foreign_server_list), 5);
-}
-
-# Perform a DNS lookup for server registration if flag is true
-if ($dns_lookup eq "true") {
-    # Add foreign server from dns
-    my @tmp_servers;
-    if (not $server_domain) {
-        # Try our DNS Searchlist
-        for my $domain(get_dns_domains()) {
-            chomp($domain);
-            my ($tmp_domains, $error_string) = &get_server_addresses($domain);
-            if(@$tmp_domains) {
-                for my $tmp_server(@$tmp_domains) {
-                    push @tmp_servers, $tmp_server;
-                }
-            }
-        }
-        if(@tmp_servers && length(@tmp_servers)==0) {
-            daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
-        }
-    } else {
-        @tmp_servers = &get_server_addresses($server_domain);
-        if( 0 == @tmp_servers ) {
-            daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
-        }
-    }
-
-    daemon_log("0 INFO: found foreign server via DNS ".join(", ", @tmp_servers), 5);    
-
-    foreach my $server (@tmp_servers) { 
-        unshift(@foreign_server_list, $server); 
-    }
-} else {
-    daemon_log("0 INFO: DNS lookup for server registration is disabled", 5);
-}
-
-
-# eliminate duplicate entries
-@foreign_server_list = &del_doubles(@foreign_server_list);
-my $all_foreign_server = join(", ", @foreign_server_list);
-daemon_log("0 INFO: found foreign server in config file and DNS: '$all_foreign_server'", 5);
-
-# add all found foreign servers to known_server
-my $cur_timestamp = &get_time();
-foreach my $foreign_server (@foreign_server_list) {
-
-	# do not add myself to known_server_db
-	if (&is_local($foreign_server)) { next; }
-	######################################
-
-    my $res = $known_server_db->add_dbentry( {table=>$known_server_tn, 
-            primkey=>['hostname'],
-            hostname=>$foreign_server,
-            macaddress=>"",
-            status=>'not_yet_registered',
-            hostkey=>"none",
-            loaded_modules => "none", 
-            timestamp=>$cur_timestamp,
-			update_time=>'19700101000000',
-            } );
-}
-
-
 # Import all modules
 &import_modules;
 
 # Check wether all modules are gosa-si valid passwd check
 &password_check;
 
+# Check DNS and config file for server registration
+if ($serverPackages_enabled eq "true") { &prepare_server_registration; }
+
 # Create functions hash
-#print STDERR Dumper $known_modules;
 while (my ($module, @mod_info) = each %$known_modules) 
 {
-#print STDERR Dumper $module;
 	while (my ($plugin, $functions) = each %{$mod_info[0][2]})
 	{
-#print STDERR Dumper $functions;
 		while (my ($function, $nothing) = each %$functions )
 		{
 			$known_functions->{$function} = $nothing;
