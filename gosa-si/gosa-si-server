@@ -655,15 +655,17 @@ sub check_outgoing_xml_validity {
             die 'source has length 0';
         }
 
-				# Check if source contains hostname instead of ip address
-				if($source =~ /^[a-z][a-z0-9\.]+:\d+$/i) {
-						my ($hostname,$port) = split(/:/, $source);
-						my $ip_address = inet_ntoa(scalar gethostbyname($hostname));
-						if(defined($ip_address) && $ip_address =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ && $port =~ /^\d+$/) {
-							# Write ip address to $source variable
-							$source = "$ip_address:$port";
-						}
-				}
+		# Check if source contains hostname instead of ip address
+		if($source =~ /^[a-z][\w-\.]+:\d+$/i) {
+			my ($hostname,$port) = split(/:/, $source);
+			my $ip_address = inet_ntoa(scalar gethostbyname($hostname));
+			if(defined($ip_address) && $ip_address =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ && $port =~ /^\d+$/) {
+				# Write ip address to $source variable
+				$source = "$ip_address:$port";
+				$msg_hash->{source}[0] = $source ;
+				$msg =~ s/<source>.*<\/source>/<source>$source<\/source>/; 
+			}
+		}
         unless( $source =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ||
                 $source =~ /^GOSA$/i) {
             die "source '$source' is neither a complete ip-address with port nor 'GOSA'";
@@ -695,7 +697,7 @@ sub check_outgoing_xml_validity {
         $msg_hash = undef;
     }
 
-    return ($msg_hash);
+    return ($msg, $msg_hash);
 }
 
 
@@ -1527,7 +1529,7 @@ sub process_task {
 
         foreach my $answer ( @{$answer_l} ) {
             # check outgoing msg to xml validity
-            my $answer_hash = &check_outgoing_xml_validity($answer, $session_id);
+            my ($answer, $answer_hash) = &check_outgoing_xml_validity($answer, $session_id);
             if( not defined $answer_hash ) { next; }
             
             $answer_header = @{$answer_hash->{'header'}}[0];
