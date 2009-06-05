@@ -1127,7 +1127,7 @@ sub msg_to_decrypt {
 	($msg, $msg_hash, $module) = &input_from_unknown_host($next_msg, $session_id);
 
 	# msg is from a gosa-si-server
-	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+	if(((!$msg) || (!$msg_hash) || (!$module)) && ($serverPackages_enabled eq "true")){
 		if (not defined $msg_source) 
 		{
 			# Only needed, to be compatible with older gosa-si-server versions
@@ -1148,7 +1148,7 @@ sub msg_to_decrypt {
 		# or a server.  In case of a client, send a ping. If the client could not understand a msg from its 
 		# server the client cause a re-registering process. In case of a server, decrease update_time in kown_server_db
 		# and trigger a re-registering process for servers
-		if (defined $msg_source && $msg_source =~ /:$server_port$/)
+		if (defined $msg_source && $msg_source =~ /:$server_port$/ && $serverPackages_enabled eq "true")
 		{
 			daemon_log("$session_id WARNING: Cannot understand incoming msg from server '$msg_source'. Cause re-registration process for servers.", 3);
 			my $update_statement = "UPDATE $known_server_tn SET update_time='19700101000000' WHERE hostname='$msg_source'"; 
@@ -1156,19 +1156,20 @@ sub msg_to_decrypt {
 			my $upadte_res = $known_server_db->exec_statement($update_statement);
 			$kernel->yield("register_at_foreign_servers");
 		}
-		elsif (defined $msg_source)
+		elsif ((defined $msg_source) && (not $msg_source =~ /:$server_port$/))
 		{
 			daemon_log("$session_id WARNING: Cannot understand incoming msg from client '$msg_source'. Send ping-msg to cause a re-registering of the client if necessary", 3);
 			#my $remote_ip = $heap->{'remote_ip'};
 			#my $remote_port = $heap->{'remote_port'};
 			my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source><target>$msg_source</target></xml>";
 			my ($test_error, $test_error_string) = &send_msg_to_target($ping_msg, "$msg_source", "dummy-key", "gosa_ping", $session_id);
-			daemon_log("$session_id WARNING: sending msg to cause re-registering: $ping_msg", 3);
+			daemon_log("$session_id WARNING: Sending msg to cause re-registering: $ping_msg", 3);
 		}
 		else
 		{
 			my $foreign_host = defined $msg_source ? $msg_source : $heap->{'remote_ip'};
-			daemon_log("$session_id ERROR: incoming message from host '$foreign_host' cannot be understood. Processing aborted: $tmp_next_msg", 1);
+			daemon_log("$session_id ERROR: Incoming message from host '$foreign_host' cannot be understood. Processing aborted!", 1);
+			daemon_log("$session_id DEBUG: Aborted message: $tmp_next_msg", 11);
 		}
 
 		$error++
