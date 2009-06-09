@@ -51,7 +51,7 @@ class wingeneric extends plugin
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->objectclasses=array("ipHost","ieee802Device");
     $this->netConfigDNS->MACisMust = FALSE;
-    $this->netConfigDNS->IPisMust = TRUE;
+    $this->netConfigDNS->IPisMust = FALSE;
 
     /* Set base */
     if ($this->dn == "new"){
