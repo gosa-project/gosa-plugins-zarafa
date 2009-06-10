@@ -6,8 +6,8 @@ Uploaders: Cajus Pollmeier <cajus@debian.org>, Benoit Mortier <benoit.mortier@op
 Standards-Version: 3.7.2.2
 Build-Depends: debhelper(>= 4.2.32), dpatch
 Homepage: https://oss.gonicus.de/labs/gosa/
-Vcs-Browser: https://oss.gonicus.de/repositories/goto/trunk/gosa-si
-Vcs-Svn: https://oss.gonicus.de/repositories/goto/trunk/gosa-si
+Vcs-Browser: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si
+Vcs-Svn: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si
 
 Package: gosa-si-common
 Architecture: any
