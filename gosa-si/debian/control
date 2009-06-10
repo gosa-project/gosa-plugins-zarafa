@@ -1,9 +1,12 @@
 Source: gosa-si
 Section: utils
 Priority: optional
-Maintainer: Cajus Pollmeier <cajus@debian.org>
+Maintainer: GOsa packages mainteners group <gosa-pkg@oss.gonicus.de>
+Uploaders: Cajus Pollmeier <cajus@debian.org>, Benoit Mortier <benoit.mortier@opensides.be>
 Standards-Version: 3.7.2.2
 Build-Depends: debhelper(>= 4.2.32), dpatch
+Vcs-Browser: https://oss.gonicus.de/repositories/goto/trunk/gosa-si
+Vcs-Svn: https://oss.gonicus.de/repositories/goto/trunk/gosa-si
 
 Package: gosa-si-common
 Architecture: any
