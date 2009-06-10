@@ -807,7 +807,10 @@ class gotomasses extends plugin
         $sort.= " DESC";
       }
     }
-     
+
+    /* Sleep a second to avoid timing issues when adding new items */
+    sleep(1);
+
     /* Get entries. */ 
     $start  = $this->start; 
     $stop   = $this->range;
