@@ -384,6 +384,15 @@ class sieve
       }
     }
 
+    /* Sometimes we do not get any authentification methods, assume PLAIN here.
+     * #TODO Maybe there is a better solution for this?
+     */
+    if($this->auth_in_use == ""){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$this->error_raw,
+          "<b>SIEVE: No authentification mechanisms received, try using PLAIN!.</b>");
+        $this->auth_in_use  = "PLAIN";
+    }
+
     /* Fill error message if no auth types are present */
     if (!isset($this->capabilities["auth"])){
       $this->error=EC_UNKNOWN;
