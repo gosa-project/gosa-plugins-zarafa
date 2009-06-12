@@ -1661,6 +1661,10 @@ msgstr ""
 msgid "Remove printer extension"
 msgstr ""
 
+#: admin/systems/goto/class_printGeneric.inc:534
+msgid "Printer got configured on remote server '%s', Editing Driver will overwrite settings."
+msgstr ""
+
 #: admin/systems/goto/class_printGeneric.inc:513
 #, php-format
 msgid "Your currently selected PPD file '%s' doesn't exist."

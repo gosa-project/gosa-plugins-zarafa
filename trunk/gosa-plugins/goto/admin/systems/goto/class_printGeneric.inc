@@ -516,7 +516,7 @@ class printgeneric extends plugin
       if(tests::is_ip($ppd_server)){
         $orig_server_name = gethostbyaddr($ppd_server);
       }else{
-        $orig_server_name = gethostbyaddr(gethostbyname($ppd_server));
+        $orig_server_name = $ppd_server;
       }
     }
 
