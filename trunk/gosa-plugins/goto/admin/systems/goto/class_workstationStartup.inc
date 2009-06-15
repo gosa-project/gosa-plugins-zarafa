@@ -389,6 +389,13 @@ class workstartup extends plugin
           if(preg_match("/fai_remove/i",$name)){
             $value = base64_decode(preg_replace("/_.*$/i","",preg_replace("/fai_remove_/i","",$name)));
             unset($this->FAIclass[$value]);
+            if($this->FAIclass == array()){
+              /* class list is emtpy. Check whether the system is part of an object group and set
+              the FAI mirror to "inherited" in this case. */
+              if ($this->member_of_ogroup){
+                $this->FAIdebianMirror = "inherited";
+              } 
+            }
           }
         }
       }
