@@ -44,7 +44,9 @@ class mailMethod{
   protected $userObjectClasses = array();
   protected $shareObjectClasses = array();
 
-  /* Enabled mail domain selection. If enabled getMailDomains must the domain parts */ 
+  /* Enabled mail domain selection. If enabled getMailDomains() have to return an array 
+   *  with the domain parts.
+   */ 
   protected $enableDomainSelection= FALSE;
   protected $enableQuota          = TRUE;
   protected $enableSieveManager   = FALSE;
