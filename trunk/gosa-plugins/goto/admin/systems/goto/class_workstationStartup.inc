@@ -721,6 +721,11 @@ class workstartup extends plugin
       }
     }
 
+    /* Clear FAI class list if FAI mirror has been set to inherited */
+    if($this->FAIdebianMirror == "inherited"){
+      $this->FAIclass =array();
+    }
+
     if(isset($_POST['WorkstationStarttabPosted'])){
       if(isset($_POST['gotoLdap_inherit'])){
         $this->gotoLdap_inherit = TRUE;
