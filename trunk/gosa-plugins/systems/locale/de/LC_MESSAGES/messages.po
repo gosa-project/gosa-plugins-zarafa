@@ -49,6 +49,10 @@ msgstr ""
 msgid "Systems"
 msgstr "Systeme"
 
+#: admin/systems/class_divListsystem.inc:395
+msgid "Member of %s object group"
+msgstr "Mitglied von Objektgruppe %s"
+
 #: admin/systems/class_systemManagement.inc:27
 msgid "This does something"
 msgstr "Dies tut etwas"
