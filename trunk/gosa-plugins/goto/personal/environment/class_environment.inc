@@ -1240,7 +1240,7 @@ class environment extends plugin
     /* Prepare HotPlug devices */
     $this->attrs['gotoHotplugDeviceDN'] = array();
     foreach($this->gotoHotplugDevices as $name => $device){
-      $this->attrs['gotoHotplugDeviceDN'][]= $device['dn'];
+      $this->attrs['gotoHotplugDeviceDN'][]= LDAP::fix($device['dn']);
     }
 
     /* Prepare LogonScripts */
