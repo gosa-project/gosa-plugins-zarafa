@@ -320,9 +320,8 @@ usage: $prg [-hvf] [-c config] [-d number]
                           32 : ldap connectivity
                           64 : database status and connectivity
                          128 : main process 
- 
 EOF
-    print "\n" ;
+	exit(0);
 }
 
 
@@ -431,11 +430,7 @@ sub check_cmdline_param () {
 	}
 
 	# Exit if an error occour
-    if( $err_counter > 0 ) 
-	{
-        &usage( "", 1 );
-        exit( -1 );
-    }
+    if( $err_counter > 0 ) { &usage( "", 1 ); }
 }
 
 
@@ -3420,7 +3415,7 @@ GetOptions("h|help" => \&usage,
         "v|verbose+" => \$verbose,
         "no-arp+" => \$no_arp,
 		"d=s" => \$debug_parts,
-           ) or (&usage("", 1)&&(exit(-1))); 
+           ) or &usage("", 1); 
 
 #  read and set config parameters
 &check_cmdline_param ;
