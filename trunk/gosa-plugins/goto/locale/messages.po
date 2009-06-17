@@ -1397,7 +1397,8 @@ msgid "'Path / Volume' must be of format 'server:port'!"
 msgstr ""
 
 #: admin/systems/services/nfs/class_servNfs.inc:188
-msgid "'Path / Volume' must contain at least one '/'!"
+msgid ""
+"'Path / Volume' must contain at least one '/' and no special characters!"
 msgstr ""
 
 #: admin/systems/services/nfs/servnfs.tpl:1
