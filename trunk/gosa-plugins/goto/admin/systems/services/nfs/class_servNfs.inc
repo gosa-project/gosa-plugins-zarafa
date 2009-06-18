@@ -235,8 +235,11 @@ class servnfs extends plugin
           $tmp = split("\|",$entry);
           if($tmp[0] == $this->name && $test['cn'][0] == $this_cn){
             /* The selected share name is identical to another share name.  Furthermore, that other share is
-               on a server with the same name. Reject this.
-            $message[]= sprintf(_("The share '%s' on another server '%s' already exists."), $this->name, $this_cn);
+               on a server with the same name. Reject this unless the other server is in a different
+               adminstrative domain. */
+            if (!isset($test['gosaUnitTag']) || $test['gosaUnitTag'][0] == $this->gosaUnitTag){
+              $message[]= sprintf(_("The share '%s' on another server '%s' already exists."), $this->name, $this_cn);
+            }
           }
         }
       }
