@@ -66,20 +66,9 @@
 <table style='width:100%;'>
  <tr>
   <td>{t}Show information{/t}
-   {if $display_information}
-    <input type='submit' name='display_information' value='{t}Hide{/t}'>
-   {else}
     <input type='submit' name='display_information' value='{t}Show{/t}'>
-   {/if}
   </td> 
  </tr>
- {if $display_information}
- <tr>
-  <td>
-    {$samba_information}
-  </td>
- </tr>
- {/if}
 </table>
 <p class="seperator">&nbsp;</p>
 
