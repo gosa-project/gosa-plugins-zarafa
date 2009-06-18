@@ -232,7 +232,7 @@ class servnfs extends plugin
         foreach($test['goExportEntry'] as $entry){
           $tmp = split("\|",$entry);
           if($tmp[0] == $this->name){
-            $message[]= msgPool::duplicated(_("Name"));
+            $message[]= sprintf(_("The share '%s' on another server '%s' already exists."), $this->name, $this_cn);
           }
         }
       }

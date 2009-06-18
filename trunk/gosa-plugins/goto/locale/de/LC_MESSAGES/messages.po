@@ -383,7 +383,6 @@ msgstr "Anwendungs-Einstellungen"
 #: admin/systems/services/shares/class_goShareServer.inc:398
 #: admin/systems/services/nfs/class_servNfs.inc:199
 #: admin/systems/services/nfs/class_servNfs.inc:202
-#: admin/systems/services/nfs/class_servNfs.inc:235
 #: admin/systems/services/nfs/servnfs.tpl:9
 #: admin/systems/goto/class_printGeneric.inc:670
 #: admin/systems/goto/class_printGeneric.inc:675
@@ -3885,3 +3884,8 @@ msgstr "Wählen Sie die Abteilung, auf die die Suchfunktion angewandt wird"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Regulärer Ausdruck zum Erkennen von Hotplug-Geräten"
+
+#: admin/systems/services/nfs/class_servNfs.inc:235
+msgid "The share '%s' on another server '%s' already exists."
+msgstr "Die Freigabe '%s' existiert bereits auf einem anderen Server '%s'"
+
