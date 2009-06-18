@@ -376,7 +376,7 @@ class sieve
     /* Loop through each allowed authentication type and see if the server allows the type */
     foreach(split(" ",$this->auth_types) as $auth_type)
     {
-      if ($this->capabilities["auth"][$auth_type])
+      if (isset($this->capabilities["auth"][$auth_type]))
       {
         /* We found an auth type that is allowed. */
         $this->auth_in_use = $auth_type;
