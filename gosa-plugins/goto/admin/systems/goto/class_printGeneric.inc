@@ -433,7 +433,7 @@ class printgeneric extends plugin
       if($this->PPDdialogToSave && is_object($this->PPDdialogToSave)){
         $this->dialog = $this->PPDdialogToSave;
       }else{
-  
+ 
         if(is_array($this->gotoPrinterPPD)){
           $this->dialog = new printerPPDDialog($this->config, $this->dn,"");
         }else{
@@ -441,6 +441,16 @@ class printgeneric extends plugin
         }
         $this->dialog->cn= $this->cn;
       }
+
+      // Detect edit acl base
+      $ldap = $this->config->get_ldap_link();
+      if($ldap->dn_exists($this->dn)){
+        $acl_base = $this->dn;
+      }else{
+        $acl_base = $this->base;
+      }
+
+      $this->dialog->set_acl_base($acl_base);
     }
 
     /* remove ppd */
@@ -803,6 +813,7 @@ class printgeneric extends plugin
 
     /* save ppd configuration */
     if($this->PPDdialogToSave && is_object($this->PPDdialogToSave)){
+    
       $this->PPDdialogToSave->save_ppd();
 
       /* Rename the generated ppd to match the gzip ending '.gz', if necessary.
@@ -823,7 +834,7 @@ class printgeneric extends plugin
         }
       }
     }
-    if($this->orig_dn != $this->dn){
+    if($this->orig_dn != $this->dn && $this->orig_dn != "new"){
       if(!empty($this->gotoPrinterPPD)) {
         $this->PPDdialogToSave = new printerPPDDialog($this->config, $this->dn,$this->gotoPrinterPPD);
         $this->PPDdialogToSave->cn = $this->cn;
@@ -841,7 +852,7 @@ class printgeneric extends plugin
     }
 
     /* If no ppd is selected, remove this attribute */
-    if(!empty($this->gotoPrinterPPD) && $this->initially_was_account) {
+    if(!empty($this->gotoPrinterPPD)) {
       $this->gotoPrinterPPD = $this->ppdServerPart.'/'.$this->gotoPrinterPPD;
     }else{
       $this->gotoPrinterPPD = array();

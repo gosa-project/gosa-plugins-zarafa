@@ -96,9 +96,9 @@ class printerPPDDialog extends plugin
     $smarty->assign("ppdString", _("Can't get ppd informations."));
     $smarty->assign("showOptions", "");
     $smarty->assign("path_valid", TRUE);
-    $smarty->assign("acl",$this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD"));
+    $smarty->assign("acl",$this->ui->get_permissions($this->acl_base,"printer/printgeneric","gotoPrinterPPD"));
 
-    $acl = $this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD");
+    $acl = $this->ui->get_permissions($this->acl_base,"printer/printgeneric","gotoPrinterPPD");
 
     if(empty($this->pathToPPD)){
 
@@ -389,7 +389,7 @@ class printerPPDDialog extends plugin
       return;
     }
 
-    if(preg_match("/w/",$this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD"))){
+    if(preg_match("/w/",$this->ui->get_permissions($this->acl_base,"printer/printgeneric","gotoPrinterPPD"))){
       foreach($this->ppdConfig as $cat => $obj){
         foreach($obj as $attr => $attributes){
           if(isset($_POST[base64_encode($attributes['_name'])])){
@@ -493,7 +493,7 @@ class printerPPDDialog extends plugin
           }
 
           $acl ="";
-          if(!preg_match("/w/",$this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD"))){
+          if(!preg_match("/w/",$this->ui->get_permissions($this->acl_base,"printer/printgeneric","gotoPrinterPPD"))){
             $acl = "disabled";
           }
 
