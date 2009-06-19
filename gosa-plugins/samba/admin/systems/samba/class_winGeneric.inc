@@ -48,7 +48,8 @@ class wingeneric extends plugin
   function wingeneric (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
-    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses,FALSE,"uid");
+    $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->uid);
     $this->netConfigDNS->objectclasses=array("ipHost","ieee802Device");
     $this->netConfigDNS->MACisMust = FALSE;
     $this->netConfigDNS->IPisMust = FALSE;
@@ -286,7 +287,7 @@ class wingeneric extends plugin
       $this->handle_post_events("modify");
     }
 
-    $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->cn);
+    $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->uid);
     $this->netConfigDNS->save();
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
