@@ -11,6 +11,9 @@ class servdhcp extends goService
   /* Section storage */
   var $dhcpSections= array();
   var $dhcpObjectCache= array();
+
+  var $dhcpDNtoID = array();
+
   var $current_object= "";
   var $types= array();
   var $serviceDN= "";
@@ -229,7 +232,8 @@ class servdhcp extends goService
       
       /* Insert new section? */
       if (preg_match('/^insertDhcp_.*_x$/', $name)){
-        $dn= base64_decode(preg_replace('/^insertDhcp_([^_]+)_x$/', '\1', $name));
+        $id= preg_replace('/^insertDhcp_([^_]+)_x$/', '\1', $name);
+        $dn = $this->dhcpDNtoID[$id];
         if (isset($this->dhcpObjectCache[$dn])){
           $this->dialog= new dhcpNewSectionDialog($this->objectType($dn));
           $this->current_object= $dn;
@@ -239,7 +243,8 @@ class servdhcp extends goService
 
       /* Edit section? */
       if (preg_match('/^editDhcp_.*_x$/', $name)){
-        $dn= base64_decode(preg_replace('/^editDhcp_([^_]+)_x$/', '\1', $name));
+        $id= preg_replace('/^editDhcp_([^_]+)_x$/', '\1', $name);
+        $dn = $this->dhcpDNtoID[$id];
         if (isset($this->dhcpObjectCache[$dn])){
           $section= $this->objectType($dn);
           $this->current_object= $dn;
@@ -249,7 +254,8 @@ class servdhcp extends goService
 
       /* Remove section? */
       if (preg_match('/^delDhcp_.*_x$/', $name)){
-        $dn= base64_decode(preg_replace('/^delDhcp_([^_]+)_x$/', '\1', $name));
+        $id= preg_replace('/^delDhcp_([^_]+)_x$/', '\1', $name);
+        $dn = $this->dhcpDNtoID[$id];
         if (isset($this->dhcpObjectCache[$dn])){
           $this->current_object= $dn;
           $this->dialog= 1;
@@ -261,7 +267,8 @@ class servdhcp extends goService
     }
 
     if(isset($_GET['act']) && $_GET['act']=="edit" && isset($_GET['id'])){
-      $dn = base64_decode($_GET['id']);
+      $id = $_GET['id'];      
+      $dn = $this->dhcpDNtoID[$id];
       if (isset($this->dhcpObjectCache[$dn])){
         $section= $this->objectType($dn);
         $this->current_object= $dn;
@@ -271,7 +278,8 @@ class servdhcp extends goService
     
 
     if(isset($_GET['act']) && $_GET['act']=="edit" && isset($_GET['id'])){
-      $dn = base64_decode($_GET['id']);
+      $id = $_GET['id'];
+      $dn = $this->dhcpDNtoID[$id];
       if (isset($this->dhcpObjectCache[$dn])){
         $section= $this->objectType($dn);
         $this->current_object= $dn;
@@ -332,25 +340,33 @@ class servdhcp extends goService
       	
     $tmp = new dhcpNewSectionDialog(NULL);
     foreach($this->dhcpSections as $section => $values ){
-    
-      $values = "<a href='?plug=".$_GET['plug']."&act=edit&id=".base64_encode($section)."'>".$values."</a>";
+
+      // Ensure that we've a valid id for this section.
+      if(!in_array($section,$this->dhcpDNtoID)){
+        $this->dhcpDNtoID[] = $section;
+      }
+
+      // Get entry ID  
+      $id = array_search($section,$this->dhcpDNtoID);
+   
+      $values = "<a href='?plug=".$_GET['plug']."&act=edit&id=".$id."'>".$values."</a>";
 	
       if (count($tmp->sectionMap[$this->objectType($section)])){
         if ($this->objectType($section) == "dhcpService"){
           $DhcpList->AddEntry(array(
               array("string" => $values),
-              array("string" => str_replace("%s",base64_encode($section),$editImgInsNoDel), "attach" => "style='text-align:right;'")
+              array("string" => str_replace("%s",$id,$editImgInsNoDel), "attach" => "style='text-align:right;'")
               ));
         } else {
           $DhcpList->AddEntry(array(
               array("string" => $values),
-              array("string" => str_replace("%s",base64_encode($section),$editImgIns), "attach" => "style='text-align:right;'")
+              array("string" => str_replace("%s",$id,$editImgIns), "attach" => "style='text-align:right;'")
               ));
         }
       } else {
         $DhcpList->AddEntry(array(
               array("string" => $values),
-              array("string" => str_replace("%s",base64_encode($section),$editImg), "attach" => "style='text-align:right;'")
+              array("string" => str_replace("%s",$id,$editImg), "attach" => "style='text-align:right;'")
               ));
       }
     }
@@ -660,6 +676,9 @@ class servdhcp extends goService
       $this->dhcpSections[$key]= preg_replace('/^[^!]+!(.*)$/', '\\1', $val);
     }
 
+    $this->dhcpDNtoID = array();
+    $this->dhcpDNtoID = array_merge(array_keys($this->dhcpSections),array_keys($this->dhcpObjectCache));
+    $this->dhcpDNtoID = array_unique($this->dhcpDNtoID);
   }
 
 
