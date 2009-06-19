@@ -30,9 +30,6 @@ class sambaAccount extends plugin
   var $uidNumber= 65535;
   var $gidNumber= 65535;
 
-  /* Samba 3 infos */
-  var $display_information = FALSE;
-
   /* Samba 2 attributes */
   var $pwdLastSet= "0";
   var $logonTime= "0";
@@ -728,13 +725,6 @@ class sambaAccount extends plugin
     /* Show main page */
     $smarty->assign("multiple_support",$this->multiple_support_active);
     if ($this->samba3){
-
-      $smarty->assign("samba_information","");
-      $smarty->assign("display_information",$this->display_information);
-      if($this->display_information){
-        $smarty->assign("samba_information",$this->get_samba_information());
-      }
-
       $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
     } else {
       $display.= $smarty->fetch (get_template_path('samba2.tpl', TRUE, dirname(__FILE__)));
@@ -977,6 +967,7 @@ class sambaAccount extends plugin
     }
 
     $str =
+      "\n<div style='height:200px; overflow: auto;'>".
       "\n<table style='width:100%;'>".
       "\n<tr><td><b>"._("Domain attributes")."</b></td></tr>". 
       "\n<tr><td>"._("Min password length").":           </td><td>".$sambaMinPwdLength."</td></tr>". 
@@ -1000,6 +991,7 @@ class sambaAccount extends plugin
       "\n<tr><td>"._("Password expires").":              </td><td>".$sambaPwdMustChange."</td></tr>".
       "\n<tr><td>"._("Password change available").":     </td><td>".$sambaPwdCanChange."</td></tr>".
       "\n</table>";
+      "\n</div>";
     return($str);
   }
 
