@@ -453,6 +453,21 @@ class servdnseditZone extends plugin
     if(!tests::is_ip($addr)){
       $message[] = msgPool::invalid(_("Network address"));
     }
+
+    // Ensure that we do not use reverse zones twice. 
+    //  this currently not supported by GOsa.
+    $zones = DNS::getDNSZoneEntries($this->config,$this->dn);
+    switch($this->NetworkClass){
+      case 'C' : $test = preg_replace("/\.[0-9]*$/","",$this->ReverseZone);break;
+      case 'B' : $test = preg_replace("/\.[0-9]*\.[0-9]*$/","",$this->ReverseZone);break;
+      case 'A' : $test = preg_replace("/\.[0-9]*\.[0-9]*\.[0-9]*$/","",$this->ReverseZone);break;
+      default : trigger_error("Invalid network class given '".$this->NetworkClass."'");
+    }
+    foreach($zones as $name => $data){
+      if($data['ReverseZone'] == $test){
+        $message[] = msgPool::duplicated(_("Network address"));
+      }
+    }
  
     /* Check if given address matches selected network class */
     switch($this->NetworkClass){
