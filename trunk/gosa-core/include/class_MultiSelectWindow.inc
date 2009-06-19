@@ -146,6 +146,7 @@ class MultiSelectWindow{
 		$this->filterName			= $filterName;
     $this->ui = get_userinfo();
     $this->post_id = preg_replace("/[^0-9]/","",microtime(TRUE));
+    $this->selectedBase  = session::get('CurrentMainBase');
 
     /* Check default values for SaveAdditionalVars */
     $MultiDialogFilters = session::get('MultiDialogFilters');
