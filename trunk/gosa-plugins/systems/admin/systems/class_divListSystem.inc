@@ -385,18 +385,19 @@ class divListSystem extends MultiSelectWindow
       $cnts[$type] ++;
 
       /* Create each field */
+      $filtered_dn = str_replace('\\,', '\\2C', LDAP::fix($val['dn']));
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
       $field1 = array("string" => sprintf($img['img'],$val['dn']),
           "attach" => "style='text-align:center;width:20px;'");
-      if(isset($ogs_release[$val['dn']])){
+      if(isset($ogs_release[$filtered_dn])){
         $field2 = array("string" => sprintf($editlink,$key,$display)."&nbsp;<img src=
             'plugins/ogroups/images/select_ogroup.png' class='center' alt='' title='".
-            sprintf(_("Member of %s object group"),trim($ogs_release[$val['dn']]['CN'],", "))."'>",
-            "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'");
+            sprintf(_("Member of %s object group"),trim($ogs_release[$filtered_dn]['CN'],", "))."'>",
+            "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', LDAP::fix($filtered_dn))."'");
       }else{
         $field2 = array("string" => sprintf($editlink,$key,$display),
-            "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'");
+            "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', LDAP::fix($filtered_dn))."'");
       }
       $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action),
           "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
@@ -408,11 +409,11 @@ class divListSystem extends MultiSelectWindow
         if(isset($val['FAIclass'][0]) && preg_match("/:/",$val['FAIclass'][0])){
           $release        = preg_replace("/^.*:/","",$val['FAIclass'][0]);
           $release_attach = ""; 
-        }elseif(isset($ogs_release[$val['dn']])){
-          $release = trim($ogs_release[$val['dn']]['STR'],", ").
+        }elseif(isset($ogs_release[$filtered_dn])){
+          $release = trim($ogs_release[$filtered_dn]['STR'],", ").
             "&nbsp;<img src='plugins/ogroups/images/select_ogroup.png' class='center' alt='' 
-            title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'>";
-          $release_attach = "title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'"; 
+            title='".sprintf(_("Inherited from %s"),trim($ogs_release[$filtered_dn]['CN'],", "))."'>";
+          $release_attach = "title='".sprintf(_("Inherited from %s"),trim($ogs_release[$filtered_dn]['CN'],", "))."'"; 
         }
         $field2a = array("string" => $release."&nbsp;","attach"=>$release_attach." style='width:100px;'");
         $this->AddElement( array($field0,$field1,$field2,$field2a,$field3));
