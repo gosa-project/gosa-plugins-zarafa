@@ -954,6 +954,7 @@ class plugin
     /* Walk through all objectGroups and check if there are 
         members matching the source dn 
      */
+    $src_dn=str_replace('\\,', '\\2C', LDAP::fix($src_dn));
     foreach($ogroups as $ogroup){
       if(isset($ogroup['member'])){
 
@@ -972,7 +973,9 @@ class plugin
               $o_ogroup = new ogroup($this->config,$ogroup['dn']);
             }              
 
-            unset($o_ogroup->member[$c_mem]);
+            /* Members are stored with their converted names, so convert $c_mem as well
+               to have it match in case of special characters in its name. */
+            unset($o_ogroup->member[LDAP::convert($c_mem)]);
             $o_ogroup->member[$d_mem]= $d_mem;
           }
         }
