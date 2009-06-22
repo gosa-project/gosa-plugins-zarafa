@@ -840,7 +840,8 @@ sub check_opsi_res {
 }
 
 sub calc_timestamp {
-    my ($timestamp, $operation, $value) = @_ ;
+    my ($timestamp, $operation, $value, $entity) = @_ ;
+	$entity = defined $entity ? $entity : "seconds";
     my $res_timestamp = 0;
     
     $value = int($value);
@@ -855,12 +856,12 @@ sub calc_timestamp {
             );
 
     if ($operation eq "plus" || $operation eq "+") {
-        $dt->add( seconds => $value);
+        $dt->add($entity => $value);
         $res_timestamp = $dt->ymd('').$dt->hms('');
     }
 
     if ($operation eq "minus" || $operation eq "-") {
-        $dt->subtract(seconds => $value);
+        $dt->subtract($entity => $value);
         $res_timestamp = $dt->ymd('').$dt->hms('');
     }
 

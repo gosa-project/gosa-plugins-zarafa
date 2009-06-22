@@ -151,6 +151,7 @@ my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 	"plainname VARCHAR(255) DEFAULT 'none'",
 	"siserver VARCHAR(255) DEFAULT 'none'",
 	"modified INTEGER DEFAULT '0'",
+	"periodic VARCHAR(6) DEFAULT 'none'",
 );
 
 # holds all other gosa-si-server
@@ -224,6 +225,10 @@ our $logged_in_user_date_of_expiry = 600;
 
 # List of month names, used in function daemon_log
 my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+
+# List of accepted periodical xml tags related to cpan modul DateTime
+our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minutes"=>''};
+
 
 %cfg_defaults = (
 "general" => {
@@ -1327,7 +1332,7 @@ sub msg_to_decrypt {
 				$msg =~ s/<header>gosa_/<header>/;
 				my $error= &send_msg_to_target($msg, $hostname, $hostkey, $header, $session_id);
 				if ($error) {
-					&daemon_log("$session_id ERROR: Some problems occurred while trying to send msg to client '$hostkey': $msg", 1);
+					&daemon_log("$session_id ERROR: Some problems occurred while trying to send msg to client '$hostname': $msg", 1);
 				}
 			} 
 			else 
@@ -1700,16 +1705,33 @@ sub session_start {
 
 
 sub watch_for_done_jobs {
-	#CHECK: $heap for what?
-	my ($kernel,$heap) = @_[KERNEL, HEAP];
+	my $kernel = $_[KERNEL];
 
 	my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((status='done') AND (modified='0'))";
 	my $res = $job_db->select_dbentry( $sql_statement );
 
-	while( my ($id, $hit) = each %{$res} ) {
-		my $jobdb_id = $hit->{id};
-		my $sql_statement = "DELETE FROM $job_queue_tn WHERE id=$jobdb_id"; 
-		my $res = $job_db->del_dbentry($sql_statement);	
+	while( my ($number, $hit) = each %{$res} ) 
+	{
+		# Periodical jobs should not be deleted but reactivated with new timestamp instead.
+		if (exists $check_periodic->{$hit->{periodic}})
+		{
+			my $reactivated_ts = $hit->{timestamp};
+			my $act_ts = int(&get_time());
+			while ($act_ts > int($reactivated_ts))   # Redo calculation to avoid multiple jobs in the past
+			{
+				$reactivated_ts = &calc_timestamp($reactivated_ts, "plus", 1, $hit->{periodic});
+			}
+			my $sql = "UPDATE $job_queue_tn SET status='waiting', timestamp='$reactivated_ts' WHERE id='".$hit->{id}."'"; 
+			my $res = $job_db->exec_statement($sql);
+			&daemon_log("J INFO: Update periodical job '".$hit->{headertag}."' for client '".$hit->{targettag}."'. New execution time '$reactivated_ts'.", 5);
+		}
+		# Non periodical jobs can be deleted.
+		else
+		{
+			my $jobdb_id = $hit->{id};
+			my $sql_statement = "DELETE FROM $job_queue_tn WHERE id=$jobdb_id"; 
+			my $res = $job_db->del_dbentry($sql_statement);	
+		}
 	}
 
 	$kernel->delay_set('watch_for_done_jobs',$job_queue_loop_delay);
@@ -1936,7 +1958,7 @@ sub watch_for_new_jobs {
 					my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header, "J");                    
 
 					# update status in job queue to ...
-                    # ... 'processing', for jobs: 'reinstall', 'update'
+                    # ... 'processing', for jobs: 'reinstall', 'update', activate_new
                     if (($header =~ /gosa_trigger_action_reinstall/) 
                             || ($header =~ /gosa_trigger_activate_new/)
                             || ($header =~ /gosa_trigger_action_update/)) {
@@ -1947,7 +1969,7 @@ sub watch_for_new_jobs {
                     # ... 'done', for all other jobs, they are no longer needed in the jobqueue
                     else {
                         my $sql_statement = "UPDATE $job_queue_tn SET status='done' WHERE id=$jobdb_id";
-                        my $dbres = $job_db->update_dbentry($sql_statement);
+                        my $dbres = $job_db->exec_statement($sql_statement);
                     }
                 
 

@@ -139,9 +139,7 @@ sub delete_jobdb_entry {
     #}
 
     # set job to status 'done', job will be deleted automatically
-    my $sql_statement = "UPDATE $main::job_queue_tn ".
-        "SET status='done', modified='1' ".
-        "$where";
+    my $sql_statement = "UPDATE $main::job_queue_tn SET status='done', modified='1', periodic='none' $where";
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
     my $res = $main::job_db->update_dbentry( $sql_statement );
  

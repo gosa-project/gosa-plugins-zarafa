@@ -246,6 +246,8 @@ sub process_job_msg {
             "<answer1>1</answer1>".
             "<error_string>no mac address specified, neither in target-tag nor in macaddres-tag</error_string>".
             "</xml>";
+
+        return ($out_msg);
     }
     
     # Determine plain_name for host
@@ -276,6 +278,29 @@ sub process_job_msg {
         &main::release_ldap_handle($ldap_handle);
     }
 	
+    # Check if it is a periodical job
+    my $periodic = 'none';
+    if (exists $msg_hash->{periodic})
+    {
+        $periodic = $msg_hash->{periodic}[0];
+        if (not defined $periodic)   # Periodic tag is not defined
+        {
+            $periodic = "";
+        }
+
+        if (not exists $main::check_periodic->{$periodic})   # Periodic tag is not valid
+        {
+            &main::daemon_log("$session_id ERROR: Message contains invalid periodic-tag '$periodic'.".
+                    " Please use one of the following tags instead: '".join("', '", keys(%$main::check_periodic))."'.".
+                    " Aborted message: $msg", 1);
+            $out_msg = "<xml>".
+                "<header>answer</header><source>$main::server_address</source><target>GOSA</target>".
+                "<answer1>1</answer1><error_string>Message contains invalid periodic-tag '$periodic'</error_string>".
+                "</xml>";
+            return ($out_msg);
+        }
+    }
+
     # Add job to job queue
     if( $error == 0 ) {
         my $func_dic = {table=>$main::job_queue_tn, 
@@ -291,6 +316,7 @@ sub process_job_msg {
 			plainname=>$plain_name,
             siserver=>"localhost",
             modified=>"1",
+            periodic=>$periodic,
         };
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {

@@ -126,8 +126,9 @@ sub usr_msg {
     my ($rand_fh, $rand_file) = tempfile( SUFFIX => '.goto_notify');
     print $rand_fh "source:$source\ntarget:$target\nusr:$to\nsubject:".@{$msg_hash->{'subject'}}[0]."\nmessage:".@{$msg_hash->{'message'}}[0]."\n";
     close $rand_fh;
-
-    my $feedback = system("/usr/bin/goto-notify user-message '$to' '$subject' '$message' '$rand_file' &" );
+	
+	my ($host, $port) = split(':', $target);
+    my $feedback = system("/usr/bin/goto-notify user-message '$to' '$subject' '$message' '$rand_file' '$host' &" );
 
     return
 }

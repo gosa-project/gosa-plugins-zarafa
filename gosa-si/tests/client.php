@@ -16,6 +16,10 @@ for($count = 1; $count <= $zahl; $count++)
 
   if($sock->connected()){
 
+	##############################
+	# periodical jobs
+	$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><macaddress>00:0c:29:4c:4b:0c</macaddress><timestamp>20090622000000</timestamp><periodic>minutes</periodic></xml>"; 
+
     /* Prepare a hunge bunch of data to be send */
     # jobdb add
     #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source><target>GOSA</target><hostname>ws-muc-2</hostname></xml>";
@@ -77,7 +81,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>rettenbe</usr></xml>";
 
     # List all si-server providing opsi
-    $data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>linux-cl-7:20081</target> <module_name>opsi</module_name> </xml>";
+    #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>linux-cl-7:20081</target> <module_name>opsi</module_name> </xml>";
 
     # Send messages to a user and displayed message via konch
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
@@ -211,7 +215,6 @@ for($count = 1; $count <= $zahl; $count++)
     ##############################
     # SYSLOG reload
     #$data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:0C:29:4C:4B:0C</macaddress> </xml>"; 
-
 
 
 
