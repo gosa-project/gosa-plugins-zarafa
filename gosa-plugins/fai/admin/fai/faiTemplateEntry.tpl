@@ -3,38 +3,49 @@
 <h2><img class="middle" alt="" src="images/forward.png" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h2>
 <table width="100%" summary="">
 <tr>
-	<td width="50%">
-		<table>
+  <td style="vertical-align:top;width:50%;border-right:1px solid #B0B0B0; padding-right:10px;">
+		<table style='width:100%;'>
 		  <tr>
 		    <td>
 		{t}File name{/t}{$must}&nbsp;
 		    </td>
-		    <td>
+		    <td style='width:100%;'>
 {render acl=$cnACL}
-		<input value="{$templateFile}" name="templateFile" size="45" maxlength="80">&nbsp;&nbsp;
+		      <input style='width:100%;' value="{$templateFile}" 
+            name="templateFile" maxlength="80">
 {/render}
 		    </td>
-		   </tr>
+	    </tr>
 		  <tr>
-			<td>
-				<LABEL for="templatePath">
-					{t}Destination path{/t}{$must}&nbsp;
-				</LABEL>
-				</td>
-			<td>
+			  <td>
+				  <LABEL for="templatePath">
+				  	{t}Destination path{/t}{$must}&nbsp;
+				  </LABEL>
+			  </td>
+			  <td>
 {render acl=$FAItemplatePathACL}
-				<input type="text" name="templatePath" value="{$templatePath}" id="templatePath" size="45">
+				  <input style='width:100%;' type="text" name="templatePath" 
+            value="{$templatePath}" id="templatePath" >
 {/render}
 				</td>
-		  </tr>
+      </tr>
 		</table>
 	</td>
-	<td>
-		{t}Description{/t}&nbsp;
+  <td style='vertical-align:top;'>
+		<table style='width:100%;'>
+      <tr>
+       	<td style='vertical-align:top;'>
+          {t}Description{/t}
+        </td>
+        <td style='width:100%;'>
 {render acl=$descriptionACL}
-		<input size="45" maxlength="80" value="{$description}" name="description">
+		      <input  style='width:100%;' maxlength="80" 
+            value="{$description}" name="description">
 {/render}
-	</td>
+	      </td>
+      </tr>
+    </table>
+  </td>
 </tr>
 </table>
 
