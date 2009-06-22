@@ -1067,6 +1067,7 @@ sub server_input {
 
 			# if client is alread in a registration process, that means not registered, do nothing
 			# if not, cause re-registration
+# TODO : This if-else can cause a registration deadlock. Currently I can not reproduce the deadlock and don't have a clue what is the reason for the deadlock
 			if (not $REGISTERED) {
 				&daemon_log("WARNING: gosa-si-client is already in a registration process so ignore this message", 3);
 			} else {
