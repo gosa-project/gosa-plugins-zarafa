@@ -74,13 +74,12 @@ class terminfo extends plugin
     if(!preg_match("/r/",$this->getacl(""))){
       $smarty->assign("ACL",FALSE);
     }elseif(!is_callable("snmpget")){
-      msg_dialog::display(_("Configuration error"), msgPool::missingext("snmp"), ERROR_DIALOG);
 
       $smarty->assign("load", progressbar(0,100,15,true));
       $smarty->assign("mem", progressbar(0,100,15,true));
       $smarty->assign("swap", progressbar(0,100,15,true));
       foreach(array("uptime", "sshd", "X", "saned", "artsd", "cupsd","status","ghNetNic", "ghIdeDev", "ghScsiDev","FloppyDevice", "CdromDevice","active") as $val){
-        $smarty->assign("$val", "<i>"._("unknown status")."</i>");
+        $smarty->assign("$val", "<i>"._("unknown status, SNMP support missing")."</i>");
       }
 
 
