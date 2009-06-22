@@ -1372,7 +1372,7 @@ msgstr "Paket-Konfiguration"
 
 #: admin/fai/class_faiTemplateEntry.inc:90
 msgid "no file uploaded yet"
-msgstr "Es wurden noch keine Datei hochgeladen."
+msgstr "es wurde noch keine Datei hochgeladen."
 
 #: admin/fai/class_faiTemplateEntry.inc:96
 #, php-format
