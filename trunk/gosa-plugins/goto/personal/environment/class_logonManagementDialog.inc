@@ -55,6 +55,7 @@ class logonManagementDialog extends plugin
         $smarty->assign($attr."CHK","");
       }
     }
+    $smarty->assign("LogonPriority",$this->LogonPriority);
     $prios=array(1,2,3,4,5,6,7,8,9,10);
     $smarty->assign("LogonPrioritys",$prios);
     $smarty->assign("LogonPriorityKeys",$prios);
