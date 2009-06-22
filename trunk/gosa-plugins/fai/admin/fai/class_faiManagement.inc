@@ -328,8 +328,6 @@ class faiManagement extends plugin
           $this->dialog= FALSE;
           FAI::save_release_changes_now();
           $to_del = FAI::clean_up_releases($dn);
-          /* Remove sub-objects (e.g. the variable key/value of a FAIvariable) from LDAP entirely */
-          $to_del += FAI::get_child_objects($dn);
           foreach($to_del as $dn){
             $ldap->rmdir_recursive($dn);
           }
