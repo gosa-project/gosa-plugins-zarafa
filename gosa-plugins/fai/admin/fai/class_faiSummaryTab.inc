@@ -75,8 +75,13 @@ class faiSummaryTab extends plugin{
   
     /* Check if parent tab is work tab */
     }elseif(isset($this->parent->by_name['workstartup'])){
-      $this->Classes = $this->parent->by_object['workstartup']->FAIclass;
-      $this->Release = $this->parent->by_object['workstartup']->FAIrelease;
+      if($this->parent->by_object['workstartup']->FAIdebianMirror == "inherited"){
+        $this->Classes = $this->parent->by_object['workstartup']->InheritedFAIclass;
+        $this->Release = $this->parent->by_object['workstartup']->InheritedFAIrelease;
+      }else{
+        $this->Classes = $this->parent->by_object['workstartup']->FAIclass;
+        $this->Release = $this->parent->by_object['workstartup']->FAIrelease;
+      }
 
       /* Check if this is a workstation or an object group */
       if(isset($this->parent->by_object['workgeneric'])){
