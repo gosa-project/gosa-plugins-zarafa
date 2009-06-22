@@ -185,10 +185,12 @@ class FAI
     if(!$removed){
       $ldap = $config->get_ldap_link();
       $ldap->cd($config->current['BASE']);
+      $parent_dn = FAI::get_parent_object($Current_DN);
 
       /* Get some basic informations */
       $parent_obj   = FAI::get_parent_release_object($Current_DN);
-      if(!empty($parent_obj)){
+      /* Check whether parent object is removed, do not create object in this case */
+      if(!empty($parent_obj) && !FAI::parent_is_removed($Current_DN)){
         $ldap->cat($parent_obj,array("*"));
         $attrs = FAI::                           prepare_ldap_fetch_to_be_saved($ldap->fetch());
 
@@ -503,7 +505,10 @@ class FAI
                 echo "<b>Create an empty placeholder in follwing release</b> ".$key; 
                 print_a($objectAttrs);
               }
-              FAI::save_FAI_object($key,$objectAttrs);
+              /* Only save removed parent objects, not their children */
+              if (FAI::is_parent_object($Current_DN)){
+                FAI::save_FAI_object($key,$objectAttrs);
+              }
             }
           }
         }else{
@@ -517,11 +522,15 @@ class FAI
                 print_a($parent_attrs);
               }
              
-              /* Append FAIstate tag to ensure that freezed objects stay freezed
-               */ 
-              $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
-              $parent_attrs['FAIstate'] = $rTag;
-              FAI::save_FAI_object($key,$parent_attrs);
+              /* Only update the freeze tag if the entry actually exists. */
+              $ldap->cat($key);
+              if($ldap->count()){
+                /* Append FAIstate tag to ensure that freezed objects stay freezed
+                 */ 
+                $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
+                $parent_attrs['FAIstate'] = $rTag;
+                FAI::save_FAI_object($key,$parent_attrs);
+              }
             }
           }
 
@@ -1270,7 +1279,100 @@ class FAI
     }                                                         
   }                                                           
 
+  /* Returns true if this is a parent object, e.g. FAIpartitionTable, not FAIpartitionDisk */
+  static function is_parent_object($dn)
+  {
+    global $config;
+    $Current_DN = $dn;
 
+    /* special case partitions, as they don't start with cn= in their DN (schema bug?) */
+    if (preg_match('/^FAIpartitionNr=/', $Current_DN)){
+      return false;
+    }
+
+    $parent_dn = preg_replace('/^cn=[^,.]*,/', '', $Current_DN);
+    if (preg_match('/^cn=/', $parent_dn)) {
+      $ldap = $config->get_ldap_link();
+      $ldap->cd($config->current['BASE']);
+      $ldap->cat($parent_dn);
+      if($ldap->count()){
+        return false;
+      }
+    }else{
+      return true;
+    }
+  }
+
+  /* Return a child objects, if there are any */
+  static function get_child_objects($dn)
+  {
+    global $config;
+    $Current_DN = $dn;
+    $children= array();
+
+    if (FAI::is_parent_object($Current_DN)){
+      $ldap = $config->get_ldap_link();
+      $ldap->cd($config->current['BASE']);
+      $ldap->search("(objectClass=FAIclass)",array("dn"));
+      while($attrs = $ldap->fetch()){
+        $newdn=$attrs['dn'];
+        if(preg_match("/".preg_quote($Current_DN, '/')."/",$attrs['dn']) && $attrs['dn'] != $Current_DN){
+          $children[] = $attrs['dn'];
+        }
+      }
+    }
+    return $children;
+  }
+
+  /* Get the DN of the parent object; e.g. the FAIpartitionTable of a FAIpartitionDisk */
+  static function get_parent_object($dn)
+  {
+    global $config;
+    $Current_DN = $dn;
+
+    $tmp_dn = $Current_DN;
+    $parent_dn = $tmp_dn;
+
+    /* special case partitions, as they don't start with cn= in their DN (schema bug?) */
+    $tmp_dn = preg_replace('/^FAIpartitionNr=/', 'cn=', $tmp_dn);
+
+    while (preg_match('/^cn=/', $tmp_dn)){
+      $parent_dn = $tmp_dn;
+      $tmp_dn = preg_replace('/^cn=[^,.]*,/', '', $parent_dn);
+    }
+    if ($parent_dn != $Current_DN){
+      $ldap = $config->get_ldap_link();
+      $ldap->cd($config->current['BASE']);
+      $ldap->cat($parent_dn);
+
+      /* Check objectClasses and name to check if this is a release department */
+      if($ldap->count()){
+        return $parent_dn;
+      }
+    }
+    return "";
+  }
+
+  /* Check whether parent object is removed */
+  static function parent_is_removed($dn)
+  {
+    global $config;
+    $Current_DN = $dn;
+
+    $ldap = $config->get_ldap_link();
+    $parent_dn = FAI::get_parent_object($Current_DN);
+    if ($parent_dn) { 
+      $ldap->cd($config->current['BASE']);
+      $ldap->cat($parent_dn);
+      $parentObjectAttrs = FAI::prepare_ldap_fetch_to_be_saved($ldap->fetch());
+      if(isset($parentObjectAttrs['FAIstate'][0])){
+        if(preg_match("/removed$/",$parentObjectAttrs['FAIstate'][0])){
+          return true;
+        }
+      }
+    } 
+    return false;
+  }
 }
 
 
