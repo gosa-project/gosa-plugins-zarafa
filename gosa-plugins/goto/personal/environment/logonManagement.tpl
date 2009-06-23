@@ -24,7 +24,7 @@
 							<td><LABEL for="LogonPriority">{t}Priority{/t}</LABEL>
 							</td><td>
 				            	<select name="LogonPriority" id="LogonPriority">
-                					{html_options values=$LogonPriorityKeys output=$LogonPrioritys}
+                					{html_options values=$LogonPriorityKeys output=$LogonPrioritys selected=$LogonPriority}
                 				</select>
 							</td>
 						</tr>
