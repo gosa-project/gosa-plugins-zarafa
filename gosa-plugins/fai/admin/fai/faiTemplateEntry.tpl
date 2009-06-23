@@ -53,46 +53,50 @@
 
 <table width="100%" summary="">
 <tr>
-  <td colspan=2><h2><img class="middle" alt="" src="plugins/fai/images/fai_template.png" title="{t}Template attributes{/t}">&nbsp;{t}Template attributes{/t}</h2></td>
+  <td colspan=2>
+    <h2>
+      <img class="center" alt="" 
+        src="plugins/fai/images/fai_template.png" 
+        title="{t}Template attributes{/t}">&nbsp;{t}Template attributes{/t}
+    </h2>
+  </td>
 </tr>
 <tr>
   <td style="vertical-align:top;width:50%;border-right:1px solid #B0B0B0">
-   <table summary="">
+  <table summary="">
     <tr>
-		<td style="vertical-align:top">
-			<LABEL for="FAItemplateFile">
-				{t}File{/t}{$must}&nbsp;
-			</LABEL>
-			</td>
-		<td style="vertical-align:top" class="center">
-			{$status}
-			{if $bStatus}
-			  <a href="{$plug}&amp;getFAItemplate">
-				<img class="center" alt="{t}Save template{/t}..." title="{t}Save template{/t}..." src="images/save.png" border="0" />
-			  </a>
-			{/if}
-			<br>
-			<br>
+      <td>
+        {t}File{/t}{$must}:&nbsp; {$status}
+        {if $bStatus}
+          <a href="{$plug}&amp;getFAItemplate">
+          <img class="center" alt="{t}Save template{/t}..." 
+            title="{t}Save template{/t}..." src="images/save.png" border="0" />
+          </a>
+          <a href="{$plug}&amp;editFAItemplate">
+          <img class="center" alt="{t}Edit template{/t}..." 
+            title="{t}Edit template{/t}..." src="images/lists/edit.png" border="0" />
+          </a>
+        {/if}
+      </td>
+    </tr>
+    {if $bStatus}
+    <tr>
+      <td>
+		    {t}Full path{/t}:&nbsp; <i>{$FAItemplatePath}</i>
+      </td>
+    </tr>
+    {/if}
+    <tr>
+		  <td style="vertical-align:top" class="center">
 {render acl=$FAItemplateFileACL}
-			<input type="file" name="FAItemplateFile" value="" id="FAItemplateFile">
+			  <input type="file" name="FAItemplateFile" value="" id="FAItemplateFile">
 {/render}
 {render acl=$FAItemplateFileACL}
-			&nbsp;<input type="submit" value="{t}Upload{/t}" name="TmpFileUpload">
+			  <input type="submit" value="{t}Upload{/t}" name="TmpFileUpload">
 {/render}
-			<br>
-			<br>
-			</td>
-	</tr><tr>
-			<td>
-				{t}Full path{/t}&nbsp;
-				</td>
-			<td>
-{render acl=$FAItemplatePathACL}
-				<i>{$FAItemplatePath}</i>
-{/render}
-				</td>
-		</tr>
-		</table>
+		  </td>
+    </tr>
+	</table>
 	</td>
 	<td>
 	  <table summary="">

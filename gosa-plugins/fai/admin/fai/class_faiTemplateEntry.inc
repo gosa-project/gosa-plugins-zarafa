@@ -86,16 +86,42 @@ class faiTemplateEntry extends plugin
     if(isset($_GET['getFAItemplate'])){
       send_binary_content($this->FAItemplateFile,$this->cn.".FAItemplate");
     }
- 
+
+    /* File edit requested */
+    if(isset($_GET['editFAItemplate'])){
+      $this->dialog = new faiTemplateEdit($this->config,$this->dn,$this->FAItemplateFile);
+    }
+
+    /* File edit requested, was canceled  */
+    if(isset($_POST['templateEditCancel'])){
+      $this->dialog = null;
+    }
+
+    /* File edit requested, was canceled  */
+    if($this->dialog instanceOf faiTemplateEdit && isset($_POST['templateEditSave'])){
+      $this->dialog->save_object();
+      $msgs = $this->dialog->check();
+      if(count($msgs)){
+        msg_dialog::displayChecks($msgs);
+      }else{
+        $this->FAItemplateFile = $this->dialog->save();
+        $this->dialog = null;
+      }
+    }
+
+    /* Display opened dialog */
+    if($this->dialog){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    }
+
     $status= _("no file uploaded yet");
-
     $bStatus = false; // Hide download icon on default 
-    
     if(strlen($this->FAItemplateFile)){
-
       $status= sprintf(_("exists in database (size: %s bytes)"),strlen($this->FAItemplateFile));
       $bStatus = true;  // Display download icon 
     }
+
     $smarty->assign("status",$status);
     $smarty->assign("bStatus",$bStatus);
 
