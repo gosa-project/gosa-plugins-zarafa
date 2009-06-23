@@ -62,7 +62,8 @@
 						<tr>
 							<td>
 								<input type="file" name="importFile" id="importFile">
-								<input type="submit" value="{t}Import{/t}" name="StartImport" >
+								<input type="submit" value="{t}Import script{/t}" name="StartImport" >
+								{$DownMe}
 							</td>
 						</tr>
 					</table>

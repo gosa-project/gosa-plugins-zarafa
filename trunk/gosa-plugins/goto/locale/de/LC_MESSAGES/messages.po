@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-22 14:24+0200\n"
+"POT-Creation-Date: 2009-06-23 11:22+0200\n"
 "PO-Revision-Date: 2008-12-04 11:18+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -156,6 +156,10 @@ msgstr "Anlegen"
 #: admin/applications/generic.tpl:139
 msgid "Import"
 msgstr "Importieren"
+
+#: personal/environment/logonManagement.tpl:65
+msgid "Import script"
+msgstr "Skript importieren"
 
 #: addons/goto/class_gotomasses.inc:380
 msgid "Resume"
@@ -369,6 +373,7 @@ msgstr "Stelle einen Mechanismus bereit um Systemen automatisch zu aktivieren"
 #: admin/systems/goto/class_printGeneric.inc:966
 #: admin/systems/goto/workstation.tpl:19 admin/systems/goto/printer.tpl:16
 #: admin/systems/goto/terminal.tpl:19
+#: personal/environment/class_logonManagementDialog.inc:125
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -1280,6 +1285,7 @@ msgstr "Einstellungen für Anmelde-Skripte"
 
 #: personal/environment/logonManagement.tpl:10
 #: personal/environment/class_logonManagementDialog.inc:107
+#: personal/environment/class_logonManagementDialog.inc:121
 msgid "Script name"
 msgstr "Skriptname"
 
@@ -1436,6 +1442,7 @@ msgstr "Standard umschalten"
 #: admin/systems/goto/class_printGeneric.inc:720
 #: admin/systems/goto/class_printGeneric.inc:964
 #: admin/groups/apps/edit_entry.tpl:43
+#: personal/environment/class_logonManagementDialog.inc:117
 msgid "Name"
 msgstr "Name"
 
@@ -1588,6 +1595,7 @@ msgid "Place entry in members launch bar"
 msgstr "Platziere einen Eintrag in der Kontrollleiste der Gruppenmitglieder"
 
 #: admin/applications/generic.tpl:144
+#: personal/environment/class_logonManagementDialog.inc:57
 msgid "Download"
 msgstr "Herunterladen"
 
