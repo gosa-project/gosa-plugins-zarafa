@@ -1,5 +1,17 @@
 <h2>Template entry</h2>
 
+{if !$mb_extension}
+
+{msgPool type=missingext param1='multi byte'}
+
+<p class='seperator'>
+  <div style='text-align:right;'>
+    <input type='submit' name='templateEditCancel' value='{msgPool type=cancelButton'}'>
+  </div>
+</p>
+
+{else}
+
 {if $write_protect}
 {t}This FAI template is write protected due to its character encoding, editing may brake this file!{/t}
 <br><input type='submit' value='{t}Edit anyway{/t}' name='editAnyway'>
@@ -17,3 +29,5 @@
     <input type='submit' name='templateEditCancel' value='{msgPool type=cancelButton'}'>
   </div>
 </p>
+
+{/if}
