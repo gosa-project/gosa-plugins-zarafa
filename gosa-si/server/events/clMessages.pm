@@ -329,7 +329,7 @@ sub set_last_system {
 		my $ldap_mesg= $ldap_handle->search(
 						base => $main::ldap_base,
 						scope => 'sub',
-						filter => "uid=$user",
+						filter => "(&(objectClass=gosaAccount)(uid=$user))",
 						);
 		# Sanity check of user search
 		if ($ldap_mesg->count == 0) {
