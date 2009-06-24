@@ -724,7 +724,7 @@ class appgroup extends plugin
       $to    = $this->_get_next($to,$o_from['PARENT']); 
       $o_to  = $all[$to]; 
     }
- 
+
     /* Target is ENTRY && same BASE, just switch */
     if($o_to['PARENT'] == $o_from['PARENT'] ){
       $parent = $all[$o_to['PARENT']];
@@ -759,7 +759,7 @@ class appgroup extends plugin
         break;
       }
     }
-    while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("ENTRY","FOLDER","CLOSE","OPEN")) && $i < count($all_l)){
+    while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("SEPERATOR","ENTRY","FOLDER","CLOSE","OPEN")) && $i < count($all_l)){
       $i++;
     }
 
@@ -792,7 +792,7 @@ class appgroup extends plugin
         $i++;
       }
     }else{
-      while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("ENTRY","FOLDER")) && $i < count($all_l)){
+      while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("SEPERATOR","ENTRY","FOLDER")) && $i < count($all_l)){
         $i++;
       }
     }
@@ -804,9 +804,6 @@ class appgroup extends plugin
     }
     return($all_l[$i]['UNIQID']);
   }
-
-
-
 
   /* !\brief Handle ui POSTS, like sort up/down/delete
    */ 
