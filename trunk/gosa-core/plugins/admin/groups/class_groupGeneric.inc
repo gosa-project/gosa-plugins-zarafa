@@ -90,6 +90,11 @@ class group extends plugin
     $this->orig_dn= $dn;
     $this->orig_cn= $this->cn;
 
+    /* Read configuration option for $this->allowGroupsWithSameNameInOtherSubtrees */
+    if ($config->get_cfg_value("allowGroupsWithSameNameInOtherSubtrees") == "false") {
+        $this->allowGroupsWithSameNameInOtherSubtrees = FALSE;
+    }
+
     /* Get member list */
     if (isset($this->attrs['memberUid'][0])){
       $tmp= array();
