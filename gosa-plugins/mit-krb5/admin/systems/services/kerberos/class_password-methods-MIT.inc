@@ -339,7 +339,16 @@ class passwordMethodMIT extends passwordMethod
    */ 
   public function is_available()
   {
+    global $config;
   
+    /* No config object given, this may be the case 
+       if there is only a is_available() request triggered.
+     */
+    if(!is_object($config)){
+       return;
+    }
+
+
     $o = new gosaSupportDaemon(FALSE);
 
     if(count($this->server_list) && $o->connect() && $o->is_configured()){
@@ -356,7 +365,11 @@ class passwordMethodMIT extends passwordMethod
   public function generate_hash($pwd = "")
   {
     $mode= "kerberos";
-    if ($this->config->get_cfg_value("useSaslForKerberos") == "true"){
+
+    /* No config object given, this may be the case 
+       if there is only a is_available() request triggered.
+     */
+    if (is_object($config) && $this->config->get_cfg_value("useSaslForKerberos") == "true"){
       $mode= "sasl";
     }
     return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
@@ -408,7 +421,11 @@ class passwordMethodMIT extends passwordMethod
   public function get_hash_name()
   {
     $mode= "kerberos";
-    if ($this->config->get_cfg_value("useSaslForKerberos") == "true"){
+
+    /* No config object given, this may be the case 
+       if there is only a is_available() request triggered.
+     */
+    if (is_object($config) && $this->config->get_cfg_value("useSaslForKerberos") == "true"){
       $mode= "sasl";
     }
     return "$mode";
