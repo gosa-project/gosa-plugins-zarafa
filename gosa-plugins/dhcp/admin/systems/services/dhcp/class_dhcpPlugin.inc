@@ -23,7 +23,6 @@ class dhcpPlugin extends plugin
   /* Used attributes */
   var $cn= "";
   var $orig_cn= "";
-  var $orig_dn= "";
   var $options= null;
   var $statements= array();
 
@@ -90,7 +89,6 @@ class dhcpPlugin extends plugin
 
     /* Save CN for later reference */
     $this->orig_cn= $this->cn;
-    $this->orig_dn= $this->dn;
   }
 
   function execute()
@@ -140,12 +138,10 @@ class dhcpPlugin extends plugin
 
     /* Add cn if we're new */
     if ($this->new){
-      $this->dn= "cn=".$this->cn.",".$this->orig_dn;
+      $this->dn= "cn=".$this->cn.",".$this->dn;
     } else {
-      $this->dn= "cn=".$this->cn.preg_replace('/^cn=[^,]+/', '', $this->orig_dn);
+      $this->dn= "cn=".$this->cn.preg_replace('/^cn=[^,]+/', '', $this->dn);
     }
-
-    print_a($this);
 
     /* Assemble new entry - options */
     $this->attrs['dhcpOption']= $this->options->save();
