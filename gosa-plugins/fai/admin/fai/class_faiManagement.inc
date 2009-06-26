@@ -113,6 +113,8 @@ class faiManagement extends plugin
     
 		$display 	= "";
     $s_action	= "";
+    $i_entryID ="";
+    $s_entryType= "";
 		$s_entry 	= "";
     $no_save = FALSE;   // hide Apply / Save buttons
     
@@ -260,24 +262,46 @@ class faiManagement extends plugin
         foreach(array("opsi_netboot","opsi_local") as $type){
           if(isset($group[$type])) unset($group[$type]);
         }
-        if(count($group)){
+        if(count($group) == 1){
+          $s_action = "remove";
+          $i_entryID = $s_entry;
+          $s_entryType = key($group);
+        }elseif(count($group)){
           $this->dialog = new faiGroupHandle($group,"remove");
         }
       }
     }elseif($s_action == "group_edit"){
       if(isset($this->objects[$s_entry])){
         $group = $this->objects[$s_entry];
-        $this->dialog = new faiGroupHandle($group,"edit");
+        if(count($group) == 1){
+          $s_action = "edit";
+          $i_entryID = $s_entry;
+          $s_entryType = key($group);
+        }else{
+          $this->dialog = new faiGroupHandle($group,"edit");
+        }
       }
     }elseif($s_action == "group_cut"){
       if(isset($this->objects[$s_entry])){
         $group = $this->objects[$s_entry];
-        $this->dialog = new faiGroupHandle($group,"cut");
+        if(count($group) == 1){
+          $s_action = "cut";
+          $i_entryID = $s_entry;
+          $s_entryType = key($group);
+        }else{
+          $this->dialog = new faiGroupHandle($group,"cut");
+        }
       }
     }elseif($s_action == "group_copy"){
       if(isset($this->objects[$s_entry])){
         $group = $this->objects[$s_entry];
-        $this->dialog = new faiGroupHandle($group,"copy");
+        if(count($group) == 1){
+          $s_action = "copy";
+          $i_entryID = $s_entry;
+          $s_entryType = key($group);
+        }else{
+          $this->dialog = new faiGroupHandle($group,"copy");
+        }
       }
     }
     if($this->dialog instanceOf faiGroupHandle){
@@ -298,7 +322,7 @@ class faiManagement extends plugin
      ********************/
 
     /* Display the copy & paste dialog, if it is currently open */
-    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    $ret = $this->copyPasteHandling_from_queue($s_action,$i_entryID,$s_entryType);
     if($ret){
       return($ret);
     }
@@ -351,7 +375,7 @@ class faiManagement extends plugin
       Delete confirme dialog 
      ****************/
 
-    if ($s_action=="del_multiple" || 
+    if ($s_action=="del_multiple" || $s_action == "remove" ||  
         $this->dialog instanceOf faiGroupHandle && $this->dialog->get_mode() == "remove"){
  
       /* Collect objects to delete and check if objects are freezed
@@ -359,7 +383,10 @@ class faiManagement extends plugin
       $dns = array();
       $errors = "";
       $this->dns = array();
-      if($this->dialog instanceOf faiGroupHandle){
+
+      if($s_action == "remove"){
+        $to_delete =array($entry = $this->objects[$i_entryID][$s_entryType]);
+      }elseif($this->dialog instanceOf faiGroupHandle){
         $to_delete = $this->dialog->get_selected();
       }else{
         $ids = $this->list_get_selected_items();
@@ -1303,7 +1330,7 @@ class faiManagement extends plugin
   }
 
 
-  function copyPasteHandling_from_queue($s_action,$s_entry)
+  function copyPasteHandling_from_queue($s_action,$i_entryID,$s_entryType)
   {
     /* Check if Copy & Paste is disabled */
     if(!is_object($this->CopyPasteHandler)){
@@ -1312,7 +1339,29 @@ class faiManagement extends plugin
 
     $ui = get_userinfo();
 
-    /* Add a single entry to queue */
+    // Copy a single entry
+    if($s_action == "copy"){
+      $entry = $this->objects[$i_entryID][$s_entryType];
+      $this->CopyPasteHandler->cleanup_queue();
+      $a_setup  = $this->get_type($entry);
+      $dn = $entry['dn'];
+      if($ui->is_copyable($dn,"fai",$a_setup[1])){
+        $this->CopyPasteHandler->add_to_queue($dn,"copy",$a_setup[0],$a_setup[2],"fai");
+      }
+    }
+
+    // cut a single entry
+    if($s_action == "cut"){
+      $entry = $this->objects[$i_entryID][$s_entryType];
+      $this->CopyPasteHandler->cleanup_queue();
+      $a_setup  = $this->get_type($entry);
+      $dn = $entry['dn'];
+      if($ui->is_copyable($dn,"fai",$a_setup[1])){
+        $this->CopyPasteHandler->add_to_queue($dn,"cut",$a_setup[0],$a_setup[2],"fai");
+      }
+    }
+
+    /* Add a entries from the group selection to queue */
     if($this->dialog instanceOf faiGroupHandle && !$this->dialog->is_open()){
 
       if(in_array($this->dialog->get_mode(),array("copy"))){      
