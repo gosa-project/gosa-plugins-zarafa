@@ -142,8 +142,19 @@ class posixAccount extends plugin
       }
       $this->initially_was_account= $this->is_account;
 
-      /* Fill group */
+      /* Fill group. If the gid is the same as a gid of a group with 
+         the same name, set primaryGroup to 0, i.e. "automatic".  */
       $this->primaryGroup= $this->gidNumber;
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search("(objectClass=posixGroup)", array("cn", "gidNumber"));
+      while($attrs = $ldap->fetch()){
+        if ($attrs['cn'][0] == $this->uid) {
+          if ($attrs['gidNumber'][0] == $this->gidNumber){
+            $this->primaryGroup = 0;
+            break;
+          }
+        }
+      }
 
       /* Generate status text */
       $current= date("U");
@@ -845,6 +856,18 @@ class posixAccount extends plugin
 
       if ($this->primaryGroup != 0){
         $this->gidNumber= $this->primaryGroup;
+      } else {
+        /* "automatic" was chosen as a group. See if there is group with the
+           same name as the uid, and if so, set the person's gid to that gid. */
+        $ldap= $this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->search("(objectClass=posixGroup)", array("cn", "gidNumber"));
+        while($attrs = $ldap->fetch()){
+          if ($attrs['cn'][0] == $this->uid) {
+            $this->gidNumber = $attrs['gidNumber'][0];
+            break;
+          }
+        }
       }
     }
 
