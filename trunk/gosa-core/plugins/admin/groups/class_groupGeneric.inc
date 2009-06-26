@@ -175,6 +175,7 @@ class group extends plugin
         $this->groupType= 0;
       }
       $this->oldgroupType= $this->groupType;
+
     }
 
     /* Get global filter config */
@@ -1121,30 +1122,29 @@ class group extends plugin
           $message[]= msgPool::duplicated(_("Name"));
         }
       }
-
     }else{
-
-      /* Check for used 'cn' */
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->search("(&(|(objectClass=gosaGroupOfNames)(objectClass=posixGroup))(cn=$this->cn))",array("cn"));
-      if ($ldap->count() != 0){
-
-        /* New entry? */
-        if ($this->dn == 'new'){
-          $message[]= msgPool::duplicated(_("Name"));
-        }
-
-        /* Moved? */
-        elseif ($new_dn != $this->orig_dn){
-          $ldap->fetch();
-          if ($ldap->getDN() != $this->orig_dn){
-            $message[]= msgPool::duplicated(_("Name"));
+        /* Check for used 'cn' */
+        $ldap= $this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->search("(&(|(objectClass=gosaGroupOfNames)(objectClass=posixGroup))(cn=$this->cn))",array("cn", "gosaUnitTag"));
+        if ($ldap->count() != 0){
+          while ($entry = $ldap->fetch()) {
+            if ($this->gosaUnitTag == '' || ($this->orig_dn != $new_dn)) {
+                  $tag = $this->get_gosaUnitTag($new_dn);
+            }
+            else {
+                  $tag = $this->gosaUnitTag;
+            }
+            if ($entry['gosaUnitTag'][0] == $tag) {
+                    if ($ldap->getDN() != $this->orig_dn){
+                    $message[]= _("Another group of the same name already exists, saving or creating this group is not allowed. Please rename the group or remove the other group.");
+                    break;
+                    }
+                }
           }
         }
-      }
-    }
-     
+    }   
+
     /* Check ID */
     if ($this->force_gid == "1"){
       if (!tests::is_id($this->gidNumber)){

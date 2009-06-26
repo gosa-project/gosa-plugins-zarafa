@@ -6522,3 +6522,6 @@ msgstr ""
 "Authentisierungscache um eine automatische Wiederanmeldung des Browsers zu "
 "verhindern."
 
+#: plugins/admin/groups/class_groupGeneric.inc:
+msgid "Another group of the same name already exists, saving or creating this group is not allowed. Please rename the group or remove the other group."
+msgstr "Es existiert bereits eine gleichnamige Gruppe, daher ist das Erstellen oder Speichern dieser Gruppe nicht erlaubt. Bitte benennen Sie die Gruppe um oder entfernen Sie die andere Gruppe."

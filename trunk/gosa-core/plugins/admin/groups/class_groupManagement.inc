@@ -56,6 +56,7 @@ class groupManagement extends plugin
       $this->ShowPrimaryCheckBox = true;
     }
 
+    echo "<pre>" . var_dump($this) . "</pre><br>";
     /* Create dialog object */
     $this->DivListGroup = new divListGroup($this->config,$this);
     $this->DivListGroup->DisableCheckBox("ShowPrimaryGroups",$this->ShowPrimaryCheckBox);
