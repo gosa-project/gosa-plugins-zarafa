@@ -1132,26 +1132,45 @@ class plugin
     }
   }
 
-  function tag_attrs(&$at, $dn= "", $tag= "", $show= false)
-  {
-    /* Skip tagging? 
-       If this is called from departmentGeneric, we have to skip this
-        tagging procedure. 
-     */
-    if($this->skipTagging){
-      return;
+  function getGosaUnitTag() {
+    $dn = $this->dn;
+    $len = strlen($dn);
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "No tag for $dn - looking for one...", "Tagging");
+    $relevant = array();
+    foreach ($this->config->adepartments as $key => $ntag){
+        /* This one is bigger than our dn, its not relevant... */
+        if ($len < strlen($key)){
+          continue;
+        }
+
+        /* This one matches with the latter part. Break and don't fix this entry */
+        if (preg_match('/(^|,)'.preg_quote($key, '/').'$/', $dn)){
+            @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "DEBUG: Possibly relevant: $key", "Tagging");
+            $relevant[strlen($key)]= $ntag;
+            continue;
+        }
     }
 
-    /* No dn? Self-operation... */
-    if ($dn == ""){
-      $dn= $this->dn;
+    /* If we've some relevant tags to set, just get the longest one */
+    if (count($relevant)){
+        ksort($relevant);
+        $tmp= array_keys($relevant);
+        $idx= end($tmp);
+        $tag= $relevant[$idx];
+    }
 
-      /* No tag? Find it yourself... */
-      if ($tag == ""){
-        $len= strlen($dn);
+    return $tag;
+  }
 
-        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "No tag for $dn - looking for one...", "Tagging");
-        $relevant= array();
+  function get_gosaUnitTag($dn = "")
+  {
+    if ($dn == "") {
+        $dn = $this->dn;
+    }
+
+    $len = strlen($dn);
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "No tag for $dn - looking for one...", "Tagging");
+     $relevant= array();
         foreach ($this->config->adepartments as $key => $ntag){
 
           /* This one is bigger than our dn, its not relevant... */
@@ -1174,8 +1193,28 @@ class plugin
           $tmp= array_keys($relevant);
           $idx= end($tmp);
           $tag= $relevant[$idx];
-          $this->gosaUnitTag= $tag;
+          return $tag;
         }
+
+  }
+  
+  function tag_attrs(&$at, $dn= "", $tag= "", $show= false)
+  {
+    /* Skip tagging? 
+       If this is called from departmentGeneric, we have to skip this
+        tagging procedure. 
+     */
+    if($this->skipTagging){
+      return;
+    }
+
+    /* No dn? Self-operation... */
+    if ($dn == ""){
+      $dn= $this->dn;
+
+      /* No tag? Find it yourself... */
+      if ($tag == ""){
+          $tag = $this->get_gosaUnitTag();
       }
     }
   
@@ -2087,5 +2126,4 @@ class plugin
   }
 }
 
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
