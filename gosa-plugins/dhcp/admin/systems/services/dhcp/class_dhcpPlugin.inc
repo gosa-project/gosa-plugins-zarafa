@@ -47,8 +47,13 @@ class dhcpPlugin extends plugin
       /* Load options */
       if (isset($attrs['dhcpOption'])){
         foreach ($attrs['dhcpOption'] as $opt){
-          $opt = trim($opt);
-          $this->options[$opt]= $opt;
+          $idx= preg_replace('/\s.+$/', '', $opt);
+          if ($idx == $opt){
+            $value= "";
+          } else {
+            $value= preg_replace('/^[^\s]+\s/', '', $opt);
+          }
+          $this->options[$idx]= $value;
         }
       }
 
@@ -106,10 +111,7 @@ class dhcpPlugin extends plugin
   {
     /* Strip network objects */
     foreach (array("routers", "domain-name", "subnet-mask", "broadcast-address") as $toberemoved){
-      $ikey = dhcpAdvanced::getOption($toberemoved, $this->options);
-      if($ikey != ""){
-        unset($this->options[$ikey]);
-      }
+      unset($this->options[$toberemoved]);
     }
     foreach (array("filename", "next-server","get-lease-hostnames","use-host-decl-names") as $toberemoved){
       unset($this->statements[$toberemoved]);
@@ -153,7 +155,7 @@ class dhcpPlugin extends plugin
     $this->attrs['dhcpOption']= array();
     if (isset ($this->options) && count ($this->options)){
       foreach ($this->options as $key => $val){
-        $this->attrs['dhcpOption'][]= "$val";
+        $this->attrs['dhcpOption'][]= "$key $val";
       }
     }
 
@@ -206,10 +208,7 @@ class dhcpPlugin extends plugin
   function fix_options()
   {
     foreach (array('domain-name-servers') as $key){
-      $ikey = dhcpAdvanced::getOption($key,$this->options);
-      if($ikey != ""){
-        unset ($this->options[$ikey]);
-      }
+      unset ($this->options[$key]);
     }
   }
 

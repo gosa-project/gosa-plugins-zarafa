@@ -121,8 +121,7 @@ class dhcpHost extends dhcpPlugin
           unset ($this->statements['fixed-address']);
         }
       }
-      $hn = "host-name {$this->cn}";
-      $this->options[$hn]= $hn;
+      $this->options['host-name']= $this->cn;
     }
 
     dhcpPlugin::save_object();

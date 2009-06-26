@@ -32,23 +32,6 @@ class dhcpAdvanced extends plugin
   var $objectclasses= array();
   var $parent;
 
-  static function getOption($needle, $heystack, $value_only = false){
-    foreach($heystack as $key => $val){
-      if($val != $key){
-        echo "<b>$key => $val</b>";
-      }
-
-      if(preg_match("/^{$needle} /i",$val)){
-        if($value_only){
-          return(trim(preg_replace('/^[^\s]*/')));
-        }else{
-          return($val);
-        }
-      }
-    }
-    return("");
-  }
-
   function dhcpAdvanced()
   {
     /* This is always an account */
@@ -70,22 +53,22 @@ class dhcpAdvanced extends plugin
     if ($acl_writeable && isset($_POST['delete_statement']) && isset($_POST['dhcpstatements'])){
       $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpstatements'));
       if (in_array($key, $this->autoStatements)){
-        msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
+	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
       } else {
         unset($this->statements[$key]);	
       }
     }
     if ($acl_writeable && isset($_POST['add_option']) && $_POST['addoption'] != ""){
-      $val= trim(get_post('addoption'));
-      $this->options[$val]= $val;
+      $key= preg_replace('/^([a-z0-9-]+)\s(.*)$/', '\\1', get_post('addoption'));
+      $val= preg_replace("/^$key\s*/", '', get_post('addoption'));
+      $this->options[$key]= $val;
     }
     if ($acl_writeable && isset($_POST['delete_option']) && isset($_POST['dhcpoptions'])){
       $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpoptions'));
-      $val= get_post('dhcpoptions');
       if (in_array($key, $this->autoOptions)){
-        msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
+	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
       } else {
-        unset($this->options[$val]);	
+        unset($this->options[$key]);	
       }
     }
 
@@ -106,11 +89,10 @@ class dhcpAdvanced extends plugin
     $smarty->assign("dhcpstatements", $statements);
     $options= array();
     foreach ($this->options as $key => $val){
-      $key = preg_replace("/ .*$/","",$val);
       if (in_array($key, $this->autoOptions)){
-        $options[$val]= "$val ["._("automatic")."]";
+        $options[$key]= "$key $val ["._("automatic")."]";
       } else {
-        $options[$val]= "$val";
+        $options[$key]= "$key $val";
       }
     }
     $smarty->assign("dhcpoptions", $options);
