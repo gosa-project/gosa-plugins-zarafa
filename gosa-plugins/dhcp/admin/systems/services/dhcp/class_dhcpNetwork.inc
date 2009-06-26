@@ -21,7 +21,7 @@
 class dhcpNetwork extends plugin
 {
   /* Used attributes */
-  var $options= array();
+  var $options= null;
   var $statements= array();
 
   /* attribute list for save action */
@@ -46,8 +46,8 @@ class dhcpNetwork extends plugin
               htmlentities(get_post('addserver')),"/[0-9a-z.-]/"), ERROR_DIALOG);
       } else {
         $servers= array();
-        if (isset($this->options['domain-name-servers'])){
-          foreach(split(",", $this->options['domain-name-servers']) as $val){
+        if($this->options->exists('domain-name-servers')){
+          foreach(split(",", $this->options->get('domain-name-servers')) as $val){
             $servers[$val]= $val;
           }
         }
@@ -57,17 +57,18 @@ class dhcpNetwork extends plugin
         foreach($servers as $val){
           $tmp.= $val.",";
         }
-        $this->options['domain-name-servers']= preg_replace('/,$/', '', $tmp);
+        $this->options->removeAll('domain-name-servers');
+        $this->options->set('domain-name-servers',preg_replace('/,$/', '', $tmp));
       }
     }
     if ($acl_writeable && isset($_POST['delete_dns']) && isset($_POST['dnsserver'])){
-      $tmp= preg_replace("/(\s*,\s*)?".get_post('dnsserver')."/i", '',
-          $this->options['domain-name-servers']);
+      $tmp= preg_replace("/(\s*,\s*)?".get_post('dnsserver')."/i", '', 
+        $this->options->get('domain-name-servers'));
       $tmp= preg_replace("/(\s*)?,(\s*)?$/", '', $tmp);
       if ($tmp != ""){
-        $this->options['domain-name-servers']= $tmp;
+        $this->options->set('domain-name-servers', $tmp);
       } else {
-        unset($this->options['domain-name-servers']);
+        $this->options->remove('domain-name-servers');
       }
     }
 
@@ -82,21 +83,14 @@ class dhcpNetwork extends plugin
      */
 
     /* Router */
-    if (isset($this->options['routers'])){
-      $smarty->assign("routers", $this->options['routers']);
-    } else {
-      $smarty->assign("routers", "");
-    }
+    $smarty->assign("routers", $this->options->get('routers'));
 
     /* DNS */
-    if (isset($this->options['domain-name'])){
-      $smarty->assign("domain", trim($this->options['domain-name'], '"'));
-    } else {
-      $smarty->assign("domain", "");
-    }
-    if (isset($this->options['domain-name-servers'])){
+    $smarty->assign("domain",$this->options->get('domain-name'));
+
+    if($this->options->exists('domain-name-servers')){
       $servers= array();
-      foreach(split(",", $this->options['domain-name-servers']) as $val){
+      foreach(split(",", $this->options->get('domain-name-servers')) as $val){
         $servers[$val]= $val;
       }
       $smarty->assign("dnsservers", $servers);
@@ -105,17 +99,12 @@ class dhcpNetwork extends plugin
     }
 
     /* Netmask / Broadcast */
-    if (isset($this->options['subnet-mask'])){
-      $this->options['subnet-mask']= normalize_netmask($this->options['subnet-mask']);
-      $smarty->assign("subnet_mask", $this->options['subnet-mask']);
-    } else {
-      $smarty->assign("subnet_mask", "");
+    if ($this->options->exists('subnet-mask')){
+      $this->options->removeAll('subnet-mask');
+      $this->options->set('subnet-mask',normalize_netmask($this->options->get('subnet-mask')));
     }
-    if (isset($this->options['broadcast-address'])){
-      $smarty->assign("broadcast_address", $this->options['broadcast-address']);
-    } else {
-      $smarty->assign("broadcast_address", "");
-    }
+    $smarty->assign("subnet_mask", $this->options->get('subnet-mask'));
+    $smarty->assign("broadcast_address", $this->options->get('broadcast-address'));
 
     /* Boot stuff */
     if (isset($this->statements['filename'])){
@@ -164,11 +153,10 @@ class dhcpNetwork extends plugin
       /* Options */
       foreach (array("routers" => "routers", "domain-name" => "domain", "subnet-mask" => "subnet_mask",
                      "broadcast-address" => "broadcast_address") as $key => $val){
-
         if ($_POST["$val"] == ''){
-          unset($this->options["$key"]);
+          $this->options->remove($key);
         } else {
-          $this->options["$key"]= get_post("$val");
+          $this->options->set($key,get_post($val));
         }
       }
 
@@ -209,16 +197,13 @@ class dhcpNetwork extends plugin
 
     /* Check netmask and broadcast */
     foreach(array("subnet-mask" => _("Netmask"), "broadcast-address" => _("Broadcast")) as $key => $typ){
-      if (!isset($this->options["$key"])){
+      if (!$this->options->exists("$key")){
         continue;
       }
-      $tmp= preg_replace('/^[^\s]+\s/', '', $this->options["$key"]);
-
-      if (!tests::is_ip($tmp)){
+      if (!tests::is_ip($this->options->get($key))){
         $message[]= sprintf(_("Error in definition of '%s'!"), $typ);
       }
     }
-
     return $message;
   }
 

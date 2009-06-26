@@ -21,7 +21,7 @@
 class dhcpAdvanced extends plugin
 {
   /* Used attributes */
-  var $options= array();
+  var $options= null;
   var $statements= array();
   var $show_advanced= FALSE;
   var $autoStatements= array();
@@ -61,14 +61,15 @@ class dhcpAdvanced extends plugin
     if ($acl_writeable && isset($_POST['add_option']) && $_POST['addoption'] != ""){
       $key= preg_replace('/^([a-z0-9-]+)\s(.*)$/', '\\1', get_post('addoption'));
       $val= preg_replace("/^$key\s*/", '', get_post('addoption'));
-      $this->options[$key]= $val;
+      $this->options->add($key,$val);
     }
     if ($acl_writeable && isset($_POST['delete_option']) && isset($_POST['dhcpoptions'])){
-      $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpoptions'));
-      if (in_array($key, $this->autoOptions)){
-	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
+      $name = preg_replace('/_[0-9]*$/', '', get_post('dhcpoptions'));
+      $key  = preg_replace('/^.*_/', '', get_post('dhcpoptions'));
+      if (in_array($name, $this->autoOptions)){
+        msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
       } else {
-        unset($this->options[$key]);	
+        $this->options->remove($name,$key);	
       }
     }
 
@@ -88,11 +89,15 @@ class dhcpAdvanced extends plugin
     }
     $smarty->assign("dhcpstatements", $statements);
     $options= array();
-    foreach ($this->options as $key => $val){
+    foreach ($this->options->getAll() as $key => $val){
       if (in_array($key, $this->autoOptions)){
-        $options[$key]= "$key $val ["._("automatic")."]";
+        foreach($val as $id => $entry){
+          $options[$key."_".$id]= "$key $entry ["._("automatic")."]";
+        }       
       } else {
-        $options[$key]= "$key $val";
+        foreach($val as $id => $entry){
+          $options[$key."_".$id]= "$key $entry";
+        }       
       }
     }
     $smarty->assign("dhcpoptions", $options);

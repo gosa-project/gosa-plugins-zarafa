@@ -37,7 +37,7 @@
    <br>
 {render acl=$acl}
    <select name='dhcpoptions' style="width:100%;" size="14">
-    {html_options values=$dhcpoptions output=$dhcpoptions}
+    {html_options options=$dhcpoptions}
    </select>
 {/render}
    <br>

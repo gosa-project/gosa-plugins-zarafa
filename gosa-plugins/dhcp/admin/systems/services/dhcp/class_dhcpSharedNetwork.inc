@@ -74,28 +74,25 @@ class dhcpSharedNetwork extends dhcpPlugin
     /* Show main page */
     $display= $smarty->fetch(get_template_path('dhcp_sharedNetwork.tpl', TRUE,dirname(__FILE__))).$this->network->execute();
 
-    /* Merge arrays for advanced view */
-    $this->fix_options();
-	
-	/* Remove states configured by checkboxes. 
+    /* Remove states configured by checkboxes. 
      */
-	foreach(array("deny unknown-clients",
+    foreach(array("deny unknown-clients",
           "deny bootp", "deny booting", "allow unknown-clients",
           "allow bootp", "allow booting") as $name){
-		if(isset($this->advanced->statements[$name])){
-			unset($this->advanced->statements[$name]);
-			unset($this->network->statements[$name]);
-		}
-	}
+      if(isset($this->advanced->statements[$name])){
+        unset($this->advanced->statements[$name]);
+        unset($this->network->statements[$name]);
+      }
+    }
 
-    foreach (array("options", "statements") as $type){
+    foreach (array("statements") as $type){
       $this->advanced->$type= $this->$type + $this->network->$type;
     }
 
     $display.= $this->advanced->execute();
 
     /* Merge back for removals */
-    foreach (array("options", "statements") as $type){
+    foreach (array("statements") as $type){
       $this->$type= $this->advanced->$type;
       $this->network->$type= $this->advanced->$type;
     }

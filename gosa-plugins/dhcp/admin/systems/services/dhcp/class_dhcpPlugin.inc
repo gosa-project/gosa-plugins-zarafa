@@ -23,7 +23,8 @@ class dhcpPlugin extends plugin
   /* Used attributes */
   var $cn= "";
   var $orig_cn= "";
-  var $options= array();
+  var $orig_dn= "";
+  var $options= null;
   var $statements= array();
 
   /* Subobjects */
@@ -36,7 +37,9 @@ class dhcpPlugin extends plugin
 
   function dhcpPlugin(&$parent,$attrs)
   {
-	$this->parent = $parent;
+    $this->parent = $parent;
+
+    $this->options = new dhcpOption();
 
     /* Load statements / options */
     if (is_array($attrs)){
@@ -46,14 +49,8 @@ class dhcpPlugin extends plugin
 
       /* Load options */
       if (isset($attrs['dhcpOption'])){
-        foreach ($attrs['dhcpOption'] as $opt){
-          $idx= preg_replace('/\s.+$/', '', $opt);
-          if ($idx == $opt){
-            $value= "";
-          } else {
-            $value= preg_replace('/^[^\s]+\s/', '', $opt);
-          }
-          $this->options[$idx]= $value;
+        foreach($attrs['dhcpOption'] as $opt){
+          $this->options->add(trim($opt));
         }
       }
 
@@ -82,17 +79,18 @@ class dhcpPlugin extends plugin
 
     /* Load network module */
     $this->network= new dhcpNetwork();
-    $this->network->options= $this->options;
+    $this->network->options= &$this->options;
     $this->network->statements= $this->statements;
     $this->advanced= new dhcpAdvanced();
-    $this->advanced->options= $this->options;
+    $this->advanced->options= &$this->options;
     $this->advanced->statements= $this->statements;
 
-	$this->network->parent = $parent;
-	$this->advanced->parent = $parent;
+    $this->network->parent = $parent;
+    $this->advanced->parent = $parent;
 
     /* Save CN for later reference */
     $this->orig_cn= $this->cn;
+    $this->orig_dn= $this->dn;
   }
 
   function execute()
@@ -109,10 +107,6 @@ class dhcpPlugin extends plugin
   /* Save data to object */
   function save_object()
   {
-    /* Strip network objects */
-    foreach (array("routers", "domain-name", "subnet-mask", "broadcast-address") as $toberemoved){
-      unset($this->options[$toberemoved]);
-    }
     foreach (array("filename", "next-server","get-lease-hostnames","use-host-decl-names") as $toberemoved){
       unset($this->statements[$toberemoved]);
     }
@@ -122,7 +116,7 @@ class dhcpPlugin extends plugin
     $this->advanced->save_object();
 
     /* Merge arrays for advanced view */
-    foreach (array("options", "statements") as $type){
+    foreach (array("statements") as $type){
       $this->advanced->$type= $this->$type + $this->network->$type;;
     }
   }
@@ -140,24 +134,21 @@ class dhcpPlugin extends plugin
   function save()
   {
     /* Merge arrays for network and advanced view */
-    foreach (array("options", "statements") as $type){
+    foreach (array("statements") as $type){
       $this->$type= $this->$type + $this->network->$type + $this->advanced->$type;
     }
 
     /* Add cn if we're new */
     if ($this->new){
-      $this->dn= "cn=".$this->cn.",".$this->dn;
+      $this->dn= "cn=".$this->cn.",".$this->orig_dn;
     } else {
-      $this->dn= "cn=".$this->cn.preg_replace('/^cn=[^,]+/', '', $this->dn);
+      $this->dn= "cn=".$this->cn.preg_replace('/^cn=[^,]+/', '', $this->orig_dn);
     }
 
+    print_a($this);
+
     /* Assemble new entry - options */
-    $this->attrs['dhcpOption']= array();
-    if (isset ($this->options) && count ($this->options)){
-      foreach ($this->options as $key => $val){
-        $this->attrs['dhcpOption'][]= "$key $val";
-      }
-    }
+    $this->attrs['dhcpOption']= $this->options->save();
 
     /* Assemble new entry - statements */
     $this->attrs['dhcpStatements']= array();
@@ -176,7 +167,6 @@ class dhcpPlugin extends plugin
     $this->attrs['cn']= array($this->cn);
     $this->attrs['objectClass']= $this->objectclasses;
     $this->attrs['MODIFIED']= TRUE;
-
     return ($this->attrs);
   }
 
@@ -202,14 +192,6 @@ class dhcpPlugin extends plugin
   function removeStatement($name)
   {
     $this->removeAttrs($name, 'dhcpStatement');
-  }
-
-
-  function fix_options()
-  {
-    foreach (array('domain-name-servers') as $key){
-      unset ($this->options[$key]);
-    }
   }
 
 }

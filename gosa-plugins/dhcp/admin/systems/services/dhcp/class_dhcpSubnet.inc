@@ -75,15 +75,14 @@ class dhcpSubnet extends dhcpPlugin
     $display= $smarty->fetch(get_template_path('dhcp_subnet.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
 
     /* Merge arrays for advanced view */
-    $this->fix_options();
-    foreach (array("options", "statements") as $type){
+    foreach (array("statements") as $type){
       $this->advanced->$type= $this->$type + $this->network->$type;
     }
 
     $display.= $this->advanced->execute();
 
     /* Merge back for removals */
-    foreach (array("options", "statements") as $type){
+    foreach (array("statements") as $type){
       $this->$type= $this->advanced->$type;
       $this->network->$type= $this->advanced->$type;
     }
