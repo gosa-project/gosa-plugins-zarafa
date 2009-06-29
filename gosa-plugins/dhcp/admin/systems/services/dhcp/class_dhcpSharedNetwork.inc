@@ -52,22 +52,20 @@ class dhcpSharedNetwork extends dhcpPlugin
     } else {
       $smarty->assign("authoritative", "");
     }
-    if (!$this->statements->exists("deny unknown-clients")){
-      $smarty->assign("allow_unknown_state", "checked");
-    } else {
-      $smarty->assign("allow_unknown_state", "");
-    }
-    if (!$this->statements->exists("deny bootp")){
-      $smarty->assign("allow_bootp_state", "checked");
-    } else {
-      $smarty->assign("allow_bootp_state", "");
-    }
-    if (!$this->statements->exists("deny booting")){
-      $smarty->assign("allow_booting_state", "checked");
-    } else {
-      $smarty->assign("allow_booting_state", "");
-    }
 
+    $allow = $this->statements->get("allow"); 
+    if(!is_array($allow)) $allow=array($allow);
+    foreach(array(
+          "unknown-clients" => "allow_unknown_state",
+          "bootp" => "allow_bootp_state",
+          "booting" => "allow_booting_state") as $state => $target){
+      if(in_array($state,$allow)){
+        $smarty->assign($target,"checked");
+      }else{
+        $smarty->assign($target,"");
+      }
+    }
+ 
     /* Show main page */
     $display= $smarty->fetch(get_template_path('dhcp_sharedNetwork.tpl', TRUE,dirname(__FILE__))).$this->network->execute();
 
@@ -127,13 +125,13 @@ class dhcpSharedNetwork extends dhcpPlugin
         $this->statements->removeAll("authoritative");
       }
 
+      $this->statements->removeAll("deny");
+      $this->statements->removeAll("allow");
       foreach(array("unknown-clients", "bootp", "booting") as $name){
         if (isset($_POST[$name])){
-          $this->statements->removeAll("deny $name");
-          $this->statements->set("allow $name","");
+          $this->statements->add("allow",$name);
         } else {
-          $this->statements->removeAll("allow $name");
-          $this->statements->set("deny $name","");
+          $this->statements->add("deny",$name);
         }
       }
     }
