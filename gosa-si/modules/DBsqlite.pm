@@ -130,15 +130,15 @@ sub create_table {
 		push(@col_names, $col_name);
 	}
 	$col_names->{ $table_name } = \@col_names;
+	my $col_names_string = join(", ", @col_names);
 	
 	# Not activated yet
 	# Check schema
-	# if($self->check_schema($table_name)) {
-	# 	$self->exec_statement("DROP TABLE $table_name");
-	# 	&main::daemon_log("WARNING: Schema of table $table_name has changed! Table will be recreated!", 3);
-	# }
+	if($self->check_schema($table_name, $col_names_ref)) {
+		$self->exec_statement("DROP TABLE $table_name");
+		&main::daemon_log("WARNING: Schema of table $table_name has changed! Table will be recreated!", 3);
+	}
 
-	my $col_names_string = join(", ", @col_names);
 	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
 	my $res = $self->exec_statement($sql_statement);
 	
@@ -151,6 +151,38 @@ sub create_table {
 
 	return 0;
 }
+
+
+sub check_schema {
+	my $self = shift;
+	my $table_name = shift;
+	my $col_names_ref = shift;   # ['id INTEGER PRIMARY KEY', 'timestamp VARCHAR(14) DEFAULT \'none\'', ... ]
+	my $col_names_length = @$col_names_ref;
+
+	my $sql = "PRAGMA table_info($table_name)";
+	my $res = $self->exec_statement($sql);   # [ ['0', 'id', 'INTEGER', '0', undef, '1' ], ['1', 'timestamp', 'VARCHAR(14)', '0', '\'none\'', '0'], ... ]
+	my $db_table_length = @$res;
+
+	# The number of columns is diffrent
+	if ($col_names_length != $db_table_length) 
+	{
+		return 1;
+	}
+
+	# The column name and column type to not match
+	for (my $i=0; $i < $db_table_length; $i++)
+	{
+		my @col_names_list = split(" ", @$col_names_ref[$i]);
+		if (($col_names_list[0] ne @{@$res[$i]}[1]) || ($col_names_list[1] ne @{@$res[$i]}[2]))
+		{
+			return 1;
+		}
+	}
+
+
+	return 0;
+}
+
 
 
 sub add_dbentry {
