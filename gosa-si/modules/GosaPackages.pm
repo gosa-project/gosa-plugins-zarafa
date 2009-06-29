@@ -280,6 +280,7 @@ sub process_job_msg {
 	
     # Check if it is a periodical job
     my $periodic = 'none';
+    my $periodic_time = 1;
     if (exists $msg_hash->{periodic})
     {
         $periodic = $msg_hash->{periodic}[0];
@@ -299,6 +300,34 @@ sub process_job_msg {
                 "</xml>";
             return ($out_msg);
         }
+
+        if (exists $msg_hash->{$periodic})   # Check periodical time tag and set value
+        {
+            if (ref $msg_hash->{$periodic}[0] eq "HASH")   # Periodical time tag is empty
+            {
+                &main::daemon_log("$session_id ERROR: Message contains no content of periodical time tag.".
+                        " Please use an integer for this tag (i. e.: <periodic>hours</periodoc><hours>5</hours>)", 1);
+                $out_msg = "<xml>".
+                    "<header>answer</header><source>$main::server_address</source><target>GOSA</target>".
+                    "<answer1>1</answer1><error_string>Message contains no content of periodic time tag</error_string>".
+                    "</xml>";
+                return ($out_msg);
+
+            }
+
+            if (not $msg_hash->{$periodic}[0] =~ /[1-9]+\d*/)   # Periodical time tag is not an INT > 0
+            {
+                &main::daemon_log("$session_id ERROR: Message contains invalid periodical time tag '$msg_hash->{$periodic}[0]'.".
+                        " Please use an integer for this tag (i. e.: <periodic>hours</periodoc><hours>5</hours>)", 1);
+                $out_msg = "<xml>".
+                    "<header>answer</header><source>$main::server_address</source><target>GOSA</target>".
+                    "<answer1>1</answer1><error_string>Message contains invalid periodic time tag '$msg_hash->{$periodic}[0]'</error_string>".
+                    "</xml>";
+                return ($out_msg);
+            }
+
+            $periodic_time = $msg_hash->{$periodic}[0];
+        }
     }
 
     # Add job to job queue
@@ -316,7 +345,7 @@ sub process_job_msg {
 			plainname=>$plain_name,
             siserver=>"localhost",
             modified=>"1",
-            periodic=>$periodic,
+            periodic=>$periodic_time."_".$periodic,
         };
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {

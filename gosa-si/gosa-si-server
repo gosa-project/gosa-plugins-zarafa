@@ -1712,25 +1712,27 @@ sub watch_for_done_jobs {
 
 	while( my ($number, $hit) = each %{$res} ) 
 	{
-		# Periodical jobs should not be deleted but reactivated with new timestamp instead.
-		if (exists $check_periodic->{$hit->{periodic}})
-		{
-			my $reactivated_ts = $hit->{timestamp};
-			my $act_ts = int(&get_time());
-			while ($act_ts > int($reactivated_ts))   # Redo calculation to avoid multiple jobs in the past
-			{
-				$reactivated_ts = &calc_timestamp($reactivated_ts, "plus", 1, $hit->{periodic});
-			}
-			my $sql = "UPDATE $job_queue_tn SET status='waiting', timestamp='$reactivated_ts' WHERE id='".$hit->{id}."'"; 
-			my $res = $job_db->exec_statement($sql);
-			&daemon_log("J INFO: Update periodical job '".$hit->{headertag}."' for client '".$hit->{targettag}."'. New execution time '$reactivated_ts'.", 5);
-		}
 		# Non periodical jobs can be deleted.
-		else
+		if ($hit->{periodic} eq "none")
 		{
 			my $jobdb_id = $hit->{id};
 			my $sql_statement = "DELETE FROM $job_queue_tn WHERE id=$jobdb_id"; 
 			my $res = $job_db->del_dbentry($sql_statement);	
+		}
+
+		# Periodical jobs should not be deleted but reactivated with new timestamp instead.
+		else
+		{
+			my ($p_time, $periodic) = split("_", $hit->{periodic});
+			my $reactivated_ts = $hit->{timestamp};
+			my $act_ts = int(&get_time());
+			while ($act_ts > int($reactivated_ts))   # Redo calculation to avoid multiple jobs in the past
+			{
+				$reactivated_ts = &calc_timestamp($reactivated_ts, "plus", $p_time, $periodic);
+			}
+			my $sql = "UPDATE $job_queue_tn SET status='waiting', timestamp='$reactivated_ts' WHERE id='".$hit->{id}."'"; 
+			my $res = $job_db->exec_statement($sql);
+			&daemon_log("J INFO: Update periodical job '".$hit->{headertag}."' for client '".$hit->{targettag}."'. New execution time '$reactivated_ts'.", 5);
 		}
 	}
 
