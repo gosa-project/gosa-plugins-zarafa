@@ -1406,6 +1406,9 @@ class group extends plugin
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
+    
+    $source_o = new group($this->config, $source['dn']);
+    $this->smbgroup = $source_o->smbgroup;
 
     $this->memberUid = array();
     if(isset($source['memberUid'])){
