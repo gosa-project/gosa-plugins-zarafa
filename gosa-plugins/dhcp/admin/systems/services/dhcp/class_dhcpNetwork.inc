@@ -100,7 +100,6 @@ class dhcpNetwork extends plugin
 
     /* Netmask / Broadcast */
     if ($this->options->exists('subnet-mask')){
-      $this->options->removeAll('subnet-mask');
       $this->options->set('subnet-mask',normalize_netmask($this->options->get('subnet-mask')));
     }
     $smarty->assign("subnet_mask", $this->options->get('subnet-mask'));
