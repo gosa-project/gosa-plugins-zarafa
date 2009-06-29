@@ -18,8 +18,8 @@ for($count = 1; $count <= $zahl; $count++)
 
 	##############################
 	# periodical jobs
-	$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><macaddress>00:0c:29:4c:4b:0c</macaddress><timestamp>20090622000000</timestamp><periodic>minutes</periodic></xml>"; 
-	$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><timestamp>20090626135000</timestamp><macaddress>00:0c:29:4c:4b:0c</macaddress><periodic>minutes</periodic><minutes>5</minutes></xml>";
+	$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><macaddress>00:0c:29:4c:4b:0c</macaddress><timestamp>20090629000000</timestamp><periodic>weeks</periodic><weeks>2</weeks></xml>"; 
+	#$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><timestamp>20090626135000</timestamp><macaddress>00:0c:29:4c:4b:0c</macaddress><periodic>minutes</periodic><minutes>5</minutes></xml>";
     /* Prepare a hunge bunch of data to be send */
     # jobdb add
     #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source><target>GOSA</target><hostname>ws-muc-2</hostname></xml>";
