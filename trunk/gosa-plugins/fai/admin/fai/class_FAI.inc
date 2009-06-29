@@ -1303,7 +1303,7 @@ class FAI
     }
   }
 
-  /* Return a child objects, if there are any */
+  /* Return child objects, if there are any */
   static function get_child_objects($dn)
   {
     global $config;
@@ -1312,10 +1312,9 @@ class FAI
 
     if (FAI::is_parent_object($Current_DN)){
       $ldap = $config->get_ldap_link();
-      $ldap->cd($config->current['BASE']);
+      $ldap->cd($dn);
       $ldap->search("(objectClass=FAIclass)",array("dn"));
       while($attrs = $ldap->fetch()){
-        $newdn=$attrs['dn'];
         if(preg_match("/".preg_quote($Current_DN, '/')."/",$attrs['dn']) && $attrs['dn'] != $Current_DN){
           $children[] = $attrs['dn'];
         }
