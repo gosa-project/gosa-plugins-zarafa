@@ -24,6 +24,7 @@ class DNS
                     'a6Record'      => "a6Record",          
                     'dSRecord'      => "dSRecord",          
                     'sSHFPRecord'   => "sSHFPRecord",       
+                    'sOARecord'     => "sOARecord",       
                     'rRSIGRecord'   => "rRSIGRecord",      
                     'nSECRecord'    => "nSECRecord");
   /* All available record types */
