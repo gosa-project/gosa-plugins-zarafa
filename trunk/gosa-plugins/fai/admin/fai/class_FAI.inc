@@ -1329,23 +1329,31 @@ class FAI
   {
     global $config;
     $Current_DN = $dn;
+    $i = 0;
 
     $tmp_dn = $Current_DN;
-    $parent_dn = $tmp_dn;
+    $parent_dn = array();
 
     /* special case partitions, as they don't start with cn= in their DN (schema bug?) */
     $tmp_dn = preg_replace('/^FAIpartitionNr=/', 'cn=', $tmp_dn);
 
-    while (preg_match('/^cn=/', $tmp_dn)){
-      $parent_dn = $tmp_dn;
-      $tmp_dn = preg_replace('/^cn=[^,.]*,/', '', $parent_dn);
+    $tmp_dn = gosa_ldap_explode_dn($tmp_dn);
+    while(preg_match('/^cn=/', $tmp_dn[$i])) {
+      $i++;
     }
+    /* DN part does not start with cn= anymore, remove one from the counter to get the
+       last CN element */
+    $i--;
+
+    for ($i;$i<$tmp_dn['count'];$i++) {
+      $parent_dn[] = trim($tmp_dn[$i]);
+    }
+    $parent_dn = join($parent_dn, ',');
+
     if ($parent_dn != $Current_DN){
       $ldap = $config->get_ldap_link();
       $ldap->cd($config->current['BASE']);
       $ldap->cat($parent_dn);
-
-      /* Check objectClasses and name to check if this is a release department */
       if($ldap->count()){
         return $parent_dn;
       }
