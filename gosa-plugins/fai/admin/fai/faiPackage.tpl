@@ -67,15 +67,24 @@
 <p class="seperator">&nbsp;</p>
 <table width="99%" summary="">
 	<tr>
-		<td> 
+		<td colspan="2"> 
 			<h2><img class="center" alt="" src="plugins/fai/images/fai_packages.png" align="middle" title="{t}Used packages{/t}">&nbsp;{t}Used packages{/t}</h2>
 			{$divlist}
-			<br>
-{render acl=$FAIpackageACL}
-			<input type="submit" name="Addpkg" value="{msgPool type=addButton}">
-{/render}
 		</td>
 	</tr>
+{render acl=$FAIpackageACL}
+	<tr>
+		<td>
+			{t}Manually add packages{/t}: 
+      <input type="text" size="25" name="addPpkgsText" value="" />
+			<input type="submit" name="AddManualpkg" value="{msgPool type=addButton}" />
+		</td>
+		<td align="right">
+      {t}Add from list{/t}: 
+			<input type="submit" name="Addpkg" value="{msgPool type=addButton}" />
+		</td>
+	</tr>
+{/render}
 </table>
 
 <!-- Place cursor -->
