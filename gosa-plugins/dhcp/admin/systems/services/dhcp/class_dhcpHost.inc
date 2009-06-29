@@ -39,7 +39,7 @@ class dhcpHost extends dhcpPlugin
     $this->advanced->setAutoOptions(array("host-name"));
     $this->advanced->setAutoStatements(array("fixed-address"));
 
-	$this->realGosaHost = $host_exists_in_gosa;
+    $this->realGosaHost = $host_exists_in_gosa;
   }
 
   function execute()
@@ -53,11 +53,7 @@ class dhcpHost extends dhcpPlugin
     $smarty->assign("acl",$this->parent->getacl(""));
 
     /* Create fixed address */
-    if (isset($this->statements['fixed-address'])){
-      $smarty->assign("fixedaddr", $this->statements['fixed-address']);
-    } else {
-      $smarty->assign("fixedaddr", "");
-    }
+    $smarty->assign("fixedaddr", $this->statements->get('fixed-address'));
 
     /* Prepare hw type selector */
     $hwtype= preg_replace('/\s.*$/', '', $this->dhcpHWAddress);
@@ -68,17 +64,8 @@ class dhcpHost extends dhcpPlugin
     /* Show main page */
     $display= $smarty->fetch(get_template_path('dhcp_host.tpl', TRUE,dirname(__FILE__))).$this->network->execute();
 
-    /* Merge arrays for advanced view */
-    foreach (array("statements") as $type){
-      $this->advanced->$type= $this->$type + $this->network->$type;
-    }
+    /* Get advanced options */
     $display.= $this->advanced->execute();
-
-    /* Merge back for removals */
-    foreach (array("statements") as $type){
-      $this->$type= $this->advanced->$type;
-      $this->network->$type= $this->advanced->$type;
-    }
 
     /* Add footer */
     $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
@@ -115,9 +102,9 @@ class dhcpHost extends dhcpPlugin
       /* Save fixed address */
       if(!$this->realGosaHost){
         if ($_POST['fixedaddr'] != ""){
-          $this->statements['fixed-address']= get_post('fixedaddr');
+          $this->statements->set('fixed-address', get_post('fixedaddr'));
         } else {
-          unset ($this->statements['fixed-address']);
+          $this->statements->removeAll('fixed-address');
         }
       }
       $this->options->set('host-name',$this->cn);

@@ -22,7 +22,7 @@ class dhcpAdvanced extends plugin
 {
   /* Used attributes */
   var $options= null;
-  var $statements= array();
+  var $statements= null;
   var $show_advanced= FALSE;
   var $autoStatements= array();
   var $autoOptions= array();
@@ -48,14 +48,15 @@ class dhcpAdvanced extends plugin
     if ($acl_writeable && isset($_POST['add_statement']) && $_POST['addstatement'] != ""){
       $key= preg_replace('/^([a-z0-9-]+)\s(.*)$/', '\\1', get_post('addstatement'));
       $val= preg_replace("/^$key\s*/", '', get_post('addstatement'));
-      $this->statements[$key]= $val;
+      $this->statements->add($key,$val);
     }
     if ($acl_writeable && isset($_POST['delete_statement']) && isset($_POST['dhcpstatements'])){
-      $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpstatements'));
-      if (in_array($key, $this->autoStatements)){
-	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
+      $name = preg_replace('/_[0-9]*$/', '', get_post('dhcpstatements'));
+      $key  = preg_replace('/^.*_/', '', get_post('dhcpstatements'));
+      if (in_array($name, $this->autoStatements)){
+        msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
       } else {
-        unset($this->statements[$key]);	
+        $this->statements->remove($name,$key);	
       }
     }
     if ($acl_writeable && isset($_POST['add_option']) && $_POST['addoption'] != ""){
@@ -75,19 +76,25 @@ class dhcpAdvanced extends plugin
 
     $smarty= get_smarty();
 
-	/* Assign ACLs */
-	$smarty->assign("acl",$this->parent->getacl(""));
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
 
-    /* Assign arrays */
+    /* Assign statements  */
     $statements= array();
-    foreach ($this->statements as $key => $val){
+    foreach ($this->statements->getAll() as $key => $val){
       if (in_array($key, $this->autoStatements)){
-        $statements[$key]= "$key $val ["._("automatic")."]";
+        foreach($val as $id => $entry){
+          $statements[$key."_".$id]= "$key $entry ["._("automatic")."]";
+        }       
       } else {
-        $statements[$key]= "$key $val";
+        foreach($val as $id => $entry){
+          $statements[$key."_".$id]= "$key $entry";
+        }       
       }
     }
     $smarty->assign("dhcpstatements", $statements);
+
+    /* Assign options  */
     $options= array();
     foreach ($this->options->getAll() as $key => $val){
       if (in_array($key, $this->autoOptions)){

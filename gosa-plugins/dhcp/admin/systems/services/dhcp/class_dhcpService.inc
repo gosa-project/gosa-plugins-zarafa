@@ -39,14 +39,15 @@ class dhcpService extends dhcpPlugin
       $this->dhcpPrimaryDN= $attrs['dhcpPrimaryDN'][0];
     } else {
       /* We keep the parent dn here if it's new */
-      $this->statements['default-lease-time']= 600;
-      $this->statements['max-lease-time']= 1700;
-      $this->statements['authoritative']= TRUE;
-      $this->statements['ddns-update-style']= 'none';
+      $this->statements->set('default-lease-time', 600);
+      $this->statements->set('max-lease-time', 1700);
+      $this->statements->set('authoritative', TRUE);
+      $this->statements->set('ddns-update-style', 'none');
     }
 
-    $this->advanced->setAutoStatements(array("default-lease-time", "max-lease-time", "authoritative", "server-identifier", "ddns-update-style"));
     $this->advanced->setAutoOptions(array("server-name"));
+    $this->advanced->setAutoStatements(array("default-lease-time", "max-lease-time", 
+          "authoritative", "server-identifier", "ddns-update-style"));
 
     /* Save for later action */
     $this->orig_dhcpPrimaryDN= $this->dhcpPrimaryDN;
@@ -63,34 +64,15 @@ class dhcpService extends dhcpPlugin
 
     $smarty->assign('ddns_styles', $this->ddns_styles);
     foreach (array('max_lease_time', 'default_lease_time', 'ddns_update_style') as $value){
-      if (isset($this->statements[preg_replace('/_/', '-', $value)])){
-        $smarty->assign("$value", $this->statements[preg_replace('/_/', '-', $value)]);
-      } else {
-        $smarty->assign("$value", "");
-      }
+      $smarty->assign("$value", $this->statements->get(preg_replace('/_/', '-', $value)));
     }
 
-    if (isset($this->statements['authoritative'])){
-      $smarty->assign("authoritative", "checked");
-    } else {
-      $smarty->assign("authoritative", "");
-    }
+    $smarty->assign("authoritative", $this->statements->get('authoritative'));
 
     /* Show main page */
     $display= $smarty->fetch(get_template_path('dhcp_service.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
 
-    /* Merge arrays for advanced view */
-    foreach (array("statements") as $type){
-      $this->advanced->$type= $this->$type + $this->network->$type;;
-    }
-
     $display.= $this->advanced->execute();
-
-    /* Merge back for removals */
-    foreach (array("statements") as $type){
-      $this->$type= $this->advanced->$type;
-      $this->network->$type= $this->advanced->$type;
-    }
 
     /* Add footer */
     $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
@@ -119,15 +101,15 @@ class dhcpService extends dhcpPlugin
       foreach (array('max_lease_time', 'default_lease_time', 'ddns_update_style') as $val){
         $tval= preg_replace('/_/', '-', $val);
         if ($_POST[$val] != ""){
-          $this->statements[$tval]= validate(get_post($val));
+          $this->statements->set($tval,validate(get_post($val)));
         } else {
-          unset ($this->statements[$tval]);
+          $this->statements->removeAll($tval);
         }
       }
       if (isset($_POST['authoritative'])){
-        $this->statements['authoritative']= "";
+        $this->statements->set('authoritative', "");
       } else {
-        unset($this->statements['authoritative']);
+        $this->statements->removeAll('authoritative');
       }
     }
 
@@ -140,13 +122,13 @@ class dhcpService extends dhcpPlugin
   {
     $message= array();
 
-    if (!tests::is_id($this->statements['default-lease-time'])){
-      $message[]= msgPool::invalid(_("Lease time"),$this->statements['default-lease-time'],"/[0-9]/");
+    if (!tests::is_id($this->statements->get('default-lease-time'))){
+      $message[]= msgPool::invalid(_("Lease time"),$this->statements->get('default-lease-time'),"/[0-9]/");
     }
-    if (!tests::is_id($this->statements['max-lease-time'])){
-      $message[]= msgPool::invalid(_("Max lease time"),$this->statements['max-lease-time'],"/[0-9]/");
+    if (!tests::is_id($this->statements->get('max-lease-time'))){
+      $message[]= msgPool::invalid(_("Max lease time"),$this->statements->get('max-lease-time'),"/[0-9]/");
     }
-    if ($this->statements['default-lease-time'] > $this->statements['max-lease-time']){
+    if ($this->statements->get('default-lease-time') > $this->statements->get('max-lease-time')){
       $message[]= msgPool::toobig(_("Default lease time"),_("Maximum lease time"));
     }
 
@@ -154,7 +136,6 @@ class dhcpService extends dhcpPlugin
     $net= $this->network->check();
     $adv= $this->advanced->check();
     $message= array_merge($message, $net, $adv);
-
     return $message;
   }
 

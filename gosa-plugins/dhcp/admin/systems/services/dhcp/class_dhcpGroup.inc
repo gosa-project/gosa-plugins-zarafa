@@ -34,32 +34,21 @@ class dhcpGroup extends dhcpPlugin
     $smarty= get_smarty();
     $smarty->assign("cn", $this->cn);
 
-	/* Assign ACLs */
-	$smarty->assign("acl",$this->parent->getacl(""));
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
 
     /* Show main page */
-    $display= $smarty->fetch (get_template_path('dhcp_group.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
-
-    /* Merge arrays for advanced view */
-    foreach (array("statements") as $type){
-      $this->advanced->$type= $this->$type + $this->network->$type;
-    }
-
+    $display= $smarty->fetch (get_template_path('dhcp_group.tpl', TRUE, 
+      dirname(__FILE__))).$this->network->execute();
     $display.= $this->advanced->execute();
 
-    /* Merge back for removals */
-    foreach (array("statements") as $type){
-      $this->$type= $this->advanced->$type;
-      $this->network->$type= $this->advanced->$type;
+    /* Add footer */
+    $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
+    if(preg_match("/w/",$this->parent->getacl(""))){
+      $display.= 	 "<input type=submit name='save_dhcp' value='".msgPool::saveButton()."'>&nbsp;";
     }
-
-	/* Add footer */
-	$display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
-	if(preg_match("/w/",$this->parent->getacl(""))){
-		$display.= 	 "<input type=submit name='save_dhcp' value='".msgPool::saveButton()."'>&nbsp;";
-	}
-	$display.=   "<input type=submit name='cancel_dhcp' value='".msgPool::cancelButton()."'>";
-	$display.= "</div>";
+    $display.=   "<input type=submit name='cancel_dhcp' value='".msgPool::cancelButton()."'>";
+    $display.= "</div>";
 
     return ($display);
   }

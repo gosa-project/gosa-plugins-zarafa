@@ -44,28 +44,25 @@ class dhcpSharedNetwork extends dhcpPlugin
     /* Fill template */
     $smarty->assign ("cn", $this->cn);
     foreach (array("server-identifier", "default-lease-time", "max-lease-time", "min-lease-time") as $attr){
-      if (isset($this->statements[$attr])){
-        $smarty->assign(preg_replace('/-/', '_', $attr), $this->statements[$attr]);
-      } else {
-        $smarty->assign(preg_replace('/-/', '_', $attr), "");
-      }
+      $name = preg_replace('/-/', '_', $attr);
+      $smarty->assign($name, $this->statements->get($attr));
     }
-    if (isset($this->statements["authoritative"])){
+    if ($this->statements->exists("authoritative")){
       $smarty->assign("authoritative", "checked");
     } else {
       $smarty->assign("authoritative", "");
     }
-    if (!isset($this->statements["deny unknown-clients"])){
+    if (!$this->statements->exists("deny unknown-clients")){
       $smarty->assign("allow_unknown_state", "checked");
     } else {
       $smarty->assign("allow_unknown_state", "");
     }
-    if (!isset($this->statements["deny bootp"])){
+    if (!$this->statements->exists("deny bootp")){
       $smarty->assign("allow_bootp_state", "checked");
     } else {
       $smarty->assign("allow_bootp_state", "");
     }
-    if (!isset($this->statements["deny booting"])){
+    if (!$this->statements->exists("deny booting")){
       $smarty->assign("allow_booting_state", "checked");
     } else {
       $smarty->assign("allow_booting_state", "");
@@ -79,23 +76,12 @@ class dhcpSharedNetwork extends dhcpPlugin
     foreach(array("deny unknown-clients",
           "deny bootp", "deny booting", "allow unknown-clients",
           "allow bootp", "allow booting") as $name){
-      if(isset($this->advanced->statements[$name])){
-        unset($this->advanced->statements[$name]);
-        unset($this->network->statements[$name]);
+      if($this->statements->exists($name)){
+        $this->statements->remove($name);
       }
     }
 
-    foreach (array("statements") as $type){
-      $this->advanced->$type= $this->$type + $this->network->$type;
-    }
-
     $display.= $this->advanced->execute();
-
-    /* Merge back for removals */
-    foreach (array("statements") as $type){
-      $this->$type= $this->advanced->$type;
-      $this->network->$type= $this->advanced->$type;
-    }
 
     /* Add footer */
     $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
@@ -129,25 +115,25 @@ class dhcpSharedNetwork extends dhcpPlugin
       foreach (array("server-identifier", "default-lease-time",
             "max-lease-time", "min-lease-time") as $attr){
         if (isset($_POST[$attr]) && $_POST[$attr] != ""){
-          $this->statements[$attr]= get_post($attr);
+          $this->statements->set($attr,get_post($attr));
         } else {
-          unset($this->statements[$attr]);
+          $this->statements->removeAll($attr);
         }
       }
 
       if (isset($_POST["authoritative"])){
-        $this->statements["authoritative"]= "";
+        $this->statements->set("authoritative", "");
       } else {
-        unset ($this->statements["authoritative"]);
+        $this->statements->removeAll("authoritative");
       }
 
       foreach(array("unknown-clients", "bootp", "booting") as $name){
         if (isset($_POST[$name])){
-          $this->statements["allow $name"]= "";
-          unset($this->statements["deny $name"]);
+          $this->statements->removeAll("deny $name");
+          $this->statements->set("allow $name","");
         } else {
-          $this->statements["deny $name"]= "";
-          unset($this->statements["allow $name"]);
+          $this->statements->removeAll("allow $name");
+          $this->statements->set("deny $name","");
         }
       }
     }
@@ -170,9 +156,9 @@ class dhcpSharedNetwork extends dhcpPlugin
     foreach (array("default-lease-time" => _("Default lease time"),
           "max-lease-time" => _("Max. lease time"),
           "min-lease-time" => _("Min. lease time")) as $key => $val){
-      if (isset($this->statements[$key]) && $this->statements[$key] != "" && 
-          !tests::is_id($this->statements[$key])){
-        $message[]= msgPool::invalid($val,$this->statements[$key],"/[0-9]/");
+      if ($this->statements->exists($key) && $this->statements->get($key) != "" && 
+          !tests::is_id($this->statements->get($key))){
+        $message[]= msgPool::invalid($val,$this->statements->get($key),"/[0-9]/");
       }
     }
 

@@ -39,6 +39,7 @@ class dhcpPlugin extends plugin
     $this->parent = $parent;
 
     $this->options = new dhcpOption();
+    $this->statements = new dhcpOption();
 
     /* Load statements / options */
     if (is_array($attrs)){
@@ -55,19 +56,8 @@ class dhcpPlugin extends plugin
 
       /* Load statements */
       if (isset($attrs['dhcpStatements'])){
-        foreach ($attrs['dhcpStatements'] as $opt){
-          $idx= preg_replace('/\s.+$/', '', $opt);
-          if ($idx == $opt){
-            $value= "";
-          } else {
-            $value= preg_replace('/^[^\s]+\s/', '', $opt);
-          }
-
-          if(preg_match("/^allow\s/",$opt) || preg_match("/^deny\s/",$opt)){
-            $this->statements[$opt]= "";
-          }else{
-            $this->statements[$idx]= $value;
-          }
+        foreach($attrs['dhcpStatements'] as $opt){
+          $this->statements->add(trim($opt));
         }
       }
     } else {
@@ -79,10 +69,10 @@ class dhcpPlugin extends plugin
     /* Load network module */
     $this->network= new dhcpNetwork();
     $this->network->options= &$this->options;
-    $this->network->statements= $this->statements;
+    $this->network->statements= &$this->statements;
     $this->advanced= new dhcpAdvanced();
     $this->advanced->options= &$this->options;
-    $this->advanced->statements= $this->statements;
+    $this->advanced->statements= &$this->statements;
 
     $this->network->parent = $parent;
     $this->advanced->parent = $parent;
@@ -105,18 +95,14 @@ class dhcpPlugin extends plugin
   /* Save data to object */
   function save_object()
   {
-    foreach (array("filename", "next-server","get-lease-hostnames","use-host-decl-names") as $toberemoved){
-      unset($this->statements[$toberemoved]);
-    }
+ # // CHECK
+ #   foreach (array("filename", "next-server","get-lease-hostnames","use-host-decl-names") as $toberemoved){
+ #     unset($this->statements[$toberemoved]);
+ #   }
 
     /* Save sub-objects */
     $this->network->save_object();
     $this->advanced->save_object();
-
-    /* Merge arrays for advanced view */
-    foreach (array("statements") as $type){
-      $this->advanced->$type= $this->$type + $this->network->$type;;
-    }
   }
 
 
@@ -131,11 +117,6 @@ class dhcpPlugin extends plugin
   /* Save to LDAP */
   function save()
   {
-    /* Merge arrays for network and advanced view */
-    foreach (array("statements") as $type){
-      $this->$type= $this->$type + $this->network->$type + $this->advanced->$type;
-    }
-
     /* Add cn if we're new */
     if ($this->new){
       $this->dn= "cn=".$this->cn.",".$this->dn;
@@ -147,16 +128,7 @@ class dhcpPlugin extends plugin
     $this->attrs['dhcpOption']= $this->options->save();
 
     /* Assemble new entry - statements */
-    $this->attrs['dhcpStatements']= array();
-    if (isset ($this->statements) && count ($this->statements)){
-      foreach ($this->statements as $key => $val){
-        if ($val != ""){
-          $this->attrs['dhcpStatements'][]= "$key $val";
-        } else {
-          $this->attrs['dhcpStatements'][]= "$key";
-        }
-      }
-    }
+    $this->attrs['dhcpStatements']= $this->statements->save();
 
     /* Move dn to the result */
     $this->attrs['dn']= $this->dn;

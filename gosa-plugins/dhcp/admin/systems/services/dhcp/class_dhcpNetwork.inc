@@ -22,7 +22,7 @@ class dhcpNetwork extends plugin
 {
   /* Used attributes */
   var $options= null;
-  var $statements= array();
+  var $statements= null;
 
   /* attribute list for save action */
   var $attributes= array();
@@ -106,27 +106,19 @@ class dhcpNetwork extends plugin
     $smarty->assign("broadcast_address", $this->options->get('broadcast-address'));
 
     /* Boot stuff */
-    if (isset($this->statements['filename'])){
-      $smarty->assign("filename", trim($this->statements['filename'], '"'));
-    } else {
-      $smarty->assign("filename", "");
-    }
-    if (isset($this->statements['next-server'])){
-      $smarty->assign("nextserver", $this->statements['next-server']);
-    } else {
-      $smarty->assign("nextserver", "");
-    }
+    $smarty->assign("filename", $this->statements->get('filename'));
+    $smarty->assign("nextserver", $this->statements->get('next-server'));
 
     /* Set flags */
     $smarty->assign("autohost", "");
-    if (isset($this->statements['get-lease-hostnames'])){
-      if (preg_match('/^(true|on|yes)$/', $this->statements['get-lease-hostnames'])){
+    if ($this->statements->exists('get-lease-hostnames')){
+      if (preg_match('/^(true|on|yes)$/', $this->statements->get('get-lease-hostnames'))){
         $smarty->assign("autohost", "checked");
       }
     }
     $smarty->assign("autohostdecl", "");
-    if (isset($this->statements['use-host-decl-names'])){
-      if (preg_match('/^(true|on|yes)$/', $this->statements['use-host-decl-names'])){
+    if ($this->statements->exists('use-host-decl-names')){
+      if (preg_match('/^(true|on|yes)$/', $this->statements->get('use-host-decl-names'))){
         $smarty->assign("autohostdecl", "checked");
       }
     }
@@ -162,28 +154,28 @@ class dhcpNetwork extends plugin
       /* Statements */
       foreach (array("filename" => "filename", "next-server" => "nextserver") as $key => $val){
         if ($_POST["$val"] == ''){
-          unset($this->statements["$key"]);
+          $this->statements->removeAll($key);
         } else {
     
           /* Only quote filename values */
           if(in_array($key,array("filename"))){
-            $this->statements["$key"]= '"'.get_post("$val").'"';
+            $this->statements->set($key,'"'.trim(get_post($val),"\"").'"');
           }else{
-            $this->statements["$key"]= get_post("$val");
+            $this->statements->set($key,get_post($val));
           }
         }
       }
 
       /* Flags */
       if (isset ($_POST['autohost'])){
-        $this->statements['get-lease-hostnames']= "true";
+        $this->statements->set('get-lease-hostnames',"true");
       } else {
-        unset($this->statements['get-lease-hostnames']);
+        $this->statements->removeAll('get-lease-hostnames');
       }
       if (isset ($_POST['autohostdecl'])){
-        $this->statements['use-host-decl-names']= "on";
+        $this->statements->set('use-host-decl-names', "on");
       } else {
-        unset($this->statements['use-host-decl-names']);
+        $this->statements->removeAll('use-host-decl-names');
       }
     }
   }
