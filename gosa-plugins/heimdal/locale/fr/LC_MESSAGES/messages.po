@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 09:57+0200\n"
-"PO-Revision-Date: 2008-08-12 13:55+0200\n"
+"PO-Revision-Date: 2009-06-30 11:11+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -92,11 +92,10 @@ msgstr "Service Kerberos ( information accès kadmin )"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:178
 #: admin/systems/services/kerberos/class_goKrbServer.inc:394
 msgid "Realm"
-msgstr ""
+msgstr "Domaine"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server requires a valid mac address."
+msgid "In order to save policy changes, the server requires a valid mac address."
 msgstr ""
 "Pour pouvoir changer la police de sécurité, le serveur nécessite un adresse "
 "mac valide."
@@ -110,9 +109,8 @@ msgid "Policy"
 msgstr "Police"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
-#, fuzzy
 msgid "Kerberos"
-msgstr "serveurs"
+msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Kerberos access information"
@@ -176,3 +174,4 @@ msgstr "Accès kadmin Kerberos"
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
 msgid "Kerberos Realms"
 msgstr "Realm Kerberos"
+
