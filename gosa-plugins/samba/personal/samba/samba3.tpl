@@ -31,6 +31,7 @@
        {html_options values=$domains output=$domains selected=$sambaDomainName}
       </select>
 {/render}
+     <input type='submit' name='display_information' value='{t}Show information{/t}'>
      </td>
     </tr>
    </table>
@@ -61,15 +62,6 @@
  </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
-<h2>&nbsp;<img class="center" src='images/info_small.png'>&nbsp;{t}Information{/t}</h2>
-<table style='width:100%;'>
- <tr>
-  <td>{t}Show information{/t}
-    <input type='submit' name='display_information' value='{t}Show{/t}'>
-  </td> 
- </tr>
-</table>
 <p class="seperator">&nbsp;</p>
 
 <h2><img class="center" alt="" align="middle" src="plugins/samba/images/terminal_server.png" />&nbsp;{t}Terminal Server{/t}</h2>
