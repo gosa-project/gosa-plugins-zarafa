@@ -13,7 +13,7 @@
 {else}
 
 {if $write_protect}
-{t}This FAI template is write protected due to its character encoding, editing may brake this file!{/t}
+{t}This FAI template is write protected. Editing may break it!{/t}
 <br><input type='submit' value='{t}Edit anyway{/t}' name='editAnyway'>
 {/if}
 
