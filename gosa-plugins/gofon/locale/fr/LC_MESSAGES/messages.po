@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 09:57+0200\n"
-"PO-Revision-Date: 2008-08-12 12:57+0200\n"
+"PO-Revision-Date: 2009-06-30 11:04+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,10 +15,9 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/ogroups/gofon/phonequeue.tpl:2
-msgid ""
-"Only users with the same asterisk home server will be included to this queue."
+msgid "Only users with the same asterisk home server will be included to this queue."
 msgstr ""
-"Seulement les utilisateurs avec le même serveur asterisk seront inclus dans "
+"Seulement les utilisateurs du même serveur asterisk seront inclus dans "
 "cette queue."
 
 #: admin/ogroups/gofon/phonequeue.tpl:5
@@ -258,9 +257,8 @@ msgstr "Numéro"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:346
 #: admin/ogroups/gofon/class_phonequeue.inc:394
-#, fuzzy
 msgid "asterisk"
-msgstr "Utilisateurs"
+msgstr "asterisk"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:378
 #: admin/ogroups/gofon/class_phonequeue.inc:732
@@ -624,8 +622,7 @@ msgstr "Configuration réseau"
 #: gofon/macro/class_gofonMacro.inc:458
 #, php-format
 msgid "Cannot delete entry because it is still in use by '%s'!"
-msgstr ""
-"Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
+msgstr "Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:331
 #: admin/systems/gofon/class_phoneGeneric.inc:334
@@ -1080,7 +1077,7 @@ msgstr "non défini"
 msgid ""
 "Could not identify telephone extension in database, please try to save "
 "again. Activate debugging if error remains."
-msgstr ""
+msgstr "Impossible d'identifier l'extension téléphonique dans la base de données, veuillez essayer de sauver à nouveau. Activez le mode debug si l'erreur persiste"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:544
 #: gofon/phoneaccount/class_phoneAccount.inc:551
@@ -1099,14 +1096,14 @@ msgstr ""
 msgid ""
 "GOsa identified problems with your MySQL table definition, please activate "
 "debugging for details."
-msgstr ""
+msgstr "GOsa à identifié des problèmes dans les définitions de vos tables MySQL, veuillez activer le mode debug pour plus de détail."
 
 #: gofon/phoneaccount/class_phoneAccount.inc:638
 #: gofon/phoneaccount/class_phoneAccount.inc:960
 #: gofon/phoneaccount/class_phoneAccount.inc:1616
 #: gofon/conference/class_phoneConferenceGeneric.inc:620
 msgid "Please activate debugging for details!"
-msgstr ""
+msgstr "Veuillez activer le mode debug pour plus de détail !"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1058
 msgid "Remove phone account"
@@ -1154,7 +1151,7 @@ msgstr "paramètre de la macro %s"
 msgid ""
 "An error occured while updating the database entries, activate debugging for "
 "details."
-msgstr ""
+msgstr "Une erreur est survenue lors de la mise à jour de la base de données, activer le mode debug pour plus de détails."
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1666
 #, php-format
@@ -1382,8 +1379,7 @@ msgstr ""
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:379
 #, php-format
-msgid ""
-"The previously selected asterisk home server '%s' is no longer available!"
+msgid "The previously selected asterisk home server '%s' is no longer available!"
 msgstr ""
 "Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
 "disponible !"
@@ -1515,9 +1511,8 @@ msgid "Application called"
 msgstr "Application appelée"
 
 #: gofon/fonreports/class_fonreport.inc:414
-#, fuzzy
 msgid "Disposition"
-msgstr "Vérification de l'annuaire LDAP"
+msgstr "Disposition"
 
 #: gofon/fonreports/class_fonreport.inc:415 gofon/fonreports/contents.tpl:36
 msgid "Duration"
@@ -1563,8 +1558,3 @@ msgstr "Statut"
 msgid "Search returned no results..."
 msgstr "La recherche n'a renvoyé aucun résultat..."
 
-#~ msgid "Addons"
-#~ msgstr "Extensions"
-
-#~ msgid "Not supported multiple brace in line %s!"
-#~ msgstr "Les crochets multiple ne sont pas supportés à la ligne %s !"
