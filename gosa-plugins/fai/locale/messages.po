@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-06-30 10:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -473,11 +473,7 @@ msgstr ""
 msgid "Used packages"
 msgstr ""
 
-#: admin/fai/faiPackage.tpl:78
-msgid "Manually add packages"
-msgstr ""
-
-#: admin/fai/faiPackage.tpl:83
+#: admin/fai/faiPackage.tpl:81
 msgid "Add from list"
 msgstr ""
 

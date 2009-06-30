@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-06-30 10:12+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -528,11 +528,7 @@ msgstr "Prego inserire un numero di telefono valido!"
 msgid "Used packages"
 msgstr "Mostra telefoni"
 
-#: admin/fai/faiPackage.tpl:78
-msgid "Manually add packages"
-msgstr ""
-
-#: admin/fai/faiPackage.tpl:83
+#: admin/fai/faiPackage.tpl:81
 msgid "Add from list"
 msgstr ""
 

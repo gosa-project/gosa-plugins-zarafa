@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-06-30 10:12+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -498,11 +498,7 @@ msgstr "请选择一个有效文件。"
 msgid "Used packages"
 msgstr "使用软件包"
 
-#: admin/fai/faiPackage.tpl:78
-msgid "Manually add packages"
-msgstr ""
-
-#: admin/fai/faiPackage.tpl:83
+#: admin/fai/faiPackage.tpl:81
 msgid "Add from list"
 msgstr ""
 
