@@ -22,7 +22,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: admin/systems/services/apache2/servApacheVhost.tpl:1
-#, fuzzy
 msgid "Apache VHosts"
 msgstr "Apache"
 
@@ -53,7 +52,6 @@ msgstr "Name"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:365
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:7
-#, fuzzy
 msgid "Virtual host name"
 msgstr "Vorname"
 
@@ -112,7 +110,6 @@ msgid "Generic"
 msgstr "Allgemein"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:30
-#, fuzzy
 msgid "Server Alias"
 msgstr "Server-Alias"
 
@@ -121,7 +118,6 @@ msgid "URL Alias"
 msgstr "URL-Alias"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:45
-#, fuzzy
 msgid "Directory Path"
 msgstr "Pfad"
 
@@ -130,12 +126,10 @@ msgid "Script Alias"
 msgstr "Skript-Alias"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:86
-#, fuzzy
 msgid "Alias Directory"
 msgstr "Verzeichnis"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:89
-#, fuzzy
 msgid "Script Directory"
 msgstr "Verzeichnis"
 
