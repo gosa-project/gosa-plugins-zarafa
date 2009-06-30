@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 10:12+0200\n"
+"POT-Creation-Date: 2009-06-30 10:58+0200\n"
 "PO-Revision-Date: 2008-12-04 14:27+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -162,7 +162,7 @@ msgstr ""
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
 msgid ""
-"The file encodig has changed from '%s' to '%s', do you really want to save?"
+"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 
 #: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:540
@@ -998,9 +998,7 @@ msgid "You are not allowed to view the fai summary."
 msgstr "Vous n'êtes pas autorisé à voir le sommaire FAI."
 
 #: admin/fai/faiTemplateEdit.tpl:16
-msgid ""
-"This FAI template is write protected due to its character encoding, editing "
-"may brake this file!"
+msgid "This FAI template is write protected. Editing may break it!"
 msgstr ""
 
 #: admin/fai/faiTemplateEdit.tpl:17
@@ -1294,9 +1292,9 @@ msgstr "PK"
 #: admin/fai/class_divListFai.inc:317 admin/fai/class_divListFai.inc:318
 #: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
 #: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
-#, php-format
-msgid "Number of listed '%s'"
-msgstr "Nombre de '%s' listés"
+#, fuzzy, php-format
+msgid "Number of listed %s"
+msgstr "Nombre d'utilisateurs listés"
 
 #: admin/fai/class_divListFai.inc:313
 msgid "profiles"
@@ -1525,3 +1523,6 @@ msgstr "Version FAI"
 #, fuzzy
 msgid "Services"
 msgstr "Périphériques"
+
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Nombre de '%s' listés"

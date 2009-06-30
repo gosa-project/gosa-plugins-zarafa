@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 10:12+0200\n"
+"POT-Creation-Date: 2009-06-30 10:58+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -165,7 +165,7 @@ msgstr ""
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
 msgid ""
-"The file encodig has changed from '%s' to '%s', do you really want to save?"
+"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 
 #: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:540
@@ -1031,9 +1031,7 @@ msgid "You are not allowed to view the fai summary."
 msgstr "Brak uprawnień do usunięcia tego użytkownika!"
 
 #: admin/fai/faiTemplateEdit.tpl:16
-msgid ""
-"This FAI template is write protected due to its character encoding, editing "
-"may brake this file!"
+msgid "This FAI template is write protected. Editing may break it!"
 msgstr ""
 
 #: admin/fai/faiTemplateEdit.tpl:17
@@ -1338,7 +1336,7 @@ msgstr "PK"
 #: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
 #: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
 #, fuzzy, php-format
-msgid "Number of listed '%s'"
+msgid "Number of listed %s"
 msgstr "Nazwa departamentu"
 
 #: admin/fai/class_divListFai.inc:313
@@ -1588,6 +1586,10 @@ msgstr "Klasy FAI"
 #: admin/systems/services/repository/class_servRepository.inc:344
 msgid "Services"
 msgstr "Usługi"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Nazwa departamentu"
 
 #, fuzzy
 #~ msgid "Deployment status"

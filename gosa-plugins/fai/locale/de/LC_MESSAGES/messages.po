@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 10:23+0200\n"
+"POT-Creation-Date: 2009-06-30 10:58+0200\n"
 "PO-Revision-Date: 2009-06-30 10:24+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -1305,9 +1305,8 @@ msgstr "PK"
 #: admin/fai/class_divListFai.inc:317 admin/fai/class_divListFai.inc:318
 #: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
 #: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
-#, php-format
-msgid "Number of listed '%s'"
-msgstr "Anzahl der angezeigten '%s'"
+msgid "Number of listed %s"
+msgstr "Anzahl der angezeigten %s"
 
 #: admin/fai/class_divListFai.inc:313
 msgid "profiles"

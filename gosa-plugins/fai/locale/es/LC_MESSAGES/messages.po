@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 10:12+0200\n"
+"POT-Creation-Date: 2009-06-30 10:58+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -178,7 +178,7 @@ msgstr ""
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
 msgid ""
-"The file encodig has changed from '%s' to '%s', do you really want to save?"
+"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 
 #: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:540
@@ -1065,9 +1065,7 @@ msgid "You are not allowed to view the fai summary."
 msgstr "No le está permitido eliminar este usuario."
 
 #: admin/fai/faiTemplateEdit.tpl:16
-msgid ""
-"This FAI template is write protected due to its character encoding, editing "
-"may brake this file!"
+msgid "This FAI template is write protected. Editing may break it!"
 msgstr ""
 
 #: admin/fai/faiTemplateEdit.tpl:17
@@ -1369,8 +1367,8 @@ msgstr ""
 #: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
 #: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
 #, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Nueva plantilla de Estación de trabajo"
+msgid "Number of listed %s"
+msgstr "Número de usuarios mostrados"
 
 #: admin/fai/class_divListFai.inc:313
 #, fuzzy
@@ -1627,6 +1625,10 @@ msgstr "Clases FAI"
 #: admin/systems/services/repository/class_servRepository.inc:344
 msgid "Services"
 msgstr "Servicios"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Nueva plantilla de Estación de trabajo"
 
 #, fuzzy
 #~ msgid "System deployment status"

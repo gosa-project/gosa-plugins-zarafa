@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 10:12+0200\n"
+"POT-Creation-Date: 2009-06-30 10:58+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -176,7 +176,7 @@ msgstr ""
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
 msgid ""
-"The file encodig has changed from '%s' to '%s', do you really want to save?"
+"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 
 #: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:540
@@ -1083,9 +1083,7 @@ msgid "You are not allowed to view the fai summary."
 msgstr "Non hai il permesso di cambiare la tua password."
 
 #: admin/fai/faiTemplateEdit.tpl:16
-msgid ""
-"This FAI template is write protected due to its character encoding, editing "
-"may brake this file!"
+msgid "This FAI template is write protected. Editing may break it!"
 msgstr ""
 
 #: admin/fai/faiTemplateEdit.tpl:17
@@ -1395,8 +1393,8 @@ msgstr ""
 #: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
 #: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
 #, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Lista degli utenti"
+msgid "Number of listed %s"
+msgstr "Nome del gruppo"
 
 #: admin/fai/class_divListFai.inc:313
 #, fuzzy
@@ -1655,6 +1653,10 @@ msgstr "Scegli il tuo numero di telefono personale"
 #: admin/systems/services/repository/class_servRepository.inc:344
 msgid "Services"
 msgstr "Servizi"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Lista degli utenti"
 
 #, fuzzy
 #~ msgid "Deployment status"
