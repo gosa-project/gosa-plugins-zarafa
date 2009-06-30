@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 10:58+0200\n"
-"PO-Revision-Date: 2008-12-04 14:27+0100\n"
+"POT-Creation-Date: 2009-06-30 10:12+0200\n"
+"PO-Revision-Date: 2009-06-30 10:49+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -61,9 +61,8 @@ msgid "Save template"
 msgstr "Sauver le modèle"
 
 #: admin/fai/faiTemplateEntry.tpl:76 admin/fai/faiTemplateEntry.tpl:77
-#, fuzzy
 msgid "Edit template"
-msgstr "modèles"
+msgstr "Editer un modèle"
 
 #: admin/fai/faiTemplateEntry.tpl:85
 msgid "Full path"
@@ -161,9 +160,8 @@ msgstr ""
 
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
-msgid ""
-"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
-msgstr ""
+msgid "The file encodig has changed from '%s' to '%s', do you really want to save?"
+msgstr "L'encodage du fichier à changé de '%s' vers '%s', voulez vous réellement le sauver ?"
 
 #: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:540
 #: admin/fai/class_faiManagement.inc:1313 admin/fai/remove_branch.tpl:2
@@ -488,7 +486,7 @@ msgstr "Paquets utilisés"
 
 #: admin/fai/faiPackage.tpl:81
 msgid "Add from list"
-msgstr ""
+msgstr "Ajouter depuis la liste"
 
 #: admin/fai/faiHook.tpl:39
 msgid "List of hook scripts"
@@ -636,8 +634,7 @@ msgstr "Branche verrouillée"
 #: admin/fai/class_faiManagement.inc:411
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-"Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
 
 #: admin/fai/class_faiManagement.inc:427
 msgid "FAI object"
@@ -777,8 +774,7 @@ msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid ""
-"This list displays all assigned package names for this repository settings."
+msgid "This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/paste_generic.tpl:1
@@ -953,8 +949,7 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1063
 msgid "Could not create new release, the destination dn is already in use."
-msgstr ""
-"Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1076
 msgid "Error while fetching source dn - aborted!"
@@ -962,8 +957,7 @@ msgstr "Une erreur s'est produite lors de la récupération du dn - Arrêt !"
 
 #: admin/fai/class_FAI.inc:1158
 #, php-format
-msgid ""
-"Release creation failed due to ldap errors. Additional informations '%s'."
+msgid "Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 "La création de la version à échoué du à des erreurs ldap. Information "
 "additionnelles '%s'."
@@ -998,8 +992,10 @@ msgid "You are not allowed to view the fai summary."
 msgstr "Vous n'êtes pas autorisé à voir le sommaire FAI."
 
 #: admin/fai/faiTemplateEdit.tpl:16
-msgid "This FAI template is write protected. Editing may break it!"
-msgstr ""
+msgid ""
+"This FAI template is write protected due to its character encoding, editing "
+"may brake this file!"
+msgstr "Ce modèle FAI est protégé contre l'écriture suite à son changement d'encodage, l'édition peut abîmer le fichier !"
 
 #: admin/fai/faiTemplateEdit.tpl:17
 msgid "Edit anyway"
@@ -1292,9 +1288,9 @@ msgstr "PK"
 #: admin/fai/class_divListFai.inc:317 admin/fai/class_divListFai.inc:318
 #: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
 #: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
-#, fuzzy, php-format
-msgid "Number of listed %s"
-msgstr "Nombre d'utilisateurs listés"
+#, php-format
+msgid "Number of listed '%s'"
+msgstr "Nombre de '%s' listés"
 
 #: admin/fai/class_divListFai.inc:313
 msgid "profiles"
@@ -1338,12 +1334,12 @@ msgstr "produits localboot"
 
 #: admin/fai/class_faiPackage.inc:220
 msgid "Invalid package names"
-msgstr ""
+msgstr "Nom de paquets non valides"
 
 #: admin/fai/class_faiPackage.inc:221
 #, php-format
 msgid "The following package names don't match the Debian policy: %s"
-msgstr ""
+msgstr "Les paquets suivants ne correspondent pas à la politique Debian : %s"
 
 #: admin/fai/class_faiPackage.inc:405 admin/fai/class_faiPackage.inc:406
 msgid "Configured"
@@ -1370,8 +1366,7 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:522
-msgid ""
-"Please choose a valid release/section combination for your repository setup!"
+msgid "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -1436,8 +1431,7 @@ msgstr "Source d'information FAI inconnue !"
 #: admin/fai/class_faiSummaryTab.inc:183
 #: admin/systems/services/repository/class_servRepository.inc:93
 msgid "You can't use this plugin until FAI is activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/fai/class_faiSummaryTab.inc:225
 msgid "This object has no FAI classes assigned."
@@ -1477,21 +1471,18 @@ msgstr "Liste des dépôts configurés."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:20
 msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
-"Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
 #: admin/systems/services/repository/class_servRepository.inc:360
-#, fuzzy
 msgid "Sections"
-msgstr "Connexion TLS"
+msgstr "Sections"
 
 #: admin/systems/services/repository/class_divListRepositories.inc:25
-#, fuzzy
 msgid "Options"
-msgstr "Applications"
+msgstr "Options"
 
 #: admin/systems/services/repository/class_divListRepositories.inc:33
 msgid "Add repository"
@@ -1506,7 +1497,7 @@ msgstr "Serveur parent"
 #: admin/systems/services/repository/class_servRepository.inc:359
 #: admin/systems/services/repository/class_servRepositorySetup.inc:157
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: admin/systems/services/repository/class_servRepository.inc:26
 #: admin/systems/services/repository/class_servRepository.inc:308
@@ -1520,9 +1511,6 @@ msgid "FAI release"
 msgstr "Version FAI"
 
 #: admin/systems/services/repository/class_servRepository.inc:344
-#, fuzzy
 msgid "Services"
-msgstr "Périphériques"
+msgstr "Services"
 
-#~ msgid "Number of listed '%s'"
-#~ msgstr "Nombre de '%s' listés"
