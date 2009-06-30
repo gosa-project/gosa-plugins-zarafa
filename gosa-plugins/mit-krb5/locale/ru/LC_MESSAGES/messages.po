@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -26,9 +26,9 @@ msgstr "Kerberos"
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:236
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:292
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:320
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:382
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:397
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:673
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:395
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:410
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:690
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:343
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:376
 #, fuzzy
@@ -58,11 +58,12 @@ msgstr "Удалить"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:266
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:41
+#, fuzzy
 msgid "Policy"
-msgstr ""
+msgstr "Английский"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:477
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:494
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:222
 msgid "Kerberos"
 msgstr "Kerberos"
@@ -78,23 +79,24 @@ msgstr "Сервисы"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:394
 #: admin/systems/services/kerberos/goKrbServer.tpl:19
+#, fuzzy
 msgid "Policies"
-msgstr ""
+msgstr "Английский"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:235
-#, php-format
+#, fuzzy, php-format
 msgid "Cannot load principal '%s', from server '%s'!"
-msgstr ""
+msgstr "Невозможно выбрать базу данных!"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:291
-#, php-format
+#, fuzzy, php-format
 msgid "Cannot load principals from server '%s'!"
-msgstr ""
+msgstr "Невозможно подключиться к серверу базы данных!"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:319
-#, php-format
+#, fuzzy, php-format
 msgid "Cannot load policies from server '%s'!"
-msgstr ""
+msgstr "Удалить"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:324
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:177
@@ -105,37 +107,41 @@ msgstr ""
 msgid "none"
 msgstr "нет"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:432
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:449
+#, fuzzy
 msgid "Daemon based"
-msgstr ""
+msgstr "Домен"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:591
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:608
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:57
 msgid "Ticket max life"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:594
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:611
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:65
 msgid "Ticket max renew"
 msgstr ""
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:1
+#, fuzzy
 msgid "Policy settings"
-msgstr ""
+msgstr "Атрибуты UNIX"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:7
 #: admin/systems/services/kerberos/class_krb5_policy.inc:103
 #: admin/systems/services/kerberos/class_krb5_policy.inc:106
 #: admin/systems/services/kerberos/class_krb5_policy.inc:110
+#, fuzzy
 msgid "Policy name"
-msgstr ""
+msgstr "Местоположение"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:11
 #: admin/systems/services/kerberos/class_krb5_policy.inc:122
 #: admin/systems/services/kerberos/class_krb5_policy.inc:124
 #: admin/systems/services/kerberos/class_krb5_policy.inc:134
+#, fuzzy
 msgid "Minimum password length"
-msgstr ""
+msgstr "Хэширование паролей"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:15
 #: admin/systems/services/kerberos/class_krb5_policy.inc:129
@@ -147,8 +153,9 @@ msgstr ""
 #: admin/systems/services/kerberos/krb5_policy.tpl:19
 #: admin/systems/services/kerberos/class_krb5_policy.inc:115
 #: admin/systems/services/kerberos/class_krb5_policy.inc:117
+#, fuzzy
 msgid "Password history size"
-msgstr ""
+msgstr "Хэширование паролей"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:28
 #: admin/systems/services/kerberos/class_krb5_policy.inc:139
@@ -201,8 +208,9 @@ msgid "Create key"
 msgstr "Создать"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:246
+#, fuzzy
 msgid "Recreate key"
-msgstr ""
+msgstr "Создать"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:248
 #, fuzzy
@@ -211,8 +219,9 @@ msgstr "Удалить"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:287
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:317
+#, fuzzy
 msgid "installed"
-msgstr ""
+msgstr "отключен"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:457
 #, fuzzy
@@ -245,8 +254,9 @@ msgid "Kerberos options"
 msgstr "Kerberos"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:8
+#, fuzzy
 msgid "Retry"
-msgstr ""
+msgstr "Повторить"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:14
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:243
@@ -296,28 +306,33 @@ msgid "Status"
 msgstr "Состояние"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:176
+#, fuzzy
 msgid "Failed logins"
-msgstr ""
+msgstr "Ошибка"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:180
+#, fuzzy
 msgid "Key version number"
-msgstr ""
+msgstr "Телефонные номера"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:184
+#, fuzzy
 msgid "Last failed login"
-msgstr ""
+msgstr "Список"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:188
+#, fuzzy
 msgid "Last password change"
-msgstr ""
+msgstr "Сменить пароль"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:192
 msgid "Last successful login"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:196
+#, fuzzy
 msgid "Last modification date"
-msgstr ""
+msgstr "Изменить сертификаты"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:209
 msgid "Prohibit issuance of service tickets"
@@ -344,20 +359,24 @@ msgid "Disallow Ticket-Granting Service"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:221
+#, fuzzy
 msgid "Password change service"
-msgstr ""
+msgstr "Сменить пароль"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:223
+#, fuzzy
 msgid "Preauthentication required"
-msgstr ""
+msgstr "Рабочая станция Windows"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:225
+#, fuzzy
 msgid "Force a password change"
-msgstr ""
+msgstr "Сменить пароль"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:227
+#, fuzzy
 msgid "Hardware preauthentication"
-msgstr ""
+msgstr "Рабочая станция Windows"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:229
 msgid "Disallow user to user authentification"

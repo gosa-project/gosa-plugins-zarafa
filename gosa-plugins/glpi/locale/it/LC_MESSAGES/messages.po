@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -84,8 +84,9 @@ msgid "GLPI database information"
 msgstr "Informazioni generali"
 
 #: admin/systems/services/glpi/goGlpiServer.tpl:4
+#, fuzzy
 msgid "Logging DB user"
-msgstr ""
+msgstr "Utenti di Dominio"
 
 #: admin/systems/services/glpi/goGlpiServer.tpl:12
 #: admin/systems/services/glpi/class_goGlpiServer.inc:102
@@ -176,8 +177,9 @@ msgid "File"
 msgstr ""
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:33
+#, fuzzy
 msgid "Upload"
-msgstr ""
+msgstr "leggere"
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:38
 msgid "Status"
@@ -194,8 +196,9 @@ msgid "Mime-type"
 msgstr "Tipo"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:104
+#, fuzzy
 msgid "Can't delete this entry, it is still in use."
-msgstr ""
+msgstr "Nome descrittivo del gruppo"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:268
 #: admin/systems/services/glpi/class_glpiAccount.inc:656
@@ -653,8 +656,9 @@ msgstr ""
 #: admin/systems/services/glpi/glpi_devices.tpl:228
 #: admin/systems/services/glpi/glpi_devices.tpl:284
 #: admin/systems/services/glpi/glpi_devices.tpl:349
+#, fuzzy
 msgid "Interface"
-msgstr ""
+msgstr "Terminal Server"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:237
 #, fuzzy
@@ -803,8 +807,9 @@ msgid "Start"
 msgstr "Avvio"
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:97
+#, fuzzy
 msgid "Stop"
-msgstr ""
+msgstr "Rapporto"
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:98
 #, fuzzy
@@ -925,8 +930,9 @@ msgstr ""
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:156
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:173
+#, fuzzy
 msgid "Can't connect to glpi database, the php-mysql extension is missing."
-msgstr ""
+msgstr "Impossibile connettersi al server del database!"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:166
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:183
@@ -1041,8 +1047,9 @@ msgid "Location"
 msgstr "Località"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:807
+#, fuzzy
 msgid "Model"
-msgstr ""
+msgstr "Dominio"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:811
 #, fuzzy
@@ -1184,8 +1191,9 @@ msgid "Can't delete printer type, it is still in use by '%s'."
 msgstr ""
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:785
+#, fuzzy
 msgid "since"
-msgstr ""
+msgstr "Privato"
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:796
 #, fuzzy
@@ -1230,8 +1238,9 @@ msgid "Regular expression for matching user names"
 msgstr ""
 
 #: admin/systems/services/glpi/glpi_edit_os.tpl:1
+#, fuzzy
 msgid "Manage OS-types"
-msgstr ""
+msgstr "Utenti di Dominio"
 
 #: admin/systems/services/glpi/class_glpiManufacturer.inc:53
 #, php-format

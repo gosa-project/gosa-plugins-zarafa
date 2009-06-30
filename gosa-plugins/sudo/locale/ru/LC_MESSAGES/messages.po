@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-06-30 09:59+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -19,8 +19,11 @@ msgid "Warning"
 msgstr "Предупреждение"
 
 #: admin/sudo/remove.tpl:9
+#, fuzzy
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
+"Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
+"нажмите <i>Отмена</i>."
 
 #: admin/sudo/class_sudoGeneric.inc:295
 msgid "Error"
@@ -101,12 +104,14 @@ msgid "Access control list"
 msgstr "Параметры доступа"
 
 #: admin/sudo/options.tpl:5
+#, fuzzy
 msgid "Option name"
-msgstr ""
+msgstr "Местоположение"
 
 #: admin/sudo/options.tpl:7
+#, fuzzy
 msgid "Value"
-msgstr ""
+msgstr "мужской"
 
 #: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
 msgid "Options"
@@ -136,8 +141,9 @@ msgid "Trust mode"
 msgstr "Режим"
 
 #: admin/sudo/generic.tpl:87
+#, fuzzy
 msgid "Users and groups"
-msgstr ""
+msgstr "группы"
 
 #: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
@@ -149,12 +155,14 @@ msgid "Systems"
 msgstr "Системы"
 
 #: admin/sudo/generic.tpl:120
+#, fuzzy
 msgid "Commands"
-msgstr ""
+msgstr "и"
 
 #: admin/sudo/generic.tpl:132
+#, fuzzy
 msgid "Run as"
-msgstr ""
+msgstr "Пользователи домена"
 
 #: admin/sudo/class_target_list_systems.inc:50
 msgid "Select the target objects for your scheduled action."
@@ -162,8 +170,9 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:51
 #: admin/sudo/class_target_list_systems.inc:52
+#, fuzzy
 msgid "Available systems"
-msgstr ""
+msgstr "Доступные приложения"
 
 #: admin/sudo/class_target_list_systems.inc:61
 #: admin/sudo/class_target_list_users.inc:58
@@ -223,8 +232,9 @@ msgid "Terminal"
 msgstr "Терминалы"
 
 #: admin/sudo/class_target_list_users.inc:47
+#, fuzzy
 msgid "Select the target objects"
-msgstr ""
+msgstr "Выберите подразделение"
 
 #: admin/sudo/class_target_list_users.inc:48
 #: admin/sudo/class_target_list_users.inc:49
@@ -233,20 +243,24 @@ msgid "Available members"
 msgstr "Доступные приложения"
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Select to see users"
-msgstr ""
+msgstr "Выберите, чтобы просмотреть серверы"
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Show users"
-msgstr ""
+msgstr "Показать пользователей Samba"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Select to see groups"
-msgstr ""
+msgstr "Выберите чтобы посмотреть группы GOsa"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Show groups"
-msgstr ""
+msgstr "Показать группы samba"
 
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
@@ -258,13 +272,14 @@ msgid "Sudo role administration"
 msgstr "Управление группами"
 
 #: admin/sudo/class_sudoOption.inc:154
+#, fuzzy
 msgid "Unknown option"
-msgstr ""
+msgstr "состояние неизвестно"
 
 #: admin/sudo/class_sudoOption.inc:155
-#, php-format
+#, fuzzy, php-format
 msgid "The sudo option '%s' is invalid!"
-msgstr ""
+msgstr "Указанное имя уже используется."
 
 #: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
 #, fuzzy
@@ -282,8 +297,9 @@ msgid "integer"
 msgstr "принтеры"
 
 #: admin/sudo/class_sudoOption.inc:284
+#, fuzzy
 msgid "list"
-msgstr ""
+msgstr "Английский"
 
 #: admin/sudo/class_sudoOption.inc:537
 #, fuzzy
@@ -347,8 +363,9 @@ msgid "Role"
 msgstr "Роль"
 
 #: admin/sudo/class_divListSudo.inc:112
+#, fuzzy
 msgid "Default"
-msgstr ""
+msgstr "Удалить"
 
 #: admin/sudo/class_divListSudo.inc:119
 msgid "Remove"
@@ -370,8 +387,9 @@ msgid "Number of listed roles"
 msgstr "Название группы"
 
 #: admin/sudo/class_sudoManagement.inc:31
+#, fuzzy
 msgid "Sudo roles"
-msgstr ""
+msgstr "состояние неизвестно"
 
 #: admin/sudo/class_sudoManagement.inc:32
 #, fuzzy

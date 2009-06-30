@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2008-10-07 18:29+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -54,9 +54,9 @@ msgstr "Zonen"
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:345
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
-#: admin/systems/services/dns/class_DNS.inc:161
-#: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:162
+#: admin/systems/services/dns/class_DNS.inc:167
+#: admin/systems/services/dns/class_DNS.inc:631
 msgid "Error"
 msgstr "Fehler"
 
@@ -69,7 +69,7 @@ msgid "Down"
 msgstr "Ab"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:565
+#: admin/systems/services/dns/class_servDNSeditZone.inc:580
 msgid "Delete"
 msgstr "Entfernen"
 
@@ -119,13 +119,14 @@ msgid "Retry"
 msgstr "Wiederholen"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:454
+#: admin/systems/services/dns/class_servDNSeditZone.inc:468
 #: admin/systems/services/dns/servdnseditzone.tpl:16
 msgid "Network address"
 msgstr "Netzwerk-Adresse"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:461
-#: admin/systems/services/dns/class_servDNSeditZone.inc:467
-#: admin/systems/services/dns/class_servDNSeditZone.inc:473
+#: admin/systems/services/dns/class_servDNSeditZone.inc:476
+#: admin/systems/services/dns/class_servDNSeditZone.inc:482
+#: admin/systems/services/dns/class_servDNSeditZone.inc:488
 #, php-format
 msgid ""
 "The specified network address and the network class (%s/%s) do not match!"
@@ -133,12 +134,12 @@ msgstr ""
 "Die angegebene Netzwerkaddresse und die Netzwerkklasse (%s/%s) passen nicht "
 "zueinander!"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:477
+#: admin/systems/services/dns/class_servDNSeditZone.inc:492
 #: admin/systems/services/dns/class_servDNS.inc:594
 msgid "Network class"
 msgstr "Netzwerk-Klasse"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:571
+#: admin/systems/services/dns/class_servDNSeditZone.inc:586
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
 msgid "Add"
 msgstr "Hinzufügen"
@@ -320,21 +321,21 @@ msgstr "Bitte beheben Sie den doppelten Datensatz %s des Eintrags '%s'."
 msgid "Remove"
 msgstr "Entfernen"
 
-#: admin/systems/services/dns/class_DNS.inc:161
+#: admin/systems/services/dns/class_DNS.inc:162
 #, php-format
 msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
 msgstr ""
 "Konnte die Reverse-Zone für DNS-Zone '%s' nicht finden. Das Einlesen der "
 "Zone wurde abgebrochen."
 
-#: admin/systems/services/dns/class_DNS.inc:166
+#: admin/systems/services/dns/class_DNS.inc:167
 #, php-format
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr ""
 "Es wurde mehr als eine Reverse-Zone für DNS-Zone '%s' gefunden. Das Einlesen "
 "der Zone wurde abgebrochen."
 
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:631
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr "Unbekannter Zonenname '%s'!"

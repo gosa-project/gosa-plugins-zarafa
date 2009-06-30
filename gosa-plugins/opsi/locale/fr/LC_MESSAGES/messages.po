@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2008-12-21 12:35+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -64,8 +64,9 @@ msgid "Description"
 msgstr ""
 
 #: admin/opsi/generic.tpl:84
+#, fuzzy
 msgid "Notes"
-msgstr ""
+msgstr "Contenu"
 
 #: admin/opsi/generic.tpl:101
 msgid "Installed products"
@@ -76,8 +77,9 @@ msgid "Available products"
 msgstr "Produits disponibles"
 
 #: admin/opsi/generic.tpl:116 admin/opsi/class_opsigeneric.inc:719
+#, fuzzy
 msgid "Action"
-msgstr ""
+msgstr "Lieu"
 
 #: admin/opsi/generic.tpl:120
 msgid "Reinstall"
@@ -114,8 +116,9 @@ msgstr "Le champ 'nom' doit contenir le nom complet incluant le domaine !"
 
 #: admin/opsi/class_opsigeneric.inc:265 admin/opsi/class_opsigeneric.inc:266
 #: admin/opsi/class_opsigeneric.inc:268 admin/opsi/class_opsigeneric.inc:269
+#, fuzzy
 msgid "OPSI"
-msgstr ""
+msgstr "UNIX"
 
 #: admin/opsi/class_opsigeneric.inc:376 admin/opsi/class_opsigeneric.inc:389
 #: admin/opsi/class_opsigeneric.inc:413 admin/opsi/class_opsigeneric.inc:424
@@ -135,8 +138,9 @@ msgid "OPSI generic"
 msgstr "Informations OPSI"
 
 #: admin/opsi/class_opsigeneric.inc:716
+#, fuzzy
 msgid "Note"
-msgstr ""
+msgstr "Non"
 
 #: admin/opsi/class_opsigeneric.inc:718
 msgid "Local product"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2008-12-19 09:04+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -2120,8 +2120,8 @@ msgid "User mail settings"
 msgstr "Benutzer Mail-Einstellungen"
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 msgid "Configuration error"
 msgstr "Konfigurationsfehler"
 
@@ -2210,26 +2210,26 @@ msgstr "Keine Zustellung in eigenes Postfach"
 msgid "Mail alternative addresses"
 msgstr "Weitere Adressen"
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr "Das eingestellte Mail-Attribut '%s' wird nicht unterstützt!"
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr "Mail-Methode '%s' ist unbekannt!"
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 msgid "None"
 msgstr "Keine"
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 msgid "Unlimited"
 msgstr "Ohne Beschränkung"
 

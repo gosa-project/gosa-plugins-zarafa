@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -679,8 +679,9 @@ msgstr "传送时间"
 
 #: admin/systems/services/mail/class_goMailServer.inc:718
 #: admin/systems/services/mail/goMailServer.tpl:149
+#, fuzzy
 msgid "Restrictions for sender"
-msgstr ""
+msgstr "主机通知命令"
 
 #: admin/systems/services/mail/class_goMailServer.inc:719
 #: admin/systems/services/mail/goMailServer.tpl:175
@@ -1317,8 +1318,9 @@ msgid "Require must be the first command in the script."
 msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_Vacation.inc:148
+#, fuzzy
 msgid "Alternative sender address must be a valid email addresses."
-msgstr ""
+msgstr "请输入一个有效的 iSerial。"
 
 #: personal/mail/sieve/templates/element_envelope.tpl:16
 #: personal/mail/sieve/templates/element_envelope.tpl:105
@@ -1478,8 +1480,9 @@ msgid "Condition"
 msgstr "连接"
 
 #: personal/mail/sieve/templates/object_container.tpl:8
+#, fuzzy
 msgid "Move object up one position"
-msgstr ""
+msgstr "成员对象"
 
 #: personal/mail/sieve/templates/object_container.tpl:8
 #: personal/mail/sieve/templates/object_container_clear.tpl:8
@@ -1674,8 +1677,9 @@ msgid "Add a new element"
 msgstr ""
 
 #: personal/mail/sieve/templates/add_element.tpl:2
+#, fuzzy
 msgid "Please select the type of element you want to add"
-msgstr ""
+msgstr "请选择一个打印机或者取消。"
 
 #: personal/mail/sieve/templates/add_element.tpl:13
 #, fuzzy
@@ -1731,8 +1735,9 @@ msgid "Export"
 msgstr "导出"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:12
+#, fuzzy
 msgid "View structured"
-msgstr ""
+msgstr "在子树中查找"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:14
 msgid "View source"
@@ -1851,8 +1856,9 @@ msgid "Header"
 msgstr "邮件头"
 
 #: personal/mail/sieve/templates/element_header.tpl:60
+#, fuzzy
 msgid "operator"
-msgstr ""
+msgstr "邮件选项"
 
 #: personal/mail/sieve/templates/create_script.tpl:2
 msgid ""
@@ -1882,8 +1888,9 @@ msgid "Domain part"
 msgstr "域"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:29
+#, fuzzy
 msgid "Local part"
-msgstr ""
+msgstr "位置"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:33
 msgid "Case insensitive"
@@ -2008,8 +2015,9 @@ msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:729
 #: personal/mail/sieve/class_sieveElement_If.inc:1062
+#, fuzzy
 msgid "Megabyte"
-msgstr ""
+msgstr "创建"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:730
 #: personal/mail/sieve/class_sieveElement_If.inc:1063
@@ -2130,9 +2138,9 @@ msgid "Cannot log into SIEVE server: %s"
 msgstr "无法登录到 SIEVE 服务器。服务器返回 '%s'。"
 
 #: personal/mail/sieve/class_sieveManagement.inc:349
-#, php-format
+#, fuzzy, php-format
 msgid "Cannot remove SIEVE script: %s"
-msgstr ""
+msgstr "未知 FAIstate %s"
 
 #: personal/mail/sieve/class_sieveManagement.inc:395
 #, fuzzy
@@ -2140,8 +2148,9 @@ msgid "Edited"
 msgstr "编辑"
 
 #: personal/mail/sieve/class_sieveManagement.inc:429
+#, fuzzy
 msgid "Uploaded script is empty!"
-msgstr ""
+msgstr "证书"
 
 #: personal/mail/sieve/class_sieveManagement.inc:431
 #, fuzzy
@@ -2198,8 +2207,9 @@ msgid "Can't log into SIEVE server. Server says '%s'."
 msgstr "无法登录到 SIEVE 服务器。服务器返回 '%s'。"
 
 #: personal/mail/sieve/class_sieveManagement.inc:770
+#, fuzzy
 msgid "Cannot insert element at the requested position!"
-msgstr ""
+msgstr "选择放置部门的子树"
 
 #: personal/mail/sieve/class_sieveManagement.inc:1045
 #, fuzzy
@@ -2215,8 +2225,8 @@ msgid "User mail settings"
 msgstr "用户邮件选项"
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 #, fuzzy
 msgid "Configuration error"
 msgstr "配置文件"
@@ -2320,27 +2330,27 @@ msgstr "不要发送到本人邮箱"
 msgid "Mail alternative addresses"
 msgstr "替代地址"
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 #, fuzzy
 msgid "None"
 msgstr "无"
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 msgid "Unknown"
 msgstr "未知"
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 #, fuzzy
 msgid "Unlimited"
 msgstr "无限"

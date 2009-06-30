@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:05+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -18,8 +18,9 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/intranet.tpl:4
+#, fuzzy
 msgid "Intranet account"
-msgstr ""
+msgstr "Cuenta POSIX"
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
@@ -29,8 +30,9 @@ msgstr "Conectividad"
 
 #: personal/connectivity/class_connectivity.inc:16
 #: personal/connectivity/class_intranetAccount.inc:18
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: personal/connectivity/class_connectivity.inc:272
 #: personal/connectivity/class_intranetAccount.inc:208

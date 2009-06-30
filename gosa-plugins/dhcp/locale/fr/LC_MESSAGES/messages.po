@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2009-02-28 13:57+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -14,122 +14,122 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/systems/services/dhcp/class_dhcpHost.inc:65
+#: admin/systems/services/dhcp/class_dhcpHost.inc:61
 msgid "Ethernet"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpHost.inc:66
+#: admin/systems/services/dhcp/class_dhcpHost.inc:62
 msgid "FDDI"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpHost.inc:67
+#: admin/systems/services/dhcp/class_dhcpHost.inc:63
 msgid "Token Ring"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpHost.inc:143
-#: admin/systems/services/dhcp/class_dhcpHost.inc:151
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:159
+#: admin/systems/services/dhcp/class_dhcpHost.inc:129
+#: admin/systems/services/dhcp/class_dhcpHost.inc:137
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:147
 #: admin/systems/services/dhcp/class_dhcpNetwork.inc:45
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:169
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:187
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:150
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:168
 #: admin/systems/services/dhcp/dhcp_host.tpl:8
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:10
-#: admin/systems/services/dhcp/class_dhcpPool.inc:113
-#: admin/systems/services/dhcp/class_dhcpPool.inc:121
+#: admin/systems/services/dhcp/class_dhcpPool.inc:101
+#: admin/systems/services/dhcp/class_dhcpPool.inc:109
 #: admin/systems/services/dhcp/dhcp_pool.tpl:6
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:96
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:99
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:107
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:84
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:87
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:95
 #: admin/systems/services/dhcp/dhcp_group.tpl:6
 msgid "Name"
 msgstr "Nom"
 
-#: admin/systems/services/dhcp/class_dhcpHost.inc:160
+#: admin/systems/services/dhcp/class_dhcpHost.inc:146
 #: admin/systems/services/dhcp/dhcp_host.tpl:41
 msgid "Hardware address"
 msgstr "Adresse hardware"
 
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:148
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:168
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:136
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:156
 #: admin/systems/services/dhcp/dhcp_subnet.tpl:8
 msgid "Network address"
 msgstr "Adresse réseau"
 
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:151
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:167
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:139
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:155
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:190
 #: admin/systems/services/dhcp/dhcp_network.tpl:17
 #: admin/systems/services/dhcp/dhcp_subnet.tpl:16
 msgid "Netmask"
 msgstr "Masque réseau"
 
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:169
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:170
-#: admin/systems/services/dhcp/class_dhcpPool.inc:128
-#: admin/systems/services/dhcp/class_dhcpPool.inc:132
-#: admin/systems/services/dhcp/class_dhcpPool.inc:136
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:157
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:158
+#: admin/systems/services/dhcp/class_dhcpPool.inc:116
+#: admin/systems/services/dhcp/class_dhcpPool.inc:120
+#: admin/systems/services/dhcp/class_dhcpPool.inc:124
 #: admin/systems/services/dhcp/dhcp_pool.tpl:13
 msgid "Range"
 msgstr "Etendue"
 
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:179
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:167
 msgid "Network range"
 msgstr "Etendue réseau"
 
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:185
-#: admin/systems/services/dhcp/class_dhcpPool.inc:150
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:173
+#: admin/systems/services/dhcp/class_dhcpPool.inc:138
 msgid "'Range' is not inside the configured network."
 msgstr "L'étendue réseau n'est pas comprise dans le réseau configuré."
 
-#: admin/systems/services/dhcp/class_dhcpService.inc:145
+#: admin/systems/services/dhcp/class_dhcpService.inc:126
 msgid "Lease time"
 msgstr "Bail"
 
-#: admin/systems/services/dhcp/class_dhcpService.inc:148
+#: admin/systems/services/dhcp/class_dhcpService.inc:129
 msgid "Max lease time"
 msgstr "Temps maximum du bail"
 
-#: admin/systems/services/dhcp/class_dhcpService.inc:151
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:173
+#: admin/systems/services/dhcp/class_dhcpService.inc:132
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:154
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:55
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:59
 msgid "Default lease time"
 msgstr "Bail par défaut"
 
-#: admin/systems/services/dhcp/class_dhcpService.inc:151
+#: admin/systems/services/dhcp/class_dhcpService.inc:132
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:68
 msgid "Maximum lease time"
 msgstr "Temps maximum du bail"
 
 #: admin/systems/services/dhcp/class_dhcpNetwork.inc:45
-#: admin/systems/services/dhcp/class_servDHCP.inc:681
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:56
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:69
+#: admin/systems/services/dhcp/class_servDHCP.inc:700
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:57
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:71
 msgid "Error"
 msgstr "Erreur"
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:190
 #: admin/systems/services/dhcp/dhcp_network.tpl:25
 msgid "Broadcast"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:218
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:195
 #, php-format
 msgid "Error in definition of '%s'!"
 msgstr "Erreur lors de la définition de '%s' !"
 
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:174
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:155
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:64
 msgid "Max. lease time"
 msgstr "Temps maximum du bail"
 
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:175
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:156
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:73
 msgid "Min. lease time"
 msgstr "Temps minimum du bail"
 
 #: admin/systems/services/dhcp/remove_dhcp.tpl:2
-#: admin/systems/services/dhcp/class_servDHCP.inc:108
+#: admin/systems/services/dhcp/class_servDHCP.inc:111
 msgid "Warning"
 msgstr "Avertissement"
 
@@ -188,7 +188,8 @@ msgstr "Adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:22
 msgid "Use hostname or IP-address to assign fixed address"
-msgstr "Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
+msgstr ""
+"Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:31
 msgid "Hardware type"
@@ -261,7 +262,8 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:42
-msgid "Enter name of file that will be loaded via tftp after client has started"
+msgid ""
+"Enter name of file that will be loaded via tftp after client has started"
 msgstr ""
 "Entrez le nom du fichier qui doit être chargé via tftp après que le client "
 "aie démarré"
@@ -392,7 +394,8 @@ msgstr "Accepter les clients inconnus"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Select if bootp clients should get dynamic IP addresses"
-msgstr "Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
+msgstr ""
+"Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Allow bootp clients"
@@ -406,63 +409,63 @@ msgstr "Sélectionner si les clients sont autorisés à utiliser ce serveur dhcp
 msgid "Allow booting"
 msgstr "Permettre le démarrage"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:33
-#: admin/systems/services/dhcp/class_servDHCP.inc:692
-#: admin/systems/services/dhcp/class_servDHCP.inc:693
-#: admin/systems/services/dhcp/class_servDHCP.inc:739
+#: admin/systems/services/dhcp/class_servDHCP.inc:36
+#: admin/systems/services/dhcp/class_servDHCP.inc:711
+#: admin/systems/services/dhcp/class_servDHCP.inc:712
+#: admin/systems/services/dhcp/class_servDHCP.inc:758
 msgid "DHCP service"
 msgstr "Service DHCP"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:35
+#: admin/systems/services/dhcp/class_servDHCP.inc:38
 msgid "Logging"
 msgstr "Journaux systèmes"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:36
-#: admin/systems/services/dhcp/class_servDHCP.inc:301
-#: admin/systems/services/dhcp/class_servDHCP.inc:604
+#: admin/systems/services/dhcp/class_servDHCP.inc:39
+#: admin/systems/services/dhcp/class_servDHCP.inc:309
+#: admin/systems/services/dhcp/class_servDHCP.inc:620
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:26
 msgid "Global options"
 msgstr "Options Globales"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:37
+#: admin/systems/services/dhcp/class_servDHCP.inc:40
 msgid "Class"
 msgstr "Classe"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:38
+#: admin/systems/services/dhcp/class_servDHCP.inc:41
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:28
 msgid "Subclass"
 msgstr "sous classe"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:39
+#: admin/systems/services/dhcp/class_servDHCP.inc:42
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:29
 msgid "Host"
 msgstr "Hôte"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:40
+#: admin/systems/services/dhcp/class_servDHCP.inc:43
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:30
 msgid "Group"
 msgstr "Groupes"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:41
+#: admin/systems/services/dhcp/class_servDHCP.inc:44
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:31
 msgid "Pool"
 msgstr "réservoir"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:42
+#: admin/systems/services/dhcp/class_servDHCP.inc:45
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
 msgid "Subnet"
 msgstr "Sous réseau"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:43
+#: admin/systems/services/dhcp/class_servDHCP.inc:46
 msgid "Failover peer"
 msgstr "Partenaire pour la prise de contrôle"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:44
+#: admin/systems/services/dhcp/class_servDHCP.inc:47
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
 msgid "Shared network"
 msgstr "Réseaux partagés"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:103
+#: admin/systems/services/dhcp/class_servDHCP.inc:106
 #, php-format
 msgid ""
 "You have requested a migration of the DHCP setup from server '%s' to the "
@@ -471,44 +474,44 @@ msgstr ""
 "Vous avez demandé la migration du serveur DHCP depuis le serveur '%s' vers "
 "le serveur actuel."
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:105
+#: admin/systems/services/dhcp/class_servDHCP.inc:108
 msgid "The migration will be started when you save this system."
 msgstr "La migration sera démarrée lorsque vous sauverez ce système."
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:222
+#: admin/systems/services/dhcp/class_servDHCP.inc:225
 msgid "Permission error"
 msgstr "Erreur de permissions"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:256
+#: admin/systems/services/dhcp/class_servDHCP.inc:262
 msgid "DHCP section"
 msgstr "Section DHCP"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:325
-#: admin/systems/services/dhcp/class_servDHCP.inc:328
+#: admin/systems/services/dhcp/class_servDHCP.inc:333
+#: admin/systems/services/dhcp/class_servDHCP.inc:336
 msgid "Insert new DHCP section"
 msgstr "Insérer une nouvelle section DHCP"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:326
-#: admin/systems/services/dhcp/class_servDHCP.inc:329
-#: admin/systems/services/dhcp/class_servDHCP.inc:330
+#: admin/systems/services/dhcp/class_servDHCP.inc:334
+#: admin/systems/services/dhcp/class_servDHCP.inc:337
+#: admin/systems/services/dhcp/class_servDHCP.inc:338
 msgid "Edit DHCP section"
 msgstr "Editer une section DHCP"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:327
-#: admin/systems/services/dhcp/class_servDHCP.inc:331
+#: admin/systems/services/dhcp/class_servDHCP.inc:335
+#: admin/systems/services/dhcp/class_servDHCP.inc:339
 msgid "Remove DHCP section"
 msgstr "Suppression d'une section DHCP"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:378
-#: admin/systems/services/dhcp/class_servDHCP.inc:395
-#: admin/systems/services/dhcp/class_servDHCP.inc:450
-#: admin/systems/services/dhcp/class_servDHCP.inc:526
-#: admin/systems/services/dhcp/class_servDHCP.inc:534
-#: admin/systems/services/dhcp/class_servDHCP.inc:561
+#: admin/systems/services/dhcp/class_servDHCP.inc:394
+#: admin/systems/services/dhcp/class_servDHCP.inc:411
+#: admin/systems/services/dhcp/class_servDHCP.inc:466
+#: admin/systems/services/dhcp/class_servDHCP.inc:542
+#: admin/systems/services/dhcp/class_servDHCP.inc:550
+#: admin/systems/services/dhcp/class_servDHCP.inc:577
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:681
+#: admin/systems/services/dhcp/class_servDHCP.inc:700
 msgid ""
 "The DHCP configuration set is unkown. Please contact your system "
 "administrator."
@@ -516,29 +519,29 @@ msgstr ""
 "La configuration DHCP est inconnue. Veuillez contacter votre administrateur "
 "système."
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:693
+#: admin/systems/services/dhcp/class_servDHCP.inc:712
 msgid "Services"
 msgstr "Services"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:701
+#: admin/systems/services/dhcp/class_servDHCP.inc:720
 msgid "Start service"
 msgstr "Démarrer le service"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:702
+#: admin/systems/services/dhcp/class_servDHCP.inc:721
 msgid "Stop service"
 msgstr "Arrêter le service"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:703
+#: admin/systems/services/dhcp/class_servDHCP.inc:722
 msgid "Restart service"
 msgstr "Redémarrer le service"
 
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:56
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:69
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:57
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:71
 msgid "Cannot delete automatic statements!"
 msgstr "Impossible d'effacer les déclarations automatiques !"
 
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:84
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:93
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:87
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:102
 msgid "automatic"
 msgstr "automatique"
 
@@ -549,4 +552,3 @@ msgstr "Nom du pool d'adresses"
 #: admin/systems/services/dhcp/dhcp_group.tpl:11
 msgid "Name of group"
 msgstr "Nom du groupe"
-

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -820,8 +820,9 @@ msgstr "Controleer parameter"
 
 #: admin/systems/services/virus/goVirusServer.tpl:84
 #: admin/systems/services/virus/class_goVirusServer.inc:232
+#, fuzzy
 msgid "Enable debugging"
-msgstr ""
+msgstr "gedeactiveerd"
 
 #: admin/systems/services/virus/goVirusServer.tpl:92
 #: admin/systems/services/virus/class_goVirusServer.inc:233
@@ -856,8 +857,9 @@ msgstr ""
 #: admin/systems/services/virus/goVirusServer.tpl:152
 #: admin/systems/services/virus/class_goVirusServer.inc:167
 #: admin/systems/services/virus/class_goVirusServer.inc:242
+#, fuzzy
 msgid "Maximum compression ratio"
-msgstr ""
+msgstr "Toegangsopties"
 
 #: admin/systems/services/virus/class_goVirusServer.inc:45
 #: admin/systems/services/virus/class_goVirusServer.inc:210
@@ -1763,8 +1765,9 @@ msgid "Export"
 msgstr "Exporteer"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:12
+#, fuzzy
 msgid "View structured"
-msgstr ""
+msgstr "Zoek binnen subtree"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:14
 #, fuzzy
@@ -1889,8 +1892,9 @@ msgid "Header"
 msgstr "header"
 
 #: personal/mail/sieve/templates/element_header.tpl:60
+#, fuzzy
 msgid "operator"
-msgstr ""
+msgstr "E-mail opties"
 
 #: personal/mail/sieve/templates/create_script.tpl:2
 msgid ""
@@ -1920,8 +1924,9 @@ msgid "Domain part"
 msgstr "Windows gebruikers"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:29
+#, fuzzy
 msgid "Local part"
-msgstr ""
+msgstr "Plaats"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:33
 msgid "Case insensitive"
@@ -2047,8 +2052,9 @@ msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:729
 #: personal/mail/sieve/class_sieveElement_If.inc:1062
+#, fuzzy
 msgid "Megabyte"
-msgstr ""
+msgstr "Aanmaken"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:730
 #: personal/mail/sieve/class_sieveElement_If.inc:1063
@@ -2169,9 +2175,9 @@ msgid "Cannot log into SIEVE server: %s"
 msgstr "Kan niet op de SIEVE server inloggen. De server meldt: '%s'."
 
 #: personal/mail/sieve/class_sieveManagement.inc:349
-#, php-format
+#, fuzzy, php-format
 msgid "Cannot remove SIEVE script: %s"
-msgstr ""
+msgstr "Onbekende FAI status %s"
 
 #: personal/mail/sieve/class_sieveManagement.inc:395
 #, fuzzy
@@ -2179,8 +2185,9 @@ msgid "Edited"
 msgstr "Bewerken"
 
 #: personal/mail/sieve/class_sieveManagement.inc:429
+#, fuzzy
 msgid "Uploaded script is empty!"
-msgstr ""
+msgstr "Certificaten"
 
 #: personal/mail/sieve/class_sieveManagement.inc:431
 #, fuzzy
@@ -2238,8 +2245,9 @@ msgid "Can't log into SIEVE server. Server says '%s'."
 msgstr "Kan niet op de SIEVE server inloggen. De server meldt: '%s'."
 
 #: personal/mail/sieve/class_sieveManagement.inc:770
+#, fuzzy
 msgid "Cannot insert element at the requested position!"
-msgstr ""
+msgstr "Ga naar de afdeling van de gebruiker"
 
 #: personal/mail/sieve/class_sieveManagement.inc:1045
 #, fuzzy
@@ -2255,8 +2263,8 @@ msgid "User mail settings"
 msgstr "Gebruikers E-mail instellingen"
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 #, fuzzy
 msgid "Configuration error"
 msgstr "Configuratie bestand"
@@ -2361,27 +2369,27 @@ msgstr "Geen aflevering in eigen mailbox"
 msgid "Mail alternative addresses"
 msgstr "Alternatieve adressen"
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 #, fuzzy
 msgid "None"
 msgstr "geen"
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 #, fuzzy
 msgid "Unlimited"
 msgstr "geen limiet"

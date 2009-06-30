@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,9 +46,9 @@ msgstr ""
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:345
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
-#: admin/systems/services/dns/class_DNS.inc:161
-#: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:162
+#: admin/systems/services/dns/class_DNS.inc:167
+#: admin/systems/services/dns/class_DNS.inc:631
 msgid "Error"
 msgstr ""
 
@@ -61,7 +61,7 @@ msgid "Down"
 msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:565
+#: admin/systems/services/dns/class_servDNSeditZone.inc:580
 msgid "Delete"
 msgstr ""
 
@@ -111,24 +111,25 @@ msgid "Retry"
 msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:454
+#: admin/systems/services/dns/class_servDNSeditZone.inc:468
 #: admin/systems/services/dns/servdnseditzone.tpl:16
 msgid "Network address"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:461
-#: admin/systems/services/dns/class_servDNSeditZone.inc:467
-#: admin/systems/services/dns/class_servDNSeditZone.inc:473
+#: admin/systems/services/dns/class_servDNSeditZone.inc:476
+#: admin/systems/services/dns/class_servDNSeditZone.inc:482
+#: admin/systems/services/dns/class_servDNSeditZone.inc:488
 #, php-format
 msgid ""
 "The specified network address and the network class (%s/%s) do not match!"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:477
+#: admin/systems/services/dns/class_servDNSeditZone.inc:492
 #: admin/systems/services/dns/class_servDNS.inc:594
 msgid "Network class"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:571
+#: admin/systems/services/dns/class_servDNSeditZone.inc:586
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
 msgid "Add"
 msgstr ""
@@ -294,17 +295,17 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:161
+#: admin/systems/services/dns/class_DNS.inc:162
 #, php-format
 msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:166
+#: admin/systems/services/dns/class_DNS.inc:167
 #, php-format
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:631
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""

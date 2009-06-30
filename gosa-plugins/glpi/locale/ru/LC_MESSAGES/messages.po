@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -89,8 +89,9 @@ msgid "GLPI database information"
 msgstr "Общая информация о пользователе"
 
 #: admin/systems/services/glpi/goGlpiServer.tpl:4
+#, fuzzy
 msgid "Logging DB user"
-msgstr ""
+msgstr "Служба печати"
 
 #: admin/systems/services/glpi/goGlpiServer.tpl:12
 #: admin/systems/services/glpi/class_goGlpiServer.inc:102
@@ -201,8 +202,9 @@ msgid "Mime-type"
 msgstr "Тип"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:104
+#, fuzzy
 msgid "Can't delete this entry, it is still in use."
-msgstr ""
+msgstr "Описание группы"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:268
 #: admin/systems/services/glpi/class_glpiAccount.inc:656
@@ -663,8 +665,9 @@ msgstr ""
 #: admin/systems/services/glpi/glpi_devices.tpl:228
 #: admin/systems/services/glpi/glpi_devices.tpl:284
 #: admin/systems/services/glpi/glpi_devices.tpl:349
+#, fuzzy
 msgid "Interface"
-msgstr ""
+msgstr "Терминал-сервер"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:237
 #, fuzzy
@@ -815,8 +818,9 @@ msgid "Start"
 msgstr "Запуск"
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:97
+#, fuzzy
 msgid "Stop"
-msgstr ""
+msgstr "Отношение"
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:98
 #, fuzzy
@@ -1263,8 +1267,9 @@ msgid "Regular expression for matching user names"
 msgstr "Регулярное выражение, соответствующее именам пользователей"
 
 #: admin/systems/services/glpi/glpi_edit_os.tpl:1
+#, fuzzy
 msgid "Manage OS-types"
-msgstr ""
+msgstr "Пользователи домена"
 
 #: admin/systems/services/glpi/class_glpiManufacturer.inc:53
 #, php-format

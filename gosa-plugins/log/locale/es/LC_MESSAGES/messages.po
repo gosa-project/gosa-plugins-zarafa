@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -55,20 +55,23 @@ msgid "Allow view of entries on this server"
 msgstr "Permitir vista de entradas en este servidor"
 
 #: admin/systems/services/log/gosaLogServer.tpl:1
+#, fuzzy
 msgid "GOsa logging database"
-msgstr ""
+msgstr "Pantalla de inicio de GOsa"
 
 #: admin/systems/services/log/gosaLogServer.tpl:12
 msgid "Database user"
 msgstr "Usuario de base de datos"
 
 #: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+#, fuzzy
 msgid "Filter"
-msgstr ""
+msgstr "Filtros"
 
 #: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+#, fuzzy
 msgid "Show hosts"
-msgstr ""
+msgstr "Mostrar %s"
 
 #: addons/logview/gosa_log_contents.tpl:20
 #: addons/logview/gosa_log_contents.tpl:82
@@ -80,16 +83,18 @@ msgid "Time interval"
 msgstr ""
 
 #: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+#, fuzzy
 msgid "Search for"
-msgstr ""
+msgstr "Buscar"
 
 #: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
 msgid "Enter string to search for"
 msgstr ""
 
 #: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+#, fuzzy
 msgid "Ruleset"
-msgstr ""
+msgstr "Eliminar ACL"
 
 #: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
 msgid "Edit"
@@ -100,8 +105,9 @@ msgid "Search"
 msgstr "Buscar"
 
 #: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+#, fuzzy
 msgid "Date"
-msgstr ""
+msgstr "Provincia"
 
 #: addons/logview/gosa_log_contents.tpl:85
 #, fuzzy
@@ -122,12 +128,14 @@ msgstr ""
 
 #: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
 #: addons/logview/class_gosa_logview.inc:6
+#, fuzzy
 msgid "System logs"
-msgstr ""
+msgstr "Sistemas"
 
 #: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: addons/logview/class_logview.inc:79
 #: addons/logview/class_gosa_logview.inc:118
@@ -160,13 +168,15 @@ msgstr "Error"
 #: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
 #: addons/logview/class_gosa_logview.inc:169
 #: addons/logview/class_gosa_logview.inc:184
+#, fuzzy
 msgid "All"
-msgstr ""
+msgstr "Acl"
 
 #: addons/logview/class_logview.inc:156
 #: addons/logview/class_gosa_logview.inc:71
+#, fuzzy
 msgid "one hour"
-msgstr ""
+msgstr "Número de teléfono"
 
 #: addons/logview/class_logview.inc:156
 #: addons/logview/class_gosa_logview.inc:71
@@ -190,8 +200,9 @@ msgstr ""
 
 #: addons/logview/class_logview.inc:158
 #: addons/logview/class_gosa_logview.inc:73
+#, fuzzy
 msgid "one week"
-msgstr ""
+msgstr "Cola telefónica"
 
 #: addons/logview/class_logview.inc:159
 #: addons/logview/class_gosa_logview.inc:74
@@ -204,20 +215,23 @@ msgid "one month"
 msgstr ""
 
 #: addons/logview/class_logview.inc:412
+#, fuzzy
 msgid "Log view"
-msgstr ""
+msgstr "Inicio"
 
 #: addons/logview/class_logview.inc:413
 msgid "Log view addon"
 msgstr ""
 
 #: addons/logview/main.inc:49
+#, fuzzy
 msgid "System log view"
-msgstr ""
+msgstr "Sistema / Departamento"
 
 #: addons/logview/class_gosa_logview.inc:203
+#, fuzzy
 msgid "You have insufficient permissions to view syslog entries."
-msgstr ""
+msgstr "No tiene permisos para ver estos objetos:"
 
 #: addons/logview/class_gosa_logview.inc:238
 #, php-format
@@ -225,16 +239,18 @@ msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""
 
 #: addons/logview/contents.tpl:20
+#, fuzzy
 msgid "Log level"
-msgstr ""
+msgstr "Nivel de depuración"
 
 #: addons/logview/contents.tpl:82
 msgid "Level"
 msgstr ""
 
 #: addons/logview/contents.tpl:83
+#, fuzzy
 msgid "Hostname"
-msgstr ""
+msgstr "Apellido"
 
 #~ msgid "Save"
 #~ msgstr "Guardar"

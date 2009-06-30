@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:05+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2008-08-12 12:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -71,8 +71,9 @@ msgid "Admin mail address"
 msgstr "Adresse de messagerie de l'administrateur"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:387
+#, fuzzy
 msgid "Server alias"
-msgstr ""
+msgstr "Serveur"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:397
 msgid "Script alias"
@@ -107,8 +108,9 @@ msgid "Generic"
 msgstr "Informations"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:30
+#, fuzzy
 msgid "Server Alias"
-msgstr ""
+msgstr "Serveur"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:42
 msgid "URL Alias"
@@ -123,12 +125,14 @@ msgid "Script Alias"
 msgstr ""
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:86
+#, fuzzy
 msgid "Alias Directory"
-msgstr ""
+msgstr "Répertoire"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:89
+#, fuzzy
 msgid "Script Directory"
-msgstr ""
+msgstr "Répertoire"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:112
 msgid "Save"

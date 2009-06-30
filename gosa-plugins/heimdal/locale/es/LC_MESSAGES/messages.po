@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -58,8 +58,9 @@ msgid "Month"
 msgstr "mes"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:42
+#, fuzzy
 msgid "Year"
-msgstr ""
+msgstr "Buscar"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:47
 msgid "Valid ticket start time"
@@ -90,8 +91,9 @@ msgstr "Servicio Kerberos"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:358
 #: admin/systems/services/kerberos/class_goKrbServer.inc:367
 #: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#, fuzzy
 msgid "Service infrastructure"
-msgstr ""
+msgstr "error de infraestructura"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:165
 msgid "Kerberos service (kadmin access informations)"
@@ -112,8 +114,9 @@ msgid "Remove"
 msgstr "Eliminar"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
+#, fuzzy
 msgid "Policy"
-msgstr ""
+msgstr "Polaco"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
 msgid "Kerberos"
@@ -129,8 +132,9 @@ msgstr "Servicios"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:393
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
+#, fuzzy
 msgid "Policies"
-msgstr ""
+msgstr "Polaco"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127

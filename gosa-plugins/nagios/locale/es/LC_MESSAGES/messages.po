@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -26,8 +26,9 @@ msgid "Nagios"
 msgstr "Nagios"
 
 #: personal/nagios/class_nagiosAccount.inc:19
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: personal/nagios/class_nagiosAccount.inc:173
 #: personal/nagios/class_nagiosAccount.inc:258
@@ -115,24 +116,28 @@ msgid "Trigger all host commands"
 msgstr "Activar todos los comandos de máquina"
 
 #: personal/nagios/nagios.tpl:5
+#, fuzzy
 msgid "Nagios Account"
-msgstr ""
+msgstr "Grupo Nagios"
 
 #: personal/nagios/nagios.tpl:79
 msgid "Pager"
 msgstr "Buscapersonas"
 
 #: personal/nagios/nagios.tpl:115
+#, fuzzy
 msgid "Nagios authentification"
-msgstr ""
+msgstr "autenticación"
 
 #: personal/nagios/nagios.tpl:121
+#, fuzzy
 msgid "view system informations"
-msgstr ""
+msgstr "Información genérica del usuario"
 
 #: personal/nagios/nagios.tpl:130
+#, fuzzy
 msgid "view configuration information"
-msgstr ""
+msgstr "Escribir archivo de configuración"
 
 #: personal/nagios/nagios.tpl:139
 msgid "trigger system commands"

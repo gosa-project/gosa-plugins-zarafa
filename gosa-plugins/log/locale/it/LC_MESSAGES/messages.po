@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -70,8 +70,9 @@ msgid "Filter"
 msgstr "Filtro"
 
 #: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+#, fuzzy
 msgid "Show hosts"
-msgstr ""
+msgstr "Mostra telefoni"
 
 #: addons/logview/gosa_log_contents.tpl:20
 #: addons/logview/gosa_log_contents.tpl:82
@@ -91,8 +92,9 @@ msgid "Enter string to search for"
 msgstr ""
 
 #: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+#, fuzzy
 msgid "Ruleset"
-msgstr ""
+msgstr "Rimuovi"
 
 #: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
 msgid "Edit"
@@ -116,8 +118,9 @@ msgid "Object"
 msgstr "Oggetto"
 
 #: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+#, fuzzy
 msgid "Message"
-msgstr ""
+msgstr "Home Page"
 
 #: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
 msgid "Search returned no results..."
@@ -168,8 +171,9 @@ msgstr ""
 
 #: addons/logview/class_logview.inc:156
 #: addons/logview/class_gosa_logview.inc:71
+#, fuzzy
 msgid "one hour"
-msgstr ""
+msgstr "Numero di telefono"
 
 #: addons/logview/class_logview.inc:156
 #: addons/logview/class_gosa_logview.inc:71
@@ -193,8 +197,9 @@ msgstr ""
 
 #: addons/logview/class_logview.inc:158
 #: addons/logview/class_gosa_logview.inc:73
+#, fuzzy
 msgid "one week"
-msgstr ""
+msgstr "Numero di telefono"
 
 #: addons/logview/class_logview.inc:159
 #: addons/logview/class_gosa_logview.inc:74
@@ -217,8 +222,9 @@ msgid "Log view addon"
 msgstr "Dominio"
 
 #: addons/logview/main.inc:49
+#, fuzzy
 msgid "System log view"
-msgstr ""
+msgstr "Dipartimento"
 
 #: addons/logview/class_gosa_logview.inc:203
 #, fuzzy
@@ -231,16 +237,18 @@ msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""
 
 #: addons/logview/contents.tpl:20
+#, fuzzy
 msgid "Log level"
-msgstr ""
+msgstr "Rimuovi"
 
 #: addons/logview/contents.tpl:82
 msgid "Level"
 msgstr ""
 
 #: addons/logview/contents.tpl:83
+#, fuzzy
 msgid "Hostname"
-msgstr ""
+msgstr "Scegli il tuo numero di telefono personale"
 
 #~ msgid "Save"
 #~ msgstr "Salva"

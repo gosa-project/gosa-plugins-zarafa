@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -116,8 +116,9 @@ msgid "Remove"
 msgstr "删除"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
+#, fuzzy
 msgid "Policy"
-msgstr ""
+msgstr "波兰语"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
 msgid "Kerberos"
@@ -134,8 +135,9 @@ msgstr "服务"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:393
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
+#, fuzzy
 msgid "Policies"
-msgstr ""
+msgstr "波兰语"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127

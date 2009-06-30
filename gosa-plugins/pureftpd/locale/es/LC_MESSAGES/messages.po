@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -22,8 +22,9 @@ msgid "FTP"
 msgstr "FTP"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:7
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
@@ -33,13 +34,15 @@ msgstr "Servicio LDAP"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
+#, fuzzy
 msgid "Upload bandwidth"
-msgstr ""
+msgstr "¡Ha fallado el subir archivo!"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
 #: personal/connectivity/pureftpd/pureftpd.tpl:29
+#, fuzzy
 msgid "Download bandwidth"
-msgstr ""
+msgstr "Descargar configuración"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
@@ -98,8 +101,9 @@ msgid "Status"
 msgstr "Estado"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:6
+#, fuzzy
 msgid "FTP account"
-msgstr ""
+msgstr "Mi cuenta"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:17
 msgid "Bandwidth"
@@ -115,8 +119,9 @@ msgid "Quota"
 msgstr ""
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:49
+#, fuzzy
 msgid "Files"
-msgstr ""
+msgstr "Archivo"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:57
 msgid "Size"
@@ -127,8 +132,9 @@ msgid "MB"
 msgstr "Mb"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:73
+#, fuzzy
 msgid "Ratio"
-msgstr ""
+msgstr "Localización"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:77
 msgid "Uploaded / downloaded files"

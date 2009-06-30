@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -88,8 +88,9 @@ msgid "OXTaskDays"
 msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
+#, fuzzy
 msgid "OXTimeZone"
-msgstr ""
+msgstr "Cellulare"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
 msgid "Open-Xchange Account"
@@ -102,12 +103,14 @@ msgid ""
 msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:18
+#, fuzzy
 msgid "Open-Xchange account"
-msgstr ""
+msgstr "Estenzioni FTP"
 
 #: personal/connectivity/openxchange/oxchange.tpl:29
+#, fuzzy
 msgid "Remember"
-msgstr ""
+msgstr "Dicembre"
 
 #: personal/connectivity/openxchange/oxchange.tpl:33
 msgid "Appointment Days"
@@ -123,12 +126,14 @@ msgid "Task Days"
 msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:61
+#, fuzzy
 msgid "User Information"
-msgstr ""
+msgstr "Informazioni"
 
 #: personal/connectivity/openxchange/oxchange.tpl:65
+#, fuzzy
 msgid "User Timezone"
-msgstr ""
+msgstr "Cellulare"
 
 #, fuzzy
 #~ msgid "Cannot connect to %s database!"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -611,8 +611,9 @@ msgstr "传真"
 #: gofax/faxaccount/class_gofaxAccount.inc:165
 #: gofax/faxaccount/class_gofaxAccount.inc:175
 #: gofax/faxaccount/class_gofaxAccount.inc:178
+#, fuzzy
 msgid "GOfax"
-msgstr ""
+msgstr "GOsa"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:174
 msgid "Remove fax account"

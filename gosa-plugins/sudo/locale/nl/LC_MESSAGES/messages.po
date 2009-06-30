@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-06-30 09:59+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -24,8 +24,11 @@ msgid "Warning"
 msgstr "Waarschuwing"
 
 #: admin/sudo/remove.tpl:9
+#, fuzzy
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
+"Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
+"om te annuleren."
 
 #: admin/sudo/class_sudoGeneric.inc:295
 msgid "Error"
@@ -107,12 +110,14 @@ msgid "Access control list"
 msgstr "Toegangsopties"
 
 #: admin/sudo/options.tpl:5
+#, fuzzy
 msgid "Option name"
-msgstr ""
+msgstr "Naam van de locatie"
 
 #: admin/sudo/options.tpl:7
+#, fuzzy
 msgid "Value"
-msgstr ""
+msgstr "man"
 
 #: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
 msgid "Options"
@@ -141,8 +146,9 @@ msgid "Trust mode"
 msgstr "Vertrouwensmodus"
 
 #: admin/sudo/generic.tpl:87
+#, fuzzy
 msgid "Users and groups"
-msgstr ""
+msgstr "groepen"
 
 #: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
@@ -154,12 +160,14 @@ msgid "Systems"
 msgstr "Systeem"
 
 #: admin/sudo/generic.tpl:120
+#, fuzzy
 msgid "Commands"
-msgstr ""
+msgstr "en"
 
 #: admin/sudo/generic.tpl:132
+#, fuzzy
 msgid "Run as"
-msgstr ""
+msgstr "Windows gebruikers"
 
 #: admin/sudo/class_target_list_systems.inc:50
 msgid "Select the target objects for your scheduled action."
@@ -167,8 +175,9 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:51
 #: admin/sudo/class_target_list_systems.inc:52
+#, fuzzy
 msgid "Available systems"
-msgstr ""
+msgstr "Beschikbare programma's"
 
 #: admin/sudo/class_target_list_systems.inc:61
 #: admin/sudo/class_target_list_users.inc:58
@@ -227,8 +236,9 @@ msgid "Terminal"
 msgstr "Terminal"
 
 #: admin/sudo/class_target_list_users.inc:47
+#, fuzzy
 msgid "Select the target objects"
-msgstr ""
+msgstr "Selecteer om afdelingen te zien"
 
 #: admin/sudo/class_target_list_users.inc:48
 #: admin/sudo/class_target_list_users.inc:49
@@ -236,20 +246,24 @@ msgid "Available members"
 msgstr ""
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Select to see users"
-msgstr ""
+msgstr "Selecteer om servers te zien"
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Show users"
-msgstr ""
+msgstr "Toon Samba gebruikers"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Select to see groups"
-msgstr ""
+msgstr "Selecteer om GOsa groepen te zien"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Show groups"
-msgstr ""
+msgstr "Toon Samba groepen"
 
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
@@ -261,13 +275,14 @@ msgid "Sudo role administration"
 msgstr "Groepen beheer"
 
 #: admin/sudo/class_sudoOption.inc:154
+#, fuzzy
 msgid "Unknown option"
-msgstr ""
+msgstr "Onbekend"
 
 #: admin/sudo/class_sudoOption.inc:155
-#, php-format
+#, fuzzy, php-format
 msgid "The sudo option '%s' is invalid!"
-msgstr ""
+msgstr "De opgegeven naam is ongeldig."
 
 #: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
 #, fuzzy
@@ -285,8 +300,9 @@ msgid "integer"
 msgstr "printers"
 
 #: admin/sudo/class_sudoOption.inc:284
+#, fuzzy
 msgid "list"
-msgstr ""
+msgstr "klasse"
 
 #: admin/sudo/class_sudoOption.inc:537
 #, fuzzy
@@ -350,8 +366,9 @@ msgid "Role"
 msgstr "Funktie"
 
 #: admin/sudo/class_divListSudo.inc:112
+#, fuzzy
 msgid "Default"
-msgstr ""
+msgstr "Verwijderen"
 
 #: admin/sudo/class_divListSudo.inc:119
 msgid "Remove"
@@ -371,8 +388,9 @@ msgid "Number of listed roles"
 msgstr "Naam van de groep"
 
 #: admin/sudo/class_sudoManagement.inc:31
+#, fuzzy
 msgid "Sudo roles"
-msgstr ""
+msgstr "! onbekend id"
 
 #: admin/sudo/class_sudoManagement.inc:32
 #, fuzzy

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -59,8 +59,9 @@ msgstr "błąd LDAP:"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:204
 #: personal/connectivity/squid/class_proxyAccount.inc:206
+#, fuzzy
 msgid "Quota Setting"
-msgstr ""
+msgstr "Ustawienia pocztowe"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:331
 #: personal/connectivity/squid/proxy.tpl:37

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2008-12-03 15:12+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -32,9 +32,9 @@ msgstr "Kerberos-Dienst"
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:236
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:292
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:320
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:382
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:397
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:673
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:395
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:410
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:690
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:343
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:376
 msgid "Service infrastructure"
@@ -67,7 +67,7 @@ msgid "Policy"
 msgstr "Richtlinie"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:477
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:494
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:222
 msgid "Kerberos"
 msgstr "Kerberos"
@@ -109,16 +109,16 @@ msgstr "Kann die Liste der Richtlinien nicht von Server '%s' beziehen!"
 msgid "none"
 msgstr "keine"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:432
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:449
 msgid "Daemon based"
 msgstr "Dienst basierend"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:591
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:608
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:57
 msgid "Ticket max life"
 msgstr "Maximale Ticketlebensdauer"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:594
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:611
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:65
 msgid "Ticket max renew"
 msgstr "Maximale Ticket-Erneuerbarkeit"

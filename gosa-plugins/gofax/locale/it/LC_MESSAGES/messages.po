@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -36,8 +36,9 @@ msgid "Click on fax to download"
 msgstr ""
 
 #: gofax/faxreports/detail.tpl:17
+#, fuzzy
 msgid "FAX ID"
-msgstr ""
+msgstr "FAX"
 
 #: gofax/faxreports/detail.tpl:21 gofax/faxreports/contents.tpl:30
 #: admin/systems/services/gofax/class_goFaxServer.inc:68
@@ -49,12 +50,14 @@ msgid "Date / Time"
 msgstr ""
 
 #: gofax/faxreports/detail.tpl:29 gofax/faxreports/class_faxreport.inc:503
+#, fuzzy
 msgid "Sender MSN"
-msgstr ""
+msgstr "Generale"
 
 #: gofax/faxreports/detail.tpl:33 gofax/faxreports/class_faxreport.inc:502
+#, fuzzy
 msgid "Sender ID"
-msgstr ""
+msgstr "Generale"
 
 #: gofax/faxreports/detail.tpl:37 gofax/faxreports/class_faxreport.inc:505
 msgid "Receiver MSN"
@@ -70,8 +73,9 @@ msgid "Status"
 msgstr "Stato"
 
 #: gofax/faxreports/detail.tpl:49
+#, fuzzy
 msgid "Status message"
-msgstr ""
+msgstr "Home Page"
 
 #: gofax/faxreports/detail.tpl:53 gofax/faxreports/class_faxreport.inc:508
 msgid "Transfer time"
@@ -98,16 +102,19 @@ msgid "Enter user name to search for"
 msgstr ""
 
 #: gofax/faxreports/contents.tpl:8 gofax/faxreports/contents.tpl:16
+#, fuzzy
 msgid "in"
-msgstr ""
+msgstr "Principale"
 
 #: gofax/faxreports/contents.tpl:9
+#, fuzzy
 msgid "Select subtree to base search on"
-msgstr ""
+msgstr "Scegli il subtree per l'utente"
 
 #: gofax/faxreports/contents.tpl:12
+#, fuzzy
 msgid "during"
-msgstr ""
+msgstr "Attenzione"
 
 #: gofax/faxreports/contents.tpl:21
 msgid "Search"
@@ -118,12 +125,14 @@ msgid "Date"
 msgstr "Data"
 
 #: gofax/faxreports/contents.tpl:33
+#, fuzzy
 msgid "Sender"
-msgstr ""
+msgstr "Generale"
 
 #: gofax/faxreports/contents.tpl:34
+#, fuzzy
 msgid "Receiver"
-msgstr ""
+msgstr "Dicembre"
 
 #: gofax/faxreports/contents.tpl:50
 msgid "Search returned no results..."
@@ -194,8 +203,9 @@ msgstr "Permessi"
 
 #: gofax/faxreports/class_faxreport.inc:167
 #: gofax/faxreports/class_faxreport.inc:177
+#, fuzzy
 msgid "You have no permission to view this fax id!"
-msgstr ""
+msgstr "Non hai il permesso di cambiare la tua password."
 
 #: gofax/faxreports/class_faxreport.inc:208
 #: gofax/faxreports/class_faxreport.inc:329
@@ -203,8 +213,9 @@ msgid "Y-M-D"
 msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:323
+#, fuzzy
 msgid "Insufficient permissions to view this attribute"
-msgstr ""
+msgstr "Non hai il permesso di cambiare la tua password."
 
 #: gofax/faxreports/class_faxreport.inc:323
 #, fuzzy
@@ -243,8 +254,9 @@ msgid "Time"
 msgstr "Cellulare"
 
 #: gofax/faxreports/class_faxreport.inc:506
+#, fuzzy
 msgid "Number of pages"
-msgstr ""
+msgstr "Imposta dipartimento"
 
 #: gofax/faxreports/class_faxreport.inc:507
 #, fuzzy
@@ -274,12 +286,14 @@ msgid "Generic"
 msgstr "Generale"
 
 #: gofax/blocklists/generic.tpl:8 gofax/blocklists/paste_generic.tpl:3
+#, fuzzy
 msgid "List name"
-msgstr ""
+msgstr "Scegli il tuo numero di telefono personale"
 
 #: gofax/blocklists/generic.tpl:12 gofax/blocklists/paste_generic.tpl:5
+#, fuzzy
 msgid "Name of blocklist"
-msgstr ""
+msgstr "Data di nascita"
 
 #: gofax/blocklists/generic.tpl:17
 #: gofax/blocklists/class_divListBlocklists.inc:86
@@ -310,12 +324,14 @@ msgid "Description"
 msgstr "Descrizione"
 
 #: gofax/blocklists/generic.tpl:54
+#, fuzzy
 msgid "Descriptive text for this blocklist"
-msgstr ""
+msgstr "Nome descrittivo del gruppo"
 
 #: gofax/blocklists/generic.tpl:68
+#, fuzzy
 msgid "Blocked numbers"
-msgstr ""
+msgstr "Forza numero ID"
 
 #: gofax/blocklists/generic.tpl:90
 msgid "Information"
@@ -373,8 +389,9 @@ msgid "Show receive blocklists"
 msgstr ""
 
 #: gofax/blocklists/class_divListBlocklists.inc:67
+#, fuzzy
 msgid "Regular expression for matching list names"
-msgstr ""
+msgstr "Espressioni regolare per selezionare il nome del gruppo"
 
 #: gofax/blocklists/class_divListBlocklists.inc:88
 msgid "Submit department"
@@ -449,8 +466,9 @@ msgid "blocklist"
 msgstr "Liste di blocco"
 
 #: gofax/blocklists/main.inc:35 gofax/blocklists/main.inc:37
+#, fuzzy
 msgid "Blocklist management"
-msgstr ""
+msgstr "Riferimenti"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:9
 #: gofax/blocklists/class_blocklistGeneric.inc:376
@@ -502,28 +520,33 @@ msgid "Filters"
 msgstr "Filtri"
 
 #: gofax/faxaccount/locals.tpl:28
+#, fuzzy
 msgid "Display numbers of department"
-msgstr ""
+msgstr "Mostra utenti del dipartimento"
 
 #: gofax/faxaccount/locals.tpl:29
 msgid "Choose the department the search will be based on"
 msgstr "Scegli il dipartimento di base per la ricerca"
 
 #: gofax/faxaccount/locals.tpl:38
+#, fuzzy
 msgid "Display numbers matching"
-msgstr ""
+msgstr "Mostra utenti che corrispondono a"
 
 #: gofax/faxaccount/locals.tpl:41
+#, fuzzy
 msgid "Regular expression for matching numbers"
-msgstr ""
+msgstr "Espressioni regolare per selezionare il nome del gruppo"
 
 #: gofax/faxaccount/locals.tpl:47
+#, fuzzy
 msgid "Display numbers of user"
-msgstr ""
+msgstr "Mostra gruppi di utenti"
 
 #: gofax/faxaccount/locals.tpl:50
+#, fuzzy
 msgid "User name of which numbers are shown"
-msgstr ""
+msgstr "Nome dell'utente del quale mostrare i gruppi"
 
 #: gofax/faxaccount/generic.tpl:13
 msgid "Multiple edit"

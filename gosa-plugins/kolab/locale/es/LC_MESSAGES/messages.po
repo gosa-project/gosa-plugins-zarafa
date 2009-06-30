@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -49,8 +49,9 @@ msgid "Error"
 msgstr "Error"
 
 #: admin/systems/services/kolab/class_servKolab.inc:207
+#, fuzzy
 msgid "hostname"
-msgstr ""
+msgstr "Apellido"
 
 #: admin/systems/services/kolab/class_servKolab.inc:217
 #: admin/systems/services/kolab/class_servKolab.inc:233
@@ -63,8 +64,9 @@ msgstr "Servicio LDAP"
 
 #: admin/systems/services/kolab/class_servKolab.inc:309
 #: admin/systems/services/kolab/class_servKolab.inc:311
+#, fuzzy
 msgid "Future days"
-msgstr ""
+msgstr "Sábado"
 
 #: admin/systems/services/kolab/class_servKolab.inc:315
 #: admin/systems/services/kolab/class_servKolab.inc:319
@@ -191,8 +193,9 @@ msgid "Generic"
 msgstr "Genérico"
 
 #: admin/systems/services/kolab/servkolab.tpl:27
+#, fuzzy
 msgid "Postfix mydestination"
-msgstr ""
+msgstr "Caracteristicas Posix"
 
 #: admin/systems/services/kolab/servkolab.tpl:102
 msgid "FTP FreeBusy service (legacy, not interoperable with Kolab2 FreeBusy)"
@@ -207,8 +210,9 @@ msgid "Amavis email scanning (virus/spam)"
 msgstr ""
 
 #: admin/systems/services/kolab/servkolab.tpl:151
+#, fuzzy
 msgid "Free/Busy settings"
-msgstr ""
+msgstr "Parametros de grupos"
 
 #: admin/systems/services/kolab/servkolab.tpl:157
 msgid "Allow unauthenticated downloading of Free/Busy information"
@@ -234,80 +238,85 @@ msgstr ""
 msgid "Accept mail from other domains over non-authenticated SMTP"
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:112
 #: personal/mail/kolab/class_mail-methods-kolab.inc:120
-#: personal/mail/kolab/class_mail-methods-kolab.inc:121
+#: personal/mail/kolab/class_mail-methods-kolab.inc:128
+#: personal/mail/kolab/class_mail-methods-kolab.inc:129
 msgid "Unspecified"
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:113
+#: personal/mail/kolab/class_mail-methods-kolab.inc:121
 #, fuzzy
 msgid "Mails"
 msgstr "Correo Electrónico"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:114
+#: personal/mail/kolab/class_mail-methods-kolab.inc:122
+#, fuzzy
 msgid "Tasks"
-msgstr ""
+msgstr "clase"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:115
+#: personal/mail/kolab/class_mail-methods-kolab.inc:123
 msgid "Journals"
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:116
+#: personal/mail/kolab/class_mail-methods-kolab.inc:124
 msgid "Calendar"
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:117
+#: personal/mail/kolab/class_mail-methods-kolab.inc:125
 #, fuzzy
 msgid "Contacts"
 msgstr "Contenidos"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:118
+#: personal/mail/kolab/class_mail-methods-kolab.inc:126
+#, fuzzy
 msgid "Notes"
-msgstr ""
+msgstr "Contenidos"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:122
+#: personal/mail/kolab/class_mail-methods-kolab.inc:130
+#, fuzzy
 msgid "Inbox"
-msgstr ""
+msgstr "índice"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:123
+#: personal/mail/kolab/class_mail-methods-kolab.inc:131
 msgid "Drafts"
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:124
+#: personal/mail/kolab/class_mail-methods-kolab.inc:132
+#, fuzzy
 msgid "Sent"
-msgstr ""
+msgstr "Activar"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:125
+#: personal/mail/kolab/class_mail-methods-kolab.inc:133
 msgid "SPAM"
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:127
-#: personal/mail/kolab/class_mail-methods-kolab.inc:128
-#: personal/mail/kolab/class_mail-methods-kolab.inc:129
-#: personal/mail/kolab/class_mail-methods-kolab.inc:130
-#: personal/mail/kolab/class_mail-methods-kolab.inc:131
+#: personal/mail/kolab/class_mail-methods-kolab.inc:135
+#: personal/mail/kolab/class_mail-methods-kolab.inc:136
+#: personal/mail/kolab/class_mail-methods-kolab.inc:137
+#: personal/mail/kolab/class_mail-methods-kolab.inc:138
+#: personal/mail/kolab/class_mail-methods-kolab.inc:139
 #, fuzzy
 msgid "Default"
 msgstr "Eliminar"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:146
+#: personal/mail/kolab/class_mail-methods-kolab.inc:154
 msgid "Mail settings cannot be removed while there are delegations configured!"
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:244
+#: personal/mail/kolab/class_mail-methods-kolab.inc:252
 msgid "Waiting for kolab to remove mail properties..."
 msgstr ""
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:247
+#: personal/mail/kolab/class_mail-methods-kolab.inc:255
 #, fuzzy
 msgid "Please remove the mail settings first!"
 msgstr "Seleccione para ver que grupos tienen configuración de correo"
 
 #: personal/connectivity/kolab/kolab.tpl:3
 #: personal/connectivity/kolab/kolab.tpl:43
+#, fuzzy
 msgid "Kolab account"
-msgstr ""
+msgstr "Mi cuenta"
 
 #: personal/connectivity/kolab/kolab.tpl:4
 msgid ""
@@ -322,28 +331,32 @@ msgid "Delegations"
 msgstr "Delegaciones"
 
 #: personal/connectivity/kolab/kolab.tpl:83
+#, fuzzy
 msgid "Mail size"
-msgstr ""
+msgstr "Parámetros de correo"
 
 #: personal/connectivity/kolab/kolab.tpl:87
 msgid "No mail size restriction for this account"
 msgstr ""
 
 #: personal/connectivity/kolab/kolab.tpl:95
+#, fuzzy
 msgid "Free Busy information"
-msgstr ""
+msgstr "Información genérica del usuario"
 
 #: personal/connectivity/kolab/kolab.tpl:98
 msgid "URL"
 msgstr ""
 
 #: personal/connectivity/kolab/kolab.tpl:107
+#, fuzzy
 msgid "Future"
-msgstr ""
+msgstr "Características"
 
 #: personal/connectivity/kolab/kolab.tpl:112
+#, fuzzy
 msgid "days"
-msgstr ""
+msgstr "Domingo"
 
 #: personal/connectivity/kolab/kolab.tpl:119
 #: personal/connectivity/kolab/class_kolabAccount.inc:526
@@ -351,8 +364,9 @@ msgid "Invitation policy"
 msgstr "Política de invitación"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:6
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:171
 msgid "Mail address"

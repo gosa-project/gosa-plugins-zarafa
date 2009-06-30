@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-06-30 09:59+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -21,8 +21,9 @@ msgid "Warning"
 msgstr "警告"
 
 #: admin/sudo/remove.tpl:9
+#, fuzzy
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
+msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
 #: admin/sudo/class_sudoGeneric.inc:295
 msgid "Error"
@@ -104,12 +105,14 @@ msgid "Access control list"
 msgstr "访问选项"
 
 #: admin/sudo/options.tpl:5
+#, fuzzy
 msgid "Option name"
-msgstr ""
+msgstr "位置名称"
 
 #: admin/sudo/options.tpl:7
+#, fuzzy
 msgid "Value"
-msgstr ""
+msgstr "男"
 
 #: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
 msgid "Options"
@@ -138,8 +141,9 @@ msgid "Trust mode"
 msgstr "信赖模式"
 
 #: admin/sudo/generic.tpl:87
+#, fuzzy
 msgid "Users and groups"
-msgstr ""
+msgstr "组"
 
 #: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
@@ -151,12 +155,14 @@ msgid "Systems"
 msgstr "系统"
 
 #: admin/sudo/generic.tpl:120
+#, fuzzy
 msgid "Commands"
-msgstr ""
+msgstr "和"
 
 #: admin/sudo/generic.tpl:132
+#, fuzzy
 msgid "Run as"
-msgstr ""
+msgstr "域用户"
 
 #: admin/sudo/class_target_list_systems.inc:50
 msgid "Select the target objects for your scheduled action."
@@ -164,8 +170,9 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:51
 #: admin/sudo/class_target_list_systems.inc:52
+#, fuzzy
 msgid "Available systems"
-msgstr ""
+msgstr "可用的应用程序"
 
 #: admin/sudo/class_target_list_systems.inc:61
 #: admin/sudo/class_target_list_users.inc:58
@@ -224,8 +231,9 @@ msgid "Terminal"
 msgstr "终端"
 
 #: admin/sudo/class_target_list_users.inc:47
+#, fuzzy
 msgid "Select the target objects"
-msgstr ""
+msgstr "选择查看部门"
 
 #: admin/sudo/class_target_list_users.inc:48
 #: admin/sudo/class_target_list_users.inc:49
@@ -233,20 +241,24 @@ msgid "Available members"
 msgstr ""
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Select to see users"
-msgstr ""
+msgstr "选择显示服务器"
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Show users"
-msgstr ""
+msgstr "显示 samba 用户"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Select to see groups"
-msgstr ""
+msgstr "选择查看 GOsa 组"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Show groups"
-msgstr ""
+msgstr "显示 samba 用户组"
 
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
@@ -258,13 +270,14 @@ msgid "Sudo role administration"
 msgstr "组管理"
 
 #: admin/sudo/class_sudoOption.inc:154
+#, fuzzy
 msgid "Unknown option"
-msgstr ""
+msgstr "未知"
 
 #: admin/sudo/class_sudoOption.inc:155
-#, php-format
+#, fuzzy, php-format
 msgid "The sudo option '%s' is invalid!"
-msgstr ""
+msgstr "指定的 branch 名称无效。"
 
 #: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
 #, fuzzy
@@ -282,8 +295,9 @@ msgid "integer"
 msgstr "打印机"
 
 #: admin/sudo/class_sudoOption.inc:284
+#, fuzzy
 msgid "list"
-msgstr ""
+msgstr "类"
 
 #: admin/sudo/class_sudoOption.inc:537
 #, fuzzy
@@ -347,8 +361,9 @@ msgid "Role"
 msgstr "角色"
 
 #: admin/sudo/class_divListSudo.inc:112
+#, fuzzy
 msgid "Default"
-msgstr ""
+msgstr "删除"
 
 #: admin/sudo/class_divListSudo.inc:119
 msgid "Remove"
@@ -368,8 +383,9 @@ msgid "Number of listed roles"
 msgstr "组名称"
 
 #: admin/sudo/class_sudoManagement.inc:31
+#, fuzzy
 msgid "Sudo roles"
-msgstr ""
+msgstr "! 未知 id"
 
 #: admin/sudo/class_sudoManagement.inc:32
 #, fuzzy

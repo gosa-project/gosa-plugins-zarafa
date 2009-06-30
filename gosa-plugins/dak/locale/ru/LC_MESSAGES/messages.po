@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:05+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -73,8 +73,9 @@ msgid "Expires: "
 msgstr "Экспорт"
 
 #: addons/dak/class_dakkeyring.inc:276
+#, fuzzy
 msgid "DAK keyring"
-msgstr ""
+msgstr "Экспорт в LDIF"
 
 #: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
 #: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44

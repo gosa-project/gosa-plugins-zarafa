@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 #: admin/applications/class_applicationGeneric.inc:597
 #: admin/mimetypes/generic.tpl:4 admin/mimetypes/paste_generic.tpl:4
 #: admin/mimetypes/class_mimetypeGeneric.inc:715
-#: admin/systems/goto/class_printGeneric.inc:921
+#: admin/systems/goto/class_printGeneric.inc:988
 #: admin/systems/goto/class_workstationGeneric.inc:698
 msgid "Generic"
 msgstr ""
@@ -149,6 +149,7 @@ msgstr ""
 #: admin/systems/goto/class_terminalStartup.inc:116
 #: admin/systems/goto/class_terminalStartup.inc:120
 #: admin/systems/goto/class_terminalService.inc:182
+#: admin/systems/goto/class_terminalService.inc:260
 #: admin/systems/goto/class_terminalService.inc:263
 #: admin/systems/goto/class_terminalService.inc:271
 #: admin/systems/goto/class_terminalService.inc:274
@@ -167,13 +168,14 @@ msgstr ""
 #: admin/systems/goto/class_workstationService.inc:209
 #: admin/systems/goto/class_workstationService.inc:212
 #: admin/systems/goto/class_workstationService.inc:215
-#: admin/systems/goto/class_workstationService.inc:226
-#: admin/systems/goto/class_workstationService.inc:227
-#: admin/systems/goto/class_workstationService.inc:228
+#: admin/systems/goto/class_workstationService.inc:218
 #: admin/systems/goto/class_workstationService.inc:229
 #: admin/systems/goto/class_workstationService.inc:230
 #: admin/systems/goto/class_workstationService.inc:231
 #: admin/systems/goto/class_workstationService.inc:232
+#: admin/systems/goto/class_workstationService.inc:233
+#: admin/systems/goto/class_workstationService.inc:234
+#: admin/systems/goto/class_workstationService.inc:235
 #: admin/systems/goto/class_terminalGeneric.inc:137
 #: admin/systems/goto/class_terminalGeneric.inc:287
 #: admin/systems/goto/class_terminalGeneric.inc:299
@@ -181,13 +183,13 @@ msgid "inherited"
 msgstr ""
 
 #: admin/ogroups/goto/class_termgroup.inc:203
-#: admin/systems/goto/class_terminalService.inc:673
+#: admin/systems/goto/class_terminalService.inc:678
 #: admin/systems/goto/class_workstationGeneric.inc:212
 #: admin/systems/goto/class_workstationGeneric.inc:635
 #: admin/systems/goto/class_workstationStartup.inc:926
 #: admin/systems/goto/class_workstationStartup.inc:1053
 #: admin/systems/goto/class_workstationStartup.inc:1113
-#: admin/systems/goto/class_workstationService.inc:560
+#: admin/systems/goto/class_workstationService.inc:568
 #: admin/systems/goto/class_terminalGeneric.inc:187
 #: admin/systems/goto/class_terminalGeneric.inc:594
 #: addons/goto/class_gotomasses.inc:328
@@ -269,8 +271,8 @@ msgstr ""
 #: admin/groups/apps/class_groupApplication.inc:1344
 #: admin/groups/apps/class_groupApplication.inc:1358
 #: admin/devices/class_deviceGeneric.inc:196
-#: admin/applications/class_applicationParameters.inc:161
-#: admin/applications/class_applicationParameters.inc:224
+#: admin/applications/class_applicationParameters.inc:158
+#: admin/applications/class_applicationParameters.inc:221
 #: admin/applications/class_applicationGeneric.inc:271
 #: admin/applications/class_applicationGeneric.inc:285
 #: admin/applications/class_applicationGeneric.inc:515
@@ -285,8 +287,8 @@ msgstr ""
 #: admin/systems/services/shares/class_goShareServer.inc:261
 #: admin/systems/services/shares/class_goShareServer.inc:277
 #: admin/systems/services/shares/class_goShareServer.inc:290
-#: admin/systems/goto/class_printGeneric.inc:602
-#: admin/systems/goto/class_printGeneric.inc:886
+#: admin/systems/goto/class_printGeneric.inc:660
+#: admin/systems/goto/class_printGeneric.inc:953
 #: admin/systems/goto/class_terminalStartup.inc:455
 #: admin/systems/goto/class_ArpNewDevice.inc:69
 #: admin/systems/goto/class_terminalService.inc:597
@@ -294,7 +296,7 @@ msgstr ""
 #: admin/systems/goto/class_workstationGeneric.inc:596
 #: admin/systems/goto/class_workstationGeneric.inc:613
 #: admin/systems/goto/class_workstationStartup.inc:877
-#: admin/systems/goto/class_workstationService.inc:453
+#: admin/systems/goto/class_workstationService.inc:456
 #: admin/systems/goto/class_terminalGeneric.inc:353
 #: admin/systems/goto/class_terminalGeneric.inc:580
 #: personal/environment/class_environment.inc:1058
@@ -361,7 +363,7 @@ msgstr ""
 #: admin/devices/class_deviceGeneric.inc:90
 #: admin/devices/class_deviceGeneric.inc:114
 #: admin/devices/class_deviceGeneric.inc:260
-#: admin/applications/class_applicationParameters.inc:193
+#: admin/applications/class_applicationParameters.inc:190
 #: admin/applications/class_applicationGeneric.inc:430
 #: admin/applications/class_applicationGeneric.inc:434
 #: admin/applications/class_applicationGeneric.inc:606
@@ -373,10 +375,10 @@ msgstr ""
 #: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/nfs/class_servNfs.inc:235
 #: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/goto/class_printGeneric.inc:671
-#: admin/systems/goto/class_printGeneric.inc:676
-#: admin/systems/goto/class_printGeneric.inc:695
-#: admin/systems/goto/class_printGeneric.inc:930
+#: admin/systems/goto/class_printGeneric.inc:733
+#: admin/systems/goto/class_printGeneric.inc:738
+#: admin/systems/goto/class_printGeneric.inc:757
+#: admin/systems/goto/class_printGeneric.inc:997
 #: admin/systems/goto/class_ArpNewDevice.inc:46
 #: admin/systems/goto/class_workstationGeneric.inc:456
 #: admin/systems/goto/class_workstationGeneric.inc:461
@@ -480,13 +482,13 @@ msgstr ""
 #: admin/groups/apps/app_list.tpl:86 admin/groups/apps/app_list.tpl:107
 #: admin/groups/apps/app_list.tpl:132
 #: admin/devices/class_divListDevices.inc:100
-#: admin/applications/class_applicationParameters.inc:125
+#: admin/applications/class_applicationParameters.inc:122
 #: admin/applications/class_divListApplication.inc:120
 #: admin/mimetypes/class_divListMimeTypes.inc:122
 #: admin/systems/goto/terminalService.tpl:212
 #: admin/systems/goto/terminalStartup.tpl:115
 #: admin/systems/goto/workstationStartup.tpl:233
-#: admin/systems/goto/printer.tpl:71 addons/goto/class_gotomasses.inc:269
+#: admin/systems/goto/printer.tpl:80 addons/goto/class_gotomasses.inc:269
 #: addons/goto/class_gotomasses.inc:376 addons/goto/class_gotomasses.inc:484
 #: addons/goto/class_gotomasses.inc:488
 #: addons/goto/events/class_DaemonEvent.inc:230
@@ -496,7 +498,7 @@ msgstr ""
 
 #: admin/groups/apps/app_list.tpl:88 admin/groups/apps/app_list.tpl:134
 #: admin/systems/services/shares/goShareServer.tpl:17
-#: admin/systems/goto/printer.tpl:68 addons/goto/class_gotomasses.inc:469
+#: admin/systems/goto/printer.tpl:77 addons/goto/class_gotomasses.inc:469
 #: personal/environment/environment.tpl:274
 msgid "Edit"
 msgstr ""
@@ -567,7 +569,7 @@ msgstr ""
 #: admin/systems/services/ldap/class_goLdapServer.inc:79
 #: admin/systems/services/ldap/class_goLdapServer.inc:82
 #: admin/systems/goto/workstation.tpl:35
-#: admin/systems/goto/class_printGeneric.inc:931
+#: admin/systems/goto/class_printGeneric.inc:998
 #: admin/systems/goto/class_workstationGeneric.inc:710
 #: admin/systems/goto/class_terminalGeneric.inc:667
 #: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
@@ -671,7 +673,7 @@ msgstr ""
 #: admin/systems/services/nfs/servnfs.tpl:19
 #: admin/systems/goto/workstation.tpl:19
 #: admin/systems/goto/ArpNewDevice.tpl:17
-#: admin/systems/goto/class_printGeneric.inc:932
+#: admin/systems/goto/class_printGeneric.inc:999
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: admin/systems/goto/class_terminalGeneric.inc:666
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
@@ -760,12 +762,12 @@ msgstr ""
 #: admin/systems/services/shares/class_goShareServer.inc:233
 #: admin/systems/services/nfs/class_servNfs.inc:43
 #: admin/systems/services/nfs/class_servNfs.inc:46
-#: admin/systems/goto/class_printGeneric.inc:435
-#: admin/systems/goto/class_printGeneric.inc:482
-#: admin/systems/goto/class_printGeneric.inc:584
-#: admin/systems/goto/class_printGeneric.inc:591
-#: admin/systems/goto/class_printGeneric.inc:1009
-#: admin/systems/goto/class_printGeneric.inc:1020
+#: admin/systems/goto/class_printGeneric.inc:488
+#: admin/systems/goto/class_printGeneric.inc:535
+#: admin/systems/goto/class_printGeneric.inc:642
+#: admin/systems/goto/class_printGeneric.inc:649
+#: admin/systems/goto/class_printGeneric.inc:1076
+#: admin/systems/goto/class_printGeneric.inc:1087
 #: admin/systems/goto/class_terminalStartup.inc:223
 #: admin/systems/goto/class_workstationStartup.inc:234
 #: admin/systems/goto/class_workstationStartup.inc:247
@@ -847,8 +849,8 @@ msgstr ""
 #: admin/mimetypes/class_mimetypeManagement.inc:412
 #: admin/mimetypes/class_mimetypeManagement.inc:466
 #: admin/mimetypes/class_mimetypeManagement.inc:496
-#: admin/systems/goto/class_printGeneric.inc:952
-#: admin/systems/goto/class_printGeneric.inc:974
+#: admin/systems/goto/class_printGeneric.inc:1019
+#: admin/systems/goto/class_printGeneric.inc:1041
 #: personal/environment/class_environment.inc:583
 msgid "Permission error"
 msgstr ""
@@ -869,40 +871,40 @@ msgstr ""
 msgid "Current release"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:53
+#: admin/applications/class_applicationParameters.inc:50
 msgid "Remove options"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:53
-#: admin/applications/class_applicationParameters.inc:55
+#: admin/applications/class_applicationParameters.inc:50
+#: admin/applications/class_applicationParameters.inc:52
 msgid "parameter"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:55
+#: admin/applications/class_applicationParameters.inc:52
 msgid "Create options"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:99
+#: admin/applications/class_applicationParameters.inc:96
 msgid "Variable"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:99
+#: admin/applications/class_applicationParameters.inc:96
 msgid "Default value"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:131
+#: admin/applications/class_applicationParameters.inc:128
 msgid "Add option"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:236
+#: admin/applications/class_applicationParameters.inc:247
 msgid "Parameter"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:237
+#: admin/applications/class_applicationParameters.inc:248
 msgid "Parameter configuration"
 msgstr ""
 
-#: admin/applications/class_applicationParameters.inc:245
+#: admin/applications/class_applicationParameters.inc:256
 msgid "Application parameter settings"
 msgstr ""
 
@@ -1325,7 +1327,7 @@ msgstr ""
 #: admin/systems/services/terminal/class_goTerminalServer.inc:76
 #: admin/systems/services/terminal/class_goTerminalServer.inc:164
 #: admin/systems/services/terminal/class_goTerminalServer.inc:165
-#: admin/systems/goto/class_terminalService.inc:686
+#: admin/systems/goto/class_terminalService.inc:691
 msgid "Terminal service"
 msgstr ""
 
@@ -1435,7 +1437,7 @@ msgid "Syslog service database"
 msgstr ""
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:69
-#: admin/systems/goto/class_printGeneric.inc:909
+#: admin/systems/goto/class_printGeneric.inc:976
 #: addons/goto/events/class_EventTargetAddUsersList.inc:171
 msgid "User"
 msgstr ""
@@ -1483,7 +1485,7 @@ msgid "Workstation name"
 msgstr ""
 
 #: admin/systems/goto/workstation.tpl:27
-#: admin/systems/goto/class_printGeneric.inc:933
+#: admin/systems/goto/class_printGeneric.inc:1000
 #: admin/systems/goto/class_workstationGeneric.inc:709
 msgid "Location"
 msgstr ""
@@ -1603,149 +1605,149 @@ msgstr ""
 msgid "DNS name"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:106
-#: admin/systems/goto/class_printGeneric.inc:969
+#: admin/systems/goto/class_printGeneric.inc:108
+#: admin/systems/goto/class_printGeneric.inc:1036
 msgid "Internal error"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:106
+#: admin/systems/goto/class_printGeneric.inc:108
 #, php-format
 msgid ""
 "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:262
-#: admin/systems/goto/class_printGeneric.inc:270
-#: admin/systems/goto/class_printGeneric.inc:275
-#: admin/systems/goto/class_printGeneric.inc:324
-#: admin/systems/goto/class_printGeneric.inc:340
-#: admin/systems/goto/class_printGeneric.inc:343
+#: admin/systems/goto/class_printGeneric.inc:285
+#: admin/systems/goto/class_printGeneric.inc:293
+#: admin/systems/goto/class_printGeneric.inc:298
+#: admin/systems/goto/class_printGeneric.inc:347
+#: admin/systems/goto/class_printGeneric.inc:363
+#: admin/systems/goto/class_printGeneric.inc:366
 msgid "Add printer extension"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:263
+#: admin/systems/goto/class_printGeneric.inc:286
 msgid ""
 "Could not initialize printer tab, parameter parent was missing while "
 "construction."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:271
+#: admin/systems/goto/class_printGeneric.inc:294
 msgid "This is a workstation template, printer tab is disabled."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:276
+#: admin/systems/goto/class_printGeneric.inc:299
 msgid "This is a terminal template, printer tab is disabled."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:317
-#: admin/systems/goto/class_printGeneric.inc:325
-#: admin/systems/goto/class_printGeneric.inc:333
-#: admin/systems/goto/class_printGeneric.inc:336
-#: admin/systems/goto/class_printGeneric.inc:341
-#: admin/systems/goto/class_printGeneric.inc:344
+#: admin/systems/goto/class_printGeneric.inc:340
+#: admin/systems/goto/class_printGeneric.inc:348
+#: admin/systems/goto/class_printGeneric.inc:356
+#: admin/systems/goto/class_printGeneric.inc:359
+#: admin/systems/goto/class_printGeneric.inc:364
+#: admin/systems/goto/class_printGeneric.inc:367
 msgid "printer"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:325
+#: admin/systems/goto/class_printGeneric.inc:348
 msgid ""
 "You can't enable it while 'cn' is not present in entry. Possibly you are "
 "currently creating a new terminal template."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:332
-#: admin/systems/goto/class_printGeneric.inc:335
+#: admin/systems/goto/class_printGeneric.inc:355
+#: admin/systems/goto/class_printGeneric.inc:358
 msgid "Remove printer extension"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:513
+#: admin/systems/goto/class_printGeneric.inc:567
 #, php-format
 msgid "Your currently selected PPD file '%s' doesn't exist."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:519
+#: admin/systems/goto/class_printGeneric.inc:573
 msgid "Not defined"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:522
+#: admin/systems/goto/class_printGeneric.inc:577
 #: admin/systems/ppd/class_printerPPDDialog.inc:96
 msgid "Can't get ppd informations."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:535
-#: admin/systems/goto/class_printGeneric.inc:537
+#: admin/systems/goto/class_printGeneric.inc:593
+#: admin/systems/goto/class_printGeneric.inc:595
 #, php-format
 msgid "This printer belongs to %s. You can't rename this printer."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:535
+#: admin/systems/goto/class_printGeneric.inc:593
 #: admin/systems/goto/class_terminalStartup.inc:180
 #: admin/systems/goto/class_terminalInfo.inc:68
 #: admin/systems/goto/class_terminalGeneric.inc:230
 msgid "terminal"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:537
+#: admin/systems/goto/class_printGeneric.inc:595
 #: admin/systems/goto/class_workstationGeneric.inc:226
 #: admin/systems/goto/class_workstationStartup.inc:285
 msgid "workstation"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:584
-#: admin/systems/goto/class_printGeneric.inc:591
+#: admin/systems/goto/class_printGeneric.inc:642
+#: admin/systems/goto/class_printGeneric.inc:649
 msgid "Object is no printer!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:681
+#: admin/systems/goto/class_printGeneric.inc:743
 #: admin/systems/goto/printer.tpl:54
 msgid "Printer URL"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:904
-#: admin/systems/goto/class_printGeneric.inc:906
+#: admin/systems/goto/class_printGeneric.inc:971
+#: admin/systems/goto/class_printGeneric.inc:973
 #: addons/goto/events/class_EventTargetAddUsersList.inc:173
 msgid "Group"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:922
+#: admin/systems/goto/class_printGeneric.inc:989
 msgid "Print generic"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:927
+#: admin/systems/goto/class_printGeneric.inc:994
 #: admin/systems/goto/terminalService.tpl:245
 #: personal/environment/environment.tpl:338
 #: personal/environment/environment.tpl:374
 msgid "Printer"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:934
+#: admin/systems/goto/class_printGeneric.inc:1001
 msgid "LabeledURL"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:935
+#: admin/systems/goto/class_printGeneric.inc:1002
 msgid "Printer PPD"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:936
-#: admin/systems/goto/printer.tpl:82
+#: admin/systems/goto/class_printGeneric.inc:1003
+#: admin/systems/goto/printer.tpl:91
 msgid "Permissions"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:952
-#: admin/systems/goto/class_printGeneric.inc:974
+#: admin/systems/goto/class_printGeneric.inc:1019
+#: admin/systems/goto/class_printGeneric.inc:1041
 msgid "printer user"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:969
+#: admin/systems/goto/class_printGeneric.inc:1036
 #, php-format
 msgid "Illegal member type '%s'!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:1009
+#: admin/systems/goto/class_printGeneric.inc:1076
 #, php-format
 msgid "'%s' is already used!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:1020
+#: admin/systems/goto/class_printGeneric.inc:1087
 #, php-format
 msgid "'%s' does not exist!"
 msgstr ""
@@ -1806,11 +1808,50 @@ msgid "Kernel parameter"
 msgstr ""
 
 #: admin/systems/goto/class_terminalInfo.inc:50
-#: admin/systems/goto/class_terminalInfo.inc:204
+#: admin/systems/goto/class_terminalInfo.inc:203
 msgid "present"
 msgstr ""
 
-#: admin/systems/goto/class_terminalInfo.inc:77
+#: admin/systems/goto/class_terminalInfo.inc:82
+msgid "unknown status, SNMP support missing"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:91
+msgid "This is a virtual terminal which has no properties to show here."
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:105
+msgid "online"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:167
+msgid "running"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:170
+msgid "not running"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:173
+msgid "not defined"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:178
+msgid "unknown status"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:195
+msgid "offline"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:250
+msgid "System info"
+msgstr ""
+
+#: admin/systems/goto/class_terminalInfo.inc:251
+msgid "System informations"
+msgstr ""
+
 #: admin/systems/goto/class_terminalService.inc:121
 #: admin/systems/goto/class_workstationStartup.inc:1295
 #: admin/systems/goto/class_workstationStartup.inc:1297
@@ -1819,43 +1860,6 @@ msgstr ""
 #: admin/systems/ppd/class_printerPPDDialog.inc:120
 #: personal/environment/class_environment.inc:234
 msgid "Configuration error"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:83
-#: admin/systems/goto/class_terminalInfo.inc:179
-msgid "unknown status"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:92
-msgid "This is a virtual terminal which has no properties to show here."
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:106
-msgid "online"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:168
-msgid "running"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:171
-msgid "not running"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:174
-msgid "not defined"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:196
-msgid "offline"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:251
-msgid "System info"
-msgstr ""
-
-#: admin/systems/goto/class_terminalInfo.inc:252
-msgid "System informations"
 msgstr ""
 
 #: admin/systems/goto/class_terminalService.inc:128
@@ -1895,7 +1899,7 @@ msgid "automatic"
 msgstr ""
 
 #: admin/systems/goto/class_terminalService.inc:274
-#: admin/systems/goto/class_workstationService.inc:200
+#: admin/systems/goto/class_workstationService.inc:203
 msgid "Bit"
 msgstr ""
 
@@ -1908,7 +1912,7 @@ msgid "Unsupported"
 msgstr ""
 
 #: admin/systems/goto/class_terminalService.inc:421
-#: admin/systems/goto/class_workstationService.inc:315
+#: admin/systems/goto/class_workstationService.inc:318
 msgid "Choose the phone located at the current terminal"
 msgstr ""
 
@@ -1934,103 +1938,103 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:685
-#: admin/systems/goto/class_workstationService.inc:490
+#: admin/systems/goto/class_terminalService.inc:690
+#: admin/systems/goto/class_workstationService.inc:498
 msgid "Service"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:695
-#: admin/systems/goto/class_workstationService.inc:499
+#: admin/systems/goto/class_terminalService.inc:700
+#: admin/systems/goto/class_workstationService.inc:507
 msgid "Monitor"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:696
+#: admin/systems/goto/class_terminalService.inc:701
 msgid "Method"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:697
+#: admin/systems/goto/class_terminalService.inc:702
 #: admin/systems/goto/terminalService.tpl:173
 msgid "Remote desktop"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:698
-#: admin/systems/goto/class_workstationService.inc:500
+#: admin/systems/goto/class_terminalService.inc:703
+#: admin/systems/goto/class_workstationService.inc:508
 msgid "Gfx driver"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:699
-#: admin/systems/goto/class_workstationService.inc:501
+#: admin/systems/goto/class_terminalService.inc:704
+#: admin/systems/goto/class_workstationService.inc:509
 msgid "Gfx resolution"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:700
-#: admin/systems/goto/class_workstationService.inc:502
+#: admin/systems/goto/class_terminalService.inc:705
+#: admin/systems/goto/class_workstationService.inc:510
 msgid "Gfx color depth"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:701
+#: admin/systems/goto/class_terminalService.inc:706
 #: admin/systems/goto/terminalService.tpl:150
 #: admin/systems/goto/workstationService.tpl:170
-#: admin/systems/goto/class_workstationService.inc:399
-#: admin/systems/goto/class_workstationService.inc:401
-#: admin/systems/goto/class_workstationService.inc:406
-#: admin/systems/goto/class_workstationService.inc:503
+#: admin/systems/goto/class_workstationService.inc:402
+#: admin/systems/goto/class_workstationService.inc:404
+#: admin/systems/goto/class_workstationService.inc:409
+#: admin/systems/goto/class_workstationService.inc:511
 msgid "HSync"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:702
+#: admin/systems/goto/class_terminalService.inc:707
 #: admin/systems/goto/terminalService.tpl:158
 #: admin/systems/goto/workstationService.tpl:181
-#: admin/systems/goto/class_workstationService.inc:382
-#: admin/systems/goto/class_workstationService.inc:384
-#: admin/systems/goto/class_workstationService.inc:389
-#: admin/systems/goto/class_workstationService.inc:504
+#: admin/systems/goto/class_workstationService.inc:385
+#: admin/systems/goto/class_workstationService.inc:387
+#: admin/systems/goto/class_workstationService.inc:392
+#: admin/systems/goto/class_workstationService.inc:512
 msgid "VSync"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:703
+#: admin/systems/goto/class_terminalService.inc:708
 msgid "Auto-Sync"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:704
-#: admin/systems/goto/class_workstationService.inc:506
+#: admin/systems/goto/class_terminalService.inc:709
+#: admin/systems/goto/class_workstationService.inc:514
 msgid "Scanner enabled"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:705
-#: admin/systems/goto/class_terminalService.inc:711
+#: admin/systems/goto/class_terminalService.inc:710
+#: admin/systems/goto/class_terminalService.inc:716
 msgid "Printer enabled"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:706
-#: admin/systems/goto/class_workstationService.inc:507
+#: admin/systems/goto/class_terminalService.inc:711
+#: admin/systems/goto/class_workstationService.inc:515
 msgid "Keyboard model"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:707
-#: admin/systems/goto/class_workstationService.inc:508
+#: admin/systems/goto/class_terminalService.inc:712
+#: admin/systems/goto/class_workstationService.inc:516
 msgid "Keyboard layout"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:708
-#: admin/systems/goto/class_workstationService.inc:509
+#: admin/systems/goto/class_terminalService.inc:713
+#: admin/systems/goto/class_workstationService.inc:517
 msgid "Keyboard variant"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:709
-#: admin/systems/goto/class_workstationService.inc:510
+#: admin/systems/goto/class_terminalService.inc:714
+#: admin/systems/goto/class_workstationService.inc:518
 msgid "Mouse type"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:710
-#: admin/systems/goto/class_workstationService.inc:511
+#: admin/systems/goto/class_terminalService.inc:715
+#: admin/systems/goto/class_workstationService.inc:519
 msgid "Mouse port"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:712
+#: admin/systems/goto/class_terminalService.inc:717
 #: admin/systems/goto/terminalService.tpl:76
 #: admin/systems/goto/workstationService.tpl:86
-#: admin/systems/goto/class_workstationService.inc:512
+#: admin/systems/goto/class_workstationService.inc:520
 msgid "Telephone hardware"
 msgstr ""
 
@@ -2245,7 +2249,7 @@ msgstr ""
 
 #: admin/systems/goto/terminalService.tpl:98
 #: admin/systems/goto/workstationService.tpl:110
-#: admin/systems/goto/printer.tpl:66
+#: admin/systems/goto/printer.tpl:75
 msgid "Driver"
 msgstr ""
 
@@ -2431,11 +2435,11 @@ msgstr ""
 msgid "Create ISO-Image"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:491
+#: admin/systems/goto/class_workstationService.inc:499
 msgid "Workstation service"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:505
+#: admin/systems/goto/class_workstationService.inc:513
 msgid "Use DDC"
 msgstr ""
 
@@ -2603,27 +2607,31 @@ msgstr ""
 msgid "Printer location"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:89
+#: admin/systems/goto/printer.tpl:63
+msgid "PPD Provider"
+msgstr ""
+
+#: admin/systems/goto/printer.tpl:98
 msgid "Users which are allowed to use this printer"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:91
+#: admin/systems/goto/printer.tpl:100
 msgid "Users"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:96 admin/systems/goto/printer.tpl:120
+#: admin/systems/goto/printer.tpl:105 admin/systems/goto/printer.tpl:129
 msgid "Add user"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:99 admin/systems/goto/printer.tpl:123
+#: admin/systems/goto/printer.tpl:108 admin/systems/goto/printer.tpl:132
 msgid "Add group"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:113
+#: admin/systems/goto/printer.tpl:122
 msgid "Users which are allowed to administrate this printer"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:115
+#: admin/systems/goto/printer.tpl:124
 msgid "Admins"
 msgstr ""
 
@@ -2693,57 +2701,57 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:16
-#: admin/systems/ppd/class_ppdManager.inc:148
-#: admin/systems/ppd/class_ppdManager.inc:150
+#: admin/systems/ppd/class_ppdManager.inc:24
+#: admin/systems/ppd/class_ppdManager.inc:172
+#: admin/systems/ppd/class_ppdManager.inc:174
 msgid "PPD manager error"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:16
+#: admin/systems/ppd/class_ppdManager.inc:24
 #, php-format
 msgid "The specified path '%s' does not exist."
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:148
+#: admin/systems/ppd/class_ppdManager.inc:172
 #, php-format
 msgid "Specified PPD file '%s' cannot be opened for reading."
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:150
+#: admin/systems/ppd/class_ppdManager.inc:174
 #, php-format
 msgid "The temporary file '%s' cannot be opened for writing."
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:176
-#: admin/systems/ppd/class_ppdManager.inc:312
+#: admin/systems/ppd/class_ppdManager.inc:200
+#: admin/systems/ppd/class_ppdManager.inc:335
 #, php-format
 msgid ""
 "Parsing PPD file %s failed - line too long. Trailing characters have been "
 "ignored"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:184
+#: admin/systems/ppd/class_ppdManager.inc:208
 msgid "Nested groups are not supported!"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:188
+#: admin/systems/ppd/class_ppdManager.inc:212
 msgid "Group name not unique!"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:194
-#: admin/systems/ppd/class_ppdManager.inc:224
+#: admin/systems/ppd/class_ppdManager.inc:218
+#: admin/systems/ppd/class_ppdManager.inc:248
 msgid "Symbol values are not supported yet!"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:218
+#: admin/systems/ppd/class_ppdManager.inc:242
 msgid "Nested options are not supported!"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:243
+#: admin/systems/ppd/class_ppdManager.inc:267
 msgid "PickMany is not supported yet!"
 msgstr ""
 
-#: admin/systems/ppd/class_ppdManager.inc:336
+#: admin/systems/ppd/class_ppdManager.inc:360
 #, php-format
 msgid "Parsing PPD file %s failed - no information found."
 msgstr ""

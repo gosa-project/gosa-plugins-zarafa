@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -120,8 +120,9 @@ msgid "Remove"
 msgstr "Verwijderen"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
+#, fuzzy
 msgid "Policy"
-msgstr ""
+msgstr "Pools"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
 msgid "Kerberos"
@@ -138,8 +139,9 @@ msgstr "Services"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:393
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
+#, fuzzy
 msgid "Policies"
-msgstr ""
+msgstr "Pools"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127

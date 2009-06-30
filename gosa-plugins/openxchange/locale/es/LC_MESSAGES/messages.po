@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -25,8 +25,9 @@ msgid "Open-Xchange"
 msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
@@ -102,12 +103,14 @@ msgid ""
 msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:18
+#, fuzzy
 msgid "Open-Xchange account"
-msgstr ""
+msgstr "Cuenta POSIX"
 
 #: personal/connectivity/openxchange/oxchange.tpl:29
+#, fuzzy
 msgid "Remember"
-msgstr ""
+msgstr "Diciembre"
 
 #: personal/connectivity/openxchange/oxchange.tpl:33
 msgid "Appointment Days"
@@ -115,20 +118,23 @@ msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:39
 #: personal/connectivity/openxchange/oxchange.tpl:49
+#, fuzzy
 msgid "days"
-msgstr ""
+msgstr "Domingo"
 
 #: personal/connectivity/openxchange/oxchange.tpl:42
 msgid "Task Days"
 msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:61
+#, fuzzy
 msgid "User Information"
-msgstr ""
+msgstr "Información"
 
 #: personal/connectivity/openxchange/oxchange.tpl:65
+#, fuzzy
 msgid "User Timezone"
-msgstr ""
+msgstr "Zona de uso horario"
 
 #, fuzzy
 #~ msgid "Cannot connect to %s database!"

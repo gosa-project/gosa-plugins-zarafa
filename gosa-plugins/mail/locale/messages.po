@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2069,8 +2069,8 @@ msgid "User mail settings"
 msgstr ""
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 msgid "Configuration error"
 msgstr ""
 
@@ -2159,26 +2159,26 @@ msgstr ""
 msgid "Mail alternative addresses"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 msgid "None"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 msgid "Unknown"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 msgid "Unlimited"
 msgstr ""
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -784,8 +784,9 @@ msgstr "Sprawdź parametr"
 
 #: admin/systems/services/virus/goVirusServer.tpl:84
 #: admin/systems/services/virus/class_goVirusServer.inc:232
+#, fuzzy
 msgid "Enable debugging"
-msgstr ""
+msgstr "Włącz skanowanie antyfirusowe"
 
 #: admin/systems/services/virus/goVirusServer.tpl:92
 #: admin/systems/services/virus/class_goVirusServer.inc:233
@@ -820,8 +821,9 @@ msgstr ""
 #: admin/systems/services/virus/goVirusServer.tpl:152
 #: admin/systems/services/virus/class_goVirusServer.inc:167
 #: admin/systems/services/virus/class_goVirusServer.inc:242
+#, fuzzy
 msgid "Maximum compression ratio"
-msgstr ""
+msgstr "Kontrola dostępu"
 
 #: admin/systems/services/virus/class_goVirusServer.inc:45
 #: admin/systems/services/virus/class_goVirusServer.inc:210
@@ -866,8 +868,9 @@ msgid "Enable use of bayes filtering"
 msgstr ""
 
 #: admin/systems/services/spam/goSpamServer.tpl:72
+#, fuzzy
 msgid "Enable bayes auto learning"
-msgstr ""
+msgstr "Włącz skanowanie antyfirusowe"
 
 #: admin/systems/services/spam/goSpamServer.tpl:75
 #: admin/systems/services/spam/class_goSpamServer.inc:336
@@ -918,8 +921,9 @@ msgid "Rules"
 msgstr "Pełniona funkcja"
 
 #: admin/systems/services/spam/class_goSpamServer.inc:335
+#, fuzzy
 msgid "Enabled bayes auto learning"
-msgstr ""
+msgstr "Włącz skanowanie antyfirusowe"
 
 #: admin/systems/services/spam/goSpamServerRule.tpl:6
 msgid "Name"
@@ -1726,8 +1730,9 @@ msgid "Export"
 msgstr "Export"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:12
+#, fuzzy
 msgid "View structured"
-msgstr ""
+msgstr "Szukaj wewnątrz tego poddrzewa"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:14
 #, fuzzy
@@ -1851,8 +1856,9 @@ msgid "Header"
 msgstr "nagłówek"
 
 #: personal/mail/sieve/templates/element_header.tpl:60
+#, fuzzy
 msgid "operator"
-msgstr ""
+msgstr "Opcje poczty"
 
 #: personal/mail/sieve/templates/create_script.tpl:2
 msgid ""
@@ -1882,8 +1888,9 @@ msgid "Domain part"
 msgstr "Użytkownicy domeny"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:29
+#, fuzzy
 msgid "Local part"
-msgstr ""
+msgstr "Lokalizacja"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:33
 msgid "Case insensitive"
@@ -2009,8 +2016,9 @@ msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:729
 #: personal/mail/sieve/class_sieveElement_If.inc:1062
+#, fuzzy
 msgid "Megabyte"
-msgstr ""
+msgstr "Utwórz"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:730
 #: personal/mail/sieve/class_sieveElement_If.inc:1063
@@ -2131,9 +2139,9 @@ msgid "Cannot log into SIEVE server: %s"
 msgstr "Nie można zalogować się do serwera SIEVE. Odpowiedź serwera '%s'."
 
 #: personal/mail/sieve/class_sieveManagement.inc:349
-#, php-format
+#, fuzzy, php-format
 msgid "Cannot remove SIEVE script: %s"
-msgstr ""
+msgstr "Nieznany wpis  '%s'!"
 
 #: personal/mail/sieve/class_sieveManagement.inc:395
 #, fuzzy
@@ -2141,8 +2149,9 @@ msgid "Edited"
 msgstr "Edytuj"
 
 #: personal/mail/sieve/class_sieveManagement.inc:429
+#, fuzzy
 msgid "Uploaded script is empty!"
-msgstr ""
+msgstr "Certyfikaty"
 
 #: personal/mail/sieve/class_sieveManagement.inc:431
 #, fuzzy
@@ -2200,8 +2209,9 @@ msgid "Can't log into SIEVE server. Server says '%s'."
 msgstr "Nie można zalogować się do serwera SIEVE. Odpowiedź serwera '%s'."
 
 #: personal/mail/sieve/class_sieveManagement.inc:770
+#, fuzzy
 msgid "Cannot insert element at the requested position!"
-msgstr ""
+msgstr "Przejdź do domowego departamentu użytkowników"
 
 #: personal/mail/sieve/class_sieveManagement.inc:1045
 #, fuzzy
@@ -2217,8 +2227,8 @@ msgid "User mail settings"
 msgstr "Ustawienia poczty użytkownika"
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 #, fuzzy
 msgid "Configuration error"
 msgstr "Plik konfiguracyjny"
@@ -2316,27 +2326,27 @@ msgstr "Nie dostarczaj do własnej skrzynki"
 msgid "Mail alternative addresses"
 msgstr "Adresy alternatywne"
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 #, fuzzy
 msgid "None"
 msgstr "żaden"
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 msgid "Unknown"
 msgstr "Nieznane"
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 #, fuzzy
 msgid "Unlimited"
 msgstr "bez limitu"

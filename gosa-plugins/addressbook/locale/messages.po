@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-03 14:53+0100\n"
+"POT-Creation-Date: 2009-06-30 09:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,207 +24,104 @@ msgstr ""
 msgid "Missing parameters!"
 msgstr ""
 
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr ""
-
-#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
-#: addons/addressbook/class_addressbook.inc:468
-#: addons/addressbook/class_addressbook.inc:472
-#: addons/addressbook/class_addressbook.inc:588
-msgid "Dial"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:7
-msgid "Choose the department to store entry in"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:24
 #: addons/addressbook/address_info.tpl:18
+#: addons/addressbook/address_edit.tpl:24
 msgid "Personal"
 msgstr ""
 
-#: addons/addressbook/address_edit.tpl:30
-msgid "Last name"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:33
-msgid "First name"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:48
-#: addons/addressbook/class_addressbook.inc:865
-#: addons/addressbook/address_info.tpl:32
-msgid "Initials"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:60
-#: addons/addressbook/address_info.tpl:40
-msgid "Personal title"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
-#: addons/addressbook/address_info.tpl:53
-msgid "Private"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-msgid "Address"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:94
-#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
-#: addons/addressbook/class_addressbook.inc:706
-#: addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-msgid "Phone"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
-#: addons/addressbook/class_addressbook.inc:715
-#: addons/addressbook/address_info.tpl:75
-msgid "Mobile"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:118
-#: addons/addressbook/class_addressbook.inc:730
-#: addons/addressbook/address_info.tpl:83
-msgid "Email"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:134
-#: addons/addressbook/address_info.tpl:99
-msgid "Organizational"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:143
-#: addons/addressbook/address_info.tpl:109
-msgid "Company"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:155
-#: addons/addressbook/class_addressbook.inc:860
-#: addons/addressbook/address_info.tpl:117
-msgid "Department"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:167
-#: addons/addressbook/address_info.tpl:125
-msgid "City"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:179
-#: addons/addressbook/address_info.tpl:133
-msgid "Postal code"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:191
-#: addons/addressbook/address_info.tpl:141
-msgid "Country"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:233
-#: addons/addressbook/address_info.tpl:171
-msgid "FAX"
-msgstr ""
-
-#: addons/addressbook/address_edit.tpl:246
-#: addons/addressbook/class_addressbook.inc:718
-#: addons/addressbook/class_addressbook.inc:858
-#: addons/addressbook/address_info.tpl:179
-msgid "Pager"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:14
+#: addons/addressbook/address_info.tpl:24
 #: addons/addressbook/class_addressbook.inc:648
 #: addons/addressbook/class_addressbook.inc:688
 #: addons/addressbook/class_addressbook.inc:698
 #: addons/addressbook/class_addressbook.inc:725
-#: addons/addressbook/address_info.tpl:24
+#: addons/addressbook/contents.tpl:14
 msgid "Name"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:14
-#: addons/addressbook/class_addressbook.inc:712
-msgid "Fax"
+#: addons/addressbook/address_info.tpl:32
+#: addons/addressbook/class_addressbook.inc:865
+#: addons/addressbook/address_edit.tpl:48
+msgid "Initials"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:15
-msgid "Contact"
+#: addons/addressbook/address_info.tpl:40
+#: addons/addressbook/address_edit.tpl:60
+msgid "Personal title"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:33
-msgid "Information"
+#: addons/addressbook/address_info.tpl:53
+#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
+msgid "Private"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:37
-msgid ""
-"The telephone list plugin provides list and search facilities for the people "
-"in your site. You may want to specify the asterisk [*] like in 'Go*us' to "
-"find 'Gonicus'. Use the filters below to narrow down your search."
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+msgid "Address"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:42
-msgid "Actions"
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
+#: addons/addressbook/class_addressbook.inc:706
+#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
+msgid "Phone"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:48
-msgid "Add entry"
+#: addons/addressbook/address_info.tpl:75
+#: addons/addressbook/class_addressbook.inc:715
+#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
+msgid "Mobile"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:54
-msgid "Edit entry"
+#: addons/addressbook/address_info.tpl:83
+#: addons/addressbook/class_addressbook.inc:730
+#: addons/addressbook/address_edit.tpl:118
+msgid "Email"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:58
-msgid "Remove entry"
+#: addons/addressbook/address_info.tpl:99
+#: addons/addressbook/address_edit.tpl:134
+msgid "Organizational"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:65
-msgid "Filters"
+#: addons/addressbook/address_info.tpl:109
+#: addons/addressbook/address_edit.tpl:143
+msgid "Company"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:75
-msgid "Select to see regular users"
+#: addons/addressbook/address_info.tpl:117
+#: addons/addressbook/class_addressbook.inc:860
+#: addons/addressbook/address_edit.tpl:155
+msgid "Department"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:75
-msgid "Show organizational entries"
+#: addons/addressbook/address_info.tpl:125
+#: addons/addressbook/address_edit.tpl:167
+msgid "City"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:76
-msgid "Select to see users in addressbook"
+#: addons/addressbook/address_info.tpl:133
+#: addons/addressbook/address_edit.tpl:179
+msgid "Postal code"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:76
-msgid "Show addressbook entries"
+#: addons/addressbook/address_info.tpl:141
+#: addons/addressbook/address_edit.tpl:191
+msgid "Country"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:84
-msgid "Display results for department"
+#: addons/addressbook/address_info.tpl:171
+#: addons/addressbook/address_edit.tpl:233
+msgid "FAX"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:87
-msgid "Choose the department the search will be based on"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:97
-msgid "Match object"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:100
-msgid "Choose the object that will be searched in"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:109
-msgid "Search for"
-msgstr ""
-
-#: addons/addressbook/contents.tpl:112
-msgid "Search string"
+#: addons/addressbook/address_info.tpl:179
+#: addons/addressbook/class_addressbook.inc:718
+#: addons/addressbook/class_addressbook.inc:858
+#: addons/addressbook/address_edit.tpl:246
+msgid "Pager"
 msgstr ""
 
 #: addons/addressbook/remove.tpl:2
@@ -242,12 +139,23 @@ msgstr ""
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 
-#: addons/addressbook/main.inc:43 addons/addressbook/class_addressbook.inc:11
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr ""
+
+#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
+#: addons/addressbook/class_addressbook.inc:468
+#: addons/addressbook/class_addressbook.inc:472
+#: addons/addressbook/class_addressbook.inc:588
+msgid "Dial"
+msgstr ""
+
+#: addons/addressbook/class_addressbook.inc:11
 #: addons/addressbook/class_addressbook.inc:12
 #: addons/addressbook/class_addressbook.inc:23
 #: addons/addressbook/class_addressbook.inc:841
 #: addons/addressbook/class_addressbook.inc:842
-#: addons/addressbook/class_addressbook.inc:847
+#: addons/addressbook/class_addressbook.inc:847 addons/addressbook/main.inc:43
 msgid "Addressbook"
 msgstr ""
 
@@ -346,6 +254,11 @@ msgstr ""
 msgid "Telephone number"
 msgstr ""
 
+#: addons/addressbook/class_addressbook.inc:712
+#: addons/addressbook/contents.tpl:14
+msgid "Fax"
+msgstr ""
+
 #: addons/addressbook/class_addressbook.inc:738
 msgid ""
 "Cannot create a unique DN for your entry. Please fill more formular fields."
@@ -418,4 +331,91 @@ msgstr ""
 
 #: addons/addressbook/class_addressbook.inc:868
 msgid "Common name"
+msgstr ""
+
+#: addons/addressbook/address_edit.tpl:7
+msgid "Choose the department to store entry in"
+msgstr ""
+
+#: addons/addressbook/address_edit.tpl:30
+msgid "Last name"
+msgstr ""
+
+#: addons/addressbook/address_edit.tpl:33
+msgid "First name"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:15
+msgid "Contact"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:33
+msgid "Information"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:37
+msgid ""
+"The telephone list plugin provides list and search facilities for the people "
+"in your site. You may want to specify the asterisk [*] like in 'Go*us' to "
+"find 'Gonicus'. Use the filters below to narrow down your search."
+msgstr ""
+
+#: addons/addressbook/contents.tpl:42
+msgid "Actions"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:48
+msgid "Add entry"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:54
+msgid "Edit entry"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:58
+msgid "Remove entry"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:65
+msgid "Filters"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:75
+msgid "Select to see regular users"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:75
+msgid "Show organizational entries"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:76
+msgid "Select to see users in addressbook"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:76
+msgid "Show addressbook entries"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:84
+msgid "Display results for department"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:87
+msgid "Choose the department the search will be based on"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:97
+msgid "Match object"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:100
+msgid "Choose the object that will be searched in"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:109
+msgid "Search for"
+msgstr ""
+
+#: addons/addressbook/contents.tpl:112
+msgid "Search string"
 msgstr ""

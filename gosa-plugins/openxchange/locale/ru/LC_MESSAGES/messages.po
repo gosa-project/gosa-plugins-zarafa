@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -87,8 +87,9 @@ msgid "OXTaskDays"
 msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
+#, fuzzy
 msgid "OXTimeZone"
-msgstr ""
+msgstr "Мобильный"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
 msgid "Open-Xchange Account"
@@ -130,8 +131,9 @@ msgid "User Information"
 msgstr "Информация"
 
 #: personal/connectivity/openxchange/oxchange.tpl:65
+#, fuzzy
 msgid "User Timezone"
-msgstr ""
+msgstr "Мобильный"
 
 #, fuzzy
 #~ msgid "Cannot connect to %s database!"

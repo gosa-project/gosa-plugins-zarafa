@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:05+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -74,8 +74,9 @@ msgid "Expires: "
 msgstr "Esporta"
 
 #: addons/dak/class_dakkeyring.inc:276
+#, fuzzy
 msgid "DAK keyring"
-msgstr ""
+msgstr "Amministrazione LDAP"
 
 #: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
 #: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:05+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -107,8 +107,9 @@ msgid "Location"
 msgstr "Местоположение"
 
 #: addons/godfs/main.inc:35 addons/godfs/main.inc:41
+#, fuzzy
 msgid "Distributed File System Administration"
-msgstr ""
+msgstr "Управление пользователями"
 
 #: addons/godfs/contents.tpl:8
 #, fuzzy

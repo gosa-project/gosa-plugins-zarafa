@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-03 14:53+0100\n"
+"POT-Creation-Date: 2009-06-30 09:56+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -26,210 +26,105 @@ msgstr "终端服务器"
 msgid "Missing parameters!"
 msgstr "应用程序名称"
 
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr "拨号中..."
-
-#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
-#: addons/addressbook/class_addressbook.inc:468
-#: addons/addressbook/class_addressbook.inc:472
-#: addons/addressbook/class_addressbook.inc:588
-msgid "Dial"
-msgstr "拨号"
-
-#: addons/addressbook/address_edit.tpl:7
-msgid "Choose the department to store entry in"
-msgstr "选择放置条目的部门"
-
-#: addons/addressbook/address_edit.tpl:24
 #: addons/addressbook/address_info.tpl:18
+#: addons/addressbook/address_edit.tpl:24
 msgid "Personal"
 msgstr "个人"
 
-#: addons/addressbook/address_edit.tpl:30
-msgid "Last name"
-msgstr "姓"
-
-#: addons/addressbook/address_edit.tpl:33
-msgid "First name"
-msgstr "名"
-
-#: addons/addressbook/address_edit.tpl:48
-#: addons/addressbook/class_addressbook.inc:865
-#: addons/addressbook/address_info.tpl:32
-msgid "Initials"
-msgstr "中间名"
-
-#: addons/addressbook/address_edit.tpl:60
-#: addons/addressbook/address_info.tpl:40
-msgid "Personal title"
-msgstr "个人称谓"
-
-#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
-#: addons/addressbook/address_info.tpl:53
-msgid "Private"
-msgstr "私人电话"
-
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-msgid "Address"
-msgstr "住址"
-
-#: addons/addressbook/address_edit.tpl:94
-#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
-#: addons/addressbook/class_addressbook.inc:706
-#: addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-msgid "Phone"
-msgstr "电话"
-
-#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
-#: addons/addressbook/class_addressbook.inc:715
-#: addons/addressbook/address_info.tpl:75
-msgid "Mobile"
-msgstr "手机"
-
-#: addons/addressbook/address_edit.tpl:118
-#: addons/addressbook/class_addressbook.inc:730
-#: addons/addressbook/address_info.tpl:83
-msgid "Email"
-msgstr "邮件"
-
-#: addons/addressbook/address_edit.tpl:134
-#: addons/addressbook/address_info.tpl:99
-msgid "Organizational"
-msgstr "组织"
-
-#: addons/addressbook/address_edit.tpl:143
-#: addons/addressbook/address_info.tpl:109
-msgid "Company"
-msgstr "公司"
-
-#: addons/addressbook/address_edit.tpl:155
-#: addons/addressbook/class_addressbook.inc:860
-#: addons/addressbook/address_info.tpl:117
-msgid "Department"
-msgstr "部门"
-
-#: addons/addressbook/address_edit.tpl:167
-#: addons/addressbook/address_info.tpl:125
-msgid "City"
-msgstr "城市"
-
-#: addons/addressbook/address_edit.tpl:179
-#: addons/addressbook/address_info.tpl:133
-msgid "Postal code"
-msgstr "邮编"
-
-#: addons/addressbook/address_edit.tpl:191
-#: addons/addressbook/address_info.tpl:141
-msgid "Country"
-msgstr "国家"
-
-#: addons/addressbook/address_edit.tpl:233
-#: addons/addressbook/address_info.tpl:171
-msgid "FAX"
-msgstr "传真"
-
-#: addons/addressbook/address_edit.tpl:246
-#: addons/addressbook/class_addressbook.inc:718
-#: addons/addressbook/class_addressbook.inc:858
-#: addons/addressbook/address_info.tpl:179
-msgid "Pager"
-msgstr "呼机"
-
-#: addons/addressbook/contents.tpl:14
+#: addons/addressbook/address_info.tpl:24
 #: addons/addressbook/class_addressbook.inc:648
 #: addons/addressbook/class_addressbook.inc:688
 #: addons/addressbook/class_addressbook.inc:698
 #: addons/addressbook/class_addressbook.inc:725
-#: addons/addressbook/address_info.tpl:24
+#: addons/addressbook/contents.tpl:14
 msgid "Name"
 msgstr "名称"
 
-#: addons/addressbook/contents.tpl:14
-#: addons/addressbook/class_addressbook.inc:712
-msgid "Fax"
+#: addons/addressbook/address_info.tpl:32
+#: addons/addressbook/class_addressbook.inc:865
+#: addons/addressbook/address_edit.tpl:48
+msgid "Initials"
+msgstr "中间名"
+
+#: addons/addressbook/address_info.tpl:40
+#: addons/addressbook/address_edit.tpl:60
+msgid "Personal title"
+msgstr "个人称谓"
+
+#: addons/addressbook/address_info.tpl:53
+#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
+msgid "Private"
+msgstr "私人电话"
+
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+msgid "Address"
+msgstr "住址"
+
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
+#: addons/addressbook/class_addressbook.inc:706
+#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
+msgid "Phone"
+msgstr "电话"
+
+#: addons/addressbook/address_info.tpl:75
+#: addons/addressbook/class_addressbook.inc:715
+#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
+msgid "Mobile"
+msgstr "手机"
+
+#: addons/addressbook/address_info.tpl:83
+#: addons/addressbook/class_addressbook.inc:730
+#: addons/addressbook/address_edit.tpl:118
+msgid "Email"
+msgstr "邮件"
+
+#: addons/addressbook/address_info.tpl:99
+#: addons/addressbook/address_edit.tpl:134
+msgid "Organizational"
+msgstr "组织"
+
+#: addons/addressbook/address_info.tpl:109
+#: addons/addressbook/address_edit.tpl:143
+msgid "Company"
+msgstr "公司"
+
+#: addons/addressbook/address_info.tpl:117
+#: addons/addressbook/class_addressbook.inc:860
+#: addons/addressbook/address_edit.tpl:155
+msgid "Department"
+msgstr "部门"
+
+#: addons/addressbook/address_info.tpl:125
+#: addons/addressbook/address_edit.tpl:167
+msgid "City"
+msgstr "城市"
+
+#: addons/addressbook/address_info.tpl:133
+#: addons/addressbook/address_edit.tpl:179
+msgid "Postal code"
+msgstr "邮编"
+
+#: addons/addressbook/address_info.tpl:141
+#: addons/addressbook/address_edit.tpl:191
+msgid "Country"
+msgstr "国家"
+
+#: addons/addressbook/address_info.tpl:171
+#: addons/addressbook/address_edit.tpl:233
+msgid "FAX"
 msgstr "传真"
 
-#: addons/addressbook/contents.tpl:15
-msgid "Contact"
-msgstr "联系"
-
-#: addons/addressbook/contents.tpl:33
-msgid "Information"
-msgstr "提示信息"
-
-#: addons/addressbook/contents.tpl:37
-msgid ""
-"The telephone list plugin provides list and search facilities for the people "
-"in your site. You may want to specify the asterisk [*] like in 'Go*us' to "
-"find 'Gonicus'. Use the filters below to narrow down your search."
-msgstr ""
-"电话列表插件提供了针对您站点用户的列表和查询功能。您可以用通配符[*]，"
-"如“Go*us”拉来查询“Gonicus”。使用下面的过滤器来过滤查询结果。"
-
-#: addons/addressbook/contents.tpl:42
-msgid "Actions"
-msgstr "动作"
-
-#: addons/addressbook/contents.tpl:48
-msgid "Add entry"
-msgstr "添加记录"
-
-#: addons/addressbook/contents.tpl:54
-msgid "Edit entry"
-msgstr "编辑记录"
-
-#: addons/addressbook/contents.tpl:58
-msgid "Remove entry"
-msgstr "删除记录"
-
-#: addons/addressbook/contents.tpl:65
-msgid "Filters"
-msgstr "过滤器"
-
-#: addons/addressbook/contents.tpl:75
-msgid "Select to see regular users"
-msgstr "选择查看普通用户"
-
-#: addons/addressbook/contents.tpl:75
-msgid "Show organizational entries"
-msgstr "显示组织记录"
-
-#: addons/addressbook/contents.tpl:76
-msgid "Select to see users in addressbook"
-msgstr "选择查看地址簿中用户"
-
-#: addons/addressbook/contents.tpl:76
-msgid "Show addressbook entries"
-msgstr "显示地址簿记录"
-
-#: addons/addressbook/contents.tpl:84
-msgid "Display results for department"
-msgstr "显示部门的结果"
-
-#: addons/addressbook/contents.tpl:87
-msgid "Choose the department the search will be based on"
-msgstr "选择一个部门来做查询"
-
-#: addons/addressbook/contents.tpl:97
-msgid "Match object"
-msgstr "匹配对象"
-
-#: addons/addressbook/contents.tpl:100
-msgid "Choose the object that will be searched in"
-msgstr "选择要在其中查询的对象"
-
-#: addons/addressbook/contents.tpl:109
-msgid "Search for"
-msgstr "查询"
-
-#: addons/addressbook/contents.tpl:112
-msgid "Search string"
-msgstr "查找字符串"
+#: addons/addressbook/address_info.tpl:179
+#: addons/addressbook/class_addressbook.inc:718
+#: addons/addressbook/class_addressbook.inc:858
+#: addons/addressbook/address_edit.tpl:246
+msgid "Pager"
+msgstr "呼机"
 
 #: addons/addressbook/remove.tpl:2
 msgid "Warning"
@@ -248,12 +143,23 @@ msgstr ""
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
-#: addons/addressbook/main.inc:43 addons/addressbook/class_addressbook.inc:11
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr "拨号中..."
+
+#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
+#: addons/addressbook/class_addressbook.inc:468
+#: addons/addressbook/class_addressbook.inc:472
+#: addons/addressbook/class_addressbook.inc:588
+msgid "Dial"
+msgstr "拨号"
+
+#: addons/addressbook/class_addressbook.inc:11
 #: addons/addressbook/class_addressbook.inc:12
 #: addons/addressbook/class_addressbook.inc:23
 #: addons/addressbook/class_addressbook.inc:841
 #: addons/addressbook/class_addressbook.inc:842
-#: addons/addressbook/class_addressbook.inc:847
+#: addons/addressbook/class_addressbook.inc:847 addons/addressbook/main.inc:43
 msgid "Addressbook"
 msgstr "地址簿"
 
@@ -358,6 +264,11 @@ msgstr "用户 ID"
 msgid "Telephone number"
 msgstr "电话号码"
 
+#: addons/addressbook/class_addressbook.inc:712
+#: addons/addressbook/contents.tpl:14
+msgid "Fax"
+msgstr "传真"
+
 #: addons/addressbook/class_addressbook.inc:738
 msgid ""
 "Cannot create a unique DN for your entry. Please fill more formular fields."
@@ -438,6 +349,95 @@ msgstr "住宅地址"
 #: addons/addressbook/class_addressbook.inc:868
 msgid "Common name"
 msgstr "常用名"
+
+#: addons/addressbook/address_edit.tpl:7
+msgid "Choose the department to store entry in"
+msgstr "选择放置条目的部门"
+
+#: addons/addressbook/address_edit.tpl:30
+msgid "Last name"
+msgstr "姓"
+
+#: addons/addressbook/address_edit.tpl:33
+msgid "First name"
+msgstr "名"
+
+#: addons/addressbook/contents.tpl:15
+msgid "Contact"
+msgstr "联系"
+
+#: addons/addressbook/contents.tpl:33
+msgid "Information"
+msgstr "提示信息"
+
+#: addons/addressbook/contents.tpl:37
+msgid ""
+"The telephone list plugin provides list and search facilities for the people "
+"in your site. You may want to specify the asterisk [*] like in 'Go*us' to "
+"find 'Gonicus'. Use the filters below to narrow down your search."
+msgstr ""
+"电话列表插件提供了针对您站点用户的列表和查询功能。您可以用通配符[*]，"
+"如“Go*us”拉来查询“Gonicus”。使用下面的过滤器来过滤查询结果。"
+
+#: addons/addressbook/contents.tpl:42
+msgid "Actions"
+msgstr "动作"
+
+#: addons/addressbook/contents.tpl:48
+msgid "Add entry"
+msgstr "添加记录"
+
+#: addons/addressbook/contents.tpl:54
+msgid "Edit entry"
+msgstr "编辑记录"
+
+#: addons/addressbook/contents.tpl:58
+msgid "Remove entry"
+msgstr "删除记录"
+
+#: addons/addressbook/contents.tpl:65
+msgid "Filters"
+msgstr "过滤器"
+
+#: addons/addressbook/contents.tpl:75
+msgid "Select to see regular users"
+msgstr "选择查看普通用户"
+
+#: addons/addressbook/contents.tpl:75
+msgid "Show organizational entries"
+msgstr "显示组织记录"
+
+#: addons/addressbook/contents.tpl:76
+msgid "Select to see users in addressbook"
+msgstr "选择查看地址簿中用户"
+
+#: addons/addressbook/contents.tpl:76
+msgid "Show addressbook entries"
+msgstr "显示地址簿记录"
+
+#: addons/addressbook/contents.tpl:84
+msgid "Display results for department"
+msgstr "显示部门的结果"
+
+#: addons/addressbook/contents.tpl:87
+msgid "Choose the department the search will be based on"
+msgstr "选择一个部门来做查询"
+
+#: addons/addressbook/contents.tpl:97
+msgid "Match object"
+msgstr "匹配对象"
+
+#: addons/addressbook/contents.tpl:100
+msgid "Choose the object that will be searched in"
+msgstr "选择要在其中查询的对象"
+
+#: addons/addressbook/contents.tpl:109
+msgid "Search for"
+msgstr "查询"
+
+#: addons/addressbook/contents.tpl:112
+msgid "Search string"
+msgstr "查找字符串"
 
 #~ msgid "You're about to delete the entry %s."
 #~ msgstr "您将要删除条目 %s。"

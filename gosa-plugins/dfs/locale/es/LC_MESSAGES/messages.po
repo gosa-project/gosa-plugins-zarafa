@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:05+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -18,12 +18,14 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: addons/godfs/class_dfsManagment.inc:8
+#, fuzzy
 msgid "DFS Management"
-msgstr ""
+msgstr "Administración Samba"
 
 #: addons/godfs/class_dfsManagment.inc:9
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: addons/godfs/class_dfsManagment.inc:146
 #: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
@@ -36,8 +38,9 @@ msgid "No DFS entries found"
 msgstr ""
 
 #: addons/godfs/class_dfsManagment.inc:208
+#, fuzzy
 msgid "Go up one dfsshare"
-msgstr ""
+msgstr "Subir un departamento"
 
 #: addons/godfs/class_dfsManagment.inc:208
 msgid "Up"
@@ -52,8 +55,9 @@ msgid "Root"
 msgstr "Raíz"
 
 #: addons/godfs/class_dfsManagment.inc:210
+#, fuzzy
 msgid "Create new dfsshare"
-msgstr ""
+msgstr "Crear"
 
 #: addons/godfs/class_dfsManagment.inc:212
 msgid "Base"
@@ -72,36 +76,42 @@ msgid "Finish"
 msgstr "Terminar"
 
 #: addons/godfs/generic.tpl:4
+#, fuzzy
 msgid "DFS Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: addons/godfs/generic.tpl:8
+#, fuzzy
 msgid "Name of dfs Share"
-msgstr ""
+msgstr "Nombre del departamento"
 
 #: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
 msgid "Description"
 msgstr "Descripción"
 
 #: addons/godfs/generic.tpl:16
+#, fuzzy
 msgid "Fileserver"
-msgstr ""
+msgstr "Servidor"
 
 #: addons/godfs/generic.tpl:20
+#, fuzzy
 msgid "Share on Fileserver"
-msgstr ""
+msgstr "Mostrar servidores"
 
 #: addons/godfs/generic.tpl:30
+#, fuzzy
 msgid "DFS Location"
-msgstr ""
+msgstr "Localización"
 
 #: addons/godfs/generic.tpl:34
 msgid "Location"
 msgstr "Localización"
 
 #: addons/godfs/main.inc:35 addons/godfs/main.inc:41
+#, fuzzy
 msgid "Distributed File System Administration"
-msgstr ""
+msgstr "Administración sistema de FAX"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -112,23 +122,29 @@ msgid "Information"
 msgstr "Información"
 
 #: addons/godfs/contents.tpl:26
+#, fuzzy
 msgid ""
 "This menu allows you to create, delete and edit selected dfs shares. Having "
 "a large numbers of dfs shares, you might prefer the range selectors on top "
 "of the dfs share list."
 msgstr ""
+"Este menú le permitirá crear, eliminar, y editar los departamentos "
+"seleccionados. Puede preferir el selector de rango en la parte superior de "
+"la lista de departamentos cuando maneje un gran número de departamentos."
 
 #: addons/godfs/contents.tpl:31
 msgid "Filters"
 msgstr "Filtros"
 
 #: addons/godfs/contents.tpl:40
+#, fuzzy
 msgid "Display dfs shares matching"
-msgstr ""
+msgstr "Mostrar sistemas que coincidan con"
 
 #: addons/godfs/contents.tpl:44
+#, fuzzy
 msgid "Regular expression for matching dfs share names"
-msgstr ""
+msgstr "Expresiones regulares para buscar nombre de usuarios"
 
 #~ msgid "Cancel"
 #~ msgstr "Cancelar"

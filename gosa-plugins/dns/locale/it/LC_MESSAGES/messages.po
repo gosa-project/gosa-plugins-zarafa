@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -48,9 +48,9 @@ msgstr "telefoni"
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:345
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
-#: admin/systems/services/dns/class_DNS.inc:161
-#: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:162
+#: admin/systems/services/dns/class_DNS.inc:167
+#: admin/systems/services/dns/class_DNS.inc:631
 msgid "Error"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgid "Down"
 msgstr "Dominio"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:565
+#: admin/systems/services/dns/class_servDNSeditZone.inc:580
 msgid "Delete"
 msgstr "Rimuovi"
 
@@ -102,8 +102,9 @@ msgid "Refresh"
 msgstr "Riferimenti"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:431
+#, fuzzy
 msgid "Time to life"
-msgstr ""
+msgstr "Cellulare"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:435
 #: admin/systems/services/dns/class_servDNS.inc:601
@@ -119,26 +120,27 @@ msgid "Retry"
 msgstr "Riprova"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:454
+#: admin/systems/services/dns/class_servDNSeditZone.inc:468
 #: admin/systems/services/dns/servdnseditzone.tpl:16
 #, fuzzy
 msgid "Network address"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:461
-#: admin/systems/services/dns/class_servDNSeditZone.inc:467
-#: admin/systems/services/dns/class_servDNSeditZone.inc:473
+#: admin/systems/services/dns/class_servDNSeditZone.inc:476
+#: admin/systems/services/dns/class_servDNSeditZone.inc:482
+#: admin/systems/services/dns/class_servDNSeditZone.inc:488
 #, php-format
 msgid ""
 "The specified network address and the network class (%s/%s) do not match!"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:477
+#: admin/systems/services/dns/class_servDNSeditZone.inc:492
 #: admin/systems/services/dns/class_servDNS.inc:594
 #, fuzzy
 msgid "Network class"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:571
+#: admin/systems/services/dns/class_servDNSeditZone.inc:586
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
 msgid "Add"
 msgstr "Aggiungi"
@@ -186,22 +188,26 @@ msgid ""
 msgstr ""
 
 #: admin/systems/services/dns/class_servDNS.inc:166
+#, fuzzy
 msgid "Remove DNS service"
-msgstr ""
+msgstr "Elimina foto"
 
 #: admin/systems/services/dns/class_servDNS.inc:167
+#, fuzzy
 msgid ""
 "This server has DNS features enabled. You can disable them by clicking below."
-msgstr ""
+msgstr "Questa identià possiede estensioni Unix."
 
 #: admin/systems/services/dns/class_servDNS.inc:169
+#, fuzzy
 msgid "Add DNS service"
-msgstr ""
+msgstr "Servizi"
 
 #: admin/systems/services/dns/class_servDNS.inc:170
+#, fuzzy
 msgid ""
 "This server has DNS features disabled. You can enable them by clicking below."
-msgstr ""
+msgstr "Questa identità non possiede estensioni Unix"
 
 #: admin/systems/services/dns/class_servDNS.inc:280
 #: admin/systems/services/dns/class_servDNS.inc:602
@@ -316,17 +322,17 @@ msgstr ""
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: admin/systems/services/dns/class_DNS.inc:161
+#: admin/systems/services/dns/class_DNS.inc:162
 #, php-format
 msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:166
+#: admin/systems/services/dns/class_DNS.inc:167
 #, php-format
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:631
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2009-02-28 14:07+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -172,7 +172,8 @@ msgstr "Le méthode mail ne peut pas se connecter : %s"
 #: personal/mail/class_mailAccount.inc:162
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
-msgstr "Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
+msgstr ""
+"Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:297
 msgid ""
@@ -724,8 +725,9 @@ msgid "Select a transport protocol."
 msgstr "Sélectionner un protocole de transport"
 
 #: admin/systems/services/mail/goMailServer.tpl:141
+#, fuzzy
 msgid "Restrictions"
-msgstr ""
+msgstr "Restrictions pour les mot de passe"
 
 #: admin/systems/services/mail/goMailServer.tpl:157
 #: admin/systems/services/mail/goMailServer.tpl:183
@@ -846,7 +848,8 @@ msgstr "Score requis"
 
 #: admin/systems/services/spam/goSpamServer.tpl:22
 msgid "Select required score to tag mail as spam"
-msgstr "Sélectionner le score requis pour marquer ce message comme étant un spam"
+msgstr ""
+"Sélectionner le score requis pour marquer ce message comme étant un spam"
 
 #: admin/systems/services/spam/goSpamServer.tpl:69
 #: admin/systems/services/spam/class_goSpamServer.inc:334
@@ -1146,7 +1149,8 @@ msgid "No delivery to own mailbox"
 msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 
 #: personal/mail/generic.tpl:151
-msgid "Select to automatically response with the vacation message defined below"
+msgid ""
+"Select to automatically response with the vacation message defined below"
 msgstr ""
 "Indiquez la réponse automatique en remplissant le message d'absence ci-"
 "dessous"
@@ -1423,8 +1427,9 @@ msgstr "Continuer"
 
 #: personal/mail/sieve/templates/element_if.tpl:4
 #: personal/mail/sieve/class_sieveElement_If.inc:834
+#, fuzzy
 msgid "Condition"
-msgstr ""
+msgstr "Continuer"
 
 #: personal/mail/sieve/templates/object_container.tpl:8
 msgid "Move object up one position"
@@ -1695,7 +1700,8 @@ msgstr ""
 "d'authentification est vide."
 
 #: personal/mail/sieve/templates/management.tpl:6
-msgid "Please verify that the attributes uid and mail are not empty and try again."
+msgid ""
+"Please verify that the attributes uid and mail are not empty and try again."
 msgstr ""
 "Veuillez vérifier que les attributs uid et mail ne sont pas vide et "
 "réessayer."
@@ -1905,11 +1911,14 @@ msgid "Please specify a valid operator."
 msgstr "Veuillez spécifier un opérateur valide."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:654
-msgid "Invalid character found in address attribute. Quotes are not allowed here."
-msgstr "Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
+msgid ""
+"Invalid character found in address attribute. Quotes are not allowed here."
+msgstr ""
+"Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:669
-msgid "Invalid character found in value attribute. Quotes are not allowed here."
+msgid ""
+"Invalid character found in value attribute. Quotes are not allowed here."
 msgstr ""
 "Caractère non valide trouvé dans l'attribut. Les guillemets ne sont pas "
 "permis ici."
@@ -1921,8 +1930,9 @@ msgstr "plus petit que"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:729
 #: personal/mail/sieve/class_sieveElement_If.inc:1062
+#, fuzzy
 msgid "Megabyte"
-msgstr ""
+msgstr "Migrer"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:730
 #: personal/mail/sieve/class_sieveElement_If.inc:1063
@@ -1931,8 +1941,9 @@ msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:731
 #: personal/mail/sieve/class_sieveElement_If.inc:1064
+#, fuzzy
 msgid "Bytes"
-msgstr ""
+msgstr "Systèmes"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:745
 msgid "Please select a valid match type in the list box below."
@@ -1993,7 +2004,8 @@ msgstr "L'analyse à réussi"
 
 #: personal/mail/sieve/class_sieveManagement.inc:156
 #, php-format
-msgid "The specified mail server '%s' does not exist within the GOsa configuration."
+msgid ""
+"The specified mail server '%s' does not exist within the GOsa configuration."
 msgstr ""
 "Le serveur de messagerie spécifié '%s' n'existe pas dans la configuration de "
 "GOsa."
@@ -2008,7 +2020,8 @@ msgstr "Veuillez seulement utiliser des nom de script en miniscules !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:212
 msgid "Please use only alphabetical characters in script names!"
-msgstr "Seul des caractères alphabétiques sont permis dans le nom des scripts !"
+msgstr ""
+"Seul des caractères alphabétiques sont permis dans le nom des scripts !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:218
 msgid "Script name already in use!"
@@ -2113,8 +2126,8 @@ msgid "User mail settings"
 msgstr "Configuration du compte de messagerie de l'utilisateur"
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 msgid "Configuration error"
 msgstr "Erreur de configuration"
 
@@ -2203,30 +2216,29 @@ msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 msgid "Mail alternative addresses"
 msgstr "Adresses alternatives"
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr "L'attribut de messagerie '%s' n'est pas supporté !"
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr "Le méthode de messagerie '%s' est inconnue !"
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 msgid "None"
 msgstr "Aucun"
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 msgid "Unlimited"
 msgstr "Illimités"
 
 #: personal/mail/mail_locals.tpl:35
 msgid "Select department"
 msgstr "Sélectionner un département"
-

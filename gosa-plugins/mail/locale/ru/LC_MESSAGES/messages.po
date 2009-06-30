@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -96,8 +96,9 @@ msgid "Mail group"
 msgstr "Основная группа"
 
 #: admin/ogroups/mail/mail.tpl:7
+#, fuzzy
 msgid "Mail distribution list"
-msgstr ""
+msgstr "Почтовые настройки пользователя"
 
 #: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:838
 #: admin/groups/mail/mail.tpl:7 admin/groups/mail/paste_mail.tpl:8
@@ -608,8 +609,9 @@ msgstr "Запуск"
 #: personal/mail/sieve/templates/element_stop.tpl:4
 #: personal/mail/sieve/class_sieveManagement.inc:501
 #: personal/mail/sieve/class_sieveManagement.inc:719
+#, fuzzy
 msgid "Stop"
-msgstr ""
+msgstr "Отношение"
 
 #: admin/systems/services/imap/class_goImapServer.inc:211
 #: admin/systems/services/virus/class_goVirusServer.inc:230
@@ -823,8 +825,9 @@ msgstr "Изменить параметры"
 
 #: admin/systems/services/virus/goVirusServer.tpl:84
 #: admin/systems/services/virus/class_goVirusServer.inc:232
+#, fuzzy
 msgid "Enable debugging"
-msgstr ""
+msgstr "отключен"
 
 #: admin/systems/services/virus/goVirusServer.tpl:92
 #: admin/systems/services/virus/class_goVirusServer.inc:233
@@ -859,8 +862,9 @@ msgstr ""
 #: admin/systems/services/virus/goVirusServer.tpl:152
 #: admin/systems/services/virus/class_goVirusServer.inc:167
 #: admin/systems/services/virus/class_goVirusServer.inc:242
+#, fuzzy
 msgid "Maximum compression ratio"
-msgstr ""
+msgstr "Параметры доступа"
 
 #: admin/systems/services/virus/class_goVirusServer.inc:45
 #: admin/systems/services/virus/class_goVirusServer.inc:210
@@ -1020,8 +1024,9 @@ msgid "Active"
 msgstr "Личный"
 
 #: addons/mailqueue/class_mailqueue.inc:322
+#, fuzzy
 msgid "Not active"
-msgstr ""
+msgstr "Личный"
 
 #: addons/mailqueue/class_mailqueue.inc:332
 #: addons/mailqueue/class_mailqueue.inc:337
@@ -1538,8 +1543,9 @@ msgstr ""
 
 #: personal/mail/sieve/templates/object_container.tpl:9
 #: personal/mail/sieve/templates/object_container_clear.tpl:9
+#, fuzzy
 msgid "Move up"
-msgstr ""
+msgstr "Режим"
 
 #: personal/mail/sieve/templates/object_container.tpl:12
 msgid "Move object down one position"
@@ -1789,8 +1795,9 @@ msgid "Export"
 msgstr "Экспорт"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:12
+#, fuzzy
 msgid "View structured"
-msgstr ""
+msgstr "Искать в поддеревьях"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:14
 #, fuzzy
@@ -1912,8 +1919,9 @@ msgid "Header"
 msgstr "Отправитель"
 
 #: personal/mail/sieve/templates/element_header.tpl:60
+#, fuzzy
 msgid "operator"
-msgstr ""
+msgstr "Почтовые настройки"
 
 #: personal/mail/sieve/templates/create_script.tpl:2
 msgid ""
@@ -1943,8 +1951,9 @@ msgid "Domain part"
 msgstr "Пользователи домена"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:29
+#, fuzzy
 msgid "Local part"
-msgstr ""
+msgstr "Местоположение"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:33
 msgid "Case insensitive"
@@ -2073,8 +2082,9 @@ msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:729
 #: personal/mail/sieve/class_sieveElement_If.inc:1062
+#, fuzzy
 msgid "Megabyte"
-msgstr ""
+msgstr "Дата"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:730
 #: personal/mail/sieve/class_sieveElement_If.inc:1063
@@ -2097,8 +2107,9 @@ msgid "Only numeric values are allowed here."
 msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:769
+#, fuzzy
 msgid "No valid unit selected"
-msgstr ""
+msgstr "Изменить сертификаты"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:876
 #, fuzzy
@@ -2195,9 +2206,9 @@ msgid "Cannot log into SIEVE server: %s"
 msgstr "Невозможно зарегистрироваться на сервере SIEVE. Ответ сервера: \"%s\"."
 
 #: personal/mail/sieve/class_sieveManagement.inc:349
-#, php-format
+#, fuzzy, php-format
 msgid "Cannot remove SIEVE script: %s"
-msgstr ""
+msgstr "состояние неизвестно"
 
 #: personal/mail/sieve/class_sieveManagement.inc:395
 #, fuzzy
@@ -2205,8 +2216,9 @@ msgid "Edited"
 msgstr "Изменить"
 
 #: personal/mail/sieve/class_sieveManagement.inc:429
+#, fuzzy
 msgid "Uploaded script is empty!"
-msgstr ""
+msgstr "Сертификаты"
 
 #: personal/mail/sieve/class_sieveManagement.inc:431
 #, fuzzy
@@ -2264,8 +2276,9 @@ msgid "Can't log into SIEVE server. Server says '%s'."
 msgstr "Невозможно зарегистрироваться на сервере SIEVE. Ответ сервера: \"%s\"."
 
 #: personal/mail/sieve/class_sieveManagement.inc:770
+#, fuzzy
 msgid "Cannot insert element at the requested position!"
-msgstr ""
+msgstr "Невозможно подключиться к серверу базы данных!"
 
 #: personal/mail/sieve/class_sieveManagement.inc:1045
 #, fuzzy
@@ -2281,8 +2294,8 @@ msgid "User mail settings"
 msgstr "Почтовые настройки пользователя"
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 #, fuzzy
 msgid "Configuration error"
 msgstr "Настроить"
@@ -2387,28 +2400,28 @@ msgstr "Не оставлять копии в своем почтовом ящи
 msgid "Mail alternative addresses"
 msgstr "Альтернативные адреса"
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 #, fuzzy
 msgid "None"
 msgstr "нет"
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 #, fuzzy
 msgid "Unknown"
 msgstr "состояние неизвестно"
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 #, fuzzy
 msgid "Unlimited"
 msgstr "не определена"

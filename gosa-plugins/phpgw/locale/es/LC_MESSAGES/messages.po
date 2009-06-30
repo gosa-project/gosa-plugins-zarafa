@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -18,12 +18,14 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
+#, fuzzy
 msgid "PHPGroupware"
-msgstr ""
+msgstr "Nombre del grupo"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:6
+#, fuzzy
 msgid "This does something"
-msgstr ""
+msgstr "Mostrar objetos que coincidan"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:85
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:141

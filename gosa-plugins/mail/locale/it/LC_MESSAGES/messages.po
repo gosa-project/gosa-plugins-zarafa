@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:07+0100\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -96,8 +96,9 @@ msgid "Mail group"
 msgstr "Gruppo primario"
 
 #: admin/ogroups/mail/mail.tpl:7
+#, fuzzy
 msgid "Mail distribution list"
-msgstr ""
+msgstr "Opzioni di posta dell'identità"
 
 #: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:838
 #: admin/groups/mail/mail.tpl:7 admin/groups/mail/paste_mail.tpl:8
@@ -475,21 +476,24 @@ msgstr ""
 #: admin/systems/services/imap/goImapServer.tpl:7
 #: admin/systems/services/imap/class_goImapServer.inc:110
 #: admin/systems/services/imap/class_goImapServer.inc:214
+#, fuzzy
 msgid "Server identifier"
-msgstr ""
+msgstr "Identificativo della casa"
 
 #: admin/systems/services/imap/goImapServer.tpl:16
 #: admin/systems/services/imap/class_goImapServer.inc:114
 #: admin/systems/services/imap/class_goImapServer.inc:116
 #: admin/systems/services/imap/class_goImapServer.inc:215
+#, fuzzy
 msgid "Connect URL"
-msgstr ""
+msgstr "Connessione"
 
 #: admin/systems/services/imap/goImapServer.tpl:25
 #: admin/systems/services/imap/class_goImapServer.inc:127
 #: admin/systems/services/imap/class_goImapServer.inc:216
+#, fuzzy
 msgid "Admin user"
-msgstr ""
+msgstr "Modifica contatto"
 
 #: admin/systems/services/imap/goImapServer.tpl:34
 #: admin/systems/services/imap/class_goImapServer.inc:130
@@ -595,8 +599,9 @@ msgstr "Avvio"
 #: personal/mail/sieve/templates/element_stop.tpl:4
 #: personal/mail/sieve/class_sieveManagement.inc:501
 #: personal/mail/sieve/class_sieveManagement.inc:719
+#, fuzzy
 msgid "Stop"
-msgstr ""
+msgstr "Rapporto"
 
 #: admin/systems/services/imap/class_goImapServer.inc:211
 #: admin/systems/services/virus/class_goVirusServer.inc:230
@@ -679,8 +684,9 @@ msgstr ""
 
 #: admin/systems/services/mail/class_goMailServer.inc:718
 #: admin/systems/services/mail/goMailServer.tpl:149
+#, fuzzy
 msgid "Restrictions for sender"
-msgstr ""
+msgstr "Non ci sono certificati installati"
 
 #: admin/systems/services/mail/class_goMailServer.inc:719
 #: admin/systems/services/mail/goMailServer.tpl:175
@@ -804,8 +810,9 @@ msgstr "Parametro"
 
 #: admin/systems/services/virus/goVirusServer.tpl:84
 #: admin/systems/services/virus/class_goVirusServer.inc:232
+#, fuzzy
 msgid "Enable debugging"
-msgstr ""
+msgstr "disabilitato"
 
 #: admin/systems/services/virus/goVirusServer.tpl:92
 #: admin/systems/services/virus/class_goVirusServer.inc:233
@@ -840,8 +847,9 @@ msgstr ""
 #: admin/systems/services/virus/goVirusServer.tpl:152
 #: admin/systems/services/virus/class_goVirusServer.inc:167
 #: admin/systems/services/virus/class_goVirusServer.inc:242
+#, fuzzy
 msgid "Maximum compression ratio"
-msgstr ""
+msgstr "Opzioni di accesso"
 
 #: admin/systems/services/virus/class_goVirusServer.inc:45
 #: admin/systems/services/virus/class_goVirusServer.inc:210
@@ -1000,8 +1008,9 @@ msgid "Active"
 msgstr "Privato"
 
 #: addons/mailqueue/class_mailqueue.inc:322
+#, fuzzy
 msgid "Not active"
-msgstr ""
+msgstr "Privato"
 
 #: addons/mailqueue/class_mailqueue.inc:332
 #: addons/mailqueue/class_mailqueue.inc:337
@@ -1076,8 +1085,9 @@ msgid "Select a server"
 msgstr "Rimuovi"
 
 #: addons/mailqueue/contents.tpl:18
+#, fuzzy
 msgid "with status"
-msgstr ""
+msgstr "Stato"
 
 #: addons/mailqueue/contents.tpl:23
 msgid "within the last"
@@ -1128,8 +1138,9 @@ msgid "Arrival"
 msgstr "Aprile"
 
 #: addons/mailqueue/contents.tpl:76
+#, fuzzy
 msgid "Sender"
-msgstr ""
+msgstr "Generale"
 
 #: addons/mailqueue/contents.tpl:77
 #, fuzzy
@@ -1514,8 +1525,9 @@ msgstr ""
 
 #: personal/mail/sieve/templates/object_container.tpl:9
 #: personal/mail/sieve/templates/object_container_clear.tpl:9
+#, fuzzy
 msgid "Move up"
-msgstr ""
+msgstr "Dominio"
 
 #: personal/mail/sieve/templates/object_container.tpl:12
 msgid "Move object down one position"
@@ -1763,8 +1775,9 @@ msgid "Export"
 msgstr "Esporta"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:12
+#, fuzzy
 msgid "View structured"
-msgstr ""
+msgstr "Seleziona per mostrare le applicazioni"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:14
 #, fuzzy
@@ -1879,8 +1892,9 @@ msgid "Header"
 msgstr "leggere"
 
 #: personal/mail/sieve/templates/element_header.tpl:60
+#, fuzzy
 msgid "operator"
-msgstr ""
+msgstr "Opzioni di posta"
 
 #: personal/mail/sieve/templates/create_script.tpl:2
 msgid ""
@@ -1910,8 +1924,9 @@ msgid "Domain part"
 msgstr "Utenti di Dominio"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:29
+#, fuzzy
 msgid "Local part"
-msgstr ""
+msgstr "Località"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:33
 msgid "Case insensitive"
@@ -1975,8 +1990,9 @@ msgstr ""
 #: personal/mail/sieve/class_sieveElement_If.inc:52
 #: personal/mail/sieve/class_sieveElement_If.inc:726
 #: personal/mail/sieve/class_sieveElement_If.inc:1059
+#, fuzzy
 msgid "greater than"
-msgstr ""
+msgstr "Creare"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:53
 #, fuzzy
@@ -2038,8 +2054,9 @@ msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:729
 #: personal/mail/sieve/class_sieveElement_If.inc:1062
+#, fuzzy
 msgid "Megabyte"
-msgstr ""
+msgstr "Creare"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:730
 #: personal/mail/sieve/class_sieveElement_If.inc:1063
@@ -2062,8 +2079,9 @@ msgid "Only numeric values are allowed here."
 msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_If.inc:769
+#, fuzzy
 msgid "No valid unit selected"
-msgstr ""
+msgstr "Non ci sono certificati installati"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:876
 #, fuzzy
@@ -2170,8 +2188,9 @@ msgid "Edited"
 msgstr "Modifica"
 
 #: personal/mail/sieve/class_sieveManagement.inc:429
+#, fuzzy
 msgid "Uploaded script is empty!"
-msgstr ""
+msgstr "Certificati"
 
 #: personal/mail/sieve/class_sieveManagement.inc:431
 #, fuzzy
@@ -2229,8 +2248,9 @@ msgid "Can't log into SIEVE server. Server says '%s'."
 msgstr ""
 
 #: personal/mail/sieve/class_sieveManagement.inc:770
+#, fuzzy
 msgid "Cannot insert element at the requested position!"
-msgstr ""
+msgstr "Mostra utenti del dipartimento"
 
 #: personal/mail/sieve/class_sieveManagement.inc:1045
 #, fuzzy
@@ -2246,8 +2266,8 @@ msgid "User mail settings"
 msgstr "Opzioni di posta dell'identità"
 
 #: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:131
-#: personal/mail/class_mail-methods.inc:462
+#: personal/mail/class_mail-methods.inc:133
+#: personal/mail/class_mail-methods.inc:464
 #, fuzzy
 msgid "Configuration error"
 msgstr "File di configurazione"
@@ -2349,27 +2369,27 @@ msgstr "Non recapitare nella propria mailbox"
 msgid "Mail alternative addresses"
 msgstr "Indirizzi alternativi"
 
-#: personal/mail/class_mail-methods.inc:132
+#: personal/mail/class_mail-methods.inc:134
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:463
+#: personal/mail/class_mail-methods.inc:465
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:689
-#: personal/mail/class_mail-methods.inc:690
+#: personal/mail/class_mail-methods.inc:691
+#: personal/mail/class_mail-methods.inc:692
 #, fuzzy
 msgid "None"
 msgstr "nessuno"
 
-#: personal/mail/class_mail-methods.inc:779
+#: personal/mail/class_mail-methods.inc:781
 msgid "Unknown"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:783
 #, fuzzy
 msgid "Unlimited"
 msgstr "non definito"

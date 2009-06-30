@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -51,9 +51,9 @@ msgstr "域"
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:345
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
-#: admin/systems/services/dns/class_DNS.inc:161
-#: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:162
+#: admin/systems/services/dns/class_DNS.inc:167
+#: admin/systems/services/dns/class_DNS.inc:631
 msgid "Error"
 msgstr "错误"
 
@@ -66,7 +66,7 @@ msgid "Down"
 msgstr "关闭"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:565
+#: admin/systems/services/dns/class_servDNSeditZone.inc:580
 msgid "Delete"
 msgstr "删除"
 
@@ -101,8 +101,9 @@ msgid "Refresh"
 msgstr "刷新"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:431
+#, fuzzy
 msgid "Time to life"
-msgstr ""
+msgstr "用户时区"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:435
 #: admin/systems/services/dns/class_servDNS.inc:601
@@ -117,25 +118,26 @@ msgid "Retry"
 msgstr "重试"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:454
+#: admin/systems/services/dns/class_servDNSeditZone.inc:468
 #: admin/systems/services/dns/servdnseditzone.tpl:16
 msgid "Network address"
 msgstr "网络地址"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:461
-#: admin/systems/services/dns/class_servDNSeditZone.inc:467
-#: admin/systems/services/dns/class_servDNSeditZone.inc:473
+#: admin/systems/services/dns/class_servDNSeditZone.inc:476
+#: admin/systems/services/dns/class_servDNSeditZone.inc:482
+#: admin/systems/services/dns/class_servDNSeditZone.inc:488
 #, php-format
 msgid ""
 "The specified network address and the network class (%s/%s) do not match!"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:477
+#: admin/systems/services/dns/class_servDNSeditZone.inc:492
 #: admin/systems/services/dns/class_servDNS.inc:594
 #, fuzzy
 msgid "Network class"
 msgstr "网络地址"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:571
+#: admin/systems/services/dns/class_servDNSeditZone.inc:586
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
 msgid "Add"
 msgstr "添加"
@@ -311,17 +313,17 @@ msgstr ""
 msgid "Remove"
 msgstr "删除"
 
-#: admin/systems/services/dns/class_DNS.inc:161
+#: admin/systems/services/dns/class_DNS.inc:162
 #, fuzzy, php-format
 msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
 msgstr "无法找到 dns 域 '%s' 的反向解析。停止解析这个域。"
 
-#: admin/systems/services/dns/class_DNS.inc:166
+#: admin/systems/services/dns/class_DNS.inc:167
 #, fuzzy, php-format
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr "找到 %s 域的一个以上的反向解析域。退出域解析。"
 
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:631
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""

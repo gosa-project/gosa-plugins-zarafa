@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:06+0100\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -22,10 +22,14 @@ msgid "DNS take over initiated"
 msgstr ""
 
 #: admin/systems/services/dns/servdns.tpl:7
+#, fuzzy
 msgid ""
 "This includes 'all' DNS zones that are located within this server. Please "
 "double check if your really want to do this."
 msgstr ""
+"Esto incluye 'todas' las cuentas, sistemas, etc. en este subárbol. Por favor "
+"pulse dos veces si quiere realmente hacer esto, ya que no hay forma de que "
+"GOsa recupere la información posteriormente."
 
 #: admin/systems/services/dns/servdns.tpl:14
 #, fuzzy
@@ -42,16 +46,17 @@ msgid "Take over"
 msgstr ""
 
 #: admin/systems/services/dns/servdns.tpl:37
+#, fuzzy
 msgid "Zones"
-msgstr ""
+msgstr "teléfonos"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:345
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
-#: admin/systems/services/dns/class_DNS.inc:161
-#: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:162
+#: admin/systems/services/dns/class_DNS.inc:167
+#: admin/systems/services/dns/class_DNS.inc:631
 msgid "Error"
 msgstr "Error"
 
@@ -64,7 +69,7 @@ msgid "Down"
 msgstr "Abajo"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:565
+#: admin/systems/services/dns/class_servDNSeditZone.inc:580
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -99,8 +104,9 @@ msgid "Refresh"
 msgstr "Refresco"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:431
+#, fuzzy
 msgid "Time to life"
-msgstr ""
+msgstr "Zona de uso horario"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:435
 #: admin/systems/services/dns/class_servDNS.inc:601
@@ -115,24 +121,26 @@ msgid "Retry"
 msgstr "Reintento"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:454
+#: admin/systems/services/dns/class_servDNSeditZone.inc:468
 #: admin/systems/services/dns/servdnseditzone.tpl:16
+#, fuzzy
 msgid "Network address"
-msgstr ""
+msgstr "Código Postal"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:461
-#: admin/systems/services/dns/class_servDNSeditZone.inc:467
-#: admin/systems/services/dns/class_servDNSeditZone.inc:473
+#: admin/systems/services/dns/class_servDNSeditZone.inc:476
+#: admin/systems/services/dns/class_servDNSeditZone.inc:482
+#: admin/systems/services/dns/class_servDNSeditZone.inc:488
 #, php-format
 msgid ""
 "The specified network address and the network class (%s/%s) do not match!"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:477
+#: admin/systems/services/dns/class_servDNSeditZone.inc:492
 #: admin/systems/services/dns/class_servDNS.inc:594
 msgid "Network class"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:571
+#: admin/systems/services/dns/class_servDNSeditZone.inc:586
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
 msgid "Add"
 msgstr "Añadir"
@@ -166,9 +174,9 @@ msgid "DNS service"
 msgstr "Servicio DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:151
-#, php-format
+#, fuzzy, php-format
 msgid "You are going to migrate the DNS setup from server '%s'."
-msgstr ""
+msgstr "Has decidido eliminar las siguientes entradas %s"
 
 #: admin/systems/services/dns/class_servDNS.inc:152
 msgid ""
@@ -310,17 +318,17 @@ msgstr ""
 msgid "Remove"
 msgstr "Eliminar"
 
-#: admin/systems/services/dns/class_DNS.inc:161
+#: admin/systems/services/dns/class_DNS.inc:162
 #, php-format
 msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:166
+#: admin/systems/services/dns/class_DNS.inc:167
 #, php-format
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:630
+#: admin/systems/services/dns/class_DNS.inc:631
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""

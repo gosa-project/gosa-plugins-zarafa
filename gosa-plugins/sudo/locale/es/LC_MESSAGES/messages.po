@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-06-30 09:59+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -22,8 +22,11 @@ msgid "Warning"
 msgstr "Aviso"
 
 #: admin/sudo/remove.tpl:9
+#, fuzzy
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
+"Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
+"<i>Cancelar</i> para Abortar."
 
 #: admin/sudo/class_sudoGeneric.inc:295
 msgid "Error"
@@ -102,20 +105,23 @@ msgid "Access control list"
 msgstr "Lista de control de acceso"
 
 #: admin/sudo/options.tpl:5
+#, fuzzy
 msgid "Option name"
-msgstr ""
+msgstr "Nombre de la localización"
 
 #: admin/sudo/options.tpl:7
+#, fuzzy
 msgid "Value"
-msgstr ""
+msgstr "hombre"
 
 #: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
 msgid "Options"
 msgstr "Opciones"
 
 #: admin/sudo/options.tpl:86
+#, fuzzy
 msgid "Available options"
-msgstr ""
+msgstr "Roles disponibles"
 
 #: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
 #: admin/sudo/paste_generic.tpl:1
@@ -135,8 +141,9 @@ msgid "Trust mode"
 msgstr "Modo seguro"
 
 #: admin/sudo/generic.tpl:87
+#, fuzzy
 msgid "Users and groups"
-msgstr ""
+msgstr "grupos de usuarios"
 
 #: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
@@ -151,8 +158,9 @@ msgid "Commands"
 msgstr ""
 
 #: admin/sudo/generic.tpl:132
+#, fuzzy
 msgid "Run as"
-msgstr ""
+msgstr "Usuarios del dominio"
 
 #: admin/sudo/class_target_list_systems.inc:50
 msgid "Select the target objects for your scheduled action."
@@ -160,8 +168,9 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:51
 #: admin/sudo/class_target_list_systems.inc:52
+#, fuzzy
 msgid "Available systems"
-msgstr ""
+msgstr "Miembros disponibles"
 
 #: admin/sudo/class_target_list_systems.inc:61
 #: admin/sudo/class_target_list_users.inc:58
@@ -169,8 +178,9 @@ msgid "Object name"
 msgstr "Nombre de objeto"
 
 #: admin/sudo/class_target_list_systems.inc:64
+#, fuzzy
 msgid "Select to see terminals"
-msgstr ""
+msgstr "Seleccione para ver los servidores"
 
 #: admin/sudo/class_target_list_systems.inc:64
 msgid "Show terminals"
@@ -185,8 +195,9 @@ msgid "Show servers"
 msgstr "Mostrar servidores"
 
 #: admin/sudo/class_target_list_systems.inc:66
+#, fuzzy
 msgid "Select to see workstations"
-msgstr ""
+msgstr "Mover estaciones de trabajo seleccionadas"
 
 #: admin/sudo/class_target_list_systems.inc:66
 msgid "Show workstations"
@@ -220,8 +231,9 @@ msgid "Terminal"
 msgstr "Terminal"
 
 #: admin/sudo/class_target_list_users.inc:47
+#, fuzzy
 msgid "Select the target objects"
-msgstr ""
+msgstr "Seleccione los objetos a añadir"
 
 #: admin/sudo/class_target_list_users.inc:48
 #: admin/sudo/class_target_list_users.inc:49
@@ -229,20 +241,24 @@ msgid "Available members"
 msgstr "Miembros disponibles"
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Select to see users"
-msgstr ""
+msgstr "Seleccione para ver los servidores"
 
 #: admin/sudo/class_target_list_users.inc:60
+#, fuzzy
 msgid "Show users"
-msgstr ""
+msgstr "Mostrar usuarios samba"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Select to see groups"
-msgstr ""
+msgstr "Seleccione para ver los servidores"
 
 #: admin/sudo/class_target_list_users.inc:61
+#, fuzzy
 msgid "Show groups"
-msgstr ""
+msgstr "grupos de teléfonos"
 
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
@@ -254,13 +270,14 @@ msgid "Sudo role administration"
 msgstr "Administración de grupo"
 
 #: admin/sudo/class_sudoOption.inc:154
+#, fuzzy
 msgid "Unknown option"
-msgstr ""
+msgstr "Desconocido"
 
 #: admin/sudo/class_sudoOption.inc:155
-#, php-format
+#, fuzzy, php-format
 msgid "The sudo option '%s' is invalid!"
-msgstr ""
+msgstr "¡'%s' comando para la extensión %s no es válido!"
 
 #: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
 #, fuzzy
@@ -278,8 +295,9 @@ msgid "integer"
 msgstr "Impresora"
 
 #: admin/sudo/class_sudoOption.inc:284
+#, fuzzy
 msgid "list"
-msgstr ""
+msgstr "Polaco"
 
 #: admin/sudo/class_sudoOption.inc:537
 #, fuzzy
@@ -342,8 +360,9 @@ msgid "Role"
 msgstr "Rol"
 
 #: admin/sudo/class_divListSudo.inc:112
+#, fuzzy
 msgid "Default"
-msgstr ""
+msgstr "Eliminar"
 
 #: admin/sudo/class_divListSudo.inc:119
 msgid "Remove"
@@ -363,8 +382,9 @@ msgid "Number of listed roles"
 msgstr "Eliminar grupo seleccionado"
 
 #: admin/sudo/class_sudoManagement.inc:31
+#, fuzzy
 msgid "Sudo roles"
-msgstr ""
+msgstr "¡id desconocido!"
 
 #: admin/sudo/class_sudoManagement.inc:32
 #, fuzzy
