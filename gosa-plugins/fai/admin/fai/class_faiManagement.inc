@@ -392,7 +392,9 @@ class faiManagement extends plugin
         $ids = $this->list_get_selected_items();
         $to_delete = array();
         foreach($ids as $id){
-          $to_delete = array_merge($to_delete,$this->objects[$id]);
+          foreach($this->objects[$id] as $obj) { 
+            array_push($to_delete, $obj); 
+          } 
         }
       } 
 
