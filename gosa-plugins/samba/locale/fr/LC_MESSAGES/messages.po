@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 09:58+0200\n"
-"PO-Revision-Date: 2009-03-06 20:43+0100\n"
+"PO-Revision-Date: 2009-06-30 11:31+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -170,8 +170,7 @@ msgstr "Options d'accès"
 #: personal/samba/samba3.tpl:317 personal/samba/samba2.tpl:72
 #: personal/samba/class_sambaAccount.inc:1521
 msgid "Login from windows client requires no password"
-msgstr ""
-"L'identification sur une station windows ne nécessite pas de mot de passe"
+msgstr "L'identification sur une station windows ne nécessite pas de mot de passe"
 
 #: personal/samba/samba3.tpl:325 personal/samba/samba2.tpl:67
 msgid "Allow user to change password from client"
@@ -297,14 +296,12 @@ msgstr "du client précédent seulement"
 #: personal/samba/class_sambaAccount.inc:710
 #, php-format
 msgid "The password is outdated since %s, by domain policy."
-msgstr ""
-"Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
+msgstr "Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
 
 #: personal/samba/class_sambaAccount.inc:714
 #, php-format
 msgid "The password is valid till %s, by user policy."
-msgstr ""
-"Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
+msgstr "Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
 
 #: personal/samba/class_sambaAccount.inc:717
 #, php-format
@@ -340,9 +337,8 @@ msgstr "secondes"
 #: personal/samba/class_sambaAccount.inc:866
 #: personal/samba/class_sambaAccount.inc:870
 #: personal/samba/class_sambaAccount.inc:966
-#, fuzzy
 msgid "minutes"
-msgstr "imprimantes"
+msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:868
 msgid "forever"
@@ -412,7 +408,7 @@ msgstr "La durée de blocage"
 
 #: personal/samba/class_sambaAccount.inc:980
 msgid "Bad lockout attempt"
-msgstr ""
+msgstr "Nombre de tentatives avant blocage"
 
 #: personal/samba/class_sambaAccount.inc:981
 msgid "Disconnect time"
@@ -484,12 +480,10 @@ msgstr "Avertissement"
 
 #: personal/samba/class_sambaAccount.inc:1273
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr ""
-"Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
+msgstr "Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
 
 #: personal/samba/class_sambaAccount.inc:1297
-msgid ""
-"Cannot convert primary group to samba group: group cannot be identified!"
+msgid "Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 "Impossible de convertir le groupe primaire en un groupe primaire samba : le "
 "groupe ne peut être identifié !"
@@ -570,8 +564,3 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 msgid "Regular expression for matching addresses"
 msgstr "Expression régulière pour sélectionner les adresses correspondantes"
 
-#~ msgid "Hide"
-#~ msgstr "Cacher"
-
-#~ msgid "Show"
-#~ msgstr "Afficher"
