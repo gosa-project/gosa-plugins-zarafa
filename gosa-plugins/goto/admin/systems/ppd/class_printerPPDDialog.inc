@@ -277,7 +277,7 @@ class printerPPDDialog extends plugin
     /* Get Description from ppd, & parse out some informations */   
     $ppdDesc  = @$this->ppdManager->loadDescription($_PathOnHdd);
     if($ppdDesc){
-      $name   = $ppdDesc['name'];
+      $name   = preg_replace("/\//","-",$ppdDesc['name']);
       $vendor = $ppdDesc['manufacturer'];
       $model  = $ppdDesc['model'];
     }    
@@ -302,8 +302,9 @@ class printerPPDDialog extends plugin
 
     /* Check if this ppd already exists */
     $found = false;
+
     foreach($this->ppdList[$vendor] as $key => $val){
-      if(preg_match("/".$model.".*/i",$key)){
+      if(preg_match("/".preg_quote($model,'/').".*/i",$key)){
         $found = true;
         if(!$overwrite){
           if(!copy($_PathOnHdd,$_PathOnHdd."_back")){
@@ -366,7 +367,7 @@ class printerPPDDialog extends plugin
       /* Sort all available files, and create header (Vendor index) */
       foreach($tmp as $file=>$ppd){
                
-        if(preg_match("#".$this->pathToModified."#",$file)) continue;
+        if(preg_match("#".preg_quote($this->pathToModified,'#')."#",$file)) continue;
 
         if(!isset($this->ppdListHeader[$ppd['manufacturer']])){
           $this->ppdListHeader[$ppd['manufacturer']]=0;
