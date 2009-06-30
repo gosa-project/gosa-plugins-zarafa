@@ -272,13 +272,13 @@ class faiPartitionTableEntry extends plugin
                                  "changeState('FAIfsOptions_".$key."') ; \"";
   
         if($this->acl_is_writeable("FAIpartitionFlags")){
-          if($part['FAIpartitionFlags'] != "preserve"){
+          if($part['FAIpartitionFlags']!=false){
             $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' checked ".$changeState." ".$disableALL."></td>";
           }else{
             $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' ".$changeState." ".$disableALL."></td>";
           }
         }else{
-          if($part['FAIpartitionFlags'] != "preserve"){
+          if($part['FAIpartitionFlags']!=false){
             $str .= "<td>"._("False")."</td>";
           }else{
             $str .= "<td>"._("True")."</td>";
