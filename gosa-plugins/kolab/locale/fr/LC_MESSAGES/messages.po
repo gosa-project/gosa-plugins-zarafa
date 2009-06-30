@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 09:58+0200\n"
-"PO-Revision-Date: 2009-02-28 14:05+0100\n"
+"PO-Revision-Date: 2009-06-30 11:15+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,14 +98,12 @@ msgstr "Services"
 
 #: admin/systems/services/kolab/class_servKolab.inc:438
 #: admin/systems/services/kolab/servkolab.tpl:9
-#, fuzzy
 msgid "Postfix mydomain"
-msgstr "dans le domaine"
+msgstr ""
 
 #: admin/systems/services/kolab/class_servKolab.inc:439
-#, fuzzy
 msgid "My destination"
-msgstr "Information Utilisateur"
+msgstr ""
 
 #: admin/systems/services/kolab/class_servKolab.inc:440
 #: admin/systems/services/kolab/servkolab.tpl:18
@@ -188,9 +186,8 @@ msgid "Generic"
 msgstr "Informations"
 
 #: admin/systems/services/kolab/servkolab.tpl:27
-#, fuzzy
 msgid "Postfix mydestination"
-msgstr "Paramètres Posix"
+msgstr ""
 
 #: admin/systems/services/kolab/servkolab.tpl:102
 msgid "FTP FreeBusy service (legacy, not interoperable with Kolab2 FreeBusy)"
@@ -234,8 +231,7 @@ msgstr "Machine utilisée pour relayer les mails"
 
 #: admin/systems/services/kolab/servkolab.tpl:235
 msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr ""
-"Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
+msgstr "Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:120
 #: personal/mail/kolab/class_mail-methods-kolab.inc:128
@@ -264,9 +260,8 @@ msgid "Contacts"
 msgstr "Carnet d'adresses"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:126
-#, fuzzy
 msgid "Notes"
-msgstr "Contenu"
+msgstr ""
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:130
 msgid "Inbox"
@@ -300,8 +295,7 @@ msgstr ""
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:252
 msgid "Waiting for kolab to remove mail properties..."
-msgstr ""
-"En attente de kolab pour la suppression des paramètres de messagerie..."
+msgstr "En attente de kolab pour la suppression des paramètres de messagerie..."
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:255
 msgid "Please remove the mail settings first!"
@@ -390,8 +384,7 @@ msgstr "Anonyme"
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
 msgid "Free Busy future"
-msgstr ""
-"Nombre de jours dans le futur à calculer pour l'option de disponibilité"
+msgstr "Nombre de jours dans le futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:359
 #: personal/connectivity/kolab/class_kolabAccount.inc:362
@@ -433,3 +426,4 @@ msgstr "Restriction de taille des messages"
 #: personal/connectivity/kolab/class_kolabAccount.inc:524
 msgid "Free busy information"
 msgstr "Information de disponibilité"
+
