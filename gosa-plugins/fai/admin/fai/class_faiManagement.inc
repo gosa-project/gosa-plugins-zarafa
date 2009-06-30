@@ -350,8 +350,8 @@ class faiManagement extends plugin
           $this->dialog->set_acl_base($dn);
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
           $this->dialog= FALSE;
-          $to_del = FAI::clean_up_releases($dn);
           FAI::save_release_changes_now();
+          $to_del = FAI::clean_up_releases($dn);
           foreach($to_del as $dn){
             $ldap->rmdir_recursive($dn);
           }
