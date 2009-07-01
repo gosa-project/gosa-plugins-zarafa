@@ -199,6 +199,7 @@ class mailMethod{
     }else{
       $this->parent->attrs['objectClass'] = 
         array_remove_entries_ics($this->shareObjectClasses, $this->parent->attrs['objectClass']);
+      $this->parent->attrs['gosaSharedFolderTarget'] =array();
     }
     foreach($this->attributes as $source => $dest){
       $this->attrs[$dest]   = array();

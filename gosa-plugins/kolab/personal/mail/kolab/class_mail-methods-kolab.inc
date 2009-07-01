@@ -90,8 +90,10 @@ class mailMethodKolab extends mailMethodCyrus
     }
     $this->parent->attrs['objectClass'] = array_merge( $this->parent->attrs['objectClass'],$ocs);
     $this->parent->attrs['objectClass'] = array_unique($this->parent->attrs['objectClass']);
-    $this->parent->attrs['gosaSharedFolderTarget'] =array();
 
+    if($this->type == "group"){ 
+      $this->parent->attrs['gosaSharedFolderTarget'] =array();
+    }
 
     /* If the mail setup includes Master and Slave Kolab Server, then we have to remove the 
      *  mailAccount from server, by adding a kolabDeleteflag for each server.

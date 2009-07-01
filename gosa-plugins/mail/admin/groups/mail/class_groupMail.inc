@@ -520,7 +520,6 @@ class mailgroup extends plugin
     /* Zero arrays */
     $this->attrs['gosaMailAlternateAddress'] = array();
     $this->attrs['gosaMailForwardingAddress']= array();
-    $this->attrs['gosaSharedFolderTarget']= array();
 
     $this->mailMethod->fixAttributesOnRemove();
     $this->cleanup();
