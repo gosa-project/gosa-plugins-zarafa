@@ -68,7 +68,7 @@ class roleManagement extends plugin
     plugin::execute();
 
     /* Variables to restore after 'entry locked' warning was displayed */
-    session::set('LOCK_VARS_TO_USE',array('/^role_/','/^act/','/^id/','/^menu_action/'));
+    session::set('LOCK_VARS_TO_USE',array('/^role_/','/^act/','/^id/','/^menu_action/','/^item/'));
 
     $smarty     = get_smarty();
     $s_action   = "";
@@ -86,7 +86,7 @@ class roleManagement extends plugin
         break;
       }
       if(preg_match("/^role_del_/",$name)){
-        $s_action = "del";  
+        $s_action = "remove";  
         $s_entry = preg_replace("/^role_del_([0-9]*)_.*$/","\\1",$name);
         break;
       }
@@ -108,12 +108,98 @@ class roleManagement extends plugin
       }
     }
 
+    /***************
+     * Remove handling
+     ***************/
+
+    if($s_action == "remove_multiple" || $s_action == "remove"){
+    
+      if($s_action == "remove_multiple"){
+        $ids = $this->list_get_selected_items();
+      }else{
+        $ids = array($s_entry);
+      }
+
+      if(count($ids)){
+        $this->dns = array();
+        $disallowed = array();
+        foreach($ids as $id){
+          $dn = $this->roles[$id]['dn'];
+          $acl = $this->ui->get_permissions($dn, "roles/roleGeneric");
+          if(preg_match("/d/",$acl)){
+            $this->dns[$id] = $dn;
+          }else{
+            $disallowed[] = $dn;
+          }
+        }
+
+        if(count($disallowed)){
+          msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
+        }
+
+
+        if(count($this->dns)){
+          if ($user= get_multiple_locks($this->dns)){
+            return(gen_locked_message($user,$this->dns));
+          }
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            $dns_names[] = LDAP::fix($dn);
+          }
+
+          /* Lock the current entry, so nobody will edit it during deletion */
+          add_lock ($this->dns, $this->ui->dn);
+
+          $smarty->assign("info", msgPool::deleteInfo($dns_names,_("role")));
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        }
+      }
+    } 
+
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_roles_cancel'])){
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
+    }
+
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_roles_confirm'])){
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+
+        $acl = $this->ui->get_permissions($dn, "roles/roleGeneric");
+        if (preg_match('/d/', $acl)){
+
+          /* Delete request is permitted, perform LDAP action */
+          $this->dialog= new roletabs($this->config,$this->config->data['TABS']['ROLETABS'], $dn);
+          $this->dialog->delete();
+          $this->dialog= NULL;
+        } else {
+
+          /* Normally this shouldn't be reached, send some extra
+             logs to notify the administrator */
+          msg_dialog::display(_("Permission error"), msgPool::permDelete(), INFO_DIALOG);
+          new log("security","roles/".get_class($this),$dn,array(),"Tried to trick deletion.");
+        }
+      }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
+    }
+
 
     /***************
      * New handling
      ***************/
 
-    if($s_action == "new" && $this->dialog instanceOf tabs){
+    if($s_action == "new" && !$this->dialog instanceOf tabs){
       $this->dialog = new roletabs($this->config, $this->config->data['TABS']['ROLETABS'], "new");
       $this->dialog->set_acl_base($this->DivListRoles->selectedBase);
     }
@@ -234,7 +320,7 @@ class roleManagement extends plugin
     $attrs = array("cn","description","objectClass");
 
     if($this->DivListRoles->SubSearch){
-      $res= get_sub_list($filter, "roles",get_ou('roleRDN'), $base, $attrs, GL_SIZELIMIT | GL_SUBSEARCH);
+      $res= get_sub_list($filter, "roles",array(), $base, $attrs, GL_SIZELIMIT | GL_SUBSEARCH);
     }else{
       $res= get_sub_list($filter, "roles",get_ou('roleRDN'), get_ou('roleRDN').$base, $attrs, GL_SIZELIMIT );
     }

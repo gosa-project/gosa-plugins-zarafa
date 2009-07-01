@@ -32,6 +32,8 @@ class roleGeneric extends plugin {
 
   var $base = "";
   var $orig_dn = "";
+  var $orig_cn = "";
+  var $orig_base = "";
 
   var $objectclasses = array("top","organizationalRole");
   var $attributes = array("cn","x121Address","description",
@@ -41,6 +43,7 @@ class roleGeneric extends plugin {
     plugin::plugin($config,$dn);
     $this->is_account = TRUE;
     $this->orig_dn = $dn;
+    $this->orig_cn = $this->cn;
 
     /* Set base */
     if ($this->dn == "new"){
@@ -48,10 +51,12 @@ class roleGeneric extends plugin {
     } else {
       $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleRDN"), '/')."/","",$this->dn);
     }
+    $this->orig_base = $this->base;
   }
 
 
-  function execute(){
+  function execute()
+  {
     $smarty = get_smarty();
 
     /* Create base acls */
@@ -70,6 +75,39 @@ class roleGeneric extends plugin {
   }
 
 
+  function check()
+  {
+    $message = plugin::check();
+
+    /* Set the new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($this->base);
+    }
+
+    /* Check if we are allowed to create/move this user
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[]= msgPool::permCreate();
+    }elseif($this->orig_dn != "new" && 
+        !$this->acl_is_moveable($this->base) && 
+        ($this->orig_base != $this->base || $this->orig_cn != $this->cn )){ 
+      $message[]= msgPool::permMove();
+    }
+
+    /* Name already used? */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=organizationalRole)(cn=$this->cn))", array("cn"));
+    $ldap->fetch();
+    if ($ldap->count() != 0 && ( $this->dn == 'new' || $this->cn != $this->orig_cn)){
+      $message[]= msgPool::duplicated(_("Name"));
+    }
+
+
+    return($message);
+  }
+  
+
   function convert_list()
   {
     $temp= "";
@@ -81,6 +119,23 @@ class roleGeneric extends plugin {
     }
 
     return ($temp);
+  }
+
+  
+  function remove_from_parent()
+  {
+    plugin::remove_from_parent();
+
+    $ldap= $this->config->get_ldap_link();
+    $ldap->rmdir($this->dn);
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
+
+    new log("remove","roles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
+    /* Trigger remove signal */
+    $this->handle_post_events("remove");
   }
 
 
@@ -109,6 +164,8 @@ class roleGeneric extends plugin {
         $this->dn, LDAP_DEL,            get_class()));
       return (1);
     }
+
+    $this->handle_post_events($mode);
 
     /* Remove ACL dependencies too */
     if($this->dn != $this->orig_dn && $this->orig_dn != "new"){
