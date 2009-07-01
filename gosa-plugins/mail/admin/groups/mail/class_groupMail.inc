@@ -46,7 +46,7 @@ class mailgroup extends plugin
   var $orig_cn = "";
   var $show_effective_memeber = FALSE;
 
-  function __construct (&$config, $dn= NULL, $ui= NULL)
+  function __construct (&$config, $dn= NULL, $base_object= NULL)
   {
     plugin::plugin($config, $dn);
 
@@ -73,6 +73,14 @@ class mailgroup extends plugin
     /* Remember account status
      */
     $this->initially_was_account = $this->is_account;
+
+    /* While we are not not allowed to modify the mail address
+     *  and this is a new mail account, preset the user part of the 
+     *  mail address with the accounts cn.
+     */ 
+    if(!$this->mailMethod->isModifyableMail() && !$this->initially_was_account){
+      $this->mail = &$base_object->cn;
+    }
 
     /* Load folder_acls with defaults.
       anyone -- The default acl, will be written to ldap.
