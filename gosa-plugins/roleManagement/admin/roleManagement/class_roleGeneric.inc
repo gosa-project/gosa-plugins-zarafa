@@ -190,7 +190,16 @@ class roleGeneric extends plugin {
     return($bases);
   }
 
-  
+
+  function save_object()
+  {
+    plugin::save_object();  
+    if(isset($_POST['base'])){
+      $this->base = get_post('base');
+    }
+  }  
+
+ 
   static function plInfo()
   {
     return (array(

@@ -233,6 +233,7 @@ class roleManagement extends plugin
       }
     }
 
+
     /***************
      * Dialog handling
      ***************/
@@ -261,7 +262,6 @@ class roleManagement extends plugin
     }
 
     if($this->dialog instanceOf tabs){
-      $this->dialog->save_object();
       $display= $this->dialog->execute();
 
       if($this->dialog->read_only   == TRUE){
@@ -290,6 +290,12 @@ class roleManagement extends plugin
     /***************
      * List handling
      ***************/
+
+    // Check if there is a snapshot dialog open 
+    $base = $this->DivListRoles->selectedBase;
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
+      return($str);
+    }
 
     // Display dialog with group list 
     $this->DivListRoles->parent = $this;

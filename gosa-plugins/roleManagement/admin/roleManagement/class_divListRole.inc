@@ -41,7 +41,12 @@ class divListRole extends MultiSelectWindow
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
+
+    // Dynamic action col, depending on snapshot icons 
     $action_col_size = 90;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
 
     // Set list strings 
     $this->SetTitle(_("List of roles"));
@@ -127,6 +132,9 @@ class divListRole extends MultiSelectWindow
     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple_roles|\n";
 
+    /* Add snapshot icons */
+    $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
+
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
@@ -143,7 +151,11 @@ class divListRole extends MultiSelectWindow
     // Defining Links
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
+    // Dynamic action col, depending on snapshot icons 
     $action_col_size = 90;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
   
     $ui = get_userinfo();
 
