@@ -39,6 +39,13 @@ class mailMethod{
   /* Create accounts in cyrus style with '/' instead of '.' */
   protected $cyrusUseSlashes= FALSE;
 
+  /* gosaSharedFolderTarget settings, 
+   *  E.g. 
+   *    For an accountID like: 'share/herberts.folder@gonicus.de' the value 'dummy+' 
+   *    will result in gosaSharedFolderTarget: dummy+share/herberts.folder@gonicus.de
+   */
+  protected $gosaSharedPrefix = '';  
+
   /* The atribute mapping for this class  Source --> Destination */
   protected $attributes     = array();
   protected $userObjectClasses = array();
@@ -192,6 +199,7 @@ class mailMethod{
     }else{
       $this->parent->attrs['objectClass'] = 
         array_remove_entries_ics($this->shareObjectClasses, $this->parent->attrs['objectClass']);
+      $this->parent->attrs['gosaSharedFolderTarget'] =array();
     }
     foreach($this->attributes as $source => $dest){
       $this->attrs[$dest]   = array();
@@ -219,6 +227,13 @@ class mailMethod{
       if(!in_array($oc, $this->parent->attrs['objectClass'])){
         $this->parent->attrs['objectClass'][] = $oc;
       }
+    }
+  
+    // Add gosaSharedFolderTarget for groups.
+    $this->build_account_id();
+    if($this->type == "group"){ 
+      $this->parent->attrs['gosaSharedFolderTarget'] = 
+        $this->gosaSharedPrefix.$this->account_id;
     }
   }
 
