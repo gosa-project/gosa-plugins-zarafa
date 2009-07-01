@@ -161,6 +161,12 @@ class mailMethod{
           "<b>MAIL:</b> Shared folder creation set to");
       $this->share_id = $tmp;
     }
+    $tmp = $this->config->get_cfg_value("gosaSharedPrefix");
+    if(!empty($tmp)){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<i>".$tmp."</i>",
+          "<b>MAIL:</b> Shared folder prefix set to");
+      $this->gosaSharedPrefix = $tmp;
+    }
 
     $this->build_account_id();
     $this->initial_account_id = $this->account_id;
