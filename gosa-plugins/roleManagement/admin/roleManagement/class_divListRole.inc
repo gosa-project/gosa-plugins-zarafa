@@ -118,8 +118,8 @@ class divListRole extends MultiSelectWindow
     if(preg_match("/c/",$acls)) {
       $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Create")."|\n";
-      $s.= "...|<input class='center' type='image' src='plugins/roles/images/new.png' alt=''>".
-        "&nbsp;"._("Roles")."|role_new|\n";
+      $s.= "...|<input class='center' type='image' src='plugins/roleManagement/images/new.png' alt=''>".
+        "&nbsp;"._("Role")."|role_new|\n";
     }
 
     /* Multiple options */
@@ -194,7 +194,7 @@ class divListRole extends MultiSelectWindow
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' 
           name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
-      $field1 = array("string" => "<img src='plugins/roles/images/role.png' 
+      $field1 = array("string" => "<img src='plugins/roleManagement/images/role.png' 
           alt='"._("Role")."' ".$title.">", 
           "attach" => "style='text-align:center;width: 20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), 

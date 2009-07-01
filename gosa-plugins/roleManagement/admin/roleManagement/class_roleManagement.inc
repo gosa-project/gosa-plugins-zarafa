@@ -115,6 +115,7 @@ class roleManagement extends plugin
 
     if($s_action == "new"){
       $this->dialog = new roletabs($this->config, $this->config->data['TABS']['ROLETABS'], "new");
+      $this->dialog->set_acl_base($this->DivListRoles->selectedBase);
     }
     
     /***************
@@ -126,7 +127,7 @@ class roleManagement extends plugin
         trigger_error("Unknown entry!"); 
       }else{
         $entry = $this->roles[$s_entry];
-        print_a($entry);
+        $this->dialog = new roletabs($this->config, $this->config->data['TABS']['ROLETABS'], $entry['dn']);
       }
     }
 
@@ -134,7 +135,22 @@ class roleManagement extends plugin
      * Dialog handling
      ***************/
 
-    if (isset($_POST['edit_cancel'])){
+    if (isset($_POST['edit_finish']) && $this->dialog instanceOf tabs){
+      $this->dialog->save_object();
+      $msgs = $this->dialog->check();
+      if(count($msgs)){
+        msg_dialog::displayChecks($msgs);
+      }else{
+        $this->dialog->save();
+        if(isset($this->grouptab->dn)){
+          $this->remove_lock();
+        }
+        $this->dialog= NULL;
+        set_object_info();
+      }
+    }
+
+    if (isset($_POST['edit_cancel']) && $this->dialog instanceOf tabs){
       if(isset($this->grouptab->dn)){
         $this->remove_lock();
       }
@@ -198,9 +214,17 @@ class roleManagement extends plugin
     // Search and fetch all matching role objects.
     $this->roles = array();
     $ldap = $this->config->get_ldap_link();
-    $ldap->search("(objectClass=gosaGroupOfNames)",array("cn","description"));
+    $filter= "(&(objectClass=organizationalRole)(cn=$Regex))";
+    $attrs = array("cn","description","objectClass");
+
+    if($this->DivListRoles->SubSearch){
+      $res= get_sub_list($filter, "roles",get_ou('roleRDN'), $base, $attrs, GL_SIZELIMIT | GL_SUBSEARCH);
+    }else{
+      $res= get_sub_list($filter, "roles",get_ou('roleRDN'), get_ou('roleRDN').$base, $attrs, GL_SIZELIMIT );
+    }
+
     $tmp = array();
-    while($attrs = $ldap->fetch()){
+    foreach($res as $attrs){
       $tmp[$attrs['cn'][0].$attrs['dn']] = $attrs;
     }
     

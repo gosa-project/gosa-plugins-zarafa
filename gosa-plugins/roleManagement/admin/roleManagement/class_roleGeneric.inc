@@ -23,20 +23,123 @@
 
 class roleGeneric extends plugin {
 
-  var $cn ="";
+  var $cn = "";
+  var $description ="";
+  var $telephoneNumber = "";
+  var $facsimileTelephoneNumber = "";
+  var $x121Address = "";
+  var $roleOccupant = array();
+
+  var $base = "";
+  var $orig_dn = "";
+
+  var $objectclasses = array("top","organizationalRole");
+  var $attributes = array("cn","x121Address","description",
+    "telephoneNumber","facsimileTelephoneNumber","roleOccupant");
   
   function __construct($config,$dn){
     plugin::plugin($config,$dn);
+    $this->is_account = TRUE;
+    $this->orig_dn = $dn;
+
+    /* Set base */
+    if ($this->dn == "new"){
+      $this->base = session::get('CurrentMainBase');
+    } else {
+      $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleRDN"), '/')."/","",$this->dn);
+    }
   }
 
 
   function execute(){
     $smarty = get_smarty();
 
-
+    /* Create base acls */
+    $tmp = $this->allowedBasesToMoveTo();
+    $smarty->assign("bases", $tmp);
+    $smarty->assign("base_select",$this->base);
+    foreach($this->attributes as $attr){
+      $smarty->assign($attr,$this->$attr);
+    }
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $attr => $desc){
+      $smarty->assign($attr."ACL",$this->getacl($attr));
+    }
     return($smarty->fetch(get_template_path('roleGeneric.tpl',TRUE,dirname(__FILE__))));
   }
 
+
+  function save(){
+    plugin::save();
+
+    /* Save data. Using 'modify' implies that the entry is already present, use 'add' for
+       new entries. So do a check first... */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cat ($this->dn, array('dn'));
+    if ($ldap->fetch()){
+      $mode= "modify";
+    } else {
+      $mode= "add";
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
+    }
+    @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,$this->attributes, "Save via $mode");
+
+    /* Finally write data with selected 'mode' */
+    $this->cleanup();
+    $ldap->cd ($this->dn);
+    $ldap->$mode ($this->attrs);
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), 
+        $this->dn, LDAP_DEL,            get_class()));
+      return (1);
+    }
+
+    /* Remove ACL dependencies too */
+    if($this->dn != $this->orig_dn && $this->orig_dn != "new"){
+      $tmp = new acl($this->config,$this->parent,$this->dn);
+      $tmp->update_acl_membership($this->orig_dn,$this->dn);
+    }
+
+    if($mode == "modify"){
+      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+  }
+
+
+  /* This avoids that users move themselves out of their rights.
+   */
+  function allowedBasesToMoveTo()
+  {
+    /* Get bases */
+    $bases  = $this->get_allowed_bases();
+    return($bases);
+  }
+
+  
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Role generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 1,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("roles" => array("description"  => _("Roles"),
+              "objectClass"  => "organizationalRole")),
+          "plProvidedAcls"=> array(
+            "cn"                => _("Name"),
+            "description" => _("Description"),
+            "base" => _("Base"),
+            "telephoneNumber" => _("Telefon number"),
+            "facsimileTelephoneNumber" => _("Fax number"),
+            "roleOccupant" => _("Occupants"),
+            "x121Address" => _("X.121 Address"))
+          ));
+  }
 }
 
 
