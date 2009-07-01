@@ -229,6 +229,7 @@ class mailMethod{
     }
   
     // Add gosaSharedFolderTarget for groups.
+    $this->build_account_id();
     if($this->type == "group"){ 
       $this->parent->attrs['gosaSharedFolderTarget'] = 
         $this->gosaSharedPrefix.$this->account_id;
