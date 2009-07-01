@@ -68,7 +68,7 @@ class roleManagement extends plugin
     plugin::execute();
 
     /* Variables to restore after 'entry locked' warning was displayed */
-    session::set('LOCK_VARS_TO_USE',array('/^role_/'));
+    session::set('LOCK_VARS_TO_USE',array('/^role_/','/^act/','/^id/','/^menu_action/'));
 
     $smarty     = get_smarty();
     $s_action   = "";
@@ -113,7 +113,7 @@ class roleManagement extends plugin
      * New handling
      ***************/
 
-    if($s_action == "new"){
+    if($s_action == "new" && $this->dialog instanceOf tabs){
       $this->dialog = new roletabs($this->config, $this->config->data['TABS']['ROLETABS'], "new");
       $this->dialog->set_acl_base($this->DivListRoles->selectedBase);
     }
@@ -122,12 +122,28 @@ class roleManagement extends plugin
      * Edit handling
      ***************/
 
-    if($s_action == "edit"){
+    if($s_action == "edit" && !$this->dialog instanceOf tabs){
       if(!isset($this->roles[$s_entry])){
         trigger_error("Unknown entry!"); 
       }else{
+
         $entry = $this->roles[$s_entry];
-        $this->dialog = new roletabs($this->config, $this->config->data['TABS']['ROLETABS'], $entry['dn']);
+        $this->dn = $entry['dn'];
+
+        /* Check locking, save current plugin in 'back_plugin', so
+           the dialog knows where to return. */
+        if (($user= get_lock($this->dn)) != ""){
+          return(gen_locked_message ($user, $this->dn,TRUE));
+        }
+
+        /* Lock the current entry, so everyone will get the above dialog */
+        add_lock ($this->dn, $this->ui->dn);
+
+        /* Open the dialog */
+        $this->dialog = new roletabs($this->config, $this->config->data['TABS']['ROLETABS'], 
+            $entry['dn'], "roles");
+        $this->dialog->set_acl_base($this->dn);
+        set_object_info($this->dn);
       }
     }
 
@@ -135,25 +151,25 @@ class roleManagement extends plugin
      * Dialog handling
      ***************/
 
-    if (isset($_POST['edit_finish']) && $this->dialog instanceOf tabs){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && $this->dialog instanceOf tabs){
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)){
         msg_dialog::displayChecks($msgs);
       }else{
         $this->dialog->save();
-        if(isset($this->grouptab->dn)){
+        if (!isset($_POST['edit_apply'])){
           $this->remove_lock();
+          $this->dialog= NULL;
+          set_object_info();
+        }else{
+          $this->dialog->re_init();
         }
-        $this->dialog= NULL;
-        set_object_info();
       }
     }
 
     if (isset($_POST['edit_cancel']) && $this->dialog instanceOf tabs){
-      if(isset($this->grouptab->dn)){
-        $this->remove_lock();
-      }
+      $this->remove_lock();
       $this->dialog= NULL;
       set_object_info();
     }
@@ -195,7 +211,7 @@ class roleManagement extends plugin
 
     // Add departments if subsearch is disabled 
     if(!$this->DivListRoles->SubSearch){
-      $this->DivListRoles->AddDepartments($this->DivListRoles->selectedBase,4,1);
+      $this->DivListRoles->AddDepartments($this->DivListRoles->selectedBase,3,1);
     }
     $this->reload ();
     $this->DivListRoles->setEntries($this->roles);
@@ -252,6 +268,14 @@ class roleManagement extends plugin
 
   function remove_lock()
   {
+    if (isset($this->dialog->dn)){
+      del_lock ($this->dialog->dn);
+    }elseif(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
+      del_lock($this->dn);
+    }
+    if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
+      del_lock($this->dns);
+    }
   }
 
 

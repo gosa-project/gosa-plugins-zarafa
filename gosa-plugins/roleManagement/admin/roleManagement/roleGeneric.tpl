@@ -1,60 +1,93 @@
-<table>
-	<tr>
-		<td>{t}cn{/t}:</td>
-		<td>
-			{render acl=$cnACL}
-			 <input type='text' value='{$cn}' name='cn'>
-			{/render}
-		</td>
-	</tr>
-	<tr>
-		<td>{t}description{/t}:</td>
-		<td>
-			{render acl=$descriptionACL}
-			 <input type='text' value='{$description}' name='description'>
-			{/render}
-		</td>
-	</tr>
+<table style='width:100%;'>
   <tr>
-    <td>
-      <div style="height:10px;"></div>
-      <label for="base">{t}Base{/t}</label>
+    <td style='width:50%; vertical-align:top; border-right:1px solid #A0A0A0; padding-right:10px;'>
+
+      <h2><img src='plugins/roleManagement/images/role.png' alt='' class='center'>&nbsp;
+        {t}Generic{/t}
+      </h2>
+
+      <table style='width:100%;'>
+        <tr>
+          <td>{t}Name{/t}</td>
+          <td>
+            {render acl=$cnACL}
+             <input type='text' value='{$cn}' name='cn'>
+            {/render}
+          </td>
+        </tr>
+        <tr>
+          <td>{t}Description{/t}</td>
+          <td>
+            {render acl=$descriptionACL}
+             <input type='text' value='{$description}' name='description'>
+            {/render}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="height:10px;"></div>
+            <label for="base">{t}Base{/t}</label>
+          </td>
+          <td>
+            <div style="height:10px;"></div>
+      {render acl=$baseACL}
+            <select id="base" size="1" name="base" title="{t}Choose subtree to place user in{/t}">
+              {html_options options=$bases selected=$base_select}
+            </select>
+      {/render}
+      {render acl=$baseACL disable_picture='images/lists/folder_grey.png'}
+            <input type="image" name="chooseBase" src="images/lists/folder.png" class="center" 
+              title="{t}Select a base{/t}">
+      {/render}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><p class="seperator">&nbsp;</p><br></td>
+        </tr>
+        <tr>
+          <td>{t}X.121 Address{/t}</td>
+          <td>
+            {render acl=$x121AddressACL}
+             <input type='text' value='{$x121Address}' name='x121Address'>
+            {/render}
+          </td>
+        </tr>
+        <tr>
+          <td>{t}Phone number{/t}</td>
+          <td>
+            {render acl=$telephoneNumberACL}
+             <input type='text' value='{$telephoneNumber}' name='telephoneNumber'>
+            {/render}
+          </td>
+        </tr>
+        <tr>
+          <td>{t}Fax number{/t}</td>
+          <td>
+            {render acl=$facsimileTelephoneNumberACL}
+             <input type='text' value='{$facsimileTelephoneNumber}' name='facsimileTelephoneNumber'>
+            {/render}
+          </td>
+        </tr>
+      </table>
+
     </td>
-    <td>
-      <div style="height:10px;"></div>
-{render acl=$baseACL}
-      <select id="base" size="1" name="base" title="{t}Choose subtree to place user in{/t}">
-        {html_options options=$bases selected=$base_select}
+    <td style=' vertical-align:top; padding-left:10px;'>
+      <h2><img src='plugins/roleManagement/images/occupant.png' alt='' class='center'>&nbsp;
+        {t}Occupants{/t}
+      </h2>
+
+{render acl=$roleOccupantACL}
+      <select style="width:100%; height:450px;" id="members" name="members[]" size="15" multiple>
+        {$members}
       </select>
 {/render}
-{render acl=$baseACL disable_picture='images/lists/folder_grey.png'}
-      <input type="image" name="chooseBase" src="images/lists/folder.png" class="center" 
-        title="{t}Select a base{/t}">
+      <br>
+{render acl=$roleOccupantACL}
+      <input type=submit value="{msgPool type=addButton}" name="edit_membership">&nbsp;
+{/render}
+{render acl=$roleOccupantACL}
+      <input type=submit value="{msgPool type=delButton}" name="delete_membership">
 {/render}
     </td>
   </tr>
-	<tr>
-		<td>{t}x121Address{/t}:</td>
-		<td>
-			{render acl=$x121AddressACL}
-			 <input type='text' value='{$x121Address}' name='x121Address'>
-			{/render}
-		</td>
-	</tr>
-	<tr>
-		<td>{t}telephoneNumber{/t}:</td>
-		<td>
-			{render acl=$telephoneNumberACL}
-			 <input type='text' value='{$telephoneNumber}' name='telephoneNumber'>
-			{/render}
-		</td>
-	</tr>
-	<tr>
-		<td>{t}facsimileTelephoneNumber{/t}:</td>
-		<td>
-			{render acl=$facsimileTelephoneNumberACL}
-			 <input type='text' value='{$facsimileTelephoneNumber}' name='facsimileTelephoneNumber'>
-			{/render}
-		</td>
-	</tr>
-</table>
+</table>  

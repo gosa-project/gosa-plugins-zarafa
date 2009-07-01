@@ -58,6 +58,7 @@ class roleGeneric extends plugin {
     $tmp = $this->allowedBasesToMoveTo();
     $smarty->assign("bases", $tmp);
     $smarty->assign("base_select",$this->base);
+    $smarty->assign("members",$this->convert_list());
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -66,6 +67,20 @@ class roleGeneric extends plugin {
       $smarty->assign($attr."ACL",$this->getacl($attr));
     }
     return($smarty->fetch(get_template_path('roleGeneric.tpl',TRUE,dirname(__FILE__))));
+  }
+
+
+  function convert_list()
+  {
+    $temp= "";
+    foreach ($this->roleOccupant as $key => $value){
+      $temp.= "
+        <option title='".addslashes( $key)."' 
+        value=\"$key\" class=\"select\" 
+        >".$value['text']."</option>\n";
+    }
+
+    return ($temp);
   }
 
 

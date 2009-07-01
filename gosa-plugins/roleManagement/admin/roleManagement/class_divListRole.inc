@@ -154,11 +154,8 @@ class divListRole extends MultiSelectWindow
       $acl    = $ui->get_permissions($val['dn'],"roles/role");
       $acl_all= $ui->has_complete_category_acls($val['dn'],"roles");
 
-      // Add copy & cut functionality 
-      $actions = $this->parent->get_copypaste_action($val['dn'],"roles","role");
-
       // Create edit and remove icon buttons 
-      $actions.= "<input class='center' type='image'
+      $actions = "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' 
         name='role_edit_%KEY%' title='"._("Edit this entry")."'>";
       $actions.= $this->parent->get_snapshot_action($val['dn'],$this->module);
