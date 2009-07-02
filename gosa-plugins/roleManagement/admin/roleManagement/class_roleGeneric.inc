@@ -23,6 +23,7 @@
 
 class roleGeneric extends plugin {
 
+  // The variables this plugin takes care of.
   var $cn = "";
   var $description ="";
   var $telephoneNumber = "";
@@ -30,43 +31,59 @@ class roleGeneric extends plugin {
   var $x121Address = "";
   var $roleOccupant = array();
 
+  // The objects base 
   var $base = "";
+ 
+  // Keep track if possible ng aming modifications
   var $orig_dn = "";
   var $orig_cn = "";
   var $orig_base = "";
 
+  // The object classes written by this plugin
   var $objectclasses = array("top","organizationalRole");
+
+  // A list of attributes managed by this plugin
   var $attributes = array("cn","x121Address","description",
     "telephoneNumber","facsimileTelephoneNumber","roleOccupant");
-  
+ 
+
+  /* Initialize the class 
+   */
   function __construct($config,$dn){
     plugin::plugin($config,$dn);
     $this->is_account = TRUE;
-    $this->orig_dn = $dn;
-    $this->orig_cn = $this->cn;
 
-    /* Set base */
+    // Detect the objects base
     if ($this->dn == "new"){
       $this->base = session::get('CurrentMainBase');
     } else {
-      $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleRDN"), '/')."/","",$this->dn);
+      $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleRDN"), '/i')."/","",$this->dn);
     }
+
+    // Keep track of naming attribute modifications
     $this->orig_base = $this->base;
+    $this->orig_dn = $dn;
+    $this->orig_cn = $this->cn;
   }
 
 
+  /* Generate HTML output of this plugin.
+   */
   function execute()
   {
-    $smarty = get_smarty();
-
-    /* Create base acls */
+    // Get list of possible ldap bases, will be selectable in the ui.
     $tmp = $this->allowedBasesToMoveTo();
+
+    // Get smarty instance and assign required variables.
+    $smarty = get_smarty();
     $smarty->assign("bases", $tmp);
     $smarty->assign("base_select",$this->base);
     $smarty->assign("members",$this->convert_list());
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+
+    // Assign current permissions for each attribute. 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $attr => $desc){
       $smarty->assign($attr."ACL",$this->getacl($attr));
@@ -75,17 +92,18 @@ class roleGeneric extends plugin {
   }
 
 
+  /* Check user input and return a list of 'invalid input' messages.
+   */
   function check()
   {
     $message = plugin::check();
 
-    /* Set the new acl base */
+    // Set the new acl base 
     if($this->dn == "new") {
       $this->set_acl_base($this->base);
     }
 
-    /* Check if we are allowed to create/move this user
-     */
+    // Check if we are allowed to create/move this user
     if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
       $message[]= msgPool::permCreate();
     }elseif($this->orig_dn != "new" && 
@@ -94,7 +112,7 @@ class roleGeneric extends plugin {
       $message[]= msgPool::permMove();
     }
 
-    /* Name already used? */
+    // Check if this name is uniq for roles.
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=organizationalRole)(cn=$this->cn))", array("cn"));
@@ -102,12 +120,12 @@ class roleGeneric extends plugin {
     if ($ldap->count() != 0 && ( $this->dn == 'new' || $this->cn != $this->orig_cn)){
       $message[]= msgPool::duplicated(_("Name"));
     }
-
-
     return($message);
   }
   
 
+  /* Returns list of occupants as <html><option> statements.
+   */
   function convert_list()
   {
     $temp= "";
@@ -121,24 +139,30 @@ class roleGeneric extends plugin {
     return ($temp);
   }
 
-  
+ 
+  /* Removes the object from the ldap database
+   */ 
   function remove_from_parent()
   {
     plugin::remove_from_parent();
 
+    // Remove this object.
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }
 
+    // Log action.
     new log("remove","roles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-    /* Trigger remove signal */
+    // Trigger remove signal
     $this->handle_post_events("remove");
   }
 
 
+  /* Saves object modifications
+   */  
   function save(){
     plugin::save();
 
@@ -155,7 +179,7 @@ class roleGeneric extends plugin {
     }
     @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,$this->attributes, "Save via $mode");
 
-    /* Finally write data with selected 'mode' */
+    // Finally write data with selected 'mode'
     $this->cleanup();
     $ldap->cd ($this->dn);
     $ldap->$mode ($this->attrs);
@@ -165,9 +189,10 @@ class roleGeneric extends plugin {
       return (1);
     }
 
+    // Send modify/add events
     $this->handle_post_events($mode);
 
-    /* Remove ACL dependencies too */
+    // Update ACL dependencies too 
     if($this->dn != $this->orig_dn && $this->orig_dn != "new"){
       $tmp = new acl($this->config,$this->parent,$this->dn);
       $tmp->update_acl_membership($this->orig_dn,$this->dn);

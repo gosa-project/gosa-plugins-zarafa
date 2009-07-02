@@ -21,8 +21,7 @@
  */
 
 
-/* Remove locks created by this plugin
-*/
+// Remove locks created by this plugin
 if ($remove_lock){
   if(session::is_set('roleManagement')){
     $macl = session::get('roleManagement');
@@ -33,13 +32,14 @@ if ($remove_lock){
 /* Remove this plugin from session
 */
 if ( $cleanup ){
+  $macl = session::get('roleManagement');
+  $macl->remove_lock();
   session::un_set('roleManagement');
 }else{
 
   /* Create object object on demand */
   if (!session::is_set('roleManagement')){
-    session::set('roleManagement',new roleManagement ($config));
-    
+    session::set('roleManagement',new roleManagement($config));
   }
   $roleManagement = session::get('roleManagement');
 

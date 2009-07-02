@@ -104,7 +104,7 @@ class divListRole extends MultiSelectWindow
     $add_sep = false;
   
     /* Get copy & paste icon */
-    $acls  = $ui->get_permissions($this->selectedBase,"roles/role");
+    $acls  = $ui->get_permissions($this->selectedBase,"roles/roleGeneric");
     $acl_all= $ui->has_complete_category_acls($this->selectedBase,"roles");
 
     /* Add default header */
@@ -163,7 +163,7 @@ class divListRole extends MultiSelectWindow
     foreach($list as $key => $val){
       
       // Get object permissions
-      $acl    = $ui->get_permissions($val['dn'],"roles/role");
+      $acl    = $ui->get_permissions($val['dn'],"roles/roleGeneric");
       $acl_all= $ui->has_complete_category_acls($val['dn'],"roles");
 
       // Create edit and remove icon buttons 
