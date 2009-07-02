@@ -67,18 +67,18 @@ class roleManagement extends plugin
     // Call parent execute 
     plugin::execute();
 
-    /* Variables to restore after 'entry locked' warning was displayed */
+    // Variables to restore after 'entry locked' warning was displayed 
     session::set('LOCK_VARS_TO_USE',array('/^role_/','/^act/','/^id/','/^menu_action/','/^item/'));
 
     $smarty     = get_smarty();
-    $s_action   = "";
-    $s_entry    = "";
 
     /***************
      * Handle _POST/_GET variables
      ***************/
    
     // Get entry related posts 
+    $s_action   = "";
+    $s_entry    = "";
     foreach($_POST as $name => $value){
       if(preg_match("/^role_edit_/",$name)){
         $s_action = "edit";  
@@ -264,24 +264,28 @@ class roleManagement extends plugin
     if($this->dialog instanceOf tabs){
       $display= $this->dialog->execute();
 
-      if($this->dialog->read_only   == TRUE){
-        $display.= "<p style=\"text-align:right\">
-          <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">
-          </p>";
-      }else{
+      $dialog_opened = ($this->dialog->by_object[$this->dialog->current]->dialog instanceOf plugin);
 
-        $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" 
-          value=\"".msgPool::okButton(). "\">\n";
-        $display.= "&nbsp;\n";
-        if ($this->dn != "new"){
-          $display.= "<input type=submit name=\"edit_apply\" 
-            value=\"".msgPool::applyButton()."\">\n";
+      if(!$dialog_opened){
+        if($this->dialog->read_only   == TRUE){
+          $display.= "<p style=\"text-align:right\">
+            <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">
+            </p>";
+        }else{
+
+          $display.= "<p style=\"text-align:right\">\n";
+          $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" 
+            value=\"".msgPool::okButton(). "\">\n";
           $display.= "&nbsp;\n";
+          if ($this->dn != "new"){
+            $display.= "<input type=submit name=\"edit_apply\" 
+              value=\"".msgPool::applyButton()."\">\n";
+            $display.= "&nbsp;\n";
+          }
+          $display.= "<input type=submit name=\"edit_cancel\" 
+            value=\"".msgPool::cancelButton()."\">\n";
+          $display.= "</p>";
         }
-        $display.= "<input type=submit name=\"edit_cancel\" 
-          value=\"".msgPool::cancelButton()."\">\n";
-        $display.= "</p>";
       }
       return ($display);
     }

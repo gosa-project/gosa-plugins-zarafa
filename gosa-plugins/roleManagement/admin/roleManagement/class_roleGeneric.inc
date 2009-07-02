@@ -28,7 +28,6 @@ class roleGeneric extends plugin {
   var $description ="";
   var $telephoneNumber = "";
   var $facsimileTelephoneNumber = "";
-  var $x121Address = "";
   var $roleOccupant = array();
 
   // The objects base 
@@ -43,7 +42,7 @@ class roleGeneric extends plugin {
   var $objectclasses = array("top","organizationalRole");
 
   // A list of attributes managed by this plugin
-  var $attributes = array("cn","x121Address","description",
+  var $attributes = array("cn","description",
     "telephoneNumber","facsimileTelephoneNumber","roleOccupant");
  
 
@@ -73,6 +72,22 @@ class roleGeneric extends plugin {
   {
     // Get list of possible ldap bases, will be selectable in the ui.
     $tmp = $this->allowedBasesToMoveTo();
+
+
+    /***************
+     * Dialog handling
+     ***************/
+
+    if(isset($_POST['edit_membership']) && !$this->dialog instanceOf plugin){
+      $this->dialog = new occupantSelect($this->config,$this->dn,$this);
+    }
+
+    if($this->dialog instanceOf plugin){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    }
+
+
 
     // Get smarty instance and assign required variables.
     $smarty = get_smarty();
@@ -198,6 +213,7 @@ class roleGeneric extends plugin {
       $tmp->update_acl_membership($this->orig_dn,$this->dn);
     }
 
+    // Log action
     if($mode == "modify"){
       new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
@@ -210,12 +226,13 @@ class roleGeneric extends plugin {
    */
   function allowedBasesToMoveTo()
   {
-    /* Get bases */
     $bases  = $this->get_allowed_bases();
     return($bases);
   }
 
-
+  
+  /* Save HTML inputs
+   */
   function save_object()
   {
     plugin::save_object();  
@@ -242,8 +259,7 @@ class roleGeneric extends plugin {
             "base" => _("Base"),
             "telephoneNumber" => _("Telefon number"),
             "facsimileTelephoneNumber" => _("Fax number"),
-            "roleOccupant" => _("Occupants"),
-            "x121Address" => _("X.121 Address"))
+            "roleOccupant" => _("Occupants"))
           ));
   }
 }

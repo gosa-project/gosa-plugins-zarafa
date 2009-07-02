@@ -45,14 +45,6 @@
           <td colspan="2"><p class="seperator">&nbsp;</p><br></td>
         </tr>
         <tr>
-          <td>{t}X.121 Address{/t}</td>
-          <td>
-            {render acl=$x121AddressACL}
-             <input type='text' value='{$x121Address}' name='x121Address'>
-            {/render}
-          </td>
-        </tr>
-        <tr>
           <td>{t}Phone number{/t}</td>
           <td>
             {render acl=$telephoneNumberACL}
