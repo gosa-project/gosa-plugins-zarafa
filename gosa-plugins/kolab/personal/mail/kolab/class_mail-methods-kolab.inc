@@ -30,9 +30,11 @@ class mailMethodKolab extends mailMethodCyrus
   protected $share_prefix   = 'shared\\.';
 
   /* gosaSharedFolderTarget settings, 
-      E.g. 
-        AccountID = 'shared/herberts.folder@gonicus.de' 
-        'kolab+' will result in gosaSharedFolderTarget: kolab+shared/herberts.folder@gonicus.de
+   *   E.g. 
+   *     AccountID = 'shared/herberts.folder@gonicus.de' 
+   *     'kolab+' will result in gosaSharedFolderTarget: kolab+shared/herberts.folder@gonicus.de
+   *
+   * May be overridden in the gosa.conf.
    */
   protected $gosaSharedPrefix = 'kolab+';  
 
