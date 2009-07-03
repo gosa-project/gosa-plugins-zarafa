@@ -501,12 +501,13 @@ class FAI
             }
 
             foreach($r as $key ){
-              if(DEBUG_FAI_FUNC) { 
-                echo "<b>Create an empty placeholder in follwing release</b> ".$key; 
-                print_a($objectAttrs);
-              }
-              /* Only save removed parent objects, not their children */
-              if (FAI::is_parent_object($Current_DN)){
+              /* Only save removed parent objects, not their children, unless
+                 they are a child of a copy-on-write parent in a subrelease */
+              if (FAI::is_parent_object($Current_DN) || FAI::is_child_of_cow_parent($key)){
+                if(DEBUG_FAI_FUNC) { 
+                  echo "<b>Create an empty placeholder in follwing release</b> ".$key; 
+                  print_a($objectAttrs);
+                }
                 FAI::save_FAI_object($key,$objectAttrs);
               }
             }
@@ -529,8 +530,8 @@ class FAI
                  */ 
                 $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
                 $parent_attrs['FAIstate'] = $rTag;
-                FAI::save_FAI_object($key,$parent_attrs);
               }
+              FAI::save_FAI_object($key,$parent_attrs);
             }
           }
 
@@ -1323,8 +1324,9 @@ class FAI
     return $children;
   }
 
-  /* Get the DN of the parent object; e.g. the FAIpartitionTable of a FAIpartitionDisk */
-  static function get_parent_object($dn)
+  /* Get the DN of the parent object; e.g. the FAIpartitionTable of a FAIpartitionDisk.
+     If $check is false, do not check whether the parent actually exists in LDAP */
+  static function get_parent_object($dn, $check=true)
   {
     global $config;
     $Current_DN = $dn;
@@ -1350,12 +1352,15 @@ class FAI
     $parent_dn = join($parent_dn, ',');
 
     if ($parent_dn != $Current_DN){
-      $ldap = $config->get_ldap_link();
-      $ldap->cd($config->current['BASE']);
-      $ldap->cat($parent_dn);
-      if($ldap->count()){
-        return $parent_dn;
+      if($check){
+        $ldap = $config->get_ldap_link();
+        $ldap->cd($config->current['BASE']);
+        $ldap->cat($parent_dn);
+        if(!$ldap->count()){
+          return "";
+        }
       }
+      return $parent_dn;
     }
     return "";
   }
@@ -1380,6 +1385,35 @@ class FAI
     } 
     return false;
   }
+
+  /* Check whether this is a child object of a Copy-on-Write parent */
+  static function is_child_of_cow_parent($dn)
+  { 
+    global $config;
+    $Current_DN = $dn;
+    $parent_dn = "";
+
+    if (!FAI::is_parent_object($Current_DN)){
+
+      /* This is a child object; check that the parent object is not 
+         marked as removed */
+      $cow_parent_dn = FAI::get_parent_object($Current_DN, false);
+      if ($cow_parent_dn && !FAI::parent_is_removed($Current_DN)){
+
+        /* This is a child object, check whether the parent object in 
+           the main release exists */
+        $main_parent_dn = FAI::get_parent_release_object($cow_parent_dn);
+        $ldap = $config->get_ldap_link();
+        $ldap->cd($config->current['BASE']);
+        $ldap->cat($main_parent_dn);
+        if($ldap->count()){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
 
 
