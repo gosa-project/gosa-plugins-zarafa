@@ -3,9 +3,9 @@
 #            F A I - Fully automatic installation LDAP schema file            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-# Last modified: Cajus Pollmeier / 20050902                                   #
+# Last modified: Cajus Pollmeier / 20090702                                   #
 #-----------------------------------------------------------------------------#
-#             Copyright 2005, Cajus Pollmeier <cajus@debian.org>              #
+#        Copyright 2005-2009, Cajus Pollmeier <cajus@debian.org>              #
 #                             Thomas Lange <lange@debian.org>                 #
 #-----------------------------------------------------------------------------#
 # This program is free software; you can redistribute it and/or modify        #
@@ -311,6 +311,42 @@ attributetype ( 1.3.6.1.4.1.10098.1.1.5.29 NAME 'FAIrelease'
 		DESC 'TODO'
 		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26)
 
+# Name       : FAIpartitionMethod
+# Description: Store information about how to setup the partitions
+attributetype ( 1.3.6.1.4.1.10098.1.1.5.30 NAME 'FAIpartitionMethod'
+		DESC 'How to create the partitions: setup-storage'
+		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE)
+
+# Name       : FAIdiskOption
+# Description: Store new disk options like preserve_always, etc.
+attributetype ( 1.3.6.1.4.1.10098.1.1.5.31 NAME 'FAIdiskOption'
+		DESC 'Options for the disk creation'
+		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26)
+
+# Name       : FAIdiskType
+# Description: Differenciate between lvm, raid and disk
+attributetype ( 1.3.6.1.4.1.10098.1.1.5.32 NAME 'FAIdiskType'
+		DESC 'Options for the disk creation'
+		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE)
+
+# Name       : FAIlvmDevice
+# Description: For lvm disk definitions, store the physical devices
+attributetype ( 1.3.6.1.4.1.10098.1.1.5.33 NAME 'FAIlvmDevice'
+		DESC 'Options for the disk creation'
+		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26)
+
+# Name       : FAIfsCreateOptions
+# Description: New option field to pass FS creation options
+attributetype ( 1.3.6.1.4.1.10098.1.1.5.34 NAME 'FAIfsCreateOptions'
+		DESC 'Options for the disk creation'
+		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26)
+
+# Name       : FAIfsTuneOptions
+# Description: New option field to pass FS tuning options
+attributetype ( 1.3.6.1.4.1.10098.1.1.5.35 NAME 'FAIfsTuneOptions'
+		DESC 'Options for the disk creation'
+		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26)
+
 ##
 ## Object class definitions (allocated from the GONICUS oid space)
 ##
@@ -340,7 +376,7 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.40.2 NAME 'FAIprofile'
 objectclass (1.3.6.1.4.1.10098.1.2.1.40.3 NAME 'FAIpartitionTable'
 	SUP top AUXILIARY
 	DESC 'Stores FAI partition tables'
-	MUST ( cn ) MAY  ( FAIstate $ description ) )
+	MUST ( cn ) MAY  ( FAIstate $ FAIpartitionMethod $ description ) )
 
 # Name       : FAIpartitionDisk
 # Description: Each installation profile should contain a partition
@@ -349,7 +385,7 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.40.3 NAME 'FAIpartitionTable'
 objectclass (1.3.6.1.4.1.10098.1.2.1.40.4 NAME 'FAIpartitionDisk'
 	SUP top AUXILIARY
 	DESC 'Stores FAI partition tables' 
-	MUST ( cn ) MAY  ( FAIstate $ description ) )
+	MUST ( cn ) MAY  ( FAIstate $ FAIdiskType $ FAIdiskOption $ FAIlvmDevice $ description ) )
 
 # Name       : FAIpartitionEntry
 # Description: This object defines a single partition entry for the
@@ -360,7 +396,7 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.40.5 NAME 'FAIpartitionEntry'
 	MUST ( FAIpartitionType $ FAIpartitionNr $ FAIfsType $
 	       FAImountPoint $ FAIpartitionSize $ cn )
 	MAY  ( FAImountOptions $ FAIfsOptions $ FAIpartitionFlags $
-	       description $ FAIstate ) )
+	       description $ FAIstate $ FAIfsCreateOptions $ FAIfsTuneOptions ) )
 
 # Name       : FAIhook
 # Description: Container for hooks
