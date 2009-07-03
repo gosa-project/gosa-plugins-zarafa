@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:29+0200\n"
+"POT-Creation-Date: 2009-07-03 17:43+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -37,9 +37,11 @@ msgid "Permission"
 msgstr "Rechten"
 
 #: admin/roleManagement/class_roleManagement.inc:153
-#, fuzzy
-msgid "role"
-msgstr "Rechten"
+#: admin/roleManagement/class_divListRole.inc:70
+#: admin/roleManagement/class_divListRole.inc:127
+#: admin/roleManagement/class_divListRole.inc:207
+msgid "Role"
+msgstr "Funktie"
 
 #: admin/roleManagement/class_roleManagement.inc:187
 #, fuzzy
@@ -128,12 +130,6 @@ msgstr "Lijst met gebruikers"
 #, fuzzy
 msgid "Select all"
 msgstr "Selecteer"
-
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
-msgid "Role"
-msgstr "Funktie"
 
 #: admin/roleManagement/class_divListRole.inc:70
 msgid "Department"
@@ -240,3 +236,7 @@ msgstr "Toon overeenkomende objecten"
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr "Reguliere expressie voor overeenkomende objectnamen"
+
+#, fuzzy
+#~ msgid "role"
+#~ msgstr "Rechten"

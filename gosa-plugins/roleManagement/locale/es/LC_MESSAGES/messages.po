@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:29+0200\n"
+"POT-Creation-Date: 2009-07-03 17:43+0200\n"
 "PO-Revision-Date: 2008-12-08 11:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -35,9 +35,11 @@ msgid "Permission"
 msgstr "Permiso"
 
 #: admin/roleManagement/class_roleManagement.inc:153
-#, fuzzy
-msgid "role"
-msgstr "Roles ACL"
+#: admin/roleManagement/class_divListRole.inc:70
+#: admin/roleManagement/class_divListRole.inc:127
+#: admin/roleManagement/class_divListRole.inc:207
+msgid "Role"
+msgstr "Rol"
 
 #: admin/roleManagement/class_roleManagement.inc:187
 msgid "Permission error"
@@ -121,12 +123,6 @@ msgstr "Lista de usuarios"
 #: admin/roleManagement/class_divListRole.inc:64
 msgid "Select all"
 msgstr "Seleccione todos"
-
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
-msgid "Role"
-msgstr "Rol"
 
 #: admin/roleManagement/class_divListRole.inc:70
 msgid "Department"
@@ -231,3 +227,7 @@ msgstr "Mostrar objetos que coincidan"
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr "Expresiones regulares para buscar nombre de objetos"
+
+#, fuzzy
+#~ msgid "role"
+#~ msgstr "Roles ACL"

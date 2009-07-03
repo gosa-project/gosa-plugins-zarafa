@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:29+0200\n"
+"POT-Creation-Date: 2009-07-03 17:43+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -34,9 +34,11 @@ msgid "Permission"
 msgstr "允许"
 
 #: admin/roleManagement/class_roleManagement.inc:153
-#, fuzzy
-msgid "role"
-msgstr "MAC 地址"
+#: admin/roleManagement/class_divListRole.inc:70
+#: admin/roleManagement/class_divListRole.inc:127
+#: admin/roleManagement/class_divListRole.inc:207
+msgid "Role"
+msgstr "角色"
 
 #: admin/roleManagement/class_roleManagement.inc:187
 #, fuzzy
@@ -121,12 +123,6 @@ msgstr "用户列表"
 #, fuzzy
 msgid "Select all"
 msgstr "选择"
-
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
-msgid "Role"
-msgstr "角色"
 
 #: admin/roleManagement/class_divListRole.inc:70
 msgid "Department"
@@ -233,3 +229,7 @@ msgstr "显示匹配对象"
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr "匹配对象名的正则表达式"
+
+#, fuzzy
+#~ msgid "role"
+#~ msgstr "MAC 地址"

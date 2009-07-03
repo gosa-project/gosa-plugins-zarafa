@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:29+0200\n"
+"POT-Creation-Date: 2009-07-03 17:43+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -33,9 +33,11 @@ msgid "Permission"
 msgstr "Permessi"
 
 #: admin/roleManagement/class_roleManagement.inc:153
-#, fuzzy
-msgid "role"
-msgstr "ACL"
+#: admin/roleManagement/class_divListRole.inc:70
+#: admin/roleManagement/class_divListRole.inc:127
+#: admin/roleManagement/class_divListRole.inc:207
+msgid "Role"
+msgstr "Ruolo"
 
 #: admin/roleManagement/class_roleManagement.inc:187
 #, fuzzy
@@ -123,12 +125,6 @@ msgstr "Lista degli utenti"
 #, fuzzy
 msgid "Select all"
 msgstr "Rimuovi"
-
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
-msgid "Role"
-msgstr "Ruolo"
 
 #: admin/roleManagement/class_divListRole.inc:70
 msgid "Department"
@@ -237,3 +233,7 @@ msgstr ""
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr ""
+
+#, fuzzy
+#~ msgid "role"
+#~ msgstr "ACL"

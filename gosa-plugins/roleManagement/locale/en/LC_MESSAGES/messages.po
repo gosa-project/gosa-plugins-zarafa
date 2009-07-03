@@ -13,7 +13,10 @@ msgid "Permission"
 msgstr ""
 
 #: admin/roleManagement/class_roleManagement.inc:153
-msgid "role"
+#: admin/roleManagement/class_divListRole.inc:70
+#: admin/roleManagement/class_divListRole.inc:127
+#: admin/roleManagement/class_divListRole.inc:207
+msgid "Role"
 msgstr ""
 
 #: admin/roleManagement/class_roleManagement.inc:187
@@ -91,12 +94,6 @@ msgstr ""
 
 #: admin/roleManagement/class_divListRole.inc:64
 msgid "Select all"
-msgstr ""
-
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
-msgid "Role"
 msgstr ""
 
 #: admin/roleManagement/class_divListRole.inc:70
