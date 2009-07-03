@@ -1,0 +1,233 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: polski\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-03 17:29+0200\n"
+"PO-Revision-Date: 2007-07-14 21:45+0100\n"
+"Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
+"Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: iso-8859-2\n"
+"X-Poedit-Basepath: tedst\n"
+
+#: admin/roleManagement/class_roleManagement.inc:26
+#: admin/roleManagement/class_roleGeneric.inc:335
+#: admin/roleManagement/main.inc:53
+#, fuzzy
+msgid "Roles"
+msgstr "Pełniona funkcja"
+
+#: admin/roleManagement/class_roleManagement.inc:27
+#, fuzzy
+msgid "Manage roles"
+msgstr "Użytkownicy domeny"
+
+#: admin/roleManagement/class_roleManagement.inc:137
+#, fuzzy
+msgid "Permission"
+msgstr "Uprawnienia"
+
+#: admin/roleManagement/class_roleManagement.inc:153
+#, fuzzy
+msgid "role"
+msgstr "ACLe"
+
+#: admin/roleManagement/class_roleManagement.inc:187
+#, fuzzy
+msgid "Permission error"
+msgstr "Uprawnienia"
+
+#: admin/roleManagement/remove.tpl:2
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+#: admin/roleManagement/remove.tpl:7
+msgid ""
+"Please double check if you really want to do this since there is no way for "
+"GOsa to get your data back."
+msgstr "Proszę upewnić się czy kontynuować, gdyż nie ma możliwości powrotu."
+
+#: admin/roleManagement/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
+"anulować."
+
+#: admin/roleManagement/class_roleGeneric.inc:201
+#: admin/roleManagement/class_roleGeneric.inc:210
+#: admin/roleManagement/class_roleGeneric.inc:338
+#: admin/roleManagement/roleGeneric.tpl:11
+msgid "Name"
+msgstr "Imię"
+
+#: admin/roleManagement/class_roleGeneric.inc:231
+msgid "Unknown"
+msgstr "Nieznane"
+
+#: admin/roleManagement/class_roleGeneric.inc:249
+#: admin/roleManagement/class_roleGeneric.inc:283
+#, fuzzy
+msgid "LDAP error"
+msgstr "błąd LDAP:"
+
+#: admin/roleManagement/class_roleGeneric.inc:329
+#: admin/roleManagement/roleGeneric.tpl:6
+msgid "Generic"
+msgstr "Ogólne"
+
+#: admin/roleManagement/class_roleGeneric.inc:330
+#, fuzzy
+msgid "Role generic"
+msgstr "Zmień nazwę"
+
+#: admin/roleManagement/class_roleGeneric.inc:339
+#: admin/roleManagement/roleGeneric.tpl:19
+msgid "Description"
+msgstr "Opis"
+
+#: admin/roleManagement/class_roleGeneric.inc:340
+#: admin/roleManagement/class_divListRole.inc:114
+#: admin/roleManagement/roleGeneric.tpl:29
+msgid "Base"
+msgstr "Kontener"
+
+#: admin/roleManagement/class_roleGeneric.inc:341
+msgid "Telefon number"
+msgstr "Numer telefonu"
+
+#: admin/roleManagement/class_roleGeneric.inc:342
+#: admin/roleManagement/roleGeneric.tpl:56
+msgid "Fax number"
+msgstr "Numer fax"
+
+#: admin/roleManagement/class_roleGeneric.inc:343
+#: admin/roleManagement/roleGeneric.tpl:68
+msgid "Occupants"
+msgstr ""
+
+#: admin/roleManagement/class_divListRole.inc:52
+#: admin/roleManagement/class_divListRole.inc:53
+#, fuzzy
+msgid "List of roles"
+msgstr "Lista użytkowników"
+
+#: admin/roleManagement/class_divListRole.inc:64
+#, fuzzy
+msgid "Select all"
+msgstr "Wybierz"
+
+#: admin/roleManagement/class_divListRole.inc:70
+#: admin/roleManagement/class_divListRole.inc:127
+#: admin/roleManagement/class_divListRole.inc:207
+msgid "Role"
+msgstr "Pełniona funkcja"
+
+#: admin/roleManagement/class_divListRole.inc:70
+msgid "Department"
+msgstr "Departament"
+
+#: admin/roleManagement/class_divListRole.inc:71
+#: admin/roleManagement/class_divListRole.inc:120
+msgid "Actions"
+msgstr "Akcje"
+
+#: admin/roleManagement/class_divListRole.inc:80
+#, fuzzy
+msgid "Regular expression for matching role names"
+msgstr "Wyrażenie regularne dla dopasowania nazw grup"
+
+#: admin/roleManagement/class_divListRole.inc:117
+msgid "Submit department"
+msgstr "Zatwierdź departament"
+
+#: admin/roleManagement/class_divListRole.inc:117
+msgid "Submit"
+msgstr "Wyślij"
+
+#: admin/roleManagement/class_divListRole.inc:125
+msgid "Create"
+msgstr "Utwórz"
+
+#: admin/roleManagement/class_divListRole.inc:133
+msgid "Remove"
+msgstr "Usuń"
+
+#: admin/roleManagement/class_divListRole.inc:171
+msgid "edit"
+msgstr "edytuj"
+
+#: admin/roleManagement/class_divListRole.inc:172
+msgid "Edit this entry"
+msgstr "Edytuj ten obiekt"
+
+#: admin/roleManagement/class_divListRole.inc:176
+msgid "delete"
+msgstr "Usuń"
+
+#: admin/roleManagement/class_divListRole.inc:177
+msgid "Delete this entry"
+msgstr "Usuń ten obiekt"
+
+#: admin/roleManagement/class_divListRole.inc:224
+#, fuzzy
+msgid "Number of listed roles"
+msgstr "Nazwa grupy"
+
+#: admin/roleManagement/class_divListRole.inc:225
+#, fuzzy
+msgid "Number of listed departments"
+msgstr "Nazwa departamentu"
+
+#: admin/roleManagement/main.inc:57
+#, fuzzy
+msgid "Role management"
+msgstr "Zarządzanie ACL"
+
+#: admin/roleManagement/roleGeneric.tpl:34
+msgid "Choose subtree to place user in"
+msgstr "Wybierz poddrzewo do umieszczenia konta."
+
+#: admin/roleManagement/roleGeneric.tpl:40
+msgid "Select a base"
+msgstr "Wybierz bazę"
+
+#: admin/roleManagement/roleGeneric.tpl:48
+msgid "Phone number"
+msgstr "Numer telefonu"
+
+#: admin/roleManagement/occupantSelect.tpl:6
+msgid "Select objects to add"
+msgstr "Wybierz obiekty do dodania"
+
+#: admin/roleManagement/occupantSelect.tpl:20
+msgid "Filters"
+msgstr "Filtry"
+
+#: admin/roleManagement/occupantSelect.tpl:27
+msgid "Select to search within subtrees"
+msgstr "Zaznacz aby wyszukiwać wewnątrz poddrzew"
+
+#: admin/roleManagement/occupantSelect.tpl:27
+#, fuzzy
+msgid "Search in subtrees"
+msgstr "Szukaj wewnątrz tego poddrzewa"
+
+#: admin/roleManagement/occupantSelect.tpl:30
+msgid "Display objects of department"
+msgstr "Wyświetl obiekty departamentu"
+
+#: admin/roleManagement/occupantSelect.tpl:31
+msgid "Choose the department the search will be based on"
+msgstr "Wybierz departament na którym wyszukiwanie będzie bazować"
+
+#: admin/roleManagement/occupantSelect.tpl:34
+msgid "Display objects matching"
+msgstr "Wyświetl obiekty pasujące"
+
+#: admin/roleManagement/occupantSelect.tpl:35
+msgid "Regular expression for matching object names"
+msgstr "Wyrażenie regularne dla dopasowania nazw obiektów"
