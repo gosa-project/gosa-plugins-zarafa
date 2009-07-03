@@ -150,7 +150,7 @@ class roleManagement extends plugin
           /* Lock the current entry, so nobody will edit it during deletion */
           add_lock ($this->dns, $this->ui->dn);
 
-          $smarty->assign("info", msgPool::deleteInfo($dns_names,_("role")));
+          $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Role")));
           $smarty->assign("multiple", true);
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         }
