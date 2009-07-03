@@ -518,11 +518,6 @@ class FAI
           if(!empty($r)){
 
             foreach($r as $key ){
-              if(DEBUG_FAI_FUNC) { 
-                echo "<b>Copy current objects original attributes to next release</b> ".$key;
-                print_a($parent_attrs);
-              }
-             
               /* Only update the freeze tag if the entry actually exists. */
               $ldap->cat($key);
               if($ldap->count()){
@@ -531,7 +526,14 @@ class FAI
                 $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
                 $parent_attrs['FAIstate'] = $rTag;
               }
-              FAI::save_FAI_object($key,$parent_attrs);
+              /* Don't copy over subobjects in subreleases if their parent is in "removed" state */
+              if(!FAI::parent_is_removed($key)){
+                if(DEBUG_FAI_FUNC) { 
+                  echo "<b>Copy current objects original attributes to next release</b> ".$key;
+                  print_a($parent_attrs);
+                }
+                FAI::save_FAI_object($key,$parent_attrs);
+              }
             }
           }
 
