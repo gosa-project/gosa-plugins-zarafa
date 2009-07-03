@@ -8,7 +8,7 @@
 
       <table style='width:100%;'>
         <tr>
-          <td>{t}Name{/t}</td>
+          <td>{t}Name{/t}{$must}</td>
           <td>
             {render acl=$cnACL}
              <input type='text' value='{$cn}' name='cn'>

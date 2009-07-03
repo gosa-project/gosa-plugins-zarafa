@@ -196,6 +196,11 @@ class roleGeneric extends plugin {
       $message[]= msgPool::permMove();
     }
 
+    /* must: cn */
+    if ($this->cn == ""){
+      $message[]= msgPool::required(_("Name"));
+    }
+
     // Check if this name is uniq for roles.
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -204,6 +209,7 @@ class roleGeneric extends plugin {
     if ($ldap->count() != 0 && ( $this->dn == 'new' || $this->cn != $this->orig_cn)){
       $message[]= msgPool::duplicated(_("Name"));
     }
+
     return($message);
   }
   
