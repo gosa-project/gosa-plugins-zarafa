@@ -28,7 +28,6 @@ class roleGeneric extends plugin {
   var $description ="";
   var $telephoneNumber = "";
   var $facsimileTelephoneNumber = "";
-  var $roleOccupant = array();
 
   // The objects base 
   var $base = "";
@@ -41,6 +40,12 @@ class roleGeneric extends plugin {
   // The object classes written by this plugin
   var $objectclasses = array("top","organizationalRole");
 
+  // The list of occupants  ([dn])
+  var $roleOccupant = array();
+  
+  // The roleOccupant cache, dn=>attrs
+  var $roleOccCache = array();
+
   // A list of attributes managed by this plugin
   var $attributes = array("cn","description",
     "telephoneNumber","facsimileTelephoneNumber","roleOccupant");
@@ -51,6 +56,14 @@ class roleGeneric extends plugin {
   function __construct($config,$dn){
     plugin::plugin($config,$dn);
     $this->is_account = TRUE;
+
+    // Initialize list of occupants
+    $this->roleOccupant = array();
+    if(isset($this->attrs['roleOccupant'])){
+      for($i=0;$i<$this->attrs['roleOccupant']['count']; $i++){
+        $this->roleOccupant[] = $this->attrs['roleOccupant'][$i];
+      }
+    }
 
     // Detect the objects base
     if ($this->dn == "new"){
@@ -63,8 +76,38 @@ class roleGeneric extends plugin {
     $this->orig_base = $this->base;
     $this->orig_dn = $dn;
     $this->orig_cn = $this->cn;
+
+    // Reload the occupant cache. 
+    $this->reload();
   }
 
+
+  /* Keep occupant cache up to date. 
+   * Else, we may have entries we can't display.
+   */
+  function reload()
+  {
+    // Entries can't be added twice. 
+    $attrs = array("description", "objectClass", "uid","cn");
+    $this->roleOccupant = array_unique($this->roleOccupant);
+    $this->roleOccupant = array_values($this->roleOccupant);
+  
+    $ldap = $this->config->get_ldap_link();
+    foreach($this->roleOccupant as $dn){
+      if(!isset($this->roleOccCache[$dn])){
+        if($ldap->dn_exists($dn)){
+          $ldap->cat($dn, $attrs);
+          $this->roleOccCache[$dn] = $ldap->fetch();
+        }
+      }
+    }
+
+  }
+  
+
+  function getOccupants(){
+    return($this->roleOccupant);
+  }
 
   /* Generate HTML output of this plugin.
    */
@@ -81,6 +124,29 @@ class roleGeneric extends plugin {
     if(isset($_POST['edit_membership']) && !$this->dialog instanceOf plugin){
       $this->dialog = new occupantSelect($this->config,$this->dn,$this);
     }
+    if(isset($_POST['delete_membership']) && !$this->dialog instanceOf plugin){
+      if(isset($_POST['members'])){
+        foreach($_POST['members'] as $id){
+          if(isset($this->roleOccupant[$id])){
+            unset($this->roleOccupant[$id]);
+          }
+        }
+        $this->reload();
+      }
+    }
+
+    if(isset($_POST['add_object_cancel']) && $this->dialog instanceOf plugin){
+      $this->dialog = NULL;
+    }
+    if(isset($_POST['add_object_finish']) && $this->dialog instanceOf plugin){
+      $ret = $this->dialog->save();
+      foreach($ret as $key => $entry){
+        $this->roleOccupant[] = $entry['dn'];
+        $this->roleOccCache[$entry['dn']] = $entry['attrs'];
+      }
+      $this->reload();
+      $this->dialog = NULL;
+    }
 
     if($this->dialog instanceOf plugin){
       $this->dialog->save_object();
@@ -88,6 +154,9 @@ class roleGeneric extends plugin {
     }
 
 
+    /***************
+     * Template handling
+     ***************/
 
     // Get smarty instance and assign required variables.
     $smarty = get_smarty();
@@ -144,13 +213,19 @@ class roleGeneric extends plugin {
   function convert_list()
   {
     $temp= "";
-    foreach ($this->roleOccupant as $key => $value){
-      $temp.= "
-        <option title='".addslashes( $key)."' 
-        value=\"$key\" class=\"select\" 
-        >".$value['text']."</option>\n";
+    $icon = " style=\"background-image:url('plugins/generic/images/head.png');\" ";
+    foreach ($this->roleOccupant as $key => $dn){
+      if(isset($this->roleOccCache[$dn])){
+        $entry = $this->roleOccCache[$dn];
+        $name = $entry['cn']['0'];
+        if(isset($entry['description'][0])){
+          $name .= " [".$entry['description'][0]."]";
+        }
+      }else{
+        $name = _("Unknown")."&nbsp;".$dn;
+      }
+      $temp.= "<option {$icon} title='{$dn}' value='$key' class='select'>{$name}</option>\n";
     }
-
     return ($temp);
   }
 
