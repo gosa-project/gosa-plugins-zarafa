@@ -35,7 +35,7 @@ Description: GOsa support infrastructure server
 Package: gosa-si-client
 Architecture: any
 Depends: gosa-si-common, hwinfo, libdatetime-perl
-Suggests: fai-progress, gosa-si-client-krb5
+Suggests: goto-fai-progress, gosa-si-client-krb5
 Description: GOsa support infrastructure client
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
