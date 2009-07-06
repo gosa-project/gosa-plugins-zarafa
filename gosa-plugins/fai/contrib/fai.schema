@@ -321,6 +321,8 @@ attributetype ( 1.3.6.1.4.1.10098.1.1.5.30 NAME 'FAIpartitionMethod'
 # Description: Store new disk options like preserve_always, etc.
 attributetype ( 1.3.6.1.4.1.10098.1.1.5.31 NAME 'FAIdiskOption'
 		DESC 'Options for the disk creation'
+                EQUALITY caseIgnoreIA5Match
+                SUBSTR caseIgnoreIA5SubstringsMatch
 		SYNTAX 1.3.6.1.4.1.1466.115.121.1.26)
 
 # Name       : FAIdiskType
