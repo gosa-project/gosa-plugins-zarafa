@@ -163,6 +163,14 @@ sub check_schema {
 	my $res = $self->exec_statement($sql);   # [ ['0', 'id', 'INTEGER', '0', undef, '1' ], ['1', 'timestamp', 'VARCHAR(14)', '0', '\'none\'', '0'], ... ]
 	my $db_table_length = @$res;
 
+	# Tabel does not exists, so no differences
+	if ($db_table_length == 0)
+	{
+		return 0;
+	}
+
+
+
 	# The number of columns is diffrent
 	if ($col_names_length != $db_table_length) 
 	{
