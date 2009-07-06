@@ -103,8 +103,6 @@ class roleManagement extends plugin
       }
     }
 
-    print_a($_POST);
-
     if(isset($_GET['act']) && $_GET['act'] == "edit_entry" && isset($_GET['id'])){
       $id = $_GET['id'];
       if(isset($this->roles[$id])){
