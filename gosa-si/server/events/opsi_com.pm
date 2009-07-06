@@ -475,7 +475,7 @@ sub opsi_get_netboot_products {
                             my $description= xml_quote($tres->{'description'});
                             $name=~ s/\//\\\//;
                             $description=~ s/\//\\\//;
-                            $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+                            $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name>$name<\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
                         }
                     }
                 }
@@ -498,7 +498,7 @@ sub opsi_get_netboot_products {
                     my $description= xml_quote($tres->{'description'});
                     $name=~ s/\//\\\//;
                     $description=~ s/\//\\\//;
-                    $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+                    $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name>$name<\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
                 }
             }
 
@@ -1050,7 +1050,7 @@ sub opsi_get_local_products {
                             my $description= xml_quote($tres->{'description'});
                             $name=~ s/\//\\\//;
                             $description=~ s/\//\\\//;
-                            $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+                            $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name>$name<\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
                         }
 
                     }
@@ -1074,7 +1074,7 @@ sub opsi_get_local_products {
                     my $description= xml_quote($tres->{'description'});
                     $name=~ s/\//\\\//;
                     $description=~ s/\//\\\//;
-                    $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+                    $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name>$name<\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
                 }
 
             }
