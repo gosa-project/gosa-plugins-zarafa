@@ -322,6 +322,43 @@ class roleGeneric extends plugin {
     }
   }  
 
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Load member objects */
+    $this->roleOccupant = array();
+    if (isset($source['roleOccupant'])){
+      foreach ($source['roleOccupant'] as $key => $value){
+        if ("$key" != "count"){
+          $value= @LDAP::convert($value);
+          $this->roleOccupant["$value"]= "$value";
+        }
+      }
+    }
+    $this->reload();
+  }
+
+
+  function getCopyDialog()
+  {
+    $smarty = get_smarty();
+    $smarty->assign("cn",     $this->cn);
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+    }
+  }
+
  
   static function plInfo()
   {

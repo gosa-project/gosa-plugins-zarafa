@@ -132,6 +132,9 @@ class divListRole extends MultiSelectWindow
     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple_roles|\n";
 
+    /* Add Copy & Paste header */
+    $s .= $this->parent->get_copypaste_header($this->selectedBase,$this->module);
+
     /* Add snapshot icons */
     $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
 
@@ -166,10 +169,15 @@ class divListRole extends MultiSelectWindow
       $acl    = $ui->get_permissions($val['dn'],"roles/roleGeneric");
       $acl_all= $ui->has_complete_category_acls($val['dn'],"roles");
 
-      // Create edit and remove icon buttons 
-      $actions = "<input class='center' type='image'
+
+      // Add copy & cut functionality */
+      $actions = $this->parent->get_copypaste_action($val['dn'],"ogroups","ogroup");
+ 
+      // Create edit and remove icon buttons
+      $actions.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' 
         name='role_edit_%KEY%' title='"._("Edit this entry")."'>";
+
       $actions.= $this->parent->get_snapshot_action($val['dn'],$this->module);
       if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'

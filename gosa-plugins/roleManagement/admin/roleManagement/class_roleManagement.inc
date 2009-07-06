@@ -68,7 +68,8 @@ class roleManagement extends plugin
     plugin::execute();
 
     // Variables to restore after 'entry locked' warning was displayed 
-    session::set('LOCK_VARS_TO_USE',array('/^role_/','/^act/','/^id/','/^menu_action/','/^item/'));
+    session::set('LOCK_VARS_TO_USE',array('/^copy/','/^cut/','/^role_/','/^act/',
+          '/^id/','/^menu_action/','/^item/'));
 
     $smarty     = get_smarty();
 
@@ -80,6 +81,16 @@ class roleManagement extends plugin
     $s_action   = "";
     $s_entry    = "";
     foreach($_POST as $name => $value){
+      if(preg_match("/^cut_/",$name)){
+        $s_action = "cut";  
+        $s_entry = preg_replace("/^cut_([0-9]*)_.*$/","\\1",$name);
+        break;
+      }
+      if(preg_match("/^copy_/",$name)){
+        $s_action = "copy";  
+        $s_entry = preg_replace("/^copy_([0-9]*)_.*$/","\\1",$name);
+        break;
+      }
       if(preg_match("/^role_edit_/",$name)){
         $s_action = "edit";  
         $s_entry = preg_replace("/^role_edit_([0-9]*)_.*$/","\\1",$name);
@@ -91,6 +102,9 @@ class roleManagement extends plugin
         break;
       }
     }
+
+    print_a($_POST);
+
     if(isset($_GET['act']) && $_GET['act'] == "edit_entry" && isset($_GET['id'])){
       $id = $_GET['id'];
       if(isset($this->roles[$id])){
@@ -101,12 +115,25 @@ class roleManagement extends plugin
  
     // Get menu related posts 
     if(isset($_POST['menu_action'])) {
-      if($_POST['menu_action'] == "role_new"){
+      if($_POST['menu_action'] == "editPaste"){
+        $s_action = "editPaste";
+      }elseif($_POST['menu_action'] == "role_new"){
         $s_action = "new";
       }elseif($_POST['menu_action'] == "remove_multiple_roles"){
         $s_action = "remove_multiple";
       }
     }
+
+    /***************
+     * Copy & Paste handling
+     ***************/
+
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
+    }
+
 
     /***************
      * Remove handling
@@ -382,7 +409,74 @@ class roleManagement extends plugin
     return(array(get_ou('roleRDN').$this->DivListRoles->selectedBase));
   }
 
-  
+
+  function copyPasteHandling_from_queue($s_action,$s_entry)
+  {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
+    $ui = get_userinfo();
+
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn = $this->roles[$s_entry]['dn'];
+      if($s_action == "copy" && $ui->is_copyable($dn,"roles","roleGeneric")){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"roletabs","ROLETABS","roles");
+      }
+      if($s_action == "cut" && $ui->is_cutable($dn,"roles","roleGeneric")){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"roletabs","ROLETABS","roles");
+      }
+    }
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->roles[$id]['dn'];
+
+        if($s_action == "copy_multiple" && $ui->is_copyable($dn,"roles","roleGeneric")){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","roletabs","ROLETABS","roles");
+        }
+        if($s_action == "cut_multiple" && $ui->is_cutable($dn,"roles","roleGeneric")){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","roletabs","ROLETABS","roles");
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Get dialog */
+      $this->CopyPasteHandler->SetVar("base",$this->DivListRoles->selectedBase);
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
+  }
+
+ 
   function save_object()
   {
     $this->DivListRoles->save_object();
