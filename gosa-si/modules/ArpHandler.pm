@@ -195,11 +195,11 @@ sub got_packet {
 				cn => (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\./),
 				macVendor => (($lookup_vendor) ? &get_vendor_for_mac($packet->{source_haddr}) : "Unknown Vendor"),
 			};
-			&main::daemon_log("Host was not found in LDAP (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
+			&main::daemon_log("A DEBUG: Host was not found in LDAP (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",522);
 			&main::daemon_log(
-				"New Host ".($hosts_database->{$packet->{source_haddr}}->{dnsname}).
+				"A INFO: New Host ".($hosts_database->{$packet->{source_haddr}}->{dnsname}).
 				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
-				"/".$hosts_database->{$packet->{source_haddr}}->{macAddress},4);
+				"/".$hosts_database->{$packet->{source_haddr}}->{macAddress},5);
 			&add_ldap_entry(
 				$ldap_handle, 
 				$ldap_base, 
@@ -213,9 +213,9 @@ sub got_packet {
 	} else {
 		if(($arp_update eq "true") and !($hosts_database->{$packet->{source_haddr}}->{ipHostNumber} eq $packet->{source_ipaddr})) {
 			&main::daemon_log(
-				"IP Address change of MAC ".$packet->{source_haddr}.
+				"A INFO: IP Address change of MAC ".$packet->{source_haddr}.
 				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
-				"->".$packet->{source_ipaddr}, 4);
+				"->".$packet->{source_ipaddr}, 5);
 			$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}= $packet->{source_ipaddr};
 			&change_ldap_entry(
 				$ldap_handle, 
@@ -311,7 +311,7 @@ sub get_vendor_for_mac {
 		if(length($vendor) > 0) {
 			$result= @{$vendor}[0];
 		}
-		&main::daemon_log("Looking up Vendor for MAC ".$mac.": $result", 4);
+		&main::daemon_log("A INFO: Looking up Vendor for MAC ".$mac.": $result", 5);
 	}
 
 	return $result;
@@ -334,10 +334,10 @@ sub add_ldap_entry {
 		my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
 		my $c_res = (defined($s_res))?$s_res->count:0;
 		if($c_res == 1) {
-			&main::daemon_log("WARNING: macAddress $mac already in LDAP", 1);
+			&main::daemon_log("A WARNING: macAddress $mac already in LDAP", 3);
 			return;
 		} elsif($c_res > 0) {
-			&main::daemon_log("ERROR: macAddress $mac exists $c_res times in LDAP", 1);
+			&main::daemon_log("A ERROR: macAddress $mac exists $c_res times in LDAP", 1);
 			return;
 		}
 
@@ -357,14 +357,14 @@ sub add_ldap_entry {
 
 		# for $result->code constants please look at Net::LDAP::Constant
 		if($result->code == 68) {   # entry already exists 
-			&main::daemon_log("WARNING: $dn ".$result->error, 3);
+			&main::daemon_log("A WARNING: $dn ".$result->error, 3);
 		} elsif($result->code == 0) {   # everything went fine
 			&main::daemon_log("add entry $dn to ldap", 1);
 		} else {  # if any other error occur
-			&main::daemon_log("ERROR: $dn, ".$result->code.", ".$result->error, 1);
+			&main::daemon_log("A ERROR: $dn, ".$result->code.", ".$result->error, 1);
 		}
 	} else {
-		&main::daemon_log("Not adding new Entry: LDAP disabled", 6);
+		&main::daemon_log("A Not adding new Entry: LDAP disabled", 6);
 	}
 	return;
 }

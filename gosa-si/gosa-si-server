@@ -325,6 +325,8 @@ usage: $prg [-hvf] [-c config] [-d number]
                           32 : ldap connectivity
                           64 : database status and connectivity
                          128 : main process 
+                         256 : creation of packages_list_db
+                         512 : ARP debug information
 EOF
 	exit(0);
 }
@@ -996,7 +998,7 @@ sub send_msg_to_target {
             if($new_status eq "down"){
                 daemon_log("$session_id WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
             } else {
-                daemon_log("$session_id INFO: set '$address' from status '$act_status' to '$new_status'", 5);
+                daemon_log("$session_id DEBUG: set '$address' from status '$act_status' to '$new_status'", 138);
             }
         }
     }
@@ -1017,7 +1019,7 @@ sub send_msg_to_target {
             if($new_status eq "down"){
                 daemon_log("$session_id WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
             } else {
-                daemon_log("$session_id INFO: set '$address' from status '$act_status' to '$new_status'", 5);
+                daemon_log("$session_id DEBUG: set '$address' from status '$act_status' to '$new_status'", 138);
             }
         }
     }
@@ -1606,7 +1608,7 @@ sub process_task {
 
                 # Target of msg is a mac address
                 elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
-                    daemon_log("$session_id INFO: target is mac address '$answer_target', looking for host in known_clients and foreign_clients", 5);
+                    daemon_log("$session_id DEBUG: target is mac address '$answer_target', looking for host in known_clients and foreign_clients", 138);
 
                     # Looking for macaddress in known_clients
                     my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$answer_target'";
@@ -3132,7 +3134,7 @@ sub parse_package_info {
     $repo_dirs{ "${repo_path}/pool" } = 1;
 
     foreach $package ("Packages.gz"){
-        daemon_log("$session_id DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
+        daemon_log("$session_id DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 266);
         get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section", $session_id );
         parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
     }
@@ -3150,9 +3152,9 @@ sub get_package {
     # This is ugly, but I've no time to take a look at "how it works in perl"
     if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
         system("gunzip -cd '$dest' > '$dest.in'");
-        daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 7);
+        daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 266);
         unlink($dest);
-        daemon_log("$session_id DEBUG: delete file '$dest'", 7); 
+        daemon_log("$session_id DEBUG: delete file '$dest'", 266); 
     } else {
         daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' into '$dest' failed!", 1);
     }
@@ -3259,7 +3261,7 @@ sub cleanup_and_extract {
 
 		if( -f "$dir/DEBIAN/templates" ) {
 
-			daemon_log("0 DEBUG: Found debconf templates in '$package' - $newver", 7);
+			daemon_log("0 DEBUG: Found debconf templates in '$package' - $newver", 266);
 
 			my $tmpl= ""; {
 				local $/=undef;
