@@ -330,6 +330,13 @@ sub process_job_msg {
         }
     }
 
+    # Default db value is 'none' otherwise use systax /\d+_$periodic/
+    my $db_periodic_value = 'none';
+    if ($periodic ne 'none')
+    {
+        $db_periodic_value = $periodic_time."_".$periodic;
+    }
+
     # Add job to job queue
     if( $error == 0 ) {
         my $func_dic = {table=>$main::job_queue_tn, 
@@ -345,7 +352,7 @@ sub process_job_msg {
 			plainname=>$plain_name,
             siserver=>"localhost",
             modified=>"1",
-            periodic=>$periodic_time."_".$periodic,
+            periodic=>$db_periodic_value,
         };
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {
