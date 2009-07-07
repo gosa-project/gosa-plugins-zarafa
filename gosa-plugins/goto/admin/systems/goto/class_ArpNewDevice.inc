@@ -8,6 +8,14 @@ class ArpNewDevice extends plugin
   var $objectclasses = array("gotoHard");
   var $ignore_account = TRUE;
 
+  var $ObjectGroups   = array();
+  var $SystemTypes       = array();
+
+  var $ObjectGroup    = "none";
+  var $SystemType     = "workstation";
+
+  var $gotoIntegration = FALSE;
+
   function ArpNewDevice ($config, $dn= NULL, $parent= NULL)
   {
     plugin :: plugin($config,$dn);
@@ -15,16 +23,50 @@ class ArpNewDevice extends plugin
     $this->acl = "#all#";
     $this->netConfigDNS->acl = $this->acl;
     $this->netConfigDNS->force_dns();
+
+    /* Get object groups */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd ($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("cn"));
+    $tmp= array();
+    while($attrs = $ldap->fetch()){
+      $tmp[$attrs['dn']]= $attrs['cn'][0];
+    }
+    asort($tmp, SORT_LOCALE_STRING);
+    $this->ObjectGroups= $tmp;
+
+    $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"));
+    if(class_available("opsi")){
+      $this->SystemTypes["opsi_client"]= _("Windows workstation");
+    }
   }
 
   function execute()
   {
+    /* Get object groups */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd ($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("gosaGroupObjects","cn"));
+    $tmp= array("W" => array(),"T" => array(), "S" => array(),"O" => array());
+    while($attrs = $ldap->fetch()){
+      $tmp[preg_replace("/[\[\] ]/","",$attrs['gosaGroupObjects'][0])][$attrs['dn']] = $attrs['cn'][0];
+    }
+
     $smarty = get_smarty();
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
     $this->netConfigDNS->cn= $this->cn;
+
+    $map = array("workstation" => "W","terminal" => "T","server" => "S", "opsi_client" => "O");
     $smarty->assign("netconfig", $this->netConfigDNS->execute());
+    $smarty->assign("ogroups", $tmp[$map[$this->SystemType]]);
+    $smarty->assign("SystemTypes"     ,$this->SystemTypes);
+    $smarty->assign("SystemTypeKeys"  ,array_flip($this->SystemTypes)); 
+    $smarty->assign("ObjectGroup",$this->ObjectGroup);
+    $smarty->assign("SystemType",$this->SystemType);
+
+    $smarty->assign("gotoIntegration",$this->gotoIntegration);
 
     /* Display sub dialog from network settings */
     $this->netConfigDNS->acl = $this->acl;
@@ -53,20 +95,36 @@ class ArpNewDevice extends plugin
     if(isset($_POST['ArpNewDevice_posted'])){
       plugin::save_object();
       $this->netConfigDNS->save_object();
+    
+      $this->gotoIntegration = isset($_POST['gotoIntegration']);
+      if($this->gotoIntegration){
+        if(isset($_POST['SystemType'])){
+          $this->SystemType = get_post('SystemType');
+        }
+        if(isset($_POST['ObjectGroup'])){
+          $this->ObjectGroup = get_post('ObjectGroup');
+        }
+      }
     }
   }
 
   function save()
   {
+  
     $this->netConfigDNS->acl = $this->acl;
     plugin::save();
     $this->netConfigDNS->cn = $this->cn;    
     $this->netConfigDNS->save($this->dn);
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->rmdir_recursive($this->dn);
-    if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $key->dn, LDAP_DEL, get_class()));
+
+    // Do not remove this Arp-Device if gotoIntegration was selected.
+    if(!$this->gotoIntegration){ 
+
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->rmdir_recursive($this->dn);
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $key->dn, LDAP_DEL, get_class()));
+      }
     }
   }
 }
