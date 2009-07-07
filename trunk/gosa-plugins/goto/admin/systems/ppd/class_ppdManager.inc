@@ -162,7 +162,11 @@ class ppdManager
 	}
 
 	function loadProperties($ppdFile)
-	{
+  {
+    if(!(filesize($ppdFile))) {
+      trigger_error(_('Parsing PPD file failed - File has 0 bytes'));
+    }
+
 		$group= "";
 		$option= "";
 		$properties= array();
@@ -290,7 +294,11 @@ class ppdManager
 	}
 
 	function loadDescription($ppdFile)
-	{
+  {
+    if(!(filesize($ppdFile))) {
+      trigger_error(_('Parsing PPD file failed - File has 0 bytes'));
+    }
+
 		$ppdDesc = array();
 				
 		/* Only parse complete PPD file again, if it was changed */
