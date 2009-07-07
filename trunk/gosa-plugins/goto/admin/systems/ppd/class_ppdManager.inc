@@ -165,6 +165,7 @@ class ppdManager
   {
     if(!(filesize($ppdFile))) {
       trigger_error(_('Parsing PPD file failed - File has 0 bytes'));
+      return;
     }
 
 		$group= "";
@@ -297,6 +298,7 @@ class ppdManager
   {
     if(!(filesize($ppdFile))) {
       trigger_error(_('Parsing PPD file failed - File has 0 bytes'));
+      return;
     }
 
 		$ppdDesc = array();
