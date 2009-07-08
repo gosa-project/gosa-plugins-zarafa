@@ -70,7 +70,7 @@ class group extends plugin
   var $attributes= array("cn", "description", "gidNumber","memberUid","sambaGroupType","sambaSID","accessTo","trustModel");
   var $objectclasses= array("top", "posixGroup");
 
-  var $CopyPasteVars  = array("force_gid","fon_group","smbgroup","groupType","sambaSID","sambaDomainName","SID","nagios_group","sambaGroupType");
+  var $CopyPasteVars  = array("force_gid","fon_group","smbgroup","groupType","sambaSID","sambaDomainName","SID","nagios_group");
 
   var $multiple_support = TRUE;
 
@@ -1408,7 +1408,9 @@ class group extends plugin
     plugin::PrepareForCopyPaste($source);
     
     $source_o = new group($this->config, $source['dn']);
-    $this->smbgroup = $source_o->smbgroup;
+    foreach($this->CopyPasteVars as $var) {
+        $this->$var = $source_o->$var;
+    }
 
     $this->memberUid = array();
     if(isset($source['memberUid'])){
