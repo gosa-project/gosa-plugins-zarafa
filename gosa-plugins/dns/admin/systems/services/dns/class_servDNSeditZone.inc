@@ -403,9 +403,15 @@ class servdnseditZone extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-        
+    
     /* Check if zoneName is already in use */
     $usedZones = $this->getUsedZoneNames();
+    if($this->OldZoneName == "" && !empty($this->zoneName)){
+      $tmp = trim($this->zoneName,".").".";
+      if(isset($usedZones[$tmp])){
+        $message[] = msgPool::duplicated(_("Zone name"));
+      }
+    }
 
     if(empty($this->zoneName)){
       $message[] = msgPool::required(_("Zone name"));
@@ -464,7 +470,7 @@ class servdnseditZone extends plugin
       default : trigger_error("Invalid network class given '".$this->NetworkClass."'");
     }
     foreach($zones as $name => $data){
-      if($data['ReverseZone'] == $test){
+      if($data['ReverseZone'] == $test && $data['zoneName'] != $this->InitialzoneName){
         $message[] = msgPool::duplicated(_("Network address"));
       }
     }
