@@ -28,6 +28,9 @@
 						</td>
 					</tr>
 				</table>
+                                <p class="seperator">&nbsp;</p>
+                                <p>
+                                <input type="checkbox" name="mode" value="1" {$mode} {$lockmode}> {t}Use 'setup-storage' to partition the disk{/t}                                      </p>
 		</td>
 		<td style="border-left: 1px solid rgb(160, 160, 160);">
 		   &nbsp;
@@ -38,29 +41,17 @@
 						{t}Discs{/t}
 					</LABEL>
 				</h2>
-				<table width="100%" summary="">
-				<tr>
-					<td>
-						<select name="disks[]" title="{t}Choose a disk to delete or edit{/t}" style="width:100%" size="20" id="SubObject" multiple>
-							{html_options options=$disks}
-							<option>&nbsp;</option>
-						</select><br>
+                                {$Entry_divlist}
 {if $sub_object_is_addable}
-						<input type="submit" name="AddDisk"     value="{msgPool type=addButton}"     title="{msgPool type=addButton}">
+                                <input type="submit" name="AddDisk" value="{t}Add disk{/t}" title="{t}Add disk{/t}">
+                                <input type="submit" name="AddRaid" value="{t}Add RAID{/t}" title="{t}Add RAID{/t}" disabled>
+                                <input type="submit" name="AddVolgroup" value="{t}Add volume group{/t}" title="{t}Add volume group{/t}" disabled>
 {else}
-						<input type="button" name="dummy_c" value="{msgPool type=addButton}"     title="{msgPool type=addButton}" disabled >
+                                <input type="submit" name="AddDisk" value="{t}Add disk{/t}" title="{t}Add disk{/t}" disabled>
+                                <input type="submit" name="AddRaid" value="{t}Add RAID{/t}" title="{t}Add RAID{/t}" disabled>
+                                <input type="submit" name="AddVolgroup" value="{t}Add volume group{/t}" title="{t}Add volume group{/t}" disabled>
 {/if}
 
-						<input type="submit" name="EditDisk"    value="{t}Edit{/t}"    title="{t}Edit{/t}">
-
-{if $sub_object_is_removeable}
-						<input type="submit" name="DelDisk"     value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
-{else}
-						<input type="button" name="dummy_r" disabled value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
-{/if}
-					</td>
-				</tr>
-				</table>
 		</td>
 	</tr>
 </table>

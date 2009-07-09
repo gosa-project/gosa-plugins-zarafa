@@ -4,7 +4,7 @@ class faiPartitionTable extends plugin
 {
   /* attribute list for save action */
   var $ignore_account   = TRUE;
-  var $attributes       = array("cn","description");
+  var $attributes       = array("cn","description", "FAIpartitionMethod");
   var $objectclasses    = array("top","FAIclass","FAIpartitionTable");
 
   var $subAttributes      = array("cn","description");
@@ -14,12 +14,13 @@ class faiPartitionTable extends plugin
   var $subBinary = array();
 
   /* Specific attributes */
-  var $cn               = "";       // The class name for this object
-  var $description      = "";       // The description for this set of partitions
-  var $disks            = array();  // All defined Disks 
-  var $is_dialog        = false;    // specifies which buttons will be shown to save or abort
+  var $cn                 = "";       // The class name for this object
+  var $description        = "";       // The description for this set of partitions
+  var $FAIpartitionMethod = "";       // "setup-storage" or not assigned
+  var $disks              = array();  // All defined Disks 
+  var $is_dialog          = false;    // specifies which buttons will be shown to save or abort
 
-  var $FAIstate         = "";
+  var $FAIstate           = "";
   var $ui;
 
   var $view_logged      = FALSE;
@@ -43,10 +44,22 @@ class faiPartitionTable extends plugin
 
         /* Skip not relevant objects */
         if(!preg_match("/".preg_quote($this->dn, '/')."$/i",$obj['dn'])) continue;
-
         $objects = array();
         $objects['description']  = "";
         $objects['status']      = "edited";
+
+        // Transform disk type into image later...
+        if (!isset($obj['FAIdiskType'])){
+          $objects['type']        = "old";
+        } else {
+          $objects['type']        = $obj['FAIdiskType'];
+        }
+
+        // Transform potential lvm information
+        if (isset($obj['FAIlvmDevice'])){
+          $objects['vg'] = $obj['FAIlvmDevice'];
+        }
+
         $objects['dn']          = $obj['dn'];
         $objects                = $this->get_object_attributes($objects,$this->subAttributes);
         $this->disks[$objects['cn']] = $objects;
@@ -131,9 +144,91 @@ class faiPartitionTable extends plugin
       set_object_info($this->dn);
     }
 
-    if((isset($_POST['EditDisk']))&&(isset($_POST['disks']))){
+    /* Edit entries via GET */
+    $Udisk = null;
+    if(isset($_GET['act']) && isset($_GET['id'])){
+      if($_GET['act'] == "edit" && isset($this->disks[$_GET['id']])){
+        $Udisk= $_GET['id'];
+      }
+    }
+
+    /* New Listhandling */
+    foreach($_POST as $name => $value){
+      if(preg_match("/^edit_/",$name)){
+        $entry = preg_replace("/^edit_/","",$name);
+        $Udisk = base64_decode(preg_replace("/_.*/","",$entry));
+        break;
+      }
+      if(preg_match("/^delete_/",$name)){
+        $entry = preg_replace("/^delete_/","",$name);
+        $disk = base64_decode(preg_replace("/_.*/","",$entry));
+
+        if (!preg_match("/freeze/i", $this->FAIstate)){
+          if(isset($this->disks[$disk])){
+
+            /* Check for references */
+            $ignore = false;
+            $name = "";
+            foreach($this->disks as $dtest) {
+              // Is raid?
+              $device= null;
+              $name = $dtest['cn'];
+
+              if ($disk == "raid"){
+                $device = "md";
+              } else {
+                $device = $disk;
+
+                // Used by raid?
+                if (isset($this->disks[$name]['partitions'])){
+                  foreach ($this->disks[$name]['partitions'] as $partition) {
+                    if (preg_match("/${disk}\.?[0-9]+/", $partition['FAIpartitionSize'])){
+                      $ignore = true;
+                      break 2;
+                    }
+                  }
+                }
+              }
+
+              // Used by volgroup?
+              if (isset($this->disks[$name]["vg"])){
+                foreach ($this->disks[$name]["vg"] as $vg_element) {
+                  if (preg_match("/^${device}\.?[0-9]+$/", $vg_element)){
+                    $ignore = true;
+                    break 2;
+                  }
+                }
+              }
+            }
+
+            if ($ignore) {
+              msg_dialog::display(_("Error"), sprintf(_("The disk cannot be deleted while it is used in the '%s' disk definition!"), $name), ERROR_DIALOG);
+            } else {
+              if($this->disks[$disk]['status']=="edited"){
+                $this->disks[$disk."-delete"]=$this->disks[$disk];
+                unset($this->disks[$disk]);
+                $disk = $disk."-delete";        
+                $this->disks[$disk]['status']="delete";
+                foreach($this->disks[$disk]['partitions'] as $name => $value ){
+                  if($value['status']=="edited"){
+                    $this->disks[$disk]['partitions'][$name]['status']="delete"; 
+                  }else{
+                    unset($this->disks[$disk]['partitions'][$name]);
+                  }
+                }
+              }else{
+                unset($this->disks[$disk]);
+              }
+            }
+
+          }
+        }
+        break;
+      }
+    }
+
+    if($Udisk){
       $usedDiskNames =array();
-      $Udisk = $_POST['disks'][0];
       if(isset($this->disks[$Udisk])){
 
         foreach($this->disks  as $key=>$disk){
@@ -210,34 +305,6 @@ class faiPartitionTable extends plugin
       }
     }
 
-    /* Delete selected disk drive from list
-     * Assign delete status for all its partitions      
-     */
-    if((isset($_POST['DelDisk']))&&(!empty($_POST['disks']))){
-      if (!preg_match("/freeze/i", $this->FAIstate)){
-        foreach($_POST['disks'] as $disk) {
-
-          if(isset($this->disks[$disk])){
-            if($this->disks[$disk]['status']=="edited"){
-              $this->disks[$disk."-delete"]=$this->disks[$disk];
-              unset($this->disks[$disk]);
-              $disk = $disk."-delete";        
-              $this->disks[$disk]['status']="delete";
-              foreach($this->disks[$disk]['partitions'] as $name => $value ){
-                if($value['status']=="edited"){
-                  $this->disks[$disk]['partitions'][$name]['status']="delete"; 
-                }else{
-                  unset($this->disks[$disk]['partitions'][$name]);
-                }
-              }
-            }else{
-              unset($this->disks[$disk]);
-            }
-          }
-        }
-      }
-    }
-
     /* Display dialog if one is defined
      */
     if(is_object($this->dialog)){
@@ -268,18 +335,20 @@ class faiPartitionTable extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translated){
       $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/i",$this->FAIstate)));
     }
-    $disks = $this->getDisks();
-    $smarty->assign("disks"   ,$disks);
-    $display.= $smarty->fetch(get_template_path('faiPartitionTable.tpl', TRUE));
-    return($display);
-  }
 
-  function getDisks(){
-    /* Return all available disks for this partition table
-     * Return in listBox friendly array
-     */
-    $a_return = array();
+    /* Assign mode */
+    if ($this->FAIpartitionMethod == ""){
+      $smarty->assign("mode", "");
+    } else {
+      $smarty->assign("mode", "checked");
+    }
+    $smarty->assign("lockmode", "disabled");
+
+    /* Divlist containing disks */
+    $divlist = new divSelectBox("FAItemplates");
+    $divlist->setHeight(400);
     foreach($this->disks as $key => $disk){
+      $act = "";
 
       $dn = "new";
       if(isset($obj['dn'])){
@@ -288,32 +357,40 @@ class faiPartitionTable extends plugin
       $dn = $this->acl_base_for_current_object($dn);
       $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
       if(preg_match("/(r|w)/",$acl)) {
-
         if($disk['status'] != "delete"){
+
+          $act .= "<input type='image' src='images/lists/edit.png'   name='edit_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+          if(preg_match("/d/",$acl)){
+            $act .="<input type='image' src='images/lists/trash.png' name='delete_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+          }
+
           $cnt=0;
           foreach($disk['partitions'] as $val){
             if($val['status']!="delete"){
               $cnt ++;
             }
           }
-          if(!empty($disk['description'])){
-            if($cnt == 1){
-              $a_return[$key]=  $disk['cn']." [".$disk['description']."], ".sprintf(_("%s partition"), $cnt);
-            }else{
-              $a_return[$key]=  $disk['cn']." [".$disk['description']."], ".sprintf(_("%s partitions"), $cnt);
-            }
-          }else{
-            if($cnt == 1){
-              $a_return[$key]=  $disk['cn'].", ".sprintf(_("%s partition"), $cnt);
-            }else{
-              $a_return[$key]=  $disk['cn'].", ".sprintf(_("%s partitions"), $cnt);
-            }
-          }
+
+          $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$key."</a>";
+          $types= array("old" => "plugins/fai/images/fai_partitionTable.png", "disk" => "plugins/fai/images/fai_partitionTable.png",
+                        "raid" => "plugins/fai/images/raid.png", "lvm" => "plugins/ogroups/images/list_ogroup.png");
+          $type = isset($disk['type'])?$types[$disk['type']]:$types['old'];
+          $divlist->AddEntry(array( 
+              array("string"=> "<img border='0' src='".$type."'>", "attach"=>"style='width:16px'"),
+              array("string"=> $edit_link, "attach"=>"style='width:100px'"),
+              array("string"=> $disk['description']),
+              array("string"=> $cnt,  "attach"=>"style='width:16px'"),
+              array("string"=>str_replace("%s",base64_encode($key),$act),
+                "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
         }
       }
     }
-    return($a_return);
+    $smarty->assign("Entry_divlist",$divlist->DrawList());
+
+    $display.= $smarty->fetch(get_template_path('faiPartitionTable.tpl', TRUE));
+    return($display);
   }
+
 
 
   /* Delete me, and all my subtrees
