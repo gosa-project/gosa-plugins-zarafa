@@ -50,14 +50,15 @@ class faiPartitionTable extends plugin
 
         // Transform disk type into image later...
         if (!isset($obj['FAIdiskType'])){
-          $objects['type']        = "old";
+          $objects['FAIdiskType']        = "old";
         } else {
-          $objects['type']        = $obj['FAIdiskType'];
+          $objects['FAIdiskType']        = $obj['FAIdiskType'];
         }
+        $objects['FAIdiskOption']        = $obj['FAIdiskOption'];
 
         // Transform potential lvm information
         if (isset($obj['FAIlvmDevice'])){
-          $objects['vg'] = $obj['FAIlvmDevice'];
+          $objects['FAIlvmDevice'] = $obj['FAIlvmDevice'];
         }
 
         $objects['dn']          = $obj['dn'];
@@ -129,7 +130,11 @@ class faiPartitionTable extends plugin
       foreach($this->disks as $key=>$disk){
         $usedDiskNames[]= $key;
       }
-      $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames); 
+      if ($this->FAIpartitionMethod == "setup-storage") {
+        $this->dialog = new faiDiskEntry($this->config,$this->dn,$usedDiskNames); 
+      } else {
+        $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames); 
+      }
       $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
       $this->dialog->set_acl_category("fai");
       $this->dialog->FAIstate = $this->FAIstate;
@@ -191,8 +196,8 @@ class faiPartitionTable extends plugin
               }
 
               // Used by volgroup?
-              if (isset($this->disks[$name]["vg"])){
-                foreach ($this->disks[$name]["vg"] as $vg_element) {
+              if (isset($this->disks[$name]["FAIlvmDevice"])){
+                foreach ($this->disks[$name]["FAIlvmDevice"] as $vg_element) {
                   if (preg_match("/^${device}\.?[0-9]+$/", $vg_element)){
                     $ignore = true;
                     break 2;
@@ -246,7 +251,11 @@ class faiPartitionTable extends plugin
           $dn = "new";
         }
 
-        $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+        if ($this->FAIpartitionMethod == "setup-storage") {
+          $this->dialog = new faiDiskEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+        } else {
+          $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+        }
         $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
         $this->dialog->set_acl_category("fai");
         $this->dialog->FAIstate = $this->FAIstate;
@@ -385,7 +394,7 @@ class faiPartitionTable extends plugin
           $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$key."</a>";
           $types= array("old" => "plugins/fai/images/fai_partitionTable.png", "disk" => "plugins/fai/images/fai_partitionTable.png",
                         "raid" => "plugins/fai/images/raid.png", "lvm" => "plugins/ogroups/images/list_ogroup.png");
-          $type = isset($disk['type'])?$types[$disk['type']]:$types['old'];
+          $type = isset($disk['FAIdiskType'])?$types[$disk['FAIdiskType']]:$types['old'];
           $divlist->AddEntry(array( 
               array("string"=> "<img border='0' src='".$type."'>", "attach"=>"style='width:16px'"),
               array("string"=> $edit_link, "attach"=>"style='width:100px'"),

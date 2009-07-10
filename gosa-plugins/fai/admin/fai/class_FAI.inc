@@ -63,7 +63,7 @@ class FAI
       foreach($deps_to_search as $fai_base){
 
         /* Ldap search for fai classes specified in this release */
-        $attributes  = array("dn","objectClass","FAIstate","cn","FAIdiskType","FAIlvmDevice");
+        $attributes  = array("dn","objectClass","FAIstate","cn","FAIdiskType","FAIlvmDevice","FAIdiskOption");
         $res_tmp = get_list($filter,"fai",$fai_base,$attributes,GL_SUBSEARCH | GL_SIZELIMIT);
 
         /* check the returned objects, and add/replace them in our return variable */
@@ -103,6 +103,11 @@ class FAI
             $buffer['FAIdiskType'] = "old";
           }
 
+          if(isset($attr['FAIdiskOption'])){
+            $buffer['FAIdiskOption'] = $attr['FAIdiskOption'];
+          } else {
+            $buffer['FAIdiskOption'] = null;
+          }
           if(isset($attr['FAIlvmDevice'])){
             $buffer['FAIlvmDevice'] = $attr['FAIlvmDevice'];
           }
