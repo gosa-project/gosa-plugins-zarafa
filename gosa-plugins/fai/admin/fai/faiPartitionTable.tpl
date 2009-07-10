@@ -30,7 +30,7 @@
 				</table>
                                 <p class="seperator">&nbsp;</p>
                                 <p>
-                                <input type="checkbox" name="mode" value="1" {$mode} {$lockmode}> {t}Use 'setup-storage' to partition the disk{/t}                                      </p>
+                                <input type="checkbox" name="mode" value="1" {$mode} {$lockmode} onClick="changeState('AddRaid'); changeState('AddVolgroup');"> {t}Use 'setup-storage' to partition the disk{/t}                                      </p>
 		</td>
 		<td style="border-left: 1px solid rgb(160, 160, 160);">
 		   &nbsp;
@@ -44,8 +44,8 @@
                                 {$Entry_divlist}
 {if $sub_object_is_addable}
                                 <input type="submit" name="AddDisk" value="{t}Add disk{/t}" title="{t}Add disk{/t}">
-                                <input type="submit" name="AddRaid" value="{t}Add RAID{/t}" title="{t}Add RAID{/t}" disabled>
-                                <input type="submit" name="AddVolgroup" value="{t}Add volume group{/t}" title="{t}Add volume group{/t}" disabled>
+                                <input type="submit" id="AddRaid" name="AddRaid" value="{t}Add RAID{/t}" title="{t}Add RAID{/t}" {$storage_mode} {$addraid}>
+                                <input type="submit" id="AddVolgroup" name="AddVolgroup" value="{t}Add volume group{/t}" title="{t}Add volume group{/t}" {$storage_mode}>
 {else}
                                 <input type="submit" name="AddDisk" value="{t}Add disk{/t}" title="{t}Add disk{/t}" disabled>
                                 <input type="submit" name="AddRaid" value="{t}Add RAID{/t}" title="{t}Add RAID{/t}" disabled>

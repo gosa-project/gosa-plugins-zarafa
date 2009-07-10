@@ -339,10 +339,21 @@ class faiPartitionTable extends plugin
     /* Assign mode */
     if ($this->FAIpartitionMethod == ""){
       $smarty->assign("mode", "");
+      $smarty->assign("storage_mode", "disabled");
     } else {
       $smarty->assign("mode", "checked");
+      $smarty->assign("storage_mode", "");
     }
-    $smarty->assign("lockmode", "disabled");
+    if (!count($this->disks)) {
+      $smarty->assign("lockmode", "");
+    } else {
+      $smarty->assign("lockmode", "disabled");
+    }
+    if (isset($this->disks['raid'])){
+      $smarty->assign("addraid", "disabled");
+    } else {
+      $smarty->assign("addraid", "");
+    }
 
     /* Divlist containing disks */
     $divlist = new divSelectBox("FAItemplates");
