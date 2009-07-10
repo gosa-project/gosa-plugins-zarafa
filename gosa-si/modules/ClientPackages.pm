@@ -1034,7 +1034,7 @@ sub hardware_config {
 	} else {
 		my $entry= $mesg->entry(0);
 		if (defined($entry->get_value("gotoHardwareChecksum"))) {
-			if (! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
+			if (! ($entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum)) {
 				$entry->replace(gotoHardwareChecksum => $gotoHardwareChecksum);
 				if($entry->update($ldap_handle)) {
 					&main::daemon_log("$session_id INFO: Hardware changed! Detection triggered.", 5);
