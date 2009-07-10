@@ -127,6 +127,11 @@ class faiProfile extends plugin
     $index = $this->getpos($atr,$attrs);
     $res = $attrs;
 
+    /* Don't do anything if there is just one element */
+    if (count($attrs) == 1) {
+      return($res);
+    }
+
     for($i=0;$i<count($attrs);$i++) {
       if ($i==$index) {
         $left_index = $index - 1;
@@ -144,6 +149,11 @@ class faiProfile extends plugin
   {
     $index = $this->getpos($atr,$attrs);
     $res = $attrs;
+
+    /* Don't do anything if there is just one element */
+    if (count($attrs) == 1) {
+      return($res);
+    }
 
     for($i=0;$i<count($attrs);$i++) {
       if ($i==$index) {
@@ -291,10 +301,15 @@ class faiProfile extends plugin
     /* Append fai classes to divlist */
     if($this->acl_is_readable("FAIclass")){
       $i = 1;
+      $count = count($this->FAIclasses);
+
+      $linkupdown = '';
       foreach($this->FAIclasses as $usedClass){
         if($i==1) {
-          $linkupdown = "&nbsp;&nbsp;&nbsp;&nbsp;" . $linkdown;
-        } elseif ($i<count($this->FAIclasses)) {
+          if ($count > 1) {
+            $linkupdown = "&nbsp;&nbsp;&nbsp;&nbsp;" . $linkdown;
+          }
+        } elseif ($i<$count) {
           $linkupdown = $linkup . $linkdown;    
         }
         else {
