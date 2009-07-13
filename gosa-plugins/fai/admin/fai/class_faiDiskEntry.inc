@@ -9,6 +9,7 @@ class faiDiskEntry extends plugin
 
   var $DISKcn              = "";
   var $DISKdescription     = "";
+  var $DISKFAIdiskOptions     = "";
   
   var $partitions           = array();
   var $UsedAttrs            = array();
@@ -16,6 +17,8 @@ class faiDiskEntry extends plugin
   var $old_cn               = "";
   var $status               = "new";
   var $deletePartitions     = array();
+  var $fstabkey             = "device";
+  var $disklabel            = "msdos";
 
   var $FAIstate             = "";
 
@@ -74,9 +77,26 @@ class faiDiskEntry extends plugin
       /* Set default attributes */
       $this->DISKcn          = $disk['cn'];
       $this->DISKdescription = $disk['description'];
-      $this->partitions       = $disk['partitions'];
-      $this->is_edit          = true;
-      $this->old_cn           = $disk['cn'];
+      $this->partitions      = $disk['partitions'];
+      $this->is_edit         = true;
+      $this->old_cn          = $disk['cn'];
+
+      /* Move faiDiskOption */
+      if (isset($disk['FAIdiskOption'])){
+        foreach($disk['FAIdiskOption'] as $option) {
+          if (preg_match("/fstabkey:(device|label|uuid)/", $option)){
+            $this->fstabkey= preg_replace("/^.*fstabkey:(device|label|uuid).*$/", "$1", $option);
+            break;
+          }
+          if (preg_match("/disklabel:(msdos|gpt)/", $option)){
+            $this->disklabel= preg_replace("/^.*disklabel:(msdos|gpt).*$/", "$1", $option);
+            break;
+          }
+        }
+      } else {
+        $this->fstabkey= "device";
+      }
+
     }
   }
 
@@ -91,6 +111,14 @@ class faiDiskEntry extends plugin
     $s_action   = "";
     $s_entry    = "";
     $display    = "";
+
+    /* Load parameters */
+    if (isset($_POST['disklabel']) && preg_match("/^(msdos|gpt)$/", $_POST['disklabel'])){
+      $this->disklabel= $_POST['disklabel'];
+    }
+    if (isset($_POST['fstabkey']) && preg_match("/^(device|label|uuid)$/", $_POST['fstabkey'])){
+      $this->fstabkey= $_POST['fstabkey'];
+    }
     
     /* Assign values 
      * And Checkbox selection
@@ -167,8 +195,8 @@ class faiDiskEntry extends plugin
     // Fill boxes
     $smarty->assign("fstabkeys", array("device" => _("Device"), "label" => _("Label"), "uuid" => _("UUID")));
     $smarty->assign("disklabels", array("msdos" => "MSDOS", "gpt" => "GPT"));
-    $smarty->assign("fstabkey", "device");
-    $smarty->assign("disklabel", "msdos");
+    $smarty->assign("fstabkey", $this->fstabkey);
+    $smarty->assign("disklabel", $this->disklabel);
  
     /* Fetch template and show the result
      */
@@ -326,6 +354,9 @@ class faiDiskEntry extends plugin
     $tmp['partitions']  = $this->partitions;
     $tmp['status']      = $this->status;
 
+    /* Assemble flags */
+    $tmp['FAIdiskOption'] = array("fstabkey:".$this->fstabkey, "disklabel:".$this->disklabel);
+
     /* If hdd name has changed, tell partitionTable to rename it */
     if(($this->is_edit)&&($this->old_cn != $this->DISKcn)){
       $tmp['rename']['from']  = $this->old_cn;
@@ -399,8 +430,8 @@ class faiDiskEntry extends plugin
         continue;
       }
  
-      if((in_array($part['FAImountPoint'],$alreadyUsed['FAImountPoint']))&&($part['FAIfsType']!="swap")){
-        $message[]=sprintf(_("please enter a unique mount point for partition %s"),($key));
+      if($part['FAImountPoint'] != "-" && (in_array($part['FAImountPoint'],$alreadyUsed['FAImountPoint']))&&($part['FAIfsType']!="swap")){
+        $message[]=sprintf(_("Please enter a unique mount point for partition %s"),($key));
       }
 
       if($part['FAIfsType']!="swap" && $part['FAImountPoint'] != "-"){

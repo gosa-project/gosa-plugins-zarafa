@@ -21,7 +21,7 @@
                 </td><td>
 {render acl=$DISKFAIdiskOptionACL}
                         <select name="fstabkey" size="1">
-                           {html_options values=$fstabkeys output=$fstabkeys selected=$fstabkey}
+                           {html_options options=$fstabkeys selected=$fstabkey}
                         </select>
 {/render}
 		</td>
@@ -47,7 +47,7 @@
                 </td><td>
 {render acl=$DISKFAIdiskOptionACL}
                         <select name="disklabel" size="1">
-                           {html_options values=$disklabels output=$disklabels selected=$disklabel}
+                           {html_options options=$disklabels selected=$disklabel}
                         </select>
 {/render}
 		</td>
