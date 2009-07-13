@@ -518,14 +518,10 @@ class FAI
           if(!empty($r)){
 
             foreach($r as $key ){
-              /* Only update the freeze tag if the entry actually exists. */
-              $ldap->cat($key);
-              if($ldap->count()){
-                /* Append FAIstate tag to ensure that freezed objects stay freezed
-                 */ 
-                $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
-                $parent_attrs['FAIstate'] = $rTag;
-              }
+              /* Append FAIstate tag to ensure that freezed objects stay freezed
+               */ 
+              $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
+              $parent_attrs['FAIstate'] = $rTag;
               /* Don't copy over subobjects in subreleases if their parent is in "removed" state */
               if(!FAI::parent_is_removed($key)){
                 if(DEBUG_FAI_FUNC) { 
