@@ -237,12 +237,13 @@ class faiProfile extends plugin
       }
 
       if($s_action == "delete" && $this->acl_is_writeable("FAIclass")){
+        $newfaiclasses = array();
         foreach($this->FAIclasses as $key => $name) {
-          if ($name == $s_entry) {
-            unset($this->FAIclasses[$key]);
-            break;
+          if ($name != $s_entry) {
+            array_push($newfaiclasses, $name);
           }
         }
+        $this->FAIclasses = $newfaiclasses;
       }
 
       if($s_action == "add" && $this->acl_is_writeable("FAIclass")){
