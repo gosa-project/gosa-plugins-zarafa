@@ -1284,8 +1284,8 @@ class FAI
     global $config;
     $Current_DN = $dn;
 
-    /* special case partitions, as they don't start with cn= in their DN (schema bug?) */
-    if (preg_match('/^FAIpartitionNr=/', $Current_DN)){
+    /* special case partitions and debconf variables, as they don't start with cn= in their DN */
+    if (preg_match('/^(FAIpartitionNr|FAIvariable)=/', $Current_DN)){
       return false;
     }
 
@@ -1333,8 +1333,8 @@ class FAI
     $tmp_dn = $Current_DN;
     $parent_dn = array();
 
-    /* special case partitions, as they don't start with cn= in their DN (schema bug?) */
-    $tmp_dn = preg_replace('/^FAIpartitionNr=/', 'cn=', $tmp_dn);
+    /* special case partitions and debconf variables, as they don't start with cn= in their DN */
+    $tmp_dn = preg_replace('/^(FAIpartitionNr|FAIvariable)=/', 'cn=', $tmp_dn);
 
     $tmp_dn = gosa_ldap_explode_dn($tmp_dn);
     while(preg_match('/^cn=/', $tmp_dn[$i])) {
