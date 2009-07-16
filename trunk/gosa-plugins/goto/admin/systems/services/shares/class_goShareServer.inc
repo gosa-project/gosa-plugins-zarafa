@@ -248,7 +248,8 @@ class goShareServer extends goService{
     /* Check if the share is used by someone */
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(|(gotoProfileServer=*|$id)(gotoShare=*|$id|*))", array("cn"));
+    $cn = $ldap->getCn($this->dn);
+    $ldap->search("(|(gotoProfileServer=*|$id)(gotoShare=$cn|$id|*))", array("cn"));
     if ($ldap->count() != 0){
       while ($attrs= $ldap->fetch()){
         $obj[$ldap->getDN()]= $attrs['cn'][0];
