@@ -70,7 +70,7 @@ class group extends plugin
   var $attributes= array("cn", "description", "gidNumber","memberUid","sambaGroupType","sambaSID","accessTo","trustModel");
   var $objectclasses= array("top", "posixGroup");
 
-  var $CopyPasteVars  = array("force_gid","fon_group","smbgroup","groupType","sambaSID","sambaDomainName","SID","nagios_group");
+  var $CopyPasteVars  = array("force_gid","fon_group","smbgroup","groupType","sambaSID","sambaDomainName","SID","nagios_group", "accessTo");
 
   var $multiple_support = TRUE;
 
