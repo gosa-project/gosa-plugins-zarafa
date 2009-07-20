@@ -215,6 +215,29 @@ class goShareServer extends goService{
     }
   } 
 
+  function allow_remove()
+  {
+  /* Check if the service is still in use */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $cn = $ldap->getCn($this->dn);
+    $ldap->search("(&(|(objectClass=posixGroup)(objectClass=posixAccount)(objectClass=gosaGroupOfNames))(gotoShare=$cn|*))", array("dn"));
+
+    if($ldap->count()){
+      /* Number of entries shown in warning */
+      $i    = 3;
+      $str  = '<p>';
+      while(($attrs = $ldap->fetch()) && $i >= 0){
+        $i --;
+        if(isset($attrs['dn'])){
+          $str .= '<i>' . $attrs['dn']."</i><br/>";
+        }
+      }
+      $str .= '</p>';
+      return(sprintf(_("Cannot remove share - it is still in use by these objects: %s"), $str));
+      }
+  }
+
   function addToList($entry){
     $key =  key($entry);
     $this->goExportEntryList[$key]=$entry[$key];
@@ -225,7 +248,8 @@ class goShareServer extends goService{
     /* Check if the share is used by someone */
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(|(gotoProfileServer=*|$id)(gotoShare=*|$id|*||*))", array("cn"));
+    $cn = $ldap->getCn($this->dn);
+    $ldap->search("(|(gotoProfileServer=*|$id)(gotoShare=$cn|$id|*))", array("cn"));
     if ($ldap->count() != 0){
       while ($attrs= $ldap->fetch()){
         $obj[$ldap->getDN()]= $attrs['cn'][0];
