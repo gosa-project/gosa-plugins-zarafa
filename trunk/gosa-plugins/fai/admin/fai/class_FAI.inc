@@ -569,8 +569,9 @@ class FAI
 
 
   /* this function will remove all unused (deleted) objects,
-     that have no parent object */
-  static function clean_up_releases($Current_DN)
+     that have no parent object. If $recursive is set to true,
+     also check sub releases. */
+  static function clean_up_releases($Current_DN, $recursive=true)
   {
     global $config;
     $ldap = $config->get_ldap_link();
@@ -586,11 +587,14 @@ class FAI
     /* We must also include the given release dn */
     $previous_releases[] = $base_release;
 
-    /* Merge parent, current and child releases into one big release to 
-       iterate over */
     $all_releases = $previous_releases;
-    foreach($sub_releases as $sub_release){
-      $all_releases[] = $sub_release;
+
+    if ($recursive) {
+      /* Merge parent, current and child releases into one big release to 
+         iterate over */
+      foreach($sub_releases as $sub_release){
+        $all_releases[] = $sub_release;
+      }
     }
 
     /* Walk through all releases */

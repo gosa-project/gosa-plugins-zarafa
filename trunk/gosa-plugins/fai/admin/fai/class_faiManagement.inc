@@ -976,6 +976,21 @@ class faiManagement extends plugin
 			}else{
 				$this->dialog->save();
         FAI::save_release_changes_now();
+        $to_del = FAI::clean_up_releases($this->dn, false);
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd($this->dn);
+        foreach($to_del as $dn){
+          /* Only delete subobjects of the current FAI class */
+          $cn = $ldap->getCn($dn);
+          $ldap->search("cn=$cn", array('dn'));
+          if ($ldap->count()){
+            while($attrs = $ldap->fetch()){
+              if ($attrs['dn'] == $dn) {
+                $ldap->rmdir_recursive($dn);
+              }
+            }
+          }
+        }
         if (!isset($_POST['edit_apply'])){
           $this->remove_lock();
           $this->dialog=FALSE;
