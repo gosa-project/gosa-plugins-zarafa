@@ -191,13 +191,19 @@ class ppdManager
 		$option= "";
 		$properties= array();
 
-	  $fh= gzopen ($ppdFile, 'r');
+                // Check for empty files
+		if(!filesize($ppdFile)) {
+			trigger_error(_('Parsing PPD file failed - file is empty!'));
+			return;
+		}
+
+		$fh= gzopen ($ppdFile, 'r');
 		while (!gzeof($fh) && $fh){
 
 			/* Read line */
-	    $line= gzgets($fh, 256);
+			$line= gzgets($fh, 256);
 			if (strlen($line) >= 256){
-				trigger_error(_('Parsing PPD file %s failed - line too long. Trailing characters have been ignored'), E_USER_WARNING);
+				trigger_error(_('Parsing PPD file %s failed - line too long. Trailing characters have been ignored!'), E_USER_WARNING);
 			}
 
 			/* Trigger for option groups */
@@ -297,7 +303,7 @@ class ppdManager
 
 				/* Possible value? */
 				if (preg_match("@^\*$eoption\s+@", $line)){
-#*PageSize Letter/US Letter: "<>setpagedevice"
+                                        #*PageSize Letter/US Letter: "<>setpagedevice"
 					$c= preg_replace("@^\*$eoption\s+([^/]+).*$@", "$1", $line);
 					$d= preg_replace("@^\*$eoption\s+[^/]+/([^:]+).*$@", "$1", $line);
 					if(empty($group)){
@@ -315,8 +321,13 @@ class ppdManager
 
 	function loadDescription($ppdFile)
 	{
-	
-    $ppdDesc = array();
+                // Check for empty files
+		if(!filesize($ppdFile)) {
+			trigger_error(_('Parsing PPD file failed - file is empty!'));
+			return;
+		}
+
+		$ppdDesc = array();
 	
 		/* Only parse complete PPD file again, if it was changed */
 		$modified = filemtime($ppdFile);
