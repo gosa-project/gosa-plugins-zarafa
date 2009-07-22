@@ -524,6 +524,11 @@ class FAI
               $parent_attrs['FAIstate'] = $rTag;
               /* Don't copy over subobjects in subreleases if their parent is in "removed" state */
               if(!FAI::parent_is_removed($key)){
+                /* FAItemplateFile can be binary, therefore it needs to be fetched with
+                 * $ldap->get_attribute */
+                if (isset($parent_attrs['FAItemplateFile'])) {
+                  $parent_attrs['FAItemplateFile'] = $ldap->get_attribute($parent_obj, 'FAItemplateFile');
+                }
                 if(DEBUG_FAI_FUNC) { 
                   echo "<b>Copy current objects original attributes to next release</b> ".$key;
                   print_a($parent_attrs);
