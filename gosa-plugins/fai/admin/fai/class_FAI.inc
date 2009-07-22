@@ -536,6 +536,13 @@ class FAI
                */ 
               $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
               $parent_attrs['FAIstate'] = $rTag;
+
+              /* FAItemplateFile can be binary, therefore it needs to be fetched with
+               * $ldap->get_attribute */
+              if (isset($parent_attrs['FAItemplateFile'])) {
+                $parent_attrs['FAItemplateFile'] = $ldap->get_attribute($parent_obj, 'FAItemplateFile');
+              }
+
               FAI::save_FAI_object($key,$parent_attrs);
             }
           }
