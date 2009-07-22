@@ -31,7 +31,7 @@ class DaemonEvent_notify extends DaemonEvent
   var $subject = "";
   var $from    = "";
 
-  var $attributes = array("from","user","group","message","subject","timestamp");
+  var $attributes = array("from","user","group","message","subject");
 
   public function __construct($config,$data = array())
   {
