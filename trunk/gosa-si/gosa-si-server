@@ -200,7 +200,7 @@ my $arch = "i386";
 # holds all messages which should be delivered to a user
 our $messaging_db;
 our $messaging_tn = "messaging"; 
-our @messaging_col_names = ("id INTEGER PRIMARY KEY", "subject TEXT", "message_from VARCHAR(255)", "message_to VARCHAR(255)", 
+our @messaging_col_names = ("id INTEGER", "subject TEXT", "message_from VARCHAR(255)", "message_to VARCHAR(255)", 
         "flag VARCHAR(255)", "direction VARCHAR(255)", "delivery_time VARCHAR(255)", "message TEXT", "timestamp VARCHAR(14)" );
 my $messaging_file_name;
 
