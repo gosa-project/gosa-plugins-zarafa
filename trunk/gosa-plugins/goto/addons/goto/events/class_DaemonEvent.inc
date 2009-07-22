@@ -431,11 +431,9 @@ class DaemonEvent
     foreach($this->attributes as $attr){
       $ret[$attr] = $this->$attr;
     }
-    if($this->mode == SCHEDULED_EVENT){
-      $ret['timestamp'] = $this->_timestamp_to_event($this->timestamp);
-    }elseif(isset($ret['timestamp'])){
-      unset($ret['timestamp']);
-    }
+
+    $ret['timestamp'] = $this->_timestamp_to_event($this->timestamp);
+
     return($ret);
   }
 
