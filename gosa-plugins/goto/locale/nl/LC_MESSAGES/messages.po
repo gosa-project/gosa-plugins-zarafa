@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-07-22 13:05+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -294,13 +294,13 @@ msgstr "Systeem analyse"
 #: admin/systems/services/ntp/class_goNtpServer.inc:98
 #: admin/systems/services/terminal/class_goTerminalServer.inc:103
 #: admin/systems/services/shares/class_goShareServer.inc:192
-#: admin/systems/services/shares/class_goShareServer.inc:261
-#: admin/systems/services/shares/class_goShareServer.inc:277
-#: admin/systems/services/shares/class_goShareServer.inc:290
+#: admin/systems/services/shares/class_goShareServer.inc:285
+#: admin/systems/services/shares/class_goShareServer.inc:301
+#: admin/systems/services/shares/class_goShareServer.inc:314
 #: admin/systems/goto/class_printGeneric.inc:660
 #: admin/systems/goto/class_printGeneric.inc:953
 #: admin/systems/goto/class_terminalStartup.inc:455
-#: admin/systems/goto/class_ArpNewDevice.inc:69
+#: admin/systems/goto/class_ArpNewDevice.inc:126
 #: admin/systems/goto/class_terminalService.inc:597
 #: admin/systems/goto/class_workstationGeneric.inc:364
 #: admin/systems/goto/class_workstationGeneric.inc:596
@@ -389,7 +389,7 @@ msgstr "Programma instellingen"
 #: admin/applications/class_applicationGeneric.inc:610
 #: admin/mimetypes/class_mimetypeGeneric.inc:532
 #: admin/mimetypes/class_mimetypeGeneric.inc:724
-#: admin/systems/services/shares/class_goShareServer.inc:398
+#: admin/systems/services/shares/class_goShareServer.inc:422
 #: admin/systems/services/nfs/class_servNfs.inc:199
 #: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/nfs/class_servNfs.inc:235
@@ -398,7 +398,7 @@ msgstr "Programma instellingen"
 #: admin/systems/goto/class_printGeneric.inc:738
 #: admin/systems/goto/class_printGeneric.inc:757
 #: admin/systems/goto/class_printGeneric.inc:997
-#: admin/systems/goto/class_ArpNewDevice.inc:46
+#: admin/systems/goto/class_ArpNewDevice.inc:88
 #: admin/systems/goto/class_workstationGeneric.inc:456
 #: admin/systems/goto/class_workstationGeneric.inc:461
 #: admin/systems/goto/class_workstationGeneric.inc:479
@@ -709,7 +709,7 @@ msgstr "Apparaten"
 #: admin/applications/class_applicationGeneric.inc:608
 #: admin/mimetypes/generic.tpl:34 admin/mimetypes/paste_generic.tpl:21
 #: admin/mimetypes/class_mimetypeGeneric.inc:726
-#: admin/systems/services/shares/class_goShareServer.inc:400
+#: admin/systems/services/shares/class_goShareServer.inc:424
 #: admin/systems/services/nfs/class_servNfs.inc:207
 #: admin/systems/services/nfs/servnfs.tpl:19
 #: admin/systems/goto/workstation.tpl:19
@@ -744,6 +744,7 @@ msgid "(iSerial)"
 msgstr "Serieel"
 
 #: admin/devices/deviceGeneric.tpl:63
+#: admin/devices/class_deviceGeneric.inc:106
 #, fuzzy
 msgid "Vendor-ID"
 msgstr "Afzender ID"
@@ -754,6 +755,7 @@ msgid "(idVendor)"
 msgstr "Afzender ID"
 
 #: admin/devices/deviceGeneric.tpl:72
+#: admin/devices/class_deviceGeneric.inc:103
 msgid "Product-ID"
 msgstr ""
 
@@ -785,18 +787,6 @@ msgstr ""
 msgid "iSerial"
 msgstr "Serieel"
 
-#: admin/devices/class_deviceGeneric.inc:103
-#: admin/devices/class_deviceGeneric.inc:264
-#: admin/systems/goto/class_gotoLpdEnabled.inc:51
-#, fuzzy
-msgid "Serial"
-msgstr "Serieel"
-
-#: admin/devices/class_deviceGeneric.inc:106
-#, fuzzy
-msgid "Vendor ID"
-msgstr "Afzender ID"
-
 #: admin/devices/class_deviceGeneric.inc:159
 #: admin/applications/class_applicationGeneric.inc:264
 #: admin/applications/class_applicationGeneric.inc:338
@@ -810,7 +800,7 @@ msgstr "Afzender ID"
 #: admin/systems/services/kiosk/class_goKioskService.inc:164
 #: admin/systems/services/kiosk/class_goKioskService.inc:234
 #: admin/systems/services/shares/class_goShareServer.inc:98
-#: admin/systems/services/shares/class_goShareServer.inc:233
+#: admin/systems/services/shares/class_goShareServer.inc:257
 #: admin/systems/services/nfs/class_servNfs.inc:43
 #: admin/systems/services/nfs/class_servNfs.inc:46
 #: admin/systems/goto/class_printGeneric.inc:488
@@ -852,7 +842,7 @@ msgid "Hotplug"
 msgstr "Hotplug apparaten"
 
 #: admin/devices/class_deviceGeneric.inc:263
-#: admin/systems/services/shares/class_goShareServer.inc:401
+#: admin/systems/services/shares/class_goShareServer.inc:425
 #: admin/systems/services/nfs/class_servNfs.inc:193
 #: admin/systems/services/nfs/servnfs.tpl:56
 #: admin/systems/goto/terminalService.tpl:48
@@ -862,6 +852,12 @@ msgstr "Hotplug apparaten"
 #: admin/systems/goto/gotoLpdEnable.tpl:53
 msgid "Type"
 msgstr "Type"
+
+#: admin/devices/class_deviceGeneric.inc:264
+#: admin/systems/goto/class_gotoLpdEnabled.inc:51
+#, fuzzy
+msgid "Serial"
+msgstr "Serieel"
 
 #: admin/devices/class_deviceGeneric.inc:265
 #, fuzzy
@@ -1323,7 +1319,7 @@ msgstr "omhoog"
 #: admin/systems/services/ldap/class_goLdapServer.inc:129
 #: admin/systems/services/ntp/class_goNtpServer.inc:115
 #: admin/systems/services/terminal/class_goTerminalServer.inc:165
-#: admin/systems/services/shares/class_goShareServer.inc:390
+#: admin/systems/services/shares/class_goShareServer.inc:414
 #: admin/systems/services/syslog/class_goSyslogServer.inc:69
 #: admin/systems/services/syslog/class_goLogDBServer.inc:93
 msgid "Services"
@@ -1461,43 +1457,50 @@ msgstr "Shares"
 
 #: admin/systems/services/shares/class_goShareServer.inc:31
 #: admin/systems/services/shares/class_goShareServer.inc:157
-#: admin/systems/services/shares/class_goShareServer.inc:389
+#: admin/systems/services/shares/class_goShareServer.inc:413
 #, fuzzy
 msgid "File service (Shares)"
 msgstr "Bestandserver"
 
-#: admin/systems/services/shares/class_goShareServer.inc:233
+#: admin/systems/services/shares/class_goShareServer.inc:237
+#, fuzzy, php-format
+msgid "Cannot remove share - it is still in use by these objects: %s"
+msgstr ""
+"U kunt deze bijlage niet verwijderen, aangezien deze nog steeds in gebruik "
+"is door deze systemen: '%s'"
+
+#: admin/systems/services/shares/class_goShareServer.inc:257
 #, fuzzy
 msgid "share"
 msgstr "Shares"
 
-#: admin/systems/services/shares/class_goShareServer.inc:390
+#: admin/systems/services/shares/class_goShareServer.inc:414
 #, fuzzy
 msgid "File service - Shares"
 msgstr "Bestandserver"
 
-#: admin/systems/services/shares/class_goShareServer.inc:399
+#: admin/systems/services/shares/class_goShareServer.inc:423
 msgid "Apple mounts"
 msgstr ""
 
-#: admin/systems/services/shares/class_goShareServer.inc:402
+#: admin/systems/services/shares/class_goShareServer.inc:426
 #, fuzzy
 msgid "Charset"
 msgstr "Chipset"
 
-#: admin/systems/services/shares/class_goShareServer.inc:403
+#: admin/systems/services/shares/class_goShareServer.inc:427
 #: admin/systems/services/nfs/class_servNfs.inc:179
 #: admin/systems/services/nfs/servnfs.tpl:29
 msgid "Path"
 msgstr "Pad"
 
-#: admin/systems/services/shares/class_goShareServer.inc:404
+#: admin/systems/services/shares/class_goShareServer.inc:428
 #: admin/systems/services/nfs/class_servNfs.inc:215
 #: admin/systems/services/nfs/servnfs.tpl:121
 msgid "Option"
 msgstr "Optie"
 
-#: admin/systems/services/shares/class_goShareServer.inc:405
+#: admin/systems/services/shares/class_goShareServer.inc:429
 #: admin/systems/services/nfs/class_servNfs.inc:211
 #: admin/systems/services/nfs/servnfs.tpl:29
 msgid "Volume"
@@ -1520,6 +1523,7 @@ msgid "NFS setup"
 msgstr "NFS instellingen"
 
 #: admin/systems/services/nfs/servnfs.tpl:39
+#: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: addons/goto/class_target_list.inc:201
 #: addons/goto/events/class_EventTargetAddList.inc:238
@@ -1730,6 +1734,41 @@ msgstr ""
 #, fuzzy
 msgid "DNS name"
 msgstr "Naam"
+
+#: admin/systems/goto/ArpNewDevice.tpl:31
+#, fuzzy
+msgid "GOto"
+msgstr "Stop"
+
+#: admin/systems/goto/ArpNewDevice.tpl:35
+#, fuzzy
+msgid "GOto integration"
+msgstr "Groepen beheer"
+
+#: admin/systems/goto/ArpNewDevice.tpl:43
+#: admin/systems/goto/ArpNewDevice.tpl:46
+#: admin/systems/goto/SelectDeviceType.tpl:23
+#: admin/systems/goto/SelectDeviceType.tpl:24
+msgid "System type"
+msgstr "Systeemtype"
+
+#: admin/systems/goto/ArpNewDevice.tpl:58
+#: admin/systems/goto/SelectDeviceType.tpl:36
+msgid "Choose an object group as template"
+msgstr "Selecteer een objectgroep als sjabloon"
+
+#: admin/systems/goto/ArpNewDevice.tpl:61
+#: admin/systems/goto/SelectDeviceType.tpl:37
+#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
+#: addons/goto/events/class_EventTargetAddList.inc:259
+msgid "Object group"
+msgstr "Objectgroep"
+
+#: admin/systems/goto/ArpNewDevice.tpl:62
+#: admin/systems/goto/SelectDeviceType.tpl:39
+#: addons/goto/class_gotoLogView.inc:87
+msgid "none"
+msgstr "geen"
 
 #: admin/systems/goto/class_printGeneric.inc:108
 #: admin/systems/goto/class_printGeneric.inc:1036
@@ -2007,6 +2046,27 @@ msgstr "Systeem informatie"
 #, fuzzy
 msgid "System informations"
 msgstr "Systeem informatie"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:38
+#: admin/systems/goto/class_workstationGeneric.inc:704
+#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: addons/goto/class_target_list.inc:203
+#: addons/goto/events/class_EventTargetAddList.inc:249
+msgid "Workstation"
+msgstr "Werkstation"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:38
+#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: admin/systems/goto/class_terminalGeneric.inc:656
+#: admin/systems/goto/class_terminalGeneric.inc:662
+msgid "Terminal"
+msgstr "Terminal"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:40
+#: admin/systems/goto/class_SelectDeviceType.inc:41
+#: admin/systems/goto/chooser.tpl:10
+msgid "Windows workstation"
+msgstr "Windows werkstation"
 
 #: admin/systems/goto/class_terminalService.inc:121
 #: admin/systems/goto/class_workstationStartup.inc:1295
@@ -2343,13 +2403,6 @@ msgstr ""
 #, fuzzy
 msgid "Workstation generic"
 msgstr "Werkstation naam"
-
-#: admin/systems/goto/class_workstationGeneric.inc:704
-#: admin/systems/goto/class_SelectDeviceType.inc:39
-#: addons/goto/class_target_list.inc:203
-#: addons/goto/events/class_EventTargetAddList.inc:249
-msgid "Workstation"
-msgstr "Werkstation"
 
 #: admin/systems/goto/class_workstationGeneric.inc:711
 #, fuzzy
@@ -2715,40 +2768,9 @@ msgstr ""
 "Selecteer a.u.b. een systeemtype en een optionele bundel met te overerven "
 "voorgedefinieerde instellingen."
 
-#: admin/systems/goto/SelectDeviceType.tpl:23
-#: admin/systems/goto/SelectDeviceType.tpl:24
-msgid "System type"
-msgstr "Systeemtype"
-
-#: admin/systems/goto/SelectDeviceType.tpl:36
-msgid "Choose an object group as template"
-msgstr "Selecteer een objectgroep als sjabloon"
-
-#: admin/systems/goto/SelectDeviceType.tpl:37
-#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
-#: addons/goto/events/class_EventTargetAddList.inc:259
-msgid "Object group"
-msgstr "Objectgroep"
-
-#: admin/systems/goto/SelectDeviceType.tpl:39
-#: addons/goto/class_gotoLogView.inc:87
-msgid "none"
-msgstr "geen"
-
 #: admin/systems/goto/SelectDeviceType.tpl:51
 msgid "Continue"
 msgstr "Doorgaan"
-
-#: admin/systems/goto/class_SelectDeviceType.inc:39
-#: admin/systems/goto/class_terminalGeneric.inc:656
-#: admin/systems/goto/class_terminalGeneric.inc:662
-msgid "Terminal"
-msgstr "Terminal"
-
-#: admin/systems/goto/class_SelectDeviceType.inc:41
-#: admin/systems/goto/chooser.tpl:10
-msgid "Windows workstation"
-msgstr "Windows werkstation"
 
 #: admin/systems/goto/workstationStartup.tpl:64
 msgid ""
@@ -2946,8 +2968,44 @@ msgstr "Het opgegeven ppd bestand '%s' kan niet geopend worden om te lezen."
 msgid "The temporary file '%s' cannot be opened for writing."
 msgstr "Het vereiste tijdelijke bestand '%s' kan niet weggeschreven worden."
 
-#: admin/systems/ppd/class_ppdManager.inc:200
-#: admin/systems/ppd/class_ppdManager.inc:335
+#: admin/systems/ppd/class_ppdManager.inc:196
+#: admin/systems/ppd/class_ppdManager.inc:326
+#, fuzzy
+msgid "Parsing PPD file failed - file is empty!"
+msgstr ""
+"Het parsen van PPD bestand %s is mislukt - er is geen informatie gevonden."
+
+#: admin/systems/ppd/class_ppdManager.inc:206
+#, fuzzy, php-format
+msgid ""
+"Parsing PPD file %s failed - line too long. Trailing characters have been "
+"ignored!"
+msgstr ""
+"Het parsen van PPD bestand %s is mislukt - regel was te lang. Resterende "
+"karakters zijn genegeerd."
+
+#: admin/systems/ppd/class_ppdManager.inc:214
+msgid "Nested groups are not supported!"
+msgstr "Geneste groepen worden niet ondersteund!"
+
+#: admin/systems/ppd/class_ppdManager.inc:218
+msgid "Group name not unique!"
+msgstr "Groepnaam is niet uniek!"
+
+#: admin/systems/ppd/class_ppdManager.inc:224
+#: admin/systems/ppd/class_ppdManager.inc:254
+msgid "Symbol values are not supported yet!"
+msgstr "Symbool waardes worden nog niet ondersteund!"
+
+#: admin/systems/ppd/class_ppdManager.inc:248
+msgid "Nested options are not supported!"
+msgstr "Geneste opties worden niet ondersteund!"
+
+#: admin/systems/ppd/class_ppdManager.inc:273
+msgid "PickMany is not supported yet!"
+msgstr "PickMany wordt nog niet ondersteund!"
+
+#: admin/systems/ppd/class_ppdManager.inc:346
 #, php-format
 msgid ""
 "Parsing PPD file %s failed - line too long. Trailing characters have been "
@@ -2956,28 +3014,7 @@ msgstr ""
 "Het parsen van PPD bestand %s is mislukt - regel was te lang. Resterende "
 "karakters zijn genegeerd."
 
-#: admin/systems/ppd/class_ppdManager.inc:208
-msgid "Nested groups are not supported!"
-msgstr "Geneste groepen worden niet ondersteund!"
-
-#: admin/systems/ppd/class_ppdManager.inc:212
-msgid "Group name not unique!"
-msgstr "Groepnaam is niet uniek!"
-
-#: admin/systems/ppd/class_ppdManager.inc:218
-#: admin/systems/ppd/class_ppdManager.inc:248
-msgid "Symbol values are not supported yet!"
-msgstr "Symbool waardes worden nog niet ondersteund!"
-
-#: admin/systems/ppd/class_ppdManager.inc:242
-msgid "Nested options are not supported!"
-msgstr "Geneste opties worden niet ondersteund!"
-
-#: admin/systems/ppd/class_ppdManager.inc:267
-msgid "PickMany is not supported yet!"
-msgstr "PickMany wordt nog niet ondersteund!"
-
-#: admin/systems/ppd/class_ppdManager.inc:360
+#: admin/systems/ppd/class_ppdManager.inc:371
 #, php-format
 msgid "Parsing PPD file %s failed - no information found."
 msgstr ""
@@ -2990,14 +3027,14 @@ msgstr ""
 #: admin/systems/ppd/class_printerPPDDialog.inc:246
 #: admin/systems/ppd/class_printerPPDDialog.inc:270
 #: admin/systems/ppd/class_printerPPDDialog.inc:287
-#: admin/systems/ppd/class_printerPPDDialog.inc:310
-#: admin/systems/ppd/class_printerPPDDialog.inc:324
-#: admin/systems/ppd/class_printerPPDDialog.inc:334
-#: admin/systems/ppd/class_printerPPDDialog.inc:338
-#: admin/systems/ppd/class_printerPPDDialog.inc:531
-#: admin/systems/ppd/class_printerPPDDialog.inc:548
-#: admin/systems/ppd/class_printerPPDDialog.inc:551
-#: admin/systems/ppd/class_printerPPDDialog.inc:554
+#: admin/systems/ppd/class_printerPPDDialog.inc:311
+#: admin/systems/ppd/class_printerPPDDialog.inc:325
+#: admin/systems/ppd/class_printerPPDDialog.inc:335
+#: admin/systems/ppd/class_printerPPDDialog.inc:339
+#: admin/systems/ppd/class_printerPPDDialog.inc:532
+#: admin/systems/ppd/class_printerPPDDialog.inc:549
+#: admin/systems/ppd/class_printerPPDDialog.inc:552
+#: admin/systems/ppd/class_printerPPDDialog.inc:555
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:75
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:100
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:124
@@ -3016,7 +3053,7 @@ msgid "Cannot open PPD path '%s' for reading and writing!"
 msgstr "Kan bestand '%s' niet openen."
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:140
-#: admin/systems/ppd/class_printerPPDDialog.inc:338
+#: admin/systems/ppd/class_printerPPDDialog.inc:339
 #: addons/goto/class_goto_import_file.inc:29
 #, fuzzy
 msgid "file is empty"
@@ -3027,38 +3064,38 @@ msgstr "Verwijder deze invoer"
 msgid "Cannot parse PPD '%s'!"
 msgstr "Kan bestand '%s' niet openen."
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:313
+#: admin/systems/ppd/class_printerPPDDialog.inc:314
 #, fuzzy
 msgid "Overwrite existing PPD"
 msgstr "Overschrijf bestaande gegevens"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:314
+#: admin/systems/ppd/class_printerPPDDialog.inc:315
 #, fuzzy
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
 msgstr "Er bestaat al een PPD bestand voor dit type printer."
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:462
+#: admin/systems/ppd/class_printerPPDDialog.inc:463
 msgid "Section"
 msgstr "Sectie"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:522
-#: admin/systems/ppd/class_printerPPDDialog.inc:525
+#: admin/systems/ppd/class_printerPPDDialog.inc:523
+#: admin/systems/ppd/class_printerPPDDialog.inc:526
 msgid "True"
 msgstr "Ja"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:523
-#: admin/systems/ppd/class_printerPPDDialog.inc:526
+#: admin/systems/ppd/class_printerPPDDialog.inc:524
+#: admin/systems/ppd/class_printerPPDDialog.inc:527
 msgid "False"
 msgstr "Nee"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:531
+#: admin/systems/ppd/class_printerPPDDialog.inc:532
 #, fuzzy, php-format
 msgid "PPD type '%s' is not supported!"
 msgstr "PickMany wordt nog niet ondersteund!"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:568
+#: admin/systems/ppd/class_printerPPDDialog.inc:569
 msgid ""
 "Please select a valid ppd file or use 'Cancel' to go back to printer "
 "configuration."
@@ -4109,6 +4146,10 @@ msgstr "Selecteer de afdeling waarbinnen gezocht zal    worden"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Reguliere expressie voor      overeenkomende hotplugs"
+
+#, fuzzy
+#~ msgid "Vendor ID"
+#~ msgstr "Afzender ID"
 
 #, fuzzy
 #~ msgid "System mass deployment"
@@ -5372,10 +5413,6 @@ msgstr "Reguliere expressie voor      overeenkomende hotplugs"
 #~ msgstr "Ga naar de afdeling van de gebruiker"
 
 #, fuzzy
-#~ msgid "to"
-#~ msgstr "Stop"
-
-#, fuzzy
 #~ msgid "Try to create root object"
 #~ msgstr "Nieuw FAI object aanmaken"
 
@@ -6546,9 +6583,6 @@ msgstr "Reguliere expressie voor      overeenkomende hotplugs"
 #, fuzzy
 #~ msgid "Group member"
 #~ msgstr "Groepsleden"
-
-#~ msgid "Group administration"
-#~ msgstr "Groepen beheer"
 
 #~ msgid ""
 #~ "This may be a primary user group. Please double check if you really want "

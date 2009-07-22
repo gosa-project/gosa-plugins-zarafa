@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-07-22 13:05+0200\n"
 "PO-Revision-Date: 2009-06-30 11:09+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -285,13 +285,13 @@ msgstr "Analyse du système"
 #: admin/systems/services/ntp/class_goNtpServer.inc:98
 #: admin/systems/services/terminal/class_goTerminalServer.inc:103
 #: admin/systems/services/shares/class_goShareServer.inc:192
-#: admin/systems/services/shares/class_goShareServer.inc:261
-#: admin/systems/services/shares/class_goShareServer.inc:277
-#: admin/systems/services/shares/class_goShareServer.inc:290
+#: admin/systems/services/shares/class_goShareServer.inc:285
+#: admin/systems/services/shares/class_goShareServer.inc:301
+#: admin/systems/services/shares/class_goShareServer.inc:314
 #: admin/systems/goto/class_printGeneric.inc:660
 #: admin/systems/goto/class_printGeneric.inc:953
 #: admin/systems/goto/class_terminalStartup.inc:455
-#: admin/systems/goto/class_ArpNewDevice.inc:69
+#: admin/systems/goto/class_ArpNewDevice.inc:126
 #: admin/systems/goto/class_terminalService.inc:597
 #: admin/systems/goto/class_workstationGeneric.inc:364
 #: admin/systems/goto/class_workstationGeneric.inc:596
@@ -371,7 +371,7 @@ msgstr "Préférences de l'application"
 #: admin/applications/class_applicationGeneric.inc:610
 #: admin/mimetypes/class_mimetypeGeneric.inc:532
 #: admin/mimetypes/class_mimetypeGeneric.inc:724
-#: admin/systems/services/shares/class_goShareServer.inc:398
+#: admin/systems/services/shares/class_goShareServer.inc:422
 #: admin/systems/services/nfs/class_servNfs.inc:199
 #: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/nfs/class_servNfs.inc:235
@@ -380,7 +380,7 @@ msgstr "Préférences de l'application"
 #: admin/systems/goto/class_printGeneric.inc:738
 #: admin/systems/goto/class_printGeneric.inc:757
 #: admin/systems/goto/class_printGeneric.inc:997
-#: admin/systems/goto/class_ArpNewDevice.inc:46
+#: admin/systems/goto/class_ArpNewDevice.inc:88
 #: admin/systems/goto/class_workstationGeneric.inc:456
 #: admin/systems/goto/class_workstationGeneric.inc:461
 #: admin/systems/goto/class_workstationGeneric.inc:479
@@ -674,7 +674,7 @@ msgstr "Périphériques"
 #: admin/applications/class_applicationGeneric.inc:608
 #: admin/mimetypes/generic.tpl:34 admin/mimetypes/paste_generic.tpl:21
 #: admin/mimetypes/class_mimetypeGeneric.inc:726
-#: admin/systems/services/shares/class_goShareServer.inc:400
+#: admin/systems/services/shares/class_goShareServer.inc:424
 #: admin/systems/services/nfs/class_servNfs.inc:207
 #: admin/systems/services/nfs/servnfs.tpl:19
 #: admin/systems/goto/workstation.tpl:19
@@ -706,6 +706,7 @@ msgid "(iSerial)"
 msgstr "(ISérie)"
 
 #: admin/devices/deviceGeneric.tpl:63
+#: admin/devices/class_deviceGeneric.inc:106
 msgid "Vendor-ID"
 msgstr "ID du vendeur"
 
@@ -714,6 +715,7 @@ msgid "(idVendor)"
 msgstr "(Idvendeur)"
 
 #: admin/devices/deviceGeneric.tpl:72
+#: admin/devices/class_deviceGeneric.inc:103
 msgid "Product-ID"
 msgstr "ID du produit"
 
@@ -742,16 +744,6 @@ msgstr "Lecteur de CD / DVD"
 msgid "iSerial"
 msgstr "ISérie"
 
-#: admin/devices/class_deviceGeneric.inc:103
-#: admin/devices/class_deviceGeneric.inc:264
-#: admin/systems/goto/class_gotoLpdEnabled.inc:51
-msgid "Serial"
-msgstr "Série"
-
-#: admin/devices/class_deviceGeneric.inc:106
-msgid "Vendor ID"
-msgstr "ID du vendeur"
-
 #: admin/devices/class_deviceGeneric.inc:159
 #: admin/applications/class_applicationGeneric.inc:264
 #: admin/applications/class_applicationGeneric.inc:338
@@ -765,7 +757,7 @@ msgstr "ID du vendeur"
 #: admin/systems/services/kiosk/class_goKioskService.inc:164
 #: admin/systems/services/kiosk/class_goKioskService.inc:234
 #: admin/systems/services/shares/class_goShareServer.inc:98
-#: admin/systems/services/shares/class_goShareServer.inc:233
+#: admin/systems/services/shares/class_goShareServer.inc:257
 #: admin/systems/services/nfs/class_servNfs.inc:43
 #: admin/systems/services/nfs/class_servNfs.inc:46
 #: admin/systems/goto/class_printGeneric.inc:488
@@ -805,7 +797,7 @@ msgid "Hotplug"
 msgstr ""
 
 #: admin/devices/class_deviceGeneric.inc:263
-#: admin/systems/services/shares/class_goShareServer.inc:401
+#: admin/systems/services/shares/class_goShareServer.inc:425
 #: admin/systems/services/nfs/class_servNfs.inc:193
 #: admin/systems/services/nfs/servnfs.tpl:56
 #: admin/systems/goto/terminalService.tpl:48
@@ -815,6 +807,11 @@ msgstr ""
 #: admin/systems/goto/gotoLpdEnable.tpl:53
 msgid "Type"
 msgstr "Type"
+
+#: admin/devices/class_deviceGeneric.inc:264
+#: admin/systems/goto/class_gotoLpdEnabled.inc:51
+msgid "Serial"
+msgstr "Série"
 
 #: admin/devices/class_deviceGeneric.inc:265
 msgid "Vendor"
@@ -1239,7 +1236,7 @@ msgstr ""
 #: admin/systems/services/ldap/class_goLdapServer.inc:129
 #: admin/systems/services/ntp/class_goNtpServer.inc:115
 #: admin/systems/services/terminal/class_goTerminalServer.inc:165
-#: admin/systems/services/shares/class_goShareServer.inc:390
+#: admin/systems/services/shares/class_goShareServer.inc:414
 #: admin/systems/services/syslog/class_goSyslogServer.inc:69
 #: admin/systems/services/syslog/class_goLogDBServer.inc:93
 msgid "Services"
@@ -1365,39 +1362,46 @@ msgstr "Partages"
 
 #: admin/systems/services/shares/class_goShareServer.inc:31
 #: admin/systems/services/shares/class_goShareServer.inc:157
-#: admin/systems/services/shares/class_goShareServer.inc:389
+#: admin/systems/services/shares/class_goShareServer.inc:413
 msgid "File service (Shares)"
 msgstr "Serveur de fichier (Partages)"
 
-#: admin/systems/services/shares/class_goShareServer.inc:233
+#: admin/systems/services/shares/class_goShareServer.inc:237
+#, fuzzy, php-format
+msgid "Cannot remove share - it is still in use by these objects: %s"
+msgstr ""
+"Impossible d'enlever l'application ,elle est encore utilisée par ce(s) "
+"objets : %s"
+
+#: admin/systems/services/shares/class_goShareServer.inc:257
 msgid "share"
 msgstr "partage"
 
-#: admin/systems/services/shares/class_goShareServer.inc:390
+#: admin/systems/services/shares/class_goShareServer.inc:414
 msgid "File service - Shares"
 msgstr "Serveur de fichier - Partages"
 
-#: admin/systems/services/shares/class_goShareServer.inc:399
+#: admin/systems/services/shares/class_goShareServer.inc:423
 msgid "Apple mounts"
 msgstr "Montages Apple"
 
-#: admin/systems/services/shares/class_goShareServer.inc:402
+#: admin/systems/services/shares/class_goShareServer.inc:426
 msgid "Charset"
 msgstr "Jeu de caractères"
 
-#: admin/systems/services/shares/class_goShareServer.inc:403
+#: admin/systems/services/shares/class_goShareServer.inc:427
 #: admin/systems/services/nfs/class_servNfs.inc:179
 #: admin/systems/services/nfs/servnfs.tpl:29
 msgid "Path"
 msgstr "Chemin"
 
-#: admin/systems/services/shares/class_goShareServer.inc:404
+#: admin/systems/services/shares/class_goShareServer.inc:428
 #: admin/systems/services/nfs/class_servNfs.inc:215
 #: admin/systems/services/nfs/servnfs.tpl:121
 msgid "Option"
 msgstr "Option"
 
-#: admin/systems/services/shares/class_goShareServer.inc:405
+#: admin/systems/services/shares/class_goShareServer.inc:429
 #: admin/systems/services/nfs/class_servNfs.inc:211
 #: admin/systems/services/nfs/servnfs.tpl:29
 msgid "Volume"
@@ -1420,6 +1424,7 @@ msgid "NFS setup"
 msgstr "Préférences NFS"
 
 #: admin/systems/services/nfs/servnfs.tpl:39
+#: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: addons/goto/class_target_list.inc:201
 #: addons/goto/events/class_EventTargetAddList.inc:238
@@ -1622,6 +1627,41 @@ msgstr ""
 msgid "DNS name"
 msgstr "Nom DNS"
 
+#: admin/systems/goto/ArpNewDevice.tpl:31
+#, fuzzy
+msgid "GOto"
+msgstr "Option"
+
+#: admin/systems/goto/ArpNewDevice.tpl:35
+#, fuzzy
+msgid "GOto integration"
+msgstr "Administration du groupe"
+
+#: admin/systems/goto/ArpNewDevice.tpl:43
+#: admin/systems/goto/ArpNewDevice.tpl:46
+#: admin/systems/goto/SelectDeviceType.tpl:23
+#: admin/systems/goto/SelectDeviceType.tpl:24
+msgid "System type"
+msgstr "Type de système"
+
+#: admin/systems/goto/ArpNewDevice.tpl:58
+#: admin/systems/goto/SelectDeviceType.tpl:36
+msgid "Choose an object group as template"
+msgstr "Choisissez un groupe d'objets comme modèles"
+
+#: admin/systems/goto/ArpNewDevice.tpl:61
+#: admin/systems/goto/SelectDeviceType.tpl:37
+#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
+#: addons/goto/events/class_EventTargetAddList.inc:259
+msgid "Object group"
+msgstr "Groupes d'objets"
+
+#: admin/systems/goto/ArpNewDevice.tpl:62
+#: admin/systems/goto/SelectDeviceType.tpl:39
+#: addons/goto/class_gotoLogView.inc:87
+msgid "none"
+msgstr "aucun"
+
 #: admin/systems/goto/class_printGeneric.inc:108
 #: admin/systems/goto/class_printGeneric.inc:1036
 msgid "Internal error"
@@ -1629,7 +1669,8 @@ msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:108
 #, php-format
-msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
+msgid ""
+"Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
@@ -1653,7 +1694,8 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:294
 msgid "This is a workstation template, printer tab is disabled."
-msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr ""
+"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:299
 msgid "This is a terminal template, printer tab is disabled."
@@ -1875,6 +1917,27 @@ msgstr "Information système"
 #: admin/systems/goto/class_terminalInfo.inc:251
 msgid "System informations"
 msgstr "Information système"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:38
+#: admin/systems/goto/class_workstationGeneric.inc:704
+#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: addons/goto/class_target_list.inc:203
+#: addons/goto/events/class_EventTargetAddList.inc:249
+msgid "Workstation"
+msgstr "Stations de travail"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:38
+#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: admin/systems/goto/class_terminalGeneric.inc:656
+#: admin/systems/goto/class_terminalGeneric.inc:662
+msgid "Terminal"
+msgstr "Terminal"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:40
+#: admin/systems/goto/class_SelectDeviceType.inc:41
+#: admin/systems/goto/chooser.tpl:10
+msgid "Windows workstation"
+msgstr "Station de travail Windows"
 
 #: admin/systems/goto/class_terminalService.inc:121
 #: admin/systems/goto/class_workstationStartup.inc:1295
@@ -2195,13 +2258,6 @@ msgstr ""
 msgid "Workstation generic"
 msgstr "Information de la station de travail"
 
-#: admin/systems/goto/class_workstationGeneric.inc:704
-#: admin/systems/goto/class_SelectDeviceType.inc:39
-#: addons/goto/class_target_list.inc:203
-#: addons/goto/events/class_EventTargetAddList.inc:249
-msgid "Workstation"
-msgstr "Stations de travail"
-
 #: admin/systems/goto/class_workstationGeneric.inc:711
 msgid "Goto mode"
 msgstr "Mode Goto"
@@ -2404,11 +2460,13 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:234
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
+msgstr ""
+"Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:247
 #, php-format
-msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgid ""
+"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
 "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version "
 "sera '%s' !"
@@ -2547,46 +2605,16 @@ msgstr ""
 "Veuillez sélectionner un type de système et d'un ensemble de paramètres à "
 "hériter."
 
-#: admin/systems/goto/SelectDeviceType.tpl:23
-#: admin/systems/goto/SelectDeviceType.tpl:24
-msgid "System type"
-msgstr "Type de système"
-
-#: admin/systems/goto/SelectDeviceType.tpl:36
-msgid "Choose an object group as template"
-msgstr "Choisissez un groupe d'objets comme modèles"
-
-#: admin/systems/goto/SelectDeviceType.tpl:37
-#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
-#: addons/goto/events/class_EventTargetAddList.inc:259
-msgid "Object group"
-msgstr "Groupes d'objets"
-
-#: admin/systems/goto/SelectDeviceType.tpl:39
-#: addons/goto/class_gotoLogView.inc:87
-msgid "none"
-msgstr "aucun"
-
 #: admin/systems/goto/SelectDeviceType.tpl:51
 msgid "Continue"
 msgstr "Continuer"
-
-#: admin/systems/goto/class_SelectDeviceType.inc:39
-#: admin/systems/goto/class_terminalGeneric.inc:656
-#: admin/systems/goto/class_terminalGeneric.inc:662
-msgid "Terminal"
-msgstr "Terminal"
-
-#: admin/systems/goto/class_SelectDeviceType.inc:41
-#: admin/systems/goto/chooser.tpl:10
-msgid "Windows workstation"
-msgstr "Station de travail Windows"
 
 #: admin/systems/goto/workstationStartup.tpl:64
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr ""
+"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
@@ -2772,8 +2800,43 @@ msgstr "Le fichier PPD '%s' ne peut pas être ouvert en lecture."
 msgid "The temporary file '%s' cannot be opened for writing."
 msgstr "Le fichier temporaire '%s' n'a pas pu être ouvert en écriture."
 
-#: admin/systems/ppd/class_ppdManager.inc:200
-#: admin/systems/ppd/class_ppdManager.inc:335
+#: admin/systems/ppd/class_ppdManager.inc:196
+#: admin/systems/ppd/class_ppdManager.inc:326
+#, fuzzy
+msgid "Parsing PPD file failed - file is empty!"
+msgstr "La lecture du fichier PPD %s à échoué - pas de données."
+
+#: admin/systems/ppd/class_ppdManager.inc:206
+#, fuzzy, php-format
+msgid ""
+"Parsing PPD file %s failed - line too long. Trailing characters have been "
+"ignored!"
+msgstr ""
+"La lecture du PPD %s à échoué - ligne trop longue. Les caractères restant on "
+"été ignorés"
+
+#: admin/systems/ppd/class_ppdManager.inc:214
+msgid "Nested groups are not supported!"
+msgstr "Les groupes imbriqués ne sont pas supportés !"
+
+#: admin/systems/ppd/class_ppdManager.inc:218
+msgid "Group name not unique!"
+msgstr "Le nom du groupe n'est pas unique !"
+
+#: admin/systems/ppd/class_ppdManager.inc:224
+#: admin/systems/ppd/class_ppdManager.inc:254
+msgid "Symbol values are not supported yet!"
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:248
+msgid "Nested options are not supported!"
+msgstr "Les options imbriquées ne sont pas supportées !"
+
+#: admin/systems/ppd/class_ppdManager.inc:273
+msgid "PickMany is not supported yet!"
+msgstr "La sélection multiple n'est pas encore supportée !"
+
+#: admin/systems/ppd/class_ppdManager.inc:346
 #, php-format
 msgid ""
 "Parsing PPD file %s failed - line too long. Trailing characters have been "
@@ -2782,28 +2845,7 @@ msgstr ""
 "La lecture du PPD %s à échoué - ligne trop longue. Les caractères restant on "
 "été ignorés"
 
-#: admin/systems/ppd/class_ppdManager.inc:208
-msgid "Nested groups are not supported!"
-msgstr "Les groupes imbriqués ne sont pas supportés !"
-
-#: admin/systems/ppd/class_ppdManager.inc:212
-msgid "Group name not unique!"
-msgstr "Le nom du groupe n'est pas unique !"
-
-#: admin/systems/ppd/class_ppdManager.inc:218
-#: admin/systems/ppd/class_ppdManager.inc:248
-msgid "Symbol values are not supported yet!"
-msgstr ""
-
-#: admin/systems/ppd/class_ppdManager.inc:242
-msgid "Nested options are not supported!"
-msgstr "Les options imbriquées ne sont pas supportées !"
-
-#: admin/systems/ppd/class_ppdManager.inc:267
-msgid "PickMany is not supported yet!"
-msgstr "La sélection multiple n'est pas encore supportée !"
-
-#: admin/systems/ppd/class_ppdManager.inc:360
+#: admin/systems/ppd/class_ppdManager.inc:371
 #, php-format
 msgid "Parsing PPD file %s failed - no information found."
 msgstr "La lecture du fichier PPD %s à échoué - pas de données."
@@ -2815,14 +2857,14 @@ msgstr "La lecture du fichier PPD %s à échoué - pas de données."
 #: admin/systems/ppd/class_printerPPDDialog.inc:246
 #: admin/systems/ppd/class_printerPPDDialog.inc:270
 #: admin/systems/ppd/class_printerPPDDialog.inc:287
-#: admin/systems/ppd/class_printerPPDDialog.inc:310
-#: admin/systems/ppd/class_printerPPDDialog.inc:324
-#: admin/systems/ppd/class_printerPPDDialog.inc:334
-#: admin/systems/ppd/class_printerPPDDialog.inc:338
-#: admin/systems/ppd/class_printerPPDDialog.inc:531
-#: admin/systems/ppd/class_printerPPDDialog.inc:548
-#: admin/systems/ppd/class_printerPPDDialog.inc:551
-#: admin/systems/ppd/class_printerPPDDialog.inc:554
+#: admin/systems/ppd/class_printerPPDDialog.inc:311
+#: admin/systems/ppd/class_printerPPDDialog.inc:325
+#: admin/systems/ppd/class_printerPPDDialog.inc:335
+#: admin/systems/ppd/class_printerPPDDialog.inc:339
+#: admin/systems/ppd/class_printerPPDDialog.inc:532
+#: admin/systems/ppd/class_printerPPDDialog.inc:549
+#: admin/systems/ppd/class_printerPPDDialog.inc:552
+#: admin/systems/ppd/class_printerPPDDialog.inc:555
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:75
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:100
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:124
@@ -2837,10 +2879,11 @@ msgstr "Impossible de lire le PPD '%s' !"
 #: admin/systems/ppd/class_printerPPDDialog.inc:121
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
+msgstr ""
+"Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:140
-#: admin/systems/ppd/class_printerPPDDialog.inc:338
+#: admin/systems/ppd/class_printerPPDDialog.inc:339
 #: addons/goto/class_goto_import_file.inc:29
 msgid "file is empty"
 msgstr "Le fichier est vide"
@@ -2850,36 +2893,37 @@ msgstr "Le fichier est vide"
 msgid "Cannot parse PPD '%s'!"
 msgstr "Ne peut pas analyser le PPD '%s' !"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:313
+#: admin/systems/ppd/class_printerPPDDialog.inc:314
 msgid "Overwrite existing PPD"
 msgstr "Ecrasement du PPD existant"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:314
+#: admin/systems/ppd/class_printerPPDDialog.inc:315
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
+msgstr ""
+"Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:462
+#: admin/systems/ppd/class_printerPPDDialog.inc:463
 msgid "Section"
 msgstr "Section"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:522
-#: admin/systems/ppd/class_printerPPDDialog.inc:525
+#: admin/systems/ppd/class_printerPPDDialog.inc:523
+#: admin/systems/ppd/class_printerPPDDialog.inc:526
 msgid "True"
 msgstr "Vrai"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:523
-#: admin/systems/ppd/class_printerPPDDialog.inc:526
+#: admin/systems/ppd/class_printerPPDDialog.inc:524
+#: admin/systems/ppd/class_printerPPDDialog.inc:527
 msgid "False"
 msgstr "Faux"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:531
+#: admin/systems/ppd/class_printerPPDDialog.inc:532
 #, php-format
 msgid "PPD type '%s' is not supported!"
 msgstr " PPD de type '%s' non supporté !"
 
-#: admin/systems/ppd/class_printerPPDDialog.inc:568
+#: admin/systems/ppd/class_printerPPDDialog.inc:569
 msgid ""
 "Please select a valid ppd file or use 'Cancel' to go back to printer "
 "configuration."
@@ -3101,11 +3145,13 @@ msgstr "Etat du déploiement des systèmes"
 #: addons/goto/class_gotomasses.inc:270
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
+msgstr ""
+"Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:360
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
+msgstr ""
+"Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
 
 #: addons/goto/class_gotomasses.inc:361
 msgid "List of queued jobs"
@@ -3256,7 +3302,8 @@ msgstr "Déploiement de système"
 
 #: addons/goto/class_gotomasses.inc:911
 msgid "Provide a mechanism to automatically activate systems"
-msgstr "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
+msgstr ""
+"Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
 
 #: addons/goto/log_view.tpl:7
 msgid "Available logs"
@@ -3519,7 +3566,8 @@ msgid "Progress"
 msgstr "Progression"
 
 #: addons/goto/class_goto_import_file.inc:90
-msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
+msgid ""
+"Selected entries will be skipped because of errors. Do you want to proceed?"
 msgstr ""
 "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle "
 "contiennent. Voulez vous continuer ?"
@@ -3527,7 +3575,8 @@ msgstr ""
 #: addons/goto/class_goto_import_file.inc:131
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
+msgstr ""
+"L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
 
 #: personal/environment/class_environment.inc:9
 #: personal/environment/class_environment.inc:433
@@ -3585,7 +3634,8 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:364
 #, php-format
-msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid ""
+"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -3851,5 +3901,8 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
-msgstr "Expression régulière concordant avec les noms des périphériques hotplug"
+msgstr ""
+"Expression régulière concordant avec les noms des périphériques hotplug"
 
+#~ msgid "Vendor ID"
+#~ msgstr "ID du vendeur"
