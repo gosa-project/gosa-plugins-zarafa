@@ -6,7 +6,7 @@
 #
 #
 # Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008, 2009.
 # Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
 # Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
@@ -14,13 +14,14 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-22 13:05+0200\n"
-"PO-Revision-Date: 2008-12-04 11:18+0100\n"
+"PO-Revision-Date: 2009-07-22 13:16+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: deutsch <de@li.org>\n"
+"Language-Team: de <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: admin/ogroups/goto/termgroup.tpl:2 admin/devices/remove.tpl:2
 #: admin/applications/remove.tpl:2 admin/mimetypes/remove.tpl:2
@@ -1375,11 +1376,10 @@ msgstr "Freigaben"
 msgid "File service (Shares)"
 msgstr "Datei-Dienst (Freigaben)"
 
-#: admin/systems/services/shares/class_goShareServer.inc:237
-#, fuzzy, php-format
+#: admin/systems/services/shares/class_goShareServer.inc:237, php-format
 msgid "Cannot remove share - it is still in use by these objects: %s"
 msgstr ""
-"Die Anwendung konnte nicht entfernt werden, sie wird momentan noch von "
+"Die Freigabe konnte nicht entfernt werden - sie wird momentan noch von "
 "folgenden Objekten verwendet: %s"
 
 #: admin/systems/services/shares/class_goShareServer.inc:257
@@ -1637,14 +1637,12 @@ msgid "DNS name"
 msgstr "DNS-Name"
 
 #: admin/systems/goto/ArpNewDevice.tpl:31
-#, fuzzy
 msgid "GOto"
-msgstr "Option"
+msgstr "GOto"
 
 #: admin/systems/goto/ArpNewDevice.tpl:35
-#, fuzzy
 msgid "GOto integration"
-msgstr "Gruppenverwaltung"
+msgstr "GOto-Integration"
 
 #: admin/systems/goto/ArpNewDevice.tpl:43
 #: admin/systems/goto/ArpNewDevice.tpl:46
@@ -1890,7 +1888,7 @@ msgstr "vorhanden"
 
 #: admin/systems/goto/class_terminalInfo.inc:82
 msgid "unknown status, SNMP support missing"
-msgstr ""
+msgstr "unbekannter Status, SNMP-Unterstützung fehlt"
 
 #: admin/systems/goto/class_terminalInfo.inc:91
 msgid "This is a virtual terminal which has no properties to show here."
@@ -2696,7 +2694,7 @@ msgstr "Drucker-Standort"
 
 #: admin/systems/goto/printer.tpl:63
 msgid "PPD Provider"
-msgstr ""
+msgstr "PPD Anbieter"
 
 #: admin/systems/goto/printer.tpl:98
 msgid "Users which are allowed to use this printer"
@@ -2817,20 +2815,16 @@ msgstr "Die temporäre Datei '%s' kann nicht zum Schreiben geöffnet werden."
 
 #: admin/systems/ppd/class_ppdManager.inc:196
 #: admin/systems/ppd/class_ppdManager.inc:326
-#, fuzzy
 msgid "Parsing PPD file failed - file is empty!"
-msgstr ""
-"Das Verarbeiten der PPD-Datei '%s' ist fehlgeschlagen - keine Information "
-"gefunden."
+msgstr "Das Verarbeiten der PPD-Datei ist fehlgeschlagen - die Datei ist leer!"
 
-#: admin/systems/ppd/class_ppdManager.inc:206
-#, fuzzy, php-format
+#: admin/systems/ppd/class_ppdManager.inc:206, php-format
 msgid ""
 "Parsing PPD file %s failed - line too long. Trailing characters have been "
 "ignored!"
 msgstr ""
 "Das Verarbeiten der PPD-Datei '%s' ist fehlgeschlagen - Zeile zu lang. "
-"Nachfolgende Zeichen wurden ausgelassen."
+"Nachfolgende Zeichen wurden ausgelassen!"
 
 #: admin/systems/ppd/class_ppdManager.inc:214
 msgid "Nested groups are not supported!"
