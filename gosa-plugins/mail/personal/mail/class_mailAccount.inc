@@ -367,10 +367,8 @@ class mailAccount extends plugin
       }
       if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
         $ui= get_userinfo();
-        if ($user != $ui->username){
-          msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."&nbsp;".
-              sprintf(_("Address is already in use by user '%s'."), $user), ERROR_DIALOG);
-        }
+        msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."&nbsp;".
+            sprintf(_("Address is already in use by user '%s'."), $user), ERROR_DIALOG);
       }
     }
     if (isset($_POST['delete_alternate']) && isset($_POST['alternates_list'])){
