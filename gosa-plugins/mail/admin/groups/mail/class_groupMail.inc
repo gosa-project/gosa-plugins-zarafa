@@ -54,7 +54,7 @@ class mailgroup extends plugin
      */
     foreach(array("uid","cn") as $attr){
       if(isset($this->parent->by_object['group']) && isset($this->parent->by_object['group']->$attr)){
-        $this->$attr = &$this->parent->by_object['group']->$attr;
+        $this->$attr = $this->parent->by_object['group']->$attr;
       }elseif(isset($this->attrs[$attr])){
         $this->$attr = $this->attrs[$attr][0];
       }
@@ -79,7 +79,7 @@ class mailgroup extends plugin
      *  mail address with the accounts cn.
      */ 
     if(!$this->mailMethod->isModifyableMail() && !$this->initially_was_account){
-      $this->mail = &$base_object->cn;
+      $this->mail = $base_object->cn;
     }
 
     /* Load folder_acls with defaults.
