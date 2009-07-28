@@ -55,6 +55,7 @@
 		</td>
 	</tr>
 </table>
+<input type='hidden' name='faiPartitionTable' value='1'>
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

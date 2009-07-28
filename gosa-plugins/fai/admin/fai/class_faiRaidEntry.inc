@@ -1,6 +1,6 @@
 <?php
 
-class faiDiskEntry extends plugin
+class faiRaidEntry extends plugin
 {
   /* attribute list for save action */
   var $ignore_account= TRUE;
@@ -21,9 +21,9 @@ class faiDiskEntry extends plugin
   var $disklabel            = "msdos";
 
   var $FAIstate             = "";
-  var $FAIdiskType          = "disk";
+  var $FAIdiskType          = "raid";
 
-  function faiDiskEntry (&$config, $dn= NULL,$usedDiskNames=array(),$disk=false)
+  function __construct (&$config, $dn= NULL,$usedDiskNames=array(),$disk=false)
   {
     plugin::plugin ($config, $dn);
     $this->UsedAttrs  = array("cn","description","FAIpartitionType","FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",

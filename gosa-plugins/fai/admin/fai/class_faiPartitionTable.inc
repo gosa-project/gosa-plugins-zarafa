@@ -141,6 +141,38 @@ class faiPartitionTable extends plugin
       $this->is_dialog = true;
     }
 
+    /* Add Disk to this Partitionset
+     * This code adds a new HDD to the disks 
+     * A new Dialog will be opened 
+     */
+    if(isset($_POST['AddRaid']) && !preg_match("/freeze/i",$this->FAIstate)){
+      $usedDiskNames =array();
+      foreach($this->disks as $key=>$disk){
+        $usedDiskNames[]= $key;
+      }
+      $this->dialog = new faiRaidEntry($this->config,$this->dn,$usedDiskNames); 
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
+      $this->dialog->set_acl_category("fai");
+      $this->dialog->FAIstate = $this->FAIstate;
+      $this->is_dialog = true;
+    }
+
+    /* Add Disk to this Partitionset
+     * This code adds a new HDD to the disks 
+     * A new Dialog will be opened 
+     */
+    if(isset($_POST['AddVolgroup']) && !preg_match("/freeze/i",$this->FAIstate)){
+      $usedDiskNames =array();
+      foreach($this->disks as $key=>$disk){
+        $usedDiskNames[]= $key;
+      }
+      $this->dialog = new faiLvmEntry($this->config,$this->dn,$usedDiskNames); 
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
+      $this->dialog->set_acl_category("fai");
+      $this->dialog->FAIstate = $this->FAIstate;
+      $this->is_dialog = true;
+    }
+
     /* Edit disk.
      * Open dialog which allows us to edit the selected entry 
      */    
@@ -449,6 +481,15 @@ class faiPartitionTable extends plugin
         $this->$attrs = $_POST[$attrs];
       }
     }
+    if(isset($_POST['faiPartitionTable'])){
+      if(!count($this->disks)){
+        if(isset($_POST['mode'])){
+          $this->FAIpartitionMethod = "setup-storage";
+        }else{
+          $this->FAIpartitionMethod = "";
+        }
+      }
+    }
   }
 
 
@@ -510,7 +551,11 @@ class faiPartitionTable extends plugin
     foreach($order as $cn=>$disk){
       $disk_dn                    = "cn=".$disk['cn'].",".$this->dn;
       $disk_attrs['cn']           =  $disk['cn'];
-      $disk_attrs['description']  =  $disk['description']; 
+      $disk_attrs['description']  =  $disk['description'];
+  
+      if(isset($disk['FAIdiskType'])){
+        $disk_attrs['FAIdiskType']  =  $disk['FAIdiskType']; 
+      }
 
       if(empty($disk_attrs['description']) && $disk['status'] == "edited"){
         $disk_attrs['description'] = array();
