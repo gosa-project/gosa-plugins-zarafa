@@ -26,8 +26,9 @@ class faiLvmEntry extends plugin
   function __construct (&$config, $dn= NULL,$usedDiskNames=array(),$disk=false)
   {
     plugin::plugin ($config, $dn);
-    $this->UsedAttrs  = array("cn","description","FAIpartitionType","FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
-                         "FAImountOptions","FAIfsOptions","FAIpartitionFlags");
+    $this->UsedAttrs  = array("cn","description","FAIpartitionType",
+        "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
+        "FAImountOptions","FAIfsOptions","FAIpartitionFlags");
 
     /* Default status is new */
     $this->status = "new";    
@@ -35,7 +36,7 @@ class faiLvmEntry extends plugin
     /* We want to edit an entry */
     if($disk){
 
-      /* Set disk status */      
+      /* Set disk status, eg removed. */      
       $this->status = $disk['status'];
 
       /* Walk through partitions */
@@ -97,7 +98,6 @@ class faiLvmEntry extends plugin
       } else {
         $this->fstabkey= "device";
       }
-
     }
   }
 
@@ -198,10 +198,14 @@ class faiLvmEntry extends plugin
     $smarty->assign("disklabels", array("msdos" => "MSDOS", "gpt" => "GPT"));
     $smarty->assign("fstabkey", $this->fstabkey);
     $smarty->assign("disklabel", $this->disklabel);
+
+    // Create divlist 
+    $divlist = new divSelectBox("lvmDisks");
+    $smarty->assign("clist", $this->generateParts().$divlist->DrawList());
  
     /* Fetch template and show the result
      */
-    $display.= $smarty->fetch(get_template_path('faiDiskEntry.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('faiLvmEntry.tpl', TRUE));
     return($display);
   }
 

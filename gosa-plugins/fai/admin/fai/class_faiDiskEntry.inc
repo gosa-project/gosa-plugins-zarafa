@@ -207,6 +207,28 @@ class faiDiskEntry extends plugin
 
   function generateParts()
   {
+
+    $divlist = new divSelectBox("DiskEntries"); 
+    foreach($this->partitions as $key => $part){
+     
+
+      $number =array("string" => $part['FAIpartitionNr']);
+      $size   =array("string" => $part['FAIpartitionSize']);
+      $mntp   =array("string" => $part['FAImountPoint']);
+      $fstype =array("string" => $part['FAIfsType']);
+      $type   =array("string" => $part['FAIpartitionType']);
+      
+      $desc   =array("string" => $part['description']);
+      $opt    =array("string" => $part['FAImountOptions']);
+      $fsopt  =array("string" => $part['FAIfsOptions']);
+      $flags  =array("string" => $part['FAIpartitionFlags']);
+
+    
+      $fields = array($number,$mntp,$size,$fstype,$type);
+      $divlist->AddEntry($fields);
+    }
+    return($divlist->DrawList());    
+
     /* Define Arrays with allowed syntax */
     $PartitionTypes   = array("primary"=>_("primary"),"logical"=>_("logical"));
     $FAIfsTypes       = array("ext2","ext3","xfs","swap","reiser","dosfat16","winfat32");

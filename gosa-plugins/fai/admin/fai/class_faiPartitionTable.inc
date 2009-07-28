@@ -283,16 +283,35 @@ class faiPartitionTable extends plugin
           $dn = "new";
         }
 
-        if ($this->FAIpartitionMethod == "setup-storage") {
-          $this->dialog = new faiDiskEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
-        } else {
-          $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+        if(isset($this->disks[$Udisk]['FAIdiskType'])){
+          switch($this->disks[$Udisk]['FAIdiskType']){
+            case 'raid': 
+              $this->dialog = new faiRaidEntry(
+                $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+              break;
+            case 'lvm': 
+              $this->dialog = new faiLvmEntry(
+                $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+              break;
+            case 'disk': 
+              $this->dialog = new faiDiskEntry(
+                $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+              break;
+            case 'old': 
+              $this->dialog = new faiPartitionTableEntry(
+                  $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+              break;
+          }
+        }else{
+          $this->dialog = new faiPartitionTableEntry(
+              $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
         }
-        $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
-        $this->dialog->set_acl_category("fai");
-        $this->dialog->FAIstate = $this->FAIstate;
-
-        $this->is_dialog = true;
+        if($this->dialog){
+          $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
+          $this->dialog->set_acl_category("fai");
+          $this->dialog->FAIstate = $this->FAIstate;
+          $this->is_dialog = true;
+        }
       }
     }
 
