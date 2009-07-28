@@ -502,8 +502,18 @@ class addressbook extends plugin
     $smarty->assign("search_for", $this->search_for);
     $smarty->assign("object_type", $this->object_type);
 
+    /* Create list of readable departments */
+    $deps = array();
+    foreach($this->config->idepartments as $dn => $name){
+      if( $this->acl_is_readable($dn)){
+        $deps[$dn] = $name;
+      }
+    }
+
+
+  
     $this->base = $phonefilter['search_base'];
-    $smarty->assign("deplist", $this->get_allowed_bases());
+    $smarty->assign("deplist", $deps);
     $smarty->assign("depselect", $this->search_base);
     $smarty->assign("global", $phonefilter['global']);
     $smarty->assign("organizational", $phonefilter['organizational']);
