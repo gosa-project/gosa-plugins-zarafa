@@ -26,8 +26,9 @@ class faiDiskEntry extends plugin
   function faiDiskEntry (&$config, $dn= NULL,$usedDiskNames=array(),$disk=false)
   {
     plugin::plugin ($config, $dn);
-    $this->UsedAttrs  = array("cn","description","FAIpartitionType","FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
-                         "FAImountOptions","FAIfsOptions","FAIpartitionFlags");
+    $this->UsedAttrs  = array("cn","description","FAIpartitionType",
+        "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
+        "FAImountOptions","FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
 
     /* Default status is new */
     $this->status = "new";    
@@ -87,17 +88,23 @@ class faiDiskEntry extends plugin
         foreach($disk['FAIdiskOption'] as $option) {
           if (preg_match("/fstabkey:(device|label|uuid)/", $option)){
             $this->fstabkey= preg_replace("/^.*fstabkey:(device|label|uuid).*$/", "$1", $option);
-            break;
+            continue;
           }
           if (preg_match("/disklabel:(msdos|gpt)/", $option)){
             $this->disklabel= preg_replace("/^.*disklabel:(msdos|gpt).*$/", "$1", $option);
+            continue;
+          }
+          if (preg_match("/^bootable:/", $option)){
+            $bootable = split(",", trim(preg_replace("/^bootable:/","",$option),","));
+            foreach($bootable as $bootflag){
+              $this->partitions[$bootflag]['bootable'] = TRUE;  
+            }
             break;
           }
         }
       } else {
         $this->fstabkey= "device";
       }
-
     }
   }
 
@@ -138,7 +145,9 @@ class faiDiskEntry extends plugin
      * The number specifies the index we want to delete
      */
     foreach($_POST as $name => $value){
-      if((preg_match("/Delete_.*/",$name)) && $this->acl_is_removeable() && !preg_match("/freeze/i",$this->FAIstate)){
+      if((preg_match("/Delete_.*/",$name)) && 
+          $this->acl_is_removeable() && 
+          !preg_match("/freeze/i",$this->FAIstate)){
         $tmp = split("_",$name);
         $s_action = "remove";
         $s_entry  = $tmp[1]; 
@@ -149,7 +158,8 @@ class faiDiskEntry extends plugin
      * We must sort the index again, else we possibly got problems 
      * with partitions order.
      */
-    if($s_action == "remove" && $this->acl_is_removeable() && !preg_match("/freeze/i",$this->FAIstate)){
+    if($s_action == "remove" && $this->acl_is_removeable() && 
+        !preg_match("/freeze/i",$this->FAIstate)){
       if($this->partitions[$s_entry]['status'] == "edited"){
         $this->deletePartitions[$s_entry]= $this->partitions[$s_entry];
         $this->deletePartitions[$s_entry]['FAIpartitionNr']=$s_entry;
@@ -164,17 +174,40 @@ class faiDiskEntry extends plugin
       $this->partitions = $tmp;
     }
 
-    /* To add a partitions we only append an empty 
-     *  array to the already defined partitions.
-     */
-    if(isset($_POST['AddPartition']) && $this->acl_is_createable() && !preg_match("/freeze/i",$this->FAIstate)){
-      foreach($this->UsedAttrs as $attr){
-        $tmp[$attr]                = "";     
-      }
-      $tmp["old_cn"]               = "";     
-      $tmp['status']="new";
-      $this->partitions[count($this->partitions)+1]=$tmp;
+
+    /* Add / Edit partitions here.
+     */    
+    foreach($_POST as $name => $value){
+      if(preg_match("/^EditPartition_/",$name)){
+        $id = preg_replace("/^EditPartition_/","",$name);
+        $id = preg_replace("/_.*$/","",$id);
+        if(isset($this->partitions[$id])){
+          $this->dialog = new faiPartition($this->config,"disk",$this->partitions[$id]);
+          break;
+        }
+      } 
     }
+    if(isset($_POST['AddPartition']) && !preg_match("/freeze/i",$this->FAIstate)){
+      $this->dialog = new faiPartition($this->config,"disk");
+    }
+    if($this->dialog instanceOf plugin && isset($_POST['PartitionCancel'])){
+      $this->dialog = null;
+    }
+    if($this->dialog instanceOf plugin && isset($_POST['PartitionSave'])){
+      $this->dialog->save_object();
+      $attrs = $this->dialog->save();
+      if(isset($attrs['FAIpartitionNr'])){
+        $this->partitions[$attrs['FAIpartitionNr']] = $attrs;
+      }else{
+        $this->partitions[] = $attrs;
+      }
+      $this->dialog = null;
+    }
+    if($this->dialog instanceOf plugin){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    }
+
 
     /* $setup contains a table with the partitions. 
      */
@@ -210,151 +243,39 @@ class faiDiskEntry extends plugin
 
     $divlist = new divSelectBox("DiskEntries"); 
     foreach($this->partitions as $key => $part){
-     
-
-      $number =array("string" => $part['FAIpartitionNr']);
-      $size   =array("string" => $part['FAIpartitionSize']);
+      $number =array(
+          "string" => $part['FAIpartitionNr'],
+          "attach" => "style='width:20px;'");
+      $size   =array(
+          "string" => $part['FAIpartitionSize'],
+          "attach" => "style='width:100px;'");
+      $fstype =array(
+          "string" => $part['FAIfsType'],
+          "attach" => "style='width:60px;'");
+      $type   =array(
+          "string" => $part['FAIpartitionType'],
+          "attach" => "style='width:80px;'");
+      $opt    =array(
+          "string" => $part['FAImountOptions'],
+          "attach" => "style='width:80px;'");
+      $fsopt  =array(
+          "string" => $part['FAIfsOptions'],
+          "attach" => "style='width:80px;'");
+      $flags  =array(
+          "string" => $part['FAIpartitionFlags'],
+          "attach" => "style='width:80px;'");
       $mntp   =array("string" => $part['FAImountPoint']);
-      $fstype =array("string" => $part['FAIfsType']);
-      $type   =array("string" => $part['FAIpartitionType']);
-      
-      $desc   =array("string" => $part['description']);
-      $opt    =array("string" => $part['FAImountOptions']);
-      $fsopt  =array("string" => $part['FAIfsOptions']);
-      $flags  =array("string" => $part['FAIpartitionFlags']);
 
-    
-      $fields = array($number,$mntp,$size,$fstype,$type);
+   
+      $action =array(
+          "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>",
+          "attach" => "style='width:40px;'");
+
+ 
+      $fields = array($number,$type,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
       $divlist->AddEntry($fields);
     }
     return($divlist->DrawList());    
-
-    /* Define Arrays with allowed syntax */
-    $PartitionTypes   = array("primary"=>_("primary"),"logical"=>_("logical"));
-    $FAIfsTypes       = array("ext2","ext3","xfs","swap","reiser","dosfat16","winfat32");
-
-    /* Display Header */
-    $str = "";
-    if (count($this->partitions)){
-      $str .= "<tr>";
-      $str .= "<td><b>"._("Type")."</b></td>";
-      $str .= "<td><b>"._("FS type")."</b></td>";
-      $str .= "<td><b>"._("Mount point")."</b></td>";
-      $str .= "<td><b>"._("Size in MB")."</b></td>";
-      $str .= "<td><b>"._("Mount options")."</b></td>";
-      $str .= "<td><b>"._("FS option")."</b></td>";
-      $str .= "<td><b>"._("Preserve")."</b></td>";
-      $str .= "<td>&nbsp;</td>";
-      $str .= "</tr>";
-    }
-    
-    /* Walk through all defined partitions.
-     * Create a new row for each partition and append it to 
-     *  the header defined above.
-     * To be able to check the posts later, we append a key to each single postfield. like cn_1 ... cn_2
-     */
-    foreach($this->partitions as $key => $part){
-      
-      $dis = "";
-      if($part['FAIpartitionFlags'] == "preserve"){
-        $dis = " disabled ";
-      }
-
-      $disableALL = "";
-      if (preg_match("/freeze/", $this->FAIstate)){
-        $disableALL = " disabled ";
-      }
-
-      if($part['status']!="delete"){
-
-        /* Generate Partition select box  
-         */
-        $PartitionType = "";
-        if($this->acl_is_writeable("FAIpartitionType")){
-          $PartitionType = "<select name='FAIpartitionType_".$key."' id='FAIpartitionType_".$key."' ".$disableALL.">";
-          foreach($PartitionTypes as $type => $PTname){
-            if($part['FAIpartitionType'] == $type){
-              $PartitionType .="<option value='".$type."' selected >".$PTname."</option>";
-            }else{
-              $PartitionType .="<option value='".$type."'>".$PTname."</option>";
-            }
-          }        
-          $PartitionType.="</select>";   
-        }elseif($this->acl_is_readable("FAIpartitionType")){
-          $PartitionType = $part['FAIpartitionType'];
-        }
-
-
-        /* Generate fsType select box  
-         */
-        $FAIfsType= "";
-        if($this->acl_is_writeable("FAIfsType")){
-          $FAIfsType= "<select name='FAIfsType_".$key."' id='FAIfsType_".$key."' ".$dis." ".$disableALL.">";
-          foreach($FAIfsTypes as $type){
-            if($part['FAIfsType'] == $type){
-              $FAIfsType  .="<option value='".$type."' selected >".$type."</option>";
-            }else{
-              $FAIfsType .="<option value='".$type."'>".$type."</option>";
-            }
-          }        
-          $FAIfsType.="</select>";   
-        }elseif($this->acl_is_readable("FAIfsType")){
-          $FAIfsType = $part['FAIfsType'];
-        }
-
-        foreach(array("FAImountPoint","FAIpartitionSize","FAImountOptions","FAIfsOptions") as $attr){
-          $$attr  = "";
-          if($this->acl_is_writeable($attr)){
-            $$attr = "<input name='".$attr."_".$key."'  ".$disableALL."  ".$dis."
-                        value='".$part[$attr]."'    id='".$attr."_".$key."'>";
-
-          }elseif($this->acl_is_readable($attr)){
-            $$attr = $part[$attr];
-          }
-        }
-
-
-        $str .= "\n<tr>";
-        $str .= "\n<td>".$PartitionType."</td>";
-        $str .= "\n<td>".$FAIfsType."</td>";
-        $str .= "\n<td>".$FAImountPoint."</td>";
-        $str .= "\n<td>".$FAIpartitionSize."</td>";
-        $str .= "\n<td>".$FAImountOptions."</td>";
-        $str .= "\n<td>".$FAIfsOptions."</td>";
-
-        $changeState = "onClick=\"changeState('FAImountPoint_".$key."') ; ".
-                                 "changeState('FAIpartitionSize_".$key."') ; ".
-                                 "changeState('FAImountOptions_".$key."') ; ".
-                                 "changeState('FAIfsType_".$key."') ; ".
-                                 "changeState('FAIfsOptions_".$key."') ; \"";
-  
-        if($this->acl_is_writeable("FAIpartitionFlags")){
-          if($part['FAIpartitionFlags']!=false){
-            $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' checked ".$changeState." ".$disableALL."></td>";
-          }else{
-            $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' ".$changeState." ".$disableALL."></td>";
-          }
-        }else{
-          if($part['FAIpartitionFlags']!=false){
-            $str .= "<td>"._("False")."</td>";
-          }else{
-            $str .= "<td>"._("True")."</td>";
-          }
-        }
-        if($this->acl_is_removeable()){
-          $str .= "\n<td><input type='submit' name='Delete_".$key."' value='"._("Remove")."' ".$disableALL."></td>";    
-        }else{
-          $str .= "\n<td><input type='submit' name='restricted' disabled value='"._("Remove")."'></td>";    
-        }
-        $str .= "\n</tr>";    
-      }
-    }
-    
-    if(!empty($str)){
-      $str = "<table summary='' style='width:100%'>".$str."</table>";
-    }
-    return($str);
-
   }
 
   function save()
@@ -395,27 +316,6 @@ class faiDiskEntry extends plugin
   {
     if((isset($_POST['TableEntryFrameSubmitted'])) && !preg_match("/freeze/", $this->FAIstate) ){
       plugin::save_object();
-
-      foreach($this->partitions as $key => $part){
-        foreach($this->UsedAttrs as $attrs){
-
-          if($this->acl_is_writeable($attrs)){
-
-            if(isset($_POST[$attrs."_".$key])){
-              $this->partitions[$key][$attrs] = $_POST[$attrs."_".$key];
-            }else{
-              $this->partitions[$key][$attrs] = false;
-            }
-          }
-        }
-
-        /* Adapt ext3 to have -j option */
-        if ($this->partitions[$key]["FAIfsType"] == "ext3") {
-          $this->partitions[$key]["FAIfsOptions"]= preg_replace('/\s*-j\s*/', '', $this->partitions[$key]["FAIfsOptions"]);
-          $this->partitions[$key]["FAIfsOptions"]= "-j ".$this->partitions[$key]["FAIfsOptions"];
-        }
-      }
-
     }
   }
 
