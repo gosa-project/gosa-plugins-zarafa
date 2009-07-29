@@ -135,9 +135,9 @@ class faiPartitionTable extends plugin
         if(isset($_POST['AddDisk'])) $type = "disk";
         if(isset($_POST['AddRaid'])) $type = "raid";
         if(isset($_POST['AddAddVolgroup'])) $type = "lvm";
-        $this->dialog = new faiDiskEntry($this->config,$this->dn,$usedDiskNames, array(),$type); 
+        $this->dialog = new faiDiskEntry($this->config,$this->dn,$this, array(),$type); 
       } else {
-        $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames); 
+        $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$this); 
       }
 
       $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
@@ -264,7 +264,7 @@ class faiPartitionTable extends plugin
             case 'lvm': 
             case 'disk': 
               $this->dialog = new faiDiskEntry(
-                  $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk], 
+                  $this->config,$this->dn,$this,$this->disks[$Udisk], 
                   $this->disks[$Udisk]['FAIdiskType']); 
               break;
             case 'old': 

@@ -35,8 +35,13 @@ class faiPartition extends plugin
   var $preserveType = "always";
   var $encrypted = false;
 
-  function __construct($config, $object, $type)
+  var $raidDevices = array();
+
+  function __construct($config, $object, $parent,$type)
   {
+
+    $this->parent = $parent;
+
     foreach($this->attributes as $attr){
       if(isset($object[$attr])){
         $this->$attr = $object[$attr];
@@ -45,33 +50,49 @@ class faiPartition extends plugin
 
     $this->FAIdiskType = $type;
 
-    /* Prepare size attribute 
-     * This attribute may represent a range, a fixed value 
-     *  or a percentage.
-     * fixed is just a number   * 500MB
-     * range                    * 500MB-1TB
-     * remaining                * -
-     */
-    
-    // Fixed
-    if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB)$/",$this->FAIpartitionSize)){
-      $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB)$/","\\1",$this->FAIpartitionSize);
-      $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB)$/","\\2",$this->FAIpartitionSize);
-      $this->FAIpartitionSizeType = "fixed";
-    }else
-    
-    // Dynamic range
-    if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB)-[0-9]*(KB|MB|GB|TB|PB)$/",$this->FAIpartitionSize)){
-      $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB).*$/","\\1",$this->FAIpartitionSize);
-      $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB).*$/","\\2",$this->FAIpartitionSize);
-      $this->sizeStop = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB)$/","\\1",$this->FAIpartitionSize);
-      $this->sizeStop_Type = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB)$/","\\2",$this->FAIpartitionSize);
-      $this->FAIpartitionSizeType = "dynamic";
-    }else
+    if($type == "disk"){
 
-    // Dynamic range
-    if(preg_match("/^\-$/",$this->FAIpartitionSize)){
-      $this->FAIpartitionSizeType = "remaining";
+      /* Prepare size attribute 
+       * This attribute may represent a range, a fixed value 
+       *  or a percentage.
+       * fixed is just a number   * 500MB
+       * range                    * 500MB-1TB
+       * remaining                * -
+       */
+      // Fixed
+      if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
+        $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
+        $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\2",$this->FAIpartitionSize);
+        $this->FAIpartitionSizeType = "fixed";
+      }else
+
+      // Dynamic range
+      if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)-[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
+        $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\1",$this->FAIpartitionSize);
+        $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\2",$this->FAIpartitionSize);
+        $this->sizeStop = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
+        $this->sizeStop_Type = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\2",$this->FAIpartitionSize);
+        $this->FAIpartitionSizeType = "dynamic";
+      }else
+
+      // Dynamic range
+      if(preg_match("/^\-$/",$this->FAIpartitionSize)){
+        $this->FAIpartitionSizeType = "remaining";
+
+      }
+    }elseif($type == "raid"){
+  
+      $usedDisks = split(",",$this->FAIpartitionSize);
+      foreach($usedDisks as $disk){
+        $name = preg_replace("/:.*$/","",$disk);
+        $spare = preg_match("/:spare/",$disk);
+        $missing = preg_match("/:missing/",$disk);
+        $this->raidDevices[$name] = 
+          array(
+              "name" => $name, 
+              "spare" => $spare, 
+              "missing" => $missing);
+      }
     }
   }
 
@@ -79,6 +100,12 @@ class faiPartition extends plugin
   {
     plugin::execute();
     $smarty = get_smarty();
+
+    // Remove partition
+    if(isset($_POST['addPhysicalPartition']) && isset($_POST['phyiscalPartitionAdd'])){
+      $name = $_POST['phyiscalPartitionAdd'];
+      $this->raidDevices[$name] = array("name" => $name,"spare"=>false,"missing"=>false);     
+    }
 
     // Create a list of selectable partition types
     if($this->FAIdiskType == "disk"){
@@ -94,7 +121,6 @@ class faiPartition extends plugin
     }else{
       $types = "";
     }
-
      
     // Create a list of all size options
     $partitionSizeTypes  = array(
@@ -117,7 +143,8 @@ class faiPartition extends plugin
     $preserveTypes = array(
         "always" => _("Always"),
         "reinstall" => _("Reinstall"));
-  
+
+    // File system types.  
     $FAIfsTypes = array(
         "swap" => _("Swap"),
         "ext2" => _("Ext 2"),
@@ -126,6 +153,9 @@ class faiPartition extends plugin
         "reiserfs" => _("Reiser fs"),
         "xfs" => _("Xfs"),
         "btrfs" => _("Btrfs"));
+
+        
+
  
     $smarty->assign("partitionTypes", $types);
     $smarty->assign("partitionSizeTypes", $partitionSizeTypes);
@@ -142,10 +172,61 @@ class faiPartition extends plugin
 
     $smarty->assign("FAIfsTypes", $FAIfsTypes);
 
+    $smarty->assign("plist",$this->getRaidlist());
+    $smarty->assign("phyiscalPartitionList",$this->getPartitionlist());
+
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
     return($smarty->fetch(get_template_path("faiPartition.tpl", TRUE, dirname(__FILE__))));
+  }
+
+    
+  function getPartitionList()
+  {
+    $array = array();  
+    foreach($this->parent->parent->disks as $disk){
+      foreach($disk['partitions'] as $key => $part){
+        $name = $disk['cn'].$key;
+        if(!isset($this->raidDevices[$name])){
+          $array[$name] = $name;
+        }
+      }
+    }
+    return($array);
+  }
+
+
+  function getRaidList()
+  {
+    $divlist = new divSelectBox("RaidList");
+   
+    $disks = $this->parent->parent->disks;
+    $objs = $disks;
+    foreach($disks as $disk){
+      foreach($disk['partitions'] as $id => $part){
+        $objs[$disk['cn'].$id] = $part;
+      }
+    }
+    
+    $list = array();
+    foreach($this->raidDevices as $device){
+      $list[$device['name']] = $device['name'];
+
+      if(isset($objs[$device['name']]['FAIpartitionSize'])){
+        $list[$device['name']].= _("Size").":&nbsp;";
+        $list[$device['name']].= $objs[$device['name']]['FAIpartitionSize'];
+      }
+
+      $list[$device['name']].= " &nbsp; "._("Options").": ";
+      if($device['spare']){
+        $list[$device['name']].= "&nbsp;"._("Spare")."&nbsp;";
+      }
+      if($device['missing']){
+        $list[$device['name']].= "&nbsp;"._("Missing")."&nbsp;";
+      }
+    }
+    return($list);
   }
 
   function save_object()
@@ -168,6 +249,23 @@ class faiPartition extends plugin
           $this->$attr = FALSE;
         }
       }
+
+      // Remove partition
+      if(isset($_POST['delPhysicalPartition']) && isset($_POST['phyiscalPartition'])){
+        unset($this->raidDevices[$_POST['phyiscalPartition']]); 
+      }
+
+      // Toggle spare flag for partition entries
+      if(isset($_POST['toggleSpare']) && isset($_POST['phyiscalPartition'])){
+        $this->raidDevices[$_POST['phyiscalPartition']]['spare'] = 
+            !$this->raidDevices[$_POST['phyiscalPartition']]['spare'];
+      }
+
+      // Toggle missing flag for partition entries
+      if(isset($_POST['toggleMissing']) && isset($_POST['phyiscalPartition'])){
+        $this->raidDevices[$_POST['phyiscalPartition']]['missing'] = 
+            !$this->raidDevices[$_POST['phyiscalPartition']]['missing'];
+      }
     } 
   }
 
@@ -178,18 +276,32 @@ class faiPartition extends plugin
       $ret[$attr] = $this->$attr;
     }
 
-    // Save partition size 
-    switch($this->FAIpartitionSizeType){
-      case 'fixed' : 
-        $ret['FAIpartitionSize'] = $this->sizeStart.$this->sizeStart_Type;break; 
-      case 'dynamic' : 
-        $ret['FAIpartitionSize'] = $this->sizeStart.$this->sizeStart_Type."-".  
-          $this->sizeStop.$this->sizeStop_Type;break; 
-      case 'remaining' : 
-        $ret['FAIpartitionSize'] = "-";break; 
-      default: trigger_error("Unknown partition size!");
+    // Save partition size
+    if($this->FAIdiskType == "disk"){ 
+      switch($this->FAIpartitionSizeType){
+        case 'fixed' : 
+          $ret['FAIpartitionSize'] = $this->sizeStart.$this->sizeStart_Type;break; 
+        case 'dynamic' : 
+          $ret['FAIpartitionSize'] = $this->sizeStart.$this->sizeStart_Type."-".  
+            $this->sizeStop.$this->sizeStop_Type;break; 
+        case 'remaining' : 
+          $ret['FAIpartitionSize'] = "-";break; 
+        default: trigger_error("Unknown partition size!");
+      }
+    }elseif($this->FAIdiskType == "raid"){
+      $ret['FAIpartitionSize'] = "";
+      foreach($this->raidDevices as $device){
+        $ret['FAIpartitionSize'] .= $device['name'];
+        if($device['spare']){
+          $ret['FAIpartitionSize'] .= ":spare";
+        }
+        if($device['missing']){
+          $ret['FAIpartitionSize'] .= ":missing";
+        }
+        $ret['FAIpartitionSize'] .= ",";
+      }
+      $ret['FAIpartitionSize'] = trim($ret['FAIpartitionSize'],",");
     }
-
     return($ret);
   }
 }

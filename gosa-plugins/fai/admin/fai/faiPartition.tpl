@@ -3,17 +3,27 @@
 
 <table style='width: 100%;' width="100%"> 
   <tr>
-    <td>{t}Type{/t}</td>
+{if $FAIdiskType == "lvm"}
+    <td>{t}Name{/t}</td>
+    <td>
+      <input name="FAIpartitionType" value="{$FAIpartitionType}">
+    </td>
+{else}
+    <td>{t}Name{/t}</td>
     <td>
       <select name="FAIpartitionType" onChange='document.mainform.submit();'>
         {html_options options=$partitionTypes selected=$FAIpartitionType}
       </select>
     </td>
+{/if}
     <td>{t}Description{/t}</td>
     <td>
       <input type="text" value="{$description}" name="description">
     </td>
   </tr>
+
+{if $FAIdiskType == "disk"}
+
   <tr>
     <td>{t}Size{/t}</td>
     <td colspan=3>
@@ -69,11 +79,43 @@
       </select>
     </td>
   </tr>
+
+{/if}
+
   <tr>
     <td colspan="4">
       <p class="seperator">&nbsp;</p>
     </td>
   </tr>
+
+{if $FAIdiskType == "raid"}
+
+  <tr>
+    <td colspan="4">
+      <h2>{t}Combined physical partitions{/t}</h2>      
+
+      <select name='phyiscalPartition' size=5 style="width:100%;">
+        {html_options options=$plist}
+      </select>
+      <br>
+      <select name='phyiscalPartitionAdd'>
+        {html_options options=$phyiscalPartitionList}
+      </select>
+      <input type="submit" name='addPhysicalPartition' value="{msgPool type="addButton"}">&nbsp; 
+      <input type="submit" name='delPhysicalPartition' value="{msgPool type="delButton"}">&nbsp; 
+      <input type="submit" name='toggleMissing' value="{t}Toggle missing{/t}">&nbsp; 
+      <input type="submit" name='toggleSpare' value="{t}Toggle spare{/t}">&nbsp; 
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <p class="seperator">&nbsp;</p>
+    </td>
+  </tr>
+{/if}
+
+{if $FAIdiskType == "raid"  || $FAIdiskType == "disk"}
+
   <tr>
     <td>
       {t}Filesystem{/t}
@@ -122,7 +164,11 @@
       <input name="FAImountOptions" value="{$FAImountOptions}">
     </td>
   </tr>
-  
+
+{/if}
+
+
+
   <!-- Table cell sizing  --> 
   <tr>
     <td colspan=2 style='width:50%;'></td>
