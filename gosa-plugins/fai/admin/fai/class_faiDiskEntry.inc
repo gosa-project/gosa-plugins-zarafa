@@ -23,12 +23,15 @@ class faiDiskEntry extends plugin
   var $FAIstate             = "";
   var $FAIdiskType          = "disk";
 
-  function faiDiskEntry (&$config, $dn= NULL,$usedDiskNames=array(),$disk=false)
+  function faiDiskEntry (&$config, $dn= NULL,$usedDiskNames,$disk,$type)
   {
     plugin::plugin ($config, $dn);
     $this->UsedAttrs  = array("cn","description","FAIpartitionType",
         "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
         "FAImountOptions","FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
+
+    /* Set disk type */
+    $this->FAIdiskType = $type;
 
     /* Default status is new */
     $this->status = "new";    
@@ -62,6 +65,7 @@ class faiDiskEntry extends plugin
           }
      
           $disk['partitions'][$name]['old_cn']= $disk['partitions'][$name]['cn'];
+          $disk['partitions'][$name]['FAIdiskType']= $this->FAIdiskType;
  
           /* Assign empty attributes, if attribute is missing */
           foreach($this->UsedAttrs as $attr){
@@ -182,13 +186,13 @@ class faiDiskEntry extends plugin
         $id = preg_replace("/^EditPartition_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
         if(isset($this->partitions[$id])){
-          $this->dialog = new faiPartition($this->config,"disk",$this->partitions[$id]);
+          $this->dialog = new faiPartition($this->config,$this->partitions[$id], $this->FAIdiskType);
           break;
         }
       } 
     }
     if(isset($_POST['AddPartition']) && !preg_match("/freeze/i",$this->FAIstate)){
-      $this->dialog = new faiPartition($this->config,"disk");
+      $this->dialog = new faiPartition($this->config, array(), $this->FAIdiskType);
     }
     if($this->dialog instanceOf plugin && isset($_POST['PartitionCancel'])){
       $this->dialog = null;

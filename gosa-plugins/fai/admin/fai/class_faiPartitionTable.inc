@@ -125,51 +125,26 @@ class faiPartitionTable extends plugin
      * This code adds a new HDD to the disks 
      * A new Dialog will be opened 
      */
-    if(isset($_POST['AddDisk']) && !preg_match("/freeze/i",$this->FAIstate)){
+    if((isset($_POST['AddDisk']) || isset($_POST['AddRaid']) || isset($_POST['AddVolgroup'])) && 
+        !preg_match("/freeze/i",$this->FAIstate)){
       $usedDiskNames =array();
       foreach($this->disks as $key=>$disk){
         $usedDiskNames[]= $key;
       }
       if ($this->FAIpartitionMethod == "setup-storage") {
-        $this->dialog = new faiDiskEntry($this->config,$this->dn,$usedDiskNames); 
+        if(isset($_POST['AddDisk'])) $type = "disk";
+        if(isset($_POST['AddRaid'])) $type = "raid";
+        if(isset($_POST['AddAddVolgroup'])) $type = "lvm";
+        $this->dialog = new faiDiskEntry($this->config,$this->dn,$usedDiskNames, array(),$type); 
       } else {
         $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames); 
       }
-      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
-      $this->dialog->set_acl_category("fai");
-      $this->dialog->FAIstate = $this->FAIstate;
-      $this->is_dialog = true;
-    }
 
-    /* Add Disk to this Partitionset
-     * This code adds a new HDD to the disks 
-     * A new Dialog will be opened 
-     */
-    if(isset($_POST['AddRaid']) && !preg_match("/freeze/i",$this->FAIstate)){
-      $usedDiskNames =array();
-      foreach($this->disks as $key=>$disk){
-        $usedDiskNames[]= $key;
-      }
-      $this->dialog = new faiRaidEntry($this->config,$this->dn,$usedDiskNames); 
       $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
       $this->dialog->set_acl_category("fai");
       $this->dialog->FAIstate = $this->FAIstate;
-      $this->is_dialog = true;
-    }
 
-    /* Add Disk to this Partitionset
-     * This code adds a new HDD to the disks 
-     * A new Dialog will be opened 
-     */
-    if(isset($_POST['AddVolgroup']) && !preg_match("/freeze/i",$this->FAIstate)){
-      $usedDiskNames =array();
-      foreach($this->disks as $key=>$disk){
-        $usedDiskNames[]= $key;
-      }
-      $this->dialog = new faiLvmEntry($this->config,$this->dn,$usedDiskNames); 
-      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
-      $this->dialog->set_acl_category("fai");
-      $this->dialog->FAIstate = $this->FAIstate;
+
       $this->is_dialog = true;
     }
 
@@ -286,16 +261,11 @@ class faiPartitionTable extends plugin
         if(isset($this->disks[$Udisk]['FAIdiskType'])){
           switch($this->disks[$Udisk]['FAIdiskType']){
             case 'raid': 
-              $this->dialog = new faiRaidEntry(
-                $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
-              break;
             case 'lvm': 
-              $this->dialog = new faiLvmEntry(
-                $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
-              break;
             case 'disk': 
               $this->dialog = new faiDiskEntry(
-                $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+                  $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk], 
+                  $this->disks[$Udisk]['FAIdiskType']); 
               break;
             case 'old': 
               $this->dialog = new faiPartitionTableEntry(
