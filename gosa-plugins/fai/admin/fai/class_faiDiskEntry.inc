@@ -30,7 +30,8 @@ class faiDiskEntry extends plugin
     $this->parent = $parent;
 
     $this->UsedAttrs  = array("cn","description","FAIpartitionType",
-        "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
+        "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize","FAIfsTuneOptions",
+        "FAIfsCreateOptions",
         "FAImountOptions","FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
 
     /* Set disk type */
@@ -106,7 +107,30 @@ class faiDiskEntry extends plugin
             foreach($bootable as $bootflag){
               $this->partitions[$bootflag]['bootable'] = TRUE;  
             }
-            break;
+            continue;
+          }
+          if (preg_match("/^resize:/", $option)){
+            $resize = split(",", trim(preg_replace("/^resize:/","",$option),","));
+            foreach($resize as $id){
+              $this->partitions[$id]['resize'] = TRUE;  
+            }
+            continue;
+          }
+          if (preg_match("/^preserve_always:/", $option)){
+            $preserve = split(",", trim(preg_replace("/^preserve_always:/","",$option),","));
+            foreach($preserve as $presflag){
+              $this->partitions[$presflag]['preserve'] = TRUE;  
+              $this->partitions[$presflag]['preserveType'] = 'always';  
+            }
+            continue;
+          }
+          if (preg_match("/^preserve_reinstall:/", $option)){
+            $preserve = split(",", trim(preg_replace("/^preserve_reinstall:/","",$option),","));
+            foreach($preserve as $presflag){
+              $this->partitions[$presflag]['preserve'] = TRUE;  
+              $this->partitions[$presflag]['preserveType'] = 'reinstall';  
+            }
+            continue;
           }
         }
       } else {
@@ -314,6 +338,51 @@ class faiDiskEntry extends plugin
       $tmp['rename']['from']  = $this->old_cn;
       $tmp['rename']['to']    = $this->DISKcn;
     }
+
+    // Build up disk options 
+    $bootable = "";
+    $resize = "";
+    $preserve_always = "";
+    $preserve_reinstall = "";
+
+    foreach($tmp['partitions'] as $id => $part){
+      if(isset($part['bootable']) && $part['bootable']){
+        $bootable .= $id.",";
+      }
+      if(isset($part['resize']) && $part['resize']){
+        $resize .= $id.",";
+      }
+      if(isset($part['preserve']) && $part['preserve']){
+        if($part['preserveType'] == "always"){
+          $preserve_always .= $id.",";
+        }else{
+          $preserve_reinstall .= $id.",";
+        }
+      }
+      $tmp['partitions'][$id]['status'] = $part['status'];
+
+      // Unset non valid attributes 
+      foreach(array("bootable","encrypted","preserve","preserveType","resize","FAIdiskType") as $attr){
+        if(isset($tmp['partitions'][$id][$attr])){
+          unset($tmp['partitions'][$id][$attr]);
+        }
+      }
+    }    
+
+    if(!empty($bootable)){
+      $tmp['FAIdiskOption'][] = "bootable:".trim($bootable,",");
+    }
+    if(!empty($resize)){
+      $tmp['FAIdiskOption'][] = "resize:".trim($resize,",");
+    }
+    if(!empty($preserve_always)){
+      $tmp['FAIdiskOption'][] = "preserve_always:".trim($preserve_always,",");
+    }
+    if(!empty($preserve_reinstall)){
+      $tmp['FAIdiskOption'][] = "preserve_reinstall:".trim($preserve_reinstall,",");
+    }
+
+    $tmp['status'] = $this->status;
     return($tmp);
   }
 
@@ -403,7 +472,9 @@ class faiDiskEntry extends plugin
       }
 
       foreach($this->UsedAttrs as $attrs){
-        $alreadyUsed[$attrs][$key] = $part[$attrs];
+        if(isset($part[$attrs])){
+          $alreadyUsed[$attrs][$key] = $part[$attrs];
+        }
       }      
     }
 

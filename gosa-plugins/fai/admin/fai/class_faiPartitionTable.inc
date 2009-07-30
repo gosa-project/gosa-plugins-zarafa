@@ -8,7 +8,7 @@ class faiPartitionTable extends plugin
   var $objectclasses    = array("top","FAIclass","FAIpartitionTable");
 
   var $subAttributes      = array("cn","description");
-  var $subPartAttributes  = array("cn","FAIpartitionNr","FAIpartitionSize","FAImountPoint","FAIfsType","FAIpartitionType","FAImountOptions","FAIfsOptions","FAIpartitionFlags","description");
+  var $subPartAttributes  = array("cn","FAIpartitionNr","FAIpartitionSize","FAImountPoint","FAIfsType","FAIpartitionType","FAImountOptions","FAIfsOptions","FAIpartitionFlags","description","FAIfsCreateOptions","FAIfsTuneOptions");
 
   var $sub64coded = array();
   var $subBinary = array();
@@ -545,6 +545,9 @@ class faiPartitionTable extends plugin
       if(isset($disk['FAIdiskType'])){
         $disk_attrs['FAIdiskType']  =  $disk['FAIdiskType']; 
       }
+      if(isset($disk['FAIdiskOption'])){
+        $disk_attrs['FAIdiskOption']  =  $disk['FAIdiskOption']; 
+      }
 
       if(empty($disk_attrs['description']) && $disk['status'] == "edited"){
         $disk_attrs['description'] = array();
@@ -574,6 +577,7 @@ class faiPartitionTable extends plugin
       }
 
       if($disk['status']!="delete")
+
       /* Add all partitions */
       foreach($disk['partitions'] as $key => $partition){
         $partition_attrs = array();

@@ -35,6 +35,7 @@ class faiPartition extends plugin
   var $preserveType = "always";
   var $encrypted = false;
 
+  var $status = "";
   var $raidDevices = array();
 
   function __construct($config, $object, $parent,$type)
@@ -48,6 +49,7 @@ class faiPartition extends plugin
       }
     }
 
+    $this->status = $object['status'];
     $this->FAIdiskType = $type;
 
     if($type == "disk"){
@@ -80,6 +82,14 @@ class faiPartition extends plugin
         $this->FAIpartitionSizeType = "remaining";
 
       }
+
+      /* Check for encrypted partitions
+       */
+      if(preg_match("/:encrypt$/",$this->FAImountPoint)){
+        $this->FAImountPoint = preg_replace("/:encrypt/","",$this->FAImountPoint);
+        $this->encrypted = TRUE;
+      }
+  
     }elseif($type == "raid"){
   
       $usedDisks = split(",",$this->FAIpartitionSize);
@@ -154,9 +164,6 @@ class faiPartition extends plugin
         "xfs" => _("Xfs"),
         "btrfs" => _("Btrfs"));
 
-        
-
- 
     $smarty->assign("partitionTypes", $types);
     $smarty->assign("partitionSizeTypes", $partitionSizeTypes);
     $smarty->assign("FAIpartitionSizeType", $this->FAIpartitionSizeType);
@@ -288,6 +295,12 @@ class faiPartition extends plugin
           $ret['FAIpartitionSize'] = "-";break; 
         default: trigger_error("Unknown partition size!");
       }
+
+      // Add encryption flag to partition mount point
+      if($this->encrypted){
+        $ret['FAImountPoint'] .= ":encrypt";
+      }
+
     }elseif($this->FAIdiskType == "raid"){
       $ret['FAIpartitionSize'] = "";
       foreach($this->raidDevices as $device){
@@ -302,6 +315,7 @@ class faiPartition extends plugin
       }
       $ret['FAIpartitionSize'] = trim($ret['FAIpartitionSize'],",");
     }
+    $ret['status'] = $this->status;
     return($ret);
   }
 }

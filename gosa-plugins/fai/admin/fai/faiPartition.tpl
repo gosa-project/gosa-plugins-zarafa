@@ -9,7 +9,7 @@
       <input name="FAIpartitionType" value="{$FAIpartitionType}">
     </td>
 {else}
-    <td>{t}Name{/t}</td>
+    <td>{t}Type{/t}</td>
     <td>
       <select name="FAIpartitionType" onChange='document.mainform.submit();'>
         {html_options options=$partitionTypes selected=$FAIpartitionType}
@@ -75,7 +75,7 @@
     </td>
     <td>
       <select name='preserveType'>
-        {html_options options=preserveType selected=$preserveType}
+        {html_options options=$preserveTypes selected=$preserveType}
       </select>
     </td>
   </tr>
