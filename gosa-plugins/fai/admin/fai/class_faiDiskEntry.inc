@@ -12,7 +12,11 @@ class faiDiskEntry extends plugin
   var $DISKFAIdiskOptions     = "";
   
   var $partitions           = array();
-  var $UsedAttrs            = array();
+  var $UsedAttrs            = array("cn","description","FAIpartitionType",
+        "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize","FAIfsTuneOptions",
+        "FAIfsCreateOptions",
+        "FAImountOptions","FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
+
   var $is_edit              = false;
   var $old_cn               = "";
   var $status               = "new";
@@ -27,81 +31,83 @@ class faiDiskEntry extends plugin
   {
     plugin::plugin ($config, $dn);
 
+
+    // Set default attributes 
     $this->parent = $parent;
-
-    $this->UsedAttrs  = array("cn","description","FAIpartitionType",
-        "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize","FAIfsTuneOptions",
-        "FAIfsCreateOptions",
-        "FAImountOptions","FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
-
-    /* Set disk type */
     $this->FAIdiskType = $type;
-
-    /* Default status is new */
     $this->status = "new";    
  
-    /* We want to edit an entry */
+
+    // If disk is not empty, then we are going to edit 
+    //  an existing disk, load disk info now. 
     if($disk){
 
-      /* Set disk status */      
+      // Get disk status
       $this->status = $disk['status'];
 
-      /* Walk through partitions */
+      // Load default attributes 
+      $this->DISKcn          = $disk['cn'];
+      $this->DISKdescription = $disk['description'];
+      $this->is_edit         = true;
+      $this->old_cn          = $disk['cn'];
+
+      // Load partition info 
       foreach($disk['partitions'] as $name => $values){
 
-        /* If a partition is already marked as delete, attach it to deletePartitions only. */
+        // Do not load removed partitions 
         if($values['status'] == "delete"){
           unset($disk['partitions'][$name]);
           $this->deletePartitions[]=$values;
         }else{
 
-          /* Set status, to know which partition must be deleted from ldap
-             new    : Neu partition entry // save
-             edited : Update partition entry in ldap
-             deleted: Remove partition from ldap
-           */
-    
           /* If status is not new, set to edit mode. 
            * New means that this partition currently wasn't saved to ldap.
            */
           if($disk['partitions'][$name]['status']!="new"){
             $disk['partitions'][$name]['status']="edited";
           }
-     
+    
+          // Load partition attributes  
           $disk['partitions'][$name]['old_cn']= $disk['partitions'][$name]['cn'];
           $disk['partitions'][$name]['FAIdiskType']= $this->FAIdiskType;
- 
-          /* Assign empty attributes, if attribute is missing */
           foreach($this->UsedAttrs as $attr){
             if(!isset($values[$attr])){
               $disk['partitions'][$name][$attr]="";  
             }
           }
-
           if (preg_match('/^_/', $disk['partitions'][$name]['FAIfsType'])){
-            $disk['partitions'][$name]['FAIfsType']= preg_replace('/^_/', '', $disk['partitions'][$name]['FAIfsType']);
+            $disk['partitions'][$name]['FAIfsType']= 
+              preg_replace('/^_/', '', $disk['partitions'][$name]['FAIfsType']);
           }
         }
       }
 
-      /* Set default attributes */
-      $this->DISKcn          = $disk['cn'];
-      $this->DISKdescription = $disk['description'];
       $this->partitions      = $disk['partitions'];
-      $this->is_edit         = true;
-      $this->old_cn          = $disk['cn'];
 
-      /* Move faiDiskOption */
+      /* Load FAIdiskOptions.
+       * Some options are disk related and some are used for partitions.
+       *  - fstabkey    -> disk
+       *  - disklabel   -> disk
+       *  - bootable    -> partition
+       *  - preserve    -> partition
+       *  - resize      -> partition
+       */
       if (isset($disk['FAIdiskOption'])){
         foreach($disk['FAIdiskOption'] as $option) {
+
+          // Get fstab key  
           if (preg_match("/fstabkey:(device|label|uuid)/", $option)){
             $this->fstabkey= preg_replace("/^.*fstabkey:(device|label|uuid).*$/", "$1", $option);
             continue;
           }
+
+          // Get disk label
           if (preg_match("/disklabel:(msdos|gpt)/", $option)){
             $this->disklabel= preg_replace("/^.*disklabel:(msdos|gpt).*$/", "$1", $option);
             continue;
           }
+
+          // Load bootable flag for partitions 
           if (preg_match("/^bootable:/", $option)){
             $bootable = split(",", trim(preg_replace("/^bootable:/","",$option),","));
             foreach($bootable as $bootflag){
@@ -109,6 +115,8 @@ class faiDiskEntry extends plugin
             }
             continue;
           }
+
+          // Load resize flag for partitions 
           if (preg_match("/^resize:/", $option)){
             $resize = split(",", trim(preg_replace("/^resize:/","",$option),","));
             foreach($resize as $id){
@@ -116,6 +124,8 @@ class faiDiskEntry extends plugin
             }
             continue;
           }
+
+          // Load preserve_always flag for partitions 
           if (preg_match("/^preserve_always:/", $option)){
             $preserve = split(",", trim(preg_replace("/^preserve_always:/","",$option),","));
             foreach($preserve as $presflag){
@@ -124,6 +134,8 @@ class faiDiskEntry extends plugin
             }
             continue;
           }
+
+          // Load preserve_reinstall flag for partitions 
           if (preg_match("/^preserve_reinstall:/", $option)){
             $preserve = split(",", trim(preg_replace("/^preserve_reinstall:/","",$option),","));
             foreach($preserve as $presflag){
@@ -145,31 +157,11 @@ class faiDiskEntry extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    /* Fill templating stuff */
+    // Fill templating stuff
     $smarty     = get_smarty();
     $s_action   = "";
     $s_entry    = "";
     $display    = "";
-
-    /* Load parameters */
-    if (isset($_POST['disklabel']) && preg_match("/^(msdos|gpt)$/", $_POST['disklabel'])){
-      $this->disklabel= $_POST['disklabel'];
-    }
-    if (isset($_POST['fstabkey']) && preg_match("/^(device|label|uuid)$/", $_POST['fstabkey'])){
-      $this->fstabkey= $_POST['fstabkey'];
-    }
-    
-    /* Assign values 
-     * And Checkbox selection
-     */
-    foreach($this->attributes as $attrs){
-      $smarty->assign($attrs,$this->$attrs);
-      if($this->$attrs){
-        $smarty->assign($attrs."CHK"," ");
-      }else{
-        $smarty->assign($attrs."CHK"," disabled ");
-      }
-    }
 
     /* Check all Posts if there is something usefull for us,
      * For example : Delete is posted as Delete_1 
@@ -186,8 +178,8 @@ class faiDiskEntry extends plugin
     }
 
     /* To remove a partition we unset the index posted.
-     * We must sort the index again, else we possibly got problems 
-     * with partitions order.
+     * We must sort the index again, else we possibly get problems 
+     * with the partition order.
      */
     if($s_action == "remove" && $this->acl_is_removeable() && 
         !preg_match("/freeze/i",$this->FAIstate)){
@@ -206,7 +198,7 @@ class faiDiskEntry extends plugin
     }
 
 
-    /* Add / Edit partitions here.
+    /* Edit existing partitions here.
      */    
     foreach($_POST as $name => $value){
       if(preg_match("/^EditPartition_/",$name)){
@@ -218,9 +210,15 @@ class faiDiskEntry extends plugin
         }
       } 
     }
+
+    /* Create a nwe partition for this disk.
+     */
     if(isset($_POST['AddPartition']) && !preg_match("/freeze/i",$this->FAIstate)){
       $this->dialog = new faiPartition($this->config, array(), $this,$this->FAIdiskType);
     }
+
+    /* Handle partition dialogs.
+     */
     if($this->dialog instanceOf plugin && isset($_POST['PartitionCancel'])){
       $this->dialog = null;
     }
@@ -240,13 +238,29 @@ class faiDiskEntry extends plugin
     }
 
 
-    /* $setup contains a table with the partitions. 
-     */
+    // Assign checkbox related values.
+    foreach($this->attributes as $attrs){
+      $smarty->assign($attrs,$this->$attrs);
+      if($this->$attrs){
+        $smarty->assign($attrs."CHK"," ");
+      }else{
+        $smarty->assign($attrs."CHK"," disabled ");
+      }
+    }
+
+    // Assign disk info to smarty.
     $smarty->assign("setup", $this->generateParts());
+    $smarty->assign("sub_object_is_createable",$this->acl_is_createable());
+    $smarty->assign("freeze",preg_match("/freeze/i",$this->FAIstate));
+    $smarty->assign("fstabkeys", array("device" => _("Device"), "label" => _("Label"), "uuid" => _("UUID")));
+    $smarty->assign("disklabels", array("msdos" => "MSDOS", "gpt" => "GPT"));
+    $smarty->assign("fstabkey", $this->fstabkey);
+    $smarty->assign("disklabel", $this->disklabel);
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
 
+    // Assign partitions
     $tmp = $this->plInfo();
     $sacl = "";
     foreach($tmp['plProvidedAcls'] as $name => $translated){
@@ -254,17 +268,6 @@ class faiDiskEntry extends plugin
       $smarty->assign($name."ACL",$acl);
     }
    
-    $smarty->assign("sub_object_is_createable",$this->acl_is_createable());
-    $smarty->assign("freeze",preg_match("/freeze/i",$this->FAIstate));
-
-    // Fill boxes
-    $smarty->assign("fstabkeys", array("device" => _("Device"), "label" => _("Label"), "uuid" => _("UUID")));
-    $smarty->assign("disklabels", array("msdos" => "MSDOS", "gpt" => "GPT"));
-    $smarty->assign("fstabkey", $this->fstabkey);
-    $smarty->assign("disklabel", $this->disklabel);
- 
-    /* Fetch template and show the result
-     */
     $display.= $smarty->fetch(get_template_path('faiDiskEntry.tpl', TRUE));
     return($display);
   }
@@ -392,6 +395,14 @@ class faiDiskEntry extends plugin
   {
     if((isset($_POST['TableEntryFrameSubmitted'])) && !preg_match("/freeze/", $this->FAIstate) ){
       plugin::save_object();
+
+      // Save posted disk label and fstab key
+      if (isset($_POST['disklabel']) && preg_match("/^(msdos|gpt)$/", $_POST['disklabel'])){
+        $this->disklabel= $_POST['disklabel'];
+      }
+      if (isset($_POST['fstabkey']) && preg_match("/^(device|label|uuid)$/", $_POST['fstabkey'])){
+        $this->fstabkey= $_POST['fstabkey'];
+      }
     }
   }
 
@@ -421,62 +432,62 @@ class faiDiskEntry extends plugin
       $alreadyUsed[$attrs] = array();
     }      
 
-    foreach($this->partitions as $key => $part){
-  
-      /* Skip all checks, if preserve is set */ 
-      if($part['FAIpartitionFlags'] == "preserve"){
-        $this->partitions[$key]['FAIfsType']        = "preserve";
-        $this->partitions[$key]['FAIpartitionSize'] = "preserve";
-        continue;
-      }
- 
-      if($part['FAImountPoint'] != "-" && (in_array($part['FAImountPoint'],$alreadyUsed['FAImountPoint']))&&($part['FAIfsType']!="swap")){
-        $message[]=sprintf(_("Please enter a unique mount point for partition %s"),($key));
-      }
-
-      if($part['FAIfsType']!="swap" && $part['FAImountPoint'] != "-"){
-        if((empty($part['FAImountPoint']))||(!((preg_match("/^\/.*/",$part['FAImountPoint']))||(preg_match("/^swap$/",$part['FAImountPoint']))))){
-          $message[]= msgPool::invalid(sprintf(_("partition %s mount point"),$key));
-        }
-      }
-      if($part['FAIfsType'] == "swap"){
-        if(in_array($part['FAIfsType'],$alreadyUsed['FAIfsType'])){
-          $message[]=sprintf(_("File system type 'swap' is already used, change file system type for partition %s."),$key);
-        }
-      }
-      if(($part['FAIfsType'] == "swap")&&(!empty($part['FAImountPoint']))&&($part['FAImountPoint']!="swap")){
-        $message[]=_("Please use 'swap' as mount point, if 'swap' is used as fs-type.");
-      }
-
-      $tmp = split("-",$part['FAIpartitionSize']);
-      switch (count($tmp)){
-        case 0:
-                $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-                break;
-        case 1:
-                if (!tests::is_id($tmp[0]) &&(!empty($tmp[1]))){
-                  $message[]=  msgPool::invalid(sprintf(_("partition %s size"),$key));
-                }
-                break;
-                
-        case 2:
-                if( !tests::is_id($tmp[0]) && !tests::is_id($tmp[1]) && !empty($tmp[1]) ){
-                  $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-                }elseif(!empty($tmp[1]) && $tmp[0]>=$tmp[1]){
-                  $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-                }
-                break;
-
-        default:
-                $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-      }
-
-      foreach($this->UsedAttrs as $attrs){
-        if(isset($part[$attrs])){
-          $alreadyUsed[$attrs][$key] = $part[$attrs];
-        }
-      }      
-    }
+//   foreach($this->partitions as $key => $part){
+// 
+//     /* Skip all checks, if preserve is set */ 
+//     if($part['FAIpartitionFlags'] == "preserve"){
+//       $this->partitions[$key]['FAIfsType']        = "preserve";
+//       $this->partitions[$key]['FAIpartitionSize'] = "preserve";
+//       continue;
+//     }
+//
+//     if($part['FAImountPoint'] != "-" && (in_array($part['FAImountPoint'],$alreadyUsed['FAImountPoint']))&&($part['FAIfsType']!="swap")){
+//       $message[]=sprintf(_("Please enter a unique mount point for partition %s"),($key));
+//     }
+//
+//     if($part['FAIfsType']!="swap" && $part['FAImountPoint'] != "-"){
+//       if((empty($part['FAImountPoint']))||(!((preg_match("/^\/.*/",$part['FAImountPoint']))||(preg_match("/^swap$/",$part['FAImountPoint']))))){
+//         $message[]= msgPool::invalid(sprintf(_("partition %s mount point"),$key));
+//       }
+//     }
+//     if($part['FAIfsType'] == "swap"){
+//       if(in_array($part['FAIfsType'],$alreadyUsed['FAIfsType'])){
+//         $message[]=sprintf(_("File system type 'swap' is already used, change file system type for partition %s."),$key);
+//       }
+//     }
+//     if(($part['FAIfsType'] == "swap")&&(!empty($part['FAImountPoint']))&&($part['FAImountPoint']!="swap")){
+//       $message[]=_("Please use 'swap' as mount point, if 'swap' is used as fs-type.");
+//     }
+//
+//     $tmp = split("-",$part['FAIpartitionSize']);
+//     switch (count($tmp)){
+//       case 0:
+//               $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
+//               break;
+//       case 1:
+//               if (!tests::is_id($tmp[0]) &&(!empty($tmp[1]))){
+//                 $message[]=  msgPool::invalid(sprintf(_("partition %s size"),$key));
+//               }
+//               break;
+//               
+//       case 2:
+//               if( !tests::is_id($tmp[0]) && !tests::is_id($tmp[1]) && !empty($tmp[1]) ){
+//                 $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
+//               }elseif(!empty($tmp[1]) && $tmp[0]>=$tmp[1]){
+//                 $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
+//               }
+//               break;
+//
+//       default:
+//               $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
+//     }
+//
+//     foreach($this->UsedAttrs as $attrs){
+//       if(isset($part[$attrs])){
+//         $alreadyUsed[$attrs][$key] = $part[$attrs];
+//       }
+//     }      
+//   }
 
     $cnt = 0;
     foreach($this->partitions as $key => $part){

@@ -8,7 +8,7 @@ class faiPartitionTable extends plugin
   var $objectclasses    = array("top","FAIclass","FAIpartitionTable");
 
   var $subAttributes      = array("cn","description");
-  var $subPartAttributes  = array("cn","FAIpartitionNr","FAIpartitionSize","FAImountPoint","FAIfsType","FAIpartitionType","FAImountOptions","FAIfsOptions","FAIpartitionFlags","description","FAIfsCreateOptions","FAIfsTuneOptions");
+  var $subPartAttributes  = array("cn","FAIpartitionNr","FAIpartitionSize","FAImountPoint","FAIfsType","FAIpartitionType","FAImountOptions","FAIfsOptions","FAIpartitionFlags","description","FAIfsCreateOptions","FAIfsTuneOptions","FAIfsOptions","FAIpartitionFlags");
 
   var $sub64coded = array();
   var $subBinary = array();
