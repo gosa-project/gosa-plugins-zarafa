@@ -22,7 +22,7 @@
     </td>
   </tr>
 
-{if $FAIdiskType == "disk"}
+{if $FAIdiskType == "disk" || $FAIdiskType == "lvm"}
 
   <tr>
     <td>{t}Size{/t}</td>
@@ -114,8 +114,6 @@
   </tr>
 {/if}
 
-{if $FAIdiskType == "raid"  || $FAIdiskType == "disk"}
-
   <tr>
     <td>
       {t}Filesystem{/t}
@@ -164,10 +162,6 @@
       <input name="FAImountOptions" value="{$FAImountOptions}">
     </td>
   </tr>
-
-{/if}
-
-
 
   <!-- Table cell sizing  --> 
   <tr>

@@ -3,56 +3,62 @@
 <table style='width:100%' summary="">
 	<tr>
 		<td style='width:50%;border-right:1px solid #909090;'>
-                <table>
-                <tr>
-                <td>
-                        <LABEL for="DISKcn">
-			{t}Name{/t}
-			</LABEL>{$must}&nbsp;
-                </td><td>
+
+      <table>
+        <tr>
+          <td>
+            <LABEL for="DISKcn">{t}Name{/t}</LABEL>{$must}&nbsp;
+          </td>
+          <td>
 {render acl=$DISKcnACL}
-			<input value="{$DISKcn}" size="45" maxlength="80" name="DISKcn" id="DISKcn">
+			      <input value="{$DISKcn}" size="45" maxlength="80" name="DISKcn" id="DISKcn">
 {/render}
-		</td>
-                </tr>
-                <tr>
-		<td><LABEL for="fstabkey">
-			{t}FSTAB key{/t}
-                </td><td>
+      		</td>
+        </tr>
+        <tr>
+		      <td>
+            <LABEL for="fstabkey">{t}FSTAB key{/t}</LABEL>
+          </td>
+          <td>
 {render acl=$DISKFAIdiskOptionACL}
-                        <select name="fstabkey" size="1">
-                           {html_options options=$fstabkeys selected=$fstabkey}
-                        </select>
+            <select name="fstabkey" size="1">
+               {html_options options=$fstabkeys selected=$fstabkey}
+            </select>
 {/render}
-		</td>
-                </tr>
-                </table>
-                </td>
+		      </td>
+        </tr>
+      </table>
+
+    </td>
 		<td>
-                <table>
-                <tr>
-                <td>
-<LABEL for="DISKdescription">
-			&nbsp;{t}Description{/t}
-			</LABEL>&nbsp;
-                </td><td>
+
+      <table>
+        <tr>
+          <td>
+            <LABEL for="DISKdescription">&nbsp;{t}Description{/t}</LABEL>&nbsp;
+          </td>
+          <td>
 {render acl=$DISKdescriptionACL}
-			<input value="{$DISKdescription}" size="45" maxlength="80" name="DISKdescription" id="DISKdescription">
+			      <input value="{$DISKdescription}" size="45" maxlength="80" 
+              name="DISKdescription" id="DISKdescription">
 {/render}
-		</td>
-                </tr>
-                <tr>
-		<td><LABEL for="disklabel">
-			{t}Disk label{/t}
-                </td><td>
+		      </td>
+        </tr>
+        <tr>
+		      <td>
+            <LABEL for="disklabel">{t}Disk label{/t}</LABEL>
+          </td>
+          <td>
 {render acl=$DISKFAIdiskOptionACL}
-                        <select name="disklabel" size="1">
-                           {html_options options=$disklabels selected=$disklabel}
-                        </select>
+            <select name="disklabel" size="1">
+               {html_options options=$disklabels selected=$disklabel}
+            </select>
 {/render}
-		</td>
-                </tr>
-                </table>
+		      </td>
+        </tr>
+      </table>
+
+    </td>
 	</tr>
 </table>
 <br>

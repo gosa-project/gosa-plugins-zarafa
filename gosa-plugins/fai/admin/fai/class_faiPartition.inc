@@ -42,66 +42,71 @@ class faiPartition extends plugin
   {
 
     $this->parent = $parent;
+    $this->status = "new";
+   
+    // Load attributes from existing partition 
+    if($object){
 
-    foreach($this->attributes as $attr){
-      if(isset($object[$attr])){
-        $this->$attr = $object[$attr];
-      }
-    }
-
-    $this->status = $object['status'];
-    $this->FAIdiskType = $type;
-
-    if($type == "disk"){
-
-      /* Prepare size attribute 
-       * This attribute may represent a range, a fixed value 
-       *  or a percentage.
-       * fixed is just a number   * 500MB
-       * range                    * 500MB-1TB
-       * remaining                * -
-       */
-      // Fixed
-      if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
-        $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
-        $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\2",$this->FAIpartitionSize);
-        $this->FAIpartitionSizeType = "fixed";
-      }else
-
-      // Dynamic range
-      if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)-[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
-        $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\1",$this->FAIpartitionSize);
-        $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\2",$this->FAIpartitionSize);
-        $this->sizeStop = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
-        $this->sizeStop_Type = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\2",$this->FAIpartitionSize);
-        $this->FAIpartitionSizeType = "dynamic";
-      }else
-
-      // Dynamic range
-      if(preg_match("/^\-$/",$this->FAIpartitionSize)){
-        $this->FAIpartitionSizeType = "remaining";
-
+      foreach($this->attributes as $attr){
+        if(isset($object[$attr])){
+          $this->$attr = $object[$attr];
+        }
       }
 
-      /* Check for encrypted partitions
-       */
-      if(preg_match("/:encrypt$/",$this->FAImountPoint)){
-        $this->FAImountPoint = preg_replace("/:encrypt/","",$this->FAImountPoint);
-        $this->encrypted = TRUE;
-      }
-  
-    }elseif($type == "raid"){
-  
-      $usedDisks = split(",",$this->FAIpartitionSize);
-      foreach($usedDisks as $disk){
-        $name = preg_replace("/:.*$/","",$disk);
-        $spare = preg_match("/:spare/",$disk);
-        $missing = preg_match("/:missing/",$disk);
-        $this->raidDevices[$name] = 
-          array(
-              "name" => $name, 
-              "spare" => $spare, 
-              "missing" => $missing);
+      $this->status = $object['status'];
+      $this->FAIdiskType = $type;
+
+      if($type == "disk"){
+
+        /* Prepare size attribute 
+         * This attribute may represent a range, a fixed value 
+         *  or a percentage.
+         * fixed is just a number   * 500MB
+         * range                    * 500MB-1TB
+         * remaining                * -
+         */
+        // Fixed
+        if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
+          $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
+          $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\2",$this->FAIpartitionSize);
+          $this->FAIpartitionSizeType = "fixed";
+        }else
+
+        // Dynamic range
+        if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)-[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
+          $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\1",$this->FAIpartitionSize);
+          $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\2",$this->FAIpartitionSize);
+          $this->sizeStop = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
+          $this->sizeStop_Type = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\2",$this->FAIpartitionSize);
+          $this->FAIpartitionSizeType = "dynamic";
+        }else
+
+        // Dynamic range
+        if(preg_match("/^\-$/",$this->FAIpartitionSize)){
+          $this->FAIpartitionSizeType = "remaining";
+
+        }
+
+        /* Check for encrypted partitions
+         */
+        if(preg_match("/:encrypt$/",$this->FAImountPoint)){
+          $this->FAImountPoint = preg_replace("/:encrypt/","",$this->FAImountPoint);
+          $this->encrypted = TRUE;
+        }
+    
+      }elseif($type == "raid"){
+    
+        $usedDisks = split(",",$this->FAIpartitionSize);
+        foreach($usedDisks as $disk){
+          $name = preg_replace("/:.*$/","",$disk);
+          $spare = preg_match("/:spare/",$disk);
+          $missing = preg_match("/:missing/",$disk);
+          $this->raidDevices[$name] = 
+            array(
+                "name" => $name, 
+                "spare" => $spare, 
+                "missing" => $missing);
+        }
       }
     }
   }

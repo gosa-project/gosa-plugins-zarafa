@@ -13,9 +13,9 @@ class faiDiskEntry extends plugin
   
   var $partitions           = array();
   var $UsedAttrs            = array("cn","description","FAIpartitionType",
-        "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize","FAIfsTuneOptions",
-        "FAIfsCreateOptions",
-        "FAImountOptions","FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
+      "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
+      "FAIfsTuneOptions", "FAIfsCreateOptions", "FAImountOptions",
+      "FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
 
   var $is_edit              = false;
   var $old_cn               = "";
@@ -23,7 +23,6 @@ class faiDiskEntry extends plugin
   var $deletePartitions     = array();
   var $fstabkey             = "device";
   var $disklabel            = "msdos";
-
   var $FAIstate             = "";
   var $FAIdiskType          = "disk";
 
@@ -31,12 +30,10 @@ class faiDiskEntry extends plugin
   {
     plugin::plugin ($config, $dn);
 
-
     // Set default attributes 
     $this->parent = $parent;
     $this->FAIdiskType = $type;
     $this->status = "new";    
- 
 
     // If disk is not empty, then we are going to edit 
     //  an existing disk, load disk info now. 
@@ -111,7 +108,9 @@ class faiDiskEntry extends plugin
           if (preg_match("/^bootable:/", $option)){
             $bootable = split(",", trim(preg_replace("/^bootable:/","",$option),","));
             foreach($bootable as $bootflag){
-              $this->partitions[$bootflag]['bootable'] = TRUE;  
+              if(isset($this->partitions[$bootflag])){
+                $this->partitions[$bootflag]['bootable'] = TRUE;  
+              }
             }
             continue;
           }
@@ -120,7 +119,9 @@ class faiDiskEntry extends plugin
           if (preg_match("/^resize:/", $option)){
             $resize = split(",", trim(preg_replace("/^resize:/","",$option),","));
             foreach($resize as $id){
-              $this->partitions[$id]['resize'] = TRUE;  
+              if(isset($this->partitions[$bootflag])){
+                $this->partitions[$id]['resize'] = TRUE;  
+              }
             }
             continue;
           }
@@ -129,8 +130,10 @@ class faiDiskEntry extends plugin
           if (preg_match("/^preserve_always:/", $option)){
             $preserve = split(",", trim(preg_replace("/^preserve_always:/","",$option),","));
             foreach($preserve as $presflag){
-              $this->partitions[$presflag]['preserve'] = TRUE;  
-              $this->partitions[$presflag]['preserveType'] = 'always';  
+              if(isset($this->partitions[$bootflag])){
+                $this->partitions[$presflag]['preserve'] = TRUE;  
+                $this->partitions[$presflag]['preserveType'] = 'always';  
+              }
             }
             continue;
           }
@@ -139,8 +142,10 @@ class faiDiskEntry extends plugin
           if (preg_match("/^preserve_reinstall:/", $option)){
             $preserve = split(",", trim(preg_replace("/^preserve_reinstall:/","",$option),","));
             foreach($preserve as $presflag){
-              $this->partitions[$presflag]['preserve'] = TRUE;  
-              $this->partitions[$presflag]['preserveType'] = 'reinstall';  
+              if(isset($this->partitions[$bootflag])){
+                $this->partitions[$presflag]['preserve'] = TRUE;  
+                $this->partitions[$presflag]['preserveType'] = 'reinstall'; 
+              } 
             }
             continue;
           }
@@ -225,10 +230,12 @@ class faiDiskEntry extends plugin
     if($this->dialog instanceOf plugin && isset($_POST['PartitionSave'])){
       $this->dialog->save_object();
       $attrs = $this->dialog->save();
-      if(isset($attrs['FAIpartitionNr'])){
+      if(isset($attrs['FAIpartitionNr']) && $attrs['FAIpartitionNr'] != ""){
         $this->partitions[$attrs['FAIpartitionNr']] = $attrs;
       }else{
-        $this->partitions[] = $attrs;
+        $attrs['FAIpartitionNr'] = count($this->partitions) + 1;
+        $attrs['cn'] = &$attrs['FAIpartitionNr'];
+        $this->partitions[$attrs['FAIpartitionNr']] = $attrs;
       }
       $this->dialog = null;
     }
