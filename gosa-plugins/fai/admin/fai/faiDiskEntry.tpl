@@ -61,7 +61,29 @@
     </td>
 	</tr>
 </table>
-<br>
+
+{if $FAIdiskType == "lvm"}
+
+<p class="seperator">&nbsp;</p>
+<table width="100%">
+  <tr>
+    <td>
+      <h2>{t}Combined physical partitions{/t}</h2>
+
+      <select name='physicalPartition' size=5 style="width:100%;">
+        {html_options options=$plist}
+      </select>
+      <br>
+      <select name='lvmPartitionAdd'>
+        {html_options options=$physicalPartitionList}
+      </select>
+      <input type="submit" name='addLvmPartition' value="{msgPool type="addButton"}">&nbsp;
+      <input type="submit" name='delLvmPartition' value="{msgPool type="delButton"}">&nbsp;
+    </td>
+  </tr>
+</table>
+
+{/if}
 <p class="seperator">&nbsp;</p>
 <br>
 <h2><img class="center" alt="" src="images/lists/paste.png" align="middle" title="{t}Partition entries{/t}">&nbsp;{t}Partition entries{/t}</h2>

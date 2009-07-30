@@ -15,7 +15,7 @@ class faiPartition extends plugin
   var $FAIfsType = "";
   var $FAImountOptions = "";
   var $FAImountPoint = "";
-  var $FAIpartitionNr = "";
+  var $FAIpartitionNr = "undefined"; // Initial value for new partitions
   var $FAIpartitionSize = "";
   var $FAIpartitionType = "";
   var $FAIstate = "";
@@ -117,8 +117,8 @@ class faiPartition extends plugin
     $smarty = get_smarty();
 
     // Remove partition
-    if(isset($_POST['addPhysicalPartition']) && isset($_POST['phyiscalPartitionAdd'])){
-      $name = $_POST['phyiscalPartitionAdd'];
+    if(isset($_POST['addPhysicalPartition']) && isset($_POST['physicalPartitionAdd'])){
+      $name = $_POST['physicalPartitionAdd'];
       $this->raidDevices[$name] = array("name" => $name,"spare"=>false,"missing"=>false);     
     }
 
@@ -185,7 +185,7 @@ class faiPartition extends plugin
     $smarty->assign("FAIfsTypes", $FAIfsTypes);
 
     $smarty->assign("plist",$this->getRaidlist());
-    $smarty->assign("phyiscalPartitionList",$this->getPartitionlist());
+    $smarty->assign("physicalPartitionList",$this->getPartitionlist());
 
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
@@ -263,20 +263,20 @@ class faiPartition extends plugin
       }
 
       // Remove partition
-      if(isset($_POST['delPhysicalPartition']) && isset($_POST['phyiscalPartition'])){
-        unset($this->raidDevices[$_POST['phyiscalPartition']]); 
+      if(isset($_POST['delPhysicalPartition']) && isset($_POST['physicalPartition'])){
+        unset($this->raidDevices[$_POST['physicalPartition']]); 
       }
 
       // Toggle spare flag for partition entries
-      if(isset($_POST['toggleSpare']) && isset($_POST['phyiscalPartition'])){
-        $this->raidDevices[$_POST['phyiscalPartition']]['spare'] = 
-            !$this->raidDevices[$_POST['phyiscalPartition']]['spare'];
+      if(isset($_POST['toggleSpare']) && isset($_POST['physicalPartition'])){
+        $this->raidDevices[$_POST['physicalPartition']]['spare'] = 
+            !$this->raidDevices[$_POST['physicalPartition']]['spare'];
       }
 
       // Toggle missing flag for partition entries
-      if(isset($_POST['toggleMissing']) && isset($_POST['phyiscalPartition'])){
-        $this->raidDevices[$_POST['phyiscalPartition']]['missing'] = 
-            !$this->raidDevices[$_POST['phyiscalPartition']]['missing'];
+      if(isset($_POST['toggleMissing']) && isset($_POST['physicalPartition'])){
+        $this->raidDevices[$_POST['physicalPartition']]['missing'] = 
+            !$this->raidDevices[$_POST['physicalPartition']]['missing'];
       }
     } 
   }

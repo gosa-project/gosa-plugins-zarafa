@@ -5,26 +5,28 @@ class faiDiskEntry extends plugin
   /* attribute list for save action */
   var $ignore_account= TRUE;
   var $attributes   = array("DISKcn","DISKdescription");
-  var $objectclasses= array();
-
-  var $DISKcn              = "";
-  var $DISKdescription     = "";
-  var $DISKFAIdiskOptions     = "";
-  
-  var $partitions           = array();
   var $UsedAttrs            = array("cn","description","FAIpartitionType",
       "FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
       "FAIfsTuneOptions", "FAIfsCreateOptions", "FAImountOptions",
       "FAIfsOptions","FAIpartitionFlags","FAIdiskOption");
 
-  var $is_edit              = false;
-  var $old_cn               = "";
-  var $status               = "new";
-  var $deletePartitions     = array();
-  var $fstabkey             = "device";
-  var $disklabel            = "msdos";
-  var $FAIstate             = "";
-  var $FAIdiskType          = "disk";
+  var $objectclasses= array();
+
+  var $DISKcn              = "";
+  var $DISKdescription     = "";
+  var $DISKFAIdiskOptions  = "";
+  
+  var $partitions          = array();
+  var $is_edit             = false;
+  var $old_cn              = "";
+  var $status              = "new";
+  var $deletePartitions    = array();
+  var $fstabkey            = "device";
+  var $disklabel           = "msdos";
+  var $FAIstate            = "";
+  var $FAIdiskType         = "disk";
+  
+  var $lvmDevices          = array();
 
   function faiDiskEntry (&$config, $dn= NULL,$parent,$disk,$type)
   {
@@ -168,44 +170,24 @@ class faiDiskEntry extends plugin
     $s_entry    = "";
     $display    = "";
 
+    // Remove partition
+    if(isset($_POST['addLvmPartition']) && isset($_POST['lvmPartitionAdd'])){
+      $name = $_POST['lvmPartitionAdd'];
+      $this->lvmDevices[$name] = array("name" => $name);
+    }
+
     /* Check all Posts if there is something usefull for us,
      * For example : Delete is posted as Delete_1 
      * The number specifies the index we want to delete
      */
     foreach($_POST as $name => $value){
-      if((preg_match("/Delete_.*/",$name)) && 
+      if((preg_match("/RemovePartition_/",$name)) && 
           $this->acl_is_removeable() && 
           !preg_match("/freeze/i",$this->FAIstate)){
         $tmp = split("_",$name);
-        $s_action = "remove";
-        $s_entry  = $tmp[1]; 
+        $this->removePartition($tmp[1]);
+        break;
       }
-    }
-
-    /* To remove a partition we unset the index posted.
-     * We must sort the index again, else we possibly get problems 
-     * with the partition order.
-     */
-    if($s_action == "remove" && $this->acl_is_removeable() && 
-        !preg_match("/freeze/i",$this->FAIstate)){
-      if($this->partitions[$s_entry]['status'] == "edited"){
-        $this->deletePartitions[$s_entry]= $this->partitions[$s_entry];
-        $this->deletePartitions[$s_entry]['FAIpartitionNr']=$s_entry;
-        unset($this->partitions[$s_entry]);
-      }else{
-        unset($this->partitions[$s_entry]);
-      }
-      $tmp= array();
-      foreach($this->partitions as $part){
-        $tmp[count($tmp)+1]=$part;
-      }
-      $this->partitions = $tmp;
-    }
-
-
-    /* Edit existing partitions here.
-     */    
-    foreach($_POST as $name => $value){
       if(preg_match("/^EditPartition_/",$name)){
         $id = preg_replace("/^EditPartition_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
@@ -216,7 +198,7 @@ class faiDiskEntry extends plugin
       } 
     }
 
-    /* Create a nwe partition for this disk.
+    /* Create a new partition for this disk.
      */
     if(isset($_POST['AddPartition']) && !preg_match("/freeze/i",$this->FAIstate)){
       $this->dialog = new faiPartition($this->config, array(), $this,$this->FAIdiskType);
@@ -229,21 +211,13 @@ class faiDiskEntry extends plugin
     }
     if($this->dialog instanceOf plugin && isset($_POST['PartitionSave'])){
       $this->dialog->save_object();
-      $attrs = $this->dialog->save();
-      if(isset($attrs['FAIpartitionNr']) && $attrs['FAIpartitionNr'] != ""){
-        $this->partitions[$attrs['FAIpartitionNr']] = $attrs;
-      }else{
-        $attrs['FAIpartitionNr'] = count($this->partitions) + 1;
-        $attrs['cn'] = &$attrs['FAIpartitionNr'];
-        $this->partitions[$attrs['FAIpartitionNr']] = $attrs;
-      }
+      $this->updatePartition($this->dialog->save());
       $this->dialog = null;
     }
     if($this->dialog instanceOf plugin){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }
-
 
     // Assign checkbox related values.
     foreach($this->attributes as $attrs){
@@ -263,6 +237,10 @@ class faiDiskEntry extends plugin
     $smarty->assign("disklabels", array("msdos" => "MSDOS", "gpt" => "GPT"));
     $smarty->assign("fstabkey", $this->fstabkey);
     $smarty->assign("disklabel", $this->disklabel);
+    $smarty->assign("FAIdiskType", $this->FAIdiskType);
+    $smarty->assign("plist", $this->getPartitionList());
+    $smarty->assign("physicalPartitionList", $this->getAvailablePartitions());
+
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -278,6 +256,94 @@ class faiDiskEntry extends plugin
     $display.= $smarty->fetch(get_template_path('faiDiskEntry.tpl', TRUE));
     return($display);
   }
+
+  function getPartitionList()
+  {
+    $divlist = new divSelectBox("RaidList");
+    $disks = $this->parent->disks;
+    $objs = $disks;
+    foreach($disks as $disk){
+      foreach($disk['partitions'] as $id => $part){
+        $objs[$disk['cn'].$id] = $part;
+      }
+    }
+
+    $list = array();
+    foreach($this->lvmDevices as $device){
+      $list[$device['name']] = $device['name'];
+
+      if(isset($objs[$device['name']]['FAIpartitionSize'])){
+        $list[$device['name']].= _("Size").":&nbsp;";
+        $list[$device['name']].= $objs[$device['name']]['FAIpartitionSize'];
+      }
+    }
+    return($list);
+  }
+
+  
+  function getAvailablePartitions(){
+    $array = array();
+    foreach($this->parent->disks as $disk){
+      foreach($disk['partitions'] as $key => $part){
+        $name = $disk['cn'].$key;
+        if(!isset($this->lvmDevices[$name])){
+          $array[$name] = $name;
+        }
+      }
+    }
+    return($array);
+
+  }
+
+
+  /* Remove the selected partition and shift the following partitions 
+   *  to fill gap.
+   * Additionally update the partition numbers correspondingly.
+   */
+  function removePartition($id)
+  {
+    $start = false;
+    foreach($this->partitions as $key => $part){
+      if($id == $key){
+        $start = true;
+      }
+      if($start){
+        if($this->partitions[$key]['status'] == "edited"){
+          $this->deletePartitions[$key]= $this->partitions[$key];
+          $this->deletePartitions[$key]['FAIpartitionNr']=$key;
+          unset($this->partitions[$key]);
+        }else{
+          unset($this->partitions[$key]);
+        }
+        if(isset($this->partitions[($key+1)])){
+          if(isset($this->deletePartitions[$key])){
+            unset($this->deletePartitions[$key]);
+          }
+          $this->partitions[$key] = $this->partitions[($key+1)];
+          $this->partitions[$key]['FAIpartitionNr'] = $key;
+          $this->partitions[$key]['status'] = "new";
+        }
+      }
+    }
+    $tmp= array();
+    foreach($this->partitions as $part){
+      $tmp[count($tmp)+1]=$part;
+    }
+    $this->partitions = $tmp;
+  }
+
+
+  /* Add or update a partition 
+   */
+  function updatePartition($part)
+  {
+    if(!isset($part['FAIpartitionNr']) || $part['FAIpartitionNr'] == "undefined"){
+      $part['FAIpartitionNr'] = count($this->partitions) + 1;
+      $part['cn'] = count($this->partitions) + 1;
+    }
+    $this->partitions[$part['FAIpartitionNr']] = $part;
+  }
+
 
   function generateParts()
   {
@@ -309,7 +375,8 @@ class faiDiskEntry extends plugin
 
    
       $action =array(
-          "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>",
+          "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
+                      "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
           "attach" => "style='width:40px;'");
 
  
@@ -319,6 +386,7 @@ class faiDiskEntry extends plugin
     return($divlist->DrawList());    
   }
 
+
   function save()
   {
     $tmp = array();
@@ -327,6 +395,7 @@ class faiDiskEntry extends plugin
     /* Attach partitions */
     foreach($this->partitions as $key=>$val) {
       $this->partitions[$key]['FAIpartitionNr']=$key;
+      $this->partitions[$key]['cn']=$key;
     }
 
     /* Attach deleted */
@@ -438,63 +507,6 @@ class faiDiskEntry extends plugin
     foreach($this->UsedAttrs as $attrs){
       $alreadyUsed[$attrs] = array();
     }      
-
-//   foreach($this->partitions as $key => $part){
-// 
-//     /* Skip all checks, if preserve is set */ 
-//     if($part['FAIpartitionFlags'] == "preserve"){
-//       $this->partitions[$key]['FAIfsType']        = "preserve";
-//       $this->partitions[$key]['FAIpartitionSize'] = "preserve";
-//       continue;
-//     }
-//
-//     if($part['FAImountPoint'] != "-" && (in_array($part['FAImountPoint'],$alreadyUsed['FAImountPoint']))&&($part['FAIfsType']!="swap")){
-//       $message[]=sprintf(_("Please enter a unique mount point for partition %s"),($key));
-//     }
-//
-//     if($part['FAIfsType']!="swap" && $part['FAImountPoint'] != "-"){
-//       if((empty($part['FAImountPoint']))||(!((preg_match("/^\/.*/",$part['FAImountPoint']))||(preg_match("/^swap$/",$part['FAImountPoint']))))){
-//         $message[]= msgPool::invalid(sprintf(_("partition %s mount point"),$key));
-//       }
-//     }
-//     if($part['FAIfsType'] == "swap"){
-//       if(in_array($part['FAIfsType'],$alreadyUsed['FAIfsType'])){
-//         $message[]=sprintf(_("File system type 'swap' is already used, change file system type for partition %s."),$key);
-//       }
-//     }
-//     if(($part['FAIfsType'] == "swap")&&(!empty($part['FAImountPoint']))&&($part['FAImountPoint']!="swap")){
-//       $message[]=_("Please use 'swap' as mount point, if 'swap' is used as fs-type.");
-//     }
-//
-//     $tmp = split("-",$part['FAIpartitionSize']);
-//     switch (count($tmp)){
-//       case 0:
-//               $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-//               break;
-//       case 1:
-//               if (!tests::is_id($tmp[0]) &&(!empty($tmp[1]))){
-//                 $message[]=  msgPool::invalid(sprintf(_("partition %s size"),$key));
-//               }
-//               break;
-//               
-//       case 2:
-//               if( !tests::is_id($tmp[0]) && !tests::is_id($tmp[1]) && !empty($tmp[1]) ){
-//                 $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-//               }elseif(!empty($tmp[1]) && $tmp[0]>=$tmp[1]){
-//                 $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-//               }
-//               break;
-//
-//       default:
-//               $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-//     }
-//
-//     foreach($this->UsedAttrs as $attrs){
-//       if(isset($part[$attrs])){
-//         $alreadyUsed[$attrs][$key] = $part[$attrs];
-//       }
-//     }      
-//   }
 
     $cnt = 0;
     foreach($this->partitions as $key => $part){

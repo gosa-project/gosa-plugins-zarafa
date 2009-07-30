@@ -94,12 +94,12 @@
     <td colspan="4">
       <h2>{t}Combined physical partitions{/t}</h2>      
 
-      <select name='phyiscalPartition' size=5 style="width:100%;">
+      <select name='physicalPartition' size=5 style="width:100%;">
         {html_options options=$plist}
       </select>
       <br>
-      <select name='phyiscalPartitionAdd'>
-        {html_options options=$phyiscalPartitionList}
+      <select name='physicalPartitionAdd'>
+        {html_options options=$physicalPartitionList}
       </select>
       <input type="submit" name='addPhysicalPartition' value="{msgPool type="addButton"}">&nbsp; 
       <input type="submit" name='delPhysicalPartition' value="{msgPool type="delButton"}">&nbsp; 
