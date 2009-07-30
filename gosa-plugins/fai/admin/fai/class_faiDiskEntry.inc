@@ -31,7 +31,7 @@ class faiDiskEntry extends plugin
   function faiDiskEntry (&$config, $dn= NULL,$parent,$disk,$type)
   {
     plugin::plugin ($config, $dn);
-
+  
     // Set default attributes 
     $this->parent = $parent;
     $this->FAIdiskType = $type;
@@ -40,6 +40,11 @@ class faiDiskEntry extends plugin
     // If disk is not empty, then we are going to edit 
     //  an existing disk, load disk info now. 
     if($disk){
+
+      // Get devices used in volume base disks.
+      if($disk['FAIlvmDevice']){
+        $this->lvmDevices = $disk['FAIlvmDevice'];
+      }
 
       // Get disk status
       $this->status = $disk['status'];
@@ -270,11 +275,11 @@ class faiDiskEntry extends plugin
 
     $list = array();
     foreach($this->lvmDevices as $device){
-      $list[$device['name']] = $device['name'];
+      $list[$device] = $device;
 
-      if(isset($objs[$device['name']]['FAIpartitionSize'])){
-        $list[$device['name']].= _("Size").":&nbsp;";
-        $list[$device['name']].= $objs[$device['name']]['FAIpartitionSize'];
+      if(isset($objs[$device]['FAIpartitionSize'])){
+        $list[$device].= _("Size").":&nbsp;";
+        $list[$device].= $objs[$device]['FAIpartitionSize'];
       }
     }
     return($list);
@@ -408,6 +413,11 @@ class faiDiskEntry extends plugin
     $tmp['partitions']  = $this->partitions;
     $tmp['status']      = $this->status;
     $tmp['FAIdiskType'] = $this->FAIdiskType;
+
+    $tmp['FAIlvmDevice'] = array();
+    foreach($this->lvmDevices as $dev){
+      $tmp['FAIlvmDevice'][] = $dev;
+    } 
 
     /* Assemble flags */
     $tmp['FAIdiskOption'] = array("fstabkey:".$this->fstabkey, "disklabel:".$this->disklabel);
