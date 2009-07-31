@@ -58,7 +58,10 @@ class faiPartitionTable extends plugin
 
         // Transform potential lvm information
         if (isset($obj['FAIlvmDevice'])){
-          $objects['FAIlvmDevice'] = $obj['FAIlvmDevice'];
+          for($i=0;$i<$obj['FAIlvmDevice']['count'];$i++){
+            $name = $obj['FAIlvmDevice'][$i]; 
+            $objects['FAIlvmDevice'][$name] = $name;
+          }
         }
 
         $objects['dn']          = $obj['dn'];
@@ -595,7 +598,6 @@ class faiPartitionTable extends plugin
 
         $partition_dn= "FAIpartitionNr=".$partition_attrs['FAIpartitionNr'].",".$disk_dn;      
         $partition_attrs['objectClass']= array("top","FAIclass","FAIpartitionEntry");
-        $partition_attrs['cn']= $partition_attrs['FAIpartitionNr'];
         
         unset($partition_attrs['status']);
         unset($partition_attrs['old_cn']);

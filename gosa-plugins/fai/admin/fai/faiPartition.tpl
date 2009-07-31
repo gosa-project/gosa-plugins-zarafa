@@ -14,6 +14,7 @@
       <select name="FAIpartitionType" onChange='document.mainform.submit();'>
         {html_options options=$partitionTypes selected=$FAIpartitionType}
       </select>
+      {if $cn != "" }&nbsp;({$cn}){/if}
     </td>
 {/if}
     <td>{t}Description{/t}</td>
@@ -119,7 +120,7 @@
       {t}Filesystem{/t}
     </td>
     <td>
-      <select name='FAIfsType'>
+      <select name='FAIfsType' onChange="document.mainform.submit();">
         {html_options options=$FAIfsTypes selected=$FAIfsType}
       </select>
       &nbsp; 
@@ -153,7 +154,11 @@
       {t}Mount point{/t}
     </td>
     <td>
-      <input name="FAImountPoint" value="{$FAImountPoint}">
+      {if $FAIfsType != "swap"}
+        <input name="FAImountPoint" value="{$FAImountPoint}">
+      {else}
+        <input name="dummy10" value="swap" disabled>
+      {/if}
     </td>
     <td>
       {t}Mount options{/t}

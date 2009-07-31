@@ -42,7 +42,7 @@ class faiDiskEntry extends plugin
     if($disk){
 
       // Get devices used in volume base disks.
-      if($disk['FAIlvmDevice']){
+      if(isset($disk['FAIlvmDevice'])){
         $this->lvmDevices = $disk['FAIlvmDevice'];
       }
 
@@ -178,7 +178,7 @@ class faiDiskEntry extends plugin
     // Remove partition
     if(isset($_POST['addLvmPartition']) && isset($_POST['lvmPartitionAdd'])){
       $name = $_POST['lvmPartitionAdd'];
-      $this->lvmDevices[$name] = array("name" => $name);
+      $this->lvmDevices[$name] = $name;
     }
 
     /* Check all Posts if there is something usefull for us,
@@ -216,8 +216,14 @@ class faiDiskEntry extends plugin
     }
     if($this->dialog instanceOf plugin && isset($_POST['PartitionSave'])){
       $this->dialog->save_object();
-      $this->updatePartition($this->dialog->save());
-      $this->dialog = null;
+
+      $msgs = $this->dialog->check();
+      if(!count($msgs)){
+        $this->updatePartition($this->dialog->save());
+        $this->dialog = null;
+      }else{
+        msg_dialog::displayChecks($msgs);
+      }
     }
     if($this->dialog instanceOf plugin){
       $this->dialog->save_object();
@@ -269,7 +275,7 @@ class faiDiskEntry extends plugin
     $objs = $disks;
     foreach($disks as $disk){
       foreach($disk['partitions'] as $id => $part){
-        $objs[$disk['cn'].$id] = $part;
+        $objs[$disk['cn']] = $part;
       }
     }
 
@@ -290,7 +296,7 @@ class faiDiskEntry extends plugin
     $array = array();
     foreach($this->parent->disks as $disk){
       foreach($disk['partitions'] as $key => $part){
-        $name = $disk['cn'].$key;
+        $name = $disk['cn'];
         if(!isset($this->lvmDevices[$name])){
           $array[$name] = $name;
         }
@@ -344,7 +350,7 @@ class faiDiskEntry extends plugin
   {
     if(!isset($part['FAIpartitionNr']) || $part['FAIpartitionNr'] == "undefined"){
       $part['FAIpartitionNr'] = count($this->partitions) + 1;
-      $part['cn'] = count($this->partitions) + 1;
+      $part['cn'] = $this->cn.$part['FAIpartitionNr'];
     }
     $this->partitions[$part['FAIpartitionNr']] = $part;
   }
@@ -400,7 +406,7 @@ class faiDiskEntry extends plugin
     /* Attach partitions */
     foreach($this->partitions as $key=>$val) {
       $this->partitions[$key]['FAIpartitionNr']=$key;
-      $this->partitions[$key]['cn']=$key;
+      $this->partitions[$key]['cn'] = $this->DISKcn.$key;
     }
 
     /* Attach deleted */

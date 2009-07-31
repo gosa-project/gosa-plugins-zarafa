@@ -56,7 +56,7 @@ class faiPartition extends plugin
       $this->status = $object['status'];
       $this->FAIdiskType = $type;
 
-      if($type == "disk"){
+      if($type == "disk" || $type =="lvm"){
 
         /* Prepare size attribute 
          * This attribute may represent a range, a fixed value 
@@ -183,6 +183,7 @@ class faiPartition extends plugin
     $smarty->assign("preserveType", $this->preserveType);
 
     $smarty->assign("FAIfsTypes", $FAIfsTypes);
+    $smarty->assign("cn", $this->cn);
 
     $smarty->assign("plist",$this->getRaidlist());
     $smarty->assign("physicalPartitionList",$this->getPartitionlist());
@@ -199,7 +200,7 @@ class faiPartition extends plugin
     $array = array();  
     foreach($this->parent->parent->disks as $disk){
       foreach($disk['partitions'] as $key => $part){
-        $name = $disk['cn'].$key;
+        $name = $disk['cn'];
         if(!isset($this->raidDevices[$name])){
           $array[$name] = $name;
         }
@@ -217,7 +218,7 @@ class faiPartition extends plugin
     $objs = $disks;
     foreach($disks as $disk){
       foreach($disk['partitions'] as $id => $part){
-        $objs[$disk['cn'].$id] = $part;
+        $objs[$disk['cn']] = $part;
       }
     }
     
@@ -281,6 +282,49 @@ class faiPartition extends plugin
     } 
   }
 
+
+  function check()
+  {
+    $msgs = plugin::check();
+    
+    // Check the given partition size.
+    if($this->FAIdiskType == "disk" || $this->FAIdiskType == "lvm"){
+      if($this->FAIpartitionSizeType == "fixed" || $this->FAIpartitionSizeType == "dynamic"){ 
+        if(!is_numeric($this->sizeStart)){
+          $msgs[] = msgPool::invalid(_("Partition size"),$this->sizeStart,"/[0-9]/i");
+        }
+      }
+      if($this->FAIpartitionSizeType == "dynamic"){ 
+        if(!is_numeric($this->sizeStop)){
+          $msgs[] = msgPool::invalid(_("Partition size"),$this->sizeStop,"/[0-9]/i");
+        }
+
+        $mp = array(
+                    "%"  => 1,
+                    "KB" => pow(1024,0),
+                    "MB" => pow(1024,1),
+                    "GB" => pow(1024,2),
+                    "TB" => pow(1024,3),
+                    "PB" => pow(1024,4));
+        $res1 = $this->sizeStart * $mp[$this->sizeStart_Type];
+        $res2 = $this->sizeStop * $mp[$this->sizeStop_Type];
+        if($res1 > $res2){
+          $msgs[] = msgPool::toobig(_("Partition start size"), "'"._("Partition stop size")."'");
+        }
+      }
+    }
+
+    // check mount point 
+    if($this->FAIfsType != "swap"){
+      if(!preg_match("#^/#",$this->FAImountPoint)){
+        $msgs[] = msgPool::invalid(_("Mount point"));
+      }
+    }
+
+    return($msgs);
+  }
+
+
   function save()
   {
     $ret = array();
@@ -289,7 +333,7 @@ class faiPartition extends plugin
     }
 
     // Save partition size
-    if($this->FAIdiskType == "disk"){ 
+    if($this->FAIdiskType == "disk" || $this->FAIdiskType == "lvm"){ 
       switch($this->FAIpartitionSizeType){
         case 'fixed' : 
           $ret['FAIpartitionSize'] = $this->sizeStart.$this->sizeStart_Type;break; 
@@ -321,6 +365,11 @@ class faiPartition extends plugin
       $ret['FAIpartitionSize'] = trim($ret['FAIpartitionSize'],",");
     }
     $ret['status'] = $this->status;
+
+    if($this->FAIfsType == "swap"){
+      $ret['FAImountPoint'] = "swap";
+    }
+  
     return($ret);
   }
 }
