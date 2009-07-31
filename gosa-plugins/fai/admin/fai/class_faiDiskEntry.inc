@@ -350,8 +350,9 @@ class faiDiskEntry extends plugin
   {
     if(!isset($part['FAIpartitionNr']) || $part['FAIpartitionNr'] == "undefined"){
       $part['FAIpartitionNr'] = count($this->partitions) + 1;
-      $part['cn'] = $this->cn.$part['FAIpartitionNr'];
+      $part['cn'] = $this->DISKcn.$part['FAIpartitionNr'];
     }
+    $part['cn'] = $this->DISKcn.$part['FAIpartitionNr'];
     $this->partitions[$part['FAIpartitionNr']] = $part;
   }
 

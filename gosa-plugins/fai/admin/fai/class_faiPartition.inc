@@ -43,7 +43,9 @@ class faiPartition extends plugin
 
     $this->parent = $parent;
     $this->status = "new";
-   
+    $this->FAIdiskType = $type;
+    
+ 
     // Load attributes from existing partition 
     if($object){
 
@@ -54,7 +56,6 @@ class faiPartition extends plugin
       }
 
       $this->status = $object['status'];
-      $this->FAIdiskType = $type;
 
       if($type == "disk" || $type =="lvm"){
 
@@ -199,10 +200,12 @@ class faiPartition extends plugin
   {
     $array = array();  
     foreach($this->parent->parent->disks as $disk){
-      foreach($disk['partitions'] as $key => $part){
-        $name = $disk['cn'];
-        if(!isset($this->raidDevices[$name])){
-          $array[$name] = $name;
+      if($disk['FAIdiskType'] != "raid"){
+        foreach($disk['partitions'] as $key => $part){
+          $name = $part['cn'];
+          if(!isset($this->raidDevices[$name])){
+            $array[$name] = $name." (".$disk['cn'].")";
+          }
         }
       }
     }
@@ -215,13 +218,15 @@ class faiPartition extends plugin
     $divlist = new divSelectBox("RaidList");
    
     $disks = $this->parent->parent->disks;
-    $objs = $disks;
+    $objs = array();
     foreach($disks as $disk){
-      foreach($disk['partitions'] as $id => $part){
-        $objs[$disk['cn']] = $part;
+      if($disk['FAIdiskType'] != "raid"){
+        foreach($disk['partitions'] as $id => $part){
+          $objs[$part['cn']] = $part;
+        }
       }
     }
-    
+  
     $list = array();
     foreach($this->raidDevices as $device){
       $list[$device['name']] = $device['name'];
@@ -312,6 +317,10 @@ class faiPartition extends plugin
           $msgs[] = msgPool::toobig(_("Partition start size"), "'"._("Partition stop size")."'");
         }
       }
+    }
+    if($this->FAIdiskType == "raid"){
+      #FIME raid checks missing
+      echo "Add raid checks here, disk combinations are not verified right now.";
     }
 
     // check mount point 

@@ -543,23 +543,8 @@ class faiPartitionTable extends plugin
     foreach($order as $cn=>$disk){
       $disk_dn                    = "cn=".$disk['cn'].",".$this->dn;
       $disk_attrs['cn']           =  $disk['cn'];
-      $disk_attrs['description']  =  $disk['description'];
-  
-      if(isset($disk['FAIdiskType'])){
-        $disk_attrs['FAIdiskType']  =  $disk['FAIdiskType']; 
-      }
-      if(isset($disk['FAIdiskOption'])){
-        $disk_attrs['FAIdiskOption']  =  $disk['FAIdiskOption']; 
-      }
-      if(isset($disk['FAIlvmDevice'])){
-        $disk_attrs['FAIlvmDevice']  =  $disk['FAIlvmDevice']; 
-      }
-
-      if(empty($disk_attrs['description']) && $disk['status'] == "edited"){
-        $disk_attrs['description'] = array();
-      }
-
       $disk_attrs['objectClass']  =  array("top","FAIclass","FAIpartitionDisk");
+  
 
       if($disk['status']=="new"){
         $ldap->cat($disk_dn,array("objectClass"));
@@ -567,6 +552,21 @@ class faiPartitionTable extends plugin
           $disk['status']="edited";
         }
       }
+
+      foreach(array("description","FAIdiskType","FAIdiskOption","FAIlvmDevice") as $attr){
+        if($disk['status'] == "new"){
+          if(isset($disk[$attr]) && !empty($disk[$attr])){
+            $disk_attrs[$attr] = $disk[$attr];
+          }
+        }else{
+          if(isset($disk[$attr]) && !empty($disk[$attr])){
+            $disk_attrs[$attr] = $disk[$attr];
+          }else{
+            $disk_attrs[$attr] = array();
+          }
+        }
+      }
+
 
       /* Tag object */
       $this->tag_attrs($disk_attrs, $disk_dn, $this->gosaUnitTag);
