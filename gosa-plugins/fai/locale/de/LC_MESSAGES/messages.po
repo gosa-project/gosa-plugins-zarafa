@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-04 14:00+0200\n"
+"POT-Creation-Date: 2009-08-04 14:10+0200\n"
 "PO-Revision-Date: 2009-08-04 13:57+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -1135,12 +1135,10 @@ msgid "%"
 msgstr ""
 
 #: admin/fai/class_faiPartition.inc:160
-#, fuzzy
 msgid "always"
 msgstr "immer"
 
 #: admin/fai/class_faiPartition.inc:161
-#, fuzzy
 msgid "reinstall"
 msgstr "bei Neuinstallation"
 
@@ -1178,32 +1176,26 @@ msgid "Options"
 msgstr "Optionen"
 
 #: admin/fai/class_faiPartition.inc:241
-#, fuzzy
 msgid "spare"
 msgstr "Reserve"
 
 #: admin/fai/class_faiPartition.inc:244
-#, fuzzy
 msgid "missing"
 msgstr "fehlt"
 
 #: admin/fai/class_faiPartition.inc:317
-#, fuzzy
 msgid "Minimum partition size"
 msgstr "Partitionsgröße"
 
 #: admin/fai/class_faiPartition.inc:317
-#, fuzzy
 msgid "Maximum partition size"
 msgstr "Partitionsgröße"
 
 #: admin/fai/class_faiPartitionTable.inc:220
-#, fuzzy, php-format
 msgid ""
 "The disk cannot be deleted while it is used in the '%s' disk definition!"
 msgstr ""
-"Die Rolle kann nicht entfernt werden, solange sie noch von folgenden "
-"Objekten verwendet wird:"
+"Diese Festplatte kann nicht gelöscht werden solange sie von '%s' benutzt wird!"
 
 #: admin/fai/class_faiPartitionTable.inc:682
 msgid "FAI partition table"
@@ -1747,43 +1739,3 @@ msgstr "FAI Release"
 msgid "Services"
 msgstr "Dienste"
 
-#~ msgid "Percent"
-#~ msgstr "Prozent"
-
-#~ msgid "Swap"
-#~ msgstr "Auslagerungsspeicher"
-
-#~ msgid "Partition start size"
-#~ msgstr "Initiale Partitionsgröße"
-
-#~ msgid "Partition stop size"
-#~ msgstr "Maximale Partitionsgröße"
-
-#, fuzzy
-#~ msgid "Secondary"
-#~ msgstr "Montag"
-
-#, fuzzy
-#~ msgid "Raid 0"
-#~ msgstr "Lesen"
-
-#, fuzzy
-#~ msgid "Raid 1"
-#~ msgstr "Lesen"
-
-#, fuzzy
-#~ msgid "Raid 5"
-#~ msgstr "Lesen"
-
-#, fuzzy
-#~ msgid "Raid 6"
-#~ msgstr "Lesen"
-
-#~ msgid "%s partition"
-#~ msgstr "%s Partition"
-
-#~ msgid "%s partition(s)"
-#~ msgstr "%s Partition(en)"
-
-#~ msgid "Choose a disk to delete or edit"
-#~ msgstr "Wählen Sie eine Festplatte zum Entfernen oder Bearbeiten"
