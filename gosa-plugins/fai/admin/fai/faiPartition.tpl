@@ -5,12 +5,12 @@
   <tr>
 {if $FAIdiskType == "lvm"}
     <td>{t}Name{/t}</td>
-    <td>
+    <td width="35%">
       <input name="FAIpartitionType" value="{$FAIpartitionType}">
     </td>
 {else}
     <td>{t}Type{/t}</td>
-    <td>
+    <td width="35%">
       <select name="FAIpartitionType" onChange='document.mainform.submit();'>
         {html_options options=$partitionTypes selected=$FAIpartitionType}
       </select>
@@ -18,7 +18,7 @@
     </td>
 {/if}
     <td>{t}Description{/t}</td>
-    <td>
+    <td width="35%">
       <input type="text" value="{$description}" name="description">
     </td>
   </tr>
@@ -62,19 +62,19 @@
     </td>
   </tr>
   <tr>
-    <td>
+    <td colspan="2">
       <input type='checkbox' value='1' name='resize' {if $resize} checked {/if}>
-      &nbsp;{t}Resize{/t}
+      &nbsp;{t}Resize existing partition{/t}
     </td>
-    <td>
+    <td colspan="2">
       <input type='checkbox' value='1' name='bootable' {if $bootable} checked {/if}>
       &nbsp;{t}Bootable{/t}
     </td>
-    <td>
+  </tr>
+  <tr>
+    <td colspan="4">
       <input type='checkbox' value='1' name='preserve' {if $preserve} checked {/if}>
       &nbsp;{t}Preserve{/t}
-    </td>
-    <td>
       <select name='preserveType'>
         {html_options options=$preserveTypes selected=$preserveType}
       </select>
@@ -123,12 +123,9 @@
       <select name='FAIfsType' onChange="document.mainform.submit();">
         {html_options options=$FAIfsTypes selected=$FAIfsType}
       </select>
-      &nbsp; 
-      <input type='checkbox' name='encrypted' value='1' {if $encrypted} checked {/if}> 
-      &nbsp; {t}Encrypted{/t}
     </td>
     <td>
-      {t}Create options{/t}
+      {t}Filesystem create options{/t}
     </td>
     <td>
       <input name="FAIfsCreateOptions" value="{$FAIfsCreateOptions}">
@@ -136,6 +133,8 @@
   </tr>
   <tr>
     <td colspan=2>
+      <input type='checkbox' name='encrypted' value='1' {if $encrypted} checked {/if}> 
+      {t}Encrypted{/t}
     </td>
     <td>
       {t}Tune options{/t}

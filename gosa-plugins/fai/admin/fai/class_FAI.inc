@@ -243,8 +243,7 @@ class FAI
           $classes = FAI::get_all_objects_for_given_base(FAI::get_release_dn($Current_DN),
               "(&(objectClass=FAIclass)(cn=".$cn."))"); 
 
-          /* Check if this is the last class with this name.
-           */
+          /* Check if this is the last class with this name */
           if(count($classes) == 1){
 
             /* Get all FAI Profiles 
