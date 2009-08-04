@@ -17,7 +17,7 @@
         </tr>
         <tr>
 		      <td>
-            <LABEL for="fstabkey">{t}FSTAB key{/t}</LABEL>
+            <LABEL for="fstabkey">{t}fstab key{/t}</LABEL>
           </td>
           <td>
 {render acl=$DISKFAIdiskOptionACL}

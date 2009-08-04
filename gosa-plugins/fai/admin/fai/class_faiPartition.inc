@@ -127,22 +127,22 @@ class faiPartition extends plugin
     if($this->FAIdiskType == "disk"){
       $types  = array(
           "primary" => _("Primary"),
-          "secondary" => _("Secondary"));
+          "secondary" => _("Logical"));
     }elseif($this->FAIdiskType == "raid"){
       $types  = array(
-          "raid0" => _("Raid 0"),
-          "raid1" => _("Raid 1"),
-          "raid5" => _("Raid 5"),
-          "raid6" => _("Raid 6"));
+          "raid0" => _("RAID 0"),
+          "raid1" => _("RAID 1"),
+          "raid5" => _("RAID 5"),
+          "raid6" => _("RAID 6"));
     }else{
       $types = "";
     }
      
     // Create a list of all size options
     $partitionSizeTypes  = array(
-        "fixed"     => _("Fixed"),
-        "dynamic"     => _("Dynamic"),
-        "remaining" => _("Use remaining space")
+        "fixed"     => _("fixed"),
+        "dynamic"     => _("dynamic"),
+        "remaining" => _("remaining space")
         );
 
     // Create a list of all size options
@@ -152,23 +152,23 @@ class faiPartition extends plugin
         "GB"      => _("GB"),
         "TB"      => _("TB"),
         "PB"      => _("PB"),
-        "%"      => _("Percent")
+        "%"      => _("%")
         );
 
     // Preserve types 
     $preserveTypes = array(
-        "always" => _("Always"),
-        "reinstall" => _("Reinstall"));
+        "always" => _("always"),
+        "reinstall" => _("reinstall"));
 
     // File system types.  
     $FAIfsTypes = array(
-        "swap" => _("Swap"),
-        "ext2" => _("Ext 2"),
-        "ext3" => _("Ext 3"),
-        "ext4" => _("Ext 4"),
-        "reiserfs" => _("Reiser fs"),
-        "xfs" => _("Xfs"),
-        "btrfs" => _("Btrfs"));
+        "swap" => _("swap space"),
+        "ext2" => _("ext2"),
+        "ext3" => _("ext3"),
+        "ext4" => _("ext4"),
+        "reiserfs" => _("reiser fs"),
+        "xfs" => _("xfs"),
+        "btrfs" => _("btrfs"));
 
     $smarty->assign("partitionTypes", $types);
     $smarty->assign("partitionSizeTypes", $partitionSizeTypes);
@@ -238,10 +238,10 @@ class faiPartition extends plugin
 
       $list[$device['name']].= " &nbsp; "._("Options").": ";
       if($device['spare']){
-        $list[$device['name']].= "&nbsp;"._("Spare")."&nbsp;";
+        $list[$device['name']].= "&nbsp;"._("spare")."&nbsp;";
       }
       if($device['missing']){
-        $list[$device['name']].= "&nbsp;"._("Missing")."&nbsp;";
+        $list[$device['name']].= "&nbsp;"._("missing")."&nbsp;";
       }
     }
     return($list);
@@ -314,7 +314,7 @@ class faiPartition extends plugin
         $res1 = $this->sizeStart * $mp[$this->sizeStart_Type];
         $res2 = $this->sizeStop * $mp[$this->sizeStop_Type];
         if($res1 > $res2){
-          $msgs[] = msgPool::toobig(_("Partition start size"), "'"._("Partition stop size")."'");
+          $msgs[] = msgPool::toobig(_("Minimum partition size"), "'"._("Maximum partition size")."'");
         }
       }
     }
