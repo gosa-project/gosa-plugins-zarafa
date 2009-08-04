@@ -1108,7 +1108,7 @@ sub reactivate_job_with_delay {
     if (not defined $delay) { $delay = 30 } ;
     my $delay_timestamp = &calc_timestamp(&get_time(), "plus", $delay);
 
-    my $sql = "UPDATE $job_queue_tn Set timestamp='$delay_timestamp', status='waiting' WHERE (macaddress LIKE '$target' AND headertag='$header')"; 
+    my $sql = "UPDATE $job_queue_tn Set timestamp='$delay_timestamp', status='waiting' WHERE (macaddress LIKE '$target' OR plainname LIKE '$target') AND headertag='$header'"; 
     my $res = $job_db->update_dbentry($sql);
     daemon_log("$session_id INFO: '$header'-job will be reactivated at '$delay_timestamp' ".
             "cause client '$target' is currently not available", 5);
