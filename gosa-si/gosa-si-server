@@ -1056,8 +1056,17 @@ sub update_jobdb_status_for_send_msgs {
                     ||($job_header eq "trigger_action_reinstall") 
                     ||($job_header eq "trigger_activate_new")
                     ) {
-                &reactivate_job_with_delay($session_id, $job_target, $job_header, 30 );
-
+						if ($job_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i) {
+							&reactivate_job_with_delay($session_id, $job_target, $job_header, 30 );
+						} else {
+							# If we don't have the mac adress at this time, we use the plainname
+							my $plainname_result = $job_db->select_dbentry("SELECT plainname from jobs where id=$jobdb_id");
+							my $plainname = $job_target;
+							if ((keys(%$plainname_result) > 0) ) {
+								$plainname = $plainname_result->{1}->{$job_target};
+							}
+							&reactivate_job_with_delay($session_id, $plainname, $job_header, 30 );
+						}
             # For all other messages
             } else {
                 my $sql_statement = "UPDATE $job_queue_tn ".
