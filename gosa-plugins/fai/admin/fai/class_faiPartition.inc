@@ -38,13 +38,31 @@ class faiPartition extends plugin
   var $status = "";
   var $raidDevices = array();
 
+  // Once we've exceeded the primary partition limit,
+  //  hide the the 'primary' option from the select box.
+  var $disablePrimary = FALSE; 
+
   function __construct($config, $object, $parent,$type)
   {
 
     $this->parent = $parent;
     $this->status = "new";
     $this->FAIdiskType = $type;
-    
+
+    // Check if we should be able to add primary partitions.
+    if(!$object || $object['FAIpartitionType'] == "logical"){
+      if($this->FAIdiskType == "disk"){
+        $types = array('logical' => array(), 'primary' => array());
+        foreach($this->parent->partitions as $key => $part){
+          $types[$part['FAIpartitionType']][$part['FAIpartitionNr']] = 1;
+        }
+        if(count($types['logical']) && count($types['primary']) >= 3){
+          $this->disablePrimary = TRUE;
+        }elseif(count($types['logical']) >= 4){
+          $this->disablePrimary = TRUE;
+        }
+      } 
+    } 
  
     // Load attributes from existing partition 
     if($object){
@@ -125,9 +143,16 @@ class faiPartition extends plugin
 
     // Create a list of selectable partition types
     if($this->FAIdiskType == "disk"){
-      $types  = array(
-          "primary" => _("Primary"),
-          "secondary" => _("Logical"));
+
+      if($this->disablePrimary){
+        $types  = array(
+            "logical" => _("Logical"));
+      }else{
+        $types  = array(
+            "primary" => _("Primary"),
+            "logical" => _("Logical"));
+      }
+
     }elseif($this->FAIdiskType == "raid"){
       $types  = array(
           "raid0" => _("RAID 0"),
@@ -188,6 +213,7 @@ class faiPartition extends plugin
 
     $smarty->assign("plist",$this->getRaidlist());
     $smarty->assign("physicalPartitionList",$this->getPartitionlist());
+    $smarty->assign("disablePrimary", $this->disablePrimary);
 
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);

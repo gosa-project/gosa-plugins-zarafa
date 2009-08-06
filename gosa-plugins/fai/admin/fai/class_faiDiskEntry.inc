@@ -217,9 +217,12 @@ class faiDiskEntry extends plugin
     if($this->dialog instanceOf plugin && isset($_POST['PartitionSave'])){
       $this->dialog->save_object();
 
+      $new_partition = $this->dialog->save(); 
       $msgs = $this->dialog->check();
+      $msgs = array_merge($this->check_disks($new_partition));
+
       if(!count($msgs)){
-        $this->updatePartition($this->dialog->save());
+        $this->updatePartition($new_partition);
         $this->dialog = null;
       }else{
         msg_dialog::displayChecks($msgs);
@@ -514,31 +517,45 @@ class faiDiskEntry extends plugin
     if(preg_match("/[^a-z0-9_\-]/i",$d)){
       $message[] = msgPool::invalid(_("Name"),$d,"/[a-z0-9_\-]/i");
     }
-       
-    /* check every partition.
-     * if there is an invalid value defined, append an errorstr to message
-     */
-
-    /* Array that contain every partitionname mountpoint etc already assigned */
-    $alreadyUsed    = array();
-    foreach($this->UsedAttrs as $attrs){
-      $alreadyUsed[$attrs] = array();
-    }      
-
-    $cnt = 0;
-    foreach($this->partitions as $key => $part){
-      if($part['FAIpartitionType'] == "primary"){
-        $cnt ++ ; 
-      }
-    }
-    if($cnt > 3){
-      $message[] = _("You have more than 3 primary partition table entries in your configuration, please check your configuration twice.");
-    }
-
     return ($message);
   }
 
-  
+
+  /* Checks the disk combinations.
+   * 
+   */  
+  function check_disks($disk_to_add = array())
+  {
+    $msgs = array();
+
+    /* Check 'disk' combinations. 
+     *  - There can be four primary partitions.
+     *  - If there is at least one 'logical' partition, then there can be only 
+     *     three 'primary' partitions.
+     */    
+    if($this->FAIdiskType == "disk"){
+     
+      $types = array('logical' => array(), 'primary' => array());
+      $types[$disk_to_add['FAIpartitionType']][$disk_to_add['FAIpartitionNr']] = 1;
+      foreach($this->partitions as $key => $part){
+        $types[$part['FAIpartitionType']][$part['FAIpartitionNr']] = 1;
+      }
+
+      // There can only be four primary partitions per disk - without any logical partition.
+      if(count($types['logical']) == 0){
+        if(count($types['primary']) > 4){
+          $msgs[] = _("You have more than four primary partition table entries in your configuration, please check your configuration twice.");
+        }
+      }else{
+        if(count($types['primary']) > 3){
+          $msgs[] = _("You cannot have more than three primary partition while using logical partitions, please check your configuration twice.");
+        }
+      }
+    }
+
+    return($msgs);
+  }  
+
 
   /* Return plugin informations for acl handling */
   static function plInfo()
