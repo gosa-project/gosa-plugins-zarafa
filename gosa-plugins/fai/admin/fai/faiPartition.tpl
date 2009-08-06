@@ -63,18 +63,18 @@
   </tr>
   <tr>
     <td colspan="2">
-      <input type='checkbox' value='1' name='resize' {if $resize} checked {/if}>
-      &nbsp;{t}Resize existing partition{/t}
+      <input id="resize" type='checkbox' value='1' name='resize' {if $resize} checked {/if}>
+      &nbsp;<label for='resize'>{t}Resize existing partition{/t}</label>
     </td>
     <td colspan="2">
-      <input type='checkbox' value='1' name='bootable' {if $bootable} checked {/if}>
-      &nbsp;{t}Bootable{/t}
+      <input id="bootable" type='checkbox' value='1' name='bootable' {if $bootable} checked {/if}>
+      &nbsp;<label for='bootable'>{t}Bootable{/t}</label>
     </td>
   </tr>
   <tr>
     <td colspan="4">
-      <input type='checkbox' value='1' name='preserve' {if $preserve} checked {/if}>
-      &nbsp;{t}Preserve{/t}
+      <input id="preserve" type='checkbox' value='1' name='preserve' {if $preserve} checked {/if}>
+      &nbsp;<label for="preserve">{t}Preserve{/t}</label>
       <select name='preserveType'>
         {html_options options=$preserveTypes selected=$preserveType}
       </select>
@@ -95,7 +95,8 @@
     <td colspan="4">
       <h2>{t}Combined physical partitions{/t}</h2>      
 
-      <select name='physicalPartition' size=5 style="width:100%; font-family: monospace;">
+      <select name='physicalPartition[]' size=5 style="width:100%; font-family: monospace;"
+        multiple>
         {html_options options=$plist}
       </select>
       <br>
@@ -133,8 +134,8 @@
   </tr>
   <tr>
     <td colspan=2>
-      <input type='checkbox' name='encrypted' value='1' {if $encrypted} checked {/if}> 
-      {t}Encrypted{/t}
+      <input id="encrypted" type='checkbox' name='encrypted' value='1' {if $encrypted} checked {/if}>
+      &nbsp;<label for="encrypted">{t}Encrypted{/t}</label>
     </td>
     <td>
       {t}Tune options{/t}

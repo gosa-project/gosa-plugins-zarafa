@@ -308,7 +308,11 @@ class faiPartition extends plugin
 
       // Remove partition
       if(isset($_POST['delPhysicalPartition']) && isset($_POST['physicalPartition'])){
-        unset($this->raidDevices[$_POST['physicalPartition']]); 
+        foreach($_POST['physicalPartition'] as $key){
+          if(isset($this->raidDevices[$key])){
+            unset($this->raidDevices[$key]);
+          }
+        }
       }
 
       // Toggle spare flag for partition entries
