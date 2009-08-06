@@ -373,7 +373,7 @@ class faiDiskEntry extends plugin
 
 
   /* Remove the selected partition and shift the following partitions 
-   *  to fill gap.
+   *  to fill the gap.
    * Additionally update the partition numbers correspondingly.
    */
   function removePartition($id)

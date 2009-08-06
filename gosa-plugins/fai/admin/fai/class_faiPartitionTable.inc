@@ -160,131 +160,143 @@ class faiPartitionTable extends plugin
     }
 
     /* Edit entries via GET */
-    $Udisk = null;
+    $s_action = "";
+    $s_entry = "";
     if(isset($_GET['act']) && isset($_GET['id'])){
       if($_GET['act'] == "edit" && isset($this->disks[$_GET['id']])){
-        $Udisk= $_GET['id'];
+        $s_entry= $_GET['id'];
+        $s_action= "edit";
       }
     }
 
     /* New Listhandling */
-    foreach($_POST as $name => $value){
-      if(preg_match("/^edit_/",$name)){
-        $entry = preg_replace("/^edit_/","",$name);
-        $Udisk = base64_decode(preg_replace("/_.*/","",$entry));
-        break;
-      }
-      if(preg_match("/^delete_/",$name)){
-        $entry = preg_replace("/^delete_/","",$name);
-        $disk = base64_decode(preg_replace("/_.*/","",$entry));
-
-        if (!preg_match("/freeze/i", $this->FAIstate)){
-          if(isset($this->disks[$disk])){
-
-            /* Check for references */
-            $ignore = false;
-            $name = "";
-            foreach($this->disks as $dtest) {
-              // Is raid?
-              $device= null;
-              $name = $dtest['cn'];
-
-              if ($disk == "raid"){
-                $device = "md";
-              } else {
-                $device = $disk;
-
-                // Used by raid?
-                if (isset($this->disks[$name]['partitions'])){
-                  foreach ($this->disks[$name]['partitions'] as $partition) {
-                    if (preg_match("/${disk}\.?[0-9]+/", $partition['FAIpartitionSize'])){
-                      $ignore = true;
-                      break 2;
-                    }
-                  }
-                }
-              }
-
-              // Used by volgroup?
-              if (isset($this->disks[$name]["FAIlvmDevice"])){
-                foreach ($this->disks[$name]["FAIlvmDevice"] as $vg_element) {
-                  if (preg_match("/^${device}\.?[0-9]+$/", $vg_element)){
-                    $ignore = true;
-                    break 2;
-                  }
-                }
-              }
-            }
-
-            if ($ignore) {
-              msg_dialog::display(_("Error"), sprintf(_("The disk cannot be deleted while it is used in the '%s' disk definition!"), $name), ERROR_DIALOG);
-            } else {
-              if($this->disks[$disk]['status']=="edited"){
-                $this->disks[$disk."-delete"]=$this->disks[$disk];
-                unset($this->disks[$disk]);
-                $disk = $disk."-delete";        
-                $this->disks[$disk]['status']="delete";
-                foreach($this->disks[$disk]['partitions'] as $name => $value ){
-                  if($value['status']=="edited"){
-                    $this->disks[$disk]['partitions'][$name]['status']="delete"; 
-                  }else{
-                    unset($this->disks[$disk]['partitions'][$name]);
-                  }
-                }
-              }else{
-                unset($this->disks[$disk]);
-              }
-            }
-
-          }
+    if (!preg_match("/freeze/i", $this->FAIstate)){
+      foreach($_POST as $name => $value){
+        if(preg_match("/^edit_/",$name)){
+          $s_entry = preg_replace("/^edit_/","",$name);
+          $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+          $s_action = "edit"; 
+          break;
         }
-        break;
+        if(preg_match("/^delete_/",$name)){
+          $s_entry = preg_replace("/^delete_/","",$name);
+          $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+          $s_action = "remove";
+          break;
+        }
       }
     }
 
-    if($Udisk){
-      $usedDiskNames =array();
-      if(isset($this->disks[$Udisk])){
 
-        foreach($this->disks  as $key=>$disk){
-          if($key != $Udisk){
-            $usedDiskNames[]= $key;
+    /* Disk remove was requested. 
+     * Now check if the disk is still in use, in this case 
+     *  display a warning message and abort the removal. 
+     * If the disk is not used anymore, then remove it. 
+     */
+    if($s_action == "remove"){
+      if(isset($this->disks[$s_entry])){
+
+        /* Create a list of all partitions that are used in 
+         *  lvm or raid compilations. 
+         */
+        $list = array();
+        foreach($this->disks as $dname => $disk){
+          if($disk['FAIdiskType'] != "disk" && $dname != $s_entry){
+            if($disk['status'] == "delete") continue;
+            if($disk['FAIdiskType'] == "lvm"){
+              foreach($disk['FAIlvmDevice'] as $partname){
+                $list[preg_replace("/:.*$/","",$partname)][] = $disk;
+              }
+            }
+            foreach($disk['partitions'] as $partkey => $part){
+              if($part['status'] == "delete") continue;
+              if($disk['FAIdiskType'] == "raid"){
+                foreach(split(",",$part['FAIpartitionSize']) as $partname){
+                  $list[preg_replace("/:.*$/","",$partname)][] = $disk;
+                }
+              }
+            }  
           }
         }
 
-        /* Set object info string, which will be displayed in plugin info line */ 
-        if(isset($this->disks[$Udisk]['dn'])){
-          set_object_info($this->disks[$Udisk]['dn']);
-          $dn = $this->disks[$Udisk]['dn'];
-        }else{
-          set_object_info("");
-          $dn = "new";
+        /* Now that we've a list of all partition references, lets check if
+         *  one of the partitions we are going to remove is still in use.
+         */
+        $used = array();
+        foreach($this->disks[$s_entry]['partitions'] as $part){
+          if(isset($list[$part['cn']])){    
+            foreach($list[$part['cn']] as $disk){
+              $used[$disk['cn']] = $disk['cn'];
+            }
+          }
         }
 
-        if(isset($this->disks[$Udisk]['FAIdiskType'])){
-          switch($this->disks[$Udisk]['FAIdiskType']){
-            case 'raid': 
-            case 'lvm': 
-            case 'disk': 
-              $this->dialog = new faiDiskEntry(
-                  $this->config,$this->dn,$this,$this->disks[$Udisk], 
-                  $this->disks[$Udisk]['FAIdiskType']); 
-              break;
-            case 'old': 
-              $this->dialog = new faiPartitionTableEntry(
-                  $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
-              break;
-          }
+        /* Skip removal while disk is in use. 
+         */
+        if(count($used)){
+          $used = implode(",",$used);
+          msg_dialog::display(_("Error"), 
+              sprintf(_("The disk cannot be deleted while it is used in the '%s' disk definition!"), 
+                $used), ERROR_DIALOG);
         }else{
-          $this->dialog = new faiPartitionTableEntry(
-              $this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+
+          /* Everything is ok, we can remove the disk now.
+           */
+          if($this->disks[$s_entry]['status']=="edited"){
+            $this->disks[$s_entry."-delete"]=$this->disks[$s_entry];
+            unset($this->disks[$s_entry]);
+            $s_entry = $s_entry."-delete";        
+            $this->disks[$s_entry]['status']="delete";
+            foreach($this->disks[$s_entry]['partitions'] as $name => $value ){
+              if($value['status']=="edited"){
+                $this->disks[$s_entry]['partitions'][$name]['status']="delete"; 
+              }else{
+                unset($this->disks[$s_entry]['partitions'][$name]);
+              }
+            }
+          }else{
+            unset($this->disks[$s_entry]);
+          }
+        } 
+      } 
+    }
+
+    
+
+    if($s_action == "edit"){
+
+      /* Set object info string, which will be displayed in plugin info line */ 
+      if(isset($this->disks[$s_entry]['dn'])){
+        set_object_info($this->disks[$s_entry]['dn']);
+        $dn = $this->disks[$s_entry]['dn'];
+      }else{
+        set_object_info("");
+        $dn = "new";
+      }
+
+      if(isset($this->disks[$s_entry]['FAIdiskType'])){
+        switch($this->disks[$s_entry]['FAIdiskType']){
+          case 'raid': 
+          case 'lvm': 
+          case 'disk': 
+            $this->dialog = new faiDiskEntry(
+                $this->config,$this->dn,$this,$this->disks[$s_entry], 
+                $this->disks[$s_entry]['FAIdiskType']); 
+            break;
+          case 'old': 
+            $this->dialog = new faiPartitionTableEntry(
+                $this->config,$this->dn,$usedDiskNames,$this->disks[$s_entry]); 
+            break;
         }
-        if($this->dialog){
-          $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
-          $this->dialog->set_acl_category("fai");
-          $this->dialog->FAIstate = $this->FAIstate;
-          $this->is_dialog = true;
-        }
+      }else{
+        $this->dialog = new faiPartitionTableEntry(
+            $this->config,$this->dn,$usedDiskNames,$this->disks[$s_entry]); 
+      }
+      if($this->dialog){
+        $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
+        $this->dialog->set_acl_category("fai");
+        $this->dialog->FAIstate = $this->FAIstate;
+        $this->is_dialog = true;
       }
     }
 
