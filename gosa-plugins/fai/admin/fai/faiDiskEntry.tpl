@@ -75,7 +75,7 @@
         {html_options options=$plist}
       </select>
       <br>
-      <select name='lvmPartitionAdd'>
+      <select name='lvmPartitionAdd' style='width:240px;'>
         {html_options options=$physicalPartitionList}
       </select>
       <input type="submit" name='addLvmPartition' value="{msgPool type="addButton"}">&nbsp;

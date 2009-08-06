@@ -99,7 +99,7 @@
         {html_options options=$plist}
       </select>
       <br>
-      <select name='physicalPartitionAdd'>
+      <select name='physicalPartitionAdd' style='width:240px;'>
         {html_options options=$physicalPartitionList}
       </select>
       <input type="submit" name='addPhysicalPartition' value="{msgPool type="addButton"}">&nbsp; 

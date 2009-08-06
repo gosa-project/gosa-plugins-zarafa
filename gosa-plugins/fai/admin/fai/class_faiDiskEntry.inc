@@ -335,7 +335,7 @@ class faiDiskEntry extends plugin
         if(isset($objs[$device]['FAIpartitionSize'])){
           if($objs[$device]['parentDisk']['FAIdiskType'] == "raid"){
             $str .= _("Disks").":&nbsp;";
-            $str .= $objs[$device]['FAIpartitionSize'];
+            $str .= preg_replace("/(:spare|:missing)/i","",$objs[$device]['FAIpartitionSize']);
           }else{
             $str .= _("Size").":&nbsp;";
             $str .= $objs[$device]['FAIpartitionSize'];
