@@ -466,14 +466,14 @@ class faiPartitionTable extends plugin
    */
   function save_object()
   {
-    if (preg_match("/freeze/", $this->FAIstate)) return;
-    plugin::save_object();
-    foreach($this->attributes as $attrs){
-      if(isset($_POST[$attrs])){
-        $this->$attrs = $_POST[$attrs];
+    if(isset($_POST['FAIpartitionTablePosted'])){
+      if (preg_match("/freeze/", $this->FAIstate)) return;
+      plugin::save_object();
+      foreach($this->attributes as $attrs){
+        if(isset($_POST[$attrs])){
+          $this->$attrs = $_POST[$attrs];
+        }
       }
-    }
-    if(isset($_POST['faiPartitionTable'])){
       if(!count($this->disks)){
         if(isset($_POST['mode'])){
           $this->FAIpartitionMethod = "setup-storage";

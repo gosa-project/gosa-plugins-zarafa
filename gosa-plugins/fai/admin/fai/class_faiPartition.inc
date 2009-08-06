@@ -63,6 +63,8 @@ class faiPartition extends plugin
         }
       } 
     } 
+
+    print_a($object);
  
     // Load attributes from existing partition 
     if($object){
@@ -294,6 +296,11 @@ class faiPartition extends plugin
         }
       }
 
+      // Allow user defined partition names for lvm disks.
+      if($this->FAIdiskType == "lvm" && isset($_POST['cn'])){
+        $this->cn = get_post('cn');
+      }
+
       // Remove partition
       if(isset($_POST['delPhysicalPartition']) && isset($_POST['physicalPartition'])){
         unset($this->raidDevices[$_POST['physicalPartition']]); 
@@ -404,7 +411,7 @@ class faiPartition extends plugin
     if($this->FAIfsType == "swap"){
       $ret['FAImountPoint'] = "swap";
     }
-  
+ 
     return($ret);
   }
 }

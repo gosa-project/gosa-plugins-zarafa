@@ -175,10 +175,20 @@ class faiDiskEntry extends plugin
     $s_entry    = "";
     $display    = "";
 
-    // Remove partition
+    // Add partition to lvm compilation.
     if(isset($_POST['addLvmPartition']) && isset($_POST['lvmPartitionAdd'])){
-      $name = $_POST['lvmPartitionAdd'];
+      $name = get_post('lvmPartitionAdd');
       $this->lvmDevices[$name] = $name;
+    }
+
+    // Remove partition from lvm compilation.
+    if(isset($_POST['delLvmPartition']) && isset($_POST['physicalPartition'])){
+      $names = $_POST['physicalPartition'];
+      foreach($names as $name){
+        if(isset($this->lvmDevices[$name])){
+          unset($this->lvmDevices[$name]);
+        }
+      }
     }
 
     /* Check all Posts if there is something usefull for us,
@@ -365,9 +375,14 @@ class faiDiskEntry extends plugin
   {
     if(!isset($part['FAIpartitionNr']) || $part['FAIpartitionNr'] == "undefined"){
       $part['FAIpartitionNr'] = count($this->partitions) + 1;
+    }
+
+    /* Update the disk cn -       
+     * Do NOT touch the partition 'cn' in case of lvm devices. 
+     */
+    if($this->FAIdiskType == "disk"){
       $part['cn'] = $this->DISKcn.$part['FAIpartitionNr'];
     }
-    $part['cn'] = $this->DISKcn.$part['FAIpartitionNr'];
     $this->partitions[$part['FAIpartitionNr']] = $part;
   }
 
@@ -404,10 +419,13 @@ class faiDiskEntry extends plugin
       $action =array(
           "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
                       "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
-          "attach" => "style='width:40px;'");
+          "attach" => "style='width:40px; border-right: 0px;'");
 
- 
-      $fields = array($number,$type,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
+      if($this->FAIdiskType == "lvm"){ 
+        $fields = array($type,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
+      }else{
+        $fields = array($number,$type,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
+      }
       $divlist->AddEntry($fields);
     }
     return($divlist->DrawList());    
@@ -422,7 +440,10 @@ class faiDiskEntry extends plugin
     /* Attach partitions */
     foreach($this->partitions as $key=>$val) {
       $this->partitions[$key]['FAIpartitionNr']=$key;
-      $this->partitions[$key]['cn'] = $this->DISKcn.$key;
+
+      if($this->FAIdiskType == "disk"){
+        $this->partitions[$key]['cn'] = $this->DISKcn.$key;
+      }
     }
 
     /* Attach deleted */

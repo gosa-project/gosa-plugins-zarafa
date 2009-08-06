@@ -71,7 +71,7 @@
       <h2>{t}Combined physical partitions{/t}</h2>
 
       <select style='font-family: monospace; width: 100%;' 
-        name='physicalPartition' size=5> 
+        name='physicalPartition[]' size=5 multiple> 
         {html_options options=$plist}
       </select>
       <br>

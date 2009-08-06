@@ -6,7 +6,7 @@
 {if $FAIdiskType == "lvm"}
     <td>{t}Name{/t}</td>
     <td width="35%">
-      <input name="FAIpartitionType" value="{$FAIpartitionType}">
+      <input name="cn" value="{$cn}">
     </td>
 {else}
     <td>{t}Type{/t}</td>
