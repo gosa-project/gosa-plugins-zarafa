@@ -278,18 +278,30 @@ class faiDiskEntry extends plugin
     $objs = $disks;
     foreach($disks as $disk){
       foreach($disk['partitions'] as $id => $part){
-        $objs[$disk['cn']] = $part;
+        $part['parentDisk'] = $disk;
+        $objs[$part['cn']] = $part;
       }
     }
 
     $list = array();
     foreach($this->lvmDevices as $device){
-      $list[$device] = $device;
 
-      if(isset($objs[$device]['FAIpartitionSize'])){
-        $list[$device].= _("Size").":&nbsp;";
-        $list[$device].= $objs[$device]['FAIpartitionSize'];
+      $str = $device;
+      $str = preg_replace("/ /","&nbsp;",str_pad($str,20," "));
+
+      if(isset($objs[$device])){
+
+        if(isset($objs[$device]['FAIpartitionSize'])){
+          if($objs[$device]['parentDisk']['FAIdiskType'] == "raid"){
+            $str .= _("Disks").":&nbsp;";
+            $str .= $objs[$device]['FAIpartitionSize'];
+          }else{
+            $str .= _("Size").":&nbsp;";
+            $str .= $objs[$device]['FAIpartitionSize'];
+          } 
+        }
       }
+      $list[$device] = $str;
     }
     return($list);
   }
@@ -299,7 +311,7 @@ class faiDiskEntry extends plugin
     $array = array();
     foreach($this->parent->disks as $disk){
       foreach($disk['partitions'] as $key => $part){
-        $name = $disk['cn'];
+        $name = $part['cn'];
         if(!isset($this->lvmDevices[$name])){
           $array[$name] = $name;
         }

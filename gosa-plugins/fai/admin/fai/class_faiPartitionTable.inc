@@ -137,7 +137,7 @@ class faiPartitionTable extends plugin
       if ($this->FAIpartitionMethod == "setup-storage") {
         if(isset($_POST['AddDisk'])) $type = "disk";
         if(isset($_POST['AddRaid'])) $type = "raid";
-        if(isset($_POST['AddAddVolgroup'])) $type = "lvm";
+        if(isset($_POST['AddVolgroup'])) $type = "lvm";
         $this->dialog = new faiDiskEntry($this->config,$this->dn,$this, array(),$type); 
       } else {
         $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$this); 
