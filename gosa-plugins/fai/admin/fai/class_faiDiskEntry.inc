@@ -213,6 +213,15 @@ class faiDiskEntry extends plugin
       } 
     }
 
+    /* Act on _GET edit request
+     */
+    if(isset($_GET['act']) && $_GET['act'] == "editPart" && isset($_GET['id'])){
+      $id = $_GET['id'];
+      if(isset($this->partitions[$id])){
+        $this->dialog = new faiPartition($this->config,$this->partitions[$id], $this,$this->FAIdiskType);
+      }
+    }
+
     /* Create a new partition for this disk.
      */
     if(isset($_POST['AddPartition']) && !preg_match("/freeze/i",$this->FAIstate)){
@@ -437,42 +446,54 @@ class faiDiskEntry extends plugin
 
     $divlist = new divSelectBox("DiskEntries"); 
     foreach($this->partitions as $key => $part){
+
       $cn =array(
-          "string" => $part['cn'],
-          "attach" => "style='width:20px;'");
+          "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".$part['cn']."</a>",
+          "attach" => "style='width:160px;'");
+
+      $desc =array(
+          "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".
+              $part['description']."</a>",
+          "attach" => "style='width:200px;'");
+
       $number =array(
           "string" => $part['FAIpartitionNr'],
           "attach" => "style='width:20px;'");
       $size   =array(
           "string" => $part['FAIpartitionSize'],
           "attach" => "style='width:100px;'");
-      $fstype =array(
-          "string" => $part['FAIfsType'],
-          "attach" => "style='width:60px;'");
       $type   =array(
           "string" => $part['FAIpartitionType'],
           "attach" => "style='width:80px;'");
-      $opt    =array(
-          "string" => $part['FAImountOptions'],
-          "attach" => "style='width:80px;'");
-      $fsopt  =array(
-          "string" => $part['FAIfsOptions'],
-          "attach" => "style='width:80px;'");
-      $flags  =array(
-          "string" => $part['FAIpartitionFlags'],
-          "attach" => "style='width:80px;'");
-      $mntp   =array("string" => $part['FAImountPoint']);
 
-   
+      $mnt = $part['FAImountPoint'];
+      if(preg_match("/:encrypt/", $mnt)){
+        $mnt = preg_replace("/:encrypt/","",$mnt);
+      }
+      $mntp   =array("string" => $mnt);
+
+      $opt = "";
+      if(isset($part['encrypted']) && $part['encrypted']){
+        $opt.= "&nbsp;"._("encrypted").", ";
+      }      
+      if(isset($part['bootable']) && $part['bootable']){
+        $opt.= "&nbsp;"._("bootable").", ";
+      }      
+      if(isset($part['preserve']) && $part['preserve']){
+        $opt.= "&nbsp;"._("preserve").":&nbsp;".$part['preserveType'].", ";
+      }      
+      $opt    =array(
+          "string" => "<i>".preg_replace('/, $/',"",$opt)."</i>");
+
       $action =array(
           "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
                       "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
           "attach" => "style='width:40px; border-right: 0px;'");
 
       if($this->FAIdiskType == "lvm"){ 
-        $fields = array($cn,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
+        $fields = array($cn,$desc,$mntp,$opt,$size, $action);
       }else{
-        $fields = array($number,$type,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
+        $fields = array($number,$desc,$type,$mntp,$opt,$size,$action);
       }
       $divlist->AddEntry($fields);
     }
