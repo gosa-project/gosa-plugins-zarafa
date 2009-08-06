@@ -238,7 +238,7 @@ class faiDiskEntry extends plugin
 
       $new_partition = $this->dialog->save(); 
       $msgs = $this->dialog->check();
-      $msgs = array_merge($this->check_disks($new_partition));
+      $msgs = array_merge($msgs,$this->check_disks($new_partition));
 
       if(!count($msgs)){
         $this->updatePartition($new_partition);
@@ -437,6 +437,12 @@ class faiDiskEntry extends plugin
       }
     }
 
+    /* Check if we've to update lvm compilations.
+     */ 
+    if($this->FAIdiskType == "raid"){
+      $part['cn'] = 'md'.$part['FAIpartitionNr'];
+    }
+
     $this->partitions[$part['FAIpartitionNr']] = $part;
   }
 
@@ -492,6 +498,12 @@ class faiDiskEntry extends plugin
 
       if($this->FAIdiskType == "lvm"){ 
         $fields = array($cn,$desc,$mntp,$opt,$size, $action);
+      }elseif($this->FAIdiskType == "raid"){
+
+        $raid_str = $part['FAIpartitionType']." (".$part['FAIpartitionSize'].")";
+        $raid = array("string" => $raid_str);
+
+        $fields = array($cn,$desc,$raid,$mntp,$opt,$action);
       }else{
         $fields = array($number,$desc,$type,$mntp,$opt,$size,$action);
       }

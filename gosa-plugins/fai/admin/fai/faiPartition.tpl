@@ -95,7 +95,7 @@
     <td colspan="4">
       <h2>{t}Combined physical partitions{/t}</h2>      
 
-      <select name='physicalPartition' size=5 style="width:100%;">
+      <select name='physicalPartition' size=5 style="width:100%; font-family: monospace;">
         {html_options options=$plist}
       </select>
       <br>

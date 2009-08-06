@@ -120,11 +120,13 @@ class faiPartition extends plugin
           $name = preg_replace("/:.*$/","",$disk);
           $spare = preg_match("/:spare/",$disk);
           $missing = preg_match("/:missing/",$disk);
-          $this->raidDevices[$name] = 
-            array(
-                "name" => $name, 
-                "spare" => $spare, 
-                "missing" => $missing);
+          if(!empty($name)){
+            $this->raidDevices[$name] = 
+              array(
+                  "name" => $name, 
+                  "spare" => $spare, 
+                  "missing" => $missing);
+          }
         }
       }
     }
@@ -255,20 +257,25 @@ class faiPartition extends plugin
   
     $list = array();
     foreach($this->raidDevices as $device){
-      $list[$device['name']] = $device['name'];
-
+      $str = $name = $device['name'];
+      $str = str_pad($str,25," ");
       if(isset($objs[$device['name']]['FAIpartitionSize'])){
-        $list[$device['name']].= _("Size").":&nbsp;";
-        $list[$device['name']].= $objs[$device['name']]['FAIpartitionSize'];
+        $str .= _("Size").":&nbsp;";
+        $str .= $objs[$device['name']]['FAIpartitionSize'];
       }
-
-      $list[$device['name']].= " &nbsp; "._("Options").": ";
+      $str = str_pad($str,60," ");
+      $opt = "";
       if($device['spare']){
-        $list[$device['name']].= "&nbsp;"._("spare")."&nbsp;";
+        $opt.= "&nbsp;"._("spare")."&nbsp;";
       }
       if($device['missing']){
-        $list[$device['name']].= "&nbsp;"._("missing")."&nbsp;";
+        $opt.= "&nbsp;"._("missing")."&nbsp;";
       }
+      if($opt){
+        $str .= " &nbsp; "._("Options").": ".$opt;
+      }
+      $str = str_pad($str,80," ");
+      $list[$name] = preg_replace("/ /","&nbsp;",$str);
     }
     return($list);
   }
@@ -349,9 +356,14 @@ class faiPartition extends plugin
         }
       }
     }
+
+    // Add raid checks
     if($this->FAIdiskType == "raid"){
-      #FIME raid checks missing
-      echo "Add raid checks here, disk combinations are not verified right now.";
+      if(count($this->raidDevices) < 2){
+        $msgs[] = _("Raid arrays must contain at least two partitions!");
+      }else if($this->FAIpartitionType == "raid0" && count($this->raidDevices) != 2){
+        $msgs[] = _("Raid 0 arrays can only be realized with a combination of two partitions!");
+      }
     }
 
     // check mount point 
