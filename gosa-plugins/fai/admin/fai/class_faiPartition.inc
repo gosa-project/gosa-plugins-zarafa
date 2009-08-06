@@ -64,8 +64,6 @@ class faiPartition extends plugin
       } 
     } 
 
-    print_a($object);
- 
     // Load attributes from existing partition 
     if($object){
 

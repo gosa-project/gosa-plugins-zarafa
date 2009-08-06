@@ -126,7 +126,7 @@ class faiDiskEntry extends plugin
           if (preg_match("/^resize:/", $option)){
             $resize = split(",", trim(preg_replace("/^resize:/","",$option),","));
             foreach($resize as $id){
-              if(isset($this->partitions[$bootflag])){
+              if(isset($this->partitions[$id])){
                 $this->partitions[$id]['resize'] = TRUE;  
               }
             }
@@ -137,7 +137,7 @@ class faiDiskEntry extends plugin
           if (preg_match("/^preserve_always:/", $option)){
             $preserve = split(",", trim(preg_replace("/^preserve_always:/","",$option),","));
             foreach($preserve as $presflag){
-              if(isset($this->partitions[$bootflag])){
+              if(isset($this->partitions[$presflag])){
                 $this->partitions[$presflag]['preserve'] = TRUE;  
                 $this->partitions[$presflag]['preserveType'] = 'always';  
               }
@@ -284,23 +284,45 @@ class faiDiskEntry extends plugin
   function getPartitionList()
   {
     $divlist = new divSelectBox("RaidList");
+
+    /* Create a list of all available disks and partitions. 
+     * This list will then be used to display detailed info.
+     */
     $disks = $this->parent->disks;
-    $objs = $disks;
-    foreach($disks as $disk){
+    foreach($disks as $dname => $disk){
+
+      // Skip currently edited disk 
+      if($disk['cn'] == $this->old_cn) continue;
+   
+      // Add disk 
+      $objs[$dname] = $disk;
+
+      // Add disk partitions
       foreach($disk['partitions'] as $id => $part){
         $part['parentDisk'] = $disk;
         $objs[$part['cn']] = $part;
       }
     }
 
+    // Attach current disk setup to the details list.
+    $data = $this->save();
+    $objs[$data['cn']] = $data;
+    foreach($data['partitions'] as $part){
+      $part['parentDisk'] = $data;
+      $objs[$part['cn']] = $part;
+    }
+
+    // Walk through physical partition combinations and build up 
+    //  user friendly list with partition details.
     $list = array();
     foreach($this->lvmDevices as $device){
 
+      // We've a html select box here, add spaces for better readability
       $str = $device;
       $str = preg_replace("/ /","&nbsp;",str_pad($str,20," "));
 
+      // Add disk/partition details.
       if(isset($objs[$device])){
-
         if(isset($objs[$device]['FAIpartitionSize'])){
           if($objs[$device]['parentDisk']['FAIdiskType'] == "raid"){
             $str .= _("Disks").":&nbsp;";
@@ -316,10 +338,19 @@ class faiDiskEntry extends plugin
     return($list);
   }
 
-  
-  function getAvailablePartitions(){
+ 
+  /* Returns a list of available partitions that are useable in this 
+   *  lvm disk setup.
+   */ 
+  function getAvailablePartitions()
+  {
     $array = array();
     foreach($this->parent->disks as $disk){
+
+      // We can't add ourselves to the available partitions
+      if($disk['cn'] == $this->old_cn) continue;
+
+      // Add partitions to the list.
       foreach($disk['partitions'] as $key => $part){
         $name = $part['cn'];
         if(!isset($this->lvmDevices[$name])){
@@ -383,6 +414,20 @@ class faiDiskEntry extends plugin
     if($this->FAIdiskType == "disk"){
       $part['cn'] = $this->DISKcn.$part['FAIpartitionNr'];
     }
+
+    /* Check if we've to update lvm compilations.
+     */ 
+    if($this->FAIdiskType == "lvm"){
+      if(isset($this->partitions[$part['FAIpartitionNr']])){
+        $old_cn = $this->partitions[$part['FAIpartitionNr']]['cn'];
+        $new_cn = $part['cn'];
+        if(isset($this->lvmDevices[$old_cn])){
+          unset($this->lvmDevices[$old_cn]);
+          $this->lvmDevices[$new_cn] = $new_cn;
+        }
+      }
+    }
+
     $this->partitions[$part['FAIpartitionNr']] = $part;
   }
 
@@ -392,6 +437,9 @@ class faiDiskEntry extends plugin
 
     $divlist = new divSelectBox("DiskEntries"); 
     foreach($this->partitions as $key => $part){
+      $cn =array(
+          "string" => $part['cn'],
+          "attach" => "style='width:20px;'");
       $number =array(
           "string" => $part['FAIpartitionNr'],
           "attach" => "style='width:20px;'");
@@ -422,7 +470,7 @@ class faiDiskEntry extends plugin
           "attach" => "style='width:40px; border-right: 0px;'");
 
       if($this->FAIdiskType == "lvm"){ 
-        $fields = array($type,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
+        $fields = array($cn,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
       }else{
         $fields = array($number,$type,$mntp,$size,$fstype, $opt,$fsopt,$flags,$action);
       }
@@ -443,6 +491,8 @@ class faiDiskEntry extends plugin
 
       if($this->FAIdiskType == "disk"){
         $this->partitions[$key]['cn'] = $this->DISKcn.$key;
+      }elseif($this->FAIdiskType == "lvm"){
+        $this->partitions[$key]['FAIpartitionType'] = 'lvm';
       }
     }
 
