@@ -560,7 +560,11 @@ class faiPartitionTable extends plugin
           }
         }else{
           if(isset($disk[$attr]) && !empty($disk[$attr])){
-            $disk_attrs[$attr] = $disk[$attr];
+            if(is_array($disk[$attr])){
+              $disk_attrs[$attr] = array_values($disk[$attr]);
+            }else{
+              $disk_attrs[$attr] = $disk[$attr];
+            }
           }else{
             $disk_attrs[$attr] = array();
           }
