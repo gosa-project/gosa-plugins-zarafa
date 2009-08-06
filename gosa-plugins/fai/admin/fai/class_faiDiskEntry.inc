@@ -379,33 +379,72 @@ class faiDiskEntry extends plugin
   function removePartition($id)
   {
     $start = false;
-    foreach($this->partitions as $key => $part){
-      if($id == $key){
-        $start = true;
-      }
-      if($start){
-        if($this->partitions[$key]['status'] == "edited"){
-          $this->deletePartitions[$key]= $this->partitions[$key];
-          $this->deletePartitions[$key]['FAIpartitionNr']=$key;
-          unset($this->partitions[$key]);
-        }else{
-          unset($this->partitions[$key]);
-        }
-        if(isset($this->partitions[($key+1)])){
-          if(isset($this->deletePartitions[$key])){
-            unset($this->deletePartitions[$key]);
+
+    /* Create a list of all partitions that are used in
+     *  lvm or raid compilations.
+     */
+    $list = array();
+    foreach($this->parent->disks as $dname => $disk){
+      if($disk['FAIdiskType'] != "disk"){
+        if($disk['status'] == "delete") continue;
+        if($disk['FAIdiskType'] == "lvm"){
+          foreach($disk['FAIlvmDevice'] as $partname){
+            $list[preg_replace("/:.*$/","",$partname)][] = $disk;
           }
-          $this->partitions[$key] = $this->partitions[($key+1)];
-          $this->partitions[$key]['FAIpartitionNr'] = $key;
-          $this->partitions[$key]['status'] = "new";
+        }
+        foreach($disk['partitions'] as $partkey => $part){
+          if($part['status'] == "delete") continue;
+          if($disk['FAIdiskType'] == "raid"){
+            foreach(split(",",$part['FAIpartitionSize']) as $partname){
+              $list[preg_replace("/:.*$/","",$partname)][] = $disk;
+            }
+          }
         }
       }
     }
-    $tmp= array();
-    foreach($this->partitions as $part){
-      $tmp[count($tmp)+1]=$part;
+
+    /* Now that we've a list of all partition references, lets check if
+     *  one of the partitions we are going to remove is still in use.
+     */
+    if(isset($list[$this->partitions[$id]['cn']])){
+      $used = array();
+      foreach($list[$this->partitions[$id]['cn']] as $disk){
+        $used[$disk['cn']] = $disk['cn'];
+      }
+      $used = implode(",",$used);
+      msg_dialog::display(_("Error"),
+          sprintf(_("The disk cannot be deleted while it is used in the '%s' disk definition!"),
+            $used), ERROR_DIALOG);
+
+    }else{
+      foreach($this->partitions as $key => $part){
+        if($id == $key){
+          $start = true;
+        }
+        if($start){
+          if($this->partitions[$key]['status'] == "edited"){
+            $this->deletePartitions[$key]= $this->partitions[$key];
+            $this->deletePartitions[$key]['FAIpartitionNr']=$key;
+            unset($this->partitions[$key]);
+          }else{
+            unset($this->partitions[$key]);
+          }
+          if(isset($this->partitions[($key+1)])){
+            if(isset($this->deletePartitions[$key])){
+              unset($this->deletePartitions[$key]);
+            }
+            $this->partitions[$key] = $this->partitions[($key+1)];
+            $this->partitions[$key]['FAIpartitionNr'] = $key;
+            $this->partitions[$key]['status'] = "new";
+          }
+        }
+      }
+      $tmp= array();
+      foreach($this->partitions as $part){
+        $tmp[count($tmp)+1]=$part;
+      }
+      $this->partitions = $tmp;
     }
-    $this->partitions = $tmp;
   }
 
 
