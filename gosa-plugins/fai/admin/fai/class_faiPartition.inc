@@ -23,17 +23,19 @@ class faiPartition extends plugin
   
   var $FAIdiskType = "disk";
 
+  // Size options.
   var $FAIpartitionSizeType = "fixed";
   var $sizeStart = 0;
   var $sizeStop  = 0;
   var $sizeStart_Type = "MB";
   var $sizeStop_Type  = "MB";
-   
+  
+  //  Flags 
   var $bootable = false; 
   var $resize = false;
+  var $encrypted = false;
   var $preserve = false;
   var $preserveType = "always";
-  var $encrypted = false;
 
   var $status = "";
   var $raidDevices = array();
@@ -66,7 +68,6 @@ class faiPartition extends plugin
 
     // Load attributes from existing partition 
     if($object){
-
       foreach($this->attributes as $attr){
         if(isset($object[$attr])){
           $this->$attr = $object[$attr];
@@ -114,7 +115,8 @@ class faiPartition extends plugin
         }
     
       }elseif($type == "raid"){
-    
+   
+        // Extract raid devices out of the partition size attribute. 
         $usedDisks = split(",",$this->FAIpartitionSize);
         foreach($usedDisks as $disk){
           $name = preg_replace("/:.*$/","",$disk);
@@ -224,7 +226,10 @@ class faiPartition extends plugin
     return($smarty->fetch(get_template_path("faiPartition.tpl", TRUE, dirname(__FILE__))));
   }
 
-    
+  
+  /* Returns a list of all partitions that are useable 
+   *  for raid arrays.
+   */
   function getPartitionList()
   {
     $array = array();  
@@ -242,10 +247,12 @@ class faiPartition extends plugin
   }
 
 
+  /* Creates a human readable list of all used partitions 
+   *  of a raid device.
+   */
   function getRaidList()
   {
     $divlist = new divSelectBox("RaidList");
-   
     $disks = $this->parent->parent->disks;
     $objs = array();
     foreach($disks as $disk){
@@ -408,6 +415,8 @@ class faiPartition extends plugin
       }
 
     }elseif($this->FAIdiskType == "raid"){
+
+      // Save selected raid partitions in FAIpartitionSize
       $ret['FAIpartitionSize'] = "";
       foreach($this->raidDevices as $device){
         $ret['FAIpartitionSize'] .= $device['name'];
