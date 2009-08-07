@@ -290,7 +290,7 @@ class faiPartitionTable extends plugin
         }
       }else{
         $this->dialog = new faiPartitionTableEntry(
-            $this->config,$this->dn,$this->getUsedDiskNames(),$this->disks[$s_entry]); 
+            $this->config,$this->dn,$this->getUsedDiskNames(),array()); 
       }
       if($this->dialog){
         $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
