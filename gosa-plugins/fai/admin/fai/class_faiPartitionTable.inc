@@ -522,8 +522,8 @@ class faiPartitionTable extends plugin
   /* Save to LDAP */
   function save()
   {
-
     plugin::save();
+
     /* Save current settings.
      * 1 : We must save the partition table, with its description and cn 
      * 2 : Append Disk with cn and  description.
@@ -547,6 +547,11 @@ class faiPartitionTable extends plugin
         $order[$key] = $disk;
       }
     }
+
+
+    // Prepare disks to be saved. 
+    $this->prepareDiskToBeSave(); 
+ 
     foreach($this->disks as $key => $disk){
       if($disk['status'] != "delete"){
         $order[$key] = $disk;
@@ -650,6 +655,47 @@ class faiPartitionTable extends plugin
     $this->handle_post_events("add");
   }
 
+
+  function prepareDiskToBeSave()
+  {
+    foreach($this->disks as $id => $disk){
+      
+      /* Correct FAIpartitionNr.
+       * If we've only primary partition then set the partition numbers from  
+       *  1 to 4, else set the primary from 1 to 3 and logical >= 5 
+       * 
+       */
+      if($disk['FAIdiskType'] == "disk"){
+        $primary = $logical = array();
+        foreach($disk['partitions'] as $partid => $part){
+          if($part['FAIpartitionType'] == "primary"){
+            $primary[$partid] = $part;
+          }elseif($part['FAIpartitionType'] == "logical"){
+            $logical[$partid] = $part;
+          }else{
+            trigger_error("Fatal: unknown disk type? ".$part['FAIpartitionType']); 
+          } 
+        }
+        $newSetup = array();  
+        $cnt = 1;
+        foreach($primary as $part){
+          $part['FAIpartitionNr'] = $cnt;
+          $part['cn'] = $disk['cn'].$cnt;
+          $newSetup[$cnt] = $part;
+          $cnt ++;
+        } 
+        $cnt = 5;
+        foreach($logical as $part){
+          $part['FAIpartitionNr'] = $cnt;
+          $part['cn'] = $disk['cn'].$cnt;
+          $newSetup[$cnt] = $part;
+          $cnt ++;
+        }
+        $this->disks[$id]['partitions'] = $newSetup; 
+      }
+    }
+  }
+  
 
   function PrepareForCopyPaste($source)
   {
