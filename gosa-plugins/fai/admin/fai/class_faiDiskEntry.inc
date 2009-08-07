@@ -56,7 +56,9 @@ class faiDiskEntry extends plugin
       $this->old_cn          = $disk['cn'];
 
       // Load partition info 
-      foreach($disk['partitions'] as $name => $values){
+      foreach($disk['partitions'] as $values){
+
+        $name = $values['FAIpartitionNr'];
 
         // Do not load removed partitions 
         if($values['status'] == "delete"){
@@ -629,19 +631,13 @@ class faiDiskEntry extends plugin
      * And prepare names and numbers.
      */
     foreach($this->partitions as $key=>$val) {
+      if($val['status'] == "delete") continue; 
       $this->partitions[$key]['FAIpartitionNr']=$key;
       if($this->FAIdiskType == "disk"){
         $this->partitions[$key]['cn'] = $this->DISKcn.$key;
       }elseif($this->FAIdiskType == "lvm"){
         $this->partitions[$key]['FAIpartitionType'] = 'lvm';
       }
-    }
-
-    /* Attach deleted.
-     */
-    foreach($this->deletePartitions as $key=>$val) {
-      $this->partitions[$key."-delete"]=$val;
-      $this->partitions[$key."-delete"]['status']="delete";
     }
 
     $tmp['description'] = $this->DISKdescription;
@@ -709,6 +705,14 @@ class faiDiskEntry extends plugin
     }
     if(!empty($preserve_reinstall)){
       $tmp['FAIdiskOption'][] = "preserve_reinstall:".trim($preserve_reinstall,",");
+    }
+
+    /* Attach deleted.
+     */
+    foreach($this->deletePartitions as $val) {
+      $key = $val['FAIpartitionNr'];
+      $this->partitions[$key."-delete"]=$val;
+      $this->partitions[$key."-delete"]['status']="delete";
     }
 
     $tmp['status'] = $this->status;

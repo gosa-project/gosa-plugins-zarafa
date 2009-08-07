@@ -679,7 +679,7 @@ class faiPartitionTable extends plugin
           /* Important, mark all edited devices for removal.
            * If the partition number changes we do not have the object twice.
            */
-          if($part['status'] == "edited"){
+          if($part['status'] != "new"){
             $part['status'] = "delete";
             $newSetup[$partid] = $part; 
           }
