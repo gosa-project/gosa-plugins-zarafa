@@ -86,14 +86,14 @@ class faiPartition extends plugin
          * remaining                * -
          */
         // Fixed
-        if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
+        if(preg_match("/^[0-9]{1,}(KB|MB|GB|TB|PB|%|)$/",$this->FAIpartitionSize)){
           $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
           $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\2",$this->FAIpartitionSize);
           $this->FAIpartitionSizeType = "fixed";
         }else
 
         // Dynamic range
-        if(preg_match("/^[0-9]*(KB|MB|GB|TB|PB|%)-[0-9]*(KB|MB|GB|TB|PB|%)$/",$this->FAIpartitionSize)){
+        if(preg_match("/^[0-9]{1,}(KB|MB|GB|TB|PB|%|)-[0-9]{1,}(KB|MB|GB|TB|PB|%|)$/",$this->FAIpartitionSize)){
           $this->sizeStart = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\1",$this->FAIpartitionSize);
           $this->sizeStart_Type = preg_replace("/^([0-9]*)(KB|MB|GB|TB|PB|%).*$/","\\2",$this->FAIpartitionSize);
           $this->sizeStop = preg_replace("/^[^\-]*\-([0-9]*)(KB|MB|GB|TB|PB|%)$/","\\1",$this->FAIpartitionSize);
@@ -102,9 +102,16 @@ class faiPartition extends plugin
         }else
 
         // Dynamic range
-        if(preg_match("/^\-$/",$this->FAIpartitionSize)){
+        if(preg_match("/^(0|)\-$/",$this->FAIpartitionSize)){
           $this->FAIpartitionSizeType = "remaining";
+        }
 
+        // Ensure that we've a valid value type selected.
+        if(!preg_match("/(KB|MB|GB|TB|PB|%)/",$this->sizeStart_Type)){
+          $this->sizeStart_Type = "MB";
+        }
+        if(!preg_match("/(KB|MB|GB|TB|PB|%)/",$this->sizeStop_Type)){
+          $this->sizeStop_Type = "MB";
         }
 
         /* Check for encrypted partitions
@@ -405,7 +412,7 @@ class faiPartition extends plugin
           $ret['FAIpartitionSize'] = $this->sizeStart.$this->sizeStart_Type."-".  
             $this->sizeStop.$this->sizeStop_Type;break; 
         case 'remaining' : 
-          $ret['FAIpartitionSize'] = "-";break; 
+          $ret['FAIpartitionSize'] = "0-";break; 
         default: trigger_error("Unknown partition size!");
       }
 

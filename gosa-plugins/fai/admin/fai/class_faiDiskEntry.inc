@@ -701,6 +701,7 @@ class faiDiskEntry extends plugin
     if(preg_match("/[^a-z0-9_\-]/i",$d)){
       $message[] = msgPool::invalid(_("Name"),$d,"/[a-z0-9_\-]/i");
     }
+
     return ($message);
   }
 
