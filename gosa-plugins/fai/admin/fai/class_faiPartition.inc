@@ -244,6 +244,7 @@ class faiPartition extends plugin
 
       // Skip ourselves 
       if($disk['cn'] == $this->parent->DISKcn) continue;
+      if($disk['status'] == "delete") continue;
 
       // Add partition from lvm combinations 
       if($disk['FAIdiskType'] == "lvm"){
@@ -251,6 +252,8 @@ class faiPartition extends plugin
       }
 
       foreach($disk['partitions'] as $key => $part){
+
+        if($part['status'] == "delete") continue;
 
         // Add disks of raid arrays, to the used list.
         if($disk['FAIdiskType'] == "raid"){

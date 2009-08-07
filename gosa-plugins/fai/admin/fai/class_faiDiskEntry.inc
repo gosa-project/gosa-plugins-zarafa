@@ -294,7 +294,7 @@ class faiDiskEntry extends plugin
 
 
   /* Creates a human readable list, that contains all physical 
-   *  devices that are used by a volume group.
+   *  devices that are used by the volume group.
    * This list will then be displayed in a html select box.
    * (lvm)
    */
@@ -361,22 +361,48 @@ class faiDiskEntry extends plugin
    */ 
   function getAvailablePartitions()
   {
-    $array = array();
+
+    $may = $used = array();
     foreach($this->parent->disks as $disk){
 
-      // We can't add ourselves to the available partitions
-      if($disk['cn'] == $this->old_cn) continue;
+      // Skip ourselves
+      if($disk['cn'] == $this->DISKcn) continue;
+      if($disk['status'] == "delete") continue;
 
-      // Add partitions to the list.
+      // Add partition from lvm combinations
+      if($disk['FAIdiskType'] == "lvm"){
+        $used = array_merge($used,$disk['FAIlvmDevice']);
+      }
+
       foreach($disk['partitions'] as $key => $part){
-        $name = $part['cn'];
-        if(!isset($this->lvmDevices[$name])){
-          $array[$name] = $name;
+
+        if($part['status'] == "delete") continue;
+
+        // Add disks of raid arrays, to the used list.
+        if($disk['FAIdiskType'] == "raid"){
+          foreach(split(",",$part['FAIpartitionSize']) as $rDevice){
+            $used[] = preg_replace("/:.*$/i","",$rDevice);
+          }
+        }
+
+        // Collect all available disks
+        if($disk['FAIdiskType'] == "disk"){
+          $name = $part['cn'];
+          if(!isset($this->lvmDevices[$name])){
+            $may[] = $name;
+          }
         }
       }
     }
-    return($array);
 
+    // Check which of the available disks are unused.
+    $ret = array();
+    foreach($may as $val){
+      if(!in_array($val,$used)){
+        $ret[$val] = $val;
+      }
+    }
+    return($ret);
   }
 
 
