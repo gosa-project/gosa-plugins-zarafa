@@ -456,13 +456,30 @@ class faiDiskEntry extends plugin
     }
   }
 
+  
+  function get_free_partition_number()
+  {
+    $used = array();
+    foreach($this->partitions as $key => $part){
+      if($part['status'] != "delete"){
+        $used[] = $part['FAIpartitionNr'];
+      }
+    }
+    $id = 1;
+    while(in_array($id,$used) && $id < 16 ){
+      $id++;
+    }
+    return($id);
+  }
+
+
 
   /* Add or update a partition 
    */
   function updatePartition($part)
   {
     if(!isset($part['FAIpartitionNr']) || $part['FAIpartitionNr'] == "undefined"){
-      $part['FAIpartitionNr'] = count($this->partitions) + 1;
+      $part['FAIpartitionNr'] = $this->get_free_partition_number();
     }
 
     /* Update the disk cn -       
@@ -504,71 +521,74 @@ class faiDiskEntry extends plugin
     $divlist = new divSelectBox("DiskEntries"); 
     foreach($this->partitions as $key => $part){
 
-      // Create default table cols 
-      $cn =array(
-          "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".$part['cn']."</a>",
-          "attach" => "style='width:160px;'");
-      $desc =array(
-          "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".
-              $part['description']."</a>",
-          "attach" => "style='width:200px;'");
-      $number =array(
-          "string" => $part['FAIpartitionNr'],
-          "attach" => "style='width:20px;'");
-      $size   =array(
-          "string" => $part['FAIpartitionSize'],
-          "attach" => "style='width:100px;'");
-      $type   =array(
-          "string" => $part['FAIpartitionType'],
-          "attach" => "style='width:80px;'");
+      if($part['status'] != "delete"){
 
-      // Remove encryption info from the mount point.
-      $mnt = $part['FAImountPoint'];
-      if(preg_match("/:encrypt/", $mnt)){
-        $mnt = preg_replace("/:encrypt/","",$mnt);
+        // Create default table cols 
+        $cn =array(
+            "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".$part['cn']."</a>",
+            "attach" => "style='width:160px;'");
+        $desc =array(
+            "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".
+            $part['description']."</a>",
+            "attach" => "style='width:200px;'");
+        $number =array(
+            "string" => $part['FAIpartitionNr'],
+            "attach" => "style='width:20px;'");
+        $size   =array(
+            "string" => $part['FAIpartitionSize'],
+            "attach" => "style='width:100px;'");
+        $type   =array(
+            "string" => $part['FAIpartitionType'],
+            "attach" => "style='width:80px;'");
+
+        // Remove encryption info from the mount point.
+        $mnt = $part['FAImountPoint'];
+        if(preg_match("/:encrypt/", $mnt)){
+          $mnt = preg_replace("/:encrypt/","",$mnt);
+        }
+        $mntp   =array("string" => $mnt);
+
+        // create human readable strings out of the flags.
+        $opt = "";
+        if(isset($part['encrypted']) && $part['encrypted']){
+          $opt.= "&nbsp;"._("encrypted").", ";
+        }      
+        if(isset($part['bootable']) && $part['bootable']){
+          $opt.= "&nbsp;"._("bootable").", ";
+        }      
+        if(isset($part['preserve']) && $part['preserve']){
+          $opt.= "&nbsp;"._("preserve").":&nbsp;".$part['preserveType'].", ";
+        }     
+
+        // Combine options to a single table col. 
+        $opt    =array(
+            "string" => "<i>".preg_replace('/, $/',"",$opt)."</i>");
+
+        // Depending on the FAIstatus (freeze?) we will display different options. 
+        // We can't remove freezed branches -> Hide remove button.
+        if(!preg_match("/freeze/", $this->FAIstate)){
+          $action =array(
+              "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
+              "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
+              "attach" => "style='width:40px; border-right: 0px;'");
+        }else{
+          $action =array(
+              "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>",
+              "attach" => "style='width:40px; border-right: 0px;'");
+        }
+
+        // Build up info table, depending on the disk type. 
+        if($this->FAIdiskType == "lvm"){ 
+          $fields = array($cn,$desc,$mntp,$opt,$size, $action);
+        }elseif($this->FAIdiskType == "raid"){
+          $raid_str = $part['FAIpartitionType']." (".$part['FAIpartitionSize'].")";
+          $raid = array("string" => $raid_str);
+          $fields = array($cn,$desc,$raid,$mntp,$opt,$action);
+        }else{
+          $fields = array($number,$desc,$type,$mntp,$opt,$size,$action);
+        }
+        $divlist->AddEntry($fields);
       }
-      $mntp   =array("string" => $mnt);
-
-      // create human readable strings out of the flags.
-      $opt = "";
-      if(isset($part['encrypted']) && $part['encrypted']){
-        $opt.= "&nbsp;"._("encrypted").", ";
-      }      
-      if(isset($part['bootable']) && $part['bootable']){
-        $opt.= "&nbsp;"._("bootable").", ";
-      }      
-      if(isset($part['preserve']) && $part['preserve']){
-        $opt.= "&nbsp;"._("preserve").":&nbsp;".$part['preserveType'].", ";
-      }     
-
-      // Combine options to a single table col. 
-      $opt    =array(
-          "string" => "<i>".preg_replace('/, $/',"",$opt)."</i>");
-
-      // Depending on the FAIstatus (freeze?) we will display different options. 
-      // We can't remove freezed branches -> Hide remove button.
-      if(!preg_match("/freeze/", $this->FAIstate)){
-        $action =array(
-            "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
-            "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
-            "attach" => "style='width:40px; border-right: 0px;'");
-      }else{
-        $action =array(
-            "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>",
-            "attach" => "style='width:40px; border-right: 0px;'");
-      }
-
-      // Build up info table, depending on the disk type. 
-      if($this->FAIdiskType == "lvm"){ 
-        $fields = array($cn,$desc,$mntp,$opt,$size, $action);
-      }elseif($this->FAIdiskType == "raid"){
-        $raid_str = $part['FAIpartitionType']." (".$part['FAIpartitionSize'].")";
-        $raid = array("string" => $raid_str);
-        $fields = array($cn,$desc,$raid,$mntp,$opt,$action);
-      }else{
-        $fields = array($number,$desc,$type,$mntp,$opt,$size,$action);
-      }
-      $divlist->AddEntry($fields);
     }
     return($divlist->DrawList());    
   }
