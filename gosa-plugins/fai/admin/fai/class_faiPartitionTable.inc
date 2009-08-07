@@ -674,9 +674,16 @@ class faiPartitionTable extends plugin
             $logical[$partid] = $part;
           }else{
             trigger_error("Fatal: unknown disk type? ".$part['FAIpartitionType']); 
-          } 
+          }
+      
+          /* Important, mark all edited devices for removal.
+           * If the partition number changes we do not have the object twice.
+           */
+          if($part['status'] == "edited"){
+            $part['status'] = "delete";
+            $newSetup[$partid] = $part; 
+          }
         }
-        $newSetup = array();  
         $cnt = 1;
         foreach($primary as $part){
           $part['FAIpartitionNr'] = $cnt;
