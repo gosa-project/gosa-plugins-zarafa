@@ -35,7 +35,7 @@
       <table>
         <tr>
           <td>
-            <LABEL for="DISKdescription">&nbsp;{t}Description{/t}</LABEL>&nbsp;
+            <LABEL for="DISKdescription">{t}Description{/t}</LABEL>&nbsp;
           </td>
           <td>
 {render acl=$DISKdescriptionACL}
