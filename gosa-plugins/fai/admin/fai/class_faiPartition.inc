@@ -239,18 +239,44 @@ class faiPartition extends plugin
    */
   function getPartitionList()
   {
-    $array = array();  
+    $may = $used = array();  
     foreach($this->parent->parent->disks as $disk){
-      if($disk['FAIdiskType'] != "raid"){
-        foreach($disk['partitions'] as $key => $part){
+
+      // Skip ourselves 
+      if($disk['cn'] == $this->parent->DISKcn) continue;
+
+      // Add partition from lvm combinations 
+      if($disk['FAIdiskType'] == "lvm"){
+        $used = array_merge($used,$disk['FAIlvmDevice']);
+      }
+
+      foreach($disk['partitions'] as $key => $part){
+
+        // Add disks of raid arrays, to the used list.
+        if($disk['FAIdiskType'] == "raid"){
+          foreach(split(",",$part['FAIpartitionSize']) as $rDevice){
+            $used[] = preg_replace("/:.*$/i","",$rDevice);
+          }
+        }
+
+        // Collect all available disks 
+        if($disk['FAIdiskType'] == "disk"){
           $name = $part['cn'];
           if(!isset($this->raidDevices[$name])){
-            $array[$name] = $name." (".$disk['cn'].")";
+            $may[] = $name;
           }
         }
       }
     }
-    return($array);
+ 
+    // Check which of the available disks are unused. 
+    $ret = array();
+    foreach($may as $val){
+      if(!in_array($val,$used)){
+        $ret[$val] = $val;
+      }
+    }
+    return($ret);
   }
 
 
