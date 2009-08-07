@@ -16,14 +16,16 @@ class faiPartitionTableEntry extends plugin
   var $old_cn               = "";
   var $status               = "new";
   var $deletePartitions     = array();
-
+  var $parent               = null;
   var $FAIstate             = "";
 
-  function faiPartitionTableEntry (&$config, $dn= NULL,$usedDiskNames=array(),$disk=false)
+  function faiPartitionTableEntry (&$config, $dn= NULL,&$parent,$disk=false)
   {
     plugin::plugin ($config, $dn);
     $this->UsedAttrs  = array("cn","description","FAIpartitionType","FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",
                          "FAImountOptions","FAIfsOptions","FAIpartitionFlags");
+
+    $this->parent = $parent;
 
     /* Default status is new */
     $this->status = "new";    
@@ -373,6 +375,10 @@ class faiPartitionTableEntry extends plugin
     }
     if(preg_match("/[^a-z0-9_\-]/i",$d)){
       $message[] = msgPool::invalid(_("Name"),$d,"/[a-z0-9_\-]/i");
+    }
+
+    if($this->old_cn != $this->DISKcn && in_array($this->DISKcn,$this->parent->getUsedDiskNames())){
+      $message[] = msgPool::duplicated(_("Name"));
     }
        
     /* check every partition.

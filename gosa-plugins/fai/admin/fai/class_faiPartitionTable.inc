@@ -172,13 +172,13 @@ class faiPartitionTable extends plugin
     /* New Listhandling */
     if (!preg_match("/freeze/i", $this->FAIstate)){
       foreach($_POST as $name => $value){
-        if(preg_match("/^edit_/",$name)){
+        if(preg_match("/^edit_[^_]*_/",$name)){
           $s_entry = preg_replace("/^edit_/","",$name);
           $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
           $s_action = "edit"; 
           break;
         }
-        if(preg_match("/^delete_/",$name)){
+        if(preg_match("/^delete_[^_]*_/",$name)){
           $s_entry = preg_replace("/^delete_/","",$name);
           $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
           $s_action = "remove";
@@ -274,23 +274,18 @@ class faiPartitionTable extends plugin
         $dn = "new";
       }
 
+      $type ="old"; 
       if(isset($this->disks[$s_entry]['FAIdiskType'])){
-        switch($this->disks[$s_entry]['FAIdiskType']){
-          case 'raid': 
-          case 'lvm': 
-          case 'disk': 
-            $this->dialog = new faiDiskEntry(
-                $this->config,$this->dn,$this,$this->disks[$s_entry], 
-                $this->disks[$s_entry]['FAIdiskType']); 
-            break;
-          case 'old': 
-            $this->dialog = new faiPartitionTableEntry(
-                $this->config,$this->dn,$this->getUsedDiskNames(),$this->disks[$s_entry]); 
-            break;
-        }
+        $type = $this->disks[$s_entry]['FAIdiskType'];
+      }
+      if(in_array($type,array('raid','lvm','disk'))){
+        $this->dialog = new faiDiskEntry(
+            $this->config,$this->dn,$this,$this->disks[$s_entry], 
+            $this->disks[$s_entry]['FAIdiskType']); 
+
       }else{
         $this->dialog = new faiPartitionTableEntry(
-            $this->config,$this->dn,$this->getUsedDiskNames(),array()); 
+            $this->config,$this->dn,$this,$this->disks[$s_entry]); 
       }
       if($this->dialog){
         $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
@@ -450,7 +445,11 @@ class faiPartitionTable extends plugin
 
   function getUsedDiskNames()
   {
-    return(array());  
+    $ret = array();
+    foreach($this->disks as $disk){
+      $ret[] = $disk['cn'];
+    }
+    return($ret);  
   }
 
 
@@ -572,6 +571,7 @@ class faiPartitionTable extends plugin
 
       foreach(array("description","FAIdiskType","FAIdiskOption","FAIlvmDevice") as $attr){
         if($disk['status'] == "new"){
+          if(isset($disk_attrs[$attr])) unset($disk_attrs[$attr]);
           if(isset($disk[$attr]) && !empty($disk[$attr])){
             $disk_attrs[$attr] = $disk[$attr];
           }
