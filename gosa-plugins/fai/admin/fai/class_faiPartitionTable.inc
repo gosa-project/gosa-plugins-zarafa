@@ -285,12 +285,12 @@ class faiPartitionTable extends plugin
             break;
           case 'old': 
             $this->dialog = new faiPartitionTableEntry(
-                $this->config,$this->dn,$usedDiskNames,$this->disks[$s_entry]); 
+                $this->config,$this->dn,$this->getUsedDiskNames(),$this->disks[$s_entry]); 
             break;
         }
       }else{
         $this->dialog = new faiPartitionTableEntry(
-            $this->config,$this->dn,$usedDiskNames,$this->disks[$s_entry]); 
+            $this->config,$this->dn,$this->getUsedDiskNames(),$this->disks[$s_entry]); 
       }
       if($this->dialog){
         $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
@@ -447,6 +447,11 @@ class faiPartitionTable extends plugin
     return($display);
   }
 
+
+  function getUsedDiskNames()
+  {
+    return(array());  
+  }
 
 
   /* Delete me, and all my subtrees

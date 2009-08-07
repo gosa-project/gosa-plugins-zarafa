@@ -308,6 +308,7 @@ class faiPartitionTableEntry extends plugin
     /* Attach partitions */
     foreach($this->partitions as $key=>$val) {
       $this->partitions[$key]['FAIpartitionNr']=$key;
+      $this->partitions[$key]['cn']=$key;
     }
 
     /* Attach deleted */
