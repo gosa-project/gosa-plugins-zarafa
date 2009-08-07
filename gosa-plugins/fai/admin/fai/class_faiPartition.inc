@@ -212,6 +212,7 @@ class faiPartition extends plugin
 
     $smarty->assign("FAIfsTypes", $FAIfsTypes);
     $smarty->assign("cn", $this->cn);
+    $smarty->assign("freeze", preg_match("/freeze/i",$this->parent->FAIstate));
 
     $smarty->assign("plist",$this->getRaidlist());
     $smarty->assign("physicalPartitionList",$this->getPartitionlist());

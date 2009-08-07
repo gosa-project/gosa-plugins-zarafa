@@ -170,20 +170,18 @@ class faiPartitionTable extends plugin
     }
 
     /* New Listhandling */
-    if (!preg_match("/freeze/i", $this->FAIstate)){
-      foreach($_POST as $name => $value){
-        if(preg_match("/^edit_[^_]*_/",$name)){
-          $s_entry = preg_replace("/^edit_/","",$name);
-          $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
-          $s_action = "edit"; 
-          break;
-        }
-        if(preg_match("/^delete_[^_]*_/",$name)){
-          $s_entry = preg_replace("/^delete_/","",$name);
-          $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
-          $s_action = "remove";
-          break;
-        }
+    foreach($_POST as $name => $value){
+      if(preg_match("/^edit_[^_]*_/",$name)){
+        $s_entry = preg_replace("/^edit_/","",$name);
+        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        $s_action = "edit"; 
+        break;
+      }
+      if (!preg_match("/freeze/i", $this->FAIstate) && preg_match("/^delete_[^_]*_/",$name)){
+        $s_entry = preg_replace("/^delete_/","",$name);
+        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        $s_action = "remove";
+        break;
       }
     }
 
@@ -411,7 +409,7 @@ class faiPartitionTable extends plugin
         if($disk['status'] != "delete"){
 
           $act .= "<input type='image' src='images/lists/edit.png'   name='edit_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-          if(preg_match("/d/",$acl)){
+          if(preg_match("/d/",$acl) && !preg_match("/freeze/", $this->FAIstate)){
             $act .="<input type='image' src='images/lists/trash.png' name='delete_%s'  title='"._("delete")."' alt='"._("delete")."'>";
           }
 

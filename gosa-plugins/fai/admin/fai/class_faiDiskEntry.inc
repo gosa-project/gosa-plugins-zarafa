@@ -530,10 +530,18 @@ class faiDiskEntry extends plugin
       $opt    =array(
           "string" => "<i>".preg_replace('/, $/',"",$opt)."</i>");
 
-      $action =array(
-          "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
-                      "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
-          "attach" => "style='width:40px; border-right: 0px;'");
+      if(!preg_match("/freeze/", $this->FAIstate)){
+        $action =array(
+            "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
+            "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
+            "attach" => "style='width:40px; border-right: 0px;'");
+      }else{
+        $action =array(
+            "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>",
+            "attach" => "style='width:40px; border-right: 0px;'");
+      }
+
+      
 
       if($this->FAIdiskType == "lvm"){ 
         $fields = array($cn,$desc,$mntp,$opt,$size, $action);
