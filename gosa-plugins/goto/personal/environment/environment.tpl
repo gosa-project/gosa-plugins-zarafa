@@ -333,7 +333,7 @@
 
    <h2>
 	<input type="checkbox" name="use_gotoPrinter" value="1" {if $use_gotoPrinter} checked {/if}
-		class="center" onClick="toggle('div_gotoPrinter');">
+		class="center" onClick="GOsa_toggle('div_gotoPrinter');">
     <img alt="" src="plugins/systems/images/select_printer.png" align="middle" class="center" />&nbsp;
     <label for="gotoPrinter">{t}Printer{/t}</label>
    </h2>

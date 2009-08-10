@@ -30,6 +30,8 @@ class faiPartitionTable extends plugin
     /* Load Attributes */
     plugin::plugin ($config, $dn);
 
+    $a.=$b;
+
     /* If "dn==new" we try to create a new entry
      * Else we must read all objects from ldap which belong to this entry.
      */
