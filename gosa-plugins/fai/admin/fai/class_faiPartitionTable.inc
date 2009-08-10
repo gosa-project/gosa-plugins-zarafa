@@ -527,6 +527,7 @@ class faiPartitionTable extends plugin
 
     /* Append all disks to ldap */
     foreach($order as $cn=>$disk){
+
       $disk_dn                    = "cn=".$disk['cn'].",".$this->dn;
       $disk_attrs['cn']           =  $disk['cn'];
       $disk_attrs['objectClass']  =  array("top","FAIclass","FAIpartitionDisk");
@@ -565,6 +566,7 @@ class faiPartitionTable extends plugin
       if($disk['status'] == "delete"){
         FAI::prepare_to_save_FAI_object($disk_dn,array(),true);
         $this->handle_post_events("remove");
+        unset($this->disks[$cn]);
       }elseif($disk['status'] == "edited"){
         FAI::prepare_to_save_FAI_object($disk_dn,$disk_attrs);
         $this->handle_post_events("modify");
@@ -576,7 +578,7 @@ class faiPartitionTable extends plugin
       if($disk['status']!="delete")
 
       /* Add all partitions */
-      foreach($disk['partitions'] as $key => $partition){
+      foreach($disk['partitions'] as $pkey => $partition){
         $partition_attrs = array();
 
         foreach($partition as $key => $value){
@@ -610,6 +612,7 @@ class faiPartitionTable extends plugin
         if($partition['status'] == "delete"){
           FAI::prepare_to_save_FAI_object($partition_dn,array(),true);
           $this->handle_post_events("remove");
+          unset($this->disks[$cn]['partitions'][$pkey]);
         }elseif($partition['status'] == "edited"){
           FAI::prepare_to_save_FAI_object($partition_dn,$partition_attrs);
           $this->handle_post_events("modify");
@@ -617,8 +620,19 @@ class faiPartitionTable extends plugin
           FAI::prepare_to_save_FAI_object($partition_dn,$partition_attrs);
           $this->handle_post_events("add");
         }
+        
+        // We do not need the status flag any longer 
+        if(isset($this->disks[$cn]['partitions'][$pkey]['status'])){
+          unset($this->disks[$cn]['partitions'][$pkey]['status']);
+        }
+      }
+      // We do not need the status flag any longer 
+      if(isset($this->disks[$cn]['status'])){
+        unset($this->disks[$cn]['status']);
       }
     }
+    $this->initial_disks = $this->disks;
+    print_a($this->disks);
     $this->handle_post_events("add");
   }
 
