@@ -46,7 +46,6 @@ class faiPartitionTable extends plugin
         if(!preg_match("/".preg_quote($this->dn, '/')."$/i",$obj['dn'])) continue;
         $objects = array();
         $objects['description']  = "";
-        $objects['status']      = "edited";
 
         // Transform disk type into image later...
         if (!isset($obj['FAIdiskType'])){
@@ -80,7 +79,6 @@ class faiPartitionTable extends plugin
           if(!preg_match("/".preg_quote($disk['dn'], '/')."$/i",$obj['dn'])) continue;
 
           $objects = array();
-          $objects['status']      = "edited";
           $objects['dn']          = $obj['dn'];
           $objects                = $this->get_object_attributes($objects,$this->subPartAttributes);
           unset($objects['dn']);;
@@ -88,6 +86,11 @@ class faiPartitionTable extends plugin
         }
       }
     }
+
+    /* Keep track of disk changes, by comparing the initial and resulting 
+     *  disk setup.
+     */
+    $this->initial_disks = $this->disks;
 
     $this->is_new = FALSE;
     if($this->dn == "new"){
@@ -200,14 +203,12 @@ class faiPartitionTable extends plugin
         $list = array();
         foreach($this->disks as $dname => $disk){
           if($disk['FAIdiskType'] != "disk" && $dname != $s_entry){
-            if($disk['status'] == "delete") continue;
             if($disk['FAIdiskType'] == "lvm"){
               foreach($disk['FAIlvmDevice'] as $partname){
                 $list[preg_replace("/:.*$/","",$partname)][] = $disk;
               }
             }
             foreach($disk['partitions'] as $partkey => $part){
-              if($part['status'] == "delete") continue;
               if($disk['FAIdiskType'] == "raid"){
                 foreach(split(",",$part['FAIpartitionSize']) as $partname){
                   $list[preg_replace("/:.*$/","",$partname)][] = $disk;
@@ -240,21 +241,7 @@ class faiPartitionTable extends plugin
 
           /* Everything is ok, we can remove the disk now.
            */
-          if($this->disks[$s_entry]['status']=="edited"){
-            $this->disks[$s_entry."-delete"]=$this->disks[$s_entry];
-            unset($this->disks[$s_entry]);
-            $s_entry = $s_entry."-delete";        
-            $this->disks[$s_entry]['status']="delete";
-            foreach($this->disks[$s_entry]['partitions'] as $name => $value ){
-              if($value['status']=="edited"){
-                $this->disks[$s_entry]['partitions'][$name]['status']="delete"; 
-              }else{
-                unset($this->disks[$s_entry]['partitions'][$name]);
-              }
-            }
-          }else{
-            unset($this->disks[$s_entry]);
-          }
+          unset($this->disks[$s_entry]);
         } 
       } 
     }
@@ -315,19 +302,7 @@ class faiPartitionTable extends plugin
         }else{
           $disk = $this->dialog->save();
           if(isset($disk['rename'])){
-            if($this->disks[$disk['rename']['from']]['status']=="edited"){
-              $this->disks[$disk['rename']['from']]['status']="delete";
-            }else{
-              unset($this->disks[$disk['rename']['from']]);
-            }
-
-            foreach($disk['partitions'] as $key => $val){
-              if($disk['partitions'][$key]['status']!="delete"){
-                $disk['partitions'][$key]['status']= "new";
-              }
-            }
-
-            $disk['status']="new";
+            unset($this->disks[$disk['rename']['from']]);
             $disk['cn']= $disk['rename']['to'];
           }
 
@@ -406,32 +381,25 @@ class faiPartitionTable extends plugin
       $dn = $this->acl_base_for_current_object($dn);
       $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
       if(preg_match("/(r|w)/",$acl)) {
-        if($disk['status'] != "delete"){
 
-          $act .= "<input type='image' src='images/lists/edit.png'   name='edit_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-          if(preg_match("/d/",$acl) && !preg_match("/freeze/", $this->FAIstate)){
-            $act .="<input type='image' src='images/lists/trash.png' name='delete_%s'  title='"._("delete")."' alt='"._("delete")."'>";
-          }
+        $act .= "<input type='image' src='images/lists/edit.png'   name='edit_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        if(preg_match("/d/",$acl) && !preg_match("/freeze/", $this->FAIstate)){
+          $act .="<input type='image' src='images/lists/trash.png' name='delete_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+        }
 
-          $cnt=0;
-          foreach($disk['partitions'] as $val){
-            if($val['status']!="delete"){
-              $cnt ++;
-            }
-          }
+        $cnt= count($disk['partitions']);
 
-          $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$key."</a>";
-          $types= array("old" => "plugins/fai/images/fai_partitionTable.png", "disk" => "plugins/fai/images/fai_partitionTable.png",
-                        "raid" => "plugins/fai/images/raid.png", "lvm" => "plugins/ogroups/images/list_ogroup.png");
-          $type = isset($disk['FAIdiskType'])?$types[$disk['FAIdiskType']]:$types['old'];
-          $divlist->AddEntry(array( 
+        $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$key."</a>";
+        $types= array("old" => "plugins/fai/images/fai_partitionTable.png", "disk" => "plugins/fai/images/fai_partitionTable.png",
+            "raid" => "plugins/fai/images/raid.png", "lvm" => "plugins/ogroups/images/list_ogroup.png");
+        $type = isset($disk['FAIdiskType'])?$types[$disk['FAIdiskType']]:$types['old'];
+        $divlist->AddEntry(array( 
               array("string"=> "<img border='0' src='".$type."'>", "attach"=>"style='width:16px'"),
               array("string"=> $edit_link, "attach"=>"style='width:100px'"),
               array("string"=> $disk['description']),
               array("string"=> $cnt,  "attach"=>"style='width:16px'"),
               array("string"=>str_replace("%s",base64_encode($key),$act),
                 "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
-        }
       }
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());
@@ -540,6 +508,9 @@ class faiPartitionTable extends plugin
       new log("create","fai/".get_class($this),$this->dn,$this->attributes);
     }
  
+    // Prepare disks to be saved - The 'status' attribute is added here.
+    $this->prepareDiskToBeSave(); 
+ 
     /* Sort entries, because we must delete entries with status="delete" first */
     $order = array();
     foreach($this->disks as $key => $disk){
@@ -547,16 +518,12 @@ class faiPartitionTable extends plugin
         $order[$key] = $disk;
       }
     }
-
-
-    // Prepare disks to be saved. 
-    $this->prepareDiskToBeSave(); 
- 
     foreach($this->disks as $key => $disk){
       if($disk['status'] != "delete"){
         $order[$key] = $disk;
       }
     }
+
 
     /* Append all disks to ldap */
     foreach($order as $cn=>$disk){
@@ -665,6 +632,11 @@ class faiPartitionTable extends plugin
        *  1 to 4, else set the primary from 1 to 3 and logical >= 5 
        * 
        */
+      if(!isset($disk['partitions'])){
+        $disk['partitions'] = array();
+      }
+      $newSetup = array();
+
       if($disk['FAIdiskType'] == "disk"){
         $primary = $logical = array();
         foreach($disk['partitions'] as $partid => $part){
@@ -674,14 +646,6 @@ class faiPartitionTable extends plugin
             $logical[$partid] = $part;
           }else{
             trigger_error("Fatal: unknown disk type? ".$part['FAIpartitionType']); 
-          }
-      
-          /* Important, mark all edited devices for removal.
-           * If the partition number changes we do not have the object twice.
-           */
-          if($part['status'] != "new"){
-            $part['status'] = "delete";
-            $newSetup[$partid] = $part; 
           }
         }
         $cnt = 1;
@@ -698,7 +662,64 @@ class faiPartitionTable extends plugin
           $newSetup[$cnt] = $part;
           $cnt ++;
         }
-        $this->disks[$id]['partitions'] = $newSetup; 
+        $this->disks[$disk['cn']]['partitions'] = $newSetup; 
+      }
+    }
+
+ 
+    # FAIpartitionNr have to be used as index for this->disks
+    #  else the next operation will fail. 
+
+ 
+    /* Check if there are disks to be removed, edited or added.
+     * We compare the initial disk setup with the current setup and
+     *  and add a status flag, which will then be used to perform the 
+     *  correct action - add, edited, remove.
+     */
+    foreach($this->disks as $key => $disk){
+
+      // - A complete NEW disk
+      if(!isset($this->initial_disks[$disk['cn']])){
+        $this->disks[$key]['status'] = "new";
+        foreach($disk['partitions'] as $pkey => $part){
+          $this->disks[$disk['cn']]['partitions'][$pkey]['status'] = "new";
+        }
+      }else{
+    
+        // - Disk was "EDITED" 
+        $this->disks[$key]['status'] = "edited";
+        foreach($disk['partitions'] as $pkey => $part){
+
+          // - Check whether partition is "NEW" or "EDITED" 
+          if(!isset($this->initial_disks[$key]['partitions'][$pkey])){
+            $this->disks[$key]['partitions'][$pkey]['status'] = "new";
+          }else{
+            $this->disks[$key]['partitions'][$pkey]['status'] = "edited";
+          }
+        }
+      }
+    }
+     
+    /* Check which partitions havbe to be removed. 
+     * (They intially existed, but are now gone.)
+     */ 
+    foreach($this->initial_disks as $ikey => $idisk){
+      
+      // - Complete disk was REMOVED.
+      if(!isset($this->disks[$idisk['cn']])){
+        $this->disks[$idisk['cn']] = $idisk;
+        $this->disks[$idisk['cn']]['status'] = "delete";
+        foreach($idisk['partitions'] as $pkey=>$part){
+          $this->disks[$idisk['cn']]['partitions'][$pkey] = $part;
+          $this->disks[$idisk['cn']]['partitions'][$pkey]["status"] = "delete";
+        }
+      }else{
+        foreach($idisk['partitions'] as $pkey=>$part){
+          if(!isset($this->disks[$idisk['cn']]['partitions'][$pkey])){
+            $this->disks[$idisk['cn']]['partitions'][$pkey] = $part;
+            $this->disks[$idisk['cn']]['partitions'][$pkey]["status"] = "delete";
+          }
+        }
       }
     }
   }
@@ -718,7 +739,6 @@ class faiPartitionTable extends plugin
 
       $objects = array();
       $objects['description']  = "";
-      $objects['status']      = "edited";
       $objects['dn']          = $obj['dn'];
       $objects                = $this->get_object_attributes($objects,$this->subAttributes);
       $this->disks[$objects['cn']] = $objects;
@@ -735,7 +755,6 @@ class faiPartitionTable extends plugin
         if(!preg_match("/".preg_quote($disk['dn'], '/')."$/i",$obj['dn'])) continue;
 
         $objects = array();
-        $objects['status']      = "edited";
         $objects['dn']          = $obj['dn'];
         $objects                = $this->get_object_attributes($objects,$this->subPartAttributes);
         unset($objects['dn']);;

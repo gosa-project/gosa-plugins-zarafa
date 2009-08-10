@@ -37,7 +37,6 @@ class faiPartition extends plugin
   var $preserve = false;
   var $preserveType = "always";
 
-  var $status = "";
   var $raidDevices = array();
 
   // Once we've exceeded the primary partition limit,
@@ -48,7 +47,6 @@ class faiPartition extends plugin
   {
 
     $this->parent = $parent;
-    $this->status = "new";
     $this->FAIdiskType = $type;
 
     // Check if we should be able to add primary partitions.
@@ -73,8 +71,6 @@ class faiPartition extends plugin
           $this->$attr = $object[$attr];
         }
       }
-
-      $this->status = $object['status'];
 
       if($type == "disk" || $type =="lvm"){
 
@@ -244,7 +240,6 @@ class faiPartition extends plugin
 
       // Skip ourselves 
       if($disk['cn'] == $this->parent->DISKcn) continue;
-      if($disk['status'] == "delete") continue;
 
       // Add partition from lvm combinations 
       if($disk['FAIdiskType'] == "lvm"){
@@ -252,8 +247,6 @@ class faiPartition extends plugin
       }
 
       foreach($disk['partitions'] as $key => $part){
-
-        if($part['status'] == "delete") continue;
 
         // Add disks of raid arrays, to the used list.
         if($disk['FAIdiskType'] == "raid"){
@@ -466,7 +459,6 @@ class faiPartition extends plugin
       }
       $ret['FAIpartitionSize'] = trim($ret['FAIpartitionSize'],",");
     }
-    $ret['status'] = $this->status;
 
     if($this->FAIfsType == "swap"){
       $ret['FAImountPoint'] = "swap";
