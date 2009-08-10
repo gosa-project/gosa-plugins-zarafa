@@ -763,37 +763,13 @@ class faiPartitionTable extends plugin
 
     /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
      */
-    $res = FAI::get_all_objects_for_given_base($source['dn'],"(&(objectClass=FAIclass)(objectClass=FAIpartitionDisk))");
-    foreach($res as $obj){
 
-      /* Skip not relevant objects */
-      if(!preg_match("/".preg_quote($source['dn'], '/')."$/i",$obj['dn'])) continue;
-
-      $objects = array();
-      $objects['description']  = "";
-      $objects['dn']          = $obj['dn'];
-      $objects                = $this->get_object_attributes($objects,$this->subAttributes);
-      $this->disks[$objects['cn']] = $objects;
-      $this->disks[$objects['cn']]['partitions'] = array();
-    }
-
-    /* read all partitions for each disk
+    /* To be sure to copy disks and partitions correctly, just create a 
+     *  new PartitionTable object and use the 'disks' attribute 
+     *  from this it. This is much easier and less code.
      */
-    foreach($this->disks as $name => $disk){
-      $res = FAI::get_all_objects_for_given_base($disk['dn'],"(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))");
-      foreach($res as $obj){
-
-        /* Skip not relevant objects */
-        if(!preg_match("/".preg_quote($disk['dn'], '/')."$/i",$obj['dn'])) continue;
-
-        $objects = array();
-        $objects['dn']          = $obj['dn'];
-        $objects                = $this->get_object_attributes($objects,$this->subPartAttributes);
-        unset($objects['dn']);;
-        $this->disks[$name]['partitions'][$objects['FAIpartitionNr']] = $objects;
-      }
-    }
-    ksort($this->disks);
+    $obj = new faiPartitionTable($this->config, $source['dn']);
+    $this->disks = $obj->disks;
   }
 
 
