@@ -53,7 +53,14 @@ class faiPartitionTable extends plugin
         } else {
           $objects['FAIdiskType']        = $obj['FAIdiskType'];
         }
-        $objects['FAIdiskOption']        = $obj['FAIdiskOption'];
+
+        // Get disk options, without 'count' index. 
+        $objects['FAIdiskOption'] = array();
+        if (isset($obj['FAIdiskOption'])){
+          for($i=0;$i<$obj['FAIdiskOption']['count'];$i++){ 
+            $objects['FAIdiskOption'][] = $obj['FAIdiskOption'][$i];
+          }
+        }
 
         // Transform potential lvm information
         if (isset($obj['FAIlvmDevice'])){
