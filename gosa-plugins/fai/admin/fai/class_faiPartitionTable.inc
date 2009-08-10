@@ -431,7 +431,7 @@ class faiPartitionTable extends plugin
 
     FAI::prepare_to_save_FAI_object($use_dn,array(),true);
     new log("remove","fai/".get_class($this),$use_dn,$this->attributes);   
-    foreach($this->disks as $disk){
+    foreach($this->initial_disks as $disk){
       $disk_dn = "cn=".$disk['cn'].",".$this->dn;
       $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn), '/')."/i",$release, $disk_dn);
       FAI::prepare_to_save_FAI_object($use_dn,array(),true);
