@@ -632,7 +632,6 @@ class faiPartitionTable extends plugin
       }
     }
     $this->initial_disks = $this->disks;
-    print_a($this->disks);
     $this->handle_post_events("add");
   }
 
