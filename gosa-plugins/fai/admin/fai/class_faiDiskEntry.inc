@@ -557,7 +557,7 @@ class faiDiskEntry extends plugin
         $raid = array("string" => $raid_str);
         $fields = array($cn,$desc,$raid,$mntp,$opt,$action);
       }else{
-        $fields = array($number,$desc,$type,$mntp,$opt,$size,$action);
+        $fields = array($desc,$type,$mntp,$opt,$size,$action);
       }
       $divlist->AddEntry($fields);
     }
