@@ -504,8 +504,10 @@ class faiPartitionTable extends plugin
 
     if($this->initially_was_account){
       new log("modify","fai/".get_class($this),$this->dn,$this->attributes);
+      @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$this->dn , "Saving disk: ");
     }else{
       new log("create","fai/".get_class($this),$this->dn,$this->attributes);
+      @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$this->dn , "Adding disk: ");
     }
  
     // Prepare disks to be saved - The 'status' attribute is added here.
@@ -529,6 +531,7 @@ class faiPartitionTable extends plugin
     foreach($order as $cn=>$disk){
 
       $disk_dn                    = "cn=".$disk['cn'].",".$this->dn;
+      $short_dn                   = "cn=".$disk['cn'].",...";
       $disk_attrs['cn']           =  $disk['cn'];
       $disk_attrs['objectClass']  =  array("top","FAIclass","FAIpartitionDisk");
   
@@ -564,13 +567,16 @@ class faiPartitionTable extends plugin
       $this->tag_attrs($disk_attrs, $disk_dn, $this->gosaUnitTag);
 
       if($disk['status'] == "delete"){
+        @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$short_dn , "Removing disk: ");
         FAI::prepare_to_save_FAI_object($disk_dn,array(),true);
         $this->handle_post_events("remove");
         unset($this->disks[$cn]);
       }elseif($disk['status'] == "edited"){
+        @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$short_dn , "Updating disk: ");
         FAI::prepare_to_save_FAI_object($disk_dn,$disk_attrs);
         $this->handle_post_events("modify");
       }elseif($disk['status']=="new"){
+        @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$short_dn , "Adding disk: ");
         FAI::prepare_to_save_FAI_object($disk_dn,$disk_attrs);
         $this->handle_post_events("add");
       }
@@ -589,7 +595,9 @@ class faiPartitionTable extends plugin
           }
         }
 
-        $partition_dn= "FAIpartitionNr=".$partition_attrs['FAIpartitionNr'].",".$disk_dn;      
+        $partition_dn= "FAIpartitionNr=".$partition_attrs['FAIpartitionNr'].",".$disk_dn;     
+        $short_dn= "FAIpartitionNr=".$partition_attrs['FAIpartitionNr'].",...";
+     
         $partition_attrs['objectClass']= array("top","FAIclass","FAIpartitionEntry");
         
         unset($partition_attrs['status']);
@@ -609,14 +617,18 @@ class faiPartitionTable extends plugin
         /* Tag object */
         $this->tag_attrs($partition_attrs, $partition_dn, $this->gosaUnitTag);
 
+        
         if($partition['status'] == "delete"){
+          @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$short_dn , "Removing partition: ");
           FAI::prepare_to_save_FAI_object($partition_dn,array(),true);
           $this->handle_post_events("remove");
           unset($this->disks[$cn]['partitions'][$pkey]);
         }elseif($partition['status'] == "edited"){
+          @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$short_dn , "Updating partition: ");
           FAI::prepare_to_save_FAI_object($partition_dn,$partition_attrs);
           $this->handle_post_events("modify");
         }elseif($partition['status']=="new"){
+          @DEBUG (DEBUG_FAI, __LINE__, __FUNCTION__, __FILE__,$short_dn , "Adding partition: ");
           FAI::prepare_to_save_FAI_object($partition_dn,$partition_attrs);
           $this->handle_post_events("add");
         }
