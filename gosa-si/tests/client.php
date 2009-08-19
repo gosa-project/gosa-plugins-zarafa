@@ -16,9 +16,16 @@ for($count = 1; $count <= $zahl; $count++)
 
   if($sock->connected()){
 
+	#$data = "<xml><header>gosa_opsi_getLicensePoolIds_list</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
+	#$data = "<xml><header>gosa_opsi_createLicensePool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId><description>Das 135te Schaaf</description><productIds>acrobat</productIds><productIds>winzip</productIds></xml>";
+	#$data = "<xml><header>gosa_opsi_getLicensePool_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId></xml>";
+	#$data = "<xml><header>gosa_opsi_deleteLicensePool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId></xml>";
+	$data = "<xml><header>gosa_opsi_createLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><partner>Gonicus GmbH</partner><notes>I'm a note!</notes><maxInstallations>10</maxInstallations><licensePoolId>Susi</licensePoolId><licenseKey>1234567890</licenseKey></xml>";
+
+
 	##############################
 	# periodical jobs
-	$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><macaddress>00:0c:29:4c:4b:0c</macaddress><timestamp>20090629000000</timestamp><periodic>weeks</periodic><weeks>2</weeks></xml>"; 
+	#$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><macaddress>00:0c:29:4c:4b:0c</macaddress><timestamp>20090629000000</timestamp><periodic>weeks</periodic><weeks>2</weeks></xml>"; 
 	#$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><timestamp>20090626135000</timestamp><macaddress>00:0c:29:4c:4b:0c</macaddress><periodic>minutes</periodic><minutes>5</minutes></xml>";
     /* Prepare a hunge bunch of data to be send */
     # jobdb add
