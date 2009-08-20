@@ -361,6 +361,26 @@ class DaemonEvent
   /*! \brief  Returns a complete list of all available events.
     @return   Array   Containing $this->get_event_info() for all available events.
    */
+  static function get_event_types_by_category($categories)
+  {
+    $types= array();
+
+    foreach ($categories as $category) {
+      if (preg_match('/^users$/', $category)) {
+        $types= array_merge($types, DaemonEvent::get_event_types(USER_EVENT));
+      }
+      if (preg_match('/^systems$/', $category)) {
+        $types= array_merge($types, DaemonEvent::get_event_types(SYSTEM_EVENT));
+      }
+    }
+
+    return $types;
+  }
+
+
+  /*! \brief  Returns a complete list of all available events.
+    @return   Array   Containing $this->get_event_info() for all available events.
+   */
   static function get_event_types($type)
   {
     global $class_mapping,$config;
