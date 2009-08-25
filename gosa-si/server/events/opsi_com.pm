@@ -22,10 +22,18 @@ my @events = (
     "opsi_add_product_to_client",
     "opsi_del_product_from_client",
 	"opsi_createLicensePool",
-	"opsi_getLicensePoolIds_list",
-	"opsi_getLicensePool_hash",
 	"opsi_deleteLicensePool",
 	"opsi_createLicense",
+	"opsi_assignSoftwareLicenseToHost",
+	"opsi_unassignSoftwareLicenseFromHost",
+	"opsi_unassignAllSoftwareLicensesFromHost",
+	"opsi_getLicenses_list",
+	"opsi_getLicense_hash",
+	"opsi_getSoftwareLicense_hash",
+	"opsi_getLicensePool_hash",
+	"opsi_getSoftwareLicenseUsages_listOfHashes",
+	"opsi_getLicensePools_listOfHashes",
+	"opsi_test",
    );
 @EXPORT = @events;
 
@@ -35,16 +43,59 @@ use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use XML::Quote qw(:all);
 
-
 BEGIN {}
 
 END {}
 
-## @method get_events()
-# A brief function returning a list of functions which are exported by importing the module.
+# ----------------------------------------------------------------------------
+#                          D E C L A R A T I O N S
+# ----------------------------------------------------------------------------
+
+my $licenseTyp_hash = { 'OEM'=>'', 'VOLUME'=>'', 'RETAIL'=>''};
+
+
+
+# ----------------------------------------------------------------------------
+#                            S U B R O U T I N E S
+# ----------------------------------------------------------------------------
+
+
+################################
+#
+# @brief A function returning a list of functions which are exported by importing the module.
 # @return List of all provided functions
+#
 sub get_events {
     return \@events;
+}
+
+################################
+#
+# @brief Checks if there is a specified tag and if the the tag has a content.
+# @return 0|1
+#
+sub _check_xml_tag_is_ok {
+	my ($msg_hash,$tag) = @_;
+	if (not defined $msg_hash->{$tag}) {
+		$_ = "message contains no tag '$tag'";
+		return 0;
+	}
+	if (ref @{$msg_hash->{$tag}}[0] eq 'HASH') {
+		$_ = "message tag '$tag' has no content";
+		return  0;
+	}
+	return 1;
+}
+
+################################
+#
+# @brief Writes the log line and returns the error message for GOsa.
+#
+sub _give_feedback {
+	my ($msg, $msg_hash, $session_id, $error) = @_;
+	&main::daemon_log("$session_id ERROR: $error: ".$msg, 1);
+	my $out_hash = &main::create_xml_hash("error_".@{$msg_hash->{'header'}}[0], $main::server_address, @{$msg_hash->{'source'}}[0], $error);
+	return &create_xml_string($out_hash);
 }
 
 ## @method opsi_add_product_to_client
@@ -961,7 +1012,6 @@ sub opsi_get_client_software {
         my $res = $main::opsi_client->call($main::opsi_url, $callobj);
         if (not &check_opsi_res($res)){
             my $result= $res->result;
-# TODO : Ist das hier schon fertig???   
         }
 
         $xml_msg=~ s/<xxx><\/xxx>//;
@@ -1294,9 +1344,14 @@ sub _set_state {
   $main::opsi_client->call($main::opsi_url, $callobj);
 }
 
+# TODO
 ################################
 #
 # @brief Create a license pool at Opsi server.
+# @param licensePoolId The name of the pool (optional). 
+# @param description The description of the pool (optional).
+# @param productIds A list of assigned porducts of the pool (optional). 
+# @param windowsSoftwareIds A list of windows software IDs associated to the pool (optional). 
 #
 sub opsi_createLicensePool {
     my ($msg, $msg_hash, $session_id) = @_;
@@ -1309,7 +1364,7 @@ sub opsi_createLicensePool {
 	my @productIds = defined $msg_hash->{'productIds'} ? $msg_hash->{'productIds'} : undef;
 	my @windowsSoftwareIds = defined $msg_hash->{'windowsSoftwareIds'} ? $msg_hash->{'windowsSoftwareIds'} : undef;
 
-	# Submit data to Opsi server
+	# Create license Pool
     my $callobj = {
         method  => 'createLicensePool',
         params  => [ $licensePoolId, $description, @productIds, @windowsSoftwareIds],
@@ -1323,20 +1378,20 @@ sub opsi_createLicensePool {
 		# Create error message
 		&main::daemon_log("$session_id ERROR: cannot create license pool at Opsi server: ".$res_error_str, 1);
 		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
-
-	} else {
-		# Create function result message
-		$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source, $res->result);
+		return ( &create_xml_string($out_hash) );
 	}
+
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source, $res->result);
 
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
 #
-# @brief Fetch license pool IDs from Opsi server and provide it as a list.
+# @brief Return licensePoolId, description, productIds and windowsSoftwareIds for all found license pools.
 #
-sub opsi_getLicensePoolIds_list {
+sub opsi_getLicensePools_listOfHashes {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1344,7 +1399,7 @@ sub opsi_getLicensePoolIds_list {
 
 	# Fetch infos from Opsi server
     my $callobj = {
-        method  => 'getLicensePoolIds_list',
+        method  => 'getLicensePools_listOfHashes',
         params  => [ ],
         id  => 1,
     };
@@ -1356,20 +1411,31 @@ sub opsi_getLicensePoolIds_list {
 		# Create error message
 		&main::daemon_log("$session_id ERROR: cannot get license pool ID list from Opsi server: ".$res_error_str, 1);
 		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
-
-	} else {
-		# Create function result message
-		$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
-		map(&add_content2xml_hash($out_hash, "licensePoolIds", "$_"), @{$res->result});
+		return ( &create_xml_string($out_hash) );
 	}
+
+	# Create function result message
+	my $res_hash = { 'hit'=> [] };
+	foreach my $licensePool ( @{$res->result}) {
+		my $licensePool_hash = { 'licensePoolId' => [$licensePool->{'licensePoolId'}],
+			'description' => [$licensePool->{'description'}],
+			'productIds' => $licensePool->{'productIds'},
+			'windowsSoftwareIds' => $licensePool->{'windowsSoftwareIds'},
+			};
+		push( @{$res_hash->{hit}}, $licensePool_hash );
+	}
+
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	$out_hash->{result} = [$res_hash];
 
 	return ( &create_xml_string($out_hash) );
 }
 
-
 ################################
 #
-# @brief Fetch license pool details(productIds, windowsSoftwareIds, description) from Opsi server and 
+# @brief Return productIds, windowsSoftwareIds and description for a given licensePoolId
+# @param licensePoolId The name of the pool. 
 #
 sub opsi_getLicensePool_hash {
     my ($msg, $msg_hash, $session_id) = @_;
@@ -1380,17 +1446,11 @@ sub opsi_getLicensePool_hash {
 	my $out_hash;
 
 	# Check input sanity
-	if (not defined $msg_hash->{'licensePoolId'}) {
-		&main::daemon_log("$session_id ERROR: message contains no tag 'licensePoolId': ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no tag 'licensePoolId'");
-		return ( &create_xml_string($out_hash) );
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
 	}
-	if (ref @{$msg_hash->{'licensePoolId'}}[0] eq 'HASH') {
-		&main::daemon_log("$session_id ERROR: message contains no license pool ID: ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no license pool ID");
-		return ( &create_xml_string($out_hash) );
-	}
-	$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 
 	# Fetch infos from Opsi server
     my $callobj = {
@@ -1407,14 +1467,115 @@ sub opsi_getLicensePool_hash {
 		&main::daemon_log("$session_id ERROR: cannot get license pool from Opsi server: ".$res_error_str, 1);
 		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source);
 		&add_content2xml_hash($out_hash, "error", $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	}
 
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	&add_content2xml_hash($out_hash, "licensePoolId", $res->result->{'licensePoolId'});
+	&add_content2xml_hash($out_hash, "description", $res->result->{'description'});
+	map(&add_content2xml_hash($out_hash, "productIds", "$_"), @{ $res->result->{'productIds'} });
+	map(&add_content2xml_hash($out_hash, "windowsSoftwareIds", "$_"), @{ $res->result->{'windowsSoftwareIds'} });
+
+	return ( &create_xml_string($out_hash) );
+}
+
+################################
+#
+# @brief Returns softwareLicenseId, notes, licenseKey, hostId and licensePoolId for optional given licensePoolId and hostId
+# @param hostid Something like client_1.intranet.mydomain.de (optional).
+# @param licensePoolId The name of the pool (optional). 
+# 
+sub opsi_getSoftwareLicenseUsages_listOfHashes {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+	my $target = @{$msg_hash->{'target'}}[0];
+	my $licensePoolId = defined $msg_hash->{'licensePoolId'} ? @{$msg_hash->{'licensePoolId'}}[0] : undef;
+	my $hostId = defined $msg_hash->{'hostId'} ? @{$msg_hash->{'hostId'}}[0] : undef;
+	my $out_hash;
+
+	# Fetch information from Opsi server
+	my $callobj = {
+		method  => 'getSoftwareLicenseUsages_listOfHashes',
+		params  => [  $hostId, $licensePoolId ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		# Create error message
+		&main::daemon_log("$session_id ERROR: cannot fetch software licenses from license pool '$licensePoolId': ".$res_error_str, 1);
+		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	}
+
+	# Parse Opsi result
+	my $res_hash = { 'hit'=> [] };
+	foreach my $license ( @{$res->result}) {
+		my $license_hash = { 'softwareLicenseId' => [$license->{'softwareLicenseId'}],
+			'notes' => [$license->{'notes'}],
+			'licenseKey' => [$license->{'licenseKey'}],
+			'hostId' => [$license->{'hostId'}],
+			'licensePoolId' => [$license->{'licensePoolId'}],
+			};
+		push( @{$res_hash->{hit}}, $license_hash );
+	}
+
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	$out_hash->{result} = [$res_hash];
+
+	return ( &create_xml_string($out_hash) );
+}
+
+################################
+#
+# @brief Returns expirationDate, boundToHost, maxInstallation, licenseTyp, licensePoolIds and licenseKeys for a given softwareLicense ID.
+# @param softwareLicenseId Identificator of a license.
+#
+sub opsi_getSoftwareLicense_hash {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+	my $target = @{$msg_hash->{'target'}}[0];
+	my $softwareLicenseId;
+	my $out_hash;
+
+	# Check input sanity
+	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
+		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
 	} else {
-		# Create function result message
-		$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
-		&add_content2xml_hash($out_hash, "licensePoolId", $res->result->{'licensePoolId'});
-		&add_content2xml_hash($out_hash, "description", $res->result->{'description'});
-		map(&add_content2xml_hash($out_hash, "productIds", "$_"), @{ $res->result->{'productIds'} });
-		map(&add_content2xml_hash($out_hash, "windowsSoftwareIds", "$_"), @{ $res->result->{'windowsSoftwareIds'} });
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	my $callobj = {
+		method  => 'getSoftwareLicense_hash',
+		params  => [ $softwareLicenseId ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		# Create error message
+		&main::daemon_log("$session_id ERROR: cannot fetch information for license '$softwareLicenseId': ".$res_error_str, 1);
+		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	}
+	
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	&add_content2xml_hash($out_hash, "expirationDate", $res->result->{'expirationDate'});
+	&add_content2xml_hash($out_hash, "boundToHost", $res->result->{'boundToHost'});
+	&add_content2xml_hash($out_hash, "maxInstallations", $res->result->{'maxInstallations'});
+	&add_content2xml_hash($out_hash, "licenseTyp", $res->result->{'licenseTyp'});
+	foreach my $licensePoolId ( @{$res->result->{'licensePoolIds'}}) {
+		&add_content2xml_hash($out_hash, "licensePoolId", $licensePoolId);
+		&add_content2xml_hash($out_hash, $licensePoolId, $res->result->{'licenseKeys'}->{$licensePoolId});
 	}
 
 	return ( &create_xml_string($out_hash) );
@@ -1423,9 +1584,9 @@ sub opsi_getLicensePool_hash {
 ################################
 #
 # @brief Delete licnese pool by license pool ID. A pool can only be deleted if there are no software licenses bound to the pool. 
-# by specifing the parameter deleteLicenses=True all software licenses bound to the pool are being deleted. 
+# The fixed parameter deleteLicenses=True specifies that all software licenses bound to the pool are being deleted. 
+# @param licensePoolId The name of the pool. 
 #
-# TODO: funktion loescht alles bis auf die lizenz vertraege, weg finden wie auch noch die verträge gelöscht werden könne (getSoftwareLicenses_listOfHashes)
 sub opsi_deleteLicensePool {
 	my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -1435,45 +1596,83 @@ sub opsi_deleteLicensePool {
 	my $out_hash;
 
 	# Check input sanity
-	if (not defined $msg_hash->{'licensePoolId'}) {
-		&main::daemon_log("$session_id ERROR: message contains no tag 'licensePoolId': ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no tag 'licensePoolId'");
-		return ( &create_xml_string($out_hash) );
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
 	}
-	if (ref @{$msg_hash->{'licensePoolId'}}[0] eq 'HASH') {
-		&main::daemon_log("$session_id ERROR: message contains no license pool ID: ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no license pool ID");
-		return ( &create_xml_string($out_hash) );
-	}
-	$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 
-	# Fetch infos from Opsi server
-    my $callobj = {
+	# Fetch softwareLicenseIds used in license pool
+	# This has to be done because function deleteLicensePool deletes the pool and the corresponding software licenses
+	# but not the license contracts of the software licenses. In our case each software license has exactly one license contract. 
+	my $callobj = {
+		method  => 'getSoftwareLicenses_listOfHashes',
+		params  => [ ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Keep list of licenseContractIds in mind to delete it after the deletion of the software licenses
+	my @lCI_toBeDeleted;
+	foreach my $softwareLicenseHash ( @{$res->result} ) {
+		if ((@{$softwareLicenseHash->{'licensePoolIds'}} == 0) || (@{$softwareLicenseHash->{'licensePoolIds'}}[0] ne $licensePoolId)) { 
+			next; 
+		}  
+		push (@lCI_toBeDeleted, $softwareLicenseHash->{'licenseContractId'});
+	}
+
+	# Delete license pool at Opsi server
+    $callobj = {
         method  => 'deleteLicensePool',
         params  => [ $licensePoolId, 'deleteLicenses=True'  ],
         id  => 1,
     };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+    $res = $main::opsi_client->call($main::opsi_url, $callobj);
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){
 		# Create error message
 		&main::daemon_log("$session_id ERROR: cannot delete license pool at Opsi server: ".$res_error_str, 1);
 		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	} 
 
-	} else {
-		# Create function result message
-		$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	# Delete each license contract connected with the license pool
+	foreach my $licenseContractId ( @lCI_toBeDeleted ) {
+		my $callobj = {
+			method  => 'deleteLicenseContract',
+			params  => [ $licenseContractId ],
+			id  => 1,
+		};
+		my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+		my ($res_error, $res_error_str) = &check_opsi_res($res);
+		if ($res_error){
+			# Create error message
+			&main::daemon_log("$session_id ERROR: cannot delete license contract '$licenseContractId' connected with license pool '$licensePoolId' at Opsi server: ".$res_error_str, 1);
+			$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+			return ( &create_xml_string($out_hash) );
+		}
 	}
 
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	
 	return ( &create_xml_string($out_hash) );
-
 }
 
 ################################
 #
-# @brief 
+# @brief Create a license contract, create a software license and add the software license to the license pool
+# @param licensePoolId The name of the pool the license should be assigned.
+# @param licenseKey The license key.
+# @param partner Name of the license partner (optional).
+# @param conclusionDate Date of conclusion of license contract (optional)
+# @param notificationDate Date of notification that license is running out soon (optional).
+# @param notes This is the place for some notes (optional)
+# @param softwareLicenseId Identificator of a license (optional).
+# @param licenseTyp Typ of a licnese, either "OEM", "VOLUME" or "RETAIL" (optional).
+# @param maxInstallations The number of clients use this license (optional). 
+# @param boundToHost The name of the client the license is bound to (optional).
+# @param expirationDate The date when the license is running down (optional). 
 #
 sub opsi_createLicense {
 	my ($msg, $msg_hash, $session_id) = @_;
@@ -1490,31 +1689,24 @@ sub opsi_createLicense {
 	my $maxInstallations = defined $msg_hash->{'maxInstallations'} ? @{$msg_hash->{'maxInstallations'}}[0] : undef;
 	my $boundToHost = defined $msg_hash->{'boundToHost'} ? @{$msg_hash->{'boundToHost'}}[0] : undef;
 	my $expirationDate = defined $msg_hash->{'expirationDate'} ? @{$msg_hash->{'expirationDate'}}[0] : undef;
+	my $licensePoolId;
+	my $licenseKey;
 	my $out_hash;
 
 	# Check input sanity
-	if (not defined $msg_hash->{'licensePoolId'}) {
-		&main::daemon_log("$session_id ERROR: message contains no tag 'licensePoolId': ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no tag 'licensePoolId'");
-		return ( &create_xml_string($out_hash) );
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licenseKey')) {
+		$licenseKey = @{$msg_hash->{'licenseKey'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
 	}
-	if (ref @{$msg_hash->{'licensePoolId'}}[0] eq 'HASH') {
-		&main::daemon_log("$session_id ERROR: message contains no license pool ID: ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no license pool ID");
-		return ( &create_xml_string($out_hash) );
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
 	}
-	my $licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
-	if (not defined $msg_hash->{'licenseKey'}) {
-		&main::daemon_log("$session_id ERROR: message contains no tag 'licenseKey': ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no tag 'licenseKey'");
-		return ( &create_xml_string($out_hash) );
+	if ((defined $licenseType) && (not exists $licenseTyp_hash->{$licenseType})) {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, "The typ of a license can be either 'OEM', 'VOLUME' or 'RETAIL'."));
 	}
-	if (ref @{$msg_hash->{'licenseKey'}}[0] eq 'HASH') {
-		&main::daemon_log("$session_id ERROR: message contains no license key: ".$msg, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, "message contains no license key");
-		return ( &create_xml_string($out_hash) );
-	}
-	my $licenseKey = @{$msg_hash->{'licenseKey'}}[0];
 
 	# Create license contract at Opsi server
     my $callobj = {
@@ -1527,7 +1719,6 @@ sub opsi_createLicense {
 	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){
-print STDERR Dumper $res;	
 		# Create error message
 		&main::daemon_log("$session_id ERROR: cannot create license contract at Opsi server: ".$res_error_str, 1);
 		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
@@ -1535,7 +1726,6 @@ print STDERR Dumper $res;
 	}
 	
 	$licenseContractId = $res->result;
-print STDERR Dumper $licenseContractId;	
 
 	# Create software license at Opsi server
     $callobj = {
@@ -1548,14 +1738,13 @@ print STDERR Dumper $licenseContractId;
 	# Check Opsi error
 	($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){
-print STDERR Dumper $res;	
 		# Create error message
 		&main::daemon_log("$session_id ERROR: cannot create software license at Opsi server: ".$res_error_str, 1);
 		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
 		return ( &create_xml_string($out_hash) );
 	}
+
 	$softwareLicenseId = $res->result;
-print STDERR Dumper $softwareLicenseId;
 
 	# Add software license to license pool
 	$callobj = {
@@ -1568,32 +1757,224 @@ print STDERR Dumper $softwareLicenseId;
 	# Check Opsi error
 	($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){
-print STDERR Dumper $res;	
 		# Create error message
 		&main::daemon_log("$session_id ERROR: cannot add software license to license pool at Opsi server: ".$res_error_str, 1);
 		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
 		return ( &create_xml_string($out_hash) );
 	}
-print STDERR Dumper $res;
 
-
-
-## Create license contract
-#licenseContractId
-#partner
-#conclusionDate
-#notificationDate
-#expirationDate
-#notes
-#
-## Create software license
-#softwareLicenseId, 
-#licenseContractId, 
-#licenseType, 
-#maxInstallations, 
-#boundToHost, 
-#expirationDate
-	return;
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	
+	return ( &create_xml_string($out_hash) );
 }
 
+################################
+#
+# @brief Assign a software license to a host
+# @param hostid Something like client_1.intranet.mydomain.de
+# @param licensePoolId The name of the pool.
+#
+sub opsi_assignSoftwareLicenseToHost {
+	my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+	my $hostId;
+	my $licensePoolId;
+
+	# Check input sanity
+	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
+		$hostId = @{$msg_hash->{'hostId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Assign a software license to a host
+	my $callobj = {
+        method  => 'getAndAssignSoftwareLicenseKey',
+        params  => [ $hostId, $licensePoolId ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		# Create error message
+		&main::daemon_log("$session_id ERROR: cannot assign a software license to a host at Opsi server: ".$res_error_str, 1);
+		my $out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	}
+
+	# Create function result message
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	
+	return ( &create_xml_string($out_hash) );
+}
+
+################################
+#
+# @brief Unassign a software license from a host.
+# @param hostid Something like client_1.intranet.mydomain.de
+# @param licensePoolId The name of the pool.
+#
+sub opsi_unassignSoftwareLicenseFromHost {
+	my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+	my $hostId;
+	my $licensePoolId;
+
+	# Check input sanity
+	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
+		$hostId = @{$msg_hash->{'hostId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Unassign a software license from a host
+	my $callobj = {
+        method  => 'deleteSoftwareLicenseUsage',
+        params  => [ $hostId, '', $licensePoolId ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		# Create error message
+		&main::daemon_log("$session_id ERROR: cannot unassign a software license from a host at Opsi server: ".$res_error_str, 1);
+		my $out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	}
+
+	# Create function result message
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	
+	return ( &create_xml_string($out_hash) );
+}
+
+################################
+#
+# @brief Unassign all software licenses from a host
+# @param hostid Something like client_1.intranet.mydomain.de
+#
+sub opsi_unassignAllSoftwareLicensesFromHost {
+	my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+	my $hostId;
+
+	# Check input sanity
+	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
+		$hostId = @{$msg_hash->{'hostId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Unassign all software licenses from a host
+	my $callobj = {
+        method  => 'deleteAllSoftwareLicenseUsages',
+        params  => [ $hostId ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		# Create error message
+		&main::daemon_log("$session_id ERROR: cannot unassign a software license from a host at Opsi server: ".$res_error_str, 1);
+		my $out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	}
+
+	# Create function result message
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	
+	return ( &create_xml_string($out_hash) );
+}
+
+
+################################
+#
+# @brief 
+#
+#sub opsi_getLicenses_list {
+#    my ($msg, $msg_hash, $session_id) = @_;
+#    my $header = @{$msg_hash->{'header'}}[0];
+#    my $source = @{$msg_hash->{'source'}}[0];
+#	my $hostId;
+#	my $licensePoolId;
+#	my $out_hash;
+#
+#	# Check input sanity
+#	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
+#		$hostId = @{$msg_hash->{'hostId'}}[0];
+#	} else {
+#		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+#	}
+#	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+#		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+#	} else {
+#		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+#	}
+#
+#	# Fetch infos from Opsi server
+#    my $callobj = {
+#        method  => 'getLicensePoolIds_list',
+#        params  => [ ],
+#        id  => 1,
+#    };
+#    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+#
+#	# Check Opsi error
+#	my ($res_error, $res_error_str) = &check_opsi_res($res);
+#	if ($res_error){
+#		# Create error message
+#		&main::daemon_log("$session_id ERROR: cannot get license pool ID list from Opsi server: ".$res_error_str, 1);
+#		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+#
+#	} else {
+#		# Create function result message
+#		$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+#		map(&add_content2xml_hash($out_hash, "licensePoolIds", "$_"), @{$res->result});
+#	}
+#
+#	return ( &create_xml_string($out_hash) );
+#}
+
+sub opsi_test {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+	my $pram1 = @{$msg_hash->{'productId'}}[0];
+
+print STDERR Dumper $pram1;
+
+	# Fetch infos from Opsi server
+    my $callobj = {
+        method  => 'getLicensePoolId',
+        params  => [ $pram1 ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	print STDERR Dumper $res;
+	return ();
+}
 1;

@@ -16,11 +16,30 @@ for($count = 1; $count <= $zahl; $count++)
 
   if($sock->connected()){
 
-	#$data = "<xml><header>gosa_opsi_getLicensePoolIds_list</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
-	#$data = "<xml><header>gosa_opsi_createLicensePool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId><description>Das 135te Schaaf</description><productIds>acrobat</productIds><productIds>winzip</productIds></xml>";
+	# Funktioniert noch nicht
+	#$data = "<xml><header>gosa_opsi_test</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>acroread</productId></xml>";
+
+	#$data = "<xml><header>gosa_opsi_getLicensePools_listOfHashes</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
+
 	#$data = "<xml><header>gosa_opsi_getLicensePool_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId></xml>";
+
+	#$data = "<xml><header>gosa_opsi_createLicensePool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Harald</licensePoolId><description>Das 134te Schaaf</description><productIds>acrobat</productIds><productIds>winzip</productIds></xml>";
+
 	#$data = "<xml><header>gosa_opsi_deleteLicensePool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId></xml>";
-	$data = "<xml><header>gosa_opsi_createLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><partner>Gonicus GmbH</partner><notes>I'm a note!</notes><maxInstallations>10</maxInstallations><licensePoolId>Susi</licensePoolId><licenseKey>1234567890</licenseKey></xml>";
+
+	#$data = "<xml><header>gosa_opsi_createLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><partner>Gonicus GmbH</partner><notes>I'm a note!</notes><maxInstallations>10</maxInstallations><licensePoolId>Harald</licensePoolId><licenseKey>abcdefghi</licenseKey></xml>";
+
+	#$data = "<xml><header>gosa_opsi_assignSoftwareLicenseToHost</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId><hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
+
+	#$data = "<xml><header>gosa_opsi_unassignSoftwareLicenseFromHost</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId><hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
+
+	#$data = "<xml><header>gosa_opsi_unassignAllSoftwareLicensesFromHost</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
+
+	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages_listOfHashes</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
+	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages_listOfHashes</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId></xml>";
+	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages_listOfHashes</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
+
+	#$data = "<xml><header>gosa_opsi_getSoftwareLicense_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>l_2009-08-20_11:04:15_0</softwareLicenseId></xml>";
 
 
 	##############################
