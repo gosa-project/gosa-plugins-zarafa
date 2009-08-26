@@ -19,6 +19,8 @@ for($count = 1; $count <= $zahl; $count++)
 	# Funktioniert noch nicht
 	#$data = "<xml><header>gosa_opsi_test</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>acroread</productId></xml>";
 
+	$data = "<xml><header>gosa_opsi_getLicenseInformationForProduct</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>acroread</productId></xml>";
+
 	#$data = "<xml><header>gosa_opsi_getLicensePools_listOfHashes</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
 
 	#$data = "<xml><header>gosa_opsi_getLicensePool_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId></xml>";

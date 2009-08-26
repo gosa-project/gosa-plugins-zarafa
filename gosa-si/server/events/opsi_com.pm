@@ -33,6 +33,7 @@ my @events = (
 	"opsi_getLicensePool_hash",
 	"opsi_getSoftwareLicenseUsages_listOfHashes",
 	"opsi_getLicensePools_listOfHashes",
+	"opsi_getLicenseInformationForProduct",
 	"opsi_test",
    );
 @EXPORT = @events;
@@ -1914,49 +1915,67 @@ sub opsi_unassignAllSoftwareLicensesFromHost {
 #
 # @brief 
 #
-#sub opsi_getLicenses_list {
-#    my ($msg, $msg_hash, $session_id) = @_;
-#    my $header = @{$msg_hash->{'header'}}[0];
-#    my $source = @{$msg_hash->{'source'}}[0];
-#	my $hostId;
-#	my $licensePoolId;
-#	my $out_hash;
-#
-#	# Check input sanity
-#	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
-#		$hostId = @{$msg_hash->{'hostId'}}[0];
-#	} else {
-#		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
-#	}
-#	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
-#		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
-#	} else {
-#		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
-#	}
-#
-#	# Fetch infos from Opsi server
-#    my $callobj = {
-#        method  => 'getLicensePoolIds_list',
-#        params  => [ ],
-#        id  => 1,
-#    };
-#    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-#
-#	# Check Opsi error
-#	my ($res_error, $res_error_str) = &check_opsi_res($res);
-#	if ($res_error){
-#		# Create error message
-#		&main::daemon_log("$session_id ERROR: cannot get license pool ID list from Opsi server: ".$res_error_str, 1);
-#		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
-#
-#	} else {
-#		# Create function result message
-#		$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
-#		map(&add_content2xml_hash($out_hash, "licensePoolIds", "$_"), @{$res->result});
-#	}
-#
-#	return ( &create_xml_string($out_hash) );
-#}
+sub opsi_getLicenseInformationForProduct {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+	my $productId;
+	my $out_hash;
+
+	# Check input sanity
+	if (&_check_xml_tag_is_ok ($msg_hash, 'productId')) {
+		$productId = @{$msg_hash->{'productId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Fetch infos from Opsi server
+    my $callobj = {
+        method  => 'getLicensePoolId',
+        params  => [ $productId ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		# Create error message
+		&main::daemon_log("$session_id ERROR: cannot get license pool for product '$productId' : ".$res_error_str, 1);
+		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	} 
+	
+	my $licensePoolId = $res->result;
+
+	# Fetch statistic information for given pool ID
+	my $callobj = {
+		method  => 'getLicenseStatistics_hash',
+		params  => [ ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		# Create error message
+		&main::daemon_log("$session_id ERROR: cannot get statistic informations for license pools : ".$res_error_str, 1);
+		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
+		return ( &create_xml_string($out_hash) );
+	}
+
+	# Create function result message
+	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	&add_content2xml_hash($out_hash, "licensePoolId", $licensePoolId);
+	&add_content2xml_hash($out_hash, "licenses", $res->result->{$licensePoolId}->{'licenses'});
+	&add_content2xml_hash($out_hash, "usageCount", $res->result->{$licensePoolId}->{'usageCount'});
+	&add_content2xml_hash($out_hash, "maxInstallations", $res->result->{$licensePoolId}->{'maxInstallations'});
+	&add_content2xml_hash($out_hash, "remainingInstallations", $res->result->{$licensePoolId}->{'remainingInstallations'});
+	map(&add_content2xml_hash($out_hash, "usedBy", "$_"), @{ $res->result->{$licensePoolId}->{'usedBy'}});
+
+	return ( &create_xml_string($out_hash) );
+}
 
 sub opsi_test {
     my ($msg, $msg_hash, $session_id) = @_;
