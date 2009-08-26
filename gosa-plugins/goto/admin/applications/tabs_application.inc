@@ -5,9 +5,9 @@ class apptabs extends tabs
   var $parent   = FALSE;
   var $FAIstate = "";
 
-  function apptabs($config, $data, $dn,$category)
+  function apptabs($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
   {
-    tabs::tabs($config, $data, $dn,$category);
+    tabs::tabs($config, $data, $dn,$category,$hide_refs, $hide_acls);
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();

@@ -5,12 +5,15 @@ class worktabs extends tabs
 
   public $was_activated = FALSE;
 
-  function worktabs($config, $data, $dn,$category)
+  function worktabs($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
   {
     
     /* Save dn */
     $this->dn= $dn;
     $this->config= $config;
+
+    $this->hide_refs = $hide_refs;
+    $this->hide_acls = $hide_acls;
 
     $baseobject= NULL;
 
