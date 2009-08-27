@@ -758,9 +758,11 @@ sub run_as {
 	}
 	my $cmd_line= "$sudo_cmd su - $uid -c '$command'";
 	open(PIPE, "$cmd_line |");
-	my $result = {'resultCode' => $?};
-	$result->{'command'} = $cmd_line;
+	my $result = {'command' => $cmd_line};
 	push @{$result->{'output'}}, <PIPE>;
+	close(PIPE);
+	my $exit_value = $? >> 8;
+	$result->{'resultCode'} = $exit_value;
 	return $result;
 }
 
