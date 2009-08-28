@@ -90,16 +90,6 @@ class divListRole extends MultiSelectWindow
     $base = $this->config->current['BASE'];
     $options  = $this->create_department_list($this->module);
 
-    /* Add base */
-    $tmp = array();
-    $tmp[] = array("dn"=>$this->config->current['BASE']);
-    $tmp= array_merge(
-        $tmp,
-        get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", 
-          $this->module, 
-          $base,
-          array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
-
     /* Add a seperator after displaying c&p and snapshot icons ? */
     $add_sep = false;
   
