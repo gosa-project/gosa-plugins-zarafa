@@ -97,7 +97,22 @@ class roleGeneric extends plugin {
       if(!isset($this->roleOccCache[$dn])){
         if($ldap->dn_exists($dn)){
           $ldap->cat($dn, $attrs);
-          $this->roleOccCache[$dn] = $ldap->fetch();
+
+          $tmp = $ldap->fetch();
+          if(!isset($tmp['cn'])){
+         
+            // Extract the namingAttribute out of the dn.
+            $cn = preg_replace("/^[^=]*+=([^,]*).*$/","\\1",$tmp['dn']);
+            if(isset($tmp['uid'])){
+              $cn = $tmp['uid'][0];
+            }
+            if(isset($tmp['description'])){
+              $cn.= " [".$tmp['description'][0]."]";
+            }
+            $tmp['cn'][0] = $cn;
+          }
+
+          $this->roleOccCache[$dn] = $tmp;
         }
       }
     }
