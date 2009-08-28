@@ -296,7 +296,7 @@ class roleGeneric extends plugin {
     $ldap->$mode ($this->attrs);
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), 
-        $this->dn, LDAP_DEL,            get_class()));
+        $this->dn, LDAP_MOD, get_class()));
       return (1);
     }
 
