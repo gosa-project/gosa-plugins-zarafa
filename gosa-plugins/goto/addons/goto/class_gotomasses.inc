@@ -408,6 +408,8 @@ class gotomasses extends plugin
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TargetName'>"._("Target").$sort_img_1."</a>"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task").$sort_img_2."</a>",
                                       "attach"=>"style='width:120px;'"));
+    $divlist->AddHeader(array("string"=>_("Period"),
+                                      "attach"=>"style='width:60px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Schedule'>"._("Schedule").$sort_img_3."</a>",
                                       "attach"=>"style='width:140px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Status").$sort_img_4."</a>",
@@ -496,8 +498,10 @@ class gotomasses extends plugin
         $display = $task['PLAINNAME'];
         $tooltip = " title='".$task['MACADDRESS']."' ";
       }
+
+
       $display2= $task['HEADERTAG'];
-     
+      
       /* Check if this event exists as Daemon class 
        * In this case, display a more accurate entry.
        */ 
@@ -552,6 +556,15 @@ class gotomasses extends plugin
         }
       }
 
+      // Check whether this is a periodical job or not.
+      $period = "";
+      if(isset($task['PERIODIC']) && !preg_match("/none/i",$task['PERIODIC'])){
+        $tmp = split("_", $task['PERIODIC']);
+        if(count($tmp) == 2){
+          $period= $tmp[0]."&nbsp;"._($tmp[1]);
+        }
+      }
+
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$key."'>" ,
                       "attach" => "style='width:20px;".$color."'");
@@ -559,6 +572,8 @@ class gotomasses extends plugin
                       "attach" => $tooltip."style='".$color."'");
       $field1a= array("string" => $display2,
                       "attach" => "style='".$color.";width:120px;'");
+      $field1b= array("string" => $period,
+                      "attach" => "style='".$color.";width:60px;'");
       if ($task['TIMESTAMP'] == "19700101000000"){
 	      $field2 = array("string" => _("immediately"),"attach" => "style='".$color.";width:140px;'");
       } else {
@@ -566,7 +581,7 @@ class gotomasses extends plugin
       }
       $field3 = array("string" => $status,"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:140px;border-right:0px;'");
-      $divlist->AddElement(array($field0,$field1,$field1a,$field2,$field3,$field4));
+      $divlist->AddElement(array($field0,$field1,$field1a,$field1b,$field2,$field3,$field4));
     }
 
     $smarty = get_smarty();
