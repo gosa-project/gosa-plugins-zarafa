@@ -69,6 +69,10 @@ class DaemonEvent
 
   protected $visible_for          = HIDDEN_EVENT;
 
+  protected $periodType           = "days";
+  protected $periodValue          = 7;
+  protected $activate_periodical_job = FALSE;
+
   protected $attributes           = array("timestamp");
  
   function set_type($type)
@@ -103,6 +107,15 @@ class DaemonEvent
       }
       if(isset($data['TIMESTAMP'])){
         $this->timestamp = $this->_event_to_timestamp($data['TIMESTAMP']);
+      }
+    }
+
+    if(isset($data['PERIODIC'])){
+      $tmp = split("_",$data['PERIODIC']);
+      if(count($tmp)){
+        $this->activate_periodical_job = TRUE;
+        $this->periodValue = $tmp[0];
+        $this->periodType = $tmp[1];
       }
     }
   }
@@ -201,6 +214,19 @@ class DaemonEvent
       $seconds[$e] = $e;
     }
 
+    $periodTypes = array(
+        "minutes" => _("Minutes"),
+        "hours"   => _("Hours"),
+        "days"    => _("Days"),
+        "weeks"   => _("Weeks"),
+        "months"  => _("Months"));
+    
+
+    $smarty->assign("periodTypes", $periodTypes);
+    $smarty->assign("periodType", $this->periodType);
+    $smarty->assign("periodValue", $this->periodValue);
+    $smarty->assign("activate_periodical_job", $this-> activate_periodical_job);
+
     $smarty->assign("years", $years);
     $smarty->assign("months", $months);
     $smarty->assign("days", $days);
@@ -289,6 +315,15 @@ class DaemonEvent
             $_POST['time_month'],        
             $_POST['time_day'],        
             $_POST['time_year']);
+
+        if(isset($_POST['periodValue'])) $this->periodValue = get_post('periodValue');
+        if(isset($_POST['periodType'])) $this->periodType = get_post('periodType');
+
+        if(isset($_POST['activate_periodical_job'])){
+          $this->activate_periodical_job = TRUE;
+        }else{
+          $this->activate_periodical_job = FALSE;
+        }
       }
     }
 
@@ -455,6 +490,10 @@ class DaemonEvent
       $ret['timestamp'] = $this->_timestamp_to_event($this->timestamp);
     }elseif(isset($ret['timestamp'])){
       unset($ret['timestamp']);
+    }
+
+    if($this-> activate_periodical_job){
+      $ret['periodic'][$this->periodType] = $this->periodValue; 
     }
     return($ret);
   }

@@ -42,4 +42,27 @@
 		</td>
 	</tr>
 </table>
+<br>
+<br>
+<table width="100%">
+  <tr>
+    <td colspan="2">
+      <h2>
+        <input type="checkbox" name='activate_periodical_job' value='1' {if $activate_periodical_job} checked {/if}
+          onClick="changeState('periodValue'); changeState('periodType');">
+        {t}Periodical job{/t}
+      </h2>
+    </td>
+	</tr>
+  <tr>
+    <td>{t}Repeat job every{/t}</td>
+    <td>
+      <input {if !$activate_periodical_job} disabled {/if}
+          size="4" type='text' id='periodValue' value='{$periodValue}' name='periodValue'>
+      <select name='periodType' id="periodType" {if !$activate_periodical_job} disabled {/if}>
+        {html_options options=$periodTypes selected=$periodType}
+      </select>
+    </td>
+	</tr>
+</table>
 
