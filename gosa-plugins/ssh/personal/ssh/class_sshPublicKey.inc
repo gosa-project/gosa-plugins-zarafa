@@ -58,7 +58,7 @@ class sshPublicKey
       $this->publicKeys[]= array("type" => $type,
                                  "fingerprint" => $this->fingerprint(base64_decode($data)),
                                  "comment" => $comment,
-                                 "data" => $data);
+                                 "data" => $key);
     }
 
     // Save copy for later usage
