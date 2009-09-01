@@ -56,7 +56,7 @@ msgstr "Unbekanntes Format für öffentliche Schlüssel!"
 #: personal/ssh/class_sshPublicKey.inc:153
 #, php-format
 msgid "SSH %s key, Fingerprint: %s, Comment: %s"
-msgstr "SSH %s-Schlüssel, Fingerabruck: %s, Kommentar: %s"
+msgstr "SSH %s-Schlüssel, Fingerabdruck: %s, Kommentar: %s"
 
 #: personal/ssh/class_sshPublicKey.inc:206
 msgid "LDAP error"
