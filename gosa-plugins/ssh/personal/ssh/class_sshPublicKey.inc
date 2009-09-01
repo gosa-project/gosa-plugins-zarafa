@@ -112,7 +112,7 @@ class sshPublicKey
     // Upload action?
     if (isset($_POST['upload_sshpublickey'])) {
       if ($_FILES['key']['error'] > 0){
-        msg_dialog::display(_("Upload error"), _("Error: uploading the key")." (".$_FILES['key']['error'].")", ERROR_DIALOG);
+        msg_dialog::display(_("Upload error"), _("Error uploading the key!")." (".$_FILES['key']['error'].")", ERROR_DIALOG);
       } else {
 
         $lines= file($_FILES['key']['tmp_name']);
