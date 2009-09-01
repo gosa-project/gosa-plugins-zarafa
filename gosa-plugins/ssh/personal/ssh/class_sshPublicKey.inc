@@ -29,12 +29,14 @@ class sshPublicKey
   var $dn;
   var $dialog= false;
   var $enabled= false;
+  var $acl;
 
-  function sshPublicKey(&$config, $dn)
+  function sshPublicKey(&$config, $dn, $acl)
   {
     /* Configuration is fine, allways */
     $this->config= &$config;
     $this->dn= $dn;
+    $this->acl= $acl;
 
     // Load list of public keys
     $data= array();
@@ -99,7 +101,7 @@ class sshPublicKey
     }
 
     // Remove action?
-    if (isset($_POST['remove_sshpublickey']) && isset($_POST['keylist'])){
+    if (isset($_POST['remove_sshpublickey']) && isset($_POST['keylist']) && preg_match('/w/', $this->acl)){
       foreach($_POST['keylist'] as $index){
         if (isset($this->publicKeys[$index])){
           unset($this->publicKeys[$index]);
@@ -110,7 +112,7 @@ class sshPublicKey
     }
 
     // Upload action?
-    if (isset($_POST['upload_sshpublickey'])) {
+    if (isset($_POST['upload_sshpublickey']) && preg_match('/w/', $this->acl)) {
       if ($_FILES['key']['error'] > 0){
         msg_dialog::display(_("Upload error"), _("Error uploading the key!")." (".$_FILES['key']['error'].")", ERROR_DIALOG);
       } else {
@@ -153,6 +155,7 @@ class sshPublicKey
       $data[$index]= sprintf(_("SSH %s key, Fingerprint: %s, Comment: %s"), $info['type']=='ssh-dss'?"DSA":"RSA", $info['fingerprint'], $info['comment']);
     }
     $smarty->assign("keylist", $data);
+    $smarty->assign("sshPublicKeyACL", $this->acl);
     return $smarty->fetch (get_template_path('sshPublicKey.tpl', TRUE, dirname(__FILE__)));
   }
 
@@ -216,6 +219,7 @@ class sshPublicKey
     $result= preg_replace('/(..)/', '\1:', $result);
     return rtrim($result, ':');
   }
+
 
 }
 

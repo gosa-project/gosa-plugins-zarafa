@@ -6,11 +6,13 @@
      {html_options options=$keylist}
   </select>
 </p>
+{render acl=$sshPublicKeyACL}
 <input type=file name="key">
 &nbsp;
 <input type=submit name="upload_sshpublickey" value="{t}Upload key{/t}">
 &nbsp;
 <input type=submit name="remove_sshpublickey" value="{t}Remove key{/t}">
+{/render}
 
 <p class="plugbottom">
   <input type=submit name="save_sshpublickey" value="{msgPool type=saveButton}">
