@@ -43,15 +43,12 @@
 	</tr>
 </table>
 <br>
-<br>
 <table width="100%">
   <tr>
     <td colspan="2">
-      <h2>
-        <input type="checkbox" name='activate_periodical_job' value='1' {if $activate_periodical_job} checked {/if}
-          onClick="changeState('periodValue'); changeState('periodType');">
-        {t}Periodical job{/t}
-      </h2>
+      <b>{t}Periodical job{/t}</b>
+      <input class='center' type="checkbox" name='activate_periodical_job' value='1' {if $activate_periodical_job} checked {/if}
+        onClick="changeState('periodValue'); changeState('periodType');">
     </td>
 	</tr>
   <tr>

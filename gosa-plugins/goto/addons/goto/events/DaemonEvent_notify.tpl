@@ -3,29 +3,29 @@
 
 <table style='width:100%;'>
   <tr>
-    <td style='width:50%; vertical-align:top; border-right:1px solid #AAA'>
+    <td style='width:50%; vertical-align:top; border-right:1px solid #AAA; padding:6px;'>
 	  <b>{t}Message settings{/t}</b>
-	  <table style="width:100%;">
-		<tr>
-			<td>{t}Sender{/t}</td>
-			<td><input type='text' name="from" value="{$from}" style="width:100%;"></td>
-		</tr>
-		<tr>
-			<td>{t}Subject{/t}</td>
-			<td><input type='text' name="subject" value="{$subject}" style="width:100%;"></td>
-		</tr>
-		<tr>
-			<td colspan="2">{t}Message{/t} :</td>
-		</tr>
-		<tr>
-			<td colspan="2" style="width:100%;">
-				<textarea style="width:100%;height:250px;" name="message" style="100%;">{$message}</textarea>
-			</td>
-		</tr>
+      <table style="width:100%;">
+        <tr>
+          <td>{t}Sender{/t}</td>
+          <td><input type='text' name="from" value="{$from}" style="width:100%;"></td>
+        </tr>
+        <tr>
+          <td>{t}Subject{/t}</td>
+          <td><input type='text' name="subject" value="{$subject}" style="width:100%;"></td>
+        </tr>
+        <tr>
+          <td colspan="2">{t}Message{/t} :</td>
+        </tr>
+        <tr>
+          <td colspan="2" >
+            <textarea style="width:99%;height:250px;" name="message" >{$message}</textarea>
+          </td>
+        </tr>
       </table>
     </td>
     <td style='width:50%; vertical-align:top;'>
-	  <b>{t}Schedule{/t}</b>
+	    <b>{t}Schedule{/t}</b>
       <table>
         <tr>
           <td colspan="2" style='vertical-align:top'>{$timestamp}<br><br></td>
@@ -63,7 +63,7 @@
 
 <table style='width:100%;'>
 	<tr>
-		<td style='width:50%; vertical-align:top;'>
+		<td style='vertical-align:top;'>
 			<table>
 				<tr>
 					<td>{t}ID{/t}</td>

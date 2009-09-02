@@ -110,9 +110,9 @@ class DaemonEvent
       }
     }
 
-    if(isset($data['PERIODIC'])){
+    if(isset($data['PERIODIC']) && !preg_match("/none/i",$data['PERIODIC'])){
       $tmp = split("_",$data['PERIODIC']);
-      if(count($tmp)){
+      if(count($tmp) == 2){
         $this->activate_periodical_job = TRUE;
         $this->periodValue = $tmp[0];
         $this->periodType = $tmp[1];
@@ -492,6 +492,7 @@ class DaemonEvent
       unset($ret['timestamp']);
     }
 
+    $ret['periodic'] = "none";
     if($this-> activate_periodical_job){
       $ret['periodic'][$this->periodType] = $this->periodValue; 
     }
