@@ -144,6 +144,9 @@ Defines the location for the log file.
 .IP "pid-file = /var/run/gosa\-si\-client.pid" 4
 .IX Item "pid-file = /var/run/gosa-si-client.pid"
 Defines the location for the pid file.
+.IP "opts-file = var/run/gosa\-si\-client.opts" 4
+.IX Item "opts-file = var/run/gosa-si-client.opts"
+Defines the location for the opts file.
 .SS "[client]"
 .IX Subsection "[client]"
 .IP "port = 20083" 4
@@ -176,6 +179,9 @@ Defines the location for fai.log file.
 .IP "force-hostname = false | true" 4
 .IX Item "force-hostname = false | true"
 If set to true, client will try to get the hostname for registration from \f(CW$ENV\fR. Used in \s-1FAI\s0 environments, when hostname gets set from \s-1DHCP\s0.
+.IP "system-com = disabled | enabled" 4
+.IX Item "system-com = disabled | enabled"
+Open a different fifo for system communication
 .SS "[server]"
 .IX Subsection "[server]"
 .IP "ip = 127.0.0.1" 4

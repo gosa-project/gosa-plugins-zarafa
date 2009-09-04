@@ -198,6 +198,9 @@ Defines the distinguished name of the administrator.
 .IP "ldap-admin-password =" 4
 .IX Item "ldap-admin-password ="
 Defines the password of the administrator.
+.IP "ldap-version = 3" 4
+.IX Item "ldap-version = 3"
+Define the ldap protocol version used
 .IP "gosa-unit-tag =" 4
 .IX Item "gosa-unit-tag ="
 Forces the Unit-Tag in a tagged environment. If not set, GOsa-SI tries to get the tag from the server entry in \s-1LDAP\s0.
@@ -221,6 +224,9 @@ Defines the seconds the messaging queue is checked.
 .IP "key = none" 4
 .IX Item "key = none"
 Defines the password incoming GOsaPackages messages should be encrypted. This has to be modified, default value will not work!!!
+.IP "new-systems-ou = ou=workstations,ou=systems" 4
+.IX Item "new-systems-ou = ou=workstations,ou=systems"
+Define the branch in your ldap tree where new systems should be put, only change if you know what you are doing !!!
 .IP "dak-base = /srv/archive" 4
 .IX Item "dak-base = /srv/archive"
 Base Directory of the local dak Archive.
@@ -238,11 +244,18 @@ User that is used to access dak files. Only needed if you have manually changed 
 .IP "key = none" 4
 .IX Item "key = none"
 Defines the password incoming ClientPackages messages should be encrypted. This has to be modified, default value will not work!!!
+.IP "user-date-of-expiry = 600" 4
+.IX Item "user-date-of-expiry = 600"
+Lifetime of logged in user information. If no update information comes after n seconds,
+the user is marked to be no longer logged in or the host is no longer running.
 .SS "[ServerPackages]"
 .IX Subsection "[ServerPackages]"
 .IP "address =" 4
 .IX Item "address ="
 Comma seperated list of GOsa-si-servers (1.2.3.4:20081,9.8.7.6:123) in network where this SI-server should register. These given SI-servers extend the list of SI-servers found in \s-1DNS\s0.
+.IP "dns-lookup = true | false" 4
+.IX Item "dns-lookup = true | false"
+Perform a \s-1DNS\s0 lookup for server registration
 .IP "domain =" 4
 .IX Item "domain ="
 Forces the search domain used to get possible foreign servers from \s-1DNS\s0. If not set, this server will search the domains found in domain or search statement in /etc/resolv.conf.
@@ -266,6 +279,20 @@ Defines whether the ArpHandler is being activated at GOsa-SI-server start.
 .IP "interface = all" 4
 .IX Item "interface = all"
 Space\- or comma-separated list of interfaces on which to start an ARP-Daemon. Enter 'all' to use all possible interfaces (Default).
+.SS "[Opsi]"
+.IX Subsection "[Opsi]"
+.IP "enabled = true | false" 4
+.IX Item "enabled = true | false"
+Defines wheter Opsi integration is being enabled or not.
+.IP "server = localhost" 4
+.IX Item "server = localhost"
+Define the hostname of the Opsi server
+.IP "admin = opsi-admin" 4
+.IX Item "admin = opsi-admin"
+Define the name of the opsi admin
+.IP "password =" 4
+.IX Item "password ="
+Define the Opsi admin password
 .SH "BUGS"
 .IX Header "BUGS"
 Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa\-devel@oss.gonicus.de> or to <https://oss.gonicus.de/labs/gosa>

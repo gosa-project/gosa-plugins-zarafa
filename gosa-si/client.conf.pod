@@ -22,6 +22,10 @@ Defines the location for the log file.
 
 Defines the location for the pid file.
 
+=item opts-file = var/run/gosa-si-client.opts
+
+Defines the location for the opts file.
+
 =back
 
 
@@ -68,6 +72,10 @@ Defines the location for fai.log file.
 =item force-hostname = false | true
 
 If set to true, client will try to get the hostname for registration from $ENV. Used in FAI environments, when hostname gets set from DHCP.
+
+=item system-com = disabled | enabled
+
+Open a different fifo for system communication
 
 =back
 
