@@ -664,17 +664,36 @@ sub get_local_ip_for_remote_ip {
         # Eat header line
         shift @ifs;
         chomp @ifs;
+        my $iffallback = ''; 
+
+        # linux-vserver might have * as Iface due to hidden interfaces, set a default 
+        foreach my $line(@ifs) { 
+            my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line); 
+            if ($Iface =~ m/^[^\*]+$/) { 
+                 $iffallback = $Iface; 
+            } 
+        }
+ 
         foreach my $line(@ifs) {
             my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
             my $destination;
             my $mask;
             my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+            if ($Iface =~ m/^[^\*]+$/) { 
+                 $iffallback = $Iface;
+            } 
             $destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
             ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
             $mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
             if(new NetAddr::IP($remote_ip)->within(new NetAddr::IP($destination, $mask))) {
                 # destination matches route, save mac and exit
-                $result= &get_ip($Iface);
+                #$result= &get_ip($Iface);
+
+                if ($Iface =~ m/^\*$/ ) { 
+                    $result= &get_ip($iffallback);    
+                } else { 
+                    $result= &get_ip($Iface); 
+                } 
                 last;
             }
         }
