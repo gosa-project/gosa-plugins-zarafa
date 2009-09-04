@@ -315,6 +315,8 @@ class roleGeneric extends plugin {
     }else{
       new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
+
+    return 0;
   }
 
 
