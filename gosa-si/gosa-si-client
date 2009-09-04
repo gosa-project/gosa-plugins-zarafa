@@ -1289,10 +1289,10 @@ if( defined $server_check ) {
 			}
 		}
 		if (0 == @tmp_servers) {
-			my $log_string = "no gosa-si-server found!";
-			$log_string .= "\n\tdetermined domains out of /etc/resolv.conf: ".join(", ", @domain_list) if (@domain_list);
-			$log_string .= "\n\tdetermined server addresses in domains: ".join(", ",@$tmp_domains) if (defined($tmp_domains));
-			daemon_log("ERROR: $log_string", 1) if (defined($log_string));
+                        my $log_string = "no gosa-si-server found in DNS for domain: ".join(", ", @domain_list) if (@domain_list);
+                        my $log_string2 = "server addresses in domain: ".join(", ",@$tmp_domains) if (defined($tmp_domains));
+                        daemon_log("ERROR: $log_string", 1) if (defined($log_string));
+                        daemon_log("ERROR: $log_string2", 1) if (defined($log_string2));
 			daemon_log("ERROR: $error_string", 1) if (defined($error_string));
 			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
 			kill 2, $$;
