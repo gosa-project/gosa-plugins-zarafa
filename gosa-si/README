@@ -4,16 +4,38 @@ common:
 - GosaSupportDaemon.pm
 - DBsqlite.pm
 
-/usr/lib/gosa-si/modules
+/usr/share/perl5/POE/Component/
+common:
+- ArpWatch.pm
+
+/usr/lib/gosa-si/modules/
 server-module:
-- ArpPackages.pm
+- ArpHandler.pm
+- ClientPackages.pm
 - GosaPackages.pm
 - ServerPackages.pm
-- FAIPackages.pm
+- TestModule.pm
 
 server-events:
 /usr/lib/gosa-si/server
-- ping
+
+/usr/lib/gosa-si/server/ClientPackages/
+- clMessages.pm
+- siTriggered.pm
+
+/usr/lib/gosa-si/server/GosaPackages/
+- databases.pm
+- gosaTriggered.pm
+- logHandling.pm
+- opsi_com.pm
+- mailqueue_com.pm
+
+/usr/lib/gosa-si/server/ServerPackages/
+- databases.pm
+- logHandling.pm
+- server_server_com.pm
+- opsi_com.pm
+- mailqueue_com.pm
 
 client-events:
 /usr/lib/gosa-si/client/events/
@@ -21,7 +43,9 @@ client-events:
 - gosaTriggered.pm
 - installation.pm
 - mailqueue.pm
-
+- dak.pm 
+- krb5.pm
+- load_reporter.pm
 
 config-files: /etc/gosa-si/
 - client.conf
