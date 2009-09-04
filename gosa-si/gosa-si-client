@@ -377,6 +377,12 @@ sub generate_hw_digest {
 	foreach my $line (split /\n/, `cat /proc/bus/pci/devices`) {
 		$hw_data.= sprintf "%s", $line =~ /[^\s]+\s([^\s]+)\s.*/;
 	}
+        # linux-vserver has no /proc/bus/pci/devices 
+	if ( !$hw_data ) { 
+		foreach my $line (split /\n/, `ifconfig | grep HWaddr`) { 
+			$hw_data.= sprintf "%s", $line =~ /[^\s]+\s([^\s]+)\s.*/; 
+		} 
+	} 
 	return(md5_base64($hw_data));
 }
 
