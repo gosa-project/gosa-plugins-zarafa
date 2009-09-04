@@ -81,7 +81,17 @@ reload|force-reload|restart) log_daemon_msg "Restarting GOsa support infrastruct
 	log_progress_msg "done"
         log_end_msg $?
         ;;
-*)	log_action_msg "Usage: /etc/init.d/gosa-si {start|stop|restart|reload|force-reload}"
+restart-client) log_daemon_msg "Restarting GOsa support infrastructure client"
+        if [ "$START_CLIENT" = "1" -a -x /usr/sbin/gosa-si-client ]; then
+                stop_client
+        fi
+        if [ "$START_CLIENT" = "1" -a -x /usr/sbin/gosa-si-client ]; then
+                start_client
+        fi
+        log_progress_msg "done"
+        log_end_msg $?
+        ;;
+*)	log_action_msg "Usage: /etc/init.d/gosa-si {start|stop|restart|restart-client|reload|force-reload}"
         exit 2
         ;;
 esac
