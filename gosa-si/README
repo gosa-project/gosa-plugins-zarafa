@@ -24,5 +24,14 @@ config-files: /etc/gosa-si/
 
 /var/lib/gosa-si
 db's:
+- clients.db
+- fai_release.db
+- fai_server.db
+- foreign_clients.db
+- incoming.db
 - jobs.db
+- messaging.db
+- packages.db
+- servers.db
+- users.db
 
