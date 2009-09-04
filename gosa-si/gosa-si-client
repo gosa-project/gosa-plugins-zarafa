@@ -1310,13 +1310,13 @@ if( defined $server_check ) {
 
 # Open a new fifo for FAI messages to gosa-si-server
 if (-p $fai_com_fifo) { unlink $fai_com_fifo }
-POSIX::mkfifo("$fai_com_fifo", "0600");
+POSIX::mkfifo("$fai_com_fifo", 0600);
 
 # Open a new fifo for system communication, 
 if (-p $system_com_fifo) { unlink $system_com_fifo }
 if ($system_com eq "enabled") 
 { 
-	POSIX::mkfifo("$system_com_fifo", "0600"); 
+	POSIX::mkfifo("$system_com_fifo", 0600); 
 }
 
 POE::Session->create(
