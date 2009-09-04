@@ -16,7 +16,12 @@ server-events:
 - ping
 
 client-events:
-/usr/lib/gosa-si/client
+/usr/lib/gosa-si/client/events/
+- corefunctions.pm
+- gosaTriggered.pm
+- installation.pm
+- mailqueue.pm
+
 
 config-files: /etc/gosa-si/
 - client.conf
