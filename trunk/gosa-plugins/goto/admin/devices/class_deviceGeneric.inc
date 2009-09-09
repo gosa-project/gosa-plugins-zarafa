@@ -201,7 +201,7 @@ class deviceGeneric extends plugin
   /* check if given str in like this 0xffff*/
   function is_2byteHex($str)
   {
-    return !strlen($str) || preg_match("/^(0x|)[a-f0-9]{4}$/i",$str);
+    return !strlen($str) || preg_match("/^(0x|)[A-Fa-f0-9]{4}$/i",$str);
   }
 
 
