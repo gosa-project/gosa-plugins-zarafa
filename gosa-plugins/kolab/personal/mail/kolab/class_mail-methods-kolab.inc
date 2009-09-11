@@ -62,6 +62,12 @@ class mailMethodKolab extends mailMethodCyrus
   public function fixAttributesOnLoad()
   {
     mailMethodCyrus::fixAttributesOnLoad();
+
+    // Tell our parent that there is a relatioship between alias and
+    //  gosaMailAlternateAddress.  (Avoid plugin::cleanup to filter out alias).
+    if(isset($this->parent->saved_attributes['gosaMailAlternateAddress'])){
+      $this->parent->saved_attributes['alias'] = $this->parent->saved_attributes['gosaMailAlternateAddress'];
+    }
   }
 
   public function fixAttributesOnStore()
