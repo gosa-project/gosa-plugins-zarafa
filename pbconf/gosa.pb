@@ -102,7 +102,7 @@ testver gosa = true
 #pkgver gosa = stable
 #pkgtag gosa = 3
 # Hash of default package/package directory
-#defpkgdir gosa = gosa
+defpkgdir gosa = gosa
 # Hash of additional package/package directory
 #extpkgdir minor-pkg = dir-minor-pkg
 
