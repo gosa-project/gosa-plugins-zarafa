@@ -93,7 +93,7 @@ pbpackager gosa = Benoit Mortier <benoit.mortier@opensides.be>
 #
 # Global version/tag for the project
 #
-projver gosa = trunk
+projver gosa = 2.5.19
 projtag gosa = 1
 
 # Hash of valid version names
@@ -101,10 +101,10 @@ projtag gosa = 1
 # Additional repository to add at build time
 # addrepo centos-5-x86_64 = http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el5.rf.x86_64.rpm,ftp://ftp.project-builder.org/test/centos/5/pb.repo
 # addrepo centos-5-x86_64 = http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el5.rf.x86_64.rpm,ftp://ftp.project-builder.org/test/centos/5/pb.repo
-version gosa = trunk
+version gosa = stable
 
 # Is it a test version or a production version
-testver gosa = true
+testver gosa = false
 
 # Additional repository to add at build time
 # addrepo centos-5-x86_64 = http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el5.rf.x86_64.rpm,ftp://ftp.project-builder.org/test/centos/5/pb.repo
@@ -116,7 +116,7 @@ testver gosa = true
 #pkgver gosa = stable
 #pkgtag gosa = 3
 # Hash of default package/package directory
-defpkgdir gosa = gosa
+defpkgdir gosa = gosa-2.5.19
 # Hash of additional package/package directory
 #extpkgdir minor-pkg = dir-minor-pkg
 
