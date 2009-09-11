@@ -1262,7 +1262,7 @@ class mailgroup extends plugin
    */
   function delAlternate($addresses)
   {
-    if(empty($address)) continue;
+    if(!count($addresses)) return;
     $this->gosaMailAlternateAddress= array_remove_entries ($addresses,
         $this->gosaMailAlternateAddress);
     $this->is_modified= TRUE;
