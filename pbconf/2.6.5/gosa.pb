@@ -92,7 +92,7 @@ pbpackager gosa = Benoit Mortier <benoit.mortier@opensides.be>
 #
 # Global version/tag for the project
 #
-projver gosa = 2.6.5
+projver gosa = trunk
 projtag gosa = 1
 
 # Hash of valid version names
@@ -115,7 +115,7 @@ testver gosa = true
 #pkgver gosa = stable
 #pkgtag gosa = 3
 # Hash of default package/package directory
-defpkgdir gosa = gosa-2.6.5
+defpkgdir gosa = gosa-all
 # Hash of additional package/package directory
 #extpkgdir minor-pkg = dir-minor-pkg
 
