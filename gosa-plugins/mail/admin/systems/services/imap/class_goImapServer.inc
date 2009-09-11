@@ -39,7 +39,7 @@ class goImapServer extends goService {
   var $acl; 
 
   var $Actions              = array();  
-  var $conflicts            = array("goImapServer","kolab");
+  var $conflicts            = array("goImapServer");
  
   function goImapServer(&$config,$dn)
   {
