@@ -11,11 +11,11 @@
 #pburl gosa = svn://svn.gosa.org/gosa/devel
 #pburl gosa = svn://svn+ssh.gosa.org/gosa/devel
 #pburl gosa = cvs://cvs.gosa.org/gosa/devel
-#pburl gosa = http://www.gosa.org/src/gosa-devel.tar.gz
+pburl gosa = http://oss.gonicus.de/pub/gosa/gosa-2.5.19.tar.bz2
 #pburl gosa = ftp://ftp.gosa.org/src/gosa-devel.tar.gz
 #pburl gosa = file:///src/gosa-devel.tar.gz
 #pburl gosa = dir:///src/gosa-devel
-pburl gosa = svn+https://oss.gonicus.de/repositories/gosa/branches/gosa-project-builder/gosa-all
+#pburl gosa = svn+https://oss.gonicus.de/repositories/gosa/branches/gosa-project-builder/gosa-all
 
 # Repository
 pbrepo gosa = ftp://ftp.gosa.org
