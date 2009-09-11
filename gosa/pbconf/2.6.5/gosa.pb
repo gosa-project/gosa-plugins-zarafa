@@ -92,7 +92,7 @@ pbpackager gosa = Benoit Mortier <benoit.mortier@opensides.be>
 #
 # Global version/tag for the project
 #
-projver gosa = 2.6.5
+projver gosa = complete-2.6.5
 projtag gosa = 1
 
 # Hash of valid version names
