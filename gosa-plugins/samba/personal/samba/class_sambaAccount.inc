@@ -92,6 +92,7 @@ class sambaAccount extends plugin
   /* Only used  for multiple edit */
   var $temporary_disable = FALSE;
   var $no_password_required = FALSE;
+  var $no_expiry = FALSE;
   var $multiple_sambaUserWorkstations = array();
 
   function sambaAccount (&$config, $dn= NULL)
@@ -620,6 +621,13 @@ class sambaAccount extends plugin
         $smarty->assign("flagsN", "");
     }
 
+    // check if password never expires
+    if (is_integer(strpos($this->sambaAcctFlags, "X"))) {
+        $smarty->assign("flagsX", "checked");
+    } else {
+        $smarty->assign("flagsX", "");
+    }
+
     if($this->samba3){
       if ($this->sambaPwdCanChange=="1"){
         $smarty->assign("flagsP", "checked");
@@ -675,7 +683,7 @@ class sambaAccount extends plugin
           "inherit","CtxWorkDirectory","CtxInitialProgram","CtxMaxConnectionTimeF","CtxMaxConnectionTime","CtxMaxDisconnectionTimeF",
           "CtxMaxDisconnectionTime","CtxMaxIdleTimeF","CtxMaxIdleTime","connectclientdrives",
           "onnectclientprinters","defaultprinter","shadow","brokenconn",
-          "reconn","allow_pwchange","connectclientprinters","no_password_required","temporary_disable", 
+          "reconn","allow_pwchange","connectclientprinters","no_expiry","no_password_required","temporary_disable", 
           "password_expires","logon_time_set","logoff_time_set","kickoff_time_set","SetSambaLogonHours",
           "workstation_list") as $attr){
       if(in_array($attr,$this->multi_boxes)){
@@ -1117,7 +1125,16 @@ class sambaAccount extends plugin
         $this->pwdCanChange= $tmp;
         $this->sambaPwdCanChange= $tmp;
       }
-      $tmp= "UX";
+      $tmp= "U";
+
+      $this->no_expiry = FALSE;
+      if (isset($_POST["no_expiry"])){
+        if ($_POST["no_expiry"] == 1){
+          $tmp.= "X";
+          $this->no_expiry = TRUE;
+        }
+      }
+
       $this->no_password_required = FALSE;
       if (isset($_POST["no_password_required"])){
         if ($_POST["no_password_required"] == 1){
@@ -1519,6 +1536,7 @@ class sambaAccount extends plugin
             "InheritClientConfig"         => _("Inherit client config"),
             "sambaPwdCanChange"           => _("Allow user to change password") ,
             "sambaAcctFlagsN"             => _("Login from windows client requires no password"),
+            "sambaAcctFlagsX"             => _("Password never expires"),
             "sambaAcctFlagsL"             => _("Lock samba account"),
             "sambaKickoffTime"            => _("Account expires") ,
             "sambaPwdMustChange"          => _("Password expires") ,
@@ -1548,7 +1566,7 @@ class sambaAccount extends plugin
             "inherit","CtxWorkDirectory","CtxInitialProgram","CtxMaxConnectionTimeF","CtxMaxConnectionTime","CtxMaxDisconnectionTimeF",
             "CtxMaxDisconnectionTime","CtxMaxIdleTimeF","CtxMaxIdleTime","connectclientdrives",
             "onnectclientprinters","defaultprinter","shadow","brokenconn",
-            "reconn","allow_pwchange","connectclientprinters","no_password_required","temporary_disable",
+            "reconn","allow_pwchange","connectclientprinters","no_expiry","no_password_required","temporary_disable",
             "password_expires","logon_time_set","logoff_time_set","kickoff_time_set","SetSambaLogonHours",
             "workstation_list") as $attr){
         if(isset($_POST["use_".$attr])){
@@ -1734,6 +1752,10 @@ class sambaAccount extends plugin
       $ret['no_password_required'] = $this->no_password_required;
     }
 
+    if(in_array("no_expiry",$this->multi_boxes)){
+      $ret['no_expiry'] = $this->no_expiry;
+    }
+
     if(in_array("temporary_disable",$this->multi_boxes)){
       $ret['temporary_disable'] = $this->temporary_disable;
     }
@@ -1844,6 +1866,16 @@ class sambaAccount extends plugin
 
     if(isset($values['no_password_required'])){
       if($values['no_password_required']){
+        if(!preg_match("/N/",$this->sambaAcctFlags)) {
+          $this->sambaAcctFlags = preg_replace("/ /","N",$this->sambaAcctFlags,1);
+        }
+      }else{
+        $this->sambaAcctFlags = preg_replace("/N/"," ",$this->sambaAcctFlags,1);
+      }
+    }      
+
+    if(isset($values['no_expiry'])){
+      if($values['no_expiry']){
         if(!preg_match("/N/",$this->sambaAcctFlags)) {
           $this->sambaAcctFlags = preg_replace("/ /","N",$this->sambaAcctFlags,1);
         }

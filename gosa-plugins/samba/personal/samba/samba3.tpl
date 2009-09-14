@@ -311,6 +311,14 @@
    <table>
     <tr>
      <td colspan=2>
+      {render acl=$sambaAcctFlagsXACL  checkbox=$multiple_support checked=$use_no_expiry}
+       <input id="no_expiry" type=checkbox name="no_expiry" value="1" {$flagsX} class="center">
+      {/render}
+      <label for="no_expiry">{t}The password never expires{/t}</label>
+     </td>
+    </tr>
+    <tr>
+     <td colspan=2>
       {render acl=$sambaAcctFlagsNACL  checkbox=$multiple_support checked=$use_no_password_required}
        <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN} class="center">
       {/render}
