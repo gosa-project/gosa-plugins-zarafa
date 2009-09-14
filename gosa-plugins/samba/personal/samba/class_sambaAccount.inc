@@ -729,6 +729,7 @@ class sambaAccount extends plugin
       }
     }
     $smarty->assign("additional_info_PwdMustChange",$additional_info_PwdMustChange);
+    $smarty->assign("no_expiry",$this->no_expiry);
 
     /* Show main page */
     $smarty->assign("multiple_support",$this->multiple_support_active);
@@ -995,9 +996,18 @@ class sambaAccount extends plugin
       "\n<tr><td>"._("Last password update").":          </td><td>".$sambaPwdLastSet."</td></tr>".
       "\n<tr><td>"._("Last logon").":                    </td><td>".$sambaLogonTime."</td></tr>".
       "\n<tr><td>"._("Last logoff").":                   </td><td>".$sambaLogoffTime."</td></tr>".
-      "\n<tr><td>"._("Automatic logoff").":              </td><td>".$sambaKickoffTime."</td></tr>".
-      "\n<tr><td>"._("Password expires").":              </td><td>".$sambaPwdMustChange."</td></tr>".
-      "\n<tr><td>"._("Password change available").":     </td><td>".$sambaPwdCanChange."</td></tr>".
+      "\n<tr><td>"._("Automatic logoff").":              </td><td>".$sambaKickoffTime."</td></tr>";
+
+      if($this->no_expiry){
+        $str .= "\n<tr><td>"._("Password expires").":              </td><td>"._("No")."</td></tr>";
+        $str .= "\n<tr><td colspan='2'><font color='gray'>".
+          sprintf(_("The password would expire on %s, but the password expiry is disabled."),$sambaPwdMustChange).
+          "</font></td></tr>";
+      }else{
+        $str .= "\n<tr><td>"._("Password expires").":              </td><td>".$sambaPwdMustChange."</td></tr>";
+      }
+    
+      $str .= "\n<tr><td>"._("Password change available").":     </td><td>".$sambaPwdCanChange."</td></tr>".
       "\n</table>";
       "\n</div>";
     return($str);
