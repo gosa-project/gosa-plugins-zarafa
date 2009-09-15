@@ -682,7 +682,7 @@ sub new_syslog_config {
         my $ldap_res = $ldap_handle->search( base   => $ldap_base,
                 scope  => 'sub',
                 attrs => ['gotoSyslogServer'],
-                filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
+                filter => "(&(gosaGroupObjects=[W])(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
             &main::daemon_log("$session_id ERROR: new_syslog_config: ldap search: ".$ldap_res->error, 1);
             &main::release_ldap_handle($ldap_handle);
@@ -695,7 +695,7 @@ sub new_syslog_config {
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: gotoSyslogServer".
-                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
+                    "\n\tfilter: (&(gosaGroupObjects=[W])(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
             &main::release_ldap_handle($ldap_handle);
             return;
         }
@@ -758,7 +758,7 @@ sub new_ntp_config {
         my $ldap_res = $ldap_handle->search( base   => $ldap_base,
                 scope  => 'sub',
                 attrs => ['gotoNtpServer'],
-                filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
+                filter => "(&(gosaGroupObjects=[W])(objectClass=gosaGroupOfNames)(member=$filter_dn))");
         if($ldap_res->code) {
             &main::daemon_log("$session_id ERROR: new_ntp_config: ldap search: ".$ldap_res->error, 1);
             &main::release_ldap_handle($ldap_handle);
@@ -771,7 +771,7 @@ sub new_ntp_config {
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: gotoNtpServer".
-                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
+                    "\n\tfilter: (&(gosaGroupObjects=[W])(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
             &main::release_ldap_handle($ldap_handle);
             return;
         }
@@ -870,7 +870,7 @@ sub new_ldap_config {
 	        $mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
-			filter => "(&(objectClass=gosaGroupOfNames)(member=$filter_dn))");
+			filter => "(&(gosaGroupObjects=[W])(objectClass=gosaGroupOfNames)(member=$filter_dn))");
 		if($mesg->code) {
 			&main::daemon_log("$session_id ERROR: new_ldap_config: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$filter_dn))': ".$mesg->error, 1);
             &main::release_ldap_handle($ldap_handle);
@@ -883,7 +883,7 @@ sub new_ldap_config {
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: dn, gotoLdapServer, FAIclass".
-                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
+                    "\n\tfilter: (&(gosaGroupObjects=[W])(objectClass=gosaGroupOfNames)(member=$filter_dn))", 1);
             &main::release_ldap_handle($ldap_handle);
             return;
         }
