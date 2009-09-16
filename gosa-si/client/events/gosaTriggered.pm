@@ -56,8 +56,8 @@ END {}
 ### Parameter declarations ###################################################
 my $userNotification;
 my %cfg_defaults = (
-"ClientPackages" => {
-	"user-notification-of-admin-activities" => [\$userNotification, 'enabled'],
+"client" => {
+	"user-notification-of-admin-activities" => [\$userNotification, 'true'],
 	},
 );
 
@@ -187,7 +187,7 @@ sub trigger_action_localboot {
     }
 
 	# Check if user should be notificated or not
-	if ($userNotification eq "enabled") {
+	if ($userNotification eq "true") {
 		# Check logged in user
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
@@ -286,7 +286,7 @@ sub trigger_action_reboot {
     }
 
 	# Check if user should be notificated or not
-	if ($userNotification eq "enabled") {
+	if ($userNotification eq "true") {
 		# Check logged in user
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
@@ -348,7 +348,7 @@ sub trigger_action_halt {
     }
 
 	# Check if user should be notificated or not
-	if ($userNotification eq "enabled") {
+	if ($userNotification eq "true") {
 		# Check logged in user
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
@@ -400,7 +400,7 @@ sub trigger_action_reinstall {
     my ($msg, $msg_hash) = @_;
 
 	# Check if user should be notificated or not
-	if ($userNotification eq "enabled") {
+	if ($userNotification eq "true") {
 		# Check logged in user
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
