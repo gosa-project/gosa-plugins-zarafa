@@ -280,19 +280,13 @@ sub process_job_msg {
 	
     # Check if it is a periodical job
     my $periodic = 'none';
-    my $periodic_time = 1;
     if (exists $msg_hash->{periodic})
     {
         $periodic = $msg_hash->{periodic}[0];
-        if (not defined $periodic)   # Periodic tag is not defined
-        {
-            $periodic = "";
-        }
-
-        if (not exists $main::check_periodic->{$periodic})   # Periodic tag is not valid
+        if (not $periodic =~ /[0-9]+_(hours|minutes|days|weeks|months)/)    # Periodic tag is not valid
         {
             &main::daemon_log("$session_id ERROR: Message contains invalid periodic-tag '$periodic'.".
-                    " Please use one of the following tags instead: '".join("', '", keys(%$main::check_periodic))."'.".
+                    " Please use the following pattern for the tag: 'INTEGER_[minutes|hours|days|weeks|months]'".
                     " Aborted message: $msg", 1);
             $out_msg = "<xml>".
                 "<header>answer</header><source>$main::server_address</source><target>GOSA</target>".
@@ -300,41 +294,6 @@ sub process_job_msg {
                 "</xml>";
             return ($out_msg);
         }
-
-        if (exists $msg_hash->{$periodic})   # Check periodical time tag and set value
-        {
-            if (ref $msg_hash->{$periodic}[0] eq "HASH")   # Periodical time tag is empty
-            {
-                &main::daemon_log("$session_id ERROR: Message contains no content of periodical time tag.".
-                        " Please use an integer for this tag (i. e.: <periodic>hours</periodoc><hours>5</hours>)", 1);
-                $out_msg = "<xml>".
-                    "<header>answer</header><source>$main::server_address</source><target>GOSA</target>".
-                    "<answer1>1</answer1><error_string>Message contains no content of periodic time tag</error_string>".
-                    "</xml>";
-                return ($out_msg);
-
-            }
-
-            if (not $msg_hash->{$periodic}[0] =~ /[1-9]+\d*/)   # Periodical time tag is not an INT > 0
-            {
-                &main::daemon_log("$session_id ERROR: Message contains invalid periodical time tag '$msg_hash->{$periodic}[0]'.".
-                        " Please use an integer for this tag (i. e.: <periodic>hours</periodoc><hours>5</hours>)", 1);
-                $out_msg = "<xml>".
-                    "<header>answer</header><source>$main::server_address</source><target>GOSA</target>".
-                    "<answer1>1</answer1><error_string>Message contains invalid periodic time tag '$msg_hash->{$periodic}[0]'</error_string>".
-                    "</xml>";
-                return ($out_msg);
-            }
-
-            $periodic_time = $msg_hash->{$periodic}[0];
-        }
-    }
-
-    # Default db value is 'none' otherwise use systax /\d+_$periodic/
-    my $db_periodic_value = 'none';
-    if ($periodic ne 'none')
-    {
-        $db_periodic_value = $periodic_time."_".$periodic;
     }
 
     # Add job to job queue
@@ -352,7 +311,7 @@ sub process_job_msg {
 			plainname=>$plain_name,
             siserver=>"localhost",
             modified=>"1",
-            periodic=>$db_periodic_value,
+            periodic=>$periodic,
         };
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {

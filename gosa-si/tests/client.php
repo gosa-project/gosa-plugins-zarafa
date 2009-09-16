@@ -19,7 +19,7 @@ for($count = 1; $count <= $zahl; $count++)
 	# Funktioniert noch nicht
 	#$data = "<xml><header>gosa_opsi_test</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>acroread</productId></xml>";
 
-	$data = "<xml><header>gosa_opsi_getLicenseInformationForProduct</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>acroread</productId></xml>";
+	#$data = "<xml><header>gosa_opsi_getLicenseInformationForProduct</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>acroread</productId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_getLicensePools_listOfHashes</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
 
@@ -46,7 +46,7 @@ for($count = 1; $count <= $zahl; $count++)
 
 	##############################
 	# periodical jobs
-	#$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><macaddress>00:0c:29:4c:4b:0c</macaddress><timestamp>20090629000000</timestamp><periodic>weeks</periodic><weeks>2</weeks></xml>"; 
+	#$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><macaddress>00:0c:29:4c:4b:0c</macaddress><timestamp>23450629000000</timestamp><periodic>3_months</periodic></xml>"; 
 	#$data = "<xml><header>job_trigger_action_reboot</header><source>GOSA</source><target>00:0c:29:4c:4b:0c</target><timestamp>20090626135000</timestamp><macaddress>00:0c:29:4c:4b:0c</macaddress><periodic>minutes</periodic><minutes>5</minutes></xml>";
     /* Prepare a hunge bunch of data to be send */
     # jobdb add
@@ -64,7 +64,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</source><target>00:0C:29:4C:4B:0C</target></xml>";
 
     # jobdb update  
-    #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase> <id>1</id></phrase></clause></where> <update><timestamp>19700101000000</timestamp></update></xml>";
+    #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase> <id>1</id></phrase></clause></where> <update><periodic>12_weeks</periodic></update></xml>";
     #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
     # jobdb query
