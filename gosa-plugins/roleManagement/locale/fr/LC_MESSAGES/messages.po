@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-03 17:43+0200\n"
-"PO-Revision-Date: 2009-06-30 10:33+0200\n"
+"PO-Revision-Date: 2009-09-17 10:23+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,9 +22,8 @@ msgid "Roles"
 msgstr "Rôle"
 
 #: admin/roleManagement/class_roleManagement.inc:27
-#, fuzzy
 msgid "Manage roles"
-msgstr "Gèrer les utilisateurs"
+msgstr "Gèrer les rôles"
 
 #: admin/roleManagement/class_roleManagement.inc:137
 msgid "Permission"
@@ -82,9 +81,8 @@ msgid "Generic"
 msgstr "Informations"
 
 #: admin/roleManagement/class_roleGeneric.inc:330
-#, fuzzy
 msgid "Role generic"
-msgstr "Informations"
+msgstr "Rôle par défaut"
 
 #: admin/roleManagement/class_roleGeneric.inc:339
 #: admin/roleManagement/roleGeneric.tpl:19
@@ -113,9 +111,8 @@ msgstr ""
 
 #: admin/roleManagement/class_divListRole.inc:52
 #: admin/roleManagement/class_divListRole.inc:53
-#, fuzzy
 msgid "List of roles"
-msgstr "Liste des groupes"
+msgstr "Liste des rôles"
 
 #: admin/roleManagement/class_divListRole.inc:64
 msgid "Select all"
@@ -131,9 +128,8 @@ msgid "Actions"
 msgstr ""
 
 #: admin/roleManagement/class_divListRole.inc:80
-#, fuzzy
 msgid "Regular expression for matching role names"
-msgstr "Expression régulière correspondant à des noms de groupe"
+msgstr "Expression régulière correspondant à des noms de rôles"
 
 #: admin/roleManagement/class_divListRole.inc:117
 msgid "Submit department"
@@ -168,18 +164,16 @@ msgid "Delete this entry"
 msgstr "Supprimer cette entrée"
 
 #: admin/roleManagement/class_divListRole.inc:224
-#, fuzzy
 msgid "Number of listed roles"
-msgstr "Nombre de groupes affichés"
+msgstr "Nombre de rôles affichés"
 
 #: admin/roleManagement/class_divListRole.inc:225
 msgid "Number of listed departments"
 msgstr "Nombre de département listés"
 
 #: admin/roleManagement/main.inc:57
-#, fuzzy
 msgid "Role management"
-msgstr "Gestion des ACL"
+msgstr "Gestion des rôles"
 
 #: admin/roleManagement/roleGeneric.tpl:34
 msgid "Choose subtree to place user in"
@@ -225,6 +219,3 @@ msgstr "Afficher les objets correspondants"
 msgid "Regular expression for matching object names"
 msgstr "Expression régulière pour trouver les objets correspondants"
 
-#, fuzzy
-#~ msgid "role"
-#~ msgstr "Rôles ACL"
