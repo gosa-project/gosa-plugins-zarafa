@@ -52,7 +52,7 @@ my ($i,$file,$ldap,@nagiosmail,
 	$usercontact,$members,@contactname,@nagiosalias,$j,@entries
 );
 
-# Les parametres de connexion proviennent du fichier smbldap-bind.conf
+# The connexion parameters are in gosa_bind.conf
 my $gosa_bind_conf="/etc/gosa_bind.conf";
 my $gosa_ldap_conf="/etc/gosaldap.conf";
 my %config_bind = &read_conf($gosa_bind_conf);
@@ -90,7 +90,7 @@ my $password=$config_bind{masterPw};
 
 	
 
-	#Partie pour l'objectClass NAgios Contact
+	#Part of the ObjectClass NAgios Contact
 	$mesg = $ldap->search(filter=>"(&(objectClass~=nagiosContact))", base=>$peopleou,scope=>$scope);
 	@entries = $mesg->entries;
 	$i=0;
@@ -109,7 +109,7 @@ my $password=$config_bind{masterPw};
 	$nb_user=$i;
 		
 		
-	#Partie pour l'objectClass NAgios Group
+	#Part of the ObjectClass NAgios Group
 	$mesg = $ldap->search(filter=>"(&(objectClass~=nagiosContactGroup))", base=>$groupeou,scope=>$scope);
 	@entries = $mesg->entries;
 	$i=0;
@@ -131,7 +131,7 @@ my $password=$config_bind{masterPw};
 
 		$userlist1.=$admindef;
 
-	#Partie pour l'objectClass NagiosAuth
+	#Part of the ObjectClass NagiosAuth
 	$stdout.="\n\n\n\n\nAuthorization for the different Information in Nagios\n"."-" x 53;$stdout.="\n";
 	$mesg = $ldap->search(filter=>"(&(objectClass~=nagiosAuth)(AuthorizedSystemInformation~=checked))", base=>$peopleou,scope=>$scope);
 	@entries = $mesg->entries;
@@ -216,9 +216,9 @@ sub modiffile_contact()
 {
 	$file=$_[0];
 	my $text="";
-	open(FH,"$file") || die "Probleme d'ouverture du fichier $file";
+	open(FH,"$file") || die "Can't open file $file";
 	$stdout.="\n\n"; $stdout.=" "x10;$stdout.="-"x25;$stdout.=" "x10;
-	$stdout.="\n\n$nb_user utilisateur(s) ajoutÃ©(s) dans le fichier $file\n";
+	$stdout.="\n\n$nb_user user(s) added in file $file\n";
 	for($i=0;$i<$nb_user;$i++)
 	{
 		$text.="\n\ndefine contact{\n";
@@ -232,7 +232,7 @@ sub modiffile_contact()
 		$text.="\n}\n\n";
 	}
 	close(FH);
-	open(FH,"> $file") || die "Probleme d'ouverture du fichier $file";
+	open(FH,"> $file") || die "Can't open file $file";
 	print  FH "$text";
 	close(FH);
 	
@@ -244,9 +244,9 @@ sub modiffile_group()
 	$text="";
 	$j=0;
 	$i=0;
-	open(FH,"$file") || die "Probleme d'ouverture du fichier $file";
+	open(FH,"$file") || die "Can't open $file";
 	$stdout.="\n\n"; $stdout.=" "x10;$stdout.="-"x25;$stdout.=" "x10;
-	$stdout.="\n\n$nb_groupe groupe(s) ajouté(s) dans le fichier $file\n";
+	$stdout.="\n\n$nb_groupe group(s) added in file $file\n";
 	for($i=0;$i<$nb_groupe;$i++)
 	{
 		$text.="\n\ndefine contact{\n";
@@ -262,7 +262,7 @@ sub modiffile_group()
 	}
 	
 	close(FH);
-	open(FH,"> $file") || die "Probleme d'ouverture du fichier $file";
+	open(FH,"> $file") || die "Can't open file $file";
 	print FH "$text";
 	close(FH);
 	
@@ -272,7 +272,7 @@ sub modiffile_cgi()
 {
 	$file=$_[0];
 	$text="";
-	open(FH,"$file") || die "Probleme d'ouverture du fichier $file";
+	open(FH,"$file") || die "Can't open file $file";
 	while(<FH>)
 	{	
 		$line=$_;
@@ -287,7 +287,7 @@ sub modiffile_cgi()
 		else {$text.=$line};
 	}
 	close(FH);
-	open(FH,"> $file") || die "Probleme d'ouverture du fichier $file";
+	open(FH,"> $file") || die "Can't open file $file";
 	print FH "$text";
 	close(FH);
 	
@@ -296,7 +296,7 @@ sub modiffile_cgi()
 sub read_conf()
 {
         my %conf;
-        open (CONFIGFILE, "$_[0]") || die "Unable to open $_[0] for reading !\n";
+        open (CONFIGFILE, "$_[0]") || die "Can't open $_[0] for reading !\n";
         while (<CONFIGFILE>) {
                 chomp($_);
                 ## throw away comments

@@ -2,6 +2,7 @@
 
 
 # Copyright (C) 2005 Guillaume Delecourt <guillaume.delecourt@opensides.be>
+# Copyright (c) 2009 Benoit Mortier <benoit.mortier@opensides.be>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,10 +28,10 @@ use Net::LDAP::LDIF;
 # Variables a config
 $admin="cn=ldapadmin,dc=example,dc=be";
 $password="";
-$peopleou="ou=People,dc=example,dc=be";
+$peopleou="ou=people,dc=example,dc=be";
 $base="dc=example,dc=be";
 $scope="one"; # par defaut
-$dump_file="myldaptree.ldif";
+$dump_file="samba-before-gosa.ldif";
 $server="localhost";
 
 
@@ -50,7 +51,7 @@ $comm=$ARGV[0];
 
 if($comm eq "del" && @ARGV >1 )
 {	
-	print "You asked to delete attribute : ";
+	print "You asked to delete attributes : ";
 	$i=1;
 	while($ARGV[$i] ne "")
 	{	
@@ -62,7 +63,7 @@ if($comm eq "del" && @ARGV >1 )
 	$ldap->bind($admin,password=>$password);
 
 
-	print "ldap connection" .$ldap;
+	print "ldap connection " .$ldap;
 
 	$mesg = $ldap->search(filter=>"(objectClass=*)",base=>$peopleou,scope=>$scope);
 	@entries = $mesg->entries;
@@ -122,7 +123,7 @@ elsif($comm eq "modif" && @ARGV >1)
 	@entries = $mesg->entries;
 	foreach $entry (@entries) {
 	$mesg = $ldap->modify($entry->dn(), replace => { "$ARGV[1]" => "$ARGV[2]" } );
-	print $entry->dn()."\n\tattribut $ARGV[1] modifié avec la valeur $ARGV[2]\n";
+	print $entry->dn()."\n\tattribut $ARGV[1] modified with the value $ARGV[2]\n";
 	}
 	$ldap->unbind;
 	exit(0);
@@ -141,10 +142,10 @@ sub help()
     print_banner;
     print "Usage: $0 [-?] command\n";
     print "\t-?	show this help message\n";
-    print "\tgosa -> add GOsa attributes for the whole the people branch !\n";
-    print "\tdel attribut  -> Remove an attribute for the whole people branch !\n";
+    print "\tgosa -> add GOsa attributes to the people branch !\n";
+    print "\tdel <attribute>  -> Remove an attribute from the people branch !\n";
     print "\tmodif <attribute> <attribute value> -> to modify the attribute\n";
-    print "\tdump to dump the whole ldap tree\n";
+    print "\tdump -> dump the whole ldap tree\n";
     exit (1);
 }
 
