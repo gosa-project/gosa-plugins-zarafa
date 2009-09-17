@@ -130,5 +130,9 @@
   </td>
  </tr>
 </table> 
+<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+
+{$netconfig}
+
 <input type='hidden' name='opsiGeneric_posted' value='1'>
 {/if}

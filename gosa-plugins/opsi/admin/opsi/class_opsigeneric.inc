@@ -45,6 +45,7 @@ class opsiGeneric extends plugin
 
   public $attributes = array("mac","note","description");
 
+  public $netConfigDNS = NULL;
 
   /*! \brief  Initialize this class 
       @param  Object    The GOsa base config.
@@ -75,9 +76,34 @@ class opsiGeneric extends plugin
         $this->hostId = preg_replace('/\$$/',"",$this->hostId);
       }
     }
-  
+
     /* Try to plugin */
     $this->init();
+
+    // Now fake a valid ldap entry ... this is necessary to avoid 
+    //  modifications in the dns/dhcp classes
+   
+    // First fake cn 
+    $this->attrs['hostId'][0] = $this->hostId;
+    $this->attrs['cn'][0] = $this->hostId;
+
+    // Second detect DNS settings. 
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $strippedHostId = preg_replace("/\..*$/","",$this->hostId);
+    $ldap->search("(&(objectClass=dNSZone)(|(relativeDomainName=".$this->hostId.")(relativeDomainName=".$strippedHostId."))(aRecord=*))",array("aRecord"));
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+      $this->attrs['ipHostNumber']['count'] = 0;
+      $this->attrs['ipHostNumber'][0] = $attrs['aRecord'][0];
+    }
+
+    // Initialize DHCP and DNS 
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, FALSE, "hostId");
+    $this->netConfigDNS->set_acl_category("opsi");
+    $this->netConfigDNS->set_acl_base($this->config->current['BASE']);
+    $this->netConfigDNS->IPisMust = FALSE;
+    $this->netConfigDNS->MACisMust = FALSE;
   }
   
 
@@ -206,6 +232,7 @@ class opsiGeneric extends plugin
   public function check()
   {
     $messages = plugin::check();
+    $messages= array_merge($messages, $this->netConfigDNS->check());
 
     if(empty($this->hostId)){
       $messages[] = msgPool::required(_("Name"));
@@ -351,6 +378,13 @@ class opsiGeneric extends plugin
       $cfg_able = count($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG']);
       $cfg_able &= $this->acl_is_readable("netbootProduct");
     }
+
+    // Get net config template
+    $str = $this->netConfigDNS->execute();
+    if(is_object($this->netConfigDNS->dialog)){
+      return($str);
+    }
+    $smarty->assign("netconfig", $str);
 
     $smarty->assign("netboot_configurable",$cfg_able);
     $smarty->assign("hostId", $this->hostId);
@@ -501,6 +535,9 @@ class opsiGeneric extends plugin
         return;
       }
     }
+
+    $this->netConfigDNS->cn = $this->hostId;
+    $this->netConfigDNS->save();
   }
 
   
@@ -527,6 +564,8 @@ class opsiGeneric extends plugin
    */  
   public function remove_from_parent()
   {
+    $this->netConfigDNS->remove_from_parent();
+
     $this->opsi->del_client($this->hostId);
     if($this->opsi->is_error()){
       msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
@@ -577,6 +616,7 @@ class opsiGeneric extends plugin
     if(isset($_POST['opsiGeneric_posted'])){
 
       plugin::save_object();
+      $this->netConfigDNS->save_object();
 
       /* Get hostId 
        */
