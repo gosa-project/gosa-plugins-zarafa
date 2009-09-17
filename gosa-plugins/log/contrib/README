@@ -16,7 +16,7 @@ This plugin displays logged system messages, which are stored in a mysql databas
 For example, you can configure syslog-ng to log into a database and use GOsa to display 
 those messages. This plugin has to be used toghether with the 'Syslog Server' service.
 
--The database schema is in file 'logging.sql'
+-The database schema is in file 'golog.sql'
 -The service plugin is named 'Syslog service database'.
  (Can be configured in: Administration->Server->Services)
 
