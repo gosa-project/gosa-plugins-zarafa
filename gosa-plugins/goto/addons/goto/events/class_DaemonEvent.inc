@@ -494,7 +494,7 @@ class DaemonEvent
 
     $ret['periodic'] = "none";
     if($this-> activate_periodical_job){
-      $ret['periodic']= array($this->periodType => $this->periodValue); 
+      $ret['periodic']= $this->periodValue."_".$this->periodType;
     }
 
     return($ret);
