@@ -27,11 +27,6 @@ class roletabs extends tabs
 	{
 		tabs::tabs($config, $data, $dn,"roles",$hide_refs, $hide_acls);
 		$this->base = $baseobject= $this->by_object['roleGeneric']->base;
-
-    foreach($this->by_object as $plugin){
-      uniBonnAccount::propagateRoleAttributes($config, NULL, $plugin,$this);
-    }
-
 		$this->addSpecialTabs();
 
     
