@@ -79,31 +79,6 @@ class opsiGeneric extends plugin
 
     /* Try to plugin */
     $this->init();
-
-    // Now fake a valid ldap entry ... this is necessary to avoid 
-    //  modifications in the dns/dhcp classes
-   
-    // First fake cn 
-    $this->attrs['hostId'][0] = $this->hostId;
-    $this->attrs['cn'][0] = $this->hostId;
-
-    // Second detect DNS settings. 
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $strippedHostId = preg_replace("/\..*$/","",$this->hostId);
-    $ldap->search("(&(objectClass=dNSZone)(|(relativeDomainName=".$this->hostId.")(relativeDomainName=".$strippedHostId."))(aRecord=*))",array("aRecord"));
-    if($ldap->count()){
-      $attrs = $ldap->fetch();
-      $this->attrs['ipHostNumber']['count'] = 0;
-      $this->attrs['ipHostNumber'][0] = $attrs['aRecord'][0];
-    }
-
-    // Initialize DHCP and DNS 
-    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, FALSE, "hostId");
-    $this->netConfigDNS->set_acl_category("opsi");
-    $this->netConfigDNS->set_acl_base($this->config->current['BASE']);
-    $this->netConfigDNS->IPisMust = FALSE;
-    $this->netConfigDNS->MACisMust = FALSE;
   }
   
 
@@ -222,6 +197,34 @@ class opsiGeneric extends plugin
       if(empty($this->s_selectedNetbootProduct)){
         $this->s_selectedNetbootProduct = key($this->a_availableNetbootProducts);
       }
+
+      // Now fake a valid ldap entry ... this is necessary to avoid 
+      //  modifications in the dns/dhcp classes
+
+      // First fake cn 
+      $this->attrs['hostId'][0] = $this->hostId;
+      $this->attrs['cn'][0] = $this->hostId;
+
+      // Second detect DNS settings. 
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $strippedHostId = preg_replace("/\..*$/","",$this->hostId);
+      $ldap->search("(&(objectClass=dNSZone)(|(relativeDomainName=".$this->hostId.")(relativeDomainName=".$strippedHostId."))(aRecord=*))",array("aRecord"));
+      if($ldap->count()){
+        $attrs = $ldap->fetch();
+        $this->attrs['ipHostNumber']['count'] = 0;
+        $this->attrs['ipHostNumber'][0] = $attrs['aRecord'][0];
+      }
+
+      $this->attrs['macAddress']['count'] = 1;
+      $this->attrs['macAddress'][0] = &$this->mac;
+
+      // Initialize DHCP and DNS 
+      $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, FALSE, "hostId");
+      $this->netConfigDNS->set_acl_category("opsi");
+      $this->netConfigDNS->set_acl_base($this->config->current['BASE']);
+      $this->netConfigDNS->IPisMust = FALSE;
+      $this->netConfigDNS->MACisMust = FALSE;
     }
   }
 
@@ -617,7 +620,8 @@ class opsiGeneric extends plugin
 
       plugin::save_object();
       $this->netConfigDNS->save_object();
-
+      $this->mac = $this->netConfigDNS->macAddress;
+  
       /* Get hostId 
        */
       if(isset($_POST['hostId']) && $this->standalone && $this->acl_is_writeable("hostId")){

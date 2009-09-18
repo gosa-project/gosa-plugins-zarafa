@@ -22,14 +22,16 @@
 {/render}
 	 </td>
     </tr>
+<!--
     <tr>
      <td>{t}MAC address{/t}{$must}</td>
      <td>
 {render acl=$macACL}
-		<input type='text' name="mac" value="{$mac}">
+		<input type='text' name="dummy" value="{$mac}" disabled>
 {/render}
 	 </td>
 	</tr>
+-->
 	{else}
     <tr>
      <td>{t}Name{/t}</td>
@@ -39,6 +41,7 @@
 {/render}
 	 </td>
     </tr>
+<!--
     <tr>
      <td>{t}MAC address{/t}{$must}</td>
      <td>
@@ -47,6 +50,7 @@
 {/render}
 	 </td>
     </tr>
+-->
     {/if}
     <tr>
      <td>{t}Netboot product{/t}</td>
