@@ -2,7 +2,7 @@
   <tr>
     <td style='width:50%; vertical-align:top; border-right:1px solid #A0A0A0; padding-right:10px;'>
 
-      <h2><img src='plugins/roleManagement/images/role.png' alt='' class='center'>&nbsp;
+      <h2><img src='plugins/rolemanagement/images/role.png' alt='' class='center'>&nbsp;
         {t}Generic{/t}
       </h2>
 
@@ -64,7 +64,7 @@
 
     </td>
     <td style=' vertical-align:top; padding-left:10px;'>
-      <h2><img src='plugins/roleManagement/images/occupant.png' alt='' class='center'>&nbsp;
+      <h2><img src='plugins/rolemanagement/images/occupant.png' alt='' class='center'>&nbsp;
         {t}Occupants{/t}
       </h2>
 

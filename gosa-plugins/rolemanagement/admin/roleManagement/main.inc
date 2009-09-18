@@ -49,12 +49,12 @@ if ( $cleanup ){
 
   /* Page header*/
   if (get_object_info() != ""){
-    $display= print_header(get_template_path('plugins/roleManagement/images/plugin.png'),
+    $display= print_header(get_template_path('plugins/rolemanagement/images/plugin.png'),
         _("Roles"),
         "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".
         LDAP::fix(get_object_info()));
   } else {
-    $display= print_header(get_template_path('plugins/roleManagement/images/plugin.png'), _("Role management"));
+    $display= print_header(get_template_path('plugins/rolemanagement/images/plugin.png'), _("Role management"));
   }
 
   $display.= $output;

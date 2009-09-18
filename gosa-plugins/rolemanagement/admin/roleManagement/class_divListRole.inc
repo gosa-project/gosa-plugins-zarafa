@@ -113,7 +113,7 @@ class divListRole extends MultiSelectWindow
     if(preg_match("/c/",$acls)) {
       $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Create")."|\n";
-      $s.= "...|<input class='center' type='image' src='plugins/roleManagement/images/new.png' alt=''>".
+      $s.= "...|<input class='center' type='image' src='plugins/rolemanagement/images/new.png' alt=''>".
         "&nbsp;"._("Role")."|role_new|\n";
     }
 
@@ -201,7 +201,7 @@ class divListRole extends MultiSelectWindow
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' 
           name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
-      $field1 = array("string" => "<img src='plugins/roleManagement/images/role.png' 
+      $field1 = array("string" => "<img src='plugins/rolemanagement/images/role.png' 
           alt='"._("Role")."' ".$title.">", 
           "attach" => "style='text-align:center;width: 20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), 
@@ -221,7 +221,7 @@ class divListRole extends MultiSelectWindow
     $num_objs = count($list);
     $num_obj_str = _("Number of listed roles");
     $num_dep_str = _("Number of listed departments");
-    $str = "<img class='center' src='plugins/roles/images/role.png'
+    $str = "<img class='center' src='plugins/rolemanagement/images/role.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/lists/folder.png'
               title='".$num_dep_str."' alt='".$num_dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
