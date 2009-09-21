@@ -27,8 +27,6 @@ my @events = (
 	"opsi_assignSoftwareLicenseToHost",
 	"opsi_unassignSoftwareLicenseFromHost",
 	"opsi_unassignAllSoftwareLicensesFromHost",
-	"opsi_getLicenses_list",
-	"opsi_getLicense_hash",
 	"opsi_getSoftwareLicense_hash",
 	"opsi_getLicensePool_hash",
 	"opsi_getSoftwareLicenseUsages_listOfHashes",
@@ -1913,8 +1911,10 @@ sub opsi_unassignAllSoftwareLicensesFromHost {
 
 ################################
 #
-# @brief 
-#
+# @brief Returns the assigned licensePoolId and licenses, how often the product is installed and at which host
+# and the number of max and remaining installations for a given OPSI product.
+# @param productId Identificator of an OPSI product.
+#	
 sub opsi_getLicenseInformationForProduct {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
