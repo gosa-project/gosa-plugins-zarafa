@@ -23,8 +23,8 @@
 
 // Remove locks created by this plugin
 if ($remove_lock){
-  if(session::is_set('roleManagement')){
-    $macl = session::get('roleManagement');
+  if(session::is_set('opsiLicenses')){
+    $macl = session::get('opsiLicenses');
     $macl->remove_lock();
   }
 }
@@ -32,20 +32,20 @@ if ($remove_lock){
 /* Remove this plugin from session
 */
 if ( $cleanup ){
-  $macl = session::get('roleManagement');
+  $macl = session::get('opsiLicenses');
   $macl->remove_lock();
-  session::un_set('roleManagement');
+  session::un_set('opsiLicenses');
 }else{
 
   /* Create object object on demand */
-  if (!session::is_set('roleManagement')){
-    session::set('roleManagement',new roleManagement($config));
+  if (!session::is_set('opsiLicenses')){
+    session::set('opsiLicenses',new opsiLicenses($config));
   }
-  $roleManagement = session::get('roleManagement');
+  $opsiLicenses = session::get('opsiLicenses');
 
   /* Execute formular */
-  $roleManagement->save_object();
-  $output= $roleManagement->execute ();
+  $opsiLicenses->save_object();
+  $output= $opsiLicenses->execute ();
 
   /* Page header*/
   if (get_object_info() != ""){
@@ -60,7 +60,7 @@ if ( $cleanup ){
   $display.= $output;
 
   /* Store changes  in session */
-  session::set('roleManagement',$roleManagement);
+  session::set('opsiLicenses',$opsiLicenses);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
