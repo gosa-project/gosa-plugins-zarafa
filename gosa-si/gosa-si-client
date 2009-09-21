@@ -542,35 +542,35 @@ sub open_socket {
 #  DESCRIPTION:  
 #===============================================================================
 sub register_at_gosa_si_server {
-  my ($kernel) = $_[KERNEL];
-  my $try_to_register = 0;
-  
-  	# if client is already registered, stop registration process	
-  	if ($REGISTERED) {
+	my ($kernel) = $_[KERNEL];
+	my $try_to_register = 0;
+
+	if ($REGISTERED) {
+		# Client is already registered, clear all other registration events
 		$kernel->delay('register_at_gosa_si_server');
-
-	# client is not registered, start registration process
 	} else {
-	  	# clear all other triggered events and wait till registration was successful
-    	$kernel->delay('trigger_new_key');
+		# Client is not registered, start registration process
+		# Clear all other events and wait till registration was successful
+		$kernel->delay('register_at_gosa_si_server');
+		$kernel->delay('trigger_new_key');
 
-    	# create new passwd and ciphering object for client-server communication
-    	$server_key = &create_passwd();
+		# Create new passwd and ciphering object for client-server communication
+		$server_key = &create_passwd();
 
-    	my $events = join( ",", keys %{$event_hash} );
-    	while(1) {
-            $try_to_register++;
+		my $events = join( ",", keys %{$event_hash} );
+		while(1) {
+			$try_to_register++;
 
- 			# after one complete round through all server, stop trying to register           
-            if( $try_to_register > @servers )  { last; }
+			# after one complete round through all server, stop trying to register           
+			if( $try_to_register > @servers )  { last; }
 
-            # fetch first gosa-si-server from @servers
-            # append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
-            # a registration never occured
-            my $server = shift(@servers);
-            push( @servers, $server );
+			# fetch first gosa-si-server from @servers
+			# append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
+			# a registration never occured
+			my $server = shift(@servers);
+			push( @servers, $server );
 
-            # Check if our ip is resolvable - if not: don't try to register
+			# Check if $server is a valid server address
 			if(!(defined($server) && $server =~ m/^[0-9\.]*?:.*$/)) {
 				&main::daemon_log("ERROR: Server with address '".defined($server)?$server:""."' is invalid!", 1);
 				if (length(@servers) == 1) {
@@ -579,30 +579,30 @@ sub register_at_gosa_si_server {
 				}
 			}
 
-      		# Check if our ip is resolvable - if not: don't try to register
-      		my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-      		my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
-            if(!defined($dnsname)) {
-                if( defined($client_force_hostname) && $client_force_hostname eq "true") {
-                    $dnsname = `hostname`;
-                } else {
-                    &write_to_file("goto-error-dns:$ip", $fai_logpath);
-                    &main::daemon_log("ERROR: ip is not resolvable, no registration possible. Write 'goto-error-dns:$ip' to $fai_logpath", 1);
-                    exit(1);
-                }
-            }
+			# Check if our ip is resolvable - if not: don't try to register
+			my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+			my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
+			if(!defined($dnsname)) {
+				if( defined($client_force_hostname) && $client_force_hostname eq "true") {
+					$dnsname = `hostname`;
+				} else {
+					&write_to_file("goto-error-dns:$ip", $fai_logpath);
+					&main::daemon_log("ERROR: ip is not resolvable, no registration possible. Write 'goto-error-dns:$ip' to $fai_logpath", 1);
+					exit(1);
+				}
+			}
 
-      		# create registration msg
+			# create registration msg
 			my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 			my $local_mac = &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 			my $register_hash = &create_xml_hash("here_i_am", $local_ip.":".$client_port, $server);
 			&add_content2xml_hash($register_hash, "new_passwd", $server_key);
 			&add_content2xml_hash($register_hash, "mac_address", $local_mac);
 			&add_content2xml_hash($register_hash, "events", $events);
-            &add_content2xml_hash($register_hash, "client_status", $client_status);
-            &add_content2xml_hash($register_hash, "client_revision", $client_revision);
+			&add_content2xml_hash($register_hash, "client_status", $client_status);
+			&add_content2xml_hash($register_hash, "client_revision", $client_revision);
 			&add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
-            &add_content2xml_hash($register_hash, "key_lifetime", $server_key_lifetime);
+			&add_content2xml_hash($register_hash, "key_lifetime", $server_key_lifetime);
 
 			# Add $HOSTNAME from ENV if force-hostname is set
 			if( defined($client_force_hostname) && $client_force_hostname eq "true") {
@@ -613,45 +613,45 @@ sub register_at_gosa_si_server {
 				}
 			}
 
-      		# send xml hash to server with general server passwd
+			# send xml hash to server with general server passwd
 			my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
 
-	  		# if delivery of registration msg succeed
+			# if delivery of registration msg succeed
 			if($res eq "0") {
-        		# reset try_to_register
+				# reset try_to_register
 				$try_to_register = 0;
 
-        		# Set fixed client address and mac address
+				# Set fixed client address and mac address
 				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 				$client_address= "$client_ip:$client_port";
 				$client_mac_address = $local_mac;
 				$client_dnsname = $dnsname;
-                last;
+				last;
 
-	  		# delivery of registration msg failed	
+			# delivery of registration msg failed	
 			} else {
-        		# wait 1 sec until trying to register again
+				# wait 1 sec until trying to register again
 				sleep(1);
 				next;
 			}
 
-    } # end of while
-	# one circle through all servers finished and no registration succeed
-	if ( $try_to_register >= @servers )  {
+		} # end of while
+
+		if ( $try_to_register >= @servers )  {
+			# One circle through all servers finished and no registration succeed
 			&write_to_file("gosa-si-no-server-available", $fai_logpath);
-			$kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
-	
-	# delivery of registraion msg succeed, waiting for server response
-	} else {
+		} else {
+			# Delivery of registraion msg succeed, waiting for server response
 			daemon_log("INFO: waiting for msg 'register_at_gosa_si_server'",5);
-			$kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
-			# clear old settings and set it again
+			# Clear old settings and set it again
 			$kernel->delay('trigger_new_key');
 			$kernel->delay_set('trigger_new_key', $server_key_lifetime);
-	}
+		}
 
-  }
-  return;
+		# Set waiting time for 'register_at_gosa_si_server'-event
+		$kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+	}
+	return;
 }
     
 
@@ -1067,19 +1067,12 @@ sub server_input {
     if( (!$msg) || (!$msg_hash) ) {
         daemon_log("WARNING: Deciphering of incoming msg failed", 3);
         if($server_address =~ /$remote_ip/) {
-            # got a msg from gosa-si-server which can not be decrypted, may the secrete not up-to-date
+            # Got a msg from gosa-si-server which can not be decrypted, the secrete is not up-to-date
             # cause a reregistering with a new secrete handshake
-            daemon_log("WARNING: Message from gosa-si-server could not be understood, cause reregistering at server", 3);
-
-			# if client is alread in a registration process, that means not registered, do nothing
-			# if not, cause re-registration
-# TODO : This if-else can cause a registration deadlock. Currently I can not reproduce the deadlock and don't have a clue what is the reason for the deadlock
-			if (not $REGISTERED) {
-				&daemon_log("WARNING: gosa-si-client is already in a registration process so ignore this message", 3);
-			} else {
-				$REGISTERED = 0;
-				$kernel->post('client_session', 'register_at_gosa_si_server');
-			}
+            daemon_log("ERROR: Message from gosa-si-server could not be understood, cause reregistering at server", 1);
+			daemon_log("INFO: Set status of si-client to unregistered and throw new registering event", 5);
+			$REGISTERED = 0;
+			$kernel->post('client_session', 'register_at_gosa_si_server');
         }
         $error++;
     }
@@ -1120,31 +1113,13 @@ sub post_processing_and_sending
 	# Check gosa-si envelope validity
 	my $answer_hash = &check_outgoing_xml_validity($answer);
 
-	if( $answer_hash ) 
-	{
-		# Answer is valid            
-		# Pre-sending
-		if( $answer =~ "<header>registered</header>") 
-		{
-			# Set registered flag to true to stop sending further registered msgs
-			$REGISTERED = 1;
-		} 
-		else 
-		{
-			$answer =~ /<header>(\S+)<\/header>/;
-			&send_msg_to_target($answer, $server_address, $server_key, $1);
-		}
-
-		# Post-sending
-		if( $answer =~ "<header>new_key</header>") 
-		{
-			# Set new key to global variable
-			$answer =~ /<new_key>(\S*?)<\/new_key>/;
-			my $new_key = $1;
-			$server_key = $new_key;
-		}
-	}
-
+	# If answer is valid go ahead
+	if( not defined $answer_hash ) { return; }
+	
+	# Sending
+	$answer =~ /<header>(\S+)<\/header>/;
+	&send_msg_to_target($answer, $server_address, $server_key, $1);
+	
 	return;
 }
 

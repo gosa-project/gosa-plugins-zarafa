@@ -41,10 +41,10 @@ my %cfg_defaults = (
    "password" => [\$krb_password, ""],
    },
 );
-&read_configfile($main::cfg_file, %cfg_defaults);
+&krb5_read_configfile($main::cfg_file, %cfg_defaults);
 
 
-sub read_configfile {
+sub krb5_read_configfile {
     my ($cfg_file, %cfg_defaults) = @_;
     my $cfg;
 

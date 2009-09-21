@@ -106,10 +106,11 @@ sub registered {
 	$main::client_address = $target;
 
 	# set registration_flag to true 
-	my $out_hash = &create_xml_hash("registered", $main::client_address, $main::server_address);
-	 # Write the MAC address to file
+	$main::REGISTERED = 1;
+
+	# Write the MAC address to file
 	if(stat($main::opts_file)) { 
-			unlink($main::opts_file);
+		unlink($main::opts_file);
 	}
 
 	my $opts_file_FH;
@@ -132,8 +133,7 @@ sub registered {
 	}
 	close($opts_file_FH);
 	 
-	my $out_msg = &create_xml_string($out_hash);
-	return $out_msg;
+	return;
 }
 
 sub server_leaving {
@@ -201,7 +201,7 @@ sub new_syslog_config {
 	open (FILE, "+>$syslog_file");
 	print FILE join("", @file); 
 	close FILE;
-	&main::daemon_log("INFO: wrote new configuration file: $syslog_file", 5);
+	&main::daemon_log("INFO: Wrote new configuration file: $syslog_file", 5);
 
 	# Restart syslog deamon
 	my $res = qx(/etc/init.d/sysklogd restart);
@@ -263,7 +263,7 @@ sub new_ntp_config {
 	open (FILE, ">$chrony_file");
 	print FILE join("", @new_file); 
 	close FILE;
-	&main::daemon_log("INFO: wrote new configuration file: $chrony_file", 5);
+	&main::daemon_log("INFO: Wrote new configuration file: $chrony_file", 5);
 
 	# Restart chrony deamon
 	my $res = qx(/etc/init.d/chrony force-reload);
@@ -368,7 +368,7 @@ sub new_ldap_config {
 		print file1 "$element\n";
 	}
 	close (file1);
-	daemon_log("wrote $ldap_config", 5);
+	daemon_log("INFO: Wrote $ldap_config", 5);
 
 	# Setup pam_ldap.conf / libnss-ldap.conf
 	open(file1, "> $pam_config");
@@ -390,9 +390,9 @@ sub new_ldap_config {
 		print file2 "$element\n";
 	}
 	close (file2);
-	daemon_log("wrote $nss_config", 5);
+	daemon_log("INFO: Wrote $nss_config", 5);
 	close (file1);
-	daemon_log("wrote $pam_config", 5);
+	daemon_log("INFO: Wrote $pam_config", 5);
 
 	# Create goto.secrets if told so - for compatibility reasons
 	if (defined $goto_admin){
@@ -403,7 +403,7 @@ sub new_ldap_config {
 		open(file1, "> /etc/goto/secret");
 			print file1 "GOTOADMIN=\"$goto_admin\"\nGOTOSECRET=\"$goto_secret\"\n";
 			close(file1);
-			daemon_log("wrote /etc/goto/secret", 5);
+			daemon_log("INFO: Wrote /etc/goto/secret", 5);
 	}
 
 	# Write shell based config
@@ -423,7 +423,7 @@ sub new_ldap_config {
     print file1 "UNIT_TAG=\"".(defined $unit_tag ? "$unit_tag" : "")."\"\n";
     print file1 "UNIT_TAG_FILTER=\"".(defined $unit_tag ? "(gosaUnitTag=$unit_tag)" : "")."\"\n";
     close(file1);
-    daemon_log("wrote $cfg_name", 5);
+    daemon_log("INFO: Wrote $cfg_name", 5);
 
     # Write offline config
     if ($offline_enabled){
@@ -440,7 +440,7 @@ sub new_ldap_config {
 	    print file1 "UNIT_TAG=\"".(defined $unit_tag ? "$unit_tag" : "")."\"\n";
 	    print file1 "UNIT_TAG_FILTER=\"".(defined $unit_tag ? "(gosaUnitTag=$unit_tag)" : "")."\"\n";
 	    close(file1);
-	    daemon_log("wrote $cfg_name", 5);
+	    daemon_log("INFO: Wrote $cfg_name", 5);
     }
 
 	# Set permissions and ownership structure of 
@@ -452,24 +452,28 @@ sub new_ldap_config {
 
 
 sub new_key {
-    # my ($msg_hash) = @_ ;
+	
+	# Create new key
     my $new_server_key = &main::create_passwd();
 
-    my $out_hash = &create_xml_hash("new_key", $main::client_address, $main::server_address, $new_server_key);    
-    my $out_msg = &create_xml_string($out_hash);
+	# Send new_key message to server
+    my $errSend = &main::send_msg_hash_to_target(
+		&main::create_xml_hash("new_key", $main::client_address, $main::server_address, $new_server_key),
+		$main::server_address, 
+		$main::server_key,
+	);
 
-    # set global $NEW_KEY_FLAG, gosa-si-client cause a reregistering process if no 'confirm_new_key'-msg 
-    # comes from gosa-si-server within a given time
-    
+	# Set global key
+	if (not $errSend) {
+		$main::server_key = $new_server_key;
+	}
 
-    return $out_msg; 
+    return; 
 }
 
 
 sub confirm_new_key {
     my ($msg, $msg_hash) = @_ ;
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
 
     &main::daemon_log("confirm new key from $source", 5);
