@@ -161,7 +161,7 @@ class divListRole extends MultiSelectWindow
 
 
       // Add copy & cut functionality */
-      $actions = $this->parent->get_copypaste_action($val['dn'],"ogroups","ogroup");
+      $actions = $this->parent->get_copypaste_action($val['dn'],"roles","roleGeneric");
  
       // Create edit and remove icon buttons
       $actions.= "<input class='center' type='image'
