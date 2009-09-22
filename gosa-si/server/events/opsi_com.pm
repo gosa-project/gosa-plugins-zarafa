@@ -32,6 +32,7 @@ my @events = (
 	"opsi_getSoftwareLicenseUsages_listOfHashes",
 	"opsi_getLicensePools_listOfHashes",
 	"opsi_getLicenseInformationForProduct",
+	"opsi_getPool",
 	"opsi_test",
    );
 @EXPORT = @events;
@@ -1949,15 +1950,15 @@ sub opsi_getLicenseInformationForProduct {
 	my $licensePoolId = $res->result;
 
 	# Fetch statistic information for given pool ID
-	my $callobj = {
+	$callobj = {
 		method  => 'getLicenseStatistics_hash',
 		params  => [ ],
 		id  => 1,
 	};
-	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+	$res = $main::opsi_client->call($main::opsi_url, $callobj);
 
 	# Check Opsi error
-	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){
 		# Create error message
 		&main::daemon_log("$session_id ERROR: cannot get statistic informations for license pools : ".$res_error_str, 1);
@@ -1975,6 +1976,63 @@ sub opsi_getLicenseInformationForProduct {
 	map(&add_content2xml_hash($out_hash, "usedBy", "$_"), @{ $res->result->{$licensePoolId}->{'usedBy'}});
 
 	return ( &create_xml_string($out_hash) );
+}
+
+
+################################
+#
+# @brief
+# @param 
+#	
+sub opsi_getPool {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+
+	# Check input sanity
+	my $licensePoolId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Create hash for the answer
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+
+	# Call Opsi
+	my ($res, $err) = &_getLicensePool_hash( 'licensePoolId'=> $licensePoolId );
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot get license pool from Opsi server: ".$res, $session_id);
+	}
+	# Add data to outgoing hash
+	&add_content2xml_hash($out_hash, "licensePoolId", $res->{'licensePoolId'});
+	&add_content2xml_hash($out_hash, "description", $res->{'description'});
+	map(&add_content2xml_hash($out_hash, "productIds", "$_"), @{ $res->{'productIds'} });
+	map(&add_content2xml_hash($out_hash, "windowsSoftwareIds", "$_"), @{ $res->{'windowsSoftwareIds'} });
+
+
+	# Call Opsi
+	($res, $err) = &_getSoftwareLicenses_listOfHashes();
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$res, $session_id);
+	}
+	# Add data to outgoing hash
+	# Parse through all software licenses and select those associated to the pool
+	my $res_hash = { 'softwareLicenseIds'=> [] };
+	foreach my $license ( @$res) {
+		# Each license hash has a list of licensePoolIds so go through this list and search for matching licensePoolIds
+		my $found = 0;
+		my @licensePoolIds_list = @{$license->{licensePoolIds}};
+		foreach my $lPI ( @licensePoolIds_list) {
+			if ($lPI eq $licensePoolId) { $found++ }
+		}
+		if (not $found ) { next; };
+		push( @{$res_hash->{softwareLicenseId}}, $license->{'softwareLicenseId'} );
+	}
+	$out_hash->{licenses} = [$res_hash];
+
+    return ( &create_xml_string($out_hash) );
 }
 
 sub opsi_test {
@@ -1996,4 +2054,60 @@ print STDERR Dumper $pram1;
 	print STDERR Dumper $res;
 	return ();
 }
+
+
+sub _getLicensePool_hash {
+	my %arg = (
+		'licensePoolId' => undef,
+		@_,
+	);
+
+	if (not defined $arg{licensePoolId} ) { 
+		return ("function requires licensePoolId as parameter", 1);
+	}
+
+	# Fetch pool infos from Opsi server
+    my $callobj = {
+        method  => 'getLicensePool_hash',
+        params  => [ $arg{licensePoolId} ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		return ( $res_error_str, 1 );
+	}
+
+	return ($res->result, 0);
+}
+
+
+sub _getSoftwareLicenses_listOfHashes {
+	# Fetch licenses associated to the given pool
+	my $callobj = {
+		method  => 'getSoftwareLicenses_listOfHashes',
+		params  => [ ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){
+		return ( $res_error_str, 1 );
+	}
+
+	return ($res->result, 0);
+}
+
+
+sub _giveErrorFeedback {
+	my ($msg_hash, $err_string, $session_id) = @_;
+	&main::daemon_log("$session_id ERROR: $err_string", 1);
+	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{source}}[0], $err_string);
+	return ( &create_xml_string($out_hash) );
+}
+
 1;
