@@ -54,7 +54,7 @@ if ( $cleanup ){
         "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".
         LDAP::fix(get_object_info()));
   } else {
-    $display= print_header(get_template_path('plugins/licensemanagement/images/plugin.png'), _("Role management"));
+    $display= print_header(get_template_path('plugins/licensemanagement/images/plugin.png'), _("License management"));
   }
 
   $display.= $output;

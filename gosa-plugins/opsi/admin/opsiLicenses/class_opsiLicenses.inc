@@ -26,9 +26,6 @@ class opsiLicenses extends plugin
   var $plHeadline= "Opsi";
   var $plDescription= "Opsi licenses";
 
-  // Copy and paste handler 
-  var $CopyPasteHandler = NULL;
-
   // The headpage list handler. 
   var $DivListLicenses    = NULL;
 
@@ -39,12 +36,8 @@ class opsiLicenses extends plugin
   var $dns = array();
 
   // Permission modules to use.
-  var $acl_module   = array("licenses");  
+  var $acl_module   = array("opsi");  
 
-  // Internal: Is truw while objects are pasted.
-  var $start_pasting_copied_objects = FALSE;
-
-  
   // Construct and initialize the plugin 
   function __construct (&$config, $dn= NULL)
   {
@@ -52,13 +45,8 @@ class opsiLicenses extends plugin
     $this->config= &$config;
     $this->ui= get_userinfo();
 
-    // Copy & Paste enabled ?
-    if ($this->config->get_cfg_value("copyPaste") == "true"){
-      $this->CopyPasteHandler = new CopyPasteHandler($this->config);
-    }
-
     // Initialize the corresponding list class.
-    $this->DivListLicenses = new divListRole($this->config,$this);
+    $this->DivListLicenses = new divListLicense($this->config,$this);
   }
 
 
@@ -68,7 +56,7 @@ class opsiLicenses extends plugin
     plugin::execute();
 
     // Variables to restore after 'entry locked' warning was displayed 
-    session::set('LOCK_VARS_TO_USE',array('/^copy/','/^cut/','/^license_/','/^act/',
+    session::set('LOCK_VARS_TO_USE',array('/^license_/','/^act/',
           '/^id/','/^menu_action/','/^item/'));
 
     $smarty     = get_smarty();
@@ -81,16 +69,6 @@ class opsiLicenses extends plugin
     $s_action   = "";
     $s_entry    = "";
     foreach($_POST as $name => $value){
-      if(preg_match("/^cut_/",$name)){
-        $s_action = "cut";  
-        $s_entry = preg_replace("/^cut_([0-9]*)_.*$/","\\1",$name);
-        break;
-      }
-      if(preg_match("/^copy_/",$name)){
-        $s_action = "copy";  
-        $s_entry = preg_replace("/^copy_([0-9]*)_.*$/","\\1",$name);
-        break;
-      }
       if(preg_match("/^license_edit_/",$name)){
         $s_action = "edit";  
         $s_entry = preg_replace("/^license_edit_([0-9]*)_.*$/","\\1",$name);
@@ -113,24 +91,11 @@ class opsiLicenses extends plugin
  
     // Get menu related posts 
     if(isset($_POST['menu_action'])) {
-      if($_POST['menu_action'] == "editPaste"){
-        $s_action = "editPaste";
-      }elseif($_POST['menu_action'] == "license_new"){
-        $s_action = "new";
-      }elseif($_POST['menu_action'] == "remove_multiple_licenses"){
+      if($_POST['menu_action'] == "remove_multiple_licenses"){
         $s_action = "remove_multiple";
       }
     }
 
-    /***************
-     * Copy & Paste handling
-     ***************/
-
-    /* Display the copy & paste dialog, if it is currently open */
-    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
-    if($ret){
-      return($ret);
-    }
 
 
     /***************
@@ -150,7 +115,7 @@ class opsiLicenses extends plugin
         $disallowed = array();
         foreach($ids as $id){
           $dn = $this->licenses[$id]['dn'];
-          $acl = $this->ui->get_permissions($dn, "licenses/licenseGeneric");
+          $acl = $this->ui->get_permissions($dn, "opsi/licenseGeneric");
           if(preg_match("/d/",$acl)){
             $this->dns[$id] = $dn;
           }else{
@@ -162,20 +127,8 @@ class opsiLicenses extends plugin
           msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
         }
 
-
         if(count($this->dns)){
-          if ($user= get_multiple_locks($this->dns)){
-            return(gen_locked_message($user,$this->dns));
-          }
-          $dns_names = array();
-          foreach($this->dns as $dn){
-            $dns_names[] = LDAP::fix($dn);
-          }
-
-          /* Lock the current entry, so nobody will edit it during deletion */
-          add_lock ($this->dns, $this->ui->dn);
-
-          $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Role")));
+          $smarty->assign("info", msgPool::deleteInfo($dns_names,_("License")));
           $smarty->assign("multiple", true);
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         }
@@ -198,7 +151,7 @@ class opsiLicenses extends plugin
       /* Remove user by user and check acls before removeing them */
       foreach($this->dns as $key => $dn){
 
-        $acl = $this->ui->get_permissions($dn, "licenses/licenseGeneric");
+        $acl = $this->ui->get_permissions($dn, "opsi/licenseGeneric");
         if (preg_match('/d/', $acl)){
 
           /* Delete request is permitted, perform LDAP action */
@@ -210,7 +163,7 @@ class opsiLicenses extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           msg_dialog::display(_("Permission error"), msgPool::permDelete(), INFO_DIALOG);
-          new log("security","licenses/".get_class($this),$dn,array(),"Tried to trick deletion.");
+          new log("security","opsi/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
       }
 
@@ -226,7 +179,7 @@ class opsiLicenses extends plugin
 
     if($s_action == "new" && !$this->dialog instanceOf tabs){
       $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], "new");
-      $this->dialog->set_acl_base($this->DivListLicenses->selectedBase);
+      $this->dialog->set_acl_base($this->config->current['BASE']);
     }
     
     /***************
@@ -241,19 +194,10 @@ class opsiLicenses extends plugin
         $entry = $this->licenses[$s_entry];
         $this->dn = $entry['dn'];
 
-        /* Check locking, save current plugin in 'back_plugin', so
-           the dialog knows where to return. */
-        if (($user= get_lock($this->dn)) != ""){
-          return(gen_locked_message ($user, $this->dn,TRUE));
-        }
-
-        /* Lock the current entry, so everyone will get the above dialog */
-        add_lock ($this->dn, $this->ui->dn);
-
         /* Open the dialog */
         $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], 
-            $entry['dn'], "licenses");
-        $this->dialog->set_acl_base($this->dn);
+            $entry['dn'], "opsi");
+        $this->dialog->set_acl_base($this->config->current['BASE']);
         set_object_info($this->dn);
       }
     }
@@ -320,20 +264,9 @@ class opsiLicenses extends plugin
      * List handling
      ***************/
 
-    // Check if there is a snapshot dialog open 
-    $base = $this->DivListLicenses->selectedBase;
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
-      return($str);
-    }
-
     // Display dialog with group list 
     $this->DivListLicenses->parent = $this;
     $this->DivListLicenses->execute();
-
-    // Add departments if subsearch is disabled 
-    if(!$this->DivListLicenses->SubSearch){
-      $this->DivListLicenses->AddDepartments($this->DivListLicenses->selectedBase,3,1);
-    }
     $this->reload ();
     $this->DivListLicenses->setEntries($this->licenses);
     return($this->DivListLicenses->Draw());
@@ -350,23 +283,6 @@ class opsiLicenses extends plugin
 
     // Search and fetch all matching license objects.
     $this->licenses = array();
-    $ldap = $this->config->get_ldap_link();
-    $filter= "(&(objectClass=organizationalRole)(cn=$Regex))";
-    $attrs = array("cn","description","objectClass");
-
-    if($this->DivListLicenses->SubSearch){
-      $res= get_sub_list($filter, "licenses",array(), $base, $attrs, GL_SIZELIMIT | GL_SUBSEARCH);
-    }else{
-      $res= get_sub_list($filter, "licenses",get_ou('licenseRDN'), get_ou('licenseRDN').$base, $attrs, GL_SIZELIMIT );
-    }
-
-    $tmp = array();
-    foreach($res as $attrs){
-      $tmp[$attrs['cn'][0].$attrs['dn']] = $attrs;
-    }
-    
-    uksort($tmp, 'strnatcasecmp');
-    $this->licenses = array_values($tmp);
   }
 
 
@@ -399,88 +315,10 @@ class opsiLicenses extends plugin
     }
   }
 
-
-  /* Return departments, that will be included within snapshot detection 
-   */
-  function get_used_snapshot_bases()
-  {
-    return(array(get_ou('licenseRDN').$this->DivListLicenses->selectedBase));
-  }
-
-
-  function copyPasteHandling_from_queue($s_action,$s_entry)
-  {
-    /* Check if Copy & Paste is disabled */
-    if(!is_object($this->CopyPasteHandler)){
-      return("");
-    }
-
-    $ui = get_userinfo();
-
-    /* Add a single entry to queue */
-    if($s_action == "cut" || $s_action == "copy"){
-
-      /* Cleanup object queue */
-      $this->CopyPasteHandler->cleanup_queue();
-      $dn = $this->licenses[$s_entry]['dn'];
-      if($s_action == "copy" && $ui->is_copyable($dn,"licenses","licenseGeneric")){
-        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"licensetabs","LICENSETABS","licenses");
-      }
-      if($s_action == "cut" && $ui->is_cutable($dn,"licenses","licenseGeneric")){
-        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"licensetabs","LICENSETABS","licenses");
-      }
-    }
-
-    /* Add entries to queue */
-    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
-
-      /* Cleanup object queue */
-      $this->CopyPasteHandler->cleanup_queue();
-
-      /* Add new entries to CP queue */
-      foreach($this->list_get_selected_items() as $id){
-        $dn = $this->licenses[$id]['dn'];
-
-        if($s_action == "copy_multiple" && $ui->is_copyable($dn,"licenses","licenseGeneric")){
-          $this->CopyPasteHandler->add_to_queue($dn,"copy","licensetabs","LICENSETABS","licenses");
-        }
-        if($s_action == "cut_multiple" && $ui->is_cutable($dn,"licenses","licenseGeneric")){
-          $this->CopyPasteHandler->add_to_queue($dn,"cut","licensetabs","LICENSETABS","licenses");
-        }
-      }
-    }
-
-    /* Start pasting entries */
-    if($s_action == "editPaste"){
-      $this->start_pasting_copied_objects = TRUE;
-    }
-
-    /* Return C&P dialog */
-    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
-
-      /* Get dialog */
-      $this->CopyPasteHandler->SetVar("base",$this->DivListLicenses->selectedBase);
-      $data = $this->CopyPasteHandler->execute();
-
-      /* Return dialog data */
-      if(!empty($data)){
-        return($data);
-      }
-    }
-    /* Automatically disable status for pasting */
-    if(!$this->CopyPasteHandler->entries_queued()){
-      $this->start_pasting_copied_objects = FALSE;
-    }
-    return("");
-  }
-
  
   function save_object()
   {
     $this->DivListLicenses->save_object();
-    if(is_object($this->CopyPasteHandler)){
-      $this->CopyPasteHandler->save_object();
-    }
   }
 }
 

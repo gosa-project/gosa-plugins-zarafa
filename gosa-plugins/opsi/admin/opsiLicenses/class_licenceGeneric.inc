@@ -38,7 +38,7 @@ class opsiLicens extends plugin {
   var $orig_base = "";
 
   // The object classes written by this plugin
-  var $objectclasses = array("top","organizationalRole");
+  var $objectclasses = array("top","organizationalLicense");
 
   // The list of occupants  ([dn])
   var $licenseOccupant = array();
@@ -219,7 +219,7 @@ class opsiLicens extends plugin {
     // Check if this name is uniq for licenses.
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=organizationalRole)(cn=$this->cn))", array("cn"));
+    $ldap->search("(&(objectClass=organizationalLicense)(cn=$this->cn))", array("cn"));
     $ldap->fetch();
     if ($ldap->count() != 0 && ( $this->dn == 'new' || $this->cn != $this->orig_cn)){
       $message[]= msgPool::duplicated(_("Name"));
@@ -381,13 +381,13 @@ class opsiLicens extends plugin {
   {
     return (array(
           "plShortName"   => _("Generic"),
-          "plDescription" => _("Role generic"),
+          "plDescription" => _("License generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),
           "plCategory"    => array("licenses" => array("description"  => _("Licenses"),
-              "objectClass"  => "organizationalRole")),
+              "objectClass"  => "organizationalLicense")),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
             "description" => _("Description"),
