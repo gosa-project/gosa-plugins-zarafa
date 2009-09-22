@@ -142,13 +142,13 @@ class divListLicense extends MultiSelectWindow
 
     // Assigning licenses
     foreach($list as $key => $val){
-      
+     
       // Get object permissions
       $acl    = $ui->get_permissions($val['dn'],"opsi/licenseGeneric");
       $acl_all= $ui->has_complete_category_acls($val['dn'],"opsi");
 
       // Create edit and remove icon buttons
-      $actions.= "<input class='center' type='image'
+      $actions = "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' 
         name='license_edit_%KEY%' title='"._("Edit this entry")."'>";
       if(preg_match("/d/",$acl)){
@@ -160,6 +160,7 @@ class divListLicense extends MultiSelectWindow
           title='".msgPool::permDelete()."'>";
       }
 
+
       // Append license descriptio, if available
       $title = "title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'";
       if(!isset($val['description'][0])){
@@ -167,6 +168,7 @@ class divListLicense extends MultiSelectWindow
       }else{
         $desc = " - [ ".$val['description'][0]." ]";
       }
+      $display = $val['cn'][0].$desc;
 
       // Append the entry to the divlist
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' 

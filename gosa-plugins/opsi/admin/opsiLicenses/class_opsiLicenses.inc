@@ -281,8 +281,17 @@ class opsiLicenses extends plugin
     $base     = $this->DivListLicenses->selectedBase;
     $Regex    = $this->DivListLicenses->Regex;
 
-    // Search and fetch all matching license objects.
+    $si = new opsiLicenceHandler($this->config);
+    $res = $si->listPools();
+
+    // Reset the list of licenses 
     $this->licenses = array();
+    foreach($res as $item){
+
+      // Fake an ldap entry, this enables ACL checks.
+      $item['dn'] = "opsi:cn=".$item['cn'][0].",".$this->config->current['BASE'];
+      $this->licenses[] = $item;
+    }
   }
 
 
