@@ -33,6 +33,7 @@ my @events = (
 	"opsi_getLicensePools_listOfHashes",
 	"opsi_getLicenseInformationForProduct",
 	"opsi_getPool",
+	"opsi_removeLicense",
 	"opsi_test",
    );
 @EXPORT = @events;
@@ -2014,7 +2015,7 @@ sub opsi_getPool {
 	# Call Opsi two times
 	my ($usages_res, $usages_err) = &_getSoftwareLicenseUsages_listOfHashes('licensePoolId'=>$licensePoolId);
 	if ($usages_err){
-		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$usages_res, $session_id);
+		return &_giveErrorFeedback($msg_hash, "cannot get software license usage information from Opsi server: ".$usages_res, $session_id);
 	}
 	my ($licenses_res, $licenses_err) = &_getSoftwareLicenses_listOfHashes();
 	if ($licenses_err){
@@ -2059,6 +2060,50 @@ sub opsi_getPool {
 	$out_hash->{licenses} = [$res_hash];
 
     return ( &create_xml_string($out_hash) );
+}
+
+
+################################
+#
+# @brief Removes at first the software license from license pool and than deletes the software license. 
+# Attention, the software license has to exists otherwise it will lead to an Opsi internal server error.
+# @param softwareLicenseId 
+# @param licensePoolId
+#
+sub opsi_removeLicense {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+
+	# Check input sanity
+	my $softwareLicenseId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
+		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+	my $licensePoolId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
+		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+	
+	# Call Opsi
+	my ($res, $err) = &_removeSoftwareLicenseFromLicensePool( 'licensePoolId' => $licensePoolId, 'softwareLicenseId' => $softwareLicenseId );
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot delete software license from pool: ".$res, $session_id);
+	}
+
+	# Call Opsi
+	($res, $err) = &_deleteSoftwareLicense( 'softwareLicenseId'=>$softwareLicenseId );
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot delete software license from Opsi server: ".$res, $session_id);
+	}
+
+	# Create hash for the answer
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	return ( &create_xml_string($out_hash) );
 }
 
 sub opsi_test {
@@ -2109,9 +2154,7 @@ sub _getLicensePool_hash {
 
 	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
-	if ($res_error){
-		return ( $res_error_str, 1 );
-	}
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
 	return ($res->result, 0);
 }
@@ -2127,9 +2170,7 @@ sub _getSoftwareLicenses_listOfHashes {
 
 	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
-	if ($res_error){
-		return ( $res_error_str, 1 );
-	}
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
 	return ($res->result, 0);
 }
@@ -2151,7 +2192,61 @@ sub _getSoftwareLicenseUsages_listOfHashes {
 
 	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
-	if ($res_error){ return ( $res_error_str, 1 ); }
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+}
+
+sub _removeSoftwareLicenseFromLicensePool {
+	my %arg = (
+		'softwareLicenseId' => undef,
+		'licensePoolId' => undef,
+		@_,
+		);
+
+	if (not defined $arg{softwareLicenseId} ) { 
+		return ("function requires softwareLicenseId as parameter", 1);
+		}
+		if (not defined $arg{licensePoolId} ) { 
+		return ("function requires licensePoolId as parameter", 1);
+	}
+
+	# Remove software license from license pool
+	my $callobj = {
+		method  => 'removeSoftwareLicenseFromLicensePool',
+		params  => [ $arg{softwareLicenseId}, $arg{licensePoolId} ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+}
+
+sub _deleteSoftwareLicense {
+	my %arg = (
+		'softwareLicenseId' => undef,
+		'removeFromPools' => "",
+		);
+
+	if (not defined $arg{softwareLicenseId} ) { 
+		return ("function requires softwareLicenseId as parameter", 1);
+	}
+
+	# Fetch
+	my $callobj = {
+		method  => 'deleteSoftwareLicense',
+		params  => [ $arg{softwareLicenseId}, $arg{removeFromPools} ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
 	return ($res->result, 0);
 }
