@@ -81,6 +81,10 @@ Defines the location for the sources file.
 
 Defines the location of the dak Archive or local Debian Mirror and is scanned for Debian Packages.
 
+=item debian-arch = i386
+
+Defines the architecture of the debian repository.
+
 =item ldap-uri = 
 
 Defines the LDAP uniform resource identifier.
