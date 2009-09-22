@@ -94,7 +94,7 @@ sub _check_xml_tag_is_ok {
 sub _give_feedback {
 	my ($msg, $msg_hash, $session_id, $error) = @_;
 	&main::daemon_log("$session_id ERROR: $error: ".$msg, 1);
-	my $out_hash = &main::create_xml_hash("error_".@{$msg_hash->{'header'}}[0], $main::server_address, @{$msg_hash->{'source'}}[0], $error);
+	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{'source'}}[0], $error);
 	return &create_xml_string($out_hash);
 }
 
@@ -209,7 +209,7 @@ sub opsi_del_product_from_client {
         &add_content2xml_hash($out_hash, "productId", $productId);
 
 
-#TODO : check the results for more than one entry which is currently installed
+# : check the results for more than one entry which is currently installed
         #$callobj = {
         #    method  => 'getProductDependencies_listOfHashes',
         #    params  => [ $productId ],
@@ -1344,7 +1344,6 @@ sub _set_state {
   $main::opsi_client->call($main::opsi_url, $callobj);
 }
 
-# TODO
 ################################
 #
 # @brief Create a license pool at Opsi server.
@@ -2012,15 +2011,20 @@ sub opsi_getPool {
 	map(&add_content2xml_hash($out_hash, "windowsSoftwareIds", "$_"), @{ $res->{'windowsSoftwareIds'} });
 
 
-	# Call Opsi
-	($res, $err) = &_getSoftwareLicenses_listOfHashes();
-	if ($err){
-		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$res, $session_id);
+	# Call Opsi two times
+	my ($usages_res, $usages_err) = &_getSoftwareLicenseUsages_listOfHashes('licensePoolId'=>$licensePoolId);
+	if ($usages_err){
+		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$usages_res, $session_id);
 	}
+	my ($licenses_res, $licenses_err) = &_getSoftwareLicenses_listOfHashes();
+	if ($licenses_err){
+		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$licenses_res, $session_id);
+	}
+
 	# Add data to outgoing hash
 	# Parse through all software licenses and select those associated to the pool
-	my $res_hash = { 'softwareLicenseIds'=> [] };
-	foreach my $license ( @$res) {
+	my $res_hash = { 'hit'=> [] };
+	foreach my $license ( @$licenses_res) {
 		# Each license hash has a list of licensePoolIds so go through this list and search for matching licensePoolIds
 		my $found = 0;
 		my @licensePoolIds_list = @{$license->{licensePoolIds}};
@@ -2028,7 +2032,29 @@ sub opsi_getPool {
 			if ($lPI eq $licensePoolId) { $found++ }
 		}
 		if (not $found ) { next; };
-		push( @{$res_hash->{softwareLicenseId}}, $license->{'softwareLicenseId'} );
+		# Found matching licensePoolId
+		my $license_hash = { 'softwareLicenseId' => [$license->{'softwareLicenseId'}],
+			'licenseKeys' => {},
+			'expirationDate' => [$license->{'expirationDate'}],
+			'boundToHost' => [$license->{'boundToHost'}],
+			'maxInstallations' => [$license->{'maxInstallations'}],
+			'licenseType' => [$license->{'licenseType'}],
+			'licenseContractId' => [$license->{'licenseContractId'}],
+			'licensePoolIds' => [],
+			'hostIds' => [],
+			};
+		foreach my $licensePoolId (@{ $license->{'licensePoolIds'}}) {
+			push( @{$license_hash->{'licensePooIds'}}, $licensePoolId);
+			$license_hash->{licenseKeys}->{$licensePoolId} =  [ $license->{'licenseKeys'}->{$licensePoolId} ];
+		}
+		foreach my $usage (@$usages_res) {
+			# Search for hostIds with matching softwareLicenseId
+			if ($license->{'softwareLicenseId'} eq $usage->{'softwareLicenseId'}) {
+				push( @{ $license_hash->{hostIds}}, $usage->{hostId});
+			}
+		}
+
+		push( @{$res_hash->{hit}}, $license_hash );
 	}
 	$out_hash->{licenses} = [$res_hash];
 
@@ -2053,6 +2079,13 @@ print STDERR Dumper $pram1;
 
 	print STDERR Dumper $res;
 	return ();
+}
+
+sub _giveErrorFeedback {
+	my ($msg_hash, $err_string, $session_id) = @_;
+	&main::daemon_log("$session_id ERROR: $err_string", 1);
+	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{source}}[0], $err_string);
+	return ( &create_xml_string($out_hash) );
 }
 
 
@@ -2083,7 +2116,6 @@ sub _getLicensePool_hash {
 	return ($res->result, 0);
 }
 
-
 sub _getSoftwareLicenses_listOfHashes {
 	# Fetch licenses associated to the given pool
 	my $callobj = {
@@ -2102,12 +2134,26 @@ sub _getSoftwareLicenses_listOfHashes {
 	return ($res->result, 0);
 }
 
+sub _getSoftwareLicenseUsages_listOfHashes {
+	my %arg = (
+			'hostId' => "",
+			'licensePoolId' => "",
+			@_,
+			);
 
-sub _giveErrorFeedback {
-	my ($msg_hash, $err_string, $session_id) = @_;
-	&main::daemon_log("$session_id ERROR: $err_string", 1);
-	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{source}}[0], $err_string);
-	return ( &create_xml_string($out_hash) );
+	# Fetch pool infos from Opsi server
+	my $callobj = {
+		method  => 'getSoftwareLicenseUsages_listOfHashes',
+		params  => [ $arg{hostId}, $arg{licensePoolId} ],
+		id  => 1,
+	};
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( $res_error_str, 1 ); }
+
+	return ($res->result, 0);
 }
 
 1;
