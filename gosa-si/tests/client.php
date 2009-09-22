@@ -45,7 +45,7 @@ for($count = 1; $count <= $zahl; $count++)
 
 	#$data = "<xml><header>gosa_opsi_getPool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
 
-	$data = "<xml><header>gosa_opsi_removeLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId><softwareLicenseId>l_2009-09-22_09:50:58_0</softwareLicenseId></xml>";
+	$data = "<xml><header>gosa_opsi_removeLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId><softwareLicenseId>l_2009-09-22_14:06:11</softwareLicenseId></xml>";
 
 
 	##############################

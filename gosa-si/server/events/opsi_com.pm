@@ -2230,6 +2230,7 @@ sub _deleteSoftwareLicense {
 	my %arg = (
 		'softwareLicenseId' => undef,
 		'removeFromPools' => "",
+		@_,
 		);
 
 	if (not defined $arg{softwareLicenseId} ) { 
