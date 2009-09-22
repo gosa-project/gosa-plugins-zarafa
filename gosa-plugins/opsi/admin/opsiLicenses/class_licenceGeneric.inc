@@ -21,7 +21,7 @@
 */
 
 
-class opsiLicens extends plugin {
+class licenseGeneric extends plugin {
 
   // The variables this plugin takes care of.
   var $cn = "";

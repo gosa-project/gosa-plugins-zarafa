@@ -159,13 +159,10 @@ class opsiLicenses extends plugin
 
         $acl = $this->ui->get_permissions($dn, "opsi/licenseGeneric");
         if (preg_match('/d/', $acl)){
-
-          echo "<br><b>Delete ".$dn."</b>";
-
-#         /* Delete request is permitted, perform LDAP action */
-#         $this->dialog= new licensetabs($this->config,$this->config->data['TABS']['LICENSETABS'], $dn);
-#         $this->dialog->delete();
-#         $this->dialog= NULL;
+          $this->dialog = new licenseTabs($this->config, $this->config->data['TABS']['OPSILICENSETABS'],$dn, "opsi");
+          $this->dialog->set_acl_base($this->config->current['BASE']);
+          $this->dialog->delete();
+          $this->dialog= NULL;
         } else {
 
           /* Normally this shouldn't be reached, send some extra
@@ -186,11 +183,9 @@ class opsiLicenses extends plugin
      ***************/
 
     if($s_action == "new" && !$this->dialog instanceOf tabs){
-
-      echo "<br><b>Delete ".$dn."</b>";
-
- #    $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], "new");
- #    $this->dialog->set_acl_base($this->config->current['BASE']);
+      $this->dn = "new";
+      $this->dialog = new licenseTabs($this->config, $this->config->data['TABS']['OPSILICENSETABS'],$this->dn, "opsi");
+      $this->dialog->set_acl_base($this->config->current['BASE']);
     }
     
     /***************
@@ -205,13 +200,11 @@ class opsiLicenses extends plugin
         $entry = $this->licenses[$s_entry];
         $this->dn = $entry['dn'];
 
-        echo "<br><b>Edit ".$dn."</b>";
-
-#       /* Open the dialog */
-#       $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], 
-#           $entry['dn'], "opsi");
-#       $this->dialog->set_acl_base($this->config->current['BASE']);
-#       set_object_info($this->dn);
+        /* Open the dialog */
+        $this->dialog = new licenseTabs($this->config, $this->config->data['TABS']['OPSILICENSETABS'], 
+            $entry['dn'], "opsi");
+        $this->dialog->set_acl_base($this->config->current['BASE']);
+        set_object_info($this->dn);
       }
     }
 
