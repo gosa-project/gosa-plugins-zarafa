@@ -41,14 +41,14 @@ class opsiLicens extends plugin {
   var $objectclasses = array("top","organizationalRole");
 
   // The list of occupants  ([dn])
-  var $roleOccupant = array();
+  var $licenseOccupant = array();
   
-  // The roleOccupant cache, dn=>attrs
-  var $roleOccCache = array();
+  // The licenseOccupant cache, dn=>attrs
+  var $licenseOccCache = array();
 
   // A list of attributes managed by this plugin
   var $attributes = array("cn","description",
-    "telephoneNumber","facsimileTelephoneNumber","roleOccupant");
+    "telephoneNumber","facsimileTelephoneNumber","licenseOccupant");
  
 
   /* Initialize the class 
@@ -58,10 +58,10 @@ class opsiLicens extends plugin {
     $this->is_account = TRUE;
 
     // Initialize list of occupants
-    $this->roleOccupant = array();
-    if(isset($this->attrs['roleOccupant'])){
-      for($i=0;$i<$this->attrs['roleOccupant']['count']; $i++){
-        $this->roleOccupant[] = $this->attrs['roleOccupant'][$i];
+    $this->licenseOccupant = array();
+    if(isset($this->attrs['licenseOccupant'])){
+      for($i=0;$i<$this->attrs['licenseOccupant']['count']; $i++){
+        $this->licenseOccupant[] = $this->attrs['licenseOccupant'][$i];
       }
     }
 
@@ -69,7 +69,7 @@ class opsiLicens extends plugin {
     if ($this->dn == "new"){
       $this->base = session::get('CurrentMainBase');
     } else {
-      $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleRDN"), '/i')."/","",$this->dn);
+      $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("licenseRDN"), '/i')."/","",$this->dn);
     }
 
     // Keep track of naming attribute modifications
@@ -89,12 +89,12 @@ class opsiLicens extends plugin {
   {
     // Entries can't be added twice. 
     $attrs = array("description", "objectClass", "uid","cn");
-    $this->roleOccupant = array_unique($this->roleOccupant);
-    $this->roleOccupant = array_values($this->roleOccupant);
+    $this->licenseOccupant = array_unique($this->licenseOccupant);
+    $this->licenseOccupant = array_values($this->licenseOccupant);
   
     $ldap = $this->config->get_ldap_link();
-    foreach($this->roleOccupant as $dn){
-      if(!isset($this->roleOccCache[$dn])){
+    foreach($this->licenseOccupant as $dn){
+      if(!isset($this->licenseOccCache[$dn])){
         if($ldap->dn_exists($dn)){
           $ldap->cat($dn, $attrs);
 
@@ -112,7 +112,7 @@ class opsiLicens extends plugin {
             $tmp['cn'][0] = $cn;
           }
 
-          $this->roleOccCache[$dn] = $tmp;
+          $this->licenseOccCache[$dn] = $tmp;
         }
       }
     }
@@ -121,7 +121,7 @@ class opsiLicens extends plugin {
   
 
   function getOccupants(){
-    return($this->roleOccupant);
+    return($this->licenseOccupant);
   }
 
   /* Generate HTML output of this plugin.
@@ -142,8 +142,8 @@ class opsiLicens extends plugin {
     if(isset($_POST['delete_membership']) && !$this->dialog instanceOf plugin){
       if(isset($_POST['members'])){
         foreach($_POST['members'] as $id){
-          if(isset($this->roleOccupant[$id])){
-            unset($this->roleOccupant[$id]);
+          if(isset($this->licenseOccupant[$id])){
+            unset($this->licenseOccupant[$id]);
           }
         }
         $this->reload();
@@ -156,8 +156,8 @@ class opsiLicens extends plugin {
     if(isset($_POST['add_object_finish']) && $this->dialog instanceOf plugin){
       $ret = $this->dialog->save();
       foreach($ret as $key => $entry){
-        $this->roleOccupant[] = $entry['dn'];
-        $this->roleOccCache[$entry['dn']] = $entry['attrs'];
+        $this->licenseOccupant[] = $entry['dn'];
+        $this->licenseOccCache[$entry['dn']] = $entry['attrs'];
       }
       $this->reload();
       $this->dialog = NULL;
@@ -187,7 +187,7 @@ class opsiLicens extends plugin {
     foreach($tmp['plProvidedAcls'] as $attr => $desc){
       $smarty->assign($attr."ACL",$this->getacl($attr));
     }
-    return($smarty->fetch(get_template_path('roleGeneric.tpl',TRUE,dirname(__FILE__))));
+    return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
   }
 
 
@@ -216,7 +216,7 @@ class opsiLicens extends plugin {
       $message[]= msgPool::required(_("Name"));
     }
 
-    // Check if this name is uniq for roles.
+    // Check if this name is uniq for licenses.
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=organizationalRole)(cn=$this->cn))", array("cn"));
@@ -235,9 +235,9 @@ class opsiLicens extends plugin {
   {
     $temp= "";
     $icon = " style=\"background-image:url('plugins/generic/images/head.png');\" ";
-    foreach ($this->roleOccupant as $key => $dn){
-      if(isset($this->roleOccCache[$dn])){
-        $entry = $this->roleOccCache[$dn];
+    foreach ($this->licenseOccupant as $key => $dn){
+      if(isset($this->licenseOccCache[$dn])){
+        $entry = $this->licenseOccCache[$dn];
         $name = $entry['cn']['0'];
         if(isset($entry['description'][0])){
           $name .= " [".$entry['description'][0]."]";
@@ -265,7 +265,7 @@ class opsiLicens extends plugin {
     }
 
     // Log action.
-    new log("remove","roles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","licenses/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     // Trigger remove signal
     $this->handle_post_events("remove");
@@ -345,12 +345,12 @@ class opsiLicens extends plugin {
     plugin::PrepareForCopyPaste($source);
 
     /* Load member objects */
-    $this->roleOccupant = array();
-    if (isset($source['roleOccupant'])){
-      foreach ($source['roleOccupant'] as $key => $value){
+    $this->licenseOccupant = array();
+    if (isset($source['licenseOccupant'])){
+      foreach ($source['licenseOccupant'] as $key => $value){
         if ("$key" != "count"){
           $value= @LDAP::convert($value);
-          $this->roleOccupant["$value"]= "$value";
+          $this->licenseOccupant["$value"]= "$value";
         }
       }
     }
@@ -386,7 +386,7 @@ class opsiLicens extends plugin {
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),
-          "plCategory"    => array("roles" => array("description"  => _("Roles"),
+          "plCategory"    => array("licenses" => array("description"  => _("Licenses"),
               "objectClass"  => "organizationalRole")),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
@@ -394,7 +394,7 @@ class opsiLicens extends plugin {
             "base" => _("Base"),
             "telephoneNumber" => _("Telefon number"),
             "facsimileTelephoneNumber" => _("Fax number"),
-            "roleOccupant" => _("Occupants"))
+            "licenseOccupant" => _("Occupants"))
           ));
   }
 }
