@@ -128,6 +128,12 @@ class opsiLicenses extends plugin
         }
 
         if(count($this->dns)){
+
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            $dns_names[] = LDAP::fix($dn);
+          }
+
           $smarty->assign("info", msgPool::deleteInfo($dns_names,_("License")));
           $smarty->assign("multiple", true);
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
@@ -154,10 +160,12 @@ class opsiLicenses extends plugin
         $acl = $this->ui->get_permissions($dn, "opsi/licenseGeneric");
         if (preg_match('/d/', $acl)){
 
-          /* Delete request is permitted, perform LDAP action */
-          $this->dialog= new licensetabs($this->config,$this->config->data['TABS']['LICENSETABS'], $dn);
-          $this->dialog->delete();
-          $this->dialog= NULL;
+          echo "<br><b>Delete ".$dn."</b>";
+
+#         /* Delete request is permitted, perform LDAP action */
+#         $this->dialog= new licensetabs($this->config,$this->config->data['TABS']['LICENSETABS'], $dn);
+#         $this->dialog->delete();
+#         $this->dialog= NULL;
         } else {
 
           /* Normally this shouldn't be reached, send some extra
@@ -178,8 +186,11 @@ class opsiLicenses extends plugin
      ***************/
 
     if($s_action == "new" && !$this->dialog instanceOf tabs){
-      $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], "new");
-      $this->dialog->set_acl_base($this->config->current['BASE']);
+
+      echo "<br><b>Delete ".$dn."</b>";
+
+ #    $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], "new");
+ #    $this->dialog->set_acl_base($this->config->current['BASE']);
     }
     
     /***************
@@ -194,11 +205,13 @@ class opsiLicenses extends plugin
         $entry = $this->licenses[$s_entry];
         $this->dn = $entry['dn'];
 
-        /* Open the dialog */
-        $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], 
-            $entry['dn'], "opsi");
-        $this->dialog->set_acl_base($this->config->current['BASE']);
-        set_object_info($this->dn);
+        echo "<br><b>Edit ".$dn."</b>";
+
+#       /* Open the dialog */
+#       $this->dialog = new licensetabs($this->config, $this->config->data['TABS']['LICENSETABS'], 
+#           $entry['dn'], "opsi");
+#       $this->dialog->set_acl_base($this->config->current['BASE']);
+#       set_object_info($this->dn);
       }
     }
 

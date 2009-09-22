@@ -11,8 +11,8 @@
 </p>
 
 <p class="plugbottom">
-	<input type=submit name="delete_multiple_roles_confirm" value="{msgPool type=delButton}">
+	<input type=submit name="delete_multiple_licenses_confirm" value="{msgPool type=delButton}">
 		&nbsp;
- 	<input type=submit name="delete_multiple_roles_cancel" value="{msgPool type=cancelButton}">
+ 	<input type=submit name="delete_multiple_licenses_cancel" value="{msgPool type=cancelButton}">
 </p>
 
