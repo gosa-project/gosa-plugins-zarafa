@@ -27,19 +27,16 @@ class licenseGeneric extends plugin
   var $cn = "";
   var $orig_cn = "";
   var $description = "";
-
   var $orig_dn    = "";
+
   var $data       = array();
   var $orig_data  = array();
-
   var $productIds = array();
   var $softwareIds= array();
-  var $licenses= array();
+  var $licenses   = array();
 
   var $availableProductIds = array();
-
   var $attributes =array("cn","description");
-
   var $si = NULL;
 
   function __construct(&$config,$dn)
@@ -132,11 +129,22 @@ class licenseGeneric extends plugin
     $smarty->assign("availableProductIds", array_diff( $this->availableProductIds, $this->productIds));
     $smarty->assign("productIds", $this->productIds);
     $smarty->assign("softwareIds", $this->softwareIds);
-    $smarty->assign("licenses", $this->licenses);
+    $smarty->assign("licenses", $this->getLicenseList());
     $smarty->assign("initially_was_account", $this->initially_was_account);
     return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
   }
 
+
+  function getLicenseList()
+  {
+    $list = new divSelectBox("test");
+    $list->setHeight(100);
+
+    
+
+    return($list->DrawList());
+  }
+ 
  
   /* Save HTML inputs
    */

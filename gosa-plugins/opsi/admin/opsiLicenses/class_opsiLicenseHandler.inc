@@ -85,7 +85,6 @@ class opsiLicenceHandler extends opsi  {
     $data= array();
     $data['licensePoolId'] = htmlentities($licensePoolId);
     $res = $this->send_data("gosa_opsi_getLicensePool_hash",$this->target,$data,TRUE);
-
     if(isset($res['XML'][0]['ANSWER_OPSI_GETLICENSEPOOL_HASH'])){
       $item = array();
       foreach(array("LICENSEPOOLID"       => "cn", 

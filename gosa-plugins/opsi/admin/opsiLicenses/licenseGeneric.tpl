@@ -10,7 +10,7 @@
 
 <table width="100%">
   <tr> 
-    <td colspan="3">
+    <td style='vertical-align:top;'>
         <!-- GENERIC -->
         <h2>{t}Generic{/t}</h2>
         <table>
@@ -37,34 +37,32 @@
         </table>
 
     </td>
-  </tr>
-  <tr>
-    <td colspan="3">
-      <p class='separator'>&nbsp;</p>
-    </td>
-  </tr>
-  <tr> 
-    <td style='width:33%'>
+    <td style='width:50%; border-left: 1px solid #888888;padding: 5px;'>
         <!-- LICENSES -->
         <h2>{t}Licenses{/t}</h2>
         <table style='width:100%;'>
           <tr> 
             <td>
-              <select name='licenses[]' multiple size=4 style="width:100%;">
-                {html_options options=$licenses}
-              </select>
+              {$licenses}
             </td>
           </tr>
         </table>
 
     </td>
-    <td style='width:33%'>
+  </tr>
+  <tr> 
+    <td colspan="2">
+      <p class='separator'>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td style='width:50%'>
         <!-- APPLICATIONS -->
         <h2>{t}Applications{/t}</h2>
         <table style='width:100%;'>
           <tr> 
             <td>
-              <select name='productIds[]' multiple size=4 style="width:100%;">
+              <select name='productIds[]' multiple size="6" style="width:100%;">
                 {html_options options=$productIds}
               </select><br>
               <select name='availableProduct'>
@@ -77,13 +75,13 @@
         </table>
 
     </td>
-    <td>
+    <td style="border-left: 1px solid #888888; padding: 5px;">
         <!-- SOFTWARE -->
         <h2>{t}Windows software IDs{/t}</h2>
         <table style='width:100%;'>
           <tr> 
             <td>
-              <select name='softwareIds[]' multiple size=4 style="width:100%;">
+              <select name='softwareIds[]' multiple size="6" style="width:100%;">
                 {html_options options=$softwareIds}
               </select>
               <input type='text' name='newSoftwareId' value='' size=10>
