@@ -29,7 +29,7 @@ class licenseByProduct extends plugin
   var $init_successfull = FALSE;
 
 
-  function __construct(&$config,$dn)
+  function __construct(&$config,$dn,$a,$b)
   {
     $this->config = $config;
     $this->dn = $this->orig_dn = $dn;
@@ -55,7 +55,7 @@ class licenseByProduct extends plugin
       $this->init_successfull = TRUE;
     }else{
 
-      $res = $this->si->getLicenseUsage("", $this->cn);
+      $res = $this->si->getLicensesForProduct($this->cn);
       if($this->si->is_error()){
         $this->init_successfull = FALSE;
         return;
@@ -126,37 +126,8 @@ class licenseByProduct extends plugin
   }
   
 
-  /* Saves object modifications
-   */  
-  function save()
-  {
-    plugin::save();
-
-    // Send modify/add events
-    $mode = "modify";
-    if($this->orig_dn == "new"){
-      $mode = "add";
-    }
-
-    $this->si->createPool($this->cn, $this->description,$this->productIds,$this->softwareIds);#
-    if($this->si->is_error()){
-      msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
-    }else{
-      $this->handle_post_events($mode);
-    }
-
-    // Log action
-    if($mode == "modify"){
-      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
-    }else{
-      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
-    }
-
-    return 0;
-  }
-
- 
-  function remove_from_parent(){ return; }
+  function save( ){}
+  function remove_from_parent(){ }
 
  
   static function plInfo()
