@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "GOSA-SI-SERVER 1"
-.TH GOSA-SI-SERVER 1 "2009-09-04" "perl v5.10.0" "User Contributed Perl Documentation"
+.TH GOSA-SI-SERVER 1 "2009-09-23" "perl v5.10.0" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -155,6 +155,22 @@ gosa-si-server [\-hvf] [\-c config]
 .PP
 \&\fB\-\-no\-arp\fR
     starts script without connection to arp module
+.PP
+\&\fB\-d\fR <int> 
+    if verbose level is higher than 7 'v' specified parts can be debugged
+.PP
+.Vb 10
+\&      1 : receiving messages
+\&      2 : sending messages
+\&      4 : encrypting/decrypting messages
+\&      8 : verification if a message complies gosa\-si requirements
+\&     16 : message processing
+\&     32 : ldap connectivity
+\&     64 : database status and connectivity
+\&    128 : main process
+\&    256 : creation of packages_list_db
+\&    512 : ARP debug information
+.Ve
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 gosa-si-server  belongs  to  the  support infrastructure of GOsa.  Several gosa-si-clients can connect to one gosa-si-server.  The server take care of the message forwarding from GOsa to si-clients.  At the client site each message is related to a working instruction which will be executed there.  Depending of the message an answer from the client to GOsa via the server is possible.  Additional to answers clients reporting events  or  information  to the server.  The server registers himself at other servers in network and shares his knowledge with them.  So messages to clients which are no registrated locally will be forward to the client corresponding server. The communication within the complete \s-1SI\s0 nework is realised by \s-1XML\s0 messages.

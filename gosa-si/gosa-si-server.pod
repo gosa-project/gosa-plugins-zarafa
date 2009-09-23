@@ -29,6 +29,19 @@ B<-c> I<file>, B<--config=>I<file>
 B<--no-arp>
     starts script without connection to arp module
 
+B<-d> <int> 
+    if verbose level is higher than 7 'v' specified parts can be debugged
+
+      1 : receiving messages
+      2 : sending messages
+      4 : encrypting/decrypting messages
+      8 : verification if a message complies gosa-si requirements
+     16 : message processing
+     32 : ldap connectivity
+     64 : database status and connectivity
+    128 : main process
+    256 : creation of packages_list_db
+    512 : ARP debug information
 
 
 =head1 DESCRIPTION
