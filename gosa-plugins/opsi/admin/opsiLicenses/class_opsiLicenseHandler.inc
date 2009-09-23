@@ -214,7 +214,28 @@ class opsiLicenceHandler extends opsi  {
 
     $res = $this->send_data("gosa_opsi_getSoftwareLicenseUsages_listOfHashes",$this->target,$data,TRUE);
     if(isset($res['XML'][0]['ANSWER_OPSI_GETSOFTWARELICENSEUSAGES_LISTOFHASHES'])){
-      return($res['XML'][0]['RESULT']);
+
+      $items = array();
+      foreach($res['XML'][0]['RESULT'][0]['HIT'] as $entry){
+        $item = array();
+        foreach(array(
+              "HOSTID"              => "hostId",
+              "LICENSEKEY"          => "licenseKey",
+              "LICENSEPOOLID"       => "licensePoolId",
+              "NOTES"               => "notes",
+              "SOFTWARELICENSEID"   => "softwareLicenseId") as $source => $target){
+          if(isset($entry[$source])){
+
+            $item[$target] = array('count' => 0);
+            foreach($entry[$source] as $data){
+              $item[$target][] = $data['VALUE'];
+            }
+            $item[$target]['count'] = count($item[$target]) -1 ;
+          }
+        }
+        $items[]  = $item;
+      }
+      return($items);
     }
     return(FALSE);
   }

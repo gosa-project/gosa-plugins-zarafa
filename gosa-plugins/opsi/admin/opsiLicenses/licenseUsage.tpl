@@ -7,24 +7,10 @@
 <br>
 {else}
 
+<!-- GENERIC -->
+<h2>{t}License usage{/t}</h2>
 
-<table width="100%">
-  <tr> 
-    <td style='vertical-align:top;'>
+{$licenseUses}
 
-        <!-- GENERIC -->
-        <h2>{t}Generic{/t}</h2>
-        <table>
-          <tr> 
-            <td>{t}Name{/t}</td>
-            <td>
-              TESTER
-            </td>
-          </tr>
-        </table>
-
-    </td>
-  </tr>
-</table>
 <input name='opsiLicenseUsagePosted' value='1' type='hidden'>
 {/if}

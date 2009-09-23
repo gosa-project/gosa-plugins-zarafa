@@ -25,7 +25,7 @@ class licenseUsage extends plugin
 {
 
   var $cn = "";
-
+  var $licenseUses = array();
   var $init_successfull = FALSE;
 
 
@@ -50,7 +50,20 @@ class licenseUsage extends plugin
   
   function init()
   {
-    $this->init_successfull = TRUE;
+    $this->licenseUses = array();
+    if(!$this->initially_was_account){
+      $this->init_successfull = TRUE;
+    }else{
+
+      $res = $this->si->getLicenseUsage("", $this->cn);
+      if($this->si->is_error()){
+        $this->init_successfull = FALSE;
+        return;
+      }
+
+      $this->licenseUses = $res;
+      $this->init_successfull = TRUE;
+    }
   }
 
 
@@ -63,6 +76,18 @@ class licenseUsage extends plugin
       $smarty->assign("init_successfull", $this->init_successfull);
       return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
     }
+    
+    // Create usage list
+    $list = new divSelectBox("licenseUsage");
+    foreach($this->licenseUses as $license){
+
+      $f1 = array("string" => $license['hostId'][0]);
+      $f2 = array("string" => $license['licenseKey'][0]);
+      $f3 = array("string" => $license['licensePoolId'][0]);
+      $f4 = array("string" => $license['softwareLicenseId'][0],
+                  "attach" => "style='border-right:0px;'");
+      $list->addEntry(array($f1,$f2,$f3,$f4));
+    } 
 
     $smarty = get_smarty();
 
@@ -75,6 +100,7 @@ class licenseUsage extends plugin
       $smarty->assign($attr,$this->$attr);
     }
 
+    $smarty->assign("licenseUses", $list->DrawList());
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
     return($smarty->fetch(get_template_path('licenseUsage.tpl',TRUE,dirname(__FILE__))));
