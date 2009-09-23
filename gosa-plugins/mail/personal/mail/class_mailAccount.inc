@@ -1013,7 +1013,7 @@ class mailAccount extends plugin
                 "Skipping sieve settings, the account doesn't seem to be created already.</b>","");
           }else{
             if(!$this->mailMethod->saveSieveSettings()){
-              msg_dialog::display(_("Mail error"), $this->mailMethod->get_error(), ERROR_DIALOG);
+              msg_dialog::display(_("Mail error saving sieve settings"), $this->mailMethod->get_error(), ERROR_DIALOG);
             }
           }
         }else{
