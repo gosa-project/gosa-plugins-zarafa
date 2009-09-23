@@ -10,16 +10,20 @@
 
 <table width="100%">
   <tr> 
-    <td>
+    <td colspan="3">
         <!-- GENERIC -->
         <h2>{t}Generic{/t}</h2>
         <table>
           <tr> 
             <td>{t}Name{/t}</td>
             <td>
+              {if $initially_was_account}
+                <input type='text' value='{$cn}' disabled>
+              {else}
 {render acl=$cnACL}
               <input type='text' value='{$cn}' name='cn'>
 {/render}
+              {/if}
             </td>
           </tr>
           <tr> 
@@ -34,42 +38,63 @@
 
     </td>
   </tr>
+  <tr>
+    <td colspan="3">
+      <p class='separator'>&nbsp;</p>
+    </td>
+  </tr>
   <tr> 
-    <td>
+    <td style='width:33%'>
         <!-- LICENSES -->
         <h2>{t}Licenses{/t}</h2>
-        <table>
+        <table style='width:100%;'>
           <tr> 
-            <td></td>
+            <td>
+              <select name='licenses[]' multiple size=4 style="width:100%;">
+                {html_options options=$licenses}
+              </select>
+            </td>
           </tr>
         </table>
 
     </td>
-  </tr>
-  <tr> 
-    <td>
+    <td style='width:33%'>
         <!-- APPLICATIONS -->
         <h2>{t}Applications{/t}</h2>
-        <table>
+        <table style='width:100%;'>
           <tr> 
-            <td></td>
+            <td>
+              <select name='productIds[]' multiple size=4 style="width:100%;">
+                {html_options options=$productIds}
+              </select><br>
+              <select name='availableProduct'>
+                {html_options options=$availableProductIds}
+              </select>
+              <input type='submit' name='addProduct' value='{msgPool type='addButton'}'>
+              <input type='submit' name='removeProduct' value='{msgPool type='delButton'}'>
+            </td>
           </tr>
         </table>
 
     </td>
-  </tr>
-  <tr> 
     <td>
         <!-- SOFTWARE -->
         <h2>{t}Windows software IDs{/t}</h2>
-        <table>
+        <table style='width:100%;'>
           <tr> 
-            <td></td>
+            <td>
+              <select name='softwareIds[]' multiple size=4 style="width:100%;">
+                {html_options options=$softwareIds}
+              </select>
+              <input type='text' name='newSoftwareId' value='' size=10>
+              <input type='submit' name='addSoftware' value='{msgPool type='addButton'}'>
+              <input type='submit' name='removeSoftware' value='{msgPool type='delButton'}'>
+            </td>
           </tr>
         </table>
 
     </td>
   </tr>
 </table>
-
+<input name='opsiLicensesPosted' value='1' type='hidden'>
 {/if}

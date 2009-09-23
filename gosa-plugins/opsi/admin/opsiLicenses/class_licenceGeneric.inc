@@ -24,53 +24,85 @@
 class licenseGeneric extends plugin 
 {
 
+  var $cn = "";
+  var $orig_cn = "";
+  var $description = "";
+
   var $orig_dn    = "";
   var $data       = array();
   var $orig_data  = array();
 
   var $productIds = array();
   var $softwareIds= array();
+  var $licenses= array();
 
+  var $availableProductIds = array();
 
   var $attributes =array("cn","description");
+
+  var $si = NULL;
 
   function __construct(&$config,$dn)
   {
     $this->config = $config;
     $this->dn = $this->orig_dn = $dn;
 
+    $this->si = new opsiLicenceHandler($this->config);
+
+    $this->is_account=TRUE;
+    if($this->dn == "new"){
+      $this->initially_was_account = FALSE;
+    }else{
+      $this->initially_was_account = TRUE;
+      $this->cn = $this->orig_cn = preg_replace("/^opsi:cn=([^,]*),.*$/","\\1",$dn);
+    }
+
     // Extract pool name out of the fake dn.
-    $this->cn = preg_replace("/^opsi:cn=([^,]*),.*$/","\\1",$dn);
     $this->init();
   }
 
   
   function init()
   {
-    $si = new opsiLicenceHandler($this->config);
-    $res = $si->getPool($this->cn);
-    if($si->is_error()){    
+    // Load local Boot Products 
+    $res = $this->si->get_local_products();
+    if($this->si->is_error()){
       $this->init_successfull = FALSE;
       return(FALSE);
-    }else{
-      $this->data = $this->orig_data = $res;
-      $this->description = $this->data['description'][0];
+    }
+    $this->availableProductIds=array_keys($res);
 
-      // Load software IDs 
-      if(isset($this->data['softwareId'])){
-        for($i = 0; $i < $this->data['softwareId']['count']; $i++){
-          $this->softwareIds[] = $this->data['softwareId'][$i];
-        }
-      }
-
-      // Load product IDs 
-      if(isset($this->data['productId'])){
-        for($i = 0; $i < $this->data['productId']['count']; $i++){
-          $this->productIds[] = $this->data['productId'][$i];
-        }
-      }
+    // Load Pool
+    if(!$this->initially_was_account){
       $this->init_successfull = TRUE;
-      return;
+    }else{
+
+      $res = $this->si->getPool($this->cn);
+      if($this->si->is_error()){    
+        $this->init_successfull = FALSE;
+        return(FALSE);
+      }else{
+        $this->data = $this->orig_data = $res;
+        $this->description = $this->data['description'][0];
+
+        // Load software IDs 
+        $this->softwareIds = array();
+        if(isset($this->data['softwareId'])){
+          for($i = 0; $i < $this->data['softwareId']['count']; $i++){
+            $this->softwareIds[] = $this->data['softwareId'][$i];
+          }
+        }
+
+        // Load product IDs 
+        $this->productIds = array();
+        if(isset($this->data['productId'])){
+          for($i = 0; $i < $this->data['productId']['count']; $i++){
+            $this->productIds[] = $this->data['productId'][$i];
+          }
+        }
+        $this->init_successfull = TRUE;
+        return;
+      }
     }
   }
 
@@ -97,8 +129,60 @@ class licenseGeneric extends plugin
     }
 
     $smarty->assign("init_successfull", $this->init_successfull);
+    $smarty->assign("availableProductIds", array_diff( $this->availableProductIds, $this->productIds));
+    $smarty->assign("productIds", $this->productIds);
+    $smarty->assign("softwareIds", $this->softwareIds);
+    $smarty->assign("licenses", $this->licenses);
+    $smarty->assign("initially_was_account", $this->initially_was_account);
     return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
   }
+
+ 
+  /* Save HTML inputs
+   */
+  function save_object()
+  {
+    if(isset($_POST['opsiLicensesPosted'])){
+      plugin::save_object();  
+
+      // Restore license cn, to avoid creating a copy...
+      if($this->initially_was_account) $this->cn = $this->orig_cn;
+
+      // We've to add prodcuts here 
+      if(isset($_POST['availableProduct']) && isset($_POST['addProduct'])){
+        $pro = get_post('availableProduct');
+        if(isset($this->availableProductIds[$pro]) && !in_array($this->availableProductIds[$pro], $this->productIds)){
+          $this->productIds[] =$this->availableProductIds[$pro];
+        }
+      }
+
+      // We've to remove products here
+      if(isset($_POST['productIds']) && isset($_POST['removeProduct'])){
+        foreach($_POST['productIds'] as $key){
+          if(isset($this->productIds[$key])){
+            unset($this->productIds[$key]);
+          }
+        }
+      }
+
+      // We've to add software here 
+      if(isset($_POST['newSoftwareId']) && isset($_POST['addSoftware'])){
+        $soft = trim(get_post('newSoftwareId'));
+        if(!empty($soft) && !in_array($soft, $this->softwareIds)){
+          $this->softwareIds[] = $soft;
+        }
+      }
+
+      // We've to remove software Ids here
+      if(isset($_POST['softwareIds']) && isset($_POST['removeSoftware'])){
+        foreach($_POST['softwareIds'] as $key){
+          if(isset($this->softwareIds[$key])){
+            unset($this->softwareIds[$key]);
+          }
+        }
+      }
+    }
+  }  
 
 
   /* Check user input and return a list of 'invalid input' messages.
@@ -111,15 +195,20 @@ class licenseGeneric extends plugin
   
 
  
-  /* Removes the object from the ldap database
+  /* Removes the object from the opsi database
    */ 
   function remove_from_parent()
   {
-    // Log action.
-    new log("remove","licenses/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    $this->si->deletePool($this->orig_cn);
+    if($this->si->is_error()){
+      msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
+    }else{
 
-    // Trigger remove signal
-    $this->handle_post_events("remove");
+      // Trigger remove signal
+      $this->handle_post_events("remove");
+    }
+
+    new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
   }
 
 
@@ -129,33 +218,28 @@ class licenseGeneric extends plugin
   {
     plugin::save();
 
-
     // Send modify/add events
     $mode = "modify";
     if($this->orig_dn == "new"){
       $mode = "add";
     }
 
-    $this->handle_post_events($mode);
+    $this->si->createPool($this->cn, $this->description,$this->productIds,$this->softwareIds);#
+    if($this->si->is_error()){
+      msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
+    }else{
+      $this->handle_post_events($mode);
+    }
 
     // Log action
     if($mode == "modify"){
-      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
     }else{
-      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
     }
 
     return 0;
   }
- 
- 
-  /* Save HTML inputs
-   */
-  function save_object()
-  {
-    plugin::save_object();  
-  }  
-
  
   static function plInfo()
   {

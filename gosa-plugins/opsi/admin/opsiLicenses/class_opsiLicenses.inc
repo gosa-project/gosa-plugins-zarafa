@@ -94,6 +94,9 @@ class opsiLicenses extends plugin
       if($_POST['menu_action'] == "remove_multiple_licenses"){
         $s_action = "remove_multiple";
       }
+      if($_POST['menu_action'] == "license_new"){
+        $s_action = "new";
+      }
     }
 
 

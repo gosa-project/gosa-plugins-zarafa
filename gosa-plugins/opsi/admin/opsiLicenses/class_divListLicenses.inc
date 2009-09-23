@@ -37,7 +37,7 @@ class divListLicense extends MultiSelectWindow
 
   function divListLicense (&$config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config, "Licenses", "licenses");
+    MultiSelectWindow::MultiSelectWindow($config, "opsi", "licenseGeneric");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
@@ -94,8 +94,8 @@ class divListLicense extends MultiSelectWindow
     $add_sep = false;
   
     /* Get copy & paste icon */
-    $acls  = $ui->get_permissions($this->selectedBase,"licenses/licenseGeneric");
-    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"licenses");
+    $acls  = $ui->get_permissions($this->selectedBase,"opsi/licenseGeneric");
+    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"opsi");
 
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
@@ -107,7 +107,7 @@ class divListLicense extends MultiSelectWindow
     if(preg_match("/c/",$acls)) {
       $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Create")."|\n";
-      $s.= "...|<input class='center' type='image' src='plugins/licensemanagement/images/new.png' alt=''>".
+      $s.= "...|<input class='center' type='image' src='plugins/opsiLicenses/images/new.png' alt=''>".
         "&nbsp;"._("License")."|license_new|\n";
     }
 
@@ -174,7 +174,7 @@ class divListLicense extends MultiSelectWindow
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' 
           name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
-      $field1 = array("string" => "<img src='plugins/licensemanagement/images/license.png' 
+      $field1 = array("string" => "<img src='plugins/opsiLicenses/images/license.png' 
           alt='"._("License")."' ".$title.">", 
           "attach" => "style='text-align:center;width: 20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), 
@@ -192,7 +192,7 @@ class divListLicense extends MultiSelectWindow
     }
     $num_objs = count($list);
     $num_obj_str = _("Number of listed licenses");
-    $str = "<img class='center' src='plugins/licensemanagement/images/license.png'
+    $str = "<img class='center' src='plugins/opsiLicenses/images/license.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
     $this->set_List_Bottom_Info($str);
   }
