@@ -29,7 +29,7 @@ class licenseByProduct extends plugin
   var $init_successfull = FALSE;
 
 
-  function __construct(&$config,$dn,$a,$b)
+  function __construct(&$config,$dn)
   {
     $this->config = $config;
     $this->dn = $this->orig_dn = $dn;

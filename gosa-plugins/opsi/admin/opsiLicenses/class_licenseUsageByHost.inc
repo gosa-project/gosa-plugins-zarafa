@@ -79,14 +79,24 @@ class licenseUsageByHost extends plugin
     
     // Create usage list
     $list = new divSelectBox("licenseUsage");
+    $list->setHeight(150);
     foreach($this->licenseUses as $license){
-
       $f1 = array("string" => $license['hostId'][0]);
       $f2 = array("string" => $license['licenseKey'][0]);
       $f3 = array("string" => $license['licensePoolId'][0]);
-      $f4 = array("string" => $license['softwareLicenseId'][0],
-                  "attach" => "style='border-right:0px;'");
+      $f4 = array("string" => $license['softwareLicenseId'][0]);
       $list->addEntry(array($f1,$f2,$f3,$f4));
+    } 
+
+    // Create reserved list
+    $list2 = new divSelectBox("reservedLicenses");
+    $list2->setHeight(150);
+    foreach($this->licenseUses as $license){
+      $f1 = array("string" => $license['hostId'][0]);
+      $f2 = array("string" => $license['licenseKey'][0]);
+      $f3 = array("string" => $license['licensePoolId'][0]);
+      $f4 = array("string" => $license['softwareLicenseId'][0]);
+      $list2->addEntry(array($f1,$f2,$f3,$f4));
     } 
 
     $smarty = get_smarty();
@@ -101,9 +111,10 @@ class licenseUsageByHost extends plugin
     }
 
     $smarty->assign("licenseUses", $list->DrawList());
+    $smarty->assign("licenseReserved", $list2->DrawList());
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
-    return($smarty->fetch(get_template_path('licenseUsage.tpl',TRUE,dirname(__FILE__))));
+    return($smarty->fetch(get_template_path('licenseUsageByHost.tpl',TRUE,dirname(__FILE__))));
   }
 
  

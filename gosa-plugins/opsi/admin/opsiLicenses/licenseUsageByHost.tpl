@@ -8,9 +8,11 @@
 {else}
 
 <!-- GENERIC -->
-<h2>{t}License usage{/t}</h2>
-
+<h2>{t}Licenses used{/t}</h2>
 {$licenseUses}
+
+<h2>{t}Licenses reserved for this host{/t}</h2>
+{$licenseReserved}
 
 <input name='opsiLicenseUsagePosted' value='1' type='hidden'>
 {/if}
