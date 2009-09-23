@@ -56,7 +56,7 @@ class licenseByProduct extends plugin
     }else{
 
       $res = $this->si->getLicensesForProduct($this->cn);
-      if($this->si->is_error()){
+      if($this->si->is_error() || !$res){
         $this->init_successfull = FALSE;
         return;
       }

@@ -56,7 +56,7 @@ class licenseUsageByHost extends plugin
     }else{
 
       $res = $this->si->getLicenseUsage($this->cn);
-      if($this->si->is_error()){
+      if($this->si->is_error() || !$res){
         $this->init_successfull = FALSE;
         return;
       }

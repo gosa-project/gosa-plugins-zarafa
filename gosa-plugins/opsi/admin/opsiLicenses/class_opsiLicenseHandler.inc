@@ -304,10 +304,12 @@ class opsiLicenceHandler extends opsi  {
     $data['productId'] = htmlentities($productId);
     $res = $this->send_data("gosa_opsi_getLicenseInformationForProduct",$this->target,$data,TRUE);
 
-    print_a($res);
-
+    if(isset($res['XML'][0]['ERROR_OPSI_GETLICENSEINFORMATIONFORPRODUCT'])){
+#      $this->set_error($res['XML'][0]['ERROR_OPSI_GETLICENSEINFORMATIONFORPRODUCT']);
+      return(FALSE);
+    }
     if(isset($res['XML'][0]['ANSWER_OPSI_UNASSIGNALLSOFTWARELICENSESFROMHOST'])){
-      return(TRUE);
+      return($res['XML'][0]);
     }
     return(FALSE);
   }
