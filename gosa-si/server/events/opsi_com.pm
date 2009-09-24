@@ -1766,7 +1766,7 @@ sub opsi_createLicense {
 	# Create license contract at Opsi server
     my $callobj = {
         method  => 'createLicenseContract',
-        params  => [ undef, $partner, $conclusionDate, $notificationDate, undef, $notes ],
+        params  => [ "c_".$softwareLicenseId, $partner, $conclusionDate, $notificationDate, undef, $notes ],
         id  => 1,
     };
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
@@ -2112,7 +2112,6 @@ sub opsi_getPool {
 		if ($lContract_err){
 			return &_giveErrorFeedback($msg_hash, "cannot get software license contract information from Opsi server: ".$licenses_res, $session_id);
 		}
-
 		$license_hash->{$license->{'licenseContractId'}} = [];
 		my $licenseContract_hash = { 'conclusionDate' => [$lContract_res->{conclusionDate}],
 			'notificationDate' => [$lContract_res->{notificationDate}],
@@ -2120,10 +2119,7 @@ sub opsi_getPool {
 			'exirationDate' => [$lContract_res->{expirationDate}],
 			'partner' => [$lContract_res->{partner}],
 		};
-		
 		push( @{$license_hash->{licenseContractData}}, $licenseContract_hash );
-
-print STDERR Dumper $license_hash;
 
 		push( @{$res_hash->{hit}}, $license_hash );
 	}
