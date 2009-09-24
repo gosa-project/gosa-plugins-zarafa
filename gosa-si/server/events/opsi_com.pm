@@ -2107,6 +2107,24 @@ sub opsi_getPool {
 			}
 		}
 
+		# Each softwareLicenseId has one licenseContractId, fetch contract details for each licenseContractId
+		my ($lContract_res, $lContract_err) = &_getLicenseContract_hash('licenseContractId'=>$license->{licenseContractId});
+		if ($lContract_err){
+			return &_giveErrorFeedback($msg_hash, "cannot get software license contract information from Opsi server: ".$licenses_res, $session_id);
+		}
+
+		$license_hash->{$license->{'licenseContractId'}} = [];
+		my $licenseContract_hash = { 'conclusionDate' => [$lContract_res->{conclusionDate}],
+			'notificationDate' => [$lContract_res->{notificationDate}],
+			'notes' => [$lContract_res->{notes}],
+			'exirationDate' => [$lContract_res->{expirationDate}],
+			'partner' => [$lContract_res->{partner}],
+		};
+		
+		push( @{$license_hash->{licenseContractData}}, $licenseContract_hash );
+
+print STDERR Dumper $license_hash;
+
 		push( @{$res_hash->{hit}}, $license_hash );
 	}
 	$out_hash->{licenses} = [$res_hash];
@@ -2164,7 +2182,6 @@ sub opsi_removeLicense {
 # @brief
 # @param 
 #
-#TODO
 sub opsi_getReservedLicenses {
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
@@ -2390,5 +2407,31 @@ sub _getLicensePoolId {
 
 	return ($res->result, 0);
 }
+
+sub _getLicenseContract_hash {
+	my %arg = (
+			'licenseContractId' => undef,
+			@_,
+			);
+	
+	if (not defined $arg{licenseContractId} ) {
+		return ("function requires licenseContractId as parameter", 1);
+	}
+
+    my $callobj = {
+        method  => 'getLicenseContract_hash',
+        params  => [ $arg{licenseContractId} ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+
+}
+
 
 1;
