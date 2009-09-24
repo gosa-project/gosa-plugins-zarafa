@@ -29,7 +29,7 @@ my @events = (
 	"opsi_unassignAllSoftwareLicensesFromHost",
 	"opsi_getSoftwareLicense_hash",
 	"opsi_getLicensePool_hash",
-	"opsi_getSoftwareLicenseUsages_listOfHashes",
+	"opsi_getSoftwareLicenseUsages",
 	"opsi_getLicensePools_listOfHashes",
 	"opsi_getLicenseInformationForProduct",
 	"opsi_getPool",
@@ -1486,7 +1486,7 @@ sub opsi_getLicensePool_hash {
 # @param hostid Something like client_1.intranet.mydomain.de (optional).
 # @param licensePoolId The name of the pool (optional). 
 # 
-sub opsi_getSoftwareLicenseUsages_listOfHashes {
+sub opsi_getSoftwareLicenseUsages {
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -1495,32 +1495,34 @@ sub opsi_getSoftwareLicenseUsages_listOfHashes {
 	my $hostId = defined $msg_hash->{'hostId'} ? @{$msg_hash->{'hostId'}}[0] : undef;
 	my $out_hash;
 
-	# Fetch information from Opsi server
-	my $callobj = {
-		method  => 'getSoftwareLicenseUsages_listOfHashes',
-		params  => [  $hostId, $licensePoolId ],
-		id  => 1,
-	};
-	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
-	my ($res_error, $res_error_str) = &check_opsi_res($res);
-	if ($res_error){
-		# Create error message
-		&main::daemon_log("$session_id ERROR: cannot fetch software licenses from license pool '$licensePoolId': ".$res_error_str, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
-		return ( &create_xml_string($out_hash) );
+	my ($res, $err) = &_getSoftwareLicenseUsages_listOfHashes('licensePoolId'=>$licensePoolId, 'hostId'=>$hostId);
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot fetch software licenses from license pool : ".$res, $session_id);
 	}
 
 	# Parse Opsi result
+	my $tmp_licensePool_cache = {};
 	my $res_hash = { 'hit'=> [] };
-	foreach my $license ( @{$res->result}) {
+	foreach my $license ( @{$res}) {
+		my $tmp_licensePool = $license->{'licensePoolId'};
+		if (not exists $tmp_licensePool_cache->{$tmp_licensePool}) {
+			# Fetch missing informations from Opsi and cache the results for a possible later usage
+			my ($res, $err) = &_getLicensePool_hash('licensePoolId'=>$tmp_licensePool);
+			if (not $err) {
+				$tmp_licensePool_cache->{$tmp_licensePool} = $res;
+			}
+		}
 		my $license_hash = { 'softwareLicenseId' => [$license->{'softwareLicenseId'}],
 			'notes' => [$license->{'notes'}],
 			'licenseKey' => [$license->{'licenseKey'}],
 			'hostId' => [$license->{'hostId'}],
-			'licensePoolId' => [$license->{'licensePoolId'}],
+			'licensePoolId' => [$tmp_licensePool],
 			};
+		if (exists $tmp_licensePool_cache->{$tmp_licensePool}) {
+			$license_hash->{$tmp_licensePool} = {'productIds'=>[], 'windowsSoftwareIds'=>[]};
+			map (push (@{$license_hash->{$tmp_licensePool}->{productIds}}, $_), @{$tmp_licensePool_cache->{$tmp_licensePool}->{productIds}});
+			map (push (@{$license_hash->{$tmp_licensePool}->{windowsSoftwareIds}}, $_), @{$tmp_licensePool_cache->{$tmp_licensePool}->{windowsSoftwareIds}});
+		}
 		push( @{$res_hash->{hit}}, $license_hash );
 	}
 
@@ -1941,10 +1943,7 @@ sub opsi_getLicenseInformationForProduct {
 	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){
-		# Create error message
-		&main::daemon_log("$session_id ERROR: cannot get license pool for product '$productId' : ".$res_error_str, 1);
-		$out_hash = &main::create_xml_hash("error_$header", $main::server_address, $source, $res_error_str);
-		return ( &create_xml_string($out_hash) );
+		return &_giveErrorFeedback($msg_hash, "cannot get license pool for product '$productId' : ".$res_error_str, $session_id);
 	} 
 	
 	my $licensePoolId = $res->result;
