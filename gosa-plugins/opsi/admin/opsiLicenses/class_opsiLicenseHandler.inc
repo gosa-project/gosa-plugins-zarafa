@@ -84,18 +84,24 @@ class opsiLicenceHandler extends opsi  {
   {
     $data= array();
     $data['licensePoolId'] = htmlentities($licensePoolId);
-    $res = $this->send_data("gosa_opsi_getLicensePool_hash",$this->target,$data,TRUE);
-    if(isset($res['XML'][0]['ANSWER_OPSI_GETLICENSEPOOL_HASH'])){
+    $res = $this->send_data("gosa_opsi_getPool",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ANSWER_OPSI_GETPOOL'])){
       $item = array();
       foreach(array("LICENSEPOOLID"       => "cn", 
                     "DESCRIPTION"         => "description",
+                    "LICENSES"            => "licenses",
                     "WINDOWSSOFTWAREIDS"  => "softwareId",
                     "PRODUCTIDS"          => "productId") as $source => $target){
         if(isset($res['XML'][0][$source])){
-          
           $item[$target] = array('count' => 0);
+
+
           foreach($res['XML'][0][$source] as $data){
-            $item[$target][] = $data['VALUE'];
+            if(isset($data['VALUE'])){
+              $item[$target][] = $data['VALUE'];
+            }elseif(isset($data['HIT'])){
+              $item[$target] = array_merge($item[$target],$data['HIT']);
+            }
           }
           $item[$target]['count'] = count($item[$target]) -1 ;
         }

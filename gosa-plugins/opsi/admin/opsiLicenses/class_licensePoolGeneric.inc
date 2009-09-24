@@ -21,7 +21,7 @@
 */
 
 
-class poolGeneric extends plugin 
+class licensePoolGeneric extends plugin 
 {
 
   var $cn = "";
@@ -97,6 +97,12 @@ class poolGeneric extends plugin
             $this->productIds[] = $this->data['productId'][$i];
           }
         }
+
+        // Load Licences 
+        $this->licenses = array();
+        if(isset($this->data['licenses'])){
+          $this->licenses = $this->data['licenses'];
+        }
         $this->init_successfull = TRUE;
         return;
       }
@@ -111,7 +117,7 @@ class poolGeneric extends plugin
     if(!$this->init_successfull){
       $smarty = get_smarty();
       $smarty->assign("init_successfull", $this->init_successfull);
-      return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
+      return($smarty->fetch(get_template_path('licensePoolGeneric.tpl',TRUE,dirname(__FILE__))));
     }
 
     $smarty = get_smarty();
@@ -124,14 +130,13 @@ class poolGeneric extends plugin
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
-
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("availableProductIds", array_diff( $this->availableProductIds, $this->productIds));
     $smarty->assign("productIds", $this->productIds);
     $smarty->assign("softwareIds", $this->softwareIds);
     $smarty->assign("licenses", $this->getLicenseList());
     $smarty->assign("initially_was_account", $this->initially_was_account);
-    return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
+    return($smarty->fetch(get_template_path('licensePoolGeneric.tpl',TRUE,dirname(__FILE__))));
   }
 
 
@@ -139,9 +144,29 @@ class poolGeneric extends plugin
   {
     $list = new divSelectBox("test");
     $list->setHeight(100);
-
+    for($i=0 ; $i<$this->licenses['count'] ; $i++){
     
+      $license = $this->licenses[$i];
 
+      $keys = "";
+      foreach($license['LICENSEKEYS'] as $key_by_pool){
+        foreach($key_by_pool as $key){
+          $keys .= $key[0]['VALUE'].", ";
+        }
+      }
+
+      $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
+      $link.= "<input type='image' class='center' src='images/lists/trash.png' name='removeLicense_{$i}'>";
+
+      $f1 = array("string" => $license['SOFTWARELICENSEID'][0]['VALUE'], "attach" => "");
+      $f2 = array("string" => $license['LICENSETYPE'][0]['VALUE'], "attach" => "");
+      $f3 = array("string" => $license['EXPIRATIONDATE'][0]['VALUE'], "attach" => "");
+      $f4 = array("string" => $license['MAXINSTALLATIONS'][0]['VALUE'], "attach" => "");
+      $f5 = array("string" => rtrim($keys,", "));
+      $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
+
+      $list->addEntry(array($f1,$f2,$f3,$f4,$f5,$f6));
+    }
     return($list->DrawList());
   }
  
