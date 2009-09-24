@@ -307,6 +307,7 @@ class workstartup extends plugin
          * to our list of classes, abort and show a message.
          */
         foreach($this->FAIclass as $name){
+          # FIXME: Where does FAIclassInfo come from??
           if(isset($this->FAIclassInfo[$name])){
             foreach($this->FAIclassInfo[$name] as $atr){
               if(isset($atr['obj'])){
@@ -626,7 +627,6 @@ class workstartup extends plugin
       $i = 1;
       if($this->acl_is_readable("FAIclass")){
         foreach($tmp as $class){
-
           /* Mark invalid classes. (Not in selected release)
            */
           $marker = "";
@@ -653,24 +653,15 @@ class workstartup extends plugin
           /* Get Description tag 
            *  There may be several FAI objects with the same class name, 
            *   use the description from FAIprofile, if possible.
-           */  
-          $desc = ""; 
-          if(isset($this->cache['CLASSES'][$this->FAIrelease][$class])){
-            foreach($this->cache['CLASSES'][$this->FAIrelease][$class] as $types ){
-              if(isset($types['Desc'])){
-                $desc= $types['Desc'];
-                if($types['Type'] == "FAIprofile"){
-                  break;
-                }
-              }
-            }
-          }
-          if(!empty($desc)){
-            $desc = "&nbsp;[".trim($desc)."]";
+           */ 
+          $abbrevations = $this->get_abbrevations_string($class);
+
+          if(!empty($abbrevations)){
+            $abbrevations = "&nbsp;[".trim($abbrevations)."]";
           }        
 
           $div->AddEntry(array(
-                array("string"=>$class.$desc.$marker),
+                array("string"=>$class.$abbrevations.$marker),
                 array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:50px;border-right:none;'")
                 ));
         }  
@@ -1132,7 +1123,7 @@ class workstartup extends plugin
       /* Get the list of available servers and their releases.
        */
       $o_queue = new gosaSupportDaemon();
-      $tmp = $o_queue->FAI_get_classes($release);
+      $classes = $o_queue->FAI_get_classes($release);
       $this->cache['CLASSES'][$release] = array();
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
@@ -1140,9 +1131,12 @@ class workstartup extends plugin
         $this->cache=array();
         return;
       }else{
-        foreach($tmp as $entry){
-          $class = $entry['CLASS'];
-          $this->cache['CLASSES'][$release][$class] = $this->analyse_fai_object($entry); 
+        foreach($classes as $class){
+          $classname = $class['CLASS'];
+          if (!isset($this->cache['CLASSES'][$release][$classname])) {
+            $this->cache['CLASSES'][$release][$classname] = array();
+          }
+          array_push($this->cache['CLASSES'][$release][$classname], $this->analyse_fai_object($class));
         }
       }
 
@@ -1205,21 +1199,27 @@ class workstartup extends plugin
     }
   }
 
+  /* Detect the release and get all classes for it */
+  function get_classes() {
+    $this->update_fai_cache();
+
+    if($this->FAIdebianMirror == "inherited" && isset($this->cache['CLASSES'][$this->InheritedFAIrelease])){
+      $classes = $this->cache['CLASSES'][$this->InheritedFAIrelease];
+    }elseif(isset($this->cache['CLASSES'][$this->FAIrelease])){
+      $classes = $this->cache['CLASSES'][$this->FAIrelease];
+    }else{
+      $classes = array();
+    }
+
+    return $classes;
+  }
 
   /* This function return an array containing all 
    *  invalid classes for the selected server/release
    */
   function get_invalid_classes($classes)
   {
-    $this->update_fai_cache();
-    if($this->FAIdebianMirror == "inherited" && isset($this->cache['CLASSES'][$this->InheritedFAIrelease])){
-      $release_classes = $this->cache['CLASSES'][$this->InheritedFAIrelease];
-    }elseif(isset($this->cache['CLASSES'][$this->FAIrelease])){
-      $release_classes = $this->cache['CLASSES'][$this->FAIrelease];
-    }else{
-      $release_classes = array();
-    }
-
+    $release_classes = $this->get_classes();
 
     /* Detect all classes that are not valid 
      *  for the selected release 
@@ -1233,31 +1233,28 @@ class workstartup extends plugin
     return($NA);
   }  
 
-  
+
+
+  function get_abbrevations_string($class_name) {
+    $classes = $this->get_classes();
+
+    $Abbr = "";
+    foreach($classes[$class_name] as $class_type) {
+      $Abbr .= $class_type['Abbr']." ";
+    }
+    return trim($Abbr);
+  }
+
   /* Get all selectable classes for the ui select box
    */
   function selectable_classes()
   {
-    $this->update_fai_cache();
+    $classes = $this->get_classes();
 
-    if($this->FAIdebianMirror == "inherited" && isset($this->cache['CLASSES'][$this->InheritedFAIrelease])){
-      $classes = $this->cache['CLASSES'][$this->InheritedFAIrelease];
-    }elseif(isset($this->cache['CLASSES'][$this->FAIrelease])){
-      $classes = $this->cache['CLASSES'][$this->FAIrelease];
-    }else{
-      $classes = array();
-    }
-
-    $Abbr ="";
     $ret= array();
-    foreach($classes as $class_name => $class_types){
-      if(!in_array($class_name,$this->FAIclass)){
-        foreach($class_types as $type){
-          if(!preg_match("/".$type['Abbr']."/",$Abbr)){
-            $Abbr .= $type['Abbr']." ";
-          }
-        }
-        $ret[$class_name] = trim($Abbr);
+    foreach($classes as $class_name => $class_types) {
+      if (!in_array($class_name, $this->FAIclass)) {
+        $ret[$class_name] = $this->get_abbrevations_string($class_name);
       }
     }
     uksort($ret, 'strnatcasecmp');
