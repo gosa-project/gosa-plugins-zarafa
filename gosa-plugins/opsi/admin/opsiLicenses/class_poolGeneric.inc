@@ -21,7 +21,7 @@
 */
 
 
-class licenseGeneric extends plugin 
+class poolGeneric extends plugin 
 {
 
   var $cn = "";
