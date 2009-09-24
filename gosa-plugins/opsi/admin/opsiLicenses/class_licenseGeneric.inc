@@ -25,12 +25,41 @@ class licenseGeneric extends plugin
 {
 
   var $si = NULL;
+  var $data = array();
+  var $cn = "";
+  var $description = "";  
+  var $partner = "";
 
-  function __construct(&$config,$dn, $license)
+  var $conclusionDate = "";
+  var $expirationDate = "";
+  var $notificationDate = "";
+
+  var $licenseModel = "";
+  var $licenseKey = "";
+  var $licensePoolId = "";
+  var $boundToHost= array(); // Reserved for Host.   
+  var $usedByHost = array(); // Used by Host.   
+
+  var $maximumInstallations = 0;
+  var $opsiHosts; 
+  
+  var $attributes = array("cn","description","partner","conclusionDate","expirationDate",
+        "notificationDate","licenseModel","licenseKey","maximumInstallations","licensePoolId");
+
+  function __construct(&$config, $license, $hosts = array())
   {
     $this->config = $config;
-    $this->dn = $this->orig_dn = $dn;
+    $this->data = $license;
     $this->si = new opsiLicenceHandler($this->config);
+    $this->opsiHosts = $hosts;
+
+    // Detect account state.
+    if(count($this->data) == 0){
+      $this->initially_was_account = FALSE;
+    }else{
+      $this->initially_was_account = TRUE;
+    }
+    $this->is_account = TRUE;
 
     // Extract pool name out of the fake dn.
     $this->init();
@@ -39,17 +68,44 @@ class licenseGeneric extends plugin
   
   function init()
   {
-    // Load local Boot Products 
-    $res = $this->si->get_local_products();
-    if($this->si->is_error()){
-      $this->init_successfull = FALSE;
-      return(FALSE);
+
+    $map = array(
+        "BOUNDTOHOST"=> "boundToHost",
+        "EXPIRATIONDATE"=> "expirationDate",
+        "LICENSECONTRACTID"=> "contractId",
+        "LICENSEPOOIDS"=> "licensePoolId",
+        "LICENSETYPE"=> "licenseModel",
+        "MAXINSTALLATIONS"=> "maximumInstallations",
+        "SOFTWARELICENSEID"=> "cn");
+
+    foreach($map as $source => $target){
+      if(isset($this->data[$source][0]['VALUE'])){
+        $this->$target = $this->data[$source][0]['VALUE'];
+      }
     }
+
+    // Get license key
+    if(isset($this->data['LICENSEKEYS'][0][strtoupper($this->licensePoolId)][0]['VALUE'])){
+      $this->licenseKey = $this->data['LICENSEKEYS'][0][strtoupper($this->licensePoolId)][0]['VALUE'];
+    }
+
+    // Get license usage
+    $this->usedByHost = array();
+    if(isset($this->data['HOSTIDS'])){
+      foreach($this->data['HOSTIDS'] as $host){
+        $this->usedByHost[] = $host['VALUE']; 
+      }
+    }
+
+    $this->init_successfull = TRUE;
+    return;    
   }
 
 
   function execute()
   {
+    $this->init();
+
     // Handle initialization failures.
     if(isset($_POST['retry_init'])) $this->init();
     if(!$this->init_successfull){
@@ -69,10 +125,34 @@ class licenseGeneric extends plugin
       $smarty->assign($attr,$this->$attr);
     }
 
+    $smarty->assign("licenseModels",array(
+          "RETAIL" => _("Retail"),
+          "OEM"=>_("OEM"),
+          "VOLUME" => _("Volume"),
+          "CONCURRENT" => _("Concurrent")));
+
+
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
+    $smarty->assign("hosts", $this->getHosts());
+
+    $smarty->assign("notUsedHosts", array_diff($this->getHosts(), $this->usedByHost));
+    $smarty->assign("usedByHost", $this->usedByHost);
+    $smarty->assign("boundToHost", $this->boundToHost);
     return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
   }
+
+
+  function getHosts()
+  {
+    $ret = array();
+    foreach($this->opsiHosts as $host){
+      $cn = $host['NAME'][0]['VALUE'];
+      $ret[$cn] = $cn;
+    }
+    return($ret);
+  }
+
 
  
   /* Save HTML inputs

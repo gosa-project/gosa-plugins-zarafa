@@ -7,91 +7,169 @@
 <br>
 {else}
 
+<h2>{t}License{/t}</h2>
 
-<table width="100%">
-  <tr> 
-    <td style='vertical-align:top;'>
-        <!-- GENERIC -->
-        <h2>{t}Generic{/t}</h2>
+<table style='width:100%'>
+  <tr>
+    <td style='width:50%; border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
+        
         <table>
-          <tr> 
-            <td>{t}Name{/t}</td>
+          <tr>
             <td>
-              {if $initially_was_account}
-                <input type='text' value='{$cn}' disabled>
-              {else}
-{render acl=$cnACL}
-              <input type='text' value='{$cn}' name='cn'>
-{/render}
-              {/if}
+              {t}Name{/t}
+            </td>
+            <td>
+              <input type='text' name='cn' value='{$cn}'>
             </td>
           </tr>
-          <tr> 
-            <td>{t}Description{/t}</td>
+          <tr>
             <td>
-{render acl=$descriptionACL}
-              <input type='text' value='{$description}' name='description'>
-{/render}
+              {t}Partner{/t}
+            </td>
+            <td>
+              <input type='text' name='partner' value='{$partner}'>
             </td>
           </tr>
         </table>
 
     </td>
-    <td style='width:50%; border-left: 1px solid #888888;padding: 5px;'>
-        <!-- LICENSES -->
-        <h2>{t}Licenses{/t}</h2>
-        <table style='width:100%;'>
-          <tr> 
+    <td style='padding: 5px; vertical-align:top;'>
+
+        <table>
+          <tr>
             <td>
-              {$licenses}
+              {t}Description{/t}
+            </td>
+            <td>
+              <input type='text' name='description' value='{$description}'>
             </td>
           </tr>
         </table>
 
-    </td>
-  </tr>
-  <tr> 
-    <td colspan="2">
-      <p class='separator'>&nbsp;</p>
     </td>
   </tr>
   <tr>
-    <td style='width:50%'>
-        <!-- APPLICATIONS -->
-        <h2>{t}Applications{/t}</h2>
-        <table style='width:100%;'>
-          <tr> 
+    <td colspan="2"><p class='separator'>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
+    
+        <table>
+          <tr>
             <td>
-              <select name='productIds[]' multiple size="6" style="width:100%;">
-                {html_options options=$productIds}
+              {t}Conclusion date{/t}
+            </td>
+            <td>
+              <input type='text' name='conclusionDate' value='{$conclusionDate}'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {t}Expiration date{/t}
+            </td>
+            <td>
+              <input type='text' name='expirationDate' value='{$expirationDate}'>
+            </td>
+          </tr>
+        </table>
+ 
+    </td> 
+    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:bottom;'>
+   
+        <table>
+          <tr>
+            <td>
+              {t}Notification date{/t}
+            </td>
+            <td>
+              <input type='text' name='notificationDate' value='{$notificationDate}'>
+            </td>
+          </tr>
+        </table>
+    </td> 
+  </tr>
+</table>
+
+<p class='separator'>&nbsp;</p>
+
+<h2>{t}License model{/t}</h2>
+
+<table width="100%">
+  <tr>
+    <td style='width:50%;border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
+    
+        <table>
+          <tr>
+            <td>
+              {t}Model{/t}
+            </td>
+            <td>
+              <select name='licenseModel'>
+                {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
+              </select>
+            </td>
+          </tr>
+        </table>
+ 
+    </td> 
+  </tr>
+</table>
+
+<p class='separator'>&nbsp;</p>
+
+<table width="100%">
+  <tr>
+    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
+    
+        <table>
+          <tr>
+            <td>
+              {t}License key{/t}
+            </td>
+            <td>
+              <input type='text' name='licenseKey' value='{$licenseKey}'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {t}Maximum installations{/t}
+            </td>
+            <td>
+              <input type='text' name='maximumInstallations' value='{$maximumInstallations}'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {t}Reserved for Host{/t}
+            </td>
+            <td>
+              <select name='boundToHost'>
+                <option value="">{t}none{/t}</option>
+                {html_options options=$hosts selected=$boundToHost}
+              </select>
+            </td>
+          </tr>
+        </table>
+ 
+    </td> 
+    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:bottom;'>
+   
+        <table width="100%">
+          <tr>
+            <td colspan="2">
+              <b>{t}Assigned to Host{/t}</b><br>
+              <select name='usedByHost[]' multiple size=4 style='width:100%;'>
+                {html_options options=$usedByHost}
               </select><br>
-              <select name='availableProduct'>
-                {html_options options=$availableProductIds}
+              <select name='selectedHostToAdd'>
+                {html_options options=$notUsedHosts}
               </select>
-              <input type='submit' name='addProduct' value='{msgPool type='addButton'}'>
-              <input type='submit' name='removeProduct' value='{msgPool type='delButton'}'>
+              <input type="submit" name="addLicenseUsage" value="{msgPool type='addButton'}">
+              <input type="submit" name="removeLicenseUsage" value="{msgPool type='delButton'}">
             </td>
           </tr>
         </table>
-
-    </td>
-    <td style="border-left: 1px solid #888888; padding: 5px;">
-        <!-- SOFTWARE -->
-        <h2>{t}Windows software IDs{/t}</h2>
-        <table style='width:100%;'>
-          <tr> 
-            <td>
-              <select name='softwareIds[]' multiple size="6" style="width:100%;">
-                {html_options options=$softwareIds}
-              </select>
-              <input type='text' name='newSoftwareId' value='' size=10>
-              <input type='submit' name='addSoftware' value='{msgPool type='addButton'}'>
-              <input type='submit' name='removeSoftware' value='{msgPool type='delButton'}'>
-            </td>
-          </tr>
-        </table>
-
-    </td>
+    </td> 
   </tr>
 </table>
 <input name='opsiLicensesPosted' value='1' type='hidden'>

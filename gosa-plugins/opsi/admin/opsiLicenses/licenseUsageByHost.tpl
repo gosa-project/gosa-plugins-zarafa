@@ -10,7 +10,7 @@
 
 <table width="100%">
   <tr>
-    <td style='vertical-align:top;width: 50%; padding: 5px; border-right: solid 1px #888888; '>
+    <td style='vertical-align:top;width: 50%; padding: 5px; border-right: solid 1px #AAA; '>
         <h2>{t}Licenses used{/t}</h2>
         {$licenseUses}
     </td>

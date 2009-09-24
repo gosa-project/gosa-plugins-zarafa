@@ -37,7 +37,7 @@
         </table>
 
     </td>
-    <td style='width:50%; border-left: 1px solid #888888;padding: 5px;'>
+    <td style='width:50%; border-left: 1px solid #AAA;padding: 5px;'>
         <!-- LICENSES -->
         <h2>{t}Licenses{/t}</h2>
         <table style='width:100%;'>
@@ -75,7 +75,7 @@
         </table>
 
     </td>
-    <td style="border-left: 1px solid #888888; padding: 5px;">
+    <td style="border-left: 1px solid #AAA; padding: 5px;">
         <!-- SOFTWARE -->
         <h2>{t}Windows software IDs{/t}</h2>
         <table style='width:100%;'>
@@ -94,5 +94,5 @@
     </td>
   </tr>
 </table>
-<input name='opsiLicensesPosted' value='1' type='hidden'>
+<input name='opsiLicensePoolPosted' value='1' type='hidden'>
 {/if}

@@ -39,6 +39,8 @@ class licensePoolGeneric extends plugin
   var $attributes =array("cn","description");
   var $si = NULL;
 
+  var $opsiHosts = array();
+
   function __construct(&$config,$dn)
   {
     $this->config = $config;
@@ -63,11 +65,21 @@ class licensePoolGeneric extends plugin
   {
     // Load local Boot Products 
     $res = $this->si->get_local_products();
+    $this->availableProductIds=array();
     if($this->si->is_error()){
       $this->init_successfull = FALSE;
       return(FALSE);
     }
     $this->availableProductIds=array_keys($res);
+
+    // Load opsi hosts
+    $res = $this->si->list_clients();
+    $this->opsiHosts=array();
+    if($this->si->is_error()){
+      $this->init_successfull = FALSE;
+      return(FALSE);
+    }
+    $this->opsiHosts=$res;
 
     // Load Pool
     if(!$this->initially_was_account){
@@ -102,6 +114,7 @@ class licensePoolGeneric extends plugin
         $this->licenses = array();
         if(isset($this->data['licenses'])){
           $this->licenses = $this->data['licenses'];
+          unset($this->licenses['count']);
         }
         $this->init_successfull = TRUE;
         return;
@@ -118,6 +131,20 @@ class licensePoolGeneric extends plugin
       $smarty = get_smarty();
       $smarty->assign("init_successfull", $this->init_successfull);
       return($smarty->fetch(get_template_path('licensePoolGeneric.tpl',TRUE,dirname(__FILE__))));
+    }
+
+    // Display dialogs! 
+    if($this->dialog instanceOf plugin){
+      $this->dialog->save_object();
+      $display = $this->dialog->execute();
+      $display.= 
+        "<p style=\"text-align:right\">
+        <input type=submit name=\"license_finish\" style=\"width:80px\"
+        value=\"".msgPool::okButton(). "\">&nbsp;
+      <input type=submit name=\"license_cancel\"
+        value=\"".msgPool::cancelButton()."\">
+        </p>";
+      return($display);
     }
 
     $smarty = get_smarty();
@@ -144,10 +171,7 @@ class licensePoolGeneric extends plugin
   {
     $list = new divSelectBox("test");
     $list->setHeight(100);
-    for($i=0 ; $i<$this->licenses['count'] ; $i++){
-    
-      $license = $this->licenses[$i];
-
+    foreach($this->licenses as $i => $license){
       $keys = "";
       foreach($license['LICENSEKEYS'] as $key_by_pool){
         foreach($key_by_pool as $key){
@@ -175,7 +199,20 @@ class licensePoolGeneric extends plugin
    */
   function save_object()
   {
-    if(isset($_POST['opsiLicensesPosted'])){
+    // Close license edit dialogs.
+    if($this->dialog instanceOf plugin && isset($_POST['license_cancel'])){
+      $this->dialog = NULL;
+      return;
+    }
+
+    // Save license modifications
+    if($this->dialog instanceOf plugin && isset($_POST['license_finish'])){
+      echo "Save";
+      $this->dialog = NULL;
+      return;
+    }
+
+    if(isset($_POST['opsiLicensePoolPosted'])){
       plugin::save_object();  
 
       // Restore license cn, to avoid creating a copy...
@@ -212,6 +249,24 @@ class licensePoolGeneric extends plugin
           if(isset($this->softwareIds[$key])){
             unset($this->softwareIds[$key]);
           }
+        }
+      }
+
+      // Search post for image button clicks.
+      foreach($_POST as $name => $value){
+        if(preg_match("/^editLicense_/",$name)){
+          $id = preg_replace("/^editLicense_([^_]*)_.*$/","\\1",$name);
+          if(isset($this->licenses[$id])){
+            $this->dialog = new licenseGeneric($this->config,$this->licenses[$id], $this->opsiHosts);
+          }
+          break;
+        }
+        if(preg_match("/^removeLicense_/",$name)){
+          $id = preg_replace("/^removeLicense_([^_]*)_.*$/","\\1",$name);
+          if(isset($this->licenses[$id])){
+            unset($this->licenses[$id]);
+          }
+          break;
         }
       }
     }

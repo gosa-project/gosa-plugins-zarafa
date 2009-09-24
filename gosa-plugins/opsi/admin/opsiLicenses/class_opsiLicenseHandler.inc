@@ -85,11 +85,13 @@ class opsiLicenceHandler extends opsi  {
     $data= array();
     $data['licensePoolId'] = htmlentities($licensePoolId);
     $res = $this->send_data("gosa_opsi_getPool",$this->target,$data,TRUE);
+    
     if(isset($res['XML'][0]['ANSWER_OPSI_GETPOOL'])){
       $item = array();
       foreach(array("LICENSEPOOLID"       => "cn", 
                     "DESCRIPTION"         => "description",
                     "LICENSES"            => "licenses",
+                    "LICENSECONTRACTDATA" => "contract",
                     "WINDOWSSOFTWAREIDS"  => "softwareId",
                     "PRODUCTIDS"          => "productId") as $source => $target){
         if(isset($res['XML'][0][$source])){
@@ -155,7 +157,7 @@ class opsiLicenceHandler extends opsi  {
    * @param boundToHost The name of the client the license is bound to (optional).
    * @param expirationDate The date when the license is running down (optional).
    */
-  function createLicense($poolId, $licenseKey,$licenseTyp = "",  
+  function createLicense($poolId, $licenseId, $licenseKey,$licenseTyp = "",  
         $partner = "",
         $conclusionDate = "",
         $notificationDate ="",
@@ -168,7 +170,8 @@ class opsiLicenceHandler extends opsi  {
 
     $data= array();
     $data['licensePoolId']    = htmlentities($poolId);
-    $data['licenseKey']        = htmlentities($licenseKey);
+    $data['licenseKey']       = htmlentities($licenseKey);
+    $data['licenseId']        = htmlentities($licenseId);
 
     // Append optional attributes 
     foreach(array("partner","conclusionDate","notificationDate","notes","softwareLicenseId",
