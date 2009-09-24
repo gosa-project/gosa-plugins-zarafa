@@ -30,10 +30,12 @@ my @events = (
 	"opsi_getSoftwareLicense_hash",
 	"opsi_getLicensePool_hash",
 	"opsi_getSoftwareLicenseUsages",
+	"opsi_getSoftwareLicenseUsagesForProductId",
 	"opsi_getLicensePools_listOfHashes",
 	"opsi_getLicenseInformationForProduct",
 	"opsi_getPool",
 	"opsi_removeLicense",
+	"opsi_getReservedLicenses",
 	"opsi_test",
    );
 @EXPORT = @events;
@@ -1480,25 +1482,8 @@ sub opsi_getLicensePool_hash {
 	return ( &create_xml_string($out_hash) );
 }
 
-################################
-#
-# @brief Returns softwareLicenseId, notes, licenseKey, hostId and licensePoolId for optional given licensePoolId and hostId
-# @param hostid Something like client_1.intranet.mydomain.de (optional).
-# @param licensePoolId The name of the pool (optional). 
-# 
-sub opsi_getSoftwareLicenseUsages {
-	my ($msg, $msg_hash, $session_id) = @_;
-	my $header = @{$msg_hash->{'header'}}[0];
-	my $source = @{$msg_hash->{'source'}}[0];
-	my $target = @{$msg_hash->{'target'}}[0];
-	my $licensePoolId = defined $msg_hash->{'licensePoolId'} ? @{$msg_hash->{'licensePoolId'}}[0] : undef;
-	my $hostId = defined $msg_hash->{'hostId'} ? @{$msg_hash->{'hostId'}}[0] : undef;
-	my $out_hash;
-
-	my ($res, $err) = &_getSoftwareLicenseUsages_listOfHashes('licensePoolId'=>$licensePoolId, 'hostId'=>$hostId);
-	if ($err){
-		return &_giveErrorFeedback($msg_hash, "cannot fetch software licenses from license pool : ".$res, $session_id);
-	}
+sub _parse_getSoftwareLicenseUsages {
+	my $res = shift;
 
 	# Parse Opsi result
 	my $tmp_licensePool_cache = {};
@@ -1526,8 +1511,76 @@ sub opsi_getSoftwareLicenseUsages {
 		push( @{$res_hash->{hit}}, $license_hash );
 	}
 
+	return $res_hash;
+}
+
+################################
+#
+# @brief Returns softwareLicenseId, notes, licenseKey, hostId and licensePoolId for optional given licensePoolId and hostId
+# @param hostid Something like client_1.intranet.mydomain.de (optional).
+# @param licensePoolId The name of the pool (optional). 
+# 
+sub opsi_getSoftwareLicenseUsages {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+	my $target = @{$msg_hash->{'target'}}[0];
+	my $licensePoolId = defined $msg_hash->{'licensePoolId'} ? @{$msg_hash->{'licensePoolId'}}[0] : undef;
+	my $hostId = defined $msg_hash->{'hostId'} ? @{$msg_hash->{'hostId'}}[0] : undef;
+	my $out_hash;
+
+	my ($res, $err) = &_getSoftwareLicenseUsages_listOfHashes('licensePoolId'=>$licensePoolId, 'hostId'=>$hostId);
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot fetch software licenses from license pool : ".$res, $session_id);
+	}
+
+	# Parse Opsi result
+	my $res_hash = &_parse_getSoftwareLicenseUsages($res);
+
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	$out_hash->{result} = [$res_hash];
+
+	return ( &create_xml_string($out_hash) );
+}
+
+################################
+#
+# @brief Returns softwareLicenseId, notes, licenseKey, hostId and licensePoolId. Function return is identical to opsi_getSoftwareLicenseUsages
+# @param productId Something like 'firefox', 'python' or anything else .
+# 
+sub opsi_getSoftwareLicenseUsagesForProductId {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+
+	# Check input sanity
+	my $productId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'productId')) {
+		$productId= @{$msg_hash->{'productId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Fetch licensePoolId for productId
+	my ($res, $err) = &_getLicensePoolId('productId'=>$productId);
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot fetch licensePoolId for given productId : ".$res, $session_id);
+	}
+
+	my $licensePoolId;
+
+	# Fetch softwareLiceceUsages for licensePoolId
+	($res, $err) = &_getSoftwareLicenseUsages_listOfHashes('licensePoolId'=>$licensePoolId);
+	if ($err){
+		return &_giveErrorFeedback($msg_hash, "cannot fetch software licenses from license pool : ".$res, $session_id);
+	}
+
+	# Parse Opsi result
+	my $res_hash = &_parse_getSoftwareLicenseUsages($res);
+
+	# Create function result message
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 	$out_hash->{result} = [$res_hash];
 
 	return ( &create_xml_string($out_hash) );
@@ -2044,7 +2097,7 @@ sub opsi_getPool {
 			'hostIds' => [],
 			};
 		foreach my $licensePoolId (@{ $license->{'licensePoolIds'}}) {
-			push( @{$license_hash->{'licensePooIds'}}, $licensePoolId);
+			push( @{$license_hash->{'licensePoolIds'}}, $licensePoolId);
 			$license_hash->{licenseKeys}->{$licensePoolId} =  [ $license->{'licenseKeys'}->{$licensePoolId} ];
 		}
 		foreach my $usage (@$usages_res) {
@@ -2103,6 +2156,69 @@ sub opsi_removeLicense {
 	# Create hash for the answer
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 	return ( &create_xml_string($out_hash) );
+}
+
+
+################################
+#
+# @brief
+# @param 
+#
+#TODO
+sub opsi_getReservedLicenses {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+
+	# Check input sanity
+	my $hostId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
+		$hostId = @{$msg_hash->{'hostId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Fetch informations from Opsi server
+	my ($license_res, $license_err) = &_getSoftwareLicenses_listOfHashes();
+	if ($license_err){
+		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$license_res, $session_id);
+	}
+
+
+	# Parse result
+	my $res_hash = { 'hit'=> [] };
+	foreach my $license ( @$license_res) {
+		if ($license->{boundToHost} ne $hostId) { next; }
+
+		my $license_hash = { 'softwareLicenseId' => [$license->{'softwareLicenseId'}],
+			'maxInstallations' => [$license->{'maxInstallations'}],
+			'boundToHost' => [$license->{'boundToHost'}],
+			'expirationDate' => [$license->{'expirationDate'}],
+			'licenseContractId' => [$license->{'licenseContractId'}],
+			'licenseType' => [$license->{'licenseType'}],
+			'licensePoolIds' => [],
+			};
+		
+		foreach my $licensePoolId (@{$license->{'licensePoolIds'}}) {
+			# Fetch information for license pools containing a software license which is bound to given host
+			my ($pool_res, $pool_err) = &_getLicensePool_hash( 'licensePoolId'=>$licensePoolId );
+			if ($pool_err){
+				return &_giveErrorFeedback($msg_hash, "cannot get license pool from Opsi server: ".$pool_res, $session_id);
+			}
+
+			# Add licensePool information to result hash
+			push (@{$license_hash->{licensePoolIds}}, $licensePoolId);
+			$license_hash->{$licensePoolId} = {'productIds'=>[], 'windowsSoftwareIds'=>[]};
+			map (push (@{$license_hash->{$licensePoolId}->{productIds}}, $_), @{$pool_res->{productIds}});
+			map (push (@{$license_hash->{$licensePoolId}->{windowsSoftwareIds}}, $_), @{$pool_res->{windowsSoftwareIds}});
+		}
+		push( @{$res_hash->{hit}}, $license_hash );
+	}
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	$out_hash->{licenses} = [$res_hash];
+    return ( &create_xml_string($out_hash) );
+
+	return;
 }
 
 sub opsi_test {
@@ -2243,6 +2359,30 @@ sub _deleteSoftwareLicense {
 		id  => 1,
 	};
 	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+}
+
+sub _getLicensePoolId {
+	my %arg = (
+			'productId' => undef,
+			@_,
+			);
+	
+	if (not defined $arg{productId} ) {
+		return ("function requires productId as parameter", 1);
+	}
+
+    my $callobj = {
+        method  => 'getLicensePoolId',
+        params  => [ $arg{productId} ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
 
 	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
