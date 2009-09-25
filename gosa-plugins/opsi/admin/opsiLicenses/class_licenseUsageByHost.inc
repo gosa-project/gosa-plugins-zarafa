@@ -53,6 +53,7 @@ class licenseUsageByHost extends plugin
   function init()
   {
     $this->licenseUses = array();
+    $this->reservedLicenses = array();
     if(!$this->initially_was_account){
       $this->init_successfull = TRUE;
     }else{
@@ -62,8 +63,13 @@ class licenseUsageByHost extends plugin
         $this->init_successfull = FALSE;
         return;
       }
-
       $this->licenseUses = $res;
+
+      $res = $this->si->getReservedLicensesForHost($this->cn);
+      if($this->si->is_error()){
+        $this->init_successfull = FALSE;
+        return;
+      }
       $this->reservedLicenses = $res;
       $this->init_reservedLicenses = $res;
       $this->init_successfull = TRUE;
@@ -100,11 +106,12 @@ class licenseUsageByHost extends plugin
       $action = "<input class='center' type='image' src='images/lists/trash.png' 
         name='removeReservation_{$key}'>";
       $f1 = array("string" => $license['licensePoolId'][0]);
-      $f2 = array("string" => $license['licenseKey'][0]);
+#      $f2 = array("string" => $license['licenseKey'][0]);
       $f3 = array("string" => $license['softwareLicenseId'][0]);
       $f4 = array("string" => $action,
                   "attach" => "style='border-right:0px;'");
-      $list2->addEntry(array($f1,$f2,$f3, $f4));
+#      $list2->addEntry(array($f1,$f2,$f3, $f4));
+      $list2->addEntry(array($f1,$f3, $f4));
     } 
 
     $smarty = get_smarty();

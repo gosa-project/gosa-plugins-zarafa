@@ -206,6 +206,38 @@ class opsiLicenceHandler extends opsi  {
   }
 
 
+  function getReservedLicensesForHost($hostId)
+  {
+    $data= array();
+    if(!empty($hostId)){
+      $data['hostId'] = htmlentities($hostId);
+    }
+    $res = $this->send_data("gosa_opsi_getReservedLicenses",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ANSWER_OPSI_GETRESERVEDLICENSES'])){
+
+      $items = array();
+      foreach($res['XML'][0]['LICENSES'][0]['HIT'] as $entry){
+        $item = array();
+        foreach(array(
+              "LICENSEPOOLIDS"      => "licensePoolId",
+              "SOFTWARELICENSEID"   => "softwareLicenseId") as $source => $target){
+          if(isset($entry[$source])){
+
+            $item[$target] = array('count' => 0);
+            foreach($entry[$source] as $data){
+              $item[$target][] = $data['VALUE'];
+            }
+            $item[$target]['count'] = count($item[$target]) -1 ;
+          }
+        }
+        $items[]  = $item;
+      }
+      return($items);
+    }
+    return(FALSE);
+  }
+
+
   /* 
    * @brief Returns softwareLicenseId, notes, licenseKey, hostId and licensePoolId for optional given licensePoolId and hostId
    * @param hostid Something like client_1.intranet.mydomain.de (optional).
