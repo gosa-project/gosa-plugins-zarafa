@@ -456,6 +456,7 @@ class licensePoolGeneric extends plugin
         $license['maximumInstallations'],
         $license['boundToHost'],
         $license['expirationDate']);
+
       if($this->si->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
       }

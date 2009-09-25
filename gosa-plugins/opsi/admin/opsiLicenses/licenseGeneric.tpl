@@ -172,14 +172,24 @@
           <tr>
             <td colspan="2">
               <b>{t}Used by Host{/t}</b><br>
-              <select name='selectedUsedHosts[]' multiple size=4 style='width:100%;'>
+              <select 
+
+              disabled
+  
+                name='selectedUsedHosts[]' multiple size=4 style='width:100%;'>
                 {html_options options=$usedByHost}
               </select><br>
+<!--
+    
+      Actually we can't modify the license usage, due to a lack of functions.
+      We can only assign a licensePool to a host, but not a specific license.
+
               <select name='selectedHostToAdd'>
                 {html_options options=$notUsedHosts}
               </select>
               <input type="submit" name="addLicenseUsage" value="{msgPool type='addButton'}">
               <input type="submit" name="removeLicenseUsage" value="{msgPool type='delButton'}">
+-->
             </td>
           </tr>
         </table>
