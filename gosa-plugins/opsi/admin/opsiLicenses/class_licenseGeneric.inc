@@ -163,6 +163,29 @@ class licenseGeneric extends plugin
   function check()
   {
     $message = plugin::check();
+
+    // Very simple date input checks
+    if(!empty($this->expirationDate) && 
+       !preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",$this->expirationDate)){
+      $message[] = msgPool::invalid(_("Expiration date"),$this->expirationDate,"","2009-02-23");
+    }
+    if(!empty($this->conclusionDate) && 
+       !preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",$this->conclusionDate)){
+      $message[] = msgPool::invalid(_("Expiration date"),$this->conclusionDate,"","2009-02-23");
+    }
+    if(!empty($this->notificationDate) && 
+       !preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",$this->notificationDate)){
+      $message[] = msgPool::invalid(_("Expiration date"),$this->notificationDate,"","2009-02-23");
+    }
+
+    if(empty($this->cn)){
+      $message[] = msgPool::required(_("Name"));
+    }
+
+    if(empty($this->licenseKey)){
+      $message[] = msgPool::required(_("License key"));
+    }
+
     return($message);
   }
   

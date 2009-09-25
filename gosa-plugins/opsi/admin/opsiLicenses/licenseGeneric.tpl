@@ -16,7 +16,7 @@
         <table>
           <tr>
             <td>
-              {t}Name{/t}
+              {t}Name{/t}{$must}
             </td>
             <td>
               {if $initially_was_account}
@@ -108,7 +108,7 @@
               {t}Model{/t}
             </td>
             <td>
-              <select name='licenseModel'>
+              <select name='licenseModel' onChange='document.mainform.submit();'>
                 {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
               </select>
             </td>
@@ -128,12 +128,13 @@
         <table>
           <tr>
             <td>
-              {t}License key{/t}
+              {t}License key{/t}{$must}
             </td>
             <td>
               <input type='text' name='licenseKey' value='{$licenseKey}'>
             </td>
           </tr>
+          {if $licenseModel == "VOLUME"}
           <tr>
             <td>
               {t}Maximum installations{/t}
@@ -142,6 +143,8 @@
               <input type='text' name='maximumInstallations' value='{$maximumInstallations}'>
             </td>
           </tr>
+          {/if}
+          {if $licenseModel == "OEM"}
           <tr>
             <td>
               {t}Reserved for Host{/t}
@@ -153,6 +156,7 @@
               </select>
             </td>
           </tr>
+          {/if}
         </table>
  
     </td> 
@@ -161,7 +165,7 @@
         <table width="100%">
           <tr>
             <td colspan="2">
-              <b>{t}Assigned to Host{/t}</b><br>
+              <b>{t}Used by Host{/t}</b><br>
               <select name='usedByHost[]' multiple size=4 style='width:100%;'>
                 {html_options options=$usedByHost}
               </select><br>
