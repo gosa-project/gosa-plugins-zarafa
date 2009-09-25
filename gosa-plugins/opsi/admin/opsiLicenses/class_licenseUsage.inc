@@ -44,7 +44,7 @@ class licenseUsage extends plugin
     }
 
     // Extract pool name out of the fake dn.
-    $this->init();
+#    $this->init();
   }
 
   

@@ -164,7 +164,7 @@ class opsiLicenceHandler extends opsi  {
         $notes = "", 
         $softwareLicenseId = "",
         $maxInstallations = "",
-        $boudToHost = "",
+        $boundToHost = "",
         $expirationDate = "")
   {
 
@@ -175,11 +175,13 @@ class opsiLicenceHandler extends opsi  {
 
     // Append optional attributes 
     foreach(array("partner","conclusionDate","notificationDate","notes","softwareLicenseId",
-          "licenseTyp","maxInstallations","boudToHost","expirationDate") as $attr){
+          "licenseTyp","maxInstallations","boundToHost","expirationDate") as $attr){
       if(!empty($$attr)){
         $data[$attr] = $$attr;
       }
     }
+
+    print_a($data);
 
     $res = $this->send_data("gosa_opsi_createLicense",$this->target,$data,TRUE);
     if(isset($res['XML'][0]['ANSWER_OPSI_GETSOFTWARELICENSE_HASH'])){
@@ -279,6 +281,25 @@ class opsiLicenceHandler extends opsi  {
     $data['hostId'] = htmlentities($hostid);
     $res = $this->send_data("gosa_opsi_unassignSoftwareLicenseFromHost",$this->target,$data,TRUE);
     if(isset($res['XML'][0]['ANSWER_OPSI_UNASSIGNSOFTWARELICENSEFROMHOST'])){
+      return(TRUE);
+    }
+    return(FALSE);
+  }
+
+  /* 
+   * @brief   Removes a single license from a license pool
+   *          Attention, the software license has to exists 
+   *           otherwise it will lead to an Opsi internal server error.
+   * @param softwareLicenseId
+   * @param licensePoolId
+   */
+  function removeLicenseFromPool($licensePoolId,$softwareLicenseId)
+  {
+    $data= array();
+    $data['licensePoolId'] = htmlentities($licensePoolId);
+    $data['softwareLicenseId'] = htmlentities($softwareLicenseId);
+    $res = $this->send_data("gosa_opsi_removeLicense",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ANSWER_OPSI_REMOVELICENSE'])){
       return(TRUE);
     }
     return(FALSE);

@@ -19,7 +19,11 @@
               {t}Name{/t}
             </td>
             <td>
-              <input type='text' name='cn' value='{$cn}'>
+              {if $initially_was_account}
+                <input type='text' name='dummy12' disabled value='{$cn}'>
+              {else}
+                <input type='text' name='cn' value='{$cn}'>
+              {/if}
             </td>
           </tr>
           <tr>

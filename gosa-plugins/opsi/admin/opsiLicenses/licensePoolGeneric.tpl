@@ -44,6 +44,7 @@
           <tr> 
             <td>
               {$licenses}
+              <input type='submit' name='addLicense' value='{msgPool type=addButton}'>
             </td>
           </tr>
         </table>

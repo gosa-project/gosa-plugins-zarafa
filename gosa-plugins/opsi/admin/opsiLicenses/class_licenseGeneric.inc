@@ -27,6 +27,7 @@ class licenseGeneric extends plugin
   var $si = NULL;
   var $data = array();
   var $cn = "";
+  var $orig_cn = "";
   var $description = "";  
   var $partner = "";
 
@@ -35,7 +36,7 @@ class licenseGeneric extends plugin
   var $notificationDate = "";
 
   var $licenseModel = "";
-  var $licenseKey = "";
+  var $licenseKey = array();
   var $licensePoolId = "";
   var $boundToHost= array(); // Reserved for Host.   
   var $usedByHost = array(); // Used by Host.   
@@ -43,8 +44,10 @@ class licenseGeneric extends plugin
   var $maximumInstallations = 0;
   var $opsiHosts; 
   
-  var $attributes = array("cn","description","partner","conclusionDate","expirationDate",
-        "notificationDate","licenseModel","licenseKey","maximumInstallations","licensePoolId");
+  var $attributes = array(
+        "cn","description","partner","conclusionDate","expirationDate",
+        "notificationDate","licenseModel","licenseKey","maximumInstallations",
+        "licensePoolId", "usedByHost","boundToHost");
 
   function __construct(&$config, $license, $hosts = array())
   {
@@ -68,35 +71,16 @@ class licenseGeneric extends plugin
   
   function init()
   {
-
-    $map = array(
-        "BOUNDTOHOST"=> "boundToHost",
-        "EXPIRATIONDATE"=> "expirationDate",
-        "LICENSECONTRACTID"=> "contractId",
-        "LICENSEPOOIDS"=> "licensePoolId",
-        "LICENSETYPE"=> "licenseModel",
-        "MAXINSTALLATIONS"=> "maximumInstallations",
-        "SOFTWARELICENSEID"=> "cn");
-
-    foreach($map as $source => $target){
-      if(isset($this->data[$source][0]['VALUE'])){
-        $this->$target = $this->data[$source][0]['VALUE'];
+    $this->boundToHost = array('0'=>"");
+    $this->usedByHost = array('0'=>"");
+    $this->licenseKey = array('0'=>"");
+    if($this->initially_was_account){
+      foreach($this->attributes as $attr){
+        $this->$attr = $this->data[$attr];
       }
     }
 
-    // Get license key
-    if(isset($this->data['LICENSEKEYS'][0][strtoupper($this->licensePoolId)][0]['VALUE'])){
-      $this->licenseKey = $this->data['LICENSEKEYS'][0][strtoupper($this->licensePoolId)][0]['VALUE'];
-    }
-
-    // Get license usage
-    $this->usedByHost = array();
-    if(isset($this->data['HOSTIDS'])){
-      foreach($this->data['HOSTIDS'] as $host){
-        $this->usedByHost[] = $host['VALUE']; 
-      }
-    }
-
+    $this->orig_cn = $this->cn;
     $this->init_successfull = TRUE;
     return;    
   }
@@ -104,8 +88,6 @@ class licenseGeneric extends plugin
 
   function execute()
   {
-    $this->init();
-
     // Handle initialization failures.
     if(isset($_POST['retry_init'])) $this->init();
     if(!$this->init_successfull){
@@ -137,8 +119,8 @@ class licenseGeneric extends plugin
     $smarty->assign("hosts", $this->getHosts());
 
     $smarty->assign("notUsedHosts", array_diff($this->getHosts(), $this->usedByHost));
-    $smarty->assign("usedByHost", $this->usedByHost);
-    $smarty->assign("boundToHost", $this->boundToHost);
+    $smarty->assign("boundToHost", $this->boundToHost[0]);
+    $smarty->assign("licenseKey", $this->licenseKey[0]);
     return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
   }
 
@@ -159,8 +141,19 @@ class licenseGeneric extends plugin
    */
   function save_object()
   {
+
     if(isset($_POST['opsiLicensesPosted'])){
-      plugin::save_object();  
+      plugin::save_object();
+
+      // Force licenseKey to be of type array.
+      $this->licenseKey = array($this->licenseKey);
+
+      // BoundToHost maybe multiple too, later.
+      $this->boundToHost = array($this->boundToHost);
+
+      if($this->initially_was_account){
+        $this->cn = $this->orig_cn;
+      }
     }
   }  
 
@@ -197,31 +190,11 @@ class licenseGeneric extends plugin
    */  
   function save()
   {
-
-    echo "missing save";
-#   plugin::save();
-#
-#   // Send modify/add events
-#   $mode = "modify";
-#   if($this->orig_dn == "new"){
-#     $mode = "add";
-#   }
-#
-#   $this->si->createPool($this->cn, $this->description,$this->productIds,$this->softwareIds);#
-#   if($this->si->is_error()){
-#     msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
-#   }else{
-#     $this->handle_post_events($mode);
-#   }
-#
-#   // Log action
-#   if($mode == "modify"){
-#     new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
-#   }else{
-#     new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
-#   }
-#
-#   return 0;
+    $data = array();
+    foreach($this->attributes as $target){
+      $data[$target] = $this->$target;
+    }
+    return($data);
   }
  
   static function plInfo()

@@ -34,12 +34,31 @@ class licensePoolGeneric extends plugin
   var $productIds = array();
   var $softwareIds= array();
   var $licenses   = array();
+  var $orig_licenses   = array();
 
   var $availableProductIds = array();
   var $attributes =array("cn","description");
   var $si = NULL;
 
   var $opsiHosts = array();
+
+  var $licenseMap = array( 
+      "BOUNDTOHOST"=> "boundToHost",
+      "HOSTIDS"=> "usedByHost",
+      "LICENSEPOOLIDS"=> "licensePoolId",
+      "LICENSETYPE"=> "licenseModel",
+      "LICENSEKEY"=> "licenseKey",
+      "MAXINSTALLATIONS"=> "maximumInstallations",
+      "EXPIRATIONDATE"=> "expirationDate",
+      "SOFTWARELICENSEID"=> "cn"
+      );
+
+  var $licenseContractMap = array( 
+      "CONCLUSIONDATE"=> "conclusionDate",
+      "NOTIFICATIONDATE"=> "notificationDate",
+      "NOTES"=> "description",
+      "PARTNER"=> "partner"
+      );
 
   function __construct(&$config,$dn)
   {
@@ -113,9 +132,59 @@ class licensePoolGeneric extends plugin
         // Load Licences 
         $this->licenses = array();
         if(isset($this->data['licenses'])){
-          $this->licenses = $this->data['licenses'];
-          unset($this->licenses['count']);
+          for($i =0; $i< $this->data['licenses']['count']; $i++){
+            $license = $this->data['licenses'][$i];
+
+            // Do not parse invalid licenses
+            if(!is_array($license) || !isset($license['LICENSEPOOLIDS'])){
+              echo "Invalid license";
+              continue;
+            }
+
+            // Prepare Software License Key(s)
+            $upper = strtoupper($license['LICENSEPOOLIDS'][0]['VALUE']);
+            $license['LICENSEKEYS'] = $license['LICENSEKEYS'][0][$upper];
+
+            $entry = array();
+            foreach($this->licenseMap as $source => $target){
+              $entry[$target] = "";
+              if(isset($license[$source])){
+                if(count($license[$source]) >= 2){
+                  $entry[$target] = array();
+                  foreach($license[$source] as $sub){
+                    $entry[$target][] = $sub['VALUE'];
+                  }
+                }elseif(isset($license[$source][0]['VALUE'])){
+                  $entry[$target] = $license[$source][0]['VALUE'];
+                }
+              }
+            }
+
+            $lData= $license['LICENSECONTRACTDATA'][0];
+            foreach($this->licenseContractMap as $source => $target){
+              if(isset($lData[$source])){
+                if(count($lData[$source]) >= 2){
+                  $entry[$target] = array();
+                  foreach($lData[$source] as $sub){
+                    $entry[$target][] = $sub['VALUE'];
+                  }
+                }elseif(isset($lData[$source][0]['VALUE'])){
+                  $entry[$target] = $lData[$source][0]['VALUE'];
+                }
+              }
+            }
+
+            // There are some multi value attributes - force them to be of type array.
+            foreach(array("boundToHost","usedByHost","licenseKey") as $attr){
+              if(!is_array($entry[$attr])){
+                $entry[$attr] = array($entry[$attr]);
+              }
+            }
+            $this->licenses[$entry['cn']] = $entry;
+          }
         }
+
+        $this->orig_licenses = $this->licenses;
         $this->init_successfull = TRUE;
         return;
       }
@@ -172,20 +241,14 @@ class licensePoolGeneric extends plugin
     $list = new divSelectBox("test");
     $list->setHeight(100);
     foreach($this->licenses as $i => $license){
-      $keys = "";
-      foreach($license['LICENSEKEYS'] as $key_by_pool){
-        foreach($key_by_pool as $key){
-          $keys .= $key[0]['VALUE'].", ";
-        }
-      }
-
+      $keys = implode($license['licenseKey'],", ");
       $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
       $link.= "<input type='image' class='center' src='images/lists/trash.png' name='removeLicense_{$i}'>";
 
-      $f1 = array("string" => $license['SOFTWARELICENSEID'][0]['VALUE'], "attach" => "");
-      $f2 = array("string" => $license['LICENSETYPE'][0]['VALUE'], "attach" => "");
-      $f3 = array("string" => $license['EXPIRATIONDATE'][0]['VALUE'], "attach" => "");
-      $f4 = array("string" => $license['MAXINSTALLATIONS'][0]['VALUE'], "attach" => "");
+      $f1 = array("string" => $license['cn']);
+      $f2 = array("string" => $license['licenseModel']);
+      $f3 = array("string" => $license['expirationDate']);
+      $f4 = array("string" => $license['maximumInstallations']);
       $f5 = array("string" => rtrim($keys,", "));
       $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
 
@@ -207,8 +270,16 @@ class licensePoolGeneric extends plugin
 
     // Save license modifications
     if($this->dialog instanceOf plugin && isset($_POST['license_finish'])){
-      echo "Save";
-      $this->dialog = NULL;
+      $this->dialog->save_object();
+
+      $msgs = $this->dialog->check();
+      if(count($msgs)){
+        msg_dialog::displayChecks($msgs);
+      }else{
+        $attrs = $this->dialog->save();
+        $this->licenses[$attrs['cn']] = $attrs;
+        $this->dialog = NULL;
+      }
       return;
     }
 
@@ -252,17 +323,24 @@ class licensePoolGeneric extends plugin
         }
       }
 
+      // We've to create a new license
+      if(isset($_POST['addLicense'])){
+        $this->dialog = new licenseGeneric($this->config,array(), $this->opsiHosts);
+        $this->dialog->set_acl_base($this->config->current['BASE']);
+      }
+  
       // Search post for image button clicks.
       foreach($_POST as $name => $value){
         if(preg_match("/^editLicense_/",$name)){
-          $id = preg_replace("/^editLicense_([^_]*)_.*$/","\\1",$name);
+          $id = preg_replace("/^editLicense_(.*)_.$/","\\1",$name);
           if(isset($this->licenses[$id])){
             $this->dialog = new licenseGeneric($this->config,$this->licenses[$id], $this->opsiHosts);
+            $this->dialog->set_acl_base($this->config->current['BASE']);
           }
           break;
         }
         if(preg_match("/^removeLicense_/",$name)){
-          $id = preg_replace("/^removeLicense_([^_]*)_.*$/","\\1",$name);
+          $id = preg_replace("/^removeLicense_(.*)_.$/","\\1",$name);
           if(isset($this->licenses[$id])){
             unset($this->licenses[$id]);
           }
@@ -312,11 +390,44 @@ class licensePoolGeneric extends plugin
       $mode = "add";
     }
 
+    // Create or update the pool
     $this->si->createPool($this->cn, $this->description,$this->productIds,$this->softwareIds);#
     if($this->si->is_error()){
       msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
     }else{
       $this->handle_post_events($mode);
+    }
+
+    // Create, remove or update licenses
+    $add = array_diff_assoc($this->licenses,$this->orig_licenses);
+    $del = array_diff_assoc($this->orig_licenses,$this->licenses);
+
+    // Remove licenses 
+    foreach($del as $license){
+      $this->si->removeLicenseFromPool($this->cn, $license['cn']);
+      if($this->si->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
+      }
+    }
+    
+    // Add / update licenses 
+    foreach($add as $license){
+      $this->si->createLicense(
+        $this->cn,  // Pool id
+        $license['cn'], 
+        $license['licenseKey'][0],
+        $license['licenseModel'],
+        $license['partner'],
+        $license['conclusionDate'],
+        $license['notificationDate'],
+        $license['description'],
+        $license['cn'],
+        $license['maximumInstallations'],
+        $license['boundToHost'],
+        $license['expirationDate']);
+      if($this->si->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
+      }
     }
 
     // Log action
