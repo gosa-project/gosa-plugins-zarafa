@@ -44,7 +44,7 @@ class licenseUsage extends plugin
     }
 
     // Extract pool name out of the fake dn.
-#    $this->init();
+    $this->init();
   }
 
   
@@ -128,34 +128,7 @@ class licenseUsage extends plugin
 
   /* Saves object modifications
    */  
-  function save()
-  {
-    plugin::save();
-
-    // Send modify/add events
-    $mode = "modify";
-    if($this->orig_dn == "new"){
-      $mode = "add";
-    }
-
-    $this->si->createPool($this->cn, $this->description,$this->productIds,$this->softwareIds);#
-    if($this->si->is_error()){
-      msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
-    }else{
-      $this->handle_post_events($mode);
-    }
-
-    // Log action
-    if($mode == "modify"){
-      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
-    }else{
-      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
-    }
-
-    return 0;
-  }
-
- 
+  function save() { }
   function remove_from_parent(){ return; }
 
  
