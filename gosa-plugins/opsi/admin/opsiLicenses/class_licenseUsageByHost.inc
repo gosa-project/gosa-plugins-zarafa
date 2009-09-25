@@ -54,10 +54,12 @@ class licenseUsageByHost extends plugin
   {
     $this->licenseUses = array();
     $this->reservedLicenses = array();
+    $this->init_reservedLicenses = array();
     if(!$this->initially_was_account){
       $this->init_successfull = TRUE;
     }else{
 
+      // Get license usage  
       $res = $this->si->getLicenseUsage($this->cn);
       if($this->si->is_error()){
         $this->init_successfull = FALSE;
@@ -65,17 +67,30 @@ class licenseUsageByHost extends plugin
       }
       $this->licenseUses = $res;
 
+      // Get reservations
       $res = $this->si->getReservedLicensesForHost($this->cn);
       if($this->si->is_error()){
         $this->init_successfull = FALSE;
         return;
       }
-      $this->reservedLicenses = $res;
-      $this->init_reservedLicenses = $res;
+      foreach($res as $pool){
+        $this->reservedLicenses[] = $pool['licensePoolId'][0];
+      }
+      $this->init_reservedLicenses = $this->reservedLicenses;
+
+      // Get list of license pools 
+      $res = $this->si->listPools();
+      if($this->si->is_error()){
+        $this->init_successfull = FALSE;
+        return;
+      }
+      $this->availableLicenses = array();
+      foreach($res as $pool){
+        $this->availableLicenses[] = $pool['cn'][0];
+      }
+
       $this->init_successfull = TRUE;
     }
-
-    $this->availableLicenses = array("Dummy","Schinken");
   }
 
 
@@ -105,13 +120,10 @@ class licenseUsageByHost extends plugin
     foreach($this->reservedLicenses as $key => $license){
       $action = "<input class='center' type='image' src='images/lists/trash.png' 
         name='removeReservation_{$key}'>";
-      $f1 = array("string" => $license['licensePoolId'][0]);
-#      $f2 = array("string" => $license['licenseKey'][0]);
-      $f3 = array("string" => $license['softwareLicenseId'][0]);
+      $f1 = array("string" => $license);
       $f4 = array("string" => $action,
-                  "attach" => "style='border-right:0px;'");
-#      $list2->addEntry(array($f1,$f2,$f3, $f4));
-      $list2->addEntry(array($f1,$f3, $f4));
+                  "attach" => "style='border-right:0px; width:16px;'");
+      $list2->addEntry(array($f1,$f4));
     } 
 
     $smarty = get_smarty();
@@ -128,7 +140,7 @@ class licenseUsageByHost extends plugin
     $smarty->assign("licenseUses", $list->DrawList());
     $smarty->assign("licenseReserved", $list2->DrawList());
     $smarty->assign("init_successfull", $this->init_successfull);
-    $smarty->assign("availableLicenses", $this->availableLicenses);
+    $smarty->assign("availableLicenses", array_diff($this->availableLicenses, $this->reservedLicenses));
     $smarty->assign("initially_was_account", $this->initially_was_account);
     return($smarty->fetch(get_template_path('licenseUsageByHost.tpl',TRUE,dirname(__FILE__))));
   }
@@ -154,7 +166,10 @@ class licenseUsageByHost extends plugin
 
       // Check if we've to add reservations
       if(isset($_POST['availableLicense']) && isset($_POST['addReservation'])){
-        echo get_post('availableLicense');
+        $id = get_post('availableLicense');
+        if(isset($this->availableLicenses[$id])){
+          $this->reservedLicenses[] =  $this->availableLicenses[$id];
+        }
       }
     }
   }  
@@ -169,7 +184,27 @@ class licenseUsageByHost extends plugin
   }
   
 
-  function save(){ }
+  function save()
+  {
+    $del = array_diff($this->init_reservedLicenses, $this->reservedLicenses);
+    $add = array_diff($this->reservedLicenses, $this->init_reservedLicenses);
+
+    foreach($del as $pool){
+      $this->si->removeLicenseFromHost($pool, $this->cn);
+      if($this->si->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
+      }
+    }
+
+    foreach($add as $pool){
+      $this->si->addLicenseToHost($pool, $this->cn);
+      if($this->si->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
+      }
+    }
+  }
+
+
   function remove_from_parent(){ }
 
  

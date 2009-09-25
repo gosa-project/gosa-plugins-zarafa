@@ -308,7 +308,7 @@ class opsiLicenceHandler extends opsi  {
   {
     $data= array();
     $data['licensePoolId'] = htmlentities($licensePoolId);
-    $data['hostId'] = htmlentities($hostid);
+    $data['hostId'] = htmlentities($hostId);
     $res = $this->send_data("gosa_opsi_unassignSoftwareLicenseFromHost",$this->target,$data,TRUE);
     if(isset($res['XML'][0]['ANSWER_OPSI_UNASSIGNSOFTWARELICENSEFROMHOST'])){
       return(TRUE);
