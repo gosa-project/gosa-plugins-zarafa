@@ -108,9 +108,15 @@
               {t}Model{/t}
             </td>
             <td>
-              <select name='licenseModel' onChange='document.mainform.submit();'>
-                {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
-              </select>
+              {if $initially_was_account}
+                <select name='dummy223' disabled>
+                  {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
+                </select>
+              {else}
+                <select name='licenseModel' onChange='document.mainform.submit();'>
+                  {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
+                </select>
+              {/if}
             </td>
           </tr>
         </table>
@@ -166,7 +172,7 @@
           <tr>
             <td colspan="2">
               <b>{t}Used by Host{/t}</b><br>
-              <select name='usedByHost[]' multiple size=4 style='width:100%;'>
+              <select name='selectedUsedHosts[]' multiple size=4 style='width:100%;'>
                 {html_options options=$usedByHost}
               </select><br>
               <select name='selectedHostToAdd'>

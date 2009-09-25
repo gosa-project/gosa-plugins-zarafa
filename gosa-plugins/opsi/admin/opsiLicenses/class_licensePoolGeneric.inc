@@ -47,7 +47,7 @@ class licensePoolGeneric extends plugin
       "HOSTIDS"=> "usedByHost",
       "LICENSEPOOLIDS"=> "licensePoolId",
       "LICENSETYPE"=> "licenseModel",
-      "LICENSEKEY"=> "licenseKey",
+      "LICENSEKEYS"=> "licenseKey",
       "MAXINSTALLATIONS"=> "maximumInstallations",
       "EXPIRATIONDATE"=> "expirationDate",
       "SOFTWARELICENSEID"=> "cn"
@@ -106,6 +106,7 @@ class licensePoolGeneric extends plugin
     }else{
 
       $res = $this->si->getPool($this->cn);
+
       if($this->si->is_error()){    
         $this->init_successfull = FALSE;
         return(FALSE);
@@ -180,6 +181,7 @@ class licensePoolGeneric extends plugin
                 $entry[$attr] = array($entry[$attr]);
               }
             }
+            $entry['MODIFIED'] = FALSE;
             $this->licenses[$entry['cn']] = $entry;
           }
         }
@@ -277,6 +279,7 @@ class licensePoolGeneric extends plugin
         msg_dialog::displayChecks($msgs);
       }else{
         $attrs = $this->dialog->save();
+        $attrs['MODIFIED'] = TRUE;
         $this->licenses[$attrs['cn']] = $attrs;
         $this->dialog = NULL;
       }
@@ -399,8 +402,9 @@ class licensePoolGeneric extends plugin
     }
 
     // Create, remove or update licenses
-    $add = array_diff_assoc($this->licenses,$this->orig_licenses);
-    $del = array_diff_assoc($this->orig_licenses,$this->licenses);
+    $add    = array_diff_assoc($this->licenses,$this->orig_licenses);
+    $del    = array_diff_assoc($this->orig_licenses,$this->licenses);
+    $update = array_intersect($this->licenses,$this->orig_licenses);
 
     // Remove licenses 
     foreach($del as $license){
@@ -410,11 +414,38 @@ class licensePoolGeneric extends plugin
       }
     }
     
-    // Add / update licenses 
+    // Add licenses 
     foreach($add as $license){
       $this->si->createLicense(
         $this->cn,  // Pool id
         $license['cn'], 
+        $license['licenseKey'][0],
+        $license['licenseModel'],
+        $license['partner'],
+        $license['conclusionDate'],
+        $license['notificationDate'],
+        $license['description'],
+        $license['cn'],
+        $license['maximumInstallations'],
+        $license['boundToHost'],
+        $license['expirationDate']);
+
+      if($this->si->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
+      }
+    }
+
+    // Update licenses
+    foreach($update as $license){
+
+      // Do not save untouched licenses
+      if(!$license['MODIFIED']){
+        continue;
+      }
+
+      $this->si->createLicense(
+        $this->cn,  // Pool id
+        $license['cn'],
         $license['licenseKey'][0],
         $license['licenseModel'],
         $license['partner'],

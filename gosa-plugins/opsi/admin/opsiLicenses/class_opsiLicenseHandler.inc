@@ -157,7 +157,7 @@ class opsiLicenceHandler extends opsi  {
    * @param boundToHost The name of the client the license is bound to (optional).
    * @param expirationDate The date when the license is running down (optional).
    */
-  function createLicense($poolId, $licenseId, $licenseKey,$licenseTyp = "",  
+  function createLicense($poolId, $licenseId, $licenseKey,$licenseType = "",  
         $partner = "",
         $conclusionDate = "",
         $notificationDate ="",
@@ -175,13 +175,11 @@ class opsiLicenceHandler extends opsi  {
 
     // Append optional attributes 
     foreach(array("partner","conclusionDate","notificationDate","notes","softwareLicenseId",
-          "licenseTyp","maxInstallations","boundToHost","expirationDate") as $attr){
+          "licenseType","maxInstallations","boundToHost","expirationDate") as $attr){
       if(!empty($$attr)){
         $data[$attr] = $$attr;
       }
     }
-
-    print_a($data);
 
     $res = $this->send_data("gosa_opsi_createLicense",$this->target,$data,TRUE);
     if(isset($res['XML'][0]['ANSWER_OPSI_GETSOFTWARELICENSE_HASH'])){

@@ -37,6 +37,7 @@ class licenseGeneric extends plugin
 
   var $licenseModel = "";
   var $licenseKey = array();
+  var $orig_licenseModel = "";
   var $licensePoolId = "";
   var $boundToHost= array(); // Reserved for Host.   
   var $usedByHost = array(); // Used by Host.   
@@ -81,6 +82,7 @@ class licenseGeneric extends plugin
     }
 
     $this->orig_cn = $this->cn;
+    $this->orig_licenseModel = $this->licenseModel;
     $this->init_successfull = TRUE;
     return;    
   }
@@ -145,14 +147,37 @@ class licenseGeneric extends plugin
     if(isset($_POST['opsiLicensesPosted'])){
       plugin::save_object();
 
+      if(isset($_POST['addLicenseUsage']) && isset($_POST['selectedHostToAdd'])){
+        $host = get_post('selectedHostToAdd');
+        if(!empty($host) && 
+            in_array($host,$this->getHosts()) && 
+            !in_array($host, $this->usedByHost)){
+          $this->usedByHost[] = $host;
+        }
+      }
+
+      if(isset($_POST['removeLicenseUsage']) && isset($_POST['selectedUsedHosts'])){
+        $todel = $_POST['selectedUsedHosts'];
+        foreach($todel as $host){
+          if(isset($this->usedByHost[$host])){
+            unset($this->usedByHost[$host]);
+          }
+        }
+      }
+
       // Force licenseKey to be of type array.
-      $this->licenseKey = array($this->licenseKey);
+      if(!is_array($this->licenseKey)){
+        $this->licenseKey = array($this->licenseKey);
+      }
 
       // BoundToHost maybe multiple too, later.
-      $this->boundToHost = array($this->boundToHost);
+      if(!is_array($this->boundToHost)){
+        $this->boundToHost = array($this->boundToHost);
+      }    
 
       if($this->initially_was_account){
         $this->cn = $this->orig_cn;
+        $this->licenseModel = $this->orig_licenseModel;
       }
     }
   }  
@@ -182,31 +207,17 @@ class licenseGeneric extends plugin
       $message[] = msgPool::required(_("Name"));
     }
 
-    if(empty($this->licenseKey)){
+    if(empty($this->licenseKey[0])){
       $message[] = msgPool::required(_("License key"));
     }
 
     return($message);
   }
   
-
  
   /* Removes the object from the opsi database
    */ 
-  function remove_from_parent()
-  {
-  echo "missing remove.";
-#   $this->si->deletePool($this->orig_cn);
-#   if($this->si->is_error()){
-#     msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
-#   }else{
-#
-#     // Trigger remove signal
-#     $this->handle_post_events("remove");
-#   }
-#
-#   new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$this->si->get_error());
-  }
+  function remove_from_parent() {}
 
 
   /* Saves object modifications
