@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 09:57+0200\n"
-"PO-Revision-Date: 2007-07-14 21:45+0100\n"
-"Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
+"PO-Revision-Date: 2009-09-05 15:38+0100\n"
+"Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -15,63 +15,56 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
-#, fuzzy
 msgid "Heimdal options"
-msgstr "kobieta"
+msgstr "Opcje Heimdal"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:6
 msgid "Use empty values for infinite"
-msgstr ""
+msgstr "Użyj pustych wartości dla nieskończoności"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:10
 msgid "Ticket max life"
-msgstr ""
+msgstr "Maksymalny czas życia biletu"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:18
 msgid "Ticket max renew"
-msgstr ""
+msgstr "Maksymalny czas odnowienia biletu"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:32
 msgid "infinite"
-msgstr ""
+msgstr "nieskończone"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:34
-#, fuzzy
 msgid "Hour"
-msgstr "godzina"
+msgstr "Hodzina"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:36
-#, fuzzy
 msgid "Minute"
-msgstr "Drukarka"
+msgstr "Minuta"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:38
-#, fuzzy
 msgid "Day"
-msgstr "dzień"
+msgstr "Dzień"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:40
-#, fuzzy
 msgid "Month"
-msgstr "miesiąc"
+msgstr "Miesiąc"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:42
-#, fuzzy
 msgid "Year"
-msgstr "Szukaj"
+msgstr "Rok"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:47
 msgid "Valid ticket start time"
-msgstr ""
+msgstr "Ważność biletu od"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:87
 msgid "Valid ticket end time"
-msgstr ""
+msgstr "Ważność biletu do"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:127
-#, fuzzy
 msgid "Password end"
-msgstr "Hasło"
+msgstr "Hasło wygasa"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:198
 msgid "Save"
@@ -89,14 +82,12 @@ msgstr "Usługa Kerberos"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:358
 #: admin/systems/services/kerberos/class_goKrbServer.inc:367
 #: admin/systems/services/kerberos/class_goKrbServer.inc:371
-#, fuzzy
 msgid "Service infrastructure"
-msgstr "Szukaj wewnątrz tego poddrzewa"
+msgstr "Infrastruktura usługi"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:165
-#, fuzzy
 msgid "Kerberos service (kadmin access informations)"
-msgstr "Informacje dostępowe Kerberos kadmin"
+msgstr "Usługa Kerberos (informacje dostępowe kadmin)"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:178
 #: admin/systems/services/kerberos/class_goKrbServer.inc:394
@@ -104,27 +95,24 @@ msgid "Realm"
 msgstr "Dziedzina"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server requires a valid mac address."
-msgstr ""
+msgid "In order to save policy changes, the server requires a valid mac address."
+msgstr "Aby zapisać zmiany polis, serwer wymaga poprawnego adresu MAC."
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 msgid "Remove"
 msgstr "Usuń"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
-#, fuzzy
 msgid "Policy"
-msgstr "Polski"
+msgstr "Polisa"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
 msgid "Kerberos"
 msgstr "Kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#, fuzzy
 msgid "Kerberos access information"
-msgstr "Informacje dostępowe Kerberos kadmin"
+msgstr "Informacje dostępowe Kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Services"
@@ -132,78 +120,67 @@ msgstr "Usługi"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:393
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
-#, fuzzy
 msgid "Policies"
-msgstr "Polski"
+msgstr "Polisy"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:177
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:189
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:226
-#, fuzzy
 msgid "Heimdal"
-msgstr "kobieta"
+msgstr "Heimdal"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #, php-format
-msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
-"found for '%s'."
-msgstr ""
+msgid "Error loading heimdal configuration, more than one configuration entry was found for '%s'."
+msgstr "Błąd ładowania konfiguracji heimdal, znaleziono więcej niż jeden wpis konfiguracyjny dla '%s'."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:157
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:413
-#, fuzzy
 msgid "LDAP error"
-msgstr "błąd LDAP:"
+msgstr "błąd LDAP"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:333
 msgid "Max life"
-msgstr ""
+msgstr "Maksymalny czas życia"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:336
 msgid "Max renew"
-msgstr ""
+msgstr "Maksymalne czas odnowienia"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:339
 msgid "Valid start"
-msgstr ""
+msgstr "Ważne od"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:342
 msgid "Valid end"
-msgstr ""
+msgstr "Ważne do"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
-#, fuzzy
 msgid "Valid password"
-msgstr "Stare hasło"
+msgstr "Prawidłowe hasło"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:1
 msgid "Kerberos kadmin access"
 msgstr "Dostęp do Kerberos kadmin"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
 msgid "Kerberos Realms"
-msgstr "Dziedzina Kerberos"
+msgstr "Dziedziny Kerberos"
 
 #~ msgid "Admin user"
 #~ msgstr "Użytkownik administracyjny"
-
 #~ msgid "Admin"
 #~ msgstr "Admin"
 
 #, fuzzy
 #~ msgid "Please specify a numeric value for %s."
 #~ msgstr "Proszę podać liczbę jako wartość dla ttl."
-
 #~ msgid "The specified kerberos password is empty."
 #~ msgstr "Podane hasło kerberos jest puste."
-
 #~ msgid "The specified kerberos admin is empty."
 #~ msgstr "Podany administrator kerberos jest pusty."
-
 #~ msgid "The specified kerberos realm is empty."
 #~ msgstr "Podana dziedzina kerberos jest pusta."
 
@@ -214,3 +191,4 @@ msgstr "Dziedzina Kerberos"
 #, fuzzy
 #~ msgid "Could not add or update heimdal extensions."
 #~ msgstr "To konto nie posiada rozszerzeń pocztowych"
+

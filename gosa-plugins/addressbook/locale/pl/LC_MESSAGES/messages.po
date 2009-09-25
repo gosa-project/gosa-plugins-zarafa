@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 09:56+0200\n"
-"PO-Revision-Date: 2007-07-14 21:45+0100\n"
-"Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
+"PO-Revision-Date: 2009-09-05 15:16+0100\n"
+"Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -15,14 +15,12 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: html/getvcard.php:39
-#, fuzzy
 msgid "Internal error"
-msgstr "Terminal Server"
+msgstr "Błąd wewnętrzny"
 
 #: html/getvcard.php:39
-#, fuzzy
 msgid "Missing parameters!"
-msgstr "Parametr aplikacji"
+msgstr "Brak parametrów!"
 
 #: addons/addressbook/address_info.tpl:18
 #: addons/addressbook/address_edit.tpl:24
@@ -50,7 +48,8 @@ msgid "Personal title"
 msgstr "Osobisty tytuł"
 
 #: addons/addressbook/address_info.tpl:53
-#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
+#: addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/contents.tpl:15
 msgid "Private"
 msgstr "Prywatne"
 
@@ -65,13 +64,15 @@ msgstr "Adres"
 #: addons/addressbook/address_info.tpl:163
 #: addons/addressbook/class_addressbook.inc:706
 #: addons/addressbook/address_edit.tpl:94
-#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
+#: addons/addressbook/address_edit.tpl:221
+#: addons/addressbook/contents.tpl:14
 msgid "Phone"
 msgstr "Telefon"
 
 #: addons/addressbook/address_info.tpl:75
 #: addons/addressbook/class_addressbook.inc:715
-#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
+#: addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/contents.tpl:15
 msgid "Mobile"
 msgstr "Komórka"
 
@@ -129,26 +130,19 @@ msgid "Warning"
 msgstr "Ostrzeżenie"
 
 #: addons/addressbook/remove.tpl:6
-msgid ""
-"This includes all addressbook data in this entry. Please double check if "
-"your really want to do this since there is no way for GOsa to get your data "
-"back."
-msgstr ""
-"Operacja odnosi się do wszystkich danych książki adresowej w tym elemencie. "
-"Proszę upewnić się że jest to pożądana akcja, gdyż nie będzie możliwości "
-"powrotu."
+msgid "This includes all addressbook data in this entry. Please double check if your really want to do this since there is no way for GOsa to get your data back."
+msgstr "Operacja odnosi się do wszystkich danych książki adresowej w tym elemencie. Proszę upewnić się że jest to pożądana akcja, gdyż nie będzie możliwości powrotu."
 
 #: addons/addressbook/remove.tpl:10
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
-"anulować."
+msgstr "Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby anulować."
 
 #: addons/addressbook/dial.tpl:3
 msgid "Dial connection..."
 msgstr "Połączenie dzwonienia..."
 
-#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
+#: addons/addressbook/dial.tpl:10
+#: addons/addressbook/class_addressbook.inc:461
 #: addons/addressbook/class_addressbook.inc:468
 #: addons/addressbook/class_addressbook.inc:472
 #: addons/addressbook/class_addressbook.inc:588
@@ -160,7 +154,8 @@ msgstr "Dzwonienie"
 #: addons/addressbook/class_addressbook.inc:23
 #: addons/addressbook/class_addressbook.inc:841
 #: addons/addressbook/class_addressbook.inc:842
-#: addons/addressbook/class_addressbook.inc:847 addons/addressbook/main.inc:43
+#: addons/addressbook/class_addressbook.inc:847
+#: addons/addressbook/main.inc:43
 msgid "Addressbook"
 msgstr "Książka adresowa"
 
@@ -169,9 +164,8 @@ msgid "GOsa"
 msgstr "GOsa"
 
 #: addons/addressbook/class_addressbook.inc:12
-#, fuzzy
 msgid "GOsa related objects"
-msgstr "Utwórz obiekty"
+msgstr "Powiązane obiekty GOsa"
 
 #: addons/addressbook/class_addressbook.inc:24
 msgid "This does something"
@@ -187,24 +181,18 @@ msgid "Error"
 msgstr "Błąd"
 
 #: addons/addressbook/class_addressbook.inc:195
-#, fuzzy
-msgid ""
-"You need to set your personal phone number in order to perform direct dials."
-msgstr ""
-"Brak ustawionego osobistego numeru telefonu. Proszę uzupełnić aby móc "
-"wykonywać bezpośrednie połączenia."
+msgid "You need to set your personal phone number in order to perform direct dials."
+msgstr "Musisz ustawić swój osobisty numer telefonu aby móc wykonywać bezpośrednie połączenia."
 
 #: addons/addressbook/class_addressbook.inc:223
 #: addons/addressbook/class_addressbook.inc:789
-#, fuzzy
 msgid "LDAP error"
-msgstr "błąd LDAP:"
+msgstr "błąd LDAP"
 
 #: addons/addressbook/class_addressbook.inc:231
 #: addons/addressbook/class_addressbook.inc:339
-#, fuzzy
 msgid "Permission"
-msgstr "Uprawnienia"
+msgstr "Uprawnienie"
 
 #: addons/addressbook/class_addressbook.inc:478
 #, php-format
@@ -262,7 +250,6 @@ msgid "User ID"
 msgstr "Identyfikator użytkownika"
 
 #: addons/addressbook/class_addressbook.inc:709
-#, fuzzy
 msgid "Telephone number"
 msgstr "Numer telefonu"
 
@@ -272,21 +259,16 @@ msgid "Fax"
 msgstr "Fax"
 
 #: addons/addressbook/class_addressbook.inc:738
-msgid ""
-"Cannot create a unique DN for your entry. Please fill more formular fields."
-msgstr ""
-"Nie można utworzyć unikalnego DN dla tego elementu. Proszę wypełnić więcej "
-"pól formularza."
+msgid "Cannot create a unique DN for your entry. Please fill more formular fields."
+msgstr "Nie można utworzyć unikalnego DN dla tego elementu. Proszę wypełnić więcej pól formularza."
 
 #: addons/addressbook/class_addressbook.inc:841
-#, fuzzy
 msgid "Addressbook entries"
-msgstr "Pokaż elementy książki adresowej"
+msgstr "Wpisy książki adresowej"
 
 #: addons/addressbook/class_addressbook.inc:842
-#, fuzzy
 msgid "Addressbook related objects"
-msgstr "Zapisywanie wpisu książki adresowej nieudane"
+msgstr "Powiązane obiekty książki adresowej"
 
 #: addons/addressbook/class_addressbook.inc:846
 msgid "Addons"
@@ -370,14 +352,8 @@ msgid "Information"
 msgstr "Informacja"
 
 #: addons/addressbook/contents.tpl:37
-msgid ""
-"The telephone list plugin provides list and search facilities for the people "
-"in your site. You may want to specify the asterisk [*] like in 'Go*us' to "
-"find 'Gonicus'. Use the filters below to narrow down your search."
-msgstr ""
-"Dodatek lista telefonów udostępnia listę oraz mechanizmy wyszukiwania dla "
-"ludzi w firmie. Mozna podawać gwiazdkę [*] np. 'Go*us' aby znależć "
-"'Gonicus'. Użyj filtrów poniżej aby zawęzić wyniki wyszukiwania."
+msgid "The telephone list plugin provides list and search facilities for the people in your site. You may want to specify the asterisk [*] like in 'Go*us' to find 'Gonicus'. Use the filters below to narrow down your search."
+msgstr "Dodatek lista telefonów udostępnia listę oraz mechanizmy wyszukiwania dla ludzi w firmie. Mozna podawać gwiazdkę [*] np. 'Go*us' aby znależć 'Gonicus'. Użyj filtrów poniżej aby zawęzić wyniki wyszukiwania."
 
 #: addons/addressbook/contents.tpl:42
 msgid "Actions"
@@ -441,19 +417,14 @@ msgstr "Poszukiwany napis"
 
 #~ msgid "You're about to delete the entry %s."
 #~ msgstr "Zamierzasz usunąć element %s."
-
 #~ msgid "Cancel"
 #~ msgstr "Anuluj"
-
 #~ msgid "Save"
 #~ msgstr "Zapisz"
-
 #~ msgid "Delete"
 #~ msgstr "Usuń"
-
 #~ msgid "Address book"
 #~ msgstr "Książka adresowa"
-
 #~ msgid "Removing of addressbook entry '%s' failed."
 #~ msgstr "Usuwanie wpisu książki adresowej '%s' nieudane."
 
@@ -464,30 +435,22 @@ msgstr "Poszukiwany napis"
 #, fuzzy
 #~ msgid "You have no permission to delete this entry!"
 #~ msgstr "Brak uprawnień do usunięcia tego departamentu."
-
 #~ msgid "The required field 'Name' is not set."
 #~ msgstr "Wymagane pole 'Nazwa' jest puste."
-
 #~ msgid "The required field 'Given name' is not set."
 #~ msgstr "Wymagane pole 'Podana nazwa' jest puste."
-
 #~ msgid "The field 'Name' contains invalid characters."
 #~ msgstr "Pole 'Nazwa' zawiera niedozwolone znaki."
-
 #~ msgid "The field 'Given name' contains invalid characters."
 #~ msgstr "Pole 'Podana nazwa' zawiera niedozwolone znaki."
-
 #~ msgid "The field 'Phone' contains an invalid phone number."
 #~ msgstr "Pole 'Telefon' zawiera nieprawidłowy numer telefonu."
-
 #~ msgid "The field 'Fax' contains an invalid phone number."
 #~ msgstr "Pole 'Fax' zawiera nieprawidłowy numer telefonu."
-
 #~ msgid "The field 'Mobile' contains an invalid phone number."
 #~ msgstr "Pole 'Komórka' zawiera nieprawidłowy numer telefonu."
-
 #~ msgid "The field 'Pager' contains an invalid phone number."
 #~ msgstr "Pole 'Pager' zawiera nieprawidłowy numer telefonu."
-
 #~ msgid "Please enter a valid email address in 'Primary address' field."
 #~ msgstr "Proszę podać prawidłowy adres email w polu 'Podstawowy adres'"
+

@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 09:57+0200\n"
-"PO-Revision-Date: 2007-07-14 21:45+0100\n"
-"Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
+"PO-Revision-Date: 2009-09-05 15:16+0100\n"
+"Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -36,9 +36,8 @@ msgstr "Moje konto "
 
 #: personal/connectivity/class_connectivity.inc:276
 #: personal/connectivity/class_intranetAccount.inc:212
-#, fuzzy
 msgid "Connectivity addon"
-msgstr "Konto połączeń"
+msgstr "dodatek Połączeń"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
@@ -47,9 +46,8 @@ msgstr "Inranet"
 
 #: personal/connectivity/class_intranetAccount.inc:126
 #: personal/connectivity/class_intranetAccount.inc:193
-#, fuzzy
 msgid "LDAP error"
-msgstr "błąd LDAP:"
+msgstr "błąd LDAP"
 
 #: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
@@ -57,22 +55,17 @@ msgstr "Ustawienia konta Intranet"
 
 #~ msgid "This account has no connectivity extensions."
 #~ msgstr "To konto nie posiada rozszerzeń do Połączeń"
-
 #~ msgid "Ok"
 #~ msgstr "Ok"
-
 #~ msgid "Cancel"
 #~ msgstr "Anuluj"
-
 #~ msgid "Click the 'Edit' button below to change informations in this dialog"
 #~ msgstr ""
 #~ "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
-
 #~ msgid "Edit"
 #~ msgstr "Edytuj"
-
 #~ msgid "Removing of user/intranet account with dn '%s' failed."
 #~ msgstr "Usuwanie konta intranet z dn '%s' nieudane."
-
 #~ msgid "Saving of user/intranet account with dn '%s' failed."
 #~ msgstr "Zapisywanie konta intranet z dn '%s' nieudane."
+
