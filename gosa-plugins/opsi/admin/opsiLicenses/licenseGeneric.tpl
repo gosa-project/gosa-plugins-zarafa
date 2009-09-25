@@ -129,7 +129,7 @@
 
 <table width="100%">
   <tr>
-    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
+    <td style='width:50%;border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
     
         <table>
           <tr>
@@ -172,10 +172,7 @@
           <tr>
             <td colspan="2">
               <b>{t}Used by Host{/t}</b><br>
-              <select 
-
-              disabled
-  
+              <select   disabled
                 name='selectedUsedHosts[]' multiple size=4 style='width:100%;'>
                 {html_options options=$usedByHost}
               </select><br>
