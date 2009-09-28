@@ -86,6 +86,7 @@ class licensePoolGeneric extends plugin
     $res = $this->si->get_local_products();
     $this->availableProductIds=array();
     if($this->si->is_error()){
+      msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
       $this->init_successfull = FALSE;
       return(FALSE);
     }
@@ -95,6 +96,7 @@ class licensePoolGeneric extends plugin
     $res = $this->si->list_clients();
     $this->opsiHosts=array();
     if($this->si->is_error()){
+      msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
       $this->init_successfull = FALSE;
       return(FALSE);
     }
@@ -109,6 +111,7 @@ class licensePoolGeneric extends plugin
 
       if($this->si->is_error()){    
         $this->init_successfull = FALSE;
+        msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
         return(FALSE);
       }else{
         $this->data = $this->orig_data = $res;

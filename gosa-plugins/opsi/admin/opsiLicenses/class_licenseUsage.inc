@@ -58,6 +58,7 @@ class licenseUsage extends plugin
       $res = $this->si->getLicenseUsage("", $this->cn);
       if($this->si->is_error()){
         $this->init_successfull = FALSE;
+        msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
         return;
       }
 
