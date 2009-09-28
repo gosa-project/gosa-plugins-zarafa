@@ -12,15 +12,23 @@
   <tr>
     <td style='vertical-align:top;width: 50%; padding: 5px; border-right: solid 1px #AAA; '>
         <h2>{t}Licenses used{/t}</h2>
+{render acl=$boundToHostACL}
         {$licenseUses}
+{/render}
     </td>
     <td style='vertical-align:top;'>
         <h2>{t}Licenses reserved for this host{/t}</h2>
+{render acl=$boundToHostACL}
         {$licenseReserved}
+{/render}
+{render acl=$boundToHostACL}
         <select name='availableLicense'>
+{/render}
           {html_options options=$availableLicenses}
         </select>
+{render acl=$boundToHostACL}
         <input type='submit' name='addReservation' value='{msgPool type=addButton}'>
+{/render}
     </td>
   </tr>
 </table>
