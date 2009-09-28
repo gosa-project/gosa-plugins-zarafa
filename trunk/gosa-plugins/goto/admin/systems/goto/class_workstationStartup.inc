@@ -650,18 +650,18 @@ class workstartup extends plugin
           }
           $i ++ ; 
 
-          /* Get Description tag 
-           *  There may be several FAI objects with the same class name, 
-           *   use the description from FAIprofile, if possible.
+          /*  Get used FAI types from the class 
            */ 
-          $abbrevations = $this->get_abbrevations_string($class);
-
-          if(!empty($abbrevations)){
-            $abbrevations = "&nbsp;[".trim($abbrevations)."]";
-          }        
+          if(!$marker) {
+            $types = $this->get_fai_types_string($class, true);
+          }
+          else {
+            $types = "";
+          }
 
           $div->AddEntry(array(
-                array("string"=>$class.$abbrevations.$marker),
+            array("string"=>$class.$marker),
+            array("string"=>$types),
                 array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:50px;border-right:none;'")
                 ));
         }  
@@ -1064,7 +1064,7 @@ class workstartup extends plugin
     if($force || !isset($this->cache['SERVERS'])){
 
       $o_queue = new gosaSupportDaemon();
-      $tmp = $o_queue->FAI_get_server();
+      $servers = $o_queue->FAI_get_server();
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
         $this->si_fai_action_failed = TRUE;
@@ -1072,12 +1072,21 @@ class workstartup extends plugin
         return;
       }else{
 
-        foreach($tmp as $entry){
-          $rel = $entry['FAI_RELEASE'];
+        foreach($servers as $server){
+          if ($this->attrs['gosaUnitTag'][0] != $server['TAG']) {
+            echo "Skipping server " . $server['SERVER'] . "<br>";
+            continue;
+          }
+        
+
+          echo "My unittag: ". $this->attrs['gosaUnitTag'][0] ."<br>";
+          echo "<p> " . print_a($server);
+          echo "</p>";
+          $rel = $server['FAI_RELEASE'];
           $this->cache['SERVERS']['auto'][$rel] = $rel;
-          $this->cache['SERVERS'][$entry['SERVER']][$rel] = $rel;
+          $this->cache['SERVERS'][$server['SERVER']][$rel] = $rel;
           uksort($this->cache['SERVERS']['auto'], 'strnatcasecmp');
-          uksort($this->cache['SERVERS'][$entry['SERVER']], 'strnatcasecmp');
+          uksort($this->cache['SERVERS'][$server['SERVER']], 'strnatcasecmp');
         }
       }
     }
@@ -1133,6 +1142,7 @@ class workstartup extends plugin
       }else{
         foreach($classes as $class){
           $classname = $class['CLASS'];
+          var_dump($class);
           if (!isset($this->cache['CLASSES'][$release][$classname])) {
             $this->cache['CLASSES'][$release][$classname] = array();
           }
@@ -1233,16 +1243,33 @@ class workstartup extends plugin
     return($NA);
   }  
 
-
-
-  function get_abbrevations_string($class_name) {
+  function get_fai_types_string($class_name, $image=FALSE) {
     $classes = $this->get_classes();
 
-    $Abbr = "";
-    foreach($classes[$class_name] as $class_type) {
-      $Abbr .= $class_type['Abbr']." ";
+    $result = array();
+
+    if ($image) {        
+      # Pre-fill the array fields with an empty image so that
+      # everything looks fine if the type in this position
+      # doesn't exist in that class
+      for ($i=0; $i<6; $i++) {
+        $result[$i] = "<img src='images/empty.png' width='17'>";
+      }
     }
-    return trim($Abbr);
+
+    foreach($classes[$class_name] as $type) {
+      $index = $type['index'];
+      if ($image) {
+        $string = "<img src='".$type['img']."' width='17' alt='".$type['desc']."'>&nbsp;";
+      }
+      else {
+        $string = $type['Abbr'];
+      }
+      
+      $result[$index] = $string;
+    }
+    return join(' ', $result);
+
   }
 
   /* Get all selectable classes for the ui select box
@@ -1254,7 +1281,7 @@ class workstartup extends plugin
     $ret= array();
     foreach($classes as $class_name => $class_types) {
       if (!in_array($class_name, $this->FAIclass)) {
-        $ret[$class_name] = $this->get_abbrevations_string($class_name);
+        $ret[$class_name] = $this->get_fai_types_string($class_name);
       }
     }
     uksort($ret, 'strnatcasecmp');
@@ -1267,40 +1294,59 @@ class workstartup extends plugin
    */
   function analyse_fai_object($attr)
   {
-    $tmp = array();
+    $result = array();
+    $result['desc'] = 'Placeholder';
     switch($attr['TYPE']){
-
+      case 'FAIpartitionTable':
+        $result["Type"]= 'FAIpartitionTable'; 
+        $result["Abbr"]= 'Pt';
+        $result["img"]= 'plugins/fai/images/fai_partitionTable.png';
+        $result["desc"] = "_('Partition table')";
+        $result["index"]= 0;
+        break;
       case 'FAIpackageList':
-        $tmp["Type"]= 'FAIpackageList';
-        $tmp["Abbr"]= 'Pl';
-        break;
-      case 'FAItemplate': 
-        $tmp["Type"]= 'FAItemplate'; 
-        $tmp["Abbr"]= 'T'; 
-        break;
-      case 'FAIvariable':
-        $tmp["Type"]= 'FAIvariable'; 
-        $tmp["Abbr"]= 'V'; 
+        $result["Type"]= 'FAIpackageList';
+        $result["Abbr"]= 'Pl';
+        $result["img"] = 'plugins/fai/images/fai_packages.png';
+        $result["desc"] = "_('Package list')";
+        $result["index"] = 1;
         break;
       case 'FAIscript':
-        $tmp["Type"]= 'FAIscript'; 
-        $tmp["Abbr"]= 'S'; 
+        $result["Type"]= 'FAIscript'; 
+        $result["Abbr"]= 'S'; 
+        $result["img"]= 'plugins/fai/images/fai_script.png';
+        $result["desc"] = "_('Script')";
+        $result["index"] = 2;
+        break;
+      case 'FAIvariable':
+        $result["Type"]= 'FAIvariable'; 
+        $result["Abbr"]= 'V';
+        $result["img"]= 'plugins/fai/images/fai_variable.png'; 
+        $result["desc"] = "_('Variables')";
+        $result["index"]= 3;
         break;
       case 'FAIhook':
-        $tmp["Type"]= 'FAIhook'; 
-        $tmp["Abbr"]= 'H'; 
-        break;
-      case 'FAIpartitionTable':
-        $tmp["Type"]= 'FAIpartitionTable'; 
-        $tmp["Abbr"]= 'Pt'; 
+        $result["Type"]= 'FAIhook'; 
+        $result["Abbr"]= 'H'; 
+        $result["img"]= 'plugins/fai/images/fai_hook.png';
+        $result["desc"] = "_('Hooks')";
+        $result["index"]= 4;
         break;
       case 'FAIprofile':
-        $tmp["Type"]= 'FAIprofile'; 
-        $tmp["Abbr"]= 'P'; 
+        $result["Type"]= 'FAIprofile'; 
+        $result["Abbr"]= 'P';
+        $result["img"]= 'plugins/fai/images/fai_profile.png';
+        $result["index"] = 5;
+        break;
+      case 'FAItemplate': 
+        $result["Type"]= 'FAItemplate'; 
+        $result["Abbr"]= 'T';
+        $result["img"] = 'plugins/fai/images/fai_template.png'; 
+        $result["index"] = 6;
         break;
       default: trigger_error("Unknown FAI object type!");;
     }
-    return($tmp);
+    return($result);
   }
 
 
