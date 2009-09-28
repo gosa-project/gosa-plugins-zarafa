@@ -5,6 +5,9 @@ class termgroup extends plugin
   /* attribute list for save action */
   var $members= array();
 
+  /* Stores a list of the member dn's */
+  var $member_dn = array();
+
   var $gotoMode           = "locked";
   var $gotoSyslogServer   = "";
   var $gotoNtpServer      = array();
@@ -33,7 +36,7 @@ class termgroup extends plugin
   var $nfsservers     = array();
   var $swapservers    = array();
   var $member_of_ogroup= false;
-
+  var $members_inherit_from_group = true;
 
   function termgroup (&$config, $dn= NULL, $parent= NULL)
   {
@@ -61,6 +64,7 @@ class termgroup extends plugin
     if(isset($this->attrs['member'])){
       for ($i= 0; $i<$this->attrs['member']['count']; $i++){
         $member= $this->attrs['member'][$i];
+        array_push($this->member_dn, $member);
         $ldap->cat($member, array('objectClass', 'macAddress', 'cn'));
         if ($ldap->success()){
           $attrs = $ldap->fetch();
@@ -180,6 +184,11 @@ class termgroup extends plugin
     /*************** 
       Handle requested action
      ***************/
+
+    /* Handle the inherit to members button */
+    if (isset($_POST['inheritToMembers'])) {
+      $this->members_inherit_from_group = true;
+    }
 
     /* Watch for events */
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
@@ -316,6 +325,9 @@ class termgroup extends plugin
 
     plugin::save();
 
+    /* Tell members to inherit all attributes if the flag is set  */
+    $this->inherit_attributes_to_members();
+
     /***************
       Prepare special vars 
      ***************/
@@ -382,6 +394,17 @@ class termgroup extends plugin
             "gotoTerminalPath"    => _("Root server"),
             "gotoSwapServer"      => _("Swap server"))
           ));
+  }
+
+  function inherit_attributes_to_members()
+  {
+    if ($this->members_inherit_from_group) {
+      foreach ($this->member_dn as $dn) {
+        $member_obj = new worktabs($this->config, $this->config->data['TABS']['WORKTABS'], $dn);
+        $member_obj->by_object['workgeneric']->set_everything_to_inherited();
+        $member_obj->save();
+      }
+    }
   }
 
   function PrepareForCopyPaste($source)
