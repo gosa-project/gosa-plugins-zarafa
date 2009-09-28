@@ -216,21 +216,23 @@ class opsiLicenceHandler extends opsi  {
     if(isset($res['XML'][0]['ANSWER_OPSI_GETRESERVEDLICENSES'])){
 
       $items = array();
-      foreach($res['XML'][0]['LICENSES'][0]['HIT'] as $entry){
-        $item = array();
-        foreach(array(
-              "LICENSEPOOLIDS"      => "licensePoolId",
-              "SOFTWARELICENSEID"   => "softwareLicenseId") as $source => $target){
-          if(isset($entry[$source])){
+      if(isset($res['XML'][0]['LICENSES'][0]['HIT'])){
+        foreach($res['XML'][0]['LICENSES'][0]['HIT'] as $entry){
+          $item = array();
+          foreach(array(
+                "LICENSEPOOLIDS"      => "licensePoolId",
+                "SOFTWARELICENSEID"   => "softwareLicenseId") as $source => $target){
+            if(isset($entry[$source])){
 
-            $item[$target] = array('count' => 0);
-            foreach($entry[$source] as $data){
-              $item[$target][] = $data['VALUE'];
+              $item[$target] = array('count' => 0);
+              foreach($entry[$source] as $data){
+                $item[$target][] = $data['VALUE'];
+              }
+              $item[$target]['count'] = count($item[$target]) -1 ;
             }
-            $item[$target]['count'] = count($item[$target]) -1 ;
           }
+          $items[]  = $item;
         }
-        $items[]  = $item;
       }
       return($items);
     }
@@ -257,24 +259,26 @@ class opsiLicenceHandler extends opsi  {
     if(isset($res['XML'][0]['ANSWER_OPSI_GETSOFTWARELICENSEUSAGES'])){
 
       $items = array();
-      foreach($res['XML'][0]['RESULT'][0]['HIT'] as $entry){
-        $item = array();
-        foreach(array(
-              "HOSTID"              => "hostId",
-              "LICENSEKEY"          => "licenseKey",
-              "LICENSEPOOLID"       => "licensePoolId",
-              "NOTES"               => "notes",
-              "SOFTWARELICENSEID"   => "softwareLicenseId") as $source => $target){
-          if(isset($entry[$source])){
+      if(isset($res['XML'][0]['RESULT'][0]['HIT'])){
+        foreach($res['XML'][0]['RESULT'][0]['HIT'] as $entry){
+          $item = array();
+          foreach(array(
+                "HOSTID"              => "hostId",
+                "LICENSEKEY"          => "licenseKey",
+                "LICENSEPOOLID"       => "licensePoolId",
+                "NOTES"               => "notes",
+                "SOFTWARELICENSEID"   => "softwareLicenseId") as $source => $target){
+            if(isset($entry[$source])){
 
-            $item[$target] = array('count' => 0);
-            foreach($entry[$source] as $data){
-              $item[$target][] = $data['VALUE'];
+              $item[$target] = array('count' => 0);
+              foreach($entry[$source] as $data){
+                $item[$target][] = $data['VALUE'];
+              }
+              $item[$target]['count'] = count($item[$target]) -1 ;
             }
-            $item[$target]['count'] = count($item[$target]) -1 ;
           }
+          $items[]  = $item;
         }
-        $items[]  = $item;
       }
       return($items);
     }
