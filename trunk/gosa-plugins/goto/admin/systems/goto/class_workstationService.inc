@@ -184,7 +184,7 @@ class workservice extends plugin
     $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
     if ($ldap->count() == 1){
       $map= array("gotoXResolution", "gotoXColordepth", "gotoXKbModel", "gotoXKbLayout",
-                  "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport");
+                  "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport", "gotoXDriver");
       $attrs= $ldap->fetch();
 
       foreach ($map as $name){
@@ -193,6 +193,9 @@ class workservice extends plugin
         }
         
         switch ($name){
+          case 'gotoXDriver':
+            $this->XDrivers = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XDrivers;
+            break;
           case 'gotoXResolution':
             $this->XResolutions= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XResolutions;
             break;
@@ -223,6 +226,7 @@ class workservice extends plugin
     /* Workaround to fill in inherited values if we've specified an objectclass */
     $SelectedSystemType = session::get("SelectedSystemType");
     if (isset($SelectedSystemType['ogroup']) && $SelectedSystemType['ogroup'] != 'none'){
+      $this->XDrivers=array('default' => _("inherited"));
       $this->XResolutions= array('default' => _("inherited"));
       $this->XColordepths= array('default' => _("inherited"));
       $this->XKbModels= array('default' => _("inherited"));
@@ -428,7 +432,7 @@ class workservice extends plugin
     /* Strip out 'default' values */
     foreach(array(
           "gotoXDriver", "gotoXResolution", "gotoXColordepth",
-          "gotoXKbModel", "gotoXKbLayout",
+          "gotoXKbModel", "gotoXKbLayout", "gotoXDriver",
           "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport") as $val){
 
       if ($this->attrs[$val] == "default"){

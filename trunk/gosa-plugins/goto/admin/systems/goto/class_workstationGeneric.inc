@@ -724,7 +724,7 @@ class workgeneric extends plugin
 
     /* Set workstation service attributes to inherited */
     if($this->member_of_ogroup && isset($this->parent->by_object['workservice'])){
-      foreach(array("gotoXKbLayout","gotoXKbModel","gotoXKbVariant",
+      foreach(array("gotoXKbLayout","gotoXKbModel","gotoXKbVariant","gotoXDriver",
             "gotoXResolution","gotoXColordepth","gotoXMouseType","gotoXMouseport") as $name){
         if($this->parent->by_object['workservice']->acl_is_writeable($name)){
           $this->parent->by_object['workservice']->$name = "default"; 
