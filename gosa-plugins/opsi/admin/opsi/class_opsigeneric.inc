@@ -234,6 +234,13 @@ class opsiGeneric extends plugin
    */
   public function check()
   {
+  
+    // In case of initialization problem, we do not save anything.
+    // We can skip checks here, the date isn't usable.
+    if($this->init_failed){ 
+      return;
+    };
+
     $messages = plugin::check();
     $messages= array_merge($messages, $this->netConfigDNS->check());
 
@@ -403,6 +410,9 @@ class opsiGeneric extends plugin
    */
   public function save()
   {
+    if($this->init_failed){ 
+      return;
+    }
     
     /* Check if we have to create a new opsi client
         or just have to save client modifications.
@@ -567,6 +577,9 @@ class opsiGeneric extends plugin
    */  
   public function remove_from_parent()
   {
+    if($this->init_failed){ 
+      return;
+    }
     $this->netConfigDNS->remove_from_parent();
 
     $this->opsi->del_client($this->hostId);
