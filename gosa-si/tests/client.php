@@ -14,6 +14,8 @@ for($count = 1; $count <= $zahl; $count++)
   #$sock = new Socket_Client("10.89.1.42","20081",TRUE,5);
   #$sock->setEncryptionKey("secret-gosa-password");
 
+  $mac = "00:01:6C:9D:B9:FA"; # ws-muc-02
+
   if($sock->connected()){
 
 	# Funktioniert noch nicht
@@ -51,8 +53,10 @@ for($count = 1; $count <= $zahl; $count++)
 
 	#$data = "<xml><header>gosa_opsi_getReservedLicenses</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
 
-	$data = "<xml><header>gosa_opsi_boundHostToLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
+	#$data = "<xml><header>gosa_opsi_boundHostToLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
 	#$data = "<xml><header>gosa_opsi_unboundHostFromLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId></xml>";
+
+	$data = "<xml><header>gosa_opsi_getAllSoftwareLicenses</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
 
 
 	##############################
@@ -209,14 +213,21 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <description>Test halt</description> <ip>1.2.3.4</ip> <notes>Im a note</notes> </xml>";
 
     # Add product to Opsi client
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>winxppro</productId> </xml>";
+    #$data = "<xml><header>gosa_opsi_add_product_to_client</header><source>GOSA</source><target>$mac</target><hostId>linux-cl-2.intranet.gonicus.de</hostId><productId>winxppro</productId></xml>";
+    #$data = "<xml><header>gosa_opsi_add_product_to_client</header><source>GOSA</source><target>$mac</target><hostId>linux-cl-2.intranet.gonicus.de</hostId><productId>acroread</productId></xml>";
     #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>preloginloader</productId> </xml>";
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>opsi-adminutils</productId> </xml>";
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>xpconfig</productId> </xml>";
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>hwaudit</productId> </xml>";
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>javavm</productId> </xml>";
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>firefox</productId> </xml>";
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>flashplayer</productId> </xml>";
+    
+	#$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>opsi-adminutils</productId> </xml>";
+    
+	#$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>xpconfig</productId> </xml>";
+    
+	#$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>hwaudit</productId> </xml>";
+    
+	#$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>javavm</productId> </xml>";
+    
+	#$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>firefox</productId> </xml>";
+    
+	#$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>flashplayer</productId> </xml>";
 
     # Delete product from Opsi client
     #$data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <productId>wipedisk</productId>  </xml>";

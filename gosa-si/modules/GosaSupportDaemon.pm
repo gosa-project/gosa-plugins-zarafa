@@ -848,13 +848,19 @@ sub check_opsi_res {
         if ($res->is_error) {
             my $error_string;
             if (ref $res->error_message eq "HASH") { 
+				# for different versions
                 $error_string = $res->error_message->{'message'}; 
+				$_ = $res->error_message->{'message'};
             } else { 
+				# for different versions
                 $error_string = $res->error_message; 
+				$_ = $res->error_message;
             }
             return 1, $error_string;
         }
     } else {
+		# for different versions
+		$_ = $main::opsi_client->status_line;
         return 1, $main::opsi_client->status_line;
     }
     return 0;

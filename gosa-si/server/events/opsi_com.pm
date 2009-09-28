@@ -34,6 +34,7 @@ my @events = (
 	"opsi_getLicensePools_listOfHashes",
 	"opsi_getLicenseInformationForProduct",
 	"opsi_getPool",
+	"opsi_getAllSoftwareLicenses",
 	"opsi_removeLicense",
 	"opsi_getReservedLicenses",
 	"opsi_boundHostToLicense",
@@ -96,12 +97,16 @@ sub _check_xml_tag_is_ok {
 #
 # @brief Writes the log line and returns the error message for GOsa.
 #
-sub _give_feedback {
-	my ($msg, $msg_hash, $session_id, $error) = @_;
-	&main::daemon_log("$session_id ERROR: $error: ".$msg, 1);
-	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{'source'}}[0], $error);
-	return &create_xml_string($out_hash);
+sub _giveErrorFeedback {
+	my ($msg_hash, $err_string, $session_id) = @_;
+	&main::daemon_log("$session_id ERROR: $err_string", 1);
+	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{source}}[0], $err_string);
+    if (exists $msg_hash->{forward_to_gosa}) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]);
+    }
+	return ( &create_xml_string($out_hash) );
 }
+
 
 ## @method opsi_add_product_to_client
 # Adds an Opsi product to an Opsi client.
@@ -115,8 +120,6 @@ sub opsi_add_product_to_client {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    my ($hostId, $productId);
-    my $error = 0;
 
     # Build return message
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
@@ -126,41 +129,28 @@ sub opsi_add_product_to_client {
 
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1) || (@{$msg_hash->{'hostId'}}[0] eq ref 'HASH'))  {
-        $error++;
-        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
-        &add_content2xml_hash($out_hash, "error", "hostId");
-        &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
-
+		return &_giveErrorFeedback($msg_hash, "no hostId specified or hostId tag invalid", $session_id);
     }
     if ((not exists $msg_hash->{'productId'}) || (@{$msg_hash->{'productId'}} != 1) || (@{$msg_hash->{'productId'}}[0] eq ref 'HASH')) {
-        $error++;
-        &add_content2xml_hash($out_hash, "error_string", "no productId specified or productId tag invalid");
-        &add_content2xml_hash($out_hash, "error", "productId");
-        &main::daemon_log("$session_id ERROR: no productId specified or procutId tag invalid: $msg", 1); 
+		return &_giveErrorFeedback($msg_hash, "no productId specified or productId tag invalid", $session_id);
     }
 
-    if (not $error) {
-        # Get hostId
-        $hostId = @{$msg_hash->{'hostId'}}[0];
-        &add_content2xml_hash($out_hash, "hostId", $hostId);
+	# Get hostId
+	my $hostId = @{$msg_hash->{'hostId'}}[0];
+	&add_content2xml_hash($out_hash, "hostId", $hostId);
 
-        # Get productID
-        $productId = @{$msg_hash->{'productId'}}[0];
-        &add_content2xml_hash($out_hash, "productId", $productId);
+	# Get productID
+	my $productId = @{$msg_hash->{'productId'}}[0];
+	&add_content2xml_hash($out_hash, "productId", $productId);
 
-        # Do an action request for all these -> "setup".
-        my $callobj = {
-            method  => 'setProductActionRequest',
-            params  => [ $productId, $hostId, "setup" ],
-            id  => 1, }; 
+	# Do an action request for all these -> "setup".
+	my $callobj = {
+		method  => 'setProductActionRequest',
+		params  => [ $productId, $hostId, "setup" ],
+		id  => 1, }; 
 
-        my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-        my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
-        if ($sres_err){
-            &main::daemon_log("$session_id ERROR: cannot add product: ".$sres_err_string, 1);
-            &add_content2xml_hash($out_hash, "error", $sres_err_string);
-        }
-    } 
+	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+	if (&check_opsi_res($res)) { return ( (caller(0))[3]." : ".$_, 1 ); };
 
     # return message
     return ( &create_xml_string($out_hash) );
@@ -1453,7 +1443,7 @@ sub opsi_getLicensePool_hash {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_giveErrorFeedback($msg_hash, "", $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, "", $session_id, $_);
 	}
 
 	# Fetch infos from Opsi server
@@ -1561,7 +1551,7 @@ sub opsi_getSoftwareLicenseUsagesForProductId {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'productId')) {
 		$productId= @{$msg_hash->{'productId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Fetch licensePoolId for productId
@@ -1605,7 +1595,7 @@ sub opsi_getSoftwareLicense_hash {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
 		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	my $callobj = {
@@ -1656,7 +1646,7 @@ sub opsi_deleteLicensePool {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Fetch softwareLicenseIds used in license pool
@@ -1754,15 +1744,15 @@ sub opsi_createLicense {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licenseKey')) {
 		$licenseKey = @{$msg_hash->{'licenseKey'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	if ((defined $licenseType) && (not exists $licenseTyp_hash->{$licenseType})) {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, "The typ of a license can be either 'OEM', 'VOLUME' or 'RETAIL'."));
+		return &_giveErrorFeedback($msg_hash, "The typ of a license can be either 'OEM', 'VOLUME' or 'RETAIL'.", $session_id);
 	}
 	
 	# Automatically define licenseContractId if ID is not given
@@ -1849,12 +1839,12 @@ sub opsi_assignSoftwareLicenseToHost {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
 		$hostId = @{$msg_hash->{'hostId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Assign a software license to a host
@@ -1898,12 +1888,12 @@ sub opsi_unassignSoftwareLicenseFromHost {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
 		$hostId = @{$msg_hash->{'hostId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Unassign a software license from a host
@@ -1945,7 +1935,7 @@ sub opsi_unassignAllSoftwareLicensesFromHost {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
 		$hostId = @{$msg_hash->{'hostId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Unassign all software licenses from a host
@@ -1989,7 +1979,7 @@ sub opsi_getLicenseInformationForProduct {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'productId')) {
 		$productId = @{$msg_hash->{'productId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Fetch infos from Opsi server
@@ -2053,7 +2043,7 @@ sub opsi_getPool {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Create hash for the answer
@@ -2153,13 +2143,13 @@ sub opsi_removeLicense {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
 		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	my $licensePoolId;
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	
 	# Call Opsi
@@ -2195,7 +2185,7 @@ sub opsi_getReservedLicenses {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
 		$hostId = @{$msg_hash->{'hostId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Fetch informations from Opsi server
@@ -2256,13 +2246,13 @@ sub opsi_boundHostToLicense {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
 		$hostId = @{$msg_hash->{'hostId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	my $softwareLicenseId;
 	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
 		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 
 	# Fetch informations from Opsi server
@@ -2288,7 +2278,7 @@ sub opsi_boundHostToLicense {
 	}
 
 	if (not $found) {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, "no softwarelicenseId found with name '".$softwareLicenseId."'") );
+		return &_giveErrorFeedback($msg_hash, "no softwarelicenseId found with name '".$softwareLicenseId."'", $session_id);
 	}
 
 	# Set boundToHost option for a given software license
@@ -2324,7 +2314,7 @@ sub opsi_unboundHostFromLicense {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
 		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
 	}
 	
 	# Memorize parameter witch are required for this procedure
@@ -2393,6 +2383,45 @@ sub opsi_unboundHostFromLicense {
     return ( &create_xml_string($out_hash) );
 }
 
+################################
+#
+# @brief
+# @param 
+#
+sub opsi_getAllSoftwareLicenses {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+
+	my ($res, $err) = &_getSoftwareLicenses_listOfHashes();
+	if ($err) {
+		return &_giveErrorFeedback($msg_hash, "cannot fetch software licenses from Opsi server : ".$res, $session_id);
+	}
+
+	# Parse result
+	my $res_hash = { 'hit'=> [] };
+	foreach my $license ( @$res) {
+		my $license_hash = { 'softwareLicenseId' => [$license->{'softwareLicenseId'}],
+			'maxInstallations' => [$license->{'maxInstallations'}],
+			'boundToHost' => [$license->{'boundToHost'}],
+			'expirationDate' => [$license->{'expirationDate'}],
+			'licenseContractId' => [$license->{'licenseContractId'}],
+			'licenseType' => [$license->{'licenseType'}],
+			'licensePoolIds' => [],
+			'licenseKeys'=> {}
+			};
+		foreach my $licensePoolId (@{$license->{'licensePoolIds'}}) {
+			push( @{$license_hash->{'licensePoolIds'}}, $licensePoolId);
+			$license_hash->{licenseKeys}->{$licensePoolId} =  [ $license->{'licenseKeys'}->{$licensePoolId} ];
+		}
+		push( @{$res_hash->{hit}}, $license_hash );
+	}
+	
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	$out_hash->{licenses} = [$res_hash];
+    return ( &create_xml_string($out_hash) );
+}
+
 sub opsi_test {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -2413,12 +2442,7 @@ print STDERR Dumper $pram1;
 	return ();
 }
 
-sub _giveErrorFeedback {
-	my ($msg_hash, $err_string, $session_id) = @_;
-	&main::daemon_log("$session_id ERROR: $err_string", 1);
-	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{source}}[0], $err_string);
-	return ( &create_xml_string($out_hash) );
-}
+
 
 
 sub _getLicensePool_hash {
