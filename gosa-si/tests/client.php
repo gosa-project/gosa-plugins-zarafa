@@ -30,7 +30,7 @@ for($count = 1; $count <= $zahl; $count++)
 
 	#$data = "<xml><header>gosa_opsi_deleteLicensePool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId></xml>";
 
-	#$data = "<xml><header>gosa_opsi_createLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><partner>Gonicus GmbH</partner><notes>I'm a note!</notes><maxInstallations>10</maxInstallations><licensePoolId>Harald</licensePoolId><licenseKey>abcdefghi</licenseKey></xml>";
+	#$data = "<xml><header>gosa_opsi_createLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><partner>Gonicus GmbH</partner><notes>I'm a note!</notes><maxInstallations>1</maxInstallations><licensePoolId>LicensePool</licensePoolId><licenseKey>abcdefghi</licenseKey><softwareLicenseId>andisLizenz</softwareLicenseId><licenseType>VOLUME</licenseType><boundToHost>krakenarme.intranet.gonicus.de</boundToHost></xml>";
 
 	#$data = "<xml><header>gosa_opsi_assignSoftwareLicenseToHost</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>Susi</licensePoolId><hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
 
@@ -43,13 +43,16 @@ for($count = 1; $count <= $zahl; $count++)
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsagesForProductId</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>firefox</productId></xml>";
 
-	#$data = "<xml><header>gosa_opsi_getSoftwareLicense_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>l_2009-09-22_09:51:11_0</softwareLicenseId></xml>";
+	#$data = "<xml><header>gosa_opsi_getSoftwareLicense_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>l_2009-09-22_09:50:58_0</softwareLicenseId></xml>";
 
-	$data = "<xml><header>gosa_opsi_getPool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
+	#$data = "<xml><header>gosa_opsi_getPool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_removeLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId><softwareLicenseId>l_2009-09-22_14:06:11</softwareLicenseId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_getReservedLicenses</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
+
+	$data = "<xml><header>gosa_opsi_boundHostToLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
+	#$data = "<xml><header>gosa_opsi_unboundHostFromLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId></xml>";
 
 
 	##############################

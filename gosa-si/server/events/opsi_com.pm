@@ -36,6 +36,8 @@ my @events = (
 	"opsi_getPool",
 	"opsi_removeLicense",
 	"opsi_getReservedLicenses",
+	"opsi_boundHostToLicense",
+	"opsi_unboundHostFromLicense",
 	"opsi_test",
    );
 @EXPORT = @events;
@@ -1451,7 +1453,7 @@ sub opsi_getLicensePool_hash {
 	if (&_check_xml_tag_is_ok ($msg_hash, 'licensePoolId')) {
 		$licensePoolId = @{$msg_hash->{'licensePoolId'}}[0];
 	} else {
-		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+		return ( &_giveErrorFeedback($msg_hash, "", $session_id, $_) );
 	}
 
 	# Fetch infos from Opsi server
@@ -1738,8 +1740,8 @@ sub opsi_createLicense {
 	my $conclusionDate = defined $msg_hash->{'conclusionDate'} ? @{$msg_hash->{'conclusionDate'}}[0] : undef;
 	my $notificationDate = defined $msg_hash->{'notificationDate'} ? @{$msg_hash->{'notificationDate'}}[0] : undef;
 	my $notes = defined $msg_hash->{'notes'} ? @{$msg_hash->{'notes'}}[0] : undef;
-	my $licenseContractId;
-	my $softwareLicenseId = defined $msg_hash->{'licenseId'} ? @{$msg_hash->{'licenseId'}}[0] : undef;
+	my $licenseContractId = undef;
+	my $softwareLicenseId = defined $msg_hash->{'softwareLicenseId'} ? @{$msg_hash->{'softwareLicenseId'}}[0] : undef;
 	my $licenseType = defined $msg_hash->{'licenseType'} ? @{$msg_hash->{'licenseType'}}[0] : undef;
 	my $maxInstallations = defined $msg_hash->{'maxInstallations'} ? @{$msg_hash->{'maxInstallations'}}[0] : undef;
 	my $boundToHost = defined $msg_hash->{'boundToHost'} ? @{$msg_hash->{'boundToHost'}}[0] : undef;
@@ -1762,11 +1764,16 @@ sub opsi_createLicense {
 	if ((defined $licenseType) && (not exists $licenseTyp_hash->{$licenseType})) {
 		return ( &_give_feedback($msg, $msg_hash, $session_id, "The typ of a license can be either 'OEM', 'VOLUME' or 'RETAIL'."));
 	}
+	
+	# Automatically define licenseContractId if ID is not given
+	if (defined $softwareLicenseId) { 
+		$licenseContractId = "c_".$softwareLicenseId;
+	}
 
 	# Create license contract at Opsi server
     my $callobj = {
         method  => 'createLicenseContract',
-        params  => [ "c_".$softwareLicenseId, $partner, $conclusionDate, $notificationDate, undef, $notes ],
+        params  => [ $licenseContractId, $partner, $conclusionDate, $notificationDate, undef, $notes ],
         id  => 1,
     };
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
@@ -2234,6 +2241,158 @@ sub opsi_getReservedLicenses {
 	return;
 }
 
+################################
+#
+# @brief
+# @param 
+#
+sub opsi_boundHostToLicense {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+
+	# Check input sanity
+	my $hostId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
+		$hostId = @{$msg_hash->{'hostId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+	my $softwareLicenseId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
+		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+
+	# Fetch informations from Opsi server
+	my ($license_res, $license_err) = &_getSoftwareLicenses_listOfHashes();
+	if ($license_err){
+		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$license_res, $session_id);
+	}
+
+	# Memorize parameter for given softwareLicenseId
+	my $licenseContractId;
+	my $licenseType;
+	my $maxInstallations;
+	my $boundToHost;
+	my $expirationDate = "";
+	my $found;
+	foreach my $license (@$license_res) {
+		if ($license->{softwareLicenseId} ne $softwareLicenseId) { next; }
+		$licenseContractId = $license->{licenseContractId};
+		$licenseType = $license->{licenseType};
+		$maxInstallations = $license->{maxInstallations};
+		$expirationDate = $license->{expirationDate};
+		$found++;
+	}
+
+	if (not $found) {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, "no softwarelicenseId found with name '".$softwareLicenseId."'") );
+	}
+
+	# Set boundToHost option for a given software license
+	my ($bound_res, $bound_err) = &_createSoftwareLicense('softwareLicenseId'=>$softwareLicenseId, 
+			'licenseContractId' => $licenseContractId, 
+			'licenseType' => $licenseType, 
+			'maxInstallations' => $maxInstallations, 
+			'boundToHost' => $hostId, 
+			'expirationDate' => $expirationDate);
+	if ($bound_err) {
+		return &_giveErrorFeedback($msg_hash, "cannot set boundToHost for given softwareLicenseId and hostId: ".$bound_res, $session_id);
+	}
+
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+    return ( &create_xml_string($out_hash) );
+}
+
+################################
+#
+# @brief
+# @param 
+#
+sub opsi_unboundHostFromLicense {
+	# This is really mad! Opsi is not able to unbound a lincense from a host. To provide the functionality for GOsa
+	# 4 rpc calls to Opsi are necessary. First, fetch all data for the given softwareLicenseId, then all details for the associated
+	# licenseContractId, then delete the softwareLicense and finally recreate the softwareLicense without the boundToHost option. NASTY!
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+
+	# Check input sanity
+	my $softwareLicenseId;
+	if (&_check_xml_tag_is_ok ($msg_hash, 'softwareLicenseId')) {
+		$softwareLicenseId = @{$msg_hash->{'softwareLicenseId'}}[0];
+	} else {
+		return ( &_give_feedback($msg, $msg_hash, $session_id, $_) );
+	}
+	
+	# Memorize parameter witch are required for this procedure
+	my $licenseContractId;
+	my $licenseType;
+	my $maxInstallations;
+	my $expirationDate;
+	my $partner;
+	my $conclusionDate;
+	my $notificationDate;
+	my $notes;
+	my $licensePoolId;
+	my $licenseKey;
+
+	# Fetch license informations from Opsi server
+	my ($license_res, $license_err) = &_getSoftwareLicenses_listOfHashes();
+	if ($license_err){
+		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server, required to unbound license from host: ".$license_res, $session_id);
+	}
+	my $found = 0;
+	foreach my $license (@$license_res) {
+		if (($found > 0) || ($license->{softwareLicenseId} ne $softwareLicenseId)) { next; }
+		$licenseContractId = $license->{licenseContractId};
+		$licenseType = $license->{licenseType};
+		$maxInstallations = $license->{maxInstallations};
+		$expirationDate = $license->{expirationDate};
+		$licensePoolId = @{$license->{licensePoolIds}}[0];
+		$licenseKey = $license->{licenseKeys}->{$licensePoolId};
+		$found++;
+	}
+	
+	# Fetch contract informations from Opsi server
+	my ($contract_res, $contract_err) = &_getLicenseContract_hash('licenseContractId'=>$licenseContractId);
+	if ($contract_err){
+		return &_giveErrorFeedback($msg_hash, "cannot get contract license information from Opsi server, required to unbound license from host: ".$license_res, $session_id);
+	}
+	$partner = $contract_res->{partner};
+	$conclusionDate = $contract_res->{conclusionDate};
+	$notificationDate = $contract_res->{notificationDate};
+	$expirationDate = $contract_res->{expirationDate};
+	$notes = $contract_res->{notes};
+
+	# Delete software license
+	my ($res, $err) = &_deleteSoftwareLicense( 'softwareLicenseId' => $softwareLicenseId, 'removeFromPools'=> "true" );
+	if ($err) {
+		return &_giveErrorFeedback($msg_hash, "cannot delet license from Opsi server, required to unbound license from host : ".$res, $session_id);
+	}
+
+	# Recreate software license without boundToHost
+	($res, $err) = &_createLicenseContract(	'licenseContractId' => $licenseContractId, 'partner' => $partner, 'conclusionDate' => $conclusionDate, 
+			'notificationDate' => $notificationDate, 'expirationDate' => $expirationDate, 'notes' => $notes	);
+	if ($err) {
+		return &_giveErrorFeedback($msg_hash, "cannot create license contract at Opsi server, required to unbound license from host : ".$res, $session_id);
+	}
+	($res, $err) = &_createSoftwareLicense( 'softwareLicenseId' => $softwareLicenseId, 'licenseContractId' => $licenseContractId, 'licenseType' => $licenseType, 
+			'maxInstallations' => $maxInstallations, 'boundToHost' => "", 'expirationDate' => $expirationDate	);
+	if ($err) {
+		return &_giveErrorFeedback($msg_hash, "cannot create software license at Opsi server, required to unbound license from host : ".$res, $session_id);
+	}
+	($res, $err) = &_addSoftwareLicenseToLicensePool( 'softwareLicenseId' => $softwareLicenseId, 'licensePoolId' => $licensePoolId, 'licenseKey' => $licenseKey );
+	if ($err) {
+		return &_giveErrorFeedback($msg_hash, "cannot add software license to license pool at Opsi server, required to unbound license from host : ".$res, $session_id);
+	}
+
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+    return ( &create_xml_string($out_hash) );
+}
+
 sub opsi_test {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -2357,18 +2516,22 @@ sub _removeSoftwareLicenseFromLicensePool {
 sub _deleteSoftwareLicense {
 	my %arg = (
 		'softwareLicenseId' => undef,
-		'removeFromPools' => "",
+		'removeFromPools' => "false",
 		@_,
 		);
 
 	if (not defined $arg{softwareLicenseId} ) { 
 		return ("function requires softwareLicenseId as parameter", 1);
 	}
+	my $removeFromPools = "";
+	if ((defined $arg{removeFromPools}) && ($arg{removeFromPools} eq "true")) { 
+		$removeFromPools = "removeFromPools";
+	}
 
 	# Fetch
 	my $callobj = {
 		method  => 'deleteSoftwareLicense',
-		params  => [ $arg{softwareLicenseId}, $arg{removeFromPools} ],
+		params  => [ $arg{softwareLicenseId}, $removeFromPools ],
 		id  => 1,
 	};
 	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
@@ -2426,8 +2589,87 @@ sub _getLicenseContract_hash {
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
 	return ($res->result, 0);
-
 }
 
+sub _createLicenseContract {
+	my %arg = (
+			'licenseContractId' => undef,
+			'partner' => undef,
+			'conclusionDate' => undef,
+			'notificationDate' => undef,
+			'expirationDate' => undef,
+			'notes' => undef,
+			@_,
+			);
+
+	# Create license contract at Opsi server
+    my $callobj = {
+        method  => 'createLicenseContract',
+        params  => [ $arg{licenseContractId}, $arg{partner}, $arg{conclusionDate}, $arg{notificationDate}, $arg{expirationDate}, $arg{notes} ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+}
+
+sub _createSoftwareLicense {
+	my %arg = (
+			'softwareLicenseId' => undef,
+			'licenseContractId' => undef,
+			'licenseType' => undef,
+			'maxInstallations' => undef,
+			'boundToHost' => undef,
+			'expirationDate' => undef,
+			@_,
+			);
+
+    my $callobj = {
+        method  => 'createSoftwareLicense',
+        params  => [ $arg{softwareLicenseId}, $arg{licenseContractId}, $arg{licenseType}, $arg{maxInstallations}, $arg{boundToHost}, $arg{expirationDate} ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+}
+
+sub _addSoftwareLicenseToLicensePool {
+	my %arg = (
+            'softwareLicenseId' => undef,
+            'licensePoolId' => undef,
+            'licenseKey' => undef,
+            @_,
+            );
+
+	if (not defined $arg{softwareLicenseId} ) {
+		return ("function requires softwareLicenseId as parameter", 1);
+	}
+	if (not defined $arg{licensePoolId} ) {
+		return ("function requires licensePoolId as parameter", 1);
+	}
+
+	# Add software license to license pool
+	my $callobj = {
+        method  => 'addSoftwareLicenseToLicensePool',
+        params  => [ $arg{softwareLicenseId}, $arg{licensePoolId}, $arg{licenseKey} ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+	# Check Opsi error
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+}
 
 1;
