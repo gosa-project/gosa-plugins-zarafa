@@ -88,6 +88,9 @@ class licenseUsageByHost extends plugin
         return;
       }
       $this->availableLicenses = array();
+
+      echo "We require Licenses here not Pools";
+
       foreach($res as $pool){
         $this->availableLicenses[] = $pool['cn'][0];
       }
@@ -204,15 +207,15 @@ class licenseUsageByHost extends plugin
     $del = array_diff($this->init_reservedLicenses, $this->reservedLicenses);
     $add = array_diff($this->reservedLicenses, $this->init_reservedLicenses);
 
-    foreach($del as $pool){
-      $this->si->removeLicenseFromHost($pool, $this->cn);
+    foreach($del as $license){
+      $this->si->removeLicenseReservationFromHost($license, $this->cn);
       if($this->si->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
       }
     }
 
-    foreach($add as $pool){
-      $this->si->addLicenseToHost($pool, $this->cn);
+    foreach($add as $license){
+      $this->si->reserverLicenseForHost($license, $this->cn);
       if($this->si->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
       }

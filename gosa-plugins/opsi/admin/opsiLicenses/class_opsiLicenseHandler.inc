@@ -18,7 +18,6 @@ class opsiLicenceHandler extends opsi  {
   {
     $data= array();
     $res = $this->send_data("gosa_opsi_getLicensePools_listOfHashes",$this->target,$data,TRUE);
-    
     $items  = array();
     if(isset($res['XML'][0]['RESULT'][0]['HIT'])){
       $items = $res['XML'][0]['RESULT'][0]['HIT'];
@@ -303,6 +302,41 @@ class opsiLicenceHandler extends opsi  {
   }
 
 
+  /* @brief   Reserve a software license to a host
+   * @param   softwareLicenseId 
+   * @param   hostId Something like client_1.intranet.mydomain.de
+   */
+  function reserverLicenseForHost($softwareLicenseId,$hostId)
+  {
+    $data= array();
+    $data['softwareLicenseId'] = htmlentities($softwareLicenseId);
+    $data['hostId'] = htmlentities($hostId);
+    $res = $this->send_data("gosa_opsi_boundHostToLicense",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ANSWER_OPSI_BOUNDHOSTTOLICENSE'])){
+      return(TRUE);
+    }
+    return(FALSE);
+  }
+
+
+  /* 
+   * @brief   Remove software licnese reservation for a host.
+   * @param   softwareLicenseId
+   * @param   hostid Something like client_1.intranet.mydomain.de
+   */
+  function removeLicenseReservationFromHost($softwareLicenseId,$hostId)
+  {
+    $data= array();
+    $data['softwareLicenseId'] = htmlentities($softwareLicenseId);
+    $data['hostId'] = htmlentities($hostId);
+    $res = $this->send_data("gosa_opsi_unboundHostFromLicense",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ANSWER_OPSI_UNBOUNDHOSTFROMLICENSE'])){
+      return(TRUE);
+    }
+    return(FALSE);
+  }
+
+
   /* 
    * @brief   Unassign a software license from a host.
    * @param   hostid Something like client_1.intranet.mydomain.de
@@ -319,6 +353,7 @@ class opsiLicenceHandler extends opsi  {
     }
     return(FALSE);
   }
+
 
   /* 
    * @brief   Removes a single license from a license pool
