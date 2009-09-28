@@ -58,12 +58,11 @@ class servgeneric extends plugin
   var $mapActions   = array("reboot"          => "",
                             "instant_update"  => "softupdate",
                             "localboot"       => "localboot",
-                            "update"          => "sceduledupdate",
+                            "update"          => "scheduledupdate",
                             "reinstall"       => "install",
                             "rescan"          => "",
                             "wakeup"            => "",
-                            "memcheck"        => "memcheck",
-                            "sysinfo"         => "sysinfo");
+                          );
 
 
   function servgeneric (&$config, $dn= NULL, $parent= NULL)
@@ -226,16 +225,14 @@ class servgeneric extends plugin
                                        "update" => _("System update"),
                                        "reinstall" => _("Reinstall"),
                                        "rescan" => _("Rescan hardware"),
-                                       "memcheck" => _("Memory test"),
                                        "localboot" => _("Force localboot"),
-                                       "sysinfo"  => _("System analysis")));
+                                     ));
     } else {
       $smarty->assign("actions", array("wakeup" => _("Wake up"),
                                        "reinstall" => _("Reinstall"),
                                        "update" => _("System update"),
-                                       "memcheck" => _("Memory test"),
-                                       "localboot" => _("Force localboot"),
-                                       "sysinfo"  => _("System analysis")));
+                                       "localboot" => _("Force localboot")
+                                     ));
     }
 
     /* Show main page */
