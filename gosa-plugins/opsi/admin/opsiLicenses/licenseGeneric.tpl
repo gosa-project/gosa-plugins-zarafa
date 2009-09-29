@@ -22,7 +22,9 @@
               {if $initially_was_account}
                 <input type='text' name='dummy12' disabled value='{$cn}'>
               {else}
+{render acl=$licenseACL}
                 <input type='text' name='cn' value='{$cn}'>
+{/render}
               {/if}
             </td>
           </tr>
@@ -31,7 +33,9 @@
               {t}Partner{/t}
             </td>
             <td>
+{render acl=$licenseACL}
               <input type='text' name='partner' value='{$partner}'>
+{/render}
             </td>
           </tr>
         </table>
@@ -45,7 +49,9 @@
               {t}Description{/t}
             </td>
             <td>
+{render acl=$licenseACL}
               <input type='text' name='description' value='{$description}'>
+{/render}
             </td>
           </tr>
         </table>
@@ -64,7 +70,9 @@
               {t}Conclusion date{/t}
             </td>
             <td>
+{render acl=$licenseACL}
               <input type='text' name='conclusionDate' value='{$conclusionDate}'>
+{/render}
             </td>
           </tr>
           <tr>
@@ -72,7 +80,9 @@
               {t}Expiration date{/t}
             </td>
             <td>
+{render acl=$licenseACL}
               <input type='text' name='expirationDate' value='{$expirationDate}'>
+{/render}
             </td>
           </tr>
         </table>
@@ -86,7 +96,9 @@
               {t}Notification date{/t}
             </td>
             <td>
+{render acl=$licenseACL}
               <input type='text' name='notificationDate' value='{$notificationDate}'>
+{/render}
             </td>
           </tr>
         </table>
@@ -137,7 +149,9 @@
               {t}License key{/t}{$must}
             </td>
             <td>
+{render acl=$licenseACL}
               <input type='text' name='licenseKey' value='{$licenseKey}'>
+{/render}
             </td>
           </tr>
           {if $licenseModel == "VOLUME"}
@@ -146,7 +160,9 @@
               {t}Maximum installations{/t}
             </td>
             <td>
+{render acl=$licenseACL}
               <input type='text' name='maximumInstallations' value='{$maximumInstallations}'>
+{/render}
             </td>
           </tr>
           {/if}
@@ -156,10 +172,12 @@
               {t}Reserved for Host{/t}
             </td>
             <td>
+{render acl=$licenseACL}
               <select name='boundToHost'>
                 <option value="">{t}none{/t}</option>
                 {html_options options=$hosts selected=$boundToHost}
               </select>
+{/render}
             </td>
           </tr>
           {/if}
@@ -172,10 +190,12 @@
           <tr>
             <td colspan="2">
               <b>{t}Used by Host{/t}</b><br>
+{render acl=$licenseACL}
               <select   disabled
                 name='selectedUsedHosts[]' multiple size=4 style='width:100%;'>
                 {html_options options=$usedByHost}
               </select><br>
+{/render}
 <!--
     
       Actually we can't modify the license usage, due to a lack of functions.

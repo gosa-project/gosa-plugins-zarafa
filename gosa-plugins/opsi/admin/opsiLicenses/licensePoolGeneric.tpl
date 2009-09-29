@@ -44,7 +44,9 @@
           <tr> 
             <td>
               {$licenses}
+{render acl=$licensesACL}
               <input type='submit' name='addLicense' value='{msgPool type=addButton}'>
+{/render}
             </td>
           </tr>
         </table>
@@ -63,14 +65,22 @@
         <table style='width:100%;'>
           <tr> 
             <td>
+{render acl=$productIdsACL}
               <select name='productIds[]' multiple size="6" style="width:100%;">
                 {html_options options=$productIds}
               </select><br>
+{/render}
+{render acl=$productIdsACL}
               <select name='availableProduct'>
                 {html_options options=$availableProductIds}
               </select>
+{/render}
+{render acl=$productIdsACL}
               <input type='submit' name='addProduct' value='{msgPool type='addButton'}'>
+{/render}
+{render acl=$productIdsACL}
               <input type='submit' name='removeProduct' value='{msgPool type='delButton'}'>
+{/render}
             </td>
           </tr>
         </table>
@@ -82,12 +92,20 @@
         <table style='width:100%;'>
           <tr> 
             <td>
+{render acl=$windowsSoftwareIdsACL}
               <select name='softwareIds[]' multiple size="6" style="width:100%;">
                 {html_options options=$softwareIds}
               </select>
+{/render}
+{render acl=$windowsSoftwareIdsACL}
               <input type='text' name='newSoftwareId' value='' size=10>
+{/render}
+{render acl=$windowsSoftwareIdsACL}
               <input type='submit' name='addSoftware' value='{msgPool type='addButton'}'>
+{/render}
+{render acl=$windowsSoftwareIdsACL}
               <input type='submit' name='removeSoftware' value='{msgPool type='delButton'}'>
+{/render}
             </td>
           </tr>
         </table>

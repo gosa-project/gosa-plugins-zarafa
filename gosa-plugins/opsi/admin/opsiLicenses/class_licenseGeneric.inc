@@ -50,10 +50,12 @@ class licenseGeneric extends plugin
         "notificationDate","licenseModel","licenseKey","maximumInstallations",
         "licensePoolId", "usedByHost","boundToHost");
 
-  function __construct(&$config, $license, $hosts = array())
+  function __construct(&$config, $dn, $license, $hosts = array())
   {
+  
     $this->config = $config;
     $this->data = $license;
+    $this->dn = $dn;
     $this->si = new opsiLicenceHandler($this->config);
     $this->opsiHosts = $hosts;
 
@@ -119,6 +121,16 @@ class licenseGeneric extends plugin
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
     $smarty->assign("hosts", $this->getHosts());
+
+    $ui = get_userinfo();
+
+    $acl_base = $this->dn;
+    if($acl_base == "new"){
+      $acl_base = $this->config->current['BASE'];
+    }
+
+    $smarty->assign("licenseACL", $ui->get_permissions($acl_base,"opsi/licensePoolGeneric","licenses"));
+    $smarty->assign("writeable", preg_match("/w/",$ui->get_permissions($acl_base,"opsi/licensePoolGeneric","licenses")));
 
     $smarty->assign("notUsedHosts", array_diff($this->getHosts(), $this->usedByHost));
     $smarty->assign("boundToHost", $this->boundToHost[0]);

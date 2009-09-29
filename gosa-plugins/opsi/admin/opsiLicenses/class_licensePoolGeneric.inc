@@ -211,13 +211,14 @@ class licensePoolGeneric extends plugin
     if($this->dialog instanceOf plugin){
       $this->dialog->save_object();
       $display = $this->dialog->execute();
-      $display.= 
-        "<p style=\"text-align:right\">
-        <input type=submit name=\"license_finish\" style=\"width:80px\"
-        value=\"".msgPool::okButton(). "\">&nbsp;
-      <input type=submit name=\"license_cancel\"
-        value=\"".msgPool::cancelButton()."\">
-        </p>";
+      $display.= "<p style=\"text-align:right\">";
+  
+      if($this->acl_is_writeable("licenses")){
+        $display.="<input type=submit name=\"license_finish\" style=\"width:80px\"
+          value=\"".msgPool::okButton(). "\">&nbsp;";
+      }
+      
+      $display.="<input type=submit name=\"license_cancel\" value=\"".msgPool::cancelButton()."\"></p>";
       return($display);
     }
 
@@ -245,19 +246,22 @@ class licensePoolGeneric extends plugin
   {
     $list = new divSelectBox("test");
     $list->setHeight(100);
-    foreach($this->licenses as $i => $license){
-      $keys = implode($license['licenseKey'],", ");
-      $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
-      $link.= "<input type='image' class='center' src='images/lists/trash.png' name='removeLicense_{$i}'>";
 
-      $f1 = array("string" => $license['cn']);
-      $f2 = array("string" => $license['licenseModel']);
-      $f3 = array("string" => $license['expirationDate']);
-      $f4 = array("string" => $license['maximumInstallations']);
-      $f5 = array("string" => rtrim($keys,", "));
-      $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
-
-      $list->addEntry(array($f1,$f2,$f3,$f4,$f5,$f6));
+    if($this->acl_is_readable("licenses")){
+      foreach($this->licenses as $i => $license){
+        $keys = implode($license['licenseKey'],", ");
+        $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
+        if(preg_match("/w/", $this->getacl("licenses"))){
+          $link.= "<input type='image' class='center' src='images/lists/trash.png' name='removeLicense_{$i}'>";
+        }
+        $f1 = array("string" => $license['cn']);
+        $f2 = array("string" => $license['licenseModel']);
+        $f3 = array("string" => $license['expirationDate']);
+        $f4 = array("string" => $license['maximumInstallations']);
+        $f5 = array("string" => rtrim($keys,", "));
+        $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
+        $list->addEntry(array($f1,$f2,$f3,$f4,$f5,$f6));
+      }
     }
     return($list->DrawList());
   }
@@ -296,61 +300,73 @@ class licensePoolGeneric extends plugin
       if($this->initially_was_account) $this->cn = $this->orig_cn;
 
       // We've to add prodcuts here 
-      if(isset($_POST['availableProduct']) && isset($_POST['addProduct'])){
-        $pro = get_post('availableProduct');
-        if(isset($this->availableProductIds[$pro]) && !in_array($this->availableProductIds[$pro], $this->productIds)){
-          $this->productIds[] =$this->availableProductIds[$pro];
+      if(preg_match("/w/",$this->getacl("productIds"))){
+        if(isset($_POST['availableProduct']) && isset($_POST['addProduct'])){
+          $pro = get_post('availableProduct');
+          if(isset($this->availableProductIds[$pro]) && !in_array($this->availableProductIds[$pro], $this->productIds)){
+            $this->productIds[] =$this->availableProductIds[$pro];
+          }
         }
       }
 
       // We've to remove products here
-      if(isset($_POST['productIds']) && isset($_POST['removeProduct'])){
-        foreach($_POST['productIds'] as $key){
-          if(isset($this->productIds[$key])){
-            unset($this->productIds[$key]);
+      if(preg_match("/w/",$this->getacl("productIds"))){
+        if(isset($_POST['productIds']) && isset($_POST['removeProduct'])){
+          foreach($_POST['productIds'] as $key){
+            if(isset($this->productIds[$key])){
+              unset($this->productIds[$key]);
+            }
           }
         }
       }
 
       // We've to add software here 
-      if(isset($_POST['newSoftwareId']) && isset($_POST['addSoftware'])){
-        $soft = trim(get_post('newSoftwareId'));
-        if(!empty($soft) && !in_array($soft, $this->softwareIds)){
-          $this->softwareIds[] = $soft;
+      if(preg_match("/w/",$this->getacl("windowsSoftwareIds"))){
+        if(isset($_POST['newSoftwareId']) && isset($_POST['addSoftware'])){
+          $soft = trim(get_post('newSoftwareId'));
+          if(!empty($soft) && !in_array($soft, $this->softwareIds)){
+            $this->softwareIds[] = $soft;
+          }
         }
       }
 
       // We've to remove software Ids here
-      if(isset($_POST['softwareIds']) && isset($_POST['removeSoftware'])){
-        foreach($_POST['softwareIds'] as $key){
-          if(isset($this->softwareIds[$key])){
-            unset($this->softwareIds[$key]);
+      if(preg_match("/w/",$this->getacl("windowsSoftwareIds"))){
+        if(isset($_POST['softwareIds']) && isset($_POST['removeSoftware'])){
+          foreach($_POST['softwareIds'] as $key){
+            if(isset($this->softwareIds[$key])){
+              unset($this->softwareIds[$key]);
+            }
           }
         }
       }
 
       // We've to create a new license
-      if(isset($_POST['addLicense'])){
-        $this->dialog = new licenseGeneric($this->config,array(), $this->opsiHosts);
-        $this->dialog->set_acl_base($this->config->current['BASE']);
+      if(preg_match("/w/",$this->getacl("licenses"))){
+        if(isset($_POST['addLicense'])){
+          $this->dialog = new licenseGeneric($this->config,$this->dn,array(), $this->opsiHosts);
+          $this->dialog->set_acl_base($this->config->current['BASE']);
+        }
       }
   
       // Search post for image button clicks.
-      foreach($_POST as $name => $value){
-        if(preg_match("/^editLicense_/",$name)){
-          $id = preg_replace("/^editLicense_(.*)_.$/","\\1",$name);
-          if(isset($this->licenses[$id])){
-            $this->dialog = new licenseGeneric($this->config,$this->licenses[$id], $this->opsiHosts);
-            $this->dialog->set_acl_base($this->config->current['BASE']);
+      if(preg_match("/r/",$this->getacl("licenses"))){
+        foreach($_POST as $name => $value){
+          if(preg_match("/^editLicense_/",$name)){
+            $id = preg_replace("/^editLicense_(.*)_.$/","\\1",$name);
+            if(isset($this->licenses[$id])){
+              $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
+              $this->dialog->set_acl_base($this->config->current['BASE']);
+            }
+            break;
           }
-          break;
-        }
-        if(preg_match("/^removeLicense_/",$name)){
-          $id = preg_replace("/^removeLicense_(.*)_.$/","\\1",$name);
-          if(isset($this->licenses[$id])){
-            unset($this->licenses[$id]);
+          if(preg_match("/^removeLicense_/",$name)){
+            $id = preg_replace("/^removeLicense_(.*)_.$/","\\1",$name);
+            if(isset($this->licenses[$id])){
+              unset($this->licenses[$id]);
+            }
+            break;
           }
-          break;
         }
       }
     }
@@ -478,8 +494,8 @@ class licensePoolGeneric extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"   => _("Generic"),
-          "plDescription" => _("License generic"),
+          "plShortName"   => _("Pool generic"),
+          "plDescription" => _("License pool generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 1,
@@ -487,7 +503,10 @@ class licensePoolGeneric extends plugin
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
-            "description" => _("Description"))
+            "description" => _("Description"),
+            "productIds"  => _("Applications"),
+            "windowsSoftwareIds"  => _("Windows software IDs"),
+            "licenses"  => _("Licenses"))
           ));
   }
 }
