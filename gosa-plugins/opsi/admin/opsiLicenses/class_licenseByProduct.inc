@@ -56,19 +56,13 @@ class licenseByProduct extends plugin
     }else{
 
       $res = $this->si->getLicensesForProduct($this->cn);
-      if($this->si->is_error() || !$res){
+      if($this->si->is_error()){
         $this->init_successfull = FALSE;
         msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
         return;
       }
 
-      if(isset($res['USEDBY'])){
-        foreach($res['USEDBY'] as $host){
-          $data = $res;
-          $data['HOST'][0] = $host;
-          $this->licenseUses[] = $data;
-        }
-      }
+      $this->licenseUses = $res;
       $this->init_successfull = TRUE;
     }
   }
@@ -81,17 +75,18 @@ class licenseByProduct extends plugin
     if(!$this->init_successfull){
       $smarty = get_smarty();
       $smarty->assign("init_successfull", $this->init_successfull);
-      return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
+      return($smarty->fetch(get_template_path('licenseByProduct.tpl',TRUE,dirname(__FILE__))));
     }
     
     // Create usage list
     $list = new divSelectBox("licenseUsage");
   
     foreach($this->licenseUses as $license){
-      $f1 = array("string" => $license['HOST'][0]['VALUE']);
+      $f1 = array("string" => $license['HOSTID'][0]['VALUE']);
+      $f2 = array("string" => $license['SOFTWARELICENSEID'][0]['VALUE']);
       $f3 = array("string" => $license['LICENSEPOOLID'][0]['VALUE'],
                  "attach" => "style='border-right:0px;'");
-      $list->addEntry(array($f1,$f3));
+      $list->addEntry(array($f1,$f2,$f3));
     } 
 
     $smarty = get_smarty();
@@ -108,7 +103,7 @@ class licenseByProduct extends plugin
     $smarty->assign("licenseUses", $list->DrawList());
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
-    return($smarty->fetch(get_template_path('licenseUsage.tpl',TRUE,dirname(__FILE__))));
+    return($smarty->fetch(get_template_path('licenseByProduct.tpl',TRUE,dirname(__FILE__))));
   }
 
  
