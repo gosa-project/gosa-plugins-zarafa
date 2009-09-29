@@ -1074,14 +1074,9 @@ class workstartup extends plugin
 
         foreach($servers as $server){
           if ($this->attrs['gosaUnitTag'][0] != $server['TAG']) {
-            echo "Skipping server " . $server['SERVER'] . "<br>";
             continue;
           }
         
-
-          echo "My unittag: ". $this->attrs['gosaUnitTag'][0] ."<br>";
-          echo "<p> " . print_a($server);
-          echo "</p>";
           $rel = $server['FAI_RELEASE'];
           $this->cache['SERVERS']['auto'][$rel] = $rel;
           $this->cache['SERVERS'][$server['SERVER']][$rel] = $rel;
