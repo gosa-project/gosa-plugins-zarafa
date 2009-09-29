@@ -62,7 +62,13 @@ class licenseByProduct extends plugin
         return;
       }
 
-      $this->licenseUses = $res;
+      if(isset($res['USEDBY'])){
+        foreach($res['USEDBY'] as $host){
+          $data = $res;
+          $data['HOST'][0] = $host;
+          $this->licenseUses[] = $data;
+        }
+      }
       $this->init_successfull = TRUE;
     }
   }
@@ -80,14 +86,12 @@ class licenseByProduct extends plugin
     
     // Create usage list
     $list = new divSelectBox("licenseUsage");
+  
     foreach($this->licenseUses as $license){
-
-      $f1 = array("string" => $license['hostId'][0]);
-      $f2 = array("string" => $license['licenseKey'][0]);
-      $f3 = array("string" => $license['licensePoolId'][0]);
-      $f4 = array("string" => $license['softwareLicenseId'][0],
-                  "attach" => "style='border-right:0px;'");
-      $list->addEntry(array($f1,$f2,$f3,$f4));
+      $f1 = array("string" => $license['HOST'][0]['VALUE']);
+      $f3 = array("string" => $license['LICENSEPOOLID'][0]['VALUE'],
+                 "attach" => "style='border-right:0px;'");
+      $list->addEntry(array($f1,$f3));
     } 
 
     $smarty = get_smarty();
