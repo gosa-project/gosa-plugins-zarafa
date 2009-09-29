@@ -140,6 +140,50 @@ class opsiLicenceHandler extends opsi  {
    * LICENSES
    *******************/
 
+  
+  function listLicenses()
+  {
+    $data= array();
+    $res = $this->send_data("gosa_opsi_getAllSoftwareLicenses",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ANSWER_OPSI_GETALLSOFTWARELICENSES'])){
+
+      $licenses = array();
+      if(isset($res['XML'][0]['LICENSES'][0]['HIT'])){
+        foreach($res['XML'][0]['LICENSES'][0]['HIT'] as $entry){
+
+          $item = array();
+
+          // License keys are indexed by the pool id, map it here.
+          if(isset($entry['LICENSEPOOLIDS'][0]['VALUE'])){
+            $n = strtoupper($entry['LICENSEPOOLIDS'][0]['VALUE']);
+            $entry['LICENSEKEYS'] = $entry['LICENSEKEYS'][0][$n];
+          }
+
+          // Now fake an ldap like result
+          foreach(array(
+                "BOUNDTOHOST"         => "boundToHost",
+                "LICENSEKEYS"         => "licenseKey",
+                "LICENSEPOOLIDS"      => "licensePoolId",
+                "LICENSETYPE"         => "licenseType",
+                "SOFTWARELICENSEID"   => "softwareLicenseId") as $source => $target){
+            if(isset($entry[$source])){
+              $item[$target] = array('count' => 0);
+              foreach($entry[$source] as $data){
+                $item[$target][] = $data['VALUE'];
+              }
+              $item[$target]['count'] = count($item[$target]) -1 ;
+            }
+          }
+
+          $licenses[] = $item;
+        } 
+      }
+      return($licenses);
+    }
+    return(FALSE);
+  }
+
+
   /*  
    * @brief 
    *     Create a license contract, create a software 

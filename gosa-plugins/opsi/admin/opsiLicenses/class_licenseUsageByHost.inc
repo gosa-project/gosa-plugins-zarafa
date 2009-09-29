@@ -76,23 +76,22 @@ class licenseUsageByHost extends plugin
         return;
       }
       foreach($res as $pool){
-        $this->reservedLicenses[] = $pool['licensePoolId'][0];
+        $l = $pool['softwareLicenseId'][0];
+        $this->reservedLicenses[$l] = $l;
       }
       $this->init_reservedLicenses = $this->reservedLicenses;
 
       // Get list of license pools 
-      $res = $this->si->listPools();
+      $res = $this->si->listLicenses();
       if($this->si->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
         $this->init_successfull = FALSE;
         return;
       }
       $this->availableLicenses = array();
-
-      echo "We require Licenses here not Pools";
-
-      foreach($res as $pool){
-        $this->availableLicenses[] = $pool['cn'][0];
+      foreach($res as $license){
+        if(!isset($license['licensePoolId'])) $license['licensePoolId'][0] = '-';
+        $this->availableLicenses[$license['softwareLicenseId'][0]] = $license;
       }
 
       $this->init_successfull = TRUE;
@@ -102,6 +101,7 @@ class licenseUsageByHost extends plugin
 
   function execute()
   {
+
     // Handle initialization failures.
     if(isset($_POST['retry_init'])) $this->init();
     if(!$this->init_successfull){
@@ -128,13 +128,17 @@ class licenseUsageByHost extends plugin
     foreach($this->reservedLicenses as $key => $license){
       if(preg_match("/r/i",$this->getacl('boundToHost'))){
 
+        $l = $this->availableLicenses[$key];
+
         // Display remove button in case of write permissions
         $action = "";
         if(preg_match("/w/i",$this->getacl('boundToHost'))){
           $action = "<input class='center' type='image' src='images/lists/trash.png' 
             name='removeReservation_{$key}'>";
         }
-        $f1 = array("string" => $license);
+  
+        $f1 = array("string" => $l['softwareLicenseId'][0]);
+        $f2 = array("string" => $l['licensePoolId'][0]);
         $f4 = array("string" => $action,
             "attach" => "style='border-right:0px; width:16px;'");
         $list2->addEntry(array($f1,$f4));
@@ -152,10 +156,18 @@ class licenseUsageByHost extends plugin
       $smarty->assign($attr,$this->$attr);
     }
 
+    // build up a available licenses list. 
+    $licenses = array();
+    foreach($this->availableLicenses as $key => $license){
+      if(!in_array($license['softwareLicenseId'][0], $this->reservedLicenses)){
+        $licenses[$key] = $license['softwareLicenseId'][0]." [".$license['licensePoolId'][0]."]";
+      }
+    }
+
     $smarty->assign("licenseUses", $list->DrawList());
     $smarty->assign("licenseReserved", $list2->DrawList());
     $smarty->assign("init_successfull", $this->init_successfull);
-    $smarty->assign("availableLicenses", array_diff($this->availableLicenses, $this->reservedLicenses));
+    $smarty->assign("availableLicenses", $licenses);
     $smarty->assign("initially_was_account", $this->initially_was_account);
     return($smarty->fetch(get_template_path('licenseUsageByHost.tpl',TRUE,dirname(__FILE__))));
   }
@@ -185,7 +197,7 @@ class licenseUsageByHost extends plugin
         if(isset($_POST['availableLicense']) && isset($_POST['addReservation'])){
           $id = get_post('availableLicense');
           if(isset($this->availableLicenses[$id]) && !in_array($this->availableLicenses[$id],$this->reservedLicenses)){
-            $this->reservedLicenses[] =  $this->availableLicenses[$id];
+            $this->reservedLicenses[$id] =  $this->availableLicenses[$id]['softwareLicenseId'][0];
           }
         }
       }
