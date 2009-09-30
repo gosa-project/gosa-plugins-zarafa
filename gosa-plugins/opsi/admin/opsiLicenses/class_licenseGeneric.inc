@@ -114,8 +114,7 @@ class licenseGeneric extends plugin
     $smarty->assign("licenseModels",array(
           "RETAIL" => _("Retail"),
           "OEM"=>_("OEM"),
-          "VOLUME" => _("Volume"),
-          "CONCURRENT" => _("Concurrent")));
+          "VOLUME" => _("Volume")));
 
 
     $smarty->assign("init_successfull", $this->init_successfull);

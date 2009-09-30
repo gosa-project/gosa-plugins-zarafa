@@ -248,18 +248,28 @@ class licensePoolGeneric extends plugin
 
     if($this->acl_is_readable("licenses")){
       foreach($this->licenses as $i => $license){
-        $keys = implode($license['licenseKey'],", ");
         $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
         if(preg_match("/w/", $this->getacl("licenses"))){
           $link.= "<input type='image' class='center' src='images/lists/trash.png' name='removeLicense_{$i}'>";
         }
         $f1 = array("string" => $license['cn']);
-        $f2 = array("string" => $license['licenseModel']);
-        $f3 = array("string" => $license['expirationDate']);
-        $f4 = array("string" => $license['maximumInstallations']);
-        $f5 = array("string" => rtrim($keys,", "));
+
+        $maxInst = "";
+        if($license['maximumInstallations'] == 0){
+          $maxInst = "("._("unlimited").")";
+        }else{
+          $maxInst = "(".$license['maximumInstallations'].")";;
+        }
+
+        $map = array(
+          "VOLUME" => sprintf(_("Volume license %s"), $maxInst),
+          "OEM"=>_("OEM"),
+          "RETAIL"=>_("retail"),
+          "CONCURRENT"=>_("concurrent"));
+
+        $f2 = array("string" => $map[$license['licenseModel']]);
         $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
-        $list->addEntry(array($f1,$f2,$f3,$f4,$f5,$f6));
+        $list->addEntry(array($f1,$f2,$f6));
       }
     }
     return($list->DrawList());
