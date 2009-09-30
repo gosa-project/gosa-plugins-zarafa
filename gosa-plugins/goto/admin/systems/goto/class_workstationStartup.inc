@@ -650,11 +650,21 @@ class workstartup extends plugin
            *   use the description from FAIprofile, if possible.
            */  
           $desc = ""; 
+
+          $objects = array(
+              "Pl"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png"),
+              "Pt"     => array("IMG"=> "plugins/fai/images/fai_packages.png"),
+              "S"          => array("IMG"=> "plugins/fai/images/fai_script.png"),
+              "V"        => array("IMG"=> "plugins/fai/images/fai_variable.png"),
+              "H"            => array("IMG"=> "plugins/fai/images/fai_hook.png"),
+              "P"         => array("IMG"=> "plugins/fai/images/fai_profile.png"),
+              "T"        => array("IMG"=> "plugins/fai/images/fai_template.png"));
+
           if(isset($this->cache['CLASSES'][$this->FAIrelease][$class])){
             $desc ="";
             foreach($this->cache['CLASSES'][$this->FAIrelease][$class] as $types ){
               if(isset($types['Abbr'])){
-                $desc.= $types['Abbr']." ";
+                $desc.= "<img src='".$objects[$types['Abbr']]['IMG']."' class='center'> ";
                 if($types['Type'] == "FAIprofile"){
                   break;
                 }
@@ -662,11 +672,12 @@ class workstartup extends plugin
             }
           }
           if(!empty($desc)){
-            $desc = "&nbsp;[".trim($desc)."]";
+            $desc = "&nbsp;".trim($desc)."";
           }        
 
           $div->AddEntry(array(
-                array("string"=>$class.$desc.$marker),
+                array("string"=>$class.$marker),
+                array("string"=>$desc),
                 array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:50px;border-right:none;'")
                 ));
         }  
