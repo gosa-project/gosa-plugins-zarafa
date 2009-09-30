@@ -485,7 +485,7 @@ sub opsi_get_netboot_products {
     my %r = ();
     for (@{$res->result}) { $r{$_} = 1 }
 
-    if (not &check_opsi_res($res)){
+      if (not &check_opsi_res($res)){
 
         if (defined $hostId){
 
