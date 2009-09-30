@@ -133,8 +133,8 @@ class licenseByProduct extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"   => _("Usage"),
-          "plDescription" => _("License usage"),
+          "plShortName"   => _("Usage by product"),
+          "plDescription" => _("License usage by product"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 1,

@@ -80,14 +80,17 @@ class licenseUsage extends plugin
     
     // Create usage list
     $list = new divSelectBox("licenseUsage");
-    foreach($this->licenseUses as $license){
-
-      $f1 = array("string" => $license['hostId'][0]);
-      $f2 = array("string" => $license['licenseKey'][0]);
-      $f3 = array("string" => $license['licensePoolId'][0]);
-      $f4 = array("string" => $license['softwareLicenseId'][0],
-                  "attach" => "style='border-right:0px;'");
-      $list->addEntry(array($f1,$f2,$f3,$f4));
+    $ui = get_userinfo();
+    $readable = $ui->get_permissions($this->config->current['BASE'], "opsi/licenseUsage","");
+    if($readable) {
+      foreach($this->licenseUses as $license){
+        $f1 = array("string" => $license['hostId'][0]);
+        $f2 = array("string" => $license['licenseKey'][0]);
+        $f3 = array("string" => $license['licensePoolId'][0]);
+        $f4 = array("string" => $license['softwareLicenseId'][0],
+            "attach" => "style='border-right:0px;'");
+        $list->addEntry(array($f1,$f2,$f3,$f4));
+      } 
     } 
 
     $smarty = get_smarty();
@@ -136,17 +139,14 @@ class licenseUsage extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"   => _("Usage"),
+          "plShortName"   => _("License usage"),
           "plDescription" => _("License usage"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
-          "plProvidedAcls"=> array(
-            "cn"                => _("Name"),
-            "description" => _("Description"))
-          ));
+          "plProvidedAcls"=> array()));
   }
 }
 

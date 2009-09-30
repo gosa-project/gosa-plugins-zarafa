@@ -241,8 +241,8 @@ class licenseUsageByHost extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"   => _("Usage"),
-          "plDescription" => _("License usage"),
+          "plShortName"   => _("Usage by host"),
+          "plDescription" => _("License usage by host"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 1,
