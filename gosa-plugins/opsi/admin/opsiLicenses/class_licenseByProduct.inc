@@ -35,15 +35,17 @@ class licenseByProduct extends plugin
     $this->dn = $this->orig_dn = $dn;
     $this->si = new opsiLicenceHandler($this->config);
 
+    // Is this a new object? 
     $this->is_account=TRUE;
     if($this->dn == "new"){
       $this->initially_was_account = FALSE;
     }else{
       $this->initially_was_account = TRUE;
+      
+      // Extract pool name out of the fake dn.
       $this->cn = $this->orig_cn = preg_replace("/^opsi:cn=([^,]*),.*$/","\\1",$dn);
     }
 
-    // Extract pool name out of the fake dn.
     $this->init();
   }
 
@@ -55,6 +57,7 @@ class licenseByProduct extends plugin
       $this->init_successfull = TRUE;
     }else{
 
+      // Get license information for the current product.
       $res = $this->si->getLicensesForProduct($this->cn);
       if($this->si->is_error()){
         $this->init_successfull = FALSE;
@@ -81,25 +84,22 @@ class licenseByProduct extends plugin
     // Create usage list
     $list = new divSelectBox("licenseUsage");
   
-    foreach($this->licenseUses as $license){
-      $f1 = array("string" => $license['HOSTID'][0]['VALUE']);
-      $f2 = array("string" => $license['SOFTWARELICENSEID'][0]['VALUE']);
-      $f3 = array("string" => $license['LICENSEPOOLID'][0]['VALUE'],
-                 "attach" => "style='border-right:0px;'");
-      $list->addEntry(array($f1,$f2,$f3));
+    $ui = get_userinfo();
+    $readable = $ui->get_permissions($this->config->current['BASE'], "opsi/licenseByProduct","");
+    if($readable) {
+      foreach($this->licenseUses as $license){
+        $f1 = array("string" => $license['HOSTID'][0]['VALUE']);
+        $f2 = array("string" => $license['SOFTWARELICENSEID'][0]['VALUE']);
+        $f3 = array("string" => $license['LICENSEPOOLID'][0]['VALUE'],
+            "attach" => "style='border-right:0px;'");
+        $list->addEntry(array($f1,$f2,$f3));
+      } 
     } 
 
     $smarty = get_smarty();
 
     // Assign ACls 
     $plInfo = $this->plInfo();
-    foreach($plInfo['plProvidedAcls'] as $name => $desc){
-      $smarty->assign("{$name}ACL",$this->getacl($name));
-    }
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr,$this->$attr);
-    }
-
     $smarty->assign("licenseUses", $list->DrawList());
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
@@ -140,10 +140,7 @@ class licenseByProduct extends plugin
           "plPriority"    => 1,
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
-          "plProvidedAcls"=> array(
-            "cn"                => _("Name"),
-            "description" => _("Description"))
-          ));
+          "plProvidedAcls"=> array()));
   }
 }
 
