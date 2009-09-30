@@ -65,17 +65,20 @@ class licensePoolGeneric extends plugin
     $this->config = $config;
     $this->dn = $this->orig_dn = $dn;
 
+    // initialize gosa-si handle for opsi licenses
     $this->si = new opsiLicenceHandler($this->config);
 
+    // Detect if this is a new or existings license
     $this->is_account=TRUE;
     if($this->dn == "new"){
       $this->initially_was_account = FALSE;
     }else{
       $this->initially_was_account = TRUE;
+
+      // Extract pool name out of the fake dn.
       $this->cn = $this->orig_cn = preg_replace("/^opsi:cn=([^,]*),.*$/","\\1",$dn);
     }
 
-    // Extract pool name out of the fake dn.
     $this->init();
   }
 
@@ -106,9 +109,7 @@ class licensePoolGeneric extends plugin
     if(!$this->initially_was_account){
       $this->init_successfull = TRUE;
     }else{
-
       $res = $this->si->getPool($this->cn);
-
       if($this->si->is_error()){    
         $this->init_successfull = FALSE;
         msg_dialog::display(_("Error"),msgPool::siError($this->si->get_error()),ERROR_DIALOG);
@@ -148,6 +149,7 @@ class licensePoolGeneric extends plugin
             $upper = strtoupper($license['LICENSEPOOLIDS'][0]['VALUE']);
             $license['LICENSEKEYS'] = $license['LICENSEKEYS'][0][$upper];
 
+            // Map license attributes to a useable format
             $entry = array();
             foreach($this->licenseMap as $source => $target){
               $entry[$target] = "";
@@ -163,6 +165,7 @@ class licensePoolGeneric extends plugin
               }
             }
 
+            // Extract contract data
             $lData= $license['LICENSECONTRACTDATA'][0];
             foreach($this->licenseContractMap as $source => $target){
               if(isset($lData[$source])){
@@ -241,11 +244,11 @@ class licensePoolGeneric extends plugin
   }
 
 
+  // Creates a divSelectBox and fills it with license entries
   function getLicenseList()
   {
     $list = new divSelectBox("test");
     $list->setHeight(100);
-
     if($this->acl_is_readable("licenses")){
       foreach($this->licenses as $i => $license){
         $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
@@ -289,7 +292,6 @@ class licensePoolGeneric extends plugin
     // Save license modifications
     if($this->dialog instanceOf plugin && isset($_POST['license_finish'])){
       $this->dialog->save_object();
-
       $msgs = $this->dialog->check();
       if(count($msgs)){
         msg_dialog::displayChecks($msgs);
