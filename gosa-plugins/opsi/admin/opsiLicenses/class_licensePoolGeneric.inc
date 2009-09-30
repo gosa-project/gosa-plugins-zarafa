@@ -141,7 +141,6 @@ class licensePoolGeneric extends plugin
 
             // Do not parse invalid licenses
             if(!is_array($license) || !isset($license['LICENSEPOOLIDS'])){
-              echo "Invalid license";
               continue;
             }
 
