@@ -86,7 +86,7 @@
         </table>
 
     </td>
-    <td style="border-left: 1px solid #AAA; padding: 5px;">
+    <td style="border-left: 1px solid #AAA; padding: 5px;vertical-align:top">
         <!-- SOFTWARE -->
         <h2>{t}Windows software IDs{/t}</h2>
         <table style='width:100%;'>
