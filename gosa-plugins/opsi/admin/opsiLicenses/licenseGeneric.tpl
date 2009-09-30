@@ -69,9 +69,19 @@
             <td>
               {t}Conclusion date{/t}
             </td>
-            <td>
+            <td style='width:300px;'>
 {render acl=$licenseACL}
-              <input type='text' name='conclusionDate' value='{$conclusionDate}'>
+              <input type="text" id="date1" name="conclusionDate" value="{$conclusionDate}" class="date" />
+              {literal}
+              <script type="text/javascript">
+                  /*<[CDATA[*/
+                  var datepicker    = new DatePicker({
+                  relative    : 'date1',
+                  language    : 'de'
+                  });
+                  /*]]>*/
+              </script>
+              {/literal}
 {/render}
             </td>
           </tr>
@@ -79,9 +89,19 @@
             <td>
               {t}Expiration date{/t}
             </td>
-            <td>
+            <td style='width:300px;'>
 {render acl=$licenseACL}
-              <input type='text' name='expirationDate' value='{$expirationDate}'>
+              <input type="text" id="date2" name="expirationDate" value="{$expirationDate}" class="date" />
+              {literal}
+              <script type="text/javascript">
+                  /*<[CDATA[*/
+                  var datepicker    = new DatePicker({
+                  relative    : 'date2',
+                  language    : 'de'
+                  });
+                  /*]]>*/
+              </script>
+              {/literal}
 {/render}
             </td>
           </tr>
@@ -95,9 +115,19 @@
             <td>
               {t}Notification date{/t}
             </td>
-            <td>
+            <td style='width:300px;'>
 {render acl=$licenseACL}
-              <input type='text' name='notificationDate' value='{$notificationDate}'>
+              <input type="text" id="date3" name="notificationDate" value="{$notificationDate}" class="date" >
+              {literal}
+              <script type="text/javascript">
+                  /*<[CDATA[*/
+                  var datepicker    = new DatePicker({
+                  relative    : 'date3',
+                  language    : 'de'
+                  });
+                  /*]]>*/
+              </script>
+              {/literal}
 {/render}
             </td>
           </tr>
@@ -213,5 +243,15 @@
     </td> 
   </tr>
 </table>
+{literal}
+<script type="text/javascript">
+    /*<[CDATA[*/
+    var datepicker    = new DatePicker({
+    relative    : 'date',
+    language    : 'de'
+    });
+    /*]]>*/
+</script>
+{/literal}
 <input name='opsiLicensesPosted' value='1' type='hidden'>
 {/if}

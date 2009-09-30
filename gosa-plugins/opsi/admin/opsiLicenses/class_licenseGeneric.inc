@@ -24,6 +24,7 @@
 class licenseGeneric extends plugin 
 {
 
+  // License attributes
   var $si = NULL;
   var $data = array();
   var $cn = "";
@@ -31,10 +32,12 @@ class licenseGeneric extends plugin
   var $description = "";  
   var $partner = "";
 
+  // Date attributes 
   var $conclusionDate = "";
   var $expirationDate = "";
   var $notificationDate = "";
 
+  // License model related attribues
   var $licenseModel = "";
   var $licenseKey = array();
   var $orig_licenseModel = "";
@@ -74,12 +77,20 @@ class licenseGeneric extends plugin
   
   function init()
   {
+    // Extract license information out of the license object ($this->data)
     $this->boundToHost = array('0'=>"");
     $this->usedByHost = array('0'=>"");
     $this->licenseKey = array('0'=>"");
     if($this->initially_was_account){
       foreach($this->attributes as $attr){
         $this->$attr = $this->data[$attr];
+      }
+
+      // Fix dates 
+      foreach(array("notificationDate","expirationDate","conclusionDate") as $date) {
+        if(!empty($this->$date)){
+          $this->$date = date("d.m.Y",strtotime($this->$date));
+        }
       }
     }
 
@@ -102,7 +113,7 @@ class licenseGeneric extends plugin
 
     $smarty = get_smarty();
 
-    // Assign ACls 
+    // Assign attributes and its ACls 
     $plInfo = $this->plInfo();
     foreach($plInfo['plProvidedAcls'] as $name => $desc){
       $smarty->assign("{$name}ACL",$this->getacl($name));
@@ -111,26 +122,24 @@ class licenseGeneric extends plugin
       $smarty->assign($attr,$this->$attr);
     }
 
+    // Assign list of available license models
     $smarty->assign("licenseModels",array(
           "RETAIL" => _("Retail"),
           "OEM"=>_("OEM"),
           "VOLUME" => _("Volume")));
 
-
+    $smarty->assign("usePrototype", "true");
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
     $smarty->assign("hosts", $this->getHosts());
 
     $ui = get_userinfo();
-
     $acl_base = $this->dn;
     if($acl_base == "new"){
       $acl_base = $this->config->current['BASE'];
     }
-
     $smarty->assign("licenseACL", $ui->get_permissions($acl_base,"opsi/licensePoolGeneric","licenses"));
     $smarty->assign("writeable", preg_match("/w/",$ui->get_permissions($acl_base,"opsi/licensePoolGeneric","licenses")));
-
     $smarty->assign("notUsedHosts", array_diff($this->getHosts(), $this->usedByHost));
     $smarty->assign("boundToHost", $this->boundToHost[0]);
     $smarty->assign("licenseKey", $this->licenseKey[0]);
@@ -202,15 +211,15 @@ class licenseGeneric extends plugin
 
     // Very simple date input checks
     if(!empty($this->expirationDate) && 
-       !preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",$this->expirationDate)){
+       !preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/",$this->expirationDate)){
       $message[] = msgPool::invalid(_("Expiration date"),$this->expirationDate,"","2009-02-23");
     }
     if(!empty($this->conclusionDate) && 
-       !preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",$this->conclusionDate)){
+       !preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/",$this->conclusionDate)){
       $message[] = msgPool::invalid(_("Expiration date"),$this->conclusionDate,"","2009-02-23");
     }
     if(!empty($this->notificationDate) && 
-       !preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",$this->notificationDate)){
+       !preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/",$this->notificationDate)){
       $message[] = msgPool::invalid(_("Expiration date"),$this->notificationDate,"","2009-02-23");
     }
 
@@ -239,6 +248,14 @@ class licenseGeneric extends plugin
     foreach($this->attributes as $target){
       $data[$target] = $this->$target;
     }
+    
+    // Return opsi like dates.
+    foreach(array("notificationDate","expirationDate","conclusionDate") as $date) {
+      if(!empty($this->$date)){
+        $data[$date] = date("Y-m-d",strtotime($this->$date));
+      }
+    }
+
     return($data);
   }
  
