@@ -25,6 +25,7 @@ class opsiLicenses extends plugin
   /* Definitions */
   var $plHeadline= "Software licences";
   var $plDescription= "Software licenses";
+  var $plIcon= "plugins/opsi/images/plugin.png";
 
   // The headpage list handler. 
   var $DivListLicenses    = NULL;

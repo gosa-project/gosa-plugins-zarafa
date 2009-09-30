@@ -166,7 +166,7 @@ class divListLicense extends MultiSelectWindow
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' 
           name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
-      $field1 = array("string" => "<img src='plugins/opsiLicenses/images/license.png' 
+      $field1 = array("string" => "<img src='plugins/opsi/images/license.png' 
           alt='"._("License")."' ".$title.">", 
           "attach" => "style='text-align:center;width: 20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), 
@@ -184,7 +184,7 @@ class divListLicense extends MultiSelectWindow
     }
     $num_objs = count($list);
     $num_obj_str = _("Number of listed licenses");
-    $str = "<img class='center' src='plugins/opsiLicenses/images/license.png'
+    $str = "<img class='center' src='plugins/opsi/images/license.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
     $this->set_List_Bottom_Info($str);
   }
