@@ -49,8 +49,8 @@ class divListLicense extends MultiSelectWindow
     }
 
     // Set list strings 
-    $this->SetTitle(_("List of licenses"));
-    $this->SetSummary(_("List of licenses"));
+    $this->SetTitle(_("List of license pools"));
+    $this->SetSummary(_("List of license pools"));
     $this->EnableAplhabet(true);
 
     // Result page will look like a headpage 
@@ -67,14 +67,9 @@ class divListLicense extends MultiSelectWindow
     // Set Page col headers 
     $this->AddHeader(array("string" => $chk,"attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
-    $this->AddHeader(array("string" => _("License")." / "._("Department"), "attach" => "style=''"));
+    $this->AddHeader(array("string" => _("License pools"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Actions"), 
           "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
-
-    // Add SubSearch checkbox 
-    //$this->AddCheckBox(SEPERATOR);
-    $this->AddCheckBox("SubSearch",  msgPool::selectToView("","subsearch"), 
-        msgPool::selectToView("","subsearch_small"), false);
 
     // Add regex user input field
     $this->AddRegex   ("Regex", _("Regular expression for matching license names"), "*" , true);
@@ -90,15 +85,12 @@ class divListLicense extends MultiSelectWindow
     $base = $this->config->current['BASE'];
     $options  = $this->create_department_list($this->module);
 
-    /* Add a seperator after displaying c&p and snapshot icons ? */
-    $add_sep = false;
-  
     /* Get copy & paste icon */
     $acls  = $ui->get_permissions($this->selectedBase,"opsi/licenseGeneric");
     $acl_all= $ui->has_complete_category_acls($this->selectedBase,"opsi");
 
     /* Add default header */
-    $listhead = MultiSelectWindow::get_default_header();
+    $listhead = MultiSelectWindow::get_default_header(false);
   
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
