@@ -259,9 +259,9 @@ class licensePoolGeneric extends plugin
 
         $maxInst = "";
         if($license['maximumInstallations'] == 0){
-          $maxInst = "("._("unlimited").")";
+          $maxInst = _("unlimited");
         }else{
-          $maxInst = "(".$license['maximumInstallations'].")";;
+          $maxInst = $license['maximumInstallations'];
         }
 
         $map = array(
