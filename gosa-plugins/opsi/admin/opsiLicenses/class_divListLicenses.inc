@@ -105,9 +105,12 @@ class divListLicense extends MultiSelectWindow
 
     /* Multiple options */
     $s.= "..|---|\n";
-    $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Remove")."|"."remove_multiple_licenses|\n";
 
+    if(preg_match("/d/",$acls)) {
+      $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Remove")."|"."remove_multiple_licenses|\n";
+    }
+  
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
