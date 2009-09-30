@@ -97,6 +97,7 @@
                 {html_options options=$softwareIds}
               </select>
 {/render}
+<!--
 {render acl=$windowsSoftwareIdsACL}
               <input type='text' name='newSoftwareId' value='' size=10>
 {/render}
@@ -106,6 +107,7 @@
 {render acl=$windowsSoftwareIdsACL}
               <input type='submit' name='removeSoftware' value='{msgPool type='delButton'}'>
 {/render}
+-->
             </td>
           </tr>
         </table>
