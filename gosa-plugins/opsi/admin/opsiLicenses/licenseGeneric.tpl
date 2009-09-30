@@ -77,6 +77,9 @@
               <script type="text/javascript">
                   /*<[CDATA[*/
                   var datepicker    = new DatePicker({
+                  keepFieldEmpty : true,
+                  enableCloseEffect : false,
+                  enableShowEffect : false,
                   relative    : 'date1',
                   language    : 'de'
                   });
@@ -99,6 +102,9 @@
               <script type="text/javascript">
                   /*<[CDATA[*/
                   var datepicker    = new DatePicker({
+                  keepFieldEmpty : true,
+                  enableCloseEffect : false,
+                  enableShowEffect : false,
                   relative    : 'date2',
                   language    : 'de'
                   });
@@ -127,6 +133,9 @@
               <script type="text/javascript">
                   /*<[CDATA[*/
                   var datepicker    = new DatePicker({
+                  keepFieldEmpty : true,
+                  enableCloseEffect : false,
+                  enableShowEffect : false,
                   relative    : 'date3',
                   language    : 'de'
                   });
