@@ -23,8 +23,8 @@
 class opsiLicenses extends plugin
 {
   /* Definitions */
-  var $plHeadline= "Opsi";
-  var $plDescription= "Opsi licenses";
+  var $plHeadline= "Software licences";
+  var $plDescription= "Software licenses";
 
   // The headpage list handler. 
   var $DivListLicenses    = NULL;

@@ -50,11 +50,11 @@ if ( $cleanup ){
   /* Page header*/
   if (get_object_info() != ""){
     $display= print_header(get_template_path('plugins/opsiLicenses/images/plugin.png'),
-        _("Licenses"),
+        _("Software licenses"),
         "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".
         LDAP::fix(get_object_info()));
   } else {
-    $display= print_header(get_template_path('plugins/opsiLicenses/images/plugin.png'), _("License management"));
+    $display= print_header(get_template_path('plugins/opsiLicenses/images/plugin.png'), _("Software licenses"));
   }
 
   $display.= $output;
