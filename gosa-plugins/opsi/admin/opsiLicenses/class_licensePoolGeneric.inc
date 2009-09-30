@@ -262,10 +262,10 @@ class licensePoolGeneric extends plugin
         }
 
         $map = array(
-          "VOLUME" => sprintf(_("Volume license %s"), $maxInst),
+          "VOLUME" => sprintf(_("Volume license (#%s)"), $maxInst),
           "OEM"=>_("OEM"),
-          "RETAIL"=>_("retail"),
-          "CONCURRENT"=>_("concurrent"));
+          "RETAIL"=>_("Retail"),
+          "CONCURRENT"=>_("Concurrent"));
 
         $f2 = array("string" => $map[$license['licenseModel']]);
         $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
