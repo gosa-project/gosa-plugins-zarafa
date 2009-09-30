@@ -10,7 +10,7 @@
 
 <table width="100%">
   <tr>
-    <td style='vertical-align:top;width: 50%; padding: 5px; border-right: solid 1px #AAA; '>
+    <td style='vertical-align:top;width: 50%; padding-right:5px; border-right: solid 1px #AAA; '>
         <h2>{t}Reserved for{/t}</h2>
 {render acl=$boundToHostACL}
         {$licenseReserved}
