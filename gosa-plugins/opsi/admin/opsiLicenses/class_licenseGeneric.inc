@@ -143,6 +143,11 @@ class licenseGeneric extends plugin
     $smarty->assign("notUsedHosts", array_diff($this->getHosts(), $this->usedByHost));
     $smarty->assign("boundToHost", $this->boundToHost[0]);
     $smarty->assign("licenseKey", $this->licenseKey[0]);
+
+    foreach(array("notificationDate","expirationDate","conclusionDate") as $date) {
+      $smarty->assign($date."Writeable", $this->acl_is_writeable($date));
+    }
+
     return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
   }
 
@@ -266,7 +271,7 @@ class licenseGeneric extends plugin
           "plDescription" => _("License generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 1,
+          "plPriority"    => 8,
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array(

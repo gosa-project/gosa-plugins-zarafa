@@ -137,7 +137,7 @@ class licenseByProduct extends plugin
           "plDescription" => _("License usage by product"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 1,
+          "plPriority"    => 12,
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array()));

@@ -245,7 +245,7 @@ class licenseUsageByHost extends plugin
           "plDescription" => _("License usage by host"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 1,
+          "plPriority"    => 13,
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array(

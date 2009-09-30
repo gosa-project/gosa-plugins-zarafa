@@ -72,6 +72,7 @@
             <td style='width:300px;'>
 {render acl=$licenseACL}
               <input type="text" id="date1" name="conclusionDate" value="{$conclusionDate}" class="date" />
+              {if $conclusionDateWriteable}
               {literal}
               <script type="text/javascript">
                   /*<[CDATA[*/
@@ -82,6 +83,7 @@
                   /*]]>*/
               </script>
               {/literal}
+              {/if}
 {/render}
             </td>
           </tr>
@@ -92,6 +94,7 @@
             <td style='width:300px;'>
 {render acl=$licenseACL}
               <input type="text" id="date2" name="expirationDate" value="{$expirationDate}" class="date" />
+              {if $expirationDateWriteable}
               {literal}
               <script type="text/javascript">
                   /*<[CDATA[*/
@@ -102,6 +105,7 @@
                   /*]]>*/
               </script>
               {/literal}
+              {/if}
 {/render}
             </td>
           </tr>
@@ -118,6 +122,7 @@
             <td style='width:300px;'>
 {render acl=$licenseACL}
               <input type="text" id="date3" name="notificationDate" value="{$notificationDate}" class="date" >
+              {if $notificationDateWriteable}
               {literal}
               <script type="text/javascript">
                   /*<[CDATA[*/
@@ -128,6 +133,7 @@
                   /*]]>*/
               </script>
               {/literal}
+              {/if}
 {/render}
             </td>
           </tr>

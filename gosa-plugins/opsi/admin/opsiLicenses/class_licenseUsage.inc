@@ -143,7 +143,7 @@ class licenseUsage extends plugin
           "plDescription" => _("License usage"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 1,
+          "plPriority"    => 11,
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array()));

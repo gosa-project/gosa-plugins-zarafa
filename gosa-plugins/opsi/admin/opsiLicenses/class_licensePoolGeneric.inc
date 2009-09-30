@@ -509,7 +509,7 @@ class licensePoolGeneric extends plugin
           "plDescription" => _("License pool generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 1,
+          "plPriority"    => 7,
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array(
