@@ -249,8 +249,8 @@ class licenseUsageByHost extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array(
-            "hostId" => _("Used by host")."&nbsp;("._("read only").")",
-            "boundToHost" => _("License revervation"))
+            "hostId" => _("Used by"),
+            "boundToHost" => _("License reservation"))
           ));
   }
 }

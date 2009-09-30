@@ -72,7 +72,7 @@ class divListLicense extends MultiSelectWindow
           "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     // Add regex user input field
-    $this->AddRegex   ("Regex", _("Regular expression for matching license names"), "*" , true);
+    $this->AddRegex   ("Regex", _("Regular expression for matching license pools"), "*" , true);
   }
 
 
@@ -183,7 +183,7 @@ class divListLicense extends MultiSelectWindow
       $num_deps = count($this->Added_Departments);
     }
     $num_objs = count($list);
-    $num_obj_str = _("Number of listed licenses");
+    $num_obj_str = _("Number of listed license pools");
     $str = "<img class='center' src='plugins/opsi/images/license.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
     $this->set_List_Bottom_Info($str);

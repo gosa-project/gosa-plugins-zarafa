@@ -2,7 +2,7 @@
 <br>
 <b>{msgPool type=siError}</b><br>
 {t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
-<input type='submit' name='retry_init' value="{t}retry{/t}">
+<input type='submit' name='retry_init' value="{t}Retry{/t}">
 <br>
 <br>
 {else}
@@ -169,7 +169,7 @@
           {if $licenseModel == "OEM"}
           <tr>
             <td>
-              {t}Reserved for Host{/t}
+              {t}Reserved for{/t}
             </td>
             <td>
 {render acl=$licenseACL}
@@ -189,7 +189,7 @@
         <table width="100%">
           <tr>
             <td colspan="2">
-              <b>{t}Used by Host{/t}</b><br>
+              <b>{t}Used by{/t}</b><br>
 {render acl=$licenseACL}
               <select   disabled
                 name='selectedUsedHosts[]' multiple size=4 style='width:100%;'>

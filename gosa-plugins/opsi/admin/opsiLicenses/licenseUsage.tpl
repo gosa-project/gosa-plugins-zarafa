@@ -2,7 +2,7 @@
 <br>
 <b>{msgPool type=siError}</b><br>
 {t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
-<input type='submit' name='retry_init' value="{t}retry{/t}">
+<input type='submit' name='retry_init' value="{t}Retry{/t}">
 <br>
 <br>
 {else}

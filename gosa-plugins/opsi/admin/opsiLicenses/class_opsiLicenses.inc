@@ -23,7 +23,7 @@
 class opsiLicenses extends plugin
 {
   /* Definitions */
-  var $plHeadline= "Software licences";
+  var $plHeadline= "Software licenses";
   var $plDescription= "Software licenses";
   var $plIcon= "plugins/opsi/images/plugin.png";
 
