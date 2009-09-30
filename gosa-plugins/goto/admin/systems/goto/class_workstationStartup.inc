@@ -651,9 +651,10 @@ class workstartup extends plugin
            */  
           $desc = ""; 
           if(isset($this->cache['CLASSES'][$this->FAIrelease][$class])){
+            $desc ="";
             foreach($this->cache['CLASSES'][$this->FAIrelease][$class] as $types ){
-              if(isset($types['Desc'])){
-                $desc= $types['Desc'];
+              if(isset($types['Abbr'])){
+                $desc.= $types['Abbr']." ";
                 if($types['Type'] == "FAIprofile"){
                   break;
                 }
@@ -1108,6 +1109,7 @@ class workstartup extends plugin
        */
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_classes($release);
+
       $this->cache['CLASSES'][$release] = array();
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
@@ -1117,7 +1119,7 @@ class workstartup extends plugin
       }else{
         foreach($tmp as $entry){
           $class = $entry['CLASS'];
-          $this->cache['CLASSES'][$release][$class] = $this->analyse_fai_object($entry); 
+          $this->cache['CLASSES'][$release][$class][] = $this->analyse_fai_object($entry); 
         }
       }
 
@@ -1227,6 +1229,7 @@ class workstartup extends plugin
     $ret= array();
     foreach($classes as $class_name => $class_types){
       if(!in_array($class_name,$this->FAIclass)){
+        $Abbr = "";
         foreach($class_types as $type){
           if(!preg_match("/".$type['Abbr']."/",$Abbr)){
             $Abbr .= $type['Abbr']." ";
