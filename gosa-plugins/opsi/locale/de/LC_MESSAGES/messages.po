@@ -378,7 +378,7 @@ msgstr "Lizenzen"
 #: admin/opsiLicenses/class_opsiLicenses.inc:26
 #: admin/opsiLicenses/class_opsiLicenses.inc:27
 msgid "Software licenses"
-msgstr "Software-Lizenzen"
+msgstr "Softwarelizenzen"
 
 #: admin/opsiLicenses/licenseUsageByHost.tpl:14
 #: admin/opsiLicenses/licenseGeneric.tpl:172
