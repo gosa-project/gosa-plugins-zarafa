@@ -250,12 +250,12 @@ class licensePoolGeneric extends plugin
     $list = new divSelectBox("test");
     $list->setHeight(100);
     if($this->acl_is_readable("licenses")){
+      $editlink = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=%s'>%s</a>";
       foreach($this->licenses as $i => $license){
         $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
         if(preg_match("/w/", $this->getacl("licenses"))){
           $link.= "<input type='image' class='center' src='images/lists/trash.png' name='removeLicense_{$i}'>";
         }
-        $f1 = array("string" => $license['cn']);
 
         $maxInst = "";
         if($license['maximumInstallations'] == 0){
@@ -264,13 +264,15 @@ class licensePoolGeneric extends plugin
           $maxInst = $license['maximumInstallations'];
         }
 
+
         $map = array(
           "VOLUME" => sprintf(_("Volume license (#%s)"), $maxInst),
           "OEM"=>_("OEM"),
           "RETAIL"=>_("Retail"),
           "CONCURRENT"=>_("Concurrent"));
 
-        $f2 = array("string" => $map[$license['licenseModel']]);
+        $f1 = array("string" => sprintf($editlink,$i,$license['cn']));
+        $f2 = array("string" => sprintf($editlink,$i,$map[$license['licenseModel']]));
         $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
         $list->addEntry(array($f1,$f2,$f6));
       }
@@ -283,6 +285,15 @@ class licensePoolGeneric extends plugin
    */
   function save_object()
   {
+    // Allow license edit via href links
+    if(isset($_GET['act']) && $_GET['act'] == 'edit' && isset($_GET['id'])){
+      $id = trim($_GET['id']);
+      if(isset($this->licenses[$id])){
+        $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
+        $this->dialog->set_acl_base($this->config->current['BASE']);
+      }
+    }
+  
     // Close license edit dialogs.
     if($this->dialog instanceOf plugin && isset($_POST['license_cancel'])){
       $this->dialog = NULL;
@@ -359,7 +370,7 @@ class licensePoolGeneric extends plugin
           $this->dialog->set_acl_base($this->config->current['BASE']);
         }
       }
-  
+
       // Search post for image button clicks.
       if(preg_match("/r/",$this->getacl("licenses"))){
         foreach($_POST as $name => $value){
