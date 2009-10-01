@@ -683,6 +683,19 @@ class termservice extends plugin
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    $source_o = new termservice ($this->config, $source['dn']);
+
+    foreach(array("gotoXdmcpServer","selected_xdmcp_servers") as $attr){
+      $this->$attr = $source_o->$attr;
+    }
+  }
+
+
+
   /* Return plugin informations for acl handling */
   static function plInfo()
   {

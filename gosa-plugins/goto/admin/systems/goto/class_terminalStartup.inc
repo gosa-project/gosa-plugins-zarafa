@@ -375,35 +375,6 @@ class termstartup extends plugin
       exit();
     }
 
-    /* Find proper terminal path for tftp configuration
-       FIXME: This is suboptimal when the default has changed to
-       another location! */
-    if ($this->gotoTerminalPath == "default-inherit"){
-      $ldap= $this->config->get_ldap_link();
-
-      /* Strip relevant part from dn, keep trailing ',' */
-      $tmp= preg_replace("/^cn=[^,]+,".get_ou('terminalRDN')."/i", "", $this->dn);
-      $tmp= preg_replace("/".$this->config->current['BASE']."$/i", "", $tmp);
-
-      /* Walk from top to base and try to load default values for
-         'gotoTerminalPath'. Abort when an entry is found. */
-      while (TRUE){
-        $tmp= preg_replace ("/^[^,]+,/", "", $tmp);
-
-        $ldap->cat("cn=default,".get_ou('terminalRDN').$tmp.
-            $this->config->current['BASE'], array('gotoTerminalPath'));
-        $attrs= $ldap->fetch();
-        if (isset($attrs['gotoTerminalPath'])){
-          $this->gotoTerminalPath= $attrs['gotoTerminalPath'][0];
-          break;
-        }
-
-        /* Nothing left? */
-        if ($tmp == ""){
-          break;
-        }
-      }
-    }
     
     plugin::save();
 
@@ -501,7 +472,12 @@ class termstartup extends plugin
 
     $source_o = new termstartup ($this->config, $source['dn']);
 
-    foreach(array("gotoModules", "gotoKernelParameters","gotoShares","gotoKernelParameters","gotoTerminalPath","gotoShares","goLdapServerList","gotoBootKernel","gotoLdapServer","gotoBootKernels") as $attr){
+    foreach(array("gotoModules", "gotoKernelParameters","gotoShare",
+                  "gotoKernelParameters","gotoShares",
+                  "goLdapServerList","gotoBootKernel","gotoLdapServer",
+                  "gotoBootKernels","gotoLdapServers","gotoLdapServers",
+                  "gotoLdapServerList","gotoLdap_inherit","gotoShareSelections",
+                  "gotoAvailableShares") as $attr){
       $this->$attr = $source_o->$attr;
     }
   }
