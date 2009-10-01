@@ -412,6 +412,11 @@ class termgroup extends plugin
     /* Create used ntp server array */
     $this->gotoNtpServer= array();
 
+    $source_o = new termgroup ($this->config, $source['dn']);
+    foreach(array("gotoTerminalPath","gotoSwapServer") as $attr){
+      $this->$attr = $source_o->$attr;
+    }
+
     if(isset($source['gotoNtpServer'])){
       $this->inheritTimeServer = false;
       unset($source['gotoNtpServer']['count']);
