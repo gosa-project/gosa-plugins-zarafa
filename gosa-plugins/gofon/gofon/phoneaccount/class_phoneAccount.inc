@@ -304,6 +304,10 @@ class phoneAccount extends plugin
      * This means, the PIN in the DB is up to date
      */
     // Connect to DB server
+
+
+    $num = key($this->phoneNumbers);
+
     if( (is_callable("mysql_pconnect"))&&
         (isset($cur_cfg))&&
         (isset($cur_cfg['SERVER']))&&
@@ -312,16 +316,20 @@ class phoneAccount extends plugin
 
       $r_con =  @mysql_pconnect($cur_cfg['SERVER'],$cur_cfg['LOGIN'],$cur_cfg['PASSWORD']);
       if($r_con){
+
+        // Try to select the gophone database
         $r_db  =  @mysql_select_db($cur_cfg['DB'],$r_con);
-  
+        if(!$r_db){
+          msg_dialog::display(_("Warning"), msgPool::dbselect($cur_cfg['DB'],mysql_error()), WARNING_DIALOG);
+        }
+
         $query_tmp = "SELECT ".$cur_cfg['VOICE_TABLE'].".context as 'v_context', 
                              ".$cur_cfg['SIP_TABLE'].".context, 
                              ".$cur_cfg['VOICE_TABLE'].".password 
                        FROM  ".$cur_cfg['VOICE_TABLE'].", 
                              ".$cur_cfg['SIP_TABLE']." 
-                       WHERE customer_id = sip_users.mailbox AND name='".$this->uid."'";
-
-
+                       WHERE ".$cur_cfg['VOICE_TABLE'].".mailbox = ".$num." 
+                          AND ".$cur_cfg['SIP_TABLE'].".name='".$this->uid."'";
         $res = mysql_query($query_tmp);
         $vp  = mysql_fetch_assoc($res);
         if(!isset($vp['context'])){
@@ -671,7 +679,7 @@ class phoneAccount extends plugin
       reset($newnums);        
       $i_new_key = key($newnums);
       $sip_data_array['callerid']  =$newnums[$i_new_key];
-      $sip_data_array['mailbox']   =$newnums[$i_new_key];
+      $sip_data_array['mailbox']   =$newnums[$i_new_key]."@".$this->voice_context;
 
       /* Check if there is already an entry in sip_users for this uid */
       $SQL_query_array = array();
@@ -731,7 +739,7 @@ class phoneAccount extends plugin
         $sip_data_array['host']         = $s_host;
         $sip_data_array['insecure']     = NULL;
         $sip_data_array['language']     = NULL;
-        $sip_data_array['mailbox']      = $newnums[$i_new_key];
+        $sip_data_array['mailbox']      = $newnums[$i_new_key]."@".$this->voice_context;
         $sip_data_array['md5secret']    = NULL;
         $sip_data_array['nat']          = "no";
         $sip_data_array['permit']       = NULL;
