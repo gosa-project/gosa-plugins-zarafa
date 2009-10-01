@@ -413,7 +413,7 @@ class termgroup extends plugin
     $this->gotoNtpServer= array();
 
     $source_o = new termgroup ($this->config, $source['dn']);
-    foreach(array("gotoTerminalPath","gotoSwapServer") as $attr){
+    foreach(array("gotoTerminalPath","gotoSwapServer","gotoSyslogServer","gotoMode") as $attr){
       $this->$attr = $source_o->$attr;
     }
 
