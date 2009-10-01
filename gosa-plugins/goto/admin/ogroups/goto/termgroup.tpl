@@ -100,7 +100,10 @@
 
 		</td>
 		<td style="vertical-align:top;border-left:1px solid #A0A0A0;">
-		<!-- Bottom right -->			
+		<!-- Bottom right -->		
+
+    <input type='checkbox' value='1' {if $members_inherit_from_group} checked {/if} name='members_inherit_from_group'>&nbsp;
+{t}Inherit all values to group members{/t}
 		</td>
 	</tr>
 </table>
