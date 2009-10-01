@@ -301,7 +301,7 @@ class macroParameter extends plugin
     foreach($_POST as $name=>$value){
 
       /* Test if there is a variable begining with "del" */
-      if(preg_match("/del/",$name)){
+      if(preg_match("/^del/",$name)){
 
         /* Extract entry id to delete */
         $nr = str_replace("del","",$name) ;
@@ -309,7 +309,7 @@ class macroParameter extends plugin
         /* unset entry */
         unset($this->goFonMacroParameter[$nr]);
 
-      }elseif(preg_match("/number/",$name)){
+      }elseif(preg_match("/^number/",$name)){
 
         /* Set Post vars */
         $key = $_POST[$name];
