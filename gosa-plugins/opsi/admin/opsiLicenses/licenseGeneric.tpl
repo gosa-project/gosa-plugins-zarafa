@@ -81,7 +81,7 @@
                   enableCloseEffect : false,
                   enableShowEffect : false,
                   relative    : 'date1',
-                  language    : 'de'
+                  language    : '{/literal}{$lang}{literal}'
                   });
                   /*]]>*/
               </script>
@@ -106,7 +106,7 @@
                   enableCloseEffect : false,
                   enableShowEffect : false,
                   relative    : 'date2',
-                  language    : 'de'
+                  language    : '{/literal}{$lang}{literal}'
                   });
                   /*]]>*/
               </script>
@@ -137,7 +137,7 @@
                   enableCloseEffect : false,
                   enableShowEffect : false,
                   relative    : 'date3',
-                  language    : 'de'
+                  language    : '{/literal}{$lang}{literal}'
                   });
                   /*]]>*/
               </script>
@@ -258,15 +258,5 @@
     </td> 
   </tr>
 </table>
-{literal}
-<script type="text/javascript">
-    /*<[CDATA[*/
-    var datepicker    = new DatePicker({
-    relative    : 'date',
-    language    : 'de'
-    });
-    /*]]>*/
-</script>
-{/literal}
 <input name='opsiLicensesPosted' value='1' type='hidden'>
 {/if}
