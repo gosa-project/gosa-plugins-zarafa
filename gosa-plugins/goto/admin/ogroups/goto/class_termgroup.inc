@@ -400,7 +400,7 @@ class termgroup extends plugin
   {
     if ($this->members_inherit_from_group) {
       foreach ($this->member_dn as $dn) {
-        $member_obj = new worktabs($this->config, $this->config->data['TABS']['WORKTABS'], $dn);
+        $member_obj = new worktabs($this->config, $this->config->data['TABS']['WORKTABS'], $dn, "workstation");
         $member_obj->by_object['workgeneric']->set_everything_to_inherited();
         $member_obj->save();
       }
