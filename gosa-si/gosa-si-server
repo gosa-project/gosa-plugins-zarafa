@@ -63,7 +63,7 @@ my $db_module = "DBsqlite";
 no strict "refs";
 require ("GOSA/".$db_module.".pm");
 ("GOSA/".$db_module)->import;
-#daemon_log("0 INFO: importing database module '$db_module'", 1);
+daemon_log("0 INFO: importing database module '$db_module'", 1);
 }
 
 my $modules_path = "/usr/lib/gosa-si/modules";
@@ -105,7 +105,7 @@ our $gosa_address;
 our $no_arp;
 our $forground;
 our $cfg_file;
-our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn, $ldap_version);
+our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn, $ldap_version, $ldap_retry_sec);
 our ($mysql_username, $mysql_password, $mysql_database, $mysql_host);
 our $known_modules;
 our $known_functions;
@@ -255,6 +255,7 @@ our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minu
     "ldap-admin-dn"         => [\$ldap_admin_dn, ""],
     "ldap-admin-password"   => [\$ldap_admin_password, ""],
     "ldap-version"          => [\$ldap_version, 3],
+    "ldap-retry-sec"        => [\$ldap_retry_sec, 10],
     "gosa-unit-tag"         => [\$gosa_unit_tag, ""],
     "max-clients"           => [\$max_clients, 10],
     "wol-password"          => [\$wake_on_lan_passwd, ""],
@@ -2299,8 +2300,8 @@ sub get_ldap_handle {
 get_handle:
 	my $ldap_handle = Net::LDAP->new( $ldap_uri );
 	if (not ref $ldap_handle) {
-		daemon_log("$session_id ERROR: Connection to LDAP URI '$ldap_uri' failed! Retrying!", 1);
-		usleep(100000);
+		daemon_log("$session_id ERROR: Connection to LDAP URI '$ldap_uri' failed! Retrying in $ldap_retry_sec seconds.", 1); 
+		sleep($ldap_retry_sec);
 		goto get_handle;
 	} else {
 		daemon_log("$session_id DEBUG: Connection to LDAP URI '$ldap_uri' established.", 42);
