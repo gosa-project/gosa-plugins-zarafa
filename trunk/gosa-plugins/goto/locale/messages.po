@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 11:49+0200\n"
+"POT-Creation-Date: 2009-10-01 11:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,7 @@ msgstr ""
 #: admin/systems/services/nfs/servnfs.tpl:9
 #: admin/systems/services/nfs/class_servNfs.inc:199
 #: admin/systems/services/nfs/class_servNfs.inc:202
-#: admin/systems/services/shares/class_goShareServer.inc:422
+#: admin/systems/services/shares/class_goShareServer.inc:423
 #: admin/applications/class_applicationParameters.inc:191
 #: admin/applications/class_applicationParameters.inc:195
 #: admin/applications/class_applicationGeneric.inc:432
@@ -108,8 +108,8 @@ msgstr ""
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: admin/systems/goto/workstation.tpl:19 admin/systems/goto/printer.tpl:16
 #: admin/systems/services/nfs/servnfs.tpl:19
-#: admin/systems/services/nfs/class_servNfs.inc:207
-#: admin/systems/services/shares/class_goShareServer.inc:424
+#: admin/systems/services/nfs/class_servNfs.inc:212
+#: admin/systems/services/shares/class_goShareServer.inc:425
 #: admin/applications/generic.tpl:33
 #: admin/applications/class_applicationGeneric.inc:623
 #: personal/environment/class_logonManagementDialog.inc:125
@@ -151,7 +151,7 @@ msgstr ""
 #: admin/systems/services/kiosk/class_goKioskService.inc:164
 #: admin/systems/services/kiosk/class_goKioskService.inc:234
 #: admin/systems/services/shares/class_goShareServer.inc:98
-#: admin/systems/services/shares/class_goShareServer.inc:257
+#: admin/systems/services/shares/class_goShareServer.inc:258
 #: admin/applications/class_applicationGeneric.inc:266
 #: admin/applications/class_applicationGeneric.inc:340
 #: admin/applications/class_applicationGeneric.inc:372
@@ -205,9 +205,9 @@ msgstr ""
 #: admin/systems/goto/class_workstationGeneric.inc:613
 #: admin/systems/services/kiosk/class_goKioskService.inc:249
 #: admin/systems/services/shares/class_goShareServer.inc:192
-#: admin/systems/services/shares/class_goShareServer.inc:285
-#: admin/systems/services/shares/class_goShareServer.inc:301
-#: admin/systems/services/shares/class_goShareServer.inc:314
+#: admin/systems/services/shares/class_goShareServer.inc:286
+#: admin/systems/services/shares/class_goShareServer.inc:302
+#: admin/systems/services/shares/class_goShareServer.inc:315
 #: admin/systems/services/ntp/class_goNtpServer.inc:98
 #: admin/systems/services/ldap/class_goLdapServer.inc:117
 #: admin/systems/services/terminal/class_goTerminalServer.inc:103
@@ -273,7 +273,7 @@ msgstr ""
 #: admin/systems/goto/gotoLpdEnable.tpl:53
 #: admin/systems/services/nfs/servnfs.tpl:56
 #: admin/systems/services/nfs/class_servNfs.inc:193
-#: admin/systems/services/shares/class_goShareServer.inc:425
+#: admin/systems/services/shares/class_goShareServer.inc:426
 msgid "Type"
 msgstr ""
 
@@ -964,12 +964,12 @@ msgid "Choose server to use for synchronizing time"
 msgstr ""
 
 #: admin/systems/goto/terminal.tpl:156 admin/systems/goto/workstation.tpl:130
-#: admin/ogroups/goto/termgroup.tpl:111 addons/goto/class_gotomasses.inc:415
+#: admin/ogroups/goto/termgroup.tpl:112 addons/goto/class_gotomasses.inc:415
 msgid "Action"
 msgstr ""
 
 #: admin/systems/goto/terminal.tpl:161 admin/systems/goto/workstation.tpl:137
-#: admin/ogroups/goto/termgroup.tpl:116
+#: admin/ogroups/goto/termgroup.tpl:117
 msgid "Select action to execute for this terminal"
 msgstr ""
 
@@ -977,7 +977,7 @@ msgstr ""
 #: admin/systems/goto/workstation.tpl:150 admin/applications/generic.tpl:24
 #: admin/applications/class_applicationGeneric.inc:440
 #: admin/applications/class_applicationGeneric.inc:624
-#: admin/ogroups/goto/termgroup.tpl:124 addons/goto/class_gotomasses.inc:383
+#: admin/ogroups/goto/termgroup.tpl:125 addons/goto/class_gotomasses.inc:383
 msgid "Execute"
 msgstr ""
 
@@ -1593,7 +1593,7 @@ msgstr ""
 #: admin/systems/goto/class_workstationService.inc:564
 #: admin/systems/goto/class_workstationStartup.inc:942
 #: admin/systems/goto/class_workstationStartup.inc:1069
-#: admin/systems/goto/class_workstationStartup.inc:1138
+#: admin/systems/goto/class_workstationStartup.inc:1133
 #: admin/systems/goto/class_terminalService.inc:673
 #: admin/systems/goto/class_workstationGeneric.inc:212
 #: admin/systems/goto/class_workstationGeneric.inc:635
@@ -1732,8 +1732,8 @@ msgid "set"
 msgstr ""
 
 #: admin/systems/goto/class_workstationService.inc:78
-#: admin/systems/goto/class_workstationStartup.inc:1363
-#: admin/systems/goto/class_workstationStartup.inc:1365
+#: admin/systems/goto/class_workstationStartup.inc:1358
+#: admin/systems/goto/class_workstationStartup.inc:1360
 #: admin/systems/goto/class_terminalService.inc:121
 #: admin/systems/ppd/class_printerPPDDialog.inc:51
 #: admin/systems/ppd/class_printerPPDDialog.inc:114
@@ -1875,7 +1875,7 @@ msgstr ""
 msgid "FAI status flag"
 msgstr ""
 
-#: admin/systems/goto/class_workstationStartup.inc:1365
+#: admin/systems/goto/class_workstationStartup.inc:1360
 msgid "'repositoryBranchHook' returned no result!"
 msgstr ""
 
@@ -2260,13 +2260,13 @@ msgstr ""
 
 #: admin/systems/services/nfs/servnfs.tpl:29
 #: admin/systems/services/nfs/class_servNfs.inc:179
-#: admin/systems/services/shares/class_goShareServer.inc:427
+#: admin/systems/services/shares/class_goShareServer.inc:428
 msgid "Path"
 msgstr ""
 
 #: admin/systems/services/nfs/servnfs.tpl:29
-#: admin/systems/services/nfs/class_servNfs.inc:211
-#: admin/systems/services/shares/class_goShareServer.inc:429
+#: admin/systems/services/nfs/class_servNfs.inc:216
+#: admin/systems/services/shares/class_goShareServer.inc:430
 msgid "Volume"
 msgstr ""
 
@@ -2279,8 +2279,8 @@ msgid "Codepage"
 msgstr ""
 
 #: admin/systems/services/nfs/servnfs.tpl:121
-#: admin/systems/services/nfs/class_servNfs.inc:215
-#: admin/systems/services/shares/class_goShareServer.inc:428
+#: admin/systems/services/nfs/class_servNfs.inc:220
+#: admin/systems/services/shares/class_goShareServer.inc:429
 msgid "Option"
 msgstr ""
 
@@ -2293,7 +2293,11 @@ msgid ""
 "'Path / Volume' must contain at least one '/' and no special characters!"
 msgstr ""
 
-#: admin/systems/services/nfs/class_servNfs.inc:241
+#: admin/systems/services/nfs/class_servNfs.inc:206
+msgid "Hidden shares must have the '$' at the end of the name!"
+msgstr ""
+
+#: admin/systems/services/nfs/class_servNfs.inc:246
 #, php-format
 msgid "The share '%s' on another server '%s' already exists."
 msgstr ""
@@ -2304,7 +2308,7 @@ msgstr ""
 
 #: admin/systems/services/cups/class_goCupsServer.inc:69
 #: admin/systems/services/kiosk/class_goKioskService.inc:270
-#: admin/systems/services/shares/class_goShareServer.inc:414
+#: admin/systems/services/shares/class_goShareServer.inc:415
 #: admin/systems/services/ntp/class_goNtpServer.inc:115
 #: admin/systems/services/ldap/class_goLdapServer.inc:129
 #: admin/systems/services/terminal/class_goTerminalServer.inc:165
@@ -2370,28 +2374,28 @@ msgstr ""
 
 #: admin/systems/services/shares/class_goShareServer.inc:31
 #: admin/systems/services/shares/class_goShareServer.inc:157
-#: admin/systems/services/shares/class_goShareServer.inc:413
+#: admin/systems/services/shares/class_goShareServer.inc:414
 msgid "File service (Shares)"
 msgstr ""
 
-#: admin/systems/services/shares/class_goShareServer.inc:237
+#: admin/systems/services/shares/class_goShareServer.inc:238
 #, php-format
 msgid "Cannot remove share - it is still in use by these objects: %s"
 msgstr ""
 
-#: admin/systems/services/shares/class_goShareServer.inc:257
+#: admin/systems/services/shares/class_goShareServer.inc:258
 msgid "share"
 msgstr ""
 
-#: admin/systems/services/shares/class_goShareServer.inc:414
+#: admin/systems/services/shares/class_goShareServer.inc:415
 msgid "File service - Shares"
 msgstr ""
 
-#: admin/systems/services/shares/class_goShareServer.inc:423
+#: admin/systems/services/shares/class_goShareServer.inc:424
 msgid "Apple mounts"
 msgstr ""
 
-#: admin/systems/services/shares/class_goShareServer.inc:426
+#: admin/systems/services/shares/class_goShareServer.inc:427
 msgid "Charset"
 msgstr ""
 
@@ -2864,7 +2868,7 @@ msgid ""
 msgstr ""
 
 #: admin/ogroups/goto/termgroup.tpl:104
-msgid "Inherit all values to group members"
+msgid "Pass on all values to group members"
 msgstr ""
 
 #: personal/environment/class_selectPrinterDialog.inc:107
