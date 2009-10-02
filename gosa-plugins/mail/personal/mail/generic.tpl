@@ -98,7 +98,7 @@
     <tr>
      <td>
 {render acl=$gosaMailDeliveryModeCACL}
-      <input class="center" type=checkbox name="own_script" value="1" {$own_script}
+      <input class="center" type=checkbox id="own_script" name="own_script" value="1" {$own_script}
         onClick="
             changeState('sieveManagement');
             changeState('drop_own_mails');
@@ -173,11 +173,11 @@
      <td>{t}till{/t}</td>
       <td style='width:140px'>
 {render acl=$gosaVacationMessageACL}
-        <input type="text" id="gosaVacationStop" name="gosaVacationStop" class="date" style='width:100px' value="{$gosaVacationStop}">
+        <div id="vacstart"><input type="text" id="gosaVacationStop" name="gosaVacationStop" class="date" style='width:100px' value="{$gosaVacationStop}"></div>
         {if $gosaVacationMessageACL|regex_replace:"/[cdmr]/":"" == "w"}
         <script type="text/javascript">
           {literal}
-          var datepicker  = new DatePicker({ relative : 'gosaVacationStop', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
+          var datepicker2  = new DatePicker({ relative : 'gosaVacationStop', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
           {/literal}
         </script>
         {/if}
@@ -305,13 +305,18 @@ alert("yes");
 
 	function changeStates()
 	{
-		if(document.getElementById('use_vacation').checked){
-			document.getElementById("datepicker-gosaVacationStart_image").style.visibility= "visible";
-			document.getElementById("datepicker-gosaVacationStop_image").style.visibility= "visible";
+	  if($('own_script').checked) {
+		$("gosaVacationStart", "gosaVacationStop","gosaVacationMessage").invoke("disable");
+		$("datepicker-gosaVacationStop_image", "datepicker-gosaVacationStart_image").invoke("hide");
+          } else {
+		if($('use_vacation').checked) {
+			$("gosaVacationStart", "gosaVacationStop","gosaVacationMessage").invoke("enable");
+			$("datepicker-gosaVacationStop_image", "datepicker-gosaVacationStart_image").invoke("show");
 		}else{
-			document.getElementById("datepicker-gosaVacationStart_image").style.visibility= "hidden";
-			document.getElementById("datepicker-gosaVacationStop_image").style.visibility= "hidden";
+			$("gosaVacationStart", "gosaVacationStop","gosaVacationMessage").invoke("disable");
+			$("datepicker-gosaVacationStop_image", "datepicker-gosaVacationStart_image").invoke("hide");
 		}
+           }
 	}
 	{/literal}
 
