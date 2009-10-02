@@ -286,7 +286,7 @@ our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minu
     "synchronization-loop" => [\$modified_jobs_loop_delay, 5],
     },
 "ArpHandler" => {
-    "enabled"   => [\$arp_enabled, "true"],
+    "enabled"   => [\$arp_enabled, "false"],
     "interface" => [\$arp_interface, "all"],
 	},
 "Opsi" => {

@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "SERVER.CONF 1"
-.TH SERVER.CONF 1 "2009-09-22" "perl v5.10.0" "User Contributed Perl Documentation"
+.TH SERVER.CONF 1 "2009-10-02" "perl v5.10.0" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -204,6 +204,9 @@ Defines the password of the administrator.
 .IP "ldap-version = 3" 4
 .IX Item "ldap-version = 3"
 Define the ldap protocol version used
+.IP "ldap-retry-sec = 10" 4
+.IX Item "ldap-retry-sec = 10"
+Define the number of second gosa-si-server should wait if ldap is not available
 .IP "gosa-unit-tag =" 4
 .IX Item "gosa-unit-tag ="
 Forces the Unit-Tag in a tagged environment. If not set, GOsa-SI tries to get the tag from the server entry in \s-1LDAP\s0.
