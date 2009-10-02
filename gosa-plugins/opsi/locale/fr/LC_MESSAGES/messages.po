@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-30 13:11+0200\n"
-"PO-Revision-Date: 2009-06-30 11:26+0200\n"
+"PO-Revision-Date: 2009-10-02 18:01+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -226,37 +226,34 @@ msgstr ""
 #: admin/opsiLicenses/licenseGeneric.tpl:4
 #: admin/opsiLicenses/licensePoolGeneric.tpl:4
 msgid "Check if the GOsa support daemon (gosa-si) is running."
-msgstr ""
+msgstr "Veuillez vérifier si le service Gosa (gosa-si) fonctionne."
 
 #: admin/opsiLicenses/licenseUsage.tpl:11
 #: admin/opsiLicenses/class_licenseUsage.inc:140
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:245
 #: admin/opsiLicenses/licenseByProduct.tpl:11
 #: admin/opsiLicenses/class_licenseByProduct.inc:137
-#, fuzzy
 msgid "License usage"
-msgstr "licence"
+msgstr "Utilisation des Licences"
 
 #: admin/opsiLicenses/class_licenseUsage.inc:139
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:244
 #: admin/opsiLicenses/class_licenseByProduct.inc:136
 msgid "Usage"
-msgstr ""
+msgstr "Utilisation"
 
 #: admin/opsiLicenses/class_divListLicenses.inc:52
 #: admin/opsiLicenses/class_divListLicenses.inc:53
-#, fuzzy
 msgid "List of license pools"
-msgstr "Liste des acls"
+msgstr "Liste des réservoir de licences"
 
 #: admin/opsiLicenses/class_divListLicenses.inc:64
 msgid "Select all"
 msgstr "Sélectionner tout"
 
 #: admin/opsiLicenses/class_divListLicenses.inc:70
-#, fuzzy
 msgid "License pools"
-msgstr "licence"
+msgstr "Réservoir de licences"
 
 #: admin/opsiLicenses/class_divListLicenses.inc:71
 #: admin/opsiLicenses/class_divListLicenses.inc:96
@@ -264,9 +261,8 @@ msgid "Actions"
 msgstr ""
 
 #: admin/opsiLicenses/class_divListLicenses.inc:75
-#, fuzzy
 msgid "Regular expression for matching license pools"
-msgstr "Expression régulière concordant avec les noms des utilisateurs"
+msgstr "Expression régulière concordant avec les "
 
 #: admin/opsiLicenses/class_divListLicenses.inc:101
 msgid "Create"
@@ -300,15 +296,13 @@ msgid "Delete this entry"
 msgstr "Supprimer cette entrée"
 
 #: admin/opsiLicenses/class_divListLicenses.inc:186
-#, fuzzy
 msgid "Number of listed license pools"
-msgstr "Nombre d'utilisateurs listés"
+msgstr "Nombre de réservoir de licences listés"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:115
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:267
-#, fuzzy
 msgid "Retail"
-msgstr "Réinstaller"
+msgstr "Vente au détail"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:116
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:266
@@ -323,53 +317,47 @@ msgstr ""
 #: admin/opsiLicenses/class_licenseGeneric.inc:210
 #: admin/opsiLicenses/class_licenseGeneric.inc:214
 #: admin/opsiLicenses/licenseGeneric.tpl:80
-#, fuzzy
 msgid "Expiration date"
-msgstr "Opération réalisée"
+msgstr "Date d'expiration"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:222
 #: admin/opsiLicenses/licenseGeneric.tpl:149
-#, fuzzy
 msgid "License key"
-msgstr "licence"
+msgstr "Clef de licence"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:249
-#, fuzzy
 msgid "License generic"
-msgstr "licence"
+msgstr "Licence par défaut"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:252
 #: admin/opsiLicenses/licenseGeneric.tpl:192
 msgid "Used by"
-msgstr ""
+msgstr "Utilisé par"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:253
-#, fuzzy
 msgid "License reservation"
-msgstr "licence"
+msgstr "Réservation de licence"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:259
 msgid "unlimited"
-msgstr ""
+msgstr "illimité"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:265
 #, php-format
 msgid "Volume license (#%s)"
-msgstr ""
+msgstr "Licence en volume (#%s)"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:268
-#, fuzzy
 msgid "Concurrent"
-msgstr "Actuel"
+msgstr "Simultané"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:506
-#, fuzzy
 msgid "Pool generic"
-msgstr "Informations OPSI"
+msgstr "Réservoir par défaut"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:507
 msgid "License pool generic"
-msgstr ""
+msgstr "Réservoir de licences par défaut"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:516
 #: admin/opsiLicenses/licensePoolGeneric.tpl:64
@@ -378,32 +366,28 @@ msgstr "Applications"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:517
 #: admin/opsiLicenses/licensePoolGeneric.tpl:91
-#, fuzzy
 msgid "Windows software IDs"
-msgstr "Installation Windows"
+msgstr "IDs logiciel Windows"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:518
 #: admin/opsiLicenses/licensePoolGeneric.tpl:42
-#, fuzzy
 msgid "Licenses"
-msgstr "licence"
+msgstr "licences"
 
 #: admin/opsiLicenses/main.inc:53 admin/opsiLicenses/main.inc:57
 #: admin/opsiLicenses/class_opsiLicenses.inc:26
 #: admin/opsiLicenses/class_opsiLicenses.inc:27
 msgid "Software licenses"
-msgstr ""
+msgstr "Licences logicielles"
 
 #: admin/opsiLicenses/licenseUsageByHost.tpl:14
 #: admin/opsiLicenses/licenseGeneric.tpl:172
-#, fuzzy
 msgid "Reserved for"
-msgstr "serveurs"
+msgstr "Réservé pour"
 
 #: admin/opsiLicenses/licenseUsageByHost.tpl:28
-#, fuzzy
 msgid "Licenses used"
-msgstr "licence"
+msgstr "Licences utilisées"
 
 #: admin/opsiLicenses/class_opsiLicenses.inc:131
 msgid "Permission"
@@ -415,43 +399,29 @@ msgstr "Erreur de permissions"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:33
 msgid "Partner"
-msgstr ""
+msgstr "Partenaire"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:70
 msgid "Conclusion date"
 msgstr ""
 
 #: admin/opsiLicenses/licenseGeneric.tpl:96
-#, fuzzy
 msgid "Notification date"
-msgstr "Script de notification"
+msgstr "Date de notification"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:111
-#, fuzzy
 msgid "License model"
-msgstr "licence"
+msgstr "Modèle de licence"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:120
 msgid "Model"
-msgstr ""
+msgstr "Modèle"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:160
-#, fuzzy
 msgid "Maximum installations"
-msgstr " "
+msgstr "Nombre maximum d'installations"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:177
 msgid "none"
 msgstr "aucun"
 
-#, fuzzy
-#~ msgid "Licenses reserved for"
-#~ msgstr "licence"
-
-#, fuzzy
-#~ msgid "read only"
-#~ msgstr "Lecture seule"
-
-#, fuzzy
-#~ msgid "retry"
-#~ msgstr "Réessayer"
