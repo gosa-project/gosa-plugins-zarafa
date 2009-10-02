@@ -434,6 +434,21 @@ class mailMethodCyrus extends mailMethod{
   {
     mailMethod::saveSieveSettings();
 
+    // Check file integrity 
+    $files = array();
+    foreach(array("sieve-header.txt","sieve-spam.txt","sieve-mailsize.txt","sieve-vacation.txt","sieve-discard.txt") as $file){
+      if(!file_exists(CONFIG_DIR."/".$file) || ! is_readable(CONFIG_DIR."/".$file)){
+        $files[] = CONFIG_DIR."/".$file;
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__ , CONFIG_DIR."/".$file,
+            "<b>Sieve template missing, please locate and move the template file: </b>");
+      }
+    }
+    if(count($files)){
+      $msg = sprintf(_("File '%s' does not exist!"),implode($files,", "));
+      $msg .= "&nbsp;"._("The sieve script may not be written correctly.");
+      msg_dialog::display(_("Warning"),$msg,WARNING_DIALOG);
+    }
+
     /* Map attribute from parent class 
      */
     $mail = $this->parent->mail;
@@ -502,6 +517,7 @@ class mailMethodCyrus extends mailMethod{
     /*****
       Build up new sieve script here.
      *****/
+
 
     /* Only create a new one, if it is not empty */
     $script= "";
