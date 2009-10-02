@@ -55,8 +55,8 @@ class mailAccount extends plugin
 
   /* GOsa mail attributes */
   var $mail                               = "";
-  var $gosaVacationStart                  = 0;
-  var $gosaVacationStop                   = 0;
+  var $gosaVacationStart                  = "";
+  var $gosaVacationStop                   = "";
   var $gosaMailAlternateAddress           = array();
   var $gosaMailForwardingAddress          = array();
   var $gosaMailDeliveryMode               = "[L        ]";
@@ -206,6 +206,11 @@ class mailAccount extends plugin
     /* Disconnect mailMethod. Connect on demand later. 
      */
     $this->mailMethod->disconnect();
+
+    /* Convert start/stop dates */
+    #TODO: use date format
+    $this->gosaVacationStart= date('d.m.Y', $this->gosaVacationStart);
+    $this->gosaVacationStop= date('d.m.Y', $this->gosaVacationStop);
   }
 
 
@@ -459,36 +464,6 @@ class mailAccount extends plugin
      */
     if($this->mailMethod->vacationRangeEnabled()){
       $smarty->assign("rangeEnabled", TRUE);
-      if($this->gosaVacationStop ==0){
-        $date= getdate(time());
-        $date["mday"]++;
-      }else{
-        $date= getdate($this->gosaVacationStop);
-      }
-      $smarty->assign("end_day", $date["mday"]);
-      $smarty->assign("end_month", $date["mon"]-1);
-      $smarty->assign("end_year", $date["year"]);
-
-      if($this->gosaVacationStart == 0){
-        $date= getdate(time());
-      }else{
-        $date= getdate($this->gosaVacationStart);
-      }
-      $smarty->assign("start_day", $date["mday"]);
-      $smarty->assign("start_month", $date["mon"]-1);
-      $smarty->assign("start_year", $date["year"]);
-      $days= array();
-      for($d= 1; $d<32; $d++){
-        $days[$d]= $d;
-      }
-      $years= array();
-      for($y= $date['year']-10; $y<$date['year']+10; $y++){
-        $years[]= $y;
-      }
-      $months= msgPool::months();
-      $smarty->assign("months", $months);
-      $smarty->assign("years", $years);
-      $smarty->assign("days", $days);
     }
 
     /* fill filter settings 
@@ -744,10 +719,10 @@ class mailAccount extends plugin
       /* Replace vacation start and end time */
       if($this->mailMethod->vacationRangeEnabled()){
         if(preg_match("/%start/",$contents)){
-          $contents = preg_replace("/%start/",date("d.m.Y",$this->gosaVacationStart),$contents);
+          $contents = preg_replace("/%start/",$this->gosaVacationStart,$contents);
         }
         if(preg_match("/%end/",$contents)){
-          $contents = preg_replace("/%end/",date("d.m.Y",$this->gosaVacationStop),$contents);
+          $contents = preg_replace("/%end/",$this->gosaVacationStop,$contents);
         }
       }else{
         if(preg_match("/%start/",$contents)){
@@ -967,6 +942,12 @@ class mailAccount extends plugin
     }elseif (!preg_match('/V/', $this->gosaMailDeliveryMode)){
       unset($this->attrs['gosaVacationStart']);
       unset($this->attrs['gosaVacationStop']);
+    } else {
+      /* Adapt values to be timestamps */
+      list($day, $month, $year)= split('\.', $this->gosaVacationStart);
+      $this->attrs['gosaVacationStart']= mktime(0,0,0,$month, $day, $year);
+      list($day, $month, $year)= split('\.', $this->gosaVacationStop);
+      $this->attrs['gosaVacationStop']= mktime(0,0,0,$month, $day, $year);
     }
 
     /* Map method attributes */ 
@@ -1133,10 +1114,29 @@ class mailAccount extends plugin
       $message[]= msgPool::required(_("Spam folder"));
     }
 
-    if ($this->mailMethod->vacationRangeEnabled() 
-        && preg_match('/V/', $this->gosaMailDeliveryMode) 
-        && $this->gosaVacationStart > $this->gosaVacationStop){
-      $message[]= msgPool::invalid(_("Vacation interval"));
+    if ($this->mailMethod->vacationRangeEnabled() && preg_match('/V/', $this->gosaMailDeliveryMode)){ 
+
+      /* Check date strings */
+      $state= true;
+      if ($this->gosaVacationStart == "" || !tests::is_date($this->gosaVacationStart)) {
+        $message[]= msgPool::invalid(_("from"),$this->gosaVacationStart);
+        $state= false;
+      }
+      if ($this->gosaVacationStart == "" || !tests::is_date($this->gosaVacationStop)) {
+        $message[]= msgPool::invalid(_("to"),$this->gosaVacationStop);
+        $state= false;
+      }
+
+      #TODO: take care of date format
+      if ($state) {
+        list($day, $month, $year)= split('\.', $this->gosaVacationStart);
+        $start= mktime(0,0,0,$month, $day, $year);
+        list($day, $month, $year)= split('\.', $this->gosaVacationStop);
+        $stop= mktime(0,0,0,$month, $day, $year);
+        if($start > $stop){
+          $message[]= msgPool::invalid(_("Vacation interval"));
+        }
+      }
     }
     return($message);
   }
@@ -1285,9 +1285,29 @@ class mailAccount extends plugin
       $message[]= msgPool::required(_("Spam folder"));
     }
 
-    if ($this->mailMethod->vacationRangeEnabled() && in_array("use_vacation",$this->multi_boxes) &&
-        preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart > $this->gosaVacationStop){
-      $message[]= msgPool::invalid(_("Vacation interval"));
+    if ($this->mailMethod->vacationRangeEnabled() && preg_match('/V/', $this->gosaMailDeliveryMode)){ 
+
+      /* Check date strings */
+      $state= true;
+      if ($this->gosaVacationStart == "" || !tests::is_date($this->gosaVacationStart)) {
+        $message[]= msgPool::invalid(_("from"),$this->gosaVacationStart);
+        $state= false;
+      }
+      if ($this->gosaVacationStart == "" || !tests::is_date($this->gosaVacationStop)) {
+        $message[]= msgPool::invalid(_("to"),$this->gosaVacationStop);
+        $state= false;
+      }
+
+      #TODO: take care of date format
+      if ($state) {
+        list($day, $month, $year)= split('\.', $this->gosaVacationStart);
+        $start= mktime(0,0,0,$month, $day, $year);
+        list($day, $month, $year)= split('\.', $this->gosaVacationStop);
+        $stop= mktime(0,0,0,$month, $day, $year);
+        if($start > $stop){
+          $message[]= msgPool::invalid(_("Vacation interval"));
+        }
+      }
     }
     return($message);
   }
