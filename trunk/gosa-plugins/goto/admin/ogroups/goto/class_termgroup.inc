@@ -37,7 +37,7 @@ class termgroup extends plugin
   var $nfsservers     = array();
   var $swapservers    = array();
   var $member_of_ogroup= false;
-  var $members_inherit_from_group = true;
+  var $inherit_confirmation;
 
   function termgroup (&$config, $dn= NULL, $parent= NULL)
   {
@@ -188,7 +188,11 @@ class termgroup extends plugin
 
     /* Handle the inherit to members button */
     if (isset($_POST['inheritToMembers'])) {
-      $this->members_inherit_from_group = true;
+      $this->inherit_confirmation = new msg_dialog(_("Pass on attributs to all members"),  _("This action will overwrite all values in the member objects by the values specified in this object group. Do you want to oproceed??"),CONFIRM_DIALOG);
+    }
+ 
+    if (is_object($this->inherit_confirmation) && ($this->inherit_confirmation->is_confirmed())) {
+        $this->pass_attributes_to_members();
     }
 
     /* Watch for events */
@@ -327,9 +331,6 @@ class termgroup extends plugin
 
     plugin::save();
 
-    /* Tell members to inherit all attributes if the flag is set  */
-    $this->inherit_attributes_to_members();
-
     /***************
       Prepare special vars 
      ***************/
@@ -398,14 +399,12 @@ class termgroup extends plugin
           ));
   }
 
-  function inherit_attributes_to_members()
+  function pass_attributes_to_members()
   {
-    if ($this->members_inherit_from_group) {
-      foreach ($this->member_dn as $dn) {
-        $member_obj = new worktabs($this->config, $this->config->data['TABS']['WORKTABS'], $dn, 'workstation/workgeneric');
-        $member_obj->by_object['workgeneric']->set_everything_to_inherited();
-        $member_obj->save();
-      }
+    foreach ($this->member_dn as $dn) {
+      $member_obj = new worktabs($this->config, $this->config->data['TABS']['WORKTABS'], $dn, 'workstation/workgeneric');
+      $member_obj->by_object['workgeneric']->set_everything_to_inherited();
+      $member_obj->save();
     }
   }
 
