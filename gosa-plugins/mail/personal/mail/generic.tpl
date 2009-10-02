@@ -149,8 +149,7 @@
    <input type=checkbox name="use_vacation" value="1" {$use_vacation} 
     id="use_vacation" {if $own_script != ""} disabled {/if}
     title="{t}Select to automatically response with the vacation message defined below{/t}" class="center" 
-    onclick="changeState('day'); changeState('month'); changeState('year'); 
-    changeState('sday'); changeState('smonth'); changeState('syear');"> {t}Activate vacation message{/t}
+    onclick="changeStates()"> {t}Activate vacation message{/t}
 {/render}
 
    <br>
@@ -159,50 +158,30 @@
    <table>
     <tr>
      <td>{t}from{/t}</td>
-     <td>
+     <td style='width:140px'>
 {render acl=$gosaVacationMessageACL}
-      <select {if $own_script != "" || $use_vacation == ""} disabled {/if} name=day id="day" 
-       onChange="createResult(this.form,this.form.gosaVacationStart);">
-       {html_options values=$days output=$days selected=$start_day}
-      </select>
+        <input type="text" id="gosaVacationStart" name="gosaVacationStart" class="date" style='width:100px' value="{$gosaVacationStart}">
+        {if $gosaVacationMessageACL|regex_replace:"/[cdmr]/":"" == "w"}
+        <script type="text/javascript">
+          {literal}
+          var datepicker  = new DatePicker({ relative : 'gosaVacationStart', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
+          {/literal}
+        </script>
+        {/if}
 {/render}
-{render acl=$gosaVacationMessageACL}
-      <select  {if $own_script != "" || $use_vacation == ""} disabled {/if} name=month id="month" 
-       onChange="populate(this.form,this.form.gosaVacationStart);">
-       {html_options options=$months selected=$start_month}
-      </select>
-{/render}
-{render acl=$gosaVacationMessageACL}
-      <select  {if $own_script != "" || $use_vacation == ""} disabled {/if} name=year id="year" 
-       onChange="populate(this.form,this.form.gosaVacationStart);">
-       {html_options values=$years output=$years selected=$start_year}
-      </select>
-{/render}
-      <input type="hidden" name="gosaVacationStart" value="{$gosaVacationStart}">
      </td>
-    </tr>
-    <tr>
      <td>{t}till{/t}</td>
-      <td>
+      <td style='width:140px'>
 {render acl=$gosaVacationMessageACL}
-       <select  {if $own_script != "" || $use_vacation == ""} disabled {/if} name=sday id="sday" 
-        onChange="createResult2(this.form,this.form.gosaVacationStop);">
-        {html_options values=$days output=$days selected=$end_day}
-       </select>
+        <input type="text" id="gosaVacationStop" name="gosaVacationStop" class="date" style='width:100px' value="{$gosaVacationStop}">
+        {if $gosaVacationMessageACL|regex_replace:"/[cdmr]/":"" == "w"}
+        <script type="text/javascript">
+          {literal}
+          var datepicker  = new DatePicker({ relative : 'gosaVacationStop', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
+          {/literal}
+        </script>
+        {/if}
 {/render}
-{render acl=$gosaVacationMessageACL}
-       <select  {if $own_script != "" || $use_vacation == ""} disabled {/if} name=smonth id="smonth" 
-        onChange="populate2(this.form,this.form.gosaVacationStop);">
-        {html_options options=$months selected=$end_month}
-       </select>
-{/render}
-{render acl=$gosaVacationMessageACL}
-       <select {if $own_script != "" || $use_vacation == ""} disabled {/if}  name=syear id="syear" 
-        onChange="populate2(this.form,this.form.gosaVacationStop);">
-        {html_options values=$years output=$years selected=$end_year}
-       </select>
-{/render}
-       <input type="hidden" name="gosaVacationStop" value="{$gosaVacationStop}">
       </td>
      </tr>
     </table>
@@ -316,23 +295,24 @@
 <script language="JavaScript" type="text/javascript">
 
 	{literal}
+        function validateClick()
+        {
+alert("yes");
+	  if(!document.getElementById('use_vacation').checked){
+            return;
+          }
+        }
+
 	function changeStates()
 	{
-
 		if(document.getElementById('use_vacation').checked){
-			changeState('day');
-			changeState('month');
-			changeState('year');
-			changeState('sday');
-			changeState('smonth');
-			changeState('syear');
+			document.getElementById("datepicker-opener-gosaVacationStop").style.visibility= "visible";
+			document.getElementById("datepicker-opener-gosaVacationStart").style.visibility= "visible";
 		}else{
-			changeSubselectState('use_vacation','day');
-			changeSubselectState('use_vacation','month');
-			changeSubselectState('use_vacation','year');
-			changeSubselectState('use_vacation','sday');
-			changeSubselectState('use_vacation','smonth');
-			changeSubselectState('use_vacation','syear');
+			document.getElementById("datepicker-opener-gosaVacationStop").style.visibility= "hidden";
+			document.getElementById("datepicker-opener-gosaVacationStart").style.visibility= "hidden";
+                        //The prototype way
+                        //$('datepicker-opener-gosaVacationStop').hide();
 		}
 	}
 	{/literal}
