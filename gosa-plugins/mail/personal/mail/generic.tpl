@@ -306,13 +306,11 @@ alert("yes");
 	function changeStates()
 	{
 		if(document.getElementById('use_vacation').checked){
-			document.getElementById("datepicker-opener-gosaVacationStop").style.visibility= "visible";
-			document.getElementById("datepicker-opener-gosaVacationStart").style.visibility= "visible";
+			document.getElementById("datepicker-gosaVacationStart_image").style.visibility= "visible";
+			document.getElementById("datepicker-gosaVacationStop_image").style.visibility= "visible";
 		}else{
-			document.getElementById("datepicker-opener-gosaVacationStop").style.visibility= "hidden";
-			document.getElementById("datepicker-opener-gosaVacationStart").style.visibility= "hidden";
-                        //The prototype way
-                        //$('datepicker-opener-gosaVacationStop').hide();
+			document.getElementById("datepicker-gosaVacationStart_image").style.visibility= "hidden";
+			document.getElementById("datepicker-gosaVacationStop_image").style.visibility= "hidden";
 		}
 	}
 	{/literal}
