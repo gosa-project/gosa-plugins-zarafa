@@ -80,7 +80,9 @@ class workservice extends plugin
     }
 
     /* Get list of available xdrivers */
-    $this->XDrivers = $this->getListOfXDrivers();
+    foreach($this->getListOfXDrivers() as $xdriver) {
+      $this->XDrivers[$xdriver] = $xdriver;
+    }
 
     array_unshift($this->XDrivers, "["._("unknown")."]");
  
