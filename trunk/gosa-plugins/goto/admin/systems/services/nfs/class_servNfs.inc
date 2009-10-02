@@ -184,8 +184,13 @@ class servnfs extends plugin
         $message[]= _("'Path / Volume' must be of format 'server:port'!");
       }
     } elseif ($this->type == "CIFS" || $this->type == "samba") {
-      if (!preg_match("/[a-z0-9%\/_.+-]+[\$]*$/i", $this->path)) {
-        $message[] = _("'$' is only allowed at the end of the share name for hidden shares");
+      if (!preg_match("/^[a-z0-9%\/_.+-]+[\$]*$/i", $this->path)) {
+        if (preg_match("/\$/", $this->path) && !preg_match("/^[^\$]+[\$]*$/", $this->path)) {
+          $message[] = _("'$' is only allowed at the end of the share name for hidden shares");
+        }
+        else {
+          $message[] = msgPool::invalid(_("Path"),$this->path,"/[a-z0-9\$%\/_.+-]+[\$]*$/i");
+        }
       }
     } else {
       if (!tests::is_path($this->path)){
