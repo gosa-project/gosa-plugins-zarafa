@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-01 11:09+0200\n"
+"POT-Creation-Date: 2009-10-02 14:04+0200\n"
 "PO-Revision-Date: 2008-12-04 11:18+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -90,9 +90,9 @@ msgstr "CD/DVD-Laufwerk"
 #: admin/systems/goto/class_workstationGeneric.inc:461
 #: admin/systems/goto/class_workstationGeneric.inc:479
 #: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/services/nfs/class_servNfs.inc:199
-#: admin/systems/services/nfs/class_servNfs.inc:202
-#: admin/systems/services/shares/class_goShareServer.inc:423
+#: admin/systems/services/nfs/class_servNfs.inc:203
+#: admin/systems/services/nfs/class_servNfs.inc:206
+#: admin/systems/services/shares/class_goShareServer.inc:422
 #: admin/applications/class_applicationParameters.inc:191
 #: admin/applications/class_applicationParameters.inc:195
 #: admin/applications/class_applicationGeneric.inc:432
@@ -114,8 +114,8 @@ msgstr "Name"
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: admin/systems/goto/workstation.tpl:19 admin/systems/goto/printer.tpl:16
 #: admin/systems/services/nfs/servnfs.tpl:19
-#: admin/systems/services/nfs/class_servNfs.inc:212
-#: admin/systems/services/shares/class_goShareServer.inc:425
+#: admin/systems/services/nfs/class_servNfs.inc:211
+#: admin/systems/services/shares/class_goShareServer.inc:424
 #: admin/applications/generic.tpl:33
 #: admin/applications/class_applicationGeneric.inc:623
 #: personal/environment/class_logonManagementDialog.inc:125
@@ -158,7 +158,7 @@ msgstr "Lieferanten-ID"
 #: admin/systems/services/kiosk/class_goKioskService.inc:164
 #: admin/systems/services/kiosk/class_goKioskService.inc:234
 #: admin/systems/services/shares/class_goShareServer.inc:98
-#: admin/systems/services/shares/class_goShareServer.inc:258
+#: admin/systems/services/shares/class_goShareServer.inc:257
 #: admin/applications/class_applicationGeneric.inc:266
 #: admin/applications/class_applicationGeneric.inc:340
 #: admin/applications/class_applicationGeneric.inc:372
@@ -212,9 +212,9 @@ msgstr "Gerät"
 #: admin/systems/goto/class_workstationGeneric.inc:613
 #: admin/systems/services/kiosk/class_goKioskService.inc:249
 #: admin/systems/services/shares/class_goShareServer.inc:192
-#: admin/systems/services/shares/class_goShareServer.inc:286
-#: admin/systems/services/shares/class_goShareServer.inc:302
-#: admin/systems/services/shares/class_goShareServer.inc:315
+#: admin/systems/services/shares/class_goShareServer.inc:285
+#: admin/systems/services/shares/class_goShareServer.inc:301
+#: admin/systems/services/shares/class_goShareServer.inc:314
 #: admin/systems/services/ntp/class_goNtpServer.inc:98
 #: admin/systems/services/ldap/class_goLdapServer.inc:117
 #: admin/systems/services/terminal/class_goTerminalServer.inc:103
@@ -223,7 +223,7 @@ msgstr "Gerät"
 #: admin/applications/class_applicationGeneric.inc:273
 #: admin/applications/class_applicationGeneric.inc:287
 #: admin/applications/class_applicationGeneric.inc:529
-#: admin/ogroups/goto/class_termgroup.inc:376
+#: admin/ogroups/goto/class_termgroup.inc:377
 #: personal/environment/class_environment.inc:1082
 #: personal/environment/class_environment.inc:1339
 msgid "LDAP error"
@@ -279,8 +279,8 @@ msgstr "Basis"
 #: admin/systems/goto/terminalService.tpl:138
 #: admin/systems/goto/gotoLpdEnable.tpl:53
 #: admin/systems/services/nfs/servnfs.tpl:56
-#: admin/systems/services/nfs/class_servNfs.inc:193
-#: admin/systems/services/shares/class_goShareServer.inc:426
+#: admin/systems/services/nfs/class_servNfs.inc:197
+#: admin/systems/services/shares/class_goShareServer.inc:425
 msgid "Type"
 msgstr "Typ"
 
@@ -912,7 +912,7 @@ msgstr "Wählen Sie den Teilbaum, in den die Gruppe eingepflegt werden soll"
 #: admin/systems/goto/terminal.tpl:47
 #: admin/systems/goto/class_terminalGeneric.inc:669
 #: admin/systems/goto/workstation.tpl:55
-#: admin/ogroups/goto/class_termgroup.inc:392
+#: admin/ogroups/goto/class_termgroup.inc:393
 #: admin/ogroups/goto/termgroup.tpl:47
 msgid "Mode"
 msgstr "Modus"
@@ -927,7 +927,7 @@ msgstr "Wählen Sie den Terminal-Modus"
 #: admin/systems/goto/workstation.tpl:65
 #: admin/systems/services/syslog/class_goSyslogServer.inc:27
 #: admin/systems/services/syslog/class_goSyslogServer.inc:47
-#: admin/ogroups/goto/class_termgroup.inc:393
+#: admin/ogroups/goto/class_termgroup.inc:394
 #: admin/ogroups/goto/termgroup.tpl:58
 msgid "Syslog server"
 msgstr "Syslog-Server"
@@ -939,7 +939,7 @@ msgstr "Wählen Sie den Server, der für das Protokollieren genutzt werden soll"
 
 #: admin/systems/goto/terminal.tpl:76
 #: admin/systems/goto/class_terminalGeneric.inc:672
-#: admin/ogroups/goto/class_termgroup.inc:396
+#: admin/ogroups/goto/class_termgroup.inc:397
 #: admin/ogroups/goto/termgroup.tpl:69
 msgid "Root server"
 msgstr "Root-Server"
@@ -950,7 +950,7 @@ msgstr "Wählen Sie das NFS-Root-Dateisystem"
 
 #: admin/systems/goto/terminal.tpl:86
 #: admin/systems/goto/class_terminalGeneric.inc:673
-#: admin/ogroups/goto/class_termgroup.inc:397
+#: admin/ogroups/goto/class_termgroup.inc:398
 #: admin/ogroups/goto/termgroup.tpl:79
 msgid "Swap server"
 msgstr "Auslagerungs-Server"
@@ -1639,7 +1639,7 @@ msgstr "Aktiv"
 #: admin/systems/goto/class_terminalService.inc:673
 #: admin/systems/goto/class_workstationGeneric.inc:212
 #: admin/systems/goto/class_workstationGeneric.inc:635
-#: admin/ogroups/goto/class_termgroup.inc:213
+#: admin/ogroups/goto/class_termgroup.inc:217
 #: addons/goto/class_gotomasses.inc:328
 #: addons/goto/class_goto_import_file.inc:124
 msgid "Service infrastructure"
@@ -1647,20 +1647,20 @@ msgstr "Dienst-Infrastruktur"
 
 #: admin/systems/goto/class_terminalGeneric.inc:191
 #: admin/systems/goto/class_workstationGeneric.inc:216
-#: admin/ogroups/goto/class_termgroup.inc:217
+#: admin/ogroups/goto/class_termgroup.inc:221
 msgid "Event error"
 msgstr "Ereignis-Fehler"
 
 #: admin/systems/goto/class_terminalGeneric.inc:192
 #: admin/systems/goto/class_workstationGeneric.inc:217
-#: admin/ogroups/goto/class_termgroup.inc:218
+#: admin/ogroups/goto/class_termgroup.inc:222
 #, php-format
 msgid "Event '%s' is not available!"
 msgstr "Das Ereignis '%s' ist nicht verfügbar!"
 
 #: admin/systems/goto/class_terminalGeneric.inc:265
 #: admin/systems/goto/class_workstationGeneric.inc:298
-#: admin/ogroups/goto/class_termgroup.inc:267
+#: admin/ogroups/goto/class_termgroup.inc:271
 #: addons/goto/events/class_DaemonEvent_halt.inc:31
 #: addons/goto/events/class_DaemonEvent_halt.inc:32
 msgid "Switch off"
@@ -1668,7 +1668,7 @@ msgstr "Ausschalten"
 
 #: admin/systems/goto/class_terminalGeneric.inc:266
 #: admin/systems/goto/class_workstationGeneric.inc:298
-#: admin/ogroups/goto/class_termgroup.inc:267
+#: admin/ogroups/goto/class_termgroup.inc:271
 #: addons/goto/events/class_DaemonEvent_reboot.inc:29
 #: addons/goto/events/class_DaemonEvent_reboot.inc:30
 msgid "Reboot"
@@ -1704,7 +1704,7 @@ msgstr "Root-Passwort"
 
 #: admin/systems/goto/class_terminalGeneric.inc:678
 #: admin/systems/goto/class_workstationGeneric.inc:716
-#: admin/ogroups/goto/class_termgroup.inc:394
+#: admin/ogroups/goto/class_termgroup.inc:395
 msgid "Action flag"
 msgstr "Ablaufstatus"
 
@@ -1776,8 +1776,8 @@ msgid "set"
 msgstr "setzen"
 
 #: admin/systems/goto/class_workstationService.inc:78
-#: admin/systems/goto/class_workstationStartup.inc:1358
-#: admin/systems/goto/class_workstationStartup.inc:1360
+#: admin/systems/goto/class_workstationStartup.inc:1357
+#: admin/systems/goto/class_workstationStartup.inc:1359
 #: admin/systems/goto/class_terminalService.inc:121
 #: admin/systems/ppd/class_printerPPDDialog.inc:51
 #: admin/systems/ppd/class_printerPPDDialog.inc:114
@@ -1924,7 +1924,7 @@ msgstr "Debian-Release"
 msgid "FAI status flag"
 msgstr "FAI-Status-Flag"
 
-#: admin/systems/goto/class_workstationStartup.inc:1360
+#: admin/systems/goto/class_workstationStartup.inc:1359
 msgid "'repositoryBranchHook' returned no result!"
 msgstr "'repositoryBranchHook' hat kein Ergebnis zurückgeliefert!"
 
@@ -2138,7 +2138,7 @@ msgstr "Bits"
 
 #: admin/systems/goto/class_workstationGeneric.inc:299
 #: admin/systems/goto/class_workstationGeneric.inc:309
-#: admin/ogroups/goto/class_termgroup.inc:268
+#: admin/ogroups/goto/class_termgroup.inc:272
 #: addons/goto/events/class_DaemonEvent_update.inc:29
 #: addons/goto/events/class_DaemonEvent_update.inc:30
 msgid "Software update"
@@ -2146,14 +2146,14 @@ msgstr "Softwareupdate"
 
 #: admin/systems/goto/class_workstationGeneric.inc:300
 #: admin/systems/goto/class_workstationGeneric.inc:308
-#: admin/ogroups/goto/class_termgroup.inc:270
+#: admin/ogroups/goto/class_termgroup.inc:274
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:32
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:33
 msgid "Reinstall"
 msgstr "Neu-Installation"
 
 #: admin/systems/goto/class_workstationGeneric.inc:301
-#: admin/ogroups/goto/class_termgroup.inc:271
+#: admin/ogroups/goto/class_termgroup.inc:275
 #: addons/goto/events/class_DaemonEvent_rescan.inc:28
 #: addons/goto/events/class_DaemonEvent_rescan.inc:29
 msgid "Rescan hardware"
@@ -2161,7 +2161,7 @@ msgstr "Hardware neu erkennen"
 
 #: admin/systems/goto/class_workstationGeneric.inc:303
 #: admin/systems/goto/class_workstationGeneric.inc:311
-#: admin/ogroups/goto/class_termgroup.inc:272
+#: admin/ogroups/goto/class_termgroup.inc:276
 #: addons/goto/events/class_DaemonEvent_localboot.inc:30
 #: addons/goto/events/class_DaemonEvent_localboot.inc:31
 msgid "Force localboot"
@@ -2195,7 +2195,7 @@ msgid "Goto mode"
 msgstr "GOto-Modus"
 
 #: admin/systems/goto/class_workstationGeneric.inc:713
-#: admin/ogroups/goto/class_termgroup.inc:395
+#: admin/ogroups/goto/class_termgroup.inc:396
 msgid "Ntp server"
 msgstr "NTP-Dienst"
 
@@ -2328,13 +2328,13 @@ msgstr "NFS-Einrichtung"
 
 #: admin/systems/services/nfs/servnfs.tpl:29
 #: admin/systems/services/nfs/class_servNfs.inc:179
-#: admin/systems/services/shares/class_goShareServer.inc:428
+#: admin/systems/services/shares/class_goShareServer.inc:427
 msgid "Path"
 msgstr "Pfad"
 
 #: admin/systems/services/nfs/servnfs.tpl:29
-#: admin/systems/services/nfs/class_servNfs.inc:216
-#: admin/systems/services/shares/class_goShareServer.inc:430
+#: admin/systems/services/nfs/class_servNfs.inc:215
+#: admin/systems/services/shares/class_goShareServer.inc:429
 msgid "Volume"
 msgstr "Volume"
 
@@ -2347,8 +2347,8 @@ msgid "Codepage"
 msgstr "Codepage"
 
 #: admin/systems/services/nfs/servnfs.tpl:121
-#: admin/systems/services/nfs/class_servNfs.inc:220
-#: admin/systems/services/shares/class_goShareServer.inc:429
+#: admin/systems/services/nfs/class_servNfs.inc:219
+#: admin/systems/services/shares/class_goShareServer.inc:428
 msgid "Option"
 msgstr "Option"
 
@@ -2357,16 +2357,16 @@ msgid "'Path / Volume' must be of format 'server:port'!"
 msgstr "'Pfad / Volume' muß das Format 'server:port' haben!"
 
 #: admin/systems/services/nfs/class_servNfs.inc:188
+msgid "'$' is only allowed at the end of the share name for hidden shares"
+msgstr ""
+
+#: admin/systems/services/nfs/class_servNfs.inc:192
 msgid ""
 "'Path / Volume' must contain at least one '/' and no special characters!"
 msgstr ""
 "'Pfad / Volume' muß mindestens ein '/' enthalten und keine Sonderzeichen!"
 
-#: admin/systems/services/nfs/class_servNfs.inc:206
-msgid "Hidden shares must have the '$' at the end of the name!"
-msgstr ""
-
-#: admin/systems/services/nfs/class_servNfs.inc:246
+#: admin/systems/services/nfs/class_servNfs.inc:245
 #, php-format
 msgid "The share '%s' on another server '%s' already exists."
 msgstr "Die Freigabe '%s' existiert bereits auf einem anderen Server '%s'"
@@ -2377,7 +2377,7 @@ msgstr "CUPS"
 
 #: admin/systems/services/cups/class_goCupsServer.inc:69
 #: admin/systems/services/kiosk/class_goKioskService.inc:270
-#: admin/systems/services/shares/class_goShareServer.inc:415
+#: admin/systems/services/shares/class_goShareServer.inc:414
 #: admin/systems/services/ntp/class_goNtpServer.inc:115
 #: admin/systems/services/ldap/class_goLdapServer.inc:129
 #: admin/systems/services/terminal/class_goTerminalServer.inc:165
@@ -2443,30 +2443,30 @@ msgstr "Kiosk"
 
 #: admin/systems/services/shares/class_goShareServer.inc:31
 #: admin/systems/services/shares/class_goShareServer.inc:157
-#: admin/systems/services/shares/class_goShareServer.inc:414
+#: admin/systems/services/shares/class_goShareServer.inc:413
 msgid "File service (Shares)"
 msgstr "Datei-Dienst (Freigaben)"
 
-#: admin/systems/services/shares/class_goShareServer.inc:238
+#: admin/systems/services/shares/class_goShareServer.inc:237
 #, php-format
 msgid "Cannot remove share - it is still in use by these objects: %s"
 msgstr ""
 "Freigabe kann nicht entfernt werden - sie wird noch von diesen Objekten "
 "benutzt: %s"
 
-#: admin/systems/services/shares/class_goShareServer.inc:258
+#: admin/systems/services/shares/class_goShareServer.inc:257
 msgid "share"
 msgstr "Freigabe"
 
-#: admin/systems/services/shares/class_goShareServer.inc:415
+#: admin/systems/services/shares/class_goShareServer.inc:414
 msgid "File service - Shares"
 msgstr "Datei-Dienst - Freigaben"
 
-#: admin/systems/services/shares/class_goShareServer.inc:424
+#: admin/systems/services/shares/class_goShareServer.inc:423
 msgid "Apple mounts"
 msgstr "Apple Freigaben"
 
-#: admin/systems/services/shares/class_goShareServer.inc:427
+#: admin/systems/services/shares/class_goShareServer.inc:426
 msgid "Charset"
 msgstr "Zeichensatz"
 
@@ -2934,15 +2934,28 @@ msgstr "Zeige die Benutzer, auf die Folgendes passt"
 msgid "Number of listed applications"
 msgstr "Anzahl der angezeigten Anwendungen"
 
-#: admin/ogroups/goto/class_termgroup.inc:269
+#: admin/ogroups/goto/class_termgroup.inc:191
+#, fuzzy
+msgid "Pass on attributes to all members"
+msgstr "Alle Werte an Gruppenmitglieder vererben"
+
+#: admin/ogroups/goto/class_termgroup.inc:191
+msgid ""
+"This action will overwrite all attributes of the group members with the "
+"values specified in this object group. Do you want to proceed?"
+msgstr "Durch diese Aktion werden alle Attribute der Gruppenmitglieder, mit"
+"den in der Objektgruppe angegebenen Werten, überschrieben."
+"Möchten Sie fortfahren?"
+
+#: admin/ogroups/goto/class_termgroup.inc:273
 msgid "Wake"
 msgstr "Aufwecken"
 
-#: admin/ogroups/goto/class_termgroup.inc:384
+#: admin/ogroups/goto/class_termgroup.inc:385
 msgid "System"
 msgstr "System"
 
-#: admin/ogroups/goto/class_termgroup.inc:385
+#: admin/ogroups/goto/class_termgroup.inc:386
 msgid "System group"
 msgstr "System-Gruppe"
 
@@ -2957,7 +2970,6 @@ msgstr ""
 "Systemen ererbt werden."
 
 #: admin/ogroups/goto/termgroup.tpl:104
-#, fuzzy
 msgid "Pass on all values to group members"
 msgstr "Alle Werte an Gruppenmitglieder vererben"
 
@@ -3915,7 +3927,7 @@ msgstr "GOto Log-Ansicht"
 msgid ""
 "Selected entries will be skipped because of errors. Do you want to proceed?"
 msgstr ""
-"Die ausgewählten Einträge sind fehlerhaft und werden nicht berücksichtig. "
+"Die ausgewählten Einträge sind fehlerhaft und werden nicht berücksichtigt. "
 "Möchten Sie fortfahren?"
 
 #: addons/goto/class_goto_import_file.inc:131
