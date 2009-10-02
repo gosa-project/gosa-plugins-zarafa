@@ -259,8 +259,8 @@ the user is marked to be no longer logged in or the host is no longer running.
 .IP "address =" 4
 .IX Item "address ="
 Comma seperated list of GOsa-si-servers (1.2.3.4:20081,9.8.7.6:123) in network where this SI-server should register. These given SI-servers extend the list of SI-servers found in \s-1DNS\s0.
-.IP "dns-lookup = true | false" 4
-.IX Item "dns-lookup = true | false"
+.IP "dns-lookup = true" 4
+.IX Item "dns-lookup = true"
 Perform a \s-1DNS\s0 lookup for server registration
 .IP "domain =" 4
 .IX Item "domain ="
@@ -271,24 +271,24 @@ Defines the password incoming ServerPackages messages should be encrypted. This 
 .IP "key-lifetime = 120" 4
 .IX Item "key-lifetime = 120"
 Defines the lifetime in seconds of a GOsa-SI-server key. After expiring the key will be automatically renewed.
-.IP "job-synchronization-enabled = true | false" 4
-.IX Item "job-synchronization-enabled = true | false"
+.IP "job-synchronization-enabled = true" 4
+.IX Item "job-synchronization-enabled = true"
 Defines whether job queue informations are be shared with other GOsa-SI-server in network.
 .IP "synchronization-loog = 5" 4
 .IX Item "synchronization-loog = 5"
 Defines in seconds after which time the job queue synchronization is being done.
 .SS "[ArpHandler]"
 .IX Subsection "[ArpHandler]"
-.IP "enabled = true | false" 4
-.IX Item "enabled = true | false"
+.IP "enabled = false" 4
+.IX Item "enabled = false"
 Defines whether the ArpHandler is being activated at GOsa-SI-server start.
 .IP "interface = all" 4
 .IX Item "interface = all"
 Space\- or comma-separated list of interfaces on which to start an ARP-Daemon. Enter 'all' to use all possible interfaces (Default).
 .SS "[Opsi]"
 .IX Subsection "[Opsi]"
-.IP "enabled = true | false" 4
-.IX Item "enabled = true | false"
+.IP "enabled = false" 4
+.IX Item "enabled = false"
 Defines wheter Opsi integration is being enabled or not.
 .IP "server = localhost" 4
 .IX Item "server = localhost"
