@@ -1073,10 +1073,6 @@ class workstartup extends plugin
       }else{
 
         foreach($servers as $server){
-          if ($this->attrs['gosaUnitTag'][0] != $server['TAG']) {
-            continue;
-          }
-        
           $rel = $server['FAI_RELEASE'];
           $this->cache['SERVERS']['auto'][$rel] = $rel;
           $this->cache['SERVERS'][$server['SERVER']][$rel] = $rel;
