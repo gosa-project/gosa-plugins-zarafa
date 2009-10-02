@@ -101,7 +101,7 @@
 		</td>
 		<td style="vertical-align:top;border-left:1px solid #A0A0A0;">
 		<!-- Bottom right -->			
-        <input type='submit' name='inheritToMembers' {$inheritState} value='{t}Pass on all values to group members{/t}'>
+        <input type='submit' name='inheritToMembers' value='{t}Pass on all values to group members{/t}'>
 
 		</td>
 	</tr>
