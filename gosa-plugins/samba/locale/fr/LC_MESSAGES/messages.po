@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-02 14:39+0200\n"
-"PO-Revision-Date: 2009-06-30 11:31+0200\n"
+"PO-Revision-Date: 2009-10-02 18:11+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -168,15 +168,13 @@ msgid "Access options"
 msgstr "Options d'accès"
 
 #: personal/samba/samba3.tpl:317
-#, fuzzy
 msgid "The password never expires"
-msgstr "Le mot de passe expirera le"
+msgstr "Le mot de passe n'expire jamais"
 
 #: personal/samba/samba3.tpl:325 personal/samba/samba2.tpl:72
 #: personal/samba/class_sambaAccount.inc:1487
 msgid "Login from windows client requires no password"
-msgstr ""
-"L'identification sur une station windows ne nécessite pas de mot de passe"
+msgstr "L'identification sur une station windows ne nécessite pas de mot de passe"
 
 #: personal/samba/samba3.tpl:333 personal/samba/samba2.tpl:67
 msgid "Allow user to change password from client"
@@ -302,14 +300,12 @@ msgstr "du client précédent seulement"
 #: personal/samba/class_sambaAccount.inc:646
 #, php-format
 msgid "The password is outdated since %s, by domain policy."
-msgstr ""
-"Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
+msgstr "Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
 
 #: personal/samba/class_sambaAccount.inc:650
 #, php-format
 msgid "The password is valid till %s, by user policy."
-msgstr ""
-"Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
+msgstr "Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
 
 #: personal/samba/class_sambaAccount.inc:653
 #, php-format
@@ -465,10 +461,9 @@ msgid "No"
 msgstr "Non"
 
 #: personal/samba/class_sambaAccount.inc:932
-#, fuzzy, php-format
+#, php-format
 msgid "The password would expire on %s, but the password expiry is disabled."
-msgstr ""
-"Le mot de passe que vous avez entré comme 'Nouveau mot de passe' est vide."
+msgstr "Le mot de passe devrait expirer le %s, mais l'expiration est désactivée."
 
 #: personal/samba/class_sambaAccount.inc:938
 msgid "Password change available"
@@ -499,12 +494,10 @@ msgstr "Avertissement"
 
 #: personal/samba/class_sambaAccount.inc:1228
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr ""
-"Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
+msgstr "Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
 
 #: personal/samba/class_sambaAccount.inc:1252
-msgid ""
-"Cannot convert primary group to samba group: group cannot be identified!"
+msgid "Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 "Impossible de convertir le groupe primaire en un groupe primaire samba : le "
 "groupe ne peut être identifié !"
@@ -538,9 +531,8 @@ msgid "Allow user to change password"
 msgstr "Autoriser les utilisateurs à changer de mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:1488
-#, fuzzy
 msgid "Password never expires"
-msgstr "Le mot de passe expirera le"
+msgstr "Le mot de passe n'expire jamais"
 
 #: personal/samba/class_sambaAccount.inc:1490
 msgid "Account expires"
@@ -589,3 +581,4 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 #: personal/samba/samba3_workstations.tpl:31
 msgid "Regular expression for matching addresses"
 msgstr "Expression régulière pour sélectionner les adresses correspondantes"
+
