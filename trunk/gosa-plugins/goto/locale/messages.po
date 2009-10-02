@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-02 17:14+0200\n"
+"POT-Creation-Date: 2009-10-02 18:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,8 +84,8 @@ msgstr ""
 #: admin/systems/goto/class_workstationGeneric.inc:461
 #: admin/systems/goto/class_workstationGeneric.inc:479
 #: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/services/nfs/class_servNfs.inc:203
-#: admin/systems/services/nfs/class_servNfs.inc:206
+#: admin/systems/services/nfs/class_servNfs.inc:208
+#: admin/systems/services/nfs/class_servNfs.inc:211
 #: admin/systems/services/shares/class_goShareServer.inc:422
 #: admin/applications/class_applicationParameters.inc:191
 #: admin/applications/class_applicationParameters.inc:195
@@ -108,7 +108,7 @@ msgstr ""
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: admin/systems/goto/workstation.tpl:19 admin/systems/goto/printer.tpl:16
 #: admin/systems/services/nfs/servnfs.tpl:19
-#: admin/systems/services/nfs/class_servNfs.inc:211
+#: admin/systems/services/nfs/class_servNfs.inc:216
 #: admin/systems/services/shares/class_goShareServer.inc:424
 #: admin/applications/generic.tpl:33
 #: admin/applications/class_applicationGeneric.inc:623
@@ -272,7 +272,7 @@ msgstr ""
 #: admin/systems/goto/terminalService.tpl:138
 #: admin/systems/goto/gotoLpdEnable.tpl:53
 #: admin/systems/services/nfs/servnfs.tpl:56
-#: admin/systems/services/nfs/class_servNfs.inc:197
+#: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/shares/class_goShareServer.inc:425
 msgid "Type"
 msgstr ""
@@ -2260,12 +2260,13 @@ msgstr ""
 
 #: admin/systems/services/nfs/servnfs.tpl:29
 #: admin/systems/services/nfs/class_servNfs.inc:179
+#: admin/systems/services/nfs/class_servNfs.inc:192
 #: admin/systems/services/shares/class_goShareServer.inc:427
 msgid "Path"
 msgstr ""
 
 #: admin/systems/services/nfs/servnfs.tpl:29
-#: admin/systems/services/nfs/class_servNfs.inc:215
+#: admin/systems/services/nfs/class_servNfs.inc:220
 #: admin/systems/services/shares/class_goShareServer.inc:429
 msgid "Volume"
 msgstr ""
@@ -2279,7 +2280,7 @@ msgid "Codepage"
 msgstr ""
 
 #: admin/systems/services/nfs/servnfs.tpl:121
-#: admin/systems/services/nfs/class_servNfs.inc:219
+#: admin/systems/services/nfs/class_servNfs.inc:224
 #: admin/systems/services/shares/class_goShareServer.inc:428
 msgid "Option"
 msgstr ""
@@ -2288,16 +2289,16 @@ msgstr ""
 msgid "'Path / Volume' must be of format 'server:port'!"
 msgstr ""
 
-#: admin/systems/services/nfs/class_servNfs.inc:188
+#: admin/systems/services/nfs/class_servNfs.inc:189
 msgid "'$' is only allowed at the end of the share name for hidden shares"
 msgstr ""
 
-#: admin/systems/services/nfs/class_servNfs.inc:192
+#: admin/systems/services/nfs/class_servNfs.inc:197
 msgid ""
 "'Path / Volume' must contain at least one '/' and no special characters!"
 msgstr ""
 
-#: admin/systems/services/nfs/class_servNfs.inc:245
+#: admin/systems/services/nfs/class_servNfs.inc:250
 #, php-format
 msgid "The share '%s' on another server '%s' already exists."
 msgstr ""
@@ -2849,7 +2850,8 @@ msgid "Number of listed applications"
 msgstr ""
 
 #: admin/ogroups/goto/class_termgroup.inc:191
-msgid "Pass on attributes to all members"
+#: admin/ogroups/goto/termgroup.tpl:104
+msgid "Pass on all attributes to group members"
 msgstr ""
 
 #: admin/ogroups/goto/class_termgroup.inc:191
@@ -2875,10 +2877,6 @@ msgid ""
 "Actions you choose here influence all systems in this object group. "
 "Additionally, all values editable here can be inherited by the clients "
 "assigned to this object group."
-msgstr ""
-
-#: admin/ogroups/goto/termgroup.tpl:104
-msgid "Pass on all attributes to group members"
 msgstr ""
 
 #: personal/environment/class_selectPrinterDialog.inc:107

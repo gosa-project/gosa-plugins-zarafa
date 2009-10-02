@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-02 17:14+0200\n"
+"POT-Creation-Date: 2009-10-02 18:02+0200\n"
 "PO-Revision-Date: 2008-12-04 11:18+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -90,8 +90,8 @@ msgstr "CD/DVD-Laufwerk"
 #: admin/systems/goto/class_workstationGeneric.inc:461
 #: admin/systems/goto/class_workstationGeneric.inc:479
 #: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/services/nfs/class_servNfs.inc:203
-#: admin/systems/services/nfs/class_servNfs.inc:206
+#: admin/systems/services/nfs/class_servNfs.inc:208
+#: admin/systems/services/nfs/class_servNfs.inc:211
 #: admin/systems/services/shares/class_goShareServer.inc:422
 #: admin/applications/class_applicationParameters.inc:191
 #: admin/applications/class_applicationParameters.inc:195
@@ -114,7 +114,7 @@ msgstr "Name"
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: admin/systems/goto/workstation.tpl:19 admin/systems/goto/printer.tpl:16
 #: admin/systems/services/nfs/servnfs.tpl:19
-#: admin/systems/services/nfs/class_servNfs.inc:211
+#: admin/systems/services/nfs/class_servNfs.inc:216
 #: admin/systems/services/shares/class_goShareServer.inc:424
 #: admin/applications/generic.tpl:33
 #: admin/applications/class_applicationGeneric.inc:623
@@ -279,7 +279,7 @@ msgstr "Basis"
 #: admin/systems/goto/terminalService.tpl:138
 #: admin/systems/goto/gotoLpdEnable.tpl:53
 #: admin/systems/services/nfs/servnfs.tpl:56
-#: admin/systems/services/nfs/class_servNfs.inc:197
+#: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/shares/class_goShareServer.inc:425
 msgid "Type"
 msgstr "Typ"
@@ -2328,12 +2328,13 @@ msgstr "NFS-Einrichtung"
 
 #: admin/systems/services/nfs/servnfs.tpl:29
 #: admin/systems/services/nfs/class_servNfs.inc:179
+#: admin/systems/services/nfs/class_servNfs.inc:192
 #: admin/systems/services/shares/class_goShareServer.inc:427
 msgid "Path"
 msgstr "Pfad"
 
 #: admin/systems/services/nfs/servnfs.tpl:29
-#: admin/systems/services/nfs/class_servNfs.inc:215
+#: admin/systems/services/nfs/class_servNfs.inc:220
 #: admin/systems/services/shares/class_goShareServer.inc:429
 msgid "Volume"
 msgstr "Volume"
@@ -2347,7 +2348,7 @@ msgid "Codepage"
 msgstr "Codepage"
 
 #: admin/systems/services/nfs/servnfs.tpl:121
-#: admin/systems/services/nfs/class_servNfs.inc:219
+#: admin/systems/services/nfs/class_servNfs.inc:224
 #: admin/systems/services/shares/class_goShareServer.inc:428
 msgid "Option"
 msgstr "Option"
@@ -2356,17 +2357,17 @@ msgstr "Option"
 msgid "'Path / Volume' must be of format 'server:port'!"
 msgstr "'Pfad / Volume' muß das Format 'server:port' haben!"
 
-#: admin/systems/services/nfs/class_servNfs.inc:188
+#: admin/systems/services/nfs/class_servNfs.inc:189
 msgid "'$' is only allowed at the end of the share name for hidden shares"
 msgstr ""
 
-#: admin/systems/services/nfs/class_servNfs.inc:192
+#: admin/systems/services/nfs/class_servNfs.inc:197
 msgid ""
 "'Path / Volume' must contain at least one '/' and no special characters!"
 msgstr ""
 "'Pfad / Volume' muß mindestens ein '/' enthalten und keine Sonderzeichen!"
 
-#: admin/systems/services/nfs/class_servNfs.inc:245
+#: admin/systems/services/nfs/class_servNfs.inc:250
 #, php-format
 msgid "The share '%s' on another server '%s' already exists."
 msgstr "Die Freigabe '%s' existiert bereits auf einem anderen Server '%s'"
@@ -2935,7 +2936,8 @@ msgid "Number of listed applications"
 msgstr "Anzahl der angezeigten Anwendungen"
 
 #: admin/ogroups/goto/class_termgroup.inc:191
-msgid "Pass on attributes to all members"
+#: admin/ogroups/goto/termgroup.tpl:104
+msgid "Pass on all attributes to group members"
 msgstr "Alle Attribute an Gruppenmitglieder vererben"
 
 #: admin/ogroups/goto/class_termgroup.inc:191
@@ -2967,11 +2969,6 @@ msgstr ""
 "Aktionen die hier ausgewählt werden beeinflussen alle Systeme dieser "
 "Objektgruppe. Zusätzlich können alle hier einstellbaren Werte von den "
 "Systemen ererbt werden."
-
-#: admin/ogroups/goto/termgroup.tpl:104
-#, fuzzy
-msgid "Pass on all attributes to group members"
-msgstr "Alle Attribute an Gruppenmitglieder vererben"
 
 #: personal/environment/class_selectPrinterDialog.inc:107
 msgid "Please select a printer!"
@@ -3934,6 +3931,9 @@ msgstr ""
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
 msgstr "Import abgeschlossen: %s Vorgänge importiert, %s fehlgeschlagen"
+
+#~ msgid "Pass on attributes to all members"
+#~ msgstr "Alle Attribute an Gruppenmitglieder vererben"
 
 #~ msgid "Instant update"
 #~ msgstr "Sofortiges Update"
