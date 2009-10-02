@@ -26,7 +26,6 @@ class sambaAccount extends plugin
   var $view_logged = FALSE;
 
   /* Switch for Samba version */
-  var $samba3= FALSE;
   var $uidNumber= 65535;
   var $gidNumber= 65535;
 
@@ -98,26 +97,17 @@ class sambaAccount extends plugin
   function sambaAccount (&$config, $dn= NULL)
   {
     /* Load attributes depending on the samba version */
-    $this->samba3= ($config->get_cfg_value("sambaversion") == 3);
-
-    if ($this->samba3){
-      $this->attributes= array ("sambaSID", "sambaPwdLastSet", "sambaLogonTime",
-          "sambaLogoffTime", "sambaKickoffTime", "sambaPwdCanChange",
-          "sambaPwdMustChange", "sambaAcctFlags", "uid", "sambaMungedDial",
-          "sambaHomePath", "sambaHomeDrive", "sambaLogonScript",
-          "sambaProfilePath", "sambaPrimaryGroupSID", "sambaDomainName",
-          "sambaUserWorkstations", "sambaPasswordHistory",
-          "sambaLogonHours", "sambaBadPasswordTime",
-          "sambaBadPasswordCount");
-      $this->objectclasses= array ("sambaSamAccount");
-      $this->mungedObject= new sambaMungedDial;
-      $this->ctxattributes= $this->mungedObject->ctxattributes;
-    } else {
-      $this->attributes= array ("pwdLastSet", "logonTime", "logoffTime", "kickoffTime",
-          "pwdCanChange", "pwdMustChange", "acctFlags", "profilePath", "uid",
-          "smbHome", "homeDrive", "scriptPath", "rid", "primaryGroupID");
-      $this->objectclasses= array ("sambaAccount");
-    }
+    $this->attributes= array ("sambaSID", "sambaPwdLastSet", "sambaLogonTime",
+        "sambaLogoffTime", "sambaKickoffTime", "sambaPwdCanChange",
+        "sambaPwdMustChange", "sambaAcctFlags", "uid", "sambaMungedDial",
+        "sambaHomePath", "sambaHomeDrive", "sambaLogonScript",
+        "sambaProfilePath", "sambaPrimaryGroupSID", "sambaDomainName",
+        "sambaUserWorkstations", "sambaPasswordHistory",
+        "sambaLogonHours", "sambaBadPasswordTime",
+        "sambaBadPasswordCount");
+    $this->objectclasses= array ("sambaSamAccount");
+    $this->mungedObject= new sambaMungedDial;
+    $this->ctxattributes= $this->mungedObject->ctxattributes;
 
     plugin::plugin ($config, $dn);
 
@@ -127,7 +117,7 @@ class sambaAccount extends plugin
     }
 
     /* Get samba Domain in case of samba 3 */
-    if ($this->samba3 && $this->sambaSID != ""){
+    if ($this->sambaSID != ""){
       $this->SID= preg_replace ("/-[^-]+$/", "", $this->sambaSID);
       $ldap= $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
@@ -155,7 +145,7 @@ class sambaAccount extends plugin
     }
 
     /* Fill mungedDial field */
-    if ($this->samba3 && isset($this->attrs['sambaMungedDial'])){
+    if (isset($this->attrs['sambaMungedDial'])){
       $this->mungedObject->load($this->sambaMungedDial);
     }
 
@@ -257,7 +247,7 @@ class sambaAccount extends plugin
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
 
     /* Open Samaba Logong hours dialog */
-    if(isset($_POST['SetSambaLogonHours']) && $this->samba3 && $this->acl_is_readable("sambaLogonHours")){
+    if(isset($_POST['SetSambaLogonHours']) && $this->acl_is_readable("sambaLogonHours")){
       $this->dialog = new sambaLogonHours($this->config,$this->dn,$this->sambaLogonHours);
     }
 
@@ -431,13 +421,11 @@ class sambaAccount extends plugin
     }
 
     /* Fill boxes */
-    if ($this->samba3){
-      $domains= array();
-      foreach($this->config->data['SERVERS']['SAMBA'] as $name => $content){
-        $domains[]= $name;
-      }
-      $smarty->assign("domains", $domains);
+    $domains= array();
+    foreach($this->config->data['SERVERS']['SAMBA'] as $name => $content){
+      $domains[]= $name;
     }
+    $smarty->assign("domains", $domains);
     $letters= array("");
     for ($i= 68; $i<91; $i++){
       $letters[]= chr($i).":";
@@ -445,88 +433,87 @@ class sambaAccount extends plugin
     $smarty->assign("drives", $letters);
 
     /* Fill terminal server settings */
-    if ($this->samba3){
-      foreach ($this->ctxattributes as $attr){
-        /* Fill common attributes */
-        if (isset($this->mungedObject->ctx[$attr])){
-          $smarty->assign("$attr", $this->mungedObject->ctx[$attr]);
-          // Set field  to blank if value is 0
-          if(in_array($attr, array("CtxMaxConnectionTime", "CtxMaxDisconnectionTime", "CtxMaxIdleTime"))) {
-            if($this->mungedObject->ctx[$attr] == 0) {
-              $smarty->assign("$attr", "");
-            }
+    foreach ($this->ctxattributes as $attr){
+      /* Fill common attributes */
+      if (isset($this->mungedObject->ctx[$attr])){
+        $smarty->assign("$attr", $this->mungedObject->ctx[$attr]);
+        // Set field  to blank if value is 0
+        if(in_array($attr, array("CtxMaxConnectionTime", "CtxMaxDisconnectionTime", "CtxMaxIdleTime"))) {
+          if($this->mungedObject->ctx[$attr] == 0) {
+            $smarty->assign("$attr", "");
           }
-        } else {
-          $smarty->assign("$attr", "");
         }
+      } else {
+        $smarty->assign("$attr", "");
       }
-
-      /* Assign enum values for preset items */
-      $shadowModeVals= array( "0" => _("disabled"),
-          "1" => _("input on, notify on"),
-          "2" => _("input on, notify off"),
-          "3" => _("input off, notify on"),
-          "4" => _("input off, nofify off"));
-
-      $brokenConnModeVals= array( 	"0" => _("disconnect"),
-          "1" => _("reset"));
-
-      $reConnModeVals= array( "0" => _("from any client"),
-          "1" => _("from previous client only"));
-
-      /* Fill preset items */
-      $smarty->assign("shadow", $shadowModeVals);
-      $smarty->assign("brokenconn", $brokenConnModeVals);
-      $smarty->assign("reconn", $reConnModeVals);
-
-      /* Fill preset items with values */
-      $smarty->assign("shadowmode", $this->mungedObject->getShadow());
-      $smarty->assign("brokenconnmode", $this->mungedObject->getBrokenConn());
-      $smarty->assign("reconnmode", $this->mungedObject->getReConn());
-
-      if(session::get('js')){
-        /* Set form elements to disabled/enable state */
-        $smarty->assign("tsloginstate", $this->mungedObject->getTsLogin()?"":"disabled");
-
-        $smarty->assign("inheritstate", "");
-        if($this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite)){
-          $smarty->assign("inheritstate", $this->mungedObject->getInheritMode()?"disabled":"");
-        }
-      }else{
-        $smarty->assign("tsloginstate", "");
-        $smarty->assign("inheritstate", "");
-      }      
-
-      /* Set checkboxes to checked or unchecked state */
-      $smarty->assign("tslogin", $this->mungedObject->getTsLogin()?"checked":"");
-      $smarty->assign("inherit", $this->mungedObject->getInheritMode()?"checked":"");
-      $smarty->assign("connectclientdrives",
-                      $this->mungedObject->getConnectClientDrives()?"checked":"");
-      $smarty->assign("connectclientprinters",
-                      $this->mungedObject->getConnectClientPrinters()?"checked":"");
-      $smarty->assign("defaultprinter",
-                      $this->mungedObject->getDefaultPrinter()?"checked":"");
-      $smarty->assign("CtxMaxConnectionTimeF",
-                      $this->mungedObject->getCtxMaxConnectionTimeF()?"checked":"");
-      $smarty->assign("CtxMaxDisconnectionTimeF",
-                      $this->mungedObject->getCtxMaxDisconnectionTimeF()?"checked":"");
-      $smarty->assign("CtxMaxIdleTimeF",
-                      $this->mungedObject->getCtxMaxIdleTimeF()?"checked":"");
-
-      
-      /* Fill sambaUserWorkstations */
-      $ws= split(",", $this->sambaUserWorkstations);
-      sort($ws);
-      
-      /* Tidy checks for empty option, and smarty will produce one if array[0]="" */
-      if(($ws[0]=="")&&(count($ws)==1)) $ws=array();
-
-      if($this->multiple_support_active){
-        $smarty->assign("multiple_workstations",$this->multiple_sambaUserWorkstations);
-      }  
-
-      $smarty->assign("workstations", $ws);
     }
+
+    /* Assign enum values for preset items */
+    $shadowModeVals= array( "0" => _("disabled"),
+        "1" => _("input on, notify on"),
+        "2" => _("input on, notify off"),
+        "3" => _("input off, notify on"),
+        "4" => _("input off, nofify off"));
+
+    $brokenConnModeVals= array( 	"0" => _("disconnect"),
+        "1" => _("reset"));
+
+    $reConnModeVals= array( "0" => _("from any client"),
+        "1" => _("from previous client only"));
+
+    /* Fill preset items */
+    $smarty->assign("shadow", $shadowModeVals);
+    $smarty->assign("brokenconn", $brokenConnModeVals);
+    $smarty->assign("reconn", $reConnModeVals);
+
+    /* Fill preset items with values */
+    $smarty->assign("shadowmode", $this->mungedObject->getShadow());
+    $smarty->assign("brokenconnmode", $this->mungedObject->getBrokenConn());
+    $smarty->assign("reconnmode", $this->mungedObject->getReConn());
+
+    if(session::get('js')){
+      /* Set form elements to disabled/enable state */
+      $smarty->assign("tsloginstate", $this->mungedObject->getTsLogin()?"":"disabled");
+
+      $smarty->assign("inheritstate", "");
+      if($this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite)){
+        $smarty->assign("inheritstate", $this->mungedObject->getInheritMode()?"disabled":"");
+      }
+    }else{
+      $smarty->assign("tsloginstate", "");
+      $smarty->assign("inheritstate", "");
+    }      
+
+    /* Set checkboxes to checked or unchecked state */
+    $smarty->assign("tslogin", $this->mungedObject->getTsLogin()?"checked":"");
+    $smarty->assign("inherit", $this->mungedObject->getInheritMode()?"checked":"");
+    $smarty->assign("connectclientdrives",
+                    $this->mungedObject->getConnectClientDrives()?"checked":"");
+    $smarty->assign("connectclientprinters",
+                    $this->mungedObject->getConnectClientPrinters()?"checked":"");
+    $smarty->assign("defaultprinter",
+                    $this->mungedObject->getDefaultPrinter()?"checked":"");
+    $smarty->assign("CtxMaxConnectionTimeF",
+                    $this->mungedObject->getCtxMaxConnectionTimeF()?"checked":"");
+    $smarty->assign("CtxMaxDisconnectionTimeF",
+                    $this->mungedObject->getCtxMaxDisconnectionTimeF()?"checked":"");
+    $smarty->assign("CtxMaxIdleTimeF",
+                    $this->mungedObject->getCtxMaxIdleTimeF()?"checked":"");
+
+    
+    /* Fill sambaUserWorkstations */
+    $ws= split(",", $this->sambaUserWorkstations);
+    sort($ws);
+    
+    /* Tidy checks for empty option, and smarty will produce one if array[0]="" */
+    if(($ws[0]=="")&&(count($ws)==1)) $ws=array();
+
+    if($this->multiple_support_active){
+      $smarty->assign("multiple_workstations",$this->multiple_sambaUserWorkstations);
+    }  
+
+    $smarty->assign("workstations", $ws);
+    
 
     /* Variables */
     foreach($this->attributes as $val){
@@ -556,18 +543,10 @@ class sambaAccount extends plugin
         $smarty->assign("flagsX", "");
     }
 
-    if($this->samba3){
-      if ($this->sambaPwdCanChange=="1"){
-        $smarty->assign("flagsP", "checked");
-      } else {
-        $smarty->assign("flagsP", "");
-      }
-    }else{
-      if ($this->pwdCanChange=="1"){
-        $smarty->assign("flagsP", "checked");
-      } else {
-        $smarty->assign("flagsP", "");
-      }
+    if ($this->sambaPwdCanChange=="1"){
+      $smarty->assign("flagsP", "checked");
+    } else {
+      $smarty->assign("flagsP", "");
     }
 
     if ($this->password_expires=="1"){
@@ -593,10 +572,8 @@ class sambaAccount extends plugin
    
 
     /* In case of javascript, disable some fields on demand */
-    if ($this->samba3){
-      foreach($this->mungedObject->getOnDemandFlags() as $key => $value) {
-        $smarty->assign("$key", "$value");
-      }
+    foreach($this->mungedObject->getOnDemandFlags() as $key => $value) {
+      $smarty->assign("$key", "$value");
     }
 
 
@@ -661,11 +638,7 @@ class sambaAccount extends plugin
 
     /* Show main page */
     $smarty->assign("multiple_support",$this->multiple_support_active);
-    if ($this->samba3){
-      $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
-    } else {
-      $display.= $smarty->fetch (get_template_path('samba2.tpl', TRUE, dirname(__FILE__)));
-    }
+    $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
 
     return ($display);
   }
@@ -991,38 +964,35 @@ class sambaAccount extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    if ($this->samba3){
+    /* sambaHomePath requires sambaHomeDrive and vice versa */
+    if(!empty($this->sambaHomePath) && empty($this->sambaHomeDrive)){
+      $message[]= msgPool::required(_("Home drive"));
+    }
+    if(!empty($this->sambaHomeDrive) && empty($this->sambaHomePath)){
+      $message[]= msgPool::required(_("Home path"));
+    }
 
-      /* sambaHomePath requires sambaHomeDrive and vice versa */
-      if(!empty($this->sambaHomePath) && empty($this->sambaHomeDrive)){
-        $message[]= msgPool::required(_("Home drive"));
+    /* Strings */
+    foreach (array( "sambaHomePath" => _("Home directory"),
+          "sambaProfilePath" => _("Profile path")) as $key => $val){
+      if (!$this->mungedObject->is_samba_path($this->$key)){
+        $message[]= msgPool::invalid($val);
       }
-      if(!empty($this->sambaHomeDrive) && empty($this->sambaHomePath)){
-        $message[]= msgPool::required(_("Home path"));
-      }
+    }
 
-      /* Strings */
-      foreach (array( "sambaHomePath" => _("Home directory"),
-            "sambaProfilePath" => _("Profile path")) as $key => $val){
-        if (!$this->mungedObject->is_samba_path($this->$key)){
-          $message[]= msgPool::invalid($val);
-        }
-      }
+    /* Numeric values */
+    foreach (array(	"CtxMaxConnectionTime" => _("Connection"),
+          "CtxMaxDisconnectionTime" => _("Disconnection"),
+          "CtxMaxIdleTime" => _("IDLE")) as $key => $val){
 
-      /* Numeric values */
-      foreach (array(	"CtxMaxConnectionTime" => _("Connection"),
-            "CtxMaxDisconnectionTime" => _("Disconnection"),
-            "CtxMaxIdleTime" => _("IDLE")) as $key => $val){
-
-        if (isset($this->mungedObject->ctx[$key]) && !tests::is_id($this->mungedObject->ctx[$key]) && $val != 0){
-          $message[]= msgPool::invalid($val);
-        }
+      if (isset($this->mungedObject->ctx[$key]) && !tests::is_id($this->mungedObject->ctx[$key]) && $val != 0){
+        $message[]= msgPool::invalid($val);
       }
+    }
 
-      /* Too many workstations? Windows usrmgr only supports eight */
-      if (substr_count($this->sambaUserWorkstations, ",") >= 8){
-        $message[]= _("The windows usermanager allows eight clients at maximum!");
-      }
+    /* Too many workstations? Windows usrmgr only supports eight */
+    if (substr_count($this->sambaUserWorkstations, ",") >= 8){
+      $message[]= _("The windows usermanager allows eight clients at maximum!");
     }
 
     return ($message);
@@ -1047,11 +1017,7 @@ class sambaAccount extends plugin
 
       /* Take care about access options */
       if ($this->acl_is_writeable("sambaAcctFlagsL",$SkipWrite) || ($this->acl_is_writeable("sambaAcctFlagsN",$SkipWrite))){
-        if ($this->samba3){
-          $attrname= "sambaPwdCanChange";
-        } else {
-          $attrname= "pwdCanChange";
-        }
+        $attrname= "sambaPwdCanChange";
         if (isset($_POST["allow_pwchange"]) && $_POST["allow_pwchange"] == 1){
           $tmp= 1;
         } else {
@@ -1129,11 +1095,7 @@ class sambaAccount extends plugin
 
       /* Only save if acl's are set */
       if ($this->acl_is_writeable("sambaAcctFlagsL",$SkipWrite) || ($this->acl_is_writeable("sambaAcctFlagsN",$SkipWrite))){
-        if ($this->samba3){
-          $attrname= "sambaAcctFlags";
-        } else {
-          $attrname= "acctFlags";
-        }
+        $attrname= "sambaAcctFlags";
         if ($this->$attrname != $tmp){
           $this->is_modified= TRUE;
         }
@@ -1141,62 +1103,60 @@ class sambaAccount extends plugin
       }
 
       /* Save sambaDomain attribute */
-      if ($this->acl_is_writeable("sambaDomainName",$SkipWrite) && $this->samba3 && isset ($_POST['sambaDomainName'],$SkipWrite)){
+      if ($this->acl_is_writeable("sambaDomainName",$SkipWrite) && isset ($_POST['sambaDomainName'],$SkipWrite)){
         $this->sambaDomainName= validate($_POST['sambaDomainName']);
       }
 
       /* Save CTX values */
-      if ($this->samba3){
-
-        /* Save obvious values */
-        foreach($this->ctxattributes as $val){
-          if (isset($_POST[$val]) && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite)){
-            if (get_magic_quotes_gpc()) {
-              $this->mungedObject->ctx[$val]= stripcslashes(validate($_POST[$val]));
-            } else {
-              $this->mungedObject->ctx[$val]= validate($_POST[$val]);
-            }
+      /* Save obvious values */
+      foreach($this->ctxattributes as $val){
+        if (isset($_POST[$val]) && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite)){
+          if (get_magic_quotes_gpc()) {
+            $this->mungedObject->ctx[$val]= stripcslashes(validate($_POST[$val]));
+          } else {
+            $this->mungedObject->ctx[$val]= validate($_POST[$val]);
           }
         }
-
-        /* Save checkbox states. */
-        $this->mungedObject->setTsLogin(!isset($_POST['tslogin'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        // Need to do some index checking to avoid messages like "index ... not found"
-        if(isset($_POST['brokenconn'])) {
-          $this->mungedObject->setBrokenConn($_POST['brokenconn'] == '1'
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        }
-        if(isset($_POST['reconn'])) {
-          $this->mungedObject->setReConn($_POST['reconn'] == '1'
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        }
-        $this->mungedObject->setInheritMode(isset($_POST['inherit'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        $this->mungedObject->setCtxMaxConnectionTimeF(!isset($_POST['CtxMaxConnectionTimeF'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        $this->mungedObject->setCtxMaxDisconnectionTimeF(
-                        !isset($_POST['CtxMaxDisconnectionTimeF']) 
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        $this->mungedObject->setCtxMaxIdleTimeF(!isset($_POST['CtxMaxIdleTimeF'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        $this->mungedObject->setConnectClientDrives(isset($_POST['connectclientdrives'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        $this->mungedObject->setConnectClientPrinters(isset($_POST['connectclientprinters'])  
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-        $this->mungedObject->setDefaultPrinter(isset($_POST['defaultprinter'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
-
-        /* Save combo boxes. Takes two values */
-        if(isset($_POST['reconn'])) {
-          $this->mungedObject->setShadow(isset($_POST['shadow']) && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite),$_POST['shadow']);
-        }
-
-        /* Check for changes */
-        if ($this->sambaMungedDial != $this->mungedObject->getMunged()){
-          $this->is_modified= TRUE;
-        }
       }
+
+      /* Save checkbox states. */
+      $this->mungedObject->setTsLogin(!isset($_POST['tslogin'])
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      // Need to do some index checking to avoid messages like "index ... not found"
+      if(isset($_POST['brokenconn'])) {
+        $this->mungedObject->setBrokenConn($_POST['brokenconn'] == '1'
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      }
+      if(isset($_POST['reconn'])) {
+        $this->mungedObject->setReConn($_POST['reconn'] == '1'
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      }
+      $this->mungedObject->setInheritMode(isset($_POST['inherit'])
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      $this->mungedObject->setCtxMaxConnectionTimeF(!isset($_POST['CtxMaxConnectionTimeF'])
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      $this->mungedObject->setCtxMaxDisconnectionTimeF(
+                      !isset($_POST['CtxMaxDisconnectionTimeF']) 
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      $this->mungedObject->setCtxMaxIdleTimeF(!isset($_POST['CtxMaxIdleTimeF'])
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      $this->mungedObject->setConnectClientDrives(isset($_POST['connectclientdrives'])
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      $this->mungedObject->setConnectClientPrinters(isset($_POST['connectclientprinters'])  
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+      $this->mungedObject->setDefaultPrinter(isset($_POST['defaultprinter'])
+                      && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
+
+      /* Save combo boxes. Takes two values */
+      if(isset($_POST['reconn'])) {
+        $this->mungedObject->setShadow(isset($_POST['shadow']) && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite),$_POST['shadow']);
+      }
+
+      /* Check for changes */
+      if ($this->sambaMungedDial != $this->mungedObject->getMunged()){
+        $this->is_modified= TRUE;
+      }
+      
     }
   }
 
@@ -1223,139 +1183,99 @@ class sambaAccount extends plugin
     $this->attrs['objectClass']= $tmp;
 
     /* Generate rid / primaryGroupId */
-    if ($this->samba3){
-      if (!isset($this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['SID'])){
-        msg_dialog::display(_("Warning"), _("Undefined Samba SID detected. Please fix this problem manually!"), WARNING_DIALOG);
-      } else {
-        $this->SID= $this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['SID'];
-        $this->ridBase= $this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['RIDBASE'];
-      }
+    if (!isset($this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['SID'])){
+      msg_dialog::display(_("Warning"), _("Undefined Samba SID detected. Please fix this problem manually!"), WARNING_DIALOG);
+    } else {
+      $this->SID= $this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['SID'];
+      $this->ridBase= $this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['RIDBASE'];
+    }
 
-      /* Need to generate a new uniqe uid/gid combination? */
-      if ($this->sambaSID == "" || $this->orig_sambaDomainName != $this->sambaDomainName){
-        $uidNumber= $this->uidNumber;
-        while(TRUE){
-          $sid= $this->SID."-".($uidNumber*2 + $this->ridBase);
-          $ldap->cd($this->config->current['BASE']);
-          $ldap->search("(sambaSID=$sid)", array("sambaSID"));
-          if ($ldap->count() == 0){
-            break;
-          }
-          $uidNumber++;
-        }
-        $this->attrs['sambaSID']= $sid;
-
-        /* Check for users primary group */
+    /* Need to generate a new uniqe uid/gid combination? */
+    if ($this->sambaSID == "" || $this->orig_sambaDomainName != $this->sambaDomainName){
+      $uidNumber= $this->uidNumber;
+      while(TRUE){
+        $sid= $this->SID."-".($uidNumber*2 + $this->ridBase);
         $ldap->cd($this->config->current['BASE']);
-        $ldap->search("(&(objectClass=posixGroup)(gidNumber=".$this->gidNumber."))", array("cn"));
-        if ($ldap->count() != 1){
-          msg_dialog::display(_("Warning"), _("Cannot convert primary group to samba group: group cannot be identified!"), WARNING_DIALOG);
-        } else {
-          $attrs= $ldap->fetch();
-          $g= new group($this->config, $ldap->getDN());
-          if ($g->sambaSID == ""){
-            $g->sambaDomainName= $this->sambaDomainName;
-            $g->smbgroup= TRUE;
-            $g->save ();
-          }
-          $this->attrs['sambaPrimaryGroupSID']= $g->sambaSID;
+        $ldap->search("(sambaSID=$sid)", array("sambaSID"));
+        if ($ldap->count() == 0){
+          break;
         }
+        $uidNumber++;
       }
+      $this->attrs['sambaSID']= $sid;
 
-      if ($this->sambaHomeDrive == ""){
-        $this->attrs["sambaHomeDrive"]= array();
-      }
-
-      /* Generate munged dial value */
-      $this->attrs["sambaMungedDial"]= $this->mungedObject->getMunged();
-
-      /* User wants me to fake the idMappings? This is useful for
-         making winbind resolve the user names in a reasonable amount
-         of time in combination with larger databases. */
-      if ($this->config->get_cfg_value("sambaidmapping") == "true"){
-        $this->attrs['objectClass'][]= "sambaIdmapEntry";
-      }
-
-
-      /* Password expiery */
-      if ($this->password_expires == "1"){
-        #TODO: check for date format
-        if ($this->attrs['sambaPwdMustChange'] == ""){
-          $this->attrs['sambaPwdMustChange']= 0;
-        } else {
-          list($day, $month, $year)= split('\.', $this->sambaPwdMustChange);
-          $this->attrs['sambaPwdMustChange']= mktime(0,0,0,$month, $day, $year);
+      /* Check for users primary group */
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search("(&(objectClass=posixGroup)(gidNumber=".$this->gidNumber."))", array("cn"));
+      if ($ldap->count() != 1){
+        msg_dialog::display(_("Warning"), _("Cannot convert primary group to samba group: group cannot be identified!"), WARNING_DIALOG);
+      } else {
+        $attrs= $ldap->fetch();
+        $g= new group($this->config, $ldap->getDN());
+        if ($g->sambaSID == ""){
+          $g->sambaDomainName= $this->sambaDomainName;
+          $g->smbgroup= TRUE;
+          $g->save ();
         }
-      } else {
-        $this->attrs['sambaPwdMustChange']= array();
+        $this->attrs['sambaPrimaryGroupSID']= $g->sambaSID;
       }
-      /* Make sure not to save zero in sambaPwdLastset */
-      if ($this->sambaPwdLastSet != "0"){
-        $this->attrs['sambaPwdLastSet']= $this->sambaPwdLastSet;
+    }
+
+    if ($this->sambaHomeDrive == ""){
+      $this->attrs["sambaHomeDrive"]= array();
+    }
+
+    /* Generate munged dial value */
+    $this->attrs["sambaMungedDial"]= $this->mungedObject->getMunged();
+
+    /* User wants me to fake the idMappings? This is useful for
+       making winbind resolve the user names in a reasonable amount
+       of time in combination with larger databases. */
+    if ($this->config->get_cfg_value("sambaidmapping") == "true"){
+      $this->attrs['objectClass'][]= "sambaIdmapEntry";
+    }
+
+
+    /* Password expiery */
+    if ($this->password_expires == "1"){
+      #TODO: check for date format
+      if ($this->attrs['sambaPwdMustChange'] == ""){
+        $this->attrs['sambaPwdMustChange']= 0;
       } else {
-        $this->attrs['sambaPwdLastSet']= array();
-      }
-      /* Account expiery */
-      if ($this->logon_time_set == "1"){
-        $this->attrs['sambaLogonTime']= $this->sambaLogonTime;
-      } else {
-        $this->attrs['sambaLogonTime']= array();
-      }
-      if ($this->logoff_time_set == "1"){
-        $this->attrs['sambaLogoffTime']= $this->sambaLogoffTime;
-      } else {
-        $this->attrs['sambaLogoffTime']= array();
-      }
-      if ($this->kickoff_time_set == "1"){
-        /* Adapt values to be timestamps */
-        #TODO: check for date format
-        if ($this->attrs['sambaKickoffTime'] == ""){
-          $this->attrs['sambaKickoffTime']= 2147483647;
-        } else {
-          list($day, $month, $year)= split('\.', $this->sambaKickoffTime);
-          $this->attrs['sambaKickoffTime']= mktime(0,0,0,$month, $day, $year);
-        }
-      } else {
-        $this->attrs['sambaKickoffTime']= array();
+        list($day, $month, $year)= split('\.', $this->sambaPwdMustChange);
+        $this->attrs['sambaPwdMustChange']= mktime(0,0,0,$month, $day, $year);
       }
     } else {
-    /* Not samba3 */
-      $this->attrs['rid']= $this->uidNumber*2 + 1000;
-      $this->attrs['primaryGroupID']= $this->gidNumber*2 +1001;
-
-      if ($this->homeDrive == ""){
-        $this->attrs["homeDrive"]= array();
-      }
-
-      /* Password expiery */
-      if ($this->password_expires == "1"){
-        $this->attrs['pwdMustChange']= $this->pwdMustChange;
+      $this->attrs['sambaPwdMustChange']= array();
+    }
+    /* Make sure not to save zero in sambaPwdLastset */
+    if ($this->sambaPwdLastSet != "0"){
+      $this->attrs['sambaPwdLastSet']= $this->sambaPwdLastSet;
+    } else {
+      $this->attrs['sambaPwdLastSet']= array();
+    }
+    /* Account expiery */
+    if ($this->logon_time_set == "1"){
+      $this->attrs['sambaLogonTime']= $this->sambaLogonTime;
+    } else {
+      $this->attrs['sambaLogonTime']= array();
+    }
+    if ($this->logoff_time_set == "1"){
+      $this->attrs['sambaLogoffTime']= $this->sambaLogoffTime;
+    } else {
+      $this->attrs['sambaLogoffTime']= array();
+    }
+    if ($this->kickoff_time_set == "1"){
+      /* Adapt values to be timestamps */
+      #TODO: check for date format
+      if ($this->attrs['sambaKickoffTime'] == ""){
+        $this->attrs['sambaKickoffTime']= 2147483647;
       } else {
-        $this->attrs['pwdMustChange']= 2147483647;
+        list($day, $month, $year)= split('\.', $this->sambaKickoffTime);
+        $this->attrs['sambaKickoffTime']= mktime(0,0,0,$month, $day, $year);
       }
-      /* Make sure not to save zero in pwdLastset */
-      if ($this->pwdLastSet != "0"){
-        $this->attrs['pwdLastSet']= $this->pwdLastSet;
-      } else {
-        $this->attrs['pwdLastSet']= array();
-      }
-      /* Account expiery */
-      if ($this->logon_time_set == "1"){
-        $this->attrs['logonTime']= $this->logonTime;
-      } else {
-        $this->attrs['logonTime']= array();
-      }
-      if ($this->logoff_time_set == "1"){
-        $this->attrs['logoffTime']= $this->logoffTime;
-      } else {
-        $this->attrs['logoffTime']= array();
-      }
-      if ($this->kickoff_time_set == "1"){
-        # Add one day in unixtime format to be compatible with usrmgr
-        $this->attrs['kickoffTime']= $this->kickoffTime + 86400;
-      } else {
-        $this->attrs['kickoffTime']= array();
-      }
+    } else {
+      $this->attrs['sambaKickoffTime']= array();
     }
 
     /* Write back to ldap */
@@ -1408,7 +1328,7 @@ class sambaAccount extends plugin
     $this->sambaPrimaryGroupSID= "";
 
     /* Fill mungedDial field */
-    if ($this->samba3 && isset($this->attrs['sambaMungedDial']) && !in_array('sambaMungedDial', $skip)){
+    if (isset($this->attrs['sambaMungedDial']) && !in_array('sambaMungedDial', $skip)){
       $this->mungedObject->load($this->sambaMungedDial);
     }
 
@@ -1499,11 +1419,7 @@ class sambaAccount extends plugin
   function enable_multiple_support()
   {
     plugin::enable_multiple_support();
-    if($this->samba3){
-      $this->multiple_support_active = TRUE;
-    }else{
-      $this->multiple_support_active = FALSE;
-    }
+    $this->multiple_support_active = TRUE;
   } 
 
   function multiple_save_object()
