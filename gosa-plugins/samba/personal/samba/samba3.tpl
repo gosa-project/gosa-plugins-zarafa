@@ -326,7 +326,7 @@
      </td>
     </tr>
     <tr>
-     <td  colspan=2 style="width:50%; vertical-align:top;">
+     <td colspan=2 style="vertical-align:top;">
       {render acl=$sambaPwdCanChangeACL  checkbox=$multiple_support checked=$use_allow_pwchange}
        <input id="allow_pwchange" type=checkbox name="allow_pwchange" value="1" {$flagsP} class="center">
       {/render}
@@ -349,21 +349,16 @@
       {/render}
       <label for="password_expires">{t}Password expires on{/t}</label>
      </td>
-     <td>
+     <td style='width:55%'>
       {render acl=$sambaPwdMustChangeACL}
-      <select name=day onChange="createResult(this.form,this.form.sambaPwdMustChange); document.mainform.submit();">
-       {html_options values=$days output=$days selected=$day}
-      </select>
-      {/render}
-      {render acl=$sambaPwdMustChangeACL}
-      <select name=month onChange="populate(this.form,this.form.sambaPwdMustChange); document.mainform.submit();">
-       {html_options options=$months selected=$month}
-      </select>
-      {/render}
-      {render acl=$sambaPwdMustChangeACL}
-      <select name=year onChange="populate(this.form,this.form.sambaPwdMustChange); document.mainform.submit();">
-       {html_options values=$years output=$years selected=$year}
-      </select>
+        <input type="text" id="sambaPwdMustChange" name="sambaPwdMustChange" class="date" style='width:100px' value="{$sambaPwdMustChange}">
+        {if $sambaPwdMustChangeACL|regex_replace:"/[cdmr]/":"" == "w"}
+        <script type="text/javascript">
+          {literal}
+          var datepicker  = new DatePicker({ relative : 'sambaPwdMustChange', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
+          {/literal}
+        </script>
+        {/if}
       {/render}
      </td>
     </tr>
@@ -383,23 +378,15 @@
 	 </td>
      <td>
       {render acl=$sambaKickoffTimeACL}
-       <select name=sambaKickoffTime_day onChange="createResult_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
-        {html_options values=$sambaKickoffTime_days output=$sambaKickoffTime_days selected=$sambaKickoffTime_day}
-       </select>
+        <input type="text" id="sambaKickoffTime" name="sambaKickoffTime" class="date" style='width:100px' value="{$sambaKickoffTime}">
+        {if $sambaKickoffTimeACL|regex_replace:"/[cdmr]/":"" == "w"}
+        <script type="text/javascript">
+          {literal}
+          var datepicker2 = new DatePicker({ relative : 'sambaKickoffTime', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
+          {/literal}
+        </script>
+        {/if}
       {/render}
-      {render acl=$sambaKickoffTimeACL}
-       <select name=sambaKickoffTime_month onChange="populate_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
-        {html_options options=$sambaKickoffTime_months output=$sambaKickoffTime_months selected=$sambaKickoffTime_month}
-       </select>
-      {/render}
-      {render acl=$sambaKickoffTimeACL}
-       <select name=sambaKickoffTime_year onChange="populate_sambaKickoffTime(this.form,this.form.sambaKickoffTime);">
-        {html_options values=$sambaKickoffTime_years output=$sambaKickoffTime_years selected=$sambaKickoffTime_year}
-       </select>
-      {/render}
-      <input type="hidden" name="sambaPwdMustChange" value="{$sambaPwdMustChange}">
-      <input type="hidden" name="sambaPwdCanChange" value="{$sambaPwdMustChange}">
-      <input type="hidden" name="sambaKickoffTime" value="{$sambaKickoffTime}">
      </td>
     </tr>
     <tr>
@@ -460,16 +447,3 @@
 </table>
 
 <input type="hidden" name="sambaTab" value="sambaTab">
-
-<!-- Place cursor -->
-<script language="JavaScript" type="text/javascript">
-  <!-- 
-  // Populate expiery dialog
-  populate(document.mainform,document.mainform.sambaPwdMustChange);
-
-  // Populate samba Time dialogs
-  populate_sambaLogonTime(document.mainform,document.mainform.sambaLogonTime);
-  populate_sambaLogoffTime(document.mainform,document.mainform.sambaLogoffTime);
-  populate_sambaKickoffTime(document.mainform,document.mainform.sambaKickoffTime);
-  -->
-</script>

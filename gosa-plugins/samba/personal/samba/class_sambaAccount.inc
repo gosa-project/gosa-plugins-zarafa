@@ -196,6 +196,11 @@ class sambaAccount extends plugin
 
     /* Save initial account state */
     $this->initially_was_account= $this->is_account;
+
+    /* Convert kickoff */
+    #TODO: use date format
+    $this->sambaKickoffTime= $this->sambaKickoffTime == 0?"":date('d.m.Y', $this->sambaKickoffTime);
+    $this->sambaPwdMustChange= $this->sambaPwdMustChange == 2147483647?"":date('d.m.Y', $this->sambaPwdMustChange);
   }
 
   function execute()
@@ -278,6 +283,7 @@ class sambaAccount extends plugin
 
     /* Prepare templating */
     $smarty= get_smarty();
+    $smarty->assign("usePrototype", "true");
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $var => $rest){
@@ -286,12 +292,6 @@ class sambaAccount extends plugin
 
     if(!session::is_set('edit') && !isset($this->parent)){
       $smarty->assign("sambaLogonHoursACL","");
-    }
-
-    if ($this->sambaPwdMustChange=="0"){
-      $date= getdate();
-    } else {
-      $date= getdate($this->sambaPwdMustChange);
     }
 
     if ($this->sambaLogonTime=="2147483647" || $this->sambaLogonTime=="0"){
@@ -306,12 +306,6 @@ class sambaAccount extends plugin
       $sambaLogoffTime_date= getdate($this->sambaLogoffTime);
     }
     
-    if ($this->sambaKickoffTime=="2147483647" || $this->sambaKickoffTime=="0"){
-      $sambaKickoffTime_date= getdate();
-    } else {
-      $sambaKickoffTime_date= getdate($this->sambaKickoffTime);
-    }
-
     /* Remove user workstations? */
     if (isset($_POST["delete_ws"]) && isset($_POST['workstation_list'])){
 
@@ -436,72 +430,6 @@ class sambaAccount extends plugin
       return ($display);
     }
 
-    /* Fill calendar */
-    $days= array();
-    for($d= 1; $d<32; $d++){
-      $days[]= $d;
-    }
-    $years= array();
-    for($y= $date['year']-4; $y<$date['year']+4; $y++){
-      $years[]= $y;
-    }
-    $months= msgPool::months();
-    $smarty->assign("day", $date["mday"]);
-    $smarty->assign("days", $days);
-    $smarty->assign("months", $months);
-    $smarty->assign("month", $date["mon"]-1);
-    $smarty->assign("years", $years);
-    $smarty->assign("year", $date["year"]);
-    
-    $sambaLogonTime_days= array();
-    for($d= 1; $d<32; $d++){
-      $sambaLogonTime_days[]= $d;
-    }
-    $sambaLogonTime_years= array();
-    for($y= $date['year']-4; $y<$date['year']+4; $y++){
-      $sambaLogonTime_years[]= $y;
-    }
-    $sambaLogonTime_months= msgPool::months();
-    $smarty->assign("sambaLogonTime_day", $sambaLogonTime_date["mday"]);
-    $smarty->assign("sambaLogonTime_days", $sambaLogonTime_days);
-    $smarty->assign("sambaLogonTime_months", $sambaLogonTime_months);
-    $smarty->assign("sambaLogonTime_month", $sambaLogonTime_date["mon"]-1);
-    $smarty->assign("sambaLogonTime_years", $sambaLogonTime_years);
-    $smarty->assign("sambaLogonTime_year", $sambaLogonTime_date["year"]);
-    
-    $sambaLogoffTime_days= array();
-    for($d= 1; $d<32; $d++){
-      $sambaLogoffTime_days[]= $d;
-    }
-    $sambaLogoffTime_years= array();
-    for($y= $date['year']-4; $y<$date['year']+4; $y++){
-      $sambaLogoffTime_years[]= $y;
-    }
-    $sambaLogoffTime_months= msgPool::months();
-    $smarty->assign("sambaLogoffTime_day", $sambaLogoffTime_date["mday"]);
-    $smarty->assign("sambaLogoffTime_days", $sambaLogoffTime_days);
-    $smarty->assign("sambaLogoffTime_months", $sambaLogoffTime_months);
-    $smarty->assign("sambaLogoffTime_month", $sambaLogoffTime_date["mon"]-1);
-    $smarty->assign("sambaLogoffTime_years", $sambaLogoffTime_years);
-    $smarty->assign("sambaLogoffTime_year", $sambaLogoffTime_date["year"]);
-    
-    $sambaKickoffTime_days= array();
-    for($d= 1; $d<32; $d++){
-      $sambaKickoffTime_days[]= $d;
-    }
-    $sambaKickoffTime_years= array();
-    for($y= $date['year']-4; $y<$date['year']+4; $y++){
-      $sambaKickoffTime_years[]= $y;
-    }
-    $sambaKickoffTime_months= msgPool::months();
-    //$smarty->assign("sambaKickoffTime_day", $sambaKickoffTime_date["mday"]-1);
-    $smarty->assign("sambaKickoffTime_day", $sambaKickoffTime_date["mday"]); // hickert
-    $smarty->assign("sambaKickoffTime_days", $sambaKickoffTime_days);
-    $smarty->assign("sambaKickoffTime_months", $sambaKickoffTime_months);
-    $smarty->assign("sambaKickoffTime_month", $sambaKickoffTime_date["mon"]-1);
-    $smarty->assign("sambaKickoffTime_years", $sambaKickoffTime_years);
-    $smarty->assign("sambaKickoffTime_year", $sambaKickoffTime_date["year"]);
-     
     /* Fill boxes */
     if ($this->samba3){
       $domains= array();
@@ -823,9 +751,13 @@ class sambaAccount extends plugin
     }
     if($this->password_expires){
       $sambaPwdMustChange = $this->sambaPwdMustChange;
+    } else {
+      $sambaPwdMustChange= date('d.m.Y', $sambaPwdMustChange);
     }
     if($this->kickoff_time_set){
       $sambaKickoffTime = $this->sambaKickoffTime;
+    } else {
+      $sambaKickoffTime= date('d.m.Y', $sambaKickoffTime);
     }
     $sambaPwdCanChange = $this->sambaPwdCanChange;
 
@@ -947,16 +879,12 @@ class sambaAccount extends plugin
      */
     if($sambaKickoffTime == "unset" || empty($sambaKickoffTime)){
       $sambaKickoffTime = "<i>("._("unset").")</i>";
-    }else{
-      $sambaKickoffTime = date("d.m.Y H:i:s",$sambaKickoffTime);
     }
 
     /* sambaPwdMustChange: Timestamp of when the password will expire
      */
     if($sambaPwdMustChange == "unset" || empty($sambaPwdMustChange)){
       $sambaPwdMustChange = "<i>("._("unset").")</i>";
-    }else{
-      $sambaPwdMustChange = date("d.m.Y H:i:s",$sambaPwdMustChange);
     }
 
     /* sambaPwdCanChange: Timestamp of when the user is allowed to update the password
@@ -1351,7 +1279,13 @@ class sambaAccount extends plugin
 
       /* Password expiery */
       if ($this->password_expires == "1"){
-        $this->attrs['sambaPwdMustChange']= $this->sambaPwdMustChange;
+        #TODO: check for date format
+        if ($this->attrs['sambaPwdMustChange'] == ""){
+          $this->attrs['sambaPwdMustChange']= 0;
+        } else {
+          list($day, $month, $year)= split('\.', $this->sambaPwdMustChange);
+          $this->attrs['sambaPwdMustChange']= mktime(0,0,0,$month, $day, $year);
+        }
       } else {
         $this->attrs['sambaPwdMustChange']= array();
       }
@@ -1373,9 +1307,14 @@ class sambaAccount extends plugin
         $this->attrs['sambaLogoffTime']= array();
       }
       if ($this->kickoff_time_set == "1"){
-        # Add one day in unixtime format to be compatible with usrmgr
-        //$this->attrs['sambaKickoffTime']= $this->sambaKickoffTime + 86400; 
-        $this->attrs['sambaKickoffTime']= $this->sambaKickoffTime; //hickert 
+        /* Adapt values to be timestamps */
+        #TODO: check for date format
+        if ($this->attrs['sambaKickoffTime'] == ""){
+          $this->attrs['sambaKickoffTime']= 2147483647;
+        } else {
+          list($day, $month, $year)= split('\.', $this->sambaKickoffTime);
+          $this->attrs['sambaKickoffTime']= mktime(0,0,0,$month, $day, $year);
+        }
       } else {
         $this->attrs['sambaKickoffTime']= array();
       }
