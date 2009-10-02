@@ -201,7 +201,7 @@ class servnfs extends plugin
       if(!preg_match("/^[a-z0-9\._äüö\$]*$/ui",$this->name)){
         $message[]= msgPool::invalid(_("Name"),$this->name,"/[a-z0-9\._äüö]\$/ui");
       } else {
-        if (!preg_match("/^[^\$]+\$$/", $this->name)) {
+        if (!preg_match("/^[^\$]+[\$]*\$$/", $this->name)) {
           $message[] = _("Hidden shares must have a '$' at the end of the name!");
         }
       }
