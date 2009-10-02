@@ -150,6 +150,33 @@ class askClassName extends plugin
       $message[]= msgPool::duplicated(_("Name"));
     }
 
+    /* Check if the given ClassName is already used in another administrative unit */
+    $parent_tag = $this->get_gosaUnitTag($this->parent->base);
+
+    $ldap= $this->config->get_ldap_link();
+    $filter = "(&(cn=".$this->ClassName.")(!(gosaUnitTag=".$parent_tag.")))";
+    $ldap->search($filter, array("dn","gosaUnitTag"));
+
+    if ($ldap->count() > 0) {
+      $entry = $ldap->fetch();
+
+      /* Find out which administrative unit is using the classname */
+      $ldap->cd($this->config->current['BASE']);
+      $filter = "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=".$entry['gosaUnitTag'][0]."))";
+      $ldap->search($filter, array('dn', 'ou'));
+
+      if ($ldap->count() > 0) {
+        $entry = $ldap->fetch();
+        $used_by = $entry['ou'][0];
+      } else {
+        $used_by = $entry['gosaUnitTag'][0];
+      }
+      
+      $message[]= sprintf(_("This FAI class name is already in use by the administrative unit '%s'."), $used_by);
+ 
+
+     }
+
     return ($message);
   }
 
