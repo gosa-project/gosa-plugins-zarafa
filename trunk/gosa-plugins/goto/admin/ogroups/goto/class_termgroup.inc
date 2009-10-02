@@ -402,7 +402,7 @@ class termgroup extends plugin
   function pass_attributes_to_members()
   {
     foreach ($this->member_dn as $dn) {
-      $member_obj = new worktabs($this->config, $this->config->data['TABS']['WORKTABS'], $dn, 'workstation/workgeneric');
+      $member_obj = new worktabs($this->config, $this->config->data['TABS']['WORKTABS'], $dn, 'workstation');
       $member_obj->by_object['workgeneric']->set_everything_to_inherited();
       $member_obj->save();
     }
