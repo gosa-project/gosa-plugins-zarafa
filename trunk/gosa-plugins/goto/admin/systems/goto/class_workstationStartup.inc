@@ -1137,7 +1137,6 @@ class workstartup extends plugin
       }else{
         foreach($classes as $class){
           $classname = $class['CLASS'];
-          var_dump($class);
           if (!isset($this->cache['CLASSES'][$release][$classname])) {
             $this->cache['CLASSES'][$release][$classname] = array();
           }
