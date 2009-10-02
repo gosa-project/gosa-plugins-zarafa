@@ -318,9 +318,8 @@ alert("yes");
 		}
            }
 	}
-	{/literal}
 
-<!-- // First input field on page
+	changeStates();
 	focus_field('mail');
-  -->
+	{/literal}
 </script>
