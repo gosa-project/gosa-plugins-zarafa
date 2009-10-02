@@ -188,7 +188,7 @@ class termgroup extends plugin
 
     /* Handle the inherit to members button */
     if (isset($_POST['inheritToMembers'])) {
-      $this->inherit_confirmation = new msg_dialog(_("Pass on attributs to all members"),  _("This action will overwrite all values in the member objects by the values specified in this object group. Do you want to oproceed??"),CONFIRM_DIALOG);
+      $this->inherit_confirmation = new msg_dialog(_("Pass on attributs to all members"),  _("This action will overwrite all values in the member objects by the values specified in this object group. Do you want to proceed??"),CONFIRM_DIALOG);
     }
  
     if (is_object($this->inherit_confirmation) && ($this->inherit_confirmation->is_confirmed())) {
