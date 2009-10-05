@@ -2359,7 +2359,7 @@ msgstr "'Pfad / Volume' muß das Format 'server:port' haben!"
 
 #: admin/systems/services/nfs/class_servNfs.inc:189
 msgid "'$' is only allowed at the end of the share name for hidden shares"
-msgstr ""
+msgstr "'$' ist nur am Ende des Namens für versteckte Freigaben erlaubt"
 
 #: admin/systems/services/nfs/class_servNfs.inc:197
 msgid ""
