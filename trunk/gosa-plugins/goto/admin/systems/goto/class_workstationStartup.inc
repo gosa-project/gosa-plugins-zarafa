@@ -1243,14 +1243,14 @@ class workstartup extends plugin
       # everything looks fine if the type in this position
       # doesn't exist in that class
       for ($i=0; $i<6; $i++) {
-        $result[$i] = "<img src='images/empty.png' width='17'>";
+        $result[$i] = "<img src='images/empty.png' width='17'>&nbsp;";
       }
     }
 
     foreach($classes[$class_name] as $type) {
       $index = $type['index'];
       if ($image) {
-        $string = "<img src='".$type['img']."' width='17' alt='".$type['desc']."'>&nbsp;";
+        $string = "<img src='".$type['img']."' width='17' title='".$type['desc']."'>&nbsp;";
       }
       else {
         $string = $type['Abbr'];
@@ -1285,53 +1285,54 @@ class workstartup extends plugin
   function analyse_fai_object($attr)
   {
     $result = array();
-    $result['desc'] = 'Placeholder';
     switch($attr['TYPE']){
       case 'FAIpartitionTable':
         $result["Type"]= 'FAIpartitionTable'; 
         $result["Abbr"]= 'Pt';
         $result["img"]= 'plugins/fai/images/fai_partitionTable.png';
-        $result["desc"] = "_('Partition table')";
+        $result["desc"] = _('Partition table');
         $result["index"]= 0;
         break;
       case 'FAIpackageList':
         $result["Type"]= 'FAIpackageList';
         $result["Abbr"]= 'Pl';
         $result["img"] = 'plugins/fai/images/fai_packages.png';
-        $result["desc"] = "_('Package list')";
+        $result["desc"] = _('Package list');
         $result["index"] = 1;
         break;
       case 'FAIscript':
         $result["Type"]= 'FAIscript'; 
         $result["Abbr"]= 'S'; 
         $result["img"]= 'plugins/fai/images/fai_script.png';
-        $result["desc"] = "_('Script')";
+        $result["desc"] = _('Scripts');
         $result["index"] = 2;
         break;
       case 'FAIvariable':
         $result["Type"]= 'FAIvariable'; 
         $result["Abbr"]= 'V';
         $result["img"]= 'plugins/fai/images/fai_variable.png'; 
-        $result["desc"] = "_('Variables')";
+        $result["desc"] = _('Variables');
         $result["index"]= 3;
         break;
       case 'FAIhook':
         $result["Type"]= 'FAIhook'; 
         $result["Abbr"]= 'H'; 
         $result["img"]= 'plugins/fai/images/fai_hook.png';
-        $result["desc"] = "_('Hooks')";
+        $result["desc"] = _('Hooks');
         $result["index"]= 4;
         break;
       case 'FAIprofile':
         $result["Type"]= 'FAIprofile'; 
         $result["Abbr"]= 'P';
         $result["img"]= 'plugins/fai/images/fai_profile.png';
+        $result["desc"]= _('Profile');
         $result["index"] = 5;
         break;
       case 'FAItemplate': 
         $result["Type"]= 'FAItemplate'; 
         $result["Abbr"]= 'T';
         $result["img"] = 'plugins/fai/images/fai_template.png'; 
+        $result["desc"]= _('Templates');
         $result["index"] = 6;
         break;
       default: trigger_error("Unknown FAI object type!");;
