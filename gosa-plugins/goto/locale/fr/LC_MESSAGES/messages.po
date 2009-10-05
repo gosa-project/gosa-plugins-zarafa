@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2009-10-05 15:52+0200\n"
 "PO-Revision-Date: 2009-07-22 14:44+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -3561,7 +3561,7 @@ msgid "Periodical job"
 msgstr ""
 
 #: addons/goto/events/timestamp_select.tpl:55
-msgid "Repeat job every"
+msgid "Job intervall"
 msgstr ""
 
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28

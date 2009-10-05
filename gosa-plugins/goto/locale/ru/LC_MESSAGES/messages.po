@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2009-10-05 15:52+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -3855,7 +3855,7 @@ msgid "Periodical job"
 msgstr ""
 
 #: addons/goto/events/timestamp_select.tpl:55
-msgid "Repeat job every"
+msgid "Job intervall"
 msgstr ""
 
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28

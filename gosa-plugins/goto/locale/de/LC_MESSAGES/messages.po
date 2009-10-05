@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2009-10-05 15:52+0200\n"
 "PO-Revision-Date: 2009-07-22 13:16+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -121,9 +121,8 @@ msgstr ""
 "werden sollen"
 
 #: admin/ogroups/goto/termgroup.tpl:106
-#, fuzzy
 msgid "Inherit all values to group members"
-msgstr "Alle Werte von Gruppe übernehmen"
+msgstr "Alle Werte auf Mitglieder übertragen"
 
 #: admin/ogroups/goto/termgroup.tpl:113 admin/systems/goto/workstation.tpl:130
 #: admin/systems/goto/terminal.tpl:155 addons/goto/class_gotomasses.inc:417
@@ -2783,9 +2782,8 @@ msgid "Terminal name"
 msgstr "Terminal-Name"
 
 #: admin/systems/goto/terminal.tpl:31
-#, fuzzy
 msgid "Choose subtree to place terminal in"
-msgstr "Wählen Sie den Teilbaum, in den der Benutzer eingepflegt werden soll"
+msgstr "Wählen Sie den Teilbaum, in den das Terminal eingepflegt werden soll"
 
 #: admin/systems/goto/terminal.tpl:177
 msgid "Inherit all"
@@ -3231,9 +3229,8 @@ msgid "Task"
 msgstr "Vorgang"
 
 #: addons/goto/class_gotomasses.inc:411
-#, fuzzy
 msgid "Period"
-msgstr "Berechtigung"
+msgstr "Intervall"
 
 #: addons/goto/class_gotomasses.inc:413
 #: addons/goto/events/DaemonEvent_update.tpl:9
@@ -3479,28 +3476,24 @@ msgid "Create '%s' job"
 msgstr "Erstelle '%s'-Vorgang"
 
 #: addons/goto/events/class_DaemonEvent.inc:218
-#, fuzzy
 msgid "Minutes"
-msgstr "Minute"
+msgstr "Minuten"
 
 #: addons/goto/events/class_DaemonEvent.inc:219
-#, fuzzy
 msgid "Hours"
-msgstr "Stunde"
+msgstr "Stunden"
 
 #: addons/goto/events/class_DaemonEvent.inc:220
-#, fuzzy
 msgid "Days"
-msgstr "Tag"
+msgstr "Tage"
 
 #: addons/goto/events/class_DaemonEvent.inc:221
 msgid "Weeks"
-msgstr ""
+msgstr "Wochen"
 
 #: addons/goto/events/class_DaemonEvent.inc:222
-#, fuzzy
 msgid "Months"
-msgstr "Monat"
+msgstr "Monate"
 
 #: addons/goto/events/class_DaemonEvent.inc:260
 msgid "Add"
@@ -3581,11 +3574,11 @@ msgstr "Sekunde"
 
 #: addons/goto/events/timestamp_select.tpl:49
 msgid "Periodical job"
-msgstr ""
+msgstr "Periodischer Auftrag"
 
 #: addons/goto/events/timestamp_select.tpl:55
-msgid "Repeat job every"
-msgstr ""
+msgid "Job intervall"
+msgstr "Aufstrags-Intervall"
 
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
@@ -3971,6 +3964,3 @@ msgstr "Wählen Sie die Abteilung, auf die die Suchfunktion angewandt wird"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Regulärer Ausdruck zum Erkennen von Hotplug-Geräten"
-
-#~ msgid "Vendor ID"
-#~ msgstr "Lieferanten-ID"
