@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:43+0200\n"
+"POT-Creation-Date: 2009-10-05 15:38+0200\n"
 "PO-Revision-Date: 2009-09-17 10:23+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/roleManagement/class_roleManagement.inc:26
-#: admin/roleManagement/class_roleGeneric.inc:335
+#: admin/roleManagement/class_roleGeneric.inc:389
 #: admin/roleManagement/main.inc:53
 #, fuzzy
 msgid "Roles"
@@ -25,18 +25,18 @@ msgstr "Rôle"
 msgid "Manage roles"
 msgstr "Gèrer les rôles"
 
-#: admin/roleManagement/class_roleManagement.inc:137
+#: admin/roleManagement/class_roleManagement.inc:162
 msgid "Permission"
 msgstr "Permissions"
 
-#: admin/roleManagement/class_roleManagement.inc:153
+#: admin/roleManagement/class_roleManagement.inc:178
 #: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
+#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:205
 msgid "Role"
 msgstr "Rôle"
 
-#: admin/roleManagement/class_roleManagement.inc:187
+#: admin/roleManagement/class_roleManagement.inc:212
 msgid "Permission error"
 msgstr "Erreur de permissions"
 
@@ -59,55 +59,63 @@ msgstr ""
 "D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
 "'Annuler' pour abandonner."
 
-#: admin/roleManagement/class_roleGeneric.inc:201
-#: admin/roleManagement/class_roleGeneric.inc:210
-#: admin/roleManagement/class_roleGeneric.inc:338
+#: admin/roleManagement/class_roleGeneric.inc:216
+#: admin/roleManagement/class_roleGeneric.inc:225
+#: admin/roleManagement/class_roleGeneric.inc:392
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Nom"
 
-#: admin/roleManagement/class_roleGeneric.inc:231
+#: admin/roleManagement/class_roleGeneric.inc:246
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: admin/roleManagement/class_roleGeneric.inc:249
-#: admin/roleManagement/class_roleGeneric.inc:283
+#: admin/roleManagement/class_roleGeneric.inc:264
+#: admin/roleManagement/class_roleGeneric.inc:298
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
-#: admin/roleManagement/class_roleGeneric.inc:329
+#: admin/roleManagement/class_roleGeneric.inc:383
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Informations"
 
-#: admin/roleManagement/class_roleGeneric.inc:330
+#: admin/roleManagement/class_roleGeneric.inc:384
 msgid "Role generic"
 msgstr "Rôle par défaut"
 
-#: admin/roleManagement/class_roleGeneric.inc:339
+#: admin/roleManagement/class_roleGeneric.inc:393
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr ""
 
-#: admin/roleManagement/class_roleGeneric.inc:340
-#: admin/roleManagement/class_divListRole.inc:114
+#: admin/roleManagement/class_roleGeneric.inc:394
+#: admin/roleManagement/class_divListRole.inc:104
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr ""
 
-#: admin/roleManagement/class_roleGeneric.inc:341
+#: admin/roleManagement/class_roleGeneric.inc:395
 msgid "Telefon number"
 msgstr "Numéro de téléphone"
 
-#: admin/roleManagement/class_roleGeneric.inc:342
+#: admin/roleManagement/class_roleGeneric.inc:396
 #: admin/roleManagement/roleGeneric.tpl:56
 msgid "Fax number"
 msgstr "Numéro de fax"
 
-#: admin/roleManagement/class_roleGeneric.inc:343
+#: admin/roleManagement/class_roleGeneric.inc:397
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr ""
+
+#: admin/roleManagement/paste_generic.tpl:4
+msgid "Group name"
+msgstr "Nom du groupe"
+
+#: admin/roleManagement/paste_generic.tpl:7
+msgid "Please enter the new object group name"
+msgstr "Veuillez entrer un nouveau nom pour le groupe d'objet"
 
 #: admin/roleManagement/class_divListRole.inc:52
 #: admin/roleManagement/class_divListRole.inc:53
@@ -123,7 +131,7 @@ msgid "Department"
 msgstr "Département"
 
 #: admin/roleManagement/class_divListRole.inc:71
-#: admin/roleManagement/class_divListRole.inc:120
+#: admin/roleManagement/class_divListRole.inc:110
 msgid "Actions"
 msgstr ""
 
@@ -131,43 +139,43 @@ msgstr ""
 msgid "Regular expression for matching role names"
 msgstr "Expression régulière correspondant à des noms de rôles"
 
-#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:107
 msgid "Submit department"
 msgstr "Soumettre le département"
 
-#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:107
 msgid "Submit"
 msgstr "Soumettre"
 
-#: admin/roleManagement/class_divListRole.inc:125
+#: admin/roleManagement/class_divListRole.inc:115
 msgid "Create"
 msgstr "Créer"
 
-#: admin/roleManagement/class_divListRole.inc:133
+#: admin/roleManagement/class_divListRole.inc:123
 msgid "Remove"
 msgstr "Supprimer"
 
-#: admin/roleManagement/class_divListRole.inc:171
+#: admin/roleManagement/class_divListRole.inc:168
 msgid "edit"
 msgstr "éditer"
 
-#: admin/roleManagement/class_divListRole.inc:172
+#: admin/roleManagement/class_divListRole.inc:169
 msgid "Edit this entry"
 msgstr "Editer cette entrée"
 
-#: admin/roleManagement/class_divListRole.inc:176
+#: admin/roleManagement/class_divListRole.inc:174
 msgid "delete"
 msgstr "supprimer"
 
-#: admin/roleManagement/class_divListRole.inc:177
+#: admin/roleManagement/class_divListRole.inc:175
 msgid "Delete this entry"
 msgstr "Supprimer cette entrée"
 
-#: admin/roleManagement/class_divListRole.inc:224
+#: admin/roleManagement/class_divListRole.inc:222
 msgid "Number of listed roles"
 msgstr "Nombre de rôles affichés"
 
-#: admin/roleManagement/class_divListRole.inc:225
+#: admin/roleManagement/class_divListRole.inc:223
 msgid "Number of listed departments"
 msgstr "Nombre de département listés"
 
@@ -218,4 +226,3 @@ msgstr "Afficher les objets correspondants"
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr "Expression régulière pour trouver les objets correspondants"
-

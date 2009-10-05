@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-04 14:10+0200\n"
+"POT-Creation-Date: 2009-10-05 15:36+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -39,8 +39,8 @@ msgid "Destination path"
 msgstr "Doelpad"
 
 #: admin/fai/faiTemplateEntry.tpl:38 admin/fai/faiDiskEntry.tpl:38
-#: admin/fai/class_faiPartitionTableEntry.inc:470 admin/fai/faiVariable.tpl:21
-#: admin/fai/class_faiHook.inc:562 admin/fai/class_faiDiskEntry.inc:556
+#: admin/fai/class_faiPartitionTableEntry.inc:432 admin/fai/faiVariable.tpl:21
+#: admin/fai/class_faiHook.inc:562 admin/fai/class_faiDiskEntry.inc:739
 #: admin/fai/faiProfile.tpl:21 admin/fai/faiScriptEntry.tpl:19
 #: admin/fai/faiScript.tpl:21 admin/fai/faiPackage.tpl:21
 #: admin/fai/faiHook.tpl:21 admin/fai/class_faiProfile.inc:479
@@ -48,7 +48,7 @@ msgstr "Doelpad"
 #: admin/fai/class_faiVariableEntry.inc:138
 #: admin/fai/class_faiTemplate.inc:545 admin/fai/class_faiScript.inc:646
 #: admin/fai/class_faiScriptEntry.inc:190 admin/fai/faiTemplate.tpl:21
-#: admin/fai/class_faiPartitionTable.inc:690 admin/fai/faiVariableEntry.tpl:19
+#: admin/fai/class_faiPartitionTable.inc:789 admin/fai/faiVariableEntry.tpl:19
 #: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:398
 #: admin/fai/faiPartition.tpl:20 admin/fai/class_faiPackage.inc:658
 #: admin/fai/class_faiTemplateEntry.inc:300 admin/fai/faiPartitionTable.tpl:21
@@ -138,17 +138,17 @@ msgid "sticky"
 msgstr "sticky"
 
 #: admin/fai/tabsScript.inc:33 admin/fai/tabsTemplate.inc:33
-#: admin/fai/class_faiHook.inc:239 admin/fai/tabsPartition.inc:34
-#: admin/fai/class_faiProfile.inc:262 admin/fai/class_faiManagement.inc:240
-#: admin/fai/class_faiManagement.inc:636 admin/fai/class_faiManagement.inc:642
-#: admin/fai/class_faiManagement.inc:928 admin/fai/class_faiManagement.inc:972
-#: admin/fai/class_faiManagement.inc:996
+#: admin/fai/class_faiHook.inc:239 admin/fai/class_faiDiskEntry.inc:427
+#: admin/fai/tabsPartition.inc:34 admin/fai/class_faiProfile.inc:262
+#: admin/fai/class_faiManagement.inc:240 admin/fai/class_faiManagement.inc:636
+#: admin/fai/class_faiManagement.inc:642 admin/fai/class_faiManagement.inc:928
+#: admin/fai/class_faiManagement.inc:972 admin/fai/class_faiManagement.inc:996
 #: admin/fai/class_faiManagement.inc:1245 admin/fai/class_faiTemplate.inc:212
 #: admin/fai/tabsVariable.inc:33 admin/fai/tabsPackage.inc:33
 #: admin/fai/class_faiScript.inc:229 admin/fai/class_FAI.inc:556
 #: admin/fai/class_faiScriptEntry.inc:59 admin/fai/class_faiScriptEntry.inc:62
-#: admin/fai/tabsHook.inc:32 admin/fai/class_faiPartitionTable.inc:220
-#: admin/fai/class_faiPartitionTable.inc:308
+#: admin/fai/tabsHook.inc:32 admin/fai/class_faiPartitionTable.inc:244
+#: admin/fai/class_faiPartitionTable.inc:307
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:348
 #: admin/fai/class_faiSummaryTab.inc:94 admin/fai/tabsProfile.inc:33
@@ -198,18 +198,19 @@ msgstr ""
 "alvorens u doorgaat. Indien u dat gedaan heeft drukt u op 'Verwijderen' om "
 "door te gaan of op 'Annuleren' om te annuleren."
 
-#: admin/fai/faiDiskEntry.tpl:2 admin/fai/class_faiDiskEntry.inc:247
+#: admin/fai/faiDiskEntry.tpl:2 admin/fai/class_faiDiskEntry.inc:253
 #: admin/fai/faiPartitionTableEntry.tpl:2
 msgid "Device"
 msgstr "Apparaat"
 
 #: admin/fai/faiDiskEntry.tpl:10
-#: admin/fai/class_faiPartitionTableEntry.inc:371
-#: admin/fai/class_faiPartitionTableEntry.inc:374
-#: admin/fai/class_faiPartitionTableEntry.inc:469 admin/fai/faiVariable.tpl:9
+#: admin/fai/class_faiPartitionTableEntry.inc:329
+#: admin/fai/class_faiPartitionTableEntry.inc:332
+#: admin/fai/class_faiPartitionTableEntry.inc:336
+#: admin/fai/class_faiPartitionTableEntry.inc:431 admin/fai/faiVariable.tpl:9
 #: admin/fai/class_faiHook.inc:440 admin/fai/class_faiHook.inc:561
-#: admin/fai/class_faiDiskEntry.inc:512 admin/fai/class_faiDiskEntry.inc:515
-#: admin/fai/class_faiDiskEntry.inc:555 admin/fai/faiProfile.tpl:9
+#: admin/fai/class_faiDiskEntry.inc:680 admin/fai/class_faiDiskEntry.inc:683
+#: admin/fai/class_faiDiskEntry.inc:738 admin/fai/faiProfile.tpl:9
 #: admin/fai/faiScriptEntry.tpl:9 admin/fai/faiScript.tpl:9
 #: admin/fai/faiPackage.tpl:9 admin/fai/faiHook.tpl:9
 #: admin/fai/class_faiProfile.inc:395 admin/fai/class_faiProfile.inc:405
@@ -228,8 +229,8 @@ msgstr "Apparaat"
 #: admin/fai/class_faiScriptEntry.inc:142
 #: admin/fai/class_faiScriptEntry.inc:145
 #: admin/fai/class_faiScriptEntry.inc:189 admin/fai/faiTemplate.tpl:9
-#: admin/fai/class_faiPartitionTable.inc:501
-#: admin/fai/class_faiPartitionTable.inc:689 admin/fai/faiVariableEntry.tpl:9
+#: admin/fai/class_faiPartitionTable.inc:490
+#: admin/fai/class_faiPartitionTable.inc:788 admin/fai/faiVariableEntry.tpl:9
 #: admin/fai/class_faiHookEntry.inc:145 admin/fai/class_faiHookEntry.inc:150
 #: admin/fai/class_faiHookEntry.inc:153 admin/fai/class_faiHookEntry.inc:196
 #: admin/fai/class_faiVariable.inc:296 admin/fai/class_faiVariable.inc:397
@@ -253,11 +254,11 @@ msgstr ""
 msgid "Combined physical partitions"
 msgstr ""
 
-#: admin/fai/faiDiskEntry.tpl:89 admin/fai/faiPartitionTableEntry.tpl:24
+#: admin/fai/faiDiskEntry.tpl:90 admin/fai/faiPartitionTableEntry.tpl:24
 msgid "Partition entries"
 msgstr "Partitie regels"
 
-#: admin/fai/faiDiskEntry.tpl:94 admin/fai/faiDiskEntry.tpl:96
+#: admin/fai/faiDiskEntry.tpl:95 admin/fai/faiDiskEntry.tpl:97
 #: admin/fai/faiPartitionTableEntry.tpl:29
 #: admin/fai/faiPartitionTableEntry.tpl:31
 msgid "Add partition"
@@ -288,78 +289,78 @@ msgstr "Selecteer om GOsa groepen te zien"
 msgid "Select the object you want to cut:"
 msgstr "Selecteer om GOsa groepen te zien"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:176
+#: admin/fai/class_faiPartitionTableEntry.inc:142
 #, fuzzy
 msgid "primary"
 msgstr "Primaire groep"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:176
+#: admin/fai/class_faiPartitionTableEntry.inc:142
 #, fuzzy
 msgid "logical"
 msgstr "Lokaal toevoegen"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:183
+#: admin/fai/class_faiPartitionTableEntry.inc:149
 #: admin/fai/faiPartition.tpl:12 admin/fai/class_faiSummaryTab.inc:353
 msgid "Type"
 msgstr "Type"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:184
+#: admin/fai/class_faiPartitionTableEntry.inc:150
 msgid "FS type"
 msgstr "FS type"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:185
-#: admin/fai/class_faiPartitionTableEntry.inc:474
-#: admin/fai/class_faiDiskEntry.inc:561 admin/fai/class_faiPartition.inc:329
-#: admin/fai/faiPartition.tpl:153 admin/fai/class_faiSummaryTab.inc:352
+#: admin/fai/class_faiPartitionTableEntry.inc:151
+#: admin/fai/class_faiPartitionTableEntry.inc:436
+#: admin/fai/class_faiDiskEntry.inc:744 admin/fai/class_faiPartition.inc:413
+#: admin/fai/faiPartition.tpl:154 admin/fai/class_faiSummaryTab.inc:352
 msgid "Mount point"
 msgstr "Koppelpunt"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:186
+#: admin/fai/class_faiPartitionTableEntry.inc:152
 #: admin/fai/class_faiSummaryTab.inc:351
 msgid "Size in MB"
 msgstr "Grootte in MB"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:187
-#: admin/fai/class_faiPartitionTableEntry.inc:476
-#: admin/fai/class_faiDiskEntry.inc:563 admin/fai/faiPartition.tpl:163
+#: admin/fai/class_faiPartitionTableEntry.inc:153
+#: admin/fai/class_faiPartitionTableEntry.inc:438
+#: admin/fai/class_faiDiskEntry.inc:746 admin/fai/faiPartition.tpl:164
 #: admin/fai/class_faiSummaryTab.inc:350
 msgid "Mount options"
 msgstr "Koppelopties"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:188
+#: admin/fai/class_faiPartitionTableEntry.inc:154
 msgid "FS option"
 msgstr "FS opties"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:189
+#: admin/fai/class_faiPartitionTableEntry.inc:155
 #: admin/fai/faiPartition.tpl:77
 msgid "Preserve"
 msgstr "Bewaar"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:282
+#: admin/fai/class_faiPartitionTableEntry.inc:246
 msgid "False"
 msgstr "Nee"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:284
+#: admin/fai/class_faiPartitionTableEntry.inc:248
 msgid "True"
 msgstr "Ja"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:288
-#: admin/fai/class_faiPartitionTableEntry.inc:290
+#: admin/fai/class_faiPartitionTableEntry.inc:252
+#: admin/fai/class_faiPartitionTableEntry.inc:254
 #: admin/fai/class_divListFai.inc:178
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:397
+#: admin/fai/class_faiPartitionTableEntry.inc:359
 #, php-format
 msgid "please enter a unique mount point for partition %s"
 msgstr "Geef a.u.b. een uniek koppelpunt op voor partitie %s"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:402
+#: admin/fai/class_faiPartitionTableEntry.inc:364
 #, php-format
 msgid "partition %s mount point"
 msgstr ""
 
-#: admin/fai/class_faiPartitionTableEntry.inc:407
+#: admin/fai/class_faiPartitionTableEntry.inc:369
 #, php-format
 msgid ""
 "File system type 'swap' is already used, change file system type for "
@@ -368,23 +369,22 @@ msgstr ""
 "Bestandssysteem type 'swap' wordt al gebruikt. Verander bestandssysteem type "
 "voor partitie %s."
 
-#: admin/fai/class_faiPartitionTableEntry.inc:411
+#: admin/fai/class_faiPartitionTableEntry.inc:373
 msgid "Please use 'swap' as mount point, if 'swap' is used as fs-type."
 msgstr ""
 "Gebruik a.u.b. 'swap' als koppelpunt indien 'swap' gebruikt wordt als fs-"
 "type."
 
-#: admin/fai/class_faiPartitionTableEntry.inc:417
-#: admin/fai/class_faiPartitionTableEntry.inc:421
-#: admin/fai/class_faiPartitionTableEntry.inc:427
-#: admin/fai/class_faiPartitionTableEntry.inc:429
-#: admin/fai/class_faiPartitionTableEntry.inc:434
+#: admin/fai/class_faiPartitionTableEntry.inc:379
+#: admin/fai/class_faiPartitionTableEntry.inc:383
+#: admin/fai/class_faiPartitionTableEntry.inc:389
+#: admin/fai/class_faiPartitionTableEntry.inc:391
+#: admin/fai/class_faiPartitionTableEntry.inc:396
 #, fuzzy, php-format
 msgid "partition %s size"
 msgstr "Partities"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:449
-#: admin/fai/class_faiDiskEntry.inc:535
+#: admin/fai/class_faiPartitionTableEntry.inc:411
 msgid ""
 "You have more than 3 primary partition table entries in your configuration, "
 "please check your configuration twice."
@@ -392,51 +392,51 @@ msgstr ""
 "U heeft meer dan 3 primaire partitietabel regels in uw configuratie. "
 "Controleer uw configuratie a.u.b. nogmaals."
 
-#: admin/fai/class_faiPartitionTableEntry.inc:461
-#: admin/fai/class_faiDiskEntry.inc:547
+#: admin/fai/class_faiPartitionTableEntry.inc:423
+#: admin/fai/class_faiDiskEntry.inc:730
 #, fuzzy
 msgid "Partition table entry"
 msgstr "Partitietabel"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:462
-#: admin/fai/class_faiDiskEntry.inc:548
+#: admin/fai/class_faiPartitionTableEntry.inc:424
+#: admin/fai/class_faiDiskEntry.inc:731
 #, fuzzy
 msgid "FAI partition table entry"
 msgstr "Nieuwe partitietabel"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:471
-#: admin/fai/class_faiDiskEntry.inc:558
+#: admin/fai/class_faiPartitionTableEntry.inc:433
+#: admin/fai/class_faiDiskEntry.inc:741
 #, fuzzy
 msgid "Partition type"
 msgstr "Partitietabel"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:472
-#: admin/fai/class_faiDiskEntry.inc:559
+#: admin/fai/class_faiPartitionTableEntry.inc:434
+#: admin/fai/class_faiDiskEntry.inc:742
 #, fuzzy
 msgid "Partition no."
 msgstr "Partities"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:473
-#: admin/fai/class_faiDiskEntry.inc:560
+#: admin/fai/class_faiPartitionTableEntry.inc:435
+#: admin/fai/class_faiDiskEntry.inc:743
 #, fuzzy
 msgid "File system type"
 msgstr "Systeemtype"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:475
-#: admin/fai/class_faiDiskEntry.inc:562 admin/fai/class_faiPartition.inc:299
-#: admin/fai/class_faiPartition.inc:304
+#: admin/fai/class_faiPartitionTableEntry.inc:437
+#: admin/fai/class_faiDiskEntry.inc:745 admin/fai/class_faiPartition.inc:378
+#: admin/fai/class_faiPartition.inc:383
 #, fuzzy
 msgid "Partition size"
 msgstr "Partities"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:477
-#: admin/fai/class_faiDiskEntry.inc:564
+#: admin/fai/class_faiPartitionTableEntry.inc:439
+#: admin/fai/class_faiDiskEntry.inc:747
 #, fuzzy
 msgid "File system options"
 msgstr "systeem informatie bekijken"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:478
-#: admin/fai/class_faiDiskEntry.inc:565
+#: admin/fai/class_faiPartitionTableEntry.inc:440
+#: admin/fai/class_faiDiskEntry.inc:748
 #, fuzzy
 msgid "Partition flags"
 msgstr "Partities"
@@ -480,27 +480,70 @@ msgstr "Inhakers"
 msgid "FAI hook"
 msgstr "Toon FAI inhakers"
 
-#: admin/fai/class_faiHook.inc:561 admin/fai/class_faiPartitionTable.inc:689
+#: admin/fai/class_faiHook.inc:561 admin/fai/class_faiPartitionTable.inc:788
 #: admin/fai/class_faiVariable.inc:397
 #, fuzzy
 msgid "Read only"
 msgstr "Lezen"
 
-#: admin/fai/class_faiDiskEntry.inc:247
+#: admin/fai/class_faiDiskEntry.inc:253
 msgid "Label"
 msgstr ""
 
-#: admin/fai/class_faiDiskEntry.inc:247
+#: admin/fai/class_faiDiskEntry.inc:253
 #, fuzzy
 msgid "UUID"
 msgstr "SUID"
 
-#: admin/fai/class_faiDiskEntry.inc:287 admin/fai/class_faiPartition.inc:235
+#: admin/fai/class_faiDiskEntry.inc:327
+#, fuzzy
+msgid "Disks"
+msgstr "Schijven"
+
+#: admin/fai/class_faiDiskEntry.inc:330 admin/fai/class_faiPartition.inc:300
 #: admin/fai/faiPartition.tpl:29
 msgid "Size"
 msgstr ""
 
-#: admin/fai/class_faiDiskEntry.inc:557
+#: admin/fai/class_faiDiskEntry.inc:428
+#: admin/fai/class_faiPartitionTable.inc:245
+#, php-format
+msgid ""
+"The disk cannot be deleted while it is used in the '%s' disk definition!"
+msgstr ""
+
+#: admin/fai/class_faiDiskEntry.inc:526
+msgid "encrypted"
+msgstr ""
+
+#: admin/fai/class_faiDiskEntry.inc:529
+msgid "bootable"
+msgstr ""
+
+#: admin/fai/class_faiDiskEntry.inc:532
+#, fuzzy
+msgid "preserve"
+msgstr "Bewaar"
+
+#: admin/fai/class_faiDiskEntry.inc:713
+#, fuzzy
+msgid ""
+"You have more than four primary partition table entries in your "
+"configuration, please check your configuration twice."
+msgstr ""
+"U heeft meer dan 3 primaire partitietabel regels in uw configuratie. "
+"Controleer uw configuratie a.u.b. nogmaals."
+
+#: admin/fai/class_faiDiskEntry.inc:717
+#, fuzzy
+msgid ""
+"You cannot have more than three primary partition while using logical "
+"partitions, please check your configuration twice."
+msgstr ""
+"U heeft meer dan 3 primaire partitietabel regels in uw configuratie. "
+"Controleer uw configuratie a.u.b. nogmaals."
+
+#: admin/fai/class_faiDiskEntry.inc:740
 #, fuzzy
 msgid "Disk options"
 msgstr "FS opties"
@@ -616,7 +659,7 @@ msgstr "Pakket bundel"
 #: admin/fai/class_faiProfile.inc:297 admin/fai/class_askClassName.inc:79
 #: admin/fai/class_faiGroupHandle.inc:100
 #: admin/fai/class_faiProfileEntry.inc:143
-#: admin/fai/class_faiPartitionTable.inc:681
+#: admin/fai/class_faiPartitionTable.inc:780
 #: admin/fai/class_divListFai.inc:154 admin/fai/class_divListFai.inc:208
 #: admin/fai/class_faiSummaryTab.inc:48
 msgid "Partition table"
@@ -846,12 +889,12 @@ msgstr "Variabele inhoud"
 
 #: admin/fai/class_faiTemplate.inc:286 admin/fai/class_faiTemplate.inc:288
 #: admin/fai/class_faiScript.inc:344 admin/fai/class_faiScript.inc:346
-#: admin/fai/class_faiPartitionTable.inc:406
+#: admin/fai/class_faiPartitionTable.inc:392
 msgid "edit"
 msgstr "Bewerk"
 
 #: admin/fai/class_faiTemplate.inc:290 admin/fai/class_faiScript.inc:348
-#: admin/fai/class_faiPartitionTable.inc:408
+#: admin/fai/class_faiPartitionTable.inc:394
 msgid "delete"
 msgstr "Verwijder"
 
@@ -1115,137 +1158,140 @@ msgstr "Alsnog bewerken"
 msgid "List of template files"
 msgstr "Lijst met sjabloonbestanden"
 
-#: admin/fai/class_faiPartition.inc:129
-#, fuzzy
-msgid "Primary"
-msgstr "Primaire groep"
-
-#: admin/fai/class_faiPartition.inc:130
+#: admin/fai/class_faiPartition.inc:156 admin/fai/class_faiPartition.inc:160
 #, fuzzy
 msgid "Logical"
 msgstr "Lokaal toevoegen"
 
-#: admin/fai/class_faiPartition.inc:133
+#: admin/fai/class_faiPartition.inc:159
+#, fuzzy
+msgid "Primary"
+msgstr "Primaire groep"
+
+#: admin/fai/class_faiPartition.inc:165
 msgid "RAID 0"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:134
+#: admin/fai/class_faiPartition.inc:166
 msgid "RAID 1"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:135
+#: admin/fai/class_faiPartition.inc:167
 msgid "RAID 5"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:136
+#: admin/fai/class_faiPartition.inc:168
 msgid "RAID 6"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:143
+#: admin/fai/class_faiPartition.inc:175
 #, fuzzy
 msgid "fixed"
 msgstr "Bestand"
 
-#: admin/fai/class_faiPartition.inc:144
+#: admin/fai/class_faiPartition.inc:176
 msgid "dynamic"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:145
+#: admin/fai/class_faiPartition.inc:177
 msgid "remaining space"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:150
+#: admin/fai/class_faiPartition.inc:182
 msgid "KB"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:151
+#: admin/fai/class_faiPartition.inc:183
 msgid "MB"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:152
+#: admin/fai/class_faiPartition.inc:184
 msgid "GB"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:153
+#: admin/fai/class_faiPartition.inc:185
 msgid "TB"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:154
+#: admin/fai/class_faiPartition.inc:186
 msgid "PB"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:155
+#: admin/fai/class_faiPartition.inc:187
 msgid "%"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:160
+#: admin/fai/class_faiPartition.inc:192
 msgid "always"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:161
+#: admin/fai/class_faiPartition.inc:193
 msgid "reinstall"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:165
+#: admin/fai/class_faiPartition.inc:197
 msgid "swap space"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:166
+#: admin/fai/class_faiPartition.inc:198
 msgid "ext2"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:167
+#: admin/fai/class_faiPartition.inc:199
 msgid "ext3"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:168
+#: admin/fai/class_faiPartition.inc:200
 msgid "ext4"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:169
+#: admin/fai/class_faiPartition.inc:201
 msgid "reiser fs"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:170
+#: admin/fai/class_faiPartition.inc:202
 msgid "xfs"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:171
+#: admin/fai/class_faiPartition.inc:203
 msgid "btrfs"
 msgstr ""
 
-#: admin/fai/class_faiPartition.inc:239
-#: admin/systems/services/repository/class_divListRepositories.inc:25
-msgid "Options"
-msgstr "Opties"
-
-#: admin/fai/class_faiPartition.inc:241
+#: admin/fai/class_faiPartition.inc:306
 #, fuzzy
 msgid "spare"
 msgstr "Opslaan"
 
-#: admin/fai/class_faiPartition.inc:244
+#: admin/fai/class_faiPartition.inc:309
 #, fuzzy
 msgid "missing"
 msgstr "Rechten"
 
-#: admin/fai/class_faiPartition.inc:317
+#: admin/fai/class_faiPartition.inc:312
+#: admin/systems/services/repository/class_divListRepositories.inc:25
+msgid "Options"
+msgstr "Opties"
+
+#: admin/fai/class_faiPartition.inc:396
 #, fuzzy
 msgid "Minimum partition size"
 msgstr "Partities"
 
-#: admin/fai/class_faiPartition.inc:317
+#: admin/fai/class_faiPartition.inc:396
 #, fuzzy
 msgid "Maximum partition size"
 msgstr "Partities"
 
-#: admin/fai/class_faiPartitionTable.inc:220
-#, php-format
-msgid ""
-"The disk cannot be deleted while it is used in the '%s' disk definition!"
+#: admin/fai/class_faiPartition.inc:404
+msgid "Raid arrays must contain at least two partitions!"
 msgstr ""
 
-#: admin/fai/class_faiPartitionTable.inc:682
+#: admin/fai/class_faiPartition.inc:406
+msgid ""
+"Raid 0 arrays can only be realized with a combination of two partitions!"
+msgstr ""
+
+#: admin/fai/class_faiPartitionTable.inc:781
 #, fuzzy
 msgid "FAI partition table"
 msgstr "Nieuwe partitietabel"
@@ -1594,31 +1640,31 @@ msgstr ""
 msgid "Bootable"
 msgstr ""
 
-#: admin/fai/faiPartition.tpl:107
+#: admin/fai/faiPartition.tpl:108
 #, fuzzy
 msgid "Toggle missing"
 msgstr "Informatie weergeven/verbergen"
 
-#: admin/fai/faiPartition.tpl:108
+#: admin/fai/faiPartition.tpl:109
 #, fuzzy
 msgid "Toggle spare"
 msgstr "Verwijder markering omschakelen"
 
-#: admin/fai/faiPartition.tpl:120
+#: admin/fai/faiPartition.tpl:121
 #, fuzzy
 msgid "Filesystem"
 msgstr "Systeemtype"
 
-#: admin/fai/faiPartition.tpl:128
+#: admin/fai/faiPartition.tpl:129
 #, fuzzy
 msgid "Filesystem create options"
 msgstr "systeem informatie bekijken"
 
-#: admin/fai/faiPartition.tpl:137
+#: admin/fai/faiPartition.tpl:138
 msgid "Encrypted"
 msgstr ""
 
-#: admin/fai/faiPartition.tpl:140
+#: admin/fai/faiPartition.tpl:141
 #, fuzzy
 msgid "Tune options"
 msgstr "Koppelopties"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:43+0200\n"
+"POT-Creation-Date: 2009-10-05 15:38+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: admin/roleManagement/class_roleManagement.inc:26
-#: admin/roleManagement/class_roleGeneric.inc:335
+#: admin/roleManagement/class_roleGeneric.inc:389
 #: admin/roleManagement/main.inc:53
 #, fuzzy
 msgid "Roles"
@@ -28,19 +28,19 @@ msgstr "角色"
 msgid "Manage roles"
 msgstr "域用户"
 
-#: admin/roleManagement/class_roleManagement.inc:137
+#: admin/roleManagement/class_roleManagement.inc:162
 #, fuzzy
 msgid "Permission"
 msgstr "允许"
 
-#: admin/roleManagement/class_roleManagement.inc:153
+#: admin/roleManagement/class_roleManagement.inc:178
 #: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
+#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:205
 msgid "Role"
 msgstr "角色"
 
-#: admin/roleManagement/class_roleManagement.inc:187
+#: admin/roleManagement/class_roleManagement.inc:212
 #, fuzzy
 msgid "Permission error"
 msgstr "允许"
@@ -59,59 +59,67 @@ msgstr "请再次检查您是否要这么做，因为 GOsa 没有办法将您的
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
-#: admin/roleManagement/class_roleGeneric.inc:201
-#: admin/roleManagement/class_roleGeneric.inc:210
-#: admin/roleManagement/class_roleGeneric.inc:338
+#: admin/roleManagement/class_roleGeneric.inc:216
+#: admin/roleManagement/class_roleGeneric.inc:225
+#: admin/roleManagement/class_roleGeneric.inc:392
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "名称"
 
-#: admin/roleManagement/class_roleGeneric.inc:231
+#: admin/roleManagement/class_roleGeneric.inc:246
 msgid "Unknown"
 msgstr "未知"
 
-#: admin/roleManagement/class_roleGeneric.inc:249
-#: admin/roleManagement/class_roleGeneric.inc:283
+#: admin/roleManagement/class_roleGeneric.inc:264
+#: admin/roleManagement/class_roleGeneric.inc:298
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP 错误:"
 
-#: admin/roleManagement/class_roleGeneric.inc:329
+#: admin/roleManagement/class_roleGeneric.inc:383
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "通用配置"
 
-#: admin/roleManagement/class_roleGeneric.inc:330
+#: admin/roleManagement/class_roleGeneric.inc:384
 #, fuzzy
 msgid "Role generic"
 msgstr "重命名"
 
-#: admin/roleManagement/class_roleGeneric.inc:339
+#: admin/roleManagement/class_roleGeneric.inc:393
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "描述"
 
-#: admin/roleManagement/class_roleGeneric.inc:340
-#: admin/roleManagement/class_divListRole.inc:114
+#: admin/roleManagement/class_roleGeneric.inc:394
+#: admin/roleManagement/class_divListRole.inc:104
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "位置"
 
-#: admin/roleManagement/class_roleGeneric.inc:341
+#: admin/roleManagement/class_roleGeneric.inc:395
 #, fuzzy
 msgid "Telefon number"
 msgstr "电话号码"
 
-#: admin/roleManagement/class_roleGeneric.inc:342
+#: admin/roleManagement/class_roleGeneric.inc:396
 #: admin/roleManagement/roleGeneric.tpl:56
 #, fuzzy
 msgid "Fax number"
 msgstr "系列号"
 
-#: admin/roleManagement/class_roleGeneric.inc:343
+#: admin/roleManagement/class_roleGeneric.inc:397
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr ""
+
+#: admin/roleManagement/paste_generic.tpl:4
+msgid "Group name"
+msgstr "组名"
+
+#: admin/roleManagement/paste_generic.tpl:7
+msgid "Please enter the new object group name"
+msgstr "请输入新对象组名称"
 
 #: admin/roleManagement/class_divListRole.inc:52
 #: admin/roleManagement/class_divListRole.inc:53
@@ -129,7 +137,7 @@ msgid "Department"
 msgstr "部门"
 
 #: admin/roleManagement/class_divListRole.inc:71
-#: admin/roleManagement/class_divListRole.inc:120
+#: admin/roleManagement/class_divListRole.inc:110
 msgid "Actions"
 msgstr "动作"
 
@@ -138,44 +146,44 @@ msgstr "动作"
 msgid "Regular expression for matching role names"
 msgstr "用于匹配组名的正则表达式"
 
-#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:107
 msgid "Submit department"
 msgstr "提交部门"
 
-#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:107
 msgid "Submit"
 msgstr "提交"
 
-#: admin/roleManagement/class_divListRole.inc:125
+#: admin/roleManagement/class_divListRole.inc:115
 msgid "Create"
 msgstr "创建"
 
-#: admin/roleManagement/class_divListRole.inc:133
+#: admin/roleManagement/class_divListRole.inc:123
 msgid "Remove"
 msgstr "删除"
 
-#: admin/roleManagement/class_divListRole.inc:171
+#: admin/roleManagement/class_divListRole.inc:168
 msgid "edit"
 msgstr "编辑"
 
-#: admin/roleManagement/class_divListRole.inc:172
+#: admin/roleManagement/class_divListRole.inc:169
 msgid "Edit this entry"
 msgstr "编辑这条记录"
 
-#: admin/roleManagement/class_divListRole.inc:176
+#: admin/roleManagement/class_divListRole.inc:174
 msgid "delete"
 msgstr "删除"
 
-#: admin/roleManagement/class_divListRole.inc:177
+#: admin/roleManagement/class_divListRole.inc:175
 msgid "Delete this entry"
 msgstr "删除这个条目"
 
-#: admin/roleManagement/class_divListRole.inc:224
+#: admin/roleManagement/class_divListRole.inc:222
 #, fuzzy
 msgid "Number of listed roles"
 msgstr "组名称"
 
-#: admin/roleManagement/class_divListRole.inc:225
+#: admin/roleManagement/class_divListRole.inc:223
 #, fuzzy
 msgid "Number of listed departments"
 msgstr "部门名称"

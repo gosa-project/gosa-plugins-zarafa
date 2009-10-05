@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 08:11+0200\n"
+"POT-Creation-Date: 2009-10-05 15:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,37 +20,37 @@ msgstr ""
 msgid "List of SSH public keys for this user"
 msgstr ""
 
-#: personal/ssh/sshPublicKey.tpl:11
+#: personal/ssh/sshPublicKey.tpl:12
 msgid "Upload key"
 msgstr ""
 
-#: personal/ssh/sshPublicKey.tpl:13
+#: personal/ssh/sshPublicKey.tpl:14
 msgid "Remove key"
 msgstr ""
 
-#: personal/ssh/class_sshPublicKey.inc:115
-#: personal/ssh/class_sshPublicKey.inc:128
-#: personal/ssh/class_sshPublicKey.inc:143
+#: personal/ssh/class_sshPublicKey.inc:117
+#: personal/ssh/class_sshPublicKey.inc:130
+#: personal/ssh/class_sshPublicKey.inc:145
 msgid "Upload error"
 msgstr ""
 
-#: personal/ssh/class_sshPublicKey.inc:115
+#: personal/ssh/class_sshPublicKey.inc:117
 msgid "Error uploading the key!"
 msgstr ""
 
-#: personal/ssh/class_sshPublicKey.inc:128
+#: personal/ssh/class_sshPublicKey.inc:130
 msgid "This key is already used!"
 msgstr ""
 
-#: personal/ssh/class_sshPublicKey.inc:143
+#: personal/ssh/class_sshPublicKey.inc:145
 msgid "Unknown public key format!"
 msgstr ""
 
-#: personal/ssh/class_sshPublicKey.inc:153
+#: personal/ssh/class_sshPublicKey.inc:155
 #, php-format
 msgid "SSH %s key, Fingerprint: %s, Comment: %s"
 msgstr ""
 
-#: personal/ssh/class_sshPublicKey.inc:206
+#: personal/ssh/class_sshPublicKey.inc:209
 msgid "LDAP error"
 msgstr ""

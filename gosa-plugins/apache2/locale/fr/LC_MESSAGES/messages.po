@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-10-05 15:36+0200\n"
 "PO-Revision-Date: 2009-06-30 10:43+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -53,7 +53,8 @@ msgstr "Nom de l'hôte de virtuel"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
 msgid "Only lowercase strings are allowed as Virtual Host Name."
-msgstr "Seul les chaînes en miniscule sont permises dans les noms d'hôtes virtuels."
+msgstr ""
+"Seul les chaînes en miniscule sont permises dans les noms d'hôtes virtuels."
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
 msgid "e.g. example.com"
@@ -145,4 +146,3 @@ msgid ""
 msgstr ""
 "Nom d'hôte virtuel inconnu '%s'. Le nom d'hôte virtuel doit être comme ceci "
 "'www.exemple.com ou exemple.com'"
-

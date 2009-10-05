@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:58+0200\n"
+"POT-Creation-Date: 2009-10-05 15:37+0200\n"
 "PO-Revision-Date: 2008-12-19 08:56+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -234,71 +234,71 @@ msgstr "Host für Mail Relay"
 msgid "Accept mail from other domains over non-authenticated SMTP"
 msgstr "Akzeptiere Mails von anderen Domänen über nicht-authentifiziertes SMTP"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:120
-#: personal/mail/kolab/class_mail-methods-kolab.inc:128
-#: personal/mail/kolab/class_mail-methods-kolab.inc:129
+#: personal/mail/kolab/class_mail-methods-kolab.inc:130
+#: personal/mail/kolab/class_mail-methods-kolab.inc:138
+#: personal/mail/kolab/class_mail-methods-kolab.inc:139
 msgid "Unspecified"
 msgstr "Nicht angegeben"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:121
+#: personal/mail/kolab/class_mail-methods-kolab.inc:131
 msgid "Mails"
 msgstr "Mails"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:122
+#: personal/mail/kolab/class_mail-methods-kolab.inc:132
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:123
+#: personal/mail/kolab/class_mail-methods-kolab.inc:133
 msgid "Journals"
 msgstr "Journal"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:124
+#: personal/mail/kolab/class_mail-methods-kolab.inc:134
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:125
+#: personal/mail/kolab/class_mail-methods-kolab.inc:135
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:126
+#: personal/mail/kolab/class_mail-methods-kolab.inc:136
 msgid "Notes"
 msgstr "Notizen"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:130
+#: personal/mail/kolab/class_mail-methods-kolab.inc:140
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:131
+#: personal/mail/kolab/class_mail-methods-kolab.inc:141
 msgid "Drafts"
 msgstr "Entwürfe"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:132
+#: personal/mail/kolab/class_mail-methods-kolab.inc:142
 msgid "Sent"
 msgstr "Gesendet"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:133
+#: personal/mail/kolab/class_mail-methods-kolab.inc:143
 msgid "SPAM"
 msgstr "Werbung"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:135
-#: personal/mail/kolab/class_mail-methods-kolab.inc:136
-#: personal/mail/kolab/class_mail-methods-kolab.inc:137
-#: personal/mail/kolab/class_mail-methods-kolab.inc:138
-#: personal/mail/kolab/class_mail-methods-kolab.inc:139
+#: personal/mail/kolab/class_mail-methods-kolab.inc:145
+#: personal/mail/kolab/class_mail-methods-kolab.inc:146
+#: personal/mail/kolab/class_mail-methods-kolab.inc:147
+#: personal/mail/kolab/class_mail-methods-kolab.inc:148
+#: personal/mail/kolab/class_mail-methods-kolab.inc:149
 msgid "Default"
 msgstr "Standard"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:154
+#: personal/mail/kolab/class_mail-methods-kolab.inc:164
 msgid "Mail settings cannot be removed while there are delegations configured!"
 msgstr ""
 "Die Mail-Einstellungen können nicht entfernt werden solange Vertretungen "
 "vorhanden sind!"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:252
+#: personal/mail/kolab/class_mail-methods-kolab.inc:262
 msgid "Waiting for kolab to remove mail properties..."
 msgstr "Warte darauf, daß Kolab die Mail-Einstellungen entfernt..."
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:255
+#: personal/mail/kolab/class_mail-methods-kolab.inc:265
 msgid "Please remove the mail settings first!"
 msgstr "Bitte entfernen Sie zunächst die Mail-Einstellungen!"
 

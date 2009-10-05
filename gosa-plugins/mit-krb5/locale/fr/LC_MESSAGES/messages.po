@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:58+0200\n"
+"POT-Creation-Date: 2009-10-05 15:37+0200\n"
 "PO-Revision-Date: 2009-06-30 11:18+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -44,7 +44,8 @@ msgid "Realm"
 msgstr "Domaine"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:182
-msgid "Cannot apply policy changes! The defined kerberos server has no mac address."
+msgid ""
+"Cannot apply policy changes! The defined kerberos server has no mac address."
 msgstr ""
 "Impossible d'appliquer les changement de polices de sécurité ! Le serveur "
 "Kerberos défini n'a pas d'adresse MAC."
@@ -356,4 +357,3 @@ msgstr "Interdire l'emission de tickets"
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:241
 msgid "Save"
 msgstr "Enregistrer"
-

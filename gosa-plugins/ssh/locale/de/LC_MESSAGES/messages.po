@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 08:11+0200\n"
+"POT-Creation-Date: 2009-10-05 15:39+0200\n"
 "PO-Revision-Date: 2009-08-26 15:37+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -27,37 +27,37 @@ msgstr ""
 msgid "List of SSH public keys for this user"
 msgstr "Liste der öffentlichen SSH-Schlüssel für diesen Benutzer"
 
-#: personal/ssh/sshPublicKey.tpl:11
+#: personal/ssh/sshPublicKey.tpl:12
 msgid "Upload key"
 msgstr "Schlüssel hochladen"
 
-#: personal/ssh/sshPublicKey.tpl:13
+#: personal/ssh/sshPublicKey.tpl:14
 msgid "Remove key"
 msgstr "Schlüssel entfernen"
 
-#: personal/ssh/class_sshPublicKey.inc:115
-#: personal/ssh/class_sshPublicKey.inc:128
-#: personal/ssh/class_sshPublicKey.inc:143
+#: personal/ssh/class_sshPublicKey.inc:117
+#: personal/ssh/class_sshPublicKey.inc:130
+#: personal/ssh/class_sshPublicKey.inc:145
 msgid "Upload error"
 msgstr "Übertragung fehlgeschlagen!"
 
-#: personal/ssh/class_sshPublicKey.inc:115
+#: personal/ssh/class_sshPublicKey.inc:117
 msgid "Error uploading the key!"
 msgstr "Fehler beim hochladen des Schlüssels!"
 
-#: personal/ssh/class_sshPublicKey.inc:128
+#: personal/ssh/class_sshPublicKey.inc:130
 msgid "This key is already used!"
 msgstr "Dieser Schlüssel wird bereits verwendet!"
 
-#: personal/ssh/class_sshPublicKey.inc:143
+#: personal/ssh/class_sshPublicKey.inc:145
 msgid "Unknown public key format!"
 msgstr "Unbekanntes Format für öffentliche Schlüssel!"
 
-#: personal/ssh/class_sshPublicKey.inc:153
+#: personal/ssh/class_sshPublicKey.inc:155
 #, php-format
 msgid "SSH %s key, Fingerprint: %s, Comment: %s"
 msgstr "SSH %s-Schlüssel, Fingerabdruck: %s, Kommentar: %s"
 
-#: personal/ssh/class_sshPublicKey.inc:206
+#: personal/ssh/class_sshPublicKey.inc:209
 msgid "LDAP error"
 msgstr "LDAP-Fehler"

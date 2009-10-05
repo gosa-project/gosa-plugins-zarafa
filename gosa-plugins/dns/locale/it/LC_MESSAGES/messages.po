@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-10-05 15:36+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -48,9 +48,9 @@ msgstr "telefoni"
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:345
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
-#: admin/systems/services/dns/class_DNS.inc:162
-#: admin/systems/services/dns/class_DNS.inc:167
-#: admin/systems/services/dns/class_DNS.inc:631
+#: admin/systems/services/dns/class_DNS.inc:161
+#: admin/systems/services/dns/class_DNS.inc:166
+#: admin/systems/services/dns/class_DNS.inc:630
 msgid "Error"
 msgstr ""
 
@@ -64,83 +64,84 @@ msgid "Down"
 msgstr "Dominio"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:580
+#: admin/systems/services/dns/class_servDNSeditZone.inc:586
 msgid "Delete"
 msgstr "Rimuovi"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:411
-#: admin/systems/services/dns/class_servDNSeditZone.inc:419
+#: admin/systems/services/dns/class_servDNSeditZone.inc:412
+#: admin/systems/services/dns/class_servDNSeditZone.inc:417
+#: admin/systems/services/dns/class_servDNSeditZone.inc:425
 #: admin/systems/services/dns/class_servDNS.inc:592
 #: admin/systems/services/dns/servdnseditzone.tpl:7
 #, fuzzy
 msgid "Zone name"
 msgstr "Nome comune"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:415
+#: admin/systems/services/dns/class_servDNSeditZone.inc:421
 #: admin/systems/services/dns/class_servDNS.inc:279
 #: admin/systems/services/dns/class_servDNS.inc:593
 #, fuzzy
 msgid "Reverse zone"
 msgstr "Riferimenti"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:419
-#: admin/systems/services/dns/class_servDNSeditZone.inc:445
+#: admin/systems/services/dns/class_servDNSeditZone.inc:425
+#: admin/systems/services/dns/class_servDNSeditZone.inc:451
 msgid "Only lowercase allowed"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:423
+#: admin/systems/services/dns/class_servDNSeditZone.inc:429
 #: admin/systems/services/dns/class_servDNS.inc:598
 #, fuzzy
 msgid "Serial"
 msgstr "Terminali"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:427
+#: admin/systems/services/dns/class_servDNSeditZone.inc:433
 #: admin/systems/services/dns/class_servDNS.inc:599
 #: admin/systems/services/dns/servdnseditzone.tpl:102
 #, fuzzy
 msgid "Refresh"
 msgstr "Riferimenti"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:431
+#: admin/systems/services/dns/class_servDNSeditZone.inc:437
 #, fuzzy
 msgid "Time to life"
 msgstr "Cellulare"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:435
+#: admin/systems/services/dns/class_servDNSeditZone.inc:441
 #: admin/systems/services/dns/class_servDNS.inc:601
 #: admin/systems/services/dns/servdnseditzone.tpl:120
 #, fuzzy
 msgid "Expire"
 msgstr "Esporta"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:439
+#: admin/systems/services/dns/class_servDNSeditZone.inc:445
 #: admin/systems/services/dns/class_servDNS.inc:600
 #: admin/systems/services/dns/servdnseditzone.tpl:111
 msgid "Retry"
 msgstr "Riprova"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:454
-#: admin/systems/services/dns/class_servDNSeditZone.inc:468
+#: admin/systems/services/dns/class_servDNSeditZone.inc:460
+#: admin/systems/services/dns/class_servDNSeditZone.inc:474
 #: admin/systems/services/dns/servdnseditzone.tpl:16
 #, fuzzy
 msgid "Network address"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:476
 #: admin/systems/services/dns/class_servDNSeditZone.inc:482
 #: admin/systems/services/dns/class_servDNSeditZone.inc:488
+#: admin/systems/services/dns/class_servDNSeditZone.inc:494
 #, php-format
 msgid ""
 "The specified network address and the network class (%s/%s) do not match!"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:492
+#: admin/systems/services/dns/class_servDNSeditZone.inc:498
 #: admin/systems/services/dns/class_servDNS.inc:594
 #, fuzzy
 msgid "Network class"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:586
+#: admin/systems/services/dns/class_servDNSeditZone.inc:592
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
 msgid "Add"
 msgstr "Aggiungi"
@@ -322,17 +323,17 @@ msgstr ""
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: admin/systems/services/dns/class_DNS.inc:162
+#: admin/systems/services/dns/class_DNS.inc:161
 #, php-format
 msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:167
+#: admin/systems/services/dns/class_DNS.inc:166
 #, php-format
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:631
+#: admin/systems/services/dns/class_DNS.inc:630
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""

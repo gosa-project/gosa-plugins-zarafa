@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-10-05 15:37+0200\n"
 "PO-Revision-Date: 2009-06-30 11:11+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -95,7 +95,8 @@ msgid "Realm"
 msgstr "Domaine"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid "In order to save policy changes, the server requires a valid mac address."
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
 msgstr ""
 "Pour pouvoir changer la police de sécurité, le serveur nécessite un adresse "
 "mac valide."
@@ -174,4 +175,3 @@ msgstr "Accès kadmin Kerberos"
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
 msgid "Kerberos Realms"
 msgstr "Realm Kerberos"
-

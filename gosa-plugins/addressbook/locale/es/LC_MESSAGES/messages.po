@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:56+0200\n"
+"POT-Creation-Date: 2009-10-05 15:36+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -34,16 +34,16 @@ msgid "Personal"
 msgstr "Título Personal"
 
 #: addons/addressbook/address_info.tpl:24
-#: addons/addressbook/class_addressbook.inc:648
-#: addons/addressbook/class_addressbook.inc:688
+#: addons/addressbook/class_addressbook.inc:658
 #: addons/addressbook/class_addressbook.inc:698
-#: addons/addressbook/class_addressbook.inc:725
+#: addons/addressbook/class_addressbook.inc:708
+#: addons/addressbook/class_addressbook.inc:735
 #: addons/addressbook/contents.tpl:14
 msgid "Name"
 msgstr "Nombre"
 
 #: addons/addressbook/address_info.tpl:32
-#: addons/addressbook/class_addressbook.inc:865
+#: addons/addressbook/class_addressbook.inc:875
 #: addons/addressbook/address_edit.tpl:48
 msgid "Initials"
 msgstr ""
@@ -68,20 +68,20 @@ msgstr "Dirección"
 
 #: addons/addressbook/address_info.tpl:67
 #: addons/addressbook/address_info.tpl:163
-#: addons/addressbook/class_addressbook.inc:706
+#: addons/addressbook/class_addressbook.inc:716
 #: addons/addressbook/address_edit.tpl:94
 #: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
 msgid "Phone"
 msgstr "Teléfono"
 
 #: addons/addressbook/address_info.tpl:75
-#: addons/addressbook/class_addressbook.inc:715
+#: addons/addressbook/class_addressbook.inc:725
 #: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
 msgid "Mobile"
 msgstr "Móvil"
 
 #: addons/addressbook/address_info.tpl:83
-#: addons/addressbook/class_addressbook.inc:730
+#: addons/addressbook/class_addressbook.inc:740
 #: addons/addressbook/address_edit.tpl:118
 #, fuzzy
 msgid "Email"
@@ -100,7 +100,7 @@ msgid "Company"
 msgstr "Copiar"
 
 #: addons/addressbook/address_info.tpl:117
-#: addons/addressbook/class_addressbook.inc:860
+#: addons/addressbook/class_addressbook.inc:870
 #: addons/addressbook/address_edit.tpl:155
 msgid "Department"
 msgstr "Departamento"
@@ -126,8 +126,8 @@ msgid "FAX"
 msgstr "FAX"
 
 #: addons/addressbook/address_info.tpl:179
-#: addons/addressbook/class_addressbook.inc:718
-#: addons/addressbook/class_addressbook.inc:858
+#: addons/addressbook/class_addressbook.inc:728
+#: addons/addressbook/class_addressbook.inc:868
 #: addons/addressbook/address_edit.tpl:246
 msgid "Pager"
 msgstr "Buscapersonas"
@@ -161,7 +161,7 @@ msgstr "Conexión LDAP"
 #: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
 #: addons/addressbook/class_addressbook.inc:468
 #: addons/addressbook/class_addressbook.inc:472
-#: addons/addressbook/class_addressbook.inc:588
+#: addons/addressbook/class_addressbook.inc:598
 #, fuzzy
 msgid "Dial"
 msgstr "Desactivado"
@@ -169,9 +169,9 @@ msgstr "Desactivado"
 #: addons/addressbook/class_addressbook.inc:11
 #: addons/addressbook/class_addressbook.inc:12
 #: addons/addressbook/class_addressbook.inc:23
-#: addons/addressbook/class_addressbook.inc:841
-#: addons/addressbook/class_addressbook.inc:842
-#: addons/addressbook/class_addressbook.inc:847 addons/addressbook/main.inc:43
+#: addons/addressbook/class_addressbook.inc:851
+#: addons/addressbook/class_addressbook.inc:852
+#: addons/addressbook/class_addressbook.inc:857 addons/addressbook/main.inc:43
 msgid "Addressbook"
 msgstr "Libreta direcciones"
 
@@ -205,7 +205,7 @@ msgid ""
 msgstr "Necesita introducir su contraseña actual para continuar."
 
 #: addons/addressbook/class_addressbook.inc:223
-#: addons/addressbook/class_addressbook.inc:789
+#: addons/addressbook/class_addressbook.inc:799
 #, fuzzy
 msgid "LDAP error"
 msgstr "Servicio LDAP"
@@ -226,143 +226,143 @@ msgstr ""
 msgid "Send mail to %s"
 msgstr ""
 
-#: addons/addressbook/class_addressbook.inc:600
+#: addons/addressbook/class_addressbook.inc:610
 #, fuzzy
 msgid "global addressbook"
 msgstr "Libreta direcciones"
 
-#: addons/addressbook/class_addressbook.inc:603
+#: addons/addressbook/class_addressbook.inc:613
 #, fuzzy
 msgid "user database"
 msgstr "¡No se ha podido ejecutar la consulta %s!"
 
-#: addons/addressbook/class_addressbook.inc:607
+#: addons/addressbook/class_addressbook.inc:617
 #, php-format
 msgid "Contact stored in '%s'"
 msgstr ""
 
-#: addons/addressbook/class_addressbook.inc:609
+#: addons/addressbook/class_addressbook.inc:619
 #, fuzzy
 msgid "Creating new entry in"
 msgstr "Crear un nuevo usuario usando plantillas"
 
-#: addons/addressbook/class_addressbook.inc:648
+#: addons/addressbook/class_addressbook.inc:658
 #, fuzzy
 msgid "All"
 msgstr "Acl"
 
-#: addons/addressbook/class_addressbook.inc:648
-#: addons/addressbook/class_addressbook.inc:692
-#: addons/addressbook/class_addressbook.inc:701
-#: addons/addressbook/class_addressbook.inc:722
-#: addons/addressbook/class_addressbook.inc:851
+#: addons/addressbook/class_addressbook.inc:658
+#: addons/addressbook/class_addressbook.inc:702
+#: addons/addressbook/class_addressbook.inc:711
+#: addons/addressbook/class_addressbook.inc:732
+#: addons/addressbook/class_addressbook.inc:861
 msgid "Given name"
 msgstr "Nombre de pila"
 
-#: addons/addressbook/class_addressbook.inc:649
+#: addons/addressbook/class_addressbook.inc:659
 #, fuzzy
 msgid "Work phone"
 msgstr "teléfonos"
 
-#: addons/addressbook/class_addressbook.inc:649
+#: addons/addressbook/class_addressbook.inc:659
 #, fuzzy
 msgid "Cell phone"
 msgstr "Teléfono"
 
-#: addons/addressbook/class_addressbook.inc:650
+#: addons/addressbook/class_addressbook.inc:660
 #, fuzzy
 msgid "Home phone"
 msgstr "Número de teléfono personal"
 
-#: addons/addressbook/class_addressbook.inc:650
+#: addons/addressbook/class_addressbook.inc:660
 msgid "User ID"
 msgstr "Identificador (ID) de usuario"
 
-#: addons/addressbook/class_addressbook.inc:709
+#: addons/addressbook/class_addressbook.inc:719
 #, fuzzy
 msgid "Telephone number"
 msgstr "Número de teléfono"
 
-#: addons/addressbook/class_addressbook.inc:712
+#: addons/addressbook/class_addressbook.inc:722
 #: addons/addressbook/contents.tpl:14
 msgid "Fax"
 msgstr "Fax"
 
-#: addons/addressbook/class_addressbook.inc:738
+#: addons/addressbook/class_addressbook.inc:748
 msgid ""
 "Cannot create a unique DN for your entry. Please fill more formular fields."
 msgstr ""
 
-#: addons/addressbook/class_addressbook.inc:841
+#: addons/addressbook/class_addressbook.inc:851
 #, fuzzy
 msgid "Addressbook entries"
 msgstr "Libreta direcciones"
 
-#: addons/addressbook/class_addressbook.inc:842
+#: addons/addressbook/class_addressbook.inc:852
 #, fuzzy
 msgid "Addressbook related objects"
 msgstr "Crear objetos"
 
-#: addons/addressbook/class_addressbook.inc:846
+#: addons/addressbook/class_addressbook.inc:856
 #, fuzzy
 msgid "Addons"
 msgstr "Añadir"
 
-#: addons/addressbook/class_addressbook.inc:850
+#: addons/addressbook/class_addressbook.inc:860
 msgid "Surename"
 msgstr "Apellidos"
 
-#: addons/addressbook/class_addressbook.inc:852
+#: addons/addressbook/class_addressbook.inc:862
 msgid "Telefon number"
 msgstr "Número de teléfono"
 
-#: addons/addressbook/class_addressbook.inc:853
+#: addons/addressbook/class_addressbook.inc:863
 msgid "Fax number"
 msgstr "Número de Fax"
 
-#: addons/addressbook/class_addressbook.inc:854
+#: addons/addressbook/class_addressbook.inc:864
 msgid "Mobile number"
 msgstr "Teléfono móvil"
 
-#: addons/addressbook/class_addressbook.inc:855
+#: addons/addressbook/class_addressbook.inc:865
 msgid "Home phone number"
 msgstr "Número de teléfono personal"
 
-#: addons/addressbook/class_addressbook.inc:856
+#: addons/addressbook/class_addressbook.inc:866
 msgid "User identification"
 msgstr "Identificación de Usuario"
 
-#: addons/addressbook/class_addressbook.inc:857
+#: addons/addressbook/class_addressbook.inc:867
 msgid "Mail address"
 msgstr "Dirección correo electrónico"
 
-#: addons/addressbook/class_addressbook.inc:859
+#: addons/addressbook/class_addressbook.inc:869
 msgid "Organization"
 msgstr "Organización"
 
-#: addons/addressbook/class_addressbook.inc:861
+#: addons/addressbook/class_addressbook.inc:871
 msgid "Location"
 msgstr "Localización"
 
-#: addons/addressbook/class_addressbook.inc:862
-#: addons/addressbook/class_addressbook.inc:863
+#: addons/addressbook/class_addressbook.inc:872
+#: addons/addressbook/class_addressbook.inc:873
 msgid "Postal address"
 msgstr "Código Postal"
 
-#: addons/addressbook/class_addressbook.inc:864
+#: addons/addressbook/class_addressbook.inc:874
 msgid "State"
 msgstr "Provincia"
 
-#: addons/addressbook/class_addressbook.inc:866
+#: addons/addressbook/class_addressbook.inc:876
 #, fuzzy
 msgid "Title"
 msgstr "Archivo"
 
-#: addons/addressbook/class_addressbook.inc:867
+#: addons/addressbook/class_addressbook.inc:877
 msgid "Home postal address"
 msgstr "Dirección Postal personal"
 
-#: addons/addressbook/class_addressbook.inc:868
+#: addons/addressbook/class_addressbook.inc:878
 #, fuzzy
 msgid "Common name"
 msgstr "Nombre del País"

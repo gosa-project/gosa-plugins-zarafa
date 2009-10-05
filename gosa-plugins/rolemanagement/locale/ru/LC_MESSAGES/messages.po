@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:43+0200\n"
+"POT-Creation-Date: 2009-10-05 15:38+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: poEdit 1.3.1\n"
 
 #: admin/roleManagement/class_roleManagement.inc:26
-#: admin/roleManagement/class_roleGeneric.inc:335
+#: admin/roleManagement/class_roleGeneric.inc:389
 #: admin/roleManagement/main.inc:53
 #, fuzzy
 msgid "Roles"
@@ -26,19 +26,19 @@ msgstr "Роль"
 msgid "Manage roles"
 msgstr "Пользователи домена"
 
-#: admin/roleManagement/class_roleManagement.inc:137
+#: admin/roleManagement/class_roleManagement.inc:162
 #, fuzzy
 msgid "Permission"
 msgstr "Права для членов группы"
 
-#: admin/roleManagement/class_roleManagement.inc:153
+#: admin/roleManagement/class_roleManagement.inc:178
 #: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
+#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:205
 msgid "Role"
 msgstr "Роль"
 
-#: admin/roleManagement/class_roleManagement.inc:187
+#: admin/roleManagement/class_roleManagement.inc:212
 #, fuzzy
 msgid "Permission error"
 msgstr "Права для членов группы"
@@ -62,60 +62,69 @@ msgstr ""
 "Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
 "нажмите <i>Отмена</i>."
 
-#: admin/roleManagement/class_roleGeneric.inc:201
-#: admin/roleManagement/class_roleGeneric.inc:210
-#: admin/roleManagement/class_roleGeneric.inc:338
+#: admin/roleManagement/class_roleGeneric.inc:216
+#: admin/roleManagement/class_roleGeneric.inc:225
+#: admin/roleManagement/class_roleGeneric.inc:392
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Фамилия"
 
-#: admin/roleManagement/class_roleGeneric.inc:231
+#: admin/roleManagement/class_roleGeneric.inc:246
 #, fuzzy
 msgid "Unknown"
 msgstr "состояние неизвестно"
 
-#: admin/roleManagement/class_roleGeneric.inc:249
-#: admin/roleManagement/class_roleGeneric.inc:283
+#: admin/roleManagement/class_roleGeneric.inc:264
+#: admin/roleManagement/class_roleGeneric.inc:298
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
 
-#: admin/roleManagement/class_roleGeneric.inc:329
+#: admin/roleManagement/class_roleGeneric.inc:383
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Общее"
 
-#: admin/roleManagement/class_roleGeneric.inc:330
+#: admin/roleManagement/class_roleGeneric.inc:384
 #, fuzzy
 msgid "Role generic"
 msgstr "Имя сервера"
 
-#: admin/roleManagement/class_roleGeneric.inc:339
+#: admin/roleManagement/class_roleGeneric.inc:393
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Описание"
 
-#: admin/roleManagement/class_roleGeneric.inc:340
-#: admin/roleManagement/class_divListRole.inc:114
+#: admin/roleManagement/class_roleGeneric.inc:394
+#: admin/roleManagement/class_divListRole.inc:104
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Ветка"
 
-#: admin/roleManagement/class_roleGeneric.inc:341
+#: admin/roleManagement/class_roleGeneric.inc:395
 #, fuzzy
 msgid "Telefon number"
 msgstr "Телефонные номера"
 
-#: admin/roleManagement/class_roleGeneric.inc:342
+#: admin/roleManagement/class_roleGeneric.inc:396
 #: admin/roleManagement/roleGeneric.tpl:56
 #, fuzzy
 msgid "Fax number"
 msgstr "Терминал"
 
-#: admin/roleManagement/class_roleGeneric.inc:343
+#: admin/roleManagement/class_roleGeneric.inc:397
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr ""
+
+#: admin/roleManagement/paste_generic.tpl:4
+msgid "Group name"
+msgstr "Группа"
+
+#: admin/roleManagement/paste_generic.tpl:7
+#, fuzzy
+msgid "Please enter the new object group name"
+msgstr "Введите адрес сервера"
 
 #: admin/roleManagement/class_divListRole.inc:52
 #: admin/roleManagement/class_divListRole.inc:53
@@ -133,7 +142,7 @@ msgid "Department"
 msgstr "Подразделение"
 
 #: admin/roleManagement/class_divListRole.inc:71
-#: admin/roleManagement/class_divListRole.inc:120
+#: admin/roleManagement/class_divListRole.inc:110
 msgid "Actions"
 msgstr "Действия"
 
@@ -142,49 +151,49 @@ msgstr "Действия"
 msgid "Regular expression for matching role names"
 msgstr "Регулярное выражение, соответствующее именам групп"
 
-#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:107
 #, fuzzy
 msgid "Submit department"
 msgstr "Показать подразделения"
 
-#: admin/roleManagement/class_divListRole.inc:117
+#: admin/roleManagement/class_divListRole.inc:107
 msgid "Submit"
 msgstr ""
 
-#: admin/roleManagement/class_divListRole.inc:125
+#: admin/roleManagement/class_divListRole.inc:115
 msgid "Create"
 msgstr "Создать"
 
-#: admin/roleManagement/class_divListRole.inc:133
+#: admin/roleManagement/class_divListRole.inc:123
 msgid "Remove"
 msgstr "Удалить"
 
-#: admin/roleManagement/class_divListRole.inc:171
+#: admin/roleManagement/class_divListRole.inc:168
 #, fuzzy
 msgid "edit"
 msgstr "Изменить"
 
-#: admin/roleManagement/class_divListRole.inc:172
+#: admin/roleManagement/class_divListRole.inc:169
 #, fuzzy
 msgid "Edit this entry"
 msgstr "Редактиовать объект"
 
-#: admin/roleManagement/class_divListRole.inc:176
+#: admin/roleManagement/class_divListRole.inc:174
 #, fuzzy
 msgid "delete"
 msgstr "Удалить"
 
-#: admin/roleManagement/class_divListRole.inc:177
+#: admin/roleManagement/class_divListRole.inc:175
 #, fuzzy
 msgid "Delete this entry"
 msgstr "Удалить"
 
-#: admin/roleManagement/class_divListRole.inc:224
+#: admin/roleManagement/class_divListRole.inc:222
 #, fuzzy
 msgid "Number of listed roles"
 msgstr "Название группы"
 
-#: admin/roleManagement/class_divListRole.inc:225
+#: admin/roleManagement/class_divListRole.inc:223
 #, fuzzy
 msgid "Number of listed departments"
 msgstr "Подразделение"

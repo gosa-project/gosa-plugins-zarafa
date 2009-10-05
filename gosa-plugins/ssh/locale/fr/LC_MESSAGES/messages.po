@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 08:11+0200\n"
+"POT-Creation-Date: 2009-10-05 15:39+0200\n"
 "PO-Revision-Date: 2009-09-01 09:42+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -21,38 +21,37 @@ msgstr ""
 msgid "List of SSH public keys for this user"
 msgstr "Liste des clefs SSH publiques pour cet utilisateur"
 
-#: personal/ssh/sshPublicKey.tpl:11
+#: personal/ssh/sshPublicKey.tpl:12
 msgid "Upload key"
 msgstr "Télécharger une clef"
 
-#: personal/ssh/sshPublicKey.tpl:13
+#: personal/ssh/sshPublicKey.tpl:14
 msgid "Remove key"
 msgstr "Enlever une clef"
 
-#: personal/ssh/class_sshPublicKey.inc:115
-#: personal/ssh/class_sshPublicKey.inc:128
-#: personal/ssh/class_sshPublicKey.inc:143
+#: personal/ssh/class_sshPublicKey.inc:117
+#: personal/ssh/class_sshPublicKey.inc:130
+#: personal/ssh/class_sshPublicKey.inc:145
 msgid "Upload error"
 msgstr "Erreur de téléchargement"
 
-#: personal/ssh/class_sshPublicKey.inc:115
+#: personal/ssh/class_sshPublicKey.inc:117
 msgid "Error uploading the key!"
 msgstr "Erreur lors du téléchargement !"
 
-#: personal/ssh/class_sshPublicKey.inc:128
+#: personal/ssh/class_sshPublicKey.inc:130
 msgid "This key is already used!"
 msgstr "Cette clef est déjà utilisée !"
 
-#: personal/ssh/class_sshPublicKey.inc:143
+#: personal/ssh/class_sshPublicKey.inc:145
 msgid "Unknown public key format!"
 msgstr "Format de la clef inconnue !"
 
-#: personal/ssh/class_sshPublicKey.inc:153
+#: personal/ssh/class_sshPublicKey.inc:155
 #, php-format
 msgid "SSH %s key, Fingerprint: %s, Comment: %s"
 msgstr "Clef SSH %s, Empreinte Digitale: %s, Commentaire: %s"
 
-#: personal/ssh/class_sshPublicKey.inc:206
+#: personal/ssh/class_sshPublicKey.inc:209
 msgid "LDAP error"
 msgstr "Erreur LDAP"
-

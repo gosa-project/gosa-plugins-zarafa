@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-10-05 15:37+0200\n"
 "PO-Revision-Date: 2009-09-05 15:38+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -95,7 +95,8 @@ msgid "Realm"
 msgstr "Dziedzina"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid "In order to save policy changes, the server requires a valid mac address."
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
 msgstr "Aby zapisać zmiany polis, serwer wymaga poprawnego adresu MAC."
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
@@ -133,8 +134,12 @@ msgstr "Heimdal"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #, php-format
-msgid "Error loading heimdal configuration, more than one configuration entry was found for '%s'."
-msgstr "Błąd ładowania konfiguracji heimdal, znaleziono więcej niż jeden wpis konfiguracyjny dla '%s'."
+msgid ""
+"Error loading heimdal configuration, more than one configuration entry was "
+"found for '%s'."
+msgstr ""
+"Błąd ładowania konfiguracji heimdal, znaleziono więcej niż jeden wpis "
+"konfiguracyjny dla '%s'."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:157
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:413
@@ -171,16 +176,20 @@ msgstr "Dziedziny Kerberos"
 
 #~ msgid "Admin user"
 #~ msgstr "Użytkownik administracyjny"
+
 #~ msgid "Admin"
 #~ msgstr "Admin"
 
 #, fuzzy
 #~ msgid "Please specify a numeric value for %s."
 #~ msgstr "Proszę podać liczbę jako wartość dla ttl."
+
 #~ msgid "The specified kerberos password is empty."
 #~ msgstr "Podane hasło kerberos jest puste."
+
 #~ msgid "The specified kerberos admin is empty."
 #~ msgstr "Podany administrator kerberos jest pusty."
+
 #~ msgid "The specified kerberos realm is empty."
 #~ msgstr "Podana dziedzina kerberos jest pusta."
 
@@ -191,4 +200,3 @@ msgstr "Dziedziny Kerberos"
 #, fuzzy
 #~ msgid "Could not add or update heimdal extensions."
 #~ msgstr "To konto nie posiada rozszerzeń pocztowych"
-

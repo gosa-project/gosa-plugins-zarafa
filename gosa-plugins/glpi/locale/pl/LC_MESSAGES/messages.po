@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-10-05 15:36+0200\n"
 "PO-Revision-Date: 2009-09-05 15:29+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -203,8 +203,12 @@ msgstr "Kartriidź"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:111
 #, php-format
-msgid "You can't delete this cartridge type, it is still in use by this printer(s) '%s'."
-msgstr "Nie można usunąć tego typu kartridża. Jest wciąż używany przez drukarkę(i) '%s'."
+msgid ""
+"You can't delete this cartridge type, it is still in use by this printer(s) "
+"'%s'."
+msgstr ""
+"Nie można usunąć tego typu kartridża. Jest wciąż używany przez drukarkę(i) '%"
+"s'."
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:158
 msgid "Cartridges"
@@ -287,8 +291,11 @@ msgstr "Nie można wykryć nazwy obiektu."
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:133
 #, php-format
-msgid "You can't delete this device, it is still in use by these system(s) '%s'"
-msgstr "Nie można usunąć tego urządzenia, jest ono wciąż używane przez te(n) system(y) '%s'"
+msgid ""
+"You can't delete this device, it is still in use by these system(s) '%s'"
+msgstr ""
+"Nie można usunąć tego urządzenia, jest ono wciąż używane przez te(n) system"
+"(y) '%s'"
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:183
 msgid "devices"
@@ -746,12 +753,21 @@ msgid "Warning"
 msgstr "Ostrzeżenie"
 
 #: admin/systems/services/glpi/remove_glpi.tpl:6
-msgid "Please double check if your really want to do this since there is no way for GOsa to get your data back."
-msgstr "Proszę upewnić się, że faktycznie chcesz wykonać tą operację. Nie ma możliwości odwrócenia tego procesu."
+msgid ""
+"Please double check if your really want to do this since there is no way for "
+"GOsa to get your data back."
+msgstr ""
+"Proszę upewnić się, że faktycznie chcesz wykonać tą operację. Nie ma "
+"możliwości odwrócenia tego procesu."
 
 #: admin/systems/services/glpi/remove_glpi.tpl:10
-msgid "Best thing to do before performing this action would be to save the current contents of your MySql database in a file. So - if you've done so - press 'Delete' to continue or 'Cancel' to abort."
-msgstr "Przed wykonaniem tej operacji zaleca się wykonanie kopii bezpieczeństwa bazy MySQL. Naciśnij 'Usuń' aby kontynuować, lub 'Anuluj' aby przerwać."
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your MySql database in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Przed wykonaniem tej operacji zaleca się wykonanie kopii bezpieczeństwa bazy "
+"MySQL. Naciśnij 'Usuń' aby kontynuować, lub 'Anuluj' aby przerwać."
 
 #: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:14
 msgid "Reference"
@@ -766,8 +782,17 @@ msgid "List of available cartridge type for this type of printer"
 msgstr "Lista dostępnych typów kartridży dla tego typu drukarki"
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:23
-msgid "This dialog allows you to create new types of cartridges, and select one or more types for your printer. Cartridge types depends on the printer type you have selected. For each selected cartridge type there will be a new cartridge created, this allows you to select the same cartridge type for more then one printer."
-msgstr "Ten dialog umożliwia tworzenie nowych typów kartridży oraz wybrania jednego lub więcej typów drukarki. Typ kartridża zależy od typu wybranej drukarki. Dla każdego wybranego typu katridża zostanie utworzony nowy kartridż. To pozwala na wybranie tego samego typu kartidża dla więcej niż jednej drukarki."
+msgid ""
+"This dialog allows you to create new types of cartridges, and select one or "
+"more types for your printer. Cartridge types depends on the printer type you "
+"have selected. For each selected cartridge type there will be a new "
+"cartridge created, this allows you to select the same cartridge type for "
+"more then one printer."
+msgstr ""
+"Ten dialog umożliwia tworzenie nowych typów kartridży oraz wybrania jednego "
+"lub więcej typów drukarki. Typ kartridża zależy od typu wybranej drukarki. "
+"Dla każdego wybranego typu katridża zostanie utworzony nowy kartridż. To "
+"pozwala na wybranie tego samego typu kartidża dla więcej niż jednej drukarki."
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:27
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:27
@@ -789,8 +814,12 @@ msgid "List of attachments"
 msgstr "Lista załączników"
 
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:23
-msgid "This dialog allow you to attach additional objects (like manuals, guides, etc.)  to your currently edited computer."
-msgstr "Ten dialog umożliwia przypisanie dodatkowych obiektów (np dokumentacja) do obecnie edytowanego komputera."
+msgid ""
+"This dialog allow you to attach additional objects (like manuals, guides, "
+"etc.)  to your currently edited computer."
+msgstr ""
+"Ten dialog umożliwia przypisanie dodatkowych obiektów (np dokumentacja) do "
+"obecnie edytowanego komputera."
 
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:35
 msgid "Display attachments matching"
@@ -805,8 +834,10 @@ msgid "List of devices"
 msgstr "Lista urządzeń"
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:23
-msgid "This dialog allows you to attach a device to your currently edited computer."
-msgstr "Ten dialog umożliwia przypięcie urządzenia do obecnie edytowanego komputera."
+msgid ""
+"This dialog allows you to attach a device to your currently edited computer."
+msgstr ""
+"Ten dialog umożliwia przypięcie urządzenia do obecnie edytowanego komputera."
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:35
 msgid "Display devices matching"
@@ -824,12 +855,14 @@ msgstr "Brak serwera z poprawną usługą bazy glpi."
 #: admin/systems/services/glpi/class_glpiAccount.inc:156
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:173
 msgid "Can't connect to glpi database, the php-mysql extension is missing."
-msgstr "Nie można połączyć się z bazą danych glpi, brak rozszerzenia php-mysql."
+msgstr ""
+"Nie można połączyć się z bazą danych glpi, brak rozszerzenia php-mysql."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:166
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:183
 msgid "Can't connect to glpi database, check configuration twice."
-msgstr "Nie można połączyć się z bazą danych glpi, proszę sprawdzić konfigurację."
+msgstr ""
+"Nie można połączyć się z bazą danych glpi, proszę sprawdzić konfigurację."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:181
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:198
@@ -849,12 +882,15 @@ msgstr "Ta funkcjonalność nie jest jeszcze zaimplementowana."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:312
 msgid "Adding new sytem type failed, this system type name is already used."
-msgstr "Dodawanie nowego typu systemu nieudane, nazwa typu systemu jest już używana."
+msgstr ""
+"Dodawanie nowego typu systemu nieudane, nazwa typu systemu jest już używana."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:332
 #, php-format
-msgid "You can't delete this system type, it is still in use by these system(s) '%s'"
-msgstr "Nie można usunąć tego typu systemu. Jest wciąż używany przez system(y) '%s'"
+msgid ""
+"You can't delete this system type, it is still in use by these system(s) '%s'"
+msgstr ""
+"Nie można usunąć tego typu systemu. Jest wciąż używany przez system(y) '%s'"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:343
 msgid "Rename failed, this system type name is already used."
@@ -862,20 +898,28 @@ msgstr "Zmiana nazwy nieudana, ta nazwa typu systemu jest już w użyciu."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:399
 msgid "Adding new operating system failed, specifed name is already used."
-msgstr "Dodawanie nowego systemu operacyjnego nieudane, podana nazwa już istnieje."
+msgstr ""
+"Dodawanie nowego systemu operacyjnego nieudane, podana nazwa już istnieje."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:421
 #, php-format
-msgid "You can't delete this operating system, it is still in use by these system(s) '%s'"
-msgstr "Nie można usunąć tego systemu operacyjnego. Jest wciąż używany przez system(y) '%s'."
+msgid ""
+"You can't delete this operating system, it is still in use by these system"
+"(s) '%s'"
+msgstr ""
+"Nie można usunąć tego systemu operacyjnego. Jest wciąż używany przez system"
+"(y) '%s'."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:433
 msgid "Updating operating system failed, specifed name is already used."
-msgstr "Aktualizacja systemu operacyjnego nieudana, podana nazwa jest już używana."
+msgstr ""
+"Aktualizacja systemu operacyjnego nieudana, podana nazwa jest już używana."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:512
 #, php-format
-msgid "Could not add the given user, the users dn is too long, only 100 characters are allowed here."
+msgid ""
+"Could not add the given user, the users dn is too long, only 100 characters "
+"are allowed here."
 msgstr ""
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:593
@@ -884,8 +928,12 @@ msgid "Remove inventory"
 msgstr "Usuń inwentarz"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:594
-msgid "This device has inventory informations enabled. You can disable them by clicking below."
-msgstr "To urządzenie posiada włączone informacje inwentarza. Można je wyłączyć klikając poniżej."
+msgid ""
+"This device has inventory informations enabled. You can disable them by "
+"clicking below."
+msgstr ""
+"To urządzenie posiada włączone informacje inwentarza. Można je wyłączyć "
+"klikając poniżej."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:596
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:232
@@ -893,8 +941,12 @@ msgid "Add inventory"
 msgstr "Dodaj inwentarz"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:597
-msgid "This device has inventory informations disabled. You can enable them by clicking below."
-msgstr "To urządzenie posiada wyłączone informacje inwentarza. Można je włączyć klikając poniżej."
+msgid ""
+"This device has inventory informations disabled. You can enable them by "
+"clicking below."
+msgstr ""
+"To urządzenie posiada wyłączone informacje inwentarza. Można je włączyć "
+"klikając poniżej."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:692
 #: admin/systems/services/glpi/class_glpiAccount.inc:693
@@ -954,8 +1006,10 @@ msgstr "załącznik"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:107
 #, php-format
-msgid "You can't delete this attachment, it is still in use by these system(s) '%s'"
-msgstr "Nie można usunąć tego załącznika, jest wciąż używany przez system(y) '%s'"
+msgid ""
+"You can't delete this attachment, it is still in use by these system(s) '%s'"
+msgstr ""
+"Nie można usunąć tego załącznika, jest wciąż używany przez system(y) '%s'"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:119
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:123
@@ -1021,18 +1075,28 @@ msgid "Please specify a valid name for this attachment."
 msgstr "Proszę podać prawidłową nazwę dla tego załącznika."
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:230
-msgid "This server has inventory features enabled. You can disable them by clicking below."
-msgstr "Ten serwer posiada cechy inwentarza. Można je wyłączyć klikając poniżej"
+msgid ""
+"This server has inventory features enabled. You can disable them by clicking "
+"below."
+msgstr ""
+"Ten serwer posiada cechy inwentarza. Można je wyłączyć klikając poniżej"
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:233
-msgid "This server has inventory features disabled. You can enable them by clicking below."
-msgstr "Ten serwer nie posiada cech inwentarza. Można je włączyć klikając poniżej."
+msgid ""
+"This server has inventory features disabled. You can enable them by clicking "
+"below."
+msgstr ""
+"Ten serwer nie posiada cech inwentarza. Można je włączyć klikając poniżej."
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:256
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:294
 #, php-format
-msgid "Can't rename given printer type to '%s', because this type name already exists."
-msgstr "Nie można zmienić nazwy typu drukarki na '%s' ponieważ ta nazwa typu jest już używana."
+msgid ""
+"Can't rename given printer type to '%s', because this type name already "
+"exists."
+msgstr ""
+"Nie można zmienić nazwy typu drukarki na '%s' ponieważ ta nazwa typu jest "
+"już używana."
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:308
 #, php-format
@@ -1068,7 +1132,8 @@ msgid "List of users"
 msgstr "Lista użytkowników"
 
 #: admin/systems/services/glpi/glpiSelectUser.tpl:23
-msgid "This dialog allows you to select a user as technical responsible person."
+msgid ""
+"This dialog allows you to select a user as technical responsible person."
 msgstr "Ten dialog umożliwia wybranie użytkownika jako kontaktu technicznego."
 
 #: admin/systems/services/glpi/glpiSelectUser.tpl:35
@@ -1085,8 +1150,12 @@ msgstr "Zarządzaj typami systemów operacyjnych"
 
 #: admin/systems/services/glpi/class_glpiManufacturer.inc:53
 #, php-format
-msgid "You can't delete this manufacturer, it is still in use by these system(s) '%s'"
-msgstr "Nie można usunąć tego producenta, jest on wciąż używany przez te system(y) '%s'"
+msgid ""
+"You can't delete this manufacturer, it is still in use by these system(s) '%"
+"s'"
+msgstr ""
+"Nie można usunąć tego producenta, jest on wciąż używany przez te system(y) '%"
+"s'"
 
 #: admin/systems/services/glpi/class_glpiManufacturer.inc:99
 msgid "Please specify a name."
@@ -1103,14 +1172,18 @@ msgstr "Zarządzaj typami systemów"
 
 #~ msgid "You're about to delete the glpi attachment component '%s'."
 #~ msgstr "Zamierzasz usunąć załącznik glpi '%s'."
+
 #~ msgid "Add"
 #~ msgstr "Dodaj"
+
 #~ msgid "Cancel"
 #~ msgstr "Anuluj"
+
 #~ msgid "Save"
 #~ msgstr "Zapisz"
+
 #~ msgid "You're about to delete the glpi device '%s'."
 #~ msgstr "Zamierzasz usunąć urządzenie blpi '%s'."
+
 #~ msgid "You're about to delete the glpi cartridge type '%s'."
 #~ msgstr "Zamierzasz usunąć kartridż glpi typu '%s'."
-

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"POT-Creation-Date: 2009-10-05 15:36+0200\n"
 "PO-Revision-Date: 2009-09-05 15:16+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -55,17 +55,22 @@ msgstr "Ustawienia konta Intranet"
 
 #~ msgid "This account has no connectivity extensions."
 #~ msgstr "To konto nie posiada rozszerzeń do Połączeń"
+
 #~ msgid "Ok"
 #~ msgstr "Ok"
+
 #~ msgid "Cancel"
 #~ msgstr "Anuluj"
+
 #~ msgid "Click the 'Edit' button below to change informations in this dialog"
 #~ msgstr ""
 #~ "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
+
 #~ msgid "Edit"
 #~ msgstr "Edytuj"
+
 #~ msgid "Removing of user/intranet account with dn '%s' failed."
 #~ msgstr "Usuwanie konta intranet z dn '%s' nieudane."
+
 #~ msgid "Saving of user/intranet account with dn '%s' failed."
 #~ msgstr "Zapisywanie konta intranet z dn '%s' nieudane."
-

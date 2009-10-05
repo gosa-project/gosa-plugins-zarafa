@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-30 13:11+0200\n"
+"POT-Creation-Date: 2009-10-05 15:37+0200\n"
 "PO-Revision-Date: 2009-10-02 18:01+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -47,12 +47,10 @@ msgstr "Réessayer"
 #: admin/opsi/generic.tpl:18 admin/opsi/generic.tpl:37
 #: admin/opsi/class_opsigeneric.inc:248 admin/opsi/class_opsigeneric.inc:253
 #: admin/opsi/class_opsigeneric.inc:256 admin/opsi/class_opsigeneric.inc:770
-#: admin/opsiLicenses/class_licenseUsage.inc:147
-#: admin/opsiLicenses/class_licenseGeneric.inc:218
-#: admin/opsiLicenses/class_licenseGeneric.inc:256
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:514
+#: admin/opsiLicenses/class_licenseGeneric.inc:232
+#: admin/opsiLicenses/class_licenseGeneric.inc:278
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:527
 #: admin/opsiLicenses/licenseGeneric.tpl:19
-#: admin/opsiLicenses/class_licenseByProduct.inc:144
 #: admin/opsiLicenses/licensePoolGeneric.tpl:18
 msgid "Name"
 msgstr "Nom"
@@ -71,11 +69,9 @@ msgid "Configure product"
 msgstr "Configurer le produit"
 
 #: admin/opsi/generic.tpl:80 admin/opsi/class_opsigeneric.inc:772
-#: admin/opsiLicenses/class_licenseUsage.inc:148
-#: admin/opsiLicenses/class_licenseGeneric.inc:257
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:515
+#: admin/opsiLicenses/class_licenseGeneric.inc:279
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:528
 #: admin/opsiLicenses/licenseGeneric.tpl:49
-#: admin/opsiLicenses/class_licenseByProduct.inc:145
 #: admin/opsiLicenses/licensePoolGeneric.tpl:30
 msgid "Description"
 msgstr ""
@@ -146,21 +142,21 @@ msgstr ""
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:87
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:225
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:232
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:89
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:99
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:114
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:401
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:427
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:441
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:462
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:489
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:92
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:102
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:115
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:414
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:440
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:454
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:475
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:502
 #: admin/opsiLicenses/class_opsiLicenses.inc:299
-#: admin/opsiLicenses/class_licenseByProduct.inc:61
+#: admin/opsiLicenses/class_licenseByProduct.inc:64
 msgid "Error"
 msgstr "Erreur"
 
 #: admin/opsi/class_opsigeneric.inc:760
-#: admin/opsiLicenses/class_licenseGeneric.inc:248
+#: admin/opsiLicenses/class_licenseGeneric.inc:270
 #: admin/opsiLicenses/licensePoolGeneric.tpl:15
 msgid "Generic"
 msgstr "Informations"
@@ -229,18 +225,11 @@ msgid "Check if the GOsa support daemon (gosa-si) is running."
 msgstr "Veuillez vérifier si le service Gosa (gosa-si) fonctionne."
 
 #: admin/opsiLicenses/licenseUsage.tpl:11
-#: admin/opsiLicenses/class_licenseUsage.inc:140
-#: admin/opsiLicenses/class_licenseUsageByHost.inc:245
+#: admin/opsiLicenses/class_licenseUsage.inc:142
+#: admin/opsiLicenses/class_licenseUsage.inc:143
 #: admin/opsiLicenses/licenseByProduct.tpl:11
-#: admin/opsiLicenses/class_licenseByProduct.inc:137
 msgid "License usage"
 msgstr "Utilisation des Licences"
-
-#: admin/opsiLicenses/class_licenseUsage.inc:139
-#: admin/opsiLicenses/class_licenseUsageByHost.inc:244
-#: admin/opsiLicenses/class_licenseByProduct.inc:136
-msgid "Usage"
-msgstr "Utilisation"
 
 #: admin/opsiLicenses/class_divListLicenses.inc:52
 #: admin/opsiLicenses/class_divListLicenses.inc:53
@@ -269,68 +258,78 @@ msgid "Create"
 msgstr "Créer"
 
 #: admin/opsiLicenses/class_divListLicenses.inc:103
-#: admin/opsiLicenses/class_divListLicenses.inc:170
+#: admin/opsiLicenses/class_divListLicenses.inc:173
 #: admin/opsiLicenses/class_opsiLicenses.inc:141
 #: admin/opsiLicenses/licenseGeneric.tpl:10
 msgid "License"
 msgstr "licence"
 
-#: admin/opsiLicenses/class_divListLicenses.inc:109
+#: admin/opsiLicenses/class_divListLicenses.inc:111
 msgid "Remove"
 msgstr "Supprimer"
 
-#: admin/opsiLicenses/class_divListLicenses.inc:144
+#: admin/opsiLicenses/class_divListLicenses.inc:147
 msgid "edit"
 msgstr "éditer"
 
-#: admin/opsiLicenses/class_divListLicenses.inc:145
+#: admin/opsiLicenses/class_divListLicenses.inc:148
 msgid "Edit this entry"
 msgstr "Editer cette entrée"
 
-#: admin/opsiLicenses/class_divListLicenses.inc:148
+#: admin/opsiLicenses/class_divListLicenses.inc:151
 msgid "delete"
 msgstr "supprimer"
 
-#: admin/opsiLicenses/class_divListLicenses.inc:149
+#: admin/opsiLicenses/class_divListLicenses.inc:152
 msgid "Delete this entry"
 msgstr "Supprimer cette entrée"
 
-#: admin/opsiLicenses/class_divListLicenses.inc:186
+#: admin/opsiLicenses/class_divListLicenses.inc:189
 msgid "Number of listed license pools"
 msgstr "Nombre de réservoir de licences listés"
 
-#: admin/opsiLicenses/class_licenseGeneric.inc:115
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:267
+#: admin/opsiLicenses/class_licenseGeneric.inc:127
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:271
 msgid "Retail"
 msgstr "Vente au détail"
 
-#: admin/opsiLicenses/class_licenseGeneric.inc:116
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:266
+#: admin/opsiLicenses/class_licenseGeneric.inc:128
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:270
 msgid "OEM"
 msgstr ""
 
-#: admin/opsiLicenses/class_licenseGeneric.inc:117
+#: admin/opsiLicenses/class_licenseGeneric.inc:129
 msgid "Volume"
 msgstr ""
 
-#: admin/opsiLicenses/class_licenseGeneric.inc:206
-#: admin/opsiLicenses/class_licenseGeneric.inc:210
-#: admin/opsiLicenses/class_licenseGeneric.inc:214
-#: admin/opsiLicenses/licenseGeneric.tpl:80
+#: admin/opsiLicenses/class_licenseGeneric.inc:220
+#: admin/opsiLicenses/class_licenseGeneric.inc:224
+#: admin/opsiLicenses/class_licenseGeneric.inc:228
+#: admin/opsiLicenses/licenseGeneric.tpl:95
 msgid "Expiration date"
 msgstr "Date d'expiration"
 
-#: admin/opsiLicenses/class_licenseGeneric.inc:222
-#: admin/opsiLicenses/licenseGeneric.tpl:149
+#: admin/opsiLicenses/class_licenseGeneric.inc:236
+#: admin/opsiLicenses/licenseGeneric.tpl:194
 msgid "License key"
 msgstr "Clef de licence"
 
-#: admin/opsiLicenses/class_licenseGeneric.inc:249
+#: admin/opsiLicenses/class_licenseGeneric.inc:271
 msgid "License generic"
 msgstr "Licence par défaut"
 
+#: admin/opsiLicenses/class_licenseUsageByHost.inc:244
+#, fuzzy
+msgid "Usage by host"
+msgstr "Utilisé par"
+
+#: admin/opsiLicenses/class_licenseUsageByHost.inc:245
+#, fuzzy
+msgid "License usage by host"
+msgstr "Utilisation des Licences"
+
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:252
-#: admin/opsiLicenses/licenseGeneric.tpl:192
+#: admin/opsiLicenses/licenseGeneric.tpl:237
 msgid "Used by"
 msgstr "Utilisé par"
 
@@ -338,38 +337,38 @@ msgstr "Utilisé par"
 msgid "License reservation"
 msgstr "Réservation de licence"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:259
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:262
 msgid "unlimited"
 msgstr "illimité"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:265
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:269
 #, php-format
 msgid "Volume license (#%s)"
 msgstr "Licence en volume (#%s)"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:268
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:272
 msgid "Concurrent"
 msgstr "Simultané"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:506
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:519
 msgid "Pool generic"
 msgstr "Réservoir par défaut"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:507
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:520
 msgid "License pool generic"
 msgstr "Réservoir de licences par défaut"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:516
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:529
 #: admin/opsiLicenses/licensePoolGeneric.tpl:64
 msgid "Applications"
 msgstr "Applications"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:517
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:530
 #: admin/opsiLicenses/licensePoolGeneric.tpl:91
 msgid "Windows software IDs"
 msgstr "IDs logiciel Windows"
 
-#: admin/opsiLicenses/class_licensePoolGeneric.inc:518
+#: admin/opsiLicenses/class_licensePoolGeneric.inc:531
 #: admin/opsiLicenses/licensePoolGeneric.tpl:42
 msgid "Licenses"
 msgstr "licences"
@@ -381,7 +380,7 @@ msgid "Software licenses"
 msgstr "Licences logicielles"
 
 #: admin/opsiLicenses/licenseUsageByHost.tpl:14
-#: admin/opsiLicenses/licenseGeneric.tpl:172
+#: admin/opsiLicenses/licenseGeneric.tpl:217
 msgid "Reserved for"
 msgstr "Réservé pour"
 
@@ -405,23 +404,35 @@ msgstr "Partenaire"
 msgid "Conclusion date"
 msgstr ""
 
-#: admin/opsiLicenses/licenseGeneric.tpl:96
+#: admin/opsiLicenses/licenseGeneric.tpl:126
 msgid "Notification date"
 msgstr "Date de notification"
 
-#: admin/opsiLicenses/licenseGeneric.tpl:111
+#: admin/opsiLicenses/licenseGeneric.tpl:156
 msgid "License model"
 msgstr "Modèle de licence"
 
-#: admin/opsiLicenses/licenseGeneric.tpl:120
+#: admin/opsiLicenses/licenseGeneric.tpl:165
 msgid "Model"
 msgstr "Modèle"
 
-#: admin/opsiLicenses/licenseGeneric.tpl:160
+#: admin/opsiLicenses/licenseGeneric.tpl:205
 msgid "Maximum installations"
 msgstr "Nombre maximum d'installations"
 
-#: admin/opsiLicenses/licenseGeneric.tpl:177
+#: admin/opsiLicenses/licenseGeneric.tpl:222
 msgid "none"
 msgstr "aucun"
 
+#: admin/opsiLicenses/class_licenseByProduct.inc:136
+#, fuzzy
+msgid "Usage by product"
+msgstr "Produits installés"
+
+#: admin/opsiLicenses/class_licenseByProduct.inc:137
+#, fuzzy
+msgid "License usage by product"
+msgstr "Utilisation des Licences"
+
+#~ msgid "Usage"
+#~ msgstr "Utilisation"
