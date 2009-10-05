@@ -422,9 +422,8 @@ msgid "User attributes"
 msgstr "Eigenschaften des Benutzers"
 
 #: personal/samba/class_sambaAccount.inc:899
-#, fuzzy
 msgid "SID"
-msgstr "GID"
+msgstr "SID"
 
 #: personal/samba/class_sambaAccount.inc:900
 msgid "Last failed login"
@@ -583,15 +582,3 @@ msgstr "Wählen Sie die Abteilung, auf die die Suchfunktion angewandt wird"
 #: personal/samba/samba3_workstations.tpl:31
 msgid "Regular expression for matching addresses"
 msgstr "Regulärer Ausdruck zum Erkennen von Mail-Adressen"
-
-#~ msgid "Samba home"
-#~ msgstr "Samba-Basisverzeichnis"
-
-#~ msgid "Temporary disable samba account"
-#~ msgstr "Vorübergehende Deaktivierung des Samba-Zugriffs"
-
-#~ msgid "Show"
-#~ msgstr "Zeige"
-
-#~ msgid "Hide"
-#~ msgstr "Verbergen"
