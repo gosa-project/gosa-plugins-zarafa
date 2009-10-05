@@ -700,7 +700,7 @@ class sambaAccount extends plugin
     /* User attributes 
      */
     $user_attributes = array("sambaBadPasswordTime","sambaPwdLastSet","sambaLogonTime","sambaLogoffTime",
-        "sambaKickoffTime","sambaPwdCanChange","sambaPwdMustChange","sambaBadPasswordCount");
+        "sambaKickoffTime","sambaPwdCanChange","sambaPwdMustChange","sambaBadPasswordCount", "sambaSID");
 
     /* Get samba SID object and parse settings.
      */  
@@ -725,12 +725,16 @@ class sambaAccount extends plugin
     if($this->password_expires){
       $sambaPwdMustChange = $this->sambaPwdMustChange;
     } else {
-      $sambaPwdMustChange= date('d.m.Y', $sambaPwdMustChange);
+      if (is_numeric($sambaPwdMustChange)) {
+        $sambaPwdMustChange= date('d.m.Y', $sambaPwdMustChange);
+      }
     }
     if($this->kickoff_time_set){
       $sambaKickoffTime = $this->sambaKickoffTime;
     } else {
-      $sambaKickoffTime= date('d.m.Y', $sambaKickoffTime);
+      if (is_numeric($sambaKickoffTime)) {
+        $sambaKickoffTime= date('d.m.Y', $sambaKickoffTime);
+      }
     }
     $sambaPwdCanChange = $this->sambaPwdCanChange;
 
@@ -892,6 +896,7 @@ class sambaAccount extends plugin
       "\n<tr><td>"._("Refuse machine password change").":</td><td>".$sambaRefuseMachinePwdChange."</td></tr>".
       "\n<tr><td>&nbsp;</td></tr>". 
       "\n<tr><td><b>"._("User attributes")."</b></td></tr>". 
+      "\n<tr><td>"._("SID").":                           </td><td>".$sambaSID."</td></tr>".
       "\n<tr><td>"._("Last failed login").":             </td><td>".$sambaBadPasswordTime."</td></tr>".
       "\n<tr><td>"._("Logon attempts").":                </td><td>".$sambaBadPasswordCount."</td></tr>".
       "\n<tr><td>"._("Last password update").":          </td><td>".$sambaPwdLastSet."</td></tr>".
