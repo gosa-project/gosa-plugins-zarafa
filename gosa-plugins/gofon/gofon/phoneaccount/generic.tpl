@@ -71,7 +71,7 @@
      <td>
 {render acl=$goFonContextACL checkbox=$multiple_support checked=$use_goFonContext}
       <select name='context' title='{t}Select the accounts context{/t}'>
-        {html_options values=$contexts output=$contexts selected=$context}
+        {html_options values=$sip_contexts output=$sip_contexts selected=$context}
       </select>
 {/render}
      </td>
@@ -82,7 +82,7 @@
      <td>
 {render acl=$goFonVoiceMailContextACL checkbox=$multiple_support checked=$use_goFonVoiceMailContext}
       <select name='voice_context' title='{t}Select the accounts context{/t}'>
-        {html_options values=$contexts output=$contexts selected=$voice_context}
+        {html_options values=$voicemail_contexts output=$voicemail_contexts selected=$voice_context}
       </select>
 {/render}
      </td>

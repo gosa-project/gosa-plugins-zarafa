@@ -1094,7 +1094,8 @@ class phoneAccount extends plugin
     $smarty->assign("macro", $this->macro);   
 
     /* Assign contexts */
-    $smarty->assign("contexts",$this->get_asterisk_contexts());
+    $smarty->assign("voicemail_contexts",$this->get_asterisk_voicemail_contexts());
+    $smarty->assign("sip_contexts",$this->get_asterisk_sip_contexts());
     $smarty->assign("context" ,$this->context);
     $smarty->assign("voice_context" ,$this->voice_context);
 
@@ -1913,18 +1914,24 @@ class phoneAccount extends plugin
   /* Return asterisk contexts
    * Additionaly read contexts from file.
    */
-  function get_asterisk_contexts()
+  function get_asterisk_voicemail_contexts()
+  {
+    return($this->get_asterisk_contexts(CONFIG_DIR."/asterisk/voicemail_context.conf"));
+  }
+  function get_asterisk_sip_contexts()
+  {
+    return($this->get_asterisk_contexts(CONFIG_DIR."/asterisk/sip_context.conf"));
+  }
+  function get_asterisk_contexts($file)
   {
     $contexts = array();
-    $contexts[] = "default";
-    $contexts[] = "parkedcalls";
-    $contexts[] = "from-sip";
-    $contexts[] = "from-capi";
-    $file = "/etc/gosa/asterisk_contexts.conf";
     if(file_exists($file) && is_readable($file)){
       foreach(file($file) as $context){
         $contexts[] = trim($context);
       }
+    }else{
+      msg_dialog::display(_("Warning"), msgPool::cannotReadFile($file),WARNING_DIALOG);
+      $contexts[] = "default";
     }
     array_unique($contexts);
     return($contexts);
