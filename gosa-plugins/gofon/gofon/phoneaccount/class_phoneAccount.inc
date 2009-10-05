@@ -339,7 +339,7 @@ class phoneAccount extends plugin
         $vp  = mysql_fetch_assoc($res);
         if(!isset($vp['context'])){
           $this->is_modified= TRUE;
-          msg_dialog::display(_("Warning"), sprintf(_("Could not identify telephone extension in database, please try to save again. Activate debugging if error remains.")), WARNING_DIALOG);
+          msg_dialog::display(_("Warning"), sprintf(_("Cannot identify telephone extension in database, please try to save again.")), WARNING_DIALOG);
         } 
  
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query_tmp, "Database query");
@@ -609,7 +609,7 @@ class phoneAccount extends plugin
          */
         if(!phoneAccount::checkRealtimeTables($a_Remove)){
           msg_dialog::display(_("Warning"),
-              sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+              sprintf(_("GOsa identified problems with your MySQL table definition!")),
               WARNING_DIALOG);
         }
 
@@ -675,7 +675,7 @@ class phoneAccount extends plugin
        */
       if(!phoneAccount::checkRealtimeTables($a_New)){
         msg_dialog::display(_("Warning"),
-            sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+            sprintf(_("GOsa identified problems with your MySQL table definition!")),
             WARNING_DIALOG);
       }
 
@@ -1489,7 +1489,7 @@ class phoneAccount extends plugin
      */
     $str = $this->generate_mysql_entension_entries(true);
     if(!$str){
-      msg_dialog::display(_("Error"),_("An error occured while updating the database entries, activate debugging for details.") , ERROR_DIALOG);
+      msg_dialog::display(_("Error"),_("An error occured while updating the database entries!") , ERROR_DIALOG);
     }
 
     if($this->attrs['goFonMacro']==""){
@@ -1559,7 +1559,7 @@ class phoneAccount extends plugin
        */
       if(!phoneAccount::checkRealtimeTables($a_SETUP)){
         msg_dialog::display(_("Warning"),
-            sprintf(_("GOsa identified problems with your MySQL table definition, please activate debugging for details.")),
+            sprintf(_("GOsa identified problems with your MySQL table definition!")),
             WARNING_DIALOG);
       }
 

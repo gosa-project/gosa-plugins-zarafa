@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2009-10-05 16:06+0200\n"
 "PO-Revision-Date: 2009-06-30 11:04+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -52,8 +52,10 @@ msgstr "Options"
 #: admin/ogroups/gofon/class_phonequeue.inc:305
 #: admin/ogroups/gofon/class_phonequeue.inc:929
 #: gofon/phoneaccount/generic.tpl:58
-#: gofon/phoneaccount/class_phoneAccount.inc:1407
-#: gofon/phoneaccount/class_phoneAccount.inc:1782
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1413
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1788
+#: gofon/phoneaccount/class_phoneAccount.inc:1413
+#: gofon/phoneaccount/class_phoneAccount.inc:1788
 #: gofon/conference/generic.tpl:68
 #: gofon/conference/class_phoneConferenceGeneric.inc:853
 msgid "Home server"
@@ -185,13 +187,15 @@ msgid "Ring instead of playing background music"
 msgstr "Sonner au lieu de mettre une musique d'ambiance"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/phoneaccount/class_phoneAccount.inc:135
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:140
+#: gofon/phoneaccount/class_phoneAccount.inc:140
 #: gofon/conference/class_phoneConferenceGeneric.inc:103
 msgid "Obsolete entry"
 msgstr "Entrée obsolète"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/phoneaccount/class_phoneAccount.inc:135
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:140
+#: gofon/phoneaccount/class_phoneAccount.inc:140
 #: gofon/conference/class_phoneConferenceGeneric.inc:103
 #, php-format
 msgid ""
@@ -264,8 +268,10 @@ msgstr "asterisk"
 #: admin/ogroups/gofon/class_phonequeue.inc:378
 #: admin/ogroups/gofon/class_phonequeue.inc:732
 #: gofon/macro/class_gofonMacro.inc:392 gofon/macro/class_gofonMacro.inc:471
-#: gofon/phoneaccount/class_phoneAccount.inc:426
-#: gofon/phoneaccount/class_phoneAccount.inc:1103
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:431
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1109
+#: gofon/phoneaccount/class_phoneAccount.inc:431
+#: gofon/phoneaccount/class_phoneAccount.inc:1109
 #: gofon/conference/class_phoneConferenceGeneric.inc:430
 #: gofon/fonreports/class_fonreport.inc:166
 #: gofon/fonreports/class_fonreport.inc:176
@@ -297,16 +303,26 @@ msgstr "numéro de téléphone"
 #: admin/systems/gofon/class_phoneGeneric.inc:272
 #: gofon/macro/class_gofonMacro.inc:458 gofon/macro/class_gofonMacro.inc:467
 #: gofon/macro/class_gofonMacro.inc:505
-#: gofon/phoneaccount/class_phoneAccount.inc:644
-#: gofon/phoneaccount/class_phoneAccount.inc:966
-#: gofon/phoneaccount/class_phoneAccount.inc:1089
-#: gofon/phoneaccount/class_phoneAccount.inc:1205
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:649
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:971
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1094
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1211
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1217
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1431
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1492
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1571
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1581
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1628
+#: gofon/phoneaccount/class_phoneAccount.inc:649
+#: gofon/phoneaccount/class_phoneAccount.inc:971
+#: gofon/phoneaccount/class_phoneAccount.inc:1094
 #: gofon/phoneaccount/class_phoneAccount.inc:1211
-#: gofon/phoneaccount/class_phoneAccount.inc:1425
-#: gofon/phoneaccount/class_phoneAccount.inc:1486
-#: gofon/phoneaccount/class_phoneAccount.inc:1565
-#: gofon/phoneaccount/class_phoneAccount.inc:1575
-#: gofon/phoneaccount/class_phoneAccount.inc:1622
+#: gofon/phoneaccount/class_phoneAccount.inc:1217
+#: gofon/phoneaccount/class_phoneAccount.inc:1431
+#: gofon/phoneaccount/class_phoneAccount.inc:1492
+#: gofon/phoneaccount/class_phoneAccount.inc:1571
+#: gofon/phoneaccount/class_phoneAccount.inc:1581
+#: gofon/phoneaccount/class_phoneAccount.inc:1628
 #: gofon/conference/class_phoneConferenceGeneric.inc:260
 #: gofon/conference/class_phoneConferenceGeneric.inc:264
 #: gofon/conference/class_phoneConferenceGeneric.inc:618
@@ -326,8 +342,10 @@ msgstr "Erreur"
 #: gofon/macro/class_gofonMacroParameters.inc:401
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
-#: gofon/phoneaccount/class_phoneAccount.inc:1512
-#: gofon/phoneaccount/class_phoneAccount.inc:1683
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1518
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1689
+#: gofon/phoneaccount/class_phoneAccount.inc:1518
+#: gofon/phoneaccount/class_phoneAccount.inc:1689
 #: gofon/conference/class_phoneConferenceGeneric.inc:789
 msgid "LDAP error"
 msgstr "Erreur LDAP"
@@ -338,13 +356,19 @@ msgid "Phone number"
 msgstr "Numéro de téléphone"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:918
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1047
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1060
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1072
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1076
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1079
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1773
 #: gofon/phoneaccount/class_phoneAccount.inc:6
-#: gofon/phoneaccount/class_phoneAccount.inc:1042
-#: gofon/phoneaccount/class_phoneAccount.inc:1055
-#: gofon/phoneaccount/class_phoneAccount.inc:1067
-#: gofon/phoneaccount/class_phoneAccount.inc:1071
-#: gofon/phoneaccount/class_phoneAccount.inc:1074
-#: gofon/phoneaccount/class_phoneAccount.inc:1767
+#: gofon/phoneaccount/class_phoneAccount.inc:1047
+#: gofon/phoneaccount/class_phoneAccount.inc:1060
+#: gofon/phoneaccount/class_phoneAccount.inc:1072
+#: gofon/phoneaccount/class_phoneAccount.inc:1076
+#: gofon/phoneaccount/class_phoneAccount.inc:1079
+#: gofon/phoneaccount/class_phoneAccount.inc:1773
 msgid "Phone"
 msgstr "Téléphone"
 
@@ -655,7 +679,8 @@ msgid "Phone generic"
 msgstr "Téléphone générique"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:513
-#: gofon/phoneaccount/class_phoneAccount.inc:1781
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1787
+#: gofon/phoneaccount/class_phoneAccount.inc:1787
 msgid "Phone hardware"
 msgstr "Matériel téléphonique"
 
@@ -713,7 +738,8 @@ msgid "List of macros"
 msgstr "Liste des macros"
 
 #: gofon/macro/headpage.tpl:20 gofon/macro/class_gofonMacroParameters.inc:374
-#: gofon/phoneaccount/class_phoneAccount.inc:1674
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
+#: gofon/phoneaccount/class_phoneAccount.inc:1680
 #: gofon/conference/headpage.tpl:20
 msgid "Information"
 msgstr "Information"
@@ -744,11 +770,18 @@ msgstr "Afficher les macros correspondantes"
 msgid "Regular expression for matching macro names"
 msgstr "Expression régulière correspondant à des noms de macro"
 
-#: gofon/macro/remove.tpl:2 gofon/phoneaccount/class_phoneAccount.inc:323
-#: gofon/phoneaccount/class_phoneAccount.inc:337
-#: gofon/phoneaccount/class_phoneAccount.inc:606
-#: gofon/phoneaccount/class_phoneAccount.inc:672
-#: gofon/phoneaccount/class_phoneAccount.inc:1555
+#: gofon/macro/remove.tpl:2 gofon/phoneaccount/.svn/tmp/tempfile.tmp:328
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:342
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:611
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:677
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1561
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1938
+#: gofon/phoneaccount/class_phoneAccount.inc:328
+#: gofon/phoneaccount/class_phoneAccount.inc:342
+#: gofon/phoneaccount/class_phoneAccount.inc:611
+#: gofon/phoneaccount/class_phoneAccount.inc:677
+#: gofon/phoneaccount/class_phoneAccount.inc:1561
+#: gofon/phoneaccount/class_phoneAccount.inc:1938
 #: gofon/conference/remove.tpl:2
 #: gofon/conference/class_phoneConferenceGeneric.inc:463
 msgid "Warning"
@@ -833,10 +866,14 @@ msgid "Macro is empty!"
 msgstr "La macro est vide !"
 
 #: gofon/macro/class_gofonMacro.inc:471
-#: gofon/phoneaccount/class_phoneAccount.inc:426
-#: gofon/phoneaccount/class_phoneAccount.inc:434
-#: gofon/phoneaccount/class_phoneAccount.inc:1103
-#: gofon/phoneaccount/class_phoneAccount.inc:1641
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:431
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:439
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1109
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1647
+#: gofon/phoneaccount/class_phoneAccount.inc:431
+#: gofon/phoneaccount/class_phoneAccount.inc:439
+#: gofon/phoneaccount/class_phoneAccount.inc:1109
+#: gofon/phoneaccount/class_phoneAccount.inc:1647
 #: gofon/fonreports/class_fonreport.inc:166
 #: gofon/fonreports/class_fonreport.inc:169
 msgid "Configuration error"
@@ -1039,13 +1076,16 @@ msgid "Voicemail context"
 msgstr "Contexte de la boite vocale"
 
 #: gofon/phoneaccount/generic.tpl:93 gofon/phoneaccount/paste_generic.tpl:32
-#: gofon/phoneaccount/class_phoneAccount.inc:1411
-#: gofon/phoneaccount/class_phoneAccount.inc:1414
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1417
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1420
+#: gofon/phoneaccount/class_phoneAccount.inc:1417
+#: gofon/phoneaccount/class_phoneAccount.inc:1420
 msgid "Voicemail PIN"
 msgstr "Code PIN de la boite vocale"
 
 #: gofon/phoneaccount/generic.tpl:103 gofon/phoneaccount/paste_generic.tpl:40
-#: gofon/phoneaccount/class_phoneAccount.inc:1419
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1425
+#: gofon/phoneaccount/class_phoneAccount.inc:1425
 msgid "Phone PIN"
 msgstr "Code PIN du téléphone"
 
@@ -1057,88 +1097,100 @@ msgstr "Rafraîchir"
 msgid "Phone settings"
 msgstr "Configuration du téléphone"
 
-#: gofon/phoneaccount/main.inc:123
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
-"cette boite de dialogue"
-
-#: gofon/phoneaccount/class_phoneAccount.inc:173
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:178
+#: gofon/phoneaccount/class_phoneAccount.inc:178
 msgid "automatic"
 msgstr "automatique"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:209
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:214
+#: gofon/phoneaccount/class_phoneAccount.inc:214
 msgid "no macro"
 msgstr "pas de macros"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:237
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:242
+#: gofon/phoneaccount/class_phoneAccount.inc:242
 msgid "undefined"
 msgstr "non défini"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:337
-#, php-format
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:342
+#: gofon/phoneaccount/class_phoneAccount.inc:342
+#, fuzzy, php-format
 msgid ""
-"Could not identify telephone extension in database, please try to save "
-"again. Activate debugging if error remains."
+"Cannot identify telephone extension in database, please try to save again."
 msgstr ""
 "Impossible d'identifier l'extension téléphonique dans la base de données, "
 "veuillez essayer de sauver à nouveau. Activez le mode debug si l'erreur "
 "persiste"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:552
-#: gofon/phoneaccount/class_phoneAccount.inc:559
-#: gofon/phoneaccount/class_phoneAccount.inc:577
-#: gofon/phoneaccount/class_phoneAccount.inc:584
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:557
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:564
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:582
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:589
+#: gofon/phoneaccount/class_phoneAccount.inc:557
+#: gofon/phoneaccount/class_phoneAccount.inc:564
+#: gofon/phoneaccount/class_phoneAccount.inc:582
+#: gofon/phoneaccount/class_phoneAccount.inc:589
 msgid "Abort saving entries to keep the database consistent."
 msgstr ""
 "Abandon de la sauvegarde des données pour garder la base de données "
 "consistante."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:607
-#: gofon/phoneaccount/class_phoneAccount.inc:673
-#: gofon/phoneaccount/class_phoneAccount.inc:1556
-#: gofon/conference/class_phoneConferenceGeneric.inc:464
-#, php-format
-msgid ""
-"GOsa identified problems with your MySQL table definition, please activate "
-"debugging for details."
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:612
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:678
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1562
+#: gofon/phoneaccount/class_phoneAccount.inc:612
+#: gofon/phoneaccount/class_phoneAccount.inc:678
+#: gofon/phoneaccount/class_phoneAccount.inc:1562
+#, fuzzy, php-format
+msgid "GOsa identified problems with your MySQL table definition!"
 msgstr ""
 "GOsa à identifié des problèmes dans les définitions de vos tables MySQL, "
 "veuillez activer le mode debug pour plus de détail."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:646
-#: gofon/phoneaccount/class_phoneAccount.inc:968
-#: gofon/phoneaccount/class_phoneAccount.inc:1624
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:651
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:973
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1630
+#: gofon/phoneaccount/class_phoneAccount.inc:651
+#: gofon/phoneaccount/class_phoneAccount.inc:973
+#: gofon/phoneaccount/class_phoneAccount.inc:1630
 #: gofon/conference/class_phoneConferenceGeneric.inc:620
 msgid "Please activate debugging for details!"
 msgstr "Veuillez activer le mode debug pour plus de détail !"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1066
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1071
+#: gofon/phoneaccount/class_phoneAccount.inc:1071
 msgid "Remove phone account"
 msgstr "Supprimer l'extension téléphonique"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1070
-#: gofon/phoneaccount/class_phoneAccount.inc:1073
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1075
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1078
+#: gofon/phoneaccount/class_phoneAccount.inc:1075
+#: gofon/phoneaccount/class_phoneAccount.inc:1078
 msgid "Create phone account"
 msgstr "Créer un compte téléphone"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1071
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1076
+#: gofon/phoneaccount/class_phoneAccount.inc:1076
 msgid "User uid"
 msgstr "id utilisateur"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1089
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1094
+#: gofon/phoneaccount/class_phoneAccount.inc:1094
 msgid "Selected macro is not available anymore!"
 msgstr "la macro sélectionnée n'est plus disponible !"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1113
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1119
+#: gofon/phoneaccount/class_phoneAccount.inc:1119
 msgid "Parameter"
 msgstr "Paramètres"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1260
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1266
+#: gofon/phoneaccount/class_phoneAccount.inc:1266
 msgid "Choose your private phone"
 msgstr "Choisissez votre téléphone privé"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1403
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1409
+#: gofon/phoneaccount/class_phoneAccount.inc:1409
 msgid ""
 "There must be at least one server with an asterisk database to create a "
 "phone account."
@@ -1146,35 +1198,41 @@ msgstr ""
 "Il doit y avoir au moins un serveur avec une base de données asterisk pour "
 "créer un compte téléphonique."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1411
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1417
+#: gofon/phoneaccount/class_phoneAccount.inc:1417
 msgid "Between 1-4 charactes"
 msgstr "Entre 1-4 caractères."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1438
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1444
+#: gofon/phoneaccount/class_phoneAccount.inc:1444
 #, php-format
 msgid "macro parameter %s"
 msgstr "paramètre de la macro %s"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1486
-msgid ""
-"An error occured while updating the database entries, activate debugging for "
-"details."
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1492
+#: gofon/phoneaccount/class_phoneAccount.inc:1492
+#, fuzzy
+msgid "An error occured while updating the database entries!"
 msgstr ""
 "Une erreur est survenue lors de la mise à jour de la base de données, "
 "activer le mode debug pour plus de détails."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1674
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
+#: gofon/phoneaccount/class_phoneAccount.inc:1680
 #, php-format
 msgid "User '%s' has been removed from phone queue '%s'."
 msgstr "L'utilisateur '%s' à été enlevé de la queue '%s'."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1711
-#: gofon/phoneaccount/class_phoneAccount.inc:1713
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1717
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1719
+#: gofon/phoneaccount/class_phoneAccount.inc:1717
+#: gofon/phoneaccount/class_phoneAccount.inc:1719
 #, php-format
 msgid "The specified telephonenumber '%s' is already assigned to '%s'."
 msgstr "Le numéro de téléphone %s est déjà utilisé par '%s'."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1759
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1765
+#: gofon/phoneaccount/class_phoneAccount.inc:1765
 #, php-format
 msgid ""
 "The previously selected asterisk home server (%s) is no longer available. "
@@ -1183,65 +1241,85 @@ msgstr ""
 "Le serveur asterisk primaire précédemment sélectionné n'existe plus (%s). "
 "Effacement interrompu."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1768
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1774
+#: gofon/phoneaccount/class_phoneAccount.inc:1774
 msgid "Phone account settings"
 msgstr "Paramètres compte téléphonique"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1772
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1778
+#: gofon/phoneaccount/class_phoneAccount.inc:1778
 msgid "My account"
 msgstr "Mon Compte"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1779
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1785
+#: gofon/phoneaccount/class_phoneAccount.inc:1785
 #: gofon/conference/class_phoneConferenceGeneric.inc:864
 msgid "Telephone number"
 msgstr "Numéro de téléphone"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1780
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1786
+#: gofon/phoneaccount/class_phoneAccount.inc:1786
 msgid "Macro settings"
 msgstr "Paramètres des macros"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1783
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1789
+#: gofon/phoneaccount/class_phoneAccount.inc:1789
 msgid "Phone context"
 msgstr "Contexte téléphonique"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1784
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1790
+#: gofon/phoneaccount/class_phoneAccount.inc:1790
 msgid "Voice mail context"
 msgstr "Contexte de la boite vocale"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1785
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1791
+#: gofon/phoneaccount/class_phoneAccount.inc:1791
 msgid "Telephone pin"
 msgstr "Code PIN du téléphone"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1786
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1792
+#: gofon/phoneaccount/class_phoneAccount.inc:1792
 msgid "Voicemail pin"
 msgstr "Code PIN de la boite vocale"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1868
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1874
+#: gofon/phoneaccount/class_phoneAccount.inc:1874
 msgid "There is currently no asterisk server defined!"
 msgstr "Il n'y a pas de serveur asterisk défini !"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1872
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1878
+#: gofon/phoneaccount/class_phoneAccount.inc:1878
 msgid "Asterisk server is invalid!"
 msgstr "Le serveur Asterisk est non valide !"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1878
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1884
+#: gofon/phoneaccount/class_phoneAccount.inc:1884
 msgid "Voicemail PIN must be 4 characters long!"
 msgstr "Le code pin de la boîte vocale doit être long de 4 caractères."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1881
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1887
+#: gofon/phoneaccount/class_phoneAccount.inc:1887
 msgid "Voicemail PIN contains invalid characters!"
 msgstr "Le code pin de la boîte vocale contient des caractères non valides !"
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1886
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1892
+#: gofon/phoneaccount/class_phoneAccount.inc:1892
 msgid "Phone pin contains invalid characters!"
 msgstr "Le mot de passe contient des caractères invalides."
 
-#: gofon/phoneaccount/class_phoneAccount.inc:1893
+#: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1899
+#: gofon/phoneaccount/class_phoneAccount.inc:1899
 #, php-format
 msgid "The parameter %s contains invalid char. '!,#' is used as delimiter"
 msgstr ""
 "Le paramètre %s contient des caractères invalides. '!#' est utilisé comme "
 "séparateur"
+
+#: gofon/phoneaccount/main.inc:123
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
+"cette boite de dialogue"
 
 #: gofon/conference/headpage.tpl:6
 #: gofon/conference/class_divListConferences.inc:31
@@ -1399,6 +1477,15 @@ msgstr ""
 #: gofon/conference/class_phoneConferenceGeneric.inc:863
 msgid "Lifetime"
 msgstr "Durée"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:464
+#, php-format
+msgid ""
+"GOsa identified problems with your MySQL table definition, please activate "
+"debugging for details."
+msgstr ""
+"GOsa à identifié des problèmes dans les définitions de vos tables MySQL, "
+"veuillez activer le mode debug pour plus de détail."
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:712
 #: gofon/conference/class_phoneConferenceGeneric.inc:714
