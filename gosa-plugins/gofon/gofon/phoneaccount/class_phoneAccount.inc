@@ -32,7 +32,9 @@ class phoneAccount extends plugin
   var $goFonHomeServers       = array();        // Contains all available server configurations 
 
   var $context                = "default";
+  var $sip_contexts           = "default";
   var $voice_context          = "default";
+  var $voicemail_contexts     = "default";
 
   /* attribute list for save action */
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
@@ -62,6 +64,9 @@ class phoneAccount extends plugin
         $this->phoneNumbers[$number]= $number;
       }
     }
+
+    $this->sip_contexts = $this->get_asterisk_sip_contexts();
+    $this->voicemail_contexts = $this->get_asterisk_voicemail_contexts();
 
     /* Set parent object to tab object */
     if(is_object($parent)){
@@ -1094,8 +1099,8 @@ class phoneAccount extends plugin
     $smarty->assign("macro", $this->macro);   
 
     /* Assign contexts */
-    $smarty->assign("voicemail_contexts",$this->get_asterisk_voicemail_contexts());
-    $smarty->assign("sip_contexts",$this->get_asterisk_sip_contexts());
+    $smarty->assign("voicemail_contexts",$this->voicemail_contexts);
+    $smarty->assign("sip_contexts",$this->sip_contexts);
     $smarty->assign("context" ,$this->context);
     $smarty->assign("voice_context" ,$this->voice_context);
 
