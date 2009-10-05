@@ -479,7 +479,6 @@ msgid "UUID"
 msgstr "UUID"
 
 #: admin/fai/class_faiDiskEntry.inc:327
-#, fuzzy
 msgid "Disks"
 msgstr "Festplatten"
 
@@ -498,36 +497,32 @@ msgstr ""
 "wird!"
 
 #: admin/fai/class_faiDiskEntry.inc:526
-#, fuzzy
 msgid "encrypted"
-msgstr "Verschlüsselt"
+msgstr "verschlüsselt"
 
 #: admin/fai/class_faiDiskEntry.inc:529
-#, fuzzy
 msgid "bootable"
-msgstr "Bootbar"
+msgstr "bootbar"
 
 #: admin/fai/class_faiDiskEntry.inc:532
-#, fuzzy
 msgid "preserve"
-msgstr "Bewahren"
+msgstr "bewahren"
 
 #: admin/fai/class_faiDiskEntry.inc:713
-#, fuzzy
 msgid ""
 "You have more than four primary partition table entries in your "
 "configuration, please check your configuration twice."
 msgstr ""
-"Sie haben mehr als 3 primäre Partitionen in ihrer Konfiguration. Bitte "
+"Sie haben mehr als 4 primäre Partitionen in ihrer Konfiguration. Bitte "
 "prüfen Sie die Konfiguration."
 
 #: admin/fai/class_faiDiskEntry.inc:717
-#, fuzzy
 msgid ""
 "You cannot have more than three primary partition while using logical "
 "partitions, please check your configuration twice."
 msgstr ""
-"Sie haben mehr als 3 primäre Partitionen in ihrer Konfiguration. Bitte "
+"Sie haben mehr als 3 primäre Partitionen bei gleichzeitiger Nutzung "
+"von logischen Partitionen in ihrer Konfiguration. Bitte "
 "prüfen Sie die Konfiguration."
 
 #: admin/fai/class_faiDiskEntry.inc:740
@@ -1143,17 +1138,14 @@ msgid "RAID 6"
 msgstr "RAID 6"
 
 #: admin/fai/class_faiPartition.inc:175
-#, fuzzy
 msgid "fixed"
 msgstr "fest"
 
 #: admin/fai/class_faiPartition.inc:176
-#, fuzzy
 msgid "dynamic"
 msgstr "dynamisch"
 
 #: admin/fai/class_faiPartition.inc:177
-#, fuzzy
 msgid "remaining space"
 msgstr "verbleibender Platz"
 
@@ -1179,7 +1171,7 @@ msgstr "PB"
 
 #: admin/fai/class_faiPartition.inc:187
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: admin/fai/class_faiPartition.inc:192
 msgid "always"
@@ -1191,31 +1183,31 @@ msgstr "bei Neuinstallation"
 
 #: admin/fai/class_faiPartition.inc:197
 msgid "swap space"
-msgstr ""
+msgstr "Auslagerungsspeicher"
 
 #: admin/fai/class_faiPartition.inc:198
 msgid "ext2"
-msgstr ""
+msgstr "ext2"
 
 #: admin/fai/class_faiPartition.inc:199
 msgid "ext3"
-msgstr ""
+msgstr "ext3"
 
 #: admin/fai/class_faiPartition.inc:200
 msgid "ext4"
-msgstr ""
+msgstr "ext4"
 
 #: admin/fai/class_faiPartition.inc:201
 msgid "reiser fs"
-msgstr ""
+msgstr "reiser fs"
 
 #: admin/fai/class_faiPartition.inc:202
 msgid "xfs"
-msgstr ""
+msgstr "xfs"
 
 #: admin/fai/class_faiPartition.inc:203
 msgid "btrfs"
-msgstr ""
+msgstr "btrfs"
 
 #: admin/fai/class_faiPartition.inc:306
 msgid "spare"
@@ -1240,12 +1232,13 @@ msgstr "Partitionsgröße"
 
 #: admin/fai/class_faiPartition.inc:404
 msgid "Raid arrays must contain at least two partitions!"
-msgstr ""
+msgstr "RAID-Arrays müssen mindestens zwei Partitionen enthalten!"
 
 #: admin/fai/class_faiPartition.inc:406
 msgid ""
 "Raid 0 arrays can only be realized with a combination of two partitions!"
 msgstr ""
+"RAID 0 Arrays können nur in Kombination von zwei Partitionen realisiert werden!"
 
 #: admin/fai/class_faiPartitionTable.inc:781
 msgid "FAI partition table"
