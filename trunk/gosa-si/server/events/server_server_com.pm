@@ -347,49 +347,80 @@ sub new_foreign_client {
 
 sub trigger_wake {
     my ($msg, $msg_hash, $session_id) = @_ ;
-
-    foreach (@{$msg_hash->{'macaddress'}}){
-        &main::daemon_log("$session_id INFO: trigger wake for $_", 5);
-        my $host    = $_;
-        my $ipaddr  = '255.255.255.255';
-        my $port    = getservbyname('discard', 'udp');
-	if (not defined $port) {
-		&main::daemon_log("$session_id ERROR: cannot determine port for wol $_: 'getservbyname('discard', 'udp')' failed!",1);
-		next;
-	}
-
-        my ($raddr, $them, $proto);
-        my ($hwaddr, $hwaddr_re, $pkt);
-
-        # get the hardware address (ethernet address)
-        $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
-        if ($host =~ m/^$hwaddr_re$/) {
-          $hwaddr = $host;
-        } else {
-          &main::daemon_log("$session_id ERROR: trigger_wake called with non mac address", 1);
-        }
-
-        # Generate magic sequence
-        foreach (split /:/, $hwaddr) {
-                $pkt .= chr(hex($_));
-        }
-        $pkt = chr(0xFF) x 6 . $pkt x 16 . $main::wake_on_lan_passwd;
-
-        # Allocate socket and send packet
-
-        $raddr = gethostbyname($ipaddr);
-	if (not defined $raddr) {
-		&main::daemon_log("$session_id ERROR: cannot determine raddr for wol $_: 'gethostbyname($ipaddr)' failed!", 1);
-		next;
-	}
-
-        $them = pack_sockaddr_in($port, $raddr);
-        $proto = getprotobyname('udp');
-
-        socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
-        setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
-        send(S, $pkt, 0, $them) or die "send : $!";
-        close S;
+	my $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
+    foreach my $mac (@{$msg_hash->{'macaddress'}}){
+		# Check the ethernet-hw-address
+		my $hwaddr;
+		if ($mac =~ m/^$hwaddr_re$/) {
+			$hwaddr = $mac;
+		} 
+		else {
+			&main::daemon_log("$session_id ERROR: trigger_wake called with non mac address", 1);
+			next;
+		}
+		my $ldap_handle = &main::get_ldap_handle(); # Use existing ldaphandle
+		my $msg;
+		my $a = my $b = my $c = my $d = 255; # IP-Address, Fallbackvalue is 255.255.255.255
+		my @subnets = ("0", "240", "255"); # List of possible subnets. Front part is always 255.255.255.
+		my @broadcasts; # List of used broadcasts
+		my $port = 40000; # Port to use for sending packets
+		if(defined($ldap_handle)) {
+			# Ldapsearch
+			$msg = $ldap_handle->search( 
+			base   => $main::ldap_base,
+			filter => "(&(macAddress=$mac)(|(objectClass=gotoWorkstation)(objectClass=goServer)))",
+			attrs => "cn, ipHostNumber"
+			) or &main::daemon_log("cannot perform search at ldap: $@", 1);
+		}
+		# Extract the cn which is the hostname
+		if(defined($msg) && $msg->count==1){
+			# use cn from ldapsearch to get the rigth ip-address
+			my @entries = $msg->entries;
+			# get the ip which belong to this hostname
+			($a,$b,$c,$d)=unpack('C4', gethostbyname($entries[0]->get_value('cn')));
+			# Calculate the correct broadcast-addresses
+			foreach my $subnet (@subnets){
+				# to get the broadcastaddress we set all host bits in the 4th-ip-address-part to 1
+				# Some bit-operations:
+				# get subnetpart: 4th-ip-address-part AND subnet-mask
+				# get hostpart and set bits to 1: 255 XOR subnet-mask (255=11111111)
+				# get broadcast: (subnetpart) + (hostpart-bits set to 1)
+				# 
+				push(@broadcasts,($d & $subnet) + (255 ^ $subnet));
+		}
+		}
+		else{
+			# No entry found for this MAC or there exists more than one entry. Anyway switch to fallback. 
+			&main::daemon_log("INFO: switched to fallback-WOL-mode", 1);
+			# As fallback set broadcast only to 255. The fallback IP will be 255.255.255.255
+			@broadcasts = ("255");
+		}
+		# Send a wol-packet for each broadcast-address
+		foreach my $broadcast (@broadcasts){
+			my $ipaddr  = "$a.$b.$c.$broadcast";
+			&main::daemon_log("INFO: trigger wake for $mac with broadcast $ipaddr", 1);
+			my ($raddr, $them, $proto, $pkt);
+			# Generate magic sequence
+			foreach (split /:/, $hwaddr) {
+					$pkt .= chr(hex($_));
+			}
+			$pkt = chr(0xFF) x 6 . $pkt x 16 . $main::wake_on_lan_passwd;
+	
+			# Allocate socket and send packet
+			$raddr = gethostbyname($ipaddr);
+			if (not defined $raddr) {
+				&main::daemon_log("$session_id ERROR: cannot determine raddr for wol $_: 'gethostbyname($ipaddr)' failed!", 1);
+				next;
+			}
+	
+			$them = pack_sockaddr_in($port, $raddr);
+			$proto = getprotobyname('udp');
+	
+			socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
+			setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
+			send(S, $pkt, 0, $them) or die "send : $!";
+			close S;
+		}
     }
 
     return;
