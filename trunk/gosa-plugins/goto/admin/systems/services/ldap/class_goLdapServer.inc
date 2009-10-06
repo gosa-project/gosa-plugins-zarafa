@@ -78,8 +78,11 @@ class goLdapServer extends goService{
     if(empty($this->goLdapBase)){
       $message[] = msgPool::required(_("Base"));
     }
-    if(!preg_match("/^ldap[si]?:\/\/[^\/]+\/.+$/", $this->goLdapBase)){
-      $message[] = msgPool::invalid(_("Base"),"","","ldap[si]://base");
+    if(!preg_match("/^ldap[si]?:\/\/[\w-:_]+\/.+$/", $this->goLdapBase)){
+      $err = _('The specified LDAP URI is incorrectly formatted.');
+      $err .= "<br><br><i>"._("Example").":</i> ". "ldap[si]://server/base";
+
+      $message[] = $err;
     }
     return($message);
   }

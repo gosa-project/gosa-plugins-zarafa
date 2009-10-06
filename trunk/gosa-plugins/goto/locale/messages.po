@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-02 18:02+0200\n"
+"POT-Creation-Date: 2009-10-05 14:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -209,7 +209,7 @@ msgstr ""
 #: admin/systems/services/shares/class_goShareServer.inc:301
 #: admin/systems/services/shares/class_goShareServer.inc:314
 #: admin/systems/services/ntp/class_goNtpServer.inc:98
-#: admin/systems/services/ldap/class_goLdapServer.inc:117
+#: admin/systems/services/ldap/class_goLdapServer.inc:120
 #: admin/systems/services/terminal/class_goTerminalServer.inc:103
 #: admin/applications/class_applicationParameters.inc:158
 #: admin/applications/class_applicationParameters.inc:226
@@ -255,7 +255,6 @@ msgstr ""
 #: admin/systems/goto/class_workstationGeneric.inc:710
 #: admin/systems/goto/workstation.tpl:35 admin/systems/goto/printer.tpl:27
 #: admin/systems/services/ldap/class_goLdapServer.inc:79
-#: admin/systems/services/ldap/class_goLdapServer.inc:82
 #: admin/applications/generic.tpl:42
 #: admin/applications/class_applicationGeneric.inc:622
 #: admin/applications/class_divListApplication.inc:90
@@ -2311,7 +2310,7 @@ msgstr ""
 #: admin/systems/services/kiosk/class_goKioskService.inc:270
 #: admin/systems/services/shares/class_goShareServer.inc:414
 #: admin/systems/services/ntp/class_goNtpServer.inc:115
-#: admin/systems/services/ldap/class_goLdapServer.inc:129
+#: admin/systems/services/ldap/class_goLdapServer.inc:132
 #: admin/systems/services/terminal/class_goTerminalServer.inc:165
 #: admin/systems/services/syslog/class_goLogDBServer.inc:93
 #: admin/systems/services/syslog/class_goSyslogServer.inc:69
@@ -2435,12 +2434,21 @@ msgstr ""
 msgid "fill-in-your-servers-dns-name"
 msgstr ""
 
-#: admin/systems/services/ldap/class_goLdapServer.inc:128
-#: admin/systems/services/ldap/class_goLdapServer.inc:129
+#: admin/systems/services/ldap/class_goLdapServer.inc:82
+msgid "The specified LDAP URI is incorrectly formatted."
+msgstr ""
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:83
+#: addons/goto/goto_import_file.tpl:9
+msgid "Example"
+msgstr ""
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:131
+#: admin/systems/services/ldap/class_goLdapServer.inc:132
 msgid "Ldap"
 msgstr ""
 
-#: admin/systems/services/ldap/class_goLdapServer.inc:137
+#: admin/systems/services/ldap/class_goLdapServer.inc:140
 msgid "Ldap base"
 msgstr ""
 
@@ -3760,10 +3768,6 @@ msgstr ""
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "DHCP group"
-msgstr ""
-
-#: addons/goto/goto_import_file.tpl:9
-msgid "Example"
 msgstr ""
 
 #: addons/goto/goto_import_file.tpl:21
