@@ -1437,6 +1437,27 @@ class phoneAccount extends plugin
       $message[]= msgPool::required("Phone number");
     }
 
+    /* Do not allow to save duplicate phone numbers 
+     *  this may destroy the extensions table.
+     */ 
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);  
+    $numberFilter = "";
+    foreach($this->phoneNumbers as $number){
+      $numberFilter .= "(telephoneNumber={$number})";
+    }
+    $ldap->search("(&(!(uid=".$this->uid."))(objectClass=goFonAccount)(|{$numberFilter}))",array("dn","telephoneNumber"));
+    $res = array();
+    while($attrs = $ldap->fetch()){
+      unset($attrs['telephoneNumber']['count']);
+      $res = array_merge($res,array_intersect($attrs['telephoneNumber'], $this->phoneNumbers));
+    }
+    $res = array_unique($res);
+    if(count($res)){
+      $message[] = msgPool::duplicated(_("Phone number"))."&nbsp;<br>".
+        implode(array_intersect($res, $this->phoneNumbers), ", ");
+    }
+
     /* check for ! in any parameter setting*/
     if(isset($this->macroarray[$this->macro])){
       foreach($this->macroarray[$this->macro] as $val){
