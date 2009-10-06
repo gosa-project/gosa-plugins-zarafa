@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-05 15:52+0200\n"
-"PO-Revision-Date: 2009-07-22 14:44+0200\n"
+"PO-Revision-Date: 2009-10-06 17:04+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -109,9 +109,8 @@ msgid "Choose NFS filesystem to place swap files on"
 msgstr "Sélectionnez le système de fichier NFS où sera placé le swap"
 
 #: admin/ogroups/goto/termgroup.tpl:106
-#, fuzzy
 msgid "Inherit all values to group members"
-msgstr "Hériter toutes les valeurs du groupe"
+msgstr "Les membres du groupe héritent de toute les valeurs"
 
 #: admin/ogroups/goto/termgroup.tpl:113 admin/systems/goto/workstation.tpl:130
 #: admin/systems/goto/terminal.tpl:155 addons/goto/class_gotomasses.inc:417
@@ -1202,7 +1201,7 @@ msgstr "Gestion des type mime"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:535
 msgid "File pattern"
-msgstr ""
+msgstr "Filtres des fichiers"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:716
 msgid "Mime type generic"
@@ -1422,7 +1421,7 @@ msgstr "'Chemin / Volume' doit au moins contenir un '/' !"
 
 #: admin/systems/services/nfs/class_servNfs.inc:205
 msgid "Hidden shares must have a '$' at the end of the name!"
-msgstr ""
+msgstr "Les partages cachés doivent avoir un '$' à la fin du nom !"
 
 #: admin/systems/services/nfs/servnfs.tpl:1
 msgid "Edit share"
@@ -1676,8 +1675,7 @@ msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:108
 #, php-format
-msgid ""
-"Cannot determine a valid department for this object. Setting base to '%s'!"
+msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
@@ -1701,8 +1699,7 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:294
 msgid "This is a workstation template, printer tab is disabled."
-msgstr ""
-"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:299
 msgid "This is a terminal template, printer tab is disabled."
@@ -2467,13 +2464,11 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:234
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr ""
-"Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
+msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:247
 #, php-format
-msgid ""
-"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
 "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version "
 "sera '%s' !"
@@ -2620,8 +2615,7 @@ msgstr "Continuer"
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
@@ -2767,9 +2761,8 @@ msgid "Terminal name"
 msgstr "Nom du terminal"
 
 #: admin/systems/goto/terminal.tpl:31
-#, fuzzy
 msgid "Choose subtree to place terminal in"
-msgstr "Sélectionnez la branche où sera enregistrée l'utilisateur"
+msgstr "Sélectionnez la branche où sera enregistrée le terminal"
 
 #: admin/systems/goto/terminal.tpl:177
 msgid "Inherit all"
@@ -2890,8 +2883,7 @@ msgstr "Impossible de lire le PPD '%s' !"
 #: admin/systems/ppd/class_printerPPDDialog.inc:121
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr ""
-"Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
+msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:140
 #: admin/systems/ppd/class_printerPPDDialog.inc:339
@@ -2912,8 +2904,7 @@ msgstr "Ecrasement du PPD existant"
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr ""
-"Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
+msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:463
 msgid "Section"
@@ -3049,7 +3040,7 @@ msgstr ""
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "timestamp"
-msgstr ""
+msgstr "Date"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "MAC-address"
@@ -3156,13 +3147,11 @@ msgstr "Etat du déploiement des systèmes"
 #: addons/goto/class_gotomasses.inc:270
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
-"Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
+msgstr "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:360
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
+msgstr "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
 
 #: addons/goto/class_gotomasses.inc:361
 msgid "List of queued jobs"
@@ -3208,9 +3197,8 @@ msgid "Task"
 msgstr "Tâches"
 
 #: addons/goto/class_gotomasses.inc:411
-#, fuzzy
 msgid "Period"
-msgstr "Permissions"
+msgstr "Période"
 
 #: addons/goto/class_gotomasses.inc:413
 #: addons/goto/events/DaemonEvent_update.tpl:9
@@ -3318,8 +3306,7 @@ msgstr "Déploiement de système"
 
 #: addons/goto/class_gotomasses.inc:926
 msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
-"Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
+msgstr "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
 
 #: addons/goto/log_view.tpl:7
 msgid "Available logs"
@@ -3456,26 +3443,22 @@ msgid "Create '%s' job"
 msgstr "Création du job '%s'"
 
 #: addons/goto/events/class_DaemonEvent.inc:218
-#, fuzzy
 msgid "Minutes"
-msgstr "Minutes"
+msgstr ""
 
 #: addons/goto/events/class_DaemonEvent.inc:219
-#, fuzzy
 msgid "Hours"
-msgstr "Heure"
+msgstr "Heures"
 
 #: addons/goto/events/class_DaemonEvent.inc:220
-#, fuzzy
 msgid "Days"
-msgstr "Jour"
+msgstr "Jours"
 
 #: addons/goto/events/class_DaemonEvent.inc:221
 msgid "Weeks"
-msgstr ""
+msgstr "Semaines"
 
 #: addons/goto/events/class_DaemonEvent.inc:222
-#, fuzzy
 msgid "Months"
 msgstr "Mois"
 
@@ -3558,11 +3541,11 @@ msgstr "Secondes"
 
 #: addons/goto/events/timestamp_select.tpl:49
 msgid "Periodical job"
-msgstr ""
+msgstr "Tâche périodique"
 
 #: addons/goto/events/timestamp_select.tpl:55
 msgid "Job intervall"
-msgstr ""
+msgstr "Intervalle pour les tâches"
 
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
@@ -3614,8 +3597,7 @@ msgid "Progress"
 msgstr "Progression"
 
 #: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
 msgstr ""
 "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle "
 "contiennent. Voulez vous continuer ?"
@@ -3623,8 +3605,7 @@ msgstr ""
 #: addons/goto/class_goto_import_file.inc:131
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
-"L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
+msgstr "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
 
 #: personal/environment/class_environment.inc:9
 #: personal/environment/class_environment.inc:433
@@ -3682,8 +3663,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:364
 #, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -3728,7 +3708,7 @@ msgstr "Supprimer ce partage"
 
 #: personal/environment/class_environment.inc:988
 msgid "Cannot set default printer flag for groups!"
-msgstr ""
+msgstr "Impossible de mettre le paramètre par défaut des imprimantes pour les groupes !"
 
 #: personal/environment/class_environment.inc:1141
 #: personal/environment/class_environment.inc:1711
@@ -3949,5 +3929,5 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
-msgstr ""
-"Expression régulière concordant avec les noms des périphériques hotplug"
+msgstr "Expression régulière concordant avec les noms des périphériques hotplug"
+
