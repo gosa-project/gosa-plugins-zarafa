@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-05 15:37+0200\n"
-"PO-Revision-Date: 2009-06-30 11:17+0200\n"
+"PO-Revision-Date: 2009-10-06 17:10+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -171,8 +171,7 @@ msgstr "Le méthode mail ne peut pas se connecter : %s"
 #: personal/mail/class_mailAccount.inc:162
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
-msgstr ""
-"Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
+msgstr "Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:305
 msgid ""
@@ -846,8 +845,7 @@ msgstr "Score requis"
 
 #: admin/systems/services/spam/goSpamServer.tpl:22
 msgid "Select required score to tag mail as spam"
-msgstr ""
-"Sélectionner le score requis pour marquer ce message comme étant un spam"
+msgstr "Sélectionner le score requis pour marquer ce message comme étant un spam"
 
 #: admin/systems/services/spam/goSpamServer.tpl:69
 #: admin/systems/services/spam/class_goSpamServer.inc:334
@@ -1147,8 +1145,7 @@ msgid "No delivery to own mailbox"
 msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 
 #: personal/mail/generic.tpl:151
-msgid ""
-"Select to automatically response with the vacation message defined below"
+msgid "Select to automatically response with the vacation message defined below"
 msgstr ""
 "Indiquez la réponse automatique en remplissant le message d'absence ci-"
 "dessous"
@@ -1242,7 +1239,7 @@ msgstr "Le fichier '%s' n'existe pas !"
 
 #: personal/mail/class_mail-methods-cyrus.inc:448
 msgid "The sieve script may not be written correctly."
-msgstr ""
+msgstr "Le script sieve peut ne pas être écrit correctement."
 
 #: personal/mail/class_mail-methods-cyrus.inc:449
 #: personal/mail/sieve/class_My_Tree.inc:245
@@ -1708,8 +1705,7 @@ msgstr ""
 "d'authentification est vide."
 
 #: personal/mail/sieve/templates/management.tpl:6
-msgid ""
-"Please verify that the attributes uid and mail are not empty and try again."
+msgid "Please verify that the attributes uid and mail are not empty and try again."
 msgstr ""
 "Veuillez vérifier que les attributs uid et mail ne sont pas vide et "
 "réessayer."
@@ -1919,14 +1915,11 @@ msgid "Please specify a valid operator."
 msgstr "Veuillez spécifier un opérateur valide."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:654
-msgid ""
-"Invalid character found in address attribute. Quotes are not allowed here."
-msgstr ""
-"Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
+msgid "Invalid character found in address attribute. Quotes are not allowed here."
+msgstr "Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:669
-msgid ""
-"Invalid character found in value attribute. Quotes are not allowed here."
+msgid "Invalid character found in value attribute. Quotes are not allowed here."
 msgstr ""
 "Caractère non valide trouvé dans l'attribut. Les guillemets ne sont pas "
 "permis ici."
@@ -2010,8 +2003,7 @@ msgstr "L'analyse à réussi"
 
 #: personal/mail/sieve/class_sieveManagement.inc:156
 #, php-format
-msgid ""
-"The specified mail server '%s' does not exist within the GOsa configuration."
+msgid "The specified mail server '%s' does not exist within the GOsa configuration."
 msgstr ""
 "Le serveur de messagerie spécifié '%s' n'existe pas dans la configuration de "
 "GOsa."
@@ -2026,8 +2018,7 @@ msgstr "Veuillez seulement utiliser des nom de script en miniscules !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:212
 msgid "Please use only alphabetical characters in script names!"
-msgstr ""
-"Seul des caractères alphabétiques sont permis dans le nom des scripts !"
+msgstr "Seul des caractères alphabétiques sont permis dans le nom des scripts !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:218
 msgid "Script name already in use!"
@@ -2162,9 +2153,8 @@ msgid "unknown"
 msgstr "inconnu"
 
 #: personal/mail/class_mailAccount.inc:998
-#, fuzzy
 msgid "Mail error saving sieve settings"
-msgstr "Impossible de sauver le script sieve"
+msgstr "Erreur de messagerie lors de la sauvegarde du script sieve"
 
 #: personal/mail/class_mailAccount.inc:1102
 #: personal/mail/class_mailAccount.inc:1110
@@ -2258,3 +2248,4 @@ msgstr "Illimités"
 #: personal/mail/mail_locals.tpl:35
 msgid "Select department"
 msgstr "Sélectionner un département"
+
