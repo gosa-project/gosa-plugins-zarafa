@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-05 15:37+0200\n"
-"PO-Revision-Date: 2009-10-02 18:01+0200\n"
+"PO-Revision-Date: 2009-10-06 17:15+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -319,14 +319,12 @@ msgid "License generic"
 msgstr "Licence par défaut"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:244
-#, fuzzy
 msgid "Usage by host"
-msgstr "Utilisé par"
+msgstr "Utilisation par hôte"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:245
-#, fuzzy
 msgid "License usage by host"
-msgstr "Utilisation des Licences"
+msgstr "Utilisation des licences par hôte"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:252
 #: admin/opsiLicenses/licenseGeneric.tpl:237
@@ -401,8 +399,9 @@ msgid "Partner"
 msgstr "Partenaire"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:70
+#, fuzzy
 msgid "Conclusion date"
-msgstr ""
+msgstr "Date de fin"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:126
 msgid "Notification date"
@@ -425,14 +424,10 @@ msgid "none"
 msgstr "aucun"
 
 #: admin/opsiLicenses/class_licenseByProduct.inc:136
-#, fuzzy
 msgid "Usage by product"
-msgstr "Produits installés"
+msgstr "Utilisation par produit"
 
 #: admin/opsiLicenses/class_licenseByProduct.inc:137
-#, fuzzy
 msgid "License usage by product"
-msgstr "Utilisation des Licences"
+msgstr "Utilisation des licences par produit"
 
-#~ msgid "Usage"
-#~ msgstr "Utilisation"
