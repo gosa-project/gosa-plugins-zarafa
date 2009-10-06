@@ -548,8 +548,10 @@ class servdnseditZone extends plugin
     $ret['sOAmail']            = preg_replace("/\@/",".",$this->sOAmail);
 
     foreach(array("sOAprimary","zoneName","sOAmail") as $attr){
+
+      // Append trailing dots if we've full qualified host names.
       if(!preg_match("/\.$/",$ret[$attr])){
-        if(!tests::is_ip($ret[$attr])){
+        if(!tests::is_ip($ret[$attr]) && preg_match("/\./",$ret[$attr])){
           $ret[$attr] = $ret[$attr].".";
         }
       }
