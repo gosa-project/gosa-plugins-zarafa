@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-05 16:06+0200\n"
-"PO-Revision-Date: 2009-06-30 11:04+0200\n"
+"PO-Revision-Date: 2009-10-06 13:10+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,8 +15,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/ogroups/gofon/phonequeue.tpl:2
-msgid ""
-"Only users with the same asterisk home server will be included to this queue."
+msgid "Only users with the same asterisk home server will be included to this queue."
 msgstr ""
 "Seulement les utilisateurs du même serveur asterisk seront inclus dans cette "
 "queue."
@@ -647,8 +646,7 @@ msgstr "Configuration réseau"
 #: gofon/macro/class_gofonMacro.inc:458
 #, php-format
 msgid "Cannot delete entry because it is still in use by '%s'!"
-msgstr ""
-"Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
+msgstr "Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:331
 #: admin/systems/gofon/class_phoneGeneric.inc:334
@@ -1114,13 +1112,11 @@ msgstr "non défini"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:342
 #: gofon/phoneaccount/class_phoneAccount.inc:342
-#, fuzzy, php-format
-msgid ""
-"Cannot identify telephone extension in database, please try to save again."
+#, php-format
+msgid "Cannot identify telephone extension in database, please try to save again."
 msgstr ""
 "Impossible d'identifier l'extension téléphonique dans la base de données, "
-"veuillez essayer de sauver à nouveau. Activez le mode debug si l'erreur "
-"persiste"
+"veuillez essayer de sauver à nouveau."
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:557
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:564
@@ -1141,11 +1137,9 @@ msgstr ""
 #: gofon/phoneaccount/class_phoneAccount.inc:612
 #: gofon/phoneaccount/class_phoneAccount.inc:678
 #: gofon/phoneaccount/class_phoneAccount.inc:1562
-#, fuzzy, php-format
+#, php-format
 msgid "GOsa identified problems with your MySQL table definition!"
-msgstr ""
-"GOsa à identifié des problèmes dans les définitions de vos tables MySQL, "
-"veuillez activer le mode debug pour plus de détail."
+msgstr "GOsa à identifié des problèmes dans les définitions de vos tables MySQL !"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:651
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:973
@@ -1211,11 +1205,8 @@ msgstr "paramètre de la macro %s"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1492
 #: gofon/phoneaccount/class_phoneAccount.inc:1492
-#, fuzzy
 msgid "An error occured while updating the database entries!"
-msgstr ""
-"Une erreur est survenue lors de la mise à jour de la base de données, "
-"activer le mode debug pour plus de détails."
+msgstr "Une erreur est survenue lors de la mise à jour de la base de données !"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
 #: gofon/phoneaccount/class_phoneAccount.inc:1680
@@ -1467,8 +1458,7 @@ msgstr ""
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:379
 #, php-format
-msgid ""
-"The previously selected asterisk home server '%s' is no longer available!"
+msgid "The previously selected asterisk home server '%s' is no longer available!"
 msgstr ""
 "Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
 "disponible !"
@@ -1655,3 +1645,4 @@ msgstr "Statut"
 #: gofon/fonreports/contents.tpl:51
 msgid "Search returned no results..."
 msgstr "La recherche n'a renvoyé aucun résultat..."
+
