@@ -25,6 +25,7 @@ class roleManagement extends plugin
   /* Definitions */
   var $plHeadline= "Roles";
   var $plDescription= "Manage roles";
+  var $plIcon= "plugins/rolemanagement/images/plugin.png";
 
   // Copy and paste handler 
   var $CopyPasteHandler = NULL;
