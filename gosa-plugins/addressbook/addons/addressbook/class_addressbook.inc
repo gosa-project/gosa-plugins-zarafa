@@ -830,8 +830,10 @@ class addressbook extends plugin
 
       /* Use addressbook acls */
       if(preg_match("/".preg_quote($this->abobjectclass, '/')."/",$dn))  {
-        $dn_a = preg_replace("/".preg_quote($this->abobjectclass, '/').",/","",$dn);
-        $acls = $this->ui->get_permissions($dn_a,"addressbook/addressbook",$attr);
+        $acls = "";
+        foreach($this->ui->ACLperPath as $path => $data){
+          $acls.= $this->ui->get_permissions($path,"addressbook/addressbook",$attr);
+        }
       }
 
       /* Use Organizational Person acls */
