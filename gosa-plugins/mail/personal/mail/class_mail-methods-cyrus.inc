@@ -437,9 +437,9 @@ class mailMethodCyrus extends mailMethod{
     // Check file integrity 
     $files = array();
     foreach(array("sieve-header.txt","sieve-spam.txt","sieve-mailsize.txt","sieve-vacation.txt","sieve-discard.txt") as $file){
-      if(!file_exists(CONFIG_DIR."/".$file) || ! is_readable(CONFIG_DIR."/".$file)){
-        $files[] = CONFIG_DIR."/".$file;
-        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__ , CONFIG_DIR."/".$file,
+      if(!file_exists(CONFIG_DIR."/mail/".$file) || ! is_readable(CONFIG_DIR."/mail/".$file)){
+        $files[] = CONFIG_DIR."/mail/".$file;
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__ , CONFIG_DIR."/mail/".$file,
             "<b>Sieve template missing, please locate and move the template file: </b>");
       }
     }
@@ -527,14 +527,14 @@ class mailMethodCyrus extends mailMethod{
         is_integer(strpos($gosaMailDeliveryMode, "V")) ||
         is_integer(strpos($gosaMailDeliveryMode, "S"))){
 
-      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/sieve-header.txt")));
+      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/mail/sieve-header.txt")));
       eval ("\$script.=\"$text\";");
     }
 
     /* Add anti-spam code */
     if (is_integer(strpos($gosaMailDeliveryMode, "S"))){
       $spambox= $gosaSpamMailbox;
-      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/sieve-spam.txt")));
+      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/mail/sieve-spam.txt")));
       eval ("\$script.=\"$text\";");
     }
 
@@ -542,7 +542,7 @@ class mailMethodCyrus extends mailMethod{
        adjustable through GOsa. */
     if (is_integer(strpos($gosaMailDeliveryMode, "R"))){
       $maxsize= $gosaMailMaxSize;
-      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/sieve-mailsize.txt")));
+      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/mail/sieve-mailsize.txt")));
       eval ("\$script.=\"$text\";");
     }
 
@@ -557,13 +557,13 @@ class mailMethodCyrus extends mailMethod{
         $addrlist .= ", \"$val\"";
       }
       $vacmsg= $gosaVacationMessage;
-      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/sieve-vacation.txt")));
+      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/mail/sieve-vacation.txt")));
       eval ("\$script.=\"$text\";");
     }
 
     /* If no local delivery is wanted, tell the script to discard the mail */
     if (!is_integer(strpos($gosaMailDeliveryMode, "L"))){
-      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/sieve-discard.txt")));
+      $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/mail/sieve-discard.txt")));
       eval ("\$script.=\"$text\";");
     }
 
