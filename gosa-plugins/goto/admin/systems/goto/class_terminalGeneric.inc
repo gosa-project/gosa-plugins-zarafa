@@ -79,6 +79,8 @@ class termgeneric extends plugin
     }
 
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
+    $this->netConfigDNS->MACisMust =TRUE;
+
     /* Read arrays */
     foreach (array("ghNetNic", "ghIdeDev", "ghScsiDev") as $val){
       if (!isset($this->attrs[$val])){
