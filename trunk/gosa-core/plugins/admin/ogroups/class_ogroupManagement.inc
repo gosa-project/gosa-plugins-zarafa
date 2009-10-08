@@ -147,17 +147,40 @@ class ogroupManagement extends plugin
 
     if(preg_match("/^event_/",$s_action) && class_available("DaemonEvent")){
       $ids = $this->list_get_selected_items();
-      $uids = array();
+      /* Resolve the selected items to their corresponding uids and group names */
+      $targets = array();
       foreach($ids as $id){
-        $uids[] = $this->ogrouplist[$id]['cn'][0];
+        $ogroup = $this->ogrouplist[$id]['cn'][0];
+        $ldap = $this->config->get_ldap_link();
+        $ldap->search("(&(cn=".$ogroup.")(member=*))", array('member'));
+
+        while ($entry = $ldap->fetch()) {
+          $members = $entry['member'];
+          for($i=0;$i<$members['count'];$i++) {
+            $ldap->cat($members[$i], array('uid','cn','objectClass'));
+            if ($ldap->count() > 0) {
+              $attrs = $ldap->fetch();
+
+              /* Determine which type the object has */
+              if (array_search('gosaAccount', $attrs['objectClass'])) {
+                $uid = $attrs['uid'][0];
+                $targets['USERS'][] = $uid;
+              }
+              elseif (array_search('posixGroup', $attrs['objectClass'])) {
+                $group = $attrs['cn'][0];
+                $targets['GROUPS'][] = $group;
+              }
+            }
+          }
+        }
       }
-      if(count($uids)){
+      if(count($targets)){
         $events = DaemonEvent::get_event_types(USER_EVENT);
         $event = preg_replace("/^event_/","",$s_action);
         if(isset($events['BY_CLASS'][$event])){
           $type = $events['BY_CLASS'][$event];
           $this->ogroup = new $type['CLASS_NAME']($this->config);
-          $this->ogroup->add_targets($uids);
+          $this->ogroup->add_targets($targets);
           $this->ogroup->set_type(TRIGGERED_EVENT);
         }
       }
@@ -170,12 +193,19 @@ class ogroupManagement extends plugin
 
     /* Save event */
     if(isset($_POST['save_event_dialog'])){
-      $o_queue = new gosaSupportDaemon();
-      $o_queue->append($this->ogroup);
-      if($o_queue->is_error()){
-        msg_dialog::display(_("Infrastructure error"), msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-      }else{
-        $this->ogroup = FALSE;
+      $this->ogroup->save_object();
+      $msgs = $this->ogroup->check();
+      if (count($msgs)) {
+        msg_dialog::displayChecks($msgs);
+      }
+      else {
+        $o_queue = new gosaSupportDaemon();
+        $o_queue->append($this->ogroup);
+        if($o_queue->is_error()){
+          msg_dialog::display(_("Infrastructure error"), msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+        }else{
+          $this->ogroup = FALSE;
+        }
       }
     }
 
