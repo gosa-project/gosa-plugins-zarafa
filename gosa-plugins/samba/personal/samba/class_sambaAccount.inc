@@ -995,6 +995,14 @@ class sambaAccount extends plugin
       }
     }
 
+    /* Check dates */
+    if (!tests::is_date($this->sambaKickoffTime)){
+      $message[]= msgPool::invalid(_("Account expires after"), $this->sambaKickoffTime,"" ,"23.02.2009");
+    }
+    if (!tests::is_date($this->sambaPwdMustChange)){
+      $message[]= msgPool::invalid(_("Password expires on"), $this->sambaPwdMustChange,"" ,"23.02.2009");
+    }
+
     /* Too many workstations? Windows usrmgr only supports eight */
     if (substr_count($this->sambaUserWorkstations, ",") >= 8){
       $message[]= _("The windows usermanager allows eight clients at maximum!");

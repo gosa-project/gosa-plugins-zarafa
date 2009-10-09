@@ -444,21 +444,21 @@ class sambaMungedDial
     if($this->old_behavior==true) {
       $result= substr($this->ctx['CtxCfgFlags1'], 1, 1);
     } else {
-    	$result= substr($this->ctx['CtxShadow'], 1, 1);
+      $result= substr($this->ctx['CtxShadow'], 1, 1);
     }
-  	return $result;
+    return $result;
   }
 
   /* sets shadow value */
   function setShadow ($checked, $value)
   {
-  	if ($checked) {
+    if ($checked) {
       if($this->old_behavior==true) {
         // We need to reset the old setting
        	$this->ctx['CtxCfgFlags1'][1]= sprintf('%1X', $value);
       }
-  		$this->ctx['CtxShadow'][1]= sprintf('%1x', $value);
-  	}
+      $this->ctx['CtxShadow'][1]= sprintf('%1x', $value);
+    }
   }
 
   /* gets connect-client-drive-at-logon value: enabled/disabled */
