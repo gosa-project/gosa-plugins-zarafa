@@ -54,6 +54,9 @@ class ServerService extends plugin
     $this->parent = $parent;
     $this->dn= $dn;
 
+    /* Initialize acl_base */
+    $this->set_acl_base($this->dn);
+
     /* Adapt parent attributes */
     if(isset($this->parent->attrs)){
       $this->attrs = $this->parent->attrs;
