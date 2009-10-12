@@ -627,8 +627,8 @@ class phonequeue extends plugin
           $a_ext[$i]['context']  = 'GOsa';
           $a_ext[$i]['exten']    = $num;
           $a_ext[$i]['priority'] = 1;
-          $a_ext[$i]['app']      = "SetLanguage";
-          $a_ext[$i]['appdata']  = "de";
+          $a_ext[$i]['app']      = "Set";
+          $a_ext[$i]['appdata']  = "CHANNEL(language)=".$this->goFonQueueLanguage;
           $i ++ ; 
 
           $a_ext[$i]['context']  = 'GOsa';
@@ -661,8 +661,8 @@ class phonequeue extends plugin
           $a_ext[$i]['context']  = 'GOsa';
           $a_ext[$i]['exten']    = $num;
           $a_ext[$i]['priority'] = 2;
-          $a_ext[$i]['app']      = "SetLanguage";
-          $a_ext[$i]['appdata']  = $this->goFonQueueLanguage;
+          $a_ext[$i]['app']      = "Set";
+          $a_ext[$i]['appdata']  = "CHANNEL(language)=".$this->goFonQueueLanguage;
           $i ++ ; 
   
           /* Play welcome sound file */
