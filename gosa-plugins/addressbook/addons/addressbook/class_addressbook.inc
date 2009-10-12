@@ -72,6 +72,7 @@ class addressbook extends plugin
 	var $objectclasses= array("top", "person", "organizationalPerson", "inetOrgPerson");
 
 	var $abobjectclass= "dc=addressbook";
+  var $globalAddressbookPermissions = "";
 
   function addressbook (&$config, $dn= NULL)
   {
@@ -98,6 +99,10 @@ class addressbook extends plugin
     }
      
     $this->ui = get_userinfo();
+    $this->globalAddressbookPermissions = "";
+    foreach($this->ui->get_acl_target_objects() as $path => $data){
+      $this->globalAddressbookPermissions .= $this->ui->get_permissions($path,"addressbook/addressbook",$attr);
+    }
   }
 
   function execute()
@@ -830,10 +835,7 @@ class addressbook extends plugin
 
       /* Use addressbook acls */
       if(preg_match("/".preg_quote($this->abobjectclass, '/')."/",$dn))  {
-        $acls = "";
-        foreach($this->ui->ACLperPath as $path => $data){
-          $acls.= $this->ui->get_permissions($path,"addressbook/addressbook",$attr);
-        }
+        $acls = $this->globalAddressbookPermissions;
       }
 
       /* Use Organizational Person acls */
