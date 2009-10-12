@@ -72,7 +72,7 @@ class addressbook extends plugin
 	var $objectclasses= array("top", "person", "organizationalPerson", "inetOrgPerson");
 
 	var $abobjectclass= "dc=addressbook";
-  var $globalAddressbookPermissions = "";
+  var $acl_targets_objects = array();
 
   function addressbook (&$config, $dn= NULL)
   {
@@ -99,10 +99,7 @@ class addressbook extends plugin
     }
      
     $this->ui = get_userinfo();
-    $this->globalAddressbookPermissions = "";
-    foreach($this->ui->get_acl_target_objects() as $path){
-      $this->globalAddressbookPermissions .= $this->ui->get_permissions($path,"addressbook/addressbook",$attr);
-    }
+    $this->acl_targets_objects = $this->ui->get_acl_target_objects();
   }
 
   function execute()
@@ -151,7 +148,7 @@ class addressbook extends plugin
     session::set("phonefilter", $phonefilter);
 
     /* Assign create acl */
-    $acl = $this->get_entry_acls($this->abobjectclass.",".$phonefilter['search_base']);
+    $acl = $this->get_entry_acls($this->dn);
     $smarty->assign("internal_createable", preg_match("/c/",$acl));
     $smarty->assign("internal_removeable", preg_match("/d/",$acl));
     $smarty->assign("internal_editable",   preg_match("/w/",$acl));
@@ -833,7 +830,10 @@ class addressbook extends plugin
 
       /* Use addressbook acls */
       if(preg_match("/".preg_quote($this->abobjectclass, '/')."/",$dn))  {
-        $acls = $this->globalAddressbookPermissions;
+        $acls = "";
+        foreach($this->acl_targets_objects as $path){
+          $acls .= $this->ui->get_permissions($path,"addressbook/addressbook",$attr);
+        }
       }
 
       /* Use Organizational Person acls */
