@@ -24,28 +24,13 @@ class sambaAccount extends plugin
   var $plHeadline= "Samba";
   var $plDescription= "This does something";
   var $view_logged = FALSE;
+  var $password_expires= 0;
 
   /* Switch for Samba version */
   var $uidNumber= 65535;
   var $gidNumber= 65535;
 
-  /* Samba 2 attributes */
-  var $pwdLastSet= "0";
-  var $logonTime= "0";
-  var $logoffTime= "2147483647";
-  var $kickoffTime= "2147483647";
-  var $pwdCanChange= "0";
-  var $pwdMustChange= "0";
-  var $password_expires= 0;
-  var $acctFlags= "[UX        ]";
-  var $smbHome= "";
-  var $homeDrive= "";
-  var $scriptPath= "";
-  var $profilePath= "";
-  var $rid= "";
-  var $primaryGroupID= "";
-
-  /* Samba 3 attributes */
+  /* Samba attributes */
   var $SID= "";
   var $ridBase= 0;
   var $sambaSID= "";
@@ -1039,7 +1024,6 @@ class sambaAccount extends plugin
         if ($this->$attrname != $tmp){
           $this->is_modified= TRUE;
         }
-        $this->pwdCanChange= $tmp;
         $this->sambaPwdCanChange= $tmp;
       }
       $tmp= "U";
@@ -1606,7 +1590,6 @@ class sambaAccount extends plugin
     /* Flags */
     if(in_array("allow_pwchange",$this->multi_boxes)){
       $ret['sambaPwdCanChange'] = $this->sambaPwdCanChange;
-      $ret['pwdCanChange']      = $this->pwdCanChange;
     }
   
     if(in_array("password_expires",$this->multi_boxes)){
@@ -1720,7 +1703,6 @@ class sambaAccount extends plugin
 
   
     if(isset($values['sambaPwdCanChange']))  $this->sambaPwdCanChange  = $values['sambaPwdCanChange'];
-    if(isset($values['pwdCanChange']))       $this->pwdCanChange       = $values['pwdCanChange'];
 
     
     
