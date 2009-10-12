@@ -510,12 +510,10 @@ class addressbook extends plugin
     /* Create list of readable departments */
     $deps = array();
     foreach($this->config->idepartments as $dn => $name){
-      if( $this->acl_is_readable($dn)){
+      if( $this->acl_is_readable($dn) || $dn == $this->config->current['BASE']){
         $deps[$dn] = $name;
       }
     }
-
-
   
     $this->base = $phonefilter['search_base'];
     $smarty->assign("deplist", $deps);
