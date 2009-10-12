@@ -100,7 +100,7 @@ class addressbook extends plugin
      
     $this->ui = get_userinfo();
     $this->globalAddressbookPermissions = "";
-    foreach($this->ui->get_acl_target_objects() as $path => $data){
+    foreach($this->ui->get_acl_target_objects() as $path){
       $this->globalAddressbookPermissions .= $this->ui->get_permissions($path,"addressbook/addressbook",$attr);
     }
   }
