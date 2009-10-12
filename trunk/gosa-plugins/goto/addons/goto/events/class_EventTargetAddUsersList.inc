@@ -64,6 +64,7 @@ class EventTargetAddUserList extends MultiSelectWindow
 
     $this->AddCheckBox("display_users"  ,"1", _("Display users"),TRUE);
     $this->AddCheckBox("display_groups" ,"1", _("Display groups"),TRUE);
+    $this->AddCheckBox("display_objectgroups" ,"1", _("Display object groups"),TRUE);
   }
 
 
@@ -150,6 +151,11 @@ class EventTargetAddUserList extends MultiSelectWindow
           get_sub_list("(objectClass=posixGroup)","groups",get_groups_ou(),get_groups_ou().$this->selectedBase,
             array("cn","objectClass","description"),GL_NONE));
     }
+    if($this->display_objectgroups){
+      $_target_list = array_merge($_target_list,
+          get_sub_list("(|(gosaGroupObjects=*G*)(gosaGroupObjects=*U*))","groups",get_groups_ou(),get_groups_ou().$this->selectedBase,
+            array("cn", "objectClass", "description"),GL_NONE));
+    }
     $this->_target_list = $_target_list;
 
     $tmp = array();
@@ -171,6 +177,8 @@ class EventTargetAddUserList extends MultiSelectWindow
         $img = '<img class="center" src="plugins/users/images/select_user.png" alt="U" title="'._("User").'">';
       }elseif(in_array("posixGroup",$obj['objectClass'])){
         $img = '<img class="center" src="plugins/groups/images/groups.png" alt="G" title="'._("Group").'">';
+      }elseif(in_array("gosaGroupOfNames", $obj['objectClass'])){
+        $img = '<img class="center" src="plugins/ogroups/images/ogroup.png" alt="O" title="'._("Object group").'">';
       }
 
       $field1 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>",
@@ -185,7 +193,7 @@ class EventTargetAddUserList extends MultiSelectWindow
 
   function get_selected_targets()
   {
-    $a_targets = array("USERS" => array(),"GROUPS" => array());
+    $a_targets = array("USERS" => array(),"GROUPS" => array(), "OBJECTGROUPS" => array());
 
     foreach($this->list_get_selected_items() as $id){
       $obj = $this->_target_list[$id];
@@ -194,6 +202,9 @@ class EventTargetAddUserList extends MultiSelectWindow
       }
       if(in_array("gosaAccount",$obj['objectClass'])){
         $a_targets['USERS'][] = $obj['uid'][0];
+      }
+      if(in_array("gosaGroupOfNames", $obj['objectClass'])){
+        $a_targets['OBJECTGROUPS'][] = $obj['cn'][0];
       }
     }
 

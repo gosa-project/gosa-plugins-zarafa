@@ -151,28 +151,7 @@ class ogroupManagement extends plugin
       $targets = array();
       foreach($ids as $id){
         $ogroup = $this->ogrouplist[$id]['cn'][0];
-        $ldap = $this->config->get_ldap_link();
-        $ldap->search("(&(cn=".$ogroup.")(member=*))", array('member'));
-
-        while ($entry = $ldap->fetch()) {
-          $members = $entry['member'];
-          for($i=0;$i<$members['count'];$i++) {
-            $ldap->cat($members[$i], array('uid','cn','objectClass'));
-            if ($ldap->count() > 0) {
-              $attrs = $ldap->fetch();
-
-              /* Determine which type the object has */
-              if (array_search('gosaAccount', $attrs['objectClass'])) {
-                $uid = $attrs['uid'][0];
-                $targets['USERS'][] = $uid;
-              }
-              elseif (array_search('posixGroup', $attrs['objectClass'])) {
-                $group = $attrs['cn'][0];
-                $targets['GROUPS'][] = $group;
-              }
-            }
-          }
-        }
+        $targets['OBJECTGROUPS'][] = $ogroup;
       }
       if(count($targets)){
         $events = DaemonEvent::get_event_types(USER_EVENT);
