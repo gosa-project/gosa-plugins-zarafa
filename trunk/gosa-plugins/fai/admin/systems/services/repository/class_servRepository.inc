@@ -238,6 +238,32 @@ class servrepository extends goService
     }
   }
 
+  function allow_remove()
+  {
+    /* Check if the service is still in use */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    foreach($this->repositories as $repository) {
+      $url = $repository['Url'];
+      $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
+      if ($ldap->count() != 0){
+        $obj= array();
+        $found= false;
+        while($attrs = $ldap->fetch()){
+          foreach($attrs['FAIclass'] as $class){
+              $obj[$ldap->getDN()]= $attrs['cn'][0];
+              $found= true;
+          }
+        }
+
+        if ($found){
+          $message = msgPool::stillInUse(_("Repository service")) . msgPool::buildList($obj);
+          return $message;
+        }
+      }
+    }
+   }
+
 
   /* Check supplied data */
   function check()
