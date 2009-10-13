@@ -48,6 +48,7 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use XML::Quote qw(:all);
+use Time::HiRes qw( time );
 
 BEGIN {}
 
@@ -62,7 +63,7 @@ my $licenseTyp_hash = { 'OEM'=>'', 'VOLUME'=>'', 'RETAIL'=>''};
 
 
 # ----------------------------------------------------------------------------
-#                            S U B R O U T I N E S
+#   external methods handling the comunication with GOsa/GOsa-si
 # ----------------------------------------------------------------------------
 
 
@@ -148,11 +149,10 @@ sub opsi_add_product_to_client {
 		method  => 'setProductActionRequest',
 		params  => [ $productId, $hostId, "setup" ],
 		id  => 1, }; 
-
 	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
 	if (&check_opsi_res($res)) { return ( (caller(0))[3]." : ".$_, 1 ); };
 
-    # return message
     return ( &create_xml_string($out_hash) );
 }
 
@@ -2034,6 +2034,7 @@ sub opsi_getLicenseInformationForProduct {
 # @param 
 #	
 sub opsi_getPool {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -2122,6 +2123,9 @@ sub opsi_getPool {
 	}
 	$out_hash->{licenses} = [$res_hash];
 
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
@@ -2443,27 +2447,37 @@ print STDERR Dumper $pram1;
 }
 
 
+# ----------------------------------------------------------------------------
+#  internal methods handling the comunication with Opsi
+# ----------------------------------------------------------------------------
 
+sub _callOpsi {
+	my %arg = ('method'=>undef, 'params'=>[], 'id'=>1, @_);
+
+	my $callObject = {
+		method => $arg{method},
+		params => $arg{params},
+		id => $arg{id},
+	};
+
+	my $startTime = Time::HiRes::time;
+	my $opsiResult = $main::opsi_client->call($main::opsi_url, $callObject);
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+
+	&main::daemon_log("0 DEBUG: time to process opsi call '$arg{method}' : $elapsedTime seconds", 1034); 
+
+	return $opsiResult;
+}
 
 sub _getLicensePool_hash {
-	my %arg = (
-		'licensePoolId' => undef,
-		@_,
-	);
+	my %arg = ( 'licensePoolId' => undef, @_ );
 
 	if (not defined $arg{licensePoolId} ) { 
 		return ("function requires licensePoolId as parameter", 1);
 	}
 
-	# Fetch pool infos from Opsi server
-    my $callobj = {
-        method  => 'getLicensePool_hash',
-        params  => [ $arg{licensePoolId} ],
-        id  => 1,
-    };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+	my $res = &_callOpsi( method  => 'getLicensePool_hash', params =>[$arg{licensePoolId}], id  => 1 );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2471,15 +2485,8 @@ sub _getLicensePool_hash {
 }
 
 sub _getSoftwareLicenses_listOfHashes {
-	# Fetch licenses associated to the given pool
-	my $callobj = {
-		method  => 'getSoftwareLicenses_listOfHashes',
-		params  => [ ],
-		id  => 1,
-	};
-	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+	
+	my $res = &_callOpsi( method  => 'getSoftwareLicenses_listOfHashes' );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2487,21 +2494,9 @@ sub _getSoftwareLicenses_listOfHashes {
 }
 
 sub _getSoftwareLicenseUsages_listOfHashes {
-	my %arg = (
-			'hostId' => "",
-			'licensePoolId' => "",
-			@_,
-			);
+	my %arg = ( 'hostId' => "", 'licensePoolId' => "", @_ );
 
-	# Fetch pool infos from Opsi server
-	my $callobj = {
-		method  => 'getSoftwareLicenseUsages_listOfHashes',
-		params  => [ $arg{hostId}, $arg{licensePoolId} ],
-		id  => 1,
-	};
-	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+	my $res = &_callOpsi( method=>'getSoftwareLicenseUsages_listOfHashes', params=>[ $arg{hostId}, $arg{licensePoolId} ] );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2509,11 +2504,7 @@ sub _getSoftwareLicenseUsages_listOfHashes {
 }
 
 sub _removeSoftwareLicenseFromLicensePool {
-	my %arg = (
-		'softwareLicenseId' => undef,
-		'licensePoolId' => undef,
-		@_,
-		);
+	my %arg = ( 'softwareLicenseId' => undef, 'licensePoolId' => undef, @_ );
 
 	if (not defined $arg{softwareLicenseId} ) { 
 		return ("function requires softwareLicenseId as parameter", 1);
@@ -2522,15 +2513,7 @@ sub _removeSoftwareLicenseFromLicensePool {
 		return ("function requires licensePoolId as parameter", 1);
 	}
 
-	# Remove software license from license pool
-	my $callobj = {
-		method  => 'removeSoftwareLicenseFromLicensePool',
-		params  => [ $arg{softwareLicenseId}, $arg{licensePoolId} ],
-		id  => 1,
-	};
-	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+	my $res = &_callOpsi( method=>'removeSoftwareLicenseFromLicensePool', params=>[ $arg{softwareLicenseId}, $arg{licensePoolId} ] );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2538,11 +2521,7 @@ sub _removeSoftwareLicenseFromLicensePool {
 }
 
 sub _deleteSoftwareLicense {
-	my %arg = (
-		'softwareLicenseId' => undef,
-		'removeFromPools' => "false",
-		@_,
-		);
+	my %arg = ( 'softwareLicenseId' => undef, 'removeFromPools' => "false", @_ );
 
 	if (not defined $arg{softwareLicenseId} ) { 
 		return ("function requires softwareLicenseId as parameter", 1);
@@ -2552,15 +2531,7 @@ sub _deleteSoftwareLicense {
 		$removeFromPools = "removeFromPools";
 	}
 
-	# Fetch
-	my $callobj = {
-		method  => 'deleteSoftwareLicense',
-		params  => [ $arg{softwareLicenseId}, $removeFromPools ],
-		id  => 1,
-	};
-	my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+	my $res = &_callOpsi( method=>'deleteSoftwareLicense', params=>[ $arg{softwareLicenseId}, $removeFromPools ] );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2568,23 +2539,13 @@ sub _deleteSoftwareLicense {
 }
 
 sub _getLicensePoolId {
-	my %arg = (
-			'productId' => undef,
-			@_,
-			);
+	my %arg = ( 'productId' => undef, @_ );
 	
 	if (not defined $arg{productId} ) {
 		return ("function requires productId as parameter", 1);
 	}
 
-    my $callobj = {
-        method  => 'getLicensePoolId',
-        params  => [ $arg{productId} ],
-        id  => 1,
-    };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+    my $res = &_callOpsi( method  => 'getLicensePoolId', params  => [ $arg{productId} ] );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2592,23 +2553,13 @@ sub _getLicensePoolId {
 }
 
 sub _getLicenseContract_hash {
-	my %arg = (
-			'licenseContractId' => undef,
-			@_,
-			);
+	my %arg = ( 'licenseContractId' => undef, @_ );
 	
 	if (not defined $arg{licenseContractId} ) {
 		return ("function requires licenseContractId as parameter", 1);
 	}
 
-    my $callobj = {
-        method  => 'getLicenseContract_hash',
-        params  => [ $arg{licenseContractId} ],
-        id  => 1,
-    };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+    my $res = &_callOpsi( method  => 'getLicenseContract_hash', params  => [ $arg{licenseContractId} ] );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2623,18 +2574,11 @@ sub _createLicenseContract {
 			'notificationDate' => undef,
 			'expirationDate' => undef,
 			'notes' => undef,
-			@_,
+			@_ );
+
+	my $res = &_callOpsi( method  => 'createLicenseContract', 
+			params  => [ $arg{licenseContractId}, $arg{partner}, $arg{conclusionDate}, $arg{notificationDate}, $arg{expirationDate}, $arg{notes} ],
 			);
-
-	# Create license contract at Opsi server
-    my $callobj = {
-        method  => 'createLicenseContract',
-        params  => [ $arg{licenseContractId}, $arg{partner}, $arg{conclusionDate}, $arg{notificationDate}, $arg{expirationDate}, $arg{notes} ],
-        id  => 1,
-    };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2649,17 +2593,11 @@ sub _createSoftwareLicense {
 			'maxInstallations' => undef,
 			'boundToHost' => undef,
 			'expirationDate' => undef,
-			@_,
-			);
+			@_ );
 
-    my $callobj = {
-        method  => 'createSoftwareLicense',
+    my $res = &_callOpsi( method  => 'createSoftwareLicense',
         params  => [ $arg{softwareLicenseId}, $arg{licenseContractId}, $arg{licenseType}, $arg{maxInstallations}, $arg{boundToHost}, $arg{expirationDate} ],
-        id  => 1,
-    };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+		);
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
@@ -2671,8 +2609,7 @@ sub _addSoftwareLicenseToLicensePool {
             'softwareLicenseId' => undef,
             'licensePoolId' => undef,
             'licenseKey' => undef,
-            @_,
-            );
+            @_ );
 
 	if (not defined $arg{softwareLicenseId} ) {
 		return ("function requires softwareLicenseId as parameter", 1);
@@ -2681,15 +2618,7 @@ sub _addSoftwareLicenseToLicensePool {
 		return ("function requires licensePoolId as parameter", 1);
 	}
 
-	# Add software license to license pool
-	my $callobj = {
-        method  => 'addSoftwareLicenseToLicensePool',
-        params  => [ $arg{softwareLicenseId}, $arg{licensePoolId}, $arg{licenseKey} ],
-        id  => 1,
-    };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-	# Check Opsi error
+	my $res = &_callOpsi( method  => 'addSoftwareLicenseToLicensePool', params  => [ $arg{softwareLicenseId}, $arg{licensePoolId}, $arg{licenseKey} ] );
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 

@@ -4,7 +4,13 @@
 require_once("../../gosa-core/include/class_socketClient.inc");
 error_reporting(E_ALL);
 
-$zahl= 1;
+function microtime_float()
+{
+	list($usec, $sec) = explode(" ", microtime());
+	return ((float)$usec + (float)$sec);
+}
+
+$zahl= 10;
 
 for($count = 1; $count <= $zahl; $count++)
 {
@@ -47,7 +53,7 @@ for($count = 1; $count <= $zahl; $count++)
 
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicense_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>l_2009-09-22_09:50:58_0</softwareLicenseId></xml>";
 
-	#$data = "<xml><header>gosa_opsi_getPool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
+	$data = "<xml><header>gosa_opsi_getPool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_removeLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId><softwareLicenseId>l_2009-09-22_14:06:11</softwareLicenseId></xml>";
 
@@ -56,7 +62,7 @@ for($count = 1; $count <= $zahl; $count++)
 	#$data = "<xml><header>gosa_opsi_boundHostToLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
 	#$data = "<xml><header>gosa_opsi_unboundHostFromLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId></xml>";
 
-	$data = "<xml><header>gosa_opsi_getAllSoftwareLicenses</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
+	#$data = "<xml><header>gosa_opsi_getAllSoftwareLicenses</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
 
 
 	##############################
@@ -267,13 +273,18 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:0C:29:4C:4B:0C</macaddress> </xml>"; 
 
 
+	$time_start = microtime_float();
 
     $sock->write($data);
     $answer = "nothing";
     $answer = $sock->read();
-
     echo "$count: $answer\n";
     $sock->close();	
+
+	$time_end = microtime_float();
+	$time = $time_end - $time_start;
+	echo "Processing time: $time seconds\n";
+
   }else{
     echo "... FAILED!\n";
   }

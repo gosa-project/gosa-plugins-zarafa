@@ -39,7 +39,7 @@ use Digest::MD5  qw(md5 md5_hex md5_base64);
 use XML::Simple;
 use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
-use Time::HiRes qw( usleep);
+use Time::HiRes qw( usleep clock_gettime );
 use Cwd;
 use File::Spec;
 use File::Basename;
@@ -50,6 +50,7 @@ use GOSA::GosaSupportDaemon;
 use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
+
 
 # revision number of server and program name
 my $server_headURL;
@@ -387,10 +388,13 @@ sub daemon_log {
 			$monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
 			$year+=1900;
 
-			
+			# Microseconds since epoch
+			my $microSeconds = sprintf("%.2f", clock_gettime ( 'CLOCK_REALTIME' ));
+			$microSeconds =~ s/^\d*(.\d\d)$/$1/;
+
 			# Build log message and write it to log file and commandline
 			chomp($msg);
-			my $log_msg = "$month $monthday $hours:$minutes:$seconds $prg $msg\n";
+			my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds $prg $msg\n";
 			flock(LOG_HANDLE, LOCK_EX);
 			seek(LOG_HANDLE, 0, 2);
 			print LOG_HANDLE $log_msg;
@@ -1311,7 +1315,7 @@ sub msg_to_decrypt {
 					module=>$module,
 					sessionid=>$session_id,
 				} );
-
+			$kernel->yield('watch_for_next_tasks');
 		}
 
 		# target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa
@@ -1431,6 +1435,7 @@ sub msg_to_decrypt {
 					sessionid=>$session_id,
 				} );
 			$done = 1;
+			$kernel->yield('watch_for_next_tasks');
 		}
 
 
@@ -1705,7 +1710,6 @@ sub session_start {
     $kernel->yield('register_at_foreign_servers');
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
-    $kernel->yield('watch_for_next_tasks');
 	$kernel->sig(USR1 => "sig_handler");
 	$kernel->sig(USR2 => "recreate_packages_db");
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
@@ -2277,8 +2281,6 @@ sub watch_for_next_tasks {
         my $sql = "DELETE FROM $incoming_tn WHERE id=$message_id";
         my $res = $incoming_db->exec_statement($sql);
     }
-
-    $kernel->delay_set('watch_for_next_tasks', 1); 
 }
 
 
@@ -3696,6 +3698,7 @@ POE::Component::Server::TCP->new(
 	},
 	InlineStates => {
 		msg_to_decrypt => \&msg_to_decrypt,
+		watch_for_next_tasks => \&watch_for_next_tasks,
 		next_task => \&next_task,
 		task_result => \&handle_task_result,
 		task_done   => \&handle_task_done,
@@ -3717,7 +3720,6 @@ POE::Session->create(
         task_result => \&handle_task_result,
         task_done   => \&handle_task_done,
         task_debug  => \&handle_task_debug,
-        watch_for_next_tasks => \&watch_for_next_tasks,
         watch_for_new_messages => \&watch_for_new_messages,
         watch_for_delivery_messages => \&watch_for_delivery_messages,
         watch_for_done_messages => \&watch_for_done_messages,
