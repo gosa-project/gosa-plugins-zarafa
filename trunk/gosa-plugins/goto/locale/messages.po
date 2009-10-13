@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 14:31+0200\n"
+"POT-Creation-Date: 2009-10-13 15:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -258,7 +258,7 @@ msgstr ""
 #: admin/applications/generic.tpl:42
 #: admin/applications/class_applicationGeneric.inc:622
 #: admin/applications/class_divListApplication.inc:90
-#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+#: addons/goto/events/class_EventTargetAddUsersList.inc:131
 #: addons/goto/events/class_EventTargetAddList.inc:161
 #: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
 msgid "Base"
@@ -360,7 +360,7 @@ msgstr ""
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddUsersList.inc:133
 #: addons/goto/events/class_EventTargetAddList.inc:163
 #: addons/goto/class_target_list.inc:154
 msgid "Submit department"
@@ -369,7 +369,7 @@ msgstr ""
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddUsersList.inc:133
 #: addons/goto/events/class_EventTargetAddList.inc:163
 #: addons/goto/class_target_list.inc:154
 msgid "Submit"
@@ -1298,13 +1298,13 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:938
 #: admin/systems/goto/class_printGeneric.inc:940
-#: addons/goto/events/class_EventTargetAddUsersList.inc:173
+#: addons/goto/events/class_EventTargetAddUsersList.inc:179
 msgid "Group"
 msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:943
 #: admin/systems/services/syslog/class_goLogDBServer.inc:69
-#: addons/goto/events/class_EventTargetAddUsersList.inc:171
+#: addons/goto/events/class_EventTargetAddUsersList.inc:177
 msgid "User"
 msgstr ""
 
@@ -1731,8 +1731,8 @@ msgid "set"
 msgstr ""
 
 #: admin/systems/goto/class_workstationService.inc:78
-#: admin/systems/goto/class_workstationStartup.inc:1353
-#: admin/systems/goto/class_workstationStartup.inc:1355
+#: admin/systems/goto/class_workstationStartup.inc:1354
+#: admin/systems/goto/class_workstationStartup.inc:1356
 #: admin/systems/goto/class_terminalService.inc:121
 #: admin/systems/ppd/class_printerPPDDialog.inc:51
 #: admin/systems/ppd/class_printerPPDDialog.inc:114
@@ -1874,7 +1874,36 @@ msgstr ""
 msgid "FAI status flag"
 msgstr ""
 
-#: admin/systems/goto/class_workstationStartup.inc:1355
+#: admin/systems/goto/class_workstationStartup.inc:1293
+msgid "Partition table"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1300
+msgid "Package list"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1307
+msgid "Scripts"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1314
+msgid "Variables"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1321
+msgid "Hooks"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1328
+#: personal/environment/environment.tpl:145
+msgid "Profile"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1335
+msgid "Templates"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1356
 msgid "'repositoryBranchHook' returned no result!"
 msgstr ""
 
@@ -1973,6 +2002,7 @@ msgid "Choose an object group as template"
 msgstr ""
 
 #: admin/systems/goto/SelectDeviceType.tpl:37
+#: addons/goto/events/class_EventTargetAddUsersList.inc:181
 #: addons/goto/events/class_EventTargetAddList.inc:259
 #: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
 msgid "Object group"
@@ -3092,10 +3122,6 @@ msgstr ""
 msgid "Kiosk profile settings"
 msgstr ""
 
-#: personal/environment/environment.tpl:145
-msgid "Profile"
-msgstr ""
-
 #: personal/environment/environment.tpl:164
 msgid "Manage"
 msgstr ""
@@ -3448,6 +3474,11 @@ msgstr ""
 msgid "Display groups"
 msgstr ""
 
+#: addons/goto/events/class_EventTargetAddUsersList.inc:67
+#: addons/goto/events/class_EventTargetAddList.inc:75
+msgid "Display object groups"
+msgstr ""
+
 #: addons/goto/events/class_DaemonEvent_lock.inc:29
 #: addons/goto/events/class_DaemonEvent_lock.inc:30
 msgid "Lock"
@@ -3534,10 +3565,6 @@ msgstr ""
 
 #: addons/goto/events/class_EventTargetAddList.inc:74
 msgid "Display workstation"
-msgstr ""
-
-#: addons/goto/events/class_EventTargetAddList.inc:75
-msgid "Display object groups"
 msgstr ""
 
 #: addons/goto/events/class_EventTargetAddList.inc:76
