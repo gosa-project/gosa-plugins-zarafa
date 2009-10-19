@@ -84,7 +84,7 @@ class workservice extends plugin
       $this->XDrivers[$xdriver] = $xdriver;
     }
 
-    array_unshift($this->XDrivers, "["._("unknown")."]");
+    array_unshift($this->XDrivers, "["._("manual/auto")."]");
  
     $this->XColordepths= array( 
         "8"        => "8 " ._("bit"), 

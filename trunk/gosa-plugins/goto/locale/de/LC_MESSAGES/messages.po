@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 15:27+0200\n"
+"POT-Creation-Date: 2009-10-19 12:35+0200\n"
 "PO-Revision-Date: 2008-12-04 11:18+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -1557,7 +1557,6 @@ msgid "Display device"
 msgstr "Anzeige"
 
 #: admin/systems/goto/workstationService.tpl:157
-#: admin/systems/goto/class_workstationService.inc:87
 #: admin/systems/goto/class_terminalService.inc:610
 msgid "unknown"
 msgstr "unbekannt"
@@ -1633,8 +1632,8 @@ msgstr "Aktiv"
 #: admin/systems/goto/class_terminalGeneric.inc:594
 #: admin/systems/goto/class_workstationService.inc:566
 #: admin/systems/goto/class_workstationStartup.inc:942
-#: admin/systems/goto/class_workstationStartup.inc:1069
-#: admin/systems/goto/class_workstationStartup.inc:1129
+#: admin/systems/goto/class_workstationStartup.inc:1107
+#: admin/systems/goto/class_workstationStartup.inc:1175
 #: admin/systems/goto/class_terminalService.inc:673
 #: admin/systems/goto/class_workstationGeneric.inc:212
 #: admin/systems/goto/class_workstationGeneric.inc:635
@@ -1775,14 +1774,18 @@ msgid "set"
 msgstr "setzen"
 
 #: admin/systems/goto/class_workstationService.inc:78
-#: admin/systems/goto/class_workstationStartup.inc:1354
-#: admin/systems/goto/class_workstationStartup.inc:1356
+#: admin/systems/goto/class_workstationStartup.inc:1407
+#: admin/systems/goto/class_workstationStartup.inc:1409
 #: admin/systems/goto/class_terminalService.inc:121
 #: admin/systems/ppd/class_printerPPDDialog.inc:51
 #: admin/systems/ppd/class_printerPPDDialog.inc:114
 #: personal/environment/class_environment.inc:258
 msgid "Configuration error"
 msgstr "Konfigurationsfehler"
+
+#: admin/systems/goto/class_workstationService.inc:87
+msgid "manual/auto"
+msgstr "manuell/auto"
 
 #: admin/systems/goto/class_workstationService.inc:90
 #: admin/systems/goto/class_workstationService.inc:91
@@ -1923,39 +1926,39 @@ msgstr "Debian-Release"
 msgid "FAI status flag"
 msgstr "FAI-Status-Flag"
 
-#: admin/systems/goto/class_workstationStartup.inc:1293
+#: admin/systems/goto/class_workstationStartup.inc:1346
 #, fuzzy
 msgid "Partition table"
 msgstr "Variable"
 
-#: admin/systems/goto/class_workstationStartup.inc:1300
+#: admin/systems/goto/class_workstationStartup.inc:1353
 msgid "Package list"
 msgstr ""
 
-#: admin/systems/goto/class_workstationStartup.inc:1307
+#: admin/systems/goto/class_workstationStartup.inc:1360
 #, fuzzy
 msgid "Scripts"
 msgstr "Skript"
 
-#: admin/systems/goto/class_workstationStartup.inc:1314
+#: admin/systems/goto/class_workstationStartup.inc:1367
 #, fuzzy
 msgid "Variables"
 msgstr "Variable"
 
-#: admin/systems/goto/class_workstationStartup.inc:1321
+#: admin/systems/goto/class_workstationStartup.inc:1374
 msgid "Hooks"
 msgstr ""
 
-#: admin/systems/goto/class_workstationStartup.inc:1328
+#: admin/systems/goto/class_workstationStartup.inc:1381
 #: personal/environment/environment.tpl:145
 msgid "Profile"
 msgstr "Profil"
 
-#: admin/systems/goto/class_workstationStartup.inc:1335
+#: admin/systems/goto/class_workstationStartup.inc:1388
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: admin/systems/goto/class_workstationStartup.inc:1356
+#: admin/systems/goto/class_workstationStartup.inc:1409
 msgid "'repositoryBranchHook' returned no result!"
 msgstr "'repositoryBranchHook' hat kein Ergebnis zurückgeliefert!"
 
