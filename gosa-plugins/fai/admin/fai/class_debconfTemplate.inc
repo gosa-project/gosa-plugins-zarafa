@@ -241,6 +241,7 @@ class debconf
   {
     $post_name= $data['post_name'];
     if (preg_match('/\$\{/', $data['Choices'])){
+       $data['Description'].= '<br><br><b>'._('This debconf question is dynamically generated during package installation and requires choosing between specific options which cannot be presented here. The entered text needs to be one of the valid choices in order to take effect.').'</b>';
       $result= $this->render_string($data);
     } else {
       $choices= "";
@@ -301,37 +302,36 @@ class debconf
     $post_name= $data['post_name'];
 
     if (preg_match('/\$\{/', $data['Choices'])){
-      $choices= array("Need to use some text...");
+      $result = $this->render_multiselect($data);
     } else {
       $choices= "";
       foreach (split(", ", $data['Choices']) as $choice){
         $choices[]= $choice;
       }
-    }
 
+      $result="
+        
+        <tr>
+        <td valign='top'>
+        <h2>".$data['Topic']."</h2>".$data['Description']."
+        </td>
+        <td  valign='top'  style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">
+        ";
 
-    $result="
-      
-      <tr>
-      <td valign='top'>
-      <h2>".$data['Topic']."</h2>".$data['Description']."
-      </td>
-      <td  valign='top'  style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">
-      ";
-
-    foreach($choices as $value){
-      if($data['Default'] == $value){
-        $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."' checked >".htmlentities($value)."<br>";
-      }else{
-        $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."'>".htmlentities($value)."<br>";
+      foreach($choices as $value){
+        if($data['Default'] == $value){
+          $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."' checked >".htmlentities($value)."<br>";
+        }else{
+          $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."'>".htmlentities($value)."<br>";
+        }
       }
-    }
 
-    $result.= "
-      
-      </td>
-      </tr>
-      ";
+      $result.= "
+        
+        </td>
+        </tr>
+        ";
+    }
 
     return ($result);
   }

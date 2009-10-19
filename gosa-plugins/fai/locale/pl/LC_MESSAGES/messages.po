@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2009-10-19 14:24+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -1797,6 +1797,14 @@ msgstr ""
 #: admin/fai/class_debconfTemplate.inc:207
 msgid "This package has no debconf options."
 msgstr "Ten pakiet nie ma opcji debconf."
+
+#: admin/fai/class_debconfTemplate.inc:244
+msgid ""
+"This debconf question is dynamically generated during package installation "
+"and requires choosing between specific options which cannot be presented "
+"here. The entered text needs to be one of the valid choices in order to take "
+"effect."
+msgstr ""
 
 #: admin/systems/services/repository/class_divListRepositories.inc:19
 #, fuzzy

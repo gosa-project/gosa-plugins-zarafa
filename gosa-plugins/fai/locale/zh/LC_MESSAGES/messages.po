@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2009-10-19 14:24+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -1793,6 +1793,14 @@ msgstr ""
 #: admin/fai/class_debconfTemplate.inc:207
 msgid "This package has no debconf options."
 msgstr "这个软件包没有 debconf 选项。"
+
+#: admin/fai/class_debconfTemplate.inc:244
+msgid ""
+"This debconf question is dynamically generated during package installation "
+"and requires choosing between specific options which cannot be presented "
+"here. The entered text needs to be one of the valid choices in order to take "
+"effect."
+msgstr ""
 
 #: admin/systems/services/repository/class_divListRepositories.inc:19
 #, fuzzy

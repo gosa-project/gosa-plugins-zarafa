@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2009-10-19 14:24+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -1888,6 +1888,14 @@ msgstr ""
 #, fuzzy
 msgid "This package has no debconf options."
 msgstr "В этой учетной записи нет атрибутов для телефона."
+
+#: admin/fai/class_debconfTemplate.inc:244
+msgid ""
+"This debconf question is dynamically generated during package installation "
+"and requires choosing between specific options which cannot be presented "
+"here. The entered text needs to be one of the valid choices in order to take "
+"effect."
+msgstr ""
 
 #: admin/systems/services/repository/class_divListRepositories.inc:19
 #, fuzzy
