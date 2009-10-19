@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-02 16:27+0200\n"
+"POT-Creation-Date: 2009-10-16 17:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:308
-#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:260
+#: admin/systems/services/repository/class_servRepository.inc:334
+#: admin/systems/services/repository/class_servRepository.inc:370
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Repository service"
 msgstr ""
@@ -88,7 +89,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:326
+#: admin/systems/services/repository/class_servRepository.inc:352
 #: admin/fai/class_faiManagement.inc:788
 #: admin/fai/class_faiPackageConfiguration.inc:35 admin/fai/class_FAI.inc:566
 #: admin/fai/class_faiPackage.inc:478 admin/fai/class_faiPackageEntry.inc:53
@@ -96,33 +97,33 @@ msgstr ""
 msgid "Service infrastructure"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:343
+#: admin/systems/services/repository/class_servRepository.inc:369
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
 #: admin/fai/faiPackage.tpl:33
 msgid "Repository"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:370
 msgid "Services"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:357
+#: admin/systems/services/repository/class_servRepository.inc:383
 #: admin/systems/services/repository/servRepositorySetup.tpl:8
 msgid "Parent server"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:358
+#: admin/systems/services/repository/class_servRepository.inc:384
 #: admin/fai/branch_selector.tpl:2
 msgid "Releases"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:359
+#: admin/systems/services/repository/class_servRepository.inc:385
 #: admin/systems/services/repository/class_servRepositorySetup.inc:157
 #: admin/systems/services/repository/servRepositorySetup.tpl:28
 msgid "URL"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:360
+#: admin/systems/services/repository/class_servRepository.inc:386
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
@@ -1018,8 +1019,16 @@ msgstr ""
 msgid "List of scripts"
 msgstr ""
 
-#: admin/fai/class_debconfTemplate.inc:207
+#: admin/fai/class_debconfTemplate.inc:210
 msgid "This package has no debconf options."
+msgstr ""
+
+#: admin/fai/class_debconfTemplate.inc:247
+msgid ""
+"This debconf question is dynamically generated during package installation "
+"and requires choosing between specific options which cannot be presented "
+"here. The entered text needs to be one of the valid choices in order to take "
+"effect."
 msgstr ""
 
 #: admin/fai/faiTemplateEntry.tpl:10 admin/fai/class_faiTemplateEntry.inc:220

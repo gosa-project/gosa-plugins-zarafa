@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-02 16:27+0200\n"
+"POT-Creation-Date: 2009-10-16 17:38+0200\n"
 "PO-Revision-Date: 2008-12-04 11:27+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -23,8 +23,9 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:308
-#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:260
+#: admin/systems/services/repository/class_servRepository.inc:334
+#: admin/systems/services/repository/class_servRepository.inc:370
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Repository service"
 msgstr "Repositorien-Dienst"
@@ -94,7 +95,7 @@ msgstr "FAI Release"
 msgid "Name"
 msgstr "Name"
 
-#: admin/systems/services/repository/class_servRepository.inc:326
+#: admin/systems/services/repository/class_servRepository.inc:352
 #: admin/fai/class_faiManagement.inc:788
 #: admin/fai/class_faiPackageConfiguration.inc:35 admin/fai/class_FAI.inc:566
 #: admin/fai/class_faiPackage.inc:478 admin/fai/class_faiPackageEntry.inc:53
@@ -102,33 +103,33 @@ msgstr "Name"
 msgid "Service infrastructure"
 msgstr "Dienst-Infrastruktur"
 
-#: admin/systems/services/repository/class_servRepository.inc:343
+#: admin/systems/services/repository/class_servRepository.inc:369
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
 #: admin/fai/faiPackage.tpl:33
 msgid "Repository"
 msgstr "Repository"
 
-#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:370
 msgid "Services"
 msgstr "Dienste"
 
-#: admin/systems/services/repository/class_servRepository.inc:357
+#: admin/systems/services/repository/class_servRepository.inc:383
 #: admin/systems/services/repository/servRepositorySetup.tpl:8
 msgid "Parent server"
 msgstr "Quell-Server"
 
-#: admin/systems/services/repository/class_servRepository.inc:358
+#: admin/systems/services/repository/class_servRepository.inc:384
 #: admin/fai/branch_selector.tpl:2
 msgid "Releases"
 msgstr "Releases"
 
-#: admin/systems/services/repository/class_servRepository.inc:359
+#: admin/systems/services/repository/class_servRepository.inc:385
 #: admin/systems/services/repository/class_servRepositorySetup.inc:157
 #: admin/systems/services/repository/servRepositorySetup.tpl:28
 msgid "URL"
 msgstr "URL"
 
-#: admin/systems/services/repository/class_servRepository.inc:360
+#: admin/systems/services/repository/class_servRepository.inc:386
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
@@ -653,7 +654,9 @@ msgstr "Vorlagen-Gruppe"
 #: admin/fai/class_askClassName.inc:175
 #, php-format
 msgid "This FAI class name is already in use by the administrative unit '%s'."
-msgstr "Dieser FAI-Klassen-Name wird bereits von der administrativen Einheit '%s' verwendet."
+msgstr ""
+"Dieser FAI-Klassen-Name wird bereits von der administrativen Einheit '%s' "
+"verwendet."
 
 #: admin/fai/branch_selector.tpl:8
 msgid "Current release"
@@ -1073,9 +1076,21 @@ msgstr "Localboot-Produkte"
 msgid "List of scripts"
 msgstr "Liste der Skripte"
 
-#: admin/fai/class_debconfTemplate.inc:207
+#: admin/fai/class_debconfTemplate.inc:210
 msgid "This package has no debconf options."
 msgstr "Dieses Paket verfügt über keine debconf-Optionen."
+
+#: admin/fai/class_debconfTemplate.inc:247
+msgid ""
+"This debconf question is dynamically generated during package installation "
+"and requires choosing between specific options which cannot be presented "
+"here. The entered text needs to be one of the valid choices in order to take "
+"effect."
+msgstr ""
+"Diese Debconf-Frage wird während der Paket-Installation automatisch "
+"generiert und erfordert eine Auswahl aus Möglichkeiten, die hier nicht "
+"dargestellt werden können. Der angegebene Wert muss einer der gültigen "
+"Auswahlmöglichkeiten entsprechen."
 
 #: admin/fai/faiTemplateEntry.tpl:10 admin/fai/class_faiTemplateEntry.inc:220
 msgid "File name"
