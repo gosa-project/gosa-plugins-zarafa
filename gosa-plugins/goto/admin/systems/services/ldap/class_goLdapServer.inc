@@ -78,8 +78,8 @@ class goLdapServer extends goService{
     if(empty($this->goLdapBase)){
       $message[] = msgPool::required(_("LDAP URI"));
     }
-    if(!preg_match("/^ldap[si]?:\/\/[0-9a-z_.-]+\/.+$/", $this->goLdapBase)){
-      $message[] = msgPool::invalid(_("LDAP URI"),"","","ldap[si]://server/base");
+    if(!preg_match("/^ldap[si]?:\/\/[0-9a-z_.-]+(:[0-9]+)?\/.+$/", $this->goLdapBase)){
+      $message[] = msgPool::invalid(_("LDAP URI"),"","","(ldap|ldaps|ldapi)://"._("Server")."(:"._("Port").")/"._("Base"));
     }
     return($message);
   }
