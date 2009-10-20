@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-19 14:24+0200\n"
-"PO-Revision-Date: 2009-10-06 13:05+0200\n"
+"PO-Revision-Date: 2009-10-20 11:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -162,8 +162,7 @@ msgstr ""
 
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
-msgid ""
-"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
+msgid "The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 "L'encodage du fichier à changé de '%s' vers '%s', voulez vous réellement le "
 "sauver ?"
@@ -246,7 +245,7 @@ msgstr "Etiquette du disque"
 
 #: admin/fai/faiDiskEntry.tpl:71 admin/fai/faiPartition.tpl:96
 msgid "Combined physical partitions"
-msgstr ""
+msgstr "Combination des partitions physiques"
 
 #: admin/fai/faiDiskEntry.tpl:90 admin/fai/faiPartitionTableEntry.tpl:24
 msgid "Partition entries"
@@ -471,7 +470,6 @@ msgid "UUID"
 msgstr ""
 
 #: admin/fai/class_faiDiskEntry.inc:327
-#, fuzzy
 msgid "Disks"
 msgstr "Disques"
 
@@ -483,8 +481,7 @@ msgstr "Taille"
 #: admin/fai/class_faiDiskEntry.inc:428
 #: admin/fai/class_faiPartitionTable.inc:245
 #, php-format
-msgid ""
-"The disk cannot be deleted while it is used in the '%s' disk definition!"
+msgid "The disk cannot be deleted while it is used in the '%s' disk definition!"
 msgstr ""
 "Ce disque ne peut pas être supprimé car il est utilisé par la définition de "
 "disque '%s' !"
@@ -728,8 +725,7 @@ msgstr "Branche verrouillée"
 #: admin/fai/class_faiManagement.inc:413
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-"Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
 
 #: admin/fai/class_faiManagement.inc:429
 msgid "FAI object"
@@ -871,8 +867,7 @@ msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid ""
-"This list displays all assigned package names for this repository settings."
+msgid "This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/paste_generic.tpl:1
@@ -1047,8 +1042,7 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1084
 msgid "Could not create new release, the destination dn is already in use."
-msgstr ""
-"Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1097
 msgid "Error while fetching source dn - aborted!"
@@ -1056,8 +1050,7 @@ msgstr "Une erreur s'est produite lors de la récupération du dn - Arrêt !"
 
 #: admin/fai/class_FAI.inc:1179
 #, php-format
-msgid ""
-"Release creation failed due to ldap errors. Additional informations '%s'."
+msgid "Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 "La création de la version à échoué du à des erreurs ldap. Information "
 "additionnelles '%s'."
@@ -1227,8 +1220,7 @@ msgid "Raid arrays must contain at least two partitions!"
 msgstr "Les ensembles RAID doit contenir au moins 2 partitions !"
 
 #: admin/fai/class_faiPartition.inc:406
-msgid ""
-"Raid 0 arrays can only be realized with a combination of two partitions!"
+msgid "Raid 0 arrays can only be realized with a combination of two partitions!"
 msgstr "Les ensembles RAID 0 ne peuvent être réalisé qu'avec deux partitions !"
 
 #: admin/fai/class_faiPartitionTable.inc:781
@@ -1576,7 +1568,7 @@ msgstr "Crypté"
 
 #: admin/fai/faiPartition.tpl:141
 msgid "Tune options"
-msgstr ""
+msgstr "Options de tuning"
 
 #: admin/fai/class_faiPackage.inc:220
 msgid "Invalid package names"
@@ -1612,8 +1604,7 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:522
-msgid ""
-"Please choose a valid release/section combination for your repository setup!"
+msgid "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -1678,8 +1669,7 @@ msgstr "Source d'information FAI inconnue !"
 #: admin/fai/class_faiSummaryTab.inc:183
 #: admin/systems/services/repository/class_servRepository.inc:93
 msgid "You can't use this plugin until FAI is activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/fai/class_faiSummaryTab.inc:225
 msgid "This object has no FAI classes assigned."
@@ -1731,7 +1721,7 @@ msgid ""
 "and requires choosing between specific options which cannot be presented "
 "here. The entered text needs to be one of the valid choices in order to take "
 "effect."
-msgstr ""
+msgstr "Cette question debconf est générée dynamiquement pendant l'installation du paquet et nécessite le choix entre différentes options qui ne peuvent pas être affichées ici. Le texte entré doit être un de ces choix pour être valide."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:19
 msgid "List of configured repositories"
@@ -1739,8 +1729,7 @@ msgstr "Liste des dépôts configurés."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:20
 msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
-"Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
@@ -1778,3 +1767,4 @@ msgstr "Version FAI"
 #: admin/systems/services/repository/class_servRepository.inc:344
 msgid "Services"
 msgstr "Services"
+
