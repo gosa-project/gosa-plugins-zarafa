@@ -84,8 +84,13 @@ class workservice extends plugin
       $this->XDrivers[$xdriver] = $xdriver;
     }
 
-    array_unshift($this->XDrivers, "["._("manual/auto")."]");
- 
+    if (isset($this->attrs['gosaGroupObjects'])) {
+      array_unshift($this->XDrivers, "["._("manual/auto")."]");
+    }
+    else {
+      array_unshift($this->XDrivers, "["._("unknown")."]");
+    }
+     
     $this->XColordepths= array( 
         "8"        => "8 " ._("bit"), 
         "15"       => "15 "._("bit"),      
