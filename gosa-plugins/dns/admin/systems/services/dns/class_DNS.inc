@@ -694,6 +694,62 @@ class DNS
     }
     return($runtime_cache['DNS']['getAvailableZones']);
   }
+
+
+  static function touchDNSZone($config,$zoneName)
+  {
+    if(empty($zoneName)){
+      return null;
+    }
+
+    preg_match('@(?<server>[^/]*)/(?<name>.*)@',$zoneName,$matches);
+    $name = $matches['name'];
+    $server = strtolower($matches['server']);
+
+    // Search for the zone entry and its reverse entry.
+    $ldap = $config->get_ldap_link();
+    $ldap-> cd($config->current['BASE']);
+    $ldap->search("(&(objectClass=dNSZone)(zoneName=$name)(sOARecord=*))",array("sOARecord"));
+    if($ldap->count() != 1){
+      trigger_error("Invalid Zone ".$zoneName);
+    }else{
+      $to_update= array();
+      $forward = $ldap->fetch();
+      $to_update[$forward['dn']] = $forward;
+      $ldap->cd($forward['dn']);
+      $ldap->search("(&(objectClass=dNSZone)(relativeDomainName=@)(sOARecord=*))",array("sOARecord"));
+  
+      // We may have multiple reverse zones later.
+      while($attrs = $ldap->fetch()){
+        $to_update[$attrs['dn']] = $attrs;
+      }
+
+      // Increase the sAONumber for each zone
+      foreach($to_update as $zone){
+        $tmp = explode(' ',$zone['sOARecord'][0]);
+        $sOA = $tmp[2];
+        $sOAdate = substr($sOA,0,8);
+        $sOAnumber = substr($sOA,-2);
+        $date = date('Ymd');
+        $number = '01';
+        if($sOAdate < $date){
+          $sOA = $date.$number;
+        } else {
+          $number = sprintf("%02d", $sOAnumber+1);
+          $sOA = $sOAdate.$number;
+        }
+        $tmp[2] = $sOA;
+        $zone['sOARecord'][0] = implode(' ', $tmp);
+        $attrs = array('sOARecord' => $zone['sOARecord'][0]);
+        $ldap = $config->get_ldap_link();
+        $ldap->cd($zone['dn']);
+        $ldap->modify($attrs);
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+        }
+      }
+    }
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
