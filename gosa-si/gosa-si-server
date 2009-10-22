@@ -389,7 +389,7 @@ sub daemon_log {
 			$year+=1900;
 
 			# Microseconds since epoch
-			my $microSeconds = sprintf("%.2f", clock_gettime ( 'CLOCK_REALTIME' ));
+			my $microSeconds = sprintf("%.2f", &Time::HiRes::clock_gettime());
 			$microSeconds =~ s/^\d*(.\d\d)$/$1/;
 
 			# Build log message and write it to log file and commandline
