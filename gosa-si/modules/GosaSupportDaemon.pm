@@ -5,6 +5,8 @@ use Exporter;
 my @functions = (
     "create_passwd",
     "create_xml_hash",
+	"createXmlHash",
+	"myXmlHashToString",
     "get_content_from_xml_hash",
     "add_content2xml_hash",
     "create_xml_string",
@@ -48,7 +50,6 @@ use XML::Simple;
 use Data::Dumper;
 use Net::DNS;
 use DateTime;
-
 
 my $op_hash = {
     'eq' => '=',
@@ -111,6 +112,89 @@ sub create_xml_hash {
             $header => [$header_value],
     };
     return $hash
+}
+
+sub createXmlHash {
+	my ($header, $source, $target) = @_;
+	return { header=>$header, source=>$source, target=>$target};
+}
+
+sub _transformHashToString {
+	my ($hash) = @_;
+	my $s = "";
+
+	while (my ($tag, $content) = each(%$hash)) {
+
+		if (ref $content eq "HASH") {
+			$s .= "<$tag>".&_transformHashToString($content)."</$tag>";
+		} elsif ( ref $content eq "ARRAY") {
+			$s .= &_transformArrayToString($tag, $content);
+		} else {
+			$s .= "<$tag>".$content."</$tag>";
+		}
+	}
+	return $s;
+}
+
+sub _transformArrayToString {
+	my ($tag, $contentArray) = @_;
+	my $s = "";
+	foreach my $content (@$contentArray) {
+		if (ref $content eq "HASH") {
+			$s .= "<$tag>".&_transformHashToString($content)."</$tag>";
+		} else {
+			$s .= "<$tag>$content</$tag>";
+		}
+	}
+	return $s;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  myXmlHashToString
+#   PARAMETERS:  xml_hash - hash - hash from function createXmlHash
+#      RETURNS:  xml_string - string - xml string representation of the hash
+#  DESCRIPTION:  Transforms the given hash to a xml wellformed string. I.e.:
+#	             {
+#                   'header' => 'a'
+#                   'source' => 'c',
+#                   'target' => 'b',
+#                   'hit' => [ '1',
+#                              '2',
+#                              { 
+#                                'hit31' => 'ABC',
+#                   	         'hit32' => 'XYZ'
+#                              }
+#                            ],
+#                   'res0' => {
+#                      'res1' => {
+#                         'res2' => 'result'
+#                      }
+#                   },
+#             	 };
+#           
+#				 will be transformed to 
+#				 <xml>
+#					<header>a</header>
+#					<source>c</source>
+#					<target>b</target>
+#					<hit>1</hit>
+#					<hit>2</hit>
+#					<hit>
+#						<hit31>ABC</hit31>
+#						<hit32>XYZ</hit32>
+#					</hit>
+#					<res0>
+#						<res1>
+#							<res2>result</res2>
+#						</res1>
+#					</res0>
+#				</xml>
+#
+#===============================================================================
+sub myXmlHashToString {
+	my ($hash) = @_;
+	return "<xml>".&_transformHashToString($hash)."</xml>";
 }
 
 
