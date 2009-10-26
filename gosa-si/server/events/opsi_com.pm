@@ -66,56 +66,21 @@ my $licenseTyp_hash = { 'OEM'=>'', 'VOLUME'=>'', 'RETAIL'=>''};
 #   external methods handling the comunication with GOsa/GOsa-si
 # ----------------------------------------------------------------------------
 
-
 ################################
-#
 # @brief A function returning a list of functions which are exported by importing the module.
 # @return List of all provided functions
-#
 sub get_events {
     return \@events;
 }
 
 ################################
-#
-# @brief Checks if there is a specified tag and if the the tag has a content.
-# @return 0|1
-#
-sub _check_xml_tag_is_ok {
-	my ($msg_hash,$tag) = @_;
-	if (not defined $msg_hash->{$tag}) {
-		$_ = "message contains no tag '$tag'";
-		return 0;
-	}
-	if (ref @{$msg_hash->{$tag}}[0] eq 'HASH') {
-		$_ = "message tag '$tag' has no content";
-		return  0;
-	}
-	return 1;
-}
-
-################################
-#
-# @brief Writes the log line and returns the error message for GOsa.
-#
-sub _giveErrorFeedback {
-	my ($msg_hash, $err_string, $session_id) = @_;
-	&main::daemon_log("$session_id ERROR: $err_string", 1);
-	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{source}}[0], $err_string);
-    if (exists $msg_hash->{forward_to_gosa}) {
-        &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]);
-    }
-	return ( &create_xml_string($out_hash) );
-}
-
-
-## @method opsi_add_product_to_client
-# Adds an Opsi product to an Opsi client.
+# @brief Adds an Opsi product to an Opsi client.
 # @param msg - STRING - xml message with tags hostId and productId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_add_product_to_client {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -153,16 +118,18 @@ sub opsi_add_product_to_client {
 
 	if (&check_opsi_res($res)) { return ( (caller(0))[3]." : ".$_, 1 ); };
 
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
-## @method opsi_del_product_from_client
-# Deletes an Opsi-product from an Opsi-client. 
+################################
+# @brief Deletes an Opsi-product from an Opsi-client. 
 # @param msg - STRING - xml message with tags hostId and productId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_del_product_from_client {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -202,22 +169,6 @@ sub opsi_del_product_from_client {
         # Get productID
         $productId = @{$msg_hash->{'productId'}}[0];
         &add_content2xml_hash($out_hash, "productId", $productId);
-
-
-# : check the results for more than one entry which is currently installed
-        #$callobj = {
-        #    method  => 'getProductDependencies_listOfHashes',
-        #    params  => [ $productId ],
-        #    id  => 1, };
-        #
-        #my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-        #my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
-        #if ($sres_err){
-        #  &main::daemon_log("ERROR: cannot perform dependency check: ".$sres_err_string, 1);
-        #  &add_content2xml_hash($out_hash, "error", $sres_err_string);
-        #  return ( &create_xml_string($out_hash) );
-        #}
-
 
         # Check to get product action list 
         my $callobj = {
@@ -265,16 +216,18 @@ sub opsi_del_product_from_client {
     }
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
-## @method opsi_add_client
-# Adds an Opsi client to Opsi.
+################################
+# @brief Adds an Opsi client to Opsi.
 # @param msg - STRING - xml message with tags hostId and macaddress
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_add_client {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -347,16 +300,18 @@ sub opsi_add_client {
     }
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
-## @method opsi_modify_client
-# Modifies the parameters description, mac or notes for an Opsi client if the corresponding message tags are given.
+################################
+# @brief Modifies the parameters description, mac or notes for an Opsi client if the corresponding message tags are given.
 # @param msg - STRING - xml message with tag hostId and optional description, mac or notes
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message    
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_modify_client {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -437,17 +392,18 @@ sub opsi_modify_client {
     }
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
-
-    
-## @method opsi_get_netboot_products
-# Get netboot products for specific host.
+ 
+################################
+# @brief Get netboot products for specific host.
 # @param msg - STRING - xml message with tag hostId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_get_netboot_products {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -558,17 +514,18 @@ sub opsi_get_netboot_products {
     $xml_msg=~ s/<xxx><\/xxx>//;
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( $xml_msg );
 }
 
-
-## @method opsi_get_product_properties
-# Get product properties for a product and a specific host or gobally for a product.
+################################   
+# @brief Get product properties for a product and a specific host or gobally for a product.
 # @param msg - STRING - xml message with tags productId and optional hostId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_get_product_properties {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -689,17 +646,18 @@ sub opsi_get_product_properties {
     $xml_msg=~ s/<xxx><\/xxx>//;
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( $xml_msg );
 }
 
-
-## @method opsi_set_product_properties
-# Set product properities for a specific host or globaly. Message needs one xml tag 'item' and within one xml tag 'name' and 'value'. The xml tags action and state are optional.
+################################   
+# @brief Set product properities for a specific host or globaly. Message needs one xml tag 'item' and within one xml tag 'name' and 'value'. The xml tags action and state are optional.
 # @param msg - STRING - xml message with tags productId, action, state and optional hostId, action and state
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_set_product_properties {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -796,17 +754,18 @@ sub opsi_set_product_properties {
 
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
-
-## @method opsi_get_client_hardware
-# Reports client hardware inventory.
+################################   
+# @brief Reports client hardware inventory.
 # @param msg - STRING - xml message with tag hostId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_get_client_hardware {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -816,79 +775,65 @@ sub opsi_get_client_hardware {
     my $error = 0;
     my $xml_msg;
 
+    # Sanity check of needed parameter
+	if (&_check_xml_tag_is_ok ($msg_hash, 'hostId')) {
+        $hostId = @{$msg_hash->{'hostId'}}[0];
+	} else {
+		return &_giveErrorFeedback($msg_hash, $_, $session_id);
+	}
+
+
     # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
-
-    # Sanity check of needed parameter
-    if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} != 1) || (@{$msg_hash->{'hostId'}}[0] eq ref 'HASH'))  {
-        $error++;
-        &add_content2xml_hash($out_hash, "error_string", "hostId contains no or more than one values");
-        &add_content2xml_hash($out_hash, "error", "hostId");
-        &main::daemon_log("$session_id ERROR: hostId contains no or more than one values: $msg", 1); 
-    }
-
-    if (not $error) {
-
-    # Get hostId
-        $hostId = @{$msg_hash->{'hostId'}}[0];
-        &add_content2xml_hash($out_hash, "hostId", "$hostId");
-        &add_content2xml_hash($out_hash, "xxx", "");
-    }    
+	&add_content2xml_hash($out_hash, "hostId", "$hostId");
+	&add_content2xml_hash($out_hash, "xxx", "");
 
     # Move to XML string
     $xml_msg= &create_xml_string($out_hash);
     
-    if (not $error) {
+	my $res = &_callOpsi(method=>'getHardwareInformation_hash', params=>[ $hostId ]);
+	if (not &check_opsi_res($res)){
+		my $result= $res->result;
+		if (ref $result eq "HASH") {
+			foreach my $r (keys %{$result}){
+				my $item= "\n<item><id>".xml_quote($r)."</id>";
+				my $value= $result->{$r};
+				foreach my $sres (@{$value}){
 
-    # JSON Query
-        my $callobj = {
-            method  => 'getHardwareInformation_hash',
-            params  => [ $hostId ],
-            id  => 1,
-        };
+					foreach my $dres (keys %{$sres}){
+						if (defined $sres->{$dres}){
+							$item.= "<$dres>".xml_quote($sres->{$dres})."</$dres>";
+						}
+					}
 
-        my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (not &check_opsi_res($res)){
-            my $result= $res->result;
-            if (ref $result eq "HASH") {
-                foreach my $r (keys %{$result}){
-                    my $item= "\n<item><id>".xml_quote($r)."</id>";
-                    my $value= $result->{$r};
-                    foreach my $sres (@{$value}){
+				}
+				$item.= "</item>";
+				$xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
 
-                        foreach my $dres (keys %{$sres}){
-                            if (defined $sres->{$dres}){
-                                $item.= "<$dres>".xml_quote($sres->{$dres})."</$dres>";
-                            }
-                        }
+			}
+		}
+	}
 
-                    }
-                    $item.= "</item>";
-                    $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
-
-                }
-            }
-        }
-
-        $xml_msg=~ s/<xxx><\/xxx>//;
-
-    }
+	$xml_msg=~ s/<xxx><\/xxx>//;
 
     # Return message
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
     return ( $xml_msg );
 }
 
-
-## @method opsi_list_clients
-# Reports all Opsi clients. 
+################################   
+# @brief Reports all Opsi clients. 
 # @param msg - STRING - xml message 
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_list_clients {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -948,20 +893,20 @@ sub opsi_list_clients {
             $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
         }
     }
-
     $xml_msg=~ s/<xxx><\/xxx>//;
+
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( $xml_msg );
 }
 
-
-
-## @method opsi_get_client_software
-# Reports client software inventory.
+################################   
+# @brief Reports client software inventory.
 # @param msg - STRING - xml message with tag hostId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_get_client_software {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1014,17 +959,18 @@ sub opsi_get_client_software {
     }
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( $xml_msg );
 }
 
-
-## @method opsi_get_local_products
-# Reports product for given hostId or globally.
+################################   
+# @brief Reports product for given hostId or globally.
 # @param msg - STRING - xml message with optional tag hostId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_get_local_products {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1135,17 +1081,18 @@ sub opsi_get_local_products {
     $xml_msg=~ s/<xxx><\/xxx>//;
 
     # Retrun Message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( $xml_msg );
 }
 
-
-## @method opsi_del_client
-# Deletes a client from Opsi.
+################################   
+# @brief Deletes a client from Opsi.
 # @param msg - STRING - xml message with tag hostId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_del_client {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1187,26 +1134,24 @@ sub opsi_del_client {
     my $xml_msg= &create_xml_string($out_hash);
 
     # Return message
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( $xml_msg );
 }
 
-
-## @method opsi_install_client
-# Set a client in Opsi to install and trigger a wake on lan message (WOL).  
+################################   
+# @brief Set a client in Opsi to install and trigger a wake on lan message (WOL).  
 # @param msg - STRING - xml message with tags hostId, macaddress
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 # @return out_msg - STRING - feedback to GOsa in success and error case
 sub opsi_install_client {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-
-
     my ($hostId, $macaddress);
-
     my $error = 0;
     my @out_msg_l;
 
@@ -1295,12 +1240,12 @@ sub opsi_install_client {
     }
     
     # Return messages
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return @out_msg_l;
 }
 
-
-## @method _set_action
-# Set action for an Opsi client
+################################
+# @brief Set action for an Opsi client
 # @param product - STRING - Opsi product
 # @param action - STRING - action
 # @param hostId - STRING - Opsi hostId
@@ -1319,8 +1264,8 @@ sub _set_action {
   $main::opsi_client->call($main::opsi_url, $callobj);
 }
 
-## @method _set_state
-# Set state for an Opsi client
+################################
+# @brief Set state for an Opsi client
 # @param product - STRING - Opsi product
 # @param action - STRING - state
 # @param hostId - STRING - Opsi hostId
@@ -1340,14 +1285,13 @@ sub _set_state {
 }
 
 ################################
-#
 # @brief Create a license pool at Opsi server.
 # @param licensePoolId The name of the pool (optional). 
 # @param description The description of the pool (optional).
 # @param productIds A list of assigned porducts of the pool (optional). 
 # @param windowsSoftwareIds A list of windows software IDs associated to the pool (optional). 
-#
 sub opsi_createLicensePool {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1377,15 +1321,18 @@ sub opsi_createLicensePool {
 
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source, $res->result);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Return licensePoolId, description, productIds and windowsSoftwareIds for all found license pools.
-#
 sub opsi_getLicensePools_listOfHashes {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1421,17 +1368,20 @@ sub opsi_getLicensePools_listOfHashes {
 
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	$out_hash->{result} = [$res_hash];
 
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Return productIds, windowsSoftwareIds and description for a given licensePoolId
 # @param licensePoolId The name of the pool. 
-#
 sub opsi_getLicensePool_hash {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1466,11 +1416,15 @@ sub opsi_getLicensePool_hash {
 
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	&add_content2xml_hash($out_hash, "licensePoolId", $res->result->{'licensePoolId'});
 	&add_content2xml_hash($out_hash, "description", $res->result->{'description'});
 	map(&add_content2xml_hash($out_hash, "productIds", "$_"), @{ $res->result->{'productIds'} });
 	map(&add_content2xml_hash($out_hash, "windowsSoftwareIds", "$_"), @{ $res->result->{'windowsSoftwareIds'} });
 
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
@@ -1507,12 +1461,11 @@ sub _parse_getSoftwareLicenseUsages {
 }
 
 ################################
-#
 # @brief Returns softwareLicenseId, notes, licenseKey, hostId and licensePoolId for optional given licensePoolId and hostId
 # @param hostid Something like client_1.intranet.mydomain.de (optional).
 # @param licensePoolId The name of the pool (optional). 
-# 
 sub opsi_getSoftwareLicenseUsages {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -1531,17 +1484,20 @@ sub opsi_getSoftwareLicenseUsages {
 
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	$out_hash->{result} = [$res_hash];
 
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Returns softwareLicenseId, notes, licenseKey, hostId and licensePoolId. Function return is identical to opsi_getSoftwareLicenseUsages
 # @param productId Something like 'firefox', 'python' or anything else .
-# 
 sub opsi_getSoftwareLicenseUsagesForProductId {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -1573,17 +1529,20 @@ sub opsi_getSoftwareLicenseUsagesForProductId {
 
 	# Create function result message
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	$out_hash->{result} = [$res_hash];
 
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Returns expirationDate, boundToHost, maxInstallation, licenseTyp, licensePoolIds and licenseKeys for a given softwareLicense ID.
 # @param softwareLicenseId Identificator of a license.
-#
 sub opsi_getSoftwareLicense_hash {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -1616,6 +1575,7 @@ sub opsi_getSoftwareLicense_hash {
 	
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	&add_content2xml_hash($out_hash, "expirationDate", $res->result->{'expirationDate'});
 	&add_content2xml_hash($out_hash, "boundToHost", $res->result->{'boundToHost'});
 	&add_content2xml_hash($out_hash, "maxInstallations", $res->result->{'maxInstallations'});
@@ -1625,16 +1585,18 @@ sub opsi_getSoftwareLicense_hash {
 		&add_content2xml_hash($out_hash, $licensePoolId, $res->result->{'licenseKeys'}->{$licensePoolId});
 	}
 
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Delete licnese pool by license pool ID. A pool can only be deleted if there are no software licenses bound to the pool. 
 # The fixed parameter deleteLicenses=True specifies that all software licenses bound to the pool are being deleted. 
 # @param licensePoolId The name of the pool. 
-#
 sub opsi_deleteLicensePool {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1702,12 +1664,15 @@ sub opsi_deleteLicensePool {
 
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
-	
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
+
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Create a license contract, create a software license and add the software license to the license pool
 # @param licensePoolId The name of the pool the license should be assigned.
 # @param licenseKey The license key.
@@ -1720,8 +1685,8 @@ sub opsi_deleteLicensePool {
 # @param maxInstallations The number of clients use this license (optional). 
 # @param boundToHost The name of the client the license is bound to (optional).
 # @param expirationDate The date when the license is running down (optional). 
-#
 sub opsi_createLicense {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1817,17 +1782,20 @@ sub opsi_createLicense {
 
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Assign a software license to a host
 # @param hostid Something like client_1.intranet.mydomain.de
 # @param licensePoolId The name of the pool.
-#
 sub opsi_assignSoftwareLicenseToHost {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1866,17 +1834,20 @@ sub opsi_assignSoftwareLicenseToHost {
 
 	# Create function result message
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Unassign a software license from a host.
 # @param hostid Something like client_1.intranet.mydomain.de
 # @param licensePoolId The name of the pool.
-#
 sub opsi_unassignSoftwareLicenseFromHost {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1915,16 +1886,19 @@ sub opsi_unassignSoftwareLicenseFromHost {
 
 	# Create function result message
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
 # @brief Unassign all software licenses from a host
 # @param hostid Something like client_1.intranet.mydomain.de
-#
 sub opsi_unassignAllSoftwareLicensesFromHost {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -1957,18 +1931,21 @@ sub opsi_unassignAllSoftwareLicensesFromHost {
 
 	# Create function result message
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 
 ################################
-#
 # @brief Returns the assigned licensePoolId and licenses, how often the product is installed and at which host
 # and the number of max and remaining installations for a given OPSI product.
 # @param productId Identificator of an OPSI product.
-#	
 sub opsi_getLicenseInformationForProduct {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -2017,6 +1994,7 @@ sub opsi_getLicenseInformationForProduct {
 
 	# Create function result message
 	$out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	&add_content2xml_hash($out_hash, "licensePoolId", $licensePoolId);
 	&add_content2xml_hash($out_hash, "licenses", $res->result->{$licensePoolId}->{'licenses'});
 	&add_content2xml_hash($out_hash, "usageCount", $res->result->{$licensePoolId}->{'usageCount'});
@@ -2024,15 +2002,16 @@ sub opsi_getLicenseInformationForProduct {
 	&add_content2xml_hash($out_hash, "remainingInstallations", $res->result->{$licensePoolId}->{'remainingInstallations'});
 	map(&add_content2xml_hash($out_hash, "usedBy", "$_"), @{ $res->result->{$licensePoolId}->{'usedBy'}});
 
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 
 ################################
-#
-# @brief
-# @param 
-#	
+# @brief Returns licensePoolId, description, a list of productIds, al list of windowsSoftwareIds and a list of licenses for a given licensePoolId. 
+# Each license contains softwareLicenseId, maxInstallations, licenseType, licensePoolIds, licenseKeys, hostIds, expirationDate, boundToHost and licenseContractId.
+# The licenseContract contains conclusionDate, expirationDate, notes, notificationDate and partner. 
+# @param licensePoolId The name of the pool.
 sub opsi_getPool {
 	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
@@ -2049,6 +2028,7 @@ sub opsi_getPool {
 
 	# Create hash for the answer
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 
 	# Call Opsi
 	my ($res, $err) = &_getLicensePool_hash( 'licensePoolId'=> $licensePoolId );
@@ -2131,13 +2111,12 @@ sub opsi_getPool {
 
 
 ################################
-#
 # @brief Removes at first the software license from license pool and than deletes the software license. 
 # Attention, the software license has to exists otherwise it will lead to an Opsi internal server error.
-# @param softwareLicenseId 
-# @param licensePoolId
-#
+# @param softwareLicenseId Identificator of a license.
+# @param licensePoolId The name of the pool.
 sub opsi_removeLicense {
+	my $startTime = Time::HiRes::time;
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -2170,16 +2149,19 @@ sub opsi_removeLicense {
 
 	# Create hash for the answer
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
 
 ################################
-#
-# @brief
-# @param 
-#
+# @brief Return softwareLicenseId, maxInstallations, licenseType, licensePoolIds, licenseContractId, expirationDate, boundToHost and a list of productIds.
+# @param hostId Something like client_1.intranet.mydomain.de
 sub opsi_getReservedLicenses {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -2197,7 +2179,6 @@ sub opsi_getReservedLicenses {
 	if ($license_err){
 		return &_giveErrorFeedback($msg_hash, "cannot get software license information from Opsi server: ".$license_res, $session_id);
 	}
-
 
 	# Parse result
 	my $res_hash = { 'hit'=> [] };
@@ -2229,18 +2210,21 @@ sub opsi_getReservedLicenses {
 		push( @{$res_hash->{hit}}, $license_hash );
 	}
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	$out_hash->{licenses} = [$res_hash];
-    return ( &create_xml_string($out_hash) );
 
-	return;
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
+    return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
-# @brief
-# @param 
-#
+# @brief Bound the given softwareLicenseId to the given host.
+# @param hostId Opsi hostId
+# @param softwareLicenseId Identificator of a license (optional).
 sub opsi_boundHostToLicense {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -2297,18 +2281,22 @@ sub opsi_boundHostToLicense {
 	}
 
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
+
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
-# @brief
-# @param 
-#
+# @brief Release a software license formerly bound to a host.
+# @param softwareLicenseId Identificator of a license.
 sub opsi_unboundHostFromLicense {
 	# This is really mad! Opsi is not able to unbound a lincense from a host. To provide the functionality for GOsa
 	# 4 rpc calls to Opsi are necessary. First, fetch all data for the given softwareLicenseId, then all details for the associated
 	# licenseContractId, then delete the softwareLicense and finally recreate the softwareLicense without the boundToHost option. NASTY!
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -2384,15 +2372,18 @@ sub opsi_unboundHostFromLicense {
 	}
 
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
+
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
 ################################
-#
-# @brief
-# @param 
-#
+# @brief Returns a list of licenses with softwaerLicenseId, maxInstallations, boundToHost, expirationDate, licenseContractId, licenseType, a list of licensePoolIds with associated licenseKeys
 sub opsi_getAllSoftwareLicenses {
+	my $startTime = Time::HiRes::time;
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
@@ -2423,6 +2414,11 @@ sub opsi_getAllSoftwareLicenses {
 	
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 	$out_hash->{licenses} = [$res_hash];
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
+
+	my $endTime = Time::HiRes::time;
+	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
@@ -2451,6 +2447,36 @@ print STDERR Dumper $pram1;
 #  internal methods handling the comunication with Opsi
 # ----------------------------------------------------------------------------
 
+################################
+# @brief Checks if there is a specified tag and if the the tag has a content.
+sub _check_xml_tag_is_ok {
+	my ($msg_hash,$tag) = @_;
+	if (not defined $msg_hash->{$tag}) {
+		$_ = "message contains no tag '$tag'";
+		return 0;
+	}
+	if (ref @{$msg_hash->{$tag}}[0] eq 'HASH') {
+		$_ = "message tag '$tag' has no content";
+		return  0;
+	}
+	return 1;
+}
+
+################################
+# @brief Writes the log line and returns the error message for GOsa.
+sub _giveErrorFeedback {
+	my ($msg_hash, $err_string, $session_id) = @_;
+	&main::daemon_log("$session_id ERROR: $err_string", 1);
+	my $out_hash = &main::create_xml_hash("error", $main::server_address, @{$msg_hash->{source}}[0], $err_string);
+    if (exists $msg_hash->{forward_to_gosa}) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]);
+    }
+	return ( &create_xml_string($out_hash) );
+}
+
+
+################################
+# @brief Perform the call to the Opsi server and measure the time for the call
 sub _callOpsi {
 	my %arg = ('method'=>undef, 'params'=>[], 'id'=>1, @_);
 

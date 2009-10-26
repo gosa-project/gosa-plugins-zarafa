@@ -10,7 +10,7 @@ function microtime_float()
 	return ((float)$usec + (float)$sec);
 }
 
-$zahl= 10;
+$zahl= 1;
 
 for($count = 1; $count <= $zahl; $count++)
 {
@@ -49,15 +49,15 @@ for($count = 1; $count <= $zahl; $count++)
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
-	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsagesForProductId</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>firefox</productId></xml>";
+	$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsagesForProductId</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>firefox</productId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicense_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>l_2009-09-22_09:50:58_0</softwareLicenseId></xml>";
 
-	$data = "<xml><header>gosa_opsi_getPool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
+	#$data = "<xml><header>gosa_opsi_getPool</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_removeLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId><softwareLicenseId>l_2009-09-22_14:06:11</softwareLicenseId></xml>";
 
-	#$data = "<xml><header>gosa_opsi_getReservedLicenses</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
+	#$data = "<xml><header>gosa_opsi_getReservedLicenses</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_boundHostToLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
 	#$data = "<xml><header>gosa_opsi_unboundHostFromLicense</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>andisLizenz</softwareLicenseId></xml>";
@@ -200,6 +200,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     # Get hardware inventory
     #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>metrischesgewinde.intranet.gonicus.de</hostId> </xml>";
     #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>der_neue.intranet.gonicus.de</hostId> </xml>";
     
     # Get software inventory
