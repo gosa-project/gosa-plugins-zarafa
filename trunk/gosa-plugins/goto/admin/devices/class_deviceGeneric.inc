@@ -105,7 +105,10 @@ class deviceGeneric extends plugin
     if(empty($this->vendor) || !$this->is_2byteHex($this->vendor)){
       $message[]= msgPool::invalid(_("Vendor ID"),"","","0x1234");
     }
-  
+    /* Convert vendorId and productId to lower case */
+    $this->serial = strtolower($this->serial);
+    $this->vendor = strtolower($this->vendor);
+
     /* Check if entry already exists */ 
     if($this->cn != $this->orig_cn || $this->dn == "new"){
       $ldap = $this->config->get_ldap_link();
