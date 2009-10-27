@@ -140,10 +140,10 @@ class servrepository extends goService
 
             if ($found){
               msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
-            }
-          }else{
-            if(isset($this->repositories[$value])){
-              unset($this->repositories[$value]);
+            }else{
+              if(isset($this->repositories[$value])){
+                unset($this->repositories[$value]);
+              }
             }
           }
         }
