@@ -74,7 +74,7 @@ our $server_key;
 our $terminal_server_hash;
 
 # default variables
-our $REGISTERED = 0;
+my $REGISTERED = 0;
 
 # path to fifo for non-gosa-si-client messages to gosa-si-server
 my $fai_com_fifo = "/var/run/gosa-si-client.socket";
@@ -260,7 +260,12 @@ sub daemon_log {
             $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
             $year+=1900;
 
-            my $log_msg = "$month $monthday $hours:$minutes:$seconds $prg $msg\n";
+			# Microseconds since epoch
+			my $microSeconds = sprintf("%.2f", &Time::HiRes::clock_gettime());
+			$microSeconds =~ s/^\d*(.\d\d)$/$1/;
+
+
+            my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds $prg $msg\n";
             print LOG_HANDLE $log_msg;
             if( $foreground ) { 
                 print STDERR $log_msg;
@@ -445,6 +450,12 @@ sub send_msg_hash_to_target {
     return $error;
 }
 
+sub _setREGISTERED {
+	my $newStatus = shift;
+	&daemon_log("DEBUG: set REGISTERED flag from '$REGISTERED' to '$newStatus'", 7);
+	$REGISTERED = $newStatus;
+	return;
+}
 
 sub send_msg_to_target {
     my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
@@ -465,7 +476,7 @@ sub send_msg_to_target {
     if( !$socket ) {
         daemon_log("WARNING: cannot send ".$msg_header."msg to '$address', host not reachable", 3);
         if ($REGISTERED == 1) {
-            $REGISTERED = 0;        # if server is not available, cause reregistering
+            &_setREGISTERED(0);        # if server is not available, cause reregistering
             daemon_log("INFO: cause reregistering at gosa-si-server", 5); 
             $global_kernel->yield('register_at_gosa_si_server');
 
@@ -1069,10 +1080,14 @@ sub server_input {
         if($server_address =~ /$remote_ip/) {
             # Got a msg from gosa-si-server which can not be decrypted, the secrete is not up-to-date
             # cause a reregistering with a new secrete handshake
-            daemon_log("ERROR: Message from gosa-si-server could not be understood, cause reregistering at server", 1);
-			daemon_log("INFO: Set status of si-client to unregistered and throw new registering event", 5);
-			$REGISTERED = 0;
-			$kernel->post('client_session', 'register_at_gosa_si_server');
+			daemon_log("ERROR: Message from gosa-si-server could not be understood, cause reregistering at server", 1);
+			if ($REGISTERED) {
+				daemon_log("INFO: Client has currently status registered so throw new registering event", 5);
+				&_setREGISTERED(0);
+				$kernel->post('client_session', 'register_at_gosa_si_server');
+			} else {
+				daemon_log("INFO: Client is currently within a registration process so wait for the next registration itteration", 5);
+			}
         }
         $error++;
     }

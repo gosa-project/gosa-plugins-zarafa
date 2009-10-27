@@ -106,7 +106,7 @@ sub registered {
 	$main::client_address = $target;
 
 	# set registration_flag to true 
-	$main::REGISTERED = 1;
+	&main::_setREGISTERED(1);
 
 	# Write the MAC address to file
 	if(stat($main::opts_file)) { 
@@ -452,7 +452,6 @@ sub new_ldap_config {
 
 
 sub new_key {
-	
 	# Create new key
     my $new_server_key = &main::create_passwd();
 
