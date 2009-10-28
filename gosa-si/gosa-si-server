@@ -1768,7 +1768,6 @@ sub watch_for_done_jobs {
 
 sub watch_for_opsi_jobs {
     my ($kernel) = $_[KERNEL];
-
     # This is not very nice to look for opsi install jobs, but headertag has to be trigger_action_reinstall. The only way to identify a 
     # opsi install job is to parse the xml message. There is still the correct header.
     my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((xmlmessage LIKE '%opsi_install_client</header>%') AND (status='processing') AND (siserver='localhost'))";
@@ -1792,10 +1791,14 @@ sub watch_for_opsi_jobs {
         };
         
         my $hres = $opsi_client->call($opsi_url, $callobj);
-        #my ($hres_err, $hres_err_string) = &check_opsi_res($hres);
+		# TODO : move all opsi relevant statments to opsi plugin
+		# The following 3 lines must be tested befor they can replace the rubbish above and below !!!
+		#my ($res, $err) = &opsi_com::_getProductStates_hash(hostId=>$hostId)
+		#if (not $err) {
+		#	my $htmp = $res->{$hostId};
+		# 
         if (not &check_opsi_res($hres)) {
             my $htmp= $hres->result->{$hostId};
-        
             # Check state != not_installed or action == setup -> load and add
             my $products= 0;
             my $installed= 0;
