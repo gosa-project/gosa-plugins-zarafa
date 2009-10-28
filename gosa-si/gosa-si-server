@@ -319,10 +319,10 @@ usage: $prg [-hvf] [-c config] [-d number]
                         'vvvvvvv': debug plus info logs
            -no-arp   : starts $prg without connection to arp module
            -d <int>  : if verbose level is higher than 7x 'v' specified parts can be debugged
-                           1 : receiving messages
-                           2 : sending messages
-                           4 : encrypting/decrypting messages
-                           8 : verification if a message complies gosa-si requirements
+                           1 : report incoming messages
+                           2 : report unencrypted outgoing messages 
+                           4 : report encrypting key for messages
+                           8 : report decrypted incoming message and verification if the message complies gosa-si requirements
                           16 : message processing
                           32 : ldap connectivity
                           64 : database status and connectivity
@@ -1548,8 +1548,7 @@ sub process_task {
             while ($answer_str =~ /<header>(\w+)<\/header>/g) {
 				push(@headers, $1);
             }
-			daemon_log("$session_id INFO: got answer message(s) with header: '".join("', '", @headers)."'", 5);
-            daemon_log("$session_id DEBUG: $module: got answer from module: \n".$answer_str,26);
+			daemon_log("$session_id DEBUG: got answer message(s) with header: '".join("', '", @headers)."'", 26);
         } else {
             daemon_log("$session_id DEBUG: $module: got no answer from module!" ,26);
         }
@@ -1607,6 +1606,9 @@ sub process_task {
                     if( defined $session_id ) {
                         $add_on = ".session_id=$session_id";
                     }
+					my $header = ($1) if $answer =~ /<header>(\S*)<\/header>/;
+					daemon_log("$session_id INFO: send ".$header." message to GOsa", 5);
+					daemon_log("$session_id DEBUG: message:\n$answer", 12);
                     # answer is for GOSA and has to returned to connected client
                     my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
                     $client_answer = $gosa_answer.$add_on;
