@@ -48,7 +48,6 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use XML::Quote qw(:all);
-use Time::HiRes qw( time );
 
 BEGIN {}
 
@@ -59,8 +58,23 @@ END {}
 # ----------------------------------------------------------------------------
 
 my $licenseTyp_hash = { 'OEM'=>'', 'VOLUME'=>'', 'RETAIL'=>''};
-
-
+my ($opsi_enabled, $opsi_server, $opsi_admin, $opsi_password, $opsi_url, $opsi_client);
+my %cfg_defaults = (
+		"Opsi" => {
+		"enabled"  => [\$opsi_enabled, "false"],
+		"server"   => [\$opsi_server, "localhost"],
+		"admin"    => [\$opsi_admin, "opsi-admin"],
+		"password" => [\$opsi_password, "secret"],
+		},
+);
+&read_configfile($main::cfg_file, %cfg_defaults);
+if ($opsi_enabled eq "true") {
+	use JSON::RPC::Client;
+	use XML::Quote qw(:all);
+	use Time::HiRes qw( time );
+	$opsi_url= "https://".$opsi_admin.":".$opsi_password."@".$opsi_server.":4447/rpc";
+	$opsi_client = new JSON::RPC::Client;
+}
 
 # ----------------------------------------------------------------------------
 #   external methods handling the comunication with GOsa/GOsa-si
@@ -1528,13 +1542,11 @@ sub opsi_getSoftwareLicenseUsagesForProductId {
 	my $res_hash = &_parse_getSoftwareLicenseUsages($res);
 
 	# Create function result message
-	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	my $out_hash = &create_xml_hash("answer_$header", $main::server_address, $source);
 	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 	$out_hash->{result} = [$res_hash];
 
-	my $endTime = Time::HiRes::time;
-	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
-	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
 	return ( &create_xml_string($out_hash) );
 }
 
@@ -1965,7 +1977,8 @@ sub opsi_getLicenseInformationForProduct {
         params  => [ $productId ],
         id  => 1,
     };
-    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+    #my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+    my $res = $opsi_client->call($opsi_url, $callobj);
 
 	# Check Opsi error
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
@@ -1981,7 +1994,7 @@ sub opsi_getLicenseInformationForProduct {
 		params  => [ ],
 		id  => 1,
 	};
-	$res = $main::opsi_client->call($main::opsi_url, $callobj);
+	$res = $opsi_client->call($opsi_url, $callobj);
 
 	# Check Opsi error
 	($res_error, $res_error_str) = &check_opsi_res($res);
@@ -2374,9 +2387,7 @@ sub opsi_unboundHostFromLicense {
 	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 
-	my $endTime = Time::HiRes::time;
-	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
-	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
@@ -2416,9 +2427,7 @@ sub opsi_getAllSoftwareLicenses {
 	$out_hash->{licenses} = [$res_hash];
 	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
 
-	my $endTime = Time::HiRes::time;
-	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
-	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : $elapsedTime seconds", 1034);
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
     return ( &create_xml_string($out_hash) );
 }
 
@@ -2487,7 +2496,7 @@ sub _callOpsi {
 	};
 
 	my $startTime = Time::HiRes::time;
-	my $opsiResult = $main::opsi_client->call($main::opsi_url, $callObject);
+	my $opsiResult = $opsi_client->call($opsi_url, $callObject);
 	my $endTime = Time::HiRes::time;
 	my $elapsedTime = sprintf("%.4f", ($endTime - $startTime));
 
@@ -2645,6 +2654,20 @@ sub _addSoftwareLicenseToLicensePool {
 	}
 
 	my $res = &_callOpsi( method  => 'addSoftwareLicenseToLicensePool', params  => [ $arg{softwareLicenseId}, $arg{licensePoolId}, $arg{licenseKey} ] );
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
+
+	return ($res->result, 0);
+}
+
+sub _getProductStates_hash {
+	my %arg = (	'hostId' => undef, @_ );
+
+	if (not defined $arg{hostId} ) {
+		return ("function requires hostId as parameter", 1);
+	}
+
+	my $res = &_callOpsi( method => 'getProductStates_hash', params => [$arg{hostId}]);
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
