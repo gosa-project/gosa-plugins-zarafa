@@ -68,7 +68,7 @@ END {}
 
 ### Start ######################################################################
 
-my $xml = new XML::Simple();
+our $xml = new XML::Simple();
 
 sub daemon_log {
     my ($msg, $level) = @_ ;
