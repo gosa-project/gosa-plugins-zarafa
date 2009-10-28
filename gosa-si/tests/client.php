@@ -49,7 +49,7 @@ for($count = 1; $count <= $zahl; $count++)
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><hostId>krakenarme.intranet.gonicus.de</hostId></xml>";
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><licensePoolId>LicensePool</licensePoolId></xml>";
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsages</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target></xml>";
-	#$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsagesForProductId</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>firefox</productId></xml>";
+	$data = "<xml><header>gosa_opsi_getSoftwareLicenseUsagesForProductId</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><productId>firefox</productId></xml>";
 
 	#$data = "<xml><header>gosa_opsi_getSoftwareLicense_hash</header><source>GOSA</source><target>00:01:6C:9D:B9:FA</target><softwareLicenseId>l_2009-09-22_09:50:58_0</softwareLicenseId></xml>";
 
@@ -114,7 +114,7 @@ for($count = 1; $count <= $zahl; $count++)
     # trigger jobs at client
     #$data = "<xml> <header>gosa_trigger_goto_settings_reload</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_detect_hardware</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
-    $data = "<xml> <header>gosa_new_key_for_client</header> <target>$mac</target> <source>GOSA</source> <macaddress>$mac</macaddress></xml>";
+    #$data = "<xml> <header>gosa_new_key_for_client</header> <target>$mac</target> <source>GOSA</source> <macaddress>$mac</macaddress></xml>";
     #$data = "<xml> <header>gosa_trigger_action_wake</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source></xml>";
     #$data = "<xml> <header>gosa_trigger_action_faireboot</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_trigger_action_reboot</header> <target>00:0C:29:4C:4B:0C</target> <source>GOSA</source> </xml>";
