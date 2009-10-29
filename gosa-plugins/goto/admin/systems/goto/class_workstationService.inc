@@ -383,13 +383,15 @@ class workservice extends plugin
         if($this->acl_is_writeable("gotoXVsync")){
           if(empty($val)){
             $message[]= msgPool::required(_("VSync"));
-          }elseif (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
+          }elseif (!preg_match ("/^\d+(\.\d+)?([+-]\d+(\.\d+)?)?$/", $val)){
             $message[]= msgPool::invalid(_("VSync"));
           } else{
-            list($v1,$v2)= preg_split ("/[-+]/", $val);
-            if ($v2 != ""){
-              if ($v1 > $v2){
-                $message[]= msgPool::invalid(_("VSync"));
+            if (!preg_match('/^\d+$/', $val)){
+              list($v1,$v2)= preg_split ("/[-+]/", $val);
+              if ($v2 != ""){
+                if ($v1 > $v2){
+                  $message[]= msgPool::invalid(_("VSync"));
+                }
               }
             }
           }
@@ -403,10 +405,12 @@ class workservice extends plugin
           }elseif (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
             $message[]= msgPool::invalid(_("HSync"));
           } else{
-            list($v1,$v2)= preg_split ("/[-+]/", $val);
-            if ($v2 != ""){
-              if ($v1 > $v2){
-                $message[]= msgPool::invalid(_("HSync"));
+            if (!preg_match('/^\d+$/', $val)){
+              list($v1,$v2)= preg_split ("/[-+]/", $val);
+              if ($v2 != ""){
+                if ($v1 > $v2){
+                  $message[]= msgPool::invalid(_("HSync"));
+                }
               }
             }
           }
