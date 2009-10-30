@@ -126,25 +126,21 @@ class servrepository extends goService
           $ldap->cd ($this->config->current['BASE']);
 
           $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
+          $found= false;
           if ($ldap->count() != 0){
             $obj= array();
-            $found= false;
             while($attrs = $ldap->fetch()){
               foreach($attrs['FAIclass'] as $class){
-                if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
+                if(preg_match("/:".str_replace("/","\/",$release)."$/i",$class)){
                   $obj[$ldap->getDN()]= $attrs['cn'][0];
                   $found= true;
                 }
               }
             }
+          }
 
-            if ($found){
-              msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
-            }else{
-              if(isset($this->repositories[$value])){
-                unset($this->repositories[$value]);
-              }
-            }
+          if ($found){
+            msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
           }else{
             if(isset($this->repositories[$value])){
               unset($this->repositories[$value]);
