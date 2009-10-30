@@ -684,6 +684,15 @@ sub get_ip {
 sub get_interface_for_ip {
 	my $result;
 	my $ip= shift;
+
+	if($ip =~ /^[a-z]/i) {
+		my $ip_address = inet_ntoa(scalar gethostbyname($ip));
+		if(defined($ip_address) && $ip_address =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/) {
+			# Write ip address to $source variable
+			$ip = $ip_address;
+		}
+	}
+
 	if ($ip && length($ip) > 0) {
 		my @ifs= &get_interfaces();
 		if($ip eq "0.0.0.0") {
