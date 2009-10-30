@@ -125,18 +125,54 @@ class servrepository extends goService
           $ldap = $this->config->get_ldap_link();
           $ldap->cd ($this->config->current['BASE']);
 
-          $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
           $found= false;
+          $auto= false;
+          $obj= array();
+          $aobj= array();
+
+          $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(|(FAIdebianMirror=".$url.")(FAIdebianMirror=auto)))",array("cn","FAIclass", "FAIdebianMirror"));
           if ($ldap->count() != 0){
-            $obj= array();
             while($attrs = $ldap->fetch()){
+              if (!isset($attrs['FAIclass'])){
+                continue;
+              }
               foreach($attrs['FAIclass'] as $class){
                 if(preg_match("/:".str_replace("/","\/",$release)."$/i",$class)){
-                  $obj[$ldap->getDN()]= $attrs['cn'][0];
-                  $found= true;
+                  if (isset($attrs['FAIdebianMirror'][0]) && $attrs['FAIdebianMirror'][0] == "auto") {
+                    $aobj[$ldap->getDN()]= $attrs['cn'][0];
+                    $auto= true;
+                  } else {
+                    $obj[$ldap->getDN()]= $attrs['cn'][0];
+                    $found= true;
+                  }
                 }
               }
             }
+          }
+
+          // Look for automatic releases
+          if ($auto) {
+            $usage= 0;
+            $ldap->search("(&(objectClass=FAIrepositoryServer))",array("FAIrepository"));
+            if ($ldap->count() != 0){
+              while($sattrs = $ldap->fetch()){
+                if (!isset($sattrs['FAIrepository'])){
+                  continue;
+                }
+                for ($i= 0; $i < $sattrs['FAIrepository']['count']; $i++){
+                  $t= split('\|', $sattrs['FAIrepository'][$i]);
+                  if($release == $t[2]){
+                    $usage++;
+                  }
+                }
+              }
+
+              // Are we the last one to provide this release?
+              if ($usage < 2) {
+                $obj= array_merge($obj, $aobj);
+                $found= true;
+              }
+            } 
           }
 
           if ($found){
