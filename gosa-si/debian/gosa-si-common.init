@@ -21,6 +21,8 @@ DAEMON_CLIENT="/usr/sbin/${CLIENT}"
 PIDFILE_SERVER="/var/run/${SERVER}.pid"
 PIDFILE_CLIENT="/var/run/${CLIENT}.pid"
 
+PATH="/sbin:/usr/sbin:/bin:/usr/bin"
+
 # Load defaults
 [ -r /etc/default/gosa-si ] && . /etc/default/gosa-si
 
@@ -76,14 +78,14 @@ stop)   log_daemon_msg "Stopping GOsa support infrastructure"
         log_end_msg $?
         ;;
 reload|force-reload|restart) log_daemon_msg "Restarting GOsa support infrastructure" 
-	if [ "$START_CLIENT" = "1" -a -x {DAEMON_CLIENT} ]; then
+	if [ "$START_CLIENT" = "1" -a -x ${DAEMON_CLIENT} ]; then
 		stop_client
 	fi
-	if [ -x {DAEMON_SERVER} ]; then
+	if [ -x ${DAEMON_SERVER} ]; then
 		stop_server
 		start_server
 	fi
-	if [ "$START_CLIENT" = "1" -a -x {DAEMON_CLIENT} ]; then
+	if [ "$START_CLIENT" = "1" -a -x ${DAEMON_CLIENT} ]; then
 		start_client
 	fi
 	log_progress_msg "done"
