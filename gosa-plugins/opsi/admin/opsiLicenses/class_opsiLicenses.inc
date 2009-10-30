@@ -294,7 +294,7 @@ class opsiLicenses extends plugin
     $si = new opsiLicenceHandler($this->config);
     $this->licenses = array();
     $res = $si->listPools();
-    if($si->is_error() || !$res){
+    if($si->is_error() || !is_array($res)){
       $this->init_successfull = FALSE;
       msg_dialog::display(_("Error"),msgPool::siError($si->get_error()),ERROR_DIALOG);
       return;

@@ -19,29 +19,34 @@ class opsiLicenceHandler extends opsi  {
     $data= array();
     $res = $this->send_data("gosa_opsi_getLicensePools_listOfHashes",$this->target,$data,TRUE);
     $items  = array();
-    if(isset($res['XML'][0]['RESULT'][0]['HIT'])){
-      $items = $res['XML'][0]['RESULT'][0]['HIT'];
-      $data =array();
-      foreach($items as $item){
-        $entry = array();
-        foreach(
-          array(
-            "DESCRIPTION"       => "description",
-            "LICENSEPOOLID"     => "cn",
-            "PRODUCTIDS"        => "productId",
-            "WINDOWSSOFTWAREIDS"=> "softwareId") as $source => $dest){
-        
-          if(isset($item[$source])){
-            $entry[$dest] = array('count' => 0);
-            foreach($item[$source] as $obj){
-              $entry[$dest][] = $obj['VALUE'];
-            }
-            $entry[$dest]['count'] = (count($entry[$dest]) -1 );
-          } 
+    if(isset($res['XML'][0]['ANSWER_OPSI_GETLICENSEPOOLS_LISTOFHASHES'])){
+      if(isset($res['XML'][0]['RESULT'][0]['HIT'])){
+        $items = $res['XML'][0]['RESULT'][0]['HIT'];
+        $data =array();
+        foreach($items as $item){
+          $entry = array();
+          foreach(
+              array(
+                "DESCRIPTION"       => "description",
+                "LICENSEPOOLID"     => "cn",
+                "PRODUCTIDS"        => "productId",
+                "WINDOWSSOFTWAREIDS"=> "softwareId") as $source => $dest){
+
+            if(isset($item[$source])){
+              $entry[$dest] = array('count' => 0);
+              foreach($item[$source] as $obj){
+                $entry[$dest][] = $obj['VALUE'];
+              }
+              $entry[$dest]['count'] = (count($entry[$dest]) -1 );
+            } 
+          }
+          $data[] =$entry;
         }
-        $data[] =$entry;
+        return($data);
+      }else{
+        // No entries, but got an answer. We probably do not have any pools yet.
+        return(array());
       }
-      return($data);
     }
     return(FALSE);
   }
@@ -145,6 +150,7 @@ class opsiLicenceHandler extends opsi  {
   {
     $data= array();
     $res = $this->send_data("gosa_opsi_getAllSoftwareLicenses",$this->target,$data,TRUE);
+
     if(isset($res['XML'][0]['ANSWER_OPSI_GETALLSOFTWARELICENSES'])){
 
       $licenses = array();
