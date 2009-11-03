@@ -69,7 +69,7 @@ class fonreport extends plugin
     }
     foreach( array("year", "month", "search_for", "search_base","selected_server") as $type){
       if (isset($_POST[$type])){
-        $this->$type= $_POST[$type];
+        $this->$type= get_post($type);
       }
     }
     
@@ -89,7 +89,7 @@ class fonreport extends plugin
     }
 
     /* remove unwanted tags */
-    $this->search_for = stripslashes(preg_replace("/[^0-9a-z\*\+ \-]/i","",$this->search_for));
+    $this->search_for = stripslashes(preg_replace("/[^0-9a-z\*\+ \-\/]/i","",$this->search_for));
   
     foreach($this->attributes_SO as $name){
       $fonfilter[$name] = $this->$name;
@@ -149,7 +149,7 @@ class fonreport extends plugin
     $smarty->assign("plug",           "?plug=".validate($_GET['plug']));
     $smarty->assign("launchimage",    get_template_path('images/launch.png'));
     $smarty->assign("search_image",   get_template_path('images/lists/search.png'));
-    $smarty->assign("search_for",     $this->search_for);
+    $smarty->assign("search_for",     htmlentities($this->search_for));
     $smarty->assign("bases",          $bases);
     $smarty->assign("base_select",    $this->search_base);
     $smarty->assign("months",         $months);
