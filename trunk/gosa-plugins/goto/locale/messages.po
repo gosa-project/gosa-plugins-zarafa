@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-19 12:35+0200\n"
+"POT-Creation-Date: 2009-11-03 14:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,8 +66,8 @@ msgid "CD/DVD drive"
 msgstr ""
 
 #: admin/devices/class_deviceGeneric.inc:90
-#: admin/devices/class_deviceGeneric.inc:114
-#: admin/devices/class_deviceGeneric.inc:260
+#: admin/devices/class_deviceGeneric.inc:117
+#: admin/devices/class_deviceGeneric.inc:263
 #: admin/mimetypes/class_mimetypeGeneric.inc:532
 #: admin/mimetypes/class_mimetypeGeneric.inc:724
 #: admin/groups/apps/edit_entry.tpl:43
@@ -98,7 +98,7 @@ msgid "Name"
 msgstr ""
 
 #: admin/devices/class_deviceGeneric.inc:93
-#: admin/devices/class_deviceGeneric.inc:262
+#: admin/devices/class_deviceGeneric.inc:265
 #: admin/devices/deviceGeneric.tpl:29 admin/mimetypes/generic.tpl:34
 #: admin/mimetypes/class_mimetypeGeneric.inc:726
 #: admin/mimetypes/paste_generic.tpl:21 admin/systems/goto/terminal.tpl:19
@@ -131,7 +131,7 @@ msgstr ""
 msgid "Vendor ID"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:159
+#: admin/devices/class_deviceGeneric.inc:162
 #: admin/systems/goto/class_terminalStartup.inc:223
 #: admin/systems/goto/class_printGeneric.inc:438
 #: admin/systems/goto/class_printGeneric.inc:485
@@ -175,7 +175,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:159
+#: admin/devices/class_deviceGeneric.inc:162
 #: admin/devices/class_divListDevices.inc:94
 #: admin/devices/class_divListDevices.inc:131
 #: admin/systems/goto/gotoLpdEnable.tpl:27
@@ -183,7 +183,7 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:196
+#: admin/devices/class_deviceGeneric.inc:199
 #: admin/mimetypes/class_mimetypeGeneric.inc:494
 #: admin/mimetypes/class_mimetypeGeneric.inc:506
 #: admin/mimetypes/class_mimetypeGeneric.inc:521
@@ -196,7 +196,7 @@ msgstr ""
 #: admin/systems/goto/class_printGeneric.inc:920
 #: admin/systems/goto/class_terminalGeneric.inc:353
 #: admin/systems/goto/class_terminalGeneric.inc:580
-#: admin/systems/goto/class_workstationService.inc:459
+#: admin/systems/goto/class_workstationService.inc:479
 #: admin/systems/goto/class_workstationStartup.inc:893
 #: admin/systems/goto/class_terminalService.inc:597
 #: admin/systems/goto/class_ArpNewDevice.inc:69
@@ -222,7 +222,7 @@ msgstr ""
 msgid "LDAP error"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:251 admin/mimetypes/generic.tpl:4
+#: admin/devices/class_deviceGeneric.inc:254 admin/mimetypes/generic.tpl:4
 #: admin/mimetypes/class_mimetypeGeneric.inc:715
 #: admin/mimetypes/paste_generic.tpl:4
 #: admin/systems/goto/class_printGeneric.inc:955
@@ -232,20 +232,20 @@ msgstr ""
 msgid "Generic"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:252
+#: admin/devices/class_deviceGeneric.inc:255
 msgid "Device generic"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:252
+#: admin/devices/class_deviceGeneric.inc:255
 msgid "Hotplug"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:257
+#: admin/devices/class_deviceGeneric.inc:260
 #: admin/devices/paste_deviceGeneric.tpl:2 admin/devices/deviceGeneric.tpl:2
 msgid "Devices"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:261 admin/devices/deviceGeneric.tpl:9
+#: admin/devices/class_deviceGeneric.inc:264 admin/devices/deviceGeneric.tpl:9
 #: admin/devices/class_divListDevices.inc:82 admin/mimetypes/generic.tpl:44
 #: admin/mimetypes/class_mimetypeGeneric.inc:727
 #: admin/mimetypes/class_divListMimeTypes.inc:93
@@ -264,7 +264,7 @@ msgstr ""
 msgid "Base"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:263
+#: admin/devices/class_deviceGeneric.inc:266
 #: admin/systems/goto/workstationService.tpl:54
 #: admin/systems/goto/workstationService.tpl:156
 #: admin/systems/goto/terminalService.tpl:48
@@ -276,16 +276,16 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:264
+#: admin/devices/class_deviceGeneric.inc:267
 #: admin/systems/goto/class_gotoLpdEnabled.inc:51
 msgid "Serial"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:265
+#: admin/devices/class_deviceGeneric.inc:268
 msgid "Vendor"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:266
+#: admin/devices/class_deviceGeneric.inc:269
 msgid "Device ID"
 msgstr ""
 
@@ -1105,22 +1105,22 @@ msgstr ""
 #: admin/systems/goto/class_terminalGeneric.inc:137
 #: admin/systems/goto/class_terminalGeneric.inc:287
 #: admin/systems/goto/class_terminalGeneric.inc:299
-#: admin/systems/goto/class_workstationService.inc:199
-#: admin/systems/goto/class_workstationService.inc:202
-#: admin/systems/goto/class_workstationService.inc:205
-#: admin/systems/goto/class_workstationService.inc:208
-#: admin/systems/goto/class_workstationService.inc:211
-#: admin/systems/goto/class_workstationService.inc:214
-#: admin/systems/goto/class_workstationService.inc:217
-#: admin/systems/goto/class_workstationService.inc:220
+#: admin/systems/goto/class_workstationService.inc:219
+#: admin/systems/goto/class_workstationService.inc:222
+#: admin/systems/goto/class_workstationService.inc:225
+#: admin/systems/goto/class_workstationService.inc:228
 #: admin/systems/goto/class_workstationService.inc:231
-#: admin/systems/goto/class_workstationService.inc:232
-#: admin/systems/goto/class_workstationService.inc:233
 #: admin/systems/goto/class_workstationService.inc:234
-#: admin/systems/goto/class_workstationService.inc:235
-#: admin/systems/goto/class_workstationService.inc:236
 #: admin/systems/goto/class_workstationService.inc:237
-#: admin/systems/goto/class_workstationService.inc:238
+#: admin/systems/goto/class_workstationService.inc:240
+#: admin/systems/goto/class_workstationService.inc:251
+#: admin/systems/goto/class_workstationService.inc:252
+#: admin/systems/goto/class_workstationService.inc:253
+#: admin/systems/goto/class_workstationService.inc:254
+#: admin/systems/goto/class_workstationService.inc:255
+#: admin/systems/goto/class_workstationService.inc:256
+#: admin/systems/goto/class_workstationService.inc:257
+#: admin/systems/goto/class_workstationService.inc:258
 #: admin/systems/goto/class_workstationStartup.inc:178
 #: admin/systems/goto/class_workstationStartup.inc:208
 #: admin/systems/goto/class_terminalService.inc:182
@@ -1467,7 +1467,7 @@ msgstr ""
 
 #: admin/systems/goto/workstationService.tpl:86
 #: admin/systems/goto/terminalService.tpl:76
-#: admin/systems/goto/class_workstationService.inc:518
+#: admin/systems/goto/class_workstationService.inc:538
 #: admin/systems/goto/class_terminalService.inc:712
 msgid "Telephone hardware"
 msgstr ""
@@ -1515,6 +1515,7 @@ msgid "Display device"
 msgstr ""
 
 #: admin/systems/goto/workstationService.tpl:157
+#: admin/systems/goto/class_workstationService.inc:106
 #: admin/systems/goto/class_terminalService.inc:610
 msgid "unknown"
 msgstr ""
@@ -1526,10 +1527,10 @@ msgstr ""
 
 #: admin/systems/goto/workstationService.tpl:170
 #: admin/systems/goto/terminalService.tpl:150
-#: admin/systems/goto/class_workstationService.inc:405
-#: admin/systems/goto/class_workstationService.inc:407
-#: admin/systems/goto/class_workstationService.inc:412
-#: admin/systems/goto/class_workstationService.inc:509
+#: admin/systems/goto/class_workstationService.inc:425
+#: admin/systems/goto/class_workstationService.inc:427
+#: admin/systems/goto/class_workstationService.inc:432
+#: admin/systems/goto/class_workstationService.inc:529
 #: admin/systems/goto/class_terminalService.inc:701
 msgid "HSync"
 msgstr ""
@@ -1541,10 +1542,10 @@ msgstr ""
 
 #: admin/systems/goto/workstationService.tpl:181
 #: admin/systems/goto/terminalService.tpl:158
-#: admin/systems/goto/class_workstationService.inc:388
-#: admin/systems/goto/class_workstationService.inc:390
-#: admin/systems/goto/class_workstationService.inc:395
-#: admin/systems/goto/class_workstationService.inc:510
+#: admin/systems/goto/class_workstationService.inc:408
+#: admin/systems/goto/class_workstationService.inc:410
+#: admin/systems/goto/class_workstationService.inc:415
+#: admin/systems/goto/class_workstationService.inc:530
 #: admin/systems/goto/class_terminalService.inc:702
 msgid "VSync"
 msgstr ""
@@ -1588,7 +1589,7 @@ msgstr ""
 
 #: admin/systems/goto/class_terminalGeneric.inc:187
 #: admin/systems/goto/class_terminalGeneric.inc:594
-#: admin/systems/goto/class_workstationService.inc:566
+#: admin/systems/goto/class_workstationService.inc:586
 #: admin/systems/goto/class_workstationStartup.inc:942
 #: admin/systems/goto/class_workstationStartup.inc:1107
 #: admin/systems/goto/class_workstationStartup.inc:1175
@@ -1729,7 +1730,7 @@ msgstr ""
 msgid "set"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:78
+#: admin/systems/goto/class_workstationService.inc:93
 #: admin/systems/goto/class_workstationStartup.inc:1407
 #: admin/systems/goto/class_workstationStartup.inc:1409
 #: admin/systems/goto/class_terminalService.inc:121
@@ -1739,14 +1740,14 @@ msgstr ""
 msgid "Configuration error"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:87
+#: admin/systems/goto/class_workstationService.inc:103
 msgid "manual/auto"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:90
-#: admin/systems/goto/class_workstationService.inc:91
-#: admin/systems/goto/class_workstationService.inc:92
-#: admin/systems/goto/class_workstationService.inc:93
+#: admin/systems/goto/class_workstationService.inc:110
+#: admin/systems/goto/class_workstationService.inc:111
+#: admin/systems/goto/class_workstationService.inc:112
+#: admin/systems/goto/class_workstationService.inc:113
 #: admin/systems/goto/class_terminalService.inc:128
 #: admin/systems/goto/class_terminalService.inc:129
 #: admin/systems/goto/class_terminalService.inc:130
@@ -1754,80 +1755,80 @@ msgstr ""
 msgid "bit"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:152
+#: admin/systems/goto/class_workstationService.inc:172
 #: admin/systems/goto/class_terminalService.inc:211
 msgid "automatic"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:205
+#: admin/systems/goto/class_workstationService.inc:225
 #: admin/systems/goto/class_terminalService.inc:274
 msgid "Bit"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:321
+#: admin/systems/goto/class_workstationService.inc:341
 #: admin/systems/goto/class_terminalService.inc:421
 msgid "Choose the phone located at the current terminal"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:496
+#: admin/systems/goto/class_workstationService.inc:516
 #: admin/systems/goto/class_terminalService.inc:685
 msgid "Service"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:497
+#: admin/systems/goto/class_workstationService.inc:517
 msgid "Workstation service"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:505
+#: admin/systems/goto/class_workstationService.inc:525
 #: admin/systems/goto/class_terminalService.inc:695
 msgid "Monitor"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:506
+#: admin/systems/goto/class_workstationService.inc:526
 #: admin/systems/goto/class_terminalService.inc:698
 msgid "Gfx driver"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:507
+#: admin/systems/goto/class_workstationService.inc:527
 #: admin/systems/goto/class_terminalService.inc:699
 msgid "Gfx resolution"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:508
+#: admin/systems/goto/class_workstationService.inc:528
 #: admin/systems/goto/class_terminalService.inc:700
 msgid "Gfx color depth"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:511
+#: admin/systems/goto/class_workstationService.inc:531
 msgid "Use DDC"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:512
+#: admin/systems/goto/class_workstationService.inc:532
 #: admin/systems/goto/class_terminalService.inc:704
 msgid "Scanner enabled"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:513
+#: admin/systems/goto/class_workstationService.inc:533
 #: admin/systems/goto/class_terminalService.inc:706
 msgid "Keyboard model"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:514
+#: admin/systems/goto/class_workstationService.inc:534
 #: admin/systems/goto/class_terminalService.inc:707
 msgid "Keyboard layout"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:515
+#: admin/systems/goto/class_workstationService.inc:535
 #: admin/systems/goto/class_terminalService.inc:708
 msgid "Keyboard variant"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:516
+#: admin/systems/goto/class_workstationService.inc:536
 #: admin/systems/goto/class_terminalService.inc:709
 msgid "Mouse type"
 msgstr ""
 
-#: admin/systems/goto/class_workstationService.inc:517
+#: admin/systems/goto/class_workstationService.inc:537
 #: admin/systems/goto/class_terminalService.inc:710
 msgid "Mouse port"
 msgstr ""
@@ -2191,7 +2192,7 @@ msgid "Workstation template"
 msgstr ""
 
 #: admin/systems/goto/workstation.tpl:160
-msgid "Inherit all values from group"
+msgid "Inherit all values from objectgroup"
 msgstr ""
 
 #: admin/systems/goto/printer.tpl:5

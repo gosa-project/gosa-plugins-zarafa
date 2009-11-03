@@ -157,7 +157,7 @@
 </td>
 <td>
 {if $member_of_ogroup}
-   <input type='submit' name='inheritAll' value='{t}Inherit all values from group{/t}'>
+   <input type='submit' name='inheritAll' value='{t}Inherit all values from objectgroup{/t}'>
 {/if}
 </td>
 </tr></table>

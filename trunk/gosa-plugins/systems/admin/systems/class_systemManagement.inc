@@ -409,14 +409,13 @@ class systems extends plugin
                 }
 
                 /*******
-                 * Set default system specific attributes 
+                 * Enable inheritance
                  */
-                foreach (array("workservice", "termservice") as $cls){
+                foreach (array("workgeneric", "termgeneric") as $cls){
                   if (isset($this->systab->by_object[$cls])){
-                    $this->systab->by_object[$cls]->gotoXMouseport= "";
-                    $this->systab->by_object[$cls]->gotoXMouseType= "";
-                    $this->systab->by_object[$cls]->gotoXResolution= "";
-                    $this->systab->by_object[$cls]->gotoXColordepth= "";
+                    $this->systab->by_object[$cls]->member_of_ogroup = true;
+                    $this->systab->by_object[$cls]->set_everything_to_inherited();
+                    $this->systab->by_object[$cls]->save();
                   }
                 }
 
@@ -425,11 +424,6 @@ class systems extends plugin
                   if (isset($this->systab->by_object[$cls])){
                     $this->systab->by_object[$cls]->auto_activate= TRUE;
                   }
-                }
-
-                // Enable sending of LDAP events
-                if (isset($this->systab->by_object["workstartup"])){
-                  $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
                 }
               }
 

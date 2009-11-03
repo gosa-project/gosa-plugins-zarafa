@@ -201,7 +201,10 @@ class workservice extends plugin
         
         switch ($name){
           case 'gotoXDriver':
-            $this->XDrivers = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XDrivers;
+            $ogroup_driver = $attrs['gotoXDriver'][0];
+            if (in_array($ogroup_driver, $this->XDrivers) && (!empty($this->attrs['gotoXDriver']))) {
+                $this->XDrivers = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XDrivers;
+            }
             break;
           case 'gotoXResolution':
             $this->XResolutions= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XResolutions;
