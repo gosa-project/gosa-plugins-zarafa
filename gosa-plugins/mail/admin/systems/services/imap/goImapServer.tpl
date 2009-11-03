@@ -17,7 +17,7 @@
 					</td>
 					<td>
 {render acl=$goImapConnectACL}
-						<input name="goImapConnect" id="goImapConnect" size=40 maxlength=60 value="{$goImapConnect}" >
+						<input name="goImapConnect" id="goImapConnect" size=40 maxlength=100 value="{$goImapConnect}" >
 {/render}
 					</td>
 				</tr>
