@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: main.inc 13288 2008-12-12 14:54:13Z hickert $$
+ * ID: $$Id: main.inc 14740 2009-11-04 09:41:16Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,46 +20,35 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-// Remove locks created by this plugin
+/* Remove locks created by this plugin
+*/
 if ($remove_lock){
   if(session::is_set('roleManagement')){
-    $macl = session::get('roleManagement');
-    $macl->remove_lock();
+      $macl = session::get('roleManagement');
+      $macl->remove_lock();
   }
 }
 
 /* Remove this plugin from session
 */
 if ( $cleanup ){
-  $macl = session::get('roleManagement');
-  $macl->remove_lock();
   session::un_set('roleManagement');
 }else{
 
-  /* Create object object on demand */
+  /* Create rolemanagement object on demand */
   if (!session::is_set('roleManagement')){
-    session::set('roleManagement',new roleManagement($config));
+    $roleManagement= new roleManagement ($config, $ui);
+    session::set('roleManagement',$roleManagement);
   }
   $roleManagement = session::get('roleManagement');
+  $display= $roleManagement->execute();
 
-  /* Execute formular */
-  $roleManagement->save_object();
-  $output= $roleManagement->execute ();
-
-  /* Page header*/
-  if (get_object_info() != ""){
-    $display= print_header(get_template_path('plugins/rolemanagement/images/plugin.png'),
-        _("Roles"),
-        "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".
-        LDAP::fix(get_object_info()));
-  } else {
-    $display= print_header(get_template_path('plugins/rolemanagement/images/plugin.png'), _("Role management"));
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    session::un_set ('roleManagement');
   }
 
-  $display.= $output;
-
-  /* Store changes  in session */
+  /* Show and save dialog */
   session::set('roleManagement',$roleManagement);
 }
 

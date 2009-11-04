@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: tabs_group.inc 9275 2008-03-04 07:29:22Z cajus $$
+ * ID: $$Id: tabs_role.inc 9275 2008-03-04 07:29:22Z cajus $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ class roletabs extends tabs
 		   'dn' to all plugins */
 		$new_dn= 'cn='.$baseobject->cn.','.get_ou("roleRDN").$baseobject->base;
 
-		/* Move group? */
+		/* Move role? */
 		if ($this->dn != $new_dn){
 
 			/* Write entry on new 'dn' */
