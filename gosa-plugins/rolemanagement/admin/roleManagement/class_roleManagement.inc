@@ -23,7 +23,7 @@
 class roleManagement extends management
 {
   var $plHeadline     = "Role";
-  var $plDescription  = "Role mangement";
+  var $plDescription  = "Role management";
   var $plIcon  = "plugins/rolemanagement/images/plugin.png";
 
   // Tab definition 
@@ -40,13 +40,13 @@ class roleManagement extends management
    
     $this->storagePoints = array(get_ou("roleRDN"));
  
-#   // Build filter
-#   if (session::global_is_set(get_class($this)."_filter")){
-#     $filter= session::global_get(get_class($this)."_filter");
-#   } else {
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("role-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-#   }
+    }
     $this->setFilter($filter);
 
     // Build headpage
