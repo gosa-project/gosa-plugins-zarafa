@@ -26,11 +26,11 @@
     <maxlength>60</maxlength>
     <default></default>
     <unset></unset>
-    <set>(|(cn=*$*)(sn=*$*)(givenName=*$*))</set>
-    <alphabet>true</alphabet>
+    <set>(cn=*$*)</set>
+    <alphabet>false</alphabet>
     <autocomplete>
       <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=posixRole)(|(cn=*$NAME*)))</filter>
+      <filter>(&amp;(objectClass=organizationalRole)(cn=*$NAME*))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>

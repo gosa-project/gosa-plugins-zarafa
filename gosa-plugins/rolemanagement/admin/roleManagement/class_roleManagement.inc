@@ -22,7 +22,7 @@
 
 class roleManagement extends management
 {
-  var $plHeadline     = "Role";
+  var $plHeadline     = "Roles";
   var $plDescription  = "Role management";
   var $plIcon  = "plugins/rolemanagement/images/plugin.png";
 
