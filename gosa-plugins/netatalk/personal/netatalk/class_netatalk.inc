@@ -118,7 +118,7 @@ class netatalk extends plugin {
     if($this->dn === "new" || $this->dn === NULL) {
       $base  = session::get('CurrentMainBase');
     } else {
-      $base = preg_replace("/^[^,]+,".preg_quote(get_people_ou(), '/')."/","",$this->dn);
+      $base = preg_replace("/^[^,]+,".preg_quote(get_people_ou(), '/')."/i","",$this->dn);
     }
 
     $ldap->cd($base);
