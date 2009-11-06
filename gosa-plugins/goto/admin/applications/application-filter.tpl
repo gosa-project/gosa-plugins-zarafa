@@ -18,6 +18,7 @@
     </label>
    </td>
    <td>
+    {$RELEASE}
     {$NAME}
    </td>
   </tr>

@@ -46,13 +46,13 @@ class applicationManagement extends management
 #   if (session::global_is_set(get_class($this)."_filter")){
 #     $filter= session::global_get(get_class($this)."_filter");
 #   } else {
-     $filter = new filter(get_template_path("application-filter.xml", true));
-     $filter->setObjectStorage($this->storagePoints);
+     $filter = new filter(get_template_path("application-filter-release.xml", true));
+#     $filter->setObjectStorage($this->storagePoints);
 #   }
     $this->setFilter($filter);
 
     // Build headpage
-    $headpage = new listing(get_template_path("application-list.xml", true));
+    $headpage = new listing(get_template_path("application-list-release.xml", true));
     $headpage->setFilter($filter);
 
     // Add copy&paste and snapshot handler.
@@ -72,9 +72,39 @@ class applicationManagement extends management
 
   function renderList()
   {
+    $filter = $this->getFilter();
     $headpage = $this->getHeadpage();
-    return(management::renderList());
+    $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
+
+    if(isset($_POST['RELEASE'])){
+      $headpage->setBase($_POST['RELEASE']);
+    }else{
+      $headpage->setBase($base = get_ou('applicationRDN').$this->config->current['BASE']);
+    }
+    
+    $headpage->update();
+    $display = $headpage->render();
+    return($this->getHeader().$display);
+
   }
+
+  function getReleaseList($base = "", $prefix ="")
+  {
+    $list = array();
+    if(empty($base)){
+      $base = get_ou('applicationRDN').$this->config->current['BASE'];
+      $list[$base] = "/";
+    }
+
+    $ldap = $this->config->get_ldap_link();
+    $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
+    while($release = $ldap->fetch()){
+      $list[$release['dn']] = $prefix.$release['ou'][0];
+      $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
+    }
+    return($list);
+  }
+  
 
   function IsReleaseManagementActivated()
   {

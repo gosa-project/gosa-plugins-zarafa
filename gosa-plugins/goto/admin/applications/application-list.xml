@@ -7,7 +7,7 @@
     <baseMode>true</baseMode>
     <multiSelect>true</multiSelect>
     <template>application-list.tpl</template>
-    <module>applications</module>
+    <module>application</module>
     <label>List of applications</label>
     <defaultSortColumn>1</defaultSortColumn>
 
