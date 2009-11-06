@@ -23,7 +23,7 @@
 class applicationManagement extends management
 {
   var $plHeadline     = "Applications";
-  var $plDescription  = "Application administration";
+  var $plDescription  = "Application management";
   var $plIcon  = "plugins/goto/images/application.png";
 
   var $app_release = ""; // The currently selected release while in release management mode!
