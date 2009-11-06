@@ -43,7 +43,6 @@ class krbHostKeys extends plugin
   private $server_list  = array(); 
   private $last_list    = array(); // The last array created for the smarty template
 
-  private $init_namingAttr  = "";
   private $namingAttr       = "";
   private $is_service_key   = FALSE;
   private $confirm_box      = NULL;
@@ -74,10 +73,30 @@ class krbHostKeys extends plugin
       trigger_error("Cannot initialize kerberos key service, invalid parent object given (Paramter 2).".
           " Should be of class 'plugin' with accessible class member variable 'cn'.");
     }else{
-      $this->init_namingAttr = $this->namingAttr = $this->object->cn;
+
+      // Check if we've enabled the DNS settings and assemble an according entry
+      $this->namingAttr= $this->getNamingAttr();
       $this->init();
     }
   }
+
+
+  function getNamingAttr()
+  {
+    // Do we have DNS settings?
+    if (empty($this->object->netConfigDNS->dnsEntry['zoneName'])) {
+
+      // no... use systems cn
+      return $this->object->cn;
+
+    } else {
+
+      // yes... assemble new naming attribute
+      return $this->object->cn.".".preg_replace('/^.*\/(.*)\.$/', '$1', $this->object->netConfigDNS->dnsEntry['zoneName']);
+    }
+
+  }
+
 
  
   /*! \brief  Reloads the list of available principals. 
@@ -106,7 +125,7 @@ class krbHostKeys extends plugin
 
       /* Update the naming attribute.
        */
-      $this->namingAttr = $this->object->cn;
+      $this->namingAttr= $this->getNamingAttr();
 
       /* Create password handle, it has already a working principal parsing 
        */
@@ -175,7 +194,8 @@ class krbHostKeys extends plugin
     /* Check if naming context has changed,
        in this case ask user if he wants to update the keys. 
      */
-    if($this->object->cn != $this->namingAttr){
+    
+    if($this->getNamingAttr() != $this->namingAttr){
 
       /* The confirm dialog was shown. Check if OK was pressed. 
        */
