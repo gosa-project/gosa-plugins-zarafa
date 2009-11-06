@@ -154,12 +154,12 @@ class appgroup extends plugin
           department release.
        */
       foreach($res as $attrs){
-        if(preg_match("/".get_ou('applicationRDN')."/",$attrs['dn'])){
+        if(preg_match("/".get_ou('applicationRDN')."/i",$attrs['dn'])){
 
           /* Parse all returned departments dns into a useable type.
              (ou=1.0.0,ou=halut,ou=apps  ==> halue/1.0.0)
            */
-          $bb     = preg_replace("/".get_ou('applicationRDN').".*/","",$attrs['dn']);
+          $bb     = preg_replace("/".preg_quote(get_ou('applicationRDN'), '/').".*/i","",$attrs['dn']);
           $parts  = array_reverse(split("ou=",$bb));
 
           $str ="";
