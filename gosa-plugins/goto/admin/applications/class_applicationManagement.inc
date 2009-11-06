@@ -81,16 +81,16 @@ class applicationManagement extends management
 
   function renderList()
   {
-    $filter = $this->getFilter();
-    $headpage = $this->getHeadpage();
-    $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
+    if($this->IsReleaseManagementActivated()){    
+      $filter = $this->getFilter();
+      $headpage = $this->getHeadpage();
+      $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
 
-    if(isset($_POST['RELEASE'])){
-      $headpage->setBase($_POST['RELEASE']);
-    }else{
-      $headpage->setBase($base = get_ou('applicationRDN').$this->config->current['BASE']);
+      if(isset($_POST['RELEASE'])){
+        $this->app_release = get_post('RELEASE');
+      }
+      $headpage->setBase($this->app_release);
     }
-    $this->app_release = $headpage->getBase();    
     $headpage->update();
     $display = $headpage->render();
     return($this->getHeader().$display);
