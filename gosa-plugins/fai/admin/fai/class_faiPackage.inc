@@ -173,7 +173,7 @@ class faiPackage extends plugin
 
       /* Assemble release name */
       $release = $this->parent->parent->fai_release;
-      $tmp= preg_replace('/[,]*'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/', '', $release);
+      $tmp= preg_replace('/[,]*'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/i', '', $release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(split(',', $tmp));
       $this->FAIdebianRelease= "/";
@@ -571,7 +571,7 @@ class faiPackage extends plugin
     if($this->FAIdebianRelease == "ClearFromCopyPaste"){
 
       $current_release  = $this->parent->parent->fai_release;
-      $tmp= preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/', '', $current_release);
+      $tmp= preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/i', '', $current_release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(split(',', $tmp));
       $this->FAIdebianRelease= "";

@@ -69,7 +69,7 @@ class faiSummaryTab extends plugin{
       /* Get Classes and release */
       $this->Classes = $this->parent->by_object['faiProfile']->FAIclasses;
       $this->base    = $this->parent->by_object['faiProfile']->parent->parent->fai_release;
-      $str = preg_replace("/^.*".preg_quote(get_ou('faiProfileRDN'), '/')."/","",$this->dn);
+      $str = preg_replace("/^.*".preg_quote(get_ou('faiProfileRDN'), '/')."/i","",$this->dn);
       $tmp  = $this->parent->by_object['faiProfile']->parent->parent->getBranches();
       $this->Release = $tmp[$this->base];
   

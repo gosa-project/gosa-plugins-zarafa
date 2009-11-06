@@ -57,7 +57,7 @@ class application extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^[^,]+,".get_ou('applicationRDN')."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou('applicationRDN'), '/')."/i", "", $this->dn);
     }
 
     $this->orig_cn = $this->cn;
@@ -230,7 +230,7 @@ class application extends plugin
     restore_error_handler();
 
     /* Parse release out of object dn */
-    $release = preg_replace("/".get_ou("applicationRDN").preg_quote($this->base, '/')."$/","",$this->dn);
+    $release = preg_replace("/".preg_quote(get_ou("applicationRDN").$this->base, '/')."$/i","",$this->dn);
     $release = preg_replace("/^cn=[^,]+,/","",$release);
 
     /* Get a list of all groups 
