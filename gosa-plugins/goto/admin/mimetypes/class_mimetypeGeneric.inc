@@ -129,7 +129,7 @@ class mimetype extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^.*,".preg_quote(get_ou("mimetypeRDN"), '/')."/", "", $this->dn);
+      $this->base= preg_replace ("/^.*,".preg_quote(get_ou("mimetypeRDN"), '/')."/i", "", $this->dn);
     }
 
     /* Get icon data */

@@ -128,7 +128,7 @@ class termgeneric extends plugin
       $ui= get_userinfo();
       $this->base= dn2base($ui->dn);
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("terminalRDN"), '/')."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("terminalRDN"), '/')."/i", "", $this->dn);
     }
 
     /* Create an array of all Syslog servers */
@@ -465,7 +465,7 @@ class termgeneric extends plugin
       }
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
-          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".preg_quote(get_ou('systemIncomingRDN'), '/')."/", $ldap->getDN())){
+          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".preg_quote(get_ou('systemIncomingRDN'), '/')."/i", $ldap->getDN())){
             continue;
           } else {
             if ($attrs['dn'] != $this->orig_dn){
@@ -510,7 +510,7 @@ class termgeneric extends plugin
       $ldap= $this->config->get_ldap_link();
 
       /* Strip relevant part from dn, keep trailing ',' */
-      $tmp= preg_replace("/^cn=[^,]+,".get_ou('terminalRDN')."/i", "", $this->dn);
+      $tmp= preg_replace("/^cn=[^,]+,".preg_quote(get_ou('terminalRDN'), '/')."/i", "", $this->dn);
       $tmp= preg_replace("/".$this->config->current['BASE']."$/i", "", $tmp);
 
       /* Walk from top to base and try to load default values for

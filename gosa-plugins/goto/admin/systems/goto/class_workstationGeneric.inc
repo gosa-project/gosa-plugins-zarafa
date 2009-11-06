@@ -473,7 +473,7 @@ class workgeneric extends plugin
       }
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
-          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".get_ou('systemIncomingRDN')."/", $ldap->getDN())){
+          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".preg_quote(get_ou('systemIncomingRDN'), '/')."/i", $ldap->getDN())){
             continue;
           } else {
             if ($attrs['dn'] != $this->orig_dn){
@@ -503,7 +503,7 @@ class workgeneric extends plugin
     }else{
       /* Warn the user, that this host is currently installing */
       if($this->currently_installing && !$this->currently_installing_warned && 
-          !preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$this->orig_dn)){
+          !preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/i",$this->orig_dn)){
       
         /* Force aborting without message dialog */
         $message[] = "";

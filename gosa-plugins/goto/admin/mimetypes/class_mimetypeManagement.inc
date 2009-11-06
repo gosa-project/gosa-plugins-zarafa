@@ -593,7 +593,7 @@ class mimetypeManagement extends plugin
     if(!$this->IsReleaseManagementActivated()){
       $use_base = $this->mime_base;
       if($SubSearch){
-        $use_base = preg_replace("/^".preg_quote(get_ou("mimeou"), '/')."/","",$use_base);
+        $use_base = preg_replace("/^".preg_quote(get_ou("mimeou"), '/')."/i","",$use_base);
       }
     }else{
       $use_base = $this->mime_release;
@@ -690,7 +690,7 @@ class mimetypeManagement extends plugin
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
 
       /* Get dialog */
-      $this->CopyPasteHandler->SetVar("base",preg_replace("/^".preg_quote(get_ou("mimetypeRDN"), '/')."/","",$this->mime_base));
+      $this->CopyPasteHandler->SetVar("base",preg_replace("/^".preg_quote(get_ou("mimetypeRDN"), '/')."/i","",$this->mime_base));
       $this->CopyPasteHandler->SetVar("parent",$this);
       $data = $this->CopyPasteHandler->execute();
 

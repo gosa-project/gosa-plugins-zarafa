@@ -777,7 +777,7 @@ class workstartup extends plugin
       $ldap= $this->config->get_ldap_link();
 
       /* Strip relevant part from dn, keep trailing ',' */
-      $tmp= preg_replace("/^cn=[^,]+,".get_ou('terminalRDN')."/i", "", $this->dn);
+      $tmp= preg_replace("/^cn=[^,]+,".preg_quote(get_ou('terminalRDN'), '/')."/i", "", $this->dn);
       $tmp= preg_replace("/".$this->config->current['BASE']."$/i", "", $tmp);
 
       /* Walk from top to base and try to load default values for
@@ -1327,7 +1327,7 @@ class workstartup extends plugin
    */
   function dn_to_release_name($dn)
   {
-    $relevant = preg_replace("/,".preg_quote(get_ou("faiBaseRDN"), '/').".*$/","",$dn);
+    $relevant = preg_replace("/,".preg_quote(get_ou("faiBaseRDN"), '/').".*$/i","",$dn);
     $parts    = array_reverse(split("\,",$relevant));
     $str ="";
     foreach($parts as $part){
