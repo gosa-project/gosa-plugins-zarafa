@@ -10,6 +10,7 @@
       <div class="contentboxb">
        <div style='background:white;padding:0px;padding:3px;'>
         <table><tr>
+          <td>{$RELOAD}&nbsp;</td><td>{$SEPARATOR}&nbsp;</td>
           <td><img src='images/rocket.png' alt='' class='center'></td>
           <td> {$ACTIONS}</td>
         </tr></table>
