@@ -8,7 +8,7 @@
 
 <div style="border-top:1px solid #AAAAAA"></div>
 
- {$SCOPE}
+ <LABEL for='RELEASE'>{t}Release{/t}</LABEL>&nbsp;{$RELEASE}<br>
 
  <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
   <tr>
@@ -18,7 +18,6 @@
     </label>
    </td>
    <td>
-    {$RELEASE}
     {$NAME}
    </td>
   </tr>

@@ -12,8 +12,8 @@
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
-      <label>Group</label>
-      <objectClass>posixGroup</objectClass>
+      <label>Application</label>
+      <objectClass>gosaApplication</objectClass>
       <category>application</category>
       <class>application</class>
       <image>plugins/applications/images/applications.png</image>
@@ -76,7 +76,7 @@
       <name>new</name>
       <type>entry</type>
       <image>plugins/applications/images/new.png</image>
-      <label>Group</label>
+      <label>Application</label>
      </action>
     </action>
 
@@ -96,14 +96,6 @@
       <type>entry</type>
       <image>images/lists/trash.png</image>
       <label>Remove</label>
-    </action>
-
-    <action>
-      <name>sendMessage</name>
-      <type>entry</type>
-      <depends>DaemonEvent_notify</depends>
-      <image>plugins/goto/images/notify.png</image>
-      <label>Send message</label>
     </action>
 
     <action>
