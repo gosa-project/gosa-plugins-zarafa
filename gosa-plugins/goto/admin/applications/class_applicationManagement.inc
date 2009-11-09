@@ -81,9 +81,9 @@ class applicationManagement extends management
 
   function renderList()
   {
+    $filter = $this->getFilter();
+    $headpage = $this->getHeadpage();
     if($this->IsReleaseManagementActivated()){    
-      $filter = $this->getFilter();
-      $headpage = $this->getHeadpage();
       $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
 
       if(isset($_POST['RELEASE'])){
