@@ -32,17 +32,13 @@ class apptabs extends tabs
     }else{
       $new_dn= "cn=".$baseobject->cn.",".get_ou('applicationRDN').$baseobject->base;
     }
-
-    /* Move group? */
+    
+    // Do we have to move the object?
     if ($this->dn != $new_dn){
-
-      /* Write entry on new 'dn' */
       if ($this->dn != "new"){
         $baseobject->move($this->dn, $new_dn);
         $this->by_object['application']= $baseobject;
       }
-
-      /* Happen to use the new one */
       $this->dn= $new_dn;
     }
 

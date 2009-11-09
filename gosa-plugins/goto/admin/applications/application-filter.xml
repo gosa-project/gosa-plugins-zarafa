@@ -16,7 +16,7 @@
       <attribute>cn</attribute>
       <attribute>description</attribute>
     </query>
-    <scope>auto</scope>
+    <scope>one</scope>
   </search>
 
   <element>
