@@ -51,13 +51,13 @@ class applicationManagement extends management
       $this->storagePoints= array(get_ou("applicationRDN"));
     }
 
-#   // Build filter
-#   if (session::global_is_set(get_class($this)."_filter")){
-#     $filter= session::global_get(get_class($this)."_filter");
-#   } else {
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path($filter_xml, true));
       $filter->setObjectStorage($this->storagePoints);
-#    }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -117,8 +117,6 @@ class applicationManagement extends management
 
   function IsReleaseManagementActivated()
   {
-    return(FALSE);  
-
     /* Check if we should enable the release selection */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
