@@ -351,21 +351,29 @@ class servdhcp extends goService
    
       $values = "<a href='?plug=".$_GET['plug']."&act=edit&id=".$id."'>".$values."</a>";
 	
-      if (count($tmp->sectionMap[$this->objectType($section)])){
-        if ($this->objectType($section) == "dhcpService"){
+      $objtype = $this->objectType($section);
+      $dhcpObject = new $objtype($this,$this->dhcpObjectCache[$section]);
+      if (count($tmp->sectionMap[$objtype])){
+        if ($objtype == "dhcpService"){
           $DhcpList->AddEntry(array(
               array("string" => $values),
+              array("string" => ''),
+              array("string" => ''),
               array("string" => str_replace("%s",$id,$editImgInsNoDel), "attach" => "style='text-align:right;'")
               ));
         } else {
           $DhcpList->AddEntry(array(
               array("string" => $values),
+              array("string" => $dhcpObject->options->get('routers')),
+              array("string" => ''),
               array("string" => str_replace("%s",$id,$editImgIns), "attach" => "style='text-align:right;'")
               ));
         }
       } else {
         $DhcpList->AddEntry(array(
               array("string" => $values),
+              array("string" => $dhcpObject->statements->get('fixed-address')),
+              array("string" =>  preg_replace('/^[^ ]+ /', '', $dhcpObject->dhcpHWAddress)),
               array("string" => str_replace("%s",$id,$editImg), "attach" => "style='text-align:right;'")
               ));
       }
