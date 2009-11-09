@@ -35,7 +35,7 @@ if ( $cleanup ){
   session::un_set('mimetypeManagement');
 }else{
 
-  /* Create applicationmanagement object on demand */
+  /* Create mimetypemanagement object on demand */
   if (!session::is_set('mimetypeManagement')){
     $mimetypeManagement= new mimetypeManagement ($config, $ui);
     session::set('mimetypeManagement',$mimetypeManagement);

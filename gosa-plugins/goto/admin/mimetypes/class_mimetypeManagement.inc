@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: class_applicationManagement.inc 14766 2009-11-05 14:30:35Z hickert $$
+ * ID: $$Id: class_mimetypeManagement.inc 14766 2009-11-05 14:30:35Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,18 @@
 
 class mimetypeManagement extends management
 {
-  var $plHeadline     = "Applications";
-  var $plDescription  = "Application management";
-  var $plIcon  = "plugins/goto/images/application.png";
+  var $plHeadline     = "Mime types";
+  var $plDescription  = "Manage mime types";
+  var $plIcon  = "plugins/goto/images/mimetypes.png";
 
-  var $app_release = ""; // The currently selected release while in release management mode!
+  var $mime_release = ""; // The currently selected release while in release management mode!
 
   // Tab definition 
-  protected $tabClass = "apptabs";
-  protected $tabType = "APPSTABS";
-  protected $aclCategory = "application";
-  protected $aclPlugin   = "application";
-  protected $objectName   = "application";
+  protected $tabClass = "mimetabs";
+  protected $tabType = "MIMETABS";
+  protected $aclCategory = "mimetypes";
+  protected $aclPlugin   = "mimetype";
+  protected $objectName   = "mimetype";
 
   function __construct($config,$ui)
   {
@@ -41,14 +41,14 @@ class mimetypeManagement extends management
     $this->ui = $ui;
 
     if($this->IsReleaseManagementActivated()){
-      $this->app_release = get_ou('applicationRDN').$this->config->current['BASE'];
+      $this->mime_release = get_ou('mimetypeRDN').$this->config->current['BASE'];
       $filter_xml = "mimetype-filter-release.xml";
       $list_xml = "mimetype-list-release.xml";
       $this->storagePoints= array();
     }else{
       $filter_xml = "mimetype-filter.xml";
       $list_xml = "mimetype-list.xml";
-      $this->storagePoints= array(get_ou("applicationRDN"));
+      $this->storagePoints= array(get_ou("mimetypeRDN"));
     }
 
 #   // Build filter
@@ -71,12 +71,7 @@ class mimetypeManagement extends management
     if($this->config->get_cfg_value("enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
     }
-    parent::__construct($config, $ui, "applications", $headpage);
-
-    $this->registerAction("edit_application","editEntry");
-    $this->registerAction("edit_environment","editEntry");
-    $this->registerAction("edit_appapplication","editEntry");
-    $this->registerAction("edit_mailapplication","editEntry");
+    parent::__construct($config, $ui, "mimetypes", $headpage);
   }
 
   function renderList()
@@ -87,9 +82,9 @@ class mimetypeManagement extends management
       $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
 
       if(isset($_POST['RELEASE'])){
-        $this->app_release = get_post('RELEASE');
+        $this->mime_release = get_post('RELEASE');
       }
-      $headpage->setBase($this->app_release);
+      $headpage->setBase($this->mime_release);
     }
 
     $headpage->update();
@@ -101,7 +96,7 @@ class mimetypeManagement extends management
   {
     $list = array();
     if(empty($base)){
-      $base = get_ou('applicationRDN').$this->config->current['BASE'];
+      $base = get_ou('mimetypeRDN').$this->config->current['BASE'];
       $list[$base] = "/";
     }
 
@@ -117,8 +112,7 @@ class mimetypeManagement extends management
 
   function IsReleaseManagementActivated()
   {
-    return(FALSE);  
-
+      return(false);
     /* Check if we should enable the release selection */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
