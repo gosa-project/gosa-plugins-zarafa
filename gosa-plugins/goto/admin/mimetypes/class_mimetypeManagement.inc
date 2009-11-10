@@ -112,7 +112,6 @@ class mimetypeManagement extends management
 
   function IsReleaseManagementActivated()
   {
-      return(false);
     /* Check if we should enable the release selection */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
