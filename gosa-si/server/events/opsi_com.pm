@@ -870,10 +870,12 @@ sub opsi_list_clients {
         params  => [ ],
         id  => 1,
     };
+
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
     if (not &check_opsi_res($res)){
         foreach my $host (@{$res->result}){
             my $item= "\n<item><name>".$host->{'hostId'}."</name>";
+            $item.= "<mac>".xml_quote($host->{'macAddress'})."</mac>";
             if (defined($host->{'description'})){
                 $item.= "<description>".xml_quote($host->{'description'})."</description>";
             }
@@ -884,25 +886,6 @@ sub opsi_list_clients {
                 $item.= "<lastSeen>".xml_quote($host->{'lastSeen'})."</lastSeen>";
             }
 
-            $callobj = {
-              method  => 'getIpAddress',
-              params  => [ $host->{'hostId'} ],
-              id  => 1,
-            };
-            my $sres= $main::opsi_client->call($main::opsi_url, $callobj);
-            if ( not &check_opsi_res($sres)){
-              $item.= "<ip>".xml_quote($sres->result)."</ip>";
-            }
-
-            $callobj = {
-              method  => 'getMacAddress',
-              params  => [ $host->{'hostId'} ],
-              id  => 1,
-            };
-            $sres= $main::opsi_client->call($main::opsi_url, $callobj);
-            if ( not &check_opsi_res($sres)){
-                $item.= "<mac>".xml_quote($sres->result)."</mac>";
-            }
             $item.= "</item>";
             $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
         }
