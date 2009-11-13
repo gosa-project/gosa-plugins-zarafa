@@ -359,12 +359,12 @@ sub add_ldap_entry {
 		if($result->code == 68) {   # entry already exists 
 			&main::daemon_log("A WARNING: $dn ".$result->error, 3);
 		} elsif($result->code == 0) {   # everything went fine
-			&main::daemon_log("add entry $dn to ldap", 1);
+			&main::daemon_log("A INFO: Add entry $dn to ldap", 5);
 		} else {  # if any other error occur
 			&main::daemon_log("A ERROR: $dn, ".$result->code.", ".$result->error, 1);
 		}
 	} else {
-		&main::daemon_log("A Not adding new Entry: LDAP disabled", 6);
+		&main::daemon_log("A INFO: Not adding new Entry: LDAP disabled", 5);
 	}
 	return;
 }
