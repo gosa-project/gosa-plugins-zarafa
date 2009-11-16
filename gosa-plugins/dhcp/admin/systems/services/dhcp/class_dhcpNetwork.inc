@@ -61,10 +61,14 @@ class dhcpNetwork extends plugin
         $this->options->set('domain-name-servers',preg_replace('/,$/', '', $tmp));
       }
     }
+
     if ($acl_writeable && isset($_POST['delete_dns']) && isset($_POST['dnsserver'])){
       $tmp= preg_replace("/(\s*,\s*)?".get_post('dnsserver')."/i", '', 
         $this->options->get('domain-name-servers'));
-      $tmp= preg_replace("/(\s*)?,(\s*)?$/", '', $tmp);
+      $tmp= trim(preg_replace("/(\s*)?,(\s*)?$/", '', $tmp),",");
+
+
+
       if ($tmp != ""){
         $this->options->set('domain-name-servers', $tmp);
       } else {
