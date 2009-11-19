@@ -104,18 +104,20 @@ class gosa_logview extends plugin
     $smarty->assign("mode4", "");
     $smarty->assign("mode5", "");
     $smarty->assign("mode6", "");
+    $smarty->assign("server_count",(isset($this->config->data['SERVERS']['LOGGING'])) && count($this->config->data['SERVERS']['LOGGING']));
 
     /* Assign select option content */
     foreach( array("server", "action", "time", "regex") as $type){
       $smarty->assign("$type", $this->$type);
     }
 
+
+
   /**** 
    * Check if defined servers 
    *  and mysql extension 
    ****/
-  if (!isset($this->config->data['SERVERS']['LOGGING']) || !count($this->config->data['SERVERS']['LOGGING'])){
-    msg_dialog::display(_("Warning"), msgPool::noserver("GOsa log"), WARNING_DIALOG);
+  if (!isset($this->config->data['SERVERS']['LidOGGING']) || !count($this->config->data['SERVERS']['LOGGING'])){
     $smarty->assign("servers", array());
     return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
   }

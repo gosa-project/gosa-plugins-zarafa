@@ -96,7 +96,11 @@
  </table>
 
 {else}
+  {if $server_count}
   <b>{t}Search returned no results...{/t}</b>
+  {else}
+  <b>{msgPool type=noserver p1='GOsa Log'}</b>
+  {/if}
 {/if}
 <input type='hidden' name='gosa_log_contents_posted' value='1'>
 <!-- Place cursor -->

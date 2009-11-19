@@ -68,7 +68,7 @@ class logview extends plugin
     $smarty->assign("mode1", "");
     $smarty->assign("mode2", "");
     $smarty->assign("mode3", "");
-    $smarty->assign("server_count", isset($this->config->data['SERVERS']['LOG']));
+    $smarty->assign("server_count",(isset($this->config->data['SERVERS']['LOG'])) && count($this->config->data['SERVERS']['LOG']));
 
     /* Assign select option content */
     foreach( array("host", "log_level", "time", "regex") as $type){
