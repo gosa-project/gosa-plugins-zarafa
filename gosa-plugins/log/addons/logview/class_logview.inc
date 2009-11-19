@@ -68,6 +68,7 @@ class logview extends plugin
     $smarty->assign("mode1", "");
     $smarty->assign("mode2", "");
     $smarty->assign("mode3", "");
+    $smarty->assign("server_count", isset($this->config->data['SERVERS']['LOG']));
 
     /* Assign select option content */
     foreach( array("host", "log_level", "time", "regex") as $type){
@@ -76,7 +77,6 @@ class logview extends plugin
 
     /* Test connection to log database */
     if (!isset($this->config->data['SERVERS']['LOG'])){
-      msg_dialog::display(_("Warning"), msgPool::noserver("syslog"), WARNING_DIALOG);
       return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
 
     }elseif(!is_callable("mysql_connect")){

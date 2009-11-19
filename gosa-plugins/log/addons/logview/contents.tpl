@@ -94,7 +94,11 @@
  </table>
 
 {else}
+  {if $server_count}
   <b>{t}Search returned no results...{/t}</b>
+  {else}
+  <b>{msgPool type=noserver p1=syslog}</b>
+  {/if}
 {/if}
 
 <!-- Place cursor -->
