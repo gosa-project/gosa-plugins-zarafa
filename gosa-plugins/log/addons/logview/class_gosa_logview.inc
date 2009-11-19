@@ -117,7 +117,7 @@ class gosa_logview extends plugin
    * Check if defined servers 
    *  and mysql extension 
    ****/
-  if (!isset($this->config->data['SERVERS']['LidOGGING']) || !count($this->config->data['SERVERS']['LOGGING'])){
+  if (!isset($this->config->data['SERVERS']['LOGGING']) || !count($this->config->data['SERVERS']['LOGGING'])){
     $smarty->assign("servers", array());
     return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
   }
