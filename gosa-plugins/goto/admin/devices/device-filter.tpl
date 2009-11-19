@@ -8,6 +8,8 @@
 
 <div style="border-top:1px solid #AAAAAA"></div>
 
+ {$SCOPE}
+
  <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
   <tr>
    <td>

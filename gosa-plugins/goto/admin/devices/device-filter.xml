@@ -16,16 +16,8 @@
       <attribute>cn</attribute>
       <attribute>description</attribute>
     </query>
-    <scope>one</scope>
+    <scope>auto</scope>
   </search>
-
-  <element>
-    <tag>RELEASE</tag>
-    <type>combobox</type>
-    <value>Loading.</value>
-    <value>Loading..</value>
-    <value>Loading...</value>
-  </element>
 
   <element>
     <type>textfield</type>
@@ -34,11 +26,11 @@
     <maxlength>60</maxlength>
     <default></default>
     <unset></unset>
-    <set>(|(cn=*$*)(description=*$*))</set>
-    <alphabet>true</alphabet>
+    <set>(cn=*$*)</set>
+    <alphabet>false</alphabet>
     <autocomplete>
       <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gotoDevice)(|(cn=*$NAME*)(description=*$NAME*)))</filter>
+      <filter>(&amp;(objectClass=gotoDevice)(cn=*$NAME*))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
