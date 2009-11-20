@@ -151,9 +151,19 @@ class askClassName extends plugin
     }
     else {
       /* Check if the given ClassName is already used in another administrative unit */
+      switch($this->objectClass) {
+        case "FAIpartitionTable":  $rdn = get_ou('faiPartitionRDN'); break;
+        case "FAIpackageList"   :  $rdn = get_ou('faiPackageRDN'); break;
+        case "FAIscript"        :  $rdn = get_ou('faiScriptRDN'); break;
+        case "FAIvariable"      :  $rdn = get_ou('faiVariableRDN'); break;
+        case "FAIhook"          :  $rdn = get_ou('faiHookRDN'); break;
+        case "FAIprofile"       :  $rdn = get_ou('faiProfileRDN'); break;
+        case "FAItemplate"      :  $rdn = get_ou('faiTemplateRDN'); break;
+      }
       $ldap= $this->config->get_ldap_link();
-      $filter = "(cn=".$this->ClassName.")";
-      $ldap->cd($this->parent->fai_release);
+      $filter = "(&(cn=".$this->ClassName.")(!(FAIstate=|removed)))";
+      $base = $rdn . $this->parent->fai_release;
+      $ldap->cd($base);
       $ldap->search($filter, array("dn","gosaUnitTag"));
 
       if ($ldap->count() > 0) {
