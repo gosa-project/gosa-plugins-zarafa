@@ -14,6 +14,7 @@ my @events = (
     "opsi_get_client_hardware",
     "opsi_get_client_software",
     "opsi_get_product_properties",
+    "opsi_get_full_product_host_information",
     "opsi_set_product_properties",
     "opsi_list_clients",
     "opsi_del_client",
@@ -21,25 +22,25 @@ my @events = (
     "opsi_modify_client",
     "opsi_add_product_to_client",
     "opsi_del_product_from_client",
-	"opsi_createLicensePool",
-	"opsi_deleteLicensePool",
-	"opsi_createLicense",
-	"opsi_assignSoftwareLicenseToHost",
-	"opsi_unassignSoftwareLicenseFromHost",
-	"opsi_unassignAllSoftwareLicensesFromHost",
-	"opsi_getSoftwareLicense_hash",
-	"opsi_getLicensePool_hash",
-	"opsi_getSoftwareLicenseUsages",
-	"opsi_getSoftwareLicenseUsagesForProductId",
-	"opsi_getLicensePools_listOfHashes",
-	"opsi_getLicenseInformationForProduct",
-	"opsi_getPool",
-	"opsi_getAllSoftwareLicenses",
-	"opsi_removeLicense",
-	"opsi_getReservedLicenses",
-	"opsi_boundHostToLicense",
-	"opsi_unboundHostFromLicense",
-	"opsi_test",
+    "opsi_createLicensePool",
+    "opsi_deleteLicensePool",
+    "opsi_createLicense",
+    "opsi_assignSoftwareLicenseToHost",
+    "opsi_unassignSoftwareLicenseFromHost",
+    "opsi_unassignAllSoftwareLicensesFromHost",
+    "opsi_getSoftwareLicense_hash",
+    "opsi_getLicensePool_hash",
+    "opsi_getSoftwareLicenseUsages",
+    "opsi_getSoftwareLicenseUsagesForProductId",
+    "opsi_getLicensePools_listOfHashes",
+    "opsi_getLicenseInformationForProduct",
+    "opsi_getPool",
+    "opsi_getAllSoftwareLicenses",
+    "opsi_removeLicense",
+    "opsi_getReservedLicenses",
+    "opsi_boundHostToLicense",
+    "opsi_unboundHostFromLicense",
+    "opsi_test",
    );
 @EXPORT = @events;
 
@@ -939,10 +940,11 @@ sub opsi_get_local_products {
         &add_content2xml_hash($out_hash, "hostId", $hostId);
     }
 
+    my $callobj;
+
     # Move to XML string
     my $xml_msg= &create_xml_string($out_hash);
 
-    my $callobj;
     # Check if we need to get host or global information
     if (defined $hostId){
       $callobj = {
@@ -963,8 +965,8 @@ sub opsi_get_local_products {
 
       # For hosts, only return the products that are or get installed
       $callobj = {
-          method  => 'getLocalBootProductInformation_list',
-          params  => [ ],
+          method  => 'getProductInformation_list',
+          params  => [ undef, 'localboot' ],
           id  => 1,
       };
 
@@ -2557,6 +2559,34 @@ sub _getProductStates_hash {
 	if ($res_error){ return ( (caller(0))[3]." : ".$res_error_str, 1 ); }
 
 	return ($res->result, 0);
+}
+
+
+################################   
+# @brief Get all host information for a specific host.
+# @param msg - STRING - xml message with hostId tag
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
+# @return out_msg - STRING - feedback to GOsa in success and error case
+sub opsi_get_full_product_host_information {
+    my $startTime = Time::HiRes::time;
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId;
+    my $xml_msg;
+
+#      $callobj = {
+#          method  => 'getFullProductHostInformation_list',
+#          params  => [ $hostId ],
+#          id  => 1,
+#      };
+#      my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+#      print STDERR "===================================================================\n";
+#      print STDERR Dumper $res;
+#      print STDERR "===================================================================\n";
 }
 
 1;
