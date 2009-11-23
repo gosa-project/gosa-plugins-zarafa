@@ -6,7 +6,6 @@
  * ID: $$Id: functions.inc 13100 2008-12-01 14:07:48Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -20,11 +19,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*! \file
+ * Common functions and named definitions. */
+
 /* Configuration file location */
 
-/* Allow setting the config patj in the apache configuration
-   e.g.  SetEnv CONFIG_FILE /etc/path
- */
 if(!isset($_SERVER['CONFIG_DIR'])){
   define ("CONFIG_DIR", "/etc/gosa");
 }else{
@@ -78,16 +77,16 @@ require_once ("functions_debug.inc");
 require_once ("accept-to-gettext.inc");
 
 /* Define constants for debugging */
-define ("DEBUG_TRACE",   1);
-define ("DEBUG_LDAP",    2);
-define ("DEBUG_MYSQL",   4);
-define ("DEBUG_SHELL",   8);
-define ("DEBUG_POST",   16);
-define ("DEBUG_SESSION",32);
-define ("DEBUG_CONFIG", 64);
-define ("DEBUG_ACL",    128);
-define ("DEBUG_SI",     256);
-define ("DEBUG_MAIL",   512); // mailAccounts, imap, sieve etc.
+define ("DEBUG_TRACE",   1); /*! Debug level for tracing of common actions (save, check, etc.) */
+define ("DEBUG_LDAP",    2); /*! Debug level for LDAP queries */
+define ("DEBUG_MYSQL",   4); /*! Debug level for mysql operations */
+define ("DEBUG_SHELL",   8); /*! Debug level for shell commands */
+define ("DEBUG_POST",   16); /*! Debug level for POST content */
+define ("DEBUG_SESSION",32); /*! Debug level for SESSION content */
+define ("DEBUG_CONFIG", 64); /*! Debug level for CONFIG information */
+define ("DEBUG_ACL",    128); /*! Debug level for ACL infos */
+define ("DEBUG_SI",     256); /*! Debug level for communication with gosa-si */
+define ("DEBUG_MAIL",   512); /*! Debug level for all about mail (mailAccounts, imap, sieve etc.) */
 
 /* Rewrite german 'umlauts' and spanish 'accents'
    to get better results */
@@ -131,8 +130,8 @@ function __autoload($class_name) {
 
 
 /*! \brief Checks if a class is available. 
- *  @param  name String  The class name.
- *  @return boolean      True if class is available, else false.
+ *  \param  string 'name' The subject of the test
+ *  \return boolean True if class is available, else false.
  */
 function class_available($name)
 {
@@ -141,7 +140,13 @@ function class_available($name)
 }
 
 
-/* Check if plugin is avaliable */
+/*! \brief Check if plugin is available
+ *
+ * Checks if a given plugin is available and readable.
+ *
+ * \param string 'plugin' the subject of the check
+ * \return boolean True if plugin is available, else FALSE.
+ */
 function plugin_available($plugin)
 {
 	global $class_mapping, $BASE_DIR;
@@ -154,14 +159,39 @@ function plugin_available($plugin)
 }
 
 
-/* Create seed with microseconds */
+/*! \brief Create seed with microseconds 
+ *
+ * Example:
+ * \code
+ * srand(make_seed());
+ * $random = rand();
+ * \endcode
+ *
+ * \return float a floating point number which can be used to feed srand() with it
+ * */
 function make_seed() {
   list($usec, $sec) = explode(' ', microtime());
   return (float) $sec + ((float) $usec * 100000);
 }
 
 
-/* Debug level action */
+/*! \brief Debug level action 
+ *
+ * Print a DEBUG level if specified debug level of the level matches the 
+ * the configured debug level.
+ *
+ * \param int 'level' The log level of the message (should use the constants,
+ * defined in functions.in (DEBUG_TRACE, DEBUG_LDAP, etc.)
+ * \param int 'line' Define the line of the logged action (using __LINE__ is common)
+ * \param string 'function' Define the function where the logged action happened in
+ * (using __FUNCTION__ is common)
+ * \param string 'file' Define the file where the logged action happend in
+ * (using __FILE__ is common)
+ * \param mixed 'data' The data to log. Can be a message or an array, which is printed
+ * with print_a
+ * \param string 'info' Optional: Additional information
+ *
+ * */
 function DEBUG($level, $line, $function, $file, $data, $info="")
 {
   if (session::global_get('DEBUGLEVEL') & $level){
@@ -181,7 +211,18 @@ function DEBUG($level, $line, $function, $file, $data, $info="")
   }
 }
 
-
+/*! \brief Determine which language to show to the user
+ *
+ * Determines which language should be used to present gosa content
+ * to the user. It does so by looking at several possibilites and returning
+ * the first setting that can be found.
+ *
+ * -# Language configured by the user
+ * -# Global configured language
+ * -# Language as returned by al2gt (as configured in the browser)
+ *
+ * \return string gettext locale string
+ */
 function get_browser_language()
 {
   /* Try to use users primary language */
@@ -216,7 +257,15 @@ function get_browser_language()
 }
 
 
-/* Rewrite ui object to another dn */
+/*! \brief Rewrite ui object to another dn 
+ *
+ * Usually used when a user is renamed. In this case the dn
+ * in the user object must be updated in order to point
+ * to the correct DN.
+ *
+ * \param string 'dn' the old DN
+ * \param string 'newdn' the new DN
+ * */
 function change_ui_dn($dn, $newdn)
 {
   $ui= session::global_get('ui');
@@ -227,7 +276,7 @@ function change_ui_dn($dn, $newdn)
 }
 
 
-/* Return theme path for specified file */
+/*! \brief Return theme path for specified file */
 function get_template_path($filename= '', $plugin= FALSE, $path= "")
 {
   global $config, $BASE_DIR;
@@ -279,20 +328,37 @@ function get_template_path($filename= '', $plugin= FALSE, $path= "")
   }
 }
 
-
+/*! \brief Remove multiple entries from an array
+ *
+ * Removes every element that is in $needles from the
+ * array given as $haystack
+ *
+ * \param array 'needles' array of the entries to remove
+ * \param array 'haystack' original array to remove the entries from
+ */
 function array_remove_entries($needles, $haystack)
 {
   return (array_merge(array_diff($haystack, $needles)));
 }
 
-
+/*! \brief Remove multiple entries from an array (case-insensitive)
+ *
+ * Same as array_remove_entries(), but case-insensitive. */
 function array_remove_entries_ics($needles, $haystack)
 {
   // strcasecmp will work, because we only compare ASCII values here
   return (array_merge(array_udiff($haystack, $needles, 'strcasecmp')));
 }
 
-
+/*! Merge to array but remove duplicate entries
+ *
+ * Merges two arrays and removes duplicate entries. Triggers
+ * an error if first or second parametre is not an array.
+ *
+ * \param array 'ar1' first array
+ * \param array 'ar2' second array-
+ * \return array
+ */
 function gosa_array_merge($ar1,$ar2)
 {
   if(!is_array($ar1) || !is_array($ar2)){
@@ -302,7 +368,12 @@ function gosa_array_merge($ar1,$ar2)
   }
 }
 
-
+/*! \brief Generate a system log info
+ *
+ * Creates a syslog message, containing user information.
+ *
+ * \param string 'message' the message to log
+ * */
 function gosa_log ($message)
 {
   global $ui;
@@ -323,6 +394,17 @@ function gosa_log ($message)
 }
 
 
+/*! \brief Initialize a LDAP connection
+ *
+ * Initializes a LDAP connection. 
+ *
+ * \param string 'server'
+ * \param string 'base'
+ * \param string 'binddn' Default: empty
+ * \param string 'pass' Default: empty
+ *
+ * \return LDAP object
+ */
 function ldap_init ($server, $base, $binddn='', $pass='')
 {
   global $config;
@@ -344,7 +426,7 @@ function ldap_init ($server, $base, $binddn='', $pass='')
   return $ldap;
 }
 
-
+/* \brief Process htaccess authentication */
 function process_htaccess ($username, $kerberos= FALSE)
 {
   global $config;
@@ -378,7 +460,6 @@ function process_htaccess ($username, $kerberos= FALSE)
   /* Nothing found? Return emtpy array */
   return array("username" => "", "server" => "");
 }
-
 
 function ldap_login_user_htaccess ($username)
 {
@@ -416,7 +497,16 @@ function ldap_login_user_htaccess ($username)
   return ($ui);
 }
 
-
+/*! \brief Verify user login against LDAP directory
+ *
+ * Checks if the specified username is in the LDAP and verifies if the
+ * password is correct by binding to the LDAP with the given credentials.
+ *
+ * \param string 'username'
+ * \param string 'password'
+ * \return
+ *  - TRUE on SUCCESS, NULL or FALSE on error
+ */
 function ldap_login_user ($username, $password)
 {
   global $config;
@@ -501,7 +591,17 @@ function ldap_login_user ($username, $password)
   return ($ui);
 }
 
-
+/*! \brief Test if account is about to expire
+ *
+ * \param string 'userdn' the DN of the user
+ * \param string 'username' the username
+ * \return int Can be one of the following values:
+ *  - 1 the account is locked
+ *  - 2 warn the user that the password is about to expire and he should change
+ *  his password
+ *  - 3 force the user to change his password
+ *  - 4 user should not be able to change his password
+ * */
 function ldap_expired_account($config, $userdn, $username)
 {
     $ldap= $config->get_ldap_link();
@@ -558,7 +658,7 @@ function ldap_expired_account($config, $userdn, $username)
       }
       
       if(isset($attrs['shadowWarning'][0])){
-        $sWarning= $attrs['shadowWarning'][0];
+        $sWarning= $attrs['shadowWarning'][-1];
       } else {
         $sWarning = 0;
       }
@@ -595,7 +695,14 @@ function ldap_expired_account($config, $userdn, $username)
    return($expired);
 }
 
-
+/*! \brief Add a lock for object(s)
+ *
+ * Adds a lock by the specified user for one ore multiple objects.
+ * If the lock for that object already exists, an error is triggered.
+ *
+ * \param mixed 'object' object or array of objects to lock
+ * \param string 'user' the user who shall own the lock
+ * */
 function add_lock($object, $user)
 {
   global $config;
@@ -655,7 +762,12 @@ function add_lock($object, $user)
   }
 }
 
-
+/*! \brief Remove a lock for object(s)
+ *
+ * Does the opposite of add_lock().
+ *
+ * \param mixed 'object' object or array of objects for which a lock shall be removed
+ * */
 function del_lock ($object)
 {
   global $config;
@@ -698,7 +810,13 @@ function del_lock ($object)
   }
 }
 
-
+/*! \brief Remove all locks owned by a specific userdn
+ *
+ * For a given userdn remove all existing locks. This is usually
+ * called on logout.
+ *
+ * \param string 'userdn' the subject whose locks shall be deleted
+ */
 function del_user_locks($userdn)
 {
   global $config;
@@ -715,6 +833,14 @@ function del_user_locks($userdn)
 }
 
 
+/*! \brief Get a lock for a specific object
+ *
+ * Searches for a lock on a given object.
+ *
+ * \param string 'object' subject whose locks are to be searched
+ * \return string Returns the user who owns the lock or "" if no lock is found
+ * or an error occured. 
+ */
 function get_lock ($object)
 {
   global $config;
@@ -758,7 +884,14 @@ function get_lock ($object)
   return ($user);
 }
 
-
+/*! Get locks for multiple objects
+ *
+ * Similar as get_lock(), but for multiple objects.
+ *
+ * \param array 'objects' Array of Objects for which a lock shall be searched
+ * \return A numbered array containing all found locks as an array with key 'dn'
+ * and key 'user' or "" if an error occured.
+ */
 function get_multiple_locks($objects)
 {
   global $config;
@@ -793,15 +926,16 @@ function get_multiple_locks($objects)
 }
 
 
-/* \!brief  This function searches the ldap database.
-            It search in  $sub_bases,*,$base  for all objects matching the $filter.
-
-    @param $filter    String The ldap search filter
-    @param $category  String The ACL category the result objects belongs 
-    @param $sub_bases  String The sub base we want to search for e.g. "ou=apps"
-    @param $base      String The ldap base from which we start the search
-    @param $attributes Array The attributes we search for.
-    @param $flags     Long   A set of Flags
+/*! \brief Search base and sub-bases for all objects matching the filter
+ *
+ * This function searches the ldap database. It searches in $sub_bases,*,$base
+ * for all objects matching the $filter.
+ *  \param string 'filter'    The ldap search filter
+ *  \param string 'category'  The ACL category the result objects belongs 
+ *  \param string 'sub_bases' The sub base we want to search for e.g. "ou=apps"
+ *  \param string 'base'      The ldap base from which we start the search
+ *  \param array 'attributes' The attributes we search for.
+ *  \param long 'flags'     A set of Flags
  */
 function get_sub_list($filter, $category,$sub_deps, $base= "", $attributes= array(), $flags= GL_SUBSEARCH)
 {
@@ -953,7 +1087,10 @@ function get_sub_list($filter, $category,$sub_deps, $base= "", $attributes= arra
   return($result);
 }
 
-
+/*! \brief Search base for all objects matching the filter
+ *
+ * Just like get_sub_list(), but without sub base search.
+ * */
 function get_list($filter, $category, $base= "", $attributes= array(), $flags= GL_SUBSEARCH)
 {
   global $config, $ui;
@@ -1021,7 +1158,7 @@ function get_list($filter, $category, $base= "", $attributes= array(), $flags= G
   return ($result);
 }
 
-
+/*! \brief Check if sizelimit is exceeded */
 function check_sizelimit()
 {
   /* Ignore dialog? */
@@ -1041,7 +1178,7 @@ function check_sizelimit()
   return ("");
 }
 
-
+/*! \brief Print a sizelimit warning */
 function print_sizelimit_warning()
 {
   if (session::global_is_set('size_limit') && session::global_get('size_limit') >= 10000000 ||
@@ -1111,6 +1248,7 @@ function getMenuCache()
 }
 
 
+/*! \brief Return the current userinfo object */
 function &get_userinfo()
 {
   global $ui;
@@ -1118,7 +1256,7 @@ function &get_userinfo()
   return $ui;
 }
 
-
+/*! \brief Get smarty object */
 function &get_smarty()
 {
   global $smarty;
@@ -1126,7 +1264,21 @@ function &get_smarty()
   return $smarty;
 }
 
-
+/*! \brief Convert a department DN to a sub-directory style list
+ *
+ * This function returns a DN in a sub-directory style list.
+ * Examples:
+ * - ou=1.1.1,ou=limux becomes limux/1.1.1
+ * - cn=bla,ou=foo,dc=local becomes foo/bla or foo/bla/local, depending
+ * on the value for $base.
+ *
+ * If the specified DN contains a basedn which either matches
+ * the specified base or $config->current['BASE'] it is stripped.
+ *
+ * \param string 'dn' the subject for the conversion
+ * \param string 'base' the base dn, default: $this->config->current['BASE']
+ * \return a string in the form as described above
+ */
 function convert_department_dn($dn, $base = NULL)
 {
   global $config;
@@ -1151,13 +1303,40 @@ function convert_department_dn($dn, $base = NULL)
 }
 
 
-/* Strip off the last sub department part of a '/level1/level2/.../'
- * style value. It removes the trailing '/', too. */
+/*! \brief Return the last sub department part of a '/level1/level2/.../' style value.
+ *
+ * Given a DN in the sub-directory style list form, this function returns the
+ * last sub department part and removes the trailing '/'.
+ *
+ * Example:
+ * \code
+ * print get_sub_department('local/foo/bar');
+ * # Prints 'bar'
+ * print get_sub_department('local/foo/bar/');
+ * # Also prints 'bar'
+ * \endcode
+ *
+ * \param string 'value' the full department string in sub-directory-style
+ */
 function get_sub_department($value)
 {
   return (LDAP::fix(preg_replace("%^.*/([^/]+)/?$%", "\\1", $value)));
 }
 
+
+/*! \brief Get the OU of a certain RDN
+ *
+ * Given a certain RDN name (ogroupRDN, applicationRDN etc.) this
+ * function returns either a configured OU or the default
+ * for the given RDN.
+ *
+ * Example:
+ * \code
+ * # Determine LDAP base where systems are stored
+ * $base = get_ou('systemRDN') . $this->config->current['BASE'];
+ * $ldap->cd($base);
+ * \endcode
+ * */
 
 function get_ou($name)
 {
@@ -1225,25 +1404,42 @@ function get_ou($name)
   }
 }
 
-
+/*! \brief Get the OU for users 
+ *
+ * Frontend for get_ou() with userRDN
+ * */
 function get_people_ou()
 {
   return (get_ou("userRDN"));
 }
 
-
+/*! \brief Get the OU for groups
+ *
+ * Frontend for get_ou() with groupRDN
+ */
 function get_groups_ou()
 {
   return (get_ou("groupRDN"));
 }
 
-
+/*! \brief Get the OU for winstations
+ *
+ * Frontend for get_ou() with sambaMachineAccountRDN
+ */
 function get_winstations_ou()
 {
   return (get_ou("sambaMachineAccountRDN"));
 }
 
-
+/*! \brief Return a base from a given user DN
+ *
+ * \code
+ * get_base_from_people('cn=Max Muster,dc=local')
+ * # Result is 'dc=local'
+ * \endcode
+ *
+ * \param string 'dn' a DN
+ * */
 function get_base_from_people($dn)
 {
   global $config;
@@ -1259,7 +1455,14 @@ function get_base_from_people($dn)
   return ($base);
 }
 
-
+/*! \brief Check if strict naming rules are configured
+ *
+ * Return TRUE or FALSE depending on weither strictNamingRules
+ * are configured or not.
+ *
+ * \return Returns TRUE if strictNamingRules is set to true or if the
+ * config object is not available, otherwise FALSE.
+ */
 function strict_uid_mode()
 {
   global $config;
@@ -1282,7 +1485,27 @@ function get_uid_regexp()
   }
 }
 
-
+/*! \brief Generate a lock message
+ *
+ * This message shows a warning to the user, that a certain object is locked
+ * and presents some choices how the user can proceed. By default this
+ * is 'Cancel' or 'Edit anyway', but depending on the function call
+ * its possible to allow readonly access, too.
+ *
+ * Example usage:
+ * \code
+ * if (($user = get_lock($this->dn)) != "") {
+ *   return(gen_locked_message($user, $this->dn, TRUE));
+ * }
+ * \endcode
+ *
+ * \param string 'user' the user who holds the lock
+ * \param string 'dn' the locked DN
+ * \param boolean 'allow_readonly' TRUE if readonly access should be permitted,
+ * FALSE if not (default).
+ *
+ *
+ */
 function gen_locked_message($user, $dn, $allow_readonly = FALSE)
 {
   global $plug, $config;
@@ -1342,7 +1565,17 @@ function gen_locked_message($user, $dn, $allow_readonly = FALSE)
   return ($smarty->fetch (get_template_path('islocked.tpl')));
 }
 
-
+/*! \brief Return a string/HTML representation of an array
+ *
+ * This returns a string representation of a given value.
+ * It can be used to dump arrays, where every value is printed
+ * on its own line. The output is targetted at HTML output, it uses
+ * '<br>' for line breaks. If the value is already a string its
+ * returned unchanged.
+ *
+ * \param mixed 'value' Whatever needs to be printed.
+ * \return string
+ */
 function to_string ($value)
 {
   /* If this is an array, generate a text blob */
@@ -1357,7 +1590,19 @@ function to_string ($value)
   }
 }
 
-
+/*! \brief Return a list of all printers in the current base
+ *
+ * Returns an array with the CNs of all printers (objects with
+ * objectClass gotoPrinter) in the current base.
+ * ($config->current['BASE']).
+ *
+ * Example:
+ * \code
+ * $this->printerList = get_printer_list();
+ * \endcode
+ *
+ * \return array an array with the CNs of the printers as key and value. 
+ * */
 function get_printer_list()
 {
   global $config;
@@ -1369,7 +1614,14 @@ function get_printer_list()
   return $res;
 }
 
-
+/*! \brief Function to rewrite some problematic characters
+ *
+ * This function takes a string and replaces all possibly characters in it
+ * with less problematic characters, as defined in $REWRITE.
+ *
+ * \param string 's' the string to rewrite
+ * \return string 's' the result of the rewrite
+ * */
 function rewrite($s)
 {
   global $REWRITE;
@@ -1382,6 +1634,10 @@ function rewrite($s)
 }
 
 
+/*! \brief Return the base of a given DN
+ *
+ * \param string 'dn' a DN
+ * */
 function dn2base($dn)
 {
   global $config;
@@ -1398,7 +1654,14 @@ function dn2base($dn)
 }
 
 
-
+/*! \brief Check if a given command exists and is executable
+ *
+ * Test if a given cmdline contains an executable command. Strips
+ * arguments from the given cmdline.
+ *
+ * \param string 'cmdline' the cmdline to check
+ * \return TRUE if command exists and is executable, otherwise FALSE.
+ * */
 function check_command($cmdline)
 {
   $cmd= preg_replace("/ .*$/", "", $cmdline);
@@ -1416,7 +1679,12 @@ function check_command($cmdline)
   return (TRUE);
 }
 
-
+/*! \brief print plugin HTML header
+ *
+ * \param string 'image' the path of the image to be used next to the headline
+ * \param string 'image' the headline
+ * \param string 'info' additional information to print
+ */
 function print_header($image, $headline, $info= "")
 {
   $display= "<div class=\"plugtop\">\n";
@@ -1543,6 +1811,7 @@ function range_selector($dcnt,$start,$range=25,$post_var=false)
 }
 
 
+/*! \brief Generate HTML for the 'Apply filter' button */
 function apply_filter()
 {
   $apply= "";
@@ -1554,7 +1823,7 @@ function apply_filter()
   return ($apply);
 }
 
-
+/*! \brief Generate HTML for the 'Back' button */
 function back_to_main()
 {
   $string= '<br><p class="plugbottom"><input type=submit name="password_back" value="'.
@@ -1590,6 +1859,25 @@ function normalize_netmask($netmask)
 }
 
 
+/*! \brief Return the number of set bits in the netmask
+ *
+ * For a given subnetmask (for example 255.255.255.0) this returns
+ * the number of set bits.
+ *
+ * Example:
+ * \code
+ * $bits = netmask_to_bits('255.255.255.0') # Returns 24
+ * $bits = netmask_to_bits('255.255.254.0') # Returns 23
+ * \endcode
+ *
+ * Be aware of the fact that the function does not check
+ * if the given subnet mask is actually valid. For example:
+ * Bad examples:
+ * \code
+ * $bits = netmask_to_bits('255.0.0.255') # Returns 16
+ * $bits = netmask_to_bits('255.255.0.255') # Returns 24
+ * \endcode
+ */
 function netmask_to_bits($netmask)
 {
   list($nm0, $nm1, $nm2, $nm3)= split('\.', $netmask);
@@ -1757,9 +2045,17 @@ function gen_uids($rule, $attributes)
   return(array_unique($ret));
 }
 
-
-/* Sadly values like memory_limit are perpended by K, M, G, etc.
-   Need to convert... */
+/*! \brief Convert various data sizes to bytes
+ *
+ * Given a certain value in the format n(g|m|k), where n
+ * is a value and (g|m|k) stands for Gigabyte, Megabyte and Kilobyte
+ * this function returns the byte value.
+ *
+ * \param string 'value' a value in the above specified format
+ * \return a byte value or the original value if specified string is simply
+ * a numeric value
+ *
+ */
 function to_byte($value) {
   $value= strtolower(trim($value));
 
@@ -1783,13 +2079,20 @@ function to_byte($value) {
   }
 }
 
-
+/*! \brief Check if a value exists in an array (case-insensitive)
+ * 
+ * This is just as http://php.net/in_array except that the comparison
+ * is case-insensitive.
+ *
+ * \param string 'value' needle
+ * \param array 'items' haystack
+ */ 
 function in_array_ics($value, $items)
 {
 	return preg_grep('/^'.preg_quote($value, '/').'$/i', $items);
 }
 
-
+/*! \brief Generate a clickable alphabet */
 function generate_alphabet($count= 10)
 {
   $characters= _("*ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
@@ -1820,13 +2123,12 @@ function generate_alphabet($count= 10)
   return ($alphabet);
 }
 
-
 function validate($string)
 {
   return (strip_tags(str_replace('\0', '', $string)));
 }
 
-
+/*! \brief Get the current gosa version */
 function get_gosa_version()
 {
   global $svn_revision, $svn_path;
@@ -1843,7 +2145,15 @@ function get_gosa_version()
   }
 }
 
-
+/*! \brief Recursively delete a path in the file system
+ *
+ * Will delete the given path and all its files recursively.
+ * Can also follow links if told so.
+ *
+ * \param string 'path'
+ * \param boolean 'followLinks' TRUE to follow links, FALSE (default)
+ * for not following links
+ */
 function rmdirRecursive($path, $followLinks=false) {
   $dir= opendir($path);
   while($entry= readdir($dir)) {
@@ -1857,7 +2167,14 @@ function rmdirRecursive($path, $followLinks=false) {
   return rmdir($path);
 }
 
-
+/*! \brief Get directory content information
+ *
+ * Returns the content of a directory as an array in an
+ * ascended sorted manner.
+ *
+ * \param string 'path'
+ * \param boolean weither to sort the content descending.
+ */
 function scan_directory($path,$sort_desc=false)
 {
   $ret = false;
@@ -1891,7 +2208,7 @@ function scan_directory($path,$sort_desc=false)
   return($ret);
 }
 
-
+/*! \brief Clean the smarty compile dir */
 function clean_smarty_compile_dir($directory)
 {
   global $svn_revision;
@@ -1978,7 +2295,17 @@ function compare_revision($revision_file, $revision)
   return $result;
 }
 
-
+/*! \brief Return HTML for a progressbar
+ *
+ * \code
+ * $smarty->assign("installprogress", progressbar($current_progress_in_percent),100,15,true); 
+ * \endcode
+ *
+ * \param int 'percentage' Value to display
+ * \param int 'width' width of the resulting output
+ * \param int 'height' height of the resulting output
+ * \param boolean 'showvalue' weither to show the percentage in the progressbar or not
+ * */
 function progressbar($percentage,$width=100,$height=15,$showvalue=false)
 {
   $str = ""; // Our return value will be saved in this var
@@ -2017,7 +2344,20 @@ function progressbar($percentage,$width=100,$height=15,$showvalue=false)
   return($str);
 }
 
-
+/*! \brief Lookup a key in an array case-insensitive
+ *
+ * Given an associative array this can lookup the value of
+ * a certain key, regardless of the case.
+ *
+ * \code
+ * $items = array ('FOO' => 'blub', 'bar' => 'blub');
+ * array_key_ics('foo', $items); # Returns 'blub'
+ * array_key_ics('BAR', $items); # Returns 'blub'
+ * \endcode
+ *
+ * \param string 'key' needle
+ * \param array 'items' haystack
+ */
 function array_key_ics($ikey, $items)
 {
   $tmp= array_change_key_case($items, CASE_LOWER);
@@ -2029,7 +2369,12 @@ function array_key_ics($ikey, $items)
   return ('');
 }
 
-
+/*! \brief Determine if two arrays are different
+ *
+ * \param array 'src'
+ * \param array 'dst'
+ * \return boolean TRUE or FALSE
+ * */
 function array_differs($src, $dst)
 {
   /* If the count is differing, the arrays differ */
@@ -2068,14 +2413,14 @@ function saveFilter($a_filter, $values)
 }
 
 
-/* Escape all LDAP filter relevant characters */
+/*! \brief Escape all LDAP filter relevant characters */
 function normalizeLdap($input)
 {
   return (addcslashes($input, '()|'));
 }
 
 
-/* Resturns the difference between to microtime() results in float  */
+/*! \brief Returns the difference between to microtime() results in float */
 function get_MicroTimeDiff($start , $stop)
 {
   $a = split("\ ",$start);
@@ -2088,7 +2433,7 @@ function get_MicroTimeDiff($start , $stop)
   return($ret);
 }
 
-
+/*! \brief Return the gosa base directory */
 function get_base_dir()
 {
   global $BASE_DIR;
@@ -2096,7 +2441,7 @@ function get_base_dir()
   return $BASE_DIR;
 }
 
-
+/*! \brief Test weither we are allowed to read the object */
 function obj_is_readable($dn, $object, $attribute)
 {
   global $ui;
@@ -2104,7 +2449,7 @@ function obj_is_readable($dn, $object, $attribute)
   return preg_match('/r/', $ui->get_permissions($dn, $object, $attribute));
 }
 
-
+/*! \brief Test weither we are allowed to change the object */
 function obj_is_writable($dn, $object, $attribute)
 {
   global $ui;
@@ -2112,7 +2457,16 @@ function obj_is_writable($dn, $object, $attribute)
   return preg_match('/w/', $ui->get_permissions($dn, $object, $attribute));
 }
 
-
+/*! \brief Explode a DN into its parts
+ *
+ * Similar to explode (http://php.net/explode), but a bit more specific
+ * for the needs when splitting, exploding LDAP DNs.
+ *
+ * \param string 'dn' the DN to split
+ * \param config-object a config object. only neeeded if DN shall be verified in the LDAP
+ * \param boolean verify_in_ldap check weither DN is valid
+ *
+ */
 function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
 {
   /* Initialize variables */
@@ -2207,13 +2561,13 @@ function get_base_from_hook($dn, $attrib)
   }
 }
 
-
+/*! \brief Check if schema version matches the requirements */
 function check_schema_version($class, $version)
 {
   return preg_match("/\(v$version\)/", $class['DESC']);
 }
 
-
+/*! \brief Check if LDAP schema matches the requirements */
 function check_schema($cfg,$rfc2307bis = FALSE)
 {
   $messages= array();
@@ -2413,7 +2767,14 @@ function get_languages($languages_in_own_language = FALSE,$strip_region_tag = FA
 }
 
 
-/* Returns contents of the given POST variable and check magic quotes settings */
+/*! \brief Returns contents of the given POST variable and check magic quotes settings
+ *
+ * Depending on the magic quotes settings this returns a stripclashed'ed version of
+ * a certain POST variable.
+ *
+ * \param string 'name' the POST var to return ($_POST[$name])
+ * \return string
+ * */
 function get_post($name)
 {
   if(!isset($_POST[$name])){
@@ -2428,7 +2789,7 @@ function get_post($name)
 }
 
 
-/* Return class name in correct case */
+/*! \brief Return class name in correct case */
 function get_correct_class_name($cls)
 {
   global $class_mapping;
@@ -2443,7 +2804,17 @@ function get_correct_class_name($cls)
 }
 
 
-// change_password, changes the Password, of the given dn
+/*! \brief Change the password of a given DN
+ * 
+ * Change the password of a given DN with the specified hash.
+ *
+ * \param string 'dn' the DN whose password shall be changed
+ * \param string 'password' the password
+ * \param int mode
+ * \param string 'hash' which hash to use to encrypt it, default is empty
+ * for cleartext storage.
+ * \return boolean TRUE on success FALSE on error
+ */
 function change_password ($dn, $password, $mode=0, $hash= "")
 {
   global $config;
@@ -2562,7 +2933,15 @@ function change_password ($dn, $password, $mode=0, $hash= "")
 }
 
 
-// Return something like array['sambaLMPassword']= "lalla..."
+/*! \brief Generate samba hashes
+ *
+ * Given a certain password this constructs an array like
+ * array['sambaLMPassword'] etc.
+ *
+ * \param string 'password'
+ * \return array contains several keys for lmPassword, ntPassword, pwdLastSet, etc. depending
+ * on the samba version
+ */
 function generate_smb_nt_hash($password)
 {
   global $config;
@@ -2611,7 +2990,16 @@ function generate_smb_nt_hash($password)
   return($attrs);
 }
 
-
+/*! \brief Get the Change Sequence Number of a certain DN
+ *
+ * To verify if a given object has been changed outside of Gosa
+ * in the meanwhile, this function can be used to get the entryCSN
+ * from the LDAP directory. It uses the attribute as configured
+ * in modificationDetectionAttribute
+ *
+ * \param string 'dn'
+ * \return either the result or "" in any other case
+ */
 function getEntryCSN($dn)
 {
   global $config;
@@ -2633,7 +3021,16 @@ function getEntryCSN($dn)
 }
 
 
-/* Add a given objectClass to an attrs entry */
+/*! \brief Add (a) given objectClass(es) to an attrs entry
+ * 
+ * The function adds the specified objectClass(es) to the given
+ * attrs entry.
+ *
+ * \param mixed 'classes' Either a single objectClass or several objectClasses
+ * as an array
+ * \param array 'attrs' The attrs array to be modified.
+ *
+ * */
 function add_objectClass($classes, &$attrs)
 {
   if (is_array($classes)){
@@ -2648,7 +3045,11 @@ function add_objectClass($classes, &$attrs)
 }
 
 
-/* Removes a given objectClass from the attrs entry */
+/*! \brief Removes a given objectClass from the attrs entry
+ *
+ * Similar to add_objectClass, except that it removes the given
+ * objectClasses. See it for the params.
+ * */
 function remove_objectClass($classes, &$attrs)
 {
   if (isset($attrs['objectClass'])){
@@ -2672,9 +3073,9 @@ function remove_objectClass($classes, &$attrs)
 }
 
 /*! \brief  Initialize a file download with given content, name and data type. 
- *  @param  data  String The content to send.
- *  @param  name  String The name of the file.
- *  @param  type  String The content identifier, default value is "application/octet-stream";
+ *  \param  string data The content to send.
+ *  \param  string name The name of the file.
+ *  \param  string type The content identifier, default value is "application/octet-stream";
  */
 function send_binary_content($data,$name,$type = "application/octet-stream")
 {
@@ -2719,8 +3120,8 @@ function reverse_html_entities($str,$type = ENT_QUOTES , $charset = "UTF-8")
 
 /*! \brief Encode special string characters so we can use the string in \
            HTML output, without breaking quotes.
-    @param  The String we want to encode.
-    @return The encoded String
+    \param string The String we want to encode.
+    \return string The encoded String
  */
 function xmlentities($str)
 { 
@@ -2752,8 +3153,8 @@ function xmlentities($str)
 
 /*! \brief  Updates all accessTo attributes from a given value to a new one.
             For example if a host is renamed.
-    @param  String  $from The source accessTo name.
-    @param  String  $to   The destination accessTo name.
+    \param  String  $from The source accessTo name.
+    \param  String  $to   The destination accessTo name.
 */
 function update_accessTo($from,$to)
 {
@@ -2785,7 +3186,7 @@ function update_accessTo($from,$to)
   }
 }
 
-
+/*! \brief Returns a random char */
 function get_random_char () {
      $randno = rand (0, 63);
      if ($randno < 12) {
