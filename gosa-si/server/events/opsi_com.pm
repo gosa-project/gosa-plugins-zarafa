@@ -22,25 +22,26 @@ my @events = (
     "opsi_modify_client",
     "opsi_add_product_to_client",
     "opsi_del_product_from_client",
-    "opsi_createLicensePool",
-    "opsi_deleteLicensePool",
-    "opsi_createLicense",
-    "opsi_assignSoftwareLicenseToHost",
-    "opsi_unassignSoftwareLicenseFromHost",
-    "opsi_unassignAllSoftwareLicensesFromHost",
-    "opsi_getSoftwareLicense_hash",
-    "opsi_getLicensePool_hash",
-    "opsi_getSoftwareLicenseUsages",
-    "opsi_getSoftwareLicenseUsagesForProductId",
-    "opsi_getLicensePools_listOfHashes",
-    "opsi_getLicenseInformationForProduct",
-    "opsi_getPool",
-    "opsi_getAllSoftwareLicenses",
-    "opsi_removeLicense",
-    "opsi_getReservedLicenses",
-    "opsi_boundHostToLicense",
-    "opsi_unboundHostFromLicense",
-    "opsi_test",
+	"opsi_createLicensePool",
+	"opsi_deleteLicensePool",
+	"opsi_createLicense",
+	"opsi_assignSoftwareLicenseToHost",
+	"opsi_unassignSoftwareLicenseFromHost",
+	"opsi_unassignAllSoftwareLicensesFromHost",
+	"opsi_getSoftwareLicense_hash",
+	"opsi_getLicensePool_hash",
+	"opsi_getSoftwareLicenseUsages",
+	"opsi_getSoftwareLicenseUsagesForProductId",
+	"opsi_getLicensePools_listOfHashes",
+	"opsi_getLicenseInformationForProduct",
+	"opsi_getPool",
+	"opsi_getAllSoftwareLicenses",
+	"opsi_removeLicense",
+	"opsi_getReservedLicenses",
+	"opsi_boundHostToLicense",
+	"opsi_unboundHostFromLicense",
+	"opsi_get_full_product_host_information",
+	"opsi_test",
    );
 @EXPORT = @events;
 
@@ -75,6 +76,12 @@ if ($opsi_enabled eq "true") {
 	use Time::HiRes qw( time );
 	$opsi_url= "https://".$opsi_admin.":".$opsi_password."@".$opsi_server.":4447/rpc";
 	$opsi_client = new JSON::RPC::Client;
+
+	# Check version dependencies
+	eval { &myXmlHashToString(); };
+	if ($@ ) {
+		die "\nThe version of the Opsi plugin you want to use requires a newer version of GosaSupportDaemon. Please update your GOsa-SI or deactivate the Opsi plugin.\n";
+	}
 }
 
 # ----------------------------------------------------------------------------
@@ -1416,15 +1423,13 @@ sub opsi_getSoftwareLicenseUsagesForProductId {
 	if ($err){
 		return &_giveErrorFeedback($msg_hash, "cannot fetch licensePoolId for given productId : ".$res, $session_id);
 	}
-
-	my $licensePoolId;
+	my $licensePoolId = $res;   # We assume that there is only one pool for each productID!!!
 
 	# Fetch softwareLiceceUsages for licensePoolId
 	($res, $err) = &_getSoftwareLicenseUsages_listOfHashes('licensePoolId'=>$licensePoolId);
 	if ($err){
 		return &_giveErrorFeedback($msg_hash, "cannot fetch software licenses from license pool : ".$res, $session_id);
 	}
-
 	# Parse Opsi result
 	my $res_hash = &_parse_getSoftwareLicenseUsages($res);
 
@@ -2318,13 +2323,36 @@ sub opsi_getAllSoftwareLicenses {
     return ( &create_xml_string($out_hash) );
 }
 
+
+################################
+# @brief Returns a list of values for a given host. Values: priority, onceScript, licenseRequired, packageVersion, productVersion, advice, setupScript, windowsSoftwareIds, installationStatus, pxeConfigTemplate, name, creationTimestamp, alwaysScript, productId, description, properties, actionRequest, uninstallScript, action, updateScript and productClassNames 
+# @param hostId Opsi hostId
+sub opsi_get_full_product_host_information {
+	my $startTime = Time::HiRes::time;
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+
+	my ($res, $err) = &_get_full_product_host_information( hostId=>@{$msg_hash->{'hostId'}}[0]);
+	if ($err) {
+		return &_giveErrorFeedback($msg_hash, "cannot fetch full_product_host_information from Opsi server : ".$res, $session_id);
+	}
+
+	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+	$out_hash->{hit} = $res;
+	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
+
+	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
+    return ( &myXmlHashToString($out_hash) );
+}
+
+
 sub opsi_test {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
 	my $pram1 = @{$msg_hash->{'productId'}}[0];
 
-print STDERR Dumper $pram1;
 
 	# Fetch infos from Opsi server
     my $callobj = {
@@ -2334,7 +2362,6 @@ print STDERR Dumper $pram1;
     };
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
 
-	print STDERR Dumper $res;
 	return ();
 }
 
@@ -2561,32 +2588,18 @@ sub _getProductStates_hash {
 	return ($res->result, 0);
 }
 
+sub _get_full_product_host_information {
+	my %arg = ( 'hostId' => undef, @_ );
 
-################################   
-# @brief Get all host information for a specific host.
-# @param msg - STRING - xml message with hostId tag
-# @param msg_hash - HASHREF - message information parsed into a hash
-# @param session_id - INTEGER - POE session id of the processing of this message
-# @return out_msg - STRING - feedback to GOsa in success and error case
-sub opsi_get_full_product_host_information {
-    my $startTime = Time::HiRes::time;
-    my ($msg, $msg_hash, $session_id) = @_;
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    my $hostId;
-    my $xml_msg;
+	if (not defined $arg{hostId}) {
+		return ("function requires hostId as parameter", 1);
+	}
 
-#      $callobj = {
-#          method  => 'getFullProductHostInformation_list',
-#          params  => [ $hostId ],
-#          id  => 1,
-#      };
-#      my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-#      print STDERR "===================================================================\n";
-#      print STDERR Dumper $res;
-#      print STDERR "===================================================================\n";
+	my $res = &_callOpsi( method => 'getFullProductHostInformation_list',  params => [$arg{hostId}]);
+	my ($res_error, $res_error_str) = &check_opsi_res($res);
+	if ($res_error){ return ((caller(0))[3]." : ".$res_error_str, 1); }
+
+	return ($res->result, 0);
 }
 
 1;

@@ -46,6 +46,7 @@ use IO::Socket::INET;
 use Crypt::Rijndael;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
 use MIME::Base64;
+use XML::Quote qw(:all);
 use XML::Simple;
 use Data::Dumper;
 use Net::DNS;
@@ -130,7 +131,8 @@ sub _transformHashToString {
 		} elsif ( ref $content eq "ARRAY") {
 			$s .= &_transformArrayToString($tag, $content);
 		} else {
-			$s .= "<$tag>".$content."</$tag>";
+			$content = defined $content ? $content : "";
+			$s .= "<$tag>".&xml_quote($content)."</$tag>";
 		}
 	}
 	return $s;
@@ -143,7 +145,8 @@ sub _transformArrayToString {
 		if (ref $content eq "HASH") {
 			$s .= "<$tag>".&_transformHashToString($content)."</$tag>";
 		} else {
-			$s .= "<$tag>$content</$tag>";
+			$content = defined $content ? $content : "";
+			$s .= "<$tag>".&xml_quote($content)."</$tag>";
 		}
 	}
 	return $s;
