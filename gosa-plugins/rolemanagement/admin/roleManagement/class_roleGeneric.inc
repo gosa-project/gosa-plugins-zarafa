@@ -50,6 +50,8 @@ class roleGeneric extends plugin {
   var $attributes = array("cn","description",
     "telephoneNumber","facsimileTelephoneNumber","roleOccupant");
  
+  // 
+  var $objCacheLoaded = FALSE;
 
   /* Initialize the class 
    */
@@ -76,9 +78,6 @@ class roleGeneric extends plugin {
     $this->orig_base = $this->base;
     $this->orig_dn = $dn;
     $this->orig_cn = $this->cn;
-
-    // Reload the occupant cache. 
-    $this->reload();
   }
 
 
@@ -131,6 +130,11 @@ class roleGeneric extends plugin {
     // Get list of possible ldap bases, will be selectable in the ui.
     $tmp = $this->allowedBasesToMoveTo();
 
+    // Reload the occupant cache. 
+    if(!$this->objCacheLoaded){
+      $this->reload();
+      $this->objCacheLoaded = TRUE;
+    }
 
     /***************
      * Dialog handling
