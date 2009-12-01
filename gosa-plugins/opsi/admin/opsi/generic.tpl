@@ -15,7 +15,7 @@
    <table>
     {if $standalone}
     <tr>
-     <td>{t}Name{/t}</td>
+     <td>{t}Name{/t}{$must}</td>
      <td>
 {render acl=$hostIdACL}
 		<input style='width:300px;' type='text' name='hostId' value='{$hostId}'>
