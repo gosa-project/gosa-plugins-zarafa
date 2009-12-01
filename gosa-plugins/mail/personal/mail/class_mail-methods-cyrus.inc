@@ -270,9 +270,16 @@ class mailMethodCyrus extends mailMethod{
 
     $cfg= $this->ServerList[$this->MailServer];
     @imap_setacl ($this->imap_handle, $this->account_id, $cfg["admin"], "lrswipcda");
-    if (!imap_deletemailbox($this->imap_handle, $cfg["connect"].$this->account_id)){
-      $this->error = imap_last_error();
-      return (FALSE);
+
+    if ($this->config->get_cfg_value("cyrusDeleteMailbox", "true") == "true"){
+      if (!imap_deletemailbox($this->imap_handle, $cfg["connect"].$this->account_id)){
+        $this->error = imap_last_error();
+        return (FALSE);
+      }
+    } else{ 
+      msg_dialog::display(_("Mail info"),
+        sprintf(_("LDAP entry has been removed but cyrus mailbox (%s) is kept.\nPlease delete it manually!"),
+        $this->account_id), INFO_DIALOG);
     }
     return (TRUE);
   }
