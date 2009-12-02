@@ -408,10 +408,14 @@ class mailgroup extends plugin
       }
       if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
         $ui= get_userinfo();
-        if ($user != $ui->username){
-          msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."&nbsp;".
-              sprintf(_("Address is already in use by user '%s'."), $user), ERROR_DIALOG);
+        $addon= "";
+        if ($user[0] == "!") {
+          $addon= sprintf(_("Address is already in use by group '%s'."), mb_substr($user, 1));
+        } else {
+          $addon= sprintf(_("Address is already in use by user '%s'."), $user);
         }
+        msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."<br><br><i>".
+            "$addon</i>", ERROR_DIALOG);
       }
     }
     if (isset($_POST['delete_alternate']) && isset($_POST['alternates_list'])){
@@ -1238,10 +1242,13 @@ class mailgroup extends plugin
     /* Is this address already assigned in LDAP? */
     $ldap->cd ($this->config->current['BASE']);
     $ldap->search ("(&(objectClass=gosaMailAccount)(|(mail=$address)".
-        "(gosaMailAlternateAddress=$address)))");
+        "(gosaMailAlternateAddress=$address)))", array("cn", "uid"));
 
     if ($ldap->count() > 0){
       $attrs= $ldap->fetch ();
+      if (!isset($attrs["uid"])) {
+        return ("!".$attrs["cn"][0]);
+      }
       return ($attrs["uid"][0]);
     }
 
