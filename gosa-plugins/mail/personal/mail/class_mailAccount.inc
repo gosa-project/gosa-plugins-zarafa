@@ -372,8 +372,14 @@ class mailAccount extends plugin
       }
       if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
         $ui= get_userinfo();
-        msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."&nbsp;".
-            sprintf(_("Address is already in use by user '%s'."), $user), ERROR_DIALOG);
+        $addon= "";
+        if ($user[0] == "!") {
+          $addon= sprintf(_("Address is already in use by group '%s'."), mb_substr($user, 1));
+        } else {
+          $addon= sprintf(_("Address is already in use by user '%s'."), $user);
+        }
+        msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."<br><br><i>".
+            "$addon</i>", ERROR_DIALOG);
       }
     }
     if (isset($_POST['delete_alternate']) && isset($_POST['alternates_list'])){
@@ -666,9 +672,12 @@ class mailAccount extends plugin
       /* Is this address already assigned in LDAP? */
       $ldap->cd ($this->config->current['BASE']);
       $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=$address)".
-          "(alias=$address)(gosaMailAlternateAddress=$address)))", array("uid"));
+          "(alias=$address)(gosaMailAlternateAddress=$address)))", array("uid", "cn"));
       if ($ldap->count() > 0){
         $attrs= $ldap->fetch ();
+        if (!isset($attrs["uid"])) {
+          return ("!".$attrs["cn"][0]);
+        }
         return ($attrs["uid"][0]);
       }
       if (!in_array($address, $this->gosaMailAlternateAddress)){
@@ -999,9 +1008,11 @@ class mailAccount extends plugin
             }
           }
         }else{
-          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, 
-              "User uses an own sieve script, skipping sieve update.".$str."</b>","");
-          $this->sieve_management->save();
+          if ($this->sieve_management) {
+            @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, 
+                "User uses an own sieve script, skipping sieve update.".$str."</b>","");
+            $this->sieve_management->save();
+          }
         }
       }
     }
@@ -1080,9 +1091,16 @@ class mailAccount extends plugin
       $filter = "(&(!(objectClass=gosaUserTemplate))(!(uid=".$this->uid."))".
         "(objectClass=gosaMailAccount)".
         "(|(mail=".$mail.")(alias=".$mail.")(gosaMailAlternateAddress=".$mail.")))";
-      $ldap->search($filter,array("uid"));
+      $ldap->search($filter,array("uid", "cn"));
       if ($ldap->count() != 0){
-        $message[]= msgPool::duplicated(_("Mail address"));
+        $entry= $ldap->fetch();
+        $addon= "";
+        if (!isset($entry['uid'])) {
+           $addon= sprintf(_("Address is already in use by group '%s'."), $entry['cn'][0]);
+        } else {
+           $addon= sprintf(_("Address is already in use by user '%s'."), $entry['uid'][0]);
+        }
+        $message[]= msgPool::duplicated(_("Mail address"))."<br><br><i>$addon</i>";
       }
     }
 
