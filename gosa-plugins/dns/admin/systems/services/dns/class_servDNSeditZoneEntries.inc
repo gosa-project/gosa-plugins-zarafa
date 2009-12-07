@@ -290,6 +290,14 @@ class servDNSeditZoneEntries extends plugin
       $tmp2 = array();
       foreach($device['RECORDS'] as $Num => $Rec){
 
+        /* Check values */
+        if ($Rec['type'] != "pTRRecord") {
+          $msg= $this->checkRecordType($DevName, $Rec['type'], $Rec['value']);
+          if ($msg != "") {
+            $message[]= $msg;
+          }
+        }
+
         /* Check for multiple use of unique record types
          */
         if(in_array($Rec['type'],$singleEntries)){
@@ -497,6 +505,26 @@ class servDNSeditZoneEntries extends plugin
       $str = "&nbsp;".strtoupper(preg_replace("/record/i","",$id));
     }
     return($str);
+  }
+
+
+  /* Check record types for strange inputs */
+  function checkRecordType($name, $type, $value)
+  {
+echo $type;
+    $checks= array(
+              "aRecord" => "/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/"
+             );
+
+    /* No check for entry */
+    if (!isset($checks[$type])) {
+      return "";
+    }
+
+    /* Else check ;-) */
+    if (!preg_match($checks[$type], $value)) {
+      return (sprintf("The syntax of entry %s (record type %s, value %s) is invalid!", $name, $type, $value));
+    } 
   }
 
 
