@@ -373,7 +373,7 @@ class servdhcp extends goService
         $DhcpList->AddEntry(array(
               array("string" => $values),
               array("string" => $dhcpObject->statements->get('fixed-address')),
-              array("string" =>  preg_replace('/^[^ ]+ /', '', $dhcpObject->dhcpHWAddress)),
+              array("string" =>  preg_replace('/^[^ ]+ /', '', isset($dhcpObject->dhcpHWAddress)?$dhcpObject->dhcpHWAddress:"")),
               array("string" => str_replace("%s",$id,$editImg), "attach" => "style='text-align:right;'")
               ));
       }
@@ -477,7 +477,7 @@ class servdhcp extends goService
         continue;
       }
 
-      /* Opdate dhcp option 'server-name' to actual server name */
+      /* Update dhcp option 'server-name' to actual server name */
       if($this->dn != $this->orig_dn){
         $fixed = FALSE;
         foreach(array("dhcpHost","dhcpSubnet","dhcpGroup","dhcpSharedNetwork") as $object){
