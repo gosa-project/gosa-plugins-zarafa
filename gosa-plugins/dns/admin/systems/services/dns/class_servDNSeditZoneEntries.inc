@@ -511,7 +511,6 @@ class servDNSeditZoneEntries extends plugin
   /* Check record types for strange inputs */
   function checkRecordType($name, $type, $value)
   {
-echo $type;
     $checks= array(
               "aRecord" => "/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/"
              );
