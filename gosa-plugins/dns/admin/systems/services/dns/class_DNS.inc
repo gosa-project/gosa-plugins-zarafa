@@ -45,7 +45,7 @@ class DNS
 
   /* This fucntion is used to flip the ip address, for example
      12.3.45  ->  45.3.12
-     Because some entries (like zones) are store like that 45.3.12.in-addr.arpa
+     Because some entries (like zones) are store like that 45.3.12.in-addr.arpa.
      but we want to display 12.3.45.
    */
   static function FlipIp($ip)
@@ -168,8 +168,8 @@ class DNS
         unset($Zones[$zoneName]);
       }else{
         $tmp = $ldap->fetch();
-        $Zones[$zoneName]['ReverseZone']        = DNS::FlipIp(str_replace(".in-addr.arpa","",$tmp['zoneName'][0]));
-        $Zones[$zoneName]['InitialReverseZone'] = DNS::FlipIp(str_replace(".in-addr.arpa","",$tmp['zoneName'][0]));
+        $Zones[$zoneName]['ReverseZone']        = DNS::FlipIp(str_replace(".in-addr.arpa.","",$tmp['zoneName'][0]));
+        $Zones[$zoneName]['InitialReverseZone'] = DNS::FlipIp(str_replace(".in-addr.arpa.","",$tmp['zoneName'][0]));
       }
     }
     return($Zones);
@@ -249,9 +249,9 @@ class DNS
       if(!empty($zone['InitialReverseZone'])){
         if($zone['InitialReverseZone'] != $zone['ReverseZone']){
           $base = "zoneName=".$zone['zoneName'].",".$HostDn;
-          $oldRDn = "zoneName=". DNS::FlipIp($zone['InitialReverseZone']).".in-addr.arpa,".$base; 
-          $newRDn = "zoneName=". DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa,".$base;
-          $PrePareZoneEntries[DNS::FlipIp($zone['InitialReverseZone']).".in-addr.arpa"] = DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa";
+          $oldRDn = "zoneName=". DNS::FlipIp($zone['InitialReverseZone']).".in-addr.arpa.,".$base; 
+          $newRDn = "zoneName=". DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa.,".$base;
+          $PrePareZoneEntries[DNS::FlipIp($zone['InitialReverseZone']).".in-addr.arpa."] = DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa.";
           $move [$oldRDn] = $newRDn;
         }
       }
@@ -282,7 +282,7 @@ class DNS
       /* Create Reverse Entry 
        * And append it to our add queue
        */
-      $zone['ReverseZone'] = DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa";
+      $zone['ReverseZone'] = DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa.";
       $base = "zoneName=".$zone['zoneName'].",".$HostDn;
       $newRDn = "zoneName=".$zone['ReverseZone'].",".$base;
       $rObj = $obj;
@@ -671,7 +671,7 @@ class DNS
           $config->current['BASE'],array("zoneName"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
 
       foreach($tmp as $at){
-        if(preg_match("/\.in\-addr\.arpa/",$at['zoneName'][0])){
+        if(preg_match("/\.in\-addr\.arpa\./",$at['zoneName'][0])){
           $ReverseZones[$at['dn']] = $at;
         }else{
           $ForwardZones[$at['dn']] = $at;
