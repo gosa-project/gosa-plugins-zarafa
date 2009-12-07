@@ -115,7 +115,7 @@ class servdnseditZone extends plugin
       /* Check if this used, in this case disable forward and reverse configuration */
       $tmp = $this->getUsedZoneNames();
       $this->Zone_is_used = FALSE;
-      if(isset($tmp[DNS::FlipIp($this->InitialReverseZone).".in-addr.arpa"])){
+      if(isset($tmp[DNS::FlipIp($this->InitialReverseZone).".in-addr.arpa."])){
         $this->Zone_is_used = TRUE;
       }
     }

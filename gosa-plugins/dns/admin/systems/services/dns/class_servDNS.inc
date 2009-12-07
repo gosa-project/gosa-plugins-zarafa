@@ -308,8 +308,8 @@ class servdns extends goService
 
     /* Add Records which uses this reverse zone
      */
-    if(isset($zones[$rev.".in-addr.arpa"])){
-      $used = array_merge($used,$zones[$rev.".in-addr.arpa"]);
+    if(isset($zones[$rev.".in-addr.arpa."])){
+      $used = array_merge($used,$zones[$rev.".in-addr.arpa."]);
     } 
 
     /* There are still entries using this configuration
@@ -452,7 +452,7 @@ class servdns extends goService
     foreach($tmp['del'] as $dn => $del){
 
       $for = $del['InitialzoneName'];
-      $rev = DNS::FlipIp($del['InitialReverseZone']).".in-addr.arpa";
+      $rev = DNS::FlipIp($del['InitialReverseZone']).".in-addr.arpa.";
 
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
