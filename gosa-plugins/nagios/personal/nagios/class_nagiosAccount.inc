@@ -136,8 +136,8 @@ class nagiosAccount extends plugin
         }
       }
     }
-    $smarty->assign('ServiceNotificationOptionsValues'  ,array("d,u,r,v"=>"d,u,r,v" ,"d,u,r"=>"d,u,r" ,"d,u"=>"d,u"));
-    $smarty->assign('HostNotificationOptionsValues'     ,array("w,u,c,r"=>"w,u,c,r" ,"w,u,c"=>"w,u,c" ,"c,w"=>"c,w"));
+    $smarty->assign('ServiceNotificationOptionsValues'  ,array("w,u,c,r,f"=>"w,u,c,r,f" ,"w,u,c,r"=>"w,u,c,r" ,"w,u,c"=>"w,u,c" ,"c,w"=>"c,w","n"=>"n"));
+    $smarty->assign('HostNotificationOptionsValues'     ,array("d,u,r,f"=>"d,u,r,f" ,"d,u,r"=>"d,u,r" ,"d,u"=>"d,u","n"=>"n"));
     $smarty->assign('ServiceNotificationPeriodValues'   ,array("24x7"=>"24x7" ,"24x5"=>"24x5" ,"8x5"=>"8x5"));
     $smarty->assign('HostNotificationPeriodValues'      ,array("24x7"=>"24x7" ,"24x5"=>"24x5" ,"8x5"=>"8x5"));
     $display.= $smarty->fetch (get_template_path('nagios.tpl', TRUE, dirname(__FILE__)));
