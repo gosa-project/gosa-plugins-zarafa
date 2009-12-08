@@ -107,6 +107,21 @@ Defines in seconds the lifetime of the key GOsa-SI-server messages should be enc
 =back
 
 
+=head2 [krb5]
+
+=over 2
+
+=item admin = user
+
+Define the admin for your kerberos realm
+
+=item password = password
+
+Defines the password for your kerberos realm admin
+
+=back
+
+
 =head1 BUGS 
 
 Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-devel@oss.gonicus.de> or to <https://oss.gonicus.de/labs/gosa>

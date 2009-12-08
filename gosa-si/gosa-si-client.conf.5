@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "CLIENT.CONF 1"
-.TH CLIENT.CONF 1 "2009-09-04" "perl v5.10.0" "User Contributed Perl Documentation"
+.TH CLIENT.CONF 1 "2009-12-09" "perl v5.10.0" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -199,6 +199,14 @@ Defines in seconds the timeout GOsa-SI-client is waiting for the next try if all
 .IP "key-lifetime = 600" 4
 .IX Item "key-lifetime = 600"
 Defines in seconds the lifetime of the key GOsa-SI-server messages should be encrypted with.
+.SS "[krb5]"
+.IX Subsection "[krb5]"
+.IP "admin = user" 2
+.IX Item "admin = user"
+Define the admin for your kerberos realm
+.IP "password = password" 2
+.IX Item "password = password"
+Defines the password for your kerberos realm admin
 .SH "BUGS"
 .IX Header "BUGS"
 Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa\-devel@oss.gonicus.de> or to <https://oss.gonicus.de/labs/gosa>
