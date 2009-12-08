@@ -3,6 +3,7 @@
 
 # Copyright (C) 2005 Guillaume Delecourt <guillaume.delecourt@opensides.be>
 # Copyright (C) 2005 Vincent Senave <vincent.senave@opensides.be>
+# Copyright (C) 2005-2009 Benoit Mortier <benoit.mortier@opensides.be>
 #
 #
 # This program is free software; you can redistribute it and/or modify
@@ -53,8 +54,8 @@ my ($i,$file,$ldap,@nagiosmail,
 );
 
 # The connexion parameters are in gosa_bind.conf
-my $gosa_bind_conf="/etc/gosa_bind.conf";
-my $gosa_ldap_conf="/etc/gosaldap.conf";
+my $gosa_bind_conf="/etc/gosa/gosa_bind.conf";
+my $gosa_ldap_conf="/etc/gosa/nagios_ldap.conf";
 my %config_bind = &read_conf($gosa_bind_conf);
 my %config = &read_conf($gosa_ldap_conf);
 
@@ -129,8 +130,6 @@ my $password=$config_bind{masterPw};
 	}
 	$nb_groupe=$i;
 
-		$userlist1.=$admindef;
-
 	#Part of the ObjectClass NagiosAuth
 	$stdout.="\n\n\n\n\nAuthorization for the different Information in Nagios\n"."-" x 53;$stdout.="\n";
 	$mesg = $ldap->search(filter=>"(&(objectClass~=nagiosAuth)(AuthorizedSystemInformation~=checked))", base=>$peopleou,scope=>$scope);
@@ -138,7 +137,7 @@ my $password=$config_bind{masterPw};
 	$stdout.="\nSystem infos :\t\t";
 	foreach $entry (@entries) {
 	$stdout.= $entry->get_value('uid')."\t";
-	$userlist1.=$entry->get_value('uid')."  ,";
+	$userlist1.=$entry->get_value('uid').",";
 	}
 	$userlist1.=$admindef;
 
@@ -147,7 +146,7 @@ my $password=$config_bind{masterPw};
 	$stdout.="\nConfiguration infos :\t";
 	foreach $entry (@entries) {
 	$stdout.= $entry->get_value('uid')."\t";
-	$userlist2.=$entry->get_value('uid')." , ";
+	$userlist2.=$entry->get_value('uid').",";
 	}
 	$userlist2.=$admindef;
 
@@ -156,7 +155,7 @@ my $password=$config_bind{masterPw};
 	$stdout.="\nSystem commands : \t";
 	foreach $entry (@entries) {
 	$stdout.= $entry->get_value('uid')."\t";
-	$userlist3.=$entry->get_value('uid')." , ";
+	$userlist3.=$entry->get_value('uid').",";
 	}
 	$userlist3.=$admindef;
 
@@ -165,7 +164,7 @@ my $password=$config_bind{masterPw};
 	$stdout.="\nAll services :\t\t";
 	foreach $entry (@entries) {
 	$stdout.= $entry->get_value('uid')."\t";
-	$userlist4.=$entry->get_value('uid')." ,";
+	$userlist4.=$entry->get_value('uid').",";
 	}
 	$userlist4.=$admindef;
 
@@ -228,6 +227,8 @@ sub modiffile_contact()
 		$text.="\n\thost_notification_options \t".$hostnotificationoptions[$i];
 		$text.="\n\tservice_notification_period \t".$servicenotificationperiod[$i];
 		$text.="\n\tservice_notification_options \t".$servicenotificationoptions[$i];
+		$text.="\n\tservice_notification_commands \t".$config{service_notification_commands};
+		$text.="\n\thost_notification_commands \t".$config{host_notification_commands};
 		$text.="\n\temail \t\t\t\t".$nagiosmail[$i];
 		$text.="\n}\n\n";
 	}
@@ -277,13 +278,13 @@ sub modiffile_cgi()
 	{	
 		$line=$_;
 		#$stdout.="$line";
-		if($line =~ /^authorized_for_system_information=*/i){$text.="authorized_for_system_information=".$userlist1}
-		elsif($line =~ /^authorized_for_configuration_information=*/i){$text.="authorized_for_configuration_information=".$userlist2}
-		elsif($line =~ /^authorized_for_system_commands=*/i){$text.="authorized_for_system_commands=".$userlist3}
-		elsif($line =~ /^authorized_for_all_services=*/i){$text.="authorized_for_all_services=".$userlist4."\n"}
-		elsif($line =~ /^authorized_for_all_hosts=*/i){$text.="authorized_for_all_hosts=".$userlist5}
-		elsif($line =~ /^authorized_for_all_service_commands=*/i){$text.="authorized_for_all_host_commands=".$userlist6."\n"}
-		elsif($line =~ /^authorized_for_all_host_commands=*/i){$text.="authorized_for_all_service_commands=".$userlist7}
+		if($line =~ s/^(authorized_for_system_information=).*$/$1$userlist1/){$text.=$line;}
+		elsif($line =~ s/^(authorized_for_configuration_information=).*$/$1$userlist2/){$text.=$line;}
+		elsif($line =~ s/^(authorized_for_system_commands=).*$/$1$userlist3/){$text.=$line;}
+		elsif($line =~ s/^(authorized_for_all_services=).*$/$1$userlist4/){$text.=$line;}
+		elsif($line =~ s/^(authorized_for_all_hosts=).*$/$1$userlist5/){$text.=$line;}
+		elsif($line =~ s/^(authorized_for_all_service_commands=).*$/$1$userlist6/){$text.=$line;}
+		elsif($line =~ s/^(authorized_for_all_host_commands=).*$/$1$userlist7/){$text.=$line;}
 		else {$text.=$line};
 	}
 	close(FH);
