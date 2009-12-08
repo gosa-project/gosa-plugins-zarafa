@@ -115,8 +115,8 @@ status)
 
         if [ "$START_CLIENT" = "1" -a -x ${DAEMON_CLIENT} ]; then
         	status=0
-        	pidofproc -p "${PIDFILE_SERVER}" "${DAEMON_SERVER}" >/dev/null || status="$?"
-        	log_daemon_msg "Status of GOsa-si server" "${NAME}"
+        	pidofproc -p "${PIDFILE_CLIENT}" "${DAEMON_CLIENT}" >/dev/null || status="$?"
+        	log_daemon_msg "Status of GOsa-si client" "${NAME}"
         	if [ "$status" = 0 ]; then
                		log_progress_msg "is running"
                		log_end_msg 0
