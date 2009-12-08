@@ -59,7 +59,7 @@ Description: GOsa support infrastructure kerberos module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
  .
- This package controls keberos setups and enables administrators
+ This package controls kerberos setups and enables administrators
  to maintain accounts and keys.
 
 Package: gosa-si-server-dak
