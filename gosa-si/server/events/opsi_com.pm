@@ -5,6 +5,8 @@
 
 package opsi_com;
 use Exporter;
+use UNIVERSAL 'isa';
+
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
@@ -22,26 +24,25 @@ my @events = (
     "opsi_modify_client",
     "opsi_add_product_to_client",
     "opsi_del_product_from_client",
-	"opsi_createLicensePool",
-	"opsi_deleteLicensePool",
-	"opsi_createLicense",
-	"opsi_assignSoftwareLicenseToHost",
-	"opsi_unassignSoftwareLicenseFromHost",
-	"opsi_unassignAllSoftwareLicensesFromHost",
-	"opsi_getSoftwareLicense_hash",
-	"opsi_getLicensePool_hash",
-	"opsi_getSoftwareLicenseUsages",
-	"opsi_getSoftwareLicenseUsagesForProductId",
-	"opsi_getLicensePools_listOfHashes",
-	"opsi_getLicenseInformationForProduct",
-	"opsi_getPool",
-	"opsi_getAllSoftwareLicenses",
-	"opsi_removeLicense",
-	"opsi_getReservedLicenses",
-	"opsi_boundHostToLicense",
-	"opsi_unboundHostFromLicense",
-	"opsi_get_full_product_host_information",
-	"opsi_test",
+    "opsi_createLicensePool",
+    "opsi_deleteLicensePool",
+    "opsi_createLicense",
+    "opsi_assignSoftwareLicenseToHost",
+    "opsi_unassignSoftwareLicenseFromHost",
+    "opsi_unassignAllSoftwareLicensesFromHost",
+    "opsi_getSoftwareLicense_hash",
+    "opsi_getLicensePool_hash",
+    "opsi_getSoftwareLicenseUsages",
+    "opsi_getSoftwareLicenseUsagesForProductId",
+    "opsi_getLicensePools_listOfHashes",
+    "opsi_getLicenseInformationForProduct",
+    "opsi_getPool",
+    "opsi_getAllSoftwareLicenses",
+    "opsi_removeLicense",
+    "opsi_getReservedLicenses",
+    "opsi_boundHostToLicense",
+    "opsi_unboundHostFromLicense",
+    "opsi_test",
    );
 @EXPORT = @events;
 
@@ -2332,18 +2333,88 @@ sub opsi_get_full_product_host_information {
 	my ($msg, $msg_hash, $session_id) = @_;
 	my $header = @{$msg_hash->{'header'}}[0];
 	my $source = @{$msg_hash->{'source'}}[0];
+        my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+        my $hostId;
 
 	my ($res, $err) = &_get_full_product_host_information( hostId=>@{$msg_hash->{'hostId'}}[0]);
 	if ($err) {
 		return &_giveErrorFeedback($msg_hash, "cannot fetch full_product_host_information from Opsi server : ".$res, $session_id);
 	}
 
-	my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
-	$out_hash->{hit} = $res;
-	if (exists $msg_hash->{forward_to_gosa}) { &add_content2xml_hash($out_hash, "forward_to_gosa", @{$msg_hash->{'forward_to_gosa'}}[0]); }
+        # Build return message with twisted target and source
+        my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+        &add_content2xml_hash($out_hash, "xxx", "");
+
+        # Get hostId if defined
+        if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} == 1))  {
+            $hostId = @{$msg_hash->{'hostId'}}[0];
+            &add_content2xml_hash($out_hash, "hostId", $hostId);
+        }
+
+        # Move to XML string
+        my $xml_msg= &create_xml_string($out_hash);
+        
+        # Convert result in something usable
+        my $replace= "";
+	foreach my $product ( @$res) {
+
+          # Open item
+          $replace.= "<item>";
+
+          # Add flat hash information
+          my @entries= ( "priority", "onceScript", "licenseRequired", "packageVersion", "productVersion", "advice",
+                              "setupScript", "windowsSoftwareIds", "installationStatus", "pxeConfigTemplate", "name",
+                              "creationTimestamp", "alwaysScript", "productId", "description", "actionRequest", "uninstallScript",
+                              "action", "updateScript", "productClassNames");
+          foreach my $entry (@entries) {
+            if (defined $product->{$entry}) {
+              my $value= $product->{$entry};
+
+              if(ref($value) eq 'ARRAY'){
+                my $tmp= "";
+                foreach my $element (@$value) {
+                  $tmp.= "<element>$element</element>";
+                }
+                $replace.= "<$entry>$tmp</$entry>";
+              } else {
+                $replace.= "<$entry>$value</$entry>";
+              }
+            }
+          }
+
+          # Add property information
+          if (defined $product->{'properties'}) {
+            $replace.= "<properties>";
+            while ((my $key, my $value) = each(%{$product->{'properties'}})){
+              $replace.= "<$key>";
+
+              while ((my $pkey, my $pvalue) = each(%$value)){
+                if(ref($pvalue) eq 'ARRAY'){
+                  my $tmp= "";
+                  foreach my $element (@$pvalue) {
+                    $tmp.= "<element>$element</element>";
+                  }
+                  $replace.= "<$pkey>$tmp</$pkey>";
+                } else {
+                  $replace.= "<$pkey>$pvalue</$pkey>";
+                }
+              }
+              $replace.= "</$key>";
+            }
+            $replace.= "</properties>";
+          }
+
+          # Close item
+          $replace.= "</item>";
+        }
+
+        $xml_msg=~ s/<xxx><\/xxx>/\n$replace/;
 
 	&main::daemon_log("0 DEBUG: time to process gosa-si message '$header' : ".sprintf("%.4f", (Time::HiRes::time - $startTime))." seconds", 1034);
-    return ( &myXmlHashToString($out_hash) );
+    return ( $xml_msg );
 }
 
 
