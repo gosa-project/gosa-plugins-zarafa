@@ -282,6 +282,33 @@ class opsi extends gosaSupportDaemon
   }
 
 
+  /*! \brief 		Returns a list of netboot products.
+    @param
+    @return 		
+   */
+  public function get_full_product_host_information($host = "")
+  {
+    /* Append host attribute to query data 
+     */
+    $data = array();
+    if(!empty($host)){
+      $data['hostId'] = trim($host);
+    }
+
+    $res    = $this->send_data("gosa_opsi_get_full_product_host_information",$this->target,$data,TRUE);
+    print_a($res);
+    $items = array();
+    if(isset($res['XML'][0]['ITEM'])){
+      foreach($res['XML'][0]['ITEM'] as $entry){
+        $e = array("DESC" => $entry['DESCRIPTION'][0]['VALUE'],
+                   "NAME" => $entry['PRODUCTID'][0]['VALUE']);
+        $items[$entry['PRODUCTID'][0]['VALUE']] = $e;
+      }
+    }
+    return($items);
+  }
+
+
   /*! \brief 		Returns a list of all product properties. \ 
     .           Additionally you can specify the host parameter to \
     .           get host specific product properties
