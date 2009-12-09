@@ -260,6 +260,8 @@ class mailMethodCyrus extends mailMethod{
 
           // Walk thru list of specified folders
           foreach ($foldersToCreate as $folder) {
+            @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>".$this->account_id."</b>" , 
+              "<b>IMAP: Add/Update account folder ".$folder."</b> on server :".$this->MailServer);
             if(!imap_createmailbox($this->imap_handle, $cfg["connect"].$this->account_id.$cyrus_delim.$folder)) {
               $this->error= imap_last_error();
               return(FALSE);
