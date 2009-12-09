@@ -247,9 +247,25 @@ class mailMethodCyrus extends mailMethod{
       if ($list === FALSE){
         @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>".$this->account_id."</b>" , 
           "<b>IMAP: Add/Update account</b> on server :".$this->MailServer);
-        if (!imap_createmailbox($this->imap_handle, $cfg["connect"]. $this->account_id)){
+        if (!imap_createmailbox($this->imap_handle, $cfg["connect"].$this->account_id)){
           $this->error = imap_last_error();
           return(FALSE);
+        }
+
+        /* Autocreate configured default folders */ 
+        $folders= $this->config->get_cfg_value("cyrusAutocreateFolders", null);
+        if ($folders) {
+          $foldersToCreate= explode(",", $folders);
+          $cyrus_delim= $this->cyrusUseSlashes?"/":".";
+
+          // Walk thru list of specified folders
+          foreach ($foldersToCreate as $folder) {
+            if(!imap_createmailbox($this->imap_handle, $cfg["connect"].$this->account_id.$cyrus_delim.$folder)) {
+              $this->error= imap_last_error();
+              return(FALSE);
+            }
+          }
+
         }
       }
     }
