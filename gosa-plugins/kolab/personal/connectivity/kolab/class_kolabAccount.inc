@@ -67,10 +67,10 @@ class kolabAccount extends plugin
     if(count($this->kolabDelegate)){
       $this->is_account = true;
     }
-    foreach(array("calFBURL") as $attr){
-      if(!empty($this->$attr)){
-        $this->is_account = true;
-      }
+
+    /* Propose FreeBusy URL if empty */
+    if(!empty($this->calFBURL)){
+      $this->is_account = true;
     } 
 
     /* Transfer account states for this union */
@@ -82,6 +82,7 @@ class kolabAccount extends plugin
        $this->is_account  = false;
       $this->mail_Account = false;
     }
+
   }
 
     
@@ -89,9 +90,15 @@ class kolabAccount extends plugin
    */
   function execute()
   {
-	  /* Call parent execute */
-  	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
+    /* Fill proposed FB URL if empty */
+    if (empty($this->calFBURL)) {
+      $this->calFBURL= "https://".$this->parent->by_object['mailAccount']->gosaMailServer.
+                       "/freebusy/".$this->parent->by_object['mailAccount']->mail.".ifb";
+    }
+    
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
