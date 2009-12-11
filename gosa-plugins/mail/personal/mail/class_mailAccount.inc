@@ -1186,6 +1186,15 @@ class mailAccount extends plugin
       }
     }
     $this->mail= strtolower(rewrite($this->mail));
+
+    // Fix mail address when using templates
+    if($this->is_account && $this->mailMethod->domainSelectionEnabled()){
+      $this->mailDomainPart = preg_replace("/^[^@]*+@/","",$this->mail);
+      $this->mail = preg_replace("/@.*$/","\\1",$this->mail);
+      if(!in_array($this->mailDomainPart,$this->mailDomainParts)){
+        $this->mailDomainParts[] = $this->mailDomainPart;
+      }
+    }
   }
 
 
