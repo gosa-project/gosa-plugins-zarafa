@@ -278,8 +278,12 @@ class roleGeneric extends plugin {
 
   /* Saves object modifications
    */  
-  function save(){
+  function save()
+  {
+  
+    $this->reload();
     plugin::save();
+
 
     /* Save data. Using 'modify' implies that the entry is already present, use 'add' for
        new entries. So do a check first... */
@@ -297,6 +301,8 @@ class roleGeneric extends plugin {
     // Finally write data with selected 'mode'
     $this->cleanup();
     $ldap->cd ($this->dn);
+
+
     $ldap->$mode ($this->attrs);
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), 
