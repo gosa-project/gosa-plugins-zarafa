@@ -281,9 +281,11 @@ class roleGeneric extends plugin {
   function save()
   {
   
-    $this->reload();
-    plugin::save();
+    // Ensure that we've added objects only once.
+    $this->roleOccupant = array_unique($this->roleOccupant);
+    $this->roleOccupant = array_values($this->roleOccupant);
 
+    plugin::save();
 
     /* Save data. Using 'modify' implies that the entry is already present, use 'add' for
        new entries. So do a check first... */
