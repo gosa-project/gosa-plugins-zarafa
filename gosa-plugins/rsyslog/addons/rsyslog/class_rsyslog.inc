@@ -7,10 +7,13 @@ class rsyslog extends plugin
 
   var $servers = array();
   var $selected_server = "";
-  var $selected_host = "%%";
+  var $selected_host = "all";
+  var $selected_priority = "all";
 
   var $startTime = "";
   var $stopTime  = "";
+
+  var $search_for ="";
 
   var $sort_value  = "FromHost";
   var $sort_type  = "DESC";
@@ -36,6 +39,7 @@ class rsyslog extends plugin
       $s['User'] = $attrs['rSyslogUser'][0]; 
       $s['Database'] = $attrs['rSyslogDatabase'][0]; 
       $s['Hosts'] = array();
+      $s['Priorities'] = array();
       $s['ACL'] = "";
       if(isset($attrs['rSyslogPassword'])) $s['Password'] = $attrs['rSyslogPassword'][0];
       $this->servers[$attrs['cn'][0]] = $s;
@@ -79,6 +83,16 @@ class rsyslog extends plugin
             $this->servers[$name]['status'] = "query_failed";
             $this->servers[$name]['error']  = @mysql_error();
           }
+          $query = "SELECT distinct(Priority) FROM SystemEvents ORDER BY Priority;";
+          $res = @mysql_query($query, $link);
+          if($res){
+            while($attrs = @mysql_fetch_assoc($res)){
+              $this->servers[$name]['Priorities'][$attrs['Priority']] = $attrs['Priority'];  
+            }
+          }else{
+            $this->servers[$name]['status'] = "query_failed";
+            $this->servers[$name]['error']  = @mysql_error();
+          }
         }
       }
     }
@@ -96,13 +110,24 @@ class rsyslog extends plugin
       $hosts = array('all' => _("All"));
       $hosts = array_merge($hosts,$this->servers[$this->selected_server]['Hosts']);
     }
+    if(!isset($this->servers[$this->selected_server]) || !count($this->servers[$this->selected_server]['Priorities'])){
+      $priorities = array('-' => _("-"));
+    }else{
+      $priorities = array('all' => _("All"));
+      foreach($this->servers[$this->selected_server]['Priorities'] as $id => $name){
+        $priorities[$id] = $name;
+      }
+    }
 
     $result =$this->get_result();
 
     $smarty->assign("servers",$this->servers);
     $smarty->assign("hosts",$hosts);
+    $smarty->assign("priorities",$priorities);
     $smarty->assign("selected_server",$this->selected_server);
     $smarty->assign("selected_host",$this->selected_host);
+    $smarty->assign("selected_priority",$this->selected_priority);
+    $smarty->assign("search_for",$this->search_for);
     $smarty->assign("startTime",  $this->startTime);
     $smarty->assign("stopTime",    $this->stopTime);
     $smarty->assign("sort_type",    $this->sort_type);
@@ -160,10 +185,17 @@ class rsyslog extends plugin
 
       $host = "%%";
       if($this->selected_host != "all") $host = $this->selected_host;
+      $prio = "%%";
+      if($this->selected_priority != "all") $prio = $this->selected_priority;
 
       $filter = "FROM SystemEvents WHERE FromHost like '{$host}' ";
+      $filter.= "AND Priority like '{$prio}' ";
       $filter.= "AND DeviceReportedTime >= '".(date("Y.m.d 00:00:00", strtotime($this->startTime)))."' ";     
       $filter.= "AND DeviceReportedTime <= '".(date("Y.m.d 23:59:59", strtotime($this->stopTime)))."' ";     
+
+      if(!empty($this->search_for)){
+        $filter.= "AND ( ( SysLogTag like '%".$this->search_for."%' ) OR  ( Message like '%".$this->search_for."%' ) ) ";
+      }
 
       // Detect amount of matching entries 
       $query = "SELECT count(ID) as `amount` ".$filter;
@@ -208,17 +240,44 @@ class rsyslog extends plugin
 
   function save_object()
   {
-    foreach(array("selected_host","selected_server","stopTime","startTime") as $attr){
+    // Get timestamps
+    foreach(array("stopTime","startTime") as $attr){
       if(isset($_POST[$attr])) $this->$attr = get_post($attr);
     }
+    
+    // Get server from post
+    if( isset($_POST['selected_server']) && isset($this->servers[$_POST['selected_server']])){ 
+      $this->selected_server = $_POST['selected_server'];
+    }
 
+    // Get Host
+    if( isset($_POST['selected_host']) && 
+        ($_POST['selected_host'] == "all" || 
+         in_array($_POST['selected_host'],$this->servers[$this->selected_server]['Hosts']))){
+      $this->selected_host = $_POST['selected_host'];
+    }
+
+    // Get priority from post
+    if( isset($_POST['selected_priority']) && 
+        ($_POST['selected_priority'] == "all" || 
+         in_array($_POST['selected_priority'],$this->servers[$this->selected_server]['Priorities']))){
+      $this->selected_priority = $_POST['selected_priority'];
+    }
+      
+    // Get serach string
+    if(isset($_POST['search_for'])){
+      $this->search_for = trim(get_post('search_for'));
+    } 
+
+    // Get page navigation attributes  
     if(isset($_GET['start'])) $this->page = $_GET['start'];
     if(isset($_POST['limit']) && isset($this->limits[$_POST['limit']])){
       $this->limit = $_POST['limit'];
     }
 
+    // Get sorting attributes 
     if(isset($_GET['sort_value']) && in_array($_GET['sort_value'], 
-          array("DeviceReportedTime","FromHost","Facility","Priority","Message"))){
+          array("DeviceReportedTime","FromHost","Facility","Priority","Message","SysLogTag"))){
       $sort_value = $_GET['sort_value'];
       if($this->sort_value == $sort_value){
         if($this->sort_type == "ASC"){

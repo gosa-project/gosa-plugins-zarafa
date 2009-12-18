@@ -37,6 +37,19 @@
         {/literal}
       </script> 
     </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>{t}Priority{/t}:</td>
+    <td>   
+      <select name='selected_priority' onChange='document.mainform.submit();'>
+        {html_options values=$priorities options=$priorities selected=$selected_priority}
+      </select>
+    </td>
+    <td>{t}Search{/t}:</td>
+    <td colspan="4">   
+      <input type='text' name='search_for' value='{$search_for}' style='width:250px;'>
+    </td>
     <td><input type='submit' name='search' value="{t}Search{/t}">
   </tr>
 </table>
@@ -66,6 +79,13 @@
       </td>
       <td>
         <b>
+          <a href='?plug={$plug_id}&amp;sort_value=SysLogTag'>{t}Log tag{/t}
+            {if $sort_value=="SysLogTag"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
+          </a>
+        </b>
+      </td>
+      <td>
+        <b>
           <a href='?plug={$plug_id}&amp;sort_value=Facility'>{t}Facility{/t}
             {if $sort_value=="Facility"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
           </a>
@@ -86,7 +106,7 @@
         </b>
       </td>
     </tr>
-    <tr><td colspan="5"><p class="separator">&nbsp;</p></td></tr>
+    <tr><td colspan="6"><p class="separator">&nbsp;</p></td></tr>
     {foreach from=$result.entries item=item key=key}
     <tr>
       <td title='{$item.DeviceReportedTime}' style='width:120px'>
@@ -95,14 +115,17 @@
       <td title='{$item.FromHost}'>
         {$item.FromHost}
       </td>
+      <td title='{$item.SysLogTag}'>
+        {$item.SysLogTag}
+      </td>
       <td title='{$item.Facility}'>
         {$item.Facility}
       </td>
       <td title='{$item.Priority}'>
         {$item.Priority}
       </td>
-      <td title='{$item.Message}' style="width:600px">
-        <div style='overflow:hidden; width:600px'><nobr>{$item.Message}</nobr></div>
+      <td title='{$item.Message}' style="width:400px">
+        <div style='overflow:hidden; width:400px'><nobr>{$item.Message}</nobr></div>
       </td>
     </tr>
     {/foreach}
