@@ -116,6 +116,6 @@
       {html_options options=$limits selected=$limit}
     </select>
   </div>
-  <div style='width:200px;float:left;'>{$page_sel}</div>
+  <div style='width:300px;float:left;'>{$page_sel}</div>
 {/if}
 
