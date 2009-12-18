@@ -176,12 +176,16 @@ class rsyslog extends plugin
       }
 
       if($result['count']){
+
+        if($result['count'] < $this->page) $this->page = 0;
+
         $filter.= "ORDER BY ".$this->sort_value." ".$this->sort_type." ";
         if($this->limit != "-"){
           $filter.= "LIMIT ".$this->page.", ".$this->limits[$this->limit];
         }else{
           $this->page = 0;
         }
+
         $query = "SELECT * ".$filter;
         $res = mysql_query($query, $link);
         if($res){
