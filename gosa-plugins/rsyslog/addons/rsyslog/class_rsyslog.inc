@@ -9,10 +9,22 @@ class rsyslog extends plugin
   var $selected_server = "";
   var $selected_host = "";
 
+  var $startTime = "";
+  var $stopTime  = "";
+
+  var $sort_value  = "FromHost";
+  var $sort_type  = "DESC";
+  var $limit  = 20;
+  var $limits = array(20,50,100,200,500,1000,'-');
+  var $page   = 0;
+
   function rsyslog (&$config, $dn= NULL)
   {
     $this->config= &$config;
     $this->ui = get_userinfo();
+
+    $this->startTime = date("d.m.Y", (time() - 7*24*60*60));
+    $this->stopTime  = date("d.m.Y", time());
 
     // Get list of rsyslog servers 
     $ldap = $this->config->get_ldap_link();
@@ -75,6 +87,7 @@ class rsyslog extends plugin
   function execute()
   {
     $smarty = get_smarty();
+    $smarty->assign("usePrototype", "true");
     $ui = get_userinfo();
     
     if(!isset($this->servers[$this->selected_server]) || !count($this->servers[$this->selected_server]['Hosts'])){
@@ -84,11 +97,29 @@ class rsyslog extends plugin
       $hosts = array_merge($hosts,$this->servers[$this->selected_server]['Hosts']);
     }
 
+    $result =$this->get_result();
+
     $smarty->assign("servers",$this->servers);
     $smarty->assign("hosts",$hosts);
     $smarty->assign("selected_server",$this->selected_server);
     $smarty->assign("selected_host",$this->selected_host);
-    $smarty->assign("result", $this->get_result());
+    $smarty->assign("startTime",  $this->startTime);
+    $smarty->assign("stopTime",    $this->stopTime);
+    $smarty->assign("sort_type",    $this->sort_type);
+    $smarty->assign("sort_value",   $this->sort_value);
+    $smarty->assign("limits",   $this->limits);
+    $smarty->assign("limit",    $this->limit);
+    $smarty->assign("page",    $this->page);
+    $smarty->assign("plug_id", $_GET['plug']);
+    $smarty->assign("downimg", "<img src='images/lists/sort-down.png' class='center' alt='\\/' border='0'>");
+    $smarty->assign("upimg", "<img src='images/lists/sort-up.png' class='center' alt='\\/' border='0'>");
+    $smarty->assign("result", $result);
+    if($this->limit != '-'){
+      $smarty->assign("page_sel", range_selector($result['count'],$this->page,$this->limits[$this->limit]));
+    }else{
+      $smarty->assign("page_sel", "");
+    }
+
     return($smarty->fetch(get_template_path("rSyslog.tpl", TRUE)));
   }
 
@@ -130,9 +161,10 @@ class rsyslog extends plugin
       $host = "%%";
       if($this->selected_host != "all") $host = $this->selected_host;
 
-    
-      $filter = "FROM SystemEvents WHERE FromHost like '{$host}' LIMIT 20;";
-      
+      $filter = "FROM SystemEvents WHERE FromHost like '{$host}' ";
+      $filter.= "AND DeviceReportedTime >= '".(date("Y.m.d 00:00:00", strtotime($this->startTime)))."' ";     
+      $filter.= "AND DeviceReportedTime <= '".(date("Y.m.d 23:59:59", strtotime($this->stopTime)))."' ";     
+
       // Detect amount of matching entries 
       $query = "SELECT count(ID) as `amount` ".$filter;
       $res = @mysql_query($query, $link);
@@ -144,9 +176,14 @@ class rsyslog extends plugin
       }
 
       if($result['count']){
-
+        $filter.= "ORDER BY ".$this->sort_value." ".$this->sort_type." ";
+        if($this->limit != "-"){
+          $filter.= "LIMIT ".$this->page.", ".$this->limits[$this->limit];
+        }else{
+          $this->page = 0;
+        }
         $query = "SELECT * ".$filter;
-        $res = @mysql_query($query, $link);
+        $res = mysql_query($query, $link);
         if($res){
           while($attrs = @mysql_fetch_assoc($res)){
             $result['entries'][] = $attrs;
@@ -167,9 +204,27 @@ class rsyslog extends plugin
 
   function save_object()
   {
-    foreach(array("selected_host","selected_server") as $attr){
+    foreach(array("selected_host","selected_server","stopTime","startTime") as $attr){
       if(isset($_POST[$attr])) $this->$attr = get_post($attr);
     }
+
+    if(isset($_GET['start'])) $this->page = $_GET['start'];
+    if(isset($_POST['limit']) && isset($this->limits[$_POST['limit']])){
+      $this->limit = $_POST['limit'];
+    }
+
+    if(isset($_GET['sort_value']) && in_array($_GET['sort_value'], 
+          array("DeviceReportedTime","FromHost","Facility","Priority","Message"))){
+      $sort_value = $_GET['sort_value'];
+      if($this->sort_value == $sort_value){
+        if($this->sort_type == "ASC"){
+          $this->sort_type="DESC"; 
+        }else{
+          $this->sort_type="ASC"; 
+        }
+      } 
+      $this->sort_value=$sort_value; 
+    } 
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
