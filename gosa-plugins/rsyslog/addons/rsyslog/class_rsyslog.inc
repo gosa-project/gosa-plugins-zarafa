@@ -7,14 +7,14 @@ class rsyslog extends plugin
 
   var $servers = array();
   var $selected_server = "";
-  var $selected_host = "";
+  var $selected_host = "%%";
 
   var $startTime = "";
   var $stopTime  = "";
 
   var $sort_value  = "FromHost";
   var $sort_type  = "DESC";
-  var $limit  = 20;
+  var $limit  = "0";
   var $limits = array(20,50,100,200,500,1000,'-');
   var $page   = 0;
 
