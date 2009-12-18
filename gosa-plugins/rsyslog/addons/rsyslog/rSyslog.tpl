@@ -20,11 +20,14 @@
   <table>
     {foreach from=$result.entries item=item key=key}
     <tr>
-      <td>
-        {$item.FromHost};
-      </td>
+      <td>{$item.DeviceReportedTime}</td>
+      <td>{$item.FromHost}</td>
+      <td>{$item.Facility}</td>
+      <td>{$item.Priority}</td>
+      <td>{$item.Message}</td>
     </tr>
     {/foreach}
   </table>
+  {$result.count} {t}entries matching filter{/t}
 {/if}
 

@@ -97,6 +97,7 @@ class rsyslog extends plugin
     $result = array();
     $result['entries'] = array();
     $result['status']  = "ok";
+    $result['count']   = 0;
     $result['error']   = "";
 
     // Check whether the selected server exists.
@@ -125,17 +126,37 @@ class rsyslog extends plugin
 
     // Get log entries matching the selected filter
     if(preg_match('/r/', $this->servers[$name]['ACL'])){
-      $query = "SELECT * FROM SystemEvents LIMIT 10;";
+
+      $host = "%%";
+      if($this->selected_host != "all") $host = $this->selected_host;
+
+    
+      $filter = "FROM SystemEvents WHERE FromHost like '{$host}' LIMIT 20;";
+      
+      // Detect amount of matching entries 
+      $query = "SELECT count(ID) as `amount` ".$filter;
       $res = @mysql_query($query, $link);
-      if($res){
-        while($attrs = @mysql_fetch_assoc($res)){
-          $result['entries'][] = $attrs;
-        }
-        $this->servers[$name]['status'] = "ok";
-        $this->servers[$name]['error']  = "";
+      if($res && $attrs = @mysql_fetch_assoc($res)){ 
+        $result['count'] = $attrs['amount'];
       }else{
         $this->servers[$name]['status'] = "query_failed";
         $this->servers[$name]['error']  = @mysql_error();
+      }
+
+      if($result['count']){
+
+        $query = "SELECT * ".$filter;
+        $res = @mysql_query($query, $link);
+        if($res){
+          while($attrs = @mysql_fetch_assoc($res)){
+            $result['entries'][] = $attrs;
+          }
+          $this->servers[$name]['status'] = "ok";
+          $this->servers[$name]['error']  = "";
+        }else{
+          $this->servers[$name]['status'] = "query_failed";
+          $this->servers[$name]['error']  = @mysql_error();
+        }
       }
     }
     $result['status'] =$this->servers[$name]['status'];
