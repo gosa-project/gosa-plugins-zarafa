@@ -15,7 +15,7 @@ class rsyslog extends plugin
 
   var $search_for ="";
 
-  var $sort_value  = "FromHost";
+  var $sort_value  = "DeviceReportedTime";
   var $sort_type  = "DESC";
   var $limit  = "0";
   var $limits = array(20,50,100,200,500,1000,'-');
@@ -211,7 +211,7 @@ class rsyslog extends plugin
 
         if($result['count'] < $this->page) $this->page = 0;
 
-        $filter.= "ORDER BY ".$this->sort_value." ".$this->sort_type." ";
+        $filter.= "ORDER BY ".$this->sort_value." ".$this->sort_type.", DeviceReportedTime ".$this->sort_type." ";
         if($this->limit != "-"){
           $filter.= "LIMIT ".$this->page.", ".$this->limits[$this->limit];
         }else{
