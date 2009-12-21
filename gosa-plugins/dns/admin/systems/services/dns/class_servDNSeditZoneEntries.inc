@@ -291,12 +291,7 @@ class servDNSeditZoneEntries extends plugin
       foreach($device['RECORDS'] as $Num => $Rec){
 
         /* Check values */
-        if ($Rec['type'] != "pTRRecord") {
-          $msg= $this->checkRecordType($DevName, $Rec['type'], $Rec['value']);
-          if ($msg != "") {
-            $message[]= $msg;
-          }
-        }
+        $message += $this->checkRecordType($DevName, $Rec['type'], $Rec['value']);
 
         /* Check for multiple use of unique record types
          */
@@ -511,19 +506,81 @@ class servDNSeditZoneEntries extends plugin
   /* Check record types for strange inputs */
   function checkRecordType($name, $type, $value)
   {
-    $checks= array(
-              "aRecord" => "/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/"
-             );
-
-    /* No check for entry */
-    if (!isset($checks[$type])) {
-      return "";
+    $template = _("The syntax of entry %s (record type %s, value %s) is invalid!")." %s<br><br><i>"._("Example").":</i> %s";
+    
+    $message = Array();
+    switch($type) {
+      case 'aAAARecord': // RFC 3596
+        if(!tests::is_dns_name($name)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Entry should be a DNS name."), "example");
+        }
+        if(!tests::is_ipv6($value)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Value should be an IPv6 address."), "1fff:0000:0a88:85a3:0000:0000:ac1f:8001");
+        }
+        break;
+      case 'aRecord': // RFC 1035
+        if(!tests::is_dns_name($name)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Entry should be a DNS name."), "example");
+        }
+        if(!tests::is_ip($value)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Value should be an IPv4 address."), "192.168.1.10");
+        }
+        break;
+      case 'cNAMERecord': // RFC 1035
+        if(!tests::is_dns_name($name)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Entry should be a DNS name."), "example");
+        }
+        if(!tests::is_dns_name($value)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Value should be a DNS name."), "example");
+        }
+        break;
+      case 'mXRecord': // RFC 1035
+        //value: preference target
+        if(preg_match('/^(\S+)\s+(\S+)$/', $value, $matches)) {
+          if(!tests::is_id($matches[1])) {
+            $message[] = sprintf($template, $name, $type, $value, _("Value 1 should be a number."), "10 example");
+          }
+          if(!tests::is_dns_name($matches[2])) {
+            $message[] = sprintf($template, $name, $type, $value, _("Value 2 should be a DNS name."), "10 example");
+          }
+        } else {
+            $message[] = sprintf($template, $name, $type, $value, _("Value should be composed of 'preference target'."), "10 example");
+        }
+        break;
+      case 'nSRecord': // RFC 1035
+        if(!tests::is_dns_name($value)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Value should be a DNS name."), "example");
+        }
+        break;
+      case 'pTRRecord': // RFC 1035
+        if(!tests::is_dns_name($value)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Value should be a DNS name."), "example");
+        }
+        break;
+      case 'sRVRecord': // RFC 2782
+        if(!tests::is_dns_name($name)) {
+          $message[] = sprintf($template, $name, $type, $value, _("Entry should be a DNS name."), "example");
+        }
+        //value: priority weight port target
+        if(preg_match('/^([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+(\S+)$/', $value, $matches)) {
+          if(!tests::is_id($matches[1])) {
+            $message[] = sprintf($template, $name, $type, $value, _("Value 1 (priority) should be a number."), "0 5 5060 example");
+          }
+          if(!tests::is_id($matches[2])) {
+            $message[] = sprintf($template, $name, $type, $value, _("Value 2 (weight) should be a number."), "0 5 5060 example");
+          }
+          if(!tests::is_id($matches[3])) {
+            $message[] = sprintf($template, $name, $type, $value, _("Value 3 (port) should be a number."), "0 5 5060 example");
+          }
+          if(!tests::is_dns_name($matches[4])) {
+            $message[] = sprintf($template, $name, $type, $value, _("Value 4 (target) should be a DNS name."), "0 5 5060 example");
+          }
+        } else {
+            $message[] = sprintf($template, $name, $type, $value, _("Value should be composed of 'priority weight port target'."), "0 5 5060 example");
+        }
+        break;
     }
-
-    /* Else check ;-) */
-    if (!preg_match($checks[$type], $value)) {
-      return (sprintf("The syntax of entry %s (record type %s, value %s) is invalid!", $name, $type, $value));
-    } 
+    return $message;
   }
 
 
