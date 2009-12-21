@@ -14,8 +14,8 @@ class rSyslogServer extends goService{
   var $dn               = NULL;
   var $acl;
   var $cn                 = "";
-  var $rSyslogDatabase    = "";
-  var $rSyslogUser        = "";
+  var $rSyslogDatabase    = "Syslog";
+  var $rSyslogUser        = "rsyslog";
   var $rSyslogPassword    = "";  
   var $view_logged  =FALSE;
 
