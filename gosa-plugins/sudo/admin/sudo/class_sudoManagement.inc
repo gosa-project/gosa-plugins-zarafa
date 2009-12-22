@@ -41,12 +41,12 @@ class sudoManagement extends management
     $this->storagePoints = array(get_ou("sudoRDN"));
  
     // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
-  #    $filter= session::global_get(get_class($this)."_filter");
- #   } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("sudo-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-   # }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -60,7 +60,19 @@ class sudoManagement extends management
     if($this->config->get_cfg_value("enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
     }
+    $this->registerAction("new_default", "newEntry");
     parent::__construct($config, $ui, "sudo", $headpage);
+  }
+
+  function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    management::newEntry($action,$target,$all,$altTabClass,$altTabType,$altAclCategory);
+
+    /* This entry will become the default entry */
+    if($action == "new_default"){
+      $this->tabObject->set_default(TRUE);
+    }
+
   }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
