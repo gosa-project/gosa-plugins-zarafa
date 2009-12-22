@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: main.inc 9275 2008-03-04 07:29:22Z cajus $$
+ * ID: $$Id: main.inc 14740 2009-11-04 09:41:16Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* Remove locks created by this plugin
 */
 if ($remove_lock){
@@ -36,25 +35,13 @@ if ( $cleanup ){
   session::un_set('sudoManagement');
 }else{
 
-  /* Create sudoManagement object on demand */
+  /* Create rolemanagement object on demand */
   if (!session::is_set('sudoManagement')){
-    session::set('sudoManagement',new sudoManagement ($config, $ui));
+    $sudoManagement= new sudoManagement ($config, $ui);
+    session::set('sudoManagement',$sudoManagement);
   }
   $sudoManagement = session::get('sudoManagement');
-  $sudoManagement->save_object();
-  $output= $sudoManagement->execute();
-
-  /* Page header*/
-  if (get_object_info() != ""){
-    $display= print_header(get_template_path('plugins/sudo/images/sudo.png'),
-                            _("Sudo role administration"), "<img alt=\"\" align=\"middle\" src=\"".
-                            get_template_path('images/lists/locked.png')."\"> ".
-                            LDAP::fix(get_object_info()));
-  } else {
-    $display= print_header(get_template_path('plugins/sudo/images/sudo.png'), _("Sudo role administration"));
-  }
-
-  $display.= $output;
+  $display= $sudoManagement->execute();
 
   /* Reset requested? */
   if (isset($_GET['reset']) && $_GET['reset'] == 1){
