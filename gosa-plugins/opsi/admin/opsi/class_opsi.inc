@@ -296,12 +296,66 @@ class opsi extends gosaSupportDaemon
     }
 
     $res    = $this->send_data("gosa_opsi_get_full_product_host_information",$this->target,$data,TRUE);
-    print_a($res);
     $items = array();
+
+    $attrs = array("PRIORITY","ONCESCRIPT","LICENSEREQUIRED","PACKAGEVERSION","PRODUCTVERSION",
+        "ADVICE","SETUPSCRIPT","WINDOWSSOFTWAREIDS","PXECONFIGTEMPLATE","NAME","CREATIONTIMESTAMP",
+        "ALWAYSSCRIPT","PRODUCTID","DESCRIPTION","UNINSTALLSCRIPT","UPDATESCRIPT","PRODUCTCLASSNAMES");
+
     if(isset($res['XML'][0]['ITEM'])){
       foreach($res['XML'][0]['ITEM'] as $entry){
-        $e = array("DESC" => $entry['DESCRIPTION'][0]['VALUE'],
-                   "NAME" => $entry['PRODUCTID'][0]['VALUE']);
+        $e = array();
+        foreach($attrs as $attr){
+          if(isset($entry[$attr])){
+            foreach($entry[$attr] as $key => $value){
+              if(isset($value['VALUE'])){
+                $e['data'][$attr] = $value['VALUE'];
+              }elseif($value['ELEMENT']){
+                foreach($value['ELEMENT'] as $element){
+                  $e['data'][$attr][] = $element['VALUE'];
+                }
+              }
+            }
+          }
+        }
+
+        $e["configurable"] = FALSE;
+        if(isset($entry['PROPERTIES']) && count($entry['PROPERTIES'])){
+          $e["configurable"] = TRUE;
+          $p_data = array();
+
+          foreach($entry['PROPERTIES'][0] as $p_name => $p_values){
+            if(empty($p_values)) continue;
+            $p_data[$p_name]= array();
+            foreach(array('CURRENT','DEFAULT','DESCRIPTION') as $p_tmp){
+              if(isset($p_values[0][$p_tmp])){
+                if(isset($p_values[0][$p_tmp][0]['VALUE'])){
+                  $p_data[$p_name][$p_tmp] = $p_values[0][$p_tmp][0]['VALUE'];
+                }
+              }
+            }
+
+            if(isset($p_values[0]['VALUES'][0]['ELEMENT'])){
+              foreach($p_values[0]['VALUES'][0]['ELEMENT'] as $val){
+                $p_data[$p_name]['VALUE'][] = $val['VALUE'];
+              }
+              $p_data[$p_name]['VALUE_CNT'] = count($p_data[$p_name]['VALUE']);
+            } 
+          }
+
+          $e["data"]['PROPERTIES'] = $p_data;
+        }
+
+
+        $e["installed"] = FALSE;
+        if(isset($entry['ACTIONREQUEST'])){
+          $e["installed"] = TRUE;
+        }
+
+        $e["requires_licence"] = FALSE;
+        if(isset($e['data']['LICENSEREQUIRED']) && preg_match("/true/i",$e['data']['LICENSEREQUIRED'])){
+          $e["requires_licence"] = TRUE;
+        }
         $items[$entry['PRODUCTID'][0]['VALUE']] = $e;
       }
     }

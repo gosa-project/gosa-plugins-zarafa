@@ -97,10 +97,10 @@ class opsiGeneric extends plugin
       $this->is_account = TRUE;
     }
 
+
     /* Try to load client infos from the gosa support daemon
      */
     if(!empty($this->hostId)){
-
       $list = $this->opsi->list_clients($this->hostId);
       $err |= $this->opsi->is_error();
 
@@ -125,6 +125,12 @@ class opsiGeneric extends plugin
       }
     }
 
+    // Get package info 
+    if(!empty($this->hostId)){
+      $list = $this->opsi->get_full_product_host_information($this->hostId);
+    }
+    
+
     /* Read informations about available netboot products. 
         If not already done, before.
      */
@@ -137,11 +143,21 @@ class opsiGeneric extends plugin
     /* Read informations about available netboot products. 
         If not already done, before.
      */
-    if(!$err && !count($this->a_availableLocalProducts)) {
-      $this->a_availableLocalProducts   = $this->opsi->get_local_products();
-      ksort($this->a_availableLocalProducts);
-      $err |= $this->opsi->is_error();
+    foreach($list as $key => $entry){
+      if(!$entry['installed']){
+        $this->a_availableLocalProducts[$key] = array('DESC'=>$entry['data']['DESCRIPTION'],'NAME'=>$key);
+      }else{
+        $this->a_selectedLocalProducts[$key] = array('DESC'=>$entry['data']['DESCRIPTION'],'NAME'=>$key);
+        if($entry['configurable']){
+          $this->a_selectedLocalProducts[$key]['CFG'] = $entry['data']['PROPERTIES'];
+        }
+      }
     }
+#   if(!$err && !count($this->a_availableLocalProducts)) {
+#     $this->a_availableLocalProducts   = $this->opsi->get_local_products();
+#     ksort($this->a_availableLocalProducts);
+#     $err |= $this->opsi->is_error();
+#   }
 
     /* Get products selected by this host.
      */
@@ -160,26 +176,26 @@ class opsiGeneric extends plugin
       $err |= $this->opsi->is_error();
     }
 
-    /* Get all selected local products 
-     */
-    if(!$err && !empty($this->hostId) && !count($this->a_selectedLocalProducts)) {
-      $tmp = $this->opsi->get_local_products($this->hostId); 
-      $err |= $this->opsi->is_error();
-      $this->a_selectedLocalProducts = $tmp;
-    }
+#   /* Get all selected local products 
+#    */
+#   if(!$err && !empty($this->hostId) && !count($this->a_selectedLocalProducts)) {
+#     $tmp = $this->opsi->get_local_products($this->hostId); 
+#     $err |= $this->opsi->is_error();
+#     $this->a_selectedLocalProducts = $tmp;
+#   }
+#
+#   /* Load product configuration for all already selected products.
+#    */
+#   if(!$err && !empty($this->hostId)) {
+#     foreach($this->a_selectedLocalProducts as $name => $data){
+#       if(!$err && !isset($this->a_selectedLocalProducts[$name]['CFG'])){
+#         $CFG = $this->opsi->get_product_properties($name,$this->hostId);
+#         $err |= $this->opsi->is_error();
+#         $this->a_selectedLocalProducts[$name]['CFG'] = $CFG;
+#       }
+#     }
+#   }
 
-    /* Load product configuration for all already selected products.
-     */
-    if(!$err && !empty($this->hostId)) {
-      foreach($this->a_selectedLocalProducts as $name => $data){
-        if(!$err && !isset($this->a_selectedLocalProducts[$name]['CFG'])){
-          $CFG = $this->opsi->get_product_properties($name,$this->hostId);
-          $err |= $this->opsi->is_error();
-          $this->a_selectedLocalProducts[$name]['CFG'] = $CFG;
-        }
-      }
-    }
-  
     /* Check if everything went fine else reset everything and display a retry button 
      */
     if($err){
