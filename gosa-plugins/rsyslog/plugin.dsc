@@ -1,5 +1,5 @@
 [gosa-plugin]
-name = log
+name = rsyslog
 description = "Syslog and GOsa logging plugin"
 version = 2.6.6
 author = "Cajus Pollmeier <pollmeier@gonicus.de>"
