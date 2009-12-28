@@ -299,7 +299,7 @@ class opsi extends gosaSupportDaemon
     $items = array();
 
     $attrs = array("PRIORITY","ONCESCRIPT","LICENSEREQUIRED","PACKAGEVERSION","PRODUCTVERSION",
-        "ADVICE","SETUPSCRIPT","WINDOWSSOFTWAREIDS","PXECONFIGTEMPLATE","NAME","CREATIONTIMESTAMP",
+        "ADVICE","SETUPSCRIPT","WINDOWSSOFTWAREIDS","PXECONFIGTEMPLATE","NAME","CREATIONTIMESTAMP", "TYPE",
         "ALWAYSSCRIPT","PRODUCTID","DESCRIPTION","UNINSTALLSCRIPT","UPDATESCRIPT","PRODUCTCLASSNAMES");
 
     if(isset($res['XML'][0]['ITEM'])){
@@ -359,6 +359,7 @@ class opsi extends gosaSupportDaemon
         $items[$entry['PRODUCTID'][0]['VALUE']] = $e;
       }
     }
+print_a($items);
     return($items);
   }
 
