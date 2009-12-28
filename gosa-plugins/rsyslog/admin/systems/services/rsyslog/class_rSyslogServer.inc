@@ -3,20 +3,20 @@
 class rSyslogServer extends goService{
 	
   /* This plugin only writes its objectClass */
-  var $objectclasses    = array("rSyslogServer");
-  var $attributes       = array("rSyslogDatabase","rSyslogUser","rSyslogPassword");
+  var $objectclasses    = array("gosaLogServer");
+  var $attributes       = array("goLogDB","goLogDBUser","goLogDBPassword");
   var $StatusFlag       = "";
 
   /* This class can't be assigned twice so it conflicts with itsself */
-  var $conflicts        = array("rSyslogServer");
+  var $conflicts        = array("gosaLogServer");
 
   var $DisplayName      = "";
   var $dn               = NULL;
   var $acl;
   var $cn                 = "";
-  var $rSyslogDatabase    = "Syslog";
-  var $rSyslogUser        = "rsyslog";
-  var $rSyslogPassword    = "";  
+  var $goLogDB    = "Syslog";
+  var $goLogDBUser        = "rsyslog";
+  var $goLogDBPassword    = "";  
   var $view_logged  =FALSE;
 
 
@@ -63,13 +63,13 @@ class rSyslogServer extends goService{
   function check()
   { 
     $message = plugin::check();
-    if (empty($this->rSyslogUser)){
+    if (empty($this->goLogDBUser)){
       $message[]= msgPool::required(_("User"));
     }
-    if (empty($this->rSyslogPassword)){
+    if (empty($this->goLogDBPassword)){
       $message[]= msgPool::required(_("Password"));
     }
-    if (empty($this->rSyslogDatabase)){
+    if (empty($this->goLogDB)){
       $message[]= msgPool::required(_("Database"));
     }
     return($message);
@@ -96,9 +96,9 @@ class rSyslogServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "rSyslogDatabase" => _("Database"),
-            "rSyslogUser"     => _("User"),
-            "rSyslogPassword" => _("Password"), 
+            "goLogDB" => _("Database"),
+            "goLogDBUser"     => _("User"),
+            "goLogDBPassword" => _("Password"), 
             "viewEntries"     => _("Allow view of entries on this server")) 
           ));
   }

@@ -3,24 +3,24 @@
     <tr>
      <td>{t}Database{/t}{$must}</td>
      <td>
-{render acl=$rSyslogDatabaseACL}
- 	<input name="rSyslogDatabase" id="rSyslogDatabase" size=30 maxlength=60 value="{$rSyslogDatabase}">
+{render acl=$goLogDBACL}
+ 	<input name="goLogDB" id="goLogDB" size=30 maxlength=60 value="{$goLogDB}">
 {/render}
      </td>
     </tr>
     <tr>
      <td>{t}Database user{/t}{$must}</td>
      <td>
-{render acl=$rSyslogUserACL}
-	<input name="rSyslogUser" id="rSyslogUser" size=30 maxlength=60 value="{$rSyslogUser}">
+{render acl=$goLogDBUserACL}
+	<input name="goLogDBUser" id="goLogDBUser" size=30 maxlength=60 value="{$goLogDBUser}">
 {/render}
      </td>
     </tr>
     <tr>
      <td>{t}Password{/t}{$must}</td>
      <td>
-{render acl=$rSyslogPasswordACL}
- 	<input type="password" name="rSyslogPassword" id="rSyslogPassword" size=30 maxlength=60 value="{$rSyslogPassword}">
+{render acl=$goLogDBPasswordACL}
+ 	<input type="password" name="goLogDBPassword" id="goLogDBPassword" size=30 maxlength=60 value="{$goLogDBPassword}">
 {/render}
      </td>
     </tr>
