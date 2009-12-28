@@ -297,8 +297,7 @@ class opsi extends gosaSupportDaemon
 
     $res    = $this->send_data("gosa_opsi_get_full_product_host_information",$this->target,$data,TRUE);
     $items = array();
-
-    $attrs = array("PRIORITY","ONCESCRIPT","LICENSEREQUIRED","PACKAGEVERSION","PRODUCTVERSION",
+    $attrs = array("TYPE","PRIORITY","ONCESCRIPT","LICENSEREQUIRED","PACKAGEVERSION","PRODUCTVERSION",
         "ADVICE","SETUPSCRIPT","WINDOWSSOFTWAREIDS","PXECONFIGTEMPLATE","NAME","CREATIONTIMESTAMP", "TYPE",
         "ALWAYSSCRIPT","PRODUCTID","DESCRIPTION","UNINSTALLSCRIPT","UPDATESCRIPT","PRODUCTCLASSNAMES");
 
