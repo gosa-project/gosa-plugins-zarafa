@@ -2,7 +2,7 @@
 
 class rsyslog extends plugin
 {
-  var $plHeadline= "rSyslog";
+  var $plHeadline= "System logs";
   var $plDescription= "View system logs";
 
   var $servers = array();
@@ -104,13 +104,13 @@ class rsyslog extends plugin
     $smarty->assign("usePrototype", "true");
     $ui = get_userinfo();
     
-    if(!isset($this->servers[$this->selected_server]) || !count($this->servers[$this->selected_server]['Hosts'])){
+    if(!isset($this->servers[$this->selected_server]['Hosts']) || !count($this->servers[$this->selected_server]['Hosts'])){
       $hosts = array('-' => _("-"));
     }else{
       $hosts = array('all' => _("All"));
       $hosts = array_merge($hosts,$this->servers[$this->selected_server]['Hosts']);
     }
-    if(!isset($this->servers[$this->selected_server]) || !count($this->servers[$this->selected_server]['Priorities'])){
+    if(!isset($this->servers[$this->selected_server]['Priorities']) || !count($this->servers[$this->selected_server]['Priorities'])){
       $priorities = array('-' => _("-"));
     }else{
       $priorities = array('all' => _("All"));
@@ -158,8 +158,8 @@ class rsyslog extends plugin
 
     // Check whether the selected server exists.
     if(!isset($this->servers[$this->selected_server])){
-      $this->servers[$name]['status'] = sprintf(_("The selected server '%s' does not exists!"),$this->selected_server);
-      $this->servers[$name]['error']  = $this->servers[$this->selected_server]['error'];
+      $this->servers["unknown"]['status'] = sprintf(_("The selected server '%s' does not exists!"),$this->selected_server);
+      $this->servers["unknown"]["cn"] = "-";
       return($result);
     }
 
@@ -181,7 +181,7 @@ class rsyslog extends plugin
     }
 
     // Get log entries matching the selected filter
-    if(preg_match('/r/', $this->servers[$name]['ACL'])){
+    if(isset($this->servers[$name]['ACL']) && preg_match('/r/', $this->servers[$name]['ACL'])){
 
       $host = "%%";
       if($this->selected_host != "all") $host = $this->selected_host;
