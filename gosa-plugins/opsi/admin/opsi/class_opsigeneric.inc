@@ -537,12 +537,12 @@ class opsiGeneric extends plugin
      */
     $res = array();
     foreach($c2 as $name => $value){
-      if(!isset($c1[$name]) || $c1[$name]['DEFAULT'] != $c2[$name]['DEFAULT']){
+      if(!isset($c1[$name]) || $c1[$name]['CURRENT'] != $c2[$name]['CURRENT']){
         $res[$name] = $c2[$name];
       }
     }
     foreach($c1 as $name => $value){
-      if(!isset($c2[$name]) || $c2[$name]['DEFAULT'] != $c1[$name]['DEFAULT']){
+      if(!isset($c2[$name]) || $c2[$name]['CURRENT'] != $c1[$name]['CURRENT']){
         $res[$name] = $c1[$name];
       }
     }

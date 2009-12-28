@@ -18,11 +18,11 @@
 			{if $item.VALUE_CNT}
 				<select name="value_{$key}" style='width:180px;'>
 				{foreach from=$item.VALUE key=k item=i}
-					<option {if $item.DEFAULT == $i} selected {/if} value="{$i}">{$i}</option>
+					<option {if $item.CURRENT == $i} selected {/if} value="{$i}">{$i}</option>
 				{/foreach}
 				</select>
 			{else}
-				<input type='input' name='value_{$key}' value="{$item.DEFAULT}" style='width:280px;'>
+				<input type='input' name='value_{$key}' value="{$item.CURRENT}" style='width:280px;'>
 			{/if}
 {/render}
 		</td>

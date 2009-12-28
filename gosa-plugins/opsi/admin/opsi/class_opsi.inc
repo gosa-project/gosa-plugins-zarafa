@@ -436,7 +436,7 @@ class opsi extends gosaSupportDaemon
     /* Add properties */
     $data['item'] = array();
     foreach($cfg as $name => $value){
-      $data['item'][] = "<name>".$name."</name><value>".$value['DEFAULT']."</value>";
+      $data['item'][] = "<name>".$name."</name><value>".$value['CURRENT']."</value>";
     }  
 
     /* Query SI server */
