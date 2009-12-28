@@ -358,7 +358,6 @@ class opsi extends gosaSupportDaemon
         $items[$entry['PRODUCTID'][0]['VALUE']] = $e;
       }
     }
-print_a($items);
     return($items);
   }
 
