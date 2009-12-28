@@ -2366,7 +2366,7 @@ sub opsi_get_full_product_host_information {
 
           # Add flat hash information
           my @entries= ( "priority", "onceScript", "licenseRequired", "packageVersion", "productVersion", "advice",
-                              "setupScript", "windowsSoftwareIds", "installationStatus", "pxeConfigTemplate", "name",
+                              "setupScript", "windowsSoftwareIds", "installationStatus", "pxeConfigTemplate", "name", "type",
                               "creationTimestamp", "alwaysScript", "productId", "description", "actionRequest", "uninstallScript",
                               "action", "updateScript", "productClassNames");
           foreach my $entry (@entries) {
