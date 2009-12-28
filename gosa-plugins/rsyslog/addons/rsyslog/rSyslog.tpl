@@ -17,6 +17,15 @@
         {/foreach}
       </select>
     </td>
+    <td>{t}Priority{/t}:</td>
+    <td>   
+      <select name='selected_priority' onChange='document.mainform.submit();'>
+        {html_options values=$priorities options=$priorities selected=$selected_priority}
+      </select>
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
     <td>{t}From{/t}:</td>
     <td>
       <input type="text" id="startTime" name="startTime" class="date" style='width:100px' value="{$startTime}">
@@ -27,7 +36,7 @@
         {/literal}
       </script> 
     </td>
-    <td>{t}to{/t}:</td>
+    <td>{t}till{/t}:</td>
     <td>
       <input type="text" id="stopTime" name="stopTime" class="date" style='width:100px' value="{$stopTime}">
       <script type="text/javascript">
@@ -37,20 +46,11 @@
         {/literal}
       </script> 
     </td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>{t}Priority{/t}:</td>
-    <td>   
-      <select name='selected_priority' onChange='document.mainform.submit();'>
-        {html_options values=$priorities options=$priorities selected=$selected_priority}
-      </select>
-    </td>
     <td>{t}Search{/t}:</td>
-    <td colspan="4">   
+    <td>   
       <input type='text' name='search_for' value='{$search_for}' style='width:250px;'>
     </td>
-    <td><input type='submit' name='search' value="{t}Search{/t}">
+    <td><input type='submit' name='search' value="{t}Search{/t}"></td>
   </tr>
 </table>
 
