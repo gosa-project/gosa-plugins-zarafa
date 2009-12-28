@@ -1,7 +1,10 @@
-
-<table width="100%">
+<div class="contentboxh">
+ <p class="contentboxh"><img src="images/launch.png" align="right" alt="[F]">{t}Filter{/t}</p>
+</div>
+<div class="contentboxb">
+<table summary="" width="100%" class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;" border=0>
   <tr>
-    <td>{t}Server{/t}:</td>
+    <td><img src="plugins/rsyslog/images/server.png" alt="" class="center">&nbsp;{t}Server{/t}:</td>
     <td>   
       <select name='selected_server' onChange='document.mainform.submit();'>
         {foreach from=$servers item=item key=key}
@@ -9,7 +12,7 @@
         {/foreach}
       </select>
     </td>
-    <td>{t}Host{/t}:</td>
+    <td><img src="plugins/rsyslog/images/workstation.png" alt="" class="center">&nbsp;{t}Host{/t}:</td>
     <td>   
       <select name='selected_host' onChange='document.mainform.submit();'>
         {foreach from=$hosts item=item key=key}
@@ -17,7 +20,7 @@
         {/foreach}
       </select>
     </td>
-    <td>{t}Priority{/t}:</td>
+    <td><img src="images/small_warning.png" alt="" class="center">&nbsp;{t}Priority{/t}:</td>
     <td>   
       <select name='selected_priority' onChange='document.mainform.submit();'>
         {html_options values=$priorities options=$priorities selected=$selected_priority}
@@ -26,7 +29,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>{t}From{/t}:</td>
+    <td><img src="plugins/rsyslog/images/clock.png" alt="" class="center">&nbsp;{t}From{/t}:</td>
     <td>
       <input type="text" id="startTime" name="startTime" class="date" style='width:100px' value="{$startTime}">
       <script type="text/javascript">
@@ -46,15 +49,15 @@
         {/literal}
       </script> 
     </td>
-    <td>{t}Search{/t}:</td>
+    <td><img src="images/lists/search.png" alt="" class="center">&nbsp;{t}Search{/t}:</td>
     <td>   
       <input type='text' name='search_for' value='{$search_for}' style='width:250px;'>
     </td>
     <td><input type='submit' name='search' value="{t}Search{/t}"></td>
   </tr>
 </table>
+</div>
 
-<p class="separator">&nbsp;</p>
 {if $result.status != 'ok'}
   <b>{t}Error{/t}: &nbsp;{$result.status}</b><br>
   {$result.error}<br>
