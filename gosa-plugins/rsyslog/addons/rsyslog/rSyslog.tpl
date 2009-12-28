@@ -61,54 +61,46 @@
 {else}
 
   <br>
-  <table width="100%">
-    <tr>
+  <table style="width:100%;background-color: #B0B0B0;" cellspacing=1 cellpadding=2>
+    <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
       <td>
-        <b>
-          <a href='?plug={$plug_id}&amp;sort_value=DeviceReportedTime'>{t}Received{/t}
-            {if $sort_value=="DeviceReportedTime"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
-          </a>
-        </b>
+        <a href='?plug={$plug_id}&amp;sort_value=DeviceReportedTime'>{t}Received{/t}
+          {if $sort_value=="DeviceReportedTime"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
+        </a>
       </td>
       <td>
-        <b>
-          <a href='?plug={$plug_id}&amp;sort_value=FromHost'>{t}Host{/t}
-            {if $sort_value=="FromHost"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
-          </a>
-        </b>
+        <a href='?plug={$plug_id}&amp;sort_value=FromHost'>{t}Host{/t}
+          {if $sort_value=="FromHost"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
+        </a>
       </td>
       <td>
-        <b>
-          <a href='?plug={$plug_id}&amp;sort_value=SysLogTag'>{t}Log tag{/t}
-            {if $sort_value=="SysLogTag"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
-          </a>
-        </b>
+        <a href='?plug={$plug_id}&amp;sort_value=SysLogTag'>{t}Log tag{/t}
+          {if $sort_value=="SysLogTag"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
+        </a>
       </td>
       <td>
-        <b>
-          <a href='?plug={$plug_id}&amp;sort_value=Facility'>{t}Facility{/t}
-            {if $sort_value=="Facility"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
-          </a>
-        </b>
+        <a href='?plug={$plug_id}&amp;sort_value=Facility'>{t}Facility{/t}
+          {if $sort_value=="Facility"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
+        </a>
       </td>
       <td>
-        <b>
-          <a href='?plug={$plug_id}&amp;sort_value=Priority'>{t}Priority{/t}
-            {if $sort_value=="Priority"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
-          </a>
-        </b>
+        <a href='?plug={$plug_id}&amp;sort_value=Priority'>{t}Priority{/t}
+          {if $sort_value=="Priority"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
+        </a>
       </td>
       <td>
-        <b>
-          <a href='?plug={$plug_id}&amp;sort_value=Message'>{t}Message{/t}
-            {if $sort_value=="Message"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
-          </a>
-        </b>
+        <a href='?plug={$plug_id}&amp;sort_value=Message'>{t}Message{/t}
+          {if $sort_value=="Message"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
+        </a>
       </td>
     </tr>
-    <tr><td colspan="6"><p class="separator">&nbsp;</p></td></tr>
     {foreach from=$result.entries item=item key=key}
-    <tr>
+
+    {if ($key%2)} 
+    <tr style='background-color: #ECECEC;'>
+    {else}
+    <tr style='background-color: #F5F5F5;'>
+    {/if}
       <td title='{$item.DeviceReportedTime}' style='width:120px'>
         {$item.DeviceReportedTime}
       </td>
