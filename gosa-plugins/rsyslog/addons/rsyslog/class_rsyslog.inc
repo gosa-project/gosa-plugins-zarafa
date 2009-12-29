@@ -229,6 +229,7 @@ class rsyslog extends plugin
             $attrs['DeviceReportedTime']= $this->time2local($attrs['DeviceReportedTime']);
             $attrs['Facility']= $this->facility2string($attrs['Facility']);
             $attrs['Priority']= $this->severity2string($attrs['Priority']);
+            $attrs['SysLogTag']= preg_replace("/:$/", "", $attrs['SysLogTag']);
             $result['entries'][] = $attrs;
           }
           $this->servers[$name]['status'] = "ok";
