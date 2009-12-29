@@ -157,7 +157,7 @@ class rsyslog extends plugin
     $result['error']   = "";
 
     // Check whether the selected server exists.
-    if(!isset($this->servers[$this->selected_server])){
+    if($this->selected_server == "unknown" || !isset($this->servers[$this->selected_server])){
       $this->servers["unknown"]['status'] = sprintf(_("The selected server '%s' does not exists!"),$this->selected_server);
       $this->servers["unknown"]["cn"] = "-";
       return($result);
@@ -165,6 +165,9 @@ class rsyslog extends plugin
 
     // Check database connectivity    
     $name = $this->selected_server;
+
+
+
     $server = $this->servers[$name];
     $link = @mysql_pconnect($server['cn'], $server['User'], $server['Password']);
     if ($link === FALSE){
@@ -251,14 +254,14 @@ class rsyslog extends plugin
     }
 
     // Get Host
-    if( isset($_POST['selected_host']) && 
+    if( isset($this->servers[$this->selected_server]['Hosts']) &&  isset($_POST['selected_host']) && 
         ($_POST['selected_host'] == "all" || 
          in_array($_POST['selected_host'],$this->servers[$this->selected_server]['Hosts']))){
       $this->selected_host = $_POST['selected_host'];
     }
 
     // Get priority from post
-    if( isset($_POST['selected_priority']) && 
+    if( isset($this->servers[$this->selected_server]['Priorities']) &&  isset($_POST['selected_priority']) && 
         ($_POST['selected_priority'] == "all" || 
          in_array($_POST['selected_priority'],$this->servers[$this->selected_server]['Priorities']))){
       $this->selected_priority = $_POST['selected_priority'];
