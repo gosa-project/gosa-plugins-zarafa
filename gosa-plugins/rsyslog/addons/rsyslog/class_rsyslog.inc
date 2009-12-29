@@ -140,7 +140,7 @@ class rsyslog extends plugin
     $smarty->assign("upimg", "<img src='images/lists/sort-up.png' class='center' alt='\\/' border='0'>");
     $smarty->assign("result", $result);
     $smarty->assign("matches", sprintf(_("%s entries match the filter"), $result["count"]));
-    if($this->limit != '-'){
+    if($this->limits[$this->limit] != '-'){
       $smarty->assign("page_sel", range_selector($result['count'],$this->page,$this->limits[$this->limit]));
     }else{
       $smarty->assign("page_sel", "");
@@ -216,7 +216,7 @@ class rsyslog extends plugin
         if($result['count'] < $this->page) $this->page = 0;
 
         $filter.= "ORDER BY ".$this->sort_value." ".$this->sort_type.", DeviceReportedTime ".$this->sort_type." ";
-        if($this->limit != "-"){
+        if($this->limits[$this->limit]!= "-"){
           $filter.= "LIMIT ".$this->page.", ".$this->limits[$this->limit];
         }else{
           $this->page = 0;
