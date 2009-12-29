@@ -1,11 +1,11 @@
 <div class="contentboxh">
  <p class="contentboxh"><img src="images/launch.png" align="right" alt="[F]">{t}Filter{/t}</p>
 </div>
-<div class="contentboxb">
-<table summary="" width="100%" class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;" border=0>
+<div class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;">
+<table summary="" class="contentboxb" border=0>
   <tr>
     <td><img src="plugins/rsyslog/images/server.png" alt="" class="center">&nbsp;{t}Server{/t}:</td>
-    <td>   
+    <td width="20%">
       <select name='selected_server' onChange='document.mainform.submit();'>
         {foreach from=$servers item=item key=key}
           <option value='{$key}' {if $key == $selected_server} selected {/if}>{$item.cn}</option>
@@ -13,7 +13,7 @@
       </select>
     </td>
     <td><img src="plugins/rsyslog/images/workstation.png" alt="" class="center">&nbsp;{t}Host{/t}:</td>
-    <td>   
+    <td width="20%">
       <select name='selected_host' onChange='document.mainform.submit();'>
         {foreach from=$hosts item=item key=key}
           <option value='{$key}' {if $key == $selected_host} selected {/if}>{$item}</option>
@@ -26,7 +26,7 @@
         {html_options values=$priorities options=$priorities selected=$selected_priority}
       </select>
     </td>
-    <td>&nbsp;</td>
+    <td width="">&nbsp;</td>
   </tr>
   <tr>
     <td><img src="plugins/rsyslog/images/clock.png" alt="" class="center">&nbsp;{t}From{/t}:</td>
