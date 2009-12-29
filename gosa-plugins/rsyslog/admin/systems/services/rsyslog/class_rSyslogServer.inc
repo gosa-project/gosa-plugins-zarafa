@@ -171,8 +171,8 @@ class rSyslogServer extends goService{
   static function plInfo()
   {
     return (array(
-          "plShortName"   => _("rSyslog logging service"),
-          "plDescription" => _("rSyslog logging service")." ("._("Services").")",
+          "plShortName"   => _("Logging service"),
+          "plDescription" => _("Logging service")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 99,

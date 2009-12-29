@@ -4,7 +4,7 @@
 <input type="checkbox" name="use_database" value="1" {if $use_database} checked {/if}
   onChange="changeState('gosaLogDB'); changeState('goLogAdmin');changeState('goLogPassword');"
   class="center">
-<b>{t}This server provides a rSyslog mysql database{/t}</b>
+<b>{t}Server provides a syslog mysql database{/t}</b>
 <table summary="">
     <tr>
      <td>{t}Database{/t}{$must}</td>

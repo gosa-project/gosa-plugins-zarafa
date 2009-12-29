@@ -67,17 +67,17 @@
   <table style="width:100%;background-color: #B0B0B0;" cellspacing=1 cellpadding=2>
     <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
       <td>
-        <a href='?plug={$plug_id}&amp;sort_value=DeviceReportedTime'>{t}Received{/t}
+        <a href='?plug={$plug_id}&amp;sort_value=DeviceReportedTime'>{t}Date{/t}
           {if $sort_value=="DeviceReportedTime"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
         </a>
       </td>
       <td>
-        <a href='?plug={$plug_id}&amp;sort_value=FromHost'>{t}Host{/t}
+        <a href='?plug={$plug_id}&amp;sort_value=FromHost'>{t}Source{/t}
           {if $sort_value=="FromHost"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
         </a>
       </td>
       <td>
-        <a href='?plug={$plug_id}&amp;sort_value=SysLogTag'>{t}Log tag{/t}
+        <a href='?plug={$plug_id}&amp;sort_value=SysLogTag'>{t}Header{/t}
           {if $sort_value=="SysLogTag"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
         </a>
       </td>
@@ -87,7 +87,7 @@
         </a>
       </td>
       <td>
-        <a href='?plug={$plug_id}&amp;sort_value=Priority'>{t}Priority{/t}
+        <a href='?plug={$plug_id}&amp;sort_value=Priority'>{t}Severity{/t}
           {if $sort_value=="Priority"}{if $sort_type=="DESC"}{$downimg}{else}{$upimg}{/if}{/if}
         </a>
       </td>
@@ -128,7 +128,7 @@
   {if !$result.count == 0}
   <p class="separator">&nbsp;</p>
   {/if}
-  <div style='width:40%;float:left;'>{$result.count} {t}entries matching filter{/t}</div>
+  <div style='width:40%;float:left;'>{$matches}</div>
   <div style='width:80px;float:right;'>
     <select name='limit' onChange='document.mainform.submit();'>
       {html_options options=$limits selected=$limit}

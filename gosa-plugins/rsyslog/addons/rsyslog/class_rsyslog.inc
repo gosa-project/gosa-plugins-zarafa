@@ -139,6 +139,7 @@ class rsyslog extends plugin
     $smarty->assign("downimg", "<img src='images/lists/sort-down.png' class='center' alt='\\/' border='0'>");
     $smarty->assign("upimg", "<img src='images/lists/sort-up.png' class='center' alt='\\/' border='0'>");
     $smarty->assign("result", $result);
+    $smarty->assign("matches", sprintf(_("%s entries match the filter"), $result["count"]));
     if($this->limit != '-'){
       $smarty->assign("page_sel", range_selector($result['count'],$this->page,$this->limits[$this->limit]));
     }else{

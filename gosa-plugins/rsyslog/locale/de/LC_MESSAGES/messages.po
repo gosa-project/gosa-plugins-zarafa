@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-29 14:10+0100\n"
+"POT-Creation-Date: 2009-12-29 14:24+0100\n"
 "PO-Revision-Date: 2009-10-05 15:19+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -28,6 +28,8 @@ msgid "Logging"
 msgstr "Protokollierung"
 
 #: admin/systems/services/rsyslog/class_rSyslogServer.inc:67
+#: admin/systems/services/rsyslog/class_rSyslogServer.inc:174
+#: admin/systems/services/rsyslog/class_rSyslogServer.inc:175
 msgid "Logging service"
 msgstr "Protokoll-Dienst"
 
@@ -52,11 +54,6 @@ msgstr "Passwort"
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: admin/systems/services/rsyslog/class_rSyslogServer.inc:174
-#: admin/systems/services/rsyslog/class_rSyslogServer.inc:175
-msgid "rSyslog logging service"
-msgstr ""
-
 #: admin/systems/services/rsyslog/class_rSyslogServer.inc:175
 msgid "Services"
 msgstr "Dienste"
@@ -70,14 +67,14 @@ msgid "Syslog logging"
 msgstr "Syslog Protokollierung"
 
 #: admin/systems/services/rsyslog/rSyslogServer.tpl:7
-msgid "This server provides a rSyslog mysql database"
-msgstr ""
+msgid "Server provides a syslog mysql database"
+msgstr "Server stellt eine Syslog MySQL-Datenbank zur Verfügung"
 
 #: admin/systems/services/rsyslog/rSyslogServer.tpl:19
 msgid "Database user"
 msgstr "Datenbank-Benutzer"
 
-#: addons/rsyslog/class_rsyslog.inc:5
+#: addons/rsyslog/class_rsyslog.inc:5 addons/rsyslog/main.inc:49
 msgid "System logs"
 msgstr "Systemprotokolle"
 
@@ -93,13 +90,15 @@ msgstr "-"
 msgid "All"
 msgstr "Alle"
 
-#: addons/rsyslog/class_rsyslog.inc:161
+#: addons/rsyslog/class_rsyslog.inc:142
+#, php-format
+msgid "%s entries match the filter"
+msgstr "%s Einträge passten auf den Filter"
+
+#: addons/rsyslog/class_rsyslog.inc:162
+#, php-format
 msgid "The selected server '%s' does not exists!"
 msgstr "Der ausgewählte Server '%s' existiert nicht!"
-
-#: addons/rsyslog/main.inc:49
-msgid "System log view"
-msgstr ""
 
 #: addons/rsyslog/rSyslog.tpl:2
 msgid "Filter"
@@ -109,11 +108,11 @@ msgstr "Filter"
 msgid "Server"
 msgstr "Server"
 
-#: addons/rsyslog/rSyslog.tpl:15 addons/rsyslog/rSyslog.tpl:75
+#: addons/rsyslog/rSyslog.tpl:15
 msgid "Host"
 msgstr "System"
 
-#: addons/rsyslog/rSyslog.tpl:23 addons/rsyslog/rSyslog.tpl:90
+#: addons/rsyslog/rSyslog.tpl:23
 msgid "Priority"
 msgstr "Priorität"
 
@@ -134,21 +133,25 @@ msgid "Error"
 msgstr "Fehler"
 
 #: addons/rsyslog/rSyslog.tpl:70
-msgid "Received"
-msgstr "Empfangen"
+msgid "Date"
+msgstr "Datum"
+
+#: addons/rsyslog/rSyslog.tpl:75
+msgid "Source"
+msgstr "Quelle"
 
 #: addons/rsyslog/rSyslog.tpl:80
-msgid "Log tag"
-msgstr ""
+msgid "Header"
+msgstr "Betreff"
 
 #: addons/rsyslog/rSyslog.tpl:85
 msgid "Facility"
-msgstr ""
+msgstr "Facility"
+
+#: addons/rsyslog/rSyslog.tpl:90
+msgid "Severity"
+msgstr "Schwere"
 
 #: addons/rsyslog/rSyslog.tpl:95
 msgid "Message"
-msgstr ""
-
-#: addons/rsyslog/rSyslog.tpl:131
-msgid "entries matching filter"
-msgstr ""
+msgstr "Nachricht"

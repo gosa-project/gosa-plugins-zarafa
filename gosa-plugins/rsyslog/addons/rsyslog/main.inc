@@ -46,7 +46,7 @@ if ( $cleanup ){
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
-	$display= print_header(get_template_path('plugins/rsyslog/images/plugin.png'), _("System log view")).$display;
+	$display= print_header(get_template_path('plugins/rsyslog/images/plugin.png'), _("System logs")).$display;
 
 	/* Store changes  in session */
 	session::set('rsyslogObject',$rsyslogObject);
