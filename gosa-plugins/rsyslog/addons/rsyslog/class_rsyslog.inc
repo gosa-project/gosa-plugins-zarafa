@@ -334,14 +334,14 @@ class rsyslog extends plugin
                 13 => _("Log audit"),
                 14 => _("Log alert"),
                 15 => _("Clock"),
-                16 => _("Local0"),
-                17 => _("Local1"),
-                18 => _("Local2"),
-                19 => _("Local3"),
-                20 => _("Local4"),
-                21 => _("Local5"),
-                22 => _("Local6"),
-                23 => _("Local7") );
+                16 => "Local0",
+                17 => "Local1",
+                18 => "Local2",
+                19 => "Local3",
+                20 => "Local4",
+                21 => "Local5",
+                22 => "Local6",
+                23 => "Local7" );
 
     if (isset($map[$facility])) {
       return $map[$facility];

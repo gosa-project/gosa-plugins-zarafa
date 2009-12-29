@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-29 14:24+0100\n"
+"POT-Creation-Date: 2009-12-29 15:03+0100\n"
 "PO-Revision-Date: 2009-10-05 15:19+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -100,6 +100,102 @@ msgstr "%s Einträge passten auf den Filter"
 msgid "The selected server '%s' does not exists!"
 msgstr "Der ausgewählte Server '%s' existiert nicht!"
 
+#: addons/rsyslog/class_rsyslog.inc:302
+msgid "Emergency"
+msgstr "Notfall"
+
+#: addons/rsyslog/class_rsyslog.inc:303
+msgid "Alert"
+msgstr "Alarm"
+
+#: addons/rsyslog/class_rsyslog.inc:304
+msgid "Critical"
+msgstr "Kritisch"
+
+#: addons/rsyslog/class_rsyslog.inc:305 addons/rsyslog/rSyslog.tpl:62
+msgid "Error"
+msgstr "Fehler"
+
+#: addons/rsyslog/class_rsyslog.inc:306
+msgid "Warning"
+msgstr "Warnung"
+
+#: addons/rsyslog/class_rsyslog.inc:307
+msgid "Notice"
+msgstr "Hinweis"
+
+#: addons/rsyslog/class_rsyslog.inc:308
+msgid "Informational"
+msgstr "Informativ"
+
+#: addons/rsyslog/class_rsyslog.inc:309
+msgid "Debug"
+msgstr "Fehlersuche"
+
+#: addons/rsyslog/class_rsyslog.inc:315 addons/rsyslog/class_rsyslog.inc:350
+msgid "Unknown (%s)"
+msgstr "Unbekannt (%s)"
+
+#: addons/rsyslog/class_rsyslog.inc:321
+msgid "Kernel"
+msgstr "Kern"
+
+#: addons/rsyslog/class_rsyslog.inc:322
+msgid "User level"
+msgstr "Benutzer Ebene"
+
+#: addons/rsyslog/class_rsyslog.inc:323
+msgid "Mail system"
+msgstr "Mailsystem"
+
+#: addons/rsyslog/class_rsyslog.inc:324
+msgid "System daemon"
+msgstr "Systemdienste"
+
+#: addons/rsyslog/class_rsyslog.inc:325 addons/rsyslog/class_rsyslog.inc:331
+msgid "Security"
+msgstr "Sicherheit"
+
+#: addons/rsyslog/class_rsyslog.inc:326
+msgid "Internal"
+msgstr "Intern"
+
+#: addons/rsyslog/class_rsyslog.inc:327
+msgid "Printing"
+msgstr "Drucksystem"
+
+#: addons/rsyslog/class_rsyslog.inc:328
+msgid "News"
+msgstr "Newssystem"
+
+#: addons/rsyslog/class_rsyslog.inc:329
+msgid "UUCP"
+msgstr "UUCP"
+
+#: addons/rsyslog/class_rsyslog.inc:330
+msgid "Cron"
+msgstr "Cron"
+
+#: addons/rsyslog/class_rsyslog.inc:332
+msgid "FTP"
+msgstr "FTP"
+
+#: addons/rsyslog/class_rsyslog.inc:333
+msgid "NTP"
+msgstr "NTP"
+
+#: addons/rsyslog/class_rsyslog.inc:334
+msgid "Log audit"
+msgstr "Log audit"
+
+#: addons/rsyslog/class_rsyslog.inc:335
+msgid "Log alert"
+msgstr "Log alarm"
+
+#: addons/rsyslog/class_rsyslog.inc:336
+msgid "Clock"
+msgstr "Zeit"
+
 #: addons/rsyslog/rSyslog.tpl:2
 msgid "Filter"
 msgstr "Filter"
@@ -112,9 +208,9 @@ msgstr "Server"
 msgid "Host"
 msgstr "System"
 
-#: addons/rsyslog/rSyslog.tpl:23
-msgid "Priority"
-msgstr "Priorität"
+#: addons/rsyslog/rSyslog.tpl:23 addons/rsyslog/rSyslog.tpl:90
+msgid "Severity"
+msgstr "Schwere"
 
 #: addons/rsyslog/rSyslog.tpl:32
 msgid "From"
@@ -127,10 +223,6 @@ msgstr "bis"
 #: addons/rsyslog/rSyslog.tpl:52 addons/rsyslog/rSyslog.tpl:56
 msgid "Search"
 msgstr "Suchen"
-
-#: addons/rsyslog/rSyslog.tpl:62
-msgid "Error"
-msgstr "Fehler"
 
 #: addons/rsyslog/rSyslog.tpl:70
 msgid "Date"
@@ -148,10 +240,9 @@ msgstr "Betreff"
 msgid "Facility"
 msgstr "Facility"
 
-#: addons/rsyslog/rSyslog.tpl:90
-msgid "Severity"
-msgstr "Schwere"
-
 #: addons/rsyslog/rSyslog.tpl:95
 msgid "Message"
 msgstr "Nachricht"
+
+#~ msgid "Priority"
+#~ msgstr "Priorität"
