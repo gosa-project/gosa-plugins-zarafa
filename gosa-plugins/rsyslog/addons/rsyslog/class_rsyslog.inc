@@ -226,6 +226,7 @@ class rsyslog extends plugin
         $res = mysql_query($query, $link);
         if($res){
           while($attrs = @mysql_fetch_assoc($res)){
+            $attrs['DeviceReportedTime']= $this->time2local($attrs['DeviceReportedTime']);
             $attrs['Facility']= $this->facility2string($attrs['Facility']);
             $attrs['Priority']= $this->severity2string($attrs['Priority']);
             $result['entries'][] = $attrs;
@@ -351,6 +352,12 @@ class rsyslog extends plugin
   }
 
 
+  function time2local($str)
+  {
+    list($date, $time)= split(" ", $str);
+    list($y, $m, $d)= split("-", $date);
+    return "$d.$m.$y $time";
+  }
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
