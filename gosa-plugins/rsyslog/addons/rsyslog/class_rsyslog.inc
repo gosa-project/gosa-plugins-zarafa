@@ -115,7 +115,7 @@ class rsyslog extends plugin
     }else{
       $priorities = array('all' => _("All"));
       foreach($this->servers[$this->selected_server]['Priorities'] as $id => $name){
-        $priorities[$id] = $name;
+        $priorities[$id] = $this->severity2string($name);
       }
     }
 
@@ -226,6 +226,8 @@ class rsyslog extends plugin
         $res = mysql_query($query, $link);
         if($res){
           while($attrs = @mysql_fetch_assoc($res)){
+            $attrs['Facility']= $this->facility2string($attrs['Facility']);
+            $attrs['Priority']= $this->severity2string($attrs['Priority']);
             $result['entries'][] = $attrs;
           }
           $this->servers[$name]['status'] = "ok";
@@ -293,6 +295,63 @@ class rsyslog extends plugin
       $this->sort_value=$sort_value; 
     } 
   }
+
+
+  function severity2string($severity)
+  {
+    $map= array( 0 => _("Emergency"),
+                 1 => _("Alert"),
+                 2 => _("Critical"),
+                 3 => _("Error"),
+                 4 => _("Warning"),
+                 5 => _("Notice"),
+                 6 => _("Informational"),
+                 7 => _("Debug") );
+
+    if (isset($map[$severity])) {
+      return $map[$severity];
+    }
+
+    return sprintf(_("Unknown (%s)"), $severity);
+  }
+
+
+  function facility2string($facility)
+  {
+    $map= array( 0 => _("Kernel"),
+                 1 => _("User level"),
+                 2 => _("Mail system"),
+                 3 => _("System daemon"),
+                 4 => _("Security"),
+                 5 => _("Internal"),
+                 6 => _("Printing"),
+                 7 => _("News"),
+                 8 => _("UUCP"),
+                 9 => _("Cron"),
+                10 => _("Security"),
+                11 => _("FTP"),
+                12 => _("NTP"),
+                13 => _("Log audit"),
+                14 => _("Log alert"),
+                15 => _("Clock"),
+                16 => _("Local0"),
+                17 => _("Local1"),
+                18 => _("Local2"),
+                19 => _("Local3"),
+                20 => _("Local4"),
+                21 => _("Local5"),
+                22 => _("Local6"),
+                23 => _("Local7") );
+
+    if (isset($map[$facility])) {
+      return $map[$facility];
+    }
+
+    return sprintf(_("Unknown (%s)"), $facility);
+  }
+
+
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

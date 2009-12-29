@@ -20,7 +20,7 @@
         {/foreach}
       </select>
     </td>
-    <td><img src="images/small_warning.png" alt="" class="center">&nbsp;{t}Priority{/t}:</td>
+    <td><img src="images/small_warning.png" alt="" class="center">&nbsp;{t}Severity{/t}:</td>
     <td>   
       <select name='selected_priority' onChange='document.mainform.submit();'>
         {html_options values=$priorities options=$priorities selected=$selected_priority}
