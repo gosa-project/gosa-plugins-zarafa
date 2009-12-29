@@ -32,16 +32,16 @@ class rsyslog extends plugin
     // Get list of rsyslog servers 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("objectClass=gosaLogServer",array("cn","goLogDBUser","goLogDB","goLogDBPassword"));
+    $ldap->search("objectClass=goLogDBServer",array("cn","goLogAdmin","gosaLogDB","goLogPassword"));
     while($attrs = $ldap->fetch()){
       if(empty($this->selected_server)) $this->selected_server = $attrs['cn'][0];
       $s = array('cn' => $attrs['cn'][0], 'dn' => $attrs['dn'], 'Password' => '', 'status' => 'ok');
-      $s['User'] = $attrs['goLogDBUser'][0]; 
-      $s['Database'] = $attrs['goLogDB'][0]; 
+      $s['User'] = $attrs['goLogAdmin'][0]; 
+      $s['Database'] = $attrs['gosaLogDB'][0]; 
       $s['Hosts'] = array();
       $s['Priorities'] = array();
       $s['ACL'] = "";
-      if(isset($attrs['goLogDBPassword'])) $s['Password'] = $attrs['goLogDBPassword'][0];
+      if(isset($attrs['goLogPassword'])) $s['Password'] = $attrs['goLogPassword'][0];
       $this->servers[$attrs['cn'][0]] = $s;
     }
 
