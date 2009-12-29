@@ -22,7 +22,7 @@
 /* Remove locks created by this plugin
 */
 if ($remove_lock){
-  if(session::is_set('rsyslogTabs')){
+  if(session::is_set('rsyslogObject')){
 	// Nothing to unlock here
   }
 }
@@ -30,25 +30,25 @@ if ($remove_lock){
 /* Remove this plugin from session
 */
 if ( $cleanup ){
-  session::un_set('rsyslogTabs');
+  session::un_set('rsyslogObject');
 }else{
 
 
 	/* Create logview object on demand */
-	if (!session::is_set('rsyslogTabs')){
-		session::set('rsyslogTabs',new rsyslogTabs($config, $config->data['TABS']['RSYSLOGTABS'],""));
+	if (!session::is_set('rsyslogObject')){
+		session::set('rsyslogObject',new rsyslog($config));
 	}
-	$rsyslogTabs = session::get('rsyslogTabs');
+	$rsyslogObject = session::get('rsyslogObject');
 
 	/* Execute formular */
-#	$display= $rsyslogTabs->save_object();
-	$display= $rsyslogTabs->execute ();
+	$display= $rsyslogObject->save_object();
+	$display= $rsyslogObject->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
 	$display= print_header(get_template_path('plugins/rsyslog/images/plugin.png'), _("System log view")).$display;
 
 	/* Store changes  in session */
-	session::set('rsyslogTabs',$rsyslogTabs);
+	session::set('rsyslogObject',$rsyslogObject);
 }
 ?>
