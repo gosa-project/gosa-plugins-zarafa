@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: class_roleManagement.inc 14742 2009-11-04 13:18:33Z hickert $$
+ * ID: $$Id: class_phoneConferenceManagment.inc 14742 2009-11-04 13:18:33Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,12 +41,12 @@ class phoneConferenceManagment extends management
     $this->storagePoints = array(get_ou("phoneConferenceRDN"));
  
     // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
- #     $filter= session::global_get(get_class($this)."_filter");
-  #  } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("conf-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-   # }
+    }
     $this->setFilter($filter);
 
     // Build headpage
