@@ -23,8 +23,8 @@
 class phoneConferenceManagment extends management
 {
   var $plHeadline     = "Conferences";
-  var $plDescription  = "Role management";
-  var $plIcon  = "plugins/conference/images/plugin.png";
+  var $plDescription  = "Conference management";
+  var $plIcon  = "plugins/gofon/images/conference.png";
 
   // Tab definition 
   protected $tabClass = "conferencetabs";
