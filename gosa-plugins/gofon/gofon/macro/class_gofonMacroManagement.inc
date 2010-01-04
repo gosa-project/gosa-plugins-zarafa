@@ -24,7 +24,7 @@ class goFonMacroManagment extends management
 {
   var $plHeadline     = "Macros";
   var $plDescription  = "Macro management";
-  var $plIcon  = "plugins/gofon/images/macro.png";
+  var $plIcon  = "plugins/gofon/images/macros.png";
 
   // Tab definition 
   protected $tabClass = "macrotabs";
@@ -37,16 +37,16 @@ class goFonMacroManagment extends management
   {
     $this->config = $config;
     $this->ui = $ui;
-   
+
     $this->storagePoints = array(get_ou("phoneMacroRDN"));
- 
+
     // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
- #     $filter= session::global_get(get_class($this)."_filter");
-  #  } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("macro-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-   # }
+    }
     $this->setFilter($filter);
 
     // Build headpage
