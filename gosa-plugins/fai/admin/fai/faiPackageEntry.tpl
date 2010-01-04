@@ -11,6 +11,12 @@
   		</div>
   		<div style='height:4px;'>
 		</div>
+      {if $max_entries}
+  		<div class="contentboxb" style="border-top:1px solid #B0B0B0; padding: 10px;">
+        <font style='color:red; font-weight:bold;'>
+        {t}The search returned too many results, only the first 200 entries are shown.{/t}
+      </div>
+      {/if}
   		<div class="contentboxb" style="border-top:1px solid #B0B0B0;">{$failist}<input type="hidden" name="edit_helper">
   		</div>
   	</td>

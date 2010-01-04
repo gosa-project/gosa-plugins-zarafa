@@ -130,6 +130,8 @@ class faiPackageEntry extends plugin
               "attach" => "style='border-right:0px;text-align:left;'")));
     }
 
+    $smarty->assign("max_entries", (count($this->pkgs) >=200));
+
     $smarty->assign("Section_boxes"          , $Section_boxes);
     $smarty->assign("searchStrPKG"  , $this->searchStrPKG);
     $smarty->assign("faihead"       , "");
