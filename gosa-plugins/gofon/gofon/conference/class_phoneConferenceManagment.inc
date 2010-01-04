@@ -22,7 +22,7 @@
 
 class phoneConferenceManagment extends management
 {
-  var $plHeadline     = "Conferences";
+  var $plHeadline     = "conferences";
   var $plDescription  = "Conference management";
   var $plIcon  = "plugins/gofon/images/conference.png";
 
