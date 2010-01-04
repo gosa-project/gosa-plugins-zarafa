@@ -23,7 +23,7 @@
 class goFonMacroManagment extends management
 {
   var $plHeadline     = "Macros";
-  var $plDescription  = "Macro management";
+  var $plDescription  = "Phone macro management";
   var $plIcon  = "plugins/gofon/images/macros.png";
 
   // Tab definition 
