@@ -264,6 +264,14 @@ class faiManagement extends management
     }
     $headpage->setBase($this->fai_release);
     $headpage->update();
+    $smarty = get_smarty();
+    $smarty->assign("fai_release", $this->fai_release);
+    $smarty->assign("fai_base", get_ou('faiBaseRDN').$this->config->current['BASE']);
+    $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
+    $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));
+    $smarty->assign("allow_create", $c);
+    $smarty->assign("allow_remove", $r);
+    $smarty->assign("fai_base", get_ou('faiBaseRDN').$this->config->current['BASE']);
     $display = $headpage->render();
     return($this->getHeader().$display);
   }
