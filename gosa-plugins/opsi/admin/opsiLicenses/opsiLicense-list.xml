@@ -97,37 +97,15 @@
       <type>exporter</type>
     </action>
 
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <type>copypaste</type>
-    </action>
-
-    <action>
-      <type>snapshot</type>
-    </action>
-
   </actionmenu>
 
-  <actiontriggers snapshot="true" copypaste="true">
-
-    <action>
-      <name>cp</name>
-      <type>copypaste</type>
-    </action>
+  <actiontriggers snapshot="false" copypaste="false">
 
     <action>
       <name>edit</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
       <label>Edit license</label>
-    </action>
-
-    <action>
-      <name>snapshot</name>
-      <type>snapshot</type>
     </action>
 
     <action>
