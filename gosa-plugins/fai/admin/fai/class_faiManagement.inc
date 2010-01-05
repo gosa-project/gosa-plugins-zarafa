@@ -79,16 +79,16 @@ class faiManagement extends management
   {
     $headpage = $this->getHeadpage();
     if(count($target) == 1){
-      foreach($headpage->entries as $entry){
-        if($entry['dn'] == $target[0]){
-          if(count($entry['GROUPS']) == 1){
-            $data = array_pop($entry['GROUPS']);
-            $type = $this->get_type($data);
-            management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
-          }else{
-            $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"edit");
-          }
-          break;
+      $entry = $headpage->getEntry($target[0]);
+      if($entry){
+        echo $target[0];
+        print_a($entry);
+        if(count($entry['GROUPS']) == 1){
+          $data = array_pop($entry['GROUPS']);
+          $type = $this->get_type($data);
+          management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+        }else{
+          $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"edit");
         }
       }
     }
