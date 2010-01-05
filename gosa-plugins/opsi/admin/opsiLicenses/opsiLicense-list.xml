@@ -8,7 +8,7 @@
     <multiSelect>true</multiSelect>
     <template>opsiLicense-list.tpl</template>
     <module>roles</module>
-    <label>List of licenses</label>
+    <label>List of license pools</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>

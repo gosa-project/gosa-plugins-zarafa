@@ -22,8 +22,8 @@
 
 class opsiLicenses extends management
 {
-  var $plHeadline     = "Opsi Licenses";
-  var $plDescription  = "License management";
+  var $plHeadline     = "Software licenses";
+  var $plDescription  = "Software licenses";
   var $plIcon  = "plugins/opsi/images/plugin.png";
 
   // Tab definition 
