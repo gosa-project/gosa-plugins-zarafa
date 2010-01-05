@@ -34,10 +34,12 @@ class faiManagement extends management
   protected $objectName   = "role";
 
   var $fai_release = ""; // The currently selected release while in release management mode!
+  var $fai_base = ""; 
 
   function __construct($config,$ui)
   {
     $this->config = $config;
+    $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
     $this->ui = $ui;
     $this->storagePoints = array(
         get_ou('faiPartitionRDN'),
@@ -69,6 +71,7 @@ class faiManagement extends management
       $this->snapHandler = new SnapshotHandler($this->config);
     }
     $this->registerAction("editByGroup","editByGroup");
+    $this->registerAction("createBranch","createBranch");
     parent::__construct($config, $ui, "roles", $headpage);
   }
 
@@ -235,6 +238,7 @@ class faiManagement extends management
     $action = management::detectPostActions();
     if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
     if(isset($_POST['faiGroupHandle_apply']))  $action['action'] = "editByGroup";
+    if(isset($_GET['act']) && $_GET['act'] == "branch_branch")  $action['action'] = "createBranch";
 
     foreach($_POST as $name => $value){
       if(preg_match("/^edit_([0-9]*)_([a-z]*)_(x|y)/i", $name)){
@@ -266,12 +270,11 @@ class faiManagement extends management
     $headpage->update();
     $smarty = get_smarty();
     $smarty->assign("fai_release", $this->fai_release);
-    $smarty->assign("fai_base", get_ou('faiBaseRDN').$this->config->current['BASE']);
+    $smarty->assign("fai_base", $this->fai_base);
     $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
     $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));
     $smarty->assign("allow_create", $c);
     $smarty->assign("allow_remove", $r);
-    $smarty->assign("fai_base", get_ou('faiBaseRDN').$this->config->current['BASE']);
     $display = $headpage->render();
     return($this->getHeader().$display);
   }
@@ -280,7 +283,7 @@ class faiManagement extends management
   {
     $list = array();
     if(empty($base)){
-      $base = get_ou('faiBaseRDN').$this->config->current['BASE'];
+      $base = $this->fai_base;
       $list[$base] = "/";
     }
 
@@ -335,6 +338,16 @@ class faiManagement extends management
     }
 
     return $icon_list;
+  }
+
+
+  function createBranch()
+  { 
+    $smarty = get_smarty();
+    $this->dispNewBranch=true;
+    $smarty->assign("iframe",false);
+    $smarty->assign("BranchName","");
+    return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
   }
 
 
