@@ -92,6 +92,18 @@ class faiManagement extends management
   }
 
 
+  function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    $headpage = $this->getHeadpage();
+    if(count($target) == 1){
+      $entry = $headpage->getEntry($target[0]);
+      if($entry){
+        $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"remove");
+      }
+    }
+  }
+
+
   function editByGroup()
   {
     if($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "edit"){
@@ -101,6 +113,68 @@ class faiManagement extends management
       $data = array_pop($entry);
       $type = $this->get_type($data);
       management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+    }elseif($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "remove"){
+      $this->dialogObject->save_object();
+      $to_delete = $entry = $this->dialogObject->get_selected();
+      $dns = array();
+
+
+      // Check FAIstate to ensure that we do not remove frozen objects
+      //  additionally check ACLs
+      $locked = array();
+      $disallowed = array();
+      foreach($to_delete as $obj){
+        if(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
+          $locked[] = $obj['dn'];
+        }else{
+          $type = $this->get_type($obj);
+          $acl = $this->ui->get_permissions($obj['dn'], 'acl/'.$type[1]);
+          if(!preg_match("/d/",$acl)){
+            $disallowed[] = $obj['dn']; 
+          }else{
+            $dns[] = $obj['dn'];
+          }
+        }
+      }
+
+      // Display info dialog about locked and not removeable entries
+      if(count($locked)){
+        msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
+            msgPool::buildList($locked)));
+      }
+
+      // Display info dialog about not removeable entries due to permissions
+      if(count($disallowed)){
+        msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
+      }
+
+      // There are entries left to be removed
+      if(count($dns)){  
+        $this->closeDialogs();
+        $this->dns = $dns;
+
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$target,"Entry removel requested!");
+
+        // check locks
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
+        }
+
+        // Add locks
+        $dns_names = array();
+        foreach($this->dns as $dn){
+          $dns_names[] =LDAP::fix($dn);
+        }
+        add_lock ($this->dns, $this->ui->dn);
+
+        // Display confirmation dialog.
+        $smarty = get_smarty();
+        $smarty->assign("info", msgPool::deleteInfo($dns_names,_($this->objectName)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }else{
+        $this->closeDialogs();
+      }
     }
   }
 

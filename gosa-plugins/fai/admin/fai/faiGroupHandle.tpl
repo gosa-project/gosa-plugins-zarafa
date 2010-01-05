@@ -20,7 +20,7 @@
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
 		<td style='width:80px;'>{if $item.freezed}<i>({t}Freezed{/t})</i>{/if}</td>
-		<td><i>({$item.description})</i></td>
+		<td><i>({$item.description.0})</i></td>
 	</tr>
 {/foreach}
 </table>
