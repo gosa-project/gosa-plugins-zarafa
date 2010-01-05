@@ -22,11 +22,7 @@
   </definition>
 
   <table>
-    <layout>|20px;c||250px|170px;r|</layout>
-
-    <column>
-      <value>%{filter:objectType(dn,objectClass)}</value>
-    </column>
+    <layout>||250px|170px;r|</layout>
 
     <column>
       <label>Name</label>
