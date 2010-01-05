@@ -2,9 +2,9 @@
 
 <list>
   <definition>
-    <departmentBrowser>true</departmentBrowser>
+    <departmentBrowser>false</departmentBrowser>
     <departmentRootVisible>false</departmentRootVisible>
-    <baseMode>true</baseMode>
+    <baseMode>false</baseMode>
     <multiSelect>true</multiSelect>
     <template>opsiLicense-list.tpl</template>
     <module>opsi</module>
