@@ -68,7 +68,7 @@ class blocklistGeneric extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base =preg_replace ("/^[^,]+,[^,]+,[^,]+,/","",$this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("faxBlocklistRDN"), '/')."/i", "", $this->dn);
     }
     
     $this->orig_base = $this->base;

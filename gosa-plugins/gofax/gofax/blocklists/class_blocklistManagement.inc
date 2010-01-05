@@ -33,8 +33,6 @@ class blocklistManagement extends management
   protected $aclPlugin   = "blocklistGeneric";
   protected $objectName   = "blocklist";
 
-  protected $skipFooter = TRUE;
-
   function __construct($config,$ui)
   {
     $this->config = $config;
