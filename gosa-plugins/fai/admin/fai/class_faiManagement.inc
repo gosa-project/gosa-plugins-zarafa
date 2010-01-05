@@ -39,7 +39,6 @@ class faiManagement extends management
   {
     $this->config = $config;
     $this->ui = $ui;
-
     $this->storagePoints = array(
         get_ou('faiPartitionRDN'),
         get_ou('faiPackageRDN'),
@@ -47,14 +46,14 @@ class faiManagement extends management
         get_ou('faiVariableRDN'),
         get_ou('faiHookRDN'),
         get_ou('faiProfileRDN'),get_ou('faiTemplateRDN'));
- 
+
     // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
- #     $filter= session::global_get(get_class($this)."_filter");
-  #  } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("fai-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-   # }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -236,6 +235,20 @@ class faiManagement extends management
     $action = management::detectPostActions();
     if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
     if(isset($_POST['faiGroupHandle_apply']))  $action['action'] = "editByGroup";
+
+    foreach($_POST as $name => $value){
+      if(preg_match("/^edit_([0-9]*)_([a-z]*)_(x|y)/i", $name)){
+        $id = preg_replace("/^edit_([0-9]*)_([a-z]*)_(x|y)/i","\\1", $name);
+        $tab = preg_replace("/^edit_([0-9]*)_([a-z]*)_(x|y)/i","\\2", $name);
+        $headpage = $this->getHeadpage();
+        if(isset($headpage->entries[$id]['GROUPS'][$tab])){
+          $data =$headpage->entries[$id]['GROUPS'][$tab];
+          $type = $this->get_type($data);
+          management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
+        } 
+        break;
+      }
+    }
     return($action);
   }
 
