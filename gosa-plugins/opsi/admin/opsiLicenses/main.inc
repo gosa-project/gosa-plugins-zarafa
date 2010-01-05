@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: main.inc 13288 2008-12-12 14:54:13Z hickert $$
+ * ID: $$Id: main.inc 14752 2009-11-05 10:00:17Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,46 +20,35 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-// Remove locks created by this plugin
+/* Remove locks created by this plugin
+*/
 if ($remove_lock){
   if(session::is_set('opsiLicenses')){
-    $macl = session::get('opsiLicenses');
-    $macl->remove_lock();
+      $macl = session::get('opsiLicenses');
+      $macl->remove_lock();
   }
 }
 
 /* Remove this plugin from session
 */
 if ( $cleanup ){
-  $macl = session::get('opsiLicenses');
-  $macl->remove_lock();
   session::un_set('opsiLicenses');
 }else{
 
-  /* Create object object on demand */
+  /* Create opsiLicenses object on demand */
   if (!session::is_set('opsiLicenses')){
-    session::set('opsiLicenses',new opsiLicenses($config));
+    $opsiLicenses= new opsiLicenses ($config, $ui);
+    session::set('opsiLicenses',$opsiLicenses);
   }
   $opsiLicenses = session::get('opsiLicenses');
+  $display= $opsiLicenses->execute();
 
-  /* Execute formular */
-  $opsiLicenses->save_object();
-  $output= $opsiLicenses->execute ();
-
-  /* Page header*/
-  if (get_object_info() != ""){
-    $display= print_header(get_template_path('plugins/opsi/images/plugin.png'),
-        _("Software licenses"),
-        "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".
-        LDAP::fix(get_object_info()));
-  } else {
-    $display= print_header(get_template_path('plugins/opsi/images/plugin.png'), _("Software licenses"));
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    session::un_set ('opsiLicenses');
   }
 
-  $display.= $output;
-
-  /* Store changes  in session */
+  /* Show and save dialog */
   session::set('opsiLicenses',$opsiLicenses);
 }
 

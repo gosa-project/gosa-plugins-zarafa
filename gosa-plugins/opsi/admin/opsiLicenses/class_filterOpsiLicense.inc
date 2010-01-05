@@ -1,0 +1,45 @@
+<?php
+
+class filterOpsiLicense {
+
+  static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
+  {
+    $config= session::global_get('config');
+    $si = new opsiLicenceHandler($config);
+    $res = $si->listPools();
+    $result = array();
+    if($si->is_error() || !is_array($res)){
+      $this->init_successfull = FALSE;
+      msg_dialog::display(_("Error"),msgPool::siError($si->get_error()),ERROR_DIALOG);
+      return;
+    }else{
+
+      // Reset the list of licenses
+      foreach($res as $item){
+
+        // Fake an ldap entry, this enables ACL checks.
+        $entry['dn'] = "opsi:cn=".$item['cn'][0].",".$config->current['BASE'];
+        foreach($item as $name => $value){
+          $entry[] = $name;
+          $entry[$name] = $value;
+        }
+        $entry['count'] = count($item);
+        $result[] = $entry;
+      }
+    }
+    return(filterACL::unifyResult($result));
+  }
+
+  static function unifyResult($result)
+  {
+    $res=array();
+    foreach($result as $entry){
+      if(!isset($res[$entry['dn']])){
+        $res[$entry['dn']]=$entry;
+      }
+    }
+    return(array_values($res)); 
+  }
+}
+
+?>
