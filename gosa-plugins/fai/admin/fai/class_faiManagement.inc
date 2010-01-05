@@ -74,15 +74,12 @@ class faiManagement extends management
   }
 
 
-  
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
     $headpage = $this->getHeadpage();
     if(count($target) == 1){
       $entry = $headpage->getEntry($target[0]);
       if($entry){
-        echo $target[0];
-        print_a($entry);
         if(count($entry['GROUPS']) == 1){
           $data = array_pop($entry['GROUPS']);
           $type = $this->get_type($data);
@@ -94,20 +91,19 @@ class faiManagement extends management
     }
   }
 
+
   function editByGroup()
   {
     if($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "edit"){
+      $this->dialogObject->save_object();
       $entry = $this->dialogObject->get_selected();
-      $this->editEntryByType(key($entry), array_pop($entry));
+      $this->closeDialogs();
+      $data = array_pop($entry);
+      $type = $this->get_type($data);
+      management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
     }
   }
 
-  function editEntryByType($type, $data)
-  {
-    $this->closeDialogs();
-    $type = $this->get_type($data);
-    management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
-  }
   
   function detectPostActions()
   {
@@ -155,7 +151,6 @@ class faiManagement extends management
 
       $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
     }
-    print_a($_POST);
     return($list);
   }
 
