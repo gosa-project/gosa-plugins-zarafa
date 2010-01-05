@@ -17,7 +17,10 @@ class filterOpsiLicense {
       // Reset the list of licenses
       foreach($res as $item){
 
+        $item['objectClass'] = array('fake_opsiLicense');
+
         // Fake an ldap entry, this enables ACL checks.
+        $entry = array();
         $entry['dn'] = "opsi:cn=".$item['cn'][0].",".$config->current['BASE'];
         foreach($item as $name => $value){
           $entry[] = $name;

@@ -8,15 +8,15 @@
     <multiSelect>true</multiSelect>
     <template>opsiLicense-list.tpl</template>
     <module>roles</module>
-    <label>List of roles</label>
+    <label>List of licenses</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
-      <label>Role</label>
-      <objectClass>organizationalRole</objectClass>
-      <category>roles</category>
-      <class>role</class>
-      <image>plugins/rolemanagement/images/role.png</image>
+      <label>License</label>
+      <objectClass>fake_opsiLicense</objectClass>
+      <category>opsi</category>
+      <class>licenseGeneric</class>
+      <image>plugins/opsi/images/license.png</image>
     </objectType>
 
   </definition>
@@ -70,7 +70,7 @@
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>plugins/rolemanagement/images/new.png</image>
+      <image>plugins/opsi/images/license.png</image>
       <label>Role</label>
      </action>
     </action>
