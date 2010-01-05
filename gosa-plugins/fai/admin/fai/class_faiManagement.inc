@@ -179,6 +179,58 @@ class faiManagement extends management
   }
 
   
+ /*! \brief  Object removal was confirmed, now remove the requested entries.
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function removeEntryConfirmed($action="",$target=array(),$all=array(),
+      $altTabClass="",$altTabType="",$altAclCategory="")
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);  
+    foreach($this->dns as $key => $dn){
+      $ldap->cat($dn);
+      if($ldap->count()){
+        $attrs = $ldap->fetch();
+        $type= $this->get_type($attrs);
+        management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+
+        // Now save changes
+        FAI::save_release_changes_now();
+        $to_del = FAI::clean_up_releases($dn);
+        foreach($to_del as $dn){
+          $ldap->rmdir_recursive($dn);
+        }
+      }
+    }
+  }
+
+  protected function saveChanges()
+  {
+    management::saveChanges();
+
+    // Now save changes
+    FAI::save_release_changes_now();
+    $to_del = FAI::clean_up_releases($this->last_dn);
+    foreach($to_del as $dn){
+      $ldap->rmdir_recursive($dn);
+    }
+  }
+
+  protected function applyChanges()
+  {
+    management::applyChanges();
+
+    // Now save changes
+    FAI::save_release_changes_now();
+    $to_del = FAI::clean_up_releases($this->last_dn);
+    foreach($to_del as $dn){
+      $ldap->rmdir_recursive($dn);
+    }
+  }
+
   function detectPostActions()
   {
     $action = management::detectPostActions();
