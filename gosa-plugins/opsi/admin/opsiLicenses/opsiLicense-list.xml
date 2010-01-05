@@ -7,7 +7,7 @@
     <baseMode>true</baseMode>
     <multiSelect>true</multiSelect>
     <template>opsiLicense-list.tpl</template>
-    <module>roles</module>
+    <module>opsi</module>
     <label>List of license pools</label>
     <defaultSortColumn>1</defaultSortColumn>
 
@@ -71,7 +71,7 @@
       <name>new</name>
       <type>entry</type>
       <image>plugins/opsi/images/license.png</image>
-      <label>Role</label>
+      <label>License</label>
      </action>
     </action>
 
@@ -122,7 +122,7 @@
       <name>edit</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
-      <label>Edit role</label>
+      <label>Edit license</label>
     </action>
 
     <action>
@@ -134,8 +134,8 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>roles/role[d]</acl>
-      <label>Remove role</label>
+      <acl>opsi/licenseGeneric[d]</acl>
+      <label>Remove license</label>
     </action>
 
   </actiontriggers>
