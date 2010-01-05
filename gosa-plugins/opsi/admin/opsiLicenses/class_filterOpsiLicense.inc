@@ -5,6 +5,25 @@ class filterOpsiLicense {
   static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
     $config= session::global_get('config');
+    $ldap= $config->get_ldap_link(TRUE);
+    $flag= ($scope == "sub")?GL_SUBSEARCH:0;
+    $result= filterOpsiLicense::get_list($base, $filter, $attributes, $category, $objectStorage, $flag);
+
+    // Simple filtering 
+    if(!empty($filter)){
+      foreach($result as $key => $entry){
+        if(!preg_match($filter, $entry['cn'][0])){
+          unset($result[$key]);
+        }
+      }
+    }
+
+    return(filterACL::unifyResult($result));
+  }
+
+  static function get_list($base, $filter, $attributes, $category, $objectStorage, $flags= GL_SUBSEARCH)
+  {
+    $config= session::global_get('config');
     $si = new opsiLicenceHandler($config);
     $res = $si->listPools();
     $result = array();
@@ -30,7 +49,7 @@ class filterOpsiLicense {
         $result[] = $entry;
       }
     }
-    return(filterACL::unifyResult($result));
+    return($result);
   }
 
   static function unifyResult($result)
