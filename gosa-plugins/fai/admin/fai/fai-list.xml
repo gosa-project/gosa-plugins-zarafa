@@ -22,7 +22,7 @@
   </definition>
 
   <table>
-    <layout>|20px;c|||250px|170px;r|</layout>
+    <layout>|20px;c||250px|170px;r|</layout>
 
     <department>
       <value>%{filter:departmentLink(row,dn,description)}</value>
@@ -38,14 +38,6 @@
       <sortAttribute>cn</sortAttribute>
       <sortType>string</sortType>
       <value>%{filter:link(row,dn,"%s",cn)}</value>
-      <export>true</export>
-    </column>
-
-    <column>
-      <label>Description</label>
-      <sortAttribute>description</sortAttribute>
-      <sortType>string</sortType>
-      <value>%{filter:link(row,dn,"%s",description)}</value>
       <export>true</export>
     </column>
 
@@ -123,7 +115,7 @@
       <name>edit</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
-      <label>Edit role</label>
+      <label>Edit</label>
     </action>
 
     <action>
@@ -135,7 +127,6 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>roles/role[d]</acl>
       <label>Remove role</label>
     </action>
 

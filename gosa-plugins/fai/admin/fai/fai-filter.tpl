@@ -8,13 +8,22 @@
 
 <div style="border-top:1px solid #AAAAAA"></div>
 
- <table summary="" style="width:100%;">
-  <tr>
-   <td>
-     <LABEL for='RELEASE'>{t}Release{/t}</LABEL>&nbsp;{$RELEASE}<br>
-   </td>
-  </tr>
- </table>
+<div style='padding:4px;'>
+  <LABEL for='RELEASE'>{t}Release{/t}</LABEL>&nbsp;{$RELEASE}<br>
+</div>
+
+<div style="border-top:1px solid #AAAAAA"></div>
+
+<div style='padding:4px;'>
+  <input class="center" type="image" name="branch_branch" src="plugins/fai/images/branch_small.png">
+  <a href="?plug={$plug}&act=branch_branch">{t}Create release{/t}</a>
+  <br>
+  <input class="center" type="image" name="freeze_branch" src="plugins/fai/images/freeze.png">
+  <a href="?plug={$plug}&act=freeze_branch">{t}Create read-only release{/t}</a>
+  <br>
+  <input class="center" type="image" name="remove_branch" src="images/lists/trash.png">
+  <a href="?plug={$plug}&act=remove_branch">{t}Delete current release{/t}</a>
+</div>
 <div style="border-top:1px solid #AAAAAA"></div>
 
 {$PROFILE}   {t}Show profiles{/t}

@@ -56,11 +56,13 @@ class filterFAI extends filterLDAP{
           $obj['description']   = $object['description'][0];
           $obj['objectClass']   = $object['objectClass'];
           $obj['TYPES'][]       = $type;
+          $obj['GROUPS'][$type]      = $object;
         
           if(!isset($result[$obj['cn']])){
             $result[$obj['cn']] = $obj;
           }else{
             $result[$obj['cn']]['TYPES'][]=$type;
+            $result[$obj['cn']]['GROUPS'][$type]=$object;
           }
         }
       }
@@ -69,11 +71,15 @@ class filterFAI extends filterLDAP{
     // Make results useable for the listing class.
     $entries = array();
     foreach($result as $entry){
-      $item=array('count' => count($entry));
+      $item=array('count' => count($entry) -1);
       foreach($entry as $name => $value){
-        $item[] = $name;
-        $item[$name] = $value ;       
+        if($name != "GROUPS"){
+          $item[] = $name;
+
+          $item[$name] = $value ;       
+        }
       }
+      $item['GROUPS'] = $entry['GROUPS'];
       $entries[] = $item;
     }
 

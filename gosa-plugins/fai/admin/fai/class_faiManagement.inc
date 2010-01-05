@@ -69,8 +69,54 @@ class faiManagement extends management
     if($this->config->get_cfg_value("enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
     }
+    $this->registerAction("editByGroup","editByGroup");
     parent::__construct($config, $ui, "roles", $headpage);
   }
+
+
+  
+  function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    $headpage = $this->getHeadpage();
+    if(count($target) == 1){
+      foreach($headpage->entries as $entry){
+        if($entry['dn'] == $target[0]){
+          if(count($entry['GROUPS']) == 1){
+            $data = array_pop($entry['GROUPS']);
+            $type = $this->get_type($data);
+            management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+          }else{
+            $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"edit");
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  function editByGroup()
+  {
+    if($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "edit"){
+      $entry = $this->dialogObject->get_selected();
+      $this->editEntryByType(key($entry), array_pop($entry));
+    }
+  }
+
+  function editEntryByType($type, $data)
+  {
+    $this->closeDialogs();
+    $type = $this->get_type($data);
+    management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+  }
+  
+  function detectPostActions()
+  {
+    $action = management::detectPostActions();
+    if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
+    if(isset($_POST['faiGroupHandle_apply']))  $action['action'] = "editByGroup";
+    return($action);
+  }
+
 
   function renderList()
   {
@@ -109,6 +155,7 @@ class faiManagement extends management
 
       $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
     }
+    print_a($_POST);
     return($list);
   }
 
@@ -149,6 +196,31 @@ class faiManagement extends management
   }
 
 
+  function get_type($array){
+    if(!isset($array['objectClass'])) return(array());
+    if(in_array("FAIpartitionTable",$array['objectClass'])){
+      return(array("tabsPartition","faiPartitionTable","FAIPARTITIONTABS"));
+    }
+    if(in_array("FAIscript",$array['objectClass'])){
+      return(array("tabsScript","faiScript","FAISCRIPTTABS"));
+    }
+    if(in_array("FAItemplate",$array['objectClass'])){
+      return(array("tabsTemplate","faiTemplate","FAITEMPLATETABS"));
+    }
+    if(in_array("FAIhook",$array['objectClass'])){
+      return(array("tabsHook","faiHook","FAIHOOKTABS"));
+    }
+    if(in_array("FAIvariable",$array['objectClass'])){
+      return(array("tabsVariable","faiVariable","FAIVARIABLETABS"));
+    }
+    if(in_array("FAIprofile",$array['objectClass'])){
+      return(array("tabsProfile","faiProfile","FAIPROFILETABS"));
+    }
+    if(in_array("FAIpackageList",$array['objectClass'])){
+      return(array("tabsPackage","faiPackage","FAIPACKAGETABS"));
+    }
+    return(array());
+  }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
