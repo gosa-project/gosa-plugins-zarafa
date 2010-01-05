@@ -39,8 +39,14 @@ class faiManagement extends management
   {
     $this->config = $config;
     $this->ui = $ui;
-   
-    $this->storagePoints = array(get_ou("roleRDN"));
+
+    $this->storagePoints = array(
+        get_ou('faiPartitionRDN'),
+        get_ou('faiPackageRDN'),
+        get_ou('faiScriptRDN'),
+        get_ou('faiVariableRDN'),
+        get_ou('faiHookRDN'),
+        get_ou('faiProfileRDN'),get_ou('faiTemplateRDN'));
  
     // Build filter
 #    if (session::global_is_set(get_class($this)."_filter")){
@@ -54,6 +60,7 @@ class faiManagement extends management
     // Build headpage
     $headpage = new listing(get_template_path("fai-list.xml", true));
     $headpage->setFilter($filter);
+    $headpage->registerElementFilter("filterProperties", "faiManagement::filterProperties");
 
     // Add copy&paste and snapshot handler.
     if ($this->config->boolValueIsTrue("main", "copyPaste")){
@@ -103,6 +110,42 @@ class faiManagement extends management
       $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
     }
     return($list);
+  }
+
+
+  static function filterProperties($row, $classes)
+  {
+    $objects = array(
+        "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png",
+          "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
+        "FAIpackageList"     => array("IMG"=> "plugins/fai/images/fai_packages.png",
+          "NAME"=>_("Package list") ,  "KZL"=> "PL", "VAR"=>"ShowPackages"),
+        "FAIscript"          => array("IMG"=> "plugins/fai/images/fai_script.png",
+          "NAME"=>_("Scripts") ,       "KZL"=> "S",  "VAR"=>"ShowScripts"),
+        "FAIvariable"        => array("IMG"=> "plugins/fai/images/fai_variable.png",
+          "NAME"=>_("Variables") ,     "KZL"=> "V",  "VAR"=>"ShowVariables"),
+        "FAIhook"            => array("IMG"=> "plugins/fai/images/fai_hook.png",
+          "NAME"=>_("Hooks"),          "KZL"=> "H",  "VAR"=>"ShowHooks"),
+        "FAIprofile"         => array("IMG"=> "plugins/fai/images/fai_profile.png",
+          "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
+        "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",
+          "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"),
+        "opsi_netboot"       => array("IMG"=> "plugins/opsi/images/netboot_package.png",
+          "NAME"=>_("OPSI netboot product") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
+        "opsi_local"         => array("IMG"=> "plugins/opsi/images/local_package.png",
+          "NAME"=>_("OPSI localboot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
+
+    $icon_list = "";
+    foreach($objects as $type => $type_data){
+      if(in_array($type, $classes)){
+        $icon_list .= "<input type='image' src='".$type_data['IMG']."' title='".$type_data['NAME']."'
+          alt='".$type_data['KZL']."' class='center' name='edit_".$row."_".$type."'>\n";
+      }else{
+        $icon_list .= "<img src='images/empty.png' alt=' ' class='center'>\n";
+      }
+    }
+
+    return $icon_list;
   }
 
 

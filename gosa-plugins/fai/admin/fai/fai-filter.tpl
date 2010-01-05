@@ -15,6 +15,15 @@
    </td>
   </tr>
  </table>
+<div style="border-top:1px solid #AAAAAA"></div>
+
+{$PROFILE}   {t}Show profiles{/t}
+<br>{$TEMPLATE}  {t}Show templates{/t}
+<br>{$SCRIPT}    {t}Show scripts{/t}
+<br>{$HOOK}      {t}Show hooks{/t}
+<br>{$VARIABLE}  {t}Show variables{/t}
+<br>{$PACKAGE}   {t}Show packages{/t}
+<br>{$PARTITION} {t}Show partition{/t}
 
  <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
   <tr>
