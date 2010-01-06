@@ -874,6 +874,33 @@ class faiManagement extends management
     }
     return(array());
   }
+
+
+  /* Check if the given FAI class is used in this release
+   */
+  static function check_class_name($oc,$name,$dn)
+  {
+    $base = FAI::get_release_dn($dn);
+
+    if($oc == "FAIprofile"){
+      $f = "";
+      $ocs = array("FAIprofile","FAItemplate","FAIhook","FAIpartitionTable","FAIpackageList","FAIscript","FAIvariable");
+      foreach($ocs as $oc){
+        $f .= "(objectClass=".$oc.")";
+      }
+      $res  = FAI::get_all_objects_for_given_base($base,"(|".$f.")",TRUE);
+    }else{
+      $res  = FAI::get_all_objects_for_given_base($base,"(objectClass=".$oc.")",TRUE);
+    }
+    $delete = array();
+    $used   = array();
+    foreach($res as $object){
+      $used[$object['cn'][0]]= $object['cn'][0];
+    }
+    return($used);
+  }
+
+
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -89,6 +89,58 @@ class filterFAI extends filterLDAP{
       $entries[] = $item;
     }
 
+
+    // Append opsi stuff ... 
+    $opsi = new opsi($config);
+
+    if($opsi instanceof opsi && $opsi->enabled()){
+      $opsi_acl = $ui->get_permissions($base,"opsi/opsiProperties");
+      if(preg_match("/r/",$opsi_acl)){
+        $err = FALSE;
+        $n_pro = $opsi->get_netboot_products();
+        $err |= $opsi->is_error();
+        foreach($n_pro as $name => $data){
+          $entry = array(
+              "cn" => $name,
+              "description" => $data['DESC'],
+              "type" => "opsi_netboot");
+          $objects[$name]['opsi_netboot'] = $entry;
+        }
+        $l_pro = $opsi->get_local_products();
+        $err |= $opsi->is_error();
+        foreach($l_pro as $name => $data){
+          $entry = array("cn" => $name,
+              "description" => $data['DESC'],
+              "type" => "opsi_local");
+          $objects[$name]["opsi_local"] = $entry;
+        }
+        if($err){
+          msg_dialog::display(_("Error"),msgPool::siError($opsi->get_error()),ERROR_DIALOG);
+        }
+      }
+    }
+
+    foreach($objects as $name => $data)
+    {
+      $data = array_pop($data);
+      $item =array();
+
+      // FAKE_OC_IsBranch allows us to delete this entry (indicates NOT freezed state)
+      $item['objectClass']  = array('count' => 2, $data['type'], "FAKE_OC_IsBranch"); 
+      $item[] = 'objectClass';
+      $item['cn']  = $data['cn'];
+      $item[] = 'cn';
+      $item['description']  = $data['description'];
+      $item[] = 'description';
+      $item['dn']  = $data['cn'];
+      $item[] = 'dn';
+      $item['TYPES']  = array($data['type']);
+      $item[] = 'TYPES';
+      $item['count'] = '5';
+      $entries[] = $item;  
+      
+    }
+
     return($entries);
   }
 }
