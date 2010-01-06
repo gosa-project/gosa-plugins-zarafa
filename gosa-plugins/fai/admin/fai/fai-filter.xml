@@ -10,7 +10,7 @@
   <search>
     <query>
       <backend>FAI</backend>
-      <filter>(&amp;(|$PROFILE$HOOK$TEMPLATE$SCRIPT$VARIABLE$PACKAGE$PARTITION)$NAME)</filter>
+      <filter>(&amp;(|$PROFILE$HOOK$TEMPLATE$SCRIPT$VARIABLE$PACKAGE$PARTITION$NETBOOT$LOCALBOOT)$NAME)</filter>
       <attribute>dn</attribute>
       <attribute>objectClass</attribute>
       <attribute>cn</attribute>
@@ -25,6 +25,22 @@
     <value>Loading.</value>
     <value>Loading..</value>
     <value>Loading...</value>
+  </element>
+
+  <element>
+    <type>checkbox</type>
+    <tag>NETBOOT</tag>
+    <default>true</default>
+    <unset></unset>
+    <set>(FAIstate=__NETBOOT__)</set>
+  </element>
+
+  <element>
+    <type>checkbox</type>
+    <tag>LOCALBOOT</tag>
+    <default>true</default>
+    <unset></unset>
+    <set>(FAIstate=__LOCALBOOT__)</set>
   </element>
 
   <element>

@@ -460,6 +460,7 @@ class faiManagement extends management
     $headpage->update();
     $smarty = get_smarty();
     $smarty->assign("fai_release", $this->fai_release);
+    $smarty->assign("opsi_available", is_object($this->opsi));
     $smarty->assign("fai_base", $this->fai_base);
     $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
     $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));

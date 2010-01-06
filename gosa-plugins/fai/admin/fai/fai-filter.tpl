@@ -47,6 +47,10 @@
 <br>{$VARIABLE}  {t}Show variables{/t}
 <br>{$PACKAGE}   {t}Show packages{/t}
 <br>{$PARTITION} {t}Show partition{/t}
+{if $opsi_available}
+<br>{$NETBOOT} {t}Show netboot products{/t}
+<br>{$LOCALBOOT} {t}Show localboot products{/t}
+{/if}
 
  <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
   <tr>
