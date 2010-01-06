@@ -85,6 +85,15 @@ class faiManagement extends management
     if($this->config->get_cfg_value("enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
     }
+
+    $this->registerAction("new_profile","newEntry");
+    $this->registerAction("new_template","newEntry");
+    $this->registerAction("new_script","newEntry");
+    $this->registerAction("new_hook","newEntry");
+    $this->registerAction("new_variable","newEntry");
+    $this->registerAction("new_package","newEntry");
+    $this->registerAction("new_partition","newEntry");
+
     $this->registerAction("editByGroup","editByGroup");
     $this->registerAction("createBranch","createBranch");
     $this->registerAction("createFreeze","createFreeze");
@@ -94,6 +103,86 @@ class faiManagement extends management
     $this->registerAction("PerformBranch","PerformBranch");
     parent::__construct($config, $ui, "roles", $headpage);
   }
+
+
+  function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    /****************
+      Create a new object
+     ****************/
+
+    $types = array( 
+        "new_partition"     =>  "FAIpartitionTable",
+        "new_script"        =>  "FAIscript",
+        "new_hook"          =>  "FAIhook",
+        "new_variable"      =>  "FAIvariable",
+        "new_template"      =>  "FAItemplate",
+        "new_package"       =>  "FAIpackageList");
+    $types_i18n = array( 
+        "new_partition"     =>  _("partition table"),
+        "new_script"        =>  _("script"),
+        "new_hook"          =>  _("hook"),
+        "new_variable"      =>  _("variable"),
+        "new_template"      =>  _("template"),
+        "new_package"       =>  _("package list"));
+
+    if(isset($types[$action])){
+      $type_acl_mapping = array(
+          "FAIpartitionTable"  => "faiPartitionTable",
+          "FAIpackageList"     => "faiPackage",
+          "FAIscript"          => "faiScript",
+          "FAIvariable"        => "faiVariable",
+          "FAIhook"            => "faiHook",
+          "FAIprofile"         => "faiProfile",
+          "FAItemplate"        => "faiTemplate");
+
+      $acl = $this->ui->get_permissions($this->acl_base,"fai/".$type_acl_mapping[$types[$action]]);
+      if(preg_match("/c/",$acl)){
+        $this->dialogObject = new askClassName($this->config,$this->dn,$this->ui,$types[$action]);
+        $this->dialogObject->parent = &$this;
+      }else{
+        msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), $types_i18n[$action]),      ERROR_DIALOG);
+      }
+    }
+    if($action == "new_profile"){
+      $this->dn = "new" ;
+
+      $acl = $this->ui->get_permissions($this->acl_base,"fai/faiProfile");
+      if(preg_match("/c/",$acl)){
+        $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
+        $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
+        $this->dialog->set_acl_base($this->base);
+        $this->dialog->parent = &$this;
+
+        $this->is_dialog = false;
+      }else{
+        msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), _("profile")), ERROR_DIALOG);
+      }
+    }
+  }
+
+
+  function newClassNameSelected()
+  {
+    $this->dialogObject->save_object();
+    if(count($this->dialogObject->check())!=0){
+      foreach($this->dialogObject->check() as $msg){
+        msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+      }
+    }elseif(isset($this->dialogObject->objectClass)){
+      $this->dn = "new" ;
+      $a_setup= $this->get_type(array("objectClass"=>array($this->dialogObject->objectClass)));
+      $name = $this->dialogObject->save();
+
+      if(class_exists($a_setup[0])){
+        $this->tabObject = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
+        $this->tabObject->set_acl_base($this->base);
+        $this->tabObject->by_object[$a_setup[1]]->cn = $name;
+        $this->tabObject->parent = &$this;
+      }
+    }
+  }
+
 
 
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
@@ -262,6 +351,14 @@ class faiManagement extends management
   function detectPostActions()
   {
     $action = management::detectPostActions();
+    if(isset($_POST['new_profile'])) $action['action'] = "new_profile";
+    if(isset($_POST['new_template'])) $action['action'] = "new_template";
+    if(isset($_POST['new_script'])) $action['action'] = "new_script";
+    if(isset($_POST['new_hook'])) $action['action'] = "new_hook";
+    if(isset($_POST['new_variable'])) $action['action'] = "new_variable";
+    if(isset($_POST['new_package'])) $action['action'] = "new_package";
+    if(isset($_POST['new_partition'])) $action['action'] = "new_partition";
+
     if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
     if(isset($_POST['CancelBranchName'])) $action['action'] = "cancel";
     if(isset($_POST['delete_branch_confirm'])) $action['action'] = "removeBranchConfirmed";

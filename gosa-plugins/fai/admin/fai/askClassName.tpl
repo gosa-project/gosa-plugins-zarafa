@@ -63,7 +63,6 @@
  </tr>
 </table>
 
-<!--
 <table summary="">
 	<tr>
 		<td>
@@ -78,7 +77,6 @@
 		</td>
 	</tr>
 </table>
--->
 <p class="seperator">&nbsp;</p>
 	
 <!-- Place cursor -->

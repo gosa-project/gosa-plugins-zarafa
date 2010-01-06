@@ -8,7 +8,7 @@
     <multiSelect>true</multiSelect>
     <template>fai-list.tpl</template>
     <module>fai</module>
-    <label>List of fai stuff!!!!!</label>
+    <label>List of deployment classes and products</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
@@ -52,29 +52,48 @@
      <label>Create</label>
 
      <action>
-      <name>new</name>
+      <name>new_profile</name>
       <type>entry</type>
-      <image>plugins/rolemanagement/images/new.png</image>
-      <label>Role</label>
+      <image>plugins/fai/images/fai_profile.png</image>
+      <label>Profile</label>
      </action>
-    </action>
-
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <name>edit</name>
+     <action>
+      <name>new_template</name>
       <type>entry</type>
-      <image>images/lists/edit.png</image>
-      <label>Edit</label>
-    </action>
-
-    <action>
-      <name>remove</name>
+      <image>plugins/fai/images/fai_template.png</image>
+      <label>Template</label>
+     </action>
+     <action>
+      <name>new_script</name>
       <type>entry</type>
-      <image>images/lists/trash.png</image>
-      <label>Remove</label>
+      <image>plugins/fai/images/fai_script.png</image>
+      <label>Script</label>
+     </action>
+     <action>
+      <name>new_hook</name>
+      <type>entry</type>
+      <image>plugins/fai/images/fai_hook.png</image>
+      <label>Hook</label>
+     </action>
+     <action>
+      <name>new_variable</name>
+      <type>entry</type>
+      <image>plugins/fai/images/fai_variable.png</image>
+      <label>Variable</label>
+     </action>
+     <action>
+      <name>new_package</name>
+      <type>entry</type>
+      <image>plugins/fai/images/fai_packages.png</image>
+      <label>Package list</label>
+     </action>
+     <action>
+      <name>new_partition</name>
+      <type>entry</type>
+      <image>plugins/fai/images/fai_partitionTable.png</image>
+      <label>Partition table</label>
+     </action>
+
     </action>
 
     <action>
