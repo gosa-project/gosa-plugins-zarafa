@@ -477,16 +477,24 @@ class faiManagement extends management
     if(isset($_GET['act']) && $_GET['act'] == "remove_branch")  $action['action'] = "removeBranch";
 
     foreach($_POST as $name => $value){
-      if(preg_match("/^edit_([0-9]*)_([a-z]*)_(x|y)/i", $name)){
-        $id = preg_replace("/^edit_([0-9]*)_([a-z]*)_(x|y)/i","\\1", $name);
-        $tab = preg_replace("/^edit_([0-9]*)_([a-z]*)_(x|y)/i","\\2", $name);
+      if(preg_match("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i", $name)){
+        $id = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\1", $name);
+        $tab = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\2", $name);
+
         $headpage = $this->getHeadpage();
-        if(isset($headpage->entries[$id]['GROUPS'][$tab])){
-          $data =$headpage->entries[$id]['GROUPS'][$tab];
-          $type = $this->get_type($data);
-          $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
+        $entry = $headpage->entries[$id];
+
+        if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
+          if(isset($headpage->entries[$id]['GROUPS'][$tab])){
+            $data =$headpage->entries[$id]['GROUPS'][$tab];
+            $type = $this->get_type($data);
+            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
+            if($str) return($str);
+          } 
+        }else{
+          $str = $this->editEntry('editEntry',array($entry['dn'])); 
           if($str) return($str);
-        } 
+        }
         break;
       }
     }
