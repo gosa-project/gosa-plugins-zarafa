@@ -33,13 +33,20 @@ class faiManagement extends management
   protected $aclPlugin   = "role";
   protected $objectName   = "role";
 
+
+  var $dispNewBranch=false;
+  var $dispNewFreeze=false;
+
   var $fai_release = ""; // The currently selected release while in release management mode!
   var $fai_base = ""; 
+  var $acl_base = ""; 
 
   function __construct($config,$ui)
   {
     $this->config = $config;
     $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
+    $this->fai_release = $this->fai_base;
+    $this->acl_base = $this->config->current['BASE'];
     $this->ui = $ui;
     $this->storagePoints = array(
         get_ou('faiPartitionRDN'),
@@ -49,18 +56,19 @@ class faiManagement extends management
         get_ou('faiHookRDN'),
         get_ou('faiProfileRDN'),get_ou('faiTemplateRDN'));
 
-    // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
-      $filter= session::global_get(get_class($this)."_filter");
-    } else {
+#    // Build filter
+#    if (session::global_is_set(get_class($this)."_filter")){
+#      $filter= session::global_get(get_class($this)."_filter");
+#    } else {
       $filter = new filter(get_template_path("fai-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-    }
+#    }
     $this->setFilter($filter);
 
     // Build headpage
     $headpage = new listing(get_template_path("fai-list.xml", true));
     $headpage->setFilter($filter);
+    $headpage->setBase($this->fai_release);
     $headpage->registerElementFilter("filterProperties", "faiManagement::filterProperties");
 
     // Add copy&paste and snapshot handler.
@@ -72,6 +80,10 @@ class faiManagement extends management
     }
     $this->registerAction("editByGroup","editByGroup");
     $this->registerAction("createBranch","createBranch");
+    $this->registerAction("createFreeze","createFreeze");
+    $this->registerAction("removeBranch","removeBranch");
+    $this->registerAction("saveBranch","saveBranch");
+    $this->registerAction("PerformBranch","PerformBranch");
     parent::__construct($config, $ui, "roles", $headpage);
   }
 
@@ -101,6 +113,34 @@ class faiManagement extends management
       $entry = $headpage->getEntry($target[0]);
       if($entry){
         $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"remove");
+      }
+    }
+  }
+
+  /*! \brief  Object removal was confirmed, now remove the requested entries.
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function removeEntryConfirmed($action="",$target=array(),$all=array(),
+      $altTabClass="",$altTabType="",$altAclCategory="")
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);  
+    foreach($this->dns as $key => $dn){
+      $ldap->cat($dn);
+      if($ldap->count()){
+        $attrs = $ldap->fetch();
+        $type= $this->get_type($attrs);
+        management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+
+        // Now save changes
+        FAI::save_release_changes_now();
+        $to_del = FAI::clean_up_releases($dn);
+        foreach($to_del as $dn){
+          $ldap->rmdir_recursive($dn);
+        }
       }
     }
   }
@@ -181,34 +221,6 @@ class faiManagement extends management
   }
 
   
- /*! \brief  Object removal was confirmed, now remove the requested entries.
-   *
-   *  @param  String  'action'  The name of the action which was the used as trigger.
-   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
-   *  @param  Array   'all'     A combination of both 'action' and 'target'.
-   */
-  function removeEntryConfirmed($action="",$target=array(),$all=array(),
-      $altTabClass="",$altTabType="",$altAclCategory="")
-  {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);  
-    foreach($this->dns as $key => $dn){
-      $ldap->cat($dn);
-      if($ldap->count()){
-        $attrs = $ldap->fetch();
-        $type= $this->get_type($attrs);
-        management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
-
-        // Now save changes
-        FAI::save_release_changes_now();
-        $to_del = FAI::clean_up_releases($dn);
-        foreach($to_del as $dn){
-          $ldap->rmdir_recursive($dn);
-        }
-      }
-    }
-  }
-
   protected function saveChanges()
   {
     management::saveChanges();
@@ -237,8 +249,13 @@ class faiManagement extends management
   {
     $action = management::detectPostActions();
     if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
+    if(isset($_POST['CancelBranchName'])) $action['action'] = "cancel";
+    if(isset($_GET['PerformBranch'])) $action['action'] = "PerformBranch";
+    if(isset($_POST['UseBranchName'])) $action['action'] = "saveBranch";
     if(isset($_POST['faiGroupHandle_apply']))  $action['action'] = "editByGroup";
     if(isset($_GET['act']) && $_GET['act'] == "branch_branch")  $action['action'] = "createBranch";
+    if(isset($_GET['act']) && $_GET['act'] == "freeze_branch")  $action['action'] = "createFreeze";
+    if(isset($_GET['act']) && $_GET['act'] == "remove_branch")  $action['action'] = "removeBranch";
 
     foreach($_POST as $name => $value){
       if(preg_match("/^edit_([0-9]*)_([a-z]*)_(x|y)/i", $name)){
@@ -341,13 +358,293 @@ class faiManagement extends management
   }
 
 
+
+
+  function removeBranch()
+  {
+
+    }
+
+
   function createBranch()
   { 
     $smarty = get_smarty();
     $this->dispNewBranch=true;
     $smarty->assign("iframe",false);
-    $smarty->assign("BranchName","");
+    if(isset($_POST['BranchName'])){
+      $smarty->assign("BranchName", $_POST['BranchName']);
+    }else{
+      $smarty->assign("BranchName","");
+    }
     return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
+  }
+
+  function createFreeze()
+  { 
+    $smarty = get_smarty();
+    $this->dispNewFreeze=true;
+    $smarty->assign("iframe",false);
+    if(isset($_POST['BranchName'])){
+      $smarty->assign("BranchName", $_POST['BranchName']);
+    }else{
+      $smarty->assign("BranchName","");
+    }
+    return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /****************
+    Create a new branch
+   ****************/
+
+  function PerformBranch()
+  {
+    if(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
+      msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
+    }else{
+
+      /* In order to see error messages we have to reset the error handler.
+         Due to the exit();
+       */
+      restore_error_handler();
+
+      /* Create it know */
+      $this->dispNewBranch = false;
+      $this->dispNewFreeze = false;
+
+      $LASTPOST = session::get('LASTPOST');
+      $base = $LASTPOST['base'];
+      $_POST  = session::get('LASTPOST');
+      $name = $_POST['BranchName'];
+
+      $type = $LASTPOST['type'];
+      $ldap = $this->config->get_ldap_link();
+
+      $baseToUse = $base;
+      if($this->fai_release !=  $this->fai_base){
+        $baseToUse = $this->fai_release;
+      }
+
+      /* Create new Release name to be able to set faidebianRelease for FAIpackageList */
+
+      $CurrentReleases  = $this->getBranches();
+      $NewReleaseName   = $name;
+      if(isset($CurrentReleases[$this->fai_release])) {
+        if($this->fai_release != $this->fai_base){
+          $NewReleaseName = $CurrentReleases[$this->fai_release]."/".$name;
+          $NewReleaseName = preg_replace("#\/#","/",$NewReleaseName);
+        }else{
+          $NewReleaseName   = $name;
+        }
+      }
+      $appsrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou('applicationRDN'),$baseToUse);
+      $appdst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou('applicationRDN'),"ou=".$name.",".$baseToUse) ;
+
+      $mimesrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou('mimetypeRDN'),$baseToUse);
+      $mimedst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou('mimetypeRDN'),"ou=".$name.",".$baseToUse) ;
+
+      /* Check if source depeartments exist */
+      foreach(array($baseToUse,$appsrc,$mimesrc) as $dep){
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->cat($dep);
+        if(!$ldap->count()){
+          $ldap->create_missing_trees($dep);
+        }
+      }
+
+      /* Print header to have styles included */
+      echo '  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+        <html>
+        <head>
+        <title></title>
+        <style type="text/css">@import url("themes/default/style.css");</style>
+        <script language="javascript" src="include/focus.js" type="text/javascript"></script>
+        </head>
+        <body style="background: none;margin:3px;color:black">
+        ';
+
+      new log("create","fai/".get_class($this),$NewReleaseName,array(),"New $type created");
+
+      /* Duplicate group application releases
+       */
+      FAI::copy_FAI_group_releases($CurrentReleases[$this->fai_release],$name,$type);
+
+      /* Duplicate applications
+       */
+      $ldap->cat($appsrc,array("dn")) ;
+      if($ldap->count()){
+        $ldap->cd ($appdst);
+        $ldap->recursive_remove();
+        FAI::copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
+      }
+
+      /* Duplicate mime types
+       */
+      $ldap->cat($mimesrc,array("dn")) ;
+      if($ldap->count()){
+        $ldap->cd ($mimedst);
+        $ldap->recursive_remove();
+        FAI::copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
+      }
+
+      $attr = array();
+      $attr['objectClass'] = array("organizationalUnit","FAIbranch");
+      $attr['ou']       = $name;
+      $attr['FAIstate'] = $type;
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->cd("ou=".$name.",".$baseToUse);
+      $ldap->cat("ou=".$name.",".$baseToUse);
+      if($ldap->count()){
+        $ldap->modify($attr);
+      }else{
+        $ldap->add($attr);
+      }
+
+      /* Duplicate fai objects
+       */
+      //      $ldap->cd ("ou=".$name.",".$baseToUse);
+      //      $ldap->recursive_remove();
+      //      FAI::copy_FAI_resource_recursive($baseToUse,"ou=".$name.",".$baseToUse,$NewReleaseName,$type,true);
+
+      echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
+        <br><input type='submit' name='CloseIFrame' value='"._("Continue")."'>
+        <input type='hidden' name='php_c_check' value='1'>
+        </form></div>";
+
+      echo "<script language=\"javascript\" type=\"text/javascript\">scrollDown2();</script>" ;
+
+      /* Print footer to have valid html */
+      echo "</body></html>";
+
+      $this->dispNewFreeze = false;
+
+      /* Postcreate */
+
+      /* Assign possible attributes */
+      $this->lock_type  = $type;
+      $this->lock_name  = $name;
+      $this->lock_dn    = $baseToUse;
+      $this->postcreate();
+
+      /* Send daemon event to reload the fai release database
+       */
+      if(class_available("DaemonEvent") && class_available("gosaSupportDaemon")){
+        $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
+        if(isset($events['TRIGGERED']['DaemonEvent_recreate_fai_release_db'])){
+          $evt = $events['TRIGGERED']['DaemonEvent_recreate_fai_release_db'];
+          $tmp = new $evt['CLASS_NAME']($this->config);
+          $tmp->set_type(TRIGGERED_EVENT);
+          $tmp->add_targets(array("GOSA"));
+          $o_queue = new gosaSupportDaemon();
+          if(!$o_queue->append($tmp)){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+          }
+        }
+      }else{
+        trigger_error("Unknown class DaemonEvent / gosaSupportDaemon");
+        msg_dialog::display(_("Fatal error"),
+            "Daemon events called but classes where not accessible, DaemonEvent gosaSupportDaemon",
+            FATAL_ERROR_DIALOG);
+      }
+      exit();
+    }
+  }
+
+
+
+
+  function saveBranch()
+  {
+    if($this->dispNewBranch){
+      $type = "branch";
+    }else{
+      $type = "freeze";
+    }
+
+    /* Check branch name */
+    $name = $_POST['BranchName'];
+    $is_ok = true;
+    $smarty = get_smarty();
+    $smarty->assign("BranchName",$name);
+    $base= $this->fai_base;
+
+    /* Check used characters */
+    if(!preg_match("/^[0-9a-z\.]*$/",$name)){
+      msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),$name,"/[0-9a-z\.]/"), ERROR_DIALOG);
+      $is_ok = false;
+    }
+
+    // Check if this name is already in use 
+    if(!$this->CheckNewBranchName($_POST['BranchName'],$this->fai_release)){
+      msg_dialog::display(_("Error"), msgPool::duplicated(_("Name")), ERROR_DIALOG);
+      $is_ok = false;
+    }
+
+    // Handle errors
+    if(!$is_ok && $this->dispNewFreeze){
+      return($this->createFreeze());
+    }elseif(!$is_ok && $this->dispNewBranch){
+      return($this->createBranch());
+    }
+
+    // Now create new release
+
+    if(session::is_set('LASTPOST')){
+      $LASTPOST = session::get('LASTPOST');
+    }else{
+      $LASTPOST = array();
+    }
+    $LASTPOST['base'] = $base;
+    $LASTPOST['type'] = $type;
+    $LASTPOST['BranchName'] = $name;
+    session::set('LASTPOST',$LASTPOST);
+    $smarty->assign("iframe", true);
+    $smarty->assign("plugID", $_GET['plug']);
+    $display  = $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
+    return($display);
+ 
+  }
+
+
+  function CheckNewBranchName($name,$base)
+  {
+    $f = $this->fai_release;
+    if($name == ""){
+      return(false);
+    }elseif(in_array($name,$this->getBranches($f))) {
+      return(false);
+    }elseif(tests::is_department_name_reserved($name,$base)){
+      return(false);
+    }
+    return(true);
+  }
+
+
+  /* Get available branches for current base */
+  function getBranches($base = false,$prefix = "")
+  {
+    $ret = array("/"=>$this->fai_base);
+    $ldap = $this->config->get_ldap_link();
+    if(!$base){
+      $base = $this->fai_base;
+    }
+    $tmp = FAI::get_all_releases_from_base($base,true);
+    foreach($tmp as $dn => $name){
+      $ret[$name]=$dn;
+    }
+    ksort($ret);
+    $ret = array_flip($ret);
+
+    return ($ret);
   }
 
 
