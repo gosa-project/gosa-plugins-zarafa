@@ -257,6 +257,42 @@ class faiManagement extends management
   }
 
 
+  function removeFAIObjects($to_delete)
+  {
+    // Do not allow to remove objects with state freeezed
+    $errors=array();
+    foreach($to_delete as $obj){
+      if(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
+        $errors[] = $obj['dn'];
+      }else{
+        $this->dns[] = $obj['dn'];
+      }
+    }
+    if(count($errors)){
+      msg_dialog::display(_("Branch locked"),
+          sprintf(_("The following entries are locked, you can't remove them %s."),msgPool::buildList($errors)),INFO_DIALOG);
+    }
+
+    // Check entry locking
+    if(count($this->dns)){
+      if ($user= get_multiple_locks($this->dns)){
+        return(gen_locked_message($user,$this->dns));
+      }
+      if(count($this->dns)){
+        $smarty = get_smarty();
+        $dns_names = array();
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names[] = LDAP::fix($dn);
+        }
+        $smarty->assign("info",msgPool::deleteInfo($dns_names,_("FAI object")));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+    
+  }
+
   function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
 
@@ -265,51 +301,18 @@ class faiManagement extends management
 
       /* Collect objects to delete and check if objects are freezed
        */
-      $errors = "";
       $headpage = $this->getHeadpage();
       $to_delete = array();
       foreach($target as $id){
         $object = $headpage->getEntry($id);
         if(in_array("FAKE_OC_FAI", $object['objectClass'])){
           foreach($object['GROUPS']  as $entry){
-
-            // Only allow to remove FAI classes  
             array_push($to_delete, $entry);
           }
         }
       }
-
-      foreach($to_delete as $obj){
-        if(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
-          $errors .= $obj['cn'].", ";
-        }else{
-          $this->dns[] = $obj['dn'];
-        }
-      }
-
-      if($errors != ""){
-        msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
-              "<br><br>".trim($errors,", ")),INFO_DIALOG);
-      }
-      /* Check locking
-       */
-      if(count($this->dns)){
-        if ($user= get_multiple_locks($this->dns)){
-          return(gen_locked_message($user,$this->dns));
-        }
-        if(count($this->dns)){
-          $smarty = get_smarty();
-          $dns_names = array();
-          foreach($this->dns as $dn){
-            add_lock ($dn, $this->ui->dn);
-            $dns_names[] = LDAP::fix($dn);
-          }
-          $smarty->assign("info",msgPool::deleteInfo($dns_names,_("FAI object")));
-          $smarty->assign("multiple", true);
-          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-        }
-      }
-
+      return($this->removeFAIObjects($to_delete));
+      
     }else{
 
       // Try to remove a single object, only FAI objects can be removed!
@@ -366,69 +369,10 @@ class faiManagement extends management
       if($str) return($str);
       $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
       $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
-
     }elseif($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "remove"){
       $this->dialogObject->save_object();
       $to_delete = $entry = $this->dialogObject->get_selected();
-      $dns = array();
-
-
-      // Check FAIstate to ensure that we do not remove frozen objects
-      //  additionally check ACLs
-      $locked = array();
-      $disallowed = array();
-      foreach($to_delete as $obj){
-        if(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
-          $locked[] = $obj['dn'];
-        }else{
-          $type = $this->get_type($obj);
-          $acl = $this->ui->get_permissions($obj['dn'], 'acl/'.$type[1]);
-          if(!preg_match("/d/",$acl)){
-            $disallowed[] = $obj['dn']; 
-          }else{
-            $dns[] = $obj['dn'];
-          }
-        }
-      }
-
-      // Display info dialog about locked and not removeable entries
-      if(count($locked)){
-        msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
-            msgPool::buildList($locked)));
-      }
-
-      // Display info dialog about not removeable entries due to permissions
-      if(count($disallowed)){
-        msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
-      }
-
-      // There are entries left to be removed
-      if(count($dns)){  
-        $this->closeDialogs();
-        $this->dns = $dns;
-
-        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$target,"Entry removel requested!");
-
-        // check locks
-        if ($user= get_multiple_locks($this->dns)){
-          return(gen_locked_message($user,$this->dns));
-        }
-
-        // Add locks
-        $dns_names = array();
-        foreach($this->dns as $dn){
-          $dns_names[] =LDAP::fix($dn);
-        }
-        add_lock ($this->dns, $this->ui->dn);
-
-        // Display confirmation dialog.
-        $smarty = get_smarty();
-        $smarty->assign("info", msgPool::deleteInfo($dns_names,_($this->objectName)));
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-      }else{
-        $this->closeDialogs();
-      }
+      return($this->removeFAIObjects($to_delete));
     }
   }
 
