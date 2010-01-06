@@ -106,6 +106,9 @@ class faiManagement extends management
           $data = array_pop($entry['GROUPS']);
           $type = $this->get_type($data);
           management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+          $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
+          $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
+
         }else{
           $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"edit");
         }
@@ -163,6 +166,9 @@ class faiManagement extends management
       $data = array_pop($entry);
       $type = $this->get_type($data);
       management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+      $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
+      $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
+
     }elseif($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "remove"){
       $this->dialogObject->save_object();
       $to_delete = $entry = $this->dialogObject->get_selected();
