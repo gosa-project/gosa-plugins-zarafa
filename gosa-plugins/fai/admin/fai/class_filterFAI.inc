@@ -49,12 +49,13 @@ class filterFAI extends filterLDAP{
           /* Clean up object informations */
           $obj                  = array();
           $obj['cn']            = $object['cn'][0];
-          $obj['dn']            = $object['cn'][0];
+          $obj['dn']            = $object['cn'][0].",".get_ou("faiBaseRDN").$config->current['BASE'];
           $obj['acl']           = $acl;
           $obj['class']         = $rest ['ACL'];
           $obj['FAIstate']      = $entry['FAIstate'];
           $obj['description']   = $object['description'][0];
           $obj['objectClass']   = $object['objectClass'];
+          $obj['objectClass'][] = 'FAKE_OC_FAI';
 
           if(!preg_match("/freeze/i", $entry['FAIstate'])){
             $obj['objectClass'][] = "FAKE_OC_IsBranch";
@@ -139,8 +140,7 @@ class filterFAI extends filterLDAP{
         }
         $item =array();
 
-        // FAKE_OC_IsBranch allows us to delete this entry (indicates NOT freezed state)
-        $item['objectClass']  = array('count' => 2, $data['type'], "FAKE_OC_IsBranch"); 
+        $item['objectClass']  = array('count' => 2, $data['type'],"FAKE_OC_OPSI");
         $item[] = 'objectClass';
         $item['cn']  = $data['cn'];
         $item[] = 'cn';

@@ -76,45 +76,47 @@ class faiManagement extends management
 #    if (session::global_is_set(get_class($this)."_filter")){
 #      $filter= session::global_get(get_class($this)."_filter");
 #    } else {
-      $filter = new filter(get_template_path("fai-filter.xml", true));
-      $filter->setObjectStorage($this->storagePoints);
+  $filter = new filter(get_template_path("fai-filter.xml", true));
+  $filter->setObjectStorage($this->storagePoints);
 #    }
-    $this->setFilter($filter);
+  $this->setFilter($filter);
 
-    // Build headpage
-    $headpage = new listing(get_template_path("fai-list.xml", true));
-    $headpage->setFilter($filter);
-    $headpage->setBase($this->fai_release);
-    $headpage->registerElementFilter("filterProperties", "faiManagement::filterProperties");
+  // Build headpage
+  $headpage = new listing(get_template_path("fai-list.xml", true));
+  $headpage->setFilter($filter);
+  $headpage->setBase($this->fai_release);
+  $headpage->registerElementFilter("filterProperties", "faiManagement::filterProperties");
 
-    // Add copy&paste and snapshot handler.
-    if ($this->config->boolValueIsTrue("main", "copyPaste")){
-      $this->cpHandler = new CopyPasteHandler($this->config);
-    }
-    if($this->config->get_cfg_value("enableSnapshots") == "true"){
-      $this->snapHandler = new SnapshotHandler($this->config);
-    }
+  // Add copy&paste and snapshot handler.
+  if ($this->config->boolValueIsTrue("main", "copyPaste")){
+    $this->cpHandler = new CopyPasteHandler($this->config);
+  }
+  if($this->config->get_cfg_value("enableSnapshots") == "true"){
+    $this->snapHandler = new SnapshotHandler($this->config);
+  }
 
-    $this->registerAction("new_profile","newEntry");
-    $this->registerAction("new_template","newEntry");
-    $this->registerAction("new_script","newEntry");
-    $this->registerAction("new_hook","newEntry");
-    $this->registerAction("new_variable","newEntry");
-    $this->registerAction("new_package","newEntry");
-    $this->registerAction("new_partition","newEntry");
+  $this->registerAction("remove_multiple","removeEntryRequested");
 
-    $this->registerAction("newClassNameSelected","newClassNameSelected");
+  $this->registerAction("new_profile","newEntry");
+  $this->registerAction("new_template","newEntry");
+  $this->registerAction("new_script","newEntry");
+  $this->registerAction("new_hook","newEntry");
+  $this->registerAction("new_variable","newEntry");
+  $this->registerAction("new_package","newEntry");
+  $this->registerAction("new_partition","newEntry");
 
-    $this->registerAction("saveOpsiProperties","saveOpsiProperties");
+  $this->registerAction("newClassNameSelected","newClassNameSelected");
 
-    $this->registerAction("editByGroup","editByGroup");
-    $this->registerAction("createBranch","createBranch");
-    $this->registerAction("createFreeze","createFreeze");
-    $this->registerAction("removeBranch","removeBranch");
-    $this->registerAction("removeBranchConfirmed","removeBranchConfirmed");
-    $this->registerAction("saveBranch","saveBranch");
-    $this->registerAction("PerformBranch","PerformBranch");
-    parent::__construct($config, $ui, "roles", $headpage);
+  $this->registerAction("saveOpsiProperties","saveOpsiProperties");
+
+  $this->registerAction("editByGroup","editByGroup");
+  $this->registerAction("createBranch","createBranch");
+  $this->registerAction("createFreeze","createFreeze");
+  $this->registerAction("removeBranch","removeBranch");
+  $this->registerAction("removeBranchConfirmed","removeBranchConfirmed");
+  $this->registerAction("saveBranch","saveBranch");
+  $this->registerAction("PerformBranch","PerformBranch");
+  parent::__construct($config, $ui, "roles", $headpage);
   }
 
 
@@ -257,11 +259,66 @@ class faiManagement extends management
 
   function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
-    $headpage = $this->getHeadpage();
-    if(count($target) == 1){
-      $entry = $headpage->getEntry($target[0]);
-      if($entry){
-        $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"remove");
+
+    $this->closeDialogs();
+    if($action == "remove_multiple"){
+
+      /* Collect objects to delete and check if objects are freezed
+       */
+      $errors = "";
+      $headpage = $this->getHeadpage();
+      $to_delete = array();
+      foreach($target as $id){
+        $object = $headpage->getEntry($id);
+        if(in_array("FAKE_OC_FAI", $object['objectClass'])){
+          foreach($object['GROUPS']  as $entry){
+
+            // Only allow to remove FAI classes  
+            array_push($to_delete, $entry);
+          }
+        }
+      }
+
+      foreach($to_delete as $obj){
+        if(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
+          $errors .= $obj['cn'].", ";
+        }else{
+          $this->dns[] = $obj['dn'];
+        }
+      }
+
+      if($errors != ""){
+        msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
+              "<br><br>".trim($errors,", ")),INFO_DIALOG);
+      }
+      /* Check locking
+       */
+      if(count($this->dns)){
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
+        }
+        if(count($this->dns)){
+          $smarty = get_smarty();
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            add_lock ($dn, $this->ui->dn);
+            $dns_names[] = LDAP::fix($dn);
+          }
+          $smarty->assign("info",msgPool::deleteInfo($dns_names,_("FAI object")));
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        }
+      }
+
+    }else{
+
+      // Try to remove a single object, only FAI objects can be removed!
+      $headpage = $this->getHeadpage();
+      if(count($target) == 1){
+        $entry = $headpage->getEntry($target[0]);
+        if($entry && !in_array("FAKE_OC_OPSI",$entry['objectClass'])){
+          $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"remove");
+        }
       }
     }
   }
@@ -276,7 +333,8 @@ class faiManagement extends management
       $altTabClass="",$altTabType="",$altAclCategory="")
   {
     $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);  
+    $ldap->cd($this->config->current['BASE']); 
+
     foreach($this->dns as $key => $dn){
       $ldap->cat($dn);
       if($ldap->count()){
@@ -404,6 +462,7 @@ class faiManagement extends management
   function detectPostActions()
   {
     $action = management::detectPostActions();
+    if(isset($_POST['remove_multiple'])) $action['action'] = "remove";
     if(isset($_POST['new_profile'])) $action['action'] = "new_profile";
     if(isset($_POST['new_template'])) $action['action'] = "new_template";
     if(isset($_POST['new_script'])) $action['action'] = "new_script";

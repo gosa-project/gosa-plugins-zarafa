@@ -9,7 +9,7 @@
     <template>fai-list.tpl</template>
     <module>fai</module>
     <label>List of deployment classes and products</label>
-    <defaultSortColumn>1</defaultSortColumn>
+    <defaultSortColumn>0</defaultSortColumn>
 
     <objectType>
       <label>FAI</label>
@@ -97,6 +97,17 @@
     </action>
 
     <action>
+      <type>separator</type>
+    </action>
+
+    <action>
+      <name>remove_multiple</name>
+      <type>entry</type>
+      <image>images/lists/trash.png</image>
+      <label>Remove</label>
+    </action>
+
+    <action>
       <type>exporter</type>
     </action>
 
@@ -114,10 +125,12 @@
 
   </actionmenu>
 
-  <actiontriggers snapshot="true" copypaste="true">
+  <actiontriggers snapshot="false" copypaste="true">
 
     <action>
       <name>cp</name>
+      <cut>false</cut>
+      <objectclass>FAKE_OC_FAI</objectclass>
       <type>copypaste</type>
     </action>
 
@@ -126,11 +139,6 @@
       <type>entry</type>
       <image>images/lists/edit.png</image>
       <label>Edit</label>
-    </action>
-
-    <action>
-      <name>snapshot</name>
-      <type>snapshot</type>
     </action>
 
     <action>
