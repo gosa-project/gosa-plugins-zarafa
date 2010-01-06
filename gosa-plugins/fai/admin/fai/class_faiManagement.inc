@@ -47,10 +47,19 @@ class faiManagement extends management
   var $lock_dn = "";
   var $lock_name = "";
 
+  var $opsi = NULL;
+
 
   function __construct($config,$ui)
   {
     $this->config = $config;
+
+    /* Check if the opsi plugin is installed.
+     */
+    if(class_available("opsi")){
+      $this->opsi = new opsi($this->config);;
+    }
+
     $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
     $this->fai_release = $this->fai_base;
     $this->acl_base = $this->config->current['BASE'];
@@ -95,6 +104,8 @@ class faiManagement extends management
     $this->registerAction("new_partition","newEntry");
 
     $this->registerAction("newClassNameSelected","newClassNameSelected");
+
+    $this->registerAction("saveOpsiProperties","saveOpsiProperties");
 
     $this->registerAction("editByGroup","editByGroup");
     $this->registerAction("createBranch","createBranch");
@@ -151,12 +162,11 @@ class faiManagement extends management
 
       $acl = $this->ui->get_permissions($this->acl_base,"fai/faiProfile");
       if(preg_match("/c/",$acl)){
-        $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
-        $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-        $this->dialog->set_acl_base($this->base);
-        $this->dialog->parent = &$this;
-
-        $this->is_dialog = false;
+        $type= $this->get_type(array("objectClass"=>array("FAIprofile")));
+        $str= management::newEntry('newEntry',array(),array(),$type[0],$type[2],$type[1]);
+        if($str) return($str);
+        $this->tabObject->set_acl_base($this->acl_base);
+        $this->tabObject->by_object[$type[1]]->cn = $name;
       }else{
         msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), _("profile")), ERROR_DIALOG);
       }
@@ -178,7 +188,8 @@ class faiManagement extends management
 
       if(class_exists($type[0])){
         $this->closeDialogs();
-        management::newEntry('newEntry',array(),array(),$type[0],$type[2],$type[1]);
+        $str = management::newEntry('newEntry',array(),array(),$type[0],$type[2],$type[1]);
+        if($str) return($str);
         $this->tabObject->set_acl_base($this->acl_base);
         $this->tabObject->by_object[$type[1]]->cn = $name;
       }
@@ -193,16 +204,52 @@ class faiManagement extends management
     if(count($target) == 1){
       $entry = $headpage->getEntry($target[0]);
       if($entry){
-        if(count($entry['GROUPS']) == 1){
-          $data = array_pop($entry['GROUPS']);
-          $type = $this->get_type($data);
-          management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
-          $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
-          $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
+
+        if(in_array("opsi_local", $entry['TYPES']) || in_array("opsi_netboot", $entry['TYPES'])){ 
+          $name = $entry['cn'];
+          $cfg = $this->opsi->get_product_properties($name);
+
+          $str = management::editEntry('editEntry',array($name),array(),'tabs_opsiProdConfig','OPSIPRODCONFIG','opsi');
+          if($str) return($str);
+          if(isset($this->tabObject->by_object['opsiProperties'])){
+            $this->tabObject->by_object['opsiProperties']->set_cfg($cfg);
+            $this->tabObject->by_object['opsiProperties']->set_product($name);
+            $this->skipFooter = TRUE;
+          }else{
+            trigger_error("Unknown tab, please check config.");
+          }
 
         }else{
-          $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"edit");
+          if(count($entry['GROUPS']) == 1){
+            $data = array_pop($entry['GROUPS']);
+            $type = $this->get_type($data);
+            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+            if($str) return($str);
+            $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
+            $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
+
+          }else{
+            $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"edit");
+          }
         }
+      }
+    }
+  }
+
+
+  function saveOpsiProperties()
+  {
+    if($this->tabObject instanceof tabs_opsiProdConfig && isset($_POST['save_properties'])){
+      $this->tabObject->save_object();
+      $op    = $this->tabObject->by_object['opsiProperties'];
+      $name  = $op->get_product();
+      $cfg   = $op->get_cfg();
+      $this->opsi->set_product_properties($name,$cfg);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+      }else{
+        $this->remove_lock();
+        $this->closeDialogs();
       }
     }
   }
@@ -235,7 +282,8 @@ class faiManagement extends management
       if($ldap->count()){
         $attrs = $ldap->fetch();
         $type= $this->get_type($attrs);
-        management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+        $str = management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+        if($str) return($str);
 
         // Now save changes
         FAI::save_release_changes_now();
@@ -256,7 +304,8 @@ class faiManagement extends management
       $this->closeDialogs();
       $data = array_pop($entry);
       $type = $this->get_type($data);
-      management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+      $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+      if($str) return($str);
       $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
       $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
 
@@ -328,7 +377,8 @@ class faiManagement extends management
   
   protected function saveChanges()
   {
-    management::saveChanges();
+    $str = management::saveChanges();
+    if($str) return($str);
 
     // Now save changes
     FAI::save_release_changes_now();
@@ -340,7 +390,8 @@ class faiManagement extends management
 
   protected function applyChanges()
   {
-    management::applyChanges();
+    $str = management::applyChanges();
+    if($str) return($str);
 
     // Now save changes
     FAI::save_release_changes_now();
@@ -360,6 +411,10 @@ class faiManagement extends management
     if(isset($_POST['new_variable'])) $action['action'] = "new_variable";
     if(isset($_POST['new_package'])) $action['action'] = "new_package";
     if(isset($_POST['new_partition'])) $action['action'] = "new_partition";
+
+
+    if(isset($_POST['save_properties'])) $action['action'] = "saveOpsiProperties";
+    if(isset($_POST['cancel_properties'])) $action['action'] = "cancel";
 
     if(isset($_POST['edit_continue'])) $action['action'] = "newClassNameSelected";
     if(isset($_POST['edit_cancel'])) $action['action'] = "cancel";
@@ -382,7 +437,8 @@ class faiManagement extends management
         if(isset($headpage->entries[$id]['GROUPS'][$tab])){
           $data =$headpage->entries[$id]['GROUPS'][$tab];
           $type = $this->get_type($data);
-          management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
+          $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
+          if($str) return($str);
         } 
         break;
       }
