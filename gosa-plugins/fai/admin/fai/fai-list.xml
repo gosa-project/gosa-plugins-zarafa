@@ -117,10 +117,7 @@
 
     <action>
       <type>copypaste</type>
-    </action>
-
-    <action>
-      <type>snapshot</type>
+      <cut>false</cut>
     </action>
 
   </actionmenu>
