@@ -70,66 +70,61 @@ class faiManagement extends management
         get_ou('faiScriptRDN'),
         get_ou('faiVariableRDN'),
         get_ou('faiHookRDN'),
-        get_ou('faiProfileRDN'),get_ou('faiTemplateRDN'));
+        get_ou('faiProfileRDN'),
+        get_ou('faiTemplateRDN'));
 
-#    // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
-#      $filter= session::global_get(get_class($this)."_filter");
-#    } else {
-  $filter = new filter(get_template_path("fai-filter.xml", true));
-  $filter->setObjectStorage($this->storagePoints);
-#    }
-  $this->setFilter($filter);
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
+      $filter = new filter(get_template_path("fai-filter.xml", true));
+      $filter->setObjectStorage($this->storagePoints);
+    }
+    $this->setFilter($filter);
 
-  // Build headpage
-  $headpage = new listing(get_template_path("fai-list.xml", true));
-  $headpage->setFilter($filter);
-  $headpage->setBase($this->fai_release);
-  $headpage->registerElementFilter("filterProperties", "faiManagement::filterProperties");
+    // Build headpage
+    $headpage = new listing(get_template_path("fai-list.xml", true));
+    $headpage->setFilter($filter);
+    $headpage->setBase($this->fai_release);
+    $headpage->registerElementFilter("filterProperties", "faiManagement::filterProperties");
 
-  // Add copy&paste and snapshot handler.
-  if ($this->config->boolValueIsTrue("main", "copyPaste")){
-    $this->cpHandler = new CopyPasteHandler($this->config);
-  }
-  if($this->config->get_cfg_value("enableSnapshots") == "true"){
-    $this->snapHandler = new SnapshotHandler($this->config);
-  }
+    // Add copy&paste and snapshot handler.
+    if ($this->config->boolValueIsTrue("main", "copyPaste")){
+      $this->cpHandler = new CopyPasteHandler($this->config);
+    }
 
-  $this->registerAction("remove_multiple","removeEntryRequested");
+    $this->registerAction("remove_multiple","removeEntryRequested");
+    $this->registerAction("new_profile","newEntry");
+    $this->registerAction("new_template","newEntry");
+    $this->registerAction("new_script","newEntry");
+    $this->registerAction("new_hook","newEntry");
+    $this->registerAction("new_variable","newEntry");
+    $this->registerAction("new_package","newEntry");
+    $this->registerAction("new_partition","newEntry");
+    $this->registerAction("newClassNameSelected","newClassNameSelected");
+    $this->registerAction("saveOpsiProperties","saveOpsiProperties");
+    $this->registerAction("editByGroup","editByGroup");
+    $this->registerAction("createBranch","createBranch");
+    $this->registerAction("createFreeze","createFreeze");
+    $this->registerAction("removeBranch","removeBranch");
+    $this->registerAction("removeBranchConfirmed","removeBranchConfirmed");
+    $this->registerAction("saveBranch","saveBranch");
+    $this->registerAction("PerformBranch","PerformBranch");
 
-  $this->registerAction("new_profile","newEntry");
-  $this->registerAction("new_template","newEntry");
-  $this->registerAction("new_script","newEntry");
-  $this->registerAction("new_hook","newEntry");
-  $this->registerAction("new_variable","newEntry");
-  $this->registerAction("new_package","newEntry");
-  $this->registerAction("new_partition","newEntry");
-
-  $this->registerAction("newClassNameSelected","newClassNameSelected");
-
-  $this->registerAction("saveOpsiProperties","saveOpsiProperties");
-
-  $this->registerAction("editByGroup","editByGroup");
-  $this->registerAction("createBranch","createBranch");
-  $this->registerAction("createFreeze","createFreeze");
-  $this->registerAction("removeBranch","removeBranch");
-  $this->registerAction("removeBranchConfirmed","removeBranchConfirmed");
-  $this->registerAction("saveBranch","saveBranch");
-  $this->registerAction("PerformBranch","PerformBranch");
-  parent::__construct($config, $ui, "roles", $headpage);
+    parent::__construct($config, $ui, "roles", $headpage);
   }
 
 
-  function copyPasteHandler($action="",$target=array(),$all=array(),
-      $altTabClass ="", $altTabType = "", $altAclCategory="",$altAclPlugin="")
+  /*! \brief  Act on copy & paste actions here.
+   */
+  function copyPasteHandler($action="",$target=array(),$all=array(),$altTabClass ="",$altTabType="",$altAclCategory="",$altAclPlugin="")
   {
-
     // Collect real dns, the listed objects are grouped by their cn
     $headpage = $this->getHeadpage();
     if($action == "copy"){
       foreach($target as $t){
         $entry = $headpage->getEntry($t);
-        
+
         // Check for valid FAI objects
         if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
           foreach($entry['GROUPS'] as $g){
@@ -164,12 +159,10 @@ class faiManagement extends management
   }
 
 
+  /*! \brief  A new FAI object was requested, let the user specify a name theis object now. 
+   */
   function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
-    /****************
-      Create a new object
-     ****************/
-
     $types = array( 
         "new_partition"     =>  "FAIpartitionTable",
         "new_script"        =>  "FAIscript",
@@ -200,7 +193,8 @@ class faiManagement extends management
         $this->dialogObject = new askClassName($this->config,$this->dn,$this->ui,$types[$action]);
         $this->dialogObject->parent = &$this;
       }else{
-        msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), $types_i18n[$action]),      ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), 
+            sprintf(_("You have no permission to create a new %s!"), $types_i18n[$action]),      ERROR_DIALOG);
       }
     }
     if($action == "new_profile"){
@@ -220,6 +214,9 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   A new FAI class was requested and the user had a specify a name for it.
+   *           Here we check if this name is useable and then open the edit dialogs.
+   */
   function newClassNameSelected()
   {
     $this->dialogObject->save_object();
@@ -243,7 +240,9 @@ class faiManagement extends management
   }
 
 
-
+  /*! \brief   Edit the selected entry.
+   *           If there was a FAI group clicked, display a dialog with all members of the group.
+   */
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
     $headpage = $this->getHeadpage();
@@ -251,6 +250,7 @@ class faiManagement extends management
       $entry = $headpage->getEntry($target[0]);
       if($entry){
 
+        // Edit Opsi objects here 
         if(in_array("opsi_local", $entry['TYPES']) || in_array("opsi_netboot", $entry['TYPES'])){ 
           $name = $entry['cn'];
           $cfg = $this->opsi->get_product_properties($name);
@@ -266,6 +266,8 @@ class faiManagement extends management
           }
 
         }else{
+
+          // Edit FAI objects here 
           if(count($entry['GROUPS']) == 1){
             $data = array_pop($entry['GROUPS']);
             $type = $this->get_type($data);
@@ -283,6 +285,8 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   Save changes made in opsi dialogs.
+   */
   function saveOpsiProperties()
   {
     if($this->tabObject instanceof tabs_opsiProdConfig && isset($_POST['save_properties'])){
@@ -301,6 +305,43 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   Someone wants to remove some object(s)
+   *            ask for a confirmation now.
+   */
+  function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    $this->closeDialogs();
+    if($action == "remove_multiple"){
+
+      // Collect objects to delete
+      $headpage = $this->getHeadpage();
+      $to_delete = array();
+      foreach($target as $id){
+        $object = $headpage->getEntry($id);
+        if(in_array("FAKE_OC_FAI", $object['objectClass'])){
+          foreach($object['GROUPS']  as $entry){
+            array_push($to_delete, $entry);
+          }
+        }
+      }
+      return($this->removeFAIObjects($to_delete));
+    }else{
+
+      // Try to remove a single object, only FAI objects can be removed!
+      $headpage = $this->getHeadpage();
+      if(count($target) == 1){
+        $entry = $headpage->getEntry($target[0]);
+        if($entry && in_array("FAKE_OC_FAI",$entry['objectClass'])){
+          $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"remove");
+        }
+      }
+    }
+  }
+
+
+  /*! \brief   Someone wants to remove some object(s)
+   *            ask for a confirmation now.
+   */
   function removeFAIObjects($to_delete)
   {
     // Do not allow to remove objects with state freeezed
@@ -334,47 +375,10 @@ class faiManagement extends management
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
     }
-    
   }
 
-  function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
-  {
 
-    $this->closeDialogs();
-    if($action == "remove_multiple"){
-
-      /* Collect objects to delete and check if objects are freezed
-       */
-      $headpage = $this->getHeadpage();
-      $to_delete = array();
-      foreach($target as $id){
-        $object = $headpage->getEntry($id);
-        if(in_array("FAKE_OC_FAI", $object['objectClass'])){
-          foreach($object['GROUPS']  as $entry){
-            array_push($to_delete, $entry);
-          }
-        }
-      }
-      return($this->removeFAIObjects($to_delete));
-      
-    }else{
-
-      // Try to remove a single object, only FAI objects can be removed!
-      $headpage = $this->getHeadpage();
-      if(count($target) == 1){
-        $entry = $headpage->getEntry($target[0]);
-        if($entry && !in_array("FAKE_OC_OPSI",$entry['objectClass'])){
-          $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"remove");
-        }
-      }
-    }
-  }
-
-  /*! \brief  Object removal was confirmed, now remove the requested entries.
-   *
-   *  @param  String  'action'  The name of the action which was the used as trigger.
-   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
-   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+  /*! \brief   Entry removal is confirmed, now remove objects
    */
   function removeEntryConfirmed($action="",$target=array(),$all=array(),
       $altTabClass="",$altTabType="",$altAclCategory="")
@@ -401,6 +405,10 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   Someone clicked on edit/remove for a grouped FAI object.
+   *           We are now going to display a dialog to let the user select the entry 
+   *            he wants to perform the action on.
+   */
   function editByGroup()
   {
     if($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "edit"){
@@ -420,7 +428,9 @@ class faiManagement extends management
     }
   }
 
-  
+
+  /*! \brief   Save dialog/object modifications
+   */
   protected function saveChanges()
   {
     $str = management::saveChanges();
@@ -434,6 +444,9 @@ class faiManagement extends management
     }
   }
 
+
+  /*! \brief   Save dialog/object modifications but keep the dialogs opened
+   */
   protected function applyChanges()
   {
     $str = management::applyChanges();
@@ -447,148 +460,9 @@ class faiManagement extends management
     }
   }
 
-  function detectPostActions()
-  {
-    $action = management::detectPostActions();
-    if(isset($_POST['remove_multiple'])) $action['action'] = "remove";
-    if(isset($_POST['new_profile'])) $action['action'] = "new_profile";
-    if(isset($_POST['new_template'])) $action['action'] = "new_template";
-    if(isset($_POST['new_script'])) $action['action'] = "new_script";
-    if(isset($_POST['new_hook'])) $action['action'] = "new_hook";
-    if(isset($_POST['new_variable'])) $action['action'] = "new_variable";
-    if(isset($_POST['new_package'])) $action['action'] = "new_package";
-    if(isset($_POST['new_partition'])) $action['action'] = "new_partition";
 
-
-    if(isset($_POST['save_properties'])) $action['action'] = "saveOpsiProperties";
-    if(isset($_POST['cancel_properties'])) $action['action'] = "cancel";
-
-    if(isset($_POST['edit_continue'])) $action['action'] = "newClassNameSelected";
-    if(isset($_POST['edit_cancel'])) $action['action'] = "cancel";
-
-    if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
-    if(isset($_POST['CancelBranchName'])) $action['action'] = "cancel";
-    if(isset($_POST['delete_branch_confirm'])) $action['action'] = "removeBranchConfirmed";
-    if(isset($_GET['PerformBranch'])) $action['action'] = "PerformBranch";
-    if(isset($_POST['UseBranchName'])) $action['action'] = "saveBranch";
-    if(isset($_POST['faiGroupHandle_apply']))  $action['action'] = "editByGroup";
-    if(isset($_GET['act']) && $_GET['act'] == "branch_branch")  $action['action'] = "createBranch";
-    if(isset($_GET['act']) && $_GET['act'] == "freeze_branch")  $action['action'] = "createFreeze";
-    if(isset($_GET['act']) && $_GET['act'] == "remove_branch")  $action['action'] = "removeBranch";
-
-    foreach($_POST as $name => $value){
-      if(preg_match("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i", $name)){
-        $id = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\1", $name);
-        $tab = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\2", $name);
-
-        $headpage = $this->getHeadpage();
-        $entry = $headpage->entries[$id];
-
-        if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
-          if(isset($headpage->entries[$id]['GROUPS'][$tab])){
-            $data =$headpage->entries[$id]['GROUPS'][$tab];
-            $type = $this->get_type($data);
-            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
-            if($str) return($str);
-          } 
-        }else{
-          $str = $this->editEntry('editEntry',array($entry['dn'])); 
-          if($str) return($str);
-        }
-        break;
-      }
-    }
-    return($action);
-  }
-
-
-  function renderList()
-  {
-    $filter = $this->getFilter();
-    $headpage = $this->getHeadpage();
-    $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
-
-    if(isset($_POST['RELEASE'])){
-      $this->fai_release = get_post('RELEASE');
-    }
-    $headpage->setBase($this->fai_release);
-    $headpage->update();
-    $smarty = get_smarty();
-    $smarty->assign("fai_release", $this->fai_release);
-    $smarty->assign("opsi_available", is_object($this->opsi));
-    $smarty->assign("fai_base", $this->fai_base);
-    $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
-    $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));
-    $smarty->assign("allow_create", $c);
-    $smarty->assign("allow_remove", $r);
-    $display = $headpage->render();
-    return($this->getHeader().$display);
-  }
-
-  function getReleaseList($base = "", $prefix ="")
-  {
-    $list = array();
-    if(empty($base)){
-      $base = $this->fai_base;
-      $list[$base] = "/";
-    }
-
-    $ldap = $this->config->get_ldap_link();
-    $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
-    $cfg_rel = $this->config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
-
-    while($release = $ldap->fetch()){
-      $list[$release['dn']] = $prefix.$release['ou'][0];
-
-      // Preset to prefered releaes if necessary  
-      if(empty($this->fai_release) && $cfg_rel == $release['dn']){
-        $this->fai_release = $release['dn'];
-      }
-
-      $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
-    }
-    return($list);
-  }
-
-
-  static function filterProperties($row, $classes)
-  {
-    $objects = array(
-        "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png",
-          "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
-        "FAIpackageList"     => array("IMG"=> "plugins/fai/images/fai_packages.png",
-          "NAME"=>_("Package list") ,  "KZL"=> "PL", "VAR"=>"ShowPackages"),
-        "FAIscript"          => array("IMG"=> "plugins/fai/images/fai_script.png",
-          "NAME"=>_("Scripts") ,       "KZL"=> "S",  "VAR"=>"ShowScripts"),
-        "FAIvariable"        => array("IMG"=> "plugins/fai/images/fai_variable.png",
-          "NAME"=>_("Variables") ,     "KZL"=> "V",  "VAR"=>"ShowVariables"),
-        "FAIhook"            => array("IMG"=> "plugins/fai/images/fai_hook.png",
-          "NAME"=>_("Hooks"),          "KZL"=> "H",  "VAR"=>"ShowHooks"),
-        "FAIprofile"         => array("IMG"=> "plugins/fai/images/fai_profile.png",
-          "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
-        "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",
-          "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"),
-        "opsi_netboot"       => array("IMG"=> "plugins/opsi/images/netboot_package.png",
-          "NAME"=>_("OPSI netboot product") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
-        "opsi_local"         => array("IMG"=> "plugins/opsi/images/local_package.png",
-          "NAME"=>_("OPSI localboot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
-
-    $icon_list = "";
-    foreach($objects as $type => $type_data){
-      if(in_array($type, $classes)){
-        $icon_list .= "<input type='image' src='".$type_data['IMG']."' title='".$type_data['NAME']."'
-          alt='".$type_data['KZL']."' class='center' name='edit_".$row."_".$type."'>\n";
-      }else{
-        $icon_list .= "<img src='images/empty.png' alt=' ' class='center'>\n";
-      }
-    }
-
-    return $icon_list;
-  }
-
-
-
-
+  /*! \brief   Initiates release removal
+   */
   function removeBranch()
   {
     /* Check if we have a post remove method configured
@@ -609,6 +483,8 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   Remove a release after removal was confirmed
+   */
   function removeBranchConfirmed()
   {
     /* Check if we have a post remove method configured
@@ -689,6 +565,8 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   Initiates release creation 
+   */
   function createBranch()
   { 
     $smarty = get_smarty();
@@ -703,6 +581,9 @@ class faiManagement extends management
     return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
   }
 
+
+  /*! \brief   Initiates release creation 
+   */
   function createFreeze()
   { 
     $smarty = get_smarty();
@@ -718,7 +599,8 @@ class faiManagement extends management
   }
 
 
-
+  /*! \brief   Creates a new branch
+   */
   function PerformBranch()
   {
     if(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
@@ -872,8 +754,8 @@ class faiManagement extends management
   }
 
 
-
-
+  /*! \brief   Creates a new branch, after a useable name was specified.
+   */
   function saveBranch()
   {
     if($this->dispNewBranch){
@@ -923,25 +805,47 @@ class faiManagement extends management
     $smarty->assign("plugID", $_GET['plug']);
     $display  = $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
     return($display);
- 
+
   }
 
 
-  function CheckNewBranchName($name,$base)
+
+  /*! \brief   Returns a list of all releases for useable for drop down boxes.
+   *                      ou=fai... /
+   *              ou=siga,ou=fai... &nbsp; siga
+   *         ou=1,ou=siga,ou=fai... &nbsp;&nbsp; 1
+   */
+  function getReleaseList($base = "", $prefix ="")
   {
-    $f = $this->fai_release;
-    if($name == ""){
-      return(false);
-    }elseif(in_array($name,$this->getBranches($f))) {
-      return(false);
-    }elseif(tests::is_department_name_reserved($name,$base)){
-      return(false);
+    $list = array();
+    if(empty($base)){
+      $base = $this->fai_base;
+      $list[$base] = "/";
     }
-    return(true);
+
+    $ldap = $this->config->get_ldap_link();
+    $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
+    $cfg_rel = $this->config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
+
+    while($release = $ldap->fetch()){
+      $list[$release['dn']] = $prefix.$release['ou'][0];
+
+      // Preset to prefered releaes if necessary  
+      if(empty($this->fai_release) && $cfg_rel == $release['dn']){
+        $this->fai_release = $release['dn'];
+      }
+
+      $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
+    }
+    return($list);
   }
 
 
-  /* Get available branches for current base */
+  /*! \brief   Returns a list of all releases with full release names
+   *                      ou=fai... /
+   *              ou=siga,ou=fai... siga
+   *         ou=1,ou=siga,ou=fai... siga/1
+   */
   function getBranches($base = false,$prefix = "")
   {
     $ret = array("/"=>$this->fai_base);
@@ -960,6 +864,11 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   Detects object info like corresponding  tab,class,acl 
+   *    e.g.    [0]   =  tabsPartition
+   *            [1]   =  faiPartitionTable
+   *            [2]   =  FAIPARTITIONTABS
+   */
   function get_type($array)
   {
     if(!isset($array['objectClass'])) return(array());
@@ -988,7 +897,7 @@ class faiManagement extends management
   }
 
 
-  /* Check if the given FAI class is used in this release
+  /*! \brief   Checks if the given string can be used as class name
    */
   static function check_class_name($oc,$name,$dn)
   {
@@ -1013,6 +922,157 @@ class faiManagement extends management
   }
 
 
+  /*! \brief   Checks if the given string can be used for a new release
+   */
+  function CheckNewBranchName($name,$base)
+  {
+    $f = $this->fai_release;
+    if($name == ""){
+      return(false);
+    }elseif(in_array($name,$this->getBranches($f))) {
+      return(false);
+    }elseif(tests::is_department_name_reserved($name,$base)){
+      return(false);
+    }
+    return(true);
+  }
+
+
+  /*! \brief   This filter is used to display small icons for each listed object 
+   *            instead of their typ names
+   */
+  static function filterProperties($row, $classes)
+  {
+    $objects = array(
+        "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png",
+          "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
+        "FAIpackageList"     => array("IMG"=> "plugins/fai/images/fai_packages.png",
+          "NAME"=>_("Package list") ,  "KZL"=> "PL", "VAR"=>"ShowPackages"),
+        "FAIscript"          => array("IMG"=> "plugins/fai/images/fai_script.png",
+          "NAME"=>_("Scripts") ,       "KZL"=> "S",  "VAR"=>"ShowScripts"),
+        "FAIvariable"        => array("IMG"=> "plugins/fai/images/fai_variable.png",
+          "NAME"=>_("Variables") ,     "KZL"=> "V",  "VAR"=>"ShowVariables"),
+        "FAIhook"            => array("IMG"=> "plugins/fai/images/fai_hook.png",
+          "NAME"=>_("Hooks"),          "KZL"=> "H",  "VAR"=>"ShowHooks"),
+        "FAIprofile"         => array("IMG"=> "plugins/fai/images/fai_profile.png",
+          "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
+        "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",
+          "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"),
+        "opsi_netboot"       => array("IMG"=> "plugins/opsi/images/netboot_package.png",
+          "NAME"=>_("OPSI netboot product") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
+        "opsi_local"         => array("IMG"=> "plugins/opsi/images/local_package.png",
+          "NAME"=>_("OPSI localboot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
+
+    $icon_list = "";
+    foreach($objects as $type => $type_data){
+      if(in_array($type, $classes)){
+        $icon_list .= "<input type='image' src='".$type_data['IMG']."' title='".$type_data['NAME']."'
+          alt='".$type_data['KZL']."' class='center' name='edit_".$row."_".$type."'>\n";
+      }else{
+        $icon_list .= "<img src='images/empty.png' alt=' ' class='center'>\n";
+      }
+    }
+
+    return $icon_list;
+  }
+
+
+  /*! \brief   Overridden render method of class mangement. 
+   *            this allows us to add a release selection box.
+   */
+  function renderList()
+  {
+    $filter = $this->getFilter();
+    $headpage = $this->getHeadpage();
+    $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
+
+    if(isset($_POST['RELEASE'])){
+      $this->fai_release = get_post('RELEASE');
+    }
+    $headpage->setBase($this->fai_release);
+    $headpage->update();
+    $smarty = get_smarty();
+    $smarty->assign("fai_release", $this->fai_release);
+    $smarty->assign("opsi_available", is_object($this->opsi));
+    $smarty->assign("fai_base", $this->fai_base);
+    $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
+    $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));
+    $smarty->assign("allow_create", $c);
+    $smarty->assign("allow_remove", $r);
+    $display = $headpage->render();
+    return($this->getHeader().$display);
+  }
+
+
+  /*! \brief   Convert POST and GET variables into actions.
+   */
+  function detectPostActions()
+  {
+    $action = management::detectPostActions();
+    if(isset($_POST['remove_multiple'])) $action['action'] = "remove";
+    if(isset($_POST['new_profile'])) $action['action'] = "new_profile";
+    if(isset($_POST['new_template'])) $action['action'] = "new_template";
+    if(isset($_POST['new_script'])) $action['action'] = "new_script";
+    if(isset($_POST['new_hook'])) $action['action'] = "new_hook";
+    if(isset($_POST['new_variable'])) $action['action'] = "new_variable";
+    if(isset($_POST['new_package'])) $action['action'] = "new_package";
+    if(isset($_POST['new_partition'])) $action['action'] = "new_partition";
+
+    if(isset($_POST['save_properties'])) $action['action'] = "saveOpsiProperties";
+    if(isset($_POST['cancel_properties'])) $action['action'] = "cancel";
+
+    if(isset($_POST['edit_continue'])) $action['action'] = "newClassNameSelected";
+    if(isset($_POST['edit_cancel'])) $action['action'] = "cancel";
+
+    if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
+    if(isset($_POST['CancelBranchName'])) $action['action'] = "cancel";
+    if(isset($_POST['delete_branch_confirm'])) $action['action'] = "removeBranchConfirmed";
+    if(isset($_GET['PerformBranch'])) $action['action'] = "PerformBranch";
+    if(isset($_POST['UseBranchName'])) $action['action'] = "saveBranch";
+    if(isset($_POST['faiGroupHandle_apply']))  $action['action'] = "editByGroup";
+    if(isset($_GET['act']) && $_GET['act'] == "branch_branch")  $action['action'] = "createBranch";
+    if(isset($_GET['act']) && $_GET['act'] == "freeze_branch")  $action['action'] = "createFreeze";
+    if(isset($_GET['act']) && $_GET['act'] == "remove_branch")  $action['action'] = "removeBranch";
+
+    foreach($_POST as $name => $value){
+      if(preg_match("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i", $name)){
+        $id = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\1", $name);
+        $tab = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\2", $name);
+
+        $headpage = $this->getHeadpage();
+        $entry = $headpage->entries[$id];
+
+        if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
+          if(isset($headpage->entries[$id]['GROUPS'][$tab])){
+            $data =$headpage->entries[$id]['GROUPS'][$tab];
+            $type = $this->get_type($data);
+            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
+            if($str) return($str);
+          } 
+        }else{
+          $str = $this->editEntry('editEntry',array($entry['dn'])); 
+          if($str) return($str);
+        }
+        break;
+      }
+    }
+    return($action);
+  }
+
+
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("FAI releases"),
+          "plDescription" => _("FAI release management"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"=> array("description" => _("FAI"),
+              "objectClass" => "FAIclass")),
+          "plProvidedAcls"=> array()));
+  }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
