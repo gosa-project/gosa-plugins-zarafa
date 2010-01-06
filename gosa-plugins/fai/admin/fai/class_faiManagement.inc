@@ -94,6 +94,8 @@ class faiManagement extends management
     $this->registerAction("new_package","newEntry");
     $this->registerAction("new_partition","newEntry");
 
+    $this->registerAction("newClassNameSelected","newClassNameSelected");
+
     $this->registerAction("editByGroup","editByGroup");
     $this->registerAction("createBranch","createBranch");
     $this->registerAction("createFreeze","createFreeze");
@@ -171,14 +173,14 @@ class faiManagement extends management
       }
     }elseif(isset($this->dialogObject->objectClass)){
       $this->dn = "new" ;
-      $a_setup= $this->get_type(array("objectClass"=>array($this->dialogObject->objectClass)));
+      $type= $this->get_type(array("objectClass"=>array($this->dialogObject->objectClass)));
       $name = $this->dialogObject->save();
 
-      if(class_exists($a_setup[0])){
-        $this->tabObject = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-        $this->tabObject->set_acl_base($this->base);
-        $this->tabObject->by_object[$a_setup[1]]->cn = $name;
-        $this->tabObject->parent = &$this;
+      if(class_exists($type[0])){
+        $this->closeDialogs();
+        management::newEntry('newEntry',array(),array(),$type[0],$type[2],$type[1]);
+        $this->tabObject->set_acl_base($this->acl_base);
+        $this->tabObject->by_object[$type[1]]->cn = $name;
       }
     }
   }
@@ -358,6 +360,9 @@ class faiManagement extends management
     if(isset($_POST['new_variable'])) $action['action'] = "new_variable";
     if(isset($_POST['new_package'])) $action['action'] = "new_package";
     if(isset($_POST['new_partition'])) $action['action'] = "new_partition";
+
+    if(isset($_POST['edit_continue'])) $action['action'] = "newClassNameSelected";
+    if(isset($_POST['edit_cancel'])) $action['action'] = "cancel";
 
     if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
     if(isset($_POST['CancelBranchName'])) $action['action'] = "cancel";

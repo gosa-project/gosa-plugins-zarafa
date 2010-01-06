@@ -62,23 +62,13 @@
   </td>
  </tr>
 </table>
-
-<table summary="">
-	<tr>
-		<td>
-		<input type="submit" name="UseSelectedClass" value="{t}Use{/t}" {$ClassNamesAvailable}> 
-		</td>
-	</tr>
-	<tr>
-		<td><b>{t}A new class name.{/t}</b>
-		</td>
-		<td>
-		<input type="submit" name="UseNewClass" value="{t}Use{/t}"> 
-		</td>
-	</tr>
-</table>
 <p class="seperator">&nbsp;</p>
-	
+
+<p style="text-align:right">
+ <input type="submit" name="edit_continue" value="{t}Continue{/t}">&nbsp;
+ <input type="submit" name="edit_cancel" value="{msgPool type='cancelButton'}">
+</p>
+
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
 	<!--
