@@ -120,6 +120,50 @@ class faiManagement extends management
   }
 
 
+  function copyPasteHandler($action="",$target=array(),$all=array(),
+      $altTabClass ="", $altTabType = "", $altAclCategory="",$altAclPlugin="")
+  {
+
+    // Collect real dns, the listed objects are grouped by their cn
+    $headpage = $this->getHeadpage();
+    if($action == "copy"){
+      foreach($target as $t){
+        $entry = $headpage->getEntry($t);
+        
+        // Check for valid FAI objects
+        if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
+          foreach($entry['GROUPS'] as $g){
+            $type = $this->get_type($g);
+            $this->cpHandler->add_to_queue($g['dn'],"copy",$type[0],$type[2],'fai',$this);
+            @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$dn,"Entry copied!");
+          }
+        }
+      }
+    }
+
+    // Initiate pasting
+    if($action == "paste"){
+      $this->cpPastingStarted = TRUE;
+    }
+
+    // Display any c&p dialogs, eg. object modifications required before pasting.
+    if($this->cpPastingStarted && $this->cpHandler->entries_queued()){
+      $this->cpHandler->SetVar("base",$headpage->getBase());
+      $data = $this->cpHandler->execute();
+      FAI::save_release_changes_now();
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    // Automatically disable pasting process since there is no entry left to paste.
+    if(!$this->cpHandler->entries_queued()){
+      $this->cpPastingStarted = FALSE;
+    }
+    return("");
+  }
+
+
   function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
     /****************
