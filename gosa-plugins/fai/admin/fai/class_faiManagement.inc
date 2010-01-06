@@ -33,6 +33,8 @@ class faiManagement extends management
   protected $aclPlugin   = "role";
   protected $objectName   = "role";
 
+  //  Attributes Managed by this plugin can be used in post events
+  protected $attributes   = array("lock_type","lock_name","lock_dn");  
 
   var $dispNewBranch=false;
   var $dispNewFreeze=false;
@@ -82,6 +84,7 @@ class faiManagement extends management
     $this->registerAction("createBranch","createBranch");
     $this->registerAction("createFreeze","createFreeze");
     $this->registerAction("removeBranch","removeBranch");
+    $this->registerAction("removeBranchConfirmed","removeBranchConfirmed");
     $this->registerAction("saveBranch","saveBranch");
     $this->registerAction("PerformBranch","PerformBranch");
     parent::__construct($config, $ui, "roles", $headpage);
@@ -250,6 +253,7 @@ class faiManagement extends management
     $action = management::detectPostActions();
     if(isset($_POST['faiGroupHandle_cancel'])) $action['action'] = "cancel";
     if(isset($_POST['CancelBranchName'])) $action['action'] = "cancel";
+    if(isset($_POST['delete_branch_confirm'])) $action['action'] = "removeBranchConfirmed";
     if(isset($_GET['PerformBranch'])) $action['action'] = "PerformBranch";
     if(isset($_POST['UseBranchName'])) $action['action'] = "saveBranch";
     if(isset($_POST['faiGroupHandle_apply']))  $action['action'] = "editByGroup";
@@ -362,14 +366,109 @@ class faiManagement extends management
 
   function removeBranch()
   {
-
+    /* Check if we have a post remove method configured
+     *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
+     */
+    if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
+      /* Load permissions for selected 'dn' and check if
+         we're allowed to remove this 'dn' */
+      if(preg_match("/d/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
+        $smarty=get_smarty();
+        $smarty->assign("release_hidden",base64_encode($this->fai_release));
+        $smarty->assign("info", msgPool::deleteInfo(LDAP::fix($this->fai_release),_("FAI branch/freeze")));
+        return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
+      } else {
+        msg_dialog::display(_("Permission error"), _("You have no permission to delete this release!"), ERROR_DIALOG);
+      }
     }
+  }
+
+
+  function removeBranchConfirmed()
+  {
+    /* Check if we have a post remove method configured
+     *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
+     */
+    if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
+
+      if(!isset($_POST['release_hidden']) || base64_decode($_POST['release_hidden']) != $this->fai_release){
+        msg_dialog::display(_("Warning"),_("Release remove aborted because the release name check failed!"));
+      }else{
+
+        $bb =  $this->fai_release;
+        $ldap = $this->config->get_ldap_link();
+
+        $br = $this->getBranches();
+
+        if(isset($br[$bb]) && preg_match("/d/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
+          $name = $br[$bb];
+
+          $ldap->cd($bb);
+          $ldap->recursive_remove();
+          $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'/i', ','.get_ou('applicationRDN'), $bb));
+          $ldap->recursive_remove();
+          $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'/i', ','.get_ou('mimetypeRDN'), $bb));
+          $ldap->recursive_remove();
+
+          /* Search for all groups with configured application menus.
+             - First search all groups, to ensure that we only remove entries form whithin groups.
+             - The search für menu configuration for the specified release and collect all those dns.
+             - Remove entries
+           */
+          $release_ou = preg_replace("/".preg_quote(get_ou("faiBaseRDN"), '/').".*$/i","",$bb);
+          $ldap->cd($this->config->current['BASE']);
+          $ldap->search("(objectClass=posixGroup)",array("dn"));
+
+          /* Collect all group dns
+           */
+          $groups = array();
+          while($attrs = $ldap->fetch()){
+            $groups[] = $attrs['dn'];
+          }
+
+
+          /* Collect all group menu release dns that match the release we have removed
+           */
+          $dns = array();
+          foreach($groups as $dn){
+            $ldap->cd($dn);
+            $ldap->search("(objectClass=FAIbranch)",array("dn"));
+            while($attrs = $ldap->fetch()){
+              if(preg_match("/^".preg_quote($release_ou, '/')."/",$attrs['dn'])){
+                $dns[] = $attrs['dn'];
+              }
+            }
+          }
+
+          /* Finally remove collected release dns
+           */
+          foreach($dns as $dn){
+            $ldap->cd($dn);
+            $ldap->recursive_remove();
+          }
+
+          /* Post remove */
+          $this->fai_release = $this->fai_base;
+          $this->lock_name   = $name;
+          $this->lock_dn     = $bb;
+          $this->postremove();
+
+          $fai_filter = session::get("fai_filter");
+          $fai_filter['fai_release'] = $this->fai_release;
+          session::set("fai_filter",$fai_filter);
+
+          new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
+        }
+      }
+    }
+  }
 
 
   function createBranch()
   { 
     $smarty = get_smarty();
     $this->dispNewBranch=true;
+    $this->dispNewFreeze=false;
     $smarty->assign("iframe",false);
     if(isset($_POST['BranchName'])){
       $smarty->assign("BranchName", $_POST['BranchName']);
@@ -383,6 +482,7 @@ class faiManagement extends management
   { 
     $smarty = get_smarty();
     $this->dispNewFreeze=true;
+    $this->dispNewBranch=false;
     $smarty->assign("iframe",false);
     if(isset($_POST['BranchName'])){
       $smarty->assign("BranchName", $_POST['BranchName']);
@@ -393,18 +493,6 @@ class faiManagement extends management
   }
 
 
-
-
-
-
-
-
-
-
-
-  /****************
-    Create a new branch
-   ****************/
 
   function PerformBranch()
   {
@@ -417,7 +505,6 @@ class faiManagement extends management
        */
       restore_error_handler();
 
-      /* Create it know */
       $this->dispNewBranch = false;
       $this->dispNewFreeze = false;
 
@@ -648,7 +735,8 @@ class faiManagement extends management
   }
 
 
-  function get_type($array){
+  function get_type($array)
+  {
     if(!isset($array['objectClass'])) return(array());
     if(in_array("FAIpartitionTable",$array['objectClass'])){
       return(array("tabsPartition","faiPartitionTable","FAIPARTITIONTABS"));
