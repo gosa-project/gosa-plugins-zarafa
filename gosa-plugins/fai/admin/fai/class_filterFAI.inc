@@ -55,6 +55,11 @@ class filterFAI extends filterLDAP{
           $obj['FAIstate']      = $entry['FAIstate'];
           $obj['description']   = $object['description'][0];
           $obj['objectClass']   = $object['objectClass'];
+
+          if(!preg_match("/freeze/i", $entry['FAIstate'])){
+            $obj['objectClass'][] = "FAKE_OC_IsBranch";
+          }
+
           $obj['TYPES'][]       = $type;
           $obj['GROUPS'][$type]      = $object;
         

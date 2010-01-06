@@ -117,6 +117,7 @@
     <action>
       <name>remove</name>
       <type>entry</type>
+      <objectclass>FAKE_OC_IsBranch</objectclass>
       <image>images/lists/trash.png</image>
       <label>Remove role</label>
     </action>

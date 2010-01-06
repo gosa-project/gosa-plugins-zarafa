@@ -43,6 +43,11 @@ class faiManagement extends management
   var $fai_base = ""; 
   var $acl_base = ""; 
 
+  var $lock_type = "";
+  var $lock_dn = "";
+  var $lock_name = "";
+
+
   function __construct($config,$ui)
   {
     $this->config = $config;
