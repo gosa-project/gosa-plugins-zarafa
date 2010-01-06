@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 #
 # Show user info from cache
 #
@@ -9,6 +9,7 @@
 
 use strict;
 use DB_File;
+use Date::Format;
 
 my $CACHE_FILE = '/var/spool/squid/quota.db';
 my $FORMAT = "A16 A5 S S L A5 L L L";

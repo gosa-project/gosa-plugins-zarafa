@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 #
 # Parse squid log and write current traffic usage by users into cache
 #
