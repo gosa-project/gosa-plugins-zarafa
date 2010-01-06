@@ -554,7 +554,11 @@ class faiPartitionTable extends plugin
         if($disk['status'] == "new"){
           if(isset($disk_attrs[$attr])) unset($disk_attrs[$attr]);
           if(isset($disk[$attr]) && !empty($disk[$attr])){
-            $disk_attrs[$attr] = $disk[$attr];
+            if(is_array($disk[$attr])){
+              $disk_attrs[$attr] = array_values($disk[$attr]);
+            }else{
+              $disk_attrs[$attr] = $disk[$attr];
+            }
           }
         }else{
           if(isset($disk[$attr]) && !empty($disk[$attr])){
