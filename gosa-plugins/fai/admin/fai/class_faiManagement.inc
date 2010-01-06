@@ -61,7 +61,13 @@ class faiManagement extends management
     }
 
     $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
-    $this->fai_release = $this->fai_base;
+    $cfg_rel = $this->config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
+    if(!empty($cfg_rel)){
+      $this->fai_release = $cfg_rel;
+    }else{
+      $this->fai_release = $this->fai_base;
+    }
+
     $this->acl_base = $this->config->current['BASE'];
     $this->ui = $ui;
     $this->storagePoints = array(
@@ -825,16 +831,9 @@ class faiManagement extends management
 
     $ldap = $this->config->get_ldap_link();
     $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
-    $cfg_rel = $this->config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
 
     while($release = $ldap->fetch()){
       $list[$release['dn']] = $prefix.$release['ou'][0];
-
-      // Preset to prefered releaes if necessary  
-      if(empty($this->fai_release) && $cfg_rel == $release['dn']){
-        $this->fai_release = $release['dn'];
-      }
-
       $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
     }
     return($list);
