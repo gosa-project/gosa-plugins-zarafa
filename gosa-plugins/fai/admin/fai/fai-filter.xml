@@ -32,7 +32,7 @@
     <tag>NETBOOT</tag>
     <default>true</default>
     <unset></unset>
-    <set>(FAIstate=__NETBOOT__)</set>
+    <set>(&amp;(objectClass=FAIclass)(FAIstate=__NETBOOT__))</set>
   </element>
 
   <element>
@@ -40,7 +40,7 @@
     <tag>LOCALBOOT</tag>
     <default>true</default>
     <unset></unset>
-    <set>(FAIstate=__LOCALBOOT__)</set>
+    <set>(&amp;(objectClass=FAIclass)(FAIstate=__LOCALBOOT__))</set>
   </element>
 
   <element>
@@ -110,7 +110,7 @@
     <alphabet>false</alphabet>
     <autocomplete>
       <backend>FAI</backend>
-      <filter>(&amp;(|(objectClass=FAIclass)(FAIstate=__NETBOOT__)(FAIstate=__LOCALBOOT__))(cn=*$NAME*))</filter>
+      <filter>(|(&amp;(objectClass=FAIclass)(cn=*$NAME*))(&amp;(objectClass=FAIclass)(|(FAIstate=__NETBOOT__)(FAIstate=__LOCALBOOT__))))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
