@@ -110,7 +110,7 @@
     <alphabet>false</alphabet>
     <autocomplete>
       <backend>FAI</backend>
-      <filter>(&amp;(objectClass=FAIclass)(cn=*$NAME*))</filter>
+      <filter>(&amp;(|(objectClass=FAIclass)(FAIstate=__NETBOOT__)(FAIstate=__LOCALBOOT__))(cn=*$NAME*))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
