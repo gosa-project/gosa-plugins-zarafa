@@ -597,33 +597,45 @@ class faiManagement extends management
    */
   function createBranch()
   { 
-    $smarty = get_smarty();
-    $this->dispNewBranch=true;
-    $this->dispNewFreeze=false;
-    $smarty->assign("iframe",false);
-    if(isset($_POST['BranchName'])){
-      $smarty->assign("BranchName", $_POST['BranchName']);
+    if($this->config->search("faiManagement", "POSTCREATE",array('menu','tabs')) == ""){ 
+      msg_dialog::display(_("Configuration"), msgPool::cmdnotfound(_("POSTCREATE"), get_class()), ERROR_DIALOG);
+    }elseif(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
+      msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
     }else{
-      $smarty->assign("BranchName","");
+      $smarty = get_smarty();
+      $this->dispNewBranch=true;
+      $this->dispNewFreeze=false;
+      $smarty->assign("iframe",false);
+      if(isset($_POST['BranchName'])){
+        $smarty->assign("BranchName", $_POST['BranchName']);
+      }else{
+        $smarty->assign("BranchName","");
+      }
+      return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
     }
-    return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
   }
 
 
   /*! \brief   Initiates release creation 
    */
   function createFreeze()
-  { 
-    $smarty = get_smarty();
-    $this->dispNewFreeze=true;
-    $this->dispNewBranch=false;
-    $smarty->assign("iframe",false);
-    if(isset($_POST['BranchName'])){
-      $smarty->assign("BranchName", $_POST['BranchName']);
+  {
+    if($this->config->search("faiManagement", "POSTCREATE",array('menu','tabs')) == ""){ 
+      msg_dialog::display(_("Configuration"), msgPool::cmdnotfound(_("POSTCREATE"), get_class()), ERROR_DIALOG);
+    }elseif(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
+      msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
     }else{
-      $smarty->assign("BranchName","");
+      $smarty = get_smarty();
+      $this->dispNewFreeze=true;
+      $this->dispNewBranch=false;
+      $smarty->assign("iframe",false);
+      if(isset($_POST['BranchName'])){
+        $smarty->assign("BranchName", $_POST['BranchName']);
+      }else{
+        $smarty->assign("BranchName","");
+      }
+      return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
     }
-    return($smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__))));
   }
 
 
