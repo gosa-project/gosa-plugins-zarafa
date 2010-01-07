@@ -391,7 +391,7 @@ class opsi extends gosaSupportDaemon
       foreach($res['XML'][0]['ITEM'] as $entry){
         foreach($entry as $name => $val){
 
-          foreach(array("DESCRIPTION","DEFAULT") as $attr){
+          foreach(array("DESCRIPTION","CURRENT") as $attr){
             $items[$name][$attr] = "";
             if(isset($val[0][$attr])){
               $items[$name][$attr] = $val[0][$attr][0]['VALUE'];
