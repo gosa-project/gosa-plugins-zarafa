@@ -4,6 +4,9 @@ class filterOpsiLicense {
 
   static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
+
+    if(!class_available('opsi')) return(array());
+
     $config= session::global_get('config');
     $ldap= $config->get_ldap_link(TRUE);
     $flag= ($scope == "sub")?GL_SUBSEARCH:0;
@@ -25,6 +28,9 @@ class filterOpsiLicense {
   {
     $config= session::global_get('config');
     $si = new opsiLicenceHandler($config);
+
+    if(!$si->enabled()) return(array());
+
     $res = $si->listPools();
     $result = array();
     if($si->is_error() || !is_array($res)){
