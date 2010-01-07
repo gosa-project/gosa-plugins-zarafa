@@ -68,6 +68,11 @@ class faiManagement extends management
       $this->fai_release = $this->fai_base;
     }
 
+    $releases = $this->getReleaseList();
+    if(!isset($releases[$this->fai_release])){
+      $this->fai_release = $this->fai_base;
+    }
+
     $this->acl_base = $this->config->current['BASE'];
     $this->ui = $ui;
     $this->storagePoints = array(
