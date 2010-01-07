@@ -611,7 +611,7 @@ sub opsi_get_product_properties {
             if (defined $values->{$key}){
               $vals= $values->{$key};
             }
-            $item.= "<$key>$dsc<default>".xml_quote($value)."</default>$vals</$key>";
+            $item.= "<$key>$dsc<current>".xml_quote($value)."</current>$vals</$key>";
             $item.= "</item>";
             $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
         }
@@ -1422,7 +1422,9 @@ sub opsi_getSoftwareLicenseUsagesForProductId {
 	# Fetch licensePoolId for productId
 	my ($res, $err) = &_getLicensePoolId('productId'=>$productId);
 	if ($err){
-		return &_giveErrorFeedback($msg_hash, "cannot fetch licensePoolId for given productId : ".$res, $session_id);
+                my $out_hash = &create_xml_hash("answer_$header", $main::server_address, $source);
+                $out_hash->{result} = [];
+		return ( &create_xml_string($out_hash) );
 	}
 	my $licensePoolId = $res;   # We assume that there is only one pool for each productID!!!
 
