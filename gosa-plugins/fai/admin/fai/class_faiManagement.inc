@@ -86,6 +86,7 @@ class faiManagement extends management
       $filter = new filter(get_template_path("fai-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
     }
+    $filter->elementValues['RELEASE'] = $this->fai_release;
     $this->setFilter($filter);
 
     // Build headpage
