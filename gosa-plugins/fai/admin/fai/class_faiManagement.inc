@@ -351,9 +351,14 @@ class faiManagement extends management
   function removeFAIObjects($to_delete)
   {
     // Do not allow to remove objects with state freeezed
-    $errors=array();
+    $errors = $disallowed = array();
+  
     foreach($to_delete as $obj){
-      if(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
+      $type = $this->get_type($obj);
+      $acl  = $this->ui->get_permissions($obj['dn'],"fai/".$type[1]);
+      if(!preg_match("/d/",$acl)){
+        $disallowed[] = $obj['dn'];
+      }elseif(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
         $errors[] = $obj['dn'];
       }else{
         $this->dns[] = $obj['dn'];
@@ -362,6 +367,9 @@ class faiManagement extends management
     if(count($errors)){
       msg_dialog::display(_("Branch locked"),
           sprintf(_("The following entries are locked, you can't remove them %s."),msgPool::buildList($errors)),INFO_DIALOG);
+    }
+    if(count($disallowed)){ 
+      msg_dialog::display(_("Permission error"), msgPool::permDelete($disallowed), ERROR_DIALOG);
     }
 
     // Check entry locking
