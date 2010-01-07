@@ -392,21 +392,35 @@ class faiManagement extends management
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']); 
 
+    $disallowed = array();
     foreach($this->dns as $key => $dn){
       $ldap->cat($dn);
       if($ldap->count()){
         $attrs = $ldap->fetch();
         $type= $this->get_type($attrs);
-        $str = management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
-        if($str) return($str);
 
-        // Now save changes
-        FAI::save_release_changes_now();
-        $to_del = FAI::clean_up_releases($dn);
-        foreach($to_del as $dn){
-          $ldap->rmdir_recursive($dn);
+        $acl  = $this->ui->get_permissions($dn,"fai/".$type[1]);
+        if(preg_match("/d/",$acl)){
+
+          // Now save changes
+          management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+          FAI::save_release_changes_now();
+          $to_del = FAI::clean_up_releases($dn);
+          foreach($to_del as $dn){
+            $ldap->rmdir_recursive($dn);
+          }
+
+        } else {
+          $disallowed[] = $dn;
+          new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
       }
+    }
+
+    /* Normally this shouldn't be reached, send some extra
+       logs to notify the administrator */
+    if(count($disallowed)){ 
+      msg_dialog::display(_("Permission error"), msgPool::permDelete($disallowed), ERROR_DIALOG);
     }
   }
 
