@@ -128,15 +128,33 @@ class faiManagement extends management
     // Collect real dns, the listed objects are grouped by their cn
     $headpage = $this->getHeadpage();
     if($action == "copy"){
-      foreach($target as $t){
-        $entry = $headpage->getEntry($t);
 
-        // Check for valid FAI objects
-        if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
-          foreach($entry['GROUPS'] as $g){
-            $type = $this->get_type($g);
-            $this->cpHandler->add_to_queue($g['dn'],"copy",$type[0],$type[2],'fai',$this);
-            @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$dn,"Entry copied!");
+      if(count($target) == 1){
+
+        // We just want to copy a single FAI object, let the user choose entries from the FAI-Group
+        $entry = $headpage->getEntry($target[0]);
+        if(count($entry['GROUPS']) == 1){
+          $data = array_pop($entry['GROUPS']);
+          $type = $this->get_type($data);
+          $this->cpHandler->add_to_queue($g['dn'],"copy",$type[0],$type[2],'fai',$this);
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$g['dn'],"Entry copied!");
+        }else{
+          $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"copy");
+        }
+        
+      }else{
+
+        // More than one group was selected, expect that the user wants to copy the complete groups.
+        foreach($target as $t){
+          $entry = $headpage->getEntry($t);
+
+          // Check for valid FAI objects
+          if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
+            foreach($entry['GROUPS'] as $g){
+              $type = $this->get_type($g);
+              $this->cpHandler->add_to_queue($g['dn'],"copy",$type[0],$type[2],'fai',$this);
+              @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$g['dn'],"Entry copied!");
+            }
           }
         }
       }
@@ -452,7 +470,19 @@ class faiManagement extends management
     }elseif($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "remove"){
       $this->dialogObject->save_object();
       $to_delete = $entry = $this->dialogObject->get_selected();
+      if(count($to_delete)) $this->closeDialogs();
       return($this->removeFAIObjects($to_delete));
+    }elseif($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "copy"){
+      $this->dialogObject->save_object();
+      $entries = $entry = $this->dialogObject->get_selected();
+      if(count($entries)){
+        foreach($entries as $entry){
+          $type = $this->get_type($entry);
+          $this->cpHandler->add_to_queue($entry['dn'],"copy",$type[0],$type[2],'fai',$this);
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$entry['dn'],"Entry copied!");
+        }
+        $this->closeDialogs();
+      }
     }
   }
 

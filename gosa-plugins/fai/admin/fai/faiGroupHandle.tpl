@@ -65,37 +65,12 @@
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td><i>({$item.description})</i>
+		<td><i>({$item.description.0})</i>
 		</td>
 	</tr>
 {/foreach}
 </table>
 
-{elseif $mode == "cut"}
-
-<b>{t}Select the object you want to cut:{/t}</b>
-<br>
-<br>
-<table>
-{foreach from=$FAI_group item=item key=key}
-	<tr>
-		<td>
-			{if $item.freezed}
-				<img src="images/lists/locked.png" class='center'>
-			{else}
-				<input type='checkbox' name='{$mode}_{$key}'
-    	     		{if $item.selected} checked {/if}>
-			{/if}
-		</td>
-		<td>
-			<img src='{$types.$key.IMG}' alt='{$types.$key.KZL}' title='{$types.$key.NAME}'
-				class='center'>
-		</td>
-		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td><i>({$item.description})</i> </td>
-	</tr>
-{/foreach}
-</table>
 {/if}
 <br>
 <br>
