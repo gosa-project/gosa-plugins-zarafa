@@ -125,7 +125,8 @@ class opsiGeneric extends plugin
       }
     }
 
-    // Get package info 
+    // Get package info
+    $list = array(); 
     if(!empty($this->hostId)){
       $list = $this->opsi->get_full_product_host_information($this->hostId);
     }
