@@ -11,7 +11,7 @@ class SelectDeviceType extends plugin
   var $SystemTypes       = array();
 
   var $ObjectGroup    = "none";
-  var $SystemType        = "workstation";
+  var $SystemType        = "gotoWorkstation";
 
   var $dn;
 
@@ -36,9 +36,9 @@ class SelectDeviceType extends plugin
     asort($tmp, SORT_LOCALE_STRING);
     $this->ObjectGroups= $tmp;
 
-    $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"));
+    $this->SystemTypes =array("gotoWorkstation"=>_("Workstation"), "gotoTerminal"=>_("Terminal"), "goServer"=>_("Server"));
     if(class_available("opsi")){
-    $this->SystemTypes["opsi_client"]= _("Windows workstation");
+      $this->SystemTypes["FAKE_OC_OpsiHost"]= _("Windows workstation");
     }
   }
 
@@ -61,7 +61,7 @@ class SelectDeviceType extends plugin
     $smarty= get_smarty();
     $display= "";
 
-    $map = array("workstation" => "W","terminal" => "T","server" => "S", "opsi_client" => "O");
+    $map = array("gotoWorkstation" => "W","gotoTerminal" => "T","goServer" => "S", "FAKE_OC_OpsiHost" => "O");
     $smarty->assign("dns_cnt" , count($this->dns));
     $smarty->assign("ogroups", $tmp[$map[$this->SystemType]]);
     $smarty->assign("SystemTypes"     ,$this->SystemTypes);
