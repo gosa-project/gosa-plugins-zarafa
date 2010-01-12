@@ -19,11 +19,10 @@ class SelectDeviceType extends plugin
   {
     if(!is_array($dn)){
       $this->dns = array($dn);
-      plugin::plugin ($config, NULL);
     }else{
       $this->dns = $dn;
-      plugin::plugin ($config, $dn);
     }
+    plugin::plugin ($config, NULL);
 
     /* Get object groups */
     $ldap = $this->config->get_ldap_link();
