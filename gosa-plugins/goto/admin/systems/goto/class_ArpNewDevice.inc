@@ -12,7 +12,7 @@ class ArpNewDevice extends plugin
   var $SystemTypes       = array();
 
   var $ObjectGroup    = "none";
-  var $SystemType     = "workstation";
+  var $SystemType     = "gotoWorkstation";
 
   var $gotoIntegration = FALSE;
 
@@ -35,9 +35,9 @@ class ArpNewDevice extends plugin
     asort($tmp, SORT_LOCALE_STRING);
     $this->ObjectGroups= $tmp;
 
-    $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"));
+    $this->SystemTypes =array("gotoWorkstation"=>_("Workstation"), "gotoTermminal"=>_("Terminal"), "goServer"=>_("Server"));
     if(class_available("opsi")){
-      $this->SystemTypes["opsi_client"]= _("Windows workstation");
+      $this->SystemTypes["FAKE_OC_OpsiHost"]= _("Windows workstation");
     }
   }
 
@@ -58,7 +58,7 @@ class ArpNewDevice extends plugin
     }
     $this->netConfigDNS->cn= $this->cn;
 
-    $map = array("workstation" => "W","terminal" => "T","server" => "S", "opsi_client" => "O");
+    $map = array("gotoWorkstation" => "W","gotoTerminal" => "T","goServer" => "S", "FAKE_OC_OpsiHost" => "O");
     $smarty->assign("netconfig", $this->netConfigDNS->execute());
     $smarty->assign("ogroups", $tmp[$map[$this->SystemType]]);
     $smarty->assign("SystemTypes"     ,$this->SystemTypes);
