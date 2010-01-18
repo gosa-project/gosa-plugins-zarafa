@@ -634,7 +634,7 @@ class faiManagement extends management
   function createBranch()
   { 
     if($this->config->search("faiManagement", "POSTCREATE",array('menu','tabs')) == ""){ 
-      msg_dialog::display(_("Configuration"), msgPool::cmdnotfound(_("POSTCREATE"), get_class()), ERROR_DIALOG);
+      msg_dialog::display(_("Configuration"), msgPool::cmdnotfound("POSTCREATE", get_class()), ERROR_DIALOG);
     }elseif(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
       msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
     }else{
@@ -657,7 +657,7 @@ class faiManagement extends management
   function createFreeze()
   {
     if($this->config->search("faiManagement", "POSTCREATE",array('menu','tabs')) == ""){ 
-      msg_dialog::display(_("Configuration"), msgPool::cmdnotfound(_("POSTCREATE"), get_class()), ERROR_DIALOG);
+      msg_dialog::display(_("Configuration"), msgPool::cmdnotfound("POSTCREATE", get_class()), ERROR_DIALOG);
     }elseif(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
       msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
     }else{

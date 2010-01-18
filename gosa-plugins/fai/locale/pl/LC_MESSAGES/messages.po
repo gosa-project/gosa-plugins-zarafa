@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 17:04+0100\n"
+"POT-Creation-Date: 2010-01-18 18:42+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -42,12 +42,11 @@ msgstr "Ścieżka docelowa"
 #: admin/fai/faiPartitionTableEntry.tpl:13 admin/fai/faiHookEntry.tpl:19
 #: admin/fai/class_faiVariableEntry.inc:138
 #: admin/fai/class_faiTemplate.inc:545 admin/fai/class_faiScript.inc:646
-#: admin/fai/class_faiScriptEntry.inc:190 admin/fai/fai-list.xml:49
-#: admin/fai/faiTemplate.tpl:21 admin/fai/class_faiPartitionTable.inc:789
-#: admin/fai/faiVariableEntry.tpl:19 admin/fai/class_faiHookEntry.inc:197
-#: admin/fai/class_faiVariable.inc:398 admin/fai/faiPartition.tpl:20
-#: admin/fai/class_faiPackage.inc:658 admin/fai/class_faiTemplateEntry.inc:300
-#: admin/fai/faiPartitionTable.tpl:21
+#: admin/fai/class_faiScriptEntry.inc:190 admin/fai/faiTemplate.tpl:21
+#: admin/fai/class_faiPartitionTable.inc:793 admin/fai/faiVariableEntry.tpl:19
+#: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:398
+#: admin/fai/faiPartition.tpl:20 admin/fai/class_faiPackage.inc:658
+#: admin/fai/class_faiTemplateEntry.inc:300 admin/fai/faiPartitionTable.tpl:21
 msgid "Description"
 msgstr "Opis"
 
@@ -136,11 +135,13 @@ msgstr "sticky"
 #: admin/fai/tabsScript.inc:33 admin/fai/tabsTemplate.inc:33
 #: admin/fai/class_faiHook.inc:239 admin/fai/class_faiDiskEntry.inc:427
 #: admin/fai/tabsPartition.inc:34 admin/fai/class_faiProfile.inc:262
-#: admin/fai/class_faiTemplate.inc:212 admin/fai/tabsVariable.inc:33
-#: admin/fai/tabsPackage.inc:33 admin/fai/class_faiScript.inc:229
-#: admin/fai/class_FAI.inc:556 admin/fai/class_faiScriptEntry.inc:59
-#: admin/fai/class_faiScriptEntry.inc:62 admin/fai/tabsHook.inc:32
-#: admin/fai/class_faiPartitionTable.inc:244
+#: admin/fai/class_filterFAI.inc:125 admin/fai/class_faiManagement.inc:255
+#: admin/fai/class_faiManagement.inc:329 admin/fai/class_faiManagement.inc:852
+#: admin/fai/class_faiManagement.inc:858 admin/fai/class_faiTemplate.inc:212
+#: admin/fai/tabsVariable.inc:33 admin/fai/tabsPackage.inc:33
+#: admin/fai/class_faiScript.inc:229 admin/fai/class_FAI.inc:556
+#: admin/fai/class_faiScriptEntry.inc:59 admin/fai/class_faiScriptEntry.inc:62
+#: admin/fai/tabsHook.inc:32 admin/fai/class_faiPartitionTable.inc:244
 #: admin/fai/class_faiPartitionTable.inc:307
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:348
@@ -168,26 +169,26 @@ msgid ""
 "The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 
-#: admin/fai/remove.tpl:2 admin/fai/remove_branch.tpl:2
+#: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:560
+#: admin/fai/remove_branch.tpl:2
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: admin/fai/remove.tpl:7
+#: admin/fai/remove.tpl:6
 msgid ""
-"This includes 'all' object information. Please double check if your really "
-"want to do this since there is no way for GOsa to get your data back."
+"This includes all account data, system access rules, imap settings, etc. for "
+"this user. Please double check if your really want to do this since there is "
+"no way for GOsa to get your data back."
 msgstr ""
-"Operacja odnosi się do 'wszystkich' informacji obiektowych. Proszę upewnić "
-"się, czy na pewno wykonać tą operację, gdyż nie ma możliwości powrotu."
+"Operacja odnosi się do wszystkich danych dotyczących konta, dostępu, "
+"ustawień imap, etc dla tego użytkownika. Proszę upewnić się czy na pewno "
+"kontynuować, gdyż nie ma możliwości powrotu."
 
-#: admin/fai/remove.tpl:11
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
+#: admin/fai/remove.tpl:10 admin/fai/remove_branch.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
-"Przed wykonaniem tej operacji zaleca się wykonanie kopii bezpieczeństwa "
-"drzewa LDAP. Naciśnij 'Usuń' aby kontynuować, lub 'Anuluj' aby przerwać."
+"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
+"anulować."
 
 #: admin/fai/faiDiskEntry.tpl:2 admin/fai/class_faiDiskEntry.inc:253
 #: admin/fai/faiPartitionTableEntry.tpl:2
@@ -206,7 +207,9 @@ msgstr "Urządzenie"
 #: admin/fai/faiPackage.tpl:9 admin/fai/faiHook.tpl:9
 #: admin/fai/class_faiProfile.inc:395 admin/fai/class_faiProfile.inc:405
 #: admin/fai/class_faiProfile.inc:478 admin/fai/faiPartitionTableEntry.tpl:6
-#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiVariableEntry.inc:90
+#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiManagement.inc:852
+#: admin/fai/class_faiManagement.inc:858
+#: admin/fai/class_faiVariableEntry.inc:90
 #: admin/fai/class_faiVariableEntry.inc:99
 #: admin/fai/class_faiVariableEntry.inc:102
 #: admin/fai/class_faiVariableEntry.inc:137
@@ -217,9 +220,9 @@ msgstr "Urządzenie"
 #: admin/fai/class_faiScriptEntry.inc:137
 #: admin/fai/class_faiScriptEntry.inc:142
 #: admin/fai/class_faiScriptEntry.inc:145
-#: admin/fai/class_faiScriptEntry.inc:189 admin/fai/fai-list.xml:41
+#: admin/fai/class_faiScriptEntry.inc:189 admin/fai/fai-list.xml:28
 #: admin/fai/faiTemplate.tpl:9 admin/fai/class_faiPartitionTable.inc:490
-#: admin/fai/class_faiPartitionTable.inc:788 admin/fai/faiVariableEntry.tpl:9
+#: admin/fai/class_faiPartitionTable.inc:792 admin/fai/faiVariableEntry.tpl:9
 #: admin/fai/class_faiHookEntry.inc:145 admin/fai/class_faiHookEntry.inc:150
 #: admin/fai/class_faiHookEntry.inc:153 admin/fai/class_faiHookEntry.inc:196
 #: admin/fai/class_faiVariable.inc:296 admin/fai/class_faiVariable.inc:397
@@ -258,7 +261,7 @@ msgstr "Dodaj partycje"
 msgid "Please select the objects you want to remove:"
 msgstr "Proszę podać nową nazwę."
 
-#: admin/fai/faiGroupHandle.tpl:22 admin/fai/class_divListFai.inc:145
+#: admin/fai/faiGroupHandle.tpl:22
 #, fuzzy
 msgid "Freezed"
 msgstr "Częstotliwość"
@@ -271,11 +274,6 @@ msgstr "Wybierz obiekty do dodania"
 #: admin/fai/faiGroupHandle.tpl:53
 #, fuzzy
 msgid "Select the object you want to copy:"
-msgstr "Wybierz aby zobaczyć grupy GOsa"
-
-#: admin/fai/faiGroupHandle.tpl:76
-#, fuzzy
-msgid "Select the object you want to cut:"
 msgstr "Wybierz aby zobaczyć grupy GOsa"
 
 #: admin/fai/class_faiPartitionTableEntry.inc:142
@@ -332,8 +330,8 @@ msgid "True"
 msgstr "Tak"
 
 #: admin/fai/class_faiPartitionTableEntry.inc:252
-#: admin/fai/class_faiPartitionTableEntry.inc:254 admin/fai/fai-list.xml:93
-#: admin/fai/class_divListFai.inc:178
+#: admin/fai/class_faiPartitionTableEntry.inc:254 admin/fai/fai-list.xml:107
+#: admin/fai/fai-list.xml:146
 msgid "Remove"
 msgstr "Usuń"
 
@@ -437,7 +435,7 @@ msgid "Choose a variable to delete or edit"
 msgstr "Wybierz zmienną do usunięcia lub edycji"
 
 #: admin/fai/faiVariable.tpl:53 admin/fai/class_faiHook.inc:312
-#: admin/fai/class_faiHook.inc:314 admin/fai/fai-list.xml:86
+#: admin/fai/class_faiHook.inc:314 admin/fai/fai-list.xml:138
 msgid "Edit"
 msgstr "Edytuj"
 
@@ -451,7 +449,7 @@ msgstr "Usuń"
 msgid "Download"
 msgstr "Ściągnij"
 
-#: admin/fai/class_faiHook.inc:553 admin/fai/class_divListFai.inc:64
+#: admin/fai/class_faiHook.inc:553 admin/fai/fai-list.xml:76
 msgid "Hook"
 msgstr "Zaczep"
 
@@ -459,7 +457,7 @@ msgstr "Zaczep"
 msgid "FAI hook"
 msgstr "Zaczep FAI"
 
-#: admin/fai/class_faiHook.inc:561 admin/fai/class_faiPartitionTable.inc:788
+#: admin/fai/class_faiHook.inc:561 admin/fai/class_faiPartitionTable.inc:792
 #: admin/fai/class_faiVariable.inc:397
 #, fuzzy
 msgid "Read only"
@@ -535,7 +533,7 @@ msgstr "Klasy FAI"
 msgid "Choose a priority"
 msgstr "Wybierz priorytet"
 
-#: admin/fai/faiScriptEntry.tpl:33
+#: admin/fai/faiScriptEntry.tpl:33 admin/fai/fai-list.xml:36
 msgid "Properties"
 msgstr "Właściwości"
 
@@ -555,7 +553,7 @@ msgstr ""
 
 #: admin/fai/faiScriptEntry.tpl:56 admin/fai/faiHookEntry.tpl:56
 #: admin/fai/class_faiScript.inc:637 admin/fai/class_faiScriptEntry.inc:150
-#: admin/fai/class_faiHookEntry.inc:158 admin/fai/class_divListFai.inc:62
+#: admin/fai/fai-list.xml:70 admin/fai/class_faiHookEntry.inc:158
 msgid "Script"
 msgstr "Skrypt"
 
@@ -574,7 +572,8 @@ msgid "Repository"
 msgstr "Repozytorium"
 
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
-#: admin/fai/fai-filter.tpl:14 admin/fai/class_faiPackage.inc:663
+#: admin/fai/fai-filter.tpl:12 admin/fai/fai-filter.tpl:26
+#: admin/fai/class_faiPackage.inc:663
 #: admin/systems/services/repository/class_divListRepositories.inc:23
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_servRepositorySetup.inc:153
@@ -635,11 +634,10 @@ msgstr "Zestaw zmiennych"
 msgid "Package bundle"
 msgstr "Zestaw pakietu"
 
-#: admin/fai/class_faiProfile.inc:297 admin/fai/class_askClassName.inc:79
-#: admin/fai/class_faiGroupHandle.inc:100
-#: admin/fai/class_faiProfileEntry.inc:143
-#: admin/fai/class_faiPartitionTable.inc:780
-#: admin/fai/class_divListFai.inc:154 admin/fai/class_divListFai.inc:208
+#: admin/fai/class_faiProfile.inc:297 admin/fai/class_faiManagement.inc:1017
+#: admin/fai/class_askClassName.inc:79 admin/fai/class_faiGroupHandle.inc:100
+#: admin/fai/fai-list.xml:94 admin/fai/class_faiProfileEntry.inc:143
+#: admin/fai/class_faiPartitionTable.inc:784
 #: admin/fai/class_faiSummaryTab.inc:48
 msgid "Partition table"
 msgstr "Tablica partycji"
@@ -660,9 +658,9 @@ msgstr "W dół"
 msgid "No class specified for this profile!"
 msgstr ""
 
-#: admin/fai/class_faiProfile.inc:470 admin/fai/class_askClassName.inc:84
-#: admin/fai/class_faiGroupHandle.inc:110 admin/fai/class_divListFai.inc:58
-#: admin/fai/class_divListFai.inc:149 admin/fai/class_divListFai.inc:218
+#: admin/fai/class_faiProfile.inc:470 admin/fai/class_faiManagement.inc:1027
+#: admin/fai/class_askClassName.inc:84 admin/fai/class_faiGroupHandle.inc:110
+#: admin/fai/fai-list.xml:58
 msgid "Profile"
 msgstr "Profile"
 
@@ -722,13 +720,171 @@ msgstr "Wyrażenie regularne dla dopasowania nazw obiektów"
 
 #: admin/fai/class_faiManagement.inc:25
 #, fuzzy
-msgid "Roles"
-msgstr "Pełniona funkcja"
+msgid "Software deployment"
+msgstr "Zarządzanie systemem"
 
 #: admin/fai/class_faiManagement.inc:26
+msgid "Manage software packages and deployment reciepes"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:204
 #, fuzzy
-msgid "Role management"
-msgstr "Zarządzanie ACL"
+msgid "partition table"
+msgstr "Tablica partycji"
+
+#: admin/fai/class_faiManagement.inc:205
+#, fuzzy
+msgid "script"
+msgstr "Skrypt"
+
+#: admin/fai/class_faiManagement.inc:206
+#, fuzzy
+msgid "hook"
+msgstr "Zaczep"
+
+#: admin/fai/class_faiManagement.inc:207
+#, fuzzy
+msgid "variable"
+msgstr "Zmienna"
+
+#: admin/fai/class_faiManagement.inc:208
+#, fuzzy
+msgid "template"
+msgstr "Szablon"
+
+#: admin/fai/class_faiManagement.inc:209
+#, fuzzy
+msgid "package list"
+msgstr "Lista pakietów"
+
+#: admin/fai/class_faiManagement.inc:226 admin/fai/class_faiManagement.inc:241
+#: admin/fai/class_faiManagement.inc:396 admin/fai/class_faiManagement.inc:455
+#: admin/fai/class_faiManagement.inc:544 admin/fai/class_faiManagement.inc:639
+#: admin/fai/class_faiManagement.inc:662 admin/fai/class_faiManagement.inc:683
+#, fuzzy
+msgid "Permission error"
+msgstr "Uprawnienia"
+
+#: admin/fai/class_faiManagement.inc:227 admin/fai/class_faiManagement.inc:241
+#, fuzzy, php-format
+msgid "You have no permission to create a new %s!"
+msgstr "Brak uprawnień do usunięcia grupy obiektowej."
+
+#: admin/fai/class_faiManagement.inc:241
+#, fuzzy
+msgid "profile"
+msgstr "Profile"
+
+#: admin/fai/class_faiManagement.inc:392
+#, fuzzy
+msgid "Branch locked"
+msgstr "Gałęzie"
+
+#: admin/fai/class_faiManagement.inc:393
+#, php-format
+msgid "The following entries are locked, you can't remove them %s."
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:411
+#, fuzzy
+msgid "FAI object"
+msgstr "Drzewo obiektów FAI"
+
+#: admin/fai/class_faiManagement.inc:541
+msgid "FAI branch/freeze"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:544
+#, fuzzy
+msgid "You have no permission to delete this release!"
+msgstr "Brak uprawnień do usunięcia tego wydania!"
+
+#: admin/fai/class_faiManagement.inc:560
+msgid "Release remove aborted because the release name check failed!"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:637 admin/fai/class_faiManagement.inc:660
+msgid "Configuration"
+msgstr "Konfiguracja"
+
+#: admin/fai/class_faiManagement.inc:637 admin/fai/class_faiManagement.inc:660
+msgid "POSTCREATE"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:639 admin/fai/class_faiManagement.inc:662
+#: admin/fai/class_faiManagement.inc:683
+#, fuzzy
+msgid "Branch"
+msgstr "Gałęzie"
+
+#: admin/fai/class_faiManagement.inc:789 admin/fai/askClassName.tpl:68
+msgid "Continue"
+msgstr "Kontynuuj"
+
+#: admin/fai/class_faiManagement.inc:819
+#: admin/fai/class_faiPackageEntry.inc:53
+#: admin/fai/class_faiPackageEntry.inc:195 admin/fai/class_FAI.inc:574
+#: admin/fai/class_faiPackageConfiguration.inc:35
+#: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
+#: admin/systems/services/repository/class_servRepository.inc:362
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Szukaj wewnątrz tego poddrzewa"
+
+#: admin/fai/class_faiManagement.inc:824 admin/fai/class_FAI.inc:1178
+#, fuzzy
+msgid "Fatal error"
+msgstr "Terminal Server"
+
+#: admin/fai/class_faiManagement.inc:1019
+#: admin/fai/class_faiGroupHandle.inc:102 admin/fai/fai-list.xml:88
+#: admin/fai/class_faiSummaryTab.inc:49
+msgid "Package list"
+msgstr "Lista pakietów"
+
+#: admin/fai/class_faiManagement.inc:1021
+#: admin/fai/class_faiGroupHandle.inc:104 admin/fai/class_faiSummaryTab.inc:44
+msgid "Scripts"
+msgstr "Skrypty"
+
+#: admin/fai/class_faiManagement.inc:1023
+#: admin/fai/class_faiGroupHandle.inc:106 admin/fai/class_faiSummaryTab.inc:46
+msgid "Variables"
+msgstr "Zmienie"
+
+#: admin/fai/class_faiManagement.inc:1025
+#: admin/fai/class_faiGroupHandle.inc:108 admin/fai/class_faiSummaryTab.inc:45
+msgid "Hooks"
+msgstr "Zaczepy"
+
+#: admin/fai/class_faiManagement.inc:1029
+#: admin/fai/class_faiGroupHandle.inc:112 admin/fai/class_faiSummaryTab.inc:47
+msgid "Templates"
+msgstr "Szablony"
+
+#: admin/fai/class_faiManagement.inc:1031
+#: admin/fai/class_faiGroupHandle.inc:114
+msgid "OPSI netboot product"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:1033
+#, fuzzy
+msgid "OPSI localboot product"
+msgstr "Grupy obiektów"
+
+#: admin/fai/class_faiManagement.inc:1135
+#, fuzzy
+msgid "FAI releases"
+msgstr "Klasy FAI"
+
+#: admin/fai/class_faiManagement.inc:1136
+#, fuzzy
+msgid "FAI release management"
+msgstr "Zarządzanie FAI"
+
+#: admin/fai/class_faiManagement.inc:1141 admin/fai/fai-list.xml:15
+msgid "FAI"
+msgstr "FAI"
 
 #: admin/fai/class_faiVariableEntry.inc:94
 #, fuzzy
@@ -760,7 +916,7 @@ msgstr "edytuj"
 msgid "delete"
 msgstr "Usuń"
 
-#: admin/fai/class_faiTemplate.inc:536
+#: admin/fai/class_faiTemplate.inc:536 admin/fai/fai-list.xml:64
 msgid "Template"
 msgstr "Szablon"
 
@@ -778,15 +934,6 @@ msgstr "Odczyt"
 msgid "Please enter your search string here"
 msgstr "Proszę podać szukany ciąg znaków"
 
-#: admin/fai/class_faiPackageEntry.inc:53
-#: admin/fai/class_faiPackageEntry.inc:195 admin/fai/class_FAI.inc:574
-#: admin/fai/class_faiPackageConfiguration.inc:35
-#: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
-#: admin/systems/services/repository/class_servRepository.inc:362
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "Szukaj wewnątrz tego poddrzewa"
-
 #: admin/fai/class_faiPackageEntry.inc:103
 msgid ""
 "This list displays all assigned package names for this repository settings."
@@ -801,7 +948,6 @@ msgstr "Klasy FAI"
 
 #: admin/fai/paste_generic.tpl:5 admin/fai/class_faiProfileEntry.inc:174
 #: admin/fai/askClassName.tpl:32 admin/fai/askClassName.tpl:54
-#: admin/fai/class_divListFai.inc:53
 msgid "Class name"
 msgstr "Nazwa klasy"
 
@@ -814,12 +960,6 @@ msgstr ""
 "Operacja odnosi się do wszystkich danych kont, dostępów, etc dla tej gałęzi. "
 "Proszę upewnić się czy na pewno wykonać operację, gdyż nie ma możliwości "
 "powrotu."
-
-#: admin/fai/remove_branch.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
-"anulować."
 
 #: admin/fai/faiProfileEntry.tpl:6
 msgid "List of FAI objects (Fully Automatic Installation)"
@@ -864,42 +1004,11 @@ msgstr "Pokaż tylko klasy z partycjami"
 msgid "Create new FAI object"
 msgstr "Utwórz nowy obiekt FAI"
 
-#: admin/fai/class_faiGroupHandle.inc:102 admin/fai/class_divListFai.inc:164
-#: admin/fai/class_divListFai.inc:210 admin/fai/class_faiSummaryTab.inc:49
-msgid "Package list"
-msgstr "Lista pakietów"
-
-#: admin/fai/class_faiGroupHandle.inc:104 admin/fai/class_divListFai.inc:156
-#: admin/fai/class_divListFai.inc:212 admin/fai/class_faiSummaryTab.inc:44
-msgid "Scripts"
-msgstr "Skrypty"
-
-#: admin/fai/class_faiGroupHandle.inc:106 admin/fai/class_divListFai.inc:160
-#: admin/fai/class_divListFai.inc:214 admin/fai/class_faiSummaryTab.inc:46
-msgid "Variables"
-msgstr "Zmienie"
-
-#: admin/fai/class_faiGroupHandle.inc:108 admin/fai/class_divListFai.inc:158
-#: admin/fai/class_divListFai.inc:216 admin/fai/class_faiSummaryTab.inc:45
-msgid "Hooks"
-msgstr "Zaczepy"
-
-#: admin/fai/class_faiGroupHandle.inc:112 admin/fai/class_divListFai.inc:220
-#: admin/fai/class_faiSummaryTab.inc:47
-msgid "Templates"
-msgstr "Szablony"
-
-#: admin/fai/class_faiGroupHandle.inc:114 admin/fai/class_divListFai.inc:76
-#: admin/fai/class_divListFai.inc:222
-msgid "OPSI netboot product"
-msgstr ""
-
 #: admin/fai/class_faiGroupHandle.inc:116
 msgid "OPSI local product"
 msgstr ""
 
-#: admin/fai/faiPackageConfiguration.tpl:1 admin/fai/class_divListFai.inc:68
-#: admin/fai/class_faiPackage.inc:649
+#: admin/fai/faiPackageConfiguration.tpl:1 admin/fai/class_faiPackage.inc:649
 msgid "Package"
 msgstr "Pakiet"
 
@@ -975,11 +1084,6 @@ msgstr "Nie można utworzyć '%s', nazwa docelowa już istnieje."
 msgid "Error while fetching source dn - aborted!"
 msgstr "Błąd podczas pobierania źródłowego dn - anulowano!"
 
-#: admin/fai/class_FAI.inc:1178
-#, fuzzy
-msgid "Fatal error"
-msgstr "Terminal Server"
-
 #: admin/fai/class_FAI.inc:1179
 #, php-format
 msgid ""
@@ -1008,35 +1112,21 @@ msgid "Script Priority"
 msgstr "Priorytet skryptu"
 
 #: admin/fai/fai-list.xml:11
-msgid "List of fai stuff!!!!!"
-msgstr ""
+#, fuzzy
+msgid "List of deployment classes and products"
+msgstr "Pokaż tylko klasy z pakietami"
 
-#: admin/fai/fai-list.xml:15
-msgid "FAI"
-msgstr "FAI"
-
-#: admin/fai/fai-list.xml:57 admin/fai/class_divListFai.inc:55
-#: admin/fai/class_divListFai.inc:138
+#: admin/fai/fai-list.xml:41
 msgid "Actions"
 msgstr "Akcje"
 
-#: admin/fai/fai-list.xml:68 admin/fai/class_divListFai.inc:140
+#: admin/fai/fai-list.xml:52
 msgid "Create"
 msgstr "Utwórz"
 
-#: admin/fai/fai-list.xml:74
-msgid "Role"
-msgstr "Pełniona funkcja"
-
-#: admin/fai/fai-list.xml:125
-#, fuzzy
-msgid "Edit role"
-msgstr "Edytuj makro"
-
-#: admin/fai/fai-list.xml:138
-#, fuzzy
-msgid "Remove role"
-msgstr "Usuń obiekt"
+#: admin/fai/fai-list.xml:82 admin/fai/class_faiVariable.inc:389
+msgid "Variable"
+msgstr "Zmienna"
 
 #: admin/fai/faiSummary.tpl:4
 msgid "FAI object tree"
@@ -1196,7 +1286,7 @@ msgid ""
 "Raid 0 arrays can only be realized with a combination of two partitions!"
 msgstr ""
 
-#: admin/fai/class_faiPartitionTable.inc:781
+#: admin/fai/class_faiPartitionTable.inc:785
 msgid "FAI partition table"
 msgstr "Tablica partycji FAI"
 
@@ -1211,21 +1301,23 @@ msgid "Current release"
 msgstr "Obecne wydanie"
 
 #: admin/fai/branch_selector.tpl:20 admin/fai/branch_selector.tpl:26
+#: admin/fai/fai-filter.tpl:21 admin/fai/fai-filter.tpl:27
 #, fuzzy
 msgid "Create release"
 msgstr "Obecne wydanie"
 
 #: admin/fai/branch_selector.tpl:23 admin/fai/branch_selector.tpl:29
+#: admin/fai/fai-filter.tpl:24 admin/fai/fai-filter.tpl:30
 #, fuzzy
 msgid "Create read-only release"
 msgstr "Obecne wydanie"
 
-#: admin/fai/branch_selector.tpl:28
+#: admin/fai/branch_selector.tpl:28 admin/fai/fai-filter.tpl:29
 #, fuzzy
 msgid "Freeze"
 msgstr "Częstotliwość"
 
-#: admin/fai/branch_selector.tpl:35
+#: admin/fai/branch_selector.tpl:35 admin/fai/fai-filter.tpl:36
 msgid "Delete current release"
 msgstr "Usuń bieżące wydanie"
 
@@ -1331,197 +1423,19 @@ msgstr "Wybierz nazwę klasy FAI z listy istniejących klas"
 msgid "Choose class name"
 msgstr "Wybierz nazwę klasy"
 
-#: admin/fai/askClassName.tpl:70 admin/fai/askClassName.tpl:77
-msgid "Use"
-msgstr "Użyj"
-
-#: admin/fai/askClassName.tpl:74
-msgid "A new class name."
-msgstr "Nowa nazwa klasy"
-
 #: admin/fai/class_faiPackageConfiguration.inc:68
 #, php-format
 msgid "Debconf information for package '%s'"
 msgstr "Informacja Debconf dla pakietu '%s'"
 
-#: admin/fai/class_faiVariable.inc:389 admin/fai/class_divListFai.inc:60
-#: admin/fai/class_divListFai.inc:66
-msgid "Variable"
-msgstr "Zmienna"
-
 #: admin/fai/class_faiVariable.inc:390
 msgid "FAI variable"
 msgstr "Zmienna FAI"
 
-#: admin/fai/class_divListFai.inc:32
-#, fuzzy
-msgid "List of classes"
-msgstr "Nazwy klas FAI"
-
-#: admin/fai/class_divListFai.inc:33
-#, fuzzy
-msgid "List of deployment classes and products"
-msgstr "Pokaż tylko klasy z pakietami"
-
-#: admin/fai/class_divListFai.inc:48
-#, fuzzy
-msgid "Select all"
-msgstr "Wybierz"
-
-#: admin/fai/class_divListFai.inc:54
-#, fuzzy
-msgid "Class types"
-msgstr "Typ klasy"
-
-#: admin/fai/class_divListFai.inc:57 admin/fai/class_divListFai.inc:59
-#: admin/fai/class_divListFai.inc:61 admin/fai/class_divListFai.inc:63
-#: admin/fai/class_divListFai.inc:65 admin/fai/class_divListFai.inc:67
-#: admin/fai/class_divListFai.inc:69 admin/fai/class_divListFai.inc:75
-#: admin/fai/class_divListFai.inc:77
-#, fuzzy, php-format
-msgid "Display objects of type '%s'."
-msgstr "Wyświetl obiekty pasujące"
-
-#: admin/fai/class_divListFai.inc:58
-msgid "Show profiles"
-msgstr "Pokaż profile"
-
-#: admin/fai/class_divListFai.inc:60
-msgid "Show templates"
-msgstr "Pokaż szablony"
-
-#: admin/fai/class_divListFai.inc:62
-msgid "Show scripts"
-msgstr "Pokaż skrypty"
-
-#: admin/fai/class_divListFai.inc:64
-msgid "Show hooks"
-msgstr "Pokaż zaczepy"
-
-#: admin/fai/class_divListFai.inc:66
-msgid "Show variables"
-msgstr "Pokaż zmienne"
-
-#: admin/fai/class_divListFai.inc:68
-msgid "Show packages"
-msgstr "Pokaż pakiety"
-
-#: admin/fai/class_divListFai.inc:70 admin/fai/faiPartition.tpl:2
+#: admin/fai/faiPartition.tpl:2
 #, fuzzy
 msgid "Partition"
 msgstr "Nr. Partycji"
-
-#: admin/fai/class_divListFai.inc:70
-msgid "Show partitions"
-msgstr "Pokaż partycje"
-
-#: admin/fai/class_divListFai.inc:76
-#, fuzzy
-msgid "Show netboot products"
-msgstr "Grupy obiektów"
-
-#: admin/fai/class_divListFai.inc:78 admin/fai/class_divListFai.inc:224
-#, fuzzy
-msgid "OPSI localboot product"
-msgstr "Grupy obiektów"
-
-#: admin/fai/class_divListFai.inc:78
-#, fuzzy
-msgid "Show localboot products"
-msgstr "Grupy obiektów"
-
-#: admin/fai/class_divListFai.inc:86
-msgid "Display users matching"
-msgstr "Wyświetl użytkowników pasujących"
-
-#: admin/fai/class_divListFai.inc:155
-msgid "PT"
-msgstr "PT"
-
-#: admin/fai/class_divListFai.inc:157
-msgid "S"
-msgstr "S"
-
-#: admin/fai/class_divListFai.inc:159
-msgid "H"
-msgstr "H"
-
-#: admin/fai/class_divListFai.inc:161
-msgid "V"
-msgstr "V"
-
-#: admin/fai/class_divListFai.inc:162
-#, fuzzy
-msgid "Templates "
-msgstr "Szablony"
-
-#: admin/fai/class_divListFai.inc:163
-#, fuzzy
-msgid "I"
-msgstr "NI"
-
-#: admin/fai/class_divListFai.inc:165
-msgid "PK"
-msgstr "PK"
-
-#: admin/fai/class_divListFai.inc:313 admin/fai/class_divListFai.inc:314
-#: admin/fai/class_divListFai.inc:315 admin/fai/class_divListFai.inc:316
-#: admin/fai/class_divListFai.inc:317 admin/fai/class_divListFai.inc:318
-#: admin/fai/class_divListFai.inc:319 admin/fai/class_divListFai.inc:320
-#: admin/fai/class_divListFai.inc:321 admin/fai/class_divListFai.inc:322
-#, fuzzy, php-format
-msgid "Number of listed %s"
-msgstr "Nazwa departamentu"
-
-#: admin/fai/class_divListFai.inc:313
-#, fuzzy
-msgid "profiles"
-msgstr "Profile"
-
-#: admin/fai/class_divListFai.inc:314
-#, fuzzy
-msgid "partitions"
-msgstr "partycja %s"
-
-#: admin/fai/class_divListFai.inc:315
-#, fuzzy
-msgid "scripts"
-msgstr "Skrypt"
-
-#: admin/fai/class_divListFai.inc:316
-#, fuzzy
-msgid "hooks"
-msgstr "Zaczep"
-
-#: admin/fai/class_divListFai.inc:317
-#, fuzzy
-msgid "variables"
-msgstr "Zmienna"
-
-#: admin/fai/class_divListFai.inc:318
-#, fuzzy
-msgid "templates"
-msgstr "Szablon"
-
-#: admin/fai/class_divListFai.inc:319
-#, fuzzy
-msgid "packages"
-msgstr "Pakiety"
-
-#: admin/fai/class_divListFai.inc:320
-#, fuzzy
-msgid "departments"
-msgstr "Zatwierdź departament"
-
-#: admin/fai/class_divListFai.inc:321
-#, fuzzy
-msgid "netboot products"
-msgstr "Grupy obiektów"
-
-#: admin/fai/class_divListFai.inc:322
-#, fuzzy
-msgid "localboot products"
-msgstr "Grupy obiektów"
 
 #: admin/fai/faiPartition.tpl:67
 msgid "Resize existing partition"
@@ -1564,6 +1478,45 @@ msgstr "Opcje montowania"
 #, fuzzy
 msgid "Filter"
 msgstr "Filtry"
+
+#: admin/fai/fai-filter.tpl:43
+msgid "Show profiles"
+msgstr "Pokaż profile"
+
+#: admin/fai/fai-filter.tpl:44
+msgid "Show templates"
+msgstr "Pokaż szablony"
+
+#: admin/fai/fai-filter.tpl:45
+msgid "Show scripts"
+msgstr "Pokaż skrypty"
+
+#: admin/fai/fai-filter.tpl:46
+msgid "Show hooks"
+msgstr "Pokaż zaczepy"
+
+#: admin/fai/fai-filter.tpl:47
+msgid "Show variables"
+msgstr "Pokaż zmienne"
+
+#: admin/fai/fai-filter.tpl:48
+msgid "Show packages"
+msgstr "Pokaż pakiety"
+
+#: admin/fai/fai-filter.tpl:49
+#, fuzzy
+msgid "Show partitions"
+msgstr "Pokaż partycje"
+
+#: admin/fai/fai-filter.tpl:51
+#, fuzzy
+msgid "Show netboot products"
+msgstr "Grupy obiektów"
+
+#: admin/fai/fai-filter.tpl:52
+#, fuzzy
+msgid "Show localboot products"
+msgstr "Grupy obiektów"
 
 #: admin/fai/class_faiPackage.inc:220
 msgid "Invalid package names"
@@ -1781,72 +1734,137 @@ msgstr "Klasy FAI"
 msgid "Services"
 msgstr "Usługi"
 
-#, fuzzy
-#~ msgid "Software deployment"
-#~ msgstr "Zarządzanie systemem"
+#~ msgid ""
+#~ "This includes 'all' object information. Please double check if your "
+#~ "really want to do this since there is no way for GOsa to get your data "
+#~ "back."
+#~ msgstr ""
+#~ "Operacja odnosi się do 'wszystkich' informacji obiektowych. Proszę "
+#~ "upewnić się, czy na pewno wykonać tą operację, gdyż nie ma możliwości "
+#~ "powrotu."
+
+#~ msgid ""
+#~ "Best thing to do before performing this action would be to save the "
+#~ "current contents of your LDAP tree in a file. So - if you've done so - "
+#~ "press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Przed wykonaniem tej operacji zaleca się wykonanie kopii bezpieczeństwa "
+#~ "drzewa LDAP. Naciśnij 'Usuń' aby kontynuować, lub 'Anuluj' aby przerwać."
 
 #, fuzzy
-#~ msgid "Permission error"
-#~ msgstr "Uprawnienia"
+#~ msgid "Select the object you want to cut:"
+#~ msgstr "Wybierz aby zobaczyć grupy GOsa"
 
 #, fuzzy
-#~ msgid "Branch locked"
-#~ msgstr "Gałęzie"
+#~ msgid "Roles"
+#~ msgstr "Pełniona funkcja"
 
 #, fuzzy
-#~ msgid "FAI object"
-#~ msgstr "Drzewo obiektów FAI"
+#~ msgid "Role management"
+#~ msgstr "Zarządzanie ACL"
+
+#~ msgid "Role"
+#~ msgstr "Pełniona funkcja"
 
 #, fuzzy
-#~ msgid "You have no permission to delete this release!"
-#~ msgstr "Brak uprawnień do usunięcia tego wydania!"
+#~ msgid "Edit role"
+#~ msgstr "Edytuj makro"
 
 #, fuzzy
-#~ msgid "Branch"
-#~ msgstr "Gałęzie"
+#~ msgid "Remove role"
+#~ msgstr "Usuń obiekt"
 
-#~ msgid "Continue"
-#~ msgstr "Kontynuuj"
+#~ msgid "Use"
+#~ msgstr "Użyj"
 
-#, fuzzy
-#~ msgid "partition table"
-#~ msgstr "Tablica partycji"
-
-#, fuzzy
-#~ msgid "script"
-#~ msgstr "Skrypt"
+#~ msgid "A new class name."
+#~ msgstr "Nowa nazwa klasy"
 
 #, fuzzy
-#~ msgid "hook"
-#~ msgstr "Zaczep"
+#~ msgid "List of classes"
+#~ msgstr "Nazwy klas FAI"
 
 #, fuzzy
-#~ msgid "variable"
-#~ msgstr "Zmienna"
+#~ msgid "Select all"
+#~ msgstr "Wybierz"
 
 #, fuzzy
-#~ msgid "template"
-#~ msgstr "Szablon"
+#~ msgid "Class types"
+#~ msgstr "Typ klasy"
 
 #, fuzzy
-#~ msgid "package list"
-#~ msgstr "Lista pakietów"
+#~ msgid "Display objects of type '%s'."
+#~ msgstr "Wyświetl obiekty pasujące"
+
+#~ msgid "Display users matching"
+#~ msgstr "Wyświetl użytkowników pasujących"
+
+#~ msgid "PT"
+#~ msgstr "PT"
+
+#~ msgid "S"
+#~ msgstr "S"
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "V"
+#~ msgstr "V"
 
 #, fuzzy
-#~ msgid "You have no permission to create a new %s!"
-#~ msgstr "Brak uprawnień do usunięcia grupy obiektowej."
+#~ msgid "Templates "
+#~ msgstr "Szablony"
 
 #, fuzzy
-#~ msgid "profile"
+#~ msgid "I"
+#~ msgstr "NI"
+
+#~ msgid "PK"
+#~ msgstr "PK"
+
+#, fuzzy
+#~ msgid "Number of listed %s"
+#~ msgstr "Nazwa departamentu"
+
+#, fuzzy
+#~ msgid "profiles"
 #~ msgstr "Profile"
 
 #, fuzzy
-#~ msgid "FAI releases"
-#~ msgstr "Klasy FAI"
+#~ msgid "partitions"
+#~ msgstr "partycja %s"
 
 #, fuzzy
-#~ msgid "FAI release management"
-#~ msgstr "Zarządzanie FAI"
+#~ msgid "scripts"
+#~ msgstr "Skrypt"
+
+#, fuzzy
+#~ msgid "hooks"
+#~ msgstr "Zaczep"
+
+#, fuzzy
+#~ msgid "variables"
+#~ msgstr "Zmienna"
+
+#, fuzzy
+#~ msgid "templates"
+#~ msgstr "Szablon"
+
+#, fuzzy
+#~ msgid "packages"
+#~ msgstr "Pakiety"
+
+#, fuzzy
+#~ msgid "departments"
+#~ msgstr "Zatwierdź departament"
+
+#, fuzzy
+#~ msgid "netboot products"
+#~ msgstr "Grupy obiektów"
+
+#, fuzzy
+#~ msgid "localboot products"
+#~ msgstr "Grupy obiektów"
 
 #, fuzzy
 #~ msgid "Partition start size"

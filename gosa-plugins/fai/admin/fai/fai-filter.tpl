@@ -46,7 +46,7 @@
 <br>{$HOOK}      {t}Show hooks{/t}
 <br>{$VARIABLE}  {t}Show variables{/t}
 <br>{$PACKAGE}   {t}Show packages{/t}
-<br>{$PARTITION} {t}Show partition{/t}
+<br>{$PARTITION} {t}Show partitions{/t}
 {if $opsi_available}
 <br>{$NETBOOT} {t}Show netboot products{/t}
 <br>{$LOCALBOOT} {t}Show localboot products{/t}
