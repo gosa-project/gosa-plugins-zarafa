@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:42+0100\n"
+"POT-Creation-Date: 2010-01-18 18:49+0100\n"
 "PO-Revision-Date: 2009-08-04 13:57+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -795,10 +795,6 @@ msgstr ""
 #: admin/fai/class_faiManagement.inc:637 admin/fai/class_faiManagement.inc:660
 msgid "Configuration"
 msgstr "Konfiguration"
-
-#: admin/fai/class_faiManagement.inc:637 admin/fai/class_faiManagement.inc:660
-msgid "POSTCREATE"
-msgstr ""
 
 #: admin/fai/class_faiManagement.inc:639 admin/fai/class_faiManagement.inc:662
 #: admin/fai/class_faiManagement.inc:683

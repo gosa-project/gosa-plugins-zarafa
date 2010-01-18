@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 17:04+0100\n"
+"POT-Creation-Date: 2010-01-18 18:49+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -506,8 +506,7 @@ msgid "Move down"
 msgstr "Przesuń w dół"
 
 #: admin/groups/apps/app_list.tpl:86 admin/groups/apps/app_list.tpl:107
-#: admin/groups/apps/app_list.tpl:132
-#: admin/devices/class_divListDevices.inc:100 admin/devices/device-list.xml:86
+#: admin/groups/apps/app_list.tpl:132 admin/devices/device-list.xml:86
 #: admin/applications/class_applicationParameters.inc:122
 #: admin/applications/application-list.xml:86
 #: admin/applications/application-list-release.xml:86
@@ -556,117 +555,6 @@ msgstr "Wstaw separator"
 msgid "Add a separator to this folder."
 msgstr "Wybrana aplikacja nie posiada opcji."
 
-#: admin/devices/class_divListDevices.inc:33
-#: admin/devices/class_divListDevices.inc:34
-#, fuzzy
-msgid "List of defined devices"
-msgstr "Lista urządzeń"
-
-#: admin/devices/class_divListDevices.inc:45
-#, fuzzy
-msgid "Select all"
-msgstr "Wybierz"
-
-#: admin/devices/class_divListDevices.inc:51
-#: admin/devices/deviceGeneric.tpl:20 admin/devices/paste_deviceGeneric.tpl:9
-msgid "Device name"
-msgstr "Nazwa urządzenia"
-
-#: admin/devices/class_divListDevices.inc:51
-msgid "Department"
-msgstr "Departament"
-
-#: admin/devices/class_divListDevices.inc:52
-#: admin/devices/class_divListDevices.inc:87 admin/devices/device-list.xml:57
-#: admin/applications/application-list.xml:57
-#: admin/applications/application-list-release.xml:57
-#: admin/mimetypes/mimetype-list-release.xml:57
-#: admin/mimetypes/mimetype-list.xml:57 addons/goto/class_gotomasses.inc:365
-msgid "Actions"
-msgstr "Akcje"
-
-#: admin/devices/class_divListDevices.inc:58
-msgid "Display devices matching"
-msgstr "Wyświetl pasujące urządzenia"
-
-#: admin/devices/class_divListDevices.inc:82 admin/devices/deviceGeneric.tpl:9
-#: admin/devices/class_deviceGeneric.inc:261 admin/devices/device-list.tpl:13
-#: admin/applications/generic.tpl:42
-#: admin/applications/class_applicationGeneric.inc:607
-#: admin/applications/application-list.tpl:13 admin/mimetypes/generic.tpl:44
-#: admin/mimetypes/mimetype-list.tpl:13
-#: admin/mimetypes/class_mimetypeGeneric.inc:727
-#: admin/systems/services/ldap/class_goLdapServer.inc:82
-#: admin/systems/goto/workstation.tpl:35
-#: admin/systems/goto/class_printGeneric.inc:998
-#: admin/systems/goto/class_workstationGeneric.inc:711
-#: admin/systems/goto/class_terminalGeneric.inc:700
-#: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
-#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
-#: addons/goto/events/class_EventTargetAddList.inc:161
-#: addons/goto/events/class_EventTargetAddUsersList.inc:130
-msgid "Base"
-msgstr "Kontener"
-
-#: admin/devices/class_divListDevices.inc:84
-#: addons/goto/class_target_list.inc:154
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-msgid "Submit department"
-msgstr "Zatwierdź departament"
-
-#: admin/devices/class_divListDevices.inc:84 admin/devices/device-list.tpl:13
-#: admin/applications/application-list.tpl:13
-#: admin/mimetypes/mimetype-list.tpl:13 addons/goto/class_target_list.inc:154
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-msgid "Submit"
-msgstr "Wyślij"
-
-#: admin/devices/class_divListDevices.inc:92 admin/devices/device-list.xml:68
-#: admin/applications/application-list.xml:68
-#: admin/applications/application-list-release.xml:68
-#: admin/mimetypes/mimetype-list-release.xml:68
-#: admin/mimetypes/mimetype-list.xml:68 admin/systems/goto/chooser.tpl:16
-#: addons/goto/class_gotomasses.inc:366
-msgid "Create"
-msgstr "Utwórz"
-
-#: admin/devices/class_divListDevices.inc:94
-#: admin/devices/class_divListDevices.inc:131 admin/devices/device-list.xml:15
-#: admin/devices/device-list.xml:74 admin/devices/class_deviceGeneric.inc:159
-#: admin/systems/goto/gotoLpdEnable.tpl:27
-#: admin/systems/goto/gotoLpdEnable.tpl:63
-msgid "Device"
-msgstr "Urządzenie"
-
-#: admin/devices/class_divListDevices.inc:156
-msgid "edit"
-msgstr "edytuj"
-
-#: admin/devices/class_divListDevices.inc:156
-msgid "Edit this entry"
-msgstr "Edytuj ten obiekt"
-
-#: admin/devices/class_divListDevices.inc:163
-#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:140
-msgid "delete"
-msgstr "Usuń"
-
-#: admin/devices/class_divListDevices.inc:163
-msgid "Delete this entry"
-msgstr "Usuń ten obiekt"
-
-#: admin/devices/class_divListDevices.inc:205
-#, fuzzy
-msgid "Number of listed devices"
-msgstr "Nazwa departamentu"
-
-#: admin/devices/class_divListDevices.inc:206
-#, fuzzy
-msgid "Number of listed departments"
-msgstr "Nazwa departamentu"
-
 #: admin/devices/remove.tpl:6 admin/applications/remove.tpl:6
 #: admin/mimetypes/remove.tpl:6
 msgid ""
@@ -685,6 +573,13 @@ msgstr ""
 #, fuzzy
 msgid "List of devices"
 msgstr "Lista urządzeń"
+
+#: admin/devices/device-list.xml:15 admin/devices/device-list.xml:74
+#: admin/devices/class_deviceGeneric.inc:159
+#: admin/systems/goto/gotoLpdEnable.tpl:27
+#: admin/systems/goto/gotoLpdEnable.tpl:63
+msgid "Device"
+msgstr "Urządzenie"
 
 #: admin/devices/device-list.xml:49 admin/devices/deviceGeneric.tpl:29
 #: admin/devices/class_deviceGeneric.inc:93
@@ -711,6 +606,21 @@ msgstr "Lista urządzeń"
 msgid "Description"
 msgstr "Opis"
 
+#: admin/devices/device-list.xml:57 admin/applications/application-list.xml:57
+#: admin/applications/application-list-release.xml:57
+#: admin/mimetypes/mimetype-list-release.xml:57
+#: admin/mimetypes/mimetype-list.xml:57 addons/goto/class_gotomasses.inc:365
+msgid "Actions"
+msgstr "Akcje"
+
+#: admin/devices/device-list.xml:68 admin/applications/application-list.xml:68
+#: admin/applications/application-list-release.xml:68
+#: admin/mimetypes/mimetype-list-release.xml:68
+#: admin/mimetypes/mimetype-list.xml:68 admin/systems/goto/chooser.tpl:16
+#: addons/goto/class_gotomasses.inc:366
+msgid "Create"
+msgstr "Utwórz"
+
 #: admin/devices/device-list.xml:118
 #, fuzzy
 msgid "Edit device"
@@ -725,6 +635,28 @@ msgstr "Usuń obrazek"
 #: admin/devices/class_deviceGeneric.inc:257
 msgid "Devices"
 msgstr "Urządzenia"
+
+#: admin/devices/deviceGeneric.tpl:9 admin/devices/class_deviceGeneric.inc:261
+#: admin/devices/device-list.tpl:13 admin/applications/generic.tpl:42
+#: admin/applications/class_applicationGeneric.inc:607
+#: admin/applications/application-list.tpl:13 admin/mimetypes/generic.tpl:44
+#: admin/mimetypes/mimetype-list.tpl:13
+#: admin/mimetypes/class_mimetypeGeneric.inc:727
+#: admin/systems/services/ldap/class_goLdapServer.inc:82
+#: admin/systems/goto/workstation.tpl:35
+#: admin/systems/goto/class_printGeneric.inc:998
+#: admin/systems/goto/class_workstationGeneric.inc:711
+#: admin/systems/goto/class_terminalGeneric.inc:700
+#: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
+#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
+#: addons/goto/events/class_EventTargetAddList.inc:161
+#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+msgid "Base"
+msgstr "Kontener"
+
+#: admin/devices/deviceGeneric.tpl:20 admin/devices/paste_deviceGeneric.tpl:9
+msgid "Device name"
+msgstr "Nazwa urządzenia"
 
 #: admin/devices/deviceGeneric.tpl:38
 #, fuzzy
@@ -882,6 +814,13 @@ msgstr "Urządzenie"
 #: admin/mimetypes/mimetype-list.tpl:13
 msgid "Update"
 msgstr "Aktualizuj"
+
+#: admin/devices/device-list.tpl:13 admin/applications/application-list.tpl:13
+#: admin/mimetypes/mimetype-list.tpl:13 addons/goto/class_target_list.inc:154
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+msgid "Submit"
+msgstr "Wyślij"
 
 #: admin/devices/class_deviceManagement.inc:25
 #: personal/environment/class_environment.inc:1783
@@ -1321,7 +1260,7 @@ msgstr ""
 #: admin/systems/services/ldap/class_goLdapServer.inc:82
 #: admin/systems/services/nfs/servnfs.tpl:39
 #: admin/systems/goto/class_ArpNewDevice.inc:38
-#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: admin/systems/goto/class_SelectDeviceType.inc:38
 #: addons/goto/class_target_list.inc:201
 #: addons/goto/events/class_EventTargetAddList.inc:238
 #: personal/environment/environment.tpl:135
@@ -1926,21 +1865,21 @@ msgstr "Informacja o systemie"
 
 #: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_workstationGeneric.inc:705
-#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: admin/systems/goto/class_SelectDeviceType.inc:38
 #: addons/goto/class_target_list.inc:203
 #: addons/goto/events/class_EventTargetAddList.inc:249
 msgid "Workstation"
 msgstr "Stacja robocza"
 
 #: admin/systems/goto/class_ArpNewDevice.inc:38
-#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: admin/systems/goto/class_SelectDeviceType.inc:38
 #: admin/systems/goto/class_terminalGeneric.inc:689
 #: admin/systems/goto/class_terminalGeneric.inc:695
 msgid "Terminal"
 msgstr "Terminal"
 
 #: admin/systems/goto/class_ArpNewDevice.inc:40
-#: admin/systems/goto/class_SelectDeviceType.inc:41
+#: admin/systems/goto/class_SelectDeviceType.inc:40
 #: admin/systems/goto/chooser.tpl:10
 msgid "Windows workstation"
 msgstr "Stacja robocza Windows"
@@ -2988,6 +2927,10 @@ msgstr ""
 msgid "Printer ppd selection."
 msgstr "Wybór ppd drukarki."
 
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:140
+msgid "delete"
+msgstr "Usuń"
+
 #: addons/goto/class_target_list.inc:58
 msgid "Select the target objects for your scheduled action."
 msgstr ""
@@ -3056,6 +2999,12 @@ msgstr ""
 #: addons/goto/class_target_list.inc:85
 msgid "IP range end"
 msgstr ""
+
+#: addons/goto/class_target_list.inc:154
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+msgid "Submit department"
+msgstr "Zatwierdź departament"
 
 #: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
 #, fuzzy
@@ -4050,6 +3999,37 @@ msgstr "Wyświetl użytkowników pasujących"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Wyrażenie regularne dla dopasowania hotplug"
+
+#, fuzzy
+#~ msgid "List of defined devices"
+#~ msgstr "Lista urządzeń"
+
+#, fuzzy
+#~ msgid "Select all"
+#~ msgstr "Wybierz"
+
+#~ msgid "Department"
+#~ msgstr "Departament"
+
+#~ msgid "Display devices matching"
+#~ msgstr "Wyświetl pasujące urządzenia"
+
+#~ msgid "edit"
+#~ msgstr "edytuj"
+
+#~ msgid "Edit this entry"
+#~ msgstr "Edytuj ten obiekt"
+
+#~ msgid "Delete this entry"
+#~ msgstr "Usuń ten obiekt"
+
+#, fuzzy
+#~ msgid "Number of listed devices"
+#~ msgstr "Nazwa departamentu"
+
+#, fuzzy
+#~ msgid "Number of listed departments"
+#~ msgstr "Nazwa departamentu"
 
 #, fuzzy
 #~ msgid ""

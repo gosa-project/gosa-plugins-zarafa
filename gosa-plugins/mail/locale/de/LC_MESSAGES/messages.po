@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 17:05+0100\n"
+"POT-Creation-Date: 2010-01-18 18:49+0100\n"
 "PO-Revision-Date: 2008-12-19 09:04+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -233,6 +233,7 @@ msgstr ""
 #: admin/groups/mail/class_groupMail.inc:413
 #: personal/mail/class_mailAccount.inc:377
 #: personal/mail/class_mailAccount.inc:1099
+#, php-format
 msgid "Address is already in use by group '%s'."
 msgstr "Die Adresse wird bereits von der Gruppe '%s' verwendet."
 
@@ -1245,8 +1246,8 @@ msgid ""
 "LDAP entry has been removed but cyrus mailbox (%s) is kept.\n"
 "Please delete it manually!"
 msgstr ""
-"Der LDAP-Eintrag wurde entfernt, aber die Cyrus-Mailbox (%s) wurde "
-"nicht gelöscht. Bitte löschen Sie diesen Eintrag manuell!"
+"Der LDAP-Eintrag wurde entfernt, aber die Cyrus-Mailbox (%s) wurde nicht "
+"gelöscht. Bitte löschen Sie diesen Eintrag manuell!"
 
 #: personal/mail/class_mail-methods-cyrus.inc:383
 #: personal/mail/class_mail-methods-cyrus.inc:420

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:42+0100\n"
+"POT-Creation-Date: 2010-01-18 18:49+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -806,10 +806,6 @@ msgstr ""
 #: admin/fai/class_faiManagement.inc:637 admin/fai/class_faiManagement.inc:660
 msgid "Configuration"
 msgstr "Konfiguracja"
-
-#: admin/fai/class_faiManagement.inc:637 admin/fai/class_faiManagement.inc:660
-msgid "POSTCREATE"
-msgstr ""
 
 #: admin/fai/class_faiManagement.inc:639 admin/fai/class_faiManagement.inc:662
 #: admin/fai/class_faiManagement.inc:683
