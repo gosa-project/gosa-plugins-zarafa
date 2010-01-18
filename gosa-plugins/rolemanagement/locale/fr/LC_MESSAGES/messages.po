@@ -1,11 +1,11 @@
 # translation of messages.po to
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-18 18:50+0100\n"
-"PO-Revision-Date: 2009-09-17 10:23+0200\n"
+"PO-Revision-Date: 2010-01-18 23:06+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,8 @@ msgstr ""
 
 #: admin/roleManagement/class_roleManagement.inc:25
 #: admin/roleManagement/class_roleGeneric.inc:401
-#, fuzzy
 msgid "Roles"
-msgstr "Rôle"
+msgstr "Rôles"
 
 #: admin/roleManagement/class_roleManagement.inc:26
 msgid "Role management"
@@ -120,14 +119,12 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: admin/roleManagement/role-list.xml:125
-#, fuzzy
 msgid "Edit role"
-msgstr "Editer un rôle acl"
+msgstr "Editer le rôle"
 
 #: admin/roleManagement/role-list.xml:138
-#, fuzzy
 msgid "Remove role"
-msgstr "Suppression de l'utilisateur"
+msgstr "Suppression du rôle"
 
 #: admin/roleManagement/role-list.tpl:13
 msgid "Update"
@@ -138,19 +135,16 @@ msgid "Submit"
 msgstr "Soumettre"
 
 #: admin/roleManagement/paste_generic.tpl:4
-#, fuzzy
 msgid "Role name"
-msgstr "Gestion des rôles"
+msgstr "Nom du rôle"
 
 #: admin/roleManagement/paste_generic.tpl:7
-#, fuzzy
 msgid "Please enter the new object role name"
-msgstr "Veuillez entrer un nouveau nom pour le groupe d'objet"
+msgstr "Veuillez entrer un nouveau nom pour le rôle"
 
 #: admin/roleManagement/role-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtres"
+msgstr "Filtre"
 
 #: admin/roleManagement/roleGeneric.tpl:34
 msgid "Choose subtree to place user in"
@@ -196,44 +190,3 @@ msgstr "Afficher les objets correspondants"
 msgid "Regular expression for matching object names"
 msgstr "Expression régulière pour trouver les objets correspondants"
 
-#~ msgid "Manage roles"
-#~ msgstr "Gèrer les rôles"
-
-#~ msgid "Permission"
-#~ msgstr "Permissions"
-
-#~ msgid "Permission error"
-#~ msgstr "Erreur de permissions"
-
-#~ msgid "Group name"
-#~ msgstr "Nom du groupe"
-
-#~ msgid "Select all"
-#~ msgstr "Sélectionner tout"
-
-#~ msgid "Department"
-#~ msgstr "Département"
-
-#~ msgid "Regular expression for matching role names"
-#~ msgstr "Expression régulière correspondant à des noms de rôles"
-
-#~ msgid "Submit department"
-#~ msgstr "Soumettre le département"
-
-#~ msgid "edit"
-#~ msgstr "éditer"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Editer cette entrée"
-
-#~ msgid "delete"
-#~ msgstr "supprimer"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Supprimer cette entrée"
-
-#~ msgid "Number of listed roles"
-#~ msgstr "Nombre de rôles affichés"
-
-#~ msgid "Number of listed departments"
-#~ msgstr "Nombre de département listés"

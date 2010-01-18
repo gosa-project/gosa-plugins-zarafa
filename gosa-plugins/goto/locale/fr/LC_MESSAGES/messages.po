@@ -1,11 +1,11 @@
 # translation of messages.po to
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-18 18:49+0100\n"
-"PO-Revision-Date: 2009-10-06 17:04+0200\n"
+"PO-Revision-Date: 2010-01-18 22:56+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -551,9 +551,8 @@ msgstr ""
 "'Annuler' pour abandonner."
 
 #: admin/devices/device-list.xml:11
-#, fuzzy
 msgid "List of devices"
-msgstr "Liste des périphériques définis"
+msgstr "Liste des périphériques"
 
 #: admin/devices/device-list.xml:15 admin/devices/device-list.xml:74
 #: admin/devices/class_deviceGeneric.inc:159
@@ -603,14 +602,12 @@ msgid "Create"
 msgstr "Créer"
 
 #: admin/devices/device-list.xml:118
-#, fuzzy
 msgid "Edit device"
-msgstr "Carte son"
+msgstr "Editer un périphérique"
 
 #: admin/devices/device-list.xml:131
-#, fuzzy
 msgid "Remove device"
-msgstr "Suppression de l'image personnelle"
+msgstr "Suppression d'un périphérique"
 
 #: admin/devices/deviceGeneric.tpl:2 admin/devices/paste_deviceGeneric.tpl:2
 #: admin/devices/class_deviceGeneric.inc:257
@@ -678,9 +675,8 @@ msgstr "(Idproduit)"
 #: admin/applications/application-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtres"
+msgstr "Filtre"
 
 #: admin/devices/class_deviceGeneric.inc:29
 msgid "Digital camera"
@@ -951,21 +947,18 @@ msgstr "Gestion des applications"
 
 #: admin/applications/application-list.xml:11
 #: admin/applications/application-list-release.xml:11
-#, fuzzy
 msgid "List of applications"
 msgstr "Liste des applications"
 
 #: admin/applications/application-list.xml:118
 #: admin/applications/application-list-release.xml:118
-#, fuzzy
 msgid "Edit application"
 msgstr "Ajouter une Application"
 
 #: admin/applications/application-list.xml:131
 #: admin/applications/application-list-release.xml:131
-#, fuzzy
 msgid "Remove application"
-msgstr "application"
+msgstr "Supprimer une application"
 
 #: admin/applications/class_applicationGeneric.inc:95
 msgid "no example"
@@ -1095,21 +1088,18 @@ msgstr "Veuillez indiquer une description pour ce type mime"
 
 #: admin/mimetypes/mimetype-list-release.xml:11
 #: admin/mimetypes/mimetype-list.xml:11
-#, fuzzy
 msgid "List of mimetypes"
-msgstr "Liste des type mime définis"
+msgstr "Liste des type mime"
 
 #: admin/mimetypes/mimetype-list-release.xml:118
 #: admin/mimetypes/mimetype-list.xml:118
-#, fuzzy
 msgid "Edit mimetype"
-msgstr "Mettre à jour l'icône mime"
+msgstr "Editer un type mime"
 
 #: admin/mimetypes/mimetype-list-release.xml:131
 #: admin/mimetypes/mimetype-list.xml:131
-#, fuzzy
 msgid "Remove mimetype"
-msgstr "Suppression de l'image personnelle"
+msgstr "Suppression d'un type mime"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:535
 msgid "File pattern"
@@ -1532,8 +1522,7 @@ msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:108
 #, php-format
-msgid ""
-"Cannot determine a valid department for this object. Setting base to '%s'!"
+msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
@@ -1557,8 +1546,7 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:294
 msgid "This is a workstation template, printer tab is disabled."
-msgstr ""
-"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:299
 msgid "This is a terminal template, printer tab is disabled."
@@ -2334,13 +2322,11 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:234
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr ""
-"Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
+msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:247
 #, php-format
-msgid ""
-"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
 "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version "
 "sera '%s' !"
@@ -2487,8 +2473,7 @@ msgstr "Continuer"
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
@@ -2756,8 +2741,7 @@ msgstr "Impossible de lire le PPD '%s' !"
 #: admin/systems/ppd/class_printerPPDDialog.inc:121
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr ""
-"Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
+msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:140
 #: admin/systems/ppd/class_printerPPDDialog.inc:339
@@ -2778,8 +2762,7 @@ msgstr "Ecrasement du PPD existant"
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr ""
-"Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
+msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:463
 msgid "Section"
@@ -3036,13 +3019,11 @@ msgstr "Permissions"
 #: addons/goto/class_gotomasses.inc:270
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
-"Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
+msgstr "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:360
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
+msgstr "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
 
 #: addons/goto/class_gotomasses.inc:361
 msgid "List of queued jobs"
@@ -3197,8 +3178,7 @@ msgstr "Déploiement de système"
 
 #: addons/goto/class_gotomasses.inc:926
 msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
-"Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
+msgstr "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
 
 #: addons/goto/log_view.tpl:7
 msgid "Available logs"
@@ -3489,8 +3469,7 @@ msgid "Progress"
 msgstr "Progression"
 
 #: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
 msgstr ""
 "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle "
 "contiennent. Voulez vous continuer ?"
@@ -3498,8 +3477,7 @@ msgstr ""
 #: addons/goto/class_goto_import_file.inc:131
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
-"L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
+msgstr "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
 
 #: personal/environment/class_environment.inc:9
 #: personal/environment/class_environment.inc:433
@@ -3561,8 +3539,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:364
 #, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -3834,103 +3811,5 @@ msgstr "Afficher les utilisateurs correspondants"
 
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
-msgstr ""
-"Expression régulière concordant avec les noms des périphériques hotplug"
+msgstr "Expression régulière concordant avec les noms des périphériques hotplug"
 
-#~ msgid "List of defined devices"
-#~ msgstr "Liste des périphériques définis"
-
-#~ msgid "Select all"
-#~ msgstr "Sélectionner tout"
-
-#~ msgid "Department"
-#~ msgstr "Département"
-
-#~ msgid "Display devices matching"
-#~ msgstr "Afficher les périphériques correspondants"
-
-#~ msgid "edit"
-#~ msgstr "éditer"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Editer cette entrée"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Supprimer cette entrée"
-
-#~ msgid "Number of listed devices"
-#~ msgstr "Nombre de périphériques listés"
-
-#~ msgid "Number of listed departments"
-#~ msgstr "Nombre de département listés"
-
-#~ msgid ""
-#~ "This may be used by several users/groups. Please double check if your "
-#~ "really want to do this since there is no way for GOsa to get your data "
-#~ "back."
-#~ msgstr ""
-#~ "Cela peut être utilisé par plusieurs utilisateurs/groupes. Veuillez "
-#~ "vérifier que vous voulez effectuer cette opération étant donné qu'il est "
-#~ "impossible pour GOsa de récupérer vos données."
-
-#~ msgid "Manage hotplug devices"
-#~ msgstr "Gérer les périphériques hotplug"
-
-#~ msgid "device"
-#~ msgstr "périphérique"
-
-#~ msgid ""
-#~ "This may be used by several groups. Please double check if your really "
-#~ "want to do this since there is no way for GOsa to get your data back."
-#~ msgstr ""
-#~ "Cela peut être utilisé par plusieurs groupes. Veuillez vérifier que vous "
-#~ "voulez effectuer cette opération étant donné qu'il est impossible pour "
-#~ "GOsa de récupérer vos données."
-
-#~ msgid "This table displays all applications in the selected tree."
-#~ msgstr "Ce tableau montre toutes les applications dans l'arbre sélectionné."
-
-#~ msgid "Freezed"
-#~ msgstr "Gelée"
-
-#~ msgid "Number of listed applications"
-#~ msgstr "Nombre d'applications listées"
-
-#~ msgid "Display mime types matching"
-#~ msgstr "Afficher les types mime correspondants"
-
-#~ msgid "Number of listed mimetypes"
-#~ msgstr "Nombre de type mime listés"
-
-#~ msgid "Mimetype management"
-#~ msgstr "Gestion des type mime"
-
-#~ msgid "Hidden shares must have a '$' at the end of the name!"
-#~ msgstr "Les partages cachés doivent avoir un '$' à la fin du nom !"
-
-#~ msgid "Syslog Service"
-#~ msgstr "Service de journaux systèmes"
-
-#~ msgid "Logging service"
-#~ msgstr "Service des journaux systèmes"
-
-#~ msgid "Syslog service database"
-#~ msgstr "Service de journaux systèmes"
-
-#~ msgid "Password"
-#~ msgstr "Mot de passe"
-
-#~ msgid "Database"
-#~ msgstr "Base de données"
-
-#~ msgid "Logging database"
-#~ msgstr "Base de données des journaux systèmes"
-
-#~ msgid "Admin"
-#~ msgstr "Administrateur"
-
-#~ msgid "Logging database information"
-#~ msgstr "Base de données des journaux systèmes"
-
-#~ msgid "Logging DB user"
-#~ msgstr "Utilisateur de la base de données des journaux systèmes"

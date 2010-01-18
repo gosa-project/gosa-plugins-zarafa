@@ -8,13 +8,13 @@
 # Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008.
 # Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
 # Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
-# Benoit Mortier <benoit.mortier@opensides.be>, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-18 18:50+0100\n"
-"PO-Revision-Date: 2009-10-06 17:15+0200\n"
+"PO-Revision-Date: 2010-01-18 23:05+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -234,9 +234,8 @@ msgid "License usage"
 msgstr "Utilisation des Licences"
 
 #: admin/opsiLicenses/opsiLicense-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtres"
+msgstr "Filtre"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:127
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:271
@@ -312,14 +311,12 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: admin/opsiLicenses/opsiLicense-list.xml:108
-#, fuzzy
 msgid "Edit license"
-msgstr "Editer cet utilisateur"
+msgstr "Editer la license"
 
 #: admin/opsiLicenses/opsiLicense-list.xml:116
-#, fuzzy
 msgid "Remove license"
-msgstr "Suppression de l'utilisateur"
+msgstr "Suppression de la licence"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:262
 msgid "unlimited"
@@ -376,7 +373,6 @@ msgid "Partner"
 msgstr "Partenaire"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:70
-#, fuzzy
 msgid "Conclusion date"
 msgstr "Date de fin"
 
@@ -408,32 +404,3 @@ msgstr "Utilisation par produit"
 msgid "License usage by product"
 msgstr "Utilisation des licences par produit"
 
-#~ msgid "Select all"
-#~ msgstr "Sélectionner tout"
-
-#~ msgid "License pools"
-#~ msgstr "Réservoir de licences"
-
-#~ msgid "Regular expression for matching license pools"
-#~ msgstr "Expression régulière concordant avec les "
-
-#~ msgid "edit"
-#~ msgstr "éditer"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Editer cette entrée"
-
-#~ msgid "delete"
-#~ msgstr "supprimer"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Supprimer cette entrée"
-
-#~ msgid "Number of listed license pools"
-#~ msgstr "Nombre de réservoir de licences listés"
-
-#~ msgid "Permission"
-#~ msgstr "Permissions"
-
-#~ msgid "Permission error"
-#~ msgstr "Erreur de permissions"

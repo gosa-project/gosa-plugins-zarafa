@@ -1,13 +1,13 @@
 # translation of messages.po to
 # Header entry was created by KBabel!
 #
-# Benoit Mortier <benoit.mortier@opensides.be>, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-18 18:50+0100\n"
-"PO-Revision-Date: 2009-06-30 11:33+0200\n"
+"PO-Revision-Date: 2010-01-18 23:20+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,9 +17,8 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/sudo/sudo-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtres"
+msgstr "Filtre"
 
 #: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:547
 #: admin/sudo/class_sudoGeneric.inc:552 admin/sudo/class_sudoGeneric.inc:557
@@ -254,14 +253,12 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: admin/sudo/sudo-list.xml:117
-#, fuzzy
 msgid "Edit sudo role"
-msgstr "Liste des rôles sudo"
+msgstr "Editer le rôle sudo"
 
 #: admin/sudo/sudo-list.xml:130
-#, fuzzy
 msgid "Remove sudo role"
-msgstr "Gèrer les rôles sudo"
+msgstr "Supprimer le rôle sudo"
 
 #: admin/sudo/class_target_list_users.inc:47
 msgid "Select the target objects"
@@ -343,46 +340,6 @@ msgid "Regular expression for matching addresses"
 msgstr "Expression régulière pour sélectionner les adresses correspondantes"
 
 #: admin/sudo/class_sudoManagement.inc:26
-#, fuzzy
 msgid "Sudo management"
-msgstr "Gestion SAMBA"
+msgstr "Gestion sudo"
 
-#~ msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Si vous êtes sur, cliquez sur 'Effacer' pour continuer ou 'Annuler' pour "
-#~ "arrêter."
-
-#~ msgid "Sudo role administration"
-#~ msgstr "Administration des rôles sudo"
-
-#~ msgid "Select all"
-#~ msgstr "Sélectionner tout"
-
-#~ msgid "Department"
-#~ msgstr "Département"
-
-#~ msgid "Regular expression for matching role names"
-#~ msgstr "Expressions régulières pour le nom des rôles correspondants"
-
-#~ msgid "Regular expression for matching role member names"
-#~ msgstr ""
-#~ "Expressions régulières pour le nom des membres appartenant aux rôles "
-#~ "correspondants"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Editer cette entrée"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Supprimer cette entrée"
-
-#~ msgid "Number of listed roles"
-#~ msgstr "Nombre de rôles listés"
-
-#~ msgid "Sudo roles"
-#~ msgstr "Rôles Sudo"
-
-#~ msgid "Permission"
-#~ msgstr "Permissions"
-
-#~ msgid "Permission error"
-#~ msgstr "Erreur de permissions"

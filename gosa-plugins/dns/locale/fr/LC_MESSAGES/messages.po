@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-18 18:49+0100\n"
-"PO-Revision-Date: 2008-10-09 15:27+0200\n"
+"PO-Revision-Date: 2010-01-18 22:52+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -121,10 +121,8 @@ msgstr "Adresse réseau"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:488
 #: admin/systems/services/dns/class_servDNSeditZone.inc:494
 #, php-format
-msgid ""
-"The specified network address and the network class (%s/%s) do not match!"
-msgstr ""
-"L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
+msgid "The specified network address and the network class (%s/%s) do not match!"
+msgstr "L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:498
 #: admin/systems/services/dns/class_servDNS.inc:584
@@ -171,8 +169,7 @@ msgstr "Service DNS"
 #: admin/systems/services/dns/class_servDNS.inc:151
 #, php-format
 msgid "You are going to migrate the DNS setup from server '%s'."
-msgstr ""
-"Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
+msgstr "Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
 
 #: admin/systems/services/dns/class_servDNS.inc:152
 msgid ""
@@ -195,8 +192,7 @@ msgstr "Classe"
 #: admin/systems/services/dns/class_servDNS.inc:335
 #, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
-msgstr ""
-"Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
+msgstr "Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
 
 #: admin/systems/services/dns/class_servDNS.inc:445
 #: admin/systems/services/dns/class_servDNS.inc:461
@@ -277,14 +273,12 @@ msgstr "Les enregistrements '%s' ne peuvent pas être utilisés plus d'une fois.
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:309
 #, php-format
 msgid "Please fix the empty %s record for entry '%s'."
-msgstr ""
-"Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
+msgstr "Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:317
 #, php-format
 msgid "Please fix the duplicate %s record for entry '%s'."
-msgstr ""
-"Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
+msgstr "Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:457
 msgid "Remove"
@@ -293,7 +287,7 @@ msgstr "Supprimer"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
 #, php-format
 msgid "The syntax of entry %s (record type %s, value %s) is invalid!"
-msgstr ""
+msgstr "La syntaxe de l'entrée %s (enregistrement de type %s, valeur %s) est non valide !"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
 msgid "Example"
@@ -304,29 +298,29 @@ msgstr "Exemple"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:531
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:562
 msgid "Entry should be a DNS name."
-msgstr ""
+msgstr "L'enregistrement doit être un nom DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:518
 msgid "Value should be an IPv6 address."
-msgstr ""
+msgstr "La valeur doit être une adresse IPv6."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:526
 msgid "Value should be an IPv4 address."
-msgstr ""
+msgstr "La valeur doit être une adresse IPv4."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:534
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:552
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:557
 msgid "Value should be a DNS name."
-msgstr ""
+msgstr "La valeur doit un nom DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:541
 msgid "Value 1 should be a number."
-msgstr ""
+msgstr "La valeur 1 doit être un nombre."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:544
 msgid "Value 2 should be a DNS name."
-msgstr ""
+msgstr "La valeur doit être un nom DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:547
 msgid "Value should be composed of 'preference target'."
@@ -334,23 +328,23 @@ msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:567
 msgid "Value 1 (priority) should be a number."
-msgstr ""
+msgstr "La valeur 1 (priorité) doit être un nombre."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:570
 msgid "Value 2 (weight) should be a number."
-msgstr ""
+msgstr "la valeur 2 (poids) doit être un nombre."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:573
 msgid "Value 3 (port) should be a number."
-msgstr ""
+msgstr "La valeur 3 (port) doit être un nombre."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:576
 msgid "Value 4 (target) should be a DNS name."
-msgstr ""
+msgstr "La valeur 4 (cible) doit être un nom DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:579
 msgid "Value should be composed of 'priority weight port target'."
-msgstr ""
+msgstr "Les valeurs doivent être composée de 'priorité poids port et cible'."
 
 #: admin/systems/services/dns/class_DNS.inc:161
 #, php-format
@@ -381,8 +375,7 @@ msgstr "Masque réseau"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:38
 msgid "Zone is in use, network settings can't be modified."
-msgstr ""
-"La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
+msgstr "La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
 
 #: admin/systems/services/dns/servdnseditzone.tpl:51
 msgid "Can't be edited because the zone wasn't saved right now."
@@ -412,22 +405,3 @@ msgstr "Enregistrements mx"
 msgid "Global zone records"
 msgstr "Enregistrements pour la zone globale"
 
-#~ msgid "Remove DNS service"
-#~ msgstr "Suppression du service DNS"
-
-#~ msgid ""
-#~ "This server has DNS features enabled. You can disable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Ce serveur à l'option DNS activée. Vous pouvez le désactiver en cliquant "
-#~ "sur le bouton ci-dessous."
-
-#~ msgid "Add DNS service"
-#~ msgstr "Ajouter un service DNS"
-
-#~ msgid ""
-#~ "This server has DNS features disabled. You can enable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Ce serveur à l'option DNS désactivé. Vous pouvez l'activer en cliquant "
-#~ "sur le bouton ci-dessous."

@@ -1,13 +1,13 @@
-# translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-18 18:49+0100\n"
-"PO-Revision-Date: 2008-06-08 14:13+0200\n"
+"PO-Revision-Date: 2010-01-18 23:00+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,24 +15,20 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
 msgid "Syslog Service"
-msgstr "Affichage des journaux système"
+msgstr "Service Syslog"
 
 #: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
 msgid "enabled"
 msgstr "Activé"
 
 #: admin/systems/services/syslog/class_goSyslogServer.inc:27
 #: admin/systems/services/syslog/class_goSyslogServer.inc:47
-#, fuzzy
 msgid "Syslog server"
-msgstr "Affichage des journaux système"
+msgstr "Serveur Syslog"
 
 #: admin/systems/services/syslog/class_goSyslogServer.inc:68
 #: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#, fuzzy
 msgid "Logging service"
 msgstr "Service de journaux systèmes GOsa"
 
@@ -43,9 +39,8 @@ msgstr "Services"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:31
 #: admin/systems/services/syslog/class_goLogDBServer.inc:59
-#, fuzzy
 msgid "Syslog service database"
-msgstr "Base de données des journaux systèmes GOsa"
+msgstr "Base de données des journaux systèmes Syslog"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:69
 msgid "User"
@@ -65,158 +60,30 @@ msgstr "Base de données"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:92
 #: admin/systems/services/syslog/class_goLogDBServer.inc:93
-#, fuzzy
 msgid "Logging database"
 msgstr "Base de données des journaux systèmes GOsa"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:101
-#, fuzzy
 msgid "Start"
 msgstr "Démarrage"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:102
 msgid "Stop"
-msgstr ""
+msgstr "Arrêt"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:103
-#, fuzzy
 msgid "Restart"
-msgstr "Restaurer"
+msgstr "Redémarrer"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
-#, fuzzy
 msgid "Admin"
-msgstr "DN de l'administrateur"
+msgstr "Administrateur"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
-#, fuzzy
 msgid "Logging database information"
-msgstr "Afficher/Cacher l'information"
+msgstr ""
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
-#, fuzzy
 msgid "Logging DB user"
-msgstr "Echec du Journal système : %s"
+msgstr "Utilisateur de la base de données des journaux systèmesa"
 
-#~ msgid "GOsa MySQL logging service"
-#~ msgstr "Service de journaux systèmes GOsa MySQL"
-
-#~ msgid "Allow view of entries on this server"
-#~ msgstr "Permet la visualisation d'entrées sur ce serveur"
-
-#~ msgid "Database user"
-#~ msgstr "Utilisateur de la base de donées"
-
-#~ msgid "Filter"
-#~ msgstr "Filtre"
-
-#~ msgid "Show hosts"
-#~ msgstr "Afficher les machines"
-
-#~ msgid "Action"
-#~ msgstr "Action"
-
-#~ msgid "Time interval"
-#~ msgstr "Intervalle de temps"
-
-#~ msgid "Search for"
-#~ msgstr "Recherche de"
-
-#~ msgid "Enter string to search for"
-#~ msgstr "Entrée la chaîne de caractères à rechercher"
-
-#~ msgid "Ruleset"
-#~ msgstr "Ensemble de règles"
-
-#~ msgid "Edit"
-#~ msgstr "Editer"
-
-#~ msgid "Search"
-#~ msgstr "Recherche"
-
-#~ msgid "Date"
-#~ msgstr "Date"
-
-#~ msgid "Object type"
-#~ msgstr "Type de l'objet"
-
-#~ msgid "Object"
-#~ msgstr "Objet"
-
-#~ msgid "Message"
-#~ msgstr "Message"
-
-#~ msgid "Search returned no results..."
-#~ msgstr "La recherche n'a renvoyé aucun résultat..."
-
-#~ msgid "System logs"
-#~ msgstr "Journaux systèmes"
-
-#~ msgid "This does something"
-#~ msgstr "Ceci fait quelque chose"
-
-#~ msgid "Warning"
-#~ msgstr "Avertissement"
-
-#~ msgid "Configuration error"
-#~ msgstr "Erreur de configuration"
-
-#~ msgid "Missing %s PHP extension!"
-#~ msgstr "Extension PHP %s manquante !"
-
-#~ msgid "Error"
-#~ msgstr "Erreur"
-
-#~ msgid "All"
-#~ msgstr "Tout"
-
-#~ msgid "one hour"
-#~ msgstr "une heure"
-
-#~ msgid "6 hours"
-#~ msgstr "6 heures"
-
-#~ msgid "12 hours"
-#~ msgstr "12 heures"
-
-#~ msgid "24 hours"
-#~ msgstr "24 heures"
-
-#~ msgid "2 days"
-#~ msgstr "2 jours"
-
-#~ msgid "one week"
-#~ msgstr "une semaine"
-
-#~ msgid "2 weeks"
-#~ msgstr "2 semaines"
-
-#~ msgid "one month"
-#~ msgstr "un mois"
-
-#~ msgid "Log view"
-#~ msgstr "Visualisation des journaux systèmes"
-
-#~ msgid "Log view addon"
-#~ msgstr "Extension de visualisation des journaux systèmes"
-
-#~ msgid "You have insufficient permissions to view syslog entries."
-#~ msgstr ""
-#~ "Vous n'avez pas l'autorisation pour voir les entrées des journaux "
-#~ "systèmes."
-
-#~ msgid ""
-#~ "Missing logging table (%s.%s) update your GOsa logging database schema."
-#~ msgstr ""
-#~ "La table journaux systèmes (%s.%s) est manquante, mettez à jour vos "
-#~ "schéma de base de données pour l'application des journaux systèmes de "
-#~ "GOsa."
-
-#~ msgid "Log level"
-#~ msgstr "Niveaux des journaux systèmes"
-
-#~ msgid "Level"
-#~ msgstr "Niveau"
-
-#~ msgid "Hostname"
-#~ msgstr "Nom d'hôte"
