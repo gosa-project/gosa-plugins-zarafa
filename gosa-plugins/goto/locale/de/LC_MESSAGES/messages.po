@@ -670,9 +670,8 @@ msgstr ""
 "'Abbrechen' zum Abbruch."
 
 #: admin/devices/device-list.xml:11
-#, fuzzy
 msgid "List of devices"
-msgstr "Liste der definierten Geräte"
+msgstr "Liste der Geräte"
 
 #: admin/devices/device-list.xml:49 admin/devices/deviceGeneric.tpl:29
 #: admin/devices/class_deviceGeneric.inc:93
@@ -700,14 +699,12 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: admin/devices/device-list.xml:118
-#, fuzzy
 msgid "Edit device"
-msgstr "Soundkarte"
+msgstr "Gerät bearbeiten"
 
 #: admin/devices/device-list.xml:131
-#, fuzzy
 msgid "Remove device"
-msgstr "Bild entfernen"
+msgstr "Gerät entfernen"
 
 #: admin/devices/deviceGeneric.tpl:2 admin/devices/paste_deviceGeneric.tpl:2
 #: admin/devices/class_deviceGeneric.inc:257
@@ -753,7 +750,6 @@ msgstr "(idProduct)"
 #: admin/applications/application-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter.tpl:3
-#, fuzzy
 msgid "Filter"
 msgstr "Filter"
 
@@ -1017,21 +1013,18 @@ msgstr "Anwendungsverwaltung"
 
 #: admin/applications/application-list.xml:11
 #: admin/applications/application-list-release.xml:11
-#, fuzzy
 msgid "List of applications"
 msgstr "Liste der Anwendungen"
 
 #: admin/applications/application-list.xml:118
 #: admin/applications/application-list-release.xml:118
-#, fuzzy
 msgid "Edit application"
-msgstr "Anwendung hinzufügen"
+msgstr "Anwendung bearbeiten"
 
 #: admin/applications/application-list.xml:131
 #: admin/applications/application-list-release.xml:131
-#, fuzzy
 msgid "Remove application"
-msgstr "Anwendung"
+msgstr "Anwendung entfernen"
 
 #: admin/applications/class_applicationGeneric.inc:95
 msgid "no example"
@@ -1161,21 +1154,18 @@ msgstr "Bitte geben Sie hier eine Beschreibung dieses MIME-Typs ein"
 
 #: admin/mimetypes/mimetype-list-release.xml:11
 #: admin/mimetypes/mimetype-list.xml:11
-#, fuzzy
 msgid "List of mimetypes"
-msgstr "Liste von definierten MIME-Typen"
+msgstr "Liste von MIME-Typen"
 
 #: admin/mimetypes/mimetype-list-release.xml:118
 #: admin/mimetypes/mimetype-list.xml:118
-#, fuzzy
 msgid "Edit mimetype"
-msgstr "Aktualisiere MIME-Typ Icon"
+msgstr "MIME-Typ bearbeiten"
 
 #: admin/mimetypes/mimetype-list-release.xml:131
 #: admin/mimetypes/mimetype-list.xml:131
-#, fuzzy
 msgid "Remove mimetype"
-msgstr "Bild entfernen"
+msgstr "MIME-Typ entfernen"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:535
 msgid "File pattern"

@@ -22,26 +22,22 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
 msgid "Syslog Service"
-msgstr "Systemprotokolle"
+msgstr "Systemprotokoll-Dienst"
 
 #: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
 msgid "enabled"
-msgstr "Aktiviert"
+msgstr "aktiv"
 
 #: admin/systems/services/syslog/class_goSyslogServer.inc:27
 #: admin/systems/services/syslog/class_goSyslogServer.inc:47
-#, fuzzy
 msgid "Syslog server"
-msgstr "Systemprotokolle"
+msgstr "Systemprotokoll-Server"
 
 #: admin/systems/services/syslog/class_goSyslogServer.inc:68
 #: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#, fuzzy
 msgid "Logging service"
-msgstr "GOsa Protokoll-Dienst"
+msgstr "Protokoll-Dienst"
 
 #: admin/systems/services/syslog/class_goSyslogServer.inc:69
 #: admin/systems/services/syslog/class_goLogDBServer.inc:93
@@ -50,9 +46,8 @@ msgstr "Dienste"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:31
 #: admin/systems/services/syslog/class_goLogDBServer.inc:59
-#, fuzzy
 msgid "Syslog service database"
-msgstr "GOsa Protokoll-Datenbank"
+msgstr "Protokoll-Datenbank"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:69
 msgid "User"
@@ -72,157 +67,29 @@ msgstr "Datenbank"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:92
 #: admin/systems/services/syslog/class_goLogDBServer.inc:93
-#, fuzzy
 msgid "Logging database"
-msgstr "GOsa Protokoll-Datenbank"
+msgstr "Protokoll-Datenbank"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:101
-#, fuzzy
 msgid "Start"
 msgstr "Start"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:102
 msgid "Stop"
-msgstr ""
+msgstr "Ende"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:103
-#, fuzzy
 msgid "Restart"
-msgstr "Wiederherstellen"
+msgstr "Neustart"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
-#, fuzzy
 msgid "Admin"
-msgstr "Administrator-DN"
+msgstr "Administrator"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
-#, fuzzy
 msgid "Logging database information"
-msgstr "Zeige/Verstecke Informationen"
+msgstr "Informationen zur Protokollierungsdatenbank"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
-#, fuzzy
 msgid "Logging DB user"
-msgstr "Protokollieren fehlgeschlagen: %s"
-
-#~ msgid "GOsa MySQL logging service"
-#~ msgstr "GOsa MySQL-Protokoll-Dienst"
-
-#~ msgid "Allow view of entries on this server"
-#~ msgstr "Erlaube Anzeigen von Einträgen auf diesem Server"
-
-#~ msgid "Database user"
-#~ msgstr "Datenbank-Benutzer"
-
-#~ msgid "Filter"
-#~ msgstr "Filter"
-
-#~ msgid "Show hosts"
-#~ msgstr "Zeige Rechner"
-
-#~ msgid "Action"
-#~ msgstr "Aktion"
-
-#~ msgid "Time interval"
-#~ msgstr "Zeit-Intervall"
-
-#~ msgid "Search for"
-#~ msgstr "Suche nach"
-
-#~ msgid "Enter string to search for"
-#~ msgstr "Zu suchende Zeichenkette"
-
-#~ msgid "Ruleset"
-#~ msgstr "Regelsatz"
-
-#~ msgid "Edit"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "Search"
-#~ msgstr "Suchen"
-
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#~ msgid "Object type"
-#~ msgstr "Objekttyp"
-
-#~ msgid "Object"
-#~ msgstr "Objekt"
-
-#~ msgid "Message"
-#~ msgstr "Nachricht"
-
-#~ msgid "Search returned no results..."
-#~ msgstr "Die Suche verlief ergebnislos..."
-
-#~ msgid "System logs"
-#~ msgstr "Systemprotokolle"
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid "Warning"
-#~ msgstr "Warnung"
-
-#~ msgid "Configuration error"
-#~ msgstr "Konfigurationsfehler"
-
-#~ msgid "Missing %s PHP extension!"
-#~ msgstr "Fehlende %s PHP-Erweiterung!"
-
-#~ msgid "Error"
-#~ msgstr "Fehler"
-
-#~ msgid "All"
-#~ msgstr "Alle"
-
-#~ msgid "one hour"
-#~ msgstr "eine Stunde"
-
-#~ msgid "6 hours"
-#~ msgstr "6 Stunden"
-
-#~ msgid "12 hours"
-#~ msgstr "12 Stunden"
-
-#~ msgid "24 hours"
-#~ msgstr "24 Stunden"
-
-#~ msgid "2 days"
-#~ msgstr "2 Tage"
-
-#~ msgid "one week"
-#~ msgstr "eine Woche"
-
-#~ msgid "2 weeks"
-#~ msgstr "2 Wochen"
-
-#~ msgid "one month"
-#~ msgstr "ein Monat"
-
-#~ msgid "Log view"
-#~ msgstr "Protokollanzeige"
-
-#~ msgid "Log view addon"
-#~ msgstr "Protokollanzeige-Erweiterung"
-
-#~ msgid "You have insufficient permissions to view syslog entries."
-#~ msgstr ""
-#~ "Sie haben keine ausreichenden Zugriffsrechte, um das Systemprotokoll "
-#~ "einzusehen."
-
-#~ msgid ""
-#~ "Missing logging table (%s.%s) update your GOsa logging database schema."
-#~ msgstr ""
-#~ "Fehlende Protokollierungstabelle (%s.%s). Aktualisieren Sie Ihr GOsa "
-#~ "Protokolldatenbank-Schema."
-
-#~ msgid "Log level"
-#~ msgstr "Priorität"
-
-#~ msgid "Level"
-#~ msgstr "Level"
-
-#~ msgid "Hostname"
-#~ msgstr "Hostname"
+msgstr "Protokollierungsdatenbank-Benutzer"

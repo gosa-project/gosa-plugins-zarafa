@@ -17,7 +17,6 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: admin/sudo/sudo-filter.tpl:3
-#, fuzzy
 msgid "Filter"
 msgstr "Filter"
 
@@ -253,14 +252,12 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: admin/sudo/sudo-list.xml:117
-#, fuzzy
 msgid "Edit sudo role"
-msgstr "Liste der sudo-Rollen"
+msgstr "sudo-Rolle bearbeiten"
 
 #: admin/sudo/sudo-list.xml:130
-#, fuzzy
 msgid "Remove sudo role"
-msgstr "Sudo-Rollen verwalten"
+msgstr "Sudo-Rollen löschen"
 
 #: admin/sudo/class_target_list_users.inc:47
 msgid "Select the target objects"
@@ -342,44 +339,5 @@ msgid "Regular expression for matching addresses"
 msgstr "Regulärer Ausdruck zum Abgleich der Addressen"
 
 #: admin/sudo/class_sudoManagement.inc:26
-#, fuzzy
 msgid "Sudo management"
-msgstr "Samba-Verwaltung"
-
-#~ msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Wenn Sie sicher sind, klicken Sie auf 'Entfernen' um fortzufahren oder "
-#~ "'Abbrechen' um die Aktion abzubrechen."
-
-#~ msgid "Sudo role administration"
-#~ msgstr "Administration der sudo-Rollen"
-
-#~ msgid "Select all"
-#~ msgstr "Alles auswählen"
-
-#~ msgid "Department"
-#~ msgstr "Abteilung"
-
-#~ msgid "Regular expression for matching role names"
-#~ msgstr "Regulärer Ausdruck zum Abgleich der Rollen-Namen"
-
-#~ msgid "Regular expression for matching role member names"
-#~ msgstr "Regulärer Ausdruck zum Abgleich der Mitglieds-Namen"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Diesen Eintrag bearbeiten"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Diesen Eintrag löschen"
-
-#~ msgid "Number of listed roles"
-#~ msgstr "Anzahl der angezeigten Rollen"
-
-#~ msgid "Sudo roles"
-#~ msgstr "Sudo-Rollen"
-
-#~ msgid "Permission"
-#~ msgstr "Berechtigung"
-
-#~ msgid "Permission error"
-#~ msgstr "Berechtigungs-Fehler"
+msgstr "SUDO-Verwaltung"

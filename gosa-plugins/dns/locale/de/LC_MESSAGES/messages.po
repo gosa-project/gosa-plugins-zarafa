@@ -304,7 +304,7 @@ msgstr "Entfernen"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
 #, php-format
 msgid "The syntax of entry %s (record type %s, value %s) is invalid!"
-msgstr ""
+msgstr "Der Eintrag %s (Record Typ %s, Wert %s) ist ungültig!"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
 msgid "Example"
@@ -315,53 +315,53 @@ msgstr "Beispiel"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:531
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:562
 msgid "Entry should be a DNS name."
-msgstr ""
+msgstr "Eintrag muss ein DNS-Name sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:518
 msgid "Value should be an IPv6 address."
-msgstr ""
+msgstr "Wert muss eine IPv6-Adresse sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:526
 msgid "Value should be an IPv4 address."
-msgstr ""
+msgstr "Wert muss eine IPv4-Adresse sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:534
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:552
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:557
 msgid "Value should be a DNS name."
-msgstr ""
+msgstr "Wert muss ein DNS-Name sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:541
 msgid "Value 1 should be a number."
-msgstr ""
+msgstr "Wert 1 muss eine Zahl sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:544
 msgid "Value 2 should be a DNS name."
-msgstr ""
+msgstr "Wert 2 muss ein DNS-Name sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:547
 msgid "Value should be composed of 'preference target'."
-msgstr ""
+msgstr "Wert muss aus 'preference target' zusammengestellt sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:567
 msgid "Value 1 (priority) should be a number."
-msgstr ""
+msgstr "Wert 1 (Priorität) muss eine Zahl sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:570
 msgid "Value 2 (weight) should be a number."
-msgstr ""
+msgstr "Wert 2 (Gewichtung) muss eine Zahl sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:573
 msgid "Value 3 (port) should be a number."
-msgstr ""
+msgstr "Wert 3 (Port) muss eine Zahl sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:576
 msgid "Value 4 (target) should be a DNS name."
-msgstr ""
+msgstr "Wert 4 (Ziel) muss ein DNS-Name sein."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:579
 msgid "Value should be composed of 'priority weight port target'."
-msgstr ""
+msgstr "Wert muss aus 'priority weight port target' zusammengestellt sein."
 
 #: admin/systems/services/dns/class_DNS.inc:161
 #, php-format

@@ -685,11 +685,10 @@ msgid "List of available packages"
 msgstr "Liste verfügbarer Pakete"
 
 #: admin/fai/faiPackageEntry.tpl:17
-#, fuzzy
 msgid ""
 "The search returned too many results, only the first 200 entries are shown."
 msgstr ""
-"Die Suche ergab zu viele Treffer. Es werden nicht mehr als %s Einträge "
+"Die Suche ergab zu viele Treffer. Es werden nicht mehr als 200 Einträge "
 "angezeigt!"
 
 #: admin/fai/faiPackageEntry.tpl:26 admin/fai/faiProfileEntry.tpl:21
@@ -719,9 +718,8 @@ msgid "Regular expression for matching object names"
 msgstr "Regulärer Ausdruck zum Erkennen von Objekt-Namen"
 
 #: admin/fai/class_faiManagement.inc:25
-#, fuzzy
 msgid "Roles"
-msgstr "Rolle"
+msgstr "Rollen"
 
 #: admin/fai/class_faiManagement.inc:26
 #, fuzzy
@@ -1012,14 +1010,12 @@ msgid "Role"
 msgstr "Rolle"
 
 #: admin/fai/fai-list.xml:125
-#, fuzzy
 msgid "Edit role"
-msgstr "ACL-Rolle bearbeiten"
+msgstr "Rolle bearbeiten"
 
 #: admin/fai/fai-list.xml:138
-#, fuzzy
 msgid "Remove role"
-msgstr "Benutzer entfernen"
+msgstr "Rolle entfernen"
 
 #: admin/fai/faiSummary.tpl:4
 msgid "FAI object tree"
@@ -1517,7 +1513,6 @@ msgid "Tune options"
 msgstr "Optimierungs-Optionen"
 
 #: admin/fai/fai-filter.tpl:3
-#, fuzzy
 msgid "Filter"
 msgstr "Filter"
 

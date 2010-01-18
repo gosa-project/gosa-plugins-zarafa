@@ -920,9 +920,8 @@ msgid "Filter"
 msgstr "Filter"
 
 #: gofon/macro/class_gofonMacroManagement.inc:25
-#, fuzzy
 msgid "Macros"
-msgstr "Makro"
+msgstr "Makros"
 
 #: gofon/macro/class_gofonMacroManagement.inc:26
 msgid "Phone macro management"
@@ -1449,14 +1448,12 @@ msgid "Select subtree to base search on"
 msgstr "Wählen Sie den Teilbaum, in dem gesucht werden soll"
 
 #: gofon/fonreports/contents.tpl:12
-#, fuzzy
 msgid "on"
-msgstr "Ab"
+msgstr "am"
 
 #: gofon/fonreports/contents.tpl:13
-#, fuzzy
 msgid "Select server to search on"
-msgstr "Wählen Sie den Teilbaum, in dem gesucht werden soll"
+msgstr "Wählen Sie den Server, auf dem gesucht werden soll"
 
 #: gofon/fonreports/contents.tpl:16
 msgid "during"
@@ -1477,143 +1474,3 @@ msgstr "Status"
 #: gofon/fonreports/contents.tpl:55
 msgid "Search returned no results..."
 msgstr "Die Suche verlief ergebnislos..."
-
-#~ msgid ""
-#~ "This menu allows you to add, edit and remove selected macros. You may "
-#~ "want to use the range selector on top of the macro listbox, when working "
-#~ "with a large number of macros."
-#~ msgstr ""
-#~ "Dieses Menü erlaubt es Ihnen Makros hinzuzufügen, zu bearbeiten oder zu "
-#~ "entfernen. Bei einer großen Anzahl von Makros bietet sich die Verwendung "
-#~ "der Bereichsauswahl an."
-
-#~ msgid "Filters"
-#~ msgstr "Filter"
-
-#~ msgid "Display macros matching"
-#~ msgstr "Zeige Makros, auf die zutrifft"
-
-#~ msgid "Display macros  matching"
-#~ msgstr "Zeige Makros, auf die zutrifft"
-
-#~ msgid "Regular expression for matching macro names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Makro-Namen"
-
-#~ msgid ""
-#~ "This may be used by several groups. Please double check if your really "
-#~ "want to do this since there is no way for GOsa to get your data back."
-#~ msgstr ""
-#~ "Dieser Eintrag wird unter Umständen von verschiedenen Gruppen genutzt. "
-#~ "Bitte überprüfen Sie genau was Sie tun, da GOsa keine Möglichkeit hat, "
-#~ "die Daten wiederherzustellen."
-
-#~ msgid "Select all"
-#~ msgstr "Alle auswählen"
-
-#~ msgid "Department"
-#~ msgstr "Abteilung"
-
-#~ msgid "Visible"
-#~ msgstr "Sichtbar"
-
-#~ msgid "Submit department"
-#~ msgstr "Aktualisieren"
-
-#~ msgid "visible"
-#~ msgstr "sichtbar"
-
-#~ msgid "invisible"
-#~ msgstr "unsichtbar"
-
-#~ msgid "edit"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "Edit macro"
-#~ msgstr "Makro bearbeiten"
-
-#~ msgid "delete"
-#~ msgstr "Entfernen"
-
-#~ msgid "Delete macro"
-#~ msgstr "Makro entfernen"
-
-#~ msgid "Number of listed %s"
-#~ msgstr "Anzahl der angezeigten %s"
-
-#~ msgid "macros"
-#~ msgstr "Makros"
-
-#~ msgid "departments"
-#~ msgstr "Abteilungen"
-
-#~ msgid "Phone macros"
-#~ msgstr "Telefon-Makros"
-
-#~ msgid "Permission"
-#~ msgstr "Berechtigung"
-
-#~ msgid "Permission error"
-#~ msgstr "Berechtigungsfehler"
-
-#~ msgid "macro"
-#~ msgstr "Makro"
-
-#~ msgid ""
-#~ "This menu allows you to create, delete and edit selected phone "
-#~ "conferences. Having a large number of phone conferences, you might prefer "
-#~ "the range selectors on top of the conferences list."
-#~ msgstr ""
-#~ "Dieses Menü erlaubt es Ihnen Telefon-Konferenzen hinzuzufügen, zu "
-#~ "bearbeiten oder zu entfernen. Bei einer großen Anzahl von Abteilungen "
-#~ "bietet sich die Verwendung der Bereichswahl an."
-
-#~ msgid "Display users matching"
-#~ msgstr "Zeige die Benutzer, auf die Folgendes passt"
-
-#~ msgid "Regular expression for        matching user names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Benutzernamen"
-
-#~ msgid ""
-#~ "This includes 'all' accounts, systems, etc. in this subtree. Please "
-#~ "double check if your really want to do this since there is no way for "
-#~ "GOsa to get your data back."
-#~ msgstr ""
-#~ "Dies umfasst 'alle' Konten, System- und Setup-Informationen dieses "
-#~ "Teilbaums. Bitte prüfen Sie genau, da es keine Möglichkeit für GOsa gibt, "
-#~ "die Daten wiederherzustellen. "
-
-#~ msgid ""
-#~ "Best thing to do before performing this action would be to save the "
-#~ "current contents of your LDAP tree in a file. So - if you've done so - "
-#~ "press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Eine Sicherung der LDAP-Datenbank bietet sich an. Wenn Sie dies erledigt "
-#~ "haben, drücken Sie 'Entfernen' um Fortzufahren oder 'Abbrechen', um den "
-#~ "Vorgang abzubrechen."
-
-#~ msgid "Phone conferences"
-#~ msgstr "Telefon-Konferenzen"
-
-#~ msgid "Management"
-#~ msgstr "Verwaltung"
-
-#~ msgid "conference"
-#~ msgstr "Konferenz"
-
-#~ msgid "You have not permission to delete this entry!"
-#~ msgstr "Sie haben keine Berechtigung, diesen Eintrag zu entfernen!"
-
-#~ msgid "Regular expression for matching conference names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Konferenznamen"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Diesen Eintrag bearbeiten"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Diesen Eintrag entfernen"
-
-#~ msgid "Unknown"
-#~ msgstr "Unbekannt"
-
-#~ msgid "Number of listed '%s'"
-#~ msgstr "Anzahl der angezeigten '%s'"

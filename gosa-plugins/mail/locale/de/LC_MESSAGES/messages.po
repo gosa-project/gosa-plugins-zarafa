@@ -233,9 +233,8 @@ msgstr ""
 #: admin/groups/mail/class_groupMail.inc:413
 #: personal/mail/class_mailAccount.inc:377
 #: personal/mail/class_mailAccount.inc:1099
-#, fuzzy, php-format
 msgid "Address is already in use by group '%s'."
-msgstr "Die Adresse wird bereits von Benutzer '%s' verwendet."
+msgstr "Die Adresse wird bereits von der Gruppe '%s' verwendet."
 
 #: admin/groups/mail/class_groupMail.inc:415
 #: personal/mail/class_mailAccount.inc:379
@@ -1237,9 +1236,8 @@ msgid "Cannot modify IMAP mailbox quota: %s"
 msgstr "Kann das IMAP-Postfach nicht verändern: '%s'"
 
 #: personal/mail/class_mail-methods-cyrus.inc:298
-#, fuzzy
 msgid "Mail info"
-msgstr "Ablegen unter"
+msgstr "Mail-Information"
 
 #: personal/mail/class_mail-methods-cyrus.inc:299
 #, php-format
@@ -1247,6 +1245,8 @@ msgid ""
 "LDAP entry has been removed but cyrus mailbox (%s) is kept.\n"
 "Please delete it manually!"
 msgstr ""
+"Der LDAP-Eintrag wurde entfernt, aber die Cyrus-Mailbox (%s) wurde "
+"nicht gelöscht. Bitte löschen Sie diesen Eintrag manuell!"
 
 #: personal/mail/class_mail-methods-cyrus.inc:383
 #: personal/mail/class_mail-methods-cyrus.inc:420
@@ -1260,7 +1260,7 @@ msgstr "Die Datei '%s' existiert nicht!"
 
 #: personal/mail/class_mail-methods-cyrus.inc:473
 msgid "The sieve script may not be written correctly."
-msgstr ""
+msgstr "Das Sieve-Skript ist nicht korrekt geschrieben worden."
 
 #: personal/mail/class_mail-methods-cyrus.inc:474
 #: personal/mail/sieve/class_My_Tree.inc:245
@@ -2180,9 +2180,8 @@ msgid "unknown"
 msgstr "unbekannt"
 
 #: personal/mail/class_mailAccount.inc:1007
-#, fuzzy
 msgid "Mail error saving sieve settings"
-msgstr "Fehler beim Speichern des Sieve-Skriptes"
+msgstr "Fehler beim Speichern der Sieve-Einstellungen"
 
 #: personal/mail/class_mailAccount.inc:1120
 #: personal/mail/class_mailAccount.inc:1128
