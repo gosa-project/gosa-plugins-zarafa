@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: class_roleManagement.inc 14742 2009-11-04 13:18:33Z hickert $$
+ * ID: $$Id: class_faiManagement.inc 14742 2009-11-04 13:18:33Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,11 @@ class faiManagement extends management
   var $plIcon  = "plugins/fai/images/plugin.png";
 
   // Tab definition 
-  protected $tabClass = "roletabs";
-  protected $tabType = "ROLETABS";
-  protected $aclCategory = "roles";
-  protected $aclPlugin   = "role";
-  protected $objectName   = "role";
+  protected $tabClass = "";
+  protected $tabType = "";
+  protected $aclCategory = "";
+  protected $aclPlugin   = "";
+  protected $objectName   = "FAI object";
 
   //  Attributes Managed by this plugin can be used in post events
   protected $attributes   = array("lock_type","lock_name","lock_dn");  
@@ -123,7 +123,7 @@ class faiManagement extends management
     $this->registerAction("saveBranch","saveBranch");
     $this->registerAction("PerformBranch","PerformBranch");
 
-    parent::__construct($config, $ui, "roles", $headpage);
+    parent::__construct($config, $ui, "FAI object", $headpage);
   }
 
 
