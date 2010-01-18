@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-19 14:24+0200\n"
+"POT-Creation-Date: 2010-01-18 17:04+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -44,11 +44,12 @@ msgstr "目标路径"
 #: admin/fai/faiPartitionTableEntry.tpl:13 admin/fai/faiHookEntry.tpl:19
 #: admin/fai/class_faiVariableEntry.inc:138
 #: admin/fai/class_faiTemplate.inc:545 admin/fai/class_faiScript.inc:646
-#: admin/fai/class_faiScriptEntry.inc:190 admin/fai/faiTemplate.tpl:21
-#: admin/fai/class_faiPartitionTable.inc:789 admin/fai/faiVariableEntry.tpl:19
-#: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:398
-#: admin/fai/faiPartition.tpl:20 admin/fai/class_faiPackage.inc:658
-#: admin/fai/class_faiTemplateEntry.inc:300 admin/fai/faiPartitionTable.tpl:21
+#: admin/fai/class_faiScriptEntry.inc:190 admin/fai/fai-list.xml:49
+#: admin/fai/faiTemplate.tpl:21 admin/fai/class_faiPartitionTable.inc:789
+#: admin/fai/faiVariableEntry.tpl:19 admin/fai/class_faiHookEntry.inc:197
+#: admin/fai/class_faiVariable.inc:398 admin/fai/faiPartition.tpl:20
+#: admin/fai/class_faiPackage.inc:658 admin/fai/class_faiTemplateEntry.inc:300
+#: admin/fai/faiPartitionTable.tpl:21
 msgid "Description"
 msgstr "描述"
 
@@ -137,21 +138,18 @@ msgstr "置顶"
 #: admin/fai/tabsScript.inc:33 admin/fai/tabsTemplate.inc:33
 #: admin/fai/class_faiHook.inc:239 admin/fai/class_faiDiskEntry.inc:427
 #: admin/fai/tabsPartition.inc:34 admin/fai/class_faiProfile.inc:262
-#: admin/fai/class_faiManagement.inc:240 admin/fai/class_faiManagement.inc:636
-#: admin/fai/class_faiManagement.inc:642 admin/fai/class_faiManagement.inc:928
-#: admin/fai/class_faiManagement.inc:972 admin/fai/class_faiManagement.inc:996
-#: admin/fai/class_faiManagement.inc:1245 admin/fai/class_faiTemplate.inc:212
-#: admin/fai/tabsVariable.inc:33 admin/fai/tabsPackage.inc:33
-#: admin/fai/class_faiScript.inc:229 admin/fai/class_FAI.inc:556
-#: admin/fai/class_faiScriptEntry.inc:59 admin/fai/class_faiScriptEntry.inc:62
-#: admin/fai/tabsHook.inc:32 admin/fai/class_faiPartitionTable.inc:244
+#: admin/fai/class_faiTemplate.inc:212 admin/fai/tabsVariable.inc:33
+#: admin/fai/tabsPackage.inc:33 admin/fai/class_faiScript.inc:229
+#: admin/fai/class_FAI.inc:556 admin/fai/class_faiScriptEntry.inc:59
+#: admin/fai/class_faiScriptEntry.inc:62 admin/fai/tabsHook.inc:32
+#: admin/fai/class_faiPartitionTable.inc:244
 #: admin/fai/class_faiPartitionTable.inc:307
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:348
 #: admin/fai/class_faiSummaryTab.inc:94 admin/fai/tabsProfile.inc:33
-#: admin/systems/services/repository/class_servRepository.inc:142
-#: admin/systems/services/repository/class_servRepository.inc:177
-#: admin/systems/services/repository/class_servRepository.inc:182
+#: admin/systems/services/repository/class_servRepository.inc:179
+#: admin/systems/services/repository/class_servRepository.inc:213
+#: admin/systems/services/repository/class_servRepository.inc:218
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Error"
 msgstr "错误"
@@ -170,8 +168,7 @@ msgid ""
 "The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 
-#: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:542
-#: admin/fai/class_faiManagement.inc:1315 admin/fai/remove_branch.tpl:2
+#: admin/fai/remove.tpl:2 admin/fai/remove_branch.tpl:2
 msgid "Warning"
 msgstr "警告"
 
@@ -209,9 +206,7 @@ msgstr "设备"
 #: admin/fai/faiPackage.tpl:9 admin/fai/faiHook.tpl:9
 #: admin/fai/class_faiProfile.inc:395 admin/fai/class_faiProfile.inc:405
 #: admin/fai/class_faiProfile.inc:478 admin/fai/faiPartitionTableEntry.tpl:6
-#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiManagement.inc:636
-#: admin/fai/class_faiManagement.inc:642
-#: admin/fai/class_faiVariableEntry.inc:90
+#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiVariableEntry.inc:90
 #: admin/fai/class_faiVariableEntry.inc:99
 #: admin/fai/class_faiVariableEntry.inc:102
 #: admin/fai/class_faiVariableEntry.inc:137
@@ -222,8 +217,8 @@ msgstr "设备"
 #: admin/fai/class_faiScriptEntry.inc:137
 #: admin/fai/class_faiScriptEntry.inc:142
 #: admin/fai/class_faiScriptEntry.inc:145
-#: admin/fai/class_faiScriptEntry.inc:189 admin/fai/faiTemplate.tpl:9
-#: admin/fai/class_faiPartitionTable.inc:490
+#: admin/fai/class_faiScriptEntry.inc:189 admin/fai/fai-list.xml:41
+#: admin/fai/faiTemplate.tpl:9 admin/fai/class_faiPartitionTable.inc:490
 #: admin/fai/class_faiPartitionTable.inc:788 admin/fai/faiVariableEntry.tpl:9
 #: admin/fai/class_faiHookEntry.inc:145 admin/fai/class_faiHookEntry.inc:150
 #: admin/fai/class_faiHookEntry.inc:153 admin/fai/class_faiHookEntry.inc:196
@@ -232,7 +227,7 @@ msgstr "设备"
 #: admin/fai/class_faiPackage.inc:657 admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:299
 #: admin/fai/class_faiSummaryTab.inc:348 admin/fai/faiPartitionTable.tpl:9
-#: admin/systems/services/repository/class_servRepository.inc:177
+#: admin/systems/services/repository/class_servRepository.inc:213
 msgid "Name"
 msgstr "名称"
 
@@ -337,7 +332,7 @@ msgid "True"
 msgstr "真"
 
 #: admin/fai/class_faiPartitionTableEntry.inc:252
-#: admin/fai/class_faiPartitionTableEntry.inc:254
+#: admin/fai/class_faiPartitionTableEntry.inc:254 admin/fai/fai-list.xml:93
 #: admin/fai/class_divListFai.inc:178
 msgid "Remove"
 msgstr "删除"
@@ -442,7 +437,7 @@ msgid "Choose a variable to delete or edit"
 msgstr "选择一个要删除或修改的变量"
 
 #: admin/fai/faiVariable.tpl:53 admin/fai/class_faiHook.inc:312
-#: admin/fai/class_faiHook.inc:314
+#: admin/fai/class_faiHook.inc:314 admin/fai/fai-list.xml:86
 msgid "Edit"
 msgstr "编辑"
 
@@ -572,12 +567,12 @@ msgstr "脚本列表"
 
 #: admin/fai/faiPackage.tpl:33
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
-#: admin/systems/services/repository/class_servRepository.inc:343
+#: admin/systems/services/repository/class_servRepository.inc:406
 msgid "Repository"
 msgstr "仓库"
 
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
-#: admin/fai/class_faiPackage.inc:663
+#: admin/fai/fai-filter.tpl:14 admin/fai/class_faiPackage.inc:663
 #: admin/systems/services/repository/class_divListRepositories.inc:23
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_servRepositorySetup.inc:153
@@ -691,162 +686,45 @@ msgstr "选择一个已存在的 FAI 任务"
 msgid "List of available packages"
 msgstr "可用软件包列表"
 
-#: admin/fai/faiPackageEntry.tpl:20 admin/fai/faiProfileEntry.tpl:21
+#: admin/fai/faiPackageEntry.tpl:17
+#, fuzzy
+msgid ""
+"The search returned too many results, only the first 200 entries are shown."
+msgstr "您提供的查询字符串 '%s' 返回太多结果。为减少内存占用，只显示前200条。"
+
+#: admin/fai/faiPackageEntry.tpl:26 admin/fai/faiProfileEntry.tpl:21
 msgid "Information"
 msgstr "提示信息"
 
-#: admin/fai/faiPackageEntry.tpl:24
+#: admin/fai/faiPackageEntry.tpl:30
 msgid ""
 "This menu allows you to select multiple packages to add them to the "
 "currently edited package list."
 msgstr "这个菜单允许您为当前编辑的软件包列表添加多个软件包。"
 
-#: admin/fai/faiPackageEntry.tpl:30 admin/fai/faiProfileEntry.tpl:31
+#: admin/fai/faiPackageEntry.tpl:36 admin/fai/faiProfileEntry.tpl:31
 msgid "Filters"
 msgstr "过滤器"
 
-#: admin/fai/faiPackageEntry.tpl:40 admin/fai/faiProfileEntry.tpl:54
+#: admin/fai/faiPackageEntry.tpl:46 admin/fai/faiProfileEntry.tpl:54
 #: admin/fai/faiProfileEntry.tpl:55
 msgid "Display objects matching"
 msgstr "显示匹配对象"
 
-#: admin/fai/faiPackageEntry.tpl:44 admin/fai/faiProfileEntry.tpl:59
+#: admin/fai/faiPackageEntry.tpl:50 admin/fai/faiProfileEntry.tpl:59
 #: admin/systems/services/repository/class_divListRepositories.inc:26
 msgid "Regular expression for matching object names"
 msgstr "匹配对象名的正则表达式"
 
-#: admin/fai/class_faiManagement.inc:25 admin/fai/main.inc:53
-#: admin/fai/main.inc:55
+#: admin/fai/class_faiManagement.inc:25
 #, fuzzy
-msgid "Software deployment"
-msgstr "系统管理"
+msgid "Roles"
+msgstr "角色"
 
 #: admin/fai/class_faiManagement.inc:26
-msgid "Manage software packages and deployment reciepes"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:362 admin/fai/class_faiManagement.inc:524
-#: admin/fai/class_faiManagement.inc:671 admin/fai/class_faiManagement.inc:833
-#: admin/fai/class_faiManagement.inc:854 admin/fai/class_faiManagement.inc:898
-#: admin/fai/class_faiManagement.inc:915
 #, fuzzy
-msgid "Permission error"
-msgstr "允许"
-
-#: admin/fai/class_faiManagement.inc:413
-#, fuzzy
-msgid "Branch locked"
-msgstr "分支"
-
-#: admin/fai/class_faiManagement.inc:413
-#, php-format
-msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:429
-#, fuzzy
-msgid "FAI object"
-msgstr "自动化安装（FAI）对象树"
-
-#: admin/fai/class_faiManagement.inc:521
-msgid "FAI branch/freeze"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:524
-#, fuzzy
-msgid "You have no permission to delete this release!"
-msgstr "您无权删除这个发行版！"
-
-#: admin/fai/class_faiManagement.inc:542
-msgid "Release remove aborted because the release name check failed!"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:671 admin/fai/class_faiManagement.inc:833
-#: admin/fai/class_faiManagement.inc:854
-#, fuzzy
-msgid "Branch"
-msgstr "分支"
-
-#: admin/fai/class_faiManagement.inc:779
-#: admin/fai/class_faiManagement.inc:1054
-#: admin/fai/class_faiManagement.inc:1060
-msgid "Continue"
-msgstr "继续"
-
-#: admin/fai/class_faiManagement.inc:810
-#: admin/fai/class_faiPackageEntry.inc:53
-#: admin/fai/class_faiPackageEntry.inc:193 admin/fai/class_FAI.inc:574
-#: admin/fai/class_faiPackageConfiguration.inc:35
-#: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
-#: admin/systems/services/repository/class_servRepository.inc:326
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "在子树中查找"
-
-#: admin/fai/class_faiManagement.inc:815 admin/fai/class_FAI.inc:1178
-#, fuzzy
-msgid "Fatal error"
-msgstr "终端服务器"
-
-#: admin/fai/class_faiManagement.inc:875
-#, fuzzy
-msgid "partition table"
-msgstr "分区表"
-
-#: admin/fai/class_faiManagement.inc:876
-#, fuzzy
-msgid "script"
-msgstr "脚本"
-
-#: admin/fai/class_faiManagement.inc:877
-#, fuzzy
-msgid "hook"
-msgstr "钩子"
-
-#: admin/fai/class_faiManagement.inc:878
-#, fuzzy
-msgid "variable"
-msgstr "变量"
-
-#: admin/fai/class_faiManagement.inc:879
-#, fuzzy
-msgid "template"
-msgstr "模板"
-
-#: admin/fai/class_faiManagement.inc:880
-#, fuzzy
-msgid "package list"
-msgstr "软件包列表"
-
-#: admin/fai/class_faiManagement.inc:898 admin/fai/class_faiManagement.inc:915
-#, fuzzy, php-format
-msgid "You have no permission to create a new %s!"
-msgstr "您无权删除这个对象组！"
-
-#: admin/fai/class_faiManagement.inc:915
-#, fuzzy
-msgid "profile"
-msgstr "Profiles"
-
-#: admin/fai/class_faiManagement.inc:1315
-msgid ""
-"The selected release is not available anymore. All triggered actions are "
-"skipped."
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:1462
-#, fuzzy
-msgid "FAI releases"
-msgstr "自动化安装（FAI）类"
-
-#: admin/fai/class_faiManagement.inc:1463
-#, fuzzy
-msgid "FAI release management"
-msgstr "Asterisk 管理"
-
-#: admin/fai/class_faiManagement.inc:1468
-msgid "FAI"
-msgstr "自动化安装"
+msgid "Role management"
+msgstr "管理"
 
 #: admin/fai/class_faiVariableEntry.inc:94
 #, fuzzy
@@ -896,6 +774,15 @@ msgstr "读"
 #: admin/fai/class_faiPackageEntry.inc:38
 msgid "Please enter your search string here"
 msgstr "请在这里输入您的查询字符串"
+
+#: admin/fai/class_faiPackageEntry.inc:53
+#: admin/fai/class_faiPackageEntry.inc:195 admin/fai/class_FAI.inc:574
+#: admin/fai/class_faiPackageConfiguration.inc:35
+#: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
+#: admin/systems/services/repository/class_servRepository.inc:362
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "在子树中查找"
 
 #: admin/fai/class_faiPackageEntry.inc:103
 msgid ""
@@ -1079,6 +966,11 @@ msgstr "无法创建 '%s'，目标名称已经存在。"
 msgid "Error while fetching source dn - aborted!"
 msgstr "当获取源 dn 时错误──退出！"
 
+#: admin/fai/class_FAI.inc:1178
+#, fuzzy
+msgid "Fatal error"
+msgstr "终端服务器"
+
 #: admin/fai/class_FAI.inc:1179
 #, php-format
 msgid ""
@@ -1105,6 +997,37 @@ msgstr "编辑记录"
 #, fuzzy
 msgid "Script Priority"
 msgstr "优先级"
+
+#: admin/fai/fai-list.xml:11
+msgid "List of fai stuff!!!!!"
+msgstr ""
+
+#: admin/fai/fai-list.xml:15
+msgid "FAI"
+msgstr "自动化安装"
+
+#: admin/fai/fai-list.xml:57 admin/fai/class_divListFai.inc:55
+#: admin/fai/class_divListFai.inc:138
+msgid "Actions"
+msgstr "动作"
+
+#: admin/fai/fai-list.xml:68 admin/fai/class_divListFai.inc:140
+msgid "Create"
+msgstr "创建"
+
+#: admin/fai/fai-list.xml:74
+msgid "Role"
+msgstr "角色"
+
+#: admin/fai/fai-list.xml:125
+#, fuzzy
+msgid "Edit role"
+msgstr "编辑宏"
+
+#: admin/fai/fai-list.xml:138
+#, fuzzy
+msgid "Remove role"
+msgstr "成员对象"
 
 #: admin/fai/faiSummary.tpl:4
 msgid "FAI object tree"
@@ -1270,7 +1193,7 @@ msgid "FAI partition table"
 msgstr "新分区表"
 
 #: admin/fai/branch_selector.tpl:2
-#: admin/systems/services/repository/class_servRepository.inc:358
+#: admin/systems/services/repository/class_servRepository.inc:421
 #, fuzzy
 msgid "Releases"
 msgstr "发行"
@@ -1438,10 +1361,6 @@ msgstr "选择"
 msgid "Class types"
 msgstr "分类类型"
 
-#: admin/fai/class_divListFai.inc:55 admin/fai/class_divListFai.inc:138
-msgid "Actions"
-msgstr "动作"
-
 #: admin/fai/class_divListFai.inc:57 admin/fai/class_divListFai.inc:59
 #: admin/fai/class_divListFai.inc:61 admin/fai/class_divListFai.inc:63
 #: admin/fai/class_divListFai.inc:65 admin/fai/class_divListFai.inc:67
@@ -1502,10 +1421,6 @@ msgstr "对象组"
 #: admin/fai/class_divListFai.inc:86
 msgid "Display users matching"
 msgstr "显示匹配的用户"
-
-#: admin/fai/class_divListFai.inc:140
-msgid "Create"
-msgstr "创建"
 
 #: admin/fai/class_divListFai.inc:155
 msgid "PT"
@@ -1632,6 +1547,11 @@ msgstr ""
 #, fuzzy
 msgid "Tune options"
 msgstr "挂载选项"
+
+#: admin/fai/fai-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "过滤器"
 
 #: admin/fai/class_faiPackage.inc:220
 msgid "Invalid package names"
@@ -1815,7 +1735,7 @@ msgstr "这个菜单允许您创建，删除和修改 FAI 分类。"
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
-#: admin/systems/services/repository/class_servRepository.inc:360
+#: admin/systems/services/repository/class_servRepository.inc:423
 #, fuzzy
 msgid "Sections"
 msgstr "节"
@@ -1826,33 +1746,101 @@ msgid "Add repository"
 msgstr "目录"
 
 #: admin/systems/services/repository/servRepositorySetup.tpl:8
-#: admin/systems/services/repository/class_servRepository.inc:357
+#: admin/systems/services/repository/class_servRepository.inc:420
 #, fuzzy
 msgid "Parent server"
 msgstr "保留"
 
 #: admin/systems/services/repository/servRepositorySetup.tpl:28
-#: admin/systems/services/repository/class_servRepository.inc:359
+#: admin/systems/services/repository/class_servRepository.inc:422
 #: admin/systems/services/repository/class_servRepositorySetup.inc:157
 msgid "URL"
 msgstr ""
 
 #: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:308
 #: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:388
+#: admin/systems/services/repository/class_servRepository.inc:407
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 #, fuzzy
 msgid "Repository service"
 msgstr "仓库"
 
-#: admin/systems/services/repository/class_servRepository.inc:142
+#: admin/systems/services/repository/class_servRepository.inc:179
 #, fuzzy
 msgid "FAI release"
 msgstr "自动化安装（FAI）类"
 
-#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:407
 msgid "Services"
 msgstr "服务"
+
+#, fuzzy
+#~ msgid "Software deployment"
+#~ msgstr "系统管理"
+
+#, fuzzy
+#~ msgid "Permission error"
+#~ msgstr "允许"
+
+#, fuzzy
+#~ msgid "Branch locked"
+#~ msgstr "分支"
+
+#, fuzzy
+#~ msgid "FAI object"
+#~ msgstr "自动化安装（FAI）对象树"
+
+#, fuzzy
+#~ msgid "You have no permission to delete this release!"
+#~ msgstr "您无权删除这个发行版！"
+
+#, fuzzy
+#~ msgid "Branch"
+#~ msgstr "分支"
+
+#~ msgid "Continue"
+#~ msgstr "继续"
+
+#, fuzzy
+#~ msgid "partition table"
+#~ msgstr "分区表"
+
+#, fuzzy
+#~ msgid "script"
+#~ msgstr "脚本"
+
+#, fuzzy
+#~ msgid "hook"
+#~ msgstr "钩子"
+
+#, fuzzy
+#~ msgid "variable"
+#~ msgstr "变量"
+
+#, fuzzy
+#~ msgid "template"
+#~ msgstr "模板"
+
+#, fuzzy
+#~ msgid "package list"
+#~ msgstr "软件包列表"
+
+#, fuzzy
+#~ msgid "You have no permission to create a new %s!"
+#~ msgstr "您无权删除这个对象组！"
+
+#, fuzzy
+#~ msgid "profile"
+#~ msgstr "Profiles"
+
+#, fuzzy
+#~ msgid "FAI releases"
+#~ msgstr "自动化安装（FAI）类"
+
+#, fuzzy
+#~ msgid "FAI release management"
+#~ msgstr "Asterisk 管理"
 
 #, fuzzy
 #~ msgid "Partition start size"
@@ -2549,9 +2537,3 @@ msgstr "服务"
 #, fuzzy
 #~ msgid "There is already a FAI object with this class name defined."
 #~ msgstr "已经有一个 profile 使用了这个类名。"
-
-#~ msgid ""
-#~ "Your specified search string '%s' returned too many results. Only the "
-#~ "first 200 entries are shown, to keep the memory usage low."
-#~ msgstr ""
-#~ "您提供的查询字符串 '%s' 返回太多结果。为减少内存占用，只显示前200条。"

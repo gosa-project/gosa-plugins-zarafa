@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2010-01-18 17:05+0100\n"
 "PO-Revision-Date: 2008-12-03 15:12+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -35,8 +35,8 @@ msgstr "Kerberos-Dienst"
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:395
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:410
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:690
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:343
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:376
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:363
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:396
 msgid "Service infrastructure"
 msgstr "Dienst-Infrastruktur"
 
@@ -68,7 +68,7 @@ msgstr "Richtlinie"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:494
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:222
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:242
 msgid "Kerberos"
 msgstr "Kerberos"
 
@@ -186,11 +186,11 @@ msgid ""
 "s'!"
 msgstr "Der für '%s' angegebene Wert muss kleiner als der für '%s' sein!"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:213
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:233
 msgid "updated to"
 msgstr "aktualisiert nach"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:222
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:242
 #, php-format
 msgid ""
 "The principal name of this system has changed. Do you want to update your "
@@ -199,29 +199,29 @@ msgstr ""
 "Der Prinzipal-Name dieses Systems hat sich geändert. Soll er aktualisiert "
 "werden? Die betroffenen Prinzipale:"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:239
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:240
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:259
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:260
 msgid "Create key"
 msgstr "Schlüssel anlegen"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:246
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:266
 msgid "Recreate key"
 msgstr "Schlüssel auffrischen"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:248
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:268
 msgid "Remove key"
 msgstr "Schlüssel entfernen"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:287
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:317
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:307
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:337
 msgid "installed"
 msgstr "installiert"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:457
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:477
 msgid "Kerberos key"
 msgstr "Kerberos-Schlüssel"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:458
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:478
 msgid "Kerberos host key"
 msgstr "Kerberos-Host-Schlüssel"
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-19 14:24+0200\n"
+"POT-Creation-Date: 2010-01-18 17:04+0100\n"
 "PO-Revision-Date: 2009-10-20 11:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -41,11 +41,12 @@ msgstr "Répertoire de destination"
 #: admin/fai/faiPartitionTableEntry.tpl:13 admin/fai/faiHookEntry.tpl:19
 #: admin/fai/class_faiVariableEntry.inc:138
 #: admin/fai/class_faiTemplate.inc:545 admin/fai/class_faiScript.inc:646
-#: admin/fai/class_faiScriptEntry.inc:190 admin/fai/faiTemplate.tpl:21
-#: admin/fai/class_faiPartitionTable.inc:789 admin/fai/faiVariableEntry.tpl:19
-#: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:398
-#: admin/fai/faiPartition.tpl:20 admin/fai/class_faiPackage.inc:658
-#: admin/fai/class_faiTemplateEntry.inc:300 admin/fai/faiPartitionTable.tpl:21
+#: admin/fai/class_faiScriptEntry.inc:190 admin/fai/fai-list.xml:49
+#: admin/fai/faiTemplate.tpl:21 admin/fai/class_faiPartitionTable.inc:789
+#: admin/fai/faiVariableEntry.tpl:19 admin/fai/class_faiHookEntry.inc:197
+#: admin/fai/class_faiVariable.inc:398 admin/fai/faiPartition.tpl:20
+#: admin/fai/class_faiPackage.inc:658 admin/fai/class_faiTemplateEntry.inc:300
+#: admin/fai/faiPartitionTable.tpl:21
 msgid "Description"
 msgstr "Description"
 
@@ -132,21 +133,18 @@ msgstr "permanent"
 #: admin/fai/tabsScript.inc:33 admin/fai/tabsTemplate.inc:33
 #: admin/fai/class_faiHook.inc:239 admin/fai/class_faiDiskEntry.inc:427
 #: admin/fai/tabsPartition.inc:34 admin/fai/class_faiProfile.inc:262
-#: admin/fai/class_faiManagement.inc:240 admin/fai/class_faiManagement.inc:636
-#: admin/fai/class_faiManagement.inc:642 admin/fai/class_faiManagement.inc:928
-#: admin/fai/class_faiManagement.inc:972 admin/fai/class_faiManagement.inc:996
-#: admin/fai/class_faiManagement.inc:1245 admin/fai/class_faiTemplate.inc:212
-#: admin/fai/tabsVariable.inc:33 admin/fai/tabsPackage.inc:33
-#: admin/fai/class_faiScript.inc:229 admin/fai/class_FAI.inc:556
-#: admin/fai/class_faiScriptEntry.inc:59 admin/fai/class_faiScriptEntry.inc:62
-#: admin/fai/tabsHook.inc:32 admin/fai/class_faiPartitionTable.inc:244
+#: admin/fai/class_faiTemplate.inc:212 admin/fai/tabsVariable.inc:33
+#: admin/fai/tabsPackage.inc:33 admin/fai/class_faiScript.inc:229
+#: admin/fai/class_FAI.inc:556 admin/fai/class_faiScriptEntry.inc:59
+#: admin/fai/class_faiScriptEntry.inc:62 admin/fai/tabsHook.inc:32
+#: admin/fai/class_faiPartitionTable.inc:244
 #: admin/fai/class_faiPartitionTable.inc:307
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:348
 #: admin/fai/class_faiSummaryTab.inc:94 admin/fai/tabsProfile.inc:33
-#: admin/systems/services/repository/class_servRepository.inc:142
-#: admin/systems/services/repository/class_servRepository.inc:177
-#: admin/systems/services/repository/class_servRepository.inc:182
+#: admin/systems/services/repository/class_servRepository.inc:179
+#: admin/systems/services/repository/class_servRepository.inc:213
+#: admin/systems/services/repository/class_servRepository.inc:218
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Error"
 msgstr "Erreur"
@@ -162,13 +160,13 @@ msgstr ""
 
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
-msgid "The file encodig has changed from '%s' to '%s'. Do you really want to save?"
+msgid ""
+"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 "L'encodage du fichier à changé de '%s' vers '%s', voulez vous réellement le "
 "sauver ?"
 
-#: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:542
-#: admin/fai/class_faiManagement.inc:1315 admin/fai/remove_branch.tpl:2
+#: admin/fai/remove.tpl:2 admin/fai/remove_branch.tpl:2
 msgid "Warning"
 msgstr "Avertissement"
 
@@ -208,9 +206,7 @@ msgstr "Périphérique"
 #: admin/fai/faiPackage.tpl:9 admin/fai/faiHook.tpl:9
 #: admin/fai/class_faiProfile.inc:395 admin/fai/class_faiProfile.inc:405
 #: admin/fai/class_faiProfile.inc:478 admin/fai/faiPartitionTableEntry.tpl:6
-#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiManagement.inc:636
-#: admin/fai/class_faiManagement.inc:642
-#: admin/fai/class_faiVariableEntry.inc:90
+#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiVariableEntry.inc:90
 #: admin/fai/class_faiVariableEntry.inc:99
 #: admin/fai/class_faiVariableEntry.inc:102
 #: admin/fai/class_faiVariableEntry.inc:137
@@ -221,8 +217,8 @@ msgstr "Périphérique"
 #: admin/fai/class_faiScriptEntry.inc:137
 #: admin/fai/class_faiScriptEntry.inc:142
 #: admin/fai/class_faiScriptEntry.inc:145
-#: admin/fai/class_faiScriptEntry.inc:189 admin/fai/faiTemplate.tpl:9
-#: admin/fai/class_faiPartitionTable.inc:490
+#: admin/fai/class_faiScriptEntry.inc:189 admin/fai/fai-list.xml:41
+#: admin/fai/faiTemplate.tpl:9 admin/fai/class_faiPartitionTable.inc:490
 #: admin/fai/class_faiPartitionTable.inc:788 admin/fai/faiVariableEntry.tpl:9
 #: admin/fai/class_faiHookEntry.inc:145 admin/fai/class_faiHookEntry.inc:150
 #: admin/fai/class_faiHookEntry.inc:153 admin/fai/class_faiHookEntry.inc:196
@@ -231,7 +227,7 @@ msgstr "Périphérique"
 #: admin/fai/class_faiPackage.inc:657 admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:299
 #: admin/fai/class_faiSummaryTab.inc:348 admin/fai/faiPartitionTable.tpl:9
-#: admin/systems/services/repository/class_servRepository.inc:177
+#: admin/systems/services/repository/class_servRepository.inc:213
 msgid "Name"
 msgstr "Nom"
 
@@ -331,7 +327,7 @@ msgid "True"
 msgstr "Vrai"
 
 #: admin/fai/class_faiPartitionTableEntry.inc:252
-#: admin/fai/class_faiPartitionTableEntry.inc:254
+#: admin/fai/class_faiPartitionTableEntry.inc:254 admin/fai/fai-list.xml:93
 #: admin/fai/class_divListFai.inc:178
 msgid "Remove"
 msgstr "Supprimer"
@@ -434,7 +430,7 @@ msgid "Choose a variable to delete or edit"
 msgstr "Choisissez une variable à effacer ou éditer"
 
 #: admin/fai/faiVariable.tpl:53 admin/fai/class_faiHook.inc:312
-#: admin/fai/class_faiHook.inc:314
+#: admin/fai/class_faiHook.inc:314 admin/fai/fai-list.xml:86
 msgid "Edit"
 msgstr "Editer"
 
@@ -481,7 +477,8 @@ msgstr "Taille"
 #: admin/fai/class_faiDiskEntry.inc:428
 #: admin/fai/class_faiPartitionTable.inc:245
 #, php-format
-msgid "The disk cannot be deleted while it is used in the '%s' disk definition!"
+msgid ""
+"The disk cannot be deleted while it is used in the '%s' disk definition!"
 msgstr ""
 "Ce disque ne peut pas être supprimé car il est utilisé par la définition de "
 "disque '%s' !"
@@ -560,12 +557,12 @@ msgstr "Liste des scripts"
 
 #: admin/fai/faiPackage.tpl:33
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
-#: admin/systems/services/repository/class_servRepository.inc:343
+#: admin/systems/services/repository/class_servRepository.inc:406
 msgid "Repository"
 msgstr "Dépôt"
 
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
-#: admin/fai/class_faiPackage.inc:663
+#: admin/fai/fai-filter.tpl:14 admin/fai/class_faiPackage.inc:663
 #: admin/systems/services/repository/class_divListRepositories.inc:23
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_servRepositorySetup.inc:153
@@ -676,11 +673,18 @@ msgstr "Choisissez une tâche FAI existante"
 msgid "List of available packages"
 msgstr "Liste des paquets disponibles"
 
-#: admin/fai/faiPackageEntry.tpl:20 admin/fai/faiProfileEntry.tpl:21
+#: admin/fai/faiPackageEntry.tpl:17
+#, fuzzy
+msgid ""
+"The search returned too many results, only the first 200 entries are shown."
+msgstr ""
+"La recherche à retourné trop de résultats. Je n'affiche que %s entr§es !"
+
+#: admin/fai/faiPackageEntry.tpl:26 admin/fai/faiProfileEntry.tpl:21
 msgid "Information"
 msgstr "Information"
 
-#: admin/fai/faiPackageEntry.tpl:24
+#: admin/fai/faiPackageEntry.tpl:30
 msgid ""
 "This menu allows you to select multiple packages to add them to the "
 "currently edited package list."
@@ -688,139 +692,29 @@ msgstr ""
 "Ce menu vous permet de sélectionner de multiples paquets à ajouter a la "
 "liste en cours d'édition."
 
-#: admin/fai/faiPackageEntry.tpl:30 admin/fai/faiProfileEntry.tpl:31
+#: admin/fai/faiPackageEntry.tpl:36 admin/fai/faiProfileEntry.tpl:31
 msgid "Filters"
 msgstr "Filtres"
 
-#: admin/fai/faiPackageEntry.tpl:40 admin/fai/faiProfileEntry.tpl:54
+#: admin/fai/faiPackageEntry.tpl:46 admin/fai/faiProfileEntry.tpl:54
 #: admin/fai/faiProfileEntry.tpl:55
 msgid "Display objects matching"
 msgstr "Afficher les objets correspondants"
 
-#: admin/fai/faiPackageEntry.tpl:44 admin/fai/faiProfileEntry.tpl:59
+#: admin/fai/faiPackageEntry.tpl:50 admin/fai/faiProfileEntry.tpl:59
 #: admin/systems/services/repository/class_divListRepositories.inc:26
 msgid "Regular expression for matching object names"
 msgstr "Expression régulière pour trouver les objets correspondants"
 
-#: admin/fai/class_faiManagement.inc:25 admin/fai/main.inc:53
-#: admin/fai/main.inc:55
-msgid "Software deployment"
-msgstr "Déploiement de logiciels"
+#: admin/fai/class_faiManagement.inc:25
+#, fuzzy
+msgid "Roles"
+msgstr "Rôle"
 
 #: admin/fai/class_faiManagement.inc:26
-msgid "Manage software packages and deployment reciepes"
-msgstr "Gestion des paquets logiciels et des recettes de déploiement"
-
-#: admin/fai/class_faiManagement.inc:362 admin/fai/class_faiManagement.inc:524
-#: admin/fai/class_faiManagement.inc:671 admin/fai/class_faiManagement.inc:833
-#: admin/fai/class_faiManagement.inc:854 admin/fai/class_faiManagement.inc:898
-#: admin/fai/class_faiManagement.inc:915
-msgid "Permission error"
-msgstr "Erreur de permission"
-
-#: admin/fai/class_faiManagement.inc:413
-msgid "Branch locked"
-msgstr "Branche verrouillée"
-
-#: admin/fai/class_faiManagement.inc:413
-#, php-format
-msgid "The following entries are locked, you can't remove them %s."
-msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
-
-#: admin/fai/class_faiManagement.inc:429
-msgid "FAI object"
-msgstr "Objet FAI"
-
-#: admin/fai/class_faiManagement.inc:521
-msgid "FAI branch/freeze"
-msgstr "FAI branche/vérrouillée"
-
-#: admin/fai/class_faiManagement.inc:524
-msgid "You have no permission to delete this release!"
-msgstr "Vous n'êtes pas autorisé à supprimer cette version !"
-
-#: admin/fai/class_faiManagement.inc:542
-msgid "Release remove aborted because the release name check failed!"
-msgstr ""
-"Echec de l'effacement de la version, la vérification du nom de la version à "
-"échoué !"
-
-#: admin/fai/class_faiManagement.inc:671 admin/fai/class_faiManagement.inc:833
-#: admin/fai/class_faiManagement.inc:854
-msgid "Branch"
-msgstr "Branche"
-
-#: admin/fai/class_faiManagement.inc:779
-#: admin/fai/class_faiManagement.inc:1054
-#: admin/fai/class_faiManagement.inc:1060
-msgid "Continue"
-msgstr "Continuer"
-
-#: admin/fai/class_faiManagement.inc:810
-#: admin/fai/class_faiPackageEntry.inc:53
-#: admin/fai/class_faiPackageEntry.inc:193 admin/fai/class_FAI.inc:574
-#: admin/fai/class_faiPackageConfiguration.inc:35
-#: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
-#: admin/systems/services/repository/class_servRepository.inc:326
-msgid "Service infrastructure"
-msgstr "Service d'infrastructure"
-
-#: admin/fai/class_faiManagement.inc:815 admin/fai/class_FAI.inc:1178
-msgid "Fatal error"
-msgstr "Erreur Fatale"
-
-#: admin/fai/class_faiManagement.inc:875
-msgid "partition table"
-msgstr "table des partitions"
-
-#: admin/fai/class_faiManagement.inc:876
-msgid "script"
-msgstr "script"
-
-#: admin/fai/class_faiManagement.inc:877
-msgid "hook"
-msgstr "connexions"
-
-#: admin/fai/class_faiManagement.inc:878
-msgid "variable"
-msgstr "variable"
-
-#: admin/fai/class_faiManagement.inc:879
-msgid "template"
-msgstr "modèle"
-
-#: admin/fai/class_faiManagement.inc:880
-msgid "package list"
-msgstr "liste des paquets"
-
-#: admin/fai/class_faiManagement.inc:898 admin/fai/class_faiManagement.inc:915
-#, php-format
-msgid "You have no permission to create a new %s!"
-msgstr "Vous n'êtes pas autorisé à créer un nouveau %s !."
-
-#: admin/fai/class_faiManagement.inc:915
-msgid "profile"
-msgstr "profil"
-
-#: admin/fai/class_faiManagement.inc:1315
-msgid ""
-"The selected release is not available anymore. All triggered actions are "
-"skipped."
-msgstr ""
-"La version sélectionnée n'est plus disponible. Toute les actions sont "
-"annulées."
-
-#: admin/fai/class_faiManagement.inc:1462
-msgid "FAI releases"
-msgstr "Versions FAI"
-
-#: admin/fai/class_faiManagement.inc:1463
-msgid "FAI release management"
-msgstr "Gestion des versions FAI"
-
-#: admin/fai/class_faiManagement.inc:1468
-msgid "FAI"
-msgstr "FAI"
+#, fuzzy
+msgid "Role management"
+msgstr "Gestion des ACL"
 
 #: admin/fai/class_faiVariableEntry.inc:94
 msgid "Content"
@@ -866,8 +760,17 @@ msgstr "Lecture seule"
 msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
+#: admin/fai/class_faiPackageEntry.inc:53
+#: admin/fai/class_faiPackageEntry.inc:195 admin/fai/class_FAI.inc:574
+#: admin/fai/class_faiPackageConfiguration.inc:35
+#: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
+#: admin/systems/services/repository/class_servRepository.inc:362
+msgid "Service infrastructure"
+msgstr "Service d'infrastructure"
+
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid "This list displays all assigned package names for this repository settings."
+msgid ""
+"This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/paste_generic.tpl:1
@@ -1042,15 +945,21 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1084
 msgid "Could not create new release, the destination dn is already in use."
-msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr ""
+"Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1097
 msgid "Error while fetching source dn - aborted!"
 msgstr "Une erreur s'est produite lors de la récupération du dn - Arrêt !"
 
+#: admin/fai/class_FAI.inc:1178
+msgid "Fatal error"
+msgstr "Erreur Fatale"
+
 #: admin/fai/class_FAI.inc:1179
 #, php-format
-msgid "Release creation failed due to ldap errors. Additional informations '%s'."
+msgid ""
+"Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 "La création de la version à échoué du à des erreurs ldap. Information "
 "additionnelles '%s'."
@@ -1071,6 +980,37 @@ msgstr "Script FAI"
 #: admin/fai/class_faiScriptEntry.inc:192
 msgid "Script Priority"
 msgstr "Priorité du script"
+
+#: admin/fai/fai-list.xml:11
+msgid "List of fai stuff!!!!!"
+msgstr ""
+
+#: admin/fai/fai-list.xml:15
+msgid "FAI"
+msgstr "FAI"
+
+#: admin/fai/fai-list.xml:57 admin/fai/class_divListFai.inc:55
+#: admin/fai/class_divListFai.inc:138
+msgid "Actions"
+msgstr "Actions"
+
+#: admin/fai/fai-list.xml:68 admin/fai/class_divListFai.inc:140
+msgid "Create"
+msgstr "Créer"
+
+#: admin/fai/fai-list.xml:74
+msgid "Role"
+msgstr "Rôle"
+
+#: admin/fai/fai-list.xml:125
+#, fuzzy
+msgid "Edit role"
+msgstr "Editer un rôle acl"
+
+#: admin/fai/fai-list.xml:138
+#, fuzzy
+msgid "Remove role"
+msgstr "Suppression de l'utilisateur"
 
 #: admin/fai/faiSummary.tpl:4
 msgid "FAI object tree"
@@ -1220,7 +1160,8 @@ msgid "Raid arrays must contain at least two partitions!"
 msgstr "Les ensembles RAID doit contenir au moins 2 partitions !"
 
 #: admin/fai/class_faiPartition.inc:406
-msgid "Raid 0 arrays can only be realized with a combination of two partitions!"
+msgid ""
+"Raid 0 arrays can only be realized with a combination of two partitions!"
 msgstr "Les ensembles RAID 0 ne peuvent être réalisé qu'avec deux partitions !"
 
 #: admin/fai/class_faiPartitionTable.inc:781
@@ -1228,7 +1169,7 @@ msgid "FAI partition table"
 msgstr "Table des partitions FAI"
 
 #: admin/fai/branch_selector.tpl:2
-#: admin/systems/services/repository/class_servRepository.inc:358
+#: admin/systems/services/repository/class_servRepository.inc:421
 msgid "Releases"
 msgstr "Versions"
 
@@ -1396,10 +1337,6 @@ msgstr "Tout sélectionner"
 msgid "Class types"
 msgstr "Type de classes"
 
-#: admin/fai/class_divListFai.inc:55 admin/fai/class_divListFai.inc:138
-msgid "Actions"
-msgstr "Actions"
-
 #: admin/fai/class_divListFai.inc:57 admin/fai/class_divListFai.inc:59
 #: admin/fai/class_divListFai.inc:61 admin/fai/class_divListFai.inc:63
 #: admin/fai/class_divListFai.inc:65 admin/fai/class_divListFai.inc:67
@@ -1456,10 +1393,6 @@ msgstr "Montrer les produits localboot"
 #: admin/fai/class_divListFai.inc:86
 msgid "Display users matching"
 msgstr "Afficher les utilisateurs correspondants"
-
-#: admin/fai/class_divListFai.inc:140
-msgid "Create"
-msgstr "Créer"
 
 #: admin/fai/class_divListFai.inc:155
 msgid "PT"
@@ -1570,6 +1503,11 @@ msgstr "Crypté"
 msgid "Tune options"
 msgstr "Options de tuning"
 
+#: admin/fai/fai-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "Filtres"
+
 #: admin/fai/class_faiPackage.inc:220
 msgid "Invalid package names"
 msgstr "Nom de paquets non valides"
@@ -1604,7 +1542,8 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:522
-msgid "Please choose a valid release/section combination for your repository setup!"
+msgid ""
+"Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -1669,7 +1608,8 @@ msgstr "Source d'information FAI inconnue !"
 #: admin/fai/class_faiSummaryTab.inc:183
 #: admin/systems/services/repository/class_servRepository.inc:93
 msgid "You can't use this plugin until FAI is activated."
-msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr ""
+"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/fai/class_faiSummaryTab.inc:225
 msgid "This object has no FAI classes assigned."
@@ -1721,7 +1661,11 @@ msgid ""
 "and requires choosing between specific options which cannot be presented "
 "here. The entered text needs to be one of the valid choices in order to take "
 "effect."
-msgstr "Cette question debconf est générée dynamiquement pendant l'installation du paquet et nécessite le choix entre différentes options qui ne peuvent pas être affichées ici. Le texte entré doit être un de ces choix pour être valide."
+msgstr ""
+"Cette question debconf est générée dynamiquement pendant l'installation du "
+"paquet et nécessite le choix entre différentes options qui ne peuvent pas "
+"être affichées ici. Le texte entré doit être un de ces choix pour être "
+"valide."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:19
 msgid "List of configured repositories"
@@ -1729,12 +1673,13 @@ msgstr "Liste des dépôts configurés."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:20
 msgid "This menu allows you to create, delete and edit repository settings."
-msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+msgstr ""
+"Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
-#: admin/systems/services/repository/class_servRepository.inc:360
+#: admin/systems/services/repository/class_servRepository.inc:423
 msgid "Sections"
 msgstr "Sections"
 
@@ -1743,28 +1688,101 @@ msgid "Add repository"
 msgstr "Ajouter un dépôt"
 
 #: admin/systems/services/repository/servRepositorySetup.tpl:8
-#: admin/systems/services/repository/class_servRepository.inc:357
+#: admin/systems/services/repository/class_servRepository.inc:420
 msgid "Parent server"
 msgstr "Serveur parent"
 
 #: admin/systems/services/repository/servRepositorySetup.tpl:28
-#: admin/systems/services/repository/class_servRepository.inc:359
+#: admin/systems/services/repository/class_servRepository.inc:422
 #: admin/systems/services/repository/class_servRepositorySetup.inc:157
 msgid "URL"
 msgstr "URL"
 
 #: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:308
 #: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:388
+#: admin/systems/services/repository/class_servRepository.inc:407
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Repository service"
 msgstr "Service de dépôt"
 
-#: admin/systems/services/repository/class_servRepository.inc:142
+#: admin/systems/services/repository/class_servRepository.inc:179
 msgid "FAI release"
 msgstr "Version FAI"
 
-#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/class_servRepository.inc:407
 msgid "Services"
 msgstr "Services"
 
+#~ msgid "Software deployment"
+#~ msgstr "Déploiement de logiciels"
+
+#~ msgid "Manage software packages and deployment reciepes"
+#~ msgstr "Gestion des paquets logiciels et des recettes de déploiement"
+
+#~ msgid "Permission error"
+#~ msgstr "Erreur de permission"
+
+#~ msgid "Branch locked"
+#~ msgstr "Branche verrouillée"
+
+#~ msgid "The following entries are locked, you can't remove them %s."
+#~ msgstr ""
+#~ "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+
+#~ msgid "FAI object"
+#~ msgstr "Objet FAI"
+
+#~ msgid "FAI branch/freeze"
+#~ msgstr "FAI branche/vérrouillée"
+
+#~ msgid "You have no permission to delete this release!"
+#~ msgstr "Vous n'êtes pas autorisé à supprimer cette version !"
+
+#~ msgid "Release remove aborted because the release name check failed!"
+#~ msgstr ""
+#~ "Echec de l'effacement de la version, la vérification du nom de la version "
+#~ "à échoué !"
+
+#~ msgid "Branch"
+#~ msgstr "Branche"
+
+#~ msgid "Continue"
+#~ msgstr "Continuer"
+
+#~ msgid "partition table"
+#~ msgstr "table des partitions"
+
+#~ msgid "script"
+#~ msgstr "script"
+
+#~ msgid "hook"
+#~ msgstr "connexions"
+
+#~ msgid "variable"
+#~ msgstr "variable"
+
+#~ msgid "template"
+#~ msgstr "modèle"
+
+#~ msgid "package list"
+#~ msgstr "liste des paquets"
+
+#~ msgid "You have no permission to create a new %s!"
+#~ msgstr "Vous n'êtes pas autorisé à créer un nouveau %s !."
+
+#~ msgid "profile"
+#~ msgstr "profil"
+
+#~ msgid ""
+#~ "The selected release is not available anymore. All triggered actions are "
+#~ "skipped."
+#~ msgstr ""
+#~ "La version sélectionnée n'est plus disponible. Toute les actions sont "
+#~ "annulées."
+
+#~ msgid "FAI releases"
+#~ msgstr "Versions FAI"
+
+#~ msgid "FAI release management"
+#~ msgstr "Gestion des versions FAI"

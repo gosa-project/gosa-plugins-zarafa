@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2010-01-18 17:04+0100\n"
 "PO-Revision-Date: 2008-10-07 18:29+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -51,8 +51,8 @@ msgid "Zones"
 msgstr "Zonen"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
-#: admin/systems/services/dns/class_servDNS.inc:184
-#: admin/systems/services/dns/class_servDNS.inc:345
+#: admin/systems/services/dns/class_servDNS.inc:174
+#: admin/systems/services/dns/class_servDNS.inc:335
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
@@ -69,21 +69,21 @@ msgid "Down"
 msgstr "Ab"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:586
+#: admin/systems/services/dns/class_servDNSeditZone.inc:588
 msgid "Delete"
 msgstr "Entfernen"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:412
 #: admin/systems/services/dns/class_servDNSeditZone.inc:417
 #: admin/systems/services/dns/class_servDNSeditZone.inc:425
-#: admin/systems/services/dns/class_servDNS.inc:592
+#: admin/systems/services/dns/class_servDNS.inc:582
 #: admin/systems/services/dns/servdnseditzone.tpl:7
 msgid "Zone name"
 msgstr "Zonenname"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:421
-#: admin/systems/services/dns/class_servDNS.inc:279
-#: admin/systems/services/dns/class_servDNS.inc:593
+#: admin/systems/services/dns/class_servDNS.inc:269
+#: admin/systems/services/dns/class_servDNS.inc:583
 msgid "Reverse zone"
 msgstr "Reverse Zone"
 
@@ -93,12 +93,12 @@ msgid "Only lowercase allowed"
 msgstr "Nur Kleinbuchstaben sind erlaubt."
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:429
-#: admin/systems/services/dns/class_servDNS.inc:598
+#: admin/systems/services/dns/class_servDNS.inc:588
 msgid "Serial"
 msgstr "Serial"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:433
-#: admin/systems/services/dns/class_servDNS.inc:599
+#: admin/systems/services/dns/class_servDNS.inc:589
 #: admin/systems/services/dns/servdnseditzone.tpl:102
 msgid "Refresh"
 msgstr "Aktualisieren"
@@ -108,13 +108,13 @@ msgid "Time to life"
 msgstr "Lebensdauer"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:441
-#: admin/systems/services/dns/class_servDNS.inc:601
+#: admin/systems/services/dns/class_servDNS.inc:591
 #: admin/systems/services/dns/servdnseditzone.tpl:120
 msgid "Expire"
 msgstr "Ablauf"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:445
-#: admin/systems/services/dns/class_servDNS.inc:600
+#: admin/systems/services/dns/class_servDNS.inc:590
 #: admin/systems/services/dns/servdnseditzone.tpl:111
 msgid "Retry"
 msgstr "Wiederholen"
@@ -136,12 +136,12 @@ msgstr ""
 "zueinander!"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:498
-#: admin/systems/services/dns/class_servDNS.inc:594
+#: admin/systems/services/dns/class_servDNS.inc:584
 msgid "Network class"
 msgstr "Netzwerk-Klasse"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:592
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
+#: admin/systems/services/dns/class_servDNSeditZone.inc:594
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:455
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -172,9 +172,9 @@ msgid "Create a new DNS zone entry"
 msgstr "Einen neuen DNS-Zonen-Eintrag erstellen"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
-#: admin/systems/services/dns/class_servDNS.inc:550
-#: admin/systems/services/dns/class_servDNS.inc:579
-#: admin/systems/services/dns/class_servDNS.inc:580
+#: admin/systems/services/dns/class_servDNS.inc:540
+#: admin/systems/services/dns/class_servDNS.inc:569
+#: admin/systems/services/dns/class_servDNS.inc:570
 msgid "DNS service"
 msgstr "DNS-Dienst"
 
@@ -191,87 +191,66 @@ msgstr ""
 "Die Migration wird gestartet, sobald Sie das System speichern. Klicken Sie "
 "auf den Knopf 'Abbrechen', um abzubrechen."
 
-#: admin/systems/services/dns/class_servDNS.inc:166
-msgid "Remove DNS service"
-msgstr "DNS-Dienst entfernen"
-
-#: admin/systems/services/dns/class_servDNS.inc:167
-msgid ""
-"This server has DNS features enabled. You can disable them by clicking below."
-msgstr ""
-"Dieser Server besitzt aktivierte DNS-Funktionen. Sie können diese durch "
-"einen Klick auf die untere Schaltfläche deaktivieren."
-
-#: admin/systems/services/dns/class_servDNS.inc:169
-msgid "Add DNS service"
-msgstr "DNS-Dienst hinzufügen"
-
-#: admin/systems/services/dns/class_servDNS.inc:170
-msgid ""
-"This server has DNS features disabled. You can enable them by clicking below."
-msgstr ""
-"Aktuell besitzt dieser Server keine aktivierten DNS-Funktionen. Sie können "
-"diese durch einen Klick auf die Schaltfläche unten aktivieren."
-
-#: admin/systems/services/dns/class_servDNS.inc:280
-#: admin/systems/services/dns/class_servDNS.inc:602
+#: admin/systems/services/dns/class_servDNS.inc:270
+#: admin/systems/services/dns/class_servDNS.inc:592
 #: admin/systems/services/dns/servdnseditzone.tpl:129
 msgid "TTL"
 msgstr "TTL"
 
-#: admin/systems/services/dns/class_servDNS.inc:281
+#: admin/systems/services/dns/class_servDNS.inc:271
 msgid "Class"
 msgstr "Klasse"
 
-#: admin/systems/services/dns/class_servDNS.inc:345
+#: admin/systems/services/dns/class_servDNS.inc:335
 #, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
 msgstr ""
 "Sie können die gewählte Zone nicht entfernen, sie wird noch von folgendem(n) "
 "Eintrag / Einträgen verwendet: '%s'"
 
-#: admin/systems/services/dns/class_servDNS.inc:455
-#: admin/systems/services/dns/class_servDNS.inc:471
-#: admin/systems/services/dns/class_servDNS.inc:496
-#: admin/systems/services/dns/class_servDNS.inc:507
-#: admin/systems/services/dns/class_servDNS.inc:540
+#: admin/systems/services/dns/class_servDNS.inc:445
+#: admin/systems/services/dns/class_servDNS.inc:461
+#: admin/systems/services/dns/class_servDNS.inc:486
+#: admin/systems/services/dns/class_servDNS.inc:497
+#: admin/systems/services/dns/class_servDNS.inc:530
+#: admin/systems/services/dns/class_DNS.inc:748
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: admin/systems/services/dns/class_servDNS.inc:580
+#: admin/systems/services/dns/class_servDNS.inc:570
 msgid "Services"
 msgstr "Dienste"
 
-#: admin/systems/services/dns/class_servDNS.inc:588
+#: admin/systems/services/dns/class_servDNS.inc:578
 msgid "Start service"
 msgstr "Dienst starten"
 
-#: admin/systems/services/dns/class_servDNS.inc:589
+#: admin/systems/services/dns/class_servDNS.inc:579
 msgid "Stop service"
 msgstr "Dienst stoppen"
 
-#: admin/systems/services/dns/class_servDNS.inc:590
+#: admin/systems/services/dns/class_servDNS.inc:580
 msgid "Restart service"
 msgstr "Dienst neustarten"
 
-#: admin/systems/services/dns/class_servDNS.inc:595
+#: admin/systems/services/dns/class_servDNS.inc:585
 msgid "Zone entry editor"
 msgstr "Zonen-Editor"
 
-#: admin/systems/services/dns/class_servDNS.inc:596
+#: admin/systems/services/dns/class_servDNS.inc:586
 msgid "Primary dns server"
 msgstr "Primärer DNS-Server"
 
-#: admin/systems/services/dns/class_servDNS.inc:597
+#: admin/systems/services/dns/class_servDNS.inc:587
 #: admin/systems/services/dns/servdnseditzone.tpl:80
 msgid "Mail address"
 msgstr "Mail-Adresse"
 
-#: admin/systems/services/dns/class_servDNS.inc:603
+#: admin/systems/services/dns/class_servDNS.inc:593
 msgid "MX records"
 msgstr "MX-Datensätze"
 
-#: admin/systems/services/dns/class_servDNS.inc:604
+#: admin/systems/services/dns/class_servDNS.inc:594
 #: admin/systems/services/dns/servdnseditzone.tpl:48
 msgid "Zone records"
 msgstr "Zonen-Datensätze"
@@ -303,24 +282,86 @@ msgstr "Kann '%s' nicht anlegen, der Eintrag wird bereits verwendet."
 msgid "Entry '%s' is used more than once."
 msgstr "Der Eintrag '%s' wird öfter als ein Mal verwendet."
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:299
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:302
 #, php-format
 msgid "%s records cannot be used more than once."
 msgstr "%s Datensätze können nicht öfter als ein Mal verwendet werden."
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:306
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:309
 #, php-format
 msgid "Please fix the empty %s record for entry '%s'."
 msgstr "Bitte beheben Sie den leeren Datensatz %s des Eintrags '%s'."
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:314
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:317
 #, php-format
 msgid "Please fix the duplicate %s record for entry '%s'."
 msgstr "Bitte beheben Sie den doppelten Datensatz %s des Eintrags '%s'."
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:454
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:457
 msgid "Remove"
 msgstr "Entfernen"
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
+#, php-format
+msgid "The syntax of entry %s (record type %s, value %s) is invalid!"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
+msgid "Example"
+msgstr "Beispiel"
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:515
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:523
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:531
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:562
+msgid "Entry should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:518
+msgid "Value should be an IPv6 address."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:526
+msgid "Value should be an IPv4 address."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:534
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:552
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:557
+msgid "Value should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:541
+msgid "Value 1 should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:544
+msgid "Value 2 should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:547
+msgid "Value should be composed of 'preference target'."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:567
+msgid "Value 1 (priority) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:570
+msgid "Value 2 (weight) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:573
+msgid "Value 3 (port) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:576
+msgid "Value 4 (target) should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:579
+msgid "Value should be composed of 'priority weight port target'."
+msgstr ""
 
 #: admin/systems/services/dns/class_DNS.inc:161
 #, php-format
@@ -383,3 +424,23 @@ msgstr "MX-Datensätze"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "Globale Zonen-Datensätze"
+
+#~ msgid "Remove DNS service"
+#~ msgstr "DNS-Dienst entfernen"
+
+#~ msgid ""
+#~ "This server has DNS features enabled. You can disable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "Dieser Server besitzt aktivierte DNS-Funktionen. Sie können diese durch "
+#~ "einen Klick auf die untere Schaltfläche deaktivieren."
+
+#~ msgid "Add DNS service"
+#~ msgstr "DNS-Dienst hinzufügen"
+
+#~ msgid ""
+#~ "This server has DNS features disabled. You can enable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "Aktuell besitzt dieser Server keine aktivierten DNS-Funktionen. Sie "
+#~ "können diese durch einen Klick auf die Schaltfläche unten aktivieren."

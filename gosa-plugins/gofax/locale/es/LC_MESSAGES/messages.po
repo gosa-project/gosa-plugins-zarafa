@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2010-01-18 17:04+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -96,7 +96,7 @@ msgstr ""
 msgid "FAX reports"
 msgstr ""
 
-#: gofax/faxreports/contents.tpl:2
+#: gofax/faxreports/contents.tpl:2 gofax/blocklists/blocklist-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Filtros"
@@ -153,7 +153,6 @@ msgid "FAX Reports"
 msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:7
-#: gofax/blocklists/class_blocklistManagement.inc:6
 #: gofax/blocklists/class_blocklistGeneric.inc:10
 #: gofax/faxaccount/class_gofaxAccount.inc:7
 #, fuzzy
@@ -209,8 +208,6 @@ msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:167
 #: gofax/faxreports/class_faxreport.inc:177
-#: gofax/blocklists/class_blocklistManagement.inc:269
-#: gofax/blocklists/class_blocklistManagement.inc:326
 #, fuzzy
 msgid "Permission error"
 msgstr "Permisos"
@@ -278,9 +275,8 @@ msgid "Warning"
 msgstr "Aviso"
 
 #: gofax/blocklists/remove.tpl:6
-#, fuzzy
 msgid ""
-"Please double check if your really want to do this since there is no way for "
+"Please double check if you really want to do this since there is no way for "
 "GOsa to get your data back."
 msgstr ""
 "Si está seguro de lo que quiere hacer pulse dos veces, ya que no hay forma "
@@ -291,6 +287,19 @@ msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 "Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
 "<i>Cancelar</i> para Abortar."
+
+#: gofax/blocklists/blocklist-list.tpl:13 gofax/blocklists/generic.tpl:17
+#: gofax/blocklists/class_blocklistGeneric.inc:387
+msgid "Base"
+msgstr "Base"
+
+#: gofax/blocklists/blocklist-list.tpl:13
+msgid "Update"
+msgstr ""
+
+#: gofax/blocklists/blocklist-list.tpl:13
+msgid "Submit"
+msgstr "Enviar"
 
 #: gofax/blocklists/generic.tpl:1 gofax/faxaccount/generic.tpl:6
 #: gofax/faxaccount/paste_generic.tpl:4
@@ -306,12 +315,6 @@ msgstr "Apellido"
 #, fuzzy
 msgid "Name of blocklist"
 msgstr "Nombre de la localidad a crear"
-
-#: gofax/blocklists/generic.tpl:17
-#: gofax/blocklists/class_divListBlocklists.inc:86
-#: gofax/blocklists/class_blocklistGeneric.inc:387
-msgid "Base"
-msgstr "Base"
 
 #: gofax/blocklists/generic.tpl:20
 msgid "Choose subtree to place group in"
@@ -329,7 +332,7 @@ msgstr "Tipo"
 msgid "Select wether to filter incoming or outgoing calls"
 msgstr ""
 
-#: gofax/blocklists/generic.tpl:51
+#: gofax/blocklists/generic.tpl:51 gofax/blocklists/blocklist-list.xml:57
 #: gofax/blocklists/class_blocklistGeneric.inc:386
 msgid "Description"
 msgstr "Descripción"
@@ -352,17 +355,23 @@ msgstr "Información"
 msgid "Numbers can also contain wild cards."
 msgstr ""
 
-#: gofax/blocklists/class_divListBlocklists.inc:31
-#: gofax/blocklists/class_divListBlocklists.inc:32
+#: gofax/blocklists/blocklist-list.xml:11
 #, fuzzy
 msgid "List of blocklists"
 msgstr "Lista de acls"
 
-#: gofax/blocklists/class_divListBlocklists.inc:50
-msgid "Select all"
-msgstr "Seleccione todos"
+#: gofax/blocklists/blocklist-list.xml:15
+#: gofax/faxaccount/class_gofaxAccount.inc:881
+#, fuzzy
+msgid "Send blocklist"
+msgstr "Lugar de residencia"
 
-#: gofax/blocklists/class_divListBlocklists.inc:56
+#: gofax/blocklists/blocklist-list.xml:23
+#: gofax/faxaccount/class_gofaxAccount.inc:880
+msgid "Receive blocklist"
+msgstr ""
+
+#: gofax/blocklists/blocklist-list.xml:49
 #: gofax/blocklists/class_blocklistGeneric.inc:219
 #: gofax/blocklists/class_blocklistGeneric.inc:222
 #: gofax/blocklists/class_blocklistGeneric.inc:229
@@ -370,108 +379,37 @@ msgstr "Seleccione todos"
 msgid "Name"
 msgstr "Nombre"
 
-#: gofax/blocklists/class_divListBlocklists.inc:56
-msgid "Department"
-msgstr "Departamento"
-
-#: gofax/blocklists/class_divListBlocklists.inc:57
-#: gofax/blocklists/class_divListBlocklists.inc:91
+#: gofax/blocklists/blocklist-list.xml:65
 msgid "Actions"
 msgstr "Acciones"
 
-#: gofax/blocklists/class_divListBlocklists.inc:60
-#: gofax/faxaccount/class_gofaxAccount.inc:881
-#, fuzzy
-msgid "Send blocklist"
-msgstr "Lugar de residencia"
-
-#: gofax/blocklists/class_divListBlocklists.inc:60
-msgid "Show send blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-#: gofax/faxaccount/class_gofaxAccount.inc:880
-msgid "Receive blocklist"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Show receive blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:67
-#, fuzzy
-msgid "Regular expression for matching list names"
-msgstr "Expresiones regulares para buscar nombre de usuarios"
-
-#: gofax/blocklists/class_divListBlocklists.inc:88
-msgid "Submit department"
-msgstr "Enviar departamento"
-
-#: gofax/blocklists/class_divListBlocklists.inc:88
-msgid "Submit"
-msgstr "Enviar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:96
+#: gofax/blocklists/blocklist-list.xml:76
 msgid "Create"
 msgstr "Crear"
 
-#: gofax/blocklists/class_divListBlocklists.inc:98
+#: gofax/blocklists/blocklist-list.xml:82
 #: gofax/blocklists/class_blocklistGeneric.inc:388
 #, fuzzy
 msgid "Blocklist"
 msgstr "Recargar lista"
 
-#: gofax/blocklists/class_divListBlocklists.inc:104
+#: gofax/blocklists/blocklist-list.xml:94
+#: gofax/blocklists/blocklist-list.xml:133 gofax/faxaccount/generic.tpl:128
+#: gofax/faxaccount/generic.tpl:136
+msgid "Edit"
+msgstr "Editar"
+
+#: gofax/blocklists/blocklist-list.xml:101
+#: gofax/blocklists/blocklist-list.xml:146
 msgid "Remove"
 msgstr "Eliminar"
 
-#: gofax/blocklists/class_divListBlocklists.inc:151
-msgid "edit"
-msgstr "editar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:151
-msgid "Edit user"
-msgstr "Editar usuario"
-
-#: gofax/blocklists/class_divListBlocklists.inc:158
-msgid "delete"
-msgstr "eliminar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:158
-msgid "Delete user"
-msgstr "Eliminar usuario"
-
-#: gofax/blocklists/class_divListBlocklists.inc:195
-#: gofax/blocklists/class_divListBlocklists.inc:196
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Eliminar departamentos seleccionados"
-
-#: gofax/blocklists/class_divListBlocklists.inc:195
-msgid "blocklists"
+#: gofax/blocklists/class_blocklistManagement.inc:25
+#: gofax/faxaccount/generic.tpl:122
+msgid "Blocklists"
 msgstr ""
 
-#: gofax/blocklists/class_divListBlocklists.inc:196
-#, fuzzy
-msgid "departments"
-msgstr "Departamento"
-
-#: gofax/blocklists/class_blocklistManagement.inc:5
-msgid "FAX blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistManagement.inc:230
-#, fuzzy
-msgid "Permission"
-msgstr "Permisos"
-
-#: gofax/blocklists/class_blocklistManagement.inc:246
-#: gofax/blocklists/class_blocklistManagement.inc:307
-#, fuzzy
-msgid "blocklist"
-msgstr "Recargar lista"
-
-#: gofax/blocklists/main.inc:35 gofax/blocklists/main.inc:37
+#: gofax/blocklists/class_blocklistManagement.inc:26
 #, fuzzy
 msgid "Blocklist management"
 msgstr "Administración sistema de correo"
@@ -609,17 +547,9 @@ msgstr "Número de serie del certificado"
 msgid "Add local"
 msgstr ""
 
-#: gofax/faxaccount/generic.tpl:122
-msgid "Blocklists"
-msgstr ""
-
 #: gofax/faxaccount/generic.tpl:125
 msgid "Blocklists for incoming fax"
 msgstr ""
-
-#: gofax/faxaccount/generic.tpl:128 gofax/faxaccount/generic.tpl:136
-msgid "Edit"
-msgstr "Editar"
 
 #: gofax/faxaccount/generic.tpl:133
 msgid "Blocklists for outgoing fax"
@@ -748,6 +678,55 @@ msgstr "mostrar información"
 #: admin/systems/services/gofax/goFaxServer.tpl:4
 msgid "FAX DB user"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "Please double check if your really want to do this since there is no way "
+#~ "for GOsa to get your data back."
+#~ msgstr ""
+#~ "Si está seguro de lo que quiere hacer pulse dos veces, ya que no hay "
+#~ "forma de que GOsa pueda recuperar posteriormente esa información"
+
+#~ msgid "Select all"
+#~ msgstr "Seleccione todos"
+
+#~ msgid "Department"
+#~ msgstr "Departamento"
+
+#, fuzzy
+#~ msgid "Regular expression for matching list names"
+#~ msgstr "Expresiones regulares para buscar nombre de usuarios"
+
+#~ msgid "Submit department"
+#~ msgstr "Enviar departamento"
+
+#~ msgid "edit"
+#~ msgstr "editar"
+
+#~ msgid "Edit user"
+#~ msgstr "Editar usuario"
+
+#~ msgid "delete"
+#~ msgstr "eliminar"
+
+#~ msgid "Delete user"
+#~ msgstr "Eliminar usuario"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Eliminar departamentos seleccionados"
+
+#, fuzzy
+#~ msgid "departments"
+#~ msgstr "Departamento"
+
+#, fuzzy
+#~ msgid "Permission"
+#~ msgstr "Permisos"
+
+#, fuzzy
+#~ msgid "blocklist"
+#~ msgstr "Recargar lista"
 
 #, fuzzy
 #~ msgid "Copy"

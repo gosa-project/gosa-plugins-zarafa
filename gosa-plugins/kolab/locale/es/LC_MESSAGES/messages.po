@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2010-01-18 17:05+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -44,7 +44,7 @@ msgid "Kolab account does not exist!"
 msgstr "Configuración cuenta Kolab"
 
 #: admin/systems/services/kolab/class_servKolab.inc:207
-#: personal/connectivity/kolab/class_kolabAccount.inc:171
+#: personal/connectivity/kolab/class_kolabAccount.inc:178
 msgid "Error"
 msgstr "Error"
 
@@ -56,8 +56,8 @@ msgstr "Apellido"
 #: admin/systems/services/kolab/class_servKolab.inc:217
 #: admin/systems/services/kolab/class_servKolab.inc:233
 #: admin/systems/services/kolab/class_servKolab.inc:402
-#: personal/connectivity/kolab/class_kolabAccount.inc:339
-#: personal/connectivity/kolab/class_kolabAccount.inc:476
+#: personal/connectivity/kolab/class_kolabAccount.inc:346
+#: personal/connectivity/kolab/class_kolabAccount.inc:483
 #, fuzzy
 msgid "LDAP error"
 msgstr "Servicio LDAP"
@@ -96,7 +96,7 @@ msgstr "Añadir el servicio Kolab"
 
 #: admin/systems/services/kolab/class_servKolab.inc:429
 #: personal/connectivity/kolab/class_kolabAccount.inc:5
-#: personal/connectivity/kolab/class_kolabAccount.inc:512
+#: personal/connectivity/kolab/class_kolabAccount.inc:519
 msgid "Kolab"
 msgstr "Kolab"
 
@@ -326,7 +326,7 @@ msgstr ""
 
 #: personal/connectivity/kolab/kolab.tpl:51
 #: personal/connectivity/kolab/kolab.tpl:63
-#: personal/connectivity/kolab/class_kolabAccount.inc:525
+#: personal/connectivity/kolab/class_kolabAccount.inc:532
 msgid "Delegations"
 msgstr "Delegaciones"
 
@@ -359,7 +359,7 @@ msgid "days"
 msgstr "Domingo"
 
 #: personal/connectivity/kolab/kolab.tpl:119
-#: personal/connectivity/kolab/class_kolabAccount.inc:526
+#: personal/connectivity/kolab/class_kolabAccount.inc:533
 msgid "Invitation policy"
 msgstr "Política de invitación"
 
@@ -368,80 +368,80 @@ msgstr "Política de invitación"
 msgid "This does something"
 msgstr "Mostrar objetos que coincidan"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:171
+#: personal/connectivity/kolab/class_kolabAccount.inc:178
 msgid "Mail address"
 msgstr "Dirección correo electrónico"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:204
+#: personal/connectivity/kolab/class_kolabAccount.inc:211
 msgid "Always accept"
 msgstr "Aceptar siempre"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:205
+#: personal/connectivity/kolab/class_kolabAccount.inc:212
 msgid "Always reject"
 msgstr "Denegar siempre"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:206
+#: personal/connectivity/kolab/class_kolabAccount.inc:213
 msgid "Reject if conflicts"
 msgstr "Denegar si hay conflictos"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:207
+#: personal/connectivity/kolab/class_kolabAccount.inc:214
 msgid "Manual if conflicts"
 msgstr "Preguntar si hay conflictos"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:208
+#: personal/connectivity/kolab/class_kolabAccount.inc:215
 msgid "Manual"
 msgstr "Manual"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:256
+#: personal/connectivity/kolab/class_kolabAccount.inc:263
 msgid "Anonymous"
 msgstr "Anónimo"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:351
-#: personal/connectivity/kolab/class_kolabAccount.inc:354
+#: personal/connectivity/kolab/class_kolabAccount.inc:358
+#: personal/connectivity/kolab/class_kolabAccount.inc:361
 #, fuzzy
 msgid "Free Busy future"
 msgstr "Disponibilidad futura"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:359
-#: personal/connectivity/kolab/class_kolabAccount.inc:362
+#: personal/connectivity/kolab/class_kolabAccount.inc:366
+#: personal/connectivity/kolab/class_kolabAccount.inc:369
 #, fuzzy
 msgid "Free Busy url"
 msgstr "Disponibilidad futura"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:376
+#: personal/connectivity/kolab/class_kolabAccount.inc:383
 #, php-format
 msgid "The invitation policy entry for address '%s' is not valid."
 msgstr ""
 "La entrada de política de invitación para la dirección '%s' no es valida."
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:384
+#: personal/connectivity/kolab/class_kolabAccount.inc:391
 #, php-format
 msgid "There's no mail user with address '%s' for your invitation policy!"
 msgstr ""
 "¡No hay ningún usuario con cuenta de correo '%s' para su política de "
 "invitación!"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:513
+#: personal/connectivity/kolab/class_kolabAccount.inc:520
 msgid "Kolab account settings"
 msgstr "Configuración cuenta Kolab"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:513
+#: personal/connectivity/kolab/class_kolabAccount.inc:520
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:517
+#: personal/connectivity/kolab/class_kolabAccount.inc:524
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:522
+#: personal/connectivity/kolab/class_kolabAccount.inc:529
 msgid "Free busy future"
 msgstr "Disponibilidad futura"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:523
+#: personal/connectivity/kolab/class_kolabAccount.inc:530
 msgid "Mail size restriction"
 msgstr "Restricciones al tamaño de mensaje"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:524
+#: personal/connectivity/kolab/class_kolabAccount.inc:531
 msgid "Free busy information"
 msgstr "Información de disponibilidad"
 

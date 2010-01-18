@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2010-01-18 17:03+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -39,9 +39,15 @@ msgstr ""
 #: admin/systems/services/dhcp/class_dhcpPool.inc:101
 #: admin/systems/services/dhcp/class_dhcpPool.inc:109
 #: admin/systems/services/dhcp/dhcp_pool.tpl:6
+#: admin/systems/services/dhcp/class_dhcpSubClass.inc:84
+#: admin/systems/services/dhcp/class_dhcpSubClass.inc:87
+#: admin/systems/services/dhcp/class_dhcpSubClass.inc:95
 #: admin/systems/services/dhcp/class_dhcpGroup.inc:84
 #: admin/systems/services/dhcp/class_dhcpGroup.inc:87
 #: admin/systems/services/dhcp/class_dhcpGroup.inc:95
+#: admin/systems/services/dhcp/class_dhcpClass.inc:84
+#: admin/systems/services/dhcp/class_dhcpClass.inc:87
+#: admin/systems/services/dhcp/class_dhcpClass.inc:95
 #: admin/systems/services/dhcp/dhcp_group.tpl:6
 msgid "Name"
 msgstr "Cognome"
@@ -61,7 +67,7 @@ msgstr "Mostra dispositiva di rete"
 
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:139
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:155
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:190
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:194
 #: admin/systems/services/dhcp/dhcp_network.tpl:17
 #: admin/systems/services/dhcp/dhcp_subnet.tpl:16
 msgid "Netmask"
@@ -113,18 +119,18 @@ msgid "Maximum lease time"
 msgstr "Inoltra i messaggi a"
 
 #: admin/systems/services/dhcp/class_dhcpNetwork.inc:45
-#: admin/systems/services/dhcp/class_servDHCP.inc:700
+#: admin/systems/services/dhcp/class_servDHCP.inc:708
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:57
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:71
 msgid "Error"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:190
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:194
 #: admin/systems/services/dhcp/dhcp_network.tpl:25
 msgid "Broadcast"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:195
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:199
 #, php-format
 msgid "Error in definition of '%s'!"
 msgstr ""
@@ -434,9 +440,9 @@ msgid "Allow booting"
 msgstr ""
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:36
-#: admin/systems/services/dhcp/class_servDHCP.inc:711
-#: admin/systems/services/dhcp/class_servDHCP.inc:712
-#: admin/systems/services/dhcp/class_servDHCP.inc:758
+#: admin/systems/services/dhcp/class_servDHCP.inc:719
+#: admin/systems/services/dhcp/class_servDHCP.inc:720
+#: admin/systems/services/dhcp/class_servDHCP.inc:766
 #, fuzzy
 msgid "DHCP service"
 msgstr "Dispositivi"
@@ -448,13 +454,14 @@ msgstr "Nome utente"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:39
 #: admin/systems/services/dhcp/class_servDHCP.inc:309
-#: admin/systems/services/dhcp/class_servDHCP.inc:620
+#: admin/systems/services/dhcp/class_servDHCP.inc:628
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:26
 #, fuzzy
 msgid "Global options"
 msgstr "Opzioni di posta"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:40
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:27
 #, fuzzy
 msgid "Class"
 msgstr "classe"
@@ -538,17 +545,17 @@ msgstr "Ispezione della configurazione PHP"
 msgid "Remove DHCP section"
 msgstr "Elimina estensioni per le applicazioni"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:394
-#: admin/systems/services/dhcp/class_servDHCP.inc:411
-#: admin/systems/services/dhcp/class_servDHCP.inc:466
-#: admin/systems/services/dhcp/class_servDHCP.inc:542
+#: admin/systems/services/dhcp/class_servDHCP.inc:402
+#: admin/systems/services/dhcp/class_servDHCP.inc:419
+#: admin/systems/services/dhcp/class_servDHCP.inc:474
 #: admin/systems/services/dhcp/class_servDHCP.inc:550
-#: admin/systems/services/dhcp/class_servDHCP.inc:577
+#: admin/systems/services/dhcp/class_servDHCP.inc:558
+#: admin/systems/services/dhcp/class_servDHCP.inc:585
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:700
+#: admin/systems/services/dhcp/class_servDHCP.inc:708
 #, fuzzy
 msgid ""
 "The DHCP configuration set is unkown. Please contact your system "
@@ -556,21 +563,21 @@ msgid ""
 msgstr ""
 "Errore di connessione al server LDAP. Contatta l'amministratore del sistema."
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:712
+#: admin/systems/services/dhcp/class_servDHCP.inc:720
 msgid "Services"
 msgstr "Servizi"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:720
+#: admin/systems/services/dhcp/class_servDHCP.inc:728
 #, fuzzy
 msgid "Start service"
 msgstr "Servizi"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:721
+#: admin/systems/services/dhcp/class_servDHCP.inc:729
 #, fuzzy
 msgid "Stop service"
 msgstr "Servizi"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:722
+#: admin/systems/services/dhcp/class_servDHCP.inc:730
 #, fuzzy
 msgid "Restart service"
 msgstr "Servizi"

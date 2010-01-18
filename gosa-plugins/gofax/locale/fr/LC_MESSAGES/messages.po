@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2010-01-18 17:04+0100\n"
 "PO-Revision-Date: 2008-07-23 23:10+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -84,7 +84,7 @@ msgstr "# pages"
 msgid "FAX reports"
 msgstr "Rapports des Fax"
 
-#: gofax/faxreports/contents.tpl:2
+#: gofax/faxreports/contents.tpl:2 gofax/blocklists/blocklist-filter.tpl:3
 msgid "Filter"
 msgstr "Filtre"
 
@@ -133,7 +133,6 @@ msgid "FAX Reports"
 msgstr "Rapports des Fax"
 
 #: gofax/faxreports/class_faxreport.inc:7
-#: gofax/blocklists/class_blocklistManagement.inc:6
 #: gofax/blocklists/class_blocklistGeneric.inc:10
 #: gofax/faxaccount/class_gofaxAccount.inc:7
 msgid "This does something"
@@ -184,8 +183,6 @@ msgstr "Impossible d'interroger la base de données %s !"
 
 #: gofax/faxreports/class_faxreport.inc:167
 #: gofax/faxreports/class_faxreport.inc:177
-#: gofax/blocklists/class_blocklistManagement.inc:269
-#: gofax/blocklists/class_blocklistManagement.inc:326
 msgid "Permission error"
 msgstr "Erreur de permissions"
 
@@ -246,18 +243,31 @@ msgstr "Avertissement"
 
 #: gofax/blocklists/remove.tpl:6
 msgid ""
-"Please double check if your really want to do this since there is no way for "
+"Please double check if you really want to do this since there is no way for "
 "GOsa to get your data back."
 msgstr ""
-"Veuillez vous assurez que vous voulez effectuer cette opération. Toutes les "
-"données seront perdues étant donné qu'il est impossible pour GOsa de "
-"récupérer vos données."
+"Veuillez vérifier que vous voulez effectuer cette action. Toutes les données "
+"seront perdues étant donné qu'il est impossible pour GOsa de récupérer vos "
+"données."
 
 #: gofax/blocklists/remove.tpl:10
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 "D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
 "'Annuler' pour abandonner."
+
+#: gofax/blocklists/blocklist-list.tpl:13 gofax/blocklists/generic.tpl:17
+#: gofax/blocklists/class_blocklistGeneric.inc:387
+msgid "Base"
+msgstr "Base"
+
+#: gofax/blocklists/blocklist-list.tpl:13
+msgid "Update"
+msgstr "Mise à jour"
+
+#: gofax/blocklists/blocklist-list.tpl:13
+msgid "Submit"
+msgstr "Soumettre"
 
 #: gofax/blocklists/generic.tpl:1 gofax/faxaccount/generic.tpl:6
 #: gofax/faxaccount/paste_generic.tpl:4
@@ -271,12 +281,6 @@ msgstr "Liste des noms"
 #: gofax/blocklists/generic.tpl:12 gofax/blocklists/paste_generic.tpl:5
 msgid "Name of blocklist"
 msgstr "Nom de la liste rouge"
-
-#: gofax/blocklists/generic.tpl:17
-#: gofax/blocklists/class_divListBlocklists.inc:86
-#: gofax/blocklists/class_blocklistGeneric.inc:387
-msgid "Base"
-msgstr "Base"
 
 #: gofax/blocklists/generic.tpl:20
 msgid "Choose subtree to place group in"
@@ -295,7 +299,7 @@ msgid "Select wether to filter incoming or outgoing calls"
 msgstr ""
 "Veuillez sélectionner si il faut filtrer sur les appels entrants ou sortants"
 
-#: gofax/blocklists/generic.tpl:51
+#: gofax/blocklists/generic.tpl:51 gofax/blocklists/blocklist-list.xml:57
 #: gofax/blocklists/class_blocklistGeneric.inc:386
 msgid "Description"
 msgstr "Description"
@@ -316,16 +320,21 @@ msgstr "Information"
 msgid "Numbers can also contain wild cards."
 msgstr "Les nombres peuvent aussi contenir des jokers."
 
-#: gofax/blocklists/class_divListBlocklists.inc:31
-#: gofax/blocklists/class_divListBlocklists.inc:32
+#: gofax/blocklists/blocklist-list.xml:11
 msgid "List of blocklists"
 msgstr "Liste des listes rouges"
 
-#: gofax/blocklists/class_divListBlocklists.inc:50
-msgid "Select all"
-msgstr "Sélectionner tout"
+#: gofax/blocklists/blocklist-list.xml:15
+#: gofax/faxaccount/class_gofaxAccount.inc:881
+msgid "Send blocklist"
+msgstr "Afficher les listes rouges en envoi"
 
-#: gofax/blocklists/class_divListBlocklists.inc:56
+#: gofax/blocklists/blocklist-list.xml:23
+#: gofax/faxaccount/class_gofaxAccount.inc:880
+msgid "Receive blocklist"
+msgstr "Afficher les listes rouges en réception"
+
+#: gofax/blocklists/blocklist-list.xml:49
 #: gofax/blocklists/class_blocklistGeneric.inc:219
 #: gofax/blocklists/class_blocklistGeneric.inc:222
 #: gofax/blocklists/class_blocklistGeneric.inc:229
@@ -333,102 +342,36 @@ msgstr "Sélectionner tout"
 msgid "Name"
 msgstr "Nom"
 
-#: gofax/blocklists/class_divListBlocklists.inc:56
-msgid "Department"
-msgstr "Département"
-
-#: gofax/blocklists/class_divListBlocklists.inc:57
-#: gofax/blocklists/class_divListBlocklists.inc:91
+#: gofax/blocklists/blocklist-list.xml:65
 msgid "Actions"
 msgstr "Actions"
 
-#: gofax/blocklists/class_divListBlocklists.inc:60
-#: gofax/faxaccount/class_gofaxAccount.inc:881
-msgid "Send blocklist"
-msgstr "Afficher les listes rouges en envoi"
-
-#: gofax/blocklists/class_divListBlocklists.inc:60
-msgid "Show send blocklists"
-msgstr "Afficher les numéros d'appels de la liste rouge"
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-#: gofax/faxaccount/class_gofaxAccount.inc:880
-msgid "Receive blocklist"
-msgstr "Afficher les listes rouges en réception"
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Show receive blocklists"
-msgstr "Afficher les listes rouges de correspondants"
-
-#: gofax/blocklists/class_divListBlocklists.inc:67
-msgid "Regular expression for matching list names"
-msgstr "Expression régulière pour trouver des listes correspondantes"
-
-#: gofax/blocklists/class_divListBlocklists.inc:88
-msgid "Submit department"
-msgstr "Soumettre le département"
-
-#: gofax/blocklists/class_divListBlocklists.inc:88
-msgid "Submit"
-msgstr "Soumettre"
-
-#: gofax/blocklists/class_divListBlocklists.inc:96
+#: gofax/blocklists/blocklist-list.xml:76
 msgid "Create"
 msgstr "Créer"
 
-#: gofax/blocklists/class_divListBlocklists.inc:98
+#: gofax/blocklists/blocklist-list.xml:82
 #: gofax/blocklists/class_blocklistGeneric.inc:388
 msgid "Blocklist"
 msgstr "Listes Rouges"
 
-#: gofax/blocklists/class_divListBlocklists.inc:104
+#: gofax/blocklists/blocklist-list.xml:94
+#: gofax/blocklists/blocklist-list.xml:133 gofax/faxaccount/generic.tpl:128
+#: gofax/faxaccount/generic.tpl:136
+msgid "Edit"
+msgstr "Editer"
+
+#: gofax/blocklists/blocklist-list.xml:101
+#: gofax/blocklists/blocklist-list.xml:146
 msgid "Remove"
 msgstr "Supprimer"
 
-#: gofax/blocklists/class_divListBlocklists.inc:151
-msgid "edit"
-msgstr "éditer"
-
-#: gofax/blocklists/class_divListBlocklists.inc:151
-msgid "Edit user"
-msgstr "Editer un utilisateur"
-
-#: gofax/blocklists/class_divListBlocklists.inc:158
-msgid "delete"
-msgstr "supprimer"
-
-#: gofax/blocklists/class_divListBlocklists.inc:158
-msgid "Delete user"
-msgstr "Supprimer un utilisateur"
-
-#: gofax/blocklists/class_divListBlocklists.inc:195
-#: gofax/blocklists/class_divListBlocklists.inc:196
-#, php-format
-msgid "Number of listed '%s'"
-msgstr "Nombre de '%s'"
-
-#: gofax/blocklists/class_divListBlocklists.inc:195
-msgid "blocklists"
+#: gofax/blocklists/class_blocklistManagement.inc:25
+#: gofax/faxaccount/generic.tpl:122
+msgid "Blocklists"
 msgstr "Listes Rouges"
 
-#: gofax/blocklists/class_divListBlocklists.inc:196
-msgid "departments"
-msgstr "département"
-
-#: gofax/blocklists/class_blocklistManagement.inc:5
-msgid "FAX blocklists"
-msgstr "Liste Rouge des Fax"
-
-#: gofax/blocklists/class_blocklistManagement.inc:230
-msgid "Permission"
-msgstr "Permissions"
-
-#: gofax/blocklists/class_blocklistManagement.inc:246
-#: gofax/blocklists/class_blocklistManagement.inc:307
-msgid "blocklist"
-msgstr "Listes Rouges"
-
-#: gofax/blocklists/main.inc:35 gofax/blocklists/main.inc:37
+#: gofax/blocklists/class_blocklistManagement.inc:26
 msgid "Blocklist management"
 msgstr "Configuration des listes rouges"
 
@@ -557,17 +500,9 @@ msgstr "Numéros de fax alternatif"
 msgid "Add local"
 msgstr "Ajouter en local"
 
-#: gofax/faxaccount/generic.tpl:122
-msgid "Blocklists"
-msgstr "Listes Rouges"
-
 #: gofax/faxaccount/generic.tpl:125
 msgid "Blocklists for incoming fax"
 msgstr "Listes rouges pour les fax entrant"
-
-#: gofax/faxaccount/generic.tpl:128 gofax/faxaccount/generic.tpl:136
-msgid "Edit"
-msgstr "Editer"
 
 #: gofax/faxaccount/generic.tpl:133
 msgid "Blocklists for outgoing fax"
@@ -692,3 +627,59 @@ msgstr "Base de données des FAX"
 #: admin/systems/services/gofax/goFaxServer.tpl:4
 msgid "FAX DB user"
 msgstr "utilisateur de la base de données du FAX"
+
+#~ msgid ""
+#~ "Please double check if your really want to do this since there is no way "
+#~ "for GOsa to get your data back."
+#~ msgstr ""
+#~ "Veuillez vous assurez que vous voulez effectuer cette opération. Toutes "
+#~ "les données seront perdues étant donné qu'il est impossible pour GOsa de "
+#~ "récupérer vos données."
+
+#~ msgid "Select all"
+#~ msgstr "Sélectionner tout"
+
+#~ msgid "Department"
+#~ msgstr "Département"
+
+#~ msgid "Show send blocklists"
+#~ msgstr "Afficher les numéros d'appels de la liste rouge"
+
+#~ msgid "Show receive blocklists"
+#~ msgstr "Afficher les listes rouges de correspondants"
+
+#~ msgid "Regular expression for matching list names"
+#~ msgstr "Expression régulière pour trouver des listes correspondantes"
+
+#~ msgid "Submit department"
+#~ msgstr "Soumettre le département"
+
+#~ msgid "edit"
+#~ msgstr "éditer"
+
+#~ msgid "Edit user"
+#~ msgstr "Editer un utilisateur"
+
+#~ msgid "delete"
+#~ msgstr "supprimer"
+
+#~ msgid "Delete user"
+#~ msgstr "Supprimer un utilisateur"
+
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Nombre de '%s'"
+
+#~ msgid "blocklists"
+#~ msgstr "Listes Rouges"
+
+#~ msgid "departments"
+#~ msgstr "département"
+
+#~ msgid "FAX blocklists"
+#~ msgstr "Liste Rouge des Fax"
+
+#~ msgid "Permission"
+#~ msgstr "Permissions"
+
+#~ msgid "blocklist"
+#~ msgstr "Listes Rouges"

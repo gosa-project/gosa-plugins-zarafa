@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2010-01-18 17:05+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,232 +14,210 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:27
-#: admin/systems/services/log/class_gosaLogServer.inc:55
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
 #, fuzzy
-msgid "GOsa MySQL logging service"
+msgid "Syslog Service"
+msgstr "Просмотр системного журнала"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "enabled"
+msgstr "отключен"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+#, fuzzy
+msgid "Syslog server"
+msgstr "Показать серверы"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#, fuzzy
+msgid "Logging service"
 msgstr "Служба печати"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:68
-#: admin/systems/services/log/class_gosaLogServer.inc:101
-#: addons/logview/gosa_log_contents.tpl:84
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
+msgid "Services"
+msgstr "Сервисы"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:31
+#: admin/systems/services/syslog/class_goLogDBServer.inc:59
+#, fuzzy
+msgid "Syslog service database"
+msgstr "база пользователя"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:69
 msgid "User"
 msgstr "Пользователь"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:71
-#: admin/systems/services/log/class_gosaLogServer.inc:102
-#: admin/systems/services/log/gosaLogServer.tpl:20
+#: admin/systems/services/syslog/class_goLogDBServer.inc:72
+#: admin/systems/services/syslog/class_goLogDBServer.inc:105
+#: admin/systems/services/syslog/goLogDBServer.tpl:20
 msgid "Password"
 msgstr "Пароль"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:74
-#: admin/systems/services/log/class_gosaLogServer.inc:100
-#: admin/systems/services/log/gosaLogServer.tpl:4
+#: admin/systems/services/syslog/class_goLogDBServer.inc:75
+#: admin/systems/services/syslog/class_goLogDBServer.inc:106
+#: admin/systems/services/syslog/goLogDBServer.tpl:4
 #, fuzzy
 msgid "Database"
 msgstr "Базы данных"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:91
-#: admin/systems/services/log/class_gosaLogServer.inc:92
+#: admin/systems/services/syslog/class_goLogDBServer.inc:92
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
 #, fuzzy
-msgid "GOsa logging service"
-msgstr "Служба печати"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-msgid "Services"
-msgstr "Сервисы"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:103
-#, fuzzy
-msgid "Allow view of entries on this server"
-msgstr "Разрешить вход на терминальный сервер"
-
-#: admin/systems/services/log/gosaLogServer.tpl:1
-#, fuzzy
-msgid "GOsa logging database"
+msgid "Logging database"
 msgstr "база пользователя"
 
-#: admin/systems/services/log/gosaLogServer.tpl:12
+#: admin/systems/services/syslog/class_goLogDBServer.inc:101
 #, fuzzy
-msgid "Database user"
-msgstr "Базы данных"
+msgid "Start"
+msgstr "Запуск"
 
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "Фильтр"
-
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
-msgid "Show hosts"
-msgstr "Показать хосты"
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Действие"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr "Интервал времени"
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "Поиск"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Введите строку для поиска"
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
-msgid "Ruleset"
-msgstr "Набор правил"
-
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "Изменить"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "Поиск"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "Дата"
-
-#: addons/logview/gosa_log_contents.tpl:85
-#, fuzzy
-msgid "Object type"
-msgstr "Имя объекта"
-
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Объект"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
-msgid "Message"
-msgstr "Сообщение"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr "Не найдено..."
-
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
-#: addons/logview/class_gosa_logview.inc:6
-msgid "System logs"
-msgstr "Системные журналы"
-
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
-msgid "This does something"
-msgstr "Что-то будет"
-
-#: addons/logview/class_logview.inc:79
-#: addons/logview/class_gosa_logview.inc:118
-msgid "Warning"
-msgstr "Предупреждение"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy
-msgid "Configuration error"
-msgstr "Настроить"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy, php-format
-msgid "Missing %s PHP extension!"
-msgstr "Удалить параметры"
-
-#: addons/logview/class_logview.inc:95 addons/logview/class_logview.inc:102
-#: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
-#: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
-#: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
-#: addons/logview/class_gosa_logview.inc:151
-#: addons/logview/class_gosa_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:237
-#: addons/logview/class_gosa_logview.inc:288
-msgid "Error"
+#: admin/systems/services/syslog/class_goLogDBServer.inc:102
+msgid "Stop"
 msgstr ""
 
-#: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:169
-#: addons/logview/class_gosa_logview.inc:184
-msgid "All"
-msgstr "Все"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "один час"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 часов"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 часов"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 часа"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 дня"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "одна неделя"
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 недели"
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "один месяц"
-
-#: addons/logview/class_logview.inc:412
+#: admin/systems/services/syslog/class_goLogDBServer.inc:103
 #, fuzzy
-msgid "Log view"
+msgid "Restart"
+msgstr "Повторить"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:104
+#, fuzzy
+msgid "Admin"
+msgstr "DN администратора"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:1
+#, fuzzy
+msgid "Logging database information"
+msgstr "Личная информация"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:12
+#, fuzzy
+msgid "Logging DB user"
 msgstr "Служба печати"
 
-#: addons/logview/class_logview.inc:413
 #, fuzzy
-msgid "Log view addon"
-msgstr "Домен"
+#~ msgid "GOsa MySQL logging service"
+#~ msgstr "Служба печати"
 
-#: addons/logview/main.inc:49
-msgid "System log view"
-msgstr "Просмотр системного журнала"
-
-#: addons/logview/class_gosa_logview.inc:203
 #, fuzzy
-msgid "You have insufficient permissions to view syslog entries."
-msgstr "У вас недостаточно прав для удаления этого стоп-листа."
+#~ msgid "Allow view of entries on this server"
+#~ msgstr "Разрешить вход на терминальный сервер"
 
-#: addons/logview/class_gosa_logview.inc:238
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
+#, fuzzy
+#~ msgid "Database user"
+#~ msgstr "Базы данных"
 
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "Уровень информативности"
+#~ msgid "Filter"
+#~ msgstr "Фильтр"
 
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "Уровень"
+#~ msgid "Show hosts"
+#~ msgstr "Показать хосты"
 
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "Имя системы"
+#~ msgid "Action"
+#~ msgstr "Действие"
+
+#~ msgid "Time interval"
+#~ msgstr "Интервал времени"
+
+#~ msgid "Search for"
+#~ msgstr "Поиск"
+
+#~ msgid "Enter string to search for"
+#~ msgstr "Введите строку для поиска"
+
+#~ msgid "Ruleset"
+#~ msgstr "Набор правил"
+
+#~ msgid "Edit"
+#~ msgstr "Изменить"
+
+#~ msgid "Search"
+#~ msgstr "Поиск"
+
+#~ msgid "Date"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Object type"
+#~ msgstr "Имя объекта"
+
+#~ msgid "Object"
+#~ msgstr "Объект"
+
+#~ msgid "Message"
+#~ msgstr "Сообщение"
+
+#~ msgid "Search returned no results..."
+#~ msgstr "Не найдено..."
+
+#~ msgid "System logs"
+#~ msgstr "Системные журналы"
+
+#~ msgid "This does something"
+#~ msgstr "Что-то будет"
+
+#~ msgid "Warning"
+#~ msgstr "Предупреждение"
+
+#, fuzzy
+#~ msgid "Configuration error"
+#~ msgstr "Настроить"
+
+#, fuzzy
+#~ msgid "Missing %s PHP extension!"
+#~ msgstr "Удалить параметры"
+
+#~ msgid "All"
+#~ msgstr "Все"
+
+#~ msgid "one hour"
+#~ msgstr "один час"
+
+#~ msgid "6 hours"
+#~ msgstr "6 часов"
+
+#~ msgid "12 hours"
+#~ msgstr "12 часов"
+
+#~ msgid "24 hours"
+#~ msgstr "24 часа"
+
+#~ msgid "2 days"
+#~ msgstr "2 дня"
+
+#~ msgid "one week"
+#~ msgstr "одна неделя"
+
+#~ msgid "2 weeks"
+#~ msgstr "2 недели"
+
+#~ msgid "one month"
+#~ msgstr "один месяц"
+
+#, fuzzy
+#~ msgid "Log view"
+#~ msgstr "Служба печати"
+
+#, fuzzy
+#~ msgid "Log view addon"
+#~ msgstr "Домен"
+
+#, fuzzy
+#~ msgid "You have insufficient permissions to view syslog entries."
+#~ msgstr "У вас недостаточно прав для удаления этого стоп-листа."
+
+#~ msgid "Log level"
+#~ msgstr "Уровень информативности"
+
+#~ msgid "Level"
+#~ msgstr "Уровень"
+
+#~ msgid "Hostname"
+#~ msgstr "Имя системы"
 
 #~ msgid "Save"
 #~ msgstr "Сохранить"

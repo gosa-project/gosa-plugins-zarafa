@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:38+0200\n"
+"POT-Creation-Date: 2010-01-18 17:06+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,40 +19,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/roleManagement/class_roleManagement.inc:26
-#: admin/roleManagement/class_roleGeneric.inc:389
-#: admin/roleManagement/main.inc:53
+#: admin/roleManagement/class_roleManagement.inc:25
+#: admin/roleManagement/class_roleGeneric.inc:401
 #, fuzzy
 msgid "Roles"
 msgstr "Funktie"
 
-#: admin/roleManagement/class_roleManagement.inc:27
+#: admin/roleManagement/class_roleManagement.inc:26
 #, fuzzy
-msgid "Manage roles"
-msgstr "Windows gebruikers"
-
-#: admin/roleManagement/class_roleManagement.inc:162
-#, fuzzy
-msgid "Permission"
-msgstr "Rechten"
-
-#: admin/roleManagement/class_roleManagement.inc:178
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:117
-#: admin/roleManagement/class_divListRole.inc:205
-msgid "Role"
-msgstr "Funktie"
-
-#: admin/roleManagement/class_roleManagement.inc:212
-#, fuzzy
-msgid "Permission error"
-msgstr "Rechten"
+msgid "Role management"
+msgstr "Blokkeerlijst beheer"
 
 #: admin/roleManagement/remove.tpl:2
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: admin/roleManagement/remove.tpl:7
+#: admin/roleManagement/remove.tpl:6
 msgid ""
 "Please double check if you really want to do this since there is no way for "
 "GOsa to get your data back."
@@ -66,140 +48,119 @@ msgstr ""
 "Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
 "om te annuleren."
 
-#: admin/roleManagement/class_roleGeneric.inc:216
-#: admin/roleManagement/class_roleGeneric.inc:225
-#: admin/roleManagement/class_roleGeneric.inc:392
+#: admin/roleManagement/class_roleGeneric.inc:220
+#: admin/roleManagement/class_roleGeneric.inc:229
+#: admin/roleManagement/class_roleGeneric.inc:404
+#: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Naam"
 
-#: admin/roleManagement/class_roleGeneric.inc:246
+#: admin/roleManagement/class_roleGeneric.inc:250
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: admin/roleManagement/class_roleGeneric.inc:264
-#: admin/roleManagement/class_roleGeneric.inc:298
+#: admin/roleManagement/class_roleGeneric.inc:268
+#: admin/roleManagement/class_roleGeneric.inc:310
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP fout:"
 
-#: admin/roleManagement/class_roleGeneric.inc:383
+#: admin/roleManagement/class_roleGeneric.inc:395
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Algemeen"
 
-#: admin/roleManagement/class_roleGeneric.inc:384
+#: admin/roleManagement/class_roleGeneric.inc:396
 #, fuzzy
 msgid "Role generic"
 msgstr "Hernoemen"
 
-#: admin/roleManagement/class_roleGeneric.inc:393
+#: admin/roleManagement/class_roleGeneric.inc:405
+#: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Omschrijving"
 
-#: admin/roleManagement/class_roleGeneric.inc:394
-#: admin/roleManagement/class_divListRole.inc:104
+#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/role-list.tpl:13
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Basis"
 
-#: admin/roleManagement/class_roleGeneric.inc:395
+#: admin/roleManagement/class_roleGeneric.inc:407
 #, fuzzy
 msgid "Telefon number"
 msgstr "Telefoonnummer"
 
-#: admin/roleManagement/class_roleGeneric.inc:396
+#: admin/roleManagement/class_roleGeneric.inc:408
 #: admin/roleManagement/roleGeneric.tpl:56
 #, fuzzy
 msgid "Fax number"
 msgstr "Serienummer"
 
-#: admin/roleManagement/class_roleGeneric.inc:397
+#: admin/roleManagement/class_roleGeneric.inc:409
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr ""
 
-#: admin/roleManagement/paste_generic.tpl:4
-msgid "Group name"
-msgstr "Groepnaam"
-
-#: admin/roleManagement/paste_generic.tpl:7
-#, fuzzy
-msgid "Please enter the new object group name"
-msgstr "Geef a.u.b. een nieuwe naam op"
-
-#: admin/roleManagement/class_divListRole.inc:52
-#: admin/roleManagement/class_divListRole.inc:53
+#: admin/roleManagement/role-list.xml:11
 #, fuzzy
 msgid "List of roles"
 msgstr "Lijst met gebruikers"
 
-#: admin/roleManagement/class_divListRole.inc:64
-#, fuzzy
-msgid "Select all"
-msgstr "Selecteer"
+#: admin/roleManagement/role-list.xml:15 admin/roleManagement/role-list.xml:74
+msgid "Role"
+msgstr "Funktie"
 
-#: admin/roleManagement/class_divListRole.inc:70
-msgid "Department"
-msgstr "Afdeling"
-
-#: admin/roleManagement/class_divListRole.inc:71
-#: admin/roleManagement/class_divListRole.inc:110
+#: admin/roleManagement/role-list.xml:57
 msgid "Actions"
 msgstr "Acties"
 
-#: admin/roleManagement/class_divListRole.inc:80
-#, fuzzy
-msgid "Regular expression for matching role names"
-msgstr "Reguliere expressie voor overeenkomende groepnamen"
-
-#: admin/roleManagement/class_divListRole.inc:107
-msgid "Submit department"
-msgstr "Verwerk afdeling"
-
-#: admin/roleManagement/class_divListRole.inc:107
-msgid "Submit"
-msgstr "Verwerk"
-
-#: admin/roleManagement/class_divListRole.inc:115
+#: admin/roleManagement/role-list.xml:68
 msgid "Create"
 msgstr "Aanmaken"
 
-#: admin/roleManagement/class_divListRole.inc:123
+#: admin/roleManagement/role-list.xml:86
+msgid "Edit"
+msgstr "Bewerken"
+
+#: admin/roleManagement/role-list.xml:93
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: admin/roleManagement/class_divListRole.inc:168
-msgid "edit"
-msgstr "Bewerk"
-
-#: admin/roleManagement/class_divListRole.inc:169
-msgid "Edit this entry"
-msgstr "Bewerk deze invoer"
-
-#: admin/roleManagement/class_divListRole.inc:174
-msgid "delete"
-msgstr "Verwijder"
-
-#: admin/roleManagement/class_divListRole.inc:175
-msgid "Delete this entry"
-msgstr "Verwijder deze invoer"
-
-#: admin/roleManagement/class_divListRole.inc:222
+#: admin/roleManagement/role-list.xml:125
 #, fuzzy
-msgid "Number of listed roles"
-msgstr "Naam van de groep"
+msgid "Edit role"
+msgstr "Bewerk share"
 
-#: admin/roleManagement/class_divListRole.inc:223
+#: admin/roleManagement/role-list.xml:138
 #, fuzzy
-msgid "Number of listed departments"
-msgstr "Naam van de afdeling"
+msgid "Remove role"
+msgstr "Lidmaatschap objecten"
 
-#: admin/roleManagement/main.inc:57
+#: admin/roleManagement/role-list.tpl:13
+msgid "Update"
+msgstr ""
+
+#: admin/roleManagement/role-list.tpl:13
+msgid "Submit"
+msgstr "Verwerk"
+
+#: admin/roleManagement/paste_generic.tpl:4
 #, fuzzy
-msgid "Role management"
-msgstr "Blokkeerlijst beheer"
+msgid "Role name"
+msgstr "Hernoemen"
+
+#: admin/roleManagement/paste_generic.tpl:7
+#, fuzzy
+msgid "Please enter the new object role name"
+msgstr "Geef a.u.b. een nieuwe naam op"
+
+#: admin/roleManagement/role-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "Filters"
 
 #: admin/roleManagement/roleGeneric.tpl:34
 msgid "Choose subtree to place user in"
@@ -245,6 +206,55 @@ msgstr "Toon overeenkomende objecten"
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr "Reguliere expressie voor overeenkomende objectnamen"
+
+#, fuzzy
+#~ msgid "Manage roles"
+#~ msgstr "Windows gebruikers"
+
+#, fuzzy
+#~ msgid "Permission"
+#~ msgstr "Rechten"
+
+#, fuzzy
+#~ msgid "Permission error"
+#~ msgstr "Rechten"
+
+#~ msgid "Group name"
+#~ msgstr "Groepnaam"
+
+#, fuzzy
+#~ msgid "Select all"
+#~ msgstr "Selecteer"
+
+#~ msgid "Department"
+#~ msgstr "Afdeling"
+
+#, fuzzy
+#~ msgid "Regular expression for matching role names"
+#~ msgstr "Reguliere expressie voor overeenkomende groepnamen"
+
+#~ msgid "Submit department"
+#~ msgstr "Verwerk afdeling"
+
+#~ msgid "edit"
+#~ msgstr "Bewerk"
+
+#~ msgid "Edit this entry"
+#~ msgstr "Bewerk deze invoer"
+
+#~ msgid "delete"
+#~ msgstr "Verwijder"
+
+#~ msgid "Delete this entry"
+#~ msgstr "Verwijder deze invoer"
+
+#, fuzzy
+#~ msgid "Number of listed roles"
+#~ msgstr "Naam van de groep"
+
+#, fuzzy
+#~ msgid "Number of listed departments"
+#~ msgstr "Naam van de afdeling"
 
 #, fuzzy
 #~ msgid "role"

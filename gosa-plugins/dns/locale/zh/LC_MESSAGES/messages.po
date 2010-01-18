@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2010-01-18 17:04+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -48,8 +48,8 @@ msgid "Zones"
 msgstr "域"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
-#: admin/systems/services/dns/class_servDNS.inc:184
-#: admin/systems/services/dns/class_servDNS.inc:345
+#: admin/systems/services/dns/class_servDNS.inc:174
+#: admin/systems/services/dns/class_servDNS.inc:335
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
@@ -66,21 +66,21 @@ msgid "Down"
 msgstr "关闭"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:586
+#: admin/systems/services/dns/class_servDNSeditZone.inc:588
 msgid "Delete"
 msgstr "删除"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:412
 #: admin/systems/services/dns/class_servDNSeditZone.inc:417
 #: admin/systems/services/dns/class_servDNSeditZone.inc:425
-#: admin/systems/services/dns/class_servDNS.inc:592
+#: admin/systems/services/dns/class_servDNS.inc:582
 #: admin/systems/services/dns/servdnseditzone.tpl:7
 msgid "Zone name"
 msgstr "域名称"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:421
-#: admin/systems/services/dns/class_servDNS.inc:279
-#: admin/systems/services/dns/class_servDNS.inc:593
+#: admin/systems/services/dns/class_servDNS.inc:269
+#: admin/systems/services/dns/class_servDNS.inc:583
 msgid "Reverse zone"
 msgstr "反向解析域"
 
@@ -91,12 +91,12 @@ msgid "Only lowercase allowed"
 msgstr "只有小写字符串被允许作为域名。"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:429
-#: admin/systems/services/dns/class_servDNS.inc:598
+#: admin/systems/services/dns/class_servDNS.inc:588
 msgid "Serial"
 msgstr "串行"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:433
-#: admin/systems/services/dns/class_servDNS.inc:599
+#: admin/systems/services/dns/class_servDNS.inc:589
 #: admin/systems/services/dns/servdnseditzone.tpl:102
 msgid "Refresh"
 msgstr "刷新"
@@ -107,13 +107,13 @@ msgid "Time to life"
 msgstr "用户时区"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:441
-#: admin/systems/services/dns/class_servDNS.inc:601
+#: admin/systems/services/dns/class_servDNS.inc:591
 #: admin/systems/services/dns/servdnseditzone.tpl:120
 msgid "Expire"
 msgstr "过期"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:445
-#: admin/systems/services/dns/class_servDNS.inc:600
+#: admin/systems/services/dns/class_servDNS.inc:590
 #: admin/systems/services/dns/servdnseditzone.tpl:111
 msgid "Retry"
 msgstr "重试"
@@ -133,13 +133,13 @@ msgid ""
 msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:498
-#: admin/systems/services/dns/class_servDNS.inc:594
+#: admin/systems/services/dns/class_servDNS.inc:584
 #, fuzzy
 msgid "Network class"
 msgstr "网络地址"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:592
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
+#: admin/systems/services/dns/class_servDNSeditZone.inc:594
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:455
 msgid "Add"
 msgstr "添加"
 
@@ -167,9 +167,9 @@ msgid "Create a new DNS zone entry"
 msgstr "创建一个新 DNS zone 条目"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
-#: admin/systems/services/dns/class_servDNS.inc:550
-#: admin/systems/services/dns/class_servDNS.inc:579
-#: admin/systems/services/dns/class_servDNS.inc:580
+#: admin/systems/services/dns/class_servDNS.inc:540
+#: admin/systems/services/dns/class_servDNS.inc:569
+#: admin/systems/services/dns/class_servDNS.inc:570
 #, fuzzy
 msgid "DNS service"
 msgstr "添加 DNS 服务"
@@ -185,88 +185,71 @@ msgid ""
 "action, use the cancel button below."
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNS.inc:166
-msgid "Remove DNS service"
-msgstr "删除 DNS 服务"
-
-#: admin/systems/services/dns/class_servDNS.inc:167
-msgid ""
-"This server has DNS features enabled. You can disable them by clicking below."
-msgstr "该账号已经启用 DNS 功能。您可以点击下面按钮禁用。"
-
-#: admin/systems/services/dns/class_servDNS.inc:169
-msgid "Add DNS service"
-msgstr "添加 DNS 服务"
-
-#: admin/systems/services/dns/class_servDNS.inc:170
-msgid ""
-"This server has DNS features disabled. You can enable them by clicking below."
-msgstr "该账号已经禁用 DNS 功能。您可以点击下面按钮启用。"
-
-#: admin/systems/services/dns/class_servDNS.inc:280
-#: admin/systems/services/dns/class_servDNS.inc:602
+#: admin/systems/services/dns/class_servDNS.inc:270
+#: admin/systems/services/dns/class_servDNS.inc:592
 #: admin/systems/services/dns/servdnseditzone.tpl:129
 msgid "TTL"
 msgstr "TTL"
 
-#: admin/systems/services/dns/class_servDNS.inc:281
+#: admin/systems/services/dns/class_servDNS.inc:271
 msgid "Class"
 msgstr "类"
 
-#: admin/systems/services/dns/class_servDNS.inc:345
+#: admin/systems/services/dns/class_servDNS.inc:335
 #, fuzzy, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
 msgstr "不能删除所选的域，因为它仍然被这些条目使用 '%s'"
 
-#: admin/systems/services/dns/class_servDNS.inc:455
-#: admin/systems/services/dns/class_servDNS.inc:471
-#: admin/systems/services/dns/class_servDNS.inc:496
-#: admin/systems/services/dns/class_servDNS.inc:507
-#: admin/systems/services/dns/class_servDNS.inc:540
+#: admin/systems/services/dns/class_servDNS.inc:445
+#: admin/systems/services/dns/class_servDNS.inc:461
+#: admin/systems/services/dns/class_servDNS.inc:486
+#: admin/systems/services/dns/class_servDNS.inc:497
+#: admin/systems/services/dns/class_servDNS.inc:530
+#: admin/systems/services/dns/class_DNS.inc:748
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP 错误:"
 
-#: admin/systems/services/dns/class_servDNS.inc:580
+#: admin/systems/services/dns/class_servDNS.inc:570
 msgid "Services"
 msgstr "服务"
 
-#: admin/systems/services/dns/class_servDNS.inc:588
+#: admin/systems/services/dns/class_servDNS.inc:578
 #, fuzzy
 msgid "Start service"
 msgstr "添加 DNS 服务"
 
-#: admin/systems/services/dns/class_servDNS.inc:589
+#: admin/systems/services/dns/class_servDNS.inc:579
 #, fuzzy
 msgid "Stop service"
 msgstr "添加 DNS 服务"
 
-#: admin/systems/services/dns/class_servDNS.inc:590
+#: admin/systems/services/dns/class_servDNS.inc:580
 #, fuzzy
 msgid "Restart service"
 msgstr "添加 DNS 服务"
 
-#: admin/systems/services/dns/class_servDNS.inc:595
+#: admin/systems/services/dns/class_servDNS.inc:585
 #, fuzzy
 msgid "Zone entry editor"
 msgstr "域记录"
 
-#: admin/systems/services/dns/class_servDNS.inc:596
+#: admin/systems/services/dns/class_servDNS.inc:586
 #, fuzzy
 msgid "Primary dns server"
 msgstr "这个域的主要 dns 服务器"
 
-#: admin/systems/services/dns/class_servDNS.inc:597
+#: admin/systems/services/dns/class_servDNS.inc:587
 #: admin/systems/services/dns/servdnseditzone.tpl:80
 msgid "Mail address"
 msgstr "邮件地址"
 
-#: admin/systems/services/dns/class_servDNS.inc:603
+#: admin/systems/services/dns/class_servDNS.inc:593
 #, fuzzy
 msgid "MX records"
 msgstr "Mx记录"
 
-#: admin/systems/services/dns/class_servDNS.inc:604
+#: admin/systems/services/dns/class_servDNS.inc:594
 #: admin/systems/services/dns/servdnseditzone.tpl:48
 msgid "Zone records"
 msgstr "域记录"
@@ -295,24 +278,86 @@ msgstr "无法创建 '%s'，目标名称已经存在。"
 msgid "Entry '%s' is used more than once."
 msgstr "名称 '%s' 被使用超过了一次。"
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:299
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:302
 #, fuzzy, php-format
 msgid "%s records cannot be used more than once."
 msgstr "名称 '%s' 被使用超过了一次。"
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:306
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:309
 #, fuzzy, php-format
 msgid "Please fix the empty %s record for entry '%s'."
 msgstr "有一个空的 '%s'，为主机 '%s'。"
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:314
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:317
 #, php-format
 msgid "Please fix the duplicate %s record for entry '%s'."
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:454
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:457
 msgid "Remove"
 msgstr "删除"
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
+#, php-format
+msgid "The syntax of entry %s (record type %s, value %s) is invalid!"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
+msgid "Example"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:515
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:523
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:531
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:562
+msgid "Entry should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:518
+msgid "Value should be an IPv6 address."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:526
+msgid "Value should be an IPv4 address."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:534
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:552
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:557
+msgid "Value should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:541
+msgid "Value 1 should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:544
+msgid "Value 2 should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:547
+msgid "Value should be composed of 'preference target'."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:567
+msgid "Value 1 (priority) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:570
+msgid "Value 2 (weight) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:573
+msgid "Value 3 (port) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:576
+msgid "Value 4 (target) should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:579
+msgid "Value should be composed of 'priority weight port target'."
+msgstr ""
 
 #: admin/systems/services/dns/class_DNS.inc:161
 #, fuzzy, php-format
@@ -369,6 +414,22 @@ msgstr "Mx记录"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "全局域记录"
+
+#~ msgid "Remove DNS service"
+#~ msgstr "删除 DNS 服务"
+
+#~ msgid ""
+#~ "This server has DNS features enabled. You can disable them by clicking "
+#~ "below."
+#~ msgstr "该账号已经启用 DNS 功能。您可以点击下面按钮禁用。"
+
+#~ msgid "Add DNS service"
+#~ msgstr "添加 DNS 服务"
+
+#~ msgid ""
+#~ "This server has DNS features disabled. You can enable them by clicking "
+#~ "below."
+#~ msgstr "该账号已经禁用 DNS 功能。您可以点击下面按钮启用。"
 
 #, fuzzy
 #~ msgid "Service start"

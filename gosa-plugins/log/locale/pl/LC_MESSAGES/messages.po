@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2010-01-18 17:05+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,231 +14,212 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:27
-#: admin/systems/services/log/class_gosaLogServer.inc:55
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
 #, fuzzy
-msgid "GOsa MySQL logging service"
+msgid "Syslog Service"
+msgstr "Podgląd logu systemowego"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "enabled"
+msgstr "Włączone"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+#, fuzzy
+msgid "Syslog server"
+msgstr "Pokaż serwery"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#, fuzzy
+msgid "Logging service"
 msgstr "Usługa Logowania"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:68
-#: admin/systems/services/log/class_gosaLogServer.inc:101
-#: addons/logview/gosa_log_contents.tpl:84
-msgid "User"
-msgstr "Użytkownik"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:71
-#: admin/systems/services/log/class_gosaLogServer.inc:102
-#: admin/systems/services/log/gosaLogServer.tpl:20
-msgid "Password"
-msgstr "Hasło"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:74
-#: admin/systems/services/log/class_gosaLogServer.inc:100
-#: admin/systems/services/log/gosaLogServer.tpl:4
-msgid "Database"
-msgstr "Baza"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:91
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-#, fuzzy
-msgid "GOsa logging service"
-msgstr "Usługa Logowania"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:92
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
 msgid "Services"
 msgstr "Usługi"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:103
+#: admin/systems/services/syslog/class_goLogDBServer.inc:31
+#: admin/systems/services/syslog/class_goLogDBServer.inc:59
 #, fuzzy
-msgid "Allow view of entries on this server"
-msgstr "Zezwól na logowanie do serwera terminali"
-
-#: admin/systems/services/log/gosaLogServer.tpl:1
-#, fuzzy
-msgid "GOsa logging database"
+msgid "Syslog service database"
 msgstr "Baza logowania"
 
-#: admin/systems/services/log/gosaLogServer.tpl:12
+#: admin/systems/services/syslog/class_goLogDBServer.inc:69
+msgid "User"
+msgstr "Użytkownik"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:72
+#: admin/systems/services/syslog/class_goLogDBServer.inc:105
+#: admin/systems/services/syslog/goLogDBServer.tpl:20
+msgid "Password"
+msgstr "Hasło"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:75
+#: admin/systems/services/syslog/class_goLogDBServer.inc:106
+#: admin/systems/services/syslog/goLogDBServer.tpl:4
+msgid "Database"
+msgstr "Baza"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:92
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
 #, fuzzy
-msgid "Database user"
-msgstr "Bazy danych"
+msgid "Logging database"
+msgstr "Baza logowania"
 
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "Filtr"
-
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
-msgid "Show hosts"
-msgstr "Pokaż hosty"
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Akcja"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr "Interwał czasowy"
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "Szukaj dla"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Proszę podać szukany ciąg znaków"
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
-msgid "Ruleset"
-msgstr "Reguły"
-
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "Edytuj"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "Szukaj"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "Data"
-
-#: addons/logview/gosa_log_contents.tpl:85
+#: admin/systems/services/syslog/class_goLogDBServer.inc:101
 #, fuzzy
-msgid "Object type"
-msgstr "Nazwa obiektu"
+msgid "Start"
+msgstr "Startup"
 
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Obiekt"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
-msgid "Message"
-msgstr "Wiadomość"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr "Wyszukiwanie nie zwróciło żadnych wyników..."
-
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
-#: addons/logview/class_gosa_logview.inc:6
-msgid "System logs"
-msgstr "Logi systemowe"
-
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
-msgid "This does something"
-msgstr "To robi coś"
-
-#: addons/logview/class_logview.inc:79
-#: addons/logview/class_gosa_logview.inc:118
-msgid "Warning"
-msgstr "Ostrzeżenie"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy
-msgid "Configuration error"
-msgstr "Plik konfiguracyjny"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy, php-format
-msgid "Missing %s PHP extension!"
-msgstr "Rozszerzenie inwentarza"
-
-#: addons/logview/class_logview.inc:95 addons/logview/class_logview.inc:102
-#: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
-#: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
-#: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
-#: addons/logview/class_gosa_logview.inc:151
-#: addons/logview/class_gosa_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:237
-#: addons/logview/class_gosa_logview.inc:288
-msgid "Error"
-msgstr "Błąd"
-
-#: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:169
-#: addons/logview/class_gosa_logview.inc:184
-msgid "All"
-msgstr "Wszystkie"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "jedna godzina"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 godzin"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 godzin"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 godziny"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 dni"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "jeden tydzień"
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 tygodnie"
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "jeden miesiąc"
-
-#: addons/logview/class_logview.inc:412
-#, fuzzy
-msgid "Log view"
-msgstr "Usługa logowania"
-
-#: addons/logview/class_logview.inc:413
-#, fuzzy
-msgid "Log view addon"
-msgstr "Przesuń w dół"
-
-#: addons/logview/main.inc:49
-msgid "System log view"
-msgstr "Podgląd logu systemowego"
-
-#: addons/logview/class_gosa_logview.inc:203
-#, fuzzy
-msgid "You have insufficient permissions to view syslog entries."
-msgstr "Brak uprawnień do usunięcia tej bloklisty."
-
-#: addons/logview/class_gosa_logview.inc:238
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+#: admin/systems/services/syslog/class_goLogDBServer.inc:102
+msgid "Stop"
 msgstr ""
 
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "Poziom logu"
+#: admin/systems/services/syslog/class_goLogDBServer.inc:103
+#, fuzzy
+msgid "Restart"
+msgstr "Odtwórz"
 
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "Poziom"
+#: admin/systems/services/syslog/class_goLogDBServer.inc:104
+#, fuzzy
+msgid "Admin"
+msgstr "DN Administratora"
 
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "Nazwa hosta"
+#: admin/systems/services/syslog/goLogDBServer.tpl:1
+#, fuzzy
+msgid "Logging database information"
+msgstr "Przełącz informacje"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:12
+#, fuzzy
+msgid "Logging DB user"
+msgstr "Użytkownik bazy logowania"
+
+#, fuzzy
+#~ msgid "GOsa MySQL logging service"
+#~ msgstr "Usługa Logowania"
+
+#, fuzzy
+#~ msgid "Allow view of entries on this server"
+#~ msgstr "Zezwól na logowanie do serwera terminali"
+
+#, fuzzy
+#~ msgid "Database user"
+#~ msgstr "Bazy danych"
+
+#~ msgid "Filter"
+#~ msgstr "Filtr"
+
+#~ msgid "Show hosts"
+#~ msgstr "Pokaż hosty"
+
+#~ msgid "Action"
+#~ msgstr "Akcja"
+
+#~ msgid "Time interval"
+#~ msgstr "Interwał czasowy"
+
+#~ msgid "Search for"
+#~ msgstr "Szukaj dla"
+
+#~ msgid "Enter string to search for"
+#~ msgstr "Proszę podać szukany ciąg znaków"
+
+#~ msgid "Ruleset"
+#~ msgstr "Reguły"
+
+#~ msgid "Edit"
+#~ msgstr "Edytuj"
+
+#~ msgid "Search"
+#~ msgstr "Szukaj"
+
+#~ msgid "Date"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Object type"
+#~ msgstr "Nazwa obiektu"
+
+#~ msgid "Object"
+#~ msgstr "Obiekt"
+
+#~ msgid "Message"
+#~ msgstr "Wiadomość"
+
+#~ msgid "Search returned no results..."
+#~ msgstr "Wyszukiwanie nie zwróciło żadnych wyników..."
+
+#~ msgid "System logs"
+#~ msgstr "Logi systemowe"
+
+#~ msgid "This does something"
+#~ msgstr "To robi coś"
+
+#~ msgid "Warning"
+#~ msgstr "Ostrzeżenie"
+
+#, fuzzy
+#~ msgid "Configuration error"
+#~ msgstr "Plik konfiguracyjny"
+
+#, fuzzy
+#~ msgid "Missing %s PHP extension!"
+#~ msgstr "Rozszerzenie inwentarza"
+
+#~ msgid "Error"
+#~ msgstr "Błąd"
+
+#~ msgid "All"
+#~ msgstr "Wszystkie"
+
+#~ msgid "one hour"
+#~ msgstr "jedna godzina"
+
+#~ msgid "6 hours"
+#~ msgstr "6 godzin"
+
+#~ msgid "12 hours"
+#~ msgstr "12 godzin"
+
+#~ msgid "24 hours"
+#~ msgstr "24 godziny"
+
+#~ msgid "2 days"
+#~ msgstr "2 dni"
+
+#~ msgid "one week"
+#~ msgstr "jeden tydzień"
+
+#~ msgid "2 weeks"
+#~ msgstr "2 tygodnie"
+
+#~ msgid "one month"
+#~ msgstr "jeden miesiąc"
+
+#, fuzzy
+#~ msgid "Log view"
+#~ msgstr "Usługa logowania"
+
+#, fuzzy
+#~ msgid "Log view addon"
+#~ msgstr "Przesuń w dół"
+
+#, fuzzy
+#~ msgid "You have insufficient permissions to view syslog entries."
+#~ msgstr "Brak uprawnień do usunięcia tej bloklisty."
+
+#~ msgid "Log level"
+#~ msgstr "Poziom logu"
+
+#~ msgid "Level"
+#~ msgstr "Poziom"
+
+#~ msgid "Hostname"
+#~ msgstr "Nazwa hosta"
 
 #~ msgid "Save"
 #~ msgstr "Zapisz"

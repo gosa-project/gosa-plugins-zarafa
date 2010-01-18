@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:39+0200\n"
+"POT-Creation-Date: 2010-01-18 17:06+0100\n"
 "PO-Revision-Date: 2009-06-30 11:33+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -16,15 +16,42 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
+#: admin/sudo/sudo-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "Filtres"
+
+#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:547
+#: admin/sudo/class_sudoGeneric.inc:552 admin/sudo/class_sudoGeneric.inc:557
+#: admin/sudo/class_sudoGeneric.inc:566 admin/sudo/class_sudoGeneric.inc:669
+#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
+#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
+msgid "Name"
+msgstr "Nom"
+
+#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:384
+#: admin/sudo/class_target_list_users.inc:177
+msgid "User"
+msgstr "Utilisateur"
+
 #: admin/sudo/remove.tpl:2
 msgid "Warning"
 msgstr "Avertissement"
 
-#: admin/sudo/remove.tpl:9
-msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
+#: admin/sudo/remove.tpl:6
+msgid ""
+"Please double check if you really want to do this since there is no way for "
+"GOsa to get your data back."
 msgstr ""
-"Si vous êtes sur, cliquez sur 'Effacer' pour continuer ou 'Annuler' pour "
-"arrêter."
+"Veuillez vérifier que vous voulez effectuer cette action. Toutes les données "
+"seront perdues étant donné qu'il est impossible pour GOsa de récupérer vos "
+"données."
+
+#: admin/sudo/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
+"'Annuler' pour abandonner."
 
 #: admin/sudo/class_sudoGeneric.inc:295
 msgid "Error"
@@ -42,11 +69,6 @@ msgstr "accès complet"
 msgid "allow access to these hosts"
 msgstr "permettre l'accès a ces hôtes"
 
-#: admin/sudo/class_sudoGeneric.inc:384
-#: admin/sudo/class_target_list_users.inc:177
-msgid "User"
-msgstr "Utilisateur"
-
 #: admin/sudo/class_sudoGeneric.inc:385
 #: admin/sudo/class_target_list_users.inc:178
 msgid "Group"
@@ -56,25 +78,16 @@ msgstr "Groupes"
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
-#: admin/sudo/class_sudoGeneric.inc:547 admin/sudo/class_sudoGeneric.inc:552
-#: admin/sudo/class_sudoGeneric.inc:557 admin/sudo/class_sudoGeneric.inc:566
-#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34 admin/sudo/paste_generic.tpl:5
-#: admin/sudo/class_divListSudo.inc:78
-msgid "Name"
-msgstr "Nom"
-
-#: admin/sudo/class_sudoGeneric.inc:660
+#: admin/sudo/class_sudoGeneric.inc:660 admin/sudo/class_sudoManagement.inc:25
 msgid "Sudo"
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:661 admin/sudo/class_sudoGeneric.inc:666
-#: admin/sudo/class_sudoManagement.inc:262
 msgid "Sudo role"
 msgstr "Rôle sudo"
 
 #: admin/sudo/class_sudoGeneric.inc:670 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44
+#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr ""
 
@@ -216,6 +229,40 @@ msgstr "Stations de travail"
 msgid "Terminal"
 msgstr ""
 
+#: admin/sudo/sudo-list.xml:11
+msgid "List of sudo roles"
+msgstr "Liste des rôles sudo"
+
+#: admin/sudo/sudo-list.xml:15 admin/sudo/sudo-list.xml:65
+msgid "Role"
+msgstr "Rôle"
+
+#: admin/sudo/sudo-list.xml:48
+msgid "Actions"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:59
+msgid "Create"
+msgstr "Créer"
+
+#: admin/sudo/sudo-list.xml:72
+msgid "Default"
+msgstr "Défaut"
+
+#: admin/sudo/sudo-list.xml:85
+msgid "Remove"
+msgstr "Supprimer"
+
+#: admin/sudo/sudo-list.xml:117
+#, fuzzy
+msgid "Edit sudo role"
+msgstr "Liste des rôles sudo"
+
+#: admin/sudo/sudo-list.xml:130
+#, fuzzy
+msgid "Remove sudo role"
+msgstr "Gèrer les rôles sudo"
+
 #: admin/sudo/class_target_list_users.inc:47
 msgid "Select the target objects"
 msgstr "Sélectionner les objets cible"
@@ -244,10 +291,6 @@ msgstr "Montrer les groupes"
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
 msgstr "Appliquer"
-
-#: admin/sudo/main.inc:50 admin/sudo/main.inc:54
-msgid "Sudo role administration"
-msgstr "Administration des rôles sudo"
 
 #: admin/sudo/class_sudoOption.inc:154
 msgid "Unknown option"
@@ -299,72 +342,47 @@ msgstr "Afficher les systèmes correspondant"
 msgid "Regular expression for matching addresses"
 msgstr "Expression régulière pour sélectionner les adresses correspondantes"
 
-#: admin/sudo/class_divListSudo.inc:51 admin/sudo/class_divListSudo.inc:52
-msgid "List of sudo roles"
-msgstr "Liste des rôles sudo"
+#: admin/sudo/class_sudoManagement.inc:26
+#, fuzzy
+msgid "Sudo management"
+msgstr "Gestion SAMBA"
 
-#: admin/sudo/class_divListSudo.inc:72
-msgid "Select all"
-msgstr "Sélectionner tout"
+#~ msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Si vous êtes sur, cliquez sur 'Effacer' pour continuer ou 'Annuler' pour "
+#~ "arrêter."
 
-#: admin/sudo/class_divListSudo.inc:78
-msgid "Department"
-msgstr "Département"
+#~ msgid "Sudo role administration"
+#~ msgstr "Administration des rôles sudo"
 
-#: admin/sudo/class_divListSudo.inc:79 admin/sudo/class_divListSudo.inc:105
-msgid "Actions"
-msgstr ""
+#~ msgid "Select all"
+#~ msgstr "Sélectionner tout"
 
-#: admin/sudo/class_divListSudo.inc:83
-msgid "Regular expression for matching role names"
-msgstr "Expressions régulières pour le nom des rôles correspondants"
+#~ msgid "Department"
+#~ msgstr "Département"
 
-#: admin/sudo/class_divListSudo.inc:85
-msgid "Regular expression for matching role member names"
-msgstr ""
-"Expressions régulières pour le nom des membres appartenant aux rôles "
-"correspondants"
+#~ msgid "Regular expression for matching role names"
+#~ msgstr "Expressions régulières pour le nom des rôles correspondants"
 
-#: admin/sudo/class_divListSudo.inc:107
-msgid "Create"
-msgstr "Créer"
+#~ msgid "Regular expression for matching role member names"
+#~ msgstr ""
+#~ "Expressions régulières pour le nom des membres appartenant aux rôles "
+#~ "correspondants"
 
-#: admin/sudo/class_divListSudo.inc:111
-msgid "Role"
-msgstr "Rôle"
+#~ msgid "Edit this entry"
+#~ msgstr "Editer cette entrée"
 
-#: admin/sudo/class_divListSudo.inc:112
-msgid "Default"
-msgstr "Défaut"
+#~ msgid "Delete this entry"
+#~ msgstr "Supprimer cette entrée"
 
-#: admin/sudo/class_divListSudo.inc:119
-msgid "Remove"
-msgstr "Supprimer"
+#~ msgid "Number of listed roles"
+#~ msgstr "Nombre de rôles listés"
 
-#: admin/sudo/class_divListSudo.inc:171
-msgid "Edit this entry"
-msgstr "Editer cette entrée"
+#~ msgid "Sudo roles"
+#~ msgstr "Rôles Sudo"
 
-#: admin/sudo/class_divListSudo.inc:178
-msgid "Delete this entry"
-msgstr "Supprimer cette entrée"
+#~ msgid "Permission"
+#~ msgstr "Permissions"
 
-#: admin/sudo/class_divListSudo.inc:220
-msgid "Number of listed roles"
-msgstr "Nombre de rôles listés"
-
-#: admin/sudo/class_sudoManagement.inc:31
-msgid "Sudo roles"
-msgstr "Rôles Sudo"
-
-#: admin/sudo/class_sudoManagement.inc:32
-msgid "Manage sudo roles"
-msgstr "Gèrer les rôles sudo"
-
-#: admin/sudo/class_sudoManagement.inc:247
-msgid "Permission"
-msgstr "Permissions"
-
-#: admin/sudo/class_sudoManagement.inc:295
-msgid "Permission error"
-msgstr "Erreur de permissions"
+#~ msgid "Permission error"
+#~ msgstr "Erreur de permissions"

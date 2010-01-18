@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2010-01-18 17:05+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -29,8 +29,8 @@ msgstr "Kerberos"
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:395
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:410
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:690
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:343
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:376
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:363
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:396
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Искать в поддеревьях"
@@ -64,7 +64,7 @@ msgstr "Английский"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:494
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:222
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:242
 msgid "Kerberos"
 msgstr "Kerberos"
 
@@ -190,45 +190,45 @@ msgid ""
 "s'!"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:213
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:233
 msgid "updated to"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:222
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:242
 #, php-format
 msgid ""
 "The principal name of this system has changed. Do you want to update your "
 "principals? The affected principals are listed below: %s"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:239
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:240
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:259
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:260
 #, fuzzy
 msgid "Create key"
 msgstr "Создать"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:246
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:266
 #, fuzzy
 msgid "Recreate key"
 msgstr "Создать"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:248
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:268
 #, fuzzy
 msgid "Remove key"
 msgstr "Удалить"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:287
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:317
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:307
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:337
 #, fuzzy
 msgid "installed"
 msgstr "отключен"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:457
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:477
 #, fuzzy
 msgid "Kerberos key"
 msgstr "Kerberos"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:458
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:478
 #, fuzzy
 msgid "Kerberos host key"
 msgstr "Kerberos"

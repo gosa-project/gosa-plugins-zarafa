@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:39+0200\n"
+"POT-Creation-Date: 2010-01-18 17:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,35 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: admin/sudo/sudo-filter.tpl:3
+msgid "Filter"
+msgstr ""
+
+#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:547
+#: admin/sudo/class_sudoGeneric.inc:552 admin/sudo/class_sudoGeneric.inc:557
+#: admin/sudo/class_sudoGeneric.inc:566 admin/sudo/class_sudoGeneric.inc:669
+#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
+#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
+msgid "Name"
+msgstr ""
+
+#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:384
+#: admin/sudo/class_target_list_users.inc:177
+msgid "User"
+msgstr ""
+
 #: admin/sudo/remove.tpl:2
 msgid "Warning"
 msgstr ""
 
-#: admin/sudo/remove.tpl:9
-msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
+#: admin/sudo/remove.tpl:6
+msgid ""
+"Please double check if you really want to do this since there is no way for "
+"GOsa to get your data back."
+msgstr ""
+
+#: admin/sudo/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:295
@@ -40,11 +63,6 @@ msgstr ""
 msgid "allow access to these hosts"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:384
-#: admin/sudo/class_target_list_users.inc:177
-msgid "User"
-msgstr ""
-
 #: admin/sudo/class_sudoGeneric.inc:385
 #: admin/sudo/class_target_list_users.inc:178
 msgid "Group"
@@ -54,25 +72,16 @@ msgstr ""
 msgid "LDAP error"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:547 admin/sudo/class_sudoGeneric.inc:552
-#: admin/sudo/class_sudoGeneric.inc:557 admin/sudo/class_sudoGeneric.inc:566
-#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34 admin/sudo/paste_generic.tpl:5
-#: admin/sudo/class_divListSudo.inc:78
-msgid "Name"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:660
+#: admin/sudo/class_sudoGeneric.inc:660 admin/sudo/class_sudoManagement.inc:25
 msgid "Sudo"
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:661 admin/sudo/class_sudoGeneric.inc:666
-#: admin/sudo/class_sudoManagement.inc:262
 msgid "Sudo role"
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:670 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44
+#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr ""
 
@@ -214,6 +223,38 @@ msgstr ""
 msgid "Terminal"
 msgstr ""
 
+#: admin/sudo/sudo-list.xml:11
+msgid "List of sudo roles"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:15 admin/sudo/sudo-list.xml:65
+msgid "Role"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:48
+msgid "Actions"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:59
+msgid "Create"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:72
+msgid "Default"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:85
+msgid "Remove"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:117
+msgid "Edit sudo role"
+msgstr ""
+
+#: admin/sudo/sudo-list.xml:130
+msgid "Remove sudo role"
+msgstr ""
+
 #: admin/sudo/class_target_list_users.inc:47
 msgid "Select the target objects"
 msgstr ""
@@ -241,10 +282,6 @@ msgstr ""
 
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
-msgstr ""
-
-#: admin/sudo/main.inc:50 admin/sudo/main.inc:54
-msgid "Sudo role administration"
 msgstr ""
 
 #: admin/sudo/class_sudoOption.inc:154
@@ -297,70 +334,6 @@ msgstr ""
 msgid "Regular expression for matching addresses"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:51 admin/sudo/class_divListSudo.inc:52
-msgid "List of sudo roles"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:72
-msgid "Select all"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:78
-msgid "Department"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:79 admin/sudo/class_divListSudo.inc:105
-msgid "Actions"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:83
-msgid "Regular expression for matching role names"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:85
-msgid "Regular expression for matching role member names"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:107
-msgid "Create"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:111
-msgid "Role"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:112
-msgid "Default"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:119
-msgid "Remove"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:171
-msgid "Edit this entry"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:178
-msgid "Delete this entry"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:220
-msgid "Number of listed roles"
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:31
-msgid "Sudo roles"
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:32
-msgid "Manage sudo roles"
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:247
-msgid "Permission"
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:295
-msgid "Permission error"
+#: admin/sudo/class_sudoManagement.inc:26
+msgid "Sudo management"
 msgstr ""

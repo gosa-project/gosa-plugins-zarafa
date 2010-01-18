@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2010-01-18 17:03+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -41,7 +41,7 @@ msgid "Name"
 msgstr "名称"
 
 #: addons/addressbook/address_info.tpl:32
-#: addons/addressbook/class_addressbook.inc:875
+#: addons/addressbook/class_addressbook.inc:877
 #: addons/addressbook/address_edit.tpl:48
 msgid "Initials"
 msgstr "中间名"
@@ -94,7 +94,7 @@ msgid "Company"
 msgstr "公司"
 
 #: addons/addressbook/address_info.tpl:117
-#: addons/addressbook/class_addressbook.inc:870
+#: addons/addressbook/class_addressbook.inc:872
 #: addons/addressbook/address_edit.tpl:155
 msgid "Department"
 msgstr "部门"
@@ -121,7 +121,7 @@ msgstr "传真"
 
 #: addons/addressbook/address_info.tpl:179
 #: addons/addressbook/class_addressbook.inc:728
-#: addons/addressbook/class_addressbook.inc:868
+#: addons/addressbook/class_addressbook.inc:870
 #: addons/addressbook/address_edit.tpl:246
 msgid "Pager"
 msgstr "呼机"
@@ -147,9 +147,9 @@ msgstr "所以，如果您确定，请按“删除”继续，否则按“取消
 msgid "Dial connection..."
 msgstr "拨号中..."
 
-#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:461
-#: addons/addressbook/class_addressbook.inc:468
-#: addons/addressbook/class_addressbook.inc:472
+#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:463
+#: addons/addressbook/class_addressbook.inc:470
+#: addons/addressbook/class_addressbook.inc:474
 #: addons/addressbook/class_addressbook.inc:598
 msgid "Dial"
 msgstr "拨号"
@@ -157,9 +157,9 @@ msgstr "拨号"
 #: addons/addressbook/class_addressbook.inc:11
 #: addons/addressbook/class_addressbook.inc:12
 #: addons/addressbook/class_addressbook.inc:23
-#: addons/addressbook/class_addressbook.inc:851
-#: addons/addressbook/class_addressbook.inc:852
-#: addons/addressbook/class_addressbook.inc:857 addons/addressbook/main.inc:43
+#: addons/addressbook/class_addressbook.inc:853
+#: addons/addressbook/class_addressbook.inc:854
+#: addons/addressbook/class_addressbook.inc:859 addons/addressbook/main.inc:43
 msgid "Addressbook"
 msgstr "地址簿"
 
@@ -177,39 +177,39 @@ msgstr "创建新 FAI 对象"
 msgid "This does something"
 msgstr "******"
 
-#: addons/addressbook/class_addressbook.inc:191
+#: addons/addressbook/class_addressbook.inc:193
 #, php-format
 msgid "Dial from %s to %s now?"
 msgstr "现在从 %s 拨号到 %s 么？"
 
-#: addons/addressbook/class_addressbook.inc:195
+#: addons/addressbook/class_addressbook.inc:197
 msgid "Error"
 msgstr "错误"
 
-#: addons/addressbook/class_addressbook.inc:195
+#: addons/addressbook/class_addressbook.inc:197
 #, fuzzy
 msgid ""
 "You need to set your personal phone number in order to perform direct dials."
 msgstr "您尚未设置个人电话号码。要想使用直接拨号需要修改个人电话号码。"
 
-#: addons/addressbook/class_addressbook.inc:223
+#: addons/addressbook/class_addressbook.inc:225
 #: addons/addressbook/class_addressbook.inc:799
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP 错误:"
 
-#: addons/addressbook/class_addressbook.inc:231
-#: addons/addressbook/class_addressbook.inc:339
+#: addons/addressbook/class_addressbook.inc:233
+#: addons/addressbook/class_addressbook.inc:341
 #, fuzzy
 msgid "Permission"
 msgstr "允许"
 
-#: addons/addressbook/class_addressbook.inc:478
+#: addons/addressbook/class_addressbook.inc:480
 #, php-format
 msgid "Save contact for %s as vcard"
 msgstr "保存 %s 的内容为 vcard"
 
-#: addons/addressbook/class_addressbook.inc:484
+#: addons/addressbook/class_addressbook.inc:486
 #, php-format
 msgid "Send mail to %s"
 msgstr "发送邮件到 %s"
@@ -239,7 +239,7 @@ msgstr "全部"
 #: addons/addressbook/class_addressbook.inc:702
 #: addons/addressbook/class_addressbook.inc:711
 #: addons/addressbook/class_addressbook.inc:732
-#: addons/addressbook/class_addressbook.inc:861
+#: addons/addressbook/class_addressbook.inc:863
 msgid "Given name"
 msgstr "名"
 
@@ -274,79 +274,79 @@ msgid ""
 "Cannot create a unique DN for your entry. Please fill more formular fields."
 msgstr "无法为您的条目创建一个唯一 DN。请填写更多字段。"
 
-#: addons/addressbook/class_addressbook.inc:851
+#: addons/addressbook/class_addressbook.inc:853
 #, fuzzy
 msgid "Addressbook entries"
 msgstr "显示地址簿记录"
 
-#: addons/addressbook/class_addressbook.inc:852
+#: addons/addressbook/class_addressbook.inc:854
 #, fuzzy
 msgid "Addressbook related objects"
 msgstr "保存地址簿条目失败"
 
-#: addons/addressbook/class_addressbook.inc:856
+#: addons/addressbook/class_addressbook.inc:858
 msgid "Addons"
 msgstr "插件"
 
-#: addons/addressbook/class_addressbook.inc:860
+#: addons/addressbook/class_addressbook.inc:862
 msgid "Surename"
 msgstr "姓"
 
-#: addons/addressbook/class_addressbook.inc:862
+#: addons/addressbook/class_addressbook.inc:864
 #, fuzzy
 msgid "Telefon number"
 msgstr "电话号码"
 
-#: addons/addressbook/class_addressbook.inc:863
+#: addons/addressbook/class_addressbook.inc:865
 #, fuzzy
 msgid "Fax number"
 msgstr "系列号"
 
-#: addons/addressbook/class_addressbook.inc:864
+#: addons/addressbook/class_addressbook.inc:866
 #, fuzzy
 msgid "Mobile number"
 msgstr "电话号码"
 
-#: addons/addressbook/class_addressbook.inc:865
+#: addons/addressbook/class_addressbook.inc:867
 #, fuzzy
 msgid "Home phone number"
 msgstr "电话号码"
 
-#: addons/addressbook/class_addressbook.inc:866
+#: addons/addressbook/class_addressbook.inc:868
 #, fuzzy
 msgid "User identification"
 msgstr "用户信息"
 
-#: addons/addressbook/class_addressbook.inc:867
+#: addons/addressbook/class_addressbook.inc:869
 msgid "Mail address"
 msgstr "邮件地址"
 
-#: addons/addressbook/class_addressbook.inc:869
+#: addons/addressbook/class_addressbook.inc:871
 msgid "Organization"
 msgstr "组织/公司"
 
-#: addons/addressbook/class_addressbook.inc:871
+#: addons/addressbook/class_addressbook.inc:873
 msgid "Location"
 msgstr "位置"
 
-#: addons/addressbook/class_addressbook.inc:872
-#: addons/addressbook/class_addressbook.inc:873
+#: addons/addressbook/class_addressbook.inc:874
+#: addons/addressbook/class_addressbook.inc:875
 msgid "Postal address"
 msgstr "地址"
 
-#: addons/addressbook/class_addressbook.inc:874
+#: addons/addressbook/class_addressbook.inc:876
 msgid "State"
 msgstr "州/省"
 
-#: addons/addressbook/class_addressbook.inc:876
+#: addons/addressbook/class_addressbook.inc:878
 msgid "Title"
 msgstr "称谓"
 
-#: addons/addressbook/class_addressbook.inc:877
+#: addons/addressbook/class_addressbook.inc:879
 msgid "Home postal address"
 msgstr "住宅地址"
 
-#: addons/addressbook/class_addressbook.inc:878
+#: addons/addressbook/class_addressbook.inc:880
 msgid "Common name"
 msgstr "常用名"
 

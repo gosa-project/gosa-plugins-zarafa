@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2010-01-18 17:05+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,231 +19,212 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:27
-#: admin/systems/services/log/class_gosaLogServer.inc:55
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
 #, fuzzy
-msgid "GOsa MySQL logging service"
+msgid "Syslog Service"
+msgstr "Systeem log weergave"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "enabled"
+msgstr "gedeactiveerd"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+#, fuzzy
+msgid "Syslog server"
+msgstr "Toon servers"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#, fuzzy
+msgid "Logging service"
 msgstr "Log DB gebruiker"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:68
-#: admin/systems/services/log/class_gosaLogServer.inc:101
-#: addons/logview/gosa_log_contents.tpl:84
-msgid "User"
-msgstr "Gebruiker"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:71
-#: admin/systems/services/log/class_gosaLogServer.inc:102
-#: admin/systems/services/log/gosaLogServer.tpl:20
-msgid "Password"
-msgstr "Wachtwoord"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:74
-#: admin/systems/services/log/class_gosaLogServer.inc:100
-#: admin/systems/services/log/gosaLogServer.tpl:4
-msgid "Database"
-msgstr "Database"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:91
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-#, fuzzy
-msgid "GOsa logging service"
-msgstr "Log DB gebruiker"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:92
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
 msgid "Services"
 msgstr "Services"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:103
+#: admin/systems/services/syslog/class_goLogDBServer.inc:31
+#: admin/systems/services/syslog/class_goLogDBServer.inc:59
 #, fuzzy
-msgid "Allow view of entries on this server"
-msgstr "Sta inloggen op de Terminal Server toe"
-
-#: admin/systems/services/log/gosaLogServer.tpl:1
-#, fuzzy
-msgid "GOsa logging database"
+msgid "Syslog service database"
 msgstr "Log database"
 
-#: admin/systems/services/log/gosaLogServer.tpl:12
+#: admin/systems/services/syslog/class_goLogDBServer.inc:69
+msgid "User"
+msgstr "Gebruiker"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:72
+#: admin/systems/services/syslog/class_goLogDBServer.inc:105
+#: admin/systems/services/syslog/goLogDBServer.tpl:20
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:75
+#: admin/systems/services/syslog/class_goLogDBServer.inc:106
+#: admin/systems/services/syslog/goLogDBServer.tpl:4
+msgid "Database"
+msgstr "Database"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:92
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
 #, fuzzy
-msgid "Database user"
-msgstr "Databases"
+msgid "Logging database"
+msgstr "Log database"
 
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "Filter"
-
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
-msgid "Show hosts"
-msgstr "Toon computers"
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Actie"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr "Tijd interval"
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "Zoek naar"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Voer de te zoeken string in"
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
-msgid "Ruleset"
-msgstr "Ruleset"
-
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "Bewerken"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "Zoeken"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "Datum"
-
-#: addons/logview/gosa_log_contents.tpl:85
+#: admin/systems/services/syslog/class_goLogDBServer.inc:101
 #, fuzzy
-msgid "Object type"
-msgstr "Objectnaam"
+msgid "Start"
+msgstr "Opstarten"
 
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Object"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
-msgid "Message"
-msgstr "Bericht"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr "De zoekopdracht gaf geen resultaten terug..."
-
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
-#: addons/logview/class_gosa_logview.inc:6
-msgid "System logs"
-msgstr "Systeem logs"
-
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
-msgid "This does something"
-msgstr "Dit doet iets"
-
-#: addons/logview/class_logview.inc:79
-#: addons/logview/class_gosa_logview.inc:118
-msgid "Warning"
-msgstr "Waarschuwing"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy
-msgid "Configuration error"
-msgstr "Configuratie bestand"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy, php-format
-msgid "Missing %s PHP extension!"
-msgstr "Verwijder printer mogelijkheden"
-
-#: addons/logview/class_logview.inc:95 addons/logview/class_logview.inc:102
-#: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
-#: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
-#: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
-#: addons/logview/class_gosa_logview.inc:151
-#: addons/logview/class_gosa_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:237
-#: addons/logview/class_gosa_logview.inc:288
-msgid "Error"
-msgstr "Fout"
-
-#: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:169
-#: addons/logview/class_gosa_logview.inc:184
-msgid "All"
-msgstr "Alle"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "1 uur"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 uur"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 uur"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 uur"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 dagen"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "1 week"
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 weken"
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "1 maand"
-
-#: addons/logview/class_logview.inc:412
-#, fuzzy
-msgid "Log view"
-msgstr "Log DB gebruiker"
-
-#: addons/logview/class_logview.inc:413
-#, fuzzy
-msgid "Log view addon"
-msgstr "Omlaag verplaatsen"
-
-#: addons/logview/main.inc:49
-msgid "System log view"
-msgstr "Systeem log weergave"
-
-#: addons/logview/class_gosa_logview.inc:203
-#, fuzzy
-msgid "You have insufficient permissions to view syslog entries."
-msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
-
-#: addons/logview/class_gosa_logview.inc:238
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+#: admin/systems/services/syslog/class_goLogDBServer.inc:102
+msgid "Stop"
 msgstr ""
 
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "Log prioriteit"
+#: admin/systems/services/syslog/class_goLogDBServer.inc:103
+#, fuzzy
+msgid "Restart"
+msgstr "Opnieuw proberen"
 
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "Prioriteit"
+#: admin/systems/services/syslog/class_goLogDBServer.inc:104
+#, fuzzy
+msgid "Admin"
+msgstr "Beheerders DN"
 
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "Computernaam"
+#: admin/systems/services/syslog/goLogDBServer.tpl:1
+#, fuzzy
+msgid "Logging database information"
+msgstr "Informatie weergeven/verbergen"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:12
+#, fuzzy
+msgid "Logging DB user"
+msgstr "Log DB gebruiker"
+
+#, fuzzy
+#~ msgid "GOsa MySQL logging service"
+#~ msgstr "Log DB gebruiker"
+
+#, fuzzy
+#~ msgid "Allow view of entries on this server"
+#~ msgstr "Sta inloggen op de Terminal Server toe"
+
+#, fuzzy
+#~ msgid "Database user"
+#~ msgstr "Databases"
+
+#~ msgid "Filter"
+#~ msgstr "Filter"
+
+#~ msgid "Show hosts"
+#~ msgstr "Toon computers"
+
+#~ msgid "Action"
+#~ msgstr "Actie"
+
+#~ msgid "Time interval"
+#~ msgstr "Tijd interval"
+
+#~ msgid "Search for"
+#~ msgstr "Zoek naar"
+
+#~ msgid "Enter string to search for"
+#~ msgstr "Voer de te zoeken string in"
+
+#~ msgid "Ruleset"
+#~ msgstr "Ruleset"
+
+#~ msgid "Edit"
+#~ msgstr "Bewerken"
+
+#~ msgid "Search"
+#~ msgstr "Zoeken"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Object type"
+#~ msgstr "Objectnaam"
+
+#~ msgid "Object"
+#~ msgstr "Object"
+
+#~ msgid "Message"
+#~ msgstr "Bericht"
+
+#~ msgid "Search returned no results..."
+#~ msgstr "De zoekopdracht gaf geen resultaten terug..."
+
+#~ msgid "System logs"
+#~ msgstr "Systeem logs"
+
+#~ msgid "This does something"
+#~ msgstr "Dit doet iets"
+
+#~ msgid "Warning"
+#~ msgstr "Waarschuwing"
+
+#, fuzzy
+#~ msgid "Configuration error"
+#~ msgstr "Configuratie bestand"
+
+#, fuzzy
+#~ msgid "Missing %s PHP extension!"
+#~ msgstr "Verwijder printer mogelijkheden"
+
+#~ msgid "Error"
+#~ msgstr "Fout"
+
+#~ msgid "All"
+#~ msgstr "Alle"
+
+#~ msgid "one hour"
+#~ msgstr "1 uur"
+
+#~ msgid "6 hours"
+#~ msgstr "6 uur"
+
+#~ msgid "12 hours"
+#~ msgstr "12 uur"
+
+#~ msgid "24 hours"
+#~ msgstr "24 uur"
+
+#~ msgid "2 days"
+#~ msgstr "2 dagen"
+
+#~ msgid "one week"
+#~ msgstr "1 week"
+
+#~ msgid "2 weeks"
+#~ msgstr "2 weken"
+
+#~ msgid "one month"
+#~ msgstr "1 maand"
+
+#, fuzzy
+#~ msgid "Log view"
+#~ msgstr "Log DB gebruiker"
+
+#, fuzzy
+#~ msgid "Log view addon"
+#~ msgstr "Omlaag verplaatsen"
+
+#, fuzzy
+#~ msgid "You have insufficient permissions to view syslog entries."
+#~ msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
+
+#~ msgid "Log level"
+#~ msgstr "Log prioriteit"
+
+#~ msgid "Level"
+#~ msgstr "Prioriteit"
+
+#~ msgid "Hostname"
+#~ msgstr "Computernaam"
 
 #~ msgid "Save"
 #~ msgstr "Opslaan"

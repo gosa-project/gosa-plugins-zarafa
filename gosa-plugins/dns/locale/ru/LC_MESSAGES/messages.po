@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:36+0200\n"
+"POT-Creation-Date: 2010-01-18 17:04+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -48,8 +48,8 @@ msgid "Zones"
 msgstr "телефоны"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
-#: admin/systems/services/dns/class_servDNS.inc:184
-#: admin/systems/services/dns/class_servDNS.inc:345
+#: admin/systems/services/dns/class_servDNS.inc:174
+#: admin/systems/services/dns/class_servDNS.inc:335
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
@@ -67,22 +67,22 @@ msgid "Down"
 msgstr "Домен"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:586
+#: admin/systems/services/dns/class_servDNSeditZone.inc:588
 msgid "Delete"
 msgstr "Удалить"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:412
 #: admin/systems/services/dns/class_servDNSeditZone.inc:417
 #: admin/systems/services/dns/class_servDNSeditZone.inc:425
-#: admin/systems/services/dns/class_servDNS.inc:592
+#: admin/systems/services/dns/class_servDNS.inc:582
 #: admin/systems/services/dns/servdnseditzone.tpl:7
 #, fuzzy
 msgid "Zone name"
 msgstr "Название"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:421
-#: admin/systems/services/dns/class_servDNS.inc:279
-#: admin/systems/services/dns/class_servDNS.inc:593
+#: admin/systems/services/dns/class_servDNS.inc:269
+#: admin/systems/services/dns/class_servDNS.inc:583
 #, fuzzy
 msgid "Reverse zone"
 msgstr "Ссылки"
@@ -93,13 +93,13 @@ msgid "Only lowercase allowed"
 msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:429
-#: admin/systems/services/dns/class_servDNS.inc:598
+#: admin/systems/services/dns/class_servDNS.inc:588
 #, fuzzy
 msgid "Serial"
 msgstr "терминалы"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:433
-#: admin/systems/services/dns/class_servDNS.inc:599
+#: admin/systems/services/dns/class_servDNS.inc:589
 #: admin/systems/services/dns/servdnseditzone.tpl:102
 #, fuzzy
 msgid "Refresh"
@@ -111,14 +111,14 @@ msgid "Time to life"
 msgstr "Мобильный"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:441
-#: admin/systems/services/dns/class_servDNS.inc:601
+#: admin/systems/services/dns/class_servDNS.inc:591
 #: admin/systems/services/dns/servdnseditzone.tpl:120
 #, fuzzy
 msgid "Expire"
 msgstr "Экспорт"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:445
-#: admin/systems/services/dns/class_servDNS.inc:600
+#: admin/systems/services/dns/class_servDNS.inc:590
 #: admin/systems/services/dns/servdnseditzone.tpl:111
 msgid "Retry"
 msgstr "Повторить"
@@ -139,13 +139,13 @@ msgid ""
 msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:498
-#: admin/systems/services/dns/class_servDNS.inc:594
+#: admin/systems/services/dns/class_servDNS.inc:584
 #, fuzzy
 msgid "Network class"
 msgstr "Сетевые устройства"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:592
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
+#: admin/systems/services/dns/class_servDNSeditZone.inc:594
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:455
 msgid "Add"
 msgstr "Добавить"
 
@@ -173,9 +173,9 @@ msgid "Create a new DNS zone entry"
 msgstr "Создание нового объекта в"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
-#: admin/systems/services/dns/class_servDNS.inc:550
-#: admin/systems/services/dns/class_servDNS.inc:579
-#: admin/systems/services/dns/class_servDNS.inc:580
+#: admin/systems/services/dns/class_servDNS.inc:540
+#: admin/systems/services/dns/class_servDNS.inc:569
+#: admin/systems/services/dns/class_servDNS.inc:570
 #, fuzzy
 msgid "DNS service"
 msgstr "Добавить сервис DNS"
@@ -191,96 +191,73 @@ msgid ""
 "action, use the cancel button below."
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNS.inc:166
-msgid "Remove DNS service"
-msgstr "Удалить сервис DNS"
-
-#: admin/systems/services/dns/class_servDNS.inc:167
-#, fuzzy
-msgid ""
-"This server has DNS features enabled. You can disable them by clicking below."
-msgstr ""
-"В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
-"ниже."
-
-#: admin/systems/services/dns/class_servDNS.inc:169
-msgid "Add DNS service"
-msgstr "Добавить сервис DNS"
-
-#: admin/systems/services/dns/class_servDNS.inc:170
-#, fuzzy
-msgid ""
-"This server has DNS features disabled. You can enable them by clicking below."
-msgstr ""
-"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
-"ниже."
-
-#: admin/systems/services/dns/class_servDNS.inc:280
-#: admin/systems/services/dns/class_servDNS.inc:602
+#: admin/systems/services/dns/class_servDNS.inc:270
+#: admin/systems/services/dns/class_servDNS.inc:592
 #: admin/systems/services/dns/servdnseditzone.tpl:129
 msgid "TTL"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNS.inc:281
+#: admin/systems/services/dns/class_servDNS.inc:271
 #, fuzzy
 msgid "Class"
 msgstr "Выберите тип мыши"
 
-#: admin/systems/services/dns/class_servDNS.inc:345
+#: admin/systems/services/dns/class_servDNS.inc:335
 #, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNS.inc:455
-#: admin/systems/services/dns/class_servDNS.inc:471
-#: admin/systems/services/dns/class_servDNS.inc:496
-#: admin/systems/services/dns/class_servDNS.inc:507
-#: admin/systems/services/dns/class_servDNS.inc:540
+#: admin/systems/services/dns/class_servDNS.inc:445
+#: admin/systems/services/dns/class_servDNS.inc:461
+#: admin/systems/services/dns/class_servDNS.inc:486
+#: admin/systems/services/dns/class_servDNS.inc:497
+#: admin/systems/services/dns/class_servDNS.inc:530
+#: admin/systems/services/dns/class_DNS.inc:748
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
 
-#: admin/systems/services/dns/class_servDNS.inc:580
+#: admin/systems/services/dns/class_servDNS.inc:570
 msgid "Services"
 msgstr "Сервисы"
 
-#: admin/systems/services/dns/class_servDNS.inc:588
+#: admin/systems/services/dns/class_servDNS.inc:578
 #, fuzzy
 msgid "Start service"
 msgstr "Добавить сервис DNS"
 
-#: admin/systems/services/dns/class_servDNS.inc:589
+#: admin/systems/services/dns/class_servDNS.inc:579
 #, fuzzy
 msgid "Stop service"
 msgstr "Добавить сервис DNS"
 
-#: admin/systems/services/dns/class_servDNS.inc:590
+#: admin/systems/services/dns/class_servDNS.inc:580
 #, fuzzy
 msgid "Restart service"
 msgstr "Добавить сервис DNS"
 
-#: admin/systems/services/dns/class_servDNS.inc:595
+#: admin/systems/services/dns/class_servDNS.inc:585
 #, fuzzy
 msgid "Zone entry editor"
 msgstr "Каталог"
 
-#: admin/systems/services/dns/class_servDNS.inc:596
+#: admin/systems/services/dns/class_servDNS.inc:586
 #, fuzzy
 msgid "Primary dns server"
 msgstr "Основной адрес эл. почты для этой общей папки"
 
-#: admin/systems/services/dns/class_servDNS.inc:597
+#: admin/systems/services/dns/class_servDNS.inc:587
 #: admin/systems/services/dns/servdnseditzone.tpl:80
 #, fuzzy
 msgid "Mail address"
 msgstr "MAC-адрес"
 
-#: admin/systems/services/dns/class_servDNS.inc:603
+#: admin/systems/services/dns/class_servDNS.inc:593
 #, fuzzy
 msgid "MX records"
 msgstr "Каталог"
 
-#: admin/systems/services/dns/class_servDNS.inc:604
+#: admin/systems/services/dns/class_servDNS.inc:594
 #: admin/systems/services/dns/servdnseditzone.tpl:48
 #, fuzzy
 msgid "Zone records"
@@ -310,24 +287,86 @@ msgstr "Подразделение с таким именем уже сущес�
 msgid "Entry '%s' is used more than once."
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:299
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:302
 #, php-format
 msgid "%s records cannot be used more than once."
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:306
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:309
 #, fuzzy, php-format
 msgid "Please fix the empty %s record for entry '%s'."
 msgstr "Метод '%s' не описан в вашем файле конфигурации."
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:314
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:317
 #, php-format
 msgid "Please fix the duplicate %s record for entry '%s'."
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:454
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:457
 msgid "Remove"
 msgstr "Удалить"
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
+#, php-format
+msgid "The syntax of entry %s (record type %s, value %s) is invalid!"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
+msgid "Example"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:515
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:523
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:531
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:562
+msgid "Entry should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:518
+msgid "Value should be an IPv6 address."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:526
+msgid "Value should be an IPv4 address."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:534
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:552
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:557
+msgid "Value should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:541
+msgid "Value 1 should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:544
+msgid "Value 2 should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:547
+msgid "Value should be composed of 'preference target'."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:567
+msgid "Value 1 (priority) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:570
+msgid "Value 2 (weight) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:573
+msgid "Value 3 (port) should be a number."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:576
+msgid "Value 4 (target) should be a DNS name."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:579
+msgid "Value should be composed of 'priority weight port target'."
+msgstr ""
 
 #: admin/systems/services/dns/class_DNS.inc:161
 #, php-format
@@ -387,6 +426,28 @@ msgstr "Каталог"
 #, fuzzy
 msgid "Global zone records"
 msgstr "Каталог"
+
+#~ msgid "Remove DNS service"
+#~ msgstr "Удалить сервис DNS"
+
+#, fuzzy
+#~ msgid ""
+#~ "This server has DNS features enabled. You can disable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
+#~ "ниже."
+
+#~ msgid "Add DNS service"
+#~ msgstr "Добавить сервис DNS"
+
+#, fuzzy
+#~ msgid ""
+#~ "This server has DNS features disabled. You can enable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+#~ "ниже."
 
 #, fuzzy
 #~ msgid "Service start"

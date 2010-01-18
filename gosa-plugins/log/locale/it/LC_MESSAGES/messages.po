@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:37+0200\n"
+"POT-Creation-Date: 2010-01-18 17:05+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,240 +15,184 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:27
-#: admin/systems/services/log/class_gosaLogServer.inc:55
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
 #, fuzzy
-msgid "GOsa MySQL logging service"
+msgid "Syslog Service"
+msgstr "Dipartimento"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "enabled"
+msgstr "disabilitato"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+#, fuzzy
+msgid "Syslog server"
+msgstr "Mostra server"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#, fuzzy
+msgid "Logging service"
 msgstr "Utenti di Dominio"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:68
-#: admin/systems/services/log/class_gosaLogServer.inc:101
-#: addons/logview/gosa_log_contents.tpl:84
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
+msgid "Services"
+msgstr "Servizi"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:31
+#: admin/systems/services/syslog/class_goLogDBServer.inc:59
+#, fuzzy
+msgid "Syslog service database"
+msgstr "Database"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:69
 msgid "User"
 msgstr ""
 
-#: admin/systems/services/log/class_gosaLogServer.inc:71
-#: admin/systems/services/log/class_gosaLogServer.inc:102
-#: admin/systems/services/log/gosaLogServer.tpl:20
+#: admin/systems/services/syslog/class_goLogDBServer.inc:72
+#: admin/systems/services/syslog/class_goLogDBServer.inc:105
+#: admin/systems/services/syslog/goLogDBServer.tpl:20
 msgid "Password"
 msgstr "Password"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:74
-#: admin/systems/services/log/class_gosaLogServer.inc:100
-#: admin/systems/services/log/gosaLogServer.tpl:4
+#: admin/systems/services/syslog/class_goLogDBServer.inc:75
+#: admin/systems/services/syslog/class_goLogDBServer.inc:106
+#: admin/systems/services/syslog/goLogDBServer.tpl:4
 #, fuzzy
 msgid "Database"
 msgstr "Database"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:91
-#: admin/systems/services/log/class_gosaLogServer.inc:92
+#: admin/systems/services/syslog/class_goLogDBServer.inc:92
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
 #, fuzzy
-msgid "GOsa logging service"
-msgstr "Utenti di Dominio"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-msgid "Services"
-msgstr "Servizi"
-
-#: admin/systems/services/log/class_gosaLogServer.inc:103
-#, fuzzy
-msgid "Allow view of entries on this server"
-msgstr "Permetti la connessione al Terminal Server"
-
-#: admin/systems/services/log/gosaLogServer.tpl:1
-#, fuzzy
-msgid "GOsa logging database"
+msgid "Logging database"
 msgstr "Database"
 
-#: admin/systems/services/log/gosaLogServer.tpl:12
+#: admin/systems/services/syslog/class_goLogDBServer.inc:101
 #, fuzzy
-msgid "Database user"
-msgstr "Database"
+msgid "Start"
+msgstr "Avvio"
 
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "Filtro"
+#: admin/systems/services/syslog/class_goLogDBServer.inc:102
+msgid "Stop"
+msgstr ""
 
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+#: admin/systems/services/syslog/class_goLogDBServer.inc:103
 #, fuzzy
-msgid "Show hosts"
-msgstr "Mostra telefoni"
+msgid "Restart"
+msgstr "Riprova"
 
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Azione"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr ""
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "Cerca"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr ""
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+#: admin/systems/services/syslog/class_goLogDBServer.inc:104
 #, fuzzy
-msgid "Ruleset"
-msgstr "Rimuovi"
+msgid "Admin"
+msgstr "DN dell'amministratore"
 
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "Modifica"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "Cerca"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "Data"
-
-#: addons/logview/gosa_log_contents.tpl:85
+#: admin/systems/services/syslog/goLogDBServer.tpl:1
 #, fuzzy
-msgid "Object type"
-msgstr "Nome dell'oggetto"
+msgid "Logging database information"
+msgstr "Informazioni organizzazione"
 
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Oggetto"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+#: admin/systems/services/syslog/goLogDBServer.tpl:12
 #, fuzzy
-msgid "Message"
-msgstr "Home Page"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr ""
-
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
-#: addons/logview/class_gosa_logview.inc:6
-msgid "System logs"
-msgstr "Log di sitema"
-
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
-msgid "This does something"
-msgstr "Questo fa qualcosa"
-
-#: addons/logview/class_logview.inc:79
-#: addons/logview/class_gosa_logview.inc:118
-msgid "Warning"
-msgstr "Attenzione"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy
-msgid "Configuration error"
-msgstr "File di configurazione"
-
-#: addons/logview/class_logview.inc:83
-#: addons/logview/class_gosa_logview.inc:124
-#, fuzzy, php-format
-msgid "Missing %s PHP extension!"
-msgstr "Elimina foto"
-
-#: addons/logview/class_logview.inc:95 addons/logview/class_logview.inc:102
-#: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
-#: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
-#: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
-#: addons/logview/class_gosa_logview.inc:151
-#: addons/logview/class_gosa_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:237
-#: addons/logview/class_gosa_logview.inc:288
-msgid "Error"
-msgstr ""
-
-#: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:169
-#: addons/logview/class_gosa_logview.inc:184
-msgid "All"
-msgstr ""
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-#, fuzzy
-msgid "one hour"
-msgstr "Numero di telefono"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr ""
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr ""
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr ""
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr ""
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:73
-#, fuzzy
-msgid "one week"
-msgstr "Numero di telefono"
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr ""
-
-#: addons/logview/class_logview.inc:159
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr ""
-
-#: addons/logview/class_logview.inc:412
-#, fuzzy
-msgid "Log view"
+msgid "Logging DB user"
 msgstr "Utenti di Dominio"
 
-#: addons/logview/class_logview.inc:413
 #, fuzzy
-msgid "Log view addon"
-msgstr "Dominio"
+#~ msgid "GOsa MySQL logging service"
+#~ msgstr "Utenti di Dominio"
 
-#: addons/logview/main.inc:49
 #, fuzzy
-msgid "System log view"
-msgstr "Dipartimento"
+#~ msgid "Allow view of entries on this server"
+#~ msgstr "Permetti la connessione al Terminal Server"
 
-#: addons/logview/class_gosa_logview.inc:203
 #, fuzzy
-msgid "You have insufficient permissions to view syslog entries."
-msgstr "Non hai il permesso di cambiare la tua password."
+#~ msgid "Database user"
+#~ msgstr "Database"
 
-#: addons/logview/class_gosa_logview.inc:238
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
+#~ msgid "Filter"
+#~ msgstr "Filtro"
 
-#: addons/logview/contents.tpl:20
 #, fuzzy
-msgid "Log level"
-msgstr "Rimuovi"
+#~ msgid "Show hosts"
+#~ msgstr "Mostra telefoni"
 
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr ""
+#~ msgid "Action"
+#~ msgstr "Azione"
 
-#: addons/logview/contents.tpl:83
+#~ msgid "Search for"
+#~ msgstr "Cerca"
+
 #, fuzzy
-msgid "Hostname"
-msgstr "Scegli il tuo numero di telefono personale"
+#~ msgid "Ruleset"
+#~ msgstr "Rimuovi"
+
+#~ msgid "Edit"
+#~ msgstr "Modifica"
+
+#~ msgid "Search"
+#~ msgstr "Cerca"
+
+#~ msgid "Date"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Object type"
+#~ msgstr "Nome dell'oggetto"
+
+#~ msgid "Object"
+#~ msgstr "Oggetto"
+
+#, fuzzy
+#~ msgid "Message"
+#~ msgstr "Home Page"
+
+#~ msgid "System logs"
+#~ msgstr "Log di sitema"
+
+#~ msgid "This does something"
+#~ msgstr "Questo fa qualcosa"
+
+#~ msgid "Warning"
+#~ msgstr "Attenzione"
+
+#, fuzzy
+#~ msgid "Configuration error"
+#~ msgstr "File di configurazione"
+
+#, fuzzy
+#~ msgid "Missing %s PHP extension!"
+#~ msgstr "Elimina foto"
+
+#, fuzzy
+#~ msgid "one hour"
+#~ msgstr "Numero di telefono"
+
+#, fuzzy
+#~ msgid "one week"
+#~ msgstr "Numero di telefono"
+
+#, fuzzy
+#~ msgid "Log view"
+#~ msgstr "Utenti di Dominio"
+
+#, fuzzy
+#~ msgid "Log view addon"
+#~ msgstr "Dominio"
+
+#, fuzzy
+#~ msgid "You have insufficient permissions to view syslog entries."
+#~ msgstr "Non hai il permesso di cambiare la tua password."
+
+#, fuzzy
+#~ msgid "Log level"
+#~ msgstr "Rimuovi"
+
+#, fuzzy
+#~ msgid "Hostname"
+#~ msgstr "Scegli il tuo numero di telefono personale"
 
 #~ msgid "Save"
 #~ msgstr "Salva"

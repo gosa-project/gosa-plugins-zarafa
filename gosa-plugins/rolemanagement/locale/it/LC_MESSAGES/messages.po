@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:38+0200\n"
+"POT-Creation-Date: 2010-01-18 17:06+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,40 +15,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: admin/roleManagement/class_roleManagement.inc:26
-#: admin/roleManagement/class_roleGeneric.inc:389
-#: admin/roleManagement/main.inc:53
+#: admin/roleManagement/class_roleManagement.inc:25
+#: admin/roleManagement/class_roleGeneric.inc:401
 #, fuzzy
 msgid "Roles"
 msgstr "Ruolo"
 
-#: admin/roleManagement/class_roleManagement.inc:27
+#: admin/roleManagement/class_roleManagement.inc:26
 #, fuzzy
-msgid "Manage roles"
-msgstr "Utenti di Dominio"
-
-#: admin/roleManagement/class_roleManagement.inc:162
-#, fuzzy
-msgid "Permission"
-msgstr "Permessi"
-
-#: admin/roleManagement/class_roleManagement.inc:178
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:117
-#: admin/roleManagement/class_divListRole.inc:205
-msgid "Role"
-msgstr "Ruolo"
-
-#: admin/roleManagement/class_roleManagement.inc:212
-#, fuzzy
-msgid "Permission error"
-msgstr "Permessi"
+msgid "Role management"
+msgstr "Riferimenti"
 
 #: admin/roleManagement/remove.tpl:2
 msgid "Warning"
 msgstr "Attenzione"
 
-#: admin/roleManagement/remove.tpl:7
+#: admin/roleManagement/remove.tpl:6
 msgid ""
 "Please double check if you really want to do this since there is no way for "
 "GOsa to get your data back."
@@ -61,140 +43,119 @@ msgstr ""
 "Quindi - Se sei sicuro - premi <i>Rimuovi</i> per continuare o <i>Annulla</"
 "i> per abortire."
 
-#: admin/roleManagement/class_roleGeneric.inc:216
-#: admin/roleManagement/class_roleGeneric.inc:225
-#: admin/roleManagement/class_roleGeneric.inc:392
+#: admin/roleManagement/class_roleGeneric.inc:220
+#: admin/roleManagement/class_roleGeneric.inc:229
+#: admin/roleManagement/class_roleGeneric.inc:404
+#: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Cognome"
 
-#: admin/roleManagement/class_roleGeneric.inc:246
+#: admin/roleManagement/class_roleGeneric.inc:250
 msgid "Unknown"
 msgstr ""
 
-#: admin/roleManagement/class_roleGeneric.inc:264
-#: admin/roleManagement/class_roleGeneric.inc:298
+#: admin/roleManagement/class_roleGeneric.inc:268
+#: admin/roleManagement/class_roleGeneric.inc:310
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
 
-#: admin/roleManagement/class_roleGeneric.inc:383
+#: admin/roleManagement/class_roleGeneric.inc:395
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Generale"
 
-#: admin/roleManagement/class_roleGeneric.inc:384
+#: admin/roleManagement/class_roleGeneric.inc:396
 #, fuzzy
 msgid "Role generic"
 msgstr "Cognome"
 
-#: admin/roleManagement/class_roleGeneric.inc:393
+#: admin/roleManagement/class_roleGeneric.inc:405
+#: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Descrizione"
 
-#: admin/roleManagement/class_roleGeneric.inc:394
-#: admin/roleManagement/class_divListRole.inc:104
+#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/role-list.tpl:13
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Base"
 
-#: admin/roleManagement/class_roleGeneric.inc:395
+#: admin/roleManagement/class_roleGeneric.inc:407
 #, fuzzy
 msgid "Telefon number"
 msgstr "Numero di telefono"
 
-#: admin/roleManagement/class_roleGeneric.inc:396
+#: admin/roleManagement/class_roleGeneric.inc:408
 #: admin/roleManagement/roleGeneric.tpl:56
 #, fuzzy
 msgid "Fax number"
 msgstr "Numero di telefono"
 
-#: admin/roleManagement/class_roleGeneric.inc:397
+#: admin/roleManagement/class_roleGeneric.inc:409
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr ""
 
-#: admin/roleManagement/paste_generic.tpl:4
-msgid "Group name"
-msgstr "Nome gruppo"
-
-#: admin/roleManagement/paste_generic.tpl:7
-#, fuzzy
-msgid "Please enter the new object group name"
-msgstr "Inserisci la URI del server LDAP"
-
-#: admin/roleManagement/class_divListRole.inc:52
-#: admin/roleManagement/class_divListRole.inc:53
+#: admin/roleManagement/role-list.xml:11
 #, fuzzy
 msgid "List of roles"
 msgstr "Lista degli utenti"
 
-#: admin/roleManagement/class_divListRole.inc:64
-#, fuzzy
-msgid "Select all"
-msgstr "Rimuovi"
+#: admin/roleManagement/role-list.xml:15 admin/roleManagement/role-list.xml:74
+msgid "Role"
+msgstr "Ruolo"
 
-#: admin/roleManagement/class_divListRole.inc:70
-msgid "Department"
-msgstr "Dipartimento"
-
-#: admin/roleManagement/class_divListRole.inc:71
-#: admin/roleManagement/class_divListRole.inc:110
+#: admin/roleManagement/role-list.xml:57
 msgid "Actions"
 msgstr "Azioni"
 
-#: admin/roleManagement/class_divListRole.inc:80
-#, fuzzy
-msgid "Regular expression for matching role names"
-msgstr "Espressioni regolare per selezionare il nome del gruppo"
-
-#: admin/roleManagement/class_divListRole.inc:107
-msgid "Submit department"
-msgstr "Imposta dipartimento"
-
-#: admin/roleManagement/class_divListRole.inc:107
-msgid "Submit"
-msgstr ""
-
-#: admin/roleManagement/class_divListRole.inc:115
+#: admin/roleManagement/role-list.xml:68
 msgid "Create"
 msgstr "Creare"
 
-#: admin/roleManagement/class_divListRole.inc:123
+#: admin/roleManagement/role-list.xml:86
+msgid "Edit"
+msgstr "Modifica"
+
+#: admin/roleManagement/role-list.xml:93
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: admin/roleManagement/class_divListRole.inc:168
-msgid "edit"
-msgstr "modifica"
-
-#: admin/roleManagement/class_divListRole.inc:169
-msgid "Edit this entry"
-msgstr "Modifica questo record"
-
-#: admin/roleManagement/class_divListRole.inc:174
-msgid "delete"
-msgstr "elimina"
-
-#: admin/roleManagement/class_divListRole.inc:175
-msgid "Delete this entry"
-msgstr "Elimina questo record"
-
-#: admin/roleManagement/class_divListRole.inc:222
+#: admin/roleManagement/role-list.xml:125
 #, fuzzy
-msgid "Number of listed roles"
-msgstr "Nome del gruppo"
+msgid "Edit role"
+msgstr "Modifica contatto"
 
-#: admin/roleManagement/class_divListRole.inc:223
+#: admin/roleManagement/role-list.xml:138
 #, fuzzy
-msgid "Number of listed departments"
-msgstr "Imposta dipartimento"
+msgid "Remove role"
+msgstr "Oggetti membri"
 
-#: admin/roleManagement/main.inc:57
+#: admin/roleManagement/role-list.tpl:13
+msgid "Update"
+msgstr ""
+
+#: admin/roleManagement/role-list.tpl:13
+msgid "Submit"
+msgstr ""
+
+#: admin/roleManagement/paste_generic.tpl:4
 #, fuzzy
-msgid "Role management"
-msgstr "Riferimenti"
+msgid "Role name"
+msgstr "Cognome"
+
+#: admin/roleManagement/paste_generic.tpl:7
+#, fuzzy
+msgid "Please enter the new object role name"
+msgstr "Inserisci la URI del server LDAP"
+
+#: admin/roleManagement/role-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "Filtri"
 
 #: admin/roleManagement/roleGeneric.tpl:34
 msgid "Choose subtree to place user in"
@@ -242,6 +203,55 @@ msgstr ""
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Manage roles"
+#~ msgstr "Utenti di Dominio"
+
+#, fuzzy
+#~ msgid "Permission"
+#~ msgstr "Permessi"
+
+#, fuzzy
+#~ msgid "Permission error"
+#~ msgstr "Permessi"
+
+#~ msgid "Group name"
+#~ msgstr "Nome gruppo"
+
+#, fuzzy
+#~ msgid "Select all"
+#~ msgstr "Rimuovi"
+
+#~ msgid "Department"
+#~ msgstr "Dipartimento"
+
+#, fuzzy
+#~ msgid "Regular expression for matching role names"
+#~ msgstr "Espressioni regolare per selezionare il nome del gruppo"
+
+#~ msgid "Submit department"
+#~ msgstr "Imposta dipartimento"
+
+#~ msgid "edit"
+#~ msgstr "modifica"
+
+#~ msgid "Edit this entry"
+#~ msgstr "Modifica questo record"
+
+#~ msgid "delete"
+#~ msgstr "elimina"
+
+#~ msgid "Delete this entry"
+#~ msgstr "Elimina questo record"
+
+#, fuzzy
+#~ msgid "Number of listed roles"
+#~ msgstr "Nome del gruppo"
+
+#, fuzzy
+#~ msgid "Number of listed departments"
+#~ msgstr "Imposta dipartimento"
 
 #, fuzzy
 #~ msgid "role"
