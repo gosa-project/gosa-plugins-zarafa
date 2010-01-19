@@ -2664,10 +2664,6 @@ sub _getProductStates_hash {
 sub _get_full_product_host_information {
 	my %arg = ( 'hostId' => undef, @_ );
 
-	if (not defined $arg{hostId}) {
-		return ("function requires hostId as parameter", 1);
-	}
-
 	my $res = &_callOpsi( method => 'getFullProductHostInformation_list',  params => [$arg{hostId}]);
 	my ($res_error, $res_error_str) = &check_opsi_res($res);
 	if ($res_error){ return ((caller(0))[3]." : ".$res_error_str, 1); }
