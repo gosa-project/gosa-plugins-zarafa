@@ -35,10 +35,18 @@
       <image>plugins/systems/images/select_terminal.png</image>
     </objectType>
 
+    <objectType>
+      <label>Object Group</label>
+      <objectClass>gosaGroupOfNames</objectClass>
+      <category>ogroups</category>
+      <class>ogroup</class>
+      <image>plugins/ogroups/images/ogroup.png</image>
+    </objectType>
+
   </definition>
 
   <table>
-    <layout>|20px;c|220px||</layout>
+    <layout>|20px;c|220px||||</layout>
 
     <department>
       <value>%{filter:objectType(dn,objectClass)}</value>
@@ -46,7 +54,7 @@
 
     <department>
       <value>%{filter:departmentLink(row,dn,description)}</value>
-      <span>1</span>
+      <span>3</span>
     </department>
 
     <column>
@@ -66,6 +74,22 @@
       <sortAttribute>description</sortAttribute>
       <sortType>string</sortType>
       <value>%{description}</value>
+      <export>true</export>
+    </column>
+
+    <column>
+      <label>IP</label>
+      <sortAttribute>ipHostNumber</sortAttribute>
+      <sortType>string</sortType>
+      <value>%{ipHostNumber}</value>
+      <export>true</export>
+    </column>
+
+    <column>
+      <label>Mac</label>
+      <sortAttribute>macAddress</sortAttribute>
+      <sortType>string</sortType>
+      <value>%{macAddress}</value>
       <export>true</export>
     </column>
 

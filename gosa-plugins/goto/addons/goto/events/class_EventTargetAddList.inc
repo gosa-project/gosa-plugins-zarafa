@@ -33,15 +33,16 @@ class EventTargetAddList extends management
     $this->storagePoints = array(
         get_ou("serverRDN"), 
         get_ou("workstationRDN"), 
+        get_ou("ogroupRDN"), 
         get_ou('terminalRDN'));
 
     // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
-      $filter= session::global_get(get_class($this)."_filter");
-    } else {
+#    if (session::global_is_set(get_class($this)."_filter")){
+ #     $filter= session::global_get(get_class($this)."_filter");
+  #  } else {
       $filter = new filter(get_template_path("../../addons/goto/events/eventTargetSystems-filter.xml", TRUE));
       $filter->setObjectStorage($this->storagePoints);
-    }
+   # }
     $this->setFilter($filter);
 
     // Build headpage
@@ -66,13 +67,35 @@ class EventTargetAddList extends management
 
   function get_selected_targets()
   {
+    // Collect mac addresses 
     $entries = $this->save();
     $macs = array();
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
+    $member_dns = array();
     foreach($entries as $entry){
       if(isset($entry['macAddress'][0])){
         $macs[] = $entry['macAddress'][0];
+      }
+      if(in_array("gosaGroupOfNames", $entry['objectClass'])){
+        $ldap->cat($entry['dn']);
+        if($ldap->count()){
+          $attrs = $ldap->fetch();
+          if(isset($attrs['member'])){
+            for($i =0 ; $i< $attrs['member']['count']; $i++){
+              $member_dns[] = $attrs['member'][$i];
+            }
+          }
+        }
+      }
+    }
+    foreach($member_dns as $dn){
+      $ldap->cat($dn, array('macAddress')); 
+      if($ldap->count()){
+        $attrs = $ldap->fetch();
+        if(isset($attrs['macAddress'])){
+          $macs[] = $attrs['macAddress'][0];
+        }
       }
     }
     return($macs);
