@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class goFonMacroManagment extends management
+class goFonMacro extends management
 {
   var $plHeadline     = "Macros";
   var $plDescription  = "Phone macro management";

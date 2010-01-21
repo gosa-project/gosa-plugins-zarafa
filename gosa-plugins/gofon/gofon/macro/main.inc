@@ -23,8 +23,8 @@
 /* Remove locks created by this plugin
 */
 if ($remove_lock){
-  if(session::is_set('goFonMacroManagment')){
-      $macl = session::get('goFonMacroManagment');
+  if(session::is_set('goFonMacro')){
+      $macl = session::get('goFonMacro');
       $macl->remove_lock();
   }
 }
@@ -32,24 +32,24 @@ if ($remove_lock){
 /* Remove this plugin from session
 */
 if ( $cleanup ){
-  session::un_set('goFonMacroManagment');
+  session::un_set('goFonMacro');
 }else{
 
-  /* Create goFonMacroManagment object on demand */
-  if (!session::is_set('goFonMacroManagment')){
-    $goFonMacroManagment= new goFonMacroManagment ($config, $ui);
-    session::set('goFonMacroManagment',$goFonMacroManagment);
+  /* Create goFonMacro object on demand */
+  if (!session::is_set('goFonMacro')){
+    $goFonMacro= new goFonMacro ($config, $ui);
+    session::set('goFonMacro',$goFonMacro);
   }
-  $goFonMacroManagment = session::get('goFonMacroManagment');
-  $display= $goFonMacroManagment->execute();
+  $goFonMacro = session::get('goFonMacro');
+  $display= $goFonMacro->execute();
 
   /* Reset requested? */
   if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('goFonMacroManagment');
+    session::un_set ('goFonMacro');
   }
 
   /* Show and save dialog */
-  session::set('goFonMacroManagment',$goFonMacroManagment);
+  session::set('goFonMacro',$goFonMacro);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
