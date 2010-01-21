@@ -23,8 +23,8 @@
 /* Remove locks created by this plugin
 */
 if ($remove_lock){
-  if(session::is_set('blocklistManagement')){
-      $macl = session::get('blocklistManagement');
+  if(session::is_set('blocklist')){
+      $macl = session::get('blocklist');
       $macl->remove_lock();
   }
 }
@@ -32,24 +32,24 @@ if ($remove_lock){
 /* Remove this plugin from session
 */
 if ( $cleanup ){
-  session::un_set('blocklistManagement');
+  session::un_set('blocklist');
 }else{
 
-  /* Create blocklistManagement object on demand */
-  if (!session::is_set('blocklistManagement')){
-    $blocklistManagement= new blocklistManagement ($config, $ui);
-    session::set('blocklistManagement',$blocklistManagement);
+  /* Create blocklist object on demand */
+  if (!session::is_set('blocklist')){
+    $blocklist= new blocklist ($config, $ui);
+    session::set('blocklist',$blocklist);
   }
-  $blocklistManagement = session::get('blocklistManagement');
-  $display= $blocklistManagement->execute();
+  $blocklist = session::get('blocklist');
+  $display= $blocklist->execute();
 
   /* Reset requested? */
   if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('blocklistManagement');
+    session::un_set ('blocklist');
   }
 
   /* Show and save dialog */
-  session::set('blocklistManagement',$blocklistManagement);
+  session::set('blocklist',$blocklist);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
