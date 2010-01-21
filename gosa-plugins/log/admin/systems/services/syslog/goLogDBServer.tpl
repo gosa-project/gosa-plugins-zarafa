@@ -12,7 +12,7 @@
      <td>{t}Logging DB user{/t}{$must}</td>
      <td>
 {render acl=$goLogAdminACL}
-	<input name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 value="{$goLogAdmin}">
+	<input type='text' name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 value="{$goLogAdmin}">
 {/render}
      </td>
     </tr>

@@ -4,7 +4,7 @@
      <td>{t}Asterisk DB user{/t}{$must}</td>
      <td>
 {render acl=$goFonAdminACL}
-      <input name="goFonAdmin" size=30 maxlength=60 id="goFonAdmin" value="{$goFonAdmin}">
+      <input type='text' name="goFonAdmin" size=30 maxlength=60 id="goFonAdmin" value="{$goFonAdmin}">
 {/render}
      </td>
     </tr>
@@ -20,7 +20,7 @@
      <td>{t}Country dial prefix{/t}{$must}</td>
      <td>
 {render acl=$goFonCountryCodeACL}
-      <input name="goFonCountryCode" size=10 maxlength=30 id="goFonCountryCode" value="{$goFonCountryCode}">
+      <input type='text' name="goFonCountryCode" size=10 maxlength=30 id="goFonCountryCode" value="{$goFonCountryCode}">
 {/render}
      </td>
     </tr>
@@ -28,7 +28,7 @@
      <td>{t}Local dial prefix{/t}{$must}</td>
      <td>
 {render acl=$goFonAreaCodeACL}
-      <input name="goFonAreaCode" size=10 maxlength=30 id="goFonAreaCode" value="{$goFonAreaCode}">
+      <input type='text' name="goFonAreaCode" size=10 maxlength=30 id="goFonAreaCode" value="{$goFonAreaCode}">
 {/render}
      </td>
     </tr>

@@ -10,7 +10,7 @@
      <td><LABEL for="cn">{t}Workstation name{/t}</LABEL>{$must}</td>
      <td>
 {render acl=$cnACL}
-      <input name="cn" id="cn" size=18 maxlength=60 value="{$cn}">
+      <input type='text' name="cn" id="cn" size=18 maxlength=60 value="{$cn}">
 {/render}
      </td>
 {/if}
@@ -19,7 +19,7 @@
      <td><LABEL for="description">{t}Description{/t}</LABEL></td>
      <td>
 {render acl=$descriptionACL}
-      <input name="description" id="description" size=18 maxlength=60 value="{$description}">
+      <input type='text' name="description" id="description" size=18 maxlength=60 value="{$description}">
 {/render}
      </td>
     </tr>
@@ -27,7 +27,7 @@
      <td><LABEL for="cn">{t}Location{/t}</LABEL></td>
      <td>
 {render acl=$lACL}
-      <input name="l" id="l" size=18 maxlength=60 value="{$l}">
+      <input type='text' name="l" id="l" size=18 maxlength=60 value="{$l}">
 {/render}
      </td>
     </tr>

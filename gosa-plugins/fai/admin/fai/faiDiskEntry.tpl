@@ -11,7 +11,7 @@
           </td>
           <td>
 {render acl=$DISKcnACL}
-			      <input value="{$DISKcn}" size="45" maxlength="80" name="DISKcn" id="DISKcn">
+			      <input type='text' value="{$DISKcn}" size="45" maxlength="80" name="DISKcn" id="DISKcn">
 {/render}
       		</td>
         </tr>

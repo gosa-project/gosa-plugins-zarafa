@@ -7,7 +7,7 @@
       <td><LABEL for="cn">{t}Application name{/t}{$must}</LABEL></td>
       <td>
 {render acl=$cnACL}
-	<input id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Application name{/t}">
+	<input type='text' id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Application name{/t}">
 {/render}
       </td>
     </tr>
@@ -33,7 +33,7 @@
      <td><LABEL for="description">{t}Description{/t}</LABEL></td>
      <td>
 {render acl=$descriptionACL}
-      <input id="description" name="description" size=35 maxlength=80 value="{$description}">
+      <input type='text' id="description" name="description" size=35 maxlength=80 value="{$description}">
 {/render}
      </td>
     </tr>

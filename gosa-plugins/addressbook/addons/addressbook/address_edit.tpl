@@ -35,10 +35,10 @@
 								</td>
    								<td>
 {render acl=$snACL}	
-									<input id="sn" name="sn" size=10 maxlength=60 value="{$info_sn}">, 
+									<input type='text' id="sn" name="sn" size=10 maxlength=60 value="{$info_sn}">, 
 {/render}
 {render acl=$givenNameACL}
-									<input id="givenName" name="givenName" size=10 maxlength=60 value="{$info_givenName}">
+									<input type='text' id="givenName" name="givenName" size=10 maxlength=60 value="{$info_givenName}">
 {/render}
 								<td>
   							</tr>
@@ -50,7 +50,7 @@
 								</td>
 								<td>
 {render acl=$initialsACL}
-									<input id="initials" name="initials" size=5 maxlength=20 value="{$info_initials}">
+									<input type='text' id="initials" name="initials" size=5 maxlength=20 value="{$info_initials}">
 {/render}
 								</td>
   							</tr>
@@ -62,7 +62,7 @@
 								</td>
 								<td>
 {render acl=$titleACL}
-									<input id="title" name="title" size=10 maxlength=20 value="{$info_title}">
+									<input type='text' id="title" name="title" size=10 maxlength=20 value="{$info_title}">
 {/render}
 								</td>
   							</tr>
@@ -96,7 +96,7 @@
 								</td>
 								<td>
 {render acl=$homePhoneACL}
-									<input id="homePhone" name="homePhone" size=15 maxlength=60 value="{$info_homePhone}">
+									<input type='text' id="homePhone" name="homePhone" size=15 maxlength=60 value="{$info_homePhone}">
 {/render}
 								</td>
 						  	</tr>
@@ -108,7 +108,7 @@
 								</td>
 								<td>
 {render acl=$mobileACL}
-									<input id="mobile" name="mobile" size=15 maxlength=60 value="{$info_mobile}">
+									<input type='text' id="mobile" name="mobile" size=15 maxlength=60 value="{$info_mobile}">
 {/render}
 								</td>
 						  	</tr>
@@ -120,7 +120,7 @@
 								</td>
 								<td>
 {render acl=$mailACL}
-									<input id="mail" name="mail" size=15 maxlength=60 value="{$info_mail}">
+									<input type='text' id="mail" name="mail" size=15 maxlength=60 value="{$info_mail}">
 {/render}
 								</td>
 						  	</tr>
@@ -145,7 +145,7 @@
 											</td>
 											<td>
 {render acl=$oACL}
-												<input id="o" name="o" size=15 maxlength=60 value="{$info_o}">
+												<input type='text' id="o" name="o" size=15 maxlength=60 value="{$info_o}">
 {/render}
 											</td>
 									 	</tr>
@@ -157,7 +157,7 @@
 											</td>
 											<td>
 {render acl=$ouACL}
-												<input id="ou" name="ou" size=15 maxlength=60 value="{$info_ou}">
+												<input type='text' id="ou" name="ou" size=15 maxlength=60 value="{$info_ou}">
 {/render}
 											</td>
 									 	</tr>
@@ -169,7 +169,7 @@
 											</td>
 											<td>
 {render acl=$lACL}
-												<input id="l" name="l" size=15 maxlength=60 value="{$info_l}">
+												<input type='text' id="l" name="l" size=15 maxlength=60 value="{$info_l}">
 {/render}
 											</td>
 									 	</tr>
@@ -181,7 +181,7 @@
 											</td>
 											<td>
 {render acl=$postalCodeACL}
-												<input id="postalCode" name="postalCode" size=15 maxlength=60 value="{$info_postalCode}">
+												<input type='text' id="postalCode" name="postalCode" size=15 maxlength=60 value="{$info_postalCode}">
 {/render}
 											</td>
 									 	</tr>
@@ -193,7 +193,7 @@
 											</td>
 											<td>
 {render acl=$stACL}
-												<input id="st" name="st" size=15 maxlength=60 value="{$info_st}">
+												<input type='text' id="st" name="st" size=15 maxlength=60 value="{$info_st}">
 {/render}
 											</td>
 									 	</tr>
@@ -223,7 +223,7 @@
 											</td>
 											<td>
 {render acl=$telephoneNumberACL}
-												<input id="telephoneNumber" name="telephoneNumber" size=15 maxlength=60 value="{$info_telephoneNumber}">
+												<input type='text' id="telephoneNumber" name="telephoneNumber" size=15 maxlength=60 value="{$info_telephoneNumber}">
 {/render}
 											</td>
 										</tr>
@@ -248,7 +248,7 @@
 											</td>
 											<td>
 {render acl=$pagerACL}
-												<input id="pager" name="pager" size=15 maxlength=60 value="{$info_pager}">
+												<input type='text' id="pager" name="pager" size=15 maxlength=60 value="{$info_pager}">
 {/render}
 											</td>
 										</tr>

@@ -103,7 +103,7 @@
      <tr>
       <td>
 {render acl=$gosaProxyFlagBACL}
-       <input name="quota_size" id="quota_size" size=7 maxlength=10 value="{$quota_size}" {if $Bstate!=""} disabled {/if} >
+       <input type='text' name="quota_size" id="quota_size" size=7 maxlength=10 value="{$quota_size}" {if $Bstate!=""} disabled {/if} >
 {/render}
        &nbsp;
 {render acl=$gosaProxyFlagBACL}

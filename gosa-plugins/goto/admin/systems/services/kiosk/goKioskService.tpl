@@ -13,7 +13,7 @@
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
-{t}Server path{/t}&nbsp;<input name="server_path" style="width:300px;" value="{$server_path}">
+{t}Server path{/t}&nbsp;<input type='text' name="server_path" style="width:300px;" value="{$server_path}">
 <br>
 <br>
 {render acl=$ThisACL}

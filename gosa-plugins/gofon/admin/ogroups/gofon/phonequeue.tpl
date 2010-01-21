@@ -31,7 +31,7 @@
 		<tr>
 		 <td colspan=2>
 {render acl=$telephoneNumberACL}
-			<input name="phonenumber" size=20 align=middle maxlength=60 value="">
+			<input type='text' name="phonenumber" size=20 align=middle maxlength=60 value="">
 {/render}
 {render acl=$telephoneNumberACL}
 			<input type="submit" value="{msgPool type=addButton}" 	name="add_phonenumber" >&nbsp;
@@ -76,7 +76,7 @@
 		</td>
 		<td>
 {render acl=$goFonTimeOutACL}
-			<input name='goFonTimeOut' value='{$goFonTimeOut}'>
+			<input type='text' name='goFonTimeOut' value='{$goFonTimeOut}'>
 {/render}
 		</td>
 		</tr>
@@ -86,7 +86,7 @@
 		</td>
 		<td>
 {render acl=$goFonQueueRetryACL}
-			<input name='goFonQueueRetry' value='{$goFonQueueRetry}'>
+			<input type='text' name='goFonQueueRetry' value='{$goFonQueueRetry}'>
 {/render}
 		</td>
 		</tr>
@@ -110,7 +110,7 @@
 		</td>
 		<td>
 {render acl=$goFonMaxLenACL}
-			<input name='goFonMaxLen' value='{$goFonMaxLen}'>	
+			<input type='text' name='goFonMaxLen' value='{$goFonMaxLen}'>	
 {/render}
 		</td>
 		</tr>
@@ -120,7 +120,7 @@
 		</td>
 		<td>
 {render acl=$goFonAnnounceFrequencyACL}
-			<input name='goFonAnnounceFrequency' value='{$goFonAnnounceFrequency}'>
+			<input type='text' name='goFonAnnounceFrequency' value='{$goFonAnnounceFrequency}'>
 {/render}
 			{t}(in seconds){/t}	
 		</td>

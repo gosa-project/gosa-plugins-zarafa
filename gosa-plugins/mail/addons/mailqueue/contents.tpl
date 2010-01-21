@@ -9,7 +9,7 @@
 			<td>
 	<img class="center" alt="{t}Search{/t}" src="images/lists/search.png" align="middle" border="0">
 	 &nbsp;{t}Search for{/t}
-    <input name="search_for" size="12" maxlength="60" value="{$search_for}" title="{t}Please enter a search string here.{/t}" onchange="mainform.submit()">
+    <input type='text' name="search_for" size="12" maxlength="60" value="{$search_for}" title="{t}Please enter a search string here.{/t}" onchange="mainform.submit()">
  	 &nbsp;in 
 	<select size="1" name="p_server" title="{t}Select a server{/t}" onchange="mainform.submit()">
 	 {html_options values=$p_serverKeys output=$p_servers selected=$p_server}

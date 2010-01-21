@@ -67,7 +67,7 @@
 				</td>
 				<td>
 {render acl=$goFonQualifyACL}
-					<input id="goFonQualify" style="width:200px" name="goFonQualify" value="{$goFonQualify}" {$goFonQualifyUSED}>
+					<input type='text' id="goFonQualify" style="width:200px" name="goFonQualify" value="{$goFonQualify}" {$goFonQualifyUSED}>
 {/render}
 				</td>
 			</tr>
@@ -100,7 +100,7 @@
 				</td>
 				<td>
 {render acl=$goFonDefaultIPACL}
-					<input id="goFonDefaultIP" style="width:200px" name="goFonDefaultIP" value="{$goFonDefaultIP}" {$goFonDefaultIPUSED}>
+					<input type='text' id="goFonDefaultIP" style="width:200px" name="goFonDefaultIP" value="{$goFonDefaultIP}" {$goFonDefaultIPUSED}>
 {/render}
 				</td>
 			</tr>
@@ -110,7 +110,7 @@
 				</td>
 				<td>
 {render acl=$goFonQualifyACL}
-					<input id="goFonQualify" style="width:200px" name="goFonQualify" value="{$goFonQualify}" {$goFonQualifyUSED}>
+					<input type='text' id="goFonQualify" style="width:200px" name="goFonQualify" value="{$goFonQualify}" {$goFonQualifyUSED}>
 {/render}
 				</td>
 			</tr>
@@ -137,7 +137,7 @@
 				</td>
 				<td>
 {render acl=$goFonSecretACL}
-					<input id="goFonSecret" style="width:200px" name="goFonSecret" value="{$goFonSecret}" {$goFonSecretUSED}>
+					<input type='text' id="goFonSecret" style="width:200px" name="goFonSecret" value="{$goFonSecret}" {$goFonSecretUSED}>
 {/render}
 				</td>
 			</tr>
@@ -146,7 +146,7 @@
 					 {t}GoFonInkeys{/t}
 				</td>
 				<td>
-					<input style="width:200px" name="goFonInkeys" value="{$goFonInkeys}" {$goFonInkeysUSED}>
+					<input type='text' style="width:200px" name="goFonInkeys" value="{$goFonInkeys}" {$goFonInkeysUSED}>
 				</td>
 			</tr>
 			<tr>
@@ -154,7 +154,7 @@
 					 {t}GoFonOutKeys{/t}
 				</td>
 				<td>
-					<input style="width:200px" name="goFonOutkey" value="{$goFonOutkey}" {$goFonOutkeyUSED}>
+					<input type='text' style="width:200px" name="goFonOutkey" value="{$goFonOutkey}" {$goFonOutkeyUSED}>
 				</td>
 			</tr> -->
 			<tr>
@@ -168,7 +168,7 @@
                 </td>
                 <td>
 {render acl=$goFonAccountCodeACL}
-                    <input id="goFonAccountCode" style="width:200px" name="goFonAccountCode" value="{$goFonAccountCode}" {$goFonAccountCodeUSED}>
+                    <input type='text' id="goFonAccountCode" style="width:200px" name="goFonAccountCode" value="{$goFonAccountCode}" {$goFonAccountCodeUSED}>
 {/render}
                 </td>
             </tr>
@@ -201,7 +201,7 @@
 {/render}
                         <br>
 {render acl=$goFonPermitACL}
-                            <input name="goFonPermitNew" size=30 align="middle" maxlength="65" value="">
+                            <input type='text' name="goFonPermitNew" size=30 align="middle" maxlength="65" value="">
 {/render}
 {render acl=$goFonPermitACL}
                         <input type=submit value="{msgPool type=addButton}" name="goFonPermitAdd">
@@ -224,7 +224,7 @@
 {/render}
                         <br>
 {render acl=$goFonDenyACL}
-                            <input name="goFonDenyNew" size=30 align="middle" maxlength="65" value="">
+                            <input type='text' name="goFonDenyNew" size=30 align="middle" maxlength="65" value="">
 {/render}
 {render acl=$goFonDenyACL}
                         <input type=submit value="{msgPool type=addButton}" name="goFonDenyAdd">
@@ -246,7 +246,7 @@
 					<td>
 						<LABEL for="goFonMSN">{t}MSN{/t}</LABEL>&nbsp;
 {render acl=$goFonMSNACL}
-						<input id="goFonMSN" style="width:200px" name="goFonMSN" value="{$goFonMSN}" {$goFonMSNUSED}>
+						<input type='text' id="goFonMSN" style="width:200px" name="goFonMSN" value="{$goFonMSN}" {$goFonMSNUSED}>
 {/render}
 					</td>
 				</tr>

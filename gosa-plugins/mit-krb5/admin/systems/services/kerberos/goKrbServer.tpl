@@ -7,7 +7,7 @@
 		 <tr>
 		  <td>{t}Kerberos Realm{/t}{$must}</td>
 		   {render acl=$goKrbRealmACL}
-		  <td><input name="goKrbRealm" id="goKrbRealm" size=30 maxlength=60  value="{$goKrbRealm}"></td>
+		  <td><input type='text' name="goKrbRealm" id="goKrbRealm" size=30 maxlength=60  value="{$goKrbRealm}"></td>
 			{/render}
 		 </tr>
 		</table>

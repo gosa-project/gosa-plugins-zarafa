@@ -11,7 +11,7 @@
 						</td>
 						<td>
 {render acl=$cnACL}
-							<input value="{$cn}" size="45" maxlength="80" id='cn' disabled >
+							<input type='text' value="{$cn}" size="45" maxlength="80" id='cn' disabled >
 {/render}
 						</td>
 					</tr>
@@ -23,7 +23,7 @@
 						</td>
 						<td>
 {render acl=$descriptionACL}
-							<input value="{$description}" size="45" maxlength="80" name="description" id="description">
+							<input type='text' value="{$description}" size="45" maxlength="80" name="description" id="description">
 {/render}
 						</td>
 					</tr>

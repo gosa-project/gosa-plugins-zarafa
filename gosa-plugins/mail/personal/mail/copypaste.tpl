@@ -5,7 +5,7 @@
 			<table style="width:100%;">
 				<tr>
 					<td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
-					<td><input id="mail" name="mail" size=35 maxlength=65 value="{$mail}"></td>
+					<td><input type='text' id="mail" name="mail" size=35 maxlength=65 value="{$mail}"></td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -39,7 +39,7 @@
 								<option disabled>&nbsp;</option>
 					   	</select>
 						<br>
-					    <input name="forward_address" size=20 align="middle" maxlength=65 	value="">
+					    <input type='text' name="forward_address" size=20 align="middle" maxlength=65 	value="">
 					    <input type="submit" value="{msgPool type=addButton}" name="add_forwarder"	>&nbsp;
 					    <input type="submit" value="{t}Add local{/t}" name="add_local_forwarder"	>&nbsp;
 					    <input type="submit" value="{msgPool type=delButton}" name="delete_forwarder"	>
@@ -57,7 +57,7 @@
 								<option disabled>&nbsp;</option>
 					   	</select>
 					   	<br/>
-					   	<input name="alternate_address" size="30" align="middle" maxlength="65" value="">
+					   	<input type='text' name="alternate_address" size="30" align="middle" maxlength="65" value="">
 			   			<input type=submit value="{msgPool type=addButton}" name="add_alternate">
 			   			<input type=submit value="{msgPool type=delButton}" name="delete_alternate">
 			  		</td>

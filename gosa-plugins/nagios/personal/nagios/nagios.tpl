@@ -8,7 +8,7 @@
      <td><label for="NagiosAlias">{t}Alias{/t}</label>{$must}</td>
      <td>
 {render acl=$NagiosAliasACL}
-      <input id="NagiosAlias" name="NagiosAlias" size=25 maxlength=65 value="{$NagiosAlias}">
+      <input type='text' id="NagiosAlias" name="NagiosAlias" size=25 maxlength=65 value="{$NagiosAlias}">
 {/render}
      </td>
     </tr>
@@ -17,7 +17,7 @@
      <td><label for="NagiosMail">{t}Mail address{/t}</label>{$must}</td>
      <td>
 {render acl=$NagiosMailACL}
-      <input id="NagiosMail" name="NagiosMail" size=25 maxlength=65 value="{$NagiosMail}">
+      <input type='text' id="NagiosMail" name="NagiosMail" size=25 maxlength=65 value="{$NagiosMail}">
 {/render}
      </td>
     </tr>
@@ -80,7 +80,7 @@
      </td>
      <td>
 {render acl=$NagiosPagerACL}
-      <input id="NagiosPager" name="NagiosPager" size=25 maxlength=65 value="{$NagiosPager}">
+      <input type='text' id="NagiosPager" name="NagiosPager" size=25 maxlength=65 value="{$NagiosPager}">
 {/render}
      </td>
     </tr>
@@ -91,7 +91,7 @@
      </td>
      <td>
 {render acl=$ServiceNotificationCommandsACL}
-      <input id="ServiceNotificationCommands" disabled name="ServiceNotificationCommands" size=25 maxlength=65  value="{$ServiceNotificationCommands}">
+      <input type='text' id="ServiceNotificationCommands" disabled name="ServiceNotificationCommands" size=25 maxlength=65  value="{$ServiceNotificationCommands}">
 {/render}
      </td>
     </tr>
@@ -101,7 +101,7 @@
      </td>
      <td>
 {render acl=$HostNotificationCommandsACL}
-      <input id="HostNotificationCommands" disabled name="HostNotificationCommands" size=25 maxlength=65  value="{$HostNotificationCommands}">
+      <input type='text' id="HostNotificationCommands" disabled name="HostNotificationCommands" size=25 maxlength=65  value="{$HostNotificationCommands}">
 {/render}
      </td>
     </tr>

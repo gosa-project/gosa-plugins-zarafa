@@ -34,7 +34,7 @@
 	 <td>
 
 {render acl=$OXAppointmentDaysACL}	
-<input name="OXAppointmentDays" id="OXAppointmentDays" size=7 maxlength=7 value="{$OXAppointmentDays}" {$oxState} >
+<input type='text' name="OXAppointmentDays" id="OXAppointmentDays" size=7 maxlength=7 value="{$OXAppointmentDays}" {$oxState} >
 {/render}
 	 {t}days{/t}</td>
        </tr>
@@ -43,7 +43,7 @@
 	 <td>
 
 {render acl=$OXTaskDaysACL}	
-<input name="OXTaskDays" id="OXTaskDays" size=7 maxlength=7 value="{$OXTaskDays}" {$oxState} >
+<input type='text' name="OXTaskDays" id="OXTaskDays" size=7 maxlength=7 value="{$OXTaskDays}" {$oxState} >
 {/render}
 
 	 {t}days{/t}

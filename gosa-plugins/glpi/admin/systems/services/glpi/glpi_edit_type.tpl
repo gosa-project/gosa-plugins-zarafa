@@ -4,7 +4,7 @@
      <select name="select_type" size="12" style="width:100%">
                             {html_options values=$SystemTypeKeys output=$SystemTypes}
      </select><br>
-	 <input name="type_string">
+	 <input type='text' name="type_string">
 	 <input type="submit" name="add_type" 		value="{msgPool type=addButton}" >
 	 <input type="submit" name="rename_type" 	value="{t}Rename{/t}" >
 	 <input type="submit" name="del_type" 		value="{msgPool type=delButton}" >
@@ -21,7 +21,7 @@
 	  -->
 	</script>
 {else}
-{t}Please enter a new name{/t}&nbsp;<input name="string" value="{$string}">
+{t}Please enter a new name{/t}&nbsp;<input type='text' name="string" value="{$string}">
 <p class="seperator">&nbsp;</p>
 	<p>
 		<div align="right" style="text-align: right;">

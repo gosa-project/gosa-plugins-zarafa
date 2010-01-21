@@ -9,18 +9,18 @@
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
      <td>
      {if !$isModifyableMail && $initially_was_account}
-		<input disabled size=30 value="{$mail}">
+		<input type='text' disabled size=30 value="{$mail}">
      {else}
 	 {if $domainSelectionEnabled}
 		{render acl=$mailACL}
-			<input id="mail" name="mail" size=20 maxlength=65 value="{$mail}">
+			<input type='text' id="mail" name="mail" size=20 maxlength=65 value="{$mail}">
 		{/render}
 		@<select name='MailDomain'>
 			{html_options values=$MailDomains output=$MailDomains selected=$MailDomain}
 		</select>
 	{else}
 		{render acl=$mailACL}
-            <input id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
+            <input type='text' id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
         {/render}
 	{/if}
 	{/if}
@@ -30,7 +30,7 @@
      <td><label for="gosaMailServer">{t}Server{/t}</label></td>
      <td>
      {if !$isModifyableServer && $initially_was_account}
-        <input disabled size=30 value="{$gosaMailServer}">
+        <input type='text' disabled size=30 value="{$gosaMailServer}">
      {else}
 
 {render acl=$gosaMailServerACL}
@@ -80,7 +80,7 @@
    </select>
    <br />
 {render acl=$gosaMailAlternateAddressACL}
-   <input name="alternate_address" size="30" align="middle" maxlength="65" value="">
+   <input type='text' name="alternate_address" size="30" align="middle" maxlength="65" value="">
 {/render}
 {render acl=$gosaMailAlternateAddressACL}
    <input type=submit value="{msgPool type=addButton}" name="add_alternate">
@@ -260,7 +260,7 @@
 {/render}
     <br>
 {render acl=$gosaMailForwardingAddressACL}
-    <input id='forward_address' name="forward_address" size=20 align="middle" maxlength=65 value="">
+    <input type='text' id='forward_address' name="forward_address" size=20 align="middle" maxlength=65 value="">
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
     <input id='add_forwarder' type="submit" value="{msgPool type=addButton}" name="add_forwarder" >&nbsp;

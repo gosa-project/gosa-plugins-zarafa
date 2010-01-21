@@ -8,7 +8,7 @@
 					</td>
 					<td>
 {render acl=$goImapNameACL}
-						<input name="goImapName" id="goImapName" size=40 maxlength=60 value="{$goImapName}" >
+						<input type='text' name="goImapName" id="goImapName" size=40 maxlength=60 value="{$goImapName}" >
 {/render}
 					</td>
 				</tr>
@@ -17,7 +17,7 @@
 					</td>
 					<td>
 {render acl=$goImapConnectACL}
-						<input name="goImapConnect" id="goImapConnect" size=40 maxlength=100 value="{$goImapConnect}" >
+						<input type='text' name="goImapConnect" id="goImapConnect" size=40 maxlength=100 value="{$goImapConnect}" >
 {/render}
 					</td>
 				</tr>
@@ -26,7 +26,7 @@
 					</td>
 					<td>
 {render acl=$goImapAdminACL}
-						<input name="goImapAdmin" id="goImapAdmin" size=30 maxlength=60 value="{$goImapAdmin}" >
+						<input type='text' name="goImapAdmin" id="goImapAdmin" size=30 maxlength=60 value="{$goImapAdmin}" >
 {/render}
 					</td>
 				</tr>
@@ -44,7 +44,7 @@
 					</td>
 					<td>
 {render acl=$goImapSieveServerACL}
-						<input name="goImapSieveServer" id="goImapSieveServer" size=30 maxlength=60 value="{$goImapSieveServer}">
+						<input type='text' name="goImapSieveServer" id="goImapSieveServer" size=30 maxlength=60 value="{$goImapSieveServer}">
 {/render}
 					</td>
 				</tr>

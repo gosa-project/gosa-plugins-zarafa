@@ -10,7 +10,7 @@
 						</td>
 						<td>
 {render acl=$cnACL}
-							<input value="{$cn}" size="45" maxlength="80" name="cn">
+							<input type='text' value="{$cn}" size="45" maxlength="80" name="cn">
 {/render}
 						</td>
 					</tr>
@@ -20,7 +20,7 @@
 						</td>
 						<td>
 {render acl=$descriptionACL}
-							<input size="45" maxlength="80" value="{$description}" name="description">
+							<input type='text' size="45" maxlength="80" value="{$description}" name="description">
 {/render}
 						</td>
 					</tr>

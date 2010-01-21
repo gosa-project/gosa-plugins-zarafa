@@ -8,7 +8,7 @@
 			<option disabled>&nbsp;</option>
    </select>
    <br />
-   <input name="email_address" size="30" align="middle" maxlength="65" value="">
+   <input type='text' name="email_address" size="30" align="middle" maxlength="65" value="">
    <input type=submit value="{msgPool type=addButton}" name="add_email">&nbsp;
    <input type=submit value="{msgPool type=delButton}" name="delete_email">
   </td>

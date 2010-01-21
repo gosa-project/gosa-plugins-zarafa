@@ -10,7 +10,7 @@
          <td><label for="facsimileTelephoneNumber">{t}Fax{/t}</label>{$must}</td>
          <td>
 {if $multiple_support}
-	<input name="dummy1" value="{t}Multiple edit{/t}" disabled id="facsimileTelephoneNumber">
+	<input type='text' name="dummy1" value="{t}Multiple edit{/t}" disabled id="facsimileTelephoneNumber">
 {else}
 {render acl=$facsimileTelephoneNumberACL}
            <input name="facsimileTelephoneNumber" id="facsimileTelephoneNumber" size=20 maxlength=65
@@ -64,7 +64,7 @@
 {/render}
       <label for="mail">{t}Deliver fax as mail to{/t}</label>&nbsp;
 {render acl=$faxtomailACL checkbox=$multiple_support checked=$use_mail}
-      <input name="mail" id="mail" size=25 maxlength=65 value="{$mail}" class="center">
+      <input type='text' name="mail" id="mail" size=25 maxlength=65 value="{$mail}" class="center">
 {/render}
      {else}
 {render acl=$faxtomailACL checkbox=$multiple_support checked=$use_faxtomail}
@@ -105,7 +105,7 @@
 {/render}
     <br>
 {render acl=$facsimileAlternateTelephoneNumberACL}
-    <input name="forward_address" size=20 align="middle" maxlength=65 value="">
+    <input type='text' name="forward_address" size=20 align="middle" maxlength=65 value="">
 {/render}
 {render acl=$facsimileAlternateTelephoneNumberACL}
     <input type=submit value="{msgPool type=addButton}" name="add_alternate">&nbsp;

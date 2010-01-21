@@ -135,7 +135,7 @@
 	  </td>
 	  <td>
 {render acl=$avArchiveMaxFileSizeACL}
-	   <input name='avArchiveMaxFileSize' id='avArchiveMaxFileSize' value='{$avArchiveMaxFileSize}'  {$avFlagsAState} >
+	   <input type='text' name='avArchiveMaxFileSize' id='avArchiveMaxFileSize' value='{$avArchiveMaxFileSize}'  {$avFlagsAState} >
 {/render}
 	  </td>
 	 </tr>
@@ -144,7 +144,7 @@
 	  </td>
 	  <td>
 {render acl=$avArchiveMaxRecursionACL}
-	   <input name='avArchiveMaxRecursion' id='avArchiveMaxRecursion' value='{$avArchiveMaxRecursion}'  {$avFlagsAState} >
+	   <input type='text' name='avArchiveMaxRecursion' id='avArchiveMaxRecursion' value='{$avArchiveMaxRecursion}'  {$avFlagsAState} >
 {/render}
 	  </td>
 	 </tr>
@@ -153,7 +153,7 @@
 	  </td>
 	  <td>
 {render acl=$avArchiveMaxCompressionRatioACL}
-	   <input name='avArchiveMaxCompressionRatio' id='avArchiveMaxCompressionRatio' value='{$avArchiveMaxCompressionRatio}' {$avFlagsAState}>
+	   <input type='text' name='avArchiveMaxCompressionRatio' id='avArchiveMaxCompressionRatio' value='{$avArchiveMaxCompressionRatio}' {$avFlagsAState}>
 {/render}
 	  </td>
 	 </tr>

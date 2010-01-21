@@ -14,7 +14,7 @@
      <option disabled>&nbsp; </option>
    </select>
    <br>
-   <input name="phonenumber" size=20 align=middle maxlength=60 value="">
+   <input type='text' name="phonenumber" size=20 align=middle maxlength=60 value="">
    <input type="submit" value="{msgPool type=addButton}" name="add_phonenumber"> 
    <input type="submit" value="{msgPool type=delButton}" name="delete_phonenumber">
   </td>

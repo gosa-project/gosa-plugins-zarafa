@@ -6,7 +6,7 @@
 {if $FAIdiskType == "lvm"}
     <td>{t}Name{/t}</td>
     <td width="35%">
-      <input name="cn" value="{$cn}">
+      <input type='text' name="cn" value="{$cn}">
     </td>
 {else}
     <td>{t}Type{/t}</td>
@@ -32,24 +32,24 @@
         {html_options options=$partitionSizeTypes selected=$FAIpartitionSizeType}
       </select>
       {if $FAIpartitionSizeType != "remaining"}
-        <input name='sizeStart' value='{$sizeStart}' size='5'>
+        <input type='text' name='sizeStart' value='{$sizeStart}' size='5'>
         <select name='sizeStart_Type'>
           {html_options options=$sizeTypes selected=$sizeStart_Type}
         </select>
       {else}
-        <input name='dummy3' value='' size='5' disabled>
+        <input type='text' name='dummy3' value='' size='5' disabled>
         <select name='dummy4' disabled>
           {html_options options=$sizeTypes}
         </select>
       {/if}
       &nbsp;-&nbsp;
       {if $FAIpartitionSizeType != "fixed" && $FAIpartitionSizeType != "remaining"}
-        <input name='sizeStop' value='{$sizeStop}' size='5'>
+        <input type='text' name='sizeStop' value='{$sizeStop}' size='5'>
         <select name='sizeStop_Type'>
           {html_options options=$sizeTypes selected=$sizeStop_Type}
         </select>
       {else}
-        <input name='dummy1' value='' size='5' disabled>
+        <input type='text' name='dummy1' value='' size='5' disabled>
         <select name='dummy2' disabled>
           {html_options options=$sizeTypes}
         </select>
@@ -129,7 +129,7 @@
       {t}Filesystem create options{/t}
     </td>
     <td>
-      <input name="FAIfsCreateOptions" value="{$FAIfsCreateOptions}">
+      <input type='text' name="FAIfsCreateOptions" value="{$FAIfsCreateOptions}">
     </td>
   </tr>
   <tr>
@@ -141,7 +141,7 @@
       {t}Tune options{/t}
     </td>
     <td>
-      <input name="FAIfsTuneOptions" value="{$FAIfsTuneOptions}">
+      <input type='text' name="FAIfsTuneOptions" value="{$FAIfsTuneOptions}">
     </td>
   </tr>
   <tr>
@@ -155,16 +155,16 @@
     </td>
     <td>
       {if $FAIfsType != "swap"}
-        <input name="FAImountPoint" value="{$FAImountPoint}">
+        <input type='text' name="FAImountPoint" value="{$FAImountPoint}">
       {else}
-        <input name="dummy10" value="swap" disabled>
+        <input type='text' name="dummy10" value="swap" disabled>
       {/if}
     </td>
     <td>
       {t}Mount options{/t}
     </td>
     <td>
-      <input name="FAImountOptions" value="{$FAImountOptions}">
+      <input type='text' name="FAImountOptions" value="{$FAImountOptions}">
     </td>
   </tr>
 

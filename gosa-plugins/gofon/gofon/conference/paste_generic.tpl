@@ -7,7 +7,7 @@
 			{$must}
 		</td>
 		<td>
-			<input id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Name of conference to create{/t}">
+			<input type='text' id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Name of conference to create{/t}">
 		</td>
 	</tr>
 	<tr>
@@ -16,7 +16,7 @@
 			{$must}
 		</td>
 		<td>
-			<input name="telephoneNumber" value="{$telephoneNumber}" size=15>
+			<input type='text' name="telephoneNumber" value="{$telephoneNumber}" size=15>
 		</td>
 	</tr>
 </table>

@@ -7,7 +7,7 @@
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
      <td>
 	 {if !$isModifyableMail && $initially_was_account}
-		<input disabled size=30 value="{$mail}">
+		<input type='text' disabled size=30 value="{$mail}">
 	 {else}
 		 {if $domainSelectionEnabled}
 			{render acl=$mailACL}
@@ -24,7 +24,7 @@
 				@<input type='text' value="{$MailDomain}" name="MailDomain">
 			{else}
 			{render acl=$mailACL}
-				<input id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
+				<input type='text' id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
 			{/render}
 			{/if}
 		{/if}
@@ -35,7 +35,7 @@
      <td><label for="gosaMailServer">{t}Server{/t}</label></td>
      <td>
      {if !$isModifyableServer && $initially_was_account}
-        <input disabled size=30 value="{$gosaMailServer}">
+        <input type='text' disabled size=30 value="{$gosaMailServer}">
      {else}
 {render acl=$gosaMailServerACL}
       <select size="1" id="gosaMailServer" name="gosaMailServer" 
@@ -111,7 +111,7 @@
 {/render}
    <br>
 {render acl=$gosaMailAlternateAddressACL}
-   <input name="alternate_address" size="30" align=middle maxlength="60" value="">
+   <input type='text' name="alternate_address" size="30" align=middle maxlength="60" value="">
 {/render}
 
 {render acl=$gosaMailAlternateAddressACL}
@@ -225,7 +225,7 @@
    <br>
 
 {render acl=$gosaMailForwardingAddressACL}
-   <input name="forward_address" size=20 align=middle maxlength=65 value="">
+   <input type='text' name="forward_address" size=20 align=middle maxlength=65 value="">
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
    <input type=submit value="{msgPool type=addButton}" name="add_forwarder">&nbsp;

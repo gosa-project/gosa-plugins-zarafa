@@ -6,14 +6,14 @@
 			{t}Name{/t}
 			</LABEL>{$must}&nbsp;
 {render acl=$DISKcnACL}
-			<input value="{$DISKcn}" size="45" maxlength="80" name="DISKcn" id="DISKcn">
+			<input type='text' value="{$DISKcn}" size="45" maxlength="80" name="DISKcn" id="DISKcn">
 {/render}
 		</td>
 		<td><LABEL for="DISKdescription">
 			&nbsp;{t}Description{/t}
 			</LABEL>&nbsp;
 {render acl=$DISKdescriptionACL}
-			<input value="{$DISKdescription}" size="45" maxlength="80" name="DISKdescription" id="DISKdescription">
+			<input type='text' value="{$DISKdescription}" size="45" maxlength="80" name="DISKdescription" id="DISKdescription">
 {/render}
 		</td>
 	</tr>

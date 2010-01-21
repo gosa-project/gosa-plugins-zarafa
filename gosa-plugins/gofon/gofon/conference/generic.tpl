@@ -18,7 +18,7 @@
           </td>
           <td>
 {render acl=$cnACL}
-            <input id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Name of conference to create{/t}">
+            <input type='text' id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Name of conference to create{/t}">
 {/render}
           </td>
         </tr>
@@ -111,7 +111,7 @@
           </td>
           <td>
 {render acl=$goFonConferenceOptionLifetimeACL}
-            <input name="goFonConferenceOptionLifetime" size=15 value="{$goFonConferenceOptionLifetime}">
+            <input type='text' name="goFonConferenceOptionLifetime" size=15 value="{$goFonConferenceOptionLifetime}">
 {/render} 
           </td>
         </tr>
@@ -122,7 +122,7 @@
           </td>
           <td>
 {render acl=$telephoneNumberACL}
-            <input name="telephoneNumber" value="{$telephoneNumber}" size=15>
+            <input type='text' name="telephoneNumber" value="{$telephoneNumber}" size=15>
 {/render} 
           </td>
         </tr>

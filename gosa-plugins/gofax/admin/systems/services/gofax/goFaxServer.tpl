@@ -4,7 +4,7 @@
      <td>{t}FAX DB user{/t}{$must}</td>
      <td>
 {render acl=$goFaxAdminACL}
-	<input name="goFaxAdmin" size=30 maxlength=60 id="goFaxAdmin" value="{$goFaxAdmin}" >
+	<input type='text' name="goFaxAdmin" size=30 maxlength=60 id="goFaxAdmin" value="{$goFaxAdmin}" >
 {/render}
      </td>
     </tr>

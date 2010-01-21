@@ -13,7 +13,7 @@
      <td><label for="sambaHomePath">{t}Home directory{/t}</label></td>
      <td>
 {render acl=$sambaHomePathACL checkbox=$multiple_support checked=$use_sambaHomePath}
-      <input id="sambaHomePath" name="sambaHomePath" size=30 maxlength=60 value="{$sambaHomePath}">
+      <input type='text' id="sambaHomePath" name="sambaHomePath" size=30 maxlength=60 value="{$sambaHomePath}">
 {/render}
 {render acl=$sambaHomeDriveACL  checkbox=$multiple_support checked=$use_sambaHomeDrive}
       <select size="1" name="sambaHomeDrive">
@@ -45,7 +45,7 @@
      <td><label for="">{t}Script path{/t}</label></td>
      <td>
 {render acl=$sambaLogonScriptACL  checkbox=$multiple_support checked=$use_sambaLogonScript}
-      <input id="sambaLogonScript" name="sambaLogonScript" size=35 maxlength=60 value="{$sambaLogonScript}">
+      <input type='text' id="sambaLogonScript" name="sambaLogonScript" size=35 maxlength=60 value="{$sambaLogonScript}">
 {/render}
      </td>
     </tr>
@@ -53,7 +53,7 @@
      <td><label for="">{t}Profile path{/t}</label></td>
      <td>
 {render acl=$sambaProfilePathACL  checkbox=$multiple_support checked=$use_sambaProfilePath}
-      <input class="center" id="sambaProfilePath" name="sambaProfilePath" size=35 maxlength=60 value="{$sambaProfilePath}">
+      <input type='text' class="center" id="sambaProfilePath" name="sambaProfilePath" size=35 maxlength=60 value="{$sambaProfilePath}">
 {/render}
      </td>
     </tr>
@@ -107,7 +107,7 @@
      <td><label for="CtxWFHomeDir">{t}Home directory{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxWFHomeDir}
-      <input id="CtxWFHomeDir" name="CtxWFHomeDir" size=30 maxlength=60 value="{$CtxWFHomeDir}" {$tsloginstate}>
+      <input type='text' id="CtxWFHomeDir" name="CtxWFHomeDir" size=30 maxlength=60 value="{$CtxWFHomeDir}" {$tsloginstate}>
 {/render}
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxWFHomeDirDrive}
       <select size="1" id="CtxWFHomeDirDrive" name="CtxWFHomeDirDrive"  {$tsloginstate}>
@@ -120,7 +120,7 @@
      <td><label for="CtxWFProfilePath">{t}Profile path{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxWFProfilePath}
-      <input id="CtxWFProfilePath" name="CtxWFProfilePath" size=35 maxlength=60 value="{$CtxWFProfilePath}" {$tsloginstate}>
+      <input type='text' id="CtxWFProfilePath" name="CtxWFProfilePath" size=35 maxlength=60 value="{$CtxWFProfilePath}" {$tsloginstate}>
 {/render}
      </td>
     </tr>
@@ -144,7 +144,7 @@
      <td><label for="CtxInitialProgram">{t}Initial program{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxInitialProgram}
-      <input id="CtxInitialProgram" name="CtxInitialProgram" size=35 maxlength=60 value="{$CtxInitialProgram}" {$inheritstate} {$tsloginstate}>
+      <input type='text' id="CtxInitialProgram" name="CtxInitialProgram" size=35 maxlength=60 value="{$CtxInitialProgram}" {$inheritstate} {$tsloginstate}>
 {/render}
      </td>
     </tr>
@@ -152,7 +152,7 @@
      <td><label for="CtxWorkDirectory">{t}Working directory{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxWorkDirectory}
-      <input id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	value='{$CtxWorkDirectory}' {$inheritstate} {$tsloginstate}>
+      <input type='text' id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	value='{$CtxWorkDirectory}' {$inheritstate} {$tsloginstate}>
 {/render}
      </td>
     </tr>

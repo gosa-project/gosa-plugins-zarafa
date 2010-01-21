@@ -23,7 +23,7 @@
 {/render}
    <br>
 {render acl=$telephoneNumberACL}
-   <input name="phonenumber" size=20 align=middle maxlength=60 value="">
+   <input type='text' name="phonenumber" size=20 align=middle maxlength=60 value="">
 {/render}
 {render acl=$telephoneNumberACL}
    <input type="submit" value="{msgPool type=addButton}" name="add_phonenumber">&nbsp;

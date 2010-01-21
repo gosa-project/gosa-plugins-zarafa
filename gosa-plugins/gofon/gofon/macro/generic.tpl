@@ -6,7 +6,7 @@
       				<td><LABEL for="cn">{t}Macro name{/t}</LABEL>{$must}</td>
       				<td>
 {render acl=$cnACL}
-					<input name="cn" id="id" size=13 maxlength=13 value="{$cn}" title="{t}Macro name{/t}">
+					<input type='text' name="cn" id="id" size=13 maxlength=13 value="{$cn}" title="{t}Macro name{/t}">
 {/render}
 				</td>
     			</tr>
@@ -49,7 +49,7 @@
      				<td><LABEL for="description">{t}Description{/t}</LABEL></td>
      				<td>
 {render acl=$descriptionACL}
-      					<input name="description" id="description" size=35 maxlength=80 value="{$description}">
+      					<input type='text' name="description" id="description" size=35 maxlength=80 value="{$description}">
 {/render}
      				</td>
     			</tr>

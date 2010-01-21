@@ -10,7 +10,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="name" value="{$name}">
+							<input type='text' name="name" value="{$name}">
 						</td>
 					</tr>
 					<tr>
@@ -33,7 +33,7 @@
 						<td style="vertical-align:top;">{t}Monitor size{/t}
 						</td>	
 						<td>	
-							<input name="size" value="{$size}"> {t}Inch{/t}
+							<input type='text' name="size" value="{$size}"> {t}Inch{/t}
 						</td>
 					</tr>
 				</table>
@@ -76,14 +76,14 @@
 						<td style="vertical-align:top;">{t}Serial number{/t}
 						</td>	
 						<td>	
-							<input name="serial" value="{$serial}">
+							<input type='text' name="serial" value="{$serial}">
 						</td>
 					</tr>
 					<tr>
 						<td style="vertical-align:top;">{t}Additional serial number{/t}
 						</td>	
 						<td>	
-							<input name="otherserial" value="{$otherserial}">
+							<input type='text' name="otherserial" value="{$otherserial}">
 						</td>
 					</tr>
 				</table>
@@ -105,7 +105,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -146,7 +146,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -181,7 +181,7 @@
 						<td>{t}Power{/t}
 						</td>	
 						<td>	
-							<input name="power" value="{$power}">
+							<input type='text' name="power" value="{$power}">
 						</td>
 					</tr>
 				</table>
@@ -201,7 +201,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -237,7 +237,7 @@
 						<td>{t}Ram{/t}
 						</td>	
 						<td>	
-							<input name="ram" value="{$ram}">
+							<input type='text' name="ram" value="{$ram}">
 						</td>
 					</tr>
 				</table>
@@ -257,7 +257,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -315,7 +315,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -379,7 +379,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -451,7 +451,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -515,7 +515,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -562,7 +562,7 @@
                         <td>{t}Name{/t}
                         </td>
                         <td>
-                            <input name="designation" value="{$designation}">
+                            <input type='text' name="designation" value="{$designation}">
                         </td>
                     </tr>
                     <tr>
@@ -615,7 +615,7 @@
                         <td>{t}Name{/t}
                         </td>
                         <td>
-                            <input name="designation" value="{$designation}">
+                            <input type='text' name="designation" value="{$designation}">
                         </td>
                     </tr>
                     <tr>
@@ -669,7 +669,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>
@@ -715,7 +715,7 @@
 						<td>{t}Name{/t}
 						</td>	
 						<td>	
-							<input name="designation" value="{$designation}">
+							<input type='text' name="designation" value="{$designation}">
 						</td>
 					</tr>
 					<tr>

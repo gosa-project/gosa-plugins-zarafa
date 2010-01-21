@@ -8,7 +8,7 @@
      <td><LABEL for="cn" >{t}Printer name{/t}</LABEL>{$must}</td>
      <td>
 {render acl=$cnACL}
-      <input name="cn" id="cn" size=20 maxlength=60 value="{$cn}">
+      <input type='text' name="cn" id="cn" size=20 maxlength=60 value="{$cn}">
 {/render}
      </td>
     </tr>
@@ -16,7 +16,7 @@
      <td><LABEL for="description">{t}Description{/t}</LABEL></td>
      <td>
 {render acl=$descriptionACL}
-      <input id="description" name="description" size=25 maxlength=80 value="{$description}">
+      <input type='text' id="description" name="description" size=25 maxlength=80 value="{$description}">
 {/render}
      </td>
     </tr>
@@ -46,7 +46,7 @@
        <td><LABEL for="l">{t}Printer location{/t}</LABEL></td>
        <td>
 {render acl=$lACL}
-        <input id="l" name="l" size=30 maxlength=80 value="{$l}">
+        <input type='text' id="l" name="l" size=30 maxlength=80 value="{$l}">
 {/render}
        </td>
      </tr>
@@ -54,7 +54,7 @@
        <td><LABEL for="labeledURI">{t}Printer URL{/t}</LABEL>{$must}</td>
        <td>
 {render acl=$labeledURIACL}
-        <input id="labeledURI" name="labeledURI" size=30 maxlength=80 value="{$labeledURI}">
+        <input type='text' id="labeledURI" name="labeledURI" size=30 maxlength=80 value="{$labeledURI}">
 {/render}
        </td>
      </tr>

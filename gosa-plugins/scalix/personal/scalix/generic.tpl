@@ -8,7 +8,7 @@
      <td><label for="scalixMailnode">{t}Scalix mailnode{/t}</label>{$must}</td>
      <td>
 {render acl=$scalixMailnodeACL}
-		<input id="scalixMailnode" name="scalixMailnode" size=35 maxlength=65 value="{$scalixMailnode}">
+		<input type='text' id="scalixMailnode" name="scalixMailnode" size=35 maxlength=65 value="{$scalixMailnode}">
 {/render}
 	 </td>
     </tr>
@@ -70,7 +70,7 @@
      <td><label for="scalixLimitMailboxSize">{t}Limit mailbox size{/t}</label></td>
      <td>
 {render acl=$scalixLimitMailboxSizeACL}
-		<input id="scalixLimitMailboxSize" name="scalixLimitMailboxSize" size=5 maxlength=10 value="{$scalixLimitMailboxSize}">&nbsp;{t}MB{/t}
+		<input type='text' id="scalixLimitMailboxSize" name="scalixLimitMailboxSize" size=5 maxlength=10 value="{$scalixLimitMailboxSize}">&nbsp;{t}MB{/t}
 {/render}
 	 </td>
     </tr>
@@ -112,7 +112,7 @@
 {/render}
    <br />
 {render acl=$scalixEmailAddressACL}
-   <input name="email_address" size="30" align="middle" maxlength="65" value="">
+   <input type='text' name="email_address" size="30" align="middle" maxlength="65" value="">
 {/render}
 {render acl=$scalixEmailAddressACL}
    <input type=submit value="{msgPool type=addButton}" name="add_email">&nbsp;

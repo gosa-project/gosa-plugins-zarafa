@@ -4,7 +4,7 @@
      <td>{t}Logging DB user{/t}{$must}</td>
      <td>
 {render acl=$goGlpiAdminACL}
-      <input name="goGlpiAdmin" id="goGlpiAdmin" size=30 maxlength=60 value="{$goGlpiAdmin}">
+      <input type='text' name="goGlpiAdmin" id="goGlpiAdmin" size=30 maxlength=60 value="{$goGlpiAdmin}">
 {/render}
      </td>
     </tr>
@@ -20,7 +20,7 @@
      <td>{t}Database{/t}{$must}</td>
      <td>
 {render acl=$goGlpiDatabaseACL}
-      <input name="goGlpiDatabase" id="goGlpiDatabase" size=30 maxlength=60 value="{$goGlpiDatabase}">
+      <input type='text' name="goGlpiDatabase" id="goGlpiDatabase" size=30 maxlength=60 value="{$goGlpiDatabase}">
 {/render}
      </td>
     </tr>

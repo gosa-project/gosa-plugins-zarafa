@@ -9,7 +9,7 @@
       <td>
 
 {render acl=$cnACL}
-       <input name="cn" id="cn" size=25 maxlength=60 value="{$cn}" title="{t}Name of blocklist{/t}">
+       <input type='text' name="cn" id="cn" size=25 maxlength=60 value="{$cn}" title="{t}Name of blocklist{/t}">
 {/render}
       </td>
      </tr>
@@ -51,7 +51,7 @@
        <td><LABEL for="description">{t}Description{/t}</LABEL></td>
        <td>
 {render acl=$descriptionACL}
-         <input name="description" id="description" size=25 maxlength=80 value="{$description}" title="{t}Descriptive text for this blocklist{/t}">
+         <input type='text' name="description" id="description" size=25 maxlength=80 value="{$description}" title="{t}Descriptive text for this blocklist{/t}">
 {/render}
        </td>
       </tr>
@@ -74,7 +74,7 @@
 {/render}
      <br>
 {render acl=$goFaxBlocklistACL}
-     <input id="number" name="number" size=25 maxlength=60 >&nbsp;
+     <input type='text' id="number" name="number" size=25 maxlength=60 >&nbsp;
 {/render}
 {render acl=$goFaxBlocklistACL}
      <input type=submit value="{msgPool type=addButton}" name="add_number">&nbsp;

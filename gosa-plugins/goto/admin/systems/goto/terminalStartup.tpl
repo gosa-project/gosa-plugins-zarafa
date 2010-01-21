@@ -77,7 +77,7 @@
 {/render}
     <br>
 {render acl=$gotoModulesACL}
-    <input name="module" size=30 align=middle maxlength=30>
+    <input type='text' name="module" size=30 align=middle maxlength=30>
 {/render}
 {render acl=$gotoModulesACL}
     <input type=submit value="{msgPool type=addButton}" name="add_module">&nbsp;
