@@ -35,13 +35,13 @@ class EventTargetAddList extends management
         get_ou("workstationRDN"), 
         get_ou('terminalRDN'));
 
-#    // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
-#      $filter= session::global_get(get_class($this)."_filter");
-#    } else {
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("../../addons/goto/events/eventTargetSystems-filter.xml", TRUE));
       $filter->setObjectStorage($this->storagePoints);
-#    }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -51,21 +51,6 @@ class EventTargetAddList extends management
   }
 
   function save_object() {}
-  function Draw(){
-      
-  }
-
-  function execute()
-  {
-    $str = management::execute();
-    $str.= "<p class='separator'>&nbsp;</p>
-      <p style=\"text-align:right\">
-      <input type=submit name=\"SaveMultiSelectWindow\" value=\"".msgPool::okButton()."\">
-      &nbsp; 
-      <input type=submit name=\"CloseMultiSelectWindow\" value=\"".msgPool::cancelButton()."\">
-      </p>";
-    return($str);
-  }
 
   function save()
   {
@@ -77,6 +62,20 @@ class EventTargetAddList extends management
       $ret[] = $headpage->getEntry($dn);
     }
     return($ret);
+  }
+
+  function get_selected_targets()
+  {
+    $entries = $this->save();
+    $macs = array();
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    foreach($entries as $entry){
+      if(isset($entry['macAddress'][0])){
+        $macs[] = $entry['macAddress'][0];
+      }
+    }
+    return($macs);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

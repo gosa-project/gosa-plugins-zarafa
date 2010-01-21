@@ -102,7 +102,7 @@
   <element>
     <type>checkbox</type>
     <tag>BYIP</tag>
-    <default>false</default>
+    <default></default>
     <set>__FilterByIP__</set>
     <unset></unset>
   </element>
