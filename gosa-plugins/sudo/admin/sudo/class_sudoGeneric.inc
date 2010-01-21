@@ -180,8 +180,10 @@ class sudo extends plugin
         foreach($this->dialog->save() as $entry){
           if(in_array("posixGroup",$entry['objectClass'])){
             $name = trim("%".$entry['cn'][0]);
-          }else{
+          }elseif(isset($entry['uid'][0])){
             $name = trim($entry['uid'][0]);
+          }else{
+            print_a($entry);
           }
           if(!in_array($name,$this->sudoUser) && !in_array("!".$name,$this->sudoUser)){
             $this->sudoUser[] = $name;
