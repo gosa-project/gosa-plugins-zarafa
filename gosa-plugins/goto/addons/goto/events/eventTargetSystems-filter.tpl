@@ -11,6 +11,7 @@
   {$SERVER}&nbsp;<LABEL for='SERVER'>{t}Show servers{/t}</LABEL><br>
   {$WORKSTATION}&nbsp;<LABEL for='WORKSTATION'>{t}Show workstations{/t}</LABEL><br>
   {$TERMINAL}&nbsp;<LABEL for='TERMINAL'>{t}Show terminals{/t}</LABEL><br>
+  {$BYIP}&nbsp;<LABEL for='TERMINAL'>{t}Filter by IP address range{/t}</LABEL><br>
 
  <div style="border-top:1px solid #AAAAAA"></div>
  {$SCOPE}
@@ -24,6 +25,26 @@
    </td>
    <td>
     {$NAME}
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <label for="IPSTART">
+     <img src="images/lists/search.png" align=middle>&nbsp;IP Start
+    </label>
+   </td>
+   <td>
+    {$IPSTART}
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <label for="IPSTOP">
+     <img src="images/lists/search.png" align=middle>&nbsp;IP Stop
+    </label>
+   </td>
+   <td>
+    {$IPSTOP}
    </td>
   </tr>
  </table>
