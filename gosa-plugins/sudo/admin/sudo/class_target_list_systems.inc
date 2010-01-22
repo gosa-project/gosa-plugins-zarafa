@@ -54,9 +54,9 @@ class target_list_systems extends management
     $str = management::execute();
     $str.= "<p class='separator'>&nbsp;</p>
       <p style=\"text-align:right\">
-      <input type=submit name=\"SaveMultiSelectWindow\" value=\"".msgPool::okButton()."\">
+      <input type=submit name=\"SavetargetSelectDialog\" value=\"".msgPool::okButton()."\">
       &nbsp; 
-      <input type=submit name=\"CloseMultiSelectWindow\" value=\"".msgPool::cancelButton()."\">
+      <input type=submit name=\"ClosetargetSelectDialog\" value=\"".msgPool::cancelButton()."\">
       </p>";
     return($str);
   }

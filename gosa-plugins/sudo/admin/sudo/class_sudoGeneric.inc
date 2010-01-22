@@ -175,7 +175,7 @@ class sudo extends plugin
     }
    
     /* Add selected hosts  to the sudoUser list */ 
-    if(isset($_POST['SaveMultiSelectWindow']) && $this->dialog instanceof target_list_users){
+    if(isset($_POST['SavetargetSelectDialog']) && $this->dialog instanceof target_list_users){
       if($this->acl_is_writeable("sudoUser")){
         foreach($this->dialog->save() as $entry){
           if(in_array("posixGroup",$entry['objectClass'])){
@@ -208,7 +208,7 @@ class sudo extends plugin
     }
    
     /* Add selected hosts  to the sudoHost list */ 
-    if(isset($_POST['SaveMultiSelectWindow']) && $this->dialog instanceof target_list_systems){
+    if(isset($_POST['SavetargetSelectDialog']) && $this->dialog instanceof target_list_systems){
       if($this->acl_is_writeable("sudoHost")){
         foreach($this->dialog->save() as $entry){
           $cn = trim($entry['cn'][0]);
@@ -226,7 +226,7 @@ class sudo extends plugin
        Dialog handling / display / close  
      *********************/ 
   
-    if(isset($_POST['CloseMultiSelectWindow']) && is_object($this->dialog)){
+    if(isset($_POST['ClosetargetSelectDialog']) && is_object($this->dialog)){
       unset($this->dialog);
       $this->dialog = NULL;
     }    
