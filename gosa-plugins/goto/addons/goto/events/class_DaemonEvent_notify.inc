@@ -185,7 +185,6 @@ class DaemonEvent_notify extends DaemonEvent
    */
   public function add_targets($targets)
   {
-    print_a($targets);
     if(isset($targets['USERS'])){
       $this->add_users($targets['USERS']);
     }
