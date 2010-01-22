@@ -62,6 +62,12 @@ class EventAddUserDialog extends management
     }
     return($ret);
   }
+
+  function get_selected_targets()
+  {
+    $entries = $this->save();
+    return($entries);
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
