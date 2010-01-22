@@ -174,10 +174,8 @@ class DaemonEvent_notify extends DaemonEvent
     if($this->target_divlist == NULL){
       $this->target_divlist = new EventAddUserDialog($this->config,$this);
     }
-    $this->target_divlist->execute();
-
     $smarty = get_smarty();
-    $smarty->assign("divlist",$this->target_divlist->Draw());
+    $smarty->assign("divlist",$this->target_divlist->execute());
     return($smarty->fetch(get_template_path('target_list.tpl', TRUE, dirname(__FILE__))));
   }
 
