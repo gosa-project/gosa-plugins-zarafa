@@ -66,7 +66,16 @@ class EventAddUserDialog extends management
   function get_selected_targets()
   {
     $entries = $this->save();
-    return($entries);
+    $a_targets = array("USERS" => array(),"GROUPS" => array());
+    foreach($entries as $entry){
+      if(in_array("posixGroup",$entry['objectClass'])){
+        $a_targets['GROUPS'][] = $entry['cn'][0];
+      }
+      if(in_array("gosaAccount",$entry['objectClass'])){
+        $a_targets['USERS'][] = $entry['uid'][0];
+      }
+    }
+    return($a_targets);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
