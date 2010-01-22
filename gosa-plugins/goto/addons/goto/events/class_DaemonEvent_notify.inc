@@ -165,7 +165,7 @@ class DaemonEvent_notify extends DaemonEvent
 
 
   /*! \brief  Returns HTML content, displaying a dialog which allows to add new targets.
-    @return String HTML content. (EventAddSystemList)
+    @return String HTML content. (EventAddSystemDialog)
    */
   public function get_target_add_list()
   {

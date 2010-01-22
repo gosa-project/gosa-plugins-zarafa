@@ -263,14 +263,14 @@ class DaemonEvent
 
 
   /*! \brief  Returns HTML content, displaying a dialog which allows to add new targets.
-    @return String HTML content. (EventAddSystemList)
+    @return String HTML content. (EventAddSystemDialog)
    */
   public function get_target_add_list()
   {
     $this->target_add_list_used = TRUE;
 
     if($this->target_divlist == NULL){ 
-      $this->target_divlist = new EventAddSystemList($this->config,$this);
+      $this->target_divlist = new EventAddSystemDialog($this->config,$this);
     }
 
     $smarty = get_smarty();

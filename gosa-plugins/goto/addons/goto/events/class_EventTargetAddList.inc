@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class EventTargetAddList extends management
+class EventAddSystemDialog extends management
 {
   // Tab definition 
   protected $skipFooter = TRUE;
