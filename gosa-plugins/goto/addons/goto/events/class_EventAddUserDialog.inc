@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: class_EventTargetAddUserList.inc 9597 2008-03-10 14:16:59Z hickert $$
+ * ID: $$Id: class_EventAddUserDialog.inc 9597 2008-03-10 14:16:59Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class EventTargetAddUserList extends MultiSelectWindow
+class EventAddUserDialog extends MultiSelectWindow
 {
   public $display_server = TRUE;
   public $display_workstation = TRUE;
@@ -34,7 +34,7 @@ class EventTargetAddUserList extends MultiSelectWindow
 
   function __construct(&$config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config, "EventTargetAddUserList", 
+    MultiSelectWindow::MultiSelectWindow($config, "EventAddUserDialog", 
         array("users","groups"));
 
     $this->parent       = $parent;

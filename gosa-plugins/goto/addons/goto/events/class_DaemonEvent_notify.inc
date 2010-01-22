@@ -172,7 +172,7 @@ class DaemonEvent_notify extends DaemonEvent
     $this->target_add_list_used = TRUE;
 
     if($this->target_divlist == NULL){
-      $this->target_divlist = new EventTargetAddUserList($this->config,$this);
+      $this->target_divlist = new EventAddUserDialog($this->config,$this);
     }
     $this->target_divlist->execute();
 
