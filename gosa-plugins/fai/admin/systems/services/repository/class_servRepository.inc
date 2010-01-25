@@ -74,7 +74,7 @@ class servrepository extends goService
         $this->repositories[$tmp[2]]=$tmp2;      
       }
     }
-
+    session::set('RepositoryList', $this->repositories);
 
     /* Create divlist */
     $this->divlist = new repositoryManagement($this->config,$this);

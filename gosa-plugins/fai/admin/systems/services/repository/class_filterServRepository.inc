@@ -4,6 +4,7 @@ class filterRepository {
 
   static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
+    return(array());
     $list = servRepository::getRepositoryList();
 
     $data = array();
