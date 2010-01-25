@@ -77,7 +77,7 @@ class servrepository extends goService
 
 
     /* Create divlist */
-    $this->divlist = new divListRepository($this->config,$this);
+    $this->divlist = new repositoryManagement($this->config,$this);
   }
 
 

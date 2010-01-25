@@ -1,6 +1,6 @@
 <?php
 
-class divListRepository extends management
+class repositoryManagement extends management
 {
   
   protected $skipFooter = TRUE;
