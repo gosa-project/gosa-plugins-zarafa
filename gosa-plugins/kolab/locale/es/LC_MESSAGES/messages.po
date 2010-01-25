@@ -2,20 +2,21 @@
 # translation of systems.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
-"PO-Revision-Date: 2007-07-24 00:26+0200\n"
-"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
-"Language-Team:  <es@li.org>\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
+"PO-Revision-Date: 2010-01-24 23:38+0100\n"
+"Last-Translator: \n"
+"Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/systems/services/kolab/class_servKolab.inc:107
 #, php-format
@@ -34,44 +35,39 @@ msgid "Remove"
 msgstr "Eliminar"
 
 #: admin/systems/services/kolab/class_servKolab.inc:203
-#, fuzzy
 msgid "Internal error"
-msgstr "Insertar separador"
+msgstr "Error interno"
 
 #: admin/systems/services/kolab/class_servKolab.inc:203
-#, fuzzy
 msgid "Kolab account does not exist!"
-msgstr "Configuración cuenta Kolab"
+msgstr "¡La cuenta Kolab no existe!"
 
 #: admin/systems/services/kolab/class_servKolab.inc:207
-#: personal/connectivity/kolab/class_kolabAccount.inc:178
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
 msgid "Error"
 msgstr "Error"
 
 #: admin/systems/services/kolab/class_servKolab.inc:207
-#, fuzzy
 msgid "hostname"
-msgstr "Apellido"
+msgstr "nombre de Maquina"
 
 #: admin/systems/services/kolab/class_servKolab.inc:217
 #: admin/systems/services/kolab/class_servKolab.inc:233
 #: admin/systems/services/kolab/class_servKolab.inc:402
-#: personal/connectivity/kolab/class_kolabAccount.inc:346
-#: personal/connectivity/kolab/class_kolabAccount.inc:483
-#, fuzzy
+#: personal/connectivity/kolab/class_kolabAccount.inc:339
+#: personal/connectivity/kolab/class_kolabAccount.inc:476
 msgid "LDAP error"
-msgstr "Servicio LDAP"
+msgstr "Error LDAP"
 
 #: admin/systems/services/kolab/class_servKolab.inc:309
 #: admin/systems/services/kolab/class_servKolab.inc:311
-#, fuzzy
 msgid "Future days"
-msgstr "Sábado"
+msgstr "Días en el futuro"
 
 #: admin/systems/services/kolab/class_servKolab.inc:315
 #: admin/systems/services/kolab/class_servKolab.inc:319
 msgid "Quota"
-msgstr ""
+msgstr "Cuota"
 
 #: admin/systems/services/kolab/class_servKolab.inc:317
 msgid "Please choose a value between 1 and 100 for Quota settings."
@@ -79,15 +75,13 @@ msgstr ""
 "Por favor introduzca un valor entre 1 y 100 para el parámetro de cuota."
 
 #: admin/systems/services/kolab/class_servKolab.inc:323
-#, fuzzy
 msgid "Privileged networks"
-msgstr "Redes privilegiadas SMTP"
+msgstr "Redes privilegiadas"
 
 #: admin/systems/services/kolab/class_servKolab.inc:327
 #: admin/systems/services/kolab/servkolab.tpl:27
-#, fuzzy
 msgid "Mail domains"
-msgstr "en dominio"
+msgstr "Dominios de correo"
 
 #: admin/systems/services/kolab/class_servKolab.inc:419
 #: admin/systems/services/kolab/class_servKolab.inc:430
@@ -96,7 +90,7 @@ msgstr "Añadir el servicio Kolab"
 
 #: admin/systems/services/kolab/class_servKolab.inc:429
 #: personal/connectivity/kolab/class_kolabAccount.inc:5
-#: personal/connectivity/kolab/class_kolabAccount.inc:519
+#: personal/connectivity/kolab/class_kolabAccount.inc:512
 msgid "Kolab"
 msgstr "Kolab"
 
@@ -193,255 +187,243 @@ msgid "Generic"
 msgstr "Genérico"
 
 #: admin/systems/services/kolab/servkolab.tpl:27
-#, fuzzy
 msgid "Postfix mydestination"
-msgstr "Caracteristicas Posix"
+msgstr "Postfix mydestination"
 
 #: admin/systems/services/kolab/servkolab.tpl:102
 msgid "FTP FreeBusy service (legacy, not interoperable with Kolab2 FreeBusy)"
 msgstr ""
+"Servicio de presencia de FTP (propio, no tiene interacción con el servicio "
+"de presencia de Kolab2)"
 
 #: admin/systems/services/kolab/servkolab.tpl:112
 msgid "HTTP FreeBusy service (legacy)"
-msgstr ""
+msgstr "Servicio de presencia HTTP (propio)"
 
 #: admin/systems/services/kolab/servkolab.tpl:122
 msgid "Amavis email scanning (virus/spam)"
-msgstr ""
+msgstr "Escaneo de correo Amavis (virus/spam)"
 
 #: admin/systems/services/kolab/servkolab.tpl:151
-#, fuzzy
 msgid "Free/Busy settings"
-msgstr "Parametros de grupos"
+msgstr "Configuración de Presencia"
 
 #: admin/systems/services/kolab/servkolab.tpl:157
 msgid "Allow unauthenticated downloading of Free/Busy information"
-msgstr ""
+msgstr "Permite descarga no autentificada de información de presencia."
 
 #: admin/systems/services/kolab/servkolab.tpl:180
 msgid "Hosts/networks allowed to relay"
-msgstr ""
+msgstr "Equipos/Redes que son permitidos para hacer relay"
 
 #: admin/systems/services/kolab/servkolab.tpl:185
 msgid "Enter multiple values, seperated with"
-msgstr ""
+msgstr "Introduzca múltiples valores, separados con"
 
 #: admin/systems/services/kolab/servkolab.tpl:198
 msgid "SMTP smarthost/relayhost"
-msgstr ""
+msgstr "SMTP smarthost/relayhost"
 
 #: admin/systems/services/kolab/servkolab.tpl:211
 msgid "Host used to relay mails"
-msgstr ""
+msgstr "Equipo usado para reenviar correos"
 
 #: admin/systems/services/kolab/servkolab.tpl:235
 msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr ""
+msgstr "Aceptar correo desde otros dominios que no usen autentificación SMTP"
+
+#: personal/mail/kolab/class_mail-methods-kolab.inc:120
+#: personal/mail/kolab/class_mail-methods-kolab.inc:128
+#: personal/mail/kolab/class_mail-methods-kolab.inc:129
+msgid "Unspecified"
+msgstr "Sin definir"
+
+#: personal/mail/kolab/class_mail-methods-kolab.inc:121
+msgid "Mails"
+msgstr "Correos"
+
+#: personal/mail/kolab/class_mail-methods-kolab.inc:122
+msgid "Tasks"
+msgstr "Tareas"
+
+#: personal/mail/kolab/class_mail-methods-kolab.inc:123
+msgid "Journals"
+msgstr "Diario"
+
+#: personal/mail/kolab/class_mail-methods-kolab.inc:124
+msgid "Calendar"
+msgstr "Calendario"
+
+#: personal/mail/kolab/class_mail-methods-kolab.inc:125
+msgid "Contacts"
+msgstr "Contactos"
+
+#: personal/mail/kolab/class_mail-methods-kolab.inc:126
+msgid "Notes"
+msgstr "Notas"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:130
-#: personal/mail/kolab/class_mail-methods-kolab.inc:138
-#: personal/mail/kolab/class_mail-methods-kolab.inc:139
-msgid "Unspecified"
-msgstr ""
+msgid "Inbox"
+msgstr "Correo Entrante"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:131
-#, fuzzy
-msgid "Mails"
-msgstr "Correo Electrónico"
+msgid "Drafts"
+msgstr "Borrador"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:132
-#, fuzzy
-msgid "Tasks"
-msgstr "clase"
+msgid "Sent"
+msgstr "Enviar"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:133
-msgid "Journals"
-msgstr ""
-
-#: personal/mail/kolab/class_mail-methods-kolab.inc:134
-msgid "Calendar"
-msgstr ""
+msgid "SPAM"
+msgstr "SPAM"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:135
-#, fuzzy
-msgid "Contacts"
-msgstr "Contenidos"
-
 #: personal/mail/kolab/class_mail-methods-kolab.inc:136
-#, fuzzy
-msgid "Notes"
-msgstr "Contenidos"
-
-#: personal/mail/kolab/class_mail-methods-kolab.inc:140
-#, fuzzy
-msgid "Inbox"
-msgstr "índice"
-
-#: personal/mail/kolab/class_mail-methods-kolab.inc:141
-msgid "Drafts"
-msgstr ""
-
-#: personal/mail/kolab/class_mail-methods-kolab.inc:142
-#, fuzzy
-msgid "Sent"
-msgstr "Activar"
-
-#: personal/mail/kolab/class_mail-methods-kolab.inc:143
-msgid "SPAM"
-msgstr ""
-
-#: personal/mail/kolab/class_mail-methods-kolab.inc:145
-#: personal/mail/kolab/class_mail-methods-kolab.inc:146
-#: personal/mail/kolab/class_mail-methods-kolab.inc:147
-#: personal/mail/kolab/class_mail-methods-kolab.inc:148
-#: personal/mail/kolab/class_mail-methods-kolab.inc:149
-#, fuzzy
+#: personal/mail/kolab/class_mail-methods-kolab.inc:137
+#: personal/mail/kolab/class_mail-methods-kolab.inc:138
+#: personal/mail/kolab/class_mail-methods-kolab.inc:139
 msgid "Default"
-msgstr "Eliminar"
+msgstr "Por defecto"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:164
+#: personal/mail/kolab/class_mail-methods-kolab.inc:154
 msgid "Mail settings cannot be removed while there are delegations configured!"
 msgstr ""
+"¡Las características de correo no pueden ser eliminadas mientras haya "
+"delegaciones configuradas!"
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:262
+#: personal/mail/kolab/class_mail-methods-kolab.inc:252
 msgid "Waiting for kolab to remove mail properties..."
-msgstr ""
+msgstr "Esperando que Kolab elimine las características de correo..."
 
-#: personal/mail/kolab/class_mail-methods-kolab.inc:265
-#, fuzzy
+#: personal/mail/kolab/class_mail-methods-kolab.inc:255
 msgid "Please remove the mail settings first!"
-msgstr "Seleccione para ver que grupos tienen configuración de correo"
+msgstr "¡Por favor elimine las características de correo primero!"
 
 #: personal/connectivity/kolab/kolab.tpl:3
 #: personal/connectivity/kolab/kolab.tpl:43
-#, fuzzy
 msgid "Kolab account"
-msgstr "Mi cuenta"
+msgstr "Cuenta Kolab"
 
 #: personal/connectivity/kolab/kolab.tpl:4
 msgid ""
 "The kolab account is currently disabled. It's features can be adjusted if "
 "you add a mail account."
 msgstr ""
+"La cuenta kolab está actualmente desactivada. Sus características serán "
+"modificadas si añade una cuenta de correo."
 
 #: personal/connectivity/kolab/kolab.tpl:51
 #: personal/connectivity/kolab/kolab.tpl:63
-#: personal/connectivity/kolab/class_kolabAccount.inc:532
+#: personal/connectivity/kolab/class_kolabAccount.inc:525
 msgid "Delegations"
 msgstr "Delegaciones"
 
 #: personal/connectivity/kolab/kolab.tpl:83
-#, fuzzy
 msgid "Mail size"
-msgstr "Parámetros de correo"
+msgstr "Tamaño del correo electrónico"
 
 #: personal/connectivity/kolab/kolab.tpl:87
 msgid "No mail size restriction for this account"
-msgstr ""
+msgstr "No hay restricción de correo para esta cuenta."
 
 #: personal/connectivity/kolab/kolab.tpl:95
-#, fuzzy
 msgid "Free Busy information"
-msgstr "Información genérica del usuario"
+msgstr "Información de estado de presencia"
 
 #: personal/connectivity/kolab/kolab.tpl:98
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: personal/connectivity/kolab/kolab.tpl:107
-#, fuzzy
 msgid "Future"
-msgstr "Características"
+msgstr "Futuro"
 
 #: personal/connectivity/kolab/kolab.tpl:112
-#, fuzzy
 msgid "days"
-msgstr "Domingo"
+msgstr "días"
 
 #: personal/connectivity/kolab/kolab.tpl:119
-#: personal/connectivity/kolab/class_kolabAccount.inc:533
+#: personal/connectivity/kolab/class_kolabAccount.inc:526
 msgid "Invitation policy"
 msgstr "Política de invitación"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:6
-#, fuzzy
 msgid "This does something"
-msgstr "Mostrar objetos que coincidan"
+msgstr "Esto hace algo"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:178
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
 msgid "Mail address"
 msgstr "Dirección correo electrónico"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:211
+#: personal/connectivity/kolab/class_kolabAccount.inc:204
 msgid "Always accept"
 msgstr "Aceptar siempre"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:212
+#: personal/connectivity/kolab/class_kolabAccount.inc:205
 msgid "Always reject"
 msgstr "Denegar siempre"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:213
+#: personal/connectivity/kolab/class_kolabAccount.inc:206
 msgid "Reject if conflicts"
 msgstr "Denegar si hay conflictos"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:214
+#: personal/connectivity/kolab/class_kolabAccount.inc:207
 msgid "Manual if conflicts"
 msgstr "Preguntar si hay conflictos"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:215
+#: personal/connectivity/kolab/class_kolabAccount.inc:208
 msgid "Manual"
 msgstr "Manual"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:263
+#: personal/connectivity/kolab/class_kolabAccount.inc:256
 msgid "Anonymous"
 msgstr "Anónimo"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:358
-#: personal/connectivity/kolab/class_kolabAccount.inc:361
-#, fuzzy
+#: personal/connectivity/kolab/class_kolabAccount.inc:351
+#: personal/connectivity/kolab/class_kolabAccount.inc:354
 msgid "Free Busy future"
 msgstr "Disponibilidad futura"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:366
-#: personal/connectivity/kolab/class_kolabAccount.inc:369
-#, fuzzy
+#: personal/connectivity/kolab/class_kolabAccount.inc:359
+#: personal/connectivity/kolab/class_kolabAccount.inc:362
 msgid "Free Busy url"
-msgstr "Disponibilidad futura"
+msgstr "URIL de disponibilidad"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:383
+#: personal/connectivity/kolab/class_kolabAccount.inc:376
 #, php-format
 msgid "The invitation policy entry for address '%s' is not valid."
 msgstr ""
 "La entrada de política de invitación para la dirección '%s' no es valida."
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:391
+#: personal/connectivity/kolab/class_kolabAccount.inc:384
 #, php-format
 msgid "There's no mail user with address '%s' for your invitation policy!"
 msgstr ""
 "¡No hay ningún usuario con cuenta de correo '%s' para su política de "
 "invitación!"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:520
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
 msgid "Kolab account settings"
 msgstr "Configuración cuenta Kolab"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:520
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:524
+#: personal/connectivity/kolab/class_kolabAccount.inc:517
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:529
+#: personal/connectivity/kolab/class_kolabAccount.inc:522
 msgid "Free busy future"
 msgstr "Disponibilidad futura"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:530
+#: personal/connectivity/kolab/class_kolabAccount.inc:523
 msgid "Mail size restriction"
 msgstr "Restricciones al tamaño de mensaje"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:531
+#: personal/connectivity/kolab/class_kolabAccount.inc:524
 msgid "Free busy information"
 msgstr "Información de disponibilidad"
 

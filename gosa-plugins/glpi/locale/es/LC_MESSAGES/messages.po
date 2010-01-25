@@ -2,20 +2,21 @@
 # translation of systems.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
-"PO-Revision-Date: 2007-07-24 00:26+0200\n"
-"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
-"Language-Team:  <es@li.org>\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"PO-Revision-Date: 2010-01-25 00:03+0100\n"
+"Last-Translator: \n"
+"Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/systems/services/glpi/class_glpiSelectUser.inc:108
 msgid "Users"
@@ -79,14 +80,12 @@ msgid "Submit department"
 msgstr "Enviar departamento"
 
 #: admin/systems/services/glpi/goGlpiServer.tpl:1
-#, fuzzy
 msgid "GLPI database information"
-msgstr "Información genérica del usuario"
+msgstr "Información de base de datos GLPI"
 
 #: admin/systems/services/glpi/goGlpiServer.tpl:4
-#, fuzzy
 msgid "Logging DB user"
-msgstr "Entrada fallida: %s"
+msgstr "Usuario de Base de datos de registro"
 
 #: admin/systems/services/glpi/goGlpiServer.tpl:12
 #: admin/systems/services/glpi/class_goGlpiServer.inc:102
@@ -105,9 +104,8 @@ msgstr "Bases de datos"
 #: admin/systems/services/glpi/glpi_edit_os.tpl:28
 #: admin/systems/services/glpi/glpi_edit_type.tpl:9
 #: admin/systems/services/glpi/glpi_edit_type.tpl:28
-#, fuzzy
 msgid "Rename"
-msgstr "Nombre del Rol"
+msgstr "Renombrar"
 
 #: admin/systems/services/glpi/glpi_edit_printer_type.tpl:14
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:81
@@ -121,14 +119,12 @@ msgstr "Cerrar"
 #: admin/systems/services/glpi/glpi_edit_printer_type.tpl:25
 #: admin/systems/services/glpi/glpi_edit_os.tpl:24
 #: admin/systems/services/glpi/glpi_edit_type.tpl:24
-#, fuzzy
 msgid "Please enter a new name"
-msgstr "Por favor introduzca un nuevo nombre del grupo de objetos"
+msgstr "Por favor introduzca un nuevo nombre"
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:2
-#, fuzzy
 msgid "Attachment"
-msgstr "Apache"
+msgstr "Adjunto"
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:10
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:7
@@ -174,22 +170,20 @@ msgid "File"
 msgstr "Archivo"
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:33
-#, fuzzy
 msgid "Upload"
-msgstr "Recargar"
+msgstr "Enviar"
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:38
 msgid "Status"
 msgstr "Estado"
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:46
-#, fuzzy
 msgid "Filename"
-msgstr "Nombre del Rol"
+msgstr "Nombre del archivo"
 
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:54
 msgid "Mime-type"
-msgstr ""
+msgstr "Tipo MIME"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:104
 msgid "Can't delete this entry, it is still in use."
@@ -208,9 +202,8 @@ msgid "The selected name is already in use."
 msgstr "El nombre introducido ya esta siendo usado"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:92
-#, fuzzy
 msgid "cartridge"
-msgstr "Cartuchos"
+msgstr "cartucho"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:111
 #, php-format
@@ -257,29 +250,27 @@ msgstr "M"
 
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:1
 msgid "Add/Edit manufacturer"
-msgstr ""
+msgstr "Añadir/Editar Fabricante"
 
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:14
 msgid "Website"
-msgstr ""
+msgstr "Sitio web"
 
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:21
 msgid "Address"
 msgstr "Dirección"
 
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:32
-#, fuzzy
 msgid "Phone number"
-msgstr "Número de teléfono personal"
+msgstr "Número de teléfono"
 
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:39
 msgid "Fax"
 msgstr "Fax"
 
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:46
-#, fuzzy
 msgid "Email"
-msgstr "hombre"
+msgstr "Correo Electrónico"
 
 #: admin/systems/services/glpi/glpiManufacturerAdd.tpl:53
 #: admin/systems/services/glpi/glpi_devices.tpl:17
@@ -295,9 +286,8 @@ msgstr "Error interno. No puedo crear un dispositivo de tipo '%s'"
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:108
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:110
-#, fuzzy
 msgid "glpi device"
-msgstr "dispositivos"
+msgstr "dispositivos glpi"
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:112
 msgid "Can't detect object name."
@@ -445,9 +435,8 @@ msgid "Generic"
 msgstr "Genérico"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:9
-#, fuzzy
 msgid "Printer type"
-msgstr "Impresora"
+msgstr "Tipo de impresora"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:18
 #: admin/systems/services/glpi/glpiPrinter.tpl:32
@@ -482,7 +471,7 @@ msgstr "Fabricante"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:39
 msgid "Supported interfaces"
-msgstr ""
+msgstr "Interfaces soportados"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:48
 msgid "Serial"
@@ -490,17 +479,16 @@ msgstr "Serie"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:58
 msgid "Parallel"
-msgstr ""
+msgstr "Paralelo"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:68
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:80
 #: admin/systems/services/glpi/glpi.tpl:52
-#, fuzzy
 msgid "Contacts"
-msgstr "Contenidos"
+msgstr "Contactos"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:83
 #: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:57
@@ -533,9 +521,8 @@ msgid "Information"
 msgstr "Información"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:139
-#, fuzzy
 msgid "Installed cartridges"
-msgstr "Instalación"
+msgstr "Cartuchos instalados"
 
 #: admin/systems/services/glpi/glpiPrinter.tpl:152
 #: admin/systems/services/glpi/glpiManufacturer.tpl:8
@@ -544,20 +531,19 @@ msgstr "Eliminar"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:2
 msgid "Add/Edit monitor"
-msgstr ""
+msgstr "Añadir/Editar monitor"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:33
 msgid "Monitor size"
-msgstr ""
+msgstr "Tamaño del monitor"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:36
-#, fuzzy
 msgid "Inch"
-msgstr "Francés"
+msgstr "Pulgada"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:44
 msgid "Integrated microphone"
-msgstr ""
+msgstr "Micrófono integrado"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:47
 #: admin/systems/services/glpi/glpi_devices.tpl:55
@@ -581,93 +567,87 @@ msgstr "No"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:52
 msgid "Integrated speakers"
-msgstr ""
+msgstr "altavoces integrados"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:60
 msgid "Sub-D"
-msgstr ""
+msgstr "Sub-D"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:68
 msgid "BNC"
-msgstr ""
+msgstr "BNC"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:76
-#, fuzzy
 msgid "Serial number"
-msgstr "Número del busca"
+msgstr "Número serie"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:83
-#, fuzzy
 msgid "Additional serial number"
-msgstr "Número de serie del certificado"
+msgstr "Número de serie adicional"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:97
 msgid "Add/Edit other device"
-msgstr ""
+msgstr "Añadir/Editar otro dispositivo"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:138
 msgid "Add/Edit power supply"
-msgstr ""
+msgstr "Añadir / Editar fuente de energía"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:173
 msgid "Atx"
-msgstr ""
+msgstr "ATX"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:181
-#, fuzzy
 msgid "Power"
-msgstr "Teléfono"
+msgstr "Potencia"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:193
 msgid "Add/Edit graphic card"
-msgstr ""
+msgstr "Añadir / Editar Tarjeta Gráfica"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:228
 #: admin/systems/services/glpi/glpi_devices.tpl:284
 #: admin/systems/services/glpi/glpi_devices.tpl:349
-#, fuzzy
 msgid "Interface"
-msgstr "error interno"
+msgstr "interfaz"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:237
 msgid "Ram"
-msgstr ""
+msgstr "RAM"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:249
-#, fuzzy
 msgid "Add/Edit controller"
-msgstr "Editar rol"
+msgstr "Añadir/Editar controlador"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:293
 #: admin/systems/services/glpi/glpi_devices.tpl:420
 #: admin/systems/services/glpi/glpi_devices.tpl:485
 msgid "Size"
-msgstr ""
+msgstr "Tamaño"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:307
 msgid "Add/Edit drive"
-msgstr ""
+msgstr "Añadir / Editar disco"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:342
 msgid "Speed"
-msgstr ""
+msgstr "Velocidad"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:358
 msgid "Writeable"
-msgstr ""
+msgstr "Grabable"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:371
 msgid "Add/Edit harddisk"
-msgstr ""
+msgstr "Añadir/Editar Disco Duro"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:406
 msgid "Rpm"
-msgstr ""
+msgstr "Rpm"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:413
-#, fuzzy
 msgid "Cache"
-msgstr "Cancelar"
+msgstr "Cache"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:427
 #: admin/systems/services/glpi/glpi_devices.tpl:492
@@ -680,19 +660,19 @@ msgstr "Tipo"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:443
 msgid "Add/Edit memory"
-msgstr ""
+msgstr "Añadir/Editar memoria"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:478
 msgid "Frequenz"
-msgstr ""
+msgstr "Frecuencia"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:507
 msgid "Add/Edit sound card"
-msgstr ""
+msgstr "Añadir/Editar tarjeta de sonido"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:553
 msgid "Add/Edit network interface"
-msgstr ""
+msgstr "Añadir/Editar dispositivo de red"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:589
 msgid "MAC address"
@@ -700,38 +680,35 @@ msgstr "Dirección MAC"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:596
 msgid "Bandwidth"
-msgstr ""
+msgstr "Ancho de banda"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:607
 msgid "Add/Edit processor"
-msgstr ""
+msgstr "Añadir/Editar procesador"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:642
-#, fuzzy
 msgid "Frequence"
-msgstr "Francés"
+msgstr "Frecuencia"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:649
 msgid "Default frequence"
-msgstr ""
+msgstr "Frecuencia inicial"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:661
 msgid "Add/Edit motherboard"
-msgstr ""
+msgstr "Añadir/Editar placa base"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:696
-#, fuzzy
 msgid "Chipset"
-msgstr "Chino"
+msgstr "Chipset"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:707
 msgid "Add/Edit computer case"
-msgstr ""
+msgstr "Añadir/Editar Caja de ordenador"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:742
-#, fuzzy
 msgid "format"
-msgstr "Información"
+msgstr "formato"
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:32
 #: admin/systems/services/glpi/class_goGlpiServer.inc:87
@@ -772,47 +749,42 @@ msgid "Admin"
 msgstr "Administrador"
 
 #: admin/systems/services/glpi/glpiManufacturer.tpl:1
-#, fuzzy
 msgid "Manage manufacturers"
-msgstr "Gestión de usuarios"
+msgstr "Administre fabricantes"
 
 #: admin/systems/services/glpi/remove_glpi.tpl:2
 msgid "Warning"
 msgstr "Aviso"
 
 #: admin/systems/services/glpi/remove_glpi.tpl:6
-#, fuzzy
 msgid ""
 "Please double check if your really want to do this since there is no way for "
 "GOsa to get your data back."
 msgstr ""
-"Si está seguro de lo que quiere hacer pulse dos veces, ya que no hay forma "
-"de que GOsa pueda recuperar posteriormente esa información"
+"Si está seguro de lo que quiere hacer pulse dos veces, ya que no hay manera "
+"de que GOsa recupere posteriormente la información."
 
 #: admin/systems/services/glpi/remove_glpi.tpl:10
-#, fuzzy
 msgid ""
 "Best thing to do before performing this action would be to save the current "
 "contents of your MySql database in a file. So - if you've done so - press "
 "'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 "La mejor opción antes de ejecutar esta acción es haber grabado el contenido "
-"actual de su árbol LDAP en un fichero. Entonces - Y solo entonces - presione "
-"'Eliminar' para continuar o 'Cancelar' para abortar."
+"actual de su base de datos MySql en un fichero. Entonces - Y soloentonces - "
+"presione 'Eliminar' para continuar o 'Cancelar' para abortar."
 
 #: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:14
-#, fuzzy
 msgid "Reference"
-msgstr "Referencias"
+msgstr "Referencia"
 
 #: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:61
-#, fuzzy
 msgid "Choose"
-msgstr "Cerrar"
+msgstr "Elige"
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:6
 msgid "List of available cartridge type for this type of printer"
-msgstr ""
+msgstr "Lista de cartuchos disponibles para este tipo de impresora"
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:23
 msgid ""
@@ -822,6 +794,11 @@ msgid ""
 "cartridge created, this allows you to select the same cartridge type for "
 "more then one printer."
 msgstr ""
+"Este dialogo le permite crear nuevos tipos de cartuchos, y seleccionar uno o "
+"mas tipos para su impresora. Los tipos de Cartuchos dependerán del tipo de "
+"impresora que haya seleccionado. Por cada tipo de cartucho seleccionado se "
+"creara un nuevo cartucho, esto le permite seleccionar el mismo tipo de "
+"cartucho para mas de una impresora."
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:27
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:27
@@ -831,55 +808,51 @@ msgid "Filters"
 msgstr "Filtros"
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:35
-#, fuzzy
 msgid "Display cartridge types matching"
-msgstr "Mostrar grupos coincidentes"
+msgstr "Mostrar tipos de cartuchos que concuerdan con"
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:37
-#, fuzzy
 msgid "Regular expression for matching cartridge types"
-msgstr "Expresiones regulares para buscar direcciones"
+msgstr "Expresiones regulares que coincidan con tipos de cartuchos"
 
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:6
-#, fuzzy
 msgid "List of attachments"
-msgstr "Lista de Departamentos"
+msgstr "Lista de Adjuntos"
 
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:23
 msgid ""
 "This dialog allow you to attach additional objects (like manuals, guides, "
 "etc.)  to your currently edited computer."
 msgstr ""
+"Este dialogo le permite unir objetos tradicionales (como manuales, guías, "
+"etc.) al ordenador que está editando actualmente."
 
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:35
-#, fuzzy
 msgid "Display attachments matching"
-msgstr "Mostrar las acl que coincidan con"
+msgstr "Mostrar adjuntos que coincidan con"
 
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:37
-#, fuzzy
 msgid "Regular expression for matching attachment names"
-msgstr "Expresión regular para buscar el nombre del departamento"
+msgstr "Expresiones regulares para encontrar nombres de adjuntos"
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:6
-#, fuzzy
 msgid "List of devices"
-msgstr "Lista de acls"
+msgstr "Lista de dispositivos"
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:23
 msgid ""
 "This dialog allows you to attach a device to your currently edited computer."
 msgstr ""
+"Este dialogo le permite unir un dispositivo al ordenador que está "
+"actualmente editando."
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:35
-#, fuzzy
 msgid "Display devices matching"
-msgstr "Mostrar las acl que coincidan con"
+msgstr "Mostrar dispositivos que coincidan con"
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:37
-#, fuzzy
 msgid "Regular expression for matching device names"
-msgstr "Expresiones regulares para buscar nombre de objetos"
+msgstr "Expresiones regulares que coincidan con nombres de dispositivos"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:146
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:163
@@ -904,11 +877,13 @@ msgstr ""
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:198
 msgid "Download of attachment failed. Attachment was not found on server."
 msgstr ""
+"La descarga del adjunto ha fallado. El adjunto no ha sido encontrado en el "
+"servidor."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:184
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:201
 msgid "Download of attachment failed. Not a valid attachment id."
-msgstr ""
+msgstr "La descarga del adjunto ha fallado. El adjunto no tiene un id válido."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:198
 #: admin/systems/services/glpi/class_glpiAccount.inc:204
@@ -1026,33 +1001,28 @@ msgid "Peripheral devices"
 msgstr "Dispositivo periférico"
 
 #: admin/systems/services/glpi/glpi.tpl:9
-#, fuzzy
 msgid "System type"
-msgstr "Sistema de seguridad"
+msgstr "Tipo de sistema"
 
 #: admin/systems/services/glpi/glpi.tpl:96
 msgid "Installed devices"
-msgstr ""
+msgstr "Dispositivos instalados"
 
 #: admin/systems/services/glpi/glpi.tpl:112
-#, fuzzy
 msgid "Trading"
-msgstr "Aviso"
+msgstr "Comercial"
 
 #: admin/systems/services/glpi/glpi.tpl:113
-#, fuzzy
 msgid "Software"
-msgstr "Provincia"
+msgstr "Software"
 
 #: admin/systems/services/glpi/glpi.tpl:114
-#, fuzzy
 msgid "Contracts"
-msgstr "Contenidos"
+msgstr "Contratos"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:68
-#, fuzzy
 msgid "attachment"
-msgstr "Adjuntos"
+msgstr "adjunto"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:107
 #, php-format
@@ -1188,6 +1158,8 @@ msgstr "Lista de usuarios"
 msgid ""
 "This dialog allows you to select a user as technical responsible person."
 msgstr ""
+"Este dialogo le permite seleccionar un usuario como personal técnico "
+"responsable."
 
 #: admin/systems/services/glpi/glpiSelectUser.tpl:35
 msgid "Display users matching"
@@ -1198,9 +1170,8 @@ msgid "Regular expression for matching user names"
 msgstr "Expresiones regulares para buscar nombre de usuarios"
 
 #: admin/systems/services/glpi/glpi_edit_os.tpl:1
-#, fuzzy
 msgid "Manage OS-types"
-msgstr "Gestión de usuarios"
+msgstr "Administrar tipos de OS"
 
 #: admin/systems/services/glpi/class_glpiManufacturer.inc:53
 #, php-format
@@ -1223,9 +1194,8 @@ msgstr ""
 "otro."
 
 #: admin/systems/services/glpi/glpi_edit_type.tpl:1
-#, fuzzy
 msgid "Manage System-types"
-msgstr "Gestión de usuarios"
+msgstr "Administrar tipos de sistemas"
 
 #~ msgid "You're about to delete the glpi attachment component '%s'."
 #~ msgstr "Ha decidido eliminar el componente adjunto glpi '%s'."

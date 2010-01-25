@@ -2,45 +2,42 @@
 # translation of systems.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
-"PO-Revision-Date: 2007-07-24 00:26+0200\n"
-"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
-"Language-Team:  <es@li.org>\n"
+"POT-Creation-Date: 2009-06-30 09:57+0200\n"
+"PO-Revision-Date: 2010-01-24 23:59+0100\n"
+"Last-Translator: \n"
+"Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: addons/godfs/class_dfsManagment.inc:8
-#, fuzzy
 msgid "DFS Management"
-msgstr "Administración Samba"
+msgstr "Administración DFS"
 
 #: addons/godfs/class_dfsManagment.inc:9
-#, fuzzy
 msgid "This does something"
-msgstr "Mostrar objetos que coincidan"
+msgstr "Esto hace algo"
 
 #: addons/godfs/class_dfsManagment.inc:146
 #: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-#, fuzzy
 msgid "LDAP error"
-msgstr "Servicio LDAP"
+msgstr "Error LDAP"
 
 #: addons/godfs/class_dfsManagment.inc:165
 msgid "No DFS entries found"
-msgstr ""
+msgstr "No se han encontrado entradas DFS"
 
 #: addons/godfs/class_dfsManagment.inc:208
-#, fuzzy
 msgid "Go up one dfsshare"
-msgstr "Subir un departamento"
+msgstr "Subir un compartido DFS"
 
 #: addons/godfs/class_dfsManagment.inc:208
 msgid "Up"
@@ -48,16 +45,15 @@ msgstr "Arriba"
 
 #: addons/godfs/class_dfsManagment.inc:209
 msgid "Go to dfs root"
-msgstr ""
+msgstr "Ir a la raíz DFS"
 
 #: addons/godfs/class_dfsManagment.inc:209
 msgid "Root"
 msgstr "Raíz"
 
 #: addons/godfs/class_dfsManagment.inc:210
-#, fuzzy
 msgid "Create new dfsshare"
-msgstr "Crear"
+msgstr "Crear nuevo compartido DFS"
 
 #: addons/godfs/class_dfsManagment.inc:212
 msgid "Base"
@@ -76,75 +72,66 @@ msgid "Finish"
 msgstr "Terminar"
 
 #: addons/godfs/generic.tpl:4
-#, fuzzy
 msgid "DFS Properties"
-msgstr "Propiedades"
+msgstr "Propiedades DFS"
 
 #: addons/godfs/generic.tpl:8
-#, fuzzy
 msgid "Name of dfs Share"
-msgstr "Nombre del departamento"
+msgstr "Nombre del compartido DFS"
 
 #: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
 msgid "Description"
 msgstr "Descripción"
 
 #: addons/godfs/generic.tpl:16
-#, fuzzy
 msgid "Fileserver"
-msgstr "Servidor"
+msgstr "Servidor de archivos"
 
 #: addons/godfs/generic.tpl:20
-#, fuzzy
 msgid "Share on Fileserver"
-msgstr "Mostrar servidores"
+msgstr "Recurso compartido en servidor de archivos"
 
 #: addons/godfs/generic.tpl:30
-#, fuzzy
 msgid "DFS Location"
-msgstr "Localización"
+msgstr "Localización DFS"
 
 #: addons/godfs/generic.tpl:34
 msgid "Location"
 msgstr "Localización"
 
 #: addons/godfs/main.inc:35 addons/godfs/main.inc:41
-#, fuzzy
 msgid "Distributed File System Administration"
-msgstr "Administración sistema de FAX"
+msgstr "Administración sistema de archivos distribuidos"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
-msgstr ""
+msgstr "Compartidos DFS"
 
 #: addons/godfs/contents.tpl:22
 msgid "Information"
 msgstr "Información"
 
 #: addons/godfs/contents.tpl:26
-#, fuzzy
 msgid ""
 "This menu allows you to create, delete and edit selected dfs shares. Having "
 "a large numbers of dfs shares, you might prefer the range selectors on top "
 "of the dfs share list."
 msgstr ""
-"Este menú le permitirá crear, eliminar, y editar los departamentos "
+"Este menú le permitirá crear, eliminar, y editar los compartidos DFS"
 "seleccionados. Puede preferir el selector de rango en la parte superior de "
-"la lista de departamentos cuando maneje un gran número de departamentos."
+"la lista de compartidos DFS cuando maneje un gran número de departamentos."
 
 #: addons/godfs/contents.tpl:31
 msgid "Filters"
 msgstr "Filtros"
 
 #: addons/godfs/contents.tpl:40
-#, fuzzy
 msgid "Display dfs shares matching"
-msgstr "Mostrar sistemas que coincidan con"
+msgstr "Mostrar compartidos DFS que coincidan con"
 
 #: addons/godfs/contents.tpl:44
-#, fuzzy
 msgid "Regular expression for matching dfs share names"
-msgstr "Expresiones regulares para buscar nombre de usuarios"
+msgstr "Expresiones regulares para buscar compartidos DFS"
 
 #~ msgid "Cancel"
 #~ msgstr "Cancelar"

@@ -2,53 +2,28 @@
 # translation of systems.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
-"PO-Revision-Date: 2007-07-24 00:26+0200\n"
-"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
-"Language-Team:  <es@li.org>\n"
+"POT-Creation-Date: 2009-06-30 09:59+0200\n"
+"PO-Revision-Date: 2010-01-20 00:39+0100\n"
+"Last-Translator: \n"
+"Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-
-#: admin/sudo/sudo-filter.tpl:3
-#, fuzzy
-msgid "Filter"
-msgstr "Filtros"
-
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:547
-#: admin/sudo/class_sudoGeneric.inc:552 admin/sudo/class_sudoGeneric.inc:557
-#: admin/sudo/class_sudoGeneric.inc:566 admin/sudo/class_sudoGeneric.inc:669
-#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
-msgid "Name"
-msgstr "Nombre"
-
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:384
-#: admin/sudo/class_target_list_users.inc:177
-msgid "User"
-msgstr "Usuario"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/sudo/remove.tpl:2
 msgid "Warning"
 msgstr "Aviso"
 
-#: admin/sudo/remove.tpl:6
-msgid ""
-"Please double check if you really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Si está seguro de lo que quiere hacer pulse dos veces, ya que no hay forma "
-"de que GOsa pueda recuperar posteriormente esa información"
-
-#: admin/sudo/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+#: admin/sudo/remove.tpl:9
+msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 "Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
 "<i>Cancelar</i> para Abortar."
@@ -69,28 +44,39 @@ msgstr "Acceso sin restricciones"
 msgid "allow access to these hosts"
 msgstr "Permitir el acceso a estos equipos"
 
+#: admin/sudo/class_sudoGeneric.inc:384
+#: admin/sudo/class_target_list_users.inc:177
+msgid "User"
+msgstr "Usuario"
+
 #: admin/sudo/class_sudoGeneric.inc:385
 #: admin/sudo/class_target_list_users.inc:178
 msgid "Group"
 msgstr "Grupo"
 
 #: admin/sudo/class_sudoGeneric.inc:533
-#, fuzzy
 msgid "LDAP error"
-msgstr "Servicio LDAP"
+msgstr "Error LDAP"
 
-#: admin/sudo/class_sudoGeneric.inc:660 admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
+#: admin/sudo/class_sudoGeneric.inc:547 admin/sudo/class_sudoGeneric.inc:552
+#: admin/sudo/class_sudoGeneric.inc:557 admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34 admin/sudo/paste_generic.tpl:5
+#: admin/sudo/class_divListSudo.inc:78
+msgid "Name"
+msgstr "Nombre"
+
+#: admin/sudo/class_sudoGeneric.inc:660
 msgid "Sudo"
-msgstr "Junio"
+msgstr "Sudo"
 
 #: admin/sudo/class_sudoGeneric.inc:661 admin/sudo/class_sudoGeneric.inc:666
-#, fuzzy
+#: admin/sudo/class_sudoManagement.inc:262
 msgid "Sudo role"
-msgstr "¡id desconocido!"
+msgstr "Rol Sudo"
 
 #: admin/sudo/class_sudoGeneric.inc:670 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
+#: admin/sudo/generic.tpl:44
 msgid "Description"
 msgstr "Descripción"
 
@@ -100,39 +86,35 @@ msgstr "Usuarios"
 
 #: admin/sudo/class_sudoGeneric.inc:672
 msgid "Host"
-msgstr ""
+msgstr "Nombre de equipo"
 
 #: admin/sudo/class_sudoGeneric.inc:673
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 #: admin/sudo/class_sudoGeneric.inc:674
-#, fuzzy
 msgid "Run as user"
-msgstr "Usuarios del dominio"
+msgstr "Ejecutar como usuario"
 
 #: admin/sudo/class_sudoGeneric.inc:675
 msgid "Access control list"
 msgstr "Lista de control de acceso"
 
 #: admin/sudo/options.tpl:5
-#, fuzzy
 msgid "Option name"
-msgstr "Nombre de la localización"
+msgstr "Nombre de la opción"
 
 #: admin/sudo/options.tpl:7
-#, fuzzy
 msgid "Value"
-msgstr "hombre"
+msgstr "Valor"
 
 #: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
 msgid "Options"
 msgstr "Opciones"
 
 #: admin/sudo/options.tpl:86
-#, fuzzy
 msgid "Available options"
-msgstr "Roles disponibles"
+msgstr "Opciones disponibles"
 
 #: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
 #: admin/sudo/paste_generic.tpl:1
@@ -141,7 +123,7 @@ msgstr "Genérico"
 
 #: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
 msgid "global defaults"
-msgstr ""
+msgstr "Opciones predeterminadas"
 
 #: admin/sudo/generic.tpl:55
 msgid "System trust"
@@ -152,13 +134,12 @@ msgid "Trust mode"
 msgstr "Modo seguro"
 
 #: admin/sudo/generic.tpl:87
-#, fuzzy
 msgid "Users and groups"
-msgstr "grupos de usuarios"
+msgstr "Usuarios y grupos"
 
 #: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
-msgstr ""
+msgstr "Añadir de la lista"
 
 #: admin/sudo/generic.tpl:102
 msgid "Systems"
@@ -166,22 +147,20 @@ msgstr "Sistemas"
 
 #: admin/sudo/generic.tpl:120
 msgid "Commands"
-msgstr ""
+msgstr "Comandos"
 
 #: admin/sudo/generic.tpl:132
-#, fuzzy
 msgid "Run as"
-msgstr "Usuarios del dominio"
+msgstr "Ejecutar como"
 
 #: admin/sudo/class_target_list_systems.inc:50
 msgid "Select the target objects for your scheduled action."
-msgstr ""
+msgstr "Seleccionar los objetos objetivos para su acción programada."
 
 #: admin/sudo/class_target_list_systems.inc:51
 #: admin/sudo/class_target_list_systems.inc:52
-#, fuzzy
 msgid "Available systems"
-msgstr "Miembros disponibles"
+msgstr "Sistemas disponibles"
 
 #: admin/sudo/class_target_list_systems.inc:61
 #: admin/sudo/class_target_list_users.inc:58
@@ -189,9 +168,8 @@ msgid "Object name"
 msgstr "Nombre de objeto"
 
 #: admin/sudo/class_target_list_systems.inc:64
-#, fuzzy
 msgid "Select to see terminals"
-msgstr "Seleccione para ver los servidores"
+msgstr "Seleccione para ver los terminales"
 
 #: admin/sudo/class_target_list_systems.inc:64
 msgid "Show terminals"
@@ -199,16 +177,15 @@ msgstr "Mostrar terminales"
 
 #: admin/sudo/class_target_list_systems.inc:65
 msgid "Select to see servers"
-msgstr "Seleccione para ver los servidores"
+msgstr "Seleccione para mostrar los servidores"
 
 #: admin/sudo/class_target_list_systems.inc:65
 msgid "Show servers"
 msgstr "Mostrar servidores"
 
 #: admin/sudo/class_target_list_systems.inc:66
-#, fuzzy
 msgid "Select to see workstations"
-msgstr "Mover estaciones de trabajo seleccionadas"
+msgstr "Seleccione para mostrar las estaciones de trabajo"
 
 #: admin/sudo/class_target_list_systems.inc:66
 msgid "Show workstations"
@@ -241,46 +218,9 @@ msgstr "Estación de trabajo"
 msgid "Terminal"
 msgstr "Terminal"
 
-#: admin/sudo/sudo-list.xml:11
-#, fuzzy
-msgid "List of sudo roles"
-msgstr "Lista de usuarios"
-
-#: admin/sudo/sudo-list.xml:15 admin/sudo/sudo-list.xml:65
-msgid "Role"
-msgstr "Rol"
-
-#: admin/sudo/sudo-list.xml:48
-msgid "Actions"
-msgstr "Acciones"
-
-#: admin/sudo/sudo-list.xml:59
-msgid "Create"
-msgstr "Crear"
-
-#: admin/sudo/sudo-list.xml:72
-#, fuzzy
-msgid "Default"
-msgstr "Eliminar"
-
-#: admin/sudo/sudo-list.xml:85
-msgid "Remove"
-msgstr "Eliminar"
-
-#: admin/sudo/sudo-list.xml:117
-#, fuzzy
-msgid "Edit sudo role"
-msgstr "¡id desconocido!"
-
-#: admin/sudo/sudo-list.xml:130
-#, fuzzy
-msgid "Remove sudo role"
-msgstr "¡id desconocido!"
-
 #: admin/sudo/class_target_list_users.inc:47
-#, fuzzy
 msgid "Select the target objects"
-msgstr "Seleccione los objetos a añadir"
+msgstr "Seleccione los objetos"
 
 #: admin/sudo/class_target_list_users.inc:48
 #: admin/sudo/class_target_list_users.inc:49
@@ -288,63 +228,57 @@ msgid "Available members"
 msgstr "Miembros disponibles"
 
 #: admin/sudo/class_target_list_users.inc:60
-#, fuzzy
 msgid "Select to see users"
-msgstr "Seleccione para ver los servidores"
+msgstr "Seleccione para mostrar los usuarios"
 
 #: admin/sudo/class_target_list_users.inc:60
-#, fuzzy
 msgid "Show users"
-msgstr "Mostrar usuarios samba"
+msgstr "Mostrar usuarios"
 
 #: admin/sudo/class_target_list_users.inc:61
-#, fuzzy
 msgid "Select to see groups"
-msgstr "Seleccione para ver los servidores"
+msgstr "Seleccione para mostrar grupos"
 
 #: admin/sudo/class_target_list_users.inc:61
-#, fuzzy
 msgid "Show groups"
-msgstr "grupos de teléfonos"
+msgstr "Mostrar grupos"
 
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
 msgstr "Aplicar"
 
-#: admin/sudo/class_sudoOption.inc:154
-#, fuzzy
-msgid "Unknown option"
-msgstr "Desconocido"
+#: admin/sudo/main.inc:50 admin/sudo/main.inc:54
+msgid "Sudo role administration"
+msgstr "Administración de rol Sudo"
 
-#: admin/sudo/class_sudoOption.inc:155
-#, fuzzy, php-format
+#: admin/sudo/class_sudoOption.inc:154
+msgid "Unknown option"
+msgstr "Opción desconocida"
+
+#: admin/sudo/class_sudoOption.inc:155, php-format
 msgid "The sudo option '%s' is invalid!"
-msgstr "¡'%s' comando para la extensión %s no es válido!"
+msgstr "¡La opción Sudo %s no es válida!"
 
 #: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
-#, fuzzy
 msgid "string"
-msgstr "Aviso"
+msgstr "cadena de texto"
 
 #: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:283
 #: admin/sudo/class_sudoOption.inc:284
 msgid "bool"
-msgstr ""
+msgstr "Booleano"
 
 #: admin/sudo/class_sudoOption.inc:283
-#, fuzzy
 msgid "integer"
-msgstr "Impresora"
+msgstr "Entero"
 
 #: admin/sudo/class_sudoOption.inc:284
-#, fuzzy
 msgid "list"
-msgstr "Polaco"
+msgstr "lista"
 
 #: admin/sudo/class_sudoOption.inc:537
-#, fuzzy
 msgid "Sudo options"
-msgstr "¡id desconocido!"
+msgstr "Opciones Sudo"
 
 #: admin/sudo/trust_machines.tpl:6
 msgid "Select systems to add"
@@ -366,57 +300,71 @@ msgstr "Mostrar sistemas que coincidan con"
 msgid "Regular expression for matching addresses"
 msgstr "Expresiones regulares para buscar direcciones"
 
-#: admin/sudo/class_sudoManagement.inc:26
-#, fuzzy
-msgid "Sudo management"
-msgstr "Administración Samba"
+#: admin/sudo/class_divListSudo.inc:51 admin/sudo/class_divListSudo.inc:52
+msgid "List of sudo roles"
+msgstr "Lista de roles Sudo"
 
-#, fuzzy
-#~ msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
-#~ "<i>Cancelar</i> para Abortar."
+#: admin/sudo/class_divListSudo.inc:72
+msgid "Select all"
+msgstr "Seleccione todos"
 
-#, fuzzy
-#~ msgid "Sudo role administration"
-#~ msgstr "Administración de grupo"
+#: admin/sudo/class_divListSudo.inc:78
+msgid "Department"
+msgstr "Departamento"
 
-#~ msgid "Select all"
-#~ msgstr "Seleccione todos"
+#: admin/sudo/class_divListSudo.inc:79 admin/sudo/class_divListSudo.inc:105
+msgid "Actions"
+msgstr "Acciones"
 
-#~ msgid "Department"
-#~ msgstr "Departamento"
+#: admin/sudo/class_divListSudo.inc:83
+msgid "Regular expression for matching role names"
+msgstr "Expresión regular para buscar nombres de roles"
 
-#, fuzzy
-#~ msgid "Regular expression for matching role names"
-#~ msgstr "Expresión regular para buscar nombres de grupos"
+#: admin/sudo/class_divListSudo.inc:85
+msgid "Regular expression for matching role member names"
+msgstr "Expresión regular para buscar miembros de roles"
 
-#, fuzzy
-#~ msgid "Regular expression for matching role member names"
-#~ msgstr "Expresión regular para buscar nombres de grupos"
+#: admin/sudo/class_divListSudo.inc:107
+msgid "Create"
+msgstr "Crear"
 
-#~ msgid "Edit this entry"
-#~ msgstr "Editar esta entrada"
+#: admin/sudo/class_divListSudo.inc:111
+msgid "Role"
+msgstr "Rol"
 
-#~ msgid "Delete this entry"
-#~ msgstr "Eliminar esta entrada"
+#: admin/sudo/class_divListSudo.inc:112
+msgid "Default"
+msgstr "Por defecto"
 
-#, fuzzy
-#~ msgid "Number of listed roles"
-#~ msgstr "Eliminar grupo seleccionado"
+#: admin/sudo/class_divListSudo.inc:119
+msgid "Remove"
+msgstr "Eliminar"
 
-#, fuzzy
-#~ msgid "Sudo roles"
-#~ msgstr "¡id desconocido!"
+#: admin/sudo/class_divListSudo.inc:171
+msgid "Edit this entry"
+msgstr "Editar esta entrada"
 
-#, fuzzy
-#~ msgid "Manage sudo roles"
-#~ msgstr "Usuarios del dominio"
+#: admin/sudo/class_divListSudo.inc:178
+msgid "Delete this entry"
+msgstr "Eliminar esta entrada"
 
-#, fuzzy
-#~ msgid "Permission"
-#~ msgstr "Permisos"
+#: admin/sudo/class_divListSudo.inc:220
+msgid "Number of listed roles"
+msgstr "Número de roles mostrados"
 
-#, fuzzy
-#~ msgid "Permission error"
-#~ msgstr "Permisos"
+#: admin/sudo/class_sudoManagement.inc:31
+msgid "Sudo roles"
+msgstr "Roles Sudo"
+
+#: admin/sudo/class_sudoManagement.inc:32
+msgid "Manage sudo roles"
+msgstr "Administrar roles Sudo"
+
+#: admin/sudo/class_sudoManagement.inc:247
+msgid "Permission"
+msgstr "Permiso"
+
+#: admin/sudo/class_sudoManagement.inc:295
+msgid "Permission error"
+msgstr "Error de Permisos"
+

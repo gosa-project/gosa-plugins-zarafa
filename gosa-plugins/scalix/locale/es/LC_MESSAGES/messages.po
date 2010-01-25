@@ -2,20 +2,21 @@
 # translation of systems.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
-"PO-Revision-Date: 2007-07-24 00:26+0200\n"
-"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
-"Language-Team:  <es@li.org>\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
+"PO-Revision-Date: 2010-01-20 01:05+0100\n"
+"Last-Translator: \n"
+"Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/groups/scalix/class_scalixGroup.inc:15
 #: personal/scalix/class_scalixAccount.inc:456
@@ -83,62 +84,55 @@ msgid "Generic"
 msgstr "Genérico"
 
 #: personal/scalix/generic.tpl:8
-#, fuzzy
 msgid "Scalix mailnode"
 msgstr "Nodo de correo Scalix"
 
 #: personal/scalix/generic.tpl:17
-#, fuzzy
 msgid "Salix mailbox class"
-msgstr "Tipo de buzón de correo"
+msgstr "Tipo de buzón de correo Scalix"
 
 #: personal/scalix/generic.tpl:21
 msgid ""
 "Limited users can not make use of the group calendar functionality in Scalix"
 msgstr ""
+"Usuarios limitados no pueden usar la funcionalidad calendario de grupo de "
+"Scalix"
 
 #: personal/scalix/generic.tpl:30
-#, fuzzy
 msgid "Scalix server language"
-msgstr "Idioma del Servidor"
+msgstr "Idioma del servidor de Scalix"
 
 #: personal/scalix/generic.tpl:34
 msgid "Message catalog language for client."
-msgstr ""
+msgstr "Idioma para el cliente."
 
 #: personal/scalix/generic.tpl:51
-#, fuzzy
 msgid "Select for admin capability."
-msgstr "Seleccione un tipo de ACL"
+msgstr "Seleccione para Capacidad de administración."
 
 #: personal/scalix/generic.tpl:51
-#, fuzzy
 msgid "Scalix Administrator"
-msgstr "Administrador"
+msgstr "Administrador Scalix"
 
 #: personal/scalix/generic.tpl:56
 msgid "Select for mailbox admin capability."
-msgstr ""
+msgstr "Seleccione para Capacidad de administración de buzón."
 
 #: personal/scalix/generic.tpl:56
-#, fuzzy
 msgid "Scalix Mailbox Administrator"
-msgstr "Administrador del buzón de correo"
+msgstr "Administrador de buzón de Scalix"
 
 #: personal/scalix/generic.tpl:61
-#, fuzzy
 msgid "Hide user entry from addressbook."
-msgstr "Ocultar las entradas de usuarios en Scalix"
+msgstr "Ocultar entrada de usuario de la libreta de direcciones."
 
 #: personal/scalix/generic.tpl:61
-#, fuzzy
 msgid "Hide this user entry in Scalix"
-msgstr "Ocultar las entradas de usuarios en Scalix"
+msgstr "Ocultar esta entrada de usuario en Scalix."
 
 #: personal/scalix/generic.tpl:70
-#, fuzzy
 msgid "Limit mailbox size"
-msgstr "Tamaño máximo del buzón de correo electrónico"
+msgstr "Tamaño máximo del buzón"
 
 #: personal/scalix/generic.tpl:73
 msgid "MB"
@@ -147,44 +141,40 @@ msgstr "Mb"
 #: personal/scalix/generic.tpl:81
 msgid "As sanction on mailbox quota overuse, stop user from sending mail."
 msgstr ""
+"Prohibir al usuario enviar correo cuando sobrepase la cuota de correo."
 
 #: personal/scalix/generic.tpl:81
-#, fuzzy
 msgid "Limit Outbound Mail"
-msgstr "Limitaciones de salida"
+msgstr "Limitar el correo saliente"
 
 #: personal/scalix/generic.tpl:86
 msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
 msgstr ""
+"Prohibir al usuario recibir correo cuando sobrepase la cuota de correo."
 
 #: personal/scalix/generic.tpl:86
-#, fuzzy
 msgid "Limit Inbound Mail"
-msgstr "Limitaciones de entrada"
+msgstr "Limitar el correo entrante"
 
 #: personal/scalix/generic.tpl:91
 msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
+msgstr "Avisar al usuario por correo cuando sobrepase la cuota de correo."
 
 #: personal/scalix/generic.tpl:91
-#, fuzzy
 msgid "Notify User"
-msgstr "Notificar al usuario"
+msgstr "Avisar al usuario"
 
 #: personal/scalix/generic.tpl:108 personal/scalix/paste_generic.tpl:6
-#, fuzzy
 msgid "List of scalix email addresses"
-msgstr "Direcciones de correo electrónico de Scalix"
+msgstr "Lista de direcciones de correo scalix"
 
 #: personal/scalix/class_scalixAccount.inc:16
-#, fuzzy
 msgid "Scalix"
-msgstr "Cuenta Scalix"
+msgstr "Scalix"
 
 #: personal/scalix/class_scalixAccount.inc:17
-#, fuzzy
 msgid "This does something"
-msgstr "Mostrar objetos que coincidan"
+msgstr "Esto hace algo"
 
 #: personal/scalix/class_scalixAccount.inc:128
 msgid "This account has no scalix extensions."
@@ -216,9 +206,8 @@ msgstr ""
 
 #: personal/scalix/class_scalixAccount.inc:234
 #: personal/scalix/class_scalixAccount.inc:340
-#, fuzzy
 msgid "LDAP error"
-msgstr "Servicio LDAP"
+msgstr "Error LDAP"
 
 #: personal/scalix/class_scalixAccount.inc:257
 #: personal/scalix/class_scalixAccount.inc:264
@@ -231,41 +220,34 @@ msgstr "Error"
 
 #: personal/scalix/class_scalixAccount.inc:257
 #: personal/scalix/class_scalixAccount.inc:496
-#, fuzzy
 msgid "Cannot add invalid mail address!"
-msgstr "Esta intentando añadir una dirección de correo no valida"
+msgstr "¡Esta intentando añadir una dirección de correo no valida!"
 
 #: personal/scalix/class_scalixAccount.inc:264
 #: personal/scalix/class_scalixAccount.inc:281
-#, fuzzy
 msgid "You have no permission to modify these addresses."
-msgstr "No tiene permisos para eliminar este departamento."
+msgstr "No tiene permisos para eliminar esta dirección."
 
 #: personal/scalix/class_scalixAccount.inc:271
-#: personal/scalix/class_scalixAccount.inc:505
-#, fuzzy, php-format
+#: personal/scalix/class_scalixAccount.inc:505, php-format
 msgid "Cannot add mail address: it is already used by user '%s'."
 msgstr ""
-"La dirección de correo que esta intentando añadir, ya esta usada por otro "
-"usuario"
+"¡La dirección de correo que esta intentando añadir, ya esta usada por el "
+"usuario '%s'!"
 
 #: personal/scalix/class_scalixAccount.inc:362
-#, fuzzy
 msgid "Mailnode"
-msgstr "Nodo de correo Scalix"
+msgstr "Nodo de correo"
 
 #: personal/scalix/class_scalixAccount.inc:365
-#, fuzzy
 msgid "Scalix object"
-msgstr "Cuenta Scalix"
+msgstr "Objeto Scalix"
 
 #: personal/scalix/class_scalixAccount.inc:374
-#, fuzzy
 msgid "Email address"
-msgstr "Direcciones de correo electrónico de Scalix"
+msgstr "Dirección de correo"
 
 #: personal/scalix/class_scalixAccount.inc:381
-#, fuzzy
 msgid "Limit Mailbox"
 msgstr "Tamaño máximo del buzón de correo electrónico"
 

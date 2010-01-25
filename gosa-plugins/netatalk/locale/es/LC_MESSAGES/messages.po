@@ -2,20 +2,21 @@
 # translation of systems.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
-"PO-Revision-Date: 2007-07-24 00:26+0200\n"
-"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
-"Language-Team:  <es@li.org>\n"
+"POT-Creation-Date: 2009-06-30 09:58+0200\n"
+"PO-Revision-Date: 2010-01-20 00:52+0100\n"
+"Last-Translator: \n"
+"Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: personal/netatalk/class_netatalk.inc:36
 #: personal/netatalk/class_netatalk.inc:372
@@ -23,9 +24,8 @@ msgid "Netatalk"
 msgstr "Netatalk"
 
 #: personal/netatalk/class_netatalk.inc:37
-#, fuzzy
 msgid "Manage netatalk account"
-msgstr "Activar extensión de usuario Netatalk"
+msgstr "Administrar cuenta Netatalk"
 
 #: personal/netatalk/class_netatalk.inc:176
 #: personal/netatalk/class_netatalk.inc:184
@@ -36,7 +36,6 @@ msgstr "Activar extensión de usuario Netatalk"
 #: personal/netatalk/class_netatalk.inc:194
 #: personal/netatalk/class_netatalk.inc:196
 #: personal/netatalk/class_netatalk.inc:197
-#, fuzzy
 msgid "netatalk"
 msgstr "Netatalk"
 
@@ -46,7 +45,7 @@ msgstr "POSIX"
 
 #: personal/netatalk/class_netatalk.inc:194
 msgid "netatalk or NFS share"
-msgstr ""
+msgstr "netatalk o compartido NFS"
 
 #: personal/netatalk/class_netatalk.inc:228
 #: personal/netatalk/class_netatalk.inc:382 personal/netatalk/netatalk.tpl:4
@@ -55,9 +54,8 @@ msgstr "Recurso compartido"
 
 #: personal/netatalk/class_netatalk.inc:292
 #: personal/netatalk/class_netatalk.inc:357
-#, fuzzy
 msgid "LDAP error"
-msgstr "Servicio LDAP"
+msgstr "Error LDAP"
 
 #: personal/netatalk/class_netatalk.inc:376
 msgid "My account"

@@ -3,25 +3,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# , 2008.
+# , 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:48+0100\n"
-"PO-Revision-Date: 2008-12-08 11:29+0100\n"
+"POT-Creation-Date: 2009-06-30 11:52+0200\n"
+"PO-Revision-Date: 2010-01-24 00:09+0100\n"
 "Last-Translator: \n"
-"Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
+"Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 0.2\n"
+"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/systems/services/apache2/servApacheVhost.tpl:1
-#, fuzzy
 msgid "Apache VHosts"
-msgstr "Apache"
+msgstr "Apache VHosts"
 
 #: admin/systems/services/apache2/servApacheVhost.tpl:8
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:54
@@ -50,44 +49,40 @@ msgstr "Nombre"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:365
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:7
-#, fuzzy
 msgid "Virtual host name"
-msgstr "Nombre"
+msgstr "Nombre Virtual Host"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
 msgid "Only lowercase strings are allowed as Virtual Host Name."
-msgstr ""
+msgstr "Solo están permitidas minúsculas en el nombre de Virtual Host."
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
 msgid "e.g. example.com"
-msgstr ""
+msgstr "ej: example.com"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:372
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:13
 msgid "Document root"
-msgstr ""
+msgstr "Raíz de documento"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:378
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:19
-#, fuzzy
 msgid "Admin mail address"
-msgstr "Dirección correo electrónico"
+msgstr "Dirección correo electrónico del administrador"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:387
-#, fuzzy
 msgid "Server alias"
-msgstr "Servidor"
+msgstr "Alias de servidor"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:397
 msgid "Script alias"
-msgstr ""
+msgstr "Alias de script"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:61
 #: admin/systems/services/apache2/class_servApacheVhost.inc:284
 #: admin/systems/services/apache2/class_servApacheVhost.inc:297
-#, fuzzy
 msgid "Apache service"
-msgstr "Apache"
+msgstr "Servicio apache"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:237
 #: admin/systems/services/apache2/class_servApacheVhost.inc:248
@@ -97,7 +92,7 @@ msgstr "Error LDAP"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:298
 msgid "Apache virtual host service"
-msgstr ""
+msgstr "Servicio de Virtual Host de Apache"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:298
 msgid "Services"
@@ -105,39 +100,35 @@ msgstr "Servicios"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:306
 msgid "Virtual hosts"
-msgstr ""
+msgstr "Virtual hosts"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:1
 msgid "Generic"
 msgstr "Genérico"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:30
-#, fuzzy
 msgid "Server Alias"
-msgstr "Servidor"
+msgstr "Alias de servidor"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:42
 msgid "URL Alias"
-msgstr ""
+msgstr "Alias de URL"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:45
-#, fuzzy
 msgid "Directory Path"
-msgstr "Directorio"
+msgstr "Ruta al directorio"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:74
 msgid "Script Alias"
-msgstr ""
+msgstr "Alias de script"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:86
-#, fuzzy
 msgid "Alias Directory"
-msgstr "Directorio"
+msgstr "Alias de directorio"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:89
-#, fuzzy
 msgid "Script Directory"
-msgstr "Directorio"
+msgstr "Directorio de script"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:112
 msgid "Save"
@@ -153,3 +144,6 @@ msgid ""
 "Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
 "or example.com'."
 msgstr ""
+"Nombre de Virtual Host sin definir '%s'. El nombre de Virtual Host debe "
+"ser como: 'www.example.com o example.com'."
+
