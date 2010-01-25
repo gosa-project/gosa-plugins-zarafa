@@ -1,5 +1,6 @@
 <?php
 
+
 class servrepository extends goService
 {
   /* attribute list for save action */
@@ -79,10 +80,107 @@ class servrepository extends goService
     $this->divlist = new divListRepository($this->config,$this);
   }
 
+
+  function newEntry()
+  {
+    $this->dialog = new servRepositorySetup($this->config,$this->dn);
+    $this->dialog->parent = $this;
+  }
+  
+
+  function removeEntry($action,$target,$all)
+  {
+    $once = true;
+    $value = preg_replace("/delete_/","",$name);
+    $value = base64_decode(preg_replace("/_.*$/","",$value));
+
+    $url = $this->repositories[$value]['Url'];
+    $release = $this->repositories[$value]['Release'];
+
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd ($this->config->current['BASE']);
+
+    $found= false;
+    $auto= false;
+    $obj= array();
+    $aobj= array();
+
+    $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(|(FAIdebianMirror=".$url.")(FAIdebianMirror=auto)))",array("cn","FAIclass", "FAIdebianMirror"));
+    if ($ldap->count() != 0){
+      while($attrs = $ldap->fetch()){
+        if (!isset($attrs['FAIclass'])){
+          continue;
+        }
+        foreach($attrs['FAIclass'] as $class){
+          if(preg_match("/:".str_replace("/","\/",$release)."$/i",$class)){
+            if (isset($attrs['FAIdebianMirror'][0]) && $attrs['FAIdebianMirror'][0] == "auto") {
+              $aobj[$ldap->getDN()]= $attrs['cn'][0];
+              $auto= true;
+            } else {
+              $obj[$ldap->getDN()]= $attrs['cn'][0];
+              $found= true;
+            }
+          }
+        }
+      }
+    }
+    // Look for automatic releases
+    if ($auto) {
+      $usage= 0;
+      $ldap->search("(&(objectClass=FAIrepositoryServer))",array("FAIrepository"));
+      if ($ldap->count() != 0){
+        while($sattrs = $ldap->fetch()){
+          if (!isset($sattrs['FAIrepository'])){
+            continue;
+          }
+          for ($i= 0; $i < $sattrs['FAIrepository']['count']; $i++){
+            $t= split('\|', $sattrs['FAIrepository'][$i]);
+            if($release == $t[2]){
+              $usage++;
+            }
+          }
+        }
+
+        // Are we the last one to provide this release?
+        if ($usage < 2) {
+          $obj= array_merge($obj, $aobj);
+          $found= true;
+        }
+      } 
+    }
+
+    if ($found){
+      msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
+    }else{
+      if(isset($this->repositories[$value])){
+        unset($this->repositories[$value]);
+      }
+    }
+  }
+
+
+  function editEntry($action,$target,$all)
+  {
+    $value = preg_replace("/edit_/","",$name);
+    $value = base64_decode(preg_replace("/_.$/","",$value));
+
+    if(isset($this->repositories[$value])){
+      $once = true;
+      $obj = $this->repositories[$value];
+
+      /* to be able to detect if this was renamed */
+      $obj['initialy_was'] = $obj['Release'];
+      $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
+      $this->dialog->parent = $this;
+    }
+  }
+
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    $this->divlist->handleActions($this->divlist->detectPostActions());
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
@@ -99,113 +197,6 @@ class servrepository extends goService
     $smarty->assign("is_createable",$this->acl_is_createable());
     $display= "";
 
-    /* Show tab dialog headers */
-    /*
-       ADD / EDIT Repository
-       Dialog Handling
-     */
-    $once = false;
-    if(isset($_POST['servRepository'])){
-      foreach($_POST as $name => $value){
-
-        if(preg_match("/AddRepository/",$name) && $this->acl_is_createable()){
-          $once = true;
-          $this->dialog = new servRepositorySetup($this->config,$this->dn);
-          $this->dialog->parent = $this;
-        }
-
-        if((preg_match("/^delete_/",$name)) && (!$once) && $this->acl_is_removeable()){
-          $once = true;
-          $value = preg_replace("/delete_/","",$name);
-          $value = base64_decode(preg_replace("/_.*$/","",$value));
-
-          $url = $this->repositories[$value]['Url'];
-          $release = $this->repositories[$value]['Release'];
-
-          $ldap = $this->config->get_ldap_link();
-          $ldap->cd ($this->config->current['BASE']);
-
-          $found= false;
-          $auto= false;
-          $obj= array();
-          $aobj= array();
-
-          $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(|(FAIdebianMirror=".$url.")(FAIdebianMirror=auto)))",array("cn","FAIclass", "FAIdebianMirror"));
-          if ($ldap->count() != 0){
-            while($attrs = $ldap->fetch()){
-              if (!isset($attrs['FAIclass'])){
-                continue;
-              }
-              foreach($attrs['FAIclass'] as $class){
-                if(preg_match("/:".str_replace("/","\/",$release)."$/i",$class)){
-                  if (isset($attrs['FAIdebianMirror'][0]) && $attrs['FAIdebianMirror'][0] == "auto") {
-                    $aobj[$ldap->getDN()]= $attrs['cn'][0];
-                    $auto= true;
-                  } else {
-                    $obj[$ldap->getDN()]= $attrs['cn'][0];
-                    $found= true;
-                  }
-                }
-              }
-            }
-          }
-
-          // Look for automatic releases
-          if ($auto) {
-            $usage= 0;
-            $ldap->search("(&(objectClass=FAIrepositoryServer))",array("FAIrepository"));
-            if ($ldap->count() != 0){
-              while($sattrs = $ldap->fetch()){
-                if (!isset($sattrs['FAIrepository'])){
-                  continue;
-                }
-                for ($i= 0; $i < $sattrs['FAIrepository']['count']; $i++){
-                  $t= split('\|', $sattrs['FAIrepository'][$i]);
-                  if($release == $t[2]){
-                    $usage++;
-                  }
-                }
-              }
-
-              // Are we the last one to provide this release?
-              if ($usage < 2) {
-                $obj= array_merge($obj, $aobj);
-                $found= true;
-              }
-            } 
-          }
-
-          if ($found){
-            msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
-          }else{
-            if(isset($this->repositories[$value])){
-              unset($this->repositories[$value]);
-            }
-          }
-        }
-
-        if((preg_match("/^edit_/",$name))&&(!$once)){
-          $value = preg_replace("/edit_/","",$name);
-          $value = base64_decode(preg_replace("/_.$/","",$value));
-
-          if(isset($this->repositories[$value])){
-            $once = true;
-            $obj = $this->repositories[$value];
-
-            /* to be able to detect if this was renamed */
-            $obj['initialy_was'] = $obj['Release'];
-            $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
-            $this->dialog->parent = $this;
-          }
-        }
-      }
-    }
-    if((isset($_GET['act']))&&($_GET['act']=="open_repository")&&(isset($_GET['id']))){
-      $obj = $this->repositories[base64_decode($_GET['id'])];
-      $obj['initialy_was'] = $obj['Release'];
-      $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
-      $this->dialog->parent = $this;
-    }
 
     if(isset($_POST['repository_setup_save']) && is_object($this->dialog)){
       $this->dialog->save_object();
@@ -245,8 +236,6 @@ class servrepository extends goService
     /*
       Repository setup dialog handling /END
     */
-
-
     $link   = "<a href='?plug=".$_GET['plug']."&amp;act=open_repository&amp;id=%s'>%s</a>";
     $edit   = "<input type='image' value='%s' name='edit_%s'   src='images/lists/edit.png'>&nbsp;";
    
@@ -257,11 +246,10 @@ class servrepository extends goService
       $delete = "<img src='images/empty.png' alt='&nbsp;'>";
     }
 
-    $this->divlist->execute(); 
-    $this->divlist->setEntries($this->repositories);
-    $smarty->assign("Repositories",$this->divlist->Draw());
+    session::set('RepositoryList', $this->repositories);
+    $str = $this->divlist->execute(); 
     $display.= $smarty->fetch(get_template_path('servRepository.tpl', TRUE,dirname(__FILE__)));
-    return($display);
+    return($str.$display);
   }
 
 
@@ -269,9 +257,6 @@ class servrepository extends goService
   function save_object()
   {
     plugin::save_object();
-    if(is_object($this->divlist)){
-      $this->divlist->save_object();
-    }
   }
 
 
@@ -393,6 +378,7 @@ class servrepository extends goService
   }
 
 
+
   function remove_from_parent()
   {
     goService::remove_from_parent();
@@ -423,7 +409,15 @@ class servrepository extends goService
             "Section"       => _("Sections"))
           ));
   }
-}
 
+  /*! \brief    Returns the list of of services, active services.
+   *            Used in the filter class for services.
+   *             class_filterServerService.inc
+   */
+  static function getRepositoryList()
+  {
+    return(session::get('RepositoryList'));
+  }
+}
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

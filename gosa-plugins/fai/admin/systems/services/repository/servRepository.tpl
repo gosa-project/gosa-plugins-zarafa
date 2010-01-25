@@ -1,4 +1,3 @@
-{$Repositories}
 <input type="hidden" name="servRepository" value="1">
 
 <p class="seperator">&nbsp;</p>
