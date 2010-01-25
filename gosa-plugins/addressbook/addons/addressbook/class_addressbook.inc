@@ -640,7 +640,7 @@ class addressbook extends plugin
         break;
       }
       if ( ($mod++) & 1){
-        $col= "style=\"background-color: #ECECEC;\"";
+        $col= "style=\"background-color: #FFFFFF;\"";
       } else {
         $col= "style=\"background-color: #F5F5F5;\"";
       }
