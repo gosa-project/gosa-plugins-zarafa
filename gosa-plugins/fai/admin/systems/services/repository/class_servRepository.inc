@@ -83,77 +83,80 @@ class servrepository extends goService
 
   function newEntry()
   {
-    $this->dialog = new servRepositorySetup($this->config,$this->dn);
-    $this->dialog->parent = $this;
+    if(!$this->dialog){
+      $this->dialog = new servRepositorySetup($this->config,$this->dn);
+      $this->dialog->parent = $this;
+    }
   }
   
 
   function removeEntry($action,$target,$all)
   {
-    $once = true;
-    $value = preg_replace("/delete_/","",$name);
-    $value = base64_decode(preg_replace("/_.*$/","",$value));
+    foreach($target as $value){
 
-    $url = $this->repositories[$value]['Url'];
-    $release = $this->repositories[$value]['Release'];
+      if(!isset($this->repositories[$value])) continue;
+      
+      $url = $this->repositories[$value]['Url'];
+      $release = $this->repositories[$value]['Release'];
 
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->config->current['BASE']);
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->config->current['BASE']);
 
-    $found= false;
-    $auto= false;
-    $obj= array();
-    $aobj= array();
+      $found= false;
+      $auto= false;
+      $obj= array();
+      $aobj= array();
 
-    $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(|(FAIdebianMirror=".$url.")(FAIdebianMirror=auto)))",array("cn","FAIclass", "FAIdebianMirror"));
-    if ($ldap->count() != 0){
-      while($attrs = $ldap->fetch()){
-        if (!isset($attrs['FAIclass'])){
-          continue;
-        }
-        foreach($attrs['FAIclass'] as $class){
-          if(preg_match("/:".str_replace("/","\/",$release)."$/i",$class)){
-            if (isset($attrs['FAIdebianMirror'][0]) && $attrs['FAIdebianMirror'][0] == "auto") {
-              $aobj[$ldap->getDN()]= $attrs['cn'][0];
-              $auto= true;
-            } else {
-              $obj[$ldap->getDN()]= $attrs['cn'][0];
-              $found= true;
+      $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(|(FAIdebianMirror=".$url.")(FAIdebianMirror=auto)))",array("cn","FAIclass", "FAIdebianMirror"));
+      if ($ldap->count() != 0){
+        while($attrs = $ldap->fetch()){
+          if (!isset($attrs['FAIclass'])){
+            continue;
+          }
+          foreach($attrs['FAIclass'] as $class){
+            if(preg_match("/:".str_replace("/","\/",$release)."$/i",$class)){
+              if (isset($attrs['FAIdebianMirror'][0]) && $attrs['FAIdebianMirror'][0] == "auto") {
+                $aobj[$ldap->getDN()]= $attrs['cn'][0];
+                $auto= true;
+              } else {
+                $obj[$ldap->getDN()]= $attrs['cn'][0];
+                $found= true;
+              }
             }
           }
         }
       }
-    }
-    // Look for automatic releases
-    if ($auto) {
-      $usage= 0;
-      $ldap->search("(&(objectClass=FAIrepositoryServer))",array("FAIrepository"));
-      if ($ldap->count() != 0){
-        while($sattrs = $ldap->fetch()){
-          if (!isset($sattrs['FAIrepository'])){
-            continue;
-          }
-          for ($i= 0; $i < $sattrs['FAIrepository']['count']; $i++){
-            $t= split('\|', $sattrs['FAIrepository'][$i]);
-            if($release == $t[2]){
-              $usage++;
+      // Look for automatic releases
+      if ($auto) {
+        $usage= 0;
+        $ldap->search("(&(objectClass=FAIrepositoryServer))",array("FAIrepository"));
+        if ($ldap->count() != 0){
+          while($sattrs = $ldap->fetch()){
+            if (!isset($sattrs['FAIrepository'])){
+              continue;
+            }
+            for ($i= 0; $i < $sattrs['FAIrepository']['count']; $i++){
+              $t= split('\|', $sattrs['FAIrepository'][$i]);
+              if($release == $t[2]){
+                $usage++;
+              }
             }
           }
-        }
 
-        // Are we the last one to provide this release?
-        if ($usage < 2) {
-          $obj= array_merge($obj, $aobj);
-          $found= true;
-        }
-      } 
-    }
+          // Are we the last one to provide this release?
+          if ($usage < 2) {
+            $obj= array_merge($obj, $aobj);
+            $found= true;
+          }
+        } 
+      }
 
-    if ($found){
-      msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
-    }else{
-      if(isset($this->repositories[$value])){
-        unset($this->repositories[$value]);
+      if ($found){
+        msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
+      }else{
+        if(isset($this->repositories[$value])){
+          unset($this->repositories[$value]);
+        }
       }
     }
   }
@@ -161,17 +164,17 @@ class servrepository extends goService
 
   function editEntry($action,$target,$all)
   {
-    $value = preg_replace("/edit_/","",$name);
-    $value = base64_decode(preg_replace("/_.$/","",$value));
+    if(count($target) == 1 && !$this->dialog){
+      $value = array_pop($target);
+      if(isset($this->repositories[$value])){
+        $once = true;
+        $obj = $this->repositories[$value];
 
-    if(isset($this->repositories[$value])){
-      $once = true;
-      $obj = $this->repositories[$value];
-
-      /* to be able to detect if this was renamed */
-      $obj['initialy_was'] = $obj['Release'];
-      $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
-      $this->dialog->parent = $this;
+        /* to be able to detect if this was renamed */
+        $obj['initialy_was'] = $obj['Release'];
+        $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
+        $this->dialog->parent = $this;
+      }
     }
   }
 
