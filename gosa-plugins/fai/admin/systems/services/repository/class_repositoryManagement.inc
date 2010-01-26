@@ -2,7 +2,7 @@
 
 class repositoryManagement extends management
 {
-  
+
   protected $skipFooter = TRUE;
   protected $skipHeader = TRUE;
   protected $parent     = NULL;
@@ -16,12 +16,12 @@ class repositoryManagement extends management
     $this->storagePoints = array();
 
     // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
-#      $filter= session::global_get(get_class($this)."_filter");
-#    } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("services/repository/repository-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
- #   }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -35,6 +35,9 @@ class repositoryManagement extends management
     $this->registerAction('new',     'forwardToParent');
   }
 
+
+  /*! \brief    Forwards list action to the parent management class 
+   */
   function forwardToParent($action, $target, $all)
   {
     if(!empty($action)){
@@ -43,9 +46,12 @@ class repositoryManagement extends management
     }
   }
 
+
+  /*! \brief    Makes section array printable for the overview list.
+   */
   static function filterSections($a,$b)
   {
-    if(!$b) return('');
+    if(!$b) return('&nbsp;');
     return(implode($b,', '));
   }
 }

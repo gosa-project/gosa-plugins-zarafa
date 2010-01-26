@@ -18,7 +18,7 @@ class servrepository extends goService
   var $view_logged            = FALSE;
   var $fai_activated          = FALSE;
 
-  var $divlist = NULL;
+  var $repositoryMangement = NULL;
 
   function servrepository (&$config, $dn= NULL, $parent= NULL)
   {
@@ -26,9 +26,12 @@ class servrepository extends goService
 
     $this->DisplayName = _("Repository service");
 
+    /* Create repositoryMangement */
+    $this->repositoryMangement = new repositoryManagement($this->config,$this);
+
     /* Skip this if fai is deactivated */
     $tmp= $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)){
+    if(0 && !empty($tmp)){
       $this->fai_activated = TRUE;    
     }else{
       return;
@@ -75,12 +78,11 @@ class servrepository extends goService
       }
     }
     session::set('RepositoryList', $this->repositories);
-
-    /* Create divlist */
-    $this->divlist = new repositoryManagement($this->config,$this);
   }
 
 
+  /*! \brief    Act on events frowarded by the repositoryManagement
+   */
   function newEntry()
   {
     if(!$this->dialog){
@@ -90,6 +92,8 @@ class servrepository extends goService
   }
   
 
+  /*! \brief    Act on events frowarded by the repositoryManagement
+   */
   function removeEntry($action,$target,$all)
   {
     foreach($target as $value){
@@ -162,6 +166,8 @@ class servrepository extends goService
   }
 
 
+  /*! \brief    Act on events frowarded by the repositoryManagement
+   */
   function editEntry($action,$target,$all)
   {
     if(count($target) == 1 && !$this->dialog){
@@ -183,7 +189,8 @@ class servrepository extends goService
     /* Call parent execute */
     plugin::execute();
 
-    $this->divlist->handleActions($this->divlist->detectPostActions());
+    $smarty= get_smarty();
+    $this->repositoryMangement->handleActions($this->repositoryMangement->detectPostActions());
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
@@ -192,11 +199,11 @@ class servrepository extends goService
 
     if(!$this->fai_activated){
       $str = "<h2>"._("You can't use this plugin until FAI is activated.")."</h2>";
-      return $str;
+      $display = $smarty->fetch(get_template_path('servRepository.tpl', TRUE,dirname(__FILE__)));
+      return($str.$display);
     }
 
     /* Fill templating stuff */
-    $smarty= get_smarty();
     $smarty->assign("is_createable",$this->acl_is_createable());
     $display= "";
 
@@ -250,7 +257,7 @@ class servrepository extends goService
     }
 
     session::set('RepositoryList', $this->repositories);
-    $str = $this->divlist->execute(); 
+    $str = $this->repositoryMangement->execute(); 
     $display.= $smarty->fetch(get_template_path('servRepository.tpl', TRUE,dirname(__FILE__)));
     return($str.$display);
   }
