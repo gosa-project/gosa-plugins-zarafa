@@ -29,7 +29,7 @@
      <td>
 {render acl=$HostNotificationPeriodACL}
       <select name="HostNotificationPeriod" id="HostNotificationPeriod">
-       {html_options options=$HostNotificationPeriodValues values=$HostNotificationPeriodValues selected=$HostNotificationPeriod }
+       {html_options options=$HostNotificationPeriodValues values=$HostNotificationPeriodValues selected=$HostNotificationPeriod}
       </select>
 {/render}
      </td>
@@ -68,7 +68,7 @@
      <td>
 {render acl=$HostNotificationOptionsACL}
       <select name="HostNotificationOptions" id="HostNotificationOptions">
-       {html_options options=$HostNotificationOptionsValues values=$HostNotificationOptionsValues selected=$HostNotificationOptions }
+       {html_options options=$HostNotificationOptionsValues values=$HostNotificationOptionsValues selected=$HostNotificationOptions}
       </select>
 {/render}
      </td>

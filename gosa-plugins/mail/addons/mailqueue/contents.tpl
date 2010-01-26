@@ -82,7 +82,7 @@
 {counter start=0 assign=i start=1}
 {foreach from=$entries item=val key=key}
 			
-	{if ($i%2)== 0 }
+	{if ($i%2)==0}
 		<tr style="height: 22px; background-color: rgb(236, 236, 236);">
 	{else}
 		<tr style="height: 22px; background-color: rgb(245, 245, 245);">

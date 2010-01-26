@@ -50,7 +50,7 @@
    		class="center" onClick="changeState('delegate_list');">
    	<b><LABEL for="delegate_list">{t}Delegations{/t}</LABEL></b><br>
 	<select id="delegate_list" style="width:350px; height:100px;" name="delegate_list[]" size=15 multiple 
-		{if !$use_kolabDelegate }disabled{/if} >
+		{if !$use_kolabDelegate}disabled{/if} >
 		{html_options values=$kolabDelegate output=$kolabDelegate}
 		<option disabled>&nbsp;</option>
 	</select>
@@ -63,7 +63,7 @@
    <b><LABEL for="delegate_list">{t}Delegations{/t}</LABEL></b><br>
 	{render acl=$kolabDelegateACL}
 	   <select id="delegate_list" style="width:350px; height:100px;" name="delegate_list[]" size=15 multiple 
-		 {if !$kolabState }disabled{/if} >
+		 {if !$kolabState}disabled{/if} >
 		{html_options values=$kolabDelegate output=$kolabDelegate}
 		<option disabled>&nbsp;</option>
 	   </select>

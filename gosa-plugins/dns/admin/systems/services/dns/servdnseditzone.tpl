@@ -27,7 +27,7 @@
 					<td>
 {render acl=$NetworkClassACL}					
 						<select name="NetworkClass" {if $NotNew | $Zone_is_used} disabled {/if}>
-							{html_options options=$NetworkClasses selected=$NetworkClass }
+							{html_options options=$NetworkClasses selected=$NetworkClass}
 						</select>
 {/render}
 					</td>

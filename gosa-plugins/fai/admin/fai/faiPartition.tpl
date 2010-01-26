@@ -14,7 +14,7 @@
       <select name="FAIpartitionType" onChange='document.mainform.submit();'>
         {html_options options=$partitionTypes selected=$FAIpartitionType}
       </select>
-      {if $cn != "" }&nbsp;({$cn}){/if}
+      {if $cn != ""}&nbsp;({$cn}){/if}
     </td>
 {/if}
     <td>{t}Description{/t}</td>
