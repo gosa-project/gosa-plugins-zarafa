@@ -44,7 +44,7 @@
 			<td colspan=3 style="background-color: #DDDDDD;height:1px"></td>
 		</tr>
 	{elseif $item.TYPE == "RELEASE"}
-		{ if $i++ % 2 == 0}
+		{if $i++ % 2 == 0}
 			<tr class="rowxp0">
 		{else}
 			<tr class="rowxp1">
@@ -59,7 +59,7 @@
 			</td>
 		</tr>
 	{elseif $item.TYPE == "FOLDER"}
-		{ if $i++ % 2 == 0}
+		{if $i++ %2 == 0}
 			<tr class="rowxp0">
 		{else}
 			<tr class="rowxp1">
@@ -91,7 +91,7 @@
 		</tr>
 	{elseif $item.TYPE == "SEPERATOR"}
 
-		{ if $i++ % 2 == 0}
+		{if $i++ % 2 == 0}
 			<tr class="rowxp0">
 		{else}
 			<tr class="rowxp1">
@@ -111,7 +111,7 @@
 		</tr>
 	{elseif $item.TYPE == "ENTRY"}
 
-		{ if $i++ % 2 == 0}
+		{if $i++ % 2 == 0}
 			<tr class="rowxp0">
 		{else}
 			<tr class="rowxp1">
