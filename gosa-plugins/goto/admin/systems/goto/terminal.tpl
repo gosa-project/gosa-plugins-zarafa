@@ -68,7 +68,7 @@
 {if $member_of_ogroup}
 {render acl=$gotoNtpServerACL}
 		<input type="checkbox" value="1" name="inheritTimeServer"
-			{if $inheritTimeServer } checked {/if} 
+			{if $inheritTimeServer} checked {/if} 
 			onClick="javascript:
 					changeState('gotoNtpServerSelected');
 					changeState('gotoNtpServers');
@@ -91,7 +91,7 @@
 	 <br>
 {render acl=$gotoNtpServerACL}
       <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if} >
-       {html_options values=$ntpservers output=$ntpservers }
+       {html_options values=$ntpservers output=$ntpservers}
       </select>
 {/render}
 {render acl=$gotoNtpServerACL}

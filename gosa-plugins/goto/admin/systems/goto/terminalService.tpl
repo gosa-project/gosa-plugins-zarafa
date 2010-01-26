@@ -111,7 +111,7 @@
       <select id="gotoXResolution" name="gotoXResolution" title="{t}Choose screen resolution used in graphic mode{/t}" >
        {html_options options=$XResolutions selected=$gotoXResolution_select}
       </select>
-{/render }
+{/render}
      </td>
     </tr>
     <tr>
