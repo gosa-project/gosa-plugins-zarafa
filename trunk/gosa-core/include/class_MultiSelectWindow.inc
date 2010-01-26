@@ -22,6 +22,10 @@
 
 define ("SEPERATOR", 1002);
 
+/*! \brief Class to generate MultiSelectWindow
+ *
+ * Base class for multi selection/divList classes in a plugin.
+ */
 class MultiSelectWindow{
 
 	var $bool_DisplayAlpahabet	= false;
@@ -81,6 +85,7 @@ class MultiSelectWindow{
     $this->HideFilterPart = $bool;
   }
 
+  /*! \brief Set the height of the divlist */
   function SetHeight($height)
   { 
     $this->DivHeight=$height;
@@ -164,64 +169,70 @@ class MultiSelectWindow{
 		$this->is_headpage = true;
 	}
 
-	/* Sets the List internal name (not displayed anywhere) 
-	   it is used to identify every single list
+	/* \brief Sets the List internal name (not displayed anywhere) 
+    
+     It is used to identify every single list.
 	 */	
 	function SetTitle($str)
 	{
 		$this->string_Title = $str;
 	}
 
-	/* Set the list header string  */
+	/*! \brief Set the list header string  */
 	function SetListHeader($str)
 	{
 		$this->string_ListHeader = $str;
 	}
 
-	/* This sets the list description which is the first gray bar on top of the list */
+	/*! \brief This sets the list description which is the first gray bar on top of the list */
 	function SetSummary($str)
 	{
 		$this->string_Summary = $str;
 	}
 
-	/* If the save button is enabled, you can change its caption with this function */	
+  /*! \brief Change the caption of the save button (if it is enabled) */
 	function SetSaveButtonString($str)
 	{
 		$this->SaveButtonString = $str;
 	}
 
-	/* If the close button is enabled, you can change its caption with this function */	
+  /*! \brief Change the caption of the close button (if it is enabled) */
 	function SetCloseButtonString($str)
 	{
 		$this->CloseButtonString = $str;
 	}
 
-	/* With this function you can change the text of the information box */
+  /*! \brief Change the text of the information box */
 	function SetInformation($str)
 	{
 		$this->string_Information = $str;
 	}
 
-	/* Display the alphabet selection box*/
+  /*! \brief Toggle the alphabet selection display */
 	function EnableAplhabet($bool)
 	{
 		$this->bool_DisplayAlpahabet = $bool;
 	}
 
-	/* Add additional header col */
+	/*! \brief Add additional header col */
 	function AddHeader($arr)
 	{
 		$this->array_Header[] = $arr;
 	}
 
-	/* add additional List element */
+	/*! \brief Add additional List element */
 	function AddElement($arr)
 	{
 		$this->array_Elements[] = $arr;
 	}
 
 
-  /* Return default header part. With back, home and root icons and department selection */
+  /*! \brief Return default header part.
+   * Returns the default header part (with back, home and root icons and
+   * department selection)
+   *
+   * \param boolean 'seperator' Show a seperator between each button (default: true)
+   * */
   function get_default_header($seperator= TRUE)
   {
     $enable_back = TRUE;
@@ -278,8 +289,10 @@ class MultiSelectWindow{
     return ($listhead);
   }
 
-	/* Add a checkbox to the filter element,
-	   the name specifies an existing class var to store the 'selection' */
+  /*! \brief Add a checkbox to the filter element
+   *
+   * \param string 'name' specifies an existing class var to store the 'selection'
+   * */
 	function AddCheckBox($name,$value="Unset",$string="Unset",$default=false)
 	{
 		$arr = array();
@@ -307,7 +320,7 @@ class MultiSelectWindow{
 	}
 
 
-	/* Hides or unhides the checkbox with the given name */
+	/*! \brief Hides or unhides the checkbox with the given name */
 	function DisableCheckBox($name,$HideShow = false)
 	{
 		foreach($this->array_Checkboxes as $key => $chkbox){
@@ -318,7 +331,7 @@ class MultiSelectWindow{
 	}
 
 
-	/* Returns true if the close button was pressed */
+	/*! \brief Returns true if the close button was pressed */
 	function isClosed()
 	{
 		return($this->is_closed);
@@ -330,19 +343,19 @@ class MultiSelectWindow{
   }
 
 
-	/* Enable the close button */
+	/*! \brief Enable the close button */
 	function EnableCloseButton($bool)
 	{
 		$this->bool_DisplayCloseButton = $bool;
 	}
 
-	/* Enable the save button on the bottom of the list*/
+	/*! \brief Enable the save button on the bottom of the list*/
 	function EnableSaveButton ($bool)
 	{
 		$this->bool_DisplaySaveButton = $bool;
 	}
 
-  /* Add a list specific filter object to position 
+  /*! \brief Add a list specific filter object to position 
       1 on top of Information 
       2 Between Information && Filter
       3 Below the Filter Part */
@@ -356,7 +369,7 @@ class MultiSelectWindow{
     $this->IgnoreAccount = !$ignore;
   }
 
-	/* Draw the list with all list elements and filters */
+	/*! \brief Draw the list with all list elements and filters */
 	function Draw()
 	{
 
@@ -490,7 +503,7 @@ class MultiSelectWindow{
 		return($display);
 	}
 
-	/* Set the close var, which simulates the close button is pressed */
+  /*! \brief Set the close var (simulates a press of the the close button) */
 	function Close()
 	{
 		$this->is_closed = true;
@@ -501,8 +514,10 @@ class MultiSelectWindow{
 		$this->is_saved = true;
 	}
 
-	/* Store all checkboxes/ regexes ... 
-	   Store data also into a session var, to keep the checkboxes check after reload  */
+  /*! \brief Store all checkboxes/ regexes ... 
+   *
+   * Store data also into a session var, to keep the checkboxes check after reload
+   */
 	function save_object()
 	{
 
@@ -650,7 +665,12 @@ class MultiSelectWindow{
 	}
 
 
-	/* this function adds the sub-departments of the current tree to the list */
+  /*! \brief Adds the sub-departments of the current tree to the list
+   *
+   *
+   * \param mixed 'base' use a certain base or FALSE if $this->selectedBase should
+   * be used (default).
+   */
 	function AddDepartments($base = false,$numtabs = 3,$empty_tabs_in_front = 0)
 	{
 		$this->DepartmentsAdded = true;
