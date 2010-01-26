@@ -118,7 +118,7 @@ class sieve_vacation
     if(isset($_POST['vacation_receiver_'.$this->object_id])){
       $vr = stripslashes ($_POST['vacation_receiver_'.$this->object_id]);
       $tmp = array();
-      $tmp2 = split(",",$vr);
+      $tmp2 = explode(",",$vr);
       foreach($tmp2 as $val){
         $ad = trim($val);
         if(!empty($ad)){

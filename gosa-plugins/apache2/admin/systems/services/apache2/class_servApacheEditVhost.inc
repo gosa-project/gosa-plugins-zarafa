@@ -381,7 +381,7 @@ class servapacheVhostEdit extends plugin
     /* Check server aliases 
      */    
     foreach($this->apacheServerAlias as $key => $line){
-      $apacheServerAlias_ar=split(" ",$line);
+      $apacheServerAlias_ar=explode(" ",$line);
       $url=$apacheServerAlias_ar[1];
       if(!tests::is_path($url)){
         $message[] = msgPool::invalid(_("Server alias"));
@@ -391,7 +391,7 @@ class servapacheVhostEdit extends plugin
     /* Check script aliases 
      */    
     foreach($this->apacheScriptAlias as $key => $line){
-      $apacheScriptAlias_ar=split(" ",$line);
+      $apacheScriptAlias_ar=explode(" ",$line);
       $url=$apacheScriptAlias_ar[1];
       if(!tests::is_path($url)){
         $message[] = msgPool::invalid(_("Script alias"));

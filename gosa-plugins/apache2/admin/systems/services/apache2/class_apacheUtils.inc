@@ -195,7 +195,7 @@ class apacheUtils extends plugin
 	    return($ret);
 	  }
 
-	  $apacheServerNameIndex  	= split("/",$apacheServerNameMix); 
+	  $apacheServerNameIndex  	= explode("/",$apacheServerNameMix); 
 	  $apacheServerName           = $apacheServerNameIndex[1];
 	  $nameServer		  	= strtolower($apacheServerNameIndex[0]);
 	  $ldap               = $config->get_ldap_link();

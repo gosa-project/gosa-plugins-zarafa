@@ -58,11 +58,11 @@ class goMailServer extends goService{
         $file = $this->config->get_cfg_value($file);
         if((isset($file)) && is_readable($file)){
           $tmp = file_get_contents($file);
-          $tmp2= split("\n",$tmp);
+          $tmp2= preg_split("/\n/",$tmp);
           foreach($tmp2 as $entry){
             if(empty($entry)) continue;
             if(preg_match("/:/",$entry)){
-              $tmp3 = split(":",$entry);
+              $tmp3 = explode(":",$entry);
               $r = $this->$var;
               $r[$tmp3[0]]=$tmp3[1];
               $this->$var = $r;
@@ -81,7 +81,7 @@ class goMailServer extends goService{
     $this->postfixMyNetworks = array();
     $tmp = array();
     if(isset($this->attrs['postfixMyNetworks'][0])){
-      $tmp = split(",",$this->attrs['postfixMyNetworks'][0]);
+      $tmp = explode(",",$this->attrs['postfixMyNetworks'][0]);
       foreach($tmp as $str){
         if(!empty($str)){
           $this->postfixMyNetworks[base64_encode($str)] = $str;
@@ -337,7 +337,7 @@ class goMailServer extends goService{
 
         if((!empty($src)) && (!empty($dst))){
           if(preg_match("/:/",$dst)){
-            $tmp = split("\:",$dst);
+            $tmp = explode(":",$dst);
             $port = trim($tmp[1]);
             $ip   = trim($tmp[0]);
 

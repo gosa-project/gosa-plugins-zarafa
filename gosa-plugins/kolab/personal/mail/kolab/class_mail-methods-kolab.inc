@@ -180,7 +180,7 @@ class mailMethodKolab extends mailMethodCyrus
     if($this->enableFolderTypes && isset($this->parent->attrs['kolabFolderType'][0])){
       $type = $this->parent->attrs['kolabFolderType'][0];
       if(strpos($type,".")){
-        list($cat,$sub) = split("\.",$this->parent->attrs['kolabFolderType'][0]);
+        list($cat,$sub) = explode(".",$this->parent->attrs['kolabFolderType'][0]);
       }else{
         $sub = "";
         $cat = $type;

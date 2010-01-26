@@ -271,7 +271,7 @@ class macro extends plugin
       " (context,exten,priority,app,appdata) ".
       " VALUES ";
       
-    $a_contentLines = split("\n",$this->goFonMacroContent);
+    $a_contentLines = preg_split("/\n/",$this->goFonMacroContent);
     foreach($a_contentLines as $i_linenum => $s_linestr){
 
       /* Remove the 'exten => ' string in front of the macro content line 
@@ -293,7 +293,7 @@ class macro extends plugin
        * If there are more or less parts, abort.
        * The preg_replace exclude parameters from split .. 
        */
-      $tmp  = split(",", $s_linestr,3);
+      $tmp  = explode(",", $s_linestr,3);
 
       /* Check if there is an application given */
       if(empty($tmp[1])){

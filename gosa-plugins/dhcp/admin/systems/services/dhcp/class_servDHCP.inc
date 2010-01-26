@@ -621,7 +621,7 @@ class servdhcp extends goService
     foreach ($list as $value){
 
       /* Set header */
-      $sortpart= split(",", $value['dn']);
+      $sortpart= explode(",", $value['dn']);
       $sortpart= array_reverse($sortpart);
       $tmp= implode(",", $sortpart);
 
@@ -670,7 +670,7 @@ class servdhcp extends goService
         }
 
         /* Prepare for sorting... */
-        $sortpart= split(",", $ldap->getDN());
+        $sortpart= explode(",", $ldap->getDN());
         $sortpart= array_reverse($sortpart);
         $tmp= implode(",", $sortpart);
         $final[$ldap->getDN()]= $tmp."!".$spaces.$type." '".$attrs['cn'][0]."'";

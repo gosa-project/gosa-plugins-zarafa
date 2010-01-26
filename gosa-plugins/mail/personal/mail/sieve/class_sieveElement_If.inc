@@ -646,7 +646,7 @@ class sieve_if
             $vls = stripslashes($_POST['keys_'.$element_id]);
             $tmp = array();
 
-            $tmp2 = split(",",$vls);
+            $tmp2 = explode(",",$vls);
             foreach($tmp2 as $val){
               $tmp[] = trim($val);
   
@@ -662,7 +662,7 @@ class sieve_if
             $vls = stripslashes($_POST['values_'.$element_id]);
             $tmp = array();
 
-            $tmp2 = split(",",$vls);
+            $tmp2 = explode(",",$vls);
             foreach($tmp2 as $val){
               $tmp[] = trim($val);
               if(preg_match("/\"/",$val)){
@@ -708,7 +708,7 @@ class sieve_if
             $vls = stripslashes($_POST['Values_'.$element_id]);
             $tmp = array();          
   
-            $tmp2 = split(",",$vls);
+            $tmp2 = explode(",",$vls);
             foreach($tmp2 as $val){
               $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
             }

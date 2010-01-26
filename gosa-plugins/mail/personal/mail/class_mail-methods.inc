@@ -360,7 +360,7 @@ class mailMethod{
     $domain = $mailpart = "";
     $mail = $this->parent->mail;
     if(preg_match("/\@/",$mail)){
-      list($mailpart,$domain) = split("\@",$mail);
+      list($mailpart,$domain) = explode("@",$mail);
     }
 
     /* Create account_id 
@@ -429,7 +429,7 @@ class mailMethod{
     $domain = $mailpart = "";
     $mail = $this->parent->mail;
     if(preg_match("/\@/",$mail)){
-      list($mailpart,$domain) = split("\@",$mail);
+      list($mailpart,$domain) = explode("@",$mail);
     }
 
     /* Create account_id
@@ -452,7 +452,7 @@ class mailMethod{
     }
 
     if(preg_match("/\@/",$acc_id)){
-      list($mail,$domain) = split("\@",$acc_id);
+      list($mail,$domain) = explode("@",$acc_id);
       $str = trim($mail . $folder . "@" . $domain);
     }else{
       $str = trim($acc_id . $folder);

@@ -372,7 +372,7 @@ class sambaAccount extends plugin
           }
         }
       }else{
-        foreach(split(',', $this->sambaUserWorkstations) as $ws){
+        foreach(explode(',', $this->sambaUserWorkstations) as $ws){
           $exclude.= "(cn=$ws$)";
         }
       }
@@ -487,7 +487,7 @@ class sambaAccount extends plugin
 
     
     /* Fill sambaUserWorkstations */
-    $ws= split(",", $this->sambaUserWorkstations);
+    $ws= explode(",", $this->sambaUserWorkstations);
     sort($ws);
     
     /* Tidy checks for empty option, and smarty will produce one if array[0]="" */
@@ -1239,7 +1239,7 @@ class sambaAccount extends plugin
       if ($this->attrs['sambaPwdMustChange'] == ""){
         $this->attrs['sambaPwdMustChange']= 0;
       } else {
-        list($day, $month, $year)= split('\.', $this->sambaPwdMustChange);
+        list($day, $month, $year)= explode('.', $this->sambaPwdMustChange);
         $this->attrs['sambaPwdMustChange']= mktime(0,0,0,$month, $day, $year);
       }
     } else {
@@ -1268,7 +1268,7 @@ class sambaAccount extends plugin
       if ($this->attrs['sambaKickoffTime'] == ""){
         $this->attrs['sambaKickoffTime']= 2147483647;
       } else {
-        list($day, $month, $year)= split('\.', $this->sambaKickoffTime);
+        list($day, $month, $year)= explode('.', $this->sambaKickoffTime);
         $this->attrs['sambaKickoffTime']= mktime(0,0,0,$month, $day, $year);
       }
     } else {
@@ -1479,7 +1479,7 @@ class sambaAccount extends plugin
      *  Those workstations will be displayed in light grey.
      */
     $tmp2 = array("count" => 0);
-    $tmp = split(",", $this->sambaUserWorkstations);
+    $tmp = explode(",", $this->sambaUserWorkstations);
     foreach($tmp as $station){
       $station = trim($station);
       if(!empty($station)){
@@ -1644,7 +1644,7 @@ class sambaAccount extends plugin
 
       /* Prepare current settings to be merged */
       if(isset($this->sambaUserWorkstations)){
-        $ttmp = split(",",$this->sambaUserWorkstations);
+        $ttmp = explode(",",$this->sambaUserWorkstations);
         foreach($ttmp as $station){
           $station = trim($station);
           if(!empty($station)){

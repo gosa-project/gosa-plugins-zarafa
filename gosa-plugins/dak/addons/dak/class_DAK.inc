@@ -18,7 +18,7 @@ class DAK
     while($attrs = $ldap->fetch()){
       for($i = 0 ; $i < $attrs['FAIrepository']['count'] ; $i ++){
         list($url,$parent,$release,$sections) = explode("|",$attrs['FAIrepository'][$i]);
-        $repo['SECTIONS'] = split(",",$sections);
+        $repo['SECTIONS'] = explode(",",$sections);
         $repo['SERVER']   = $attrs['cn'][0];
         $repo['RELEASE']  = $release;
         $repo['MAC']      = $attrs['macAddress'][0];
@@ -53,7 +53,7 @@ class DAK
       $serv['REPOSITORIES'] = array();
       for($i = 0 ; $i < $attrs['FAIrepository']['count'] ; $i ++){
         list($url,$parent,$release,$sections) = explode("|",$attrs['FAIrepository'][$i]);
-        $repo['SECTIONS'] = split(",",$sections);
+        $repo['SECTIONS'] = explode(",",$sections);
         $repo['RELEASE']  = $release;
         $repo['PARENT']   = $parent;
         $repo['URL']      = $url;

@@ -20,7 +20,7 @@ class debconf
 
   function load_from_string($str)
   {
-    $lines                 = split("\n",$str);
+    $lines                 = explode("\n",$str);
     $this->template        = array();
     $post_name             = 0;
     $langcode              = $this->language.".UTF-8";
@@ -245,7 +245,7 @@ class debconf
       $result= $this->render_string($data);
     } else {
       $choices= "";
-      foreach (split(", ", $data['Choices']) as $choice){
+      foreach (explode(", ", $data['Choices']) as $choice){
         $choices[]= $choice;
       }
 
@@ -259,7 +259,7 @@ class debconf
           <input type='hidden' name='multi-".$post_name."' value='1'>
         ";
         
-      $defs = split(", ",$data['Default']);
+      $defs = explode(", ",$data['Default']);
       foreach($choices as $value){
         if(in_array($value,$defs)){
           $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".htmlentities($value)."' checked>".$value."<br>";
@@ -305,7 +305,7 @@ class debconf
       $result = $this->render_multiselect($data);
     } else {
       $choices= "";
-      foreach (split(", ", $data['Choices']) as $choice){
+      foreach (explode(", ", $data['Choices']) as $choice){
         $choices[]= $choice;
       }
 

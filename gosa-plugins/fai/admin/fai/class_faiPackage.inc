@@ -175,7 +175,7 @@ class faiPackage extends plugin
       $release = $this->parent->parent->fai_release;
       $tmp= preg_replace('/[,]*'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/i', '', $release);
       $tmp= preg_replace('/ou=/', '', $tmp);
-      $rev= array_reverse(split(',', $tmp));
+      $rev= array_reverse(explode(',', $tmp));
       $this->FAIdebianRelease= "/";
       foreach ($rev as $part){
         $this->FAIdebianRelease.= "/$part";
@@ -573,7 +573,7 @@ class faiPackage extends plugin
       $current_release  = $this->parent->parent->fai_release;
       $tmp= preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/i', '', $current_release);
       $tmp= preg_replace('/ou=/', '', $tmp);
-      $rev= array_reverse(split(',', $tmp));
+      $rev= array_reverse(explode(',', $tmp));
       $this->FAIdebianRelease= "";
       foreach ($rev as $part){
         $this->FAIdebianRelease.= "/$part";
@@ -752,9 +752,9 @@ class faiPackage extends plugin
       if(isset($attrs['FAIrepository'])){
         for($i =0 ; $i < $attrs['FAIrepository']['count']; $i++){
           $obj = $attrs['FAIrepository'][$i];
-          $tmp = split("\|",$obj);
+          $tmp = explode("|",$obj);
           if(count($tmp)==4){
-            foreach(split(",",$tmp[3]) as $sec){
+            foreach(explode(",",$tmp[3]) as $sec){
               if(!empty($sec)){
                 $ret[$tmp[2]][] =  $sec;
               }

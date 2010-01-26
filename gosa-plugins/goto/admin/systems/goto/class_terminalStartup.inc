@@ -58,7 +58,7 @@ class termstartup extends plugin
       unset($this->attrs['gotoShare']['count']);
       foreach($this->attrs['gotoShare'] as $share){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$share);
+        $tmp = explode("|",$share);
         $tmp2['server']      =$tmp[0];
         $tmp2['name']        =$tmp[1];
         $tmp2['mountPoint']  =$tmp[2];
@@ -407,7 +407,7 @@ class termstartup extends plugin
      /* prepare share settings */
     $tmp = array();
     foreach($this->gotoShares as $name => $settings){
-      $tmp2 = split("\|",$name);
+      $tmp2 = explode("|",$name);
       $name = $tmp2[0];
       $tmp[] = $settings['server']."|".$name."|".$settings['mountPoint'];
     }

@@ -247,7 +247,7 @@ class phoneAccount extends plugin
 
         foreach($attrs['goFonMacroParameter'] as $pkey=>$pval){
           /* Split Data in readable values, by delimiter !  */
-          $data = split("!",$attrs['goFonMacroParameter'][$pkey]);
+          $data = explode("!",$attrs['goFonMacroParameter'][$pkey]);
 
           /* Set all attrs */
           $id = $data[0];
@@ -269,7 +269,7 @@ class phoneAccount extends plugin
      * If we have a macro selected, parse it and set values 
      *  in $this->macroarray[$this->macro]. 
      */
-    $tmp = split("!",$this->goFonMacro);
+    $tmp = explode("!",$this->goFonMacro);
     if(is_array($tmp)){
 
       /* First value is the macroname */
@@ -289,7 +289,7 @@ class phoneAccount extends plugin
       foreach($tmp as $var){
 
         /* Split this, so we have $varar[0] = parameterID $varar[1] = SelectedValue */
-        $varar = split("#",$var);
+        $varar = explode("#",$var);
 
         /* Only insert if the parameter still exists */
         if(isset($this->macroarray[$this->macro][$varar[0]])){
@@ -1008,7 +1008,7 @@ class phoneAccount extends plugin
     if(empty($this->macro)&&(!empty($this->goFonMacro))){
 
       /* Go through already saved values, for a parameter */
-      $tmp = split("!",$this->goFonMacro);
+      $tmp = explode("!",$this->goFonMacro);
 
       /* it is possible that nothing has been saved yet */
       if(is_array($tmp)){
@@ -1030,7 +1030,7 @@ class phoneAccount extends plugin
         foreach($tmp as $var){
 
           /* Split this, so we have $varar[0] = parameterID $varar[1] = SelectedValue */
-          $varar = split("#",$var);
+          $varar = explode("#",$var);
 
           /* Only insert if the parameter still exists */
           if(isset($this->macroarray[$this->macro][$varar[0]])){
@@ -1168,7 +1168,7 @@ class phoneAccount extends plugin
 
           case "combo":
             $str= "<select name='".$var."' ".$dis." >";
-          foreach(split(":",$default) as $choice){
+          foreach(explode(":",$default) as $choice){
             if($choosen==$choice){
               $str.= "\n<option value='".$choice."' selected>".$choice."&nbsp;</option>";
             }else{

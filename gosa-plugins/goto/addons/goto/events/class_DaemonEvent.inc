@@ -111,7 +111,7 @@ class DaemonEvent
     }
 
     if(isset($data['PERIODIC']) && !preg_match("/none/i",$data['PERIODIC'])){
-      $tmp = split("_",$data['PERIODIC']);
+      $tmp = explode("_",$data['PERIODIC']);
       if(count($tmp) == 2){
         $this->activate_periodical_job = TRUE;
         $this->periodValue = $tmp[0];

@@ -52,7 +52,7 @@ class sieve_require
       $vls = stripslashes($_POST['require_'.$this->object_id]);
       $tmp = array();
 
-      $tmp2 = split(",",$vls);
+      $tmp2 = explode(",",$vls);
       foreach($tmp2 as $val){
         
         $val = trim($val);

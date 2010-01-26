@@ -81,7 +81,7 @@ function handleContent()
 		/* Get text and split by newline 
          */
         var text = xmlHttpObject.responseText;
-		var data = text.split("\n");
+		var data = text.preg_split("/\n/");
 
 		/* Walk through progress images and check if the 
 		   progress status has changed 

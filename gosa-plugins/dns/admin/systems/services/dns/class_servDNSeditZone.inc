@@ -86,7 +86,7 @@ class servdnseditZone extends plugin
         $usedPrio = array();
         foreach($this->Records as $key => $rec){
           if($rec['type'] == "mXRecord"){
-            $tmp = split(" ",$rec['value']);
+            $tmp = explode(" ",$rec['value']);
             $rec['value'] = $tmp[1];
             $tmp2[$tmp[0]] = $rec;
             unset($this->Records[$key]);
@@ -123,7 +123,7 @@ class servdnseditZone extends plugin
     /* Detect Network class */
     if(!empty($this->ReverseZone)){
 
-      $dots = count(split("\.",$this->ReverseZone));
+      $dots = count(explode(".",$this->ReverseZone));
       if($dots == 1){
         $this->NetworkClass = "A";  
         $this->ReverseZone .= ".0.0.0"; 

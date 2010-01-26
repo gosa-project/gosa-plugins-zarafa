@@ -355,8 +355,8 @@ class rsyslog extends plugin
 
   function time2local($str)
   {
-    list($date, $time)= split(" ", $str);
-    list($y, $m, $d)= split("-", $date);
+    list($date, $time)= explode(" ", $str);
+    list($y, $m, $d)= explode("-", $date);
     return "$d.$m.$y $time";
   }
 

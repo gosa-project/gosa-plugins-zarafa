@@ -142,7 +142,7 @@ class goShareServer extends goService{
     $tellSmarty= array();
     ksort($this->goExportEntryList);
     foreach($this->goExportEntryList as $name=>$values){
-      $tmp = split("\|",$values);
+      $tmp = explode("|",$values);
       $tellSmarty[$name] = $tmp[0]." ".$tmp[4]." (".$tmp[2].")";
     }
     $smarty->assign("goExportEntry",array_keys($tellSmarty));
@@ -342,13 +342,13 @@ class goShareServer extends goService{
 
   function get_share_type($share) 
   {
-    $tmp = split("\|", $share);
+    $tmp = explode("|", $share);
     return $tmp[2];
   }
 
   function returnMountEntry($entry)
   {
-    $item = split("\|", $entry);
+    $item = explode("|", $entry);
     $name = $item[0];
     $description = $item[1];
     $type = $item[2];

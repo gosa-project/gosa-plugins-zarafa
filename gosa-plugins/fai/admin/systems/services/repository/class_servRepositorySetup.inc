@@ -66,7 +66,7 @@ class servRepositorySetup  extends plugin
         if(preg_match("/ /",$val)){
 
           /* Generate list of new section names */
-          $vals = split(" ",$val);
+          $vals = explode(" ",$val);
 
           /* Add new entries */
           foreach($vals as $entry){
@@ -203,13 +203,13 @@ class servRepositorySetup  extends plugin
       if(!$res || empty($res2)){
         msg_dialog::display(_("Error"), msgPool::cmdexecfailed("repositoryBranchHook", $cmd, _("Repository service")), ERROR_DIALOG);
       }else{  
-        $tmp = split("\n",$res);
+        $tmp = preg_split("/\n/",$res);
         foreach($tmp as $hook){
           /* skip empty */
           if(empty($hook)) continue;
 
           if(preg_match("/;/",$hook)){ 
-            $hookinfo = split(";",$hook);
+            $hookinfo = explode(";",$hook);
             $ret[$hookinfo[0]] = $hookinfo[0];
           }else{
             $ret[$hook] = $hook;

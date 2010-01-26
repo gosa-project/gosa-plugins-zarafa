@@ -147,7 +147,7 @@ class environment extends plugin
       unset($this->attrs['gotoLogonScript']['count']);
       foreach($this->attrs['gotoLogonScript'] as $device){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$device);
+        $tmp = explode("|",$device);
         $tmp2['LogonName']        = $tmp[0]; 
         $tmp2['LogonPriority']    = $tmp[2]; 
         if(preg_match("/O/i",$tmp[1])){
@@ -171,7 +171,7 @@ class environment extends plugin
       unset($this->attrs['gotoShare']['count']);
       foreach($this->attrs['gotoShare'] as $share){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$share);
+        $tmp = explode("|",$share);
         $tmp2['server']      =$tmp[0];
         $tmp2['name']        =$tmp[1];
 
@@ -222,7 +222,7 @@ class environment extends plugin
 
       if(is_readable($file)){
         $str = file_get_contents($file);
-        $lines = split("\n",$str);
+        $lines = preg_split("/\n/",$str);
         foreach($lines as $line){
           $line = trim($line);
           if(!empty($line)){
@@ -1428,7 +1428,7 @@ class environment extends plugin
       unset($this->multi_attrs_all['gotoShare']['count']);
       foreach($this->multi_attrs_all['gotoShare'] as $share){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$share);
+        $tmp = explode("|",$share);
         $tmp2['server']      =$tmp[0];
         $tmp2['name']        =$tmp[1];
 
@@ -1459,7 +1459,7 @@ class environment extends plugin
       unset($this->multi_attrs['gotoShare']['count']);
       foreach($this->multi_attrs['gotoShare'] as $share){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$share);
+        $tmp = explode("|",$share);
         $tmp2['server']      =$tmp[0];
         $tmp2['name']        =$tmp[1];
 
@@ -1491,7 +1491,7 @@ class environment extends plugin
       unset($this->multi_attrs_all['gotoLogonScript']['count']);
       foreach($this->multi_attrs_all['gotoLogonScript'] as $device){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$device);
+        $tmp = explode("|",$device);
         $tmp2['LogonName']        = $tmp[0];
         $tmp2['LogonPriority']    = $tmp[2];
         if(preg_match("/O/i",$tmp[1])){
@@ -1516,7 +1516,7 @@ class environment extends plugin
       unset($this->multi_attrs['gotoLogonScript']['count']);
       foreach($this->multi_attrs['gotoLogonScript'] as $device){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$device);
+        $tmp = explode("|",$device);
         $tmp2['LogonName']        = $tmp[0];
         $tmp2['LogonPriority']    = $tmp[2];
         if(preg_match("/O/i",$tmp[1])){

@@ -53,7 +53,7 @@ class servnfs extends plugin
 
           /* Skip comments */
           if(!preg_match("/^#/",$str)){
-            $arr = split("\=",$str);
+            $arr = explode("=",$str);
             if(count($arr)==2){
               $this->charsets[$arr[0]]=$arr[1];
             }
@@ -64,7 +64,7 @@ class servnfs extends plugin
 
     if($entry){
       list($this->name, $this->description, $this->type, $this->charset,
-          $this->path, $this->option, $this->volume)= split("\|",$entry."|");
+          $this->path, $this->option, $this->volume)= explode("|",$entry."|");
       $this->is_edit          = true;
 
     }else{
@@ -114,7 +114,7 @@ class servnfs extends plugin
       if ($this->create_mount_init) {
         $smarty->assign("mount_checked", "checked");
       } else {
-        $tmp = split(",", $this->dn);
+        $tmp = explode(",", $this->dn);
         $clip = $tmp[0] . ",".get_ou('serverRDN');
         $mountsdn = "cn=mounts," . substr($this->dn, strlen($clip));
         switch ($this->type) {
@@ -230,7 +230,7 @@ class servnfs extends plugin
         continue;
       if(isset($test['goExportEntry'])){
         foreach($test['goExportEntry'] as $entry){
-          $tmp = split("\|",$entry);
+          $tmp = explode("|",$entry);
           if($tmp[0] == $this->name){
             $message[]= msgPool::duplicated(_("Name"));
           }

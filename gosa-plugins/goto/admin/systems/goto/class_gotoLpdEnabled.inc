@@ -85,7 +85,7 @@ class gotoLpdEnable extends plugin
     }else{
       foreach($data as $dat){
         if(substr_count($dat,":") < 8) continue;
-        list($s_Type,$s_Device,$i_Port,$s_Speed,$s_FlowControl,$s_Parity,$i_Bit,$s_WriteOnly,$s_Options) = split("\:",$dat);
+        list($s_Type,$s_Device,$i_Port,$s_Speed,$s_FlowControl,$s_Parity,$i_Bit,$s_WriteOnly,$s_Options) = explode(":",$dat);
         $entry = array();
         foreach($this->attributes as $attr){
           $entry[$attr] = $$attr;

@@ -128,7 +128,7 @@ class workstartup extends plugin
        */
       $this->FAIclass =array();
       if(isset($this->attrs['FAIclass'][0])){
-        $tmp = split(" ",$this->attrs['FAIclass'][0]);
+        $tmp = explode(" ",$this->attrs['FAIclass'][0]);
         $tmp2 =array();  
 
         foreach($tmp as $class){
@@ -160,7 +160,7 @@ class workstartup extends plugin
       unset($this->attrs['gotoShare']['count']);
       foreach($this->attrs['gotoShare'] as $share){
         $tmp = $tmp2 = array();
-        $tmp = split("\|",$share);
+        $tmp = explode("|",$share);
         $tmp2['server']      =$tmp[0];
         $tmp2['name']        =$tmp[1];
         $tmp2['mountPoint']  =$tmp[2];
@@ -211,8 +211,8 @@ class workstartup extends plugin
             break;
 
           case 'FAIclass':
-            $str = split(":",$attrs[$name][0]);
-            $this->InheritedFAIclass    = split("\ ",trim($str[0]));
+            $str = explode(":",$attrs[$name][0]);
+            $this->InheritedFAIclass    = explode(" ",trim($str[0]));
             $this->InheritedFAIrelease  = trim($str[1]);
             break;
 
@@ -876,7 +876,7 @@ class workstartup extends plugin
     /* prepare share settings */
     $tmp = array();
     foreach($this->gotoShares as $name => $settings){
-      $tmp2= split("\|",$name);
+      $tmp2= explode("|",$name);
       $name = $tmp2[0];
       $tmp[] = $settings['server']."|".$name."|".$settings['mountPoint'];
     }
@@ -1139,19 +1139,19 @@ class workstartup extends plugin
        */
       $lines= $this->GetHookElements();
       foreach ($lines as $hline){
-        $entries= split(";", $hline);
+        $entries= explode(";", $hline);
         $server = $entries['0'];
         $url    = $entries['1'];
         if (!empty($url)){
 
           /* Split releases */
           if (isset($entries[2])){
-            $releases= split(",", $entries[2]);
+            $releases= explode(",", $entries[2]);
 
             foreach ($releases as $release_data){
               $release_c  = preg_replace('/:.*$/', '', $release_data);
-              $sections_c = split(':', preg_replace('/^[^:]+:([^|]+)|.*$/', '\1', $release_data));
-              $classes_c  = split('\|', preg_replace('/^[^|]+\|(.*)$/', '\1', $release_data));
+              $sections_c = explode(':', preg_replace('/^[^:]+:([^|]+)|.*$/', '\1', $release_data));
+              $classes_c  = explode('|', preg_replace('/^[^|]+\|(.*)$/', '\1', $release_data));
 
               if($release_c == $release){
                 $this->cache['SERVERS'][$url][$release_c]=$release_c;
@@ -1311,7 +1311,7 @@ class workstartup extends plugin
       }elseif(empty($res2)){
         msg_dialog::display(_("Configuration error"), _("'repositoryBranchHook' returned no result!"), ERROR_DIALOG);
       }else{
-        $tmp = split("\n",$res);
+        $tmp = preg_split("/\n/",$res);
         foreach($tmp as $line){
           if(empty($line)) continue;
           $ret[]= $line;
@@ -1328,7 +1328,7 @@ class workstartup extends plugin
   function dn_to_release_name($dn)
   {
     $relevant = preg_replace("/,".preg_quote(get_ou("faiBaseRDN"), '/').".*$/i","",$dn);
-    $parts    = array_reverse(split("\,",$relevant));
+    $parts    = array_reverse(explode(",",$relevant));
     $str ="";
     foreach($parts as $part){
       $str .= preg_replace("/^ou=/","",$part)."/";

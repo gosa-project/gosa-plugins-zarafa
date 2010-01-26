@@ -566,7 +566,7 @@ class faiSummaryTab extends plugin{
   /* Create a new Profile entry */
   function prepare_FAIprofile($data)
   {
-    $classes = split("\ ",$data['FAIclass'][0]);
+    $classes = explode(" ",$data['FAIclass'][0]);
     foreach($classes as $class){
       $class = trim($class);
       $this->resolveObject($class);

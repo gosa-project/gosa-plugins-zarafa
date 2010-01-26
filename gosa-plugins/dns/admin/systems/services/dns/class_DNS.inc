@@ -50,7 +50,7 @@ class DNS
    */
   static function FlipIp($ip)
   {
-    $tmp = array_reverse(split("\.",$ip));
+    $tmp = array_reverse(explode(".",$ip));
     $new = "";
     foreach($tmp as $section){
       $new .= $section.".";
@@ -119,7 +119,7 @@ class DNS
       /* Generate SOA entry
        */
       if(isset($attrs['sOARecord'][0])){
-        $tmp = split("\ ",$attrs['sOARecord'][0]) ;
+        $tmp = explode(" ",$attrs['sOARecord'][0]) ;
         $tmp2 = array();
 
         /* Assign soa vars */
@@ -348,7 +348,7 @@ class DNS
     $zones = DNS::getAvailableZones($config);
     $zonesArr = array();
     foreach($zones as $zoneMix){
-      $zoneIndex = split("/",$zoneMix);
+      $zoneIndex = explode("/",$zoneMix);
       if(!array_key_exists($zoneIndex[0],$zonesArr)) {
         $zonesArr[$zoneIndex[0]] = array();
       }
@@ -617,7 +617,7 @@ class DNS
   static function getNameFromMix($zoneMix){
     $ret = "";
     if(!strstr($zoneMix, '/')) return($ret);	
-    $zoneIndex 	  	= split("/",$zoneMix);
+    $zoneIndex 	  	= explode("/",$zoneMix);
     return($zoneIndex[1]);
   }
 
@@ -631,7 +631,7 @@ class DNS
       return($ret);
     }
 
-    $zoneNameIndex 	  	= split("/",$zoneNameMix); 
+    $zoneNameIndex 	  	= explode("/",$zoneNameMix); 
     $zoneName           = $zoneNameIndex[1];
     $nameServer		  		= strtolower($zoneNameIndex[0]);
     $ldap               = $config->get_ldap_link();

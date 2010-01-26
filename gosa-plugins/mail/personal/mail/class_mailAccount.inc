@@ -953,9 +953,9 @@ class mailAccount extends plugin
       unset($this->attrs['gosaVacationStop']);
     } else {
       /* Adapt values to be timestamps */
-      list($day, $month, $year)= split('\.', $this->gosaVacationStart);
+      list($day, $month, $year)= explode('.', $this->gosaVacationStart);
       $this->attrs['gosaVacationStart']= mktime(0,0,0,$month, $day, $year);
-      list($day, $month, $year)= split('\.', $this->gosaVacationStop);
+      list($day, $month, $year)= explode('.', $this->gosaVacationStop);
       $this->attrs['gosaVacationStop']= mktime(0,0,0,$month, $day, $year);
     }
 
@@ -1147,9 +1147,9 @@ class mailAccount extends plugin
 
       #TODO: take care of date format
       if ($state) {
-        list($day, $month, $year)= split('\.', $this->gosaVacationStart);
+        list($day, $month, $year)= explode('.', $this->gosaVacationStart);
         $start= mktime(0,0,0,$month, $day, $year);
-        list($day, $month, $year)= split('\.', $this->gosaVacationStop);
+        list($day, $month, $year)= explode('.', $this->gosaVacationStop);
         $stop= mktime(0,0,0,$month, $day, $year);
         if($start > $stop){
           $message[]= msgPool::invalid(_("Vacation interval"));
@@ -1327,9 +1327,9 @@ class mailAccount extends plugin
 
       #TODO: take care of date format
       if ($state) {
-        list($day, $month, $year)= split('\.', $this->gosaVacationStart);
+        list($day, $month, $year)= explode('.', $this->gosaVacationStart);
         $start= mktime(0,0,0,$month, $day, $year);
-        list($day, $month, $year)= split('\.', $this->gosaVacationStop);
+        list($day, $month, $year)= explode('.', $this->gosaVacationStop);
         $stop= mktime(0,0,0,$month, $day, $year);
         if($start > $stop){
           $message[]= msgPool::invalid(_("Vacation interval"));

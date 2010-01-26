@@ -106,7 +106,7 @@ class mimetype extends plugin
         $tmp = array();
         for($i = 0 ; $i < $this->attrs[$attr]['count'] ; $i ++){
           $str = $this->attrs[$attr][$i];
-          $tmp2= split("\|",$str);
+          $tmp2= explode("|",$str);
 
           if(count($tmp2) == 2){
             $name = $tmp2[0];

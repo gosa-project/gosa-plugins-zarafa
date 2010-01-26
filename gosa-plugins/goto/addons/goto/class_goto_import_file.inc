@@ -24,7 +24,7 @@ class goto_import_file extends plugin
     
     /* Some file checks 
      */
-    $lines = split("\n",$str);
+    $lines = preg_split("/\n/",$str);
     if(empty($str) || !count($lines)){
       msg_dialog::display(_("Import"), msgPool::incorrectUpload(_("file is empty")),ERROR_DIALOG);
       return;
@@ -43,7 +43,7 @@ class goto_import_file extends plugin
 
       /* Load values from file 
        */
-      $fields = split(";",$line);
+      $fields = explode(";",$line);
       $event = array();
       foreach($this->csv_fields as $key => $val) {
         $event[$val] = "";

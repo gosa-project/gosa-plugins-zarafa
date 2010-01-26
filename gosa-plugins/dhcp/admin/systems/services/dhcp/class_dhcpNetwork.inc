@@ -47,7 +47,7 @@ class dhcpNetwork extends plugin
       } else {
         $servers= array();
         if($this->options->exists('domain-name-servers')){
-          foreach(split(",", $this->options->get('domain-name-servers')) as $val){
+          foreach(explode(",", $this->options->get('domain-name-servers')) as $val){
             $servers[$val]= $val;
           }
         }
@@ -94,7 +94,7 @@ class dhcpNetwork extends plugin
 
     if($this->options->exists('domain-name-servers')){
       $servers= array();
-      foreach(split(",", $this->options->get('domain-name-servers')) as $val){
+      foreach(explode(",", $this->options->get('domain-name-servers')) as $val){
         $servers[$val]= $val;
       }
       $smarty->assign("dnsservers", $servers);

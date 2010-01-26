@@ -96,7 +96,7 @@ class faiDiskEntry extends plugin
 
           // Load bootable flag for partitions 
           if (preg_match("/^bootable:/", $option)){
-            $bootable = split(",", trim(preg_replace("/^bootable:/","",$option),","));
+            $bootable = explode(",", trim(preg_replace("/^bootable:/","",$option),","));
             foreach($bootable as $bootflag){
               if(isset($this->partitions[$bootflag])){
                 $this->partitions[$bootflag]['bootable'] = TRUE;  
@@ -107,7 +107,7 @@ class faiDiskEntry extends plugin
 
           // Load resize flag for partitions 
           if (preg_match("/^resize:/", $option)){
-            $resize = split(",", trim(preg_replace("/^resize:/","",$option),","));
+            $resize = explode(",", trim(preg_replace("/^resize:/","",$option),","));
             foreach($resize as $id){
               if(isset($this->partitions[$id])){
                 $this->partitions[$id]['resize'] = TRUE;  
@@ -118,7 +118,7 @@ class faiDiskEntry extends plugin
 
           // Load preserve_always flag for partitions 
           if (preg_match("/^preserve_always:/", $option)){
-            $preserve = split(",", trim(preg_replace("/^preserve_always:/","",$option),","));
+            $preserve = explode(",", trim(preg_replace("/^preserve_always:/","",$option),","));
             foreach($preserve as $presflag){
               if(isset($this->partitions[$presflag])){
                 $this->partitions[$presflag]['preserve'] = TRUE;  
@@ -130,7 +130,7 @@ class faiDiskEntry extends plugin
 
           // Load preserve_reinstall flag for partitions 
           if (preg_match("/^preserve_reinstall:/", $option)){
-            $preserve = split(",", trim(preg_replace("/^preserve_reinstall:/","",$option),","));
+            $preserve = explode(",", trim(preg_replace("/^preserve_reinstall:/","",$option),","));
             foreach($preserve as $presflag){
               if(isset($this->partitions[$bootflag])){
                 $this->partitions[$presflag]['preserve'] = TRUE;  
@@ -182,7 +182,7 @@ class faiDiskEntry extends plugin
       if((preg_match("/RemovePartition_/",$name)) && 
           $this->acl_is_removeable() && 
           !preg_match("/freeze/i",$this->FAIstate)){
-        $tmp = split("_",$name);
+        $tmp = explode("_",$name);
         $this->removePartition($tmp[1]);
         break;
       }
@@ -359,7 +359,7 @@ class faiDiskEntry extends plugin
 
         // Add disks of raid arrays, to the used list.
         if($disk['FAIdiskType'] == "raid"){
-          foreach(split(",",$part['FAIpartitionSize']) as $rDevice){
+          foreach(explode(",",$part['FAIpartitionSize']) as $rDevice){
             $used[] = preg_replace("/:.*$/i","",$rDevice);
           }
         }
@@ -407,7 +407,7 @@ class faiDiskEntry extends plugin
         }
         foreach($disk['partitions'] as $partkey => $part){
           if($disk['FAIdiskType'] == "raid"){
-            foreach(split(",",$part['FAIpartitionSize']) as $partname){
+            foreach(explode(",",$part['FAIpartitionSize']) as $partname){
               $list[preg_replace("/:.*$/","",$partname)][] = $disk;
             }
           }

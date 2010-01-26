@@ -128,7 +128,7 @@ class conference extends plugin
      * Parameter|Lifetime|number
      */
     if($this->dn!="new"){
-      $tmp1= split("\|",$this->attrs['goFonConferenceOption'][0]);
+      $tmp1= explode("|",$this->attrs['goFonConferenceOption'][0]);
 
       for($i = 0 ; $i < strlen($tmp1[0]);$i++){
         $varname = "goFonConferenceOption_".$tmp1[0][$i];

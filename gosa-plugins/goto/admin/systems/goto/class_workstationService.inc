@@ -66,7 +66,7 @@ class workservice extends plugin
 
       if(is_readable($file)){
         $str = file_get_contents($file);
-        $lines = split("\n",$str);
+        $lines = preg_split("/\n/",$str);
         foreach($lines as $line){
           $line = trim($line);
           if(!empty($line)){
@@ -120,11 +120,11 @@ class workservice extends plugin
     if(file_exists(CONFIG_DIR."/keyboardLayouts")){
       if(is_readable(CONFIG_DIR."/keyboardLayouts")){
         $str = file_get_contents(CONFIG_DIR."/keyboardLayouts");
-        $tmp = split("\n",$str);
+        $tmp = preg_split("/\n/",$str);
         foreach($tmp as $entry){
           if((!empty($entry)) && (!preg_match("/^#/",$entry))){
             $entry = trim($entry);
-            $tmp2 = split ("\:",$entry);
+            $tmp2 = explode(":",$entry);
             $la =   trim($tmp2[0]);   // What would be saved to ldap
             $da =   trim($tmp2[1]);   // This wis displayed in the listbox
             $this->XKbLayouts [ $la] = $da;  

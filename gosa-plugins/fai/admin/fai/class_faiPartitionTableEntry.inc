@@ -83,7 +83,7 @@ class faiPartitionTableEntry extends plugin
      */
     foreach($_POST as $name => $value){
       if((preg_match("/Delete_.*/",$name)) && $this->acl_is_removeable() && !preg_match("/freeze/i",$this->FAIstate)){
-        $tmp = split("_",$name);
+        $tmp = explode("_",$name);
         $s_action = "remove";
         $s_entry  = $tmp[1]; 
       }
@@ -373,7 +373,7 @@ class faiPartitionTableEntry extends plugin
         $message[]=_("Please use 'swap' as mount point, if 'swap' is used as fs-type.");
       }
 
-      $tmp = split("-",$part['FAIpartitionSize']);
+      $tmp = explode("-",$part['FAIpartitionSize']);
       switch (count($tmp)){
         case 0:
                 $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));

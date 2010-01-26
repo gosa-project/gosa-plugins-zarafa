@@ -125,7 +125,7 @@ class netatalk extends plugin {
     $ldap->search ("(&(objectClass=mount)(|(mountType=url)(mountType=nfs))(cn=*))");
 
     while ($attrs = $ldap->fetch()){
-      $tmp  = split(":", $attrs["cn"][0]);
+      $tmp  = explode(":", $attrs["cn"][0]);
       $host = trim($tmp[0]);
       $dir  = trim($tmp[1]);
       $mountType = trim($attrs["mountType"][0]);

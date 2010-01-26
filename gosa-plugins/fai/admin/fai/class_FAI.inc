@@ -897,7 +897,7 @@ class FAI
     $sub_releases = array();
     $source_dn = "";
     
-    $tmp = split("\/",$source_release);
+    $tmp = explode("/",$source_release);
     foreach($tmp as $part){
       if(empty($part)){
         continue;
@@ -1065,7 +1065,7 @@ class FAI
       if(preg_match("/^ou=/",$sourcedn)){
         echo "<h3>"._("Processing")." <i>".LDAP::fix($destinationdn)."</i></h3>";
       }else{
-        $tmp = split(",",$sourcedn);
+        $tmp = explode(",",$sourcedn);
         echo "&nbsp;<b>"._("Object").":</b> ";
         $deststr = LDAP::fix($destinationdn);
         if(strlen($deststr) > 96){

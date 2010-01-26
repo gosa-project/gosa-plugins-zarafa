@@ -217,7 +217,7 @@ class faiPartitionTable extends plugin
             }
             foreach($disk['partitions'] as $partkey => $part){
               if($disk['FAIdiskType'] == "raid"){
-                foreach(split(",",$part['FAIpartitionSize']) as $partname){
+                foreach(explode(",",$part['FAIpartitionSize']) as $partname){
                   $list[preg_replace("/:.*$/","",$partname)][] = $disk;
                 }
               }

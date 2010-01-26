@@ -93,7 +93,7 @@ class servDNSeditZoneEntries extends plugin
       /* Add a new Record in given object  
        */
       $tmp    = preg_replace("/^.*_(.*)_.*$/","\\1",$name);
-      $tmp2   = split("\|",$tmp);
+      $tmp2   = explode("|",$tmp);
 
       /* Add new host entry
        */
@@ -147,7 +147,7 @@ class servDNSeditZoneEntries extends plugin
       /* Extract informations out of post name 
        */
       $tmp    = preg_replace("/^.*_/","\\1",$name);
-      $tmp2   = split("\|",$tmp);      
+      $tmp2   = explode("|",$tmp);      
  
       if(count($tmp2) != 2) continue;
 
@@ -204,7 +204,7 @@ class servDNSeditZoneEntries extends plugin
       /* Extract informations out of post name 
        */
       $tmp    = preg_replace("/^.*_/","\\1",$name);
-      $tmp2   = split("\|",$tmp);      
+      $tmp2   = explode("|",$tmp);      
  
       if(count($tmp2) != 2) continue;
 

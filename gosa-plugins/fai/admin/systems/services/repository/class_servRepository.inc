@@ -40,7 +40,7 @@ class servrepository extends goService
     $this->repositories = array();
     if(isset($this->attrs['FAIrepository'])){
       for($i = 0; $i < $this->attrs['FAIrepository']['count']; $i++){
-        $tmp = split("\|",$this->attrs['FAIrepository'][$i]);
+        $tmp = explode("|",$this->attrs['FAIrepository'][$i]);
         $tmp2 = array();  
         $tmp3 = array();   
 
@@ -66,7 +66,7 @@ class servrepository extends goService
         }
 
         if(isset($tmp[3])){
-          $tmp3 = split(",",$tmp[3]);
+          $tmp3 = explode(",",$tmp[3]);
           foreach($tmp3 as $sec){
             $tmp2['Sections'][$sec]=$sec;
           }    

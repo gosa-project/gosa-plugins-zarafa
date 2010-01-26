@@ -82,7 +82,7 @@ class macroParameter extends plugin
 
     /* Load parametersettings*/
     foreach($this->goFonMacroParameter as $para){
-      $tmp = split("!",$para);
+      $tmp = explode("!",$para);
       $num = $tmp[0];
       $tmp2[$num]['name']        = base64_decode($tmp[1]);
       $tmp2[$num]['type']        = $tmp[2];

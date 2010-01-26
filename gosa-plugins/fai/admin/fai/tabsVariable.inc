@@ -27,8 +27,8 @@ class tabsVariable extends tabs
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		
 		/* if( new_dn is subtree of this->dn ) */
-		$cnt1 = count(split(",",$this->dn));
-		$cnt2 = count(split(",",$new_dn));
+		$cnt1 = count(explode(",",$this->dn));
+		$cnt2 = count(explode(",",$new_dn));
 		if((strstr($new_dn,$this->dn))&&($cnt1<$cnt2)){
 			msg_dialog::display(_("Error"), _("Moving the tree failed. Destination tree is subtree of source tree."), ERROR_DIALOG);
 		}else{

@@ -601,7 +601,7 @@ class My_Tree extends Tree
         }
         $tmp2 = $part->get_sieve_script_part();
 
-        $tmp3 = split("\n",$tmp2);
+        $tmp3 = preg_split("/\n/",$tmp2);
         foreach($tmp3 as $str){
           $str2 = trim($str);
 

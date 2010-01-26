@@ -559,7 +559,7 @@ class gotomasses extends plugin
       // Check whether this is a periodical job or not.
       $period = "";
       if(isset($task['PERIODIC']) && !preg_match("/none/i",$task['PERIODIC'])){
-        $tmp = split("_", $task['PERIODIC']);
+        $tmp = explode("_", $task['PERIODIC']);
         if(count($tmp) == 2){
           $period= $tmp[0]."&nbsp;"._($tmp[1]);
         }

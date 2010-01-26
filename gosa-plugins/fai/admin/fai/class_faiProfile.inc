@@ -32,7 +32,7 @@ class faiProfile extends plugin
     $this->ui = get_userinfo();
 
     /* Parse ldap attribute to get all assigned classes */
-    $tmp = split(" ",$this->FAIclass);
+    $tmp = explode(" ",$this->FAIclass);
     $tmp2 = array();
     foreach($tmp as $class){
       if(!empty($class)){
@@ -446,7 +446,7 @@ class faiProfile extends plugin
     plugin::PrepareForCopyPaste($source);
 
     /* Parse ldap attribute to get all assigned classes */
-    $tmp = split(" ",$this->FAIclass);
+    $tmp = explode(" ",$this->FAIclass);
     $tmp2 = array();
     foreach($tmp as $class){
       if(!empty($class)){

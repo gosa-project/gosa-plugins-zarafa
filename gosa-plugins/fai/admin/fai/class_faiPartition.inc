@@ -120,7 +120,7 @@ class faiPartition extends plugin
       }elseif($type == "raid"){
    
         // Extract raid devices out of the partition size attribute. 
-        $usedDisks = split(",",$this->FAIpartitionSize);
+        $usedDisks = explode(",",$this->FAIpartitionSize);
         foreach($usedDisks as $disk){
           $name = preg_replace("/:.*$/","",$disk);
           $spare = preg_match("/:spare/",$disk);
@@ -250,7 +250,7 @@ class faiPartition extends plugin
 
         // Add disks of raid arrays, to the used list.
         if($disk['FAIdiskType'] == "raid"){
-          foreach(split(",",$part['FAIpartitionSize']) as $rDevice){
+          foreach(explode(",",$part['FAIpartitionSize']) as $rDevice){
             $used[] = preg_replace("/:.*$/i","",$rDevice);
           }
         }

@@ -160,7 +160,7 @@ class appgroup extends plugin
              (ou=1.0.0,ou=halut,ou=apps  ==> halue/1.0.0)
            */
           $bb     = preg_replace("/".preg_quote(get_ou('applicationRDN'), '/').".*/i","",$attrs['dn']);
-          $parts  = array_reverse(split("ou=",$bb));
+          $parts  = array_reverse(explode("ou=",$bb));
 
           $str ="";
           foreach($parts as $key => $part){
@@ -260,7 +260,7 @@ class appgroup extends plugin
       $cur          = &$this->a_Structure[0]['ENTRIES'];
       $parent_id    = $base['UNIQID'];
       $sub_dn       = preg_replace("/,".preg_quote($this->dn, '/')."$/","",$attrs['dn']);
-      $sub_dn_array = split("\,",$sub_dn);
+      $sub_dn_array = explode(",",$sub_dn);
 
       /* Walk through our menu structure array while we have found 
           the correct position where to add this object. 
@@ -325,7 +325,7 @@ class appgroup extends plugin
             if(isset($attrs['gosaApplicationParameter'])){
               for($p = 0 ; $p < $attrs['gosaApplicationParameter']['count'] ; $p ++){
                 if(preg_match("/:/",$attrs['gosaApplicationParameter'][$p])){
-                  $tmp = split(":",$attrs['gosaApplicationParameter'][$p]);
+                  $tmp = explode(":",$attrs['gosaApplicationParameter'][$p]);
                   $data['PARAMETER'][$tmp[0]] = preg_replace('/^[^:]+:/', '', $attrs['gosaApplicationParameter'][$p]);
                 }elseif($attrs['gosaApplicationParameter'][$p] == "*separator*"){
                   $type = "SEPERATOR";
@@ -610,7 +610,7 @@ class appgroup extends plugin
         if(isset($app['gosaApplicationParameter'])){
           for($i = 0 ; $i < $app['gosaApplicationParameter']['count'] ; $i++) {
             $para = $app['gosaApplicationParameter'][$i];
-            $tmp  = split(":",$para);
+            $tmp  = explode(":",$para);
             $this->app_parameter[$tmp[0]] = $tmp[1];
           }
         }
