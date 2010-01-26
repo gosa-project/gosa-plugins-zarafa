@@ -14,7 +14,7 @@
       <label>Service</label>
       <objectClass>FAKE_OC_FaiRepository</objectClass>
       <category>server</category>
-      <class>Repository</class>
+      <class>servrepository</class>
       <image>images/lits/new.png</image>
     </objectType>
 
@@ -35,7 +35,7 @@
       <label>Sections</label>
       <sortAttribute>Sections</sortAttribute>
       <sortType>string</sortType>
-      <value>%{filter:link(row,dn,"%s",Sections)}</value>
+      <value>%{filter:filterSections(row,Sections)}</value>
       <export>true</export>
     </column>
 

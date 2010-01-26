@@ -11,6 +11,11 @@ class filterRepository {
       $entry['objectClass'] = array('FAKE_OC_FaiRepository');
       $item = array('count' => count($entry));
       $item['dn'] = $key;
+
+      if(!count($entry['Sections'])){
+        $entry['Sections'][] = '';
+      }
+
       foreach($entry as $name => $value){   
         $item[] = $name;
         if(!is_array($value)) $value=array($value);

@@ -249,6 +249,7 @@ class servrepository extends goService
       $delete = "<img src='images/empty.png' alt='&nbsp;'>";
     }
 
+    session::set('RepositoryList', $this->repositories);
     $str = $this->divlist->execute(); 
     $display.= $smarty->fetch(get_template_path('servRepository.tpl', TRUE,dirname(__FILE__)));
     return($str.$display);

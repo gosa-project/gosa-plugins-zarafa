@@ -26,6 +26,7 @@ class repositoryManagement extends management
 
     // Build headpage
     $headpage = new listing(get_template_path("services/repository/repository-list.xml", true));
+    $headpage->registerElementFilter("filterSections", "repositoryManagement::filterSections");
     $headpage->setFilter($filter);
 
     parent::__construct($config, $this->ui, "repositories", $headpage);
@@ -40,6 +41,12 @@ class repositoryManagement extends management
       $tmp = $action."Entry";
       $this->parent->$tmp($action,$target,$all);  
     }
+  }
+
+  static function filterSections($a,$b)
+  {
+    if(!$b) return('');
+    return(implode($b,', '));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
