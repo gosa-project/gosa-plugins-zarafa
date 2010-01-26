@@ -118,7 +118,7 @@
 
 
   <table summary="{t}Kiosk profile settings{/t}">
-{if $kiosk_enabled }
+{if $kiosk_enabled}
     <tr>
      <td colwidth=2>
       <label for="kiosk_server">{t}Kiosk profile{/t}</label>
@@ -260,7 +260,7 @@
 				{/if}
 			{/foreach}
 		{else}
-    	   {html_options values=$gotoLogonScriptKeys output=$gotoLogonScripts }
+    	   {html_options values=$gotoLogonScriptKeys output=$gotoLogonScripts}
 	       <option disabled>&nbsp;</option>
 		{/if}
       </select>
@@ -354,13 +354,13 @@
       <input type="submit"  name="gotoPrinterAdd"     value="{msgPool type=addButton}">
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter} disabled {/if}>
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter} disabled {/if}>
 {/render}
 {render acl=$gosaDefaultPrinterACL}
-      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter | $is_group} disabled {/if}>
+      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter||$is_group} disabled {/if}>
 {/render}
      </td>
     </tr>
@@ -387,13 +387,13 @@
       <input type="submit"  name="gotoPrinterAdd"     value="{msgPool type=addButton}">
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter} disabled {/if}>
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter} disabled {/if}>
 {/render}
 {render acl=$gosaDefaultPrinterACL}
-      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter | $is_group} disabled {/if}>
+      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter||$is_group} disabled {/if}>
 {/render}
      </td>
     </tr>
