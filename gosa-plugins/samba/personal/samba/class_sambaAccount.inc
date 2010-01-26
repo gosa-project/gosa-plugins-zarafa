@@ -58,7 +58,7 @@ class sambaAccount extends plugin
 
   /* Helper */
   var $cache = array();
-  var $show_ws_dialog= FALSE;
+  var $trustSelect= FALSE;
   var $logon_time_set= 0;
   var $logoff_time_set= 0;
   var $kickoff_time_set= 0;
@@ -307,102 +307,53 @@ class sambaAccount extends plugin
     /* Add user workstation? */
     if (isset($_POST["add_ws"])){
       if($this->acl_is_writeable("sambaUserWorkstations",$SkipWrite)){
-        $this->show_ws_dialog= TRUE;
+        $this->trustSelect= new trustSelect($this->config,get_userinfo());
         $this->dialog= TRUE;
       }
     }
 
     /* Add user workstation finished? */
     if (isset($_POST["add_ws_cancel"])){
-      $this->show_ws_dialog= FALSE;
+      $this->trustSelect= FALSE;
       $this->dialog= FALSE;
     }
 
-    /* Add user workstation? */
-    if (isset($_POST["add_ws_finish"])){
+    // Add selected machines to trusted ones.
+    if (isset($_POST["add_ws_finish"]) &&  $this->trustSelect){
+      $trusts = $this->trustSelect->detectPostActions();
+      if(isset($trusts['targets'])){
 
-      if (isset($_POST['wslist'])){
+        $headpage = $this->trustSelect->getHeadpage();
         if($this->multiple_support_active){
-          foreach($_POST['wslist'] as $ws){
+          foreach($trusts['targets'] as $id){
+            $attrs = $headpage->getEntry($id);
+            $we =$attrs['cn'][0];
             $this->multiple_sambaUserWorkstations[trim($we)] = array("Name" => trim($ws), "UsedByAllUsers" => TRUE);
           }
         }else{
+
           $tmp= $this->sambaUserWorkstations;
-          foreach($_POST['wslist'] as $ws){
-            $tmp.= ",$ws";
+          foreach($trusts['targets'] as $id){
+            $attrs = $headpage->getEntry($id);
+            $we =$attrs['cn'][0];
+            $tmp.= ",$we";
           }
           $tmp= preg_replace('/,+/', ',', $tmp);
           $this->sambaUserWorkstations= trim($tmp, ',');
         }
-        $this->is_modified= TRUE;
 
-        $this->show_ws_dialog= FALSE;
-        $this->dialog= FALSE;
-      } else {
-        msg_dialog::display(_("Error"), _("Please select an entry!"), ERROR_DIALOG);
+        $this->is_modified= TRUE;
       }
+      $this->trustSelect= NULL;
+      $this->dialog= FALSE;
     }
 
     /* Show ws dialog */
-    if ($this->show_ws_dialog){
+    if ($this->trustSelect){
 
-      /* Save data */
-      $sambafilter= session::get("sambafilter");
-      foreach( array("depselect", "regex") as $type){
-        if (isset($_POST[$type])){
-          $sambafilter[$type]= $_POST[$type];
-        }
-      }
-      if (isset($_GET['search'])){
-        $s= mb_substr($_GET['search'], 0, 1, "UTF8")."*";
-        if ($s == "**"){
-          $s= "*";
-        }
-        $sambafilter['regex']= $s;
-      }
-      session::set("sambafilter", $sambafilter);
-
-      /* Get workstation list */
-      $exclude= "";
-
-      if($this->multiple_support_active){
-        foreach($this->multiple_sambaUserWorkstations as $ws){
-          if($ws['UsedByAllUsers']){
-            $exclude.= "(cn=".$ws['Name']."$)";
-          }
-        }
-      }else{
-        foreach(explode(',', $this->sambaUserWorkstations) as $ws){
-          $exclude.= "(cn=$ws$)";
-        }
-      }
-      if ($exclude != ""){
-        $exclude= "(!(|$exclude))";
-      }
-      $regex= $sambafilter['regex'];
-      $filter= "(&(objectClass=sambaSAMAccount)$exclude(uid=*$)(|(uid=$regex)(cn=$regex)))";
-      $res= get_list($filter, "winworkstation", $sambafilter['depselect'], array("uid"), GL_SUBSEARCH | GL_SIZELIMIT);
-        
-      $wslist= array();
-      foreach ($res as $attrs){
-        $wslist[]= preg_replace('/\$/', '', $attrs['uid'][0]);
-      }
-      asort($wslist);
-
-      $smarty->assign("search_image", get_template_path('images/lists/search.png'));
-      $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
-      $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
-      $smarty->assign("deplist", $this->config->idepartments);
-      $smarty->assign("alphabet", generate_alphabet());
-      foreach( array("depselect", "regex") as $type){
-        $smarty->assign("$type", $sambafilter[$type]);
-      }
-      $smarty->assign("hint", print_sizelimit_warning());
-      $smarty->assign("wslist", $wslist);
-      $smarty->assign("apply", apply_filter());
-      $display= $smarty->fetch (get_template_path('samba3_workstations.tpl', TRUE,
-                                dirname(__FILE__)));
-      return ($display);
+      // Build up blocklist
+      session::set('filterBlacklist', array('cn' => preg_split('/,/',$this->sambaUserWorkstations)));
+      return($this->trustSelect->execute());
     }
 
     /* Fill boxes */
