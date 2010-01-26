@@ -55,7 +55,7 @@
     <tr>
      <td>{t}Netboot product{/t}</td>
      <td>
-{render acl=$netbootProductACL }
+{render acl=$netbootProductACL}
       <select name="opsi_netboot_product" onChange="document.mainform.submit();">
 		{foreach from=$ANP item=item key=key}
 			<option {if $key == $SNP} selected {/if} value="{$key}">{$key}</option>

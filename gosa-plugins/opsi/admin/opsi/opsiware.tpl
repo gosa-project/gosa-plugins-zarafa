@@ -11,7 +11,7 @@
 
 	{foreach from=$info item=item key=key}
 	<div style='background-color: #E8E8E8; width: 100%; border: 2px dotted #CCCCCC;'>
-	<h2>{t}Device{/t} { $key+1 }</h2>
+	<h2>{t}Device{/t} {$key+1}</h2>
 		{foreach from=$item key=name item=value}
 			<div style="text-transform:lowercase;width:30%; float: left; ">{$name}:&nbsp;</div> 
 			<div style="width:70%; float: right;background-color: #DADADA;">{$value.0.VALUE}&nbsp;</div>
