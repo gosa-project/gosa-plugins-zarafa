@@ -454,7 +454,7 @@ class Semantics
 		}
 
 		// Check if command may appear here
-		if (!ereg($this->s_['valid_after'], $prev))
+		if (strstr($prev, $this->s_['valid_after'] === false))
 		{
 #			$this->message = 'line '. $line .': "'. $this->command_ .'" may not appear after "'. $prev .'"';
 #			return false;
