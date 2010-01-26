@@ -186,8 +186,7 @@ class macroParameter extends plugin
     }
 
     /* get current content */
-    $macroManagment = session::get('macroManagement') ;
-    $content = $macroManagment->macrotabs->by_object['macro']->goFonMacroContent;
+    $content = $this->parent->by_object['macro']->goFonMacroContent;
 
     if(strstr($content,"ARG")){
       $vorpos = strpos($content,"ARG");
