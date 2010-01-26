@@ -18,7 +18,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*! \brief Test functions
+ *
+ * This class provides various test functions. It enables to check
+ * if a given value is:
+ *
+ * - a phone numnber
+ * - a DNS name
+ * - an URL
+ * etc.
+ *
+ * The functions need to be handled with care, because they are not as strict
+ * as one might expect.
+ */ 
 class tests {
+
+  /*! \brief Test if the given string is a phone number */
   public static function is_phone_nr($nr)
   {
     if ($nr == ""){
@@ -29,12 +44,14 @@ class tests {
   }
 
 
+  /*! \brief Test if the given string contains characters allowed in a DNS name */
   public static function is_dns_name($str)
   {
     return(preg_match("/^[a-z0-9\.\-]*$/i",$str));
   }
 
 
+  /*! \brief Test if the given string is an URL */
   public static function is_url($url)
   {
     if ($url == ""){
@@ -45,6 +62,7 @@ class tests {
   }
 
 
+  /*! \brief Test if the given string is a DN */
   public static function is_dn($dn)
   {
     if ($dn == ""){
@@ -55,6 +73,7 @@ class tests {
   }
 
 
+  /*! \brief Test if the given string is an uid */
   public static function is_uid($uid)
   {
     if ($uid == ""){
@@ -71,19 +90,21 @@ class tests {
   }
 
 
+  /*! \brief Test if the given string is an IP */
   public static function is_ip($ip)
   {
     return preg_match("/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/", $ip);
   }
 
 
+  /*! \brief Test if the given string is a mac address */
   public static function is_mac($mac)
   {
     return preg_match("/^[a-f0-9][a-f0-9]:[a-f0-9][a-f0-9]:[a-f0-9][a-f0-9]:[a-f0-9][a-f0-9]:[a-f0-9][a-f0-9]:[a-f0-9][a-f0-9]$/i", $mac);
   }
 
 
-  /* Checks if the given ip address dosen't match 
+  /*! \brief Checks if the given ip address dosen't match 
       "is_ip" because there is also a sub net mask given */
   public static function is_ip_with_subnetmask($ip)
   {
@@ -124,13 +145,17 @@ class tests {
   }
 
 
-  /* Simple is domain check, it checks if the given string looks like "string(...).string" */
+  /*! \brief Simple is domain check
+   *
+   * This checks if the given string looks like "string(...).string"
+   */
   public static function is_domain($str)
   {
     return(preg_match("/^([a-z0-9\-]*)\.[a-z0-9\-]*$/i",$str));
   }
 
 
+  /*! \brief Check if the given argument is an id */
   public static function is_id($id)
   {
     if ($id == ""){
@@ -141,6 +166,7 @@ class tests {
   }
 
 
+  /*! \brief Check if the given argument is a path */
   public static function is_path($path)
   {
     if ($path == ""){
@@ -154,6 +180,7 @@ class tests {
   }
 
 
+  /*! \brief Check if the given argument is an email */
   public static function is_email($address, $template= FALSE)
   {
     if ($address == ""){
@@ -169,7 +196,7 @@ class tests {
   }
 
 
-  /* Check if the given department name is valid */
+  /* \brief Check if the given department name is valid */
   public static function is_department_name_reserved($name,$base)
   {
     $reservedName = array("systems","apps","incomming","internal","accounts","fax","addressbook",
@@ -192,8 +219,8 @@ class tests {
   }
 
 
-  /* Check if $ip1 and $ip2 represents a valid IP range 
-   *  returns TRUE in case of a valid range, FALSE in case of an error. 
+  /* \brief Check if $ip1 and $ip2 represents a valid IP range
+   *  \return TRUE in case of a valid range, FALSE in case of an error. 
    */
   public static function is_ip_range($ip1,$ip2)
   {
@@ -210,7 +237,7 @@ class tests {
   }
 
 
-  /* Check if the specified IP address $address is inside the given network */
+  /* \brief Check if the specified IP address $address is inside the given network */
   public static function is_in_network($network, $netmask, $address)
   {
     $nw= split('\.', $network);
@@ -232,7 +259,7 @@ class tests {
   }
 
 
-  /* Check if the specified IP address $address is inside the given network */
+  /* \brief Check if the specified IP address $address is inside the given network */
   public static function is_in_ip_range($from, $to, $address)
   {
     $from = split('\.', $from);
