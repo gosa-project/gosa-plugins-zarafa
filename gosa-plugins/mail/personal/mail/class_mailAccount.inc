@@ -310,7 +310,11 @@ class mailAccount extends plugin
     if($this->mailAddressSelect instanceOf mailAddressSelect){
       $used  = array();
       $used['mail'] = array_values($this->gosaMailAlternateAddress);  
+      $used['mail'] = array_merge($used['mail'], array_values($this->gosaMailForwardingAddress));  
       $used['mail'][] = $this->mail;
+
+      // Build up blocklist
+      session::set('filterBlacklist', $used);
       return($this->mailAddressSelect->execute());
     }
 
