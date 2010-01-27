@@ -878,12 +878,12 @@ class environment extends plugin
       $this->is_dialog=true;
     }
 
-    if(isset($_POST['selectPrinter_cancel']) && $this->dialog instanceOf printerSelect){
+    if(isset($_POST['printerSelect_cancel']) && $this->dialog instanceOf printerSelect){
       $this->is_dialog=false;
       $this->dialog=FALSE;
     }
 
-    if(isset($_POST['selectPrinter_save'])  && $this->dialog instanceOf printerSelect){
+    if(isset($_POST['printerSelect_save'])  && $this->dialog instanceOf printerSelect){
 
       $res = $this->dialog->save();
         foreach($res as $printer){
@@ -929,6 +929,15 @@ class environment extends plugin
         unset($this->dialog);
         $this->dialog   =FALSE;
     }
+
+    // Display printer selection dialog 
+    if($this->dialog instanceOf printerSelect){
+
+      // Build up blocklist
+      session::set('filterBlacklist',array('cn' => array_keys($this->gotoPrinter)));
+      return($this->dialog->execute());
+    }
+
 
     if((isset($_POST['gotoPrinterDel']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
       $printer = $_POST['gotoPrinterSel'];
