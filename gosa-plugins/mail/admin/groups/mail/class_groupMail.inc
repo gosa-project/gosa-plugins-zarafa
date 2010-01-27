@@ -226,6 +226,7 @@ class mailgroup extends plugin
     $ldap->cd($this->config->current['BASE']);
     if(isset($this->parent->by_object['group'])){
       foreach($this->parent->by_object['group']->memberUid as $uid){
+        if(!isset($this->parent->by_object['group']->dnMapping[$uid])) continue;
         $dn = $this->parent->by_object['group']->dnMapping[$uid];
         $member['all'][$uid] = $uid;
         if($ldap->object_match_filter($dn,"(&(objectClass=gosaMailAccount)(".$this->mailMethod->getUAttrib()."=*))")){
