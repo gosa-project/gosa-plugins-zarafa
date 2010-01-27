@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-27 17:05+0100\n"
 "PO-Revision-Date: 2010-01-25 01:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -590,6 +590,8 @@ msgstr "Dispositivo"
 #: admin/systems/goto/class_terminalGeneric.inc:699
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
 #: addons/goto/class_gotomasses.inc:932
+#: addons/goto/events/eventTargetSystems-list.xml:73
+#: addons/goto/events/eventTargetUser-list.xml:57
 #: personal/environment/class_logonManagementDialog.inc:111
 #: personal/environment/logonManagement.tpl:17
 msgid "Description"
@@ -1522,6 +1524,7 @@ msgstr "Elija un grupo de objetos como plantilla"
 #: admin/systems/goto/ArpNewDevice.tpl:61
 #: admin/systems/goto/SelectDeviceType.tpl:37
 #: addons/goto/goto_import_file.tpl:40
+#: addons/goto/events/eventTargetSystems-list.xml:39
 msgid "Object group"
 msgstr "Grupo de objetos"
 
@@ -3395,17 +3398,6 @@ msgstr "Mostrar servidores"
 msgid "List of systems"
 msgstr "Lista de usuarios"
 
-#: addons/goto/events/eventTargetSystems-list.xml:39
-#, fuzzy
-msgid "Object Group"
-msgstr "Grupo de objetos"
-
-#: addons/goto/events/eventTargetSystems-list.xml:73
-#: addons/goto/events/eventTargetUser-list.xml:57
-#, fuzzy
-msgid "Description name"
-msgstr "Descripción"
-
 #: addons/goto/events/eventTargetSystems-list.xml:89
 #, fuzzy
 msgid "Mac"
@@ -3778,6 +3770,14 @@ msgid "Regular expression for        matching hotplugs"
 msgstr ""
 "Expresiones regulares que coincidan con dispositivos de conexión en caliente "
 "(HotPlug)"
+
+#, fuzzy
+#~ msgid "Description name"
+#~ msgstr "Descripción"
+
+#, fuzzy
+#~ msgid "Object Group"
+#~ msgstr "Grupo de objetos"
 
 #~ msgid "Select all"
 #~ msgstr "Seleccione todos"

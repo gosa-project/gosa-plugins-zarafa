@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-27 17:05+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -606,6 +606,8 @@ msgstr "设备"
 #: admin/systems/goto/class_terminalGeneric.inc:699
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
 #: addons/goto/class_gotomasses.inc:932
+#: addons/goto/events/eventTargetSystems-list.xml:73
+#: addons/goto/events/eventTargetUser-list.xml:57
 #: personal/environment/class_logonManagementDialog.inc:111
 #: personal/environment/logonManagement.tpl:17
 msgid "Description"
@@ -1595,6 +1597,7 @@ msgstr "选择一个对象组作为模板"
 #: admin/systems/goto/ArpNewDevice.tpl:61
 #: admin/systems/goto/SelectDeviceType.tpl:37
 #: addons/goto/goto_import_file.tpl:40
+#: addons/goto/events/eventTargetSystems-list.xml:39
 msgid "Object group"
 msgstr "对象组"
 
@@ -3552,17 +3555,6 @@ msgstr "显示服务器"
 msgid "List of systems"
 msgstr "用户列表"
 
-#: addons/goto/events/eventTargetSystems-list.xml:39
-#, fuzzy
-msgid "Object Group"
-msgstr "对象组"
-
-#: addons/goto/events/eventTargetSystems-list.xml:73
-#: addons/goto/events/eventTargetUser-list.xml:57
-#, fuzzy
-msgid "Description name"
-msgstr "描述"
-
 #: addons/goto/events/eventTargetSystems-list.xml:89
 #, fuzzy
 msgid "Mac"
@@ -3940,6 +3932,14 @@ msgstr "显示匹配的用户"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "用于匹配热插拔的正则表达式"
+
+#, fuzzy
+#~ msgid "Description name"
+#~ msgstr "描述"
+
+#, fuzzy
+#~ msgid "Object Group"
+#~ msgstr "对象组"
 
 #, fuzzy
 #~ msgid "Available targets"

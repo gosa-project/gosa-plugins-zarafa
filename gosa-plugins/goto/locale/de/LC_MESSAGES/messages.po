@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-27 17:05+0100\n"
 "PO-Revision-Date: 2009-07-22 13:16+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -594,6 +594,8 @@ msgstr "Gerät"
 #: admin/systems/goto/class_terminalGeneric.inc:699
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
 #: addons/goto/class_gotomasses.inc:932
+#: addons/goto/events/eventTargetSystems-list.xml:73
+#: addons/goto/events/eventTargetUser-list.xml:57
 #: personal/environment/class_logonManagementDialog.inc:111
 #: personal/environment/logonManagement.tpl:17
 msgid "Description"
@@ -1518,6 +1520,7 @@ msgstr "Wählen Sie eine Objektgruppe als Vorlageobjekt"
 #: admin/systems/goto/ArpNewDevice.tpl:61
 #: admin/systems/goto/SelectDeviceType.tpl:37
 #: addons/goto/goto_import_file.tpl:40
+#: addons/goto/events/eventTargetSystems-list.xml:39
 msgid "Object group"
 msgstr "Objektgruppe"
 
@@ -3355,12 +3358,10 @@ msgid "Show workstations"
 msgstr "Zeige Arbeitsstationen"
 
 #: addons/goto/events/eventTargetSystems-filter.tpl:13
-#, fuzzy
 msgid "Show terminals"
-msgstr "Terminals"
+msgstr "Zeige Terminals"
 
 #: addons/goto/events/eventTargetSystems-filter.tpl:14
-#, fuzzy
 msgid "Filter by IP address range"
 msgstr "IP-Bereichsfilter"
 
@@ -3379,35 +3380,20 @@ msgid "From"
 msgstr "Von"
 
 #: addons/goto/events/eventTargetUser-filter.tpl:11
-#, fuzzy
 msgid "Show groups"
-msgstr "Zeige Mail Gruppen"
+msgstr "Zeige Gruppen"
 
 #: addons/goto/events/eventTargetUser-filter.tpl:12
-#, fuzzy
 msgid "Show users"
-msgstr "Zeige Server"
+msgstr "Zeige Benutzer"
 
 #: addons/goto/events/eventTargetSystems-list.xml:11
-#, fuzzy
 msgid "List of systems"
-msgstr "Liste der Benutzer"
-
-#: addons/goto/events/eventTargetSystems-list.xml:39
-#, fuzzy
-msgid "Object Group"
-msgstr "Objektgruppe"
-
-#: addons/goto/events/eventTargetSystems-list.xml:73
-#: addons/goto/events/eventTargetUser-list.xml:57
-#, fuzzy
-msgid "Description name"
-msgstr "Beschreibung"
+msgstr "Liste der Systeme"
 
 #: addons/goto/events/eventTargetSystems-list.xml:89
-#, fuzzy
 msgid "Mac"
-msgstr "März"
+msgstr "MAC"
 
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
@@ -3774,183 +3760,3 @@ msgstr "Zeige die Benutzer, auf die Folgendes passt"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Regulärer Ausdruck zum Erkennen von Hotplug-Geräten"
-
-#~ msgid "Select the target objects for your scheduled action."
-#~ msgstr "Wählen Sie die Zielobjekte für den geplanten Vorgang."
-
-#~ msgid "Available targets"
-#~ msgstr "Verfügbare Ziele"
-
-#~ msgid "Object name"
-#~ msgstr "Objektname"
-
-#~ msgid "Select to see object groups"
-#~ msgstr "Auswählen um Objektgruppen zu sehen"
-
-#~ msgid "Show object groups"
-#~ msgstr "Zeige Objektgruppen"
-
-#~ msgid "Select to see servers"
-#~ msgstr "Wählen um Server anzuzeigen"
-
-#~ msgid "Select to see workstations"
-#~ msgstr "Auswählen um Arbeitsstationen zu sehen"
-
-#~ msgid "Select to see incoming objects"
-#~ msgstr "Auswählen um neue Objekte zu sehen"
-
-#~ msgid "Show new objects"
-#~ msgstr "Zeige neue Objekte"
-
-#~ msgid "Select to search for a specific IP range only"
-#~ msgstr "Auswählen um nur in einem bestimmten IP-Bereich zu suchen"
-
-#~ msgid "Match IP range"
-#~ msgstr "IP-Bereich"
-
-#~ msgid "Regular expression for matching group names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Gruppennamen"
-
-#~ msgid "IP range start"
-#~ msgstr "Beginn des IP-Bereichs"
-
-#~ msgid "IP range end"
-#~ msgstr "Ende des IP-Bereichs"
-
-#~ msgid "Submit department"
-#~ msgstr "Aktualisieren"
-
-#~ msgid "IP range"
-#~ msgstr "IP-Bereich"
-
-#~ msgid "Targets"
-#~ msgstr "Ziele"
-
-#~ msgid ""
-#~ "This dialog shows all available targets for the event. Check the targets "
-#~ "you want to add and use the 'Apply' button."
-#~ msgstr ""
-#~ "Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie "
-#~ "die zu verwendenden Ziele und drücken Sie auf den Knopf 'Anwenden' um die "
-#~ "Auswahl zu übernehmen."
-
-#~ msgid "System / Department"
-#~ msgstr "System / Abteilung"
-
-#~ msgid "Display server"
-#~ msgstr "Zeige Server"
-
-#~ msgid "Display workstation"
-#~ msgstr "Zeige Arbeitsstation"
-
-#~ msgid "Display object groups"
-#~ msgstr "Zeige die Objektgruppen, auf die Folgendes passt"
-
-#~ msgid ""
-#~ "This dialog shows all available targets for your event, check the targets "
-#~ "you want to add and use the 'Use' button to accept."
-#~ msgstr ""
-#~ "Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie "
-#~ "die zu verwendenden Ziele und drücken Sie auf den Knopf 'Verwenden' um "
-#~ "die Auswahl zu übernehmen."
-
-#~ msgid "Display users"
-#~ msgstr "Zeige Benutzer"
-
-#~ msgid "Display groups"
-#~ msgstr "Zeige Gruppen"
-
-#~ msgid "List of defined devices"
-#~ msgstr "Liste der definierten Geräte"
-
-#~ msgid "Select all"
-#~ msgstr "Alle auswählen"
-
-#~ msgid "Department"
-#~ msgstr "Abteilung"
-
-#~ msgid "Display devices matching"
-#~ msgstr "Zeige die Geräte, auf die das Folgende passt"
-
-#~ msgid "edit"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Diesen Eintrag bearbeiten"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Diesen Eintrag entfernen"
-
-#~ msgid "Number of listed devices"
-#~ msgstr "Anzahl der angezeigten Geräte"
-
-#~ msgid "Number of listed departments"
-#~ msgstr "Anzahl der angezeigten Abteilungen"
-
-#~ msgid ""
-#~ "This may be used by several users/groups. Please double check if your "
-#~ "really want to do this since there is no way for GOsa to get your data "
-#~ "back."
-#~ msgstr ""
-#~ "Dies wird unter Umständen von verschiedenen Benutzern/Gruppen genutzt. "
-#~ "Bitte prüfen Sie genau, ob Sie dies wünschen, da GOsa keine Möglichkeit "
-#~ "hat, die Daten wiederherzustellen."
-
-#~ msgid "Manage hotplug devices"
-#~ msgstr "Hotplug-Geräte verwalten"
-
-#~ msgid "device"
-#~ msgstr "Gerät"
-
-#~ msgid ""
-#~ "This may be used by several groups. Please double check if your really "
-#~ "want to do this since there is no way for GOsa to get your data back."
-#~ msgstr ""
-#~ "Dieser Eintrag wird unter Umständen von verschiedenen Gruppen genutzt. "
-#~ "Bitte überprüfen Sie genau was Sie tun, da GOsa keine Möglichkeit hat, "
-#~ "die Daten wiederherzustellen."
-
-#~ msgid "This table displays all applications in the selected tree."
-#~ msgstr "Diese Tabelle enthält alle Abteilungen des gewählten Teilbaums"
-
-#~ msgid "Freezed"
-#~ msgstr "Eingefroren"
-
-#~ msgid "Number of listed applications"
-#~ msgstr "Anzahl der angezeigten Anwendungen"
-
-#~ msgid "Display mime types matching"
-#~ msgstr "Zeige MIME-Typen, auf die Folgendes passt"
-
-#~ msgid "Number of listed mimetypes"
-#~ msgstr "Anzahl der angezeigten MIME-Typen"
-
-#~ msgid "Mimetype management"
-#~ msgstr "MIME-Typen Verwaltung"
-
-#~ msgid "Syslog Service"
-#~ msgstr "Protokoll-Dienst"
-
-#~ msgid "Logging service"
-#~ msgstr "Protokoll-Dienst"
-
-#~ msgid "Syslog service database"
-#~ msgstr "Protokoll-Dienst Datenbank"
-
-#~ msgid "Password"
-#~ msgstr "Passwort"
-
-#~ msgid "Database"
-#~ msgstr "Datenbank"
-
-#~ msgid "Logging database"
-#~ msgstr "Protokoll-Datenbank"
-
-#~ msgid "Admin"
-#~ msgstr "Administrator"
-
-#~ msgid "Logging database information"
-#~ msgstr "Informationen der Protokoll-Datenbank"
-
-#~ msgid "Logging DB user"
-#~ msgstr "Protokoll-DB Benutzer"

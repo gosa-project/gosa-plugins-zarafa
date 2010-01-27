@@ -36,7 +36,7 @@
     </objectType>
 
     <objectType>
-      <label>Object Group</label>
+      <label>Object group</label>
       <objectClass>gosaGroupOfNames</objectClass>
       <category>ogroups</category>
       <class>ogroup</class>
@@ -70,7 +70,7 @@
     </column>
 
     <column>
-      <label>Description name</label>
+      <label>Description</label>
       <sortAttribute>description</sortAttribute>
       <sortType>string</sortType>
       <value>%{description}</value>

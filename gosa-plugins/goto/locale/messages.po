@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-27 17:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -577,6 +577,8 @@ msgstr ""
 #: admin/systems/goto/class_terminalGeneric.inc:699
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
 #: addons/goto/class_gotomasses.inc:932
+#: addons/goto/events/eventTargetSystems-list.xml:73
+#: addons/goto/events/eventTargetUser-list.xml:57
 #: personal/environment/class_logonManagementDialog.inc:111
 #: personal/environment/logonManagement.tpl:17
 msgid "Description"
@@ -1493,6 +1495,7 @@ msgstr ""
 #: admin/systems/goto/ArpNewDevice.tpl:61
 #: admin/systems/goto/SelectDeviceType.tpl:37
 #: addons/goto/goto_import_file.tpl:40
+#: addons/goto/events/eventTargetSystems-list.xml:39
 msgid "Object group"
 msgstr ""
 
@@ -3297,15 +3300,6 @@ msgstr ""
 
 #: addons/goto/events/eventTargetSystems-list.xml:11
 msgid "List of systems"
-msgstr ""
-
-#: addons/goto/events/eventTargetSystems-list.xml:39
-msgid "Object Group"
-msgstr ""
-
-#: addons/goto/events/eventTargetSystems-list.xml:73
-#: addons/goto/events/eventTargetUser-list.xml:57
-msgid "Description name"
 msgstr ""
 
 #: addons/goto/events/eventTargetSystems-list.xml:89

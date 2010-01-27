@@ -1643,12 +1643,10 @@ msgstr ""
 "Auswahlmöglichkeiten entsprechen."
 
 #: admin/systems/services/repository/repository-list.xml:10
-#, fuzzy
 msgid "List of repositories"
-msgstr "Liste der konfigurierten Repositorien"
+msgstr "Liste der Repositorien"
 
 #: admin/systems/services/repository/repository-list.xml:14
-#, fuzzy
 msgid "Service"
 msgstr "Dienste"
 

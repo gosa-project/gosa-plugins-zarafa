@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-27 17:05+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -603,6 +603,8 @@ msgstr "Urządzenie"
 #: admin/systems/goto/class_terminalGeneric.inc:699
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
 #: addons/goto/class_gotomasses.inc:932
+#: addons/goto/events/eventTargetSystems-list.xml:73
+#: addons/goto/events/eventTargetUser-list.xml:57
 #: personal/environment/class_logonManagementDialog.inc:111
 #: personal/environment/logonManagement.tpl:17
 msgid "Description"
@@ -1573,6 +1575,7 @@ msgstr "Wybierz grupę obiektową jako szablon"
 #: admin/systems/goto/ArpNewDevice.tpl:61
 #: admin/systems/goto/SelectDeviceType.tpl:37
 #: addons/goto/goto_import_file.tpl:40
+#: addons/goto/events/eventTargetSystems-list.xml:39
 msgid "Object group"
 msgstr "Grupa obiektu"
 
@@ -3535,17 +3538,6 @@ msgstr "Pokaż serwery"
 msgid "List of systems"
 msgstr "Lista użytkowników"
 
-#: addons/goto/events/eventTargetSystems-list.xml:39
-#, fuzzy
-msgid "Object Group"
-msgstr "Grupa obiektu"
-
-#: addons/goto/events/eventTargetSystems-list.xml:73
-#: addons/goto/events/eventTargetUser-list.xml:57
-#, fuzzy
-msgid "Description name"
-msgstr "Opis"
-
 #: addons/goto/events/eventTargetSystems-list.xml:89
 #, fuzzy
 msgid "Mac"
@@ -3921,6 +3913,14 @@ msgstr "Wyświetl użytkowników pasujących"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Wyrażenie regularne dla dopasowania hotplug"
+
+#, fuzzy
+#~ msgid "Description name"
+#~ msgstr "Opis"
+
+#, fuzzy
+#~ msgid "Object Group"
+#~ msgstr "Grupa obiektu"
 
 #, fuzzy
 #~ msgid "Available targets"
