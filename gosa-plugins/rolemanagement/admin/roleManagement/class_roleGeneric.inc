@@ -140,10 +140,10 @@ class roleGeneric extends plugin {
      * Dialog handling
      ***************/
 
-    if(isset($_POST['edit_membership']) && !$this->dialog instanceOf plugin){
-      $this->dialog = new occupantSelect($this->config,$this->dn,$this);
+    if(isset($_POST['edit_membership']) && !$this->dialog instanceOf userSelect){
+      $this->dialog = new userSelect($this->config,get_userinfo());
     }
-    if(isset($_POST['delete_membership']) && !$this->dialog instanceOf plugin){
+    if(isset($_POST['delete_membership']) && !$this->dialog instanceOf userSelect){
       if(isset($_POST['members'])){
         foreach($_POST['members'] as $id){
           if(isset($this->roleOccupant[$id])){
@@ -154,21 +154,26 @@ class roleGeneric extends plugin {
       }
     }
 
-    if(isset($_POST['add_object_cancel']) && $this->dialog instanceOf plugin){
+    if(isset($_POST['add_users_cancel']) && $this->dialog instanceOf userSelect){
       $this->dialog = NULL;
     }
-    if(isset($_POST['add_object_finish']) && $this->dialog instanceOf plugin){
-      $ret = $this->dialog->save();
-      foreach($ret as $key => $entry){
-        $this->roleOccupant[] = $entry['dn'];
-        $this->roleOccCache[$entry['dn']] = $entry['attrs'];
-      }
-      $this->reload();
-      $this->dialog = NULL;
+    if(isset($_POST['add_users_finish']) && $this->dialog instanceOf userSelect){
+      $users = $this->dialog->detectPostActions();
+      if(isset($users['targets'])){
+        $headpage = $this->dialog->getHeadpage();
+        foreach($users['targets'] as $dn){
+          $attrs = $headpage->getEntry($dn);
+          $this->roleOccupant[] = $dn;
+          $this->roleOccCache[$dn] = $attrs;
+        }
+      } 
+      $this->dialog= FALSE;
     }
 
-    if($this->dialog instanceOf plugin){
-      $this->dialog->save_object();
+    if($this->dialog instanceOf userSelect){
+
+      // Build up blocklist
+      session::set('filterBlacklist', array('dn' => $this->roleOccupant));
       return($this->dialog->execute());
     }
 
