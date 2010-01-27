@@ -102,10 +102,7 @@
       </select><br>
 {/render}
 {render acl=$gotoUserPrinterACL}
-      <input type="submit" value="{t}Add user{/t}"  name="AddUser">
-{/render}
-{render acl=$gotoUserPrinterACL}
-      <input type="submit" value="{t}Add group{/t}" name="AddGroup">
+      <input type="submit" value="{msgPool type=addButton}"  name="AddUser">
 {/render}
 {render acl=$gotoUserPrinterACL}
       <input type="submit" value="{msgPool type=delButton}" name="DelUser">
@@ -126,10 +123,7 @@
                    </select><br>
 {/render}
 {render acl=$gotoUserPrinterACL}
-       <input type="submit" value="{t}Add user{/t}"  name="AddAdminUser">
-{/render}
-{render acl=$gotoUserPrinterACL}
-       <input type="submit" value="{t}Add group{/t}" name="AddAdminGroup">
+       <input type="submit" value="{msgPool type=addButton}"  name="AddAdminUser">
 {/render}
 {render acl=$gotoUserPrinterACL}
        <input type="submit" value="{msgPool type=delButton}" name="DelAdmin">

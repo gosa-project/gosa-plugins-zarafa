@@ -49,6 +49,11 @@ class printgeneric extends plugin
   var $view_logged    = FALSE;
   var $parent;
 
+
+  // Memeber dialog object
+  var $userSelect;
+  var $adminUserSelect;
+
   function printgeneric (&$config, $dn,$parent_init,$parent)
   {
     $this->config = &$config;
@@ -530,24 +535,40 @@ class printgeneric extends plugin
       $users = array();
       if($this->userSelect instanceOf userGroupSelect){
         $users = $this->userSelect->save();
+        $add = '';
       }elseif($this->adminUserSelect instanceOf userGroupSelect){
         $users = $this->adminUserSelect->save();
+        $add = 'Admin';
       }
       foreach($users as $user){
-        print_a($user);
-#       foreach($data as $mem){
-#         $this->AddMember($new['type'], $mem['dn']);
-#       }
+        if(in_array('gosaAccount', $user['objectClass'])){
+          $type = 'Add'.$add.'User';  
+        }else{
+          $type = 'Add'.$add.'Group';  
+        }
+        $this->AddMember($type, $user['dn']);
       }
       $this->dialog=FALSE;
       $this->userSelect = NULL;
       $this->adminUserSelect = NULL;
     }
 
-    if($this->userSelect instanceOf userGroupSelect){
-      return($this->userSelect->execute());
-    }elseif($this->adminUserSelect instanceOf userGroupSelect){
-      return($this->adminUserSelect->execute());
+    // Display add user/group dialogs 
+    if($this->userSelect instanceOf userGroupSelect || $this->adminUserSelect instanceOf userGroupSelect){
+
+      // Build up blocklist
+      $used = array();
+      foreach($this->member as $type => $members){
+        foreach($members as $member){
+          $used['dn'][] = $member['dn'];
+        }
+      }
+      session::set('filterBlacklist', $used);
+      if($this->userSelect instanceOf userGroupSelect){
+        return($this->userSelect->execute());
+      }elseif($this->adminUserSelect instanceOf userGroupSelect){
+        return($this->adminUserSelect->execute());
+      }
     }
 
 
