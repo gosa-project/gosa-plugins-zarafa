@@ -856,6 +856,9 @@ class environment extends plugin
     }
 
     if($this->dialog instanceOf hotplugSelect){
+    
+      // Build up blocklist
+      session::set('filterBlacklist', array('cn' => array_keys($this->gotoHotplugDevices)));
       return($this->dialog->execute());
     }
 
