@@ -29,7 +29,7 @@ class gofaxAccount extends plugin
   /* Internal variables */
   var $printerList= array();
   var $has_mailAccount= FALSE;
-  var $locals_dialog= FALSE;
+  var $faxNumberSelect= FALSE;
   var $in_blocklist_dialog= FALSE;
   var $out_blocklist_dialog= FALSE;
   var $current_blocklist= array();
@@ -184,19 +184,35 @@ class gofaxAccount extends plugin
     /* Trigger Add local fax alternatives dialog */
     if (isset($_POST['add_local_alternate'])){
       if($this->acl_is_writeable("facsimileAlternateTelephoneNumber",$edit_mode)){
-        $this->locals_dialog= TRUE;	
+        $this->faxNumberSelect = new faxNumberSelect($this->config, get_userinfo());
         $this->dialog= TRUE;	
       }
     }
 
+    if (isset($_POST['faxNumberSelect_cancel']) && $this->faxNumberSelect instanceOf faxNumberSelect){
+      $this->dialog = $this->faxNumberSelect = FALSE;
+    }
+
     /* Add alternatives from dialog */
-    if (isset($_POST['add_locals_finish']) && isset($_POST['local_list'])){
+    if (isset($_POST['faxNumberSelect_save']) && $this->faxNumberSelect instanceOf faxNumberSelect){
       if($this->acl_is_writeable("facsimileAlternateTelephoneNumber",$edit_mode)){
-        foreach ($_POST['local_list'] as $val){
-          $this->addAlternate($val);
+
+        $entries = $this->faxNumberSelect->save();
+        foreach ($entries as $entry){
+          $this->addAlternate($entry['facsimileTelephoneNumber'][0]);
           $this->is_modified= TRUE;
         }
       }
+      $this->dialog = $this->faxNumberSelect = FALSE;
+    }
+
+    if ($this->faxNumberSelect){
+
+      // Build up blocklist
+      $list = $this->facsimileAlternateTelephoneNumber;
+      $list[] = $this->facsimileTelephoneNumber;
+      session::set('filterBlacklist', array('facsimileTelephoneNumber' => $list));
+      return($this->faxNumberSelect->execute());
     }
 
     /* Add alternatives */
@@ -318,7 +334,7 @@ class gofaxAccount extends plugin
 
 
     /* Set departments */
-    if ($this->locals_dialog || $this->in_blocklist_dialog || $this->out_blocklist_dialog){
+    if ( $this->in_blocklist_dialog || $this->out_blocklist_dialog){
       
       $list= array ();
       $ldap= $this->config->get_ldap_link();
@@ -330,77 +346,15 @@ class gofaxAccount extends plugin
     }
 
     /* Cancel  dialogs */
-    if (isset($_POST['add_locals_cancel']) || isset($_POST['edit_blocklists_finish']) ||
-        isset($_POST['edit_blocklists_cancel']) || isset($_POST['add_locals_finish'])){
-
-      $this->locals_dialog= FALSE;
+    if (isset($_POST['edit_blocklists_finish']) || isset($_POST['edit_blocklists_cancel'])){
       $this->in_blocklist_dialog= FALSE;
       $this->out_blocklist_dialog= FALSE;
       $this->dialog= FALSE;
     }
 
     /* Manage locals dialog */
-    if ($this->locals_dialog){
-
-      /* Save data */
-      $faxfilter= session::get("faxfilter");
-      foreach( array("depselect", "fuser", "regex") as $type){
-        if (isset($_POST[$type])){
-          $faxfilter[$type]= $_POST[$type];
-        }
-      }
-      if (isset($_GET['search'])){
-        $s= mb_substr($_GET['search'], 0, 1, "UTF8")."*";
-        if ($s == "**"){
-          $s= "*";
-        }
-        $faxfilter['fuser']= $s;
-      }
-
-      if ($faxfilter['regex'] != '*' && $faxfilter['regex'] != ""){
-        $regex= $faxfilter['regex'];
-        $filter= "(facimileTelephoneNumber=$regex)";
-      } else {
-        $filter= "";
-      }
-      if ($faxfilter['fuser'] != ""){
-        $user= $faxfilter['fuser'];
-        $filter= "$filter(|(uid=$user)(cn=$user)(givenName=$user)(sn=$user))";
-      }
-
-      $base= $faxfilter['depselect'];
-      $res= get_list("(&(objectClass=goFaxAccount)$filter)", "gofax", $base, 
-                     array("sn", "givenName", "facsimileTelephoneNumber"), GL_SIZELIMIT | GL_SUBSEARCH);
-
-      foreach ($res as $attrs){
-        $list[$attrs['facsimileTelephoneNumber'][0]]=
-          $attrs['sn'][0].", ".
-          $attrs['givenName'][0]." [".
-          $attrs['facsimileTelephoneNumber'][0]."]";
-      }
-
-      /* Show dialog */
-      $smarty->assign("search_image", get_template_path('images/lists/search.png'));
-      $smarty->assign("usearch_image", get_template_path('images/lists/search-user.png'));
-      $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
-      $smarty->assign("infoimage", get_template_path('images/info.png'));
-      $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
-      $smarty->assign("departments", $this->config->idepartments);
-      $smarty->assign("list", $list);
-      if (isset($_POST['depselect'])){
-        $smarty->assign("depselect", $_POST['depselect']);
-      }
-      $smarty->assign("deplist", $this->config->idepartments);
-      $smarty->assign("apply", apply_filter());
-      $smarty->assign("alphabet", generate_alphabet());
-      $smarty->assign("hint", print_sizelimit_warning());
-      foreach( array("depselect", "fuser", "regex") as $type){
-        $smarty->assign("$type", $faxfilter[$type]);
-      }
-      $smarty->assign("hint", print_sizelimit_warning());
-
-      $display.= $smarty->fetch (get_template_path('locals.tpl', TRUE, dirname(__FILE__)));
-      return ($display);
+    if ($this->faxNumberSelect){
+      return($this->faxNumberSelect->execute());
     }
 
 

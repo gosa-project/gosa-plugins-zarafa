@@ -46,6 +46,19 @@ class faxNumberSelect extends management
     $headpage->setFilter($filter);
     parent::__construct($config, $ui, "users", $headpage);
   }
+
+  function save()
+  {
+    $act = $this->detectPostActions();
+    $headpage = $this->getHeadpage();
+    if(!isset($act['targets'])) return(array());
+    $ret = array();
+    foreach($act['targets'] as $dn){
+      $ret[] = $headpage->getEntry($dn);
+    }
+    return($ret);
+  }
+
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

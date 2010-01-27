@@ -21,7 +21,7 @@
   </definition>
 
   <table>
-    <layout>|20px;c|||</layout>
+    <layout>|20px;c||||</layout>
 
     <department>
       <value>%{filter:objectType(dn,objectClass)}</value>
@@ -29,7 +29,7 @@
 
     <department>
       <value>%{filter:departmentLink(row,dn,description)}</value>
-      <span>1</span>
+      <span>2</span>
     </department>
 
     <column>
@@ -49,6 +49,14 @@
       <sortAttribute>sn</sortAttribute>
       <sortType>string</sortType>
       <value>%{sn}</value>
+      <export>true</export>
+    </column>
+
+    <column>
+      <label>Fax</label>
+      <sortAttribute>facsimileTelephoneNumber</sortAttribute>
+      <sortType>string</sortType>
+      <value>%{facsimileTelephoneNumber}</value>
       <export>true</export>
     </column>
 
