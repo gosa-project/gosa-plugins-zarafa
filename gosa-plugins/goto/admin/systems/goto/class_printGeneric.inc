@@ -415,17 +415,14 @@ class printgeneric extends plugin
       $smarty->assign("$attr", $this->$attr);
     }
 
+    // Act on add user/grouo requests 
     if(isset($_POST['AddUser'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddUser",$this->member);
-    }
-    if(isset($_POST['AddGroup'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddGroup",$this->member);
+      $this->userSelect = new userGroupSelect($this->config, get_userinfo());
+      $this->dialog = TRUE;
     }
     if(isset($_POST['AddAdminUser'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddAdminUser",$this->member);
-    }
-    if(isset($_POST['AddAdminGroup'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddAdminGroup",$this->member);
+      $this->adminUserSelect = new userGroupSelect($this->config, get_userinfo());
+      $this->dialog = TRUE;
     }
 
     /* Display ppd configure/select dialog      */
@@ -528,22 +525,33 @@ class printgeneric extends plugin
     }
 
     /* Save selected users / groups */
-    if(isset($_POST['PrinterSave'])){
-      $this->dialog->save_object();
-      if(count($this->dialog->check())){
-        foreach($this->dialog->check() as $msg){
-          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
-        }
-      }else{
-        $data= $new = $this->dialog->save();
-        unset($data['type']);
-        foreach($data as $mem){
-          $this->AddMember($new['type'], $mem['dn']);
-        }
-        unset($this->dialog);
-        $this->dialog=FALSE;
+    if(isset($_POST['userGroupSelect_save'])){
+
+      $users = array();
+      if($this->userSelect instanceOf userGroupSelect){
+        $users = $this->userSelect->save();
+      }elseif($this->adminUserSelect instanceOf userGroupSelect){
+        $users = $this->adminUserSelect->save();
       }
+      
+      foreach($users as $user){
+
+        print_a($user);
+#       foreach($data as $mem){
+#         $this->AddMember($new['type'], $mem['dn']);
+#       }
+      }
+      $this->dialog=FALSE;
+      $this->userSelect = NULL;
+      $this->adminUserSelect = NULL;
     }
+
+    if($this->userSelect instanceOf userGroupSelect){
+      return($this->userSelect->execute());
+    }elseif($this->adminUserSelect instanceOf userGroupSelect){
+      return($this->adminUserSelect->execute());
+    }
+
 
     /* Display dialog, if there is currently one open*/
     if(is_object($this->dialog)){
