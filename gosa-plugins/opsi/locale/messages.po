@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
+"POT-Creation-Date: 2010-01-27 15:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,8 +38,8 @@ msgid "Retry"
 msgstr ""
 
 #: admin/opsi/generic.tpl:18 admin/opsi/generic.tpl:37
-#: admin/opsi/class_opsigeneric.inc:226 admin/opsi/class_opsigeneric.inc:231
-#: admin/opsi/class_opsigeneric.inc:234 admin/opsi/class_opsigeneric.inc:748
+#: admin/opsi/class_opsigeneric.inc:224 admin/opsi/class_opsigeneric.inc:229
+#: admin/opsi/class_opsigeneric.inc:232 admin/opsi/class_opsigeneric.inc:746
 #: admin/opsiLicenses/class_licenseGeneric.inc:232
 #: admin/opsiLicenses/class_licenseGeneric.inc:278
 #: admin/opsiLicenses/opsiLicense-list.xml:41
@@ -50,11 +50,11 @@ msgid "Name"
 msgstr ""
 
 #: admin/opsi/generic.tpl:27 admin/opsi/generic.tpl:46
-#: admin/opsi/class_opsigeneric.inc:240 admin/opsi/class_opsigeneric.inc:749
+#: admin/opsi/class_opsigeneric.inc:238 admin/opsi/class_opsigeneric.inc:747
 msgid "MAC address"
 msgstr ""
 
-#: admin/opsi/generic.tpl:56 admin/opsi/class_opsigeneric.inc:752
+#: admin/opsi/generic.tpl:56 admin/opsi/class_opsigeneric.inc:750
 msgid "Netboot product"
 msgstr ""
 
@@ -62,7 +62,7 @@ msgstr ""
 msgid "Configure product"
 msgstr ""
 
-#: admin/opsi/generic.tpl:80 admin/opsi/class_opsigeneric.inc:750
+#: admin/opsi/generic.tpl:80 admin/opsi/class_opsigeneric.inc:748
 #: admin/opsiLicenses/class_licenseGeneric.inc:279
 #: admin/opsiLicenses/opsiLicense-list.xml:49
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:528
@@ -83,7 +83,7 @@ msgstr ""
 msgid "Available products"
 msgstr ""
 
-#: admin/opsi/generic.tpl:120 admin/opsi/class_opsigeneric.inc:754
+#: admin/opsi/generic.tpl:120 admin/opsi/class_opsigeneric.inc:752
 msgid "Action"
 msgstr ""
 
@@ -103,7 +103,7 @@ msgstr ""
 msgid "Execute"
 msgstr ""
 
-#: admin/opsi/class_opsi.inc:75 admin/opsi/class_opsigeneric.inc:744
+#: admin/opsi/class_opsi.inc:75 admin/opsi/class_opsigeneric.inc:742
 msgid "Opsi"
 msgstr ""
 
@@ -116,21 +116,21 @@ msgstr ""
 msgid "Service infrastructure"
 msgstr ""
 
-#: admin/opsi/class_opsigeneric.inc:232
+#: admin/opsi/class_opsigeneric.inc:230
 msgid "The field 'Name' must contain a domain part!"
 msgstr ""
 
-#: admin/opsi/class_opsigeneric.inc:280 admin/opsi/class_opsigeneric.inc:281
-#: admin/opsi/class_opsigeneric.inc:283 admin/opsi/class_opsigeneric.inc:284
+#: admin/opsi/class_opsigeneric.inc:278 admin/opsi/class_opsigeneric.inc:279
+#: admin/opsi/class_opsigeneric.inc:281 admin/opsi/class_opsigeneric.inc:282
 msgid "OPSI"
 msgstr ""
 
-#: admin/opsi/class_opsigeneric.inc:401 admin/opsi/class_opsigeneric.inc:414
-#: admin/opsi/class_opsigeneric.inc:438 admin/opsi/class_opsigeneric.inc:449
-#: admin/opsi/class_opsigeneric.inc:455 admin/opsi/class_opsigeneric.inc:472
-#: admin/opsi/class_opsigeneric.inc:490 admin/opsi/class_opsigeneric.inc:496
-#: admin/opsi/class_opsigeneric.inc:525 admin/opsi/class_opsigeneric.inc:565
-#: admin/opsi/class_opsigeneric.inc:712
+#: admin/opsi/class_opsigeneric.inc:399 admin/opsi/class_opsigeneric.inc:412
+#: admin/opsi/class_opsigeneric.inc:436 admin/opsi/class_opsigeneric.inc:447
+#: admin/opsi/class_opsigeneric.inc:453 admin/opsi/class_opsigeneric.inc:470
+#: admin/opsi/class_opsigeneric.inc:488 admin/opsi/class_opsigeneric.inc:494
+#: admin/opsi/class_opsigeneric.inc:523 admin/opsi/class_opsigeneric.inc:563
+#: admin/opsi/class_opsigeneric.inc:710
 #: admin/opsiLicenses/class_licenseUsage.inc:61
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:65
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:74
@@ -150,21 +150,21 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: admin/opsi/class_opsigeneric.inc:738
+#: admin/opsi/class_opsigeneric.inc:736
 #: admin/opsiLicenses/class_licenseGeneric.inc:270
 #: admin/opsiLicenses/licensePoolGeneric.tpl:15
 msgid "Generic"
 msgstr ""
 
-#: admin/opsi/class_opsigeneric.inc:739
+#: admin/opsi/class_opsigeneric.inc:737
 msgid "OPSI generic"
 msgstr ""
 
-#: admin/opsi/class_opsigeneric.inc:751
+#: admin/opsi/class_opsigeneric.inc:749
 msgid "Note"
 msgstr ""
 
-#: admin/opsi/class_opsigeneric.inc:753
+#: admin/opsi/class_opsigeneric.inc:751
 msgid "Local product"
 msgstr ""
 

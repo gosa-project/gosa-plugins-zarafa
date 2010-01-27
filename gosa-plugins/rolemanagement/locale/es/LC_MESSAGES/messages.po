@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 17:43+0200\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2010-01-20 00:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -18,36 +18,20 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin/roleManagement/class_roleManagement.inc:26
-#: admin/roleManagement/class_roleGeneric.inc:335
-#: admin/roleManagement/main.inc:53
+#: admin/roleManagement/class_roleManagement.inc:25
+#: admin/roleManagement/class_roleGeneric.inc:401
 msgid "Roles"
 msgstr "Roles"
 
-#: admin/roleManagement/class_roleManagement.inc:27
-msgid "Manage roles"
-msgstr "Administrar roles"
-
-#: admin/roleManagement/class_roleManagement.inc:137
-msgid "Permission"
-msgstr "Permiso"
-
-#: admin/roleManagement/class_roleManagement.inc:153
-#: admin/roleManagement/class_divListRole.inc:70
-#: admin/roleManagement/class_divListRole.inc:127
-#: admin/roleManagement/class_divListRole.inc:207
-msgid "Role"
-msgstr "Rol"
-
-#: admin/roleManagement/class_roleManagement.inc:187
-msgid "Permission error"
-msgstr "Error de Permisos"
+#: admin/roleManagement/class_roleManagement.inc:26
+msgid "Role management"
+msgstr "Administración de roles"
 
 #: admin/roleManagement/remove.tpl:2
 msgid "Warning"
 msgstr "Aviso"
 
-#: admin/roleManagement/remove.tpl:7
+#: admin/roleManagement/remove.tpl:6
 msgid ""
 "Please double check if you really want to do this since there is no way for "
 "GOsa to get your data back."
@@ -61,121 +45,113 @@ msgstr ""
 "Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
 "<i>Cancelar</i> para Abortar."
 
-#: admin/roleManagement/class_roleGeneric.inc:201
-#: admin/roleManagement/class_roleGeneric.inc:210
-#: admin/roleManagement/class_roleGeneric.inc:338
+#: admin/roleManagement/class_roleGeneric.inc:220
+#: admin/roleManagement/class_roleGeneric.inc:229
+#: admin/roleManagement/class_roleGeneric.inc:404
+#: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Nombre"
 
-#: admin/roleManagement/class_roleGeneric.inc:231
+#: admin/roleManagement/class_roleGeneric.inc:250
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: admin/roleManagement/class_roleGeneric.inc:249
-#: admin/roleManagement/class_roleGeneric.inc:283
+#: admin/roleManagement/class_roleGeneric.inc:268
+#: admin/roleManagement/class_roleGeneric.inc:310
 msgid "LDAP error"
 msgstr "Error LDAP"
 
-#: admin/roleManagement/class_roleGeneric.inc:329
+#: admin/roleManagement/class_roleGeneric.inc:395
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Genérico"
 
-#: admin/roleManagement/class_roleGeneric.inc:330
+#: admin/roleManagement/class_roleGeneric.inc:396
 msgid "Role generic"
 msgstr "Rol genérico"
 
-#: admin/roleManagement/class_roleGeneric.inc:339
+#: admin/roleManagement/class_roleGeneric.inc:405
+#: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Descripción"
 
-#: admin/roleManagement/class_roleGeneric.inc:340
-#: admin/roleManagement/class_divListRole.inc:114
+#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/role-list.tpl:13
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Base"
 
-#: admin/roleManagement/class_roleGeneric.inc:341
+#: admin/roleManagement/class_roleGeneric.inc:407
 msgid "Telefon number"
 msgstr "Número de teléfono"
 
-#: admin/roleManagement/class_roleGeneric.inc:342
+#: admin/roleManagement/class_roleGeneric.inc:408
 #: admin/roleManagement/roleGeneric.tpl:56
 msgid "Fax number"
 msgstr "Número de Fax"
 
-#: admin/roleManagement/class_roleGeneric.inc:343
+#: admin/roleManagement/class_roleGeneric.inc:409
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr "Ocupantes"
 
-#: admin/roleManagement/class_divListRole.inc:52
-#: admin/roleManagement/class_divListRole.inc:53
+#: admin/roleManagement/role-list.xml:11
 msgid "List of roles"
 msgstr "Lista de roles"
 
-#: admin/roleManagement/class_divListRole.inc:64
-msgid "Select all"
-msgstr "Seleccione todos"
+#: admin/roleManagement/role-list.xml:15 admin/roleManagement/role-list.xml:74
+msgid "Role"
+msgstr "Rol"
 
-#: admin/roleManagement/class_divListRole.inc:70
-msgid "Department"
-msgstr "Departamento"
-
-#: admin/roleManagement/class_divListRole.inc:71
-#: admin/roleManagement/class_divListRole.inc:120
+#: admin/roleManagement/role-list.xml:57
 msgid "Actions"
 msgstr "Acciones"
 
-#: admin/roleManagement/class_divListRole.inc:80
-msgid "Regular expression for matching role names"
-msgstr "Expresión regular para buscar nombres de roles"
-
-#: admin/roleManagement/class_divListRole.inc:117
-msgid "Submit department"
-msgstr "Enviar departamento"
-
-#: admin/roleManagement/class_divListRole.inc:117
-msgid "Submit"
-msgstr "Enviar"
-
-#: admin/roleManagement/class_divListRole.inc:125
+#: admin/roleManagement/role-list.xml:68
 msgid "Create"
 msgstr "Crear"
 
-#: admin/roleManagement/class_divListRole.inc:133
+#: admin/roleManagement/role-list.xml:86
+msgid "Edit"
+msgstr "Editar"
+
+#: admin/roleManagement/role-list.xml:93
 msgid "Remove"
 msgstr "Eliminar"
 
-#: admin/roleManagement/class_divListRole.inc:171
-msgid "edit"
-msgstr "editar"
+#: admin/roleManagement/role-list.xml:125
+#, fuzzy
+msgid "Edit role"
+msgstr "Editar rol"
 
-#: admin/roleManagement/class_divListRole.inc:172
-msgid "Edit this entry"
-msgstr "Editar esta entrada"
+#: admin/roleManagement/role-list.xml:138
+#, fuzzy
+msgid "Remove role"
+msgstr "Eliminar usuario"
 
-#: admin/roleManagement/class_divListRole.inc:176
-msgid "delete"
-msgstr "eliminar"
+#: admin/roleManagement/role-list.tpl:13
+msgid "Update"
+msgstr "Actualizar"
 
-#: admin/roleManagement/class_divListRole.inc:177
-msgid "Delete this entry"
-msgstr "Eliminar esta entrada"
+#: admin/roleManagement/role-list.tpl:13
+msgid "Submit"
+msgstr "Enviar"
 
-#: admin/roleManagement/class_divListRole.inc:224
-msgid "Number of listed roles"
-msgstr "Número de roles mostrados"
+#: admin/roleManagement/paste_generic.tpl:4
+msgid "Role name"
+msgstr "Nombre del Rol"
 
-#: admin/roleManagement/class_divListRole.inc:225
-msgid "Number of listed departments"
-msgstr "Número de departamentos"
+#: admin/roleManagement/paste_generic.tpl:7
+#, fuzzy
+msgid "Please enter the new object role name"
+msgstr "Por favor introduzca un nuevo nombre del grupo de objetos"
 
-#: admin/roleManagement/main.inc:57
-msgid "Role management"
-msgstr "Administración de roles"
+#: admin/roleManagement/role-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "Filtros"
 
 #: admin/roleManagement/roleGeneric.tpl:34
 msgid "Choose subtree to place user in"
@@ -220,6 +196,45 @@ msgstr "Mostrar objetos que coincidan"
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr "Expresiones regulares para buscar nombre de objetos"
+
+#~ msgid "Manage roles"
+#~ msgstr "Administrar roles"
+
+#~ msgid "Permission"
+#~ msgstr "Permiso"
+
+#~ msgid "Permission error"
+#~ msgstr "Error de Permisos"
+
+#~ msgid "Select all"
+#~ msgstr "Seleccione todos"
+
+#~ msgid "Department"
+#~ msgstr "Departamento"
+
+#~ msgid "Regular expression for matching role names"
+#~ msgstr "Expresión regular para buscar nombres de roles"
+
+#~ msgid "Submit department"
+#~ msgstr "Enviar departamento"
+
+#~ msgid "edit"
+#~ msgstr "editar"
+
+#~ msgid "Edit this entry"
+#~ msgstr "Editar esta entrada"
+
+#~ msgid "delete"
+#~ msgstr "eliminar"
+
+#~ msgid "Delete this entry"
+#~ msgstr "Eliminar esta entrada"
+
+#~ msgid "Number of listed roles"
+#~ msgstr "Número de roles mostrados"
+
+#~ msgid "Number of listed departments"
+#~ msgstr "Número de departamentos"
 
 #, fuzzy
 #~ msgid "role"

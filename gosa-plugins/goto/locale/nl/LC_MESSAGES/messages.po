@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:12+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -413,6 +413,8 @@ msgstr "Programma instellingen"
 #: admin/systems/goto/class_terminalGeneric.inc:453
 #: admin/systems/goto/class_terminalGeneric.inc:472
 #: admin/systems/goto/class_terminalGeneric.inc:698
+#: addons/goto/events/eventTargetSystems-list.xml:65
+#: addons/goto/events/eventTargetUser-list.xml:49
 #: personal/environment/class_logonManagementDialog.inc:103
 msgid "Name"
 msgstr "Naam"
@@ -659,9 +661,9 @@ msgstr "Apparaten"
 #: admin/systems/goto/class_workstationGeneric.inc:711
 #: admin/systems/goto/class_terminalGeneric.inc:700
 #: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
-#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
-#: addons/goto/events/class_EventTargetAddList.inc:161
-#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+#: addons/goto/goto_import_file.tpl:41
+#: addons/goto/events/eventTargetSystems-list.tpl:13
+#: addons/goto/events/eventTargetUser-list.tpl:13
 msgid "Base"
 msgstr "Basis"
 
@@ -713,6 +715,8 @@ msgstr ""
 #: admin/applications/application-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter.tpl:3
+#: addons/goto/events/eventTargetSystems-filter.tpl:3
+#: addons/goto/events/eventTargetUser-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Filters"
@@ -763,7 +767,6 @@ msgstr "Serieel"
 #: admin/systems/goto/class_workstationStartup.inc:247
 #: admin/systems/goto/class_workstationStartup.inc:324
 #: admin/systems/goto/class_workstationStartup.inc:432
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
 #: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 #: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:528
 #: addons/goto/class_gotomasses.inc:670 addons/goto/class_gotomasses.inc:706
@@ -821,13 +824,15 @@ msgstr "Apparaat"
 #: admin/devices/device-list.tpl:13 admin/applications/generic.tpl:82
 #: admin/applications/application-list.tpl:13 admin/mimetypes/generic.tpl:84
 #: admin/mimetypes/mimetype-list.tpl:13
+#: addons/goto/events/eventTargetSystems-list.tpl:13
+#: addons/goto/events/eventTargetUser-list.tpl:13
 msgid "Update"
 msgstr "Bijwerken"
 
 #: admin/devices/device-list.tpl:13 admin/applications/application-list.tpl:13
-#: admin/mimetypes/mimetype-list.tpl:13 addons/goto/class_target_list.inc:154
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: admin/mimetypes/mimetype-list.tpl:13
+#: addons/goto/events/eventTargetSystems-list.tpl:13
+#: addons/goto/events/eventTargetUser-list.tpl:13
 msgid "Submit"
 msgstr "Verwerk"
 
@@ -1292,8 +1297,7 @@ msgstr ""
 #: admin/systems/services/nfs/servnfs.tpl:39
 #: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_SelectDeviceType.inc:38
-#: addons/goto/class_target_list.inc:201
-#: addons/goto/events/class_EventTargetAddList.inc:238
+#: addons/goto/events/eventTargetSystems-list.xml:15
 #: personal/environment/environment.tpl:135
 msgid "Server"
 msgstr "Server"
@@ -1605,8 +1609,7 @@ msgstr "Selecteer een objectgroep als sjabloon"
 
 #: admin/systems/goto/ArpNewDevice.tpl:61
 #: admin/systems/goto/SelectDeviceType.tpl:37
-#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
-#: addons/goto/events/class_EventTargetAddList.inc:259
+#: addons/goto/goto_import_file.tpl:40
 msgid "Object group"
 msgstr "Objectgroep"
 
@@ -1730,12 +1733,12 @@ msgstr "Printer URL"
 
 #: admin/systems/goto/class_printGeneric.inc:971
 #: admin/systems/goto/class_printGeneric.inc:973
-#: addons/goto/events/class_EventTargetAddUsersList.inc:173
+#: addons/goto/events/eventTargetUser-list.xml:23
 msgid "Group"
 msgstr "Groep"
 
 #: admin/systems/goto/class_printGeneric.inc:976
-#: addons/goto/events/class_EventTargetAddUsersList.inc:171
+#: addons/goto/events/eventTargetUser-list.xml:15
 msgid "User"
 msgstr "Gebruiker"
 
@@ -1908,8 +1911,7 @@ msgstr "Systeem informatie"
 #: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_workstationGeneric.inc:705
 #: admin/systems/goto/class_SelectDeviceType.inc:38
-#: addons/goto/class_target_list.inc:203
-#: addons/goto/events/class_EventTargetAddList.inc:249
+#: addons/goto/events/eventTargetSystems-list.xml:23
 msgid "Workstation"
 msgstr "Werkstation"
 
@@ -1917,6 +1919,7 @@ msgstr "Werkstation"
 #: admin/systems/goto/class_SelectDeviceType.inc:38
 #: admin/systems/goto/class_terminalGeneric.inc:689
 #: admin/systems/goto/class_terminalGeneric.inc:695
+#: addons/goto/events/eventTargetSystems-list.xml:31
 msgid "Terminal"
 msgstr "Terminal"
 
@@ -2993,86 +2996,6 @@ msgstr "Printer PPD selectie"
 msgid "delete"
 msgstr "Verwijder"
 
-#: addons/goto/class_target_list.inc:58
-msgid "Select the target objects for your scheduled action."
-msgstr ""
-
-#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
-#, fuzzy
-msgid "Available targets"
-msgstr "Beschikbare programma's"
-
-#: addons/goto/class_target_list.inc:69
-msgid "Object name"
-msgstr "Objectnaam"
-
-#: addons/goto/class_target_list.inc:72
-#, fuzzy
-msgid "Select to see object groups"
-msgstr "Selecteer een objectgroep"
-
-#: addons/goto/class_target_list.inc:72
-#, fuzzy
-msgid "Show object groups"
-msgstr "Objectgroepen"
-
-#: addons/goto/class_target_list.inc:73
-msgid "Select to see servers"
-msgstr "Selecteer om servers te zien"
-
-#: addons/goto/class_target_list.inc:73
-msgid "Show servers"
-msgstr "Toon servers"
-
-#: addons/goto/class_target_list.inc:74
-msgid "Select to see workstations"
-msgstr "Selecteer om werkstations te zien"
-
-#: addons/goto/class_target_list.inc:74
-msgid "Show workstations"
-msgstr "Toon werkstations"
-
-#: addons/goto/class_target_list.inc:75
-#, fuzzy
-msgid "Select to see incoming objects"
-msgstr "Selecteer om binnen subonderdelen te zoeken"
-
-#: addons/goto/class_target_list.inc:75
-#, fuzzy
-msgid "Show new objects"
-msgstr "Lidmaatschap objecten"
-
-#: addons/goto/class_target_list.inc:80
-msgid "Select to search for a specific IP range only"
-msgstr ""
-
-#: addons/goto/class_target_list.inc:80
-msgid "Match IP range"
-msgstr ""
-
-#: addons/goto/class_target_list.inc:83
-msgid "Regular expression for matching group names"
-msgstr "Reguliere expressie voor overeenkomende groepnamen"
-
-#: addons/goto/class_target_list.inc:84
-msgid "IP range start"
-msgstr ""
-
-#: addons/goto/class_target_list.inc:85
-msgid "IP range end"
-msgstr ""
-
-#: addons/goto/class_target_list.inc:154
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-msgid "Submit department"
-msgstr "Verwerk afdeling"
-
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
-#, fuzzy
-msgid "IP range"
-msgstr "VSync"
-
 #: addons/goto/goto_import_file.tpl:1
 #, fuzzy
 msgid "Import jobs"
@@ -3170,6 +3093,7 @@ msgid "FQDN"
 msgstr ""
 
 #: addons/goto/goto_import_file.tpl:43
+#: addons/goto/events/eventTargetSystems-list.xml:81
 msgid "IP"
 msgstr ""
 
@@ -3591,43 +3515,6 @@ msgstr "Systeem"
 msgid "Activate new"
 msgstr "Geactiveerd"
 
-#: addons/goto/events/class_EventTargetAddList.inc:51
-#: addons/goto/events/class_EventTargetAddUsersList.inc:45
-#, fuzzy
-msgid "Targets"
-msgstr "Shares"
-
-#: addons/goto/events/class_EventTargetAddList.inc:55
-msgid ""
-"This dialog shows all available targets for the event. Check the targets you "
-"want to add and use the 'Apply' button."
-msgstr ""
-
-#: addons/goto/events/class_EventTargetAddList.inc:66
-#: addons/goto/events/class_EventTargetAddUsersList.inc:60
-#, fuzzy
-msgid "System / Department"
-msgstr "Afdeling"
-
-#: addons/goto/events/class_EventTargetAddList.inc:73
-#, fuzzy
-msgid "Display server"
-msgstr "Scherm"
-
-#: addons/goto/events/class_EventTargetAddList.inc:74
-#, fuzzy
-msgid "Display workstation"
-msgstr "Windows werkstation"
-
-#: addons/goto/events/class_EventTargetAddList.inc:75
-#, fuzzy
-msgid "Display object groups"
-msgstr "Toon overeenkomende objecten"
-
-#: addons/goto/events/class_EventTargetAddList.inc:76
-msgid "Filter by IP range"
-msgstr ""
-
 #: addons/goto/events/timestamp_select.tpl:3
 #, fuzzy
 msgid "Year"
@@ -3666,6 +3553,22 @@ msgstr ""
 msgid "Job intervall"
 msgstr ""
 
+#: addons/goto/events/eventTargetSystems-filter.tpl:11
+msgid "Show servers"
+msgstr "Toon servers"
+
+#: addons/goto/events/eventTargetSystems-filter.tpl:12
+msgid "Show workstations"
+msgstr "Toon werkstations"
+
+#: addons/goto/events/eventTargetSystems-filter.tpl:13
+msgid "Show terminals"
+msgstr "Toon terminals"
+
+#: addons/goto/events/eventTargetSystems-filter.tpl:14
+msgid "Filter by IP address range"
+msgstr ""
+
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
 msgid "Reload LDAP config"
@@ -3682,21 +3585,36 @@ msgstr "Bericht in wachtstand plaatsen"
 msgid "From"
 msgstr "willekeurig"
 
-#: addons/goto/events/class_EventTargetAddUsersList.inc:49
-msgid ""
-"This dialog shows all available targets for your event, check the targets "
-"you want to add and use the 'Use' button to accept."
-msgstr ""
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:65
+#: addons/goto/events/eventTargetUser-filter.tpl:11
 #, fuzzy
-msgid "Display users"
-msgstr "Scherm"
+msgid "Show groups"
+msgstr "Toon Samba groepen"
 
-#: addons/goto/events/class_EventTargetAddUsersList.inc:66
+#: addons/goto/events/eventTargetUser-filter.tpl:12
 #, fuzzy
-msgid "Display groups"
-msgstr "Toon overeenkomende objecten"
+msgid "Show users"
+msgstr "Toon servers"
+
+#: addons/goto/events/eventTargetSystems-list.xml:11
+#, fuzzy
+msgid "List of systems"
+msgstr "Lijst met gebruikers"
+
+#: addons/goto/events/eventTargetSystems-list.xml:39
+#, fuzzy
+msgid "Object Group"
+msgstr "Objectgroep"
+
+#: addons/goto/events/eventTargetSystems-list.xml:73
+#: addons/goto/events/eventTargetUser-list.xml:57
+#, fuzzy
+msgid "Description name"
+msgstr "Omschrijving"
+
+#: addons/goto/events/eventTargetSystems-list.xml:89
+#, fuzzy
+msgid "Mac"
+msgstr "Maart"
 
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
@@ -3718,6 +3636,10 @@ msgstr "Geplande bijwerking"
 #, fuzzy
 msgid "Progress"
 msgstr "Eigenschappen"
+
+#: addons/goto/events/eventTargetUser-list.xml:11
+msgid "List of users"
+msgstr "Lijst met gebruikers"
 
 #: addons/goto/class_goto_import_file.inc:90
 msgid ""
@@ -4069,6 +3991,73 @@ msgstr "Toon overeenkomende gebruikers"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Reguliere expressie voor      overeenkomende hotplugs"
+
+#, fuzzy
+#~ msgid "Available targets"
+#~ msgstr "Beschikbare programma's"
+
+#~ msgid "Object name"
+#~ msgstr "Objectnaam"
+
+#, fuzzy
+#~ msgid "Select to see object groups"
+#~ msgstr "Selecteer een objectgroep"
+
+#, fuzzy
+#~ msgid "Show object groups"
+#~ msgstr "Objectgroepen"
+
+#~ msgid "Select to see servers"
+#~ msgstr "Selecteer om servers te zien"
+
+#~ msgid "Select to see workstations"
+#~ msgstr "Selecteer om werkstations te zien"
+
+#, fuzzy
+#~ msgid "Select to see incoming objects"
+#~ msgstr "Selecteer om binnen subonderdelen te zoeken"
+
+#, fuzzy
+#~ msgid "Show new objects"
+#~ msgstr "Lidmaatschap objecten"
+
+#~ msgid "Regular expression for matching group names"
+#~ msgstr "Reguliere expressie voor overeenkomende groepnamen"
+
+#~ msgid "Submit department"
+#~ msgstr "Verwerk afdeling"
+
+#, fuzzy
+#~ msgid "IP range"
+#~ msgstr "VSync"
+
+#, fuzzy
+#~ msgid "Targets"
+#~ msgstr "Shares"
+
+#, fuzzy
+#~ msgid "System / Department"
+#~ msgstr "Afdeling"
+
+#, fuzzy
+#~ msgid "Display server"
+#~ msgstr "Scherm"
+
+#, fuzzy
+#~ msgid "Display workstation"
+#~ msgstr "Windows werkstation"
+
+#, fuzzy
+#~ msgid "Display object groups"
+#~ msgstr "Toon overeenkomende objecten"
+
+#, fuzzy
+#~ msgid "Display users"
+#~ msgstr "Scherm"
+
+#, fuzzy
+#~ msgid "Display groups"
+#~ msgstr "Toon overeenkomende objecten"
 
 #, fuzzy
 #~ msgid "List of defined devices"
@@ -6433,9 +6422,6 @@ msgstr "Reguliere expressie voor      overeenkomende hotplugs"
 #, fuzzy
 #~ msgid "Applying a template"
 #~ msgstr "Sjablonen"
-
-#~ msgid "List of users"
-#~ msgstr "Lijst met gebruikers"
 
 #, fuzzy
 #~ msgid "Show %s"

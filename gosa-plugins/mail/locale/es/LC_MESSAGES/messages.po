@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 09:58+0200\n"
+"POT-Creation-Date: 2010-01-27 15:13+0100\n"
 "PO-Revision-Date: 2010-01-25 01:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -34,21 +34,21 @@ msgstr "Crear cuenta de correo"
 #: admin/ogroups/mail/class_mailogroup.inc:86
 #: admin/ogroups/mail/class_mailogroup.inc:93
 #: admin/ogroups/mail/class_mailogroup.inc:194
-#: admin/groups/mail/class_groupMail.inc:354
-#: admin/groups/mail/class_groupMail.inc:389
-#: admin/groups/mail/class_groupMail.inc:395
-#: admin/groups/mail/class_groupMail.inc:404
-#: admin/groups/mail/class_groupMail.inc:840
-#: admin/groups/mail/class_groupMail.inc:860
-#: admin/groups/mail/class_groupMail.inc:981
-#: personal/mail/class_mailAccount.inc:323
-#: personal/mail/class_mailAccount.inc:358
+#: admin/groups/mail/class_groupMail.inc:362
+#: admin/groups/mail/class_groupMail.inc:397
+#: admin/groups/mail/class_groupMail.inc:403
+#: admin/groups/mail/class_groupMail.inc:417
+#: admin/groups/mail/class_groupMail.inc:851
+#: admin/groups/mail/class_groupMail.inc:871
+#: admin/groups/mail/class_groupMail.inc:992
+#: personal/mail/class_mailAccount.inc:328
 #: personal/mail/class_mailAccount.inc:363
-#: personal/mail/class_mailAccount.inc:371
-#: personal/mail/class_mailAccount.inc:1090
-#: personal/mail/class_mailAccount.inc:1094
-#: personal/mail/class_mailAccount.inc:1105
-#: personal/mail/class_mailAccount.inc:1420
+#: personal/mail/class_mailAccount.inc:368
+#: personal/mail/class_mailAccount.inc:381
+#: personal/mail/class_mailAccount.inc:1081
+#: personal/mail/class_mailAccount.inc:1085
+#: personal/mail/class_mailAccount.inc:1103
+#: personal/mail/class_mailAccount.inc:1466
 msgid "Mail address"
 msgstr "Dirección correo electrónico"
 
@@ -58,36 +58,36 @@ msgstr "your-name@your-domain.com"
 
 #: admin/ogroups/mail/class_mailogroup.inc:120
 #: admin/ogroups/mail/class_mailogroup.inc:157
-#: admin/groups/mail/class_groupMail.inc:531
-#: admin/groups/mail/class_groupMail.inc:760
+#: admin/groups/mail/class_groupMail.inc:542
+#: admin/groups/mail/class_groupMail.inc:771
 #: admin/systems/services/imap/class_goImapServer.inc:190
 #: admin/systems/services/mail/class_goMailServer.inc:582
 #: admin/systems/services/virus/class_goVirusServer.inc:154
 #: admin/systems/services/spam/class_goSpamServer.inc:277
-#: personal/mail/class_mailAccount.inc:915
-#: personal/mail/class_mailAccount.inc:982
+#: personal/mail/class_mailAccount.inc:898
+#: personal/mail/class_mailAccount.inc:971
 msgid "LDAP error"
 msgstr "Error LDAP"
 
 #: admin/ogroups/mail/class_mailogroup.inc:186
 #: admin/ogroups/mail/paste_mail.tpl:4
-#: admin/groups/mail/class_groupMail.inc:276
-#: admin/groups/mail/class_groupMail.inc:278
-#: admin/groups/mail/class_groupMail.inc:279
 #: admin/groups/mail/class_groupMail.inc:284
 #: admin/groups/mail/class_groupMail.inc:286
 #: admin/groups/mail/class_groupMail.inc:287
-#: admin/groups/mail/class_groupMail.inc:828
-#: admin/groups/mail/class_groupMail.inc:973
+#: admin/groups/mail/class_groupMail.inc:292
+#: admin/groups/mail/class_groupMail.inc:294
+#: admin/groups/mail/class_groupMail.inc:295
+#: admin/groups/mail/class_groupMail.inc:839
+#: admin/groups/mail/class_groupMail.inc:984
 #: personal/mail/class_mailAccount.inc:50
-#: personal/mail/class_mailAccount.inc:239
-#: personal/mail/class_mailAccount.inc:247
-#: personal/mail/class_mailAccount.inc:249
+#: personal/mail/class_mailAccount.inc:244
+#: personal/mail/class_mailAccount.inc:252
 #: personal/mail/class_mailAccount.inc:254
-#: personal/mail/class_mailAccount.inc:256
-#: personal/mail/class_mailAccount.inc:1074
-#: personal/mail/class_mailAccount.inc:1264
-#: personal/mail/class_mailAccount.inc:1410
+#: personal/mail/class_mailAccount.inc:259
+#: personal/mail/class_mailAccount.inc:261
+#: personal/mail/class_mailAccount.inc:1065
+#: personal/mail/class_mailAccount.inc:1290
+#: personal/mail/class_mailAccount.inc:1456
 msgid "Mail"
 msgstr "Correo Electrónico"
 
@@ -99,9 +99,9 @@ msgstr "Grupo de correo"
 msgid "Mail distribution list"
 msgstr "Lista de distribución de correo"
 
-#: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:838
+#: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:849
 #: admin/groups/mail/mail.tpl:7 admin/groups/mail/paste_mail.tpl:8
-#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:1086
+#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:1077
 #: personal/mail/copypaste.tpl:7
 msgid "Primary address"
 msgstr "Cuenta Principal"
@@ -114,67 +114,70 @@ msgstr "Dirección de correo primaria para esta lista de distribución"
 msgid "Please enter a mail address"
 msgstr "Por favor introduzca una dirección de correo"
 
-#: admin/groups/mail/class_groupMail.inc:111
-#: admin/groups/mail/class_groupMail.inc:118
-#: admin/groups/mail/class_groupMail.inc:125
-#: admin/groups/mail/class_groupMail.inc:132
-#: admin/groups/mail/class_groupMail.inc:137
+#: admin/groups/mail/class_groupMail.inc:119
+#: admin/groups/mail/class_groupMail.inc:126
+#: admin/groups/mail/class_groupMail.inc:133
 #: admin/groups/mail/class_groupMail.inc:140
-#: admin/groups/mail/class_groupMail.inc:543
-#: admin/groups/mail/class_groupMail.inc:547
-#: admin/groups/mail/class_groupMail.inc:551
-#: admin/groups/mail/class_groupMail.inc:773
-#: admin/groups/mail/class_groupMail.inc:777
-#: admin/groups/mail/class_groupMail.inc:781
-#: admin/groups/mail/class_groupMail.inc:790
+#: admin/groups/mail/class_groupMail.inc:145
+#: admin/groups/mail/class_groupMail.inc:148
+#: admin/groups/mail/class_groupMail.inc:554
+#: admin/groups/mail/class_groupMail.inc:558
+#: admin/groups/mail/class_groupMail.inc:562
+#: admin/groups/mail/class_groupMail.inc:784
+#: admin/groups/mail/class_groupMail.inc:788
+#: admin/groups/mail/class_groupMail.inc:792
+#: admin/groups/mail/class_groupMail.inc:801
 #: personal/mail/class_mailAccount.inc:147
 #: personal/mail/class_mailAccount.inc:154
 #: personal/mail/class_mailAccount.inc:159
 #: personal/mail/class_mailAccount.inc:162
-#: personal/mail/class_mailAccount.inc:924
-#: personal/mail/class_mailAccount.inc:928
-#: personal/mail/class_mailAccount.inc:996
-#: personal/mail/class_mailAccount.inc:1000
-#: personal/mail/class_mailAccount.inc:1004
-#: personal/mail/class_mailAccount.inc:1018
+#: personal/mail/class_mailAccount.inc:907
+#: personal/mail/class_mailAccount.inc:911
+#: personal/mail/class_mailAccount.inc:985
+#: personal/mail/class_mailAccount.inc:989
+#: personal/mail/class_mailAccount.inc:993
 msgid "Mail error"
 msgstr "Error de correo"
 
-#: admin/groups/mail/class_groupMail.inc:111
-#: personal/mail/class_mailAccount.inc:147, php-format
+#: admin/groups/mail/class_groupMail.inc:119
+#: personal/mail/class_mailAccount.inc:147
+#, php-format
 msgid "Cannot read quota settings: %s"
 msgstr "No se puede leer los parámetros de cuota: %s"
 
-#: admin/groups/mail/class_groupMail.inc:118
-#: personal/mail/class_mailAccount.inc:154, php-format
+#: admin/groups/mail/class_groupMail.inc:126
+#: personal/mail/class_mailAccount.inc:154
+#, php-format
 msgid "Cannot get list of mailboxes: %s"
 msgstr "No se puede acceder a la lista de buzones de correo: %s"
 
-#: admin/groups/mail/class_groupMail.inc:125, php-format
+#: admin/groups/mail/class_groupMail.inc:133
+#, php-format
 msgid "Cannot receive folder types: %s"
 msgstr "No se puede recibir los tipos de carpetas: '%s'"
 
-#: admin/groups/mail/class_groupMail.inc:132, php-format
+#: admin/groups/mail/class_groupMail.inc:140
+#, php-format
 msgid "Cannot receive folder permissions: %s"
 msgstr "No se puede recibir los permisos de carpetas: '%s'"
 
-#: admin/groups/mail/class_groupMail.inc:137
-#: admin/groups/mail/class_groupMail.inc:543
-#: admin/groups/mail/class_groupMail.inc:773
+#: admin/groups/mail/class_groupMail.inc:145
+#: admin/groups/mail/class_groupMail.inc:554
+#: admin/groups/mail/class_groupMail.inc:784
 #: personal/mail/class_mailAccount.inc:159
-#: personal/mail/class_mailAccount.inc:924
-#: personal/mail/class_mailAccount.inc:996
+#: personal/mail/class_mailAccount.inc:907
+#: personal/mail/class_mailAccount.inc:985
 #, php-format
 msgid "Mail method cannot connect: %s"
 msgstr "El método de correo no puede conectar: %s"
 
-#: admin/groups/mail/class_groupMail.inc:140
+#: admin/groups/mail/class_groupMail.inc:148
 #: personal/mail/class_mailAccount.inc:162
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
 msgstr "El buzón de correo '%s' no existe en el servidor de correo: %s"
 
-#: admin/groups/mail/class_groupMail.inc:297
+#: admin/groups/mail/class_groupMail.inc:305
 msgid ""
 "Remove shared folder from mail server database when entry gets removed in "
 "LDAP"
@@ -182,18 +185,18 @@ msgstr ""
 "Cuando la entrada sea eliminada de LDAP se eliminara la carpeta compartida "
 "del servidor de correo."
 
-#: admin/groups/mail/class_groupMail.inc:298
+#: admin/groups/mail/class_groupMail.inc:306
 msgid "Remove the shared folder and all its contents after saving this account"
 msgstr ""
 "Despues de grabar esta cuenta se eliminara la carpeta compartida y todo su "
 "contenido"
 
-#: admin/groups/mail/class_groupMail.inc:341
-#: admin/groups/mail/class_groupMail.inc:354
-#: admin/groups/mail/class_groupMail.inc:360
-#: admin/groups/mail/class_groupMail.inc:389
-#: admin/groups/mail/class_groupMail.inc:395
-#: admin/groups/mail/class_groupMail.inc:404
+#: admin/groups/mail/class_groupMail.inc:349
+#: admin/groups/mail/class_groupMail.inc:362
+#: admin/groups/mail/class_groupMail.inc:368
+#: admin/groups/mail/class_groupMail.inc:397
+#: admin/groups/mail/class_groupMail.inc:403
+#: admin/groups/mail/class_groupMail.inc:417
 #: admin/systems/services/spam/class_goSpamServer.inc:143
 #: admin/systems/services/spam/class_goSpamServer.inc:216
 #: addons/mailqueue/class_mailqueue.inc:110
@@ -205,58 +208,69 @@ msgstr ""
 #: personal/mail/sieve/class_sieveManagement.inc:212
 #: personal/mail/sieve/class_sieveManagement.inc:218
 #: personal/mail/sieve/class_sieveManagement.inc:429
-#: personal/mail/class_mailAccount.inc:311
-#: personal/mail/class_mailAccount.inc:323
-#: personal/mail/class_mailAccount.inc:329
-#: personal/mail/class_mailAccount.inc:358
+#: personal/mail/class_mailAccount.inc:316
+#: personal/mail/class_mailAccount.inc:328
+#: personal/mail/class_mailAccount.inc:334
 #: personal/mail/class_mailAccount.inc:363
-#: personal/mail/class_mailAccount.inc:371
+#: personal/mail/class_mailAccount.inc:368
+#: personal/mail/class_mailAccount.inc:381
 msgid "Error"
 msgstr "Error"
 
-#: admin/groups/mail/class_groupMail.inc:341
-#: personal/mail/class_mailAccount.inc:311
+#: admin/groups/mail/class_groupMail.inc:349
+#: personal/mail/class_mailAccount.inc:316
 msgid "Please select an entry!"
 msgstr "¡Por favor seleccione una entrada!"
 
-#: admin/groups/mail/class_groupMail.inc:360
-#: personal/mail/class_mailAccount.inc:329
+#: admin/groups/mail/class_groupMail.inc:368
+#: personal/mail/class_mailAccount.inc:334
 msgid "Cannot add primary address to the list of forwarders!"
 msgstr ""
 "¡No puede añadir una dirección primaria de correo a la lista de reenviadores!"
 
-#: admin/groups/mail/class_groupMail.inc:405
-#: personal/mail/class_mailAccount.inc:372, php-format
-msgid "Address is already in use by user '%s'."
-msgstr ""
-"¡La dirección de correo ya esta usada por el "
-"usuario '%s'!"
+#: admin/groups/mail/class_groupMail.inc:413
+#: personal/mail/class_mailAccount.inc:377
+#: personal/mail/class_mailAccount.inc:1099
+#, fuzzy, php-format
+msgid "Address is already in use by group '%s'."
+msgstr "¡La dirección de correo ya esta usada por el usuario '%s'!"
 
-#: admin/groups/mail/class_groupMail.inc:547
-#: personal/mail/class_mailAccount.inc:928, php-format
+#: admin/groups/mail/class_groupMail.inc:415
+#: personal/mail/class_mailAccount.inc:379
+#: personal/mail/class_mailAccount.inc:1101
+#, php-format
+msgid "Address is already in use by user '%s'."
+msgstr "¡La dirección de correo ya esta usada por el usuario '%s'!"
+
+#: admin/groups/mail/class_groupMail.inc:558
+#: personal/mail/class_mailAccount.inc:911
+#, fuzzy, php-format
 msgid "Cannot remove mailbox: %s"
 msgstr "No se puede eliminar el buzón de correo: 's'"
 
-#: admin/groups/mail/class_groupMail.inc:551
-#: admin/groups/mail/class_groupMail.inc:790, php-format
+#: admin/groups/mail/class_groupMail.inc:562
+#: admin/groups/mail/class_groupMail.inc:801
+#, php-format
 msgid "Cannot update shared folder permissions: %s"
 msgstr "No se pueden modificar los permisos para la carpeta compartida: '%s'"
 
-#: admin/groups/mail/class_groupMail.inc:649
+#: admin/groups/mail/class_groupMail.inc:660
 msgid "New"
 msgstr "Nuevo"
 
-#: admin/groups/mail/class_groupMail.inc:777
-#: personal/mail/class_mailAccount.inc:1000, php-format
+#: admin/groups/mail/class_groupMail.inc:788
+#: personal/mail/class_mailAccount.inc:989
+#, php-format
 msgid "Cannot update mailbox: %s"
 msgstr "No puedo actualizar el buzón de correo: %s"
 
-#: admin/groups/mail/class_groupMail.inc:781
-#: personal/mail/class_mailAccount.inc:1004, php-format
+#: admin/groups/mail/class_groupMail.inc:792
+#: personal/mail/class_mailAccount.inc:993
+#, php-format
 msgid "Cannot write quota settings: %s"
 msgstr "No puedo guardar el parámetro de cuota: %s"
 
-#: admin/groups/mail/class_groupMail.inc:822
+#: admin/groups/mail/class_groupMail.inc:833
 #, php-format
 msgid ""
 "The group 'cn' has changed. It can't be changed due to the fact that mail "
@@ -265,56 +279,56 @@ msgstr ""
 "El grupo 'cn' ha cambiado. ¡No debería ser cambiado debido al hecho de que "
 "el método de correo '%s' se basa en el!"
 
-#: admin/groups/mail/class_groupMail.inc:847
-#: admin/groups/mail/class_groupMail.inc:982 admin/groups/mail/mail.tpl:60
-#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1113
-#: personal/mail/class_mailAccount.inc:1270
-#: personal/mail/class_mailAccount.inc:1422
+#: admin/groups/mail/class_groupMail.inc:858
+#: admin/groups/mail/class_groupMail.inc:993 admin/groups/mail/mail.tpl:60
+#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1111
+#: personal/mail/class_mailAccount.inc:1296
+#: personal/mail/class_mailAccount.inc:1468
 msgid "Quota size"
 msgstr "Tamaño de cuota"
 
-#: admin/groups/mail/class_groupMail.inc:866
-#: personal/mail/class_mailAccount.inc:1434
+#: admin/groups/mail/class_groupMail.inc:877
+#: personal/mail/class_mailAccount.inc:1480
 msgid "Mail max size"
 msgstr "Tamaño máximo del mensaje"
 
-#: admin/groups/mail/class_groupMail.inc:874
+#: admin/groups/mail/class_groupMail.inc:885
 msgid "You need to set the maximum mail size in order to reject anything."
 msgstr ""
 "Necesita introducir un valor máximo de tamaño de mensajes para poder "
 "rechazar mensajes."
 
-#: admin/groups/mail/class_groupMail.inc:878
-#: admin/groups/mail/class_groupMail.inc:983
-#: personal/mail/class_mailAccount.inc:1421
+#: admin/groups/mail/class_groupMail.inc:889
+#: admin/groups/mail/class_groupMail.inc:994
+#: personal/mail/class_mailAccount.inc:1467
 msgid "Mail server"
 msgstr "Servidor de correo"
 
-#: admin/groups/mail/class_groupMail.inc:974
+#: admin/groups/mail/class_groupMail.inc:985
 msgid "Group mail"
 msgstr "Grupo de correo"
 
-#: admin/groups/mail/class_groupMail.inc:984 admin/groups/mail/mail.tpl:73
+#: admin/groups/mail/class_groupMail.inc:995 admin/groups/mail/mail.tpl:73
 msgid "Folder type"
 msgstr "Tipo de Carpeta"
 
-#: admin/groups/mail/class_groupMail.inc:984
+#: admin/groups/mail/class_groupMail.inc:995
 msgid "Kolab"
 msgstr "Kolab"
 
-#: admin/groups/mail/class_groupMail.inc:985
+#: admin/groups/mail/class_groupMail.inc:996
 msgid "Alternate addresses"
 msgstr "Direcciones alternativas"
 
-#: admin/groups/mail/class_groupMail.inc:986
+#: admin/groups/mail/class_groupMail.inc:997
 msgid "Forwarding addresses"
 msgstr "Direcciones de reenvío"
 
-#: admin/groups/mail/class_groupMail.inc:987
+#: admin/groups/mail/class_groupMail.inc:998
 msgid "Only local"
 msgstr "Solo local"
 
-#: admin/groups/mail/class_groupMail.inc:988
+#: admin/groups/mail/class_groupMail.inc:999
 msgid "Permissions"
 msgstr "Permisos"
 
@@ -370,17 +384,17 @@ msgstr "Oculto"
 msgid "Show"
 msgstr "Mostrar"
 
-#: admin/groups/mail/mail.tpl:187 personal/mail/generic.tpl:300
+#: admin/groups/mail/mail.tpl:187 personal/mail/generic.tpl:279
 msgid "Advanced mail options"
 msgstr "Opciones de correo avanzadas"
 
-#: admin/groups/mail/mail.tpl:193 personal/mail/generic.tpl:306
+#: admin/groups/mail/mail.tpl:193 personal/mail/generic.tpl:285
 msgid "Select if user can only send and receive inside his own domain"
 msgstr ""
 "Seleccione si el usuario solo puede enviar y recibir dentro de su propio "
 "dominio"
 
-#: admin/groups/mail/mail.tpl:195 personal/mail/generic.tpl:308
+#: admin/groups/mail/mail.tpl:195 personal/mail/generic.tpl:287
 msgid "User is only allowed to send and receive local mails"
 msgstr ""
 "El usuario solo esta permitido a enviar y recibir correo de forma local"
@@ -398,7 +412,7 @@ msgid "Not used in all groups"
 msgstr "No usado en todos los grupos"
 
 #: admin/groups/mail/mail.tpl:234 admin/groups/mail/paste_mail.tpl:42
-#: personal/mail/generic.tpl:290 personal/mail/copypaste.tpl:44
+#: personal/mail/generic.tpl:269 personal/mail/copypaste.tpl:44
 msgid "Add local"
 msgstr "Añadir Cuenta Local"
 
@@ -446,7 +460,7 @@ msgstr "Seleccionar un departamento especifico"
 msgid "Choose"
 msgstr "Elige"
 
-#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1411
+#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1457
 #: personal/mail/copypaste.tpl:1
 msgid "Mail settings"
 msgstr "Parámetros de correo"
@@ -1119,7 +1133,7 @@ msgstr "cabecera"
 msgid "Display header of this message"
 msgstr "Mostrar cabecera de este mensaje"
 
-#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1442
+#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1488
 msgid "Use custom sieve script"
 msgstr "Usar 'script Sieve' propios"
 
@@ -1146,59 +1160,60 @@ msgstr ""
 "Seleccione para responder automáticamente con el mensaje de ausencia "
 "definido aquí"
 
-#: personal/mail/generic.tpl:153
+#: personal/mail/generic.tpl:152
 msgid "Activate vacation message"
 msgstr "Activar mensaje de ausencia"
 
-#: personal/mail/generic.tpl:161
+#: personal/mail/generic.tpl:160 personal/mail/class_mailAccount.inc:1140
+#: personal/mail/class_mailAccount.inc:1320
 msgid "from"
 msgstr "desde"
 
-#: personal/mail/generic.tpl:185
+#: personal/mail/generic.tpl:173
 msgid "till"
 msgstr "hasta"
 
-#: personal/mail/generic.tpl:214
+#: personal/mail/generic.tpl:193
 msgid "Select if you want to filter this mails through spamassassin"
 msgstr ""
 "Seleccione aquí si quiere que su correo se filtre a través de spamassassin"
 
-#: personal/mail/generic.tpl:216
+#: personal/mail/generic.tpl:195
 msgid "Move mails tagged with spam level greater than"
 msgstr "Mover los correos etiquetados con nivel de spam mayor que"
 
-#: personal/mail/generic.tpl:219
+#: personal/mail/generic.tpl:198
 msgid "Choose spam level - smaller values are more sensitive"
 msgstr "Elija el nivel de spam - valores mas bajos son mas sensibles"
 
-#: personal/mail/generic.tpl:223
+#: personal/mail/generic.tpl:202
 msgid "to folder"
 msgstr "a la carpeta"
 
-#: personal/mail/generic.tpl:235
+#: personal/mail/generic.tpl:214
 msgid "Reject mails bigger than"
 msgstr "rechazar correos mayores que"
 
-#: personal/mail/generic.tpl:238
+#: personal/mail/generic.tpl:217
 msgid "MB"
 msgstr "Mb"
 
-#: personal/mail/generic.tpl:245
+#: personal/mail/generic.tpl:224
 #: personal/mail/sieve/templates/object_container.tpl:31
 #: personal/mail/sieve/templates/element_vacation.tpl:44
 #: personal/mail/sieve/class_sieveManagement.inc:502
 #: personal/mail/sieve/class_sieveManagement.inc:720
-#: personal/mail/class_mailAccount.inc:1425
+#: personal/mail/class_mailAccount.inc:1471
 msgid "Vacation message"
 msgstr "Mensaje de ausencia"
 
-#: personal/mail/generic.tpl:261
+#: personal/mail/generic.tpl:240
 #: personal/mail/sieve/templates/import_script.tpl:12
 #: personal/mail/sieve/templates/edit_frame_base.tpl:7
 msgid "Import"
 msgstr "Importar"
 
-#: personal/mail/generic.tpl:267 personal/mail/copypaste.tpl:13
+#: personal/mail/generic.tpl:246 personal/mail/copypaste.tpl:13
 msgid "Forward messages to"
 msgstr "reenviar mensajes a"
 
@@ -1210,33 +1225,60 @@ msgstr "¡No se han definido servidores IMAP compatibles!"
 msgid "Mail server for this account is invalid!"
 msgstr "¡El servidor de correo para esta cuenta no es válido!"
 
-#: personal/mail/class_mail-methods-cyrus.inc:218
+#: personal/mail/class_mail-methods-cyrus.inc:222
 msgid "IMAP error"
 msgstr "Error IMAP"
 
-#: personal/mail/class_mail-methods-cyrus.inc:218
+#: personal/mail/class_mail-methods-cyrus.inc:222
 #, php-format
 msgid "Cannot modify IMAP mailbox quota: %s"
 msgstr "No se puede modificar la cuota del buzón de correo IMAP: %s"
 
-#: personal/mail/class_mail-methods-cyrus.inc:354
-#: personal/mail/class_mail-methods-cyrus.inc:391
+#: personal/mail/class_mail-methods-cyrus.inc:298
+#, fuzzy
+msgid "Mail info"
+msgstr "Archivar en"
+
+#: personal/mail/class_mail-methods-cyrus.inc:299
+#, php-format
+msgid ""
+"LDAP entry has been removed but cyrus mailbox (%s) is kept.\n"
+"Please delete it manually!"
+msgstr ""
+
+#: personal/mail/class_mail-methods-cyrus.inc:383
+#: personal/mail/class_mail-methods-cyrus.inc:420
 msgid "The module imap_getacl is not implemented!"
 msgstr "¡No se ha implementado el módulo imap_getacl!"
 
-#: personal/mail/class_mail-methods-cyrus.inc:468
+#: personal/mail/class_mail-methods-cyrus.inc:472
+#, php-format
+msgid "File '%s' does not exist!"
+msgstr "¡El archivo %s no existe!"
+
+#: personal/mail/class_mail-methods-cyrus.inc:473
+msgid "The sieve script may not be written correctly."
+msgstr ""
+
+#: personal/mail/class_mail-methods-cyrus.inc:474
+#: personal/mail/sieve/class_My_Tree.inc:245
+#: personal/mail/sieve/templates/remove_script.tpl:2
+msgid "Warning"
+msgstr "Aviso"
+
+#: personal/mail/class_mail-methods-cyrus.inc:512
 #: personal/mail/sieve/class_sieveManagement.inc:309
 #, php-format
 msgid "Cannot retrieve SIEVE script: %s"
 msgstr "No se puede acceder al script SIEVE: %s"
 
-#: personal/mail/class_mail-methods-cyrus.inc:556
+#: personal/mail/class_mail-methods-cyrus.inc:601
 #: personal/mail/sieve/class_sieveManagement.inc:1043
 #, php-format
 msgid "Cannot store SIEVE script: %s"
 msgstr "No se puede guardar el script SIEVE: %s"
 
-#: personal/mail/class_mail-methods-cyrus.inc:563
+#: personal/mail/class_mail-methods-cyrus.inc:608
 #, php-format
 msgid "Cannot activate SIEVE script: %s"
 msgstr "No se puede activar el script SIEVE: %s"
@@ -1252,11 +1294,6 @@ msgstr "Por favor indique una dirección de correo válida."
 #: personal/mail/sieve/class_sieveElement_Redirect.inc:35
 msgid "Place a mail address here"
 msgstr "Indique aquí una dirección de correo"
-
-#: personal/mail/sieve/class_My_Tree.inc:245
-#: personal/mail/sieve/templates/remove_script.tpl:2
-msgid "Warning"
-msgstr "Aviso"
 
 #: personal/mail/sieve/class_My_Tree.inc:245
 msgid "Cannot remove last element!"
@@ -2031,7 +2068,8 @@ msgstr "Error SIEVE"
 msgid "Cannot log into SIEVE server: %s"
 msgstr "No se puede acceder al servidor SIEVE: %s"
 
-#: personal/mail/sieve/class_sieveManagement.inc:349, php-format
+#: personal/mail/sieve/class_sieveManagement.inc:349
+#, php-format
 msgid "Cannot remove SIEVE script: %s"
 msgstr "No se puede eliminar el script SIEVE: %s"
 
@@ -2047,11 +2085,13 @@ msgstr "¡El script subido está vacio!"
 msgid "Internal error"
 msgstr "error interno"
 
-#: personal/mail/sieve/class_sieveManagement.inc:431, php-format
+#: personal/mail/sieve/class_sieveManagement.inc:431
+#, php-format
 msgid "Cannot access temporary file '%s'!"
 msgstr "¡No puedo acceder al fichero temporal '%s'!"
 
-#: personal/mail/sieve/class_sieveManagement.inc:433, php-format
+#: personal/mail/sieve/class_sieveManagement.inc:433
+#, php-format
 msgid "Cannot open temporary file '%s'!"
 msgstr "¡No puedo abrir el fichero temporal '%s'!"
 
@@ -2105,116 +2145,127 @@ msgstr "Indique su comentario aquí"
 msgid "User mail settings"
 msgstr "Parametros del correo del usuario"
 
-#: personal/mail/class_mailAccount.inc:635
-#: personal/mail/class_mail-methods.inc:133
-#: personal/mail/class_mail-methods.inc:464
+#: personal/mail/class_mailAccount.inc:615
+#: personal/mail/class_mail-methods.inc:140
+#: personal/mail/class_mail-methods.inc:485
 msgid "Configuration error"
 msgstr "Error en la configuración"
 
-#: personal/mail/class_mailAccount.inc:635, php-format
+#: personal/mail/class_mailAccount.inc:615
+#, php-format
 msgid "No DESC tag in vacation template '%s'!"
 msgstr "¡En la plantilla de ausencia '%s' no existe la etiqueta 'DESC'!"
 
-#: personal/mail/class_mailAccount.inc:664
-#: personal/mail/class_mailAccount.inc:677
-#: personal/mail/class_mailAccount.inc:708
-#: personal/mail/class_mailAccount.inc:721
+#: personal/mail/class_mailAccount.inc:644
+#: personal/mail/class_mailAccount.inc:657
+#: personal/mail/class_mailAccount.inc:691
+#: personal/mail/class_mailAccount.inc:704
 msgid "Permission error"
 msgstr "Error de permisos"
 
-#: personal/mail/class_mailAccount.inc:664
-#: personal/mail/class_mailAccount.inc:677
-#: personal/mail/class_mailAccount.inc:708
-#: personal/mail/class_mailAccount.inc:721
+#: personal/mail/class_mailAccount.inc:644
+#: personal/mail/class_mailAccount.inc:657
+#: personal/mail/class_mailAccount.inc:691
+#: personal/mail/class_mailAccount.inc:704
 msgid "You have no permission to modify these addresses!"
 msgstr "¡No tiene permisos para eliminar estas direcciones!"
 
-#: personal/mail/class_mailAccount.inc:755
-#: personal/mail/class_mailAccount.inc:758
+#: personal/mail/class_mailAccount.inc:738
+#: personal/mail/class_mailAccount.inc:741
 msgid "unknown"
 msgstr "desconocido"
 
-#: personal/mail/class_mailAccount.inc:1122
-#: personal/mail/class_mailAccount.inc:1130
-#: personal/mail/class_mailAccount.inc:1279
+#: personal/mail/class_mailAccount.inc:1007
+#, fuzzy
+msgid "Mail error saving sieve settings"
+msgstr "Ha fallado al grabar el script sieve"
+
+#: personal/mail/class_mailAccount.inc:1120
+#: personal/mail/class_mailAccount.inc:1128
+#: personal/mail/class_mailAccount.inc:1305
 msgid "Mail reject size"
 msgstr "Tamaño de correo desestimado"
 
-#: personal/mail/class_mailAccount.inc:1134
-#: personal/mail/class_mailAccount.inc:1286
+#: personal/mail/class_mailAccount.inc:1132
+#: personal/mail/class_mailAccount.inc:1312
 msgid "Spam folder"
 msgstr "Carpeta de SPAM"
 
-#: personal/mail/class_mailAccount.inc:1140
-#: personal/mail/class_mailAccount.inc:1291
+#: personal/mail/class_mailAccount.inc:1144
+#: personal/mail/class_mailAccount.inc:1324
+msgid "to"
+msgstr "a"
+
+#: personal/mail/class_mailAccount.inc:1155
+#: personal/mail/class_mailAccount.inc:1335
 msgid "Vacation interval"
 msgstr "Intervalo de ausencia"
 
-#: personal/mail/class_mailAccount.inc:1415
+#: personal/mail/class_mailAccount.inc:1461
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/mail/class_mailAccount.inc:1424
+#: personal/mail/class_mailAccount.inc:1470
 msgid "Add vacation information"
 msgstr "Añadir información de ausencia"
 
-#: personal/mail/class_mailAccount.inc:1427
+#: personal/mail/class_mailAccount.inc:1473
 msgid "Use spam filter"
 msgstr "Usar filtro antispam"
 
-#: personal/mail/class_mailAccount.inc:1428
+#: personal/mail/class_mailAccount.inc:1474
 msgid "Spam level"
 msgstr "Nivel de spam"
 
-#: personal/mail/class_mailAccount.inc:1429
+#: personal/mail/class_mailAccount.inc:1475
 msgid "Spam mail box"
 msgstr "Tamaño de la carpeta de spam"
 
-#: personal/mail/class_mailAccount.inc:1431
+#: personal/mail/class_mailAccount.inc:1477
 msgid "Sieve management"
 msgstr "Administración Sieve"
 
-#: personal/mail/class_mailAccount.inc:1433
+#: personal/mail/class_mailAccount.inc:1479
 msgid "Reject due to mailsize"
 msgstr "rechazar correos mayores que"
 
-#: personal/mail/class_mailAccount.inc:1436
-#: personal/mail/class_mailAccount.inc:1441
+#: personal/mail/class_mailAccount.inc:1482
+#: personal/mail/class_mailAccount.inc:1487
 msgid "Forwarding address"
 msgstr "Direcciones de reenvío"
 
-#: personal/mail/class_mailAccount.inc:1437
+#: personal/mail/class_mailAccount.inc:1483
 msgid "Local delivery"
 msgstr "Entrega local"
 
-#: personal/mail/class_mailAccount.inc:1438
+#: personal/mail/class_mailAccount.inc:1484
 msgid "No delivery to own mailbox "
 msgstr "No recibir en su propia cuenta"
 
-#: personal/mail/class_mailAccount.inc:1439
+#: personal/mail/class_mailAccount.inc:1485
 msgid "Mail alternative addresses"
 msgstr "Direcciones alternativas"
 
-#: personal/mail/class_mail-methods.inc:134
+#: personal/mail/class_mail-methods.inc:141
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr "¡El atributo '%s' configurado en el correo no esta soportado!"
 
-#: personal/mail/class_mail-methods.inc:465
+#: personal/mail/class_mail-methods.inc:486
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr "¡El método de correo '%s' es desconocido!"
 
-#: personal/mail/class_mail-methods.inc:691
-#: personal/mail/class_mail-methods.inc:692
+#: personal/mail/class_mail-methods.inc:712
+#: personal/mail/class_mail-methods.inc:713
 msgid "None"
 msgstr "Ninguno"
 
-#: personal/mail/class_mail-methods.inc:781
+#: personal/mail/class_mail-methods.inc:802
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: personal/mail/class_mail-methods.inc:783
+#: personal/mail/class_mail-methods.inc:804
 msgid "Unlimited"
 msgstr "Sin limite"
 

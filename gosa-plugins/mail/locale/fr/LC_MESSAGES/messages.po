@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:13+0100\n"
 "PO-Revision-Date: 2010-01-18 23:02+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -171,7 +171,8 @@ msgstr "Le méthode mail ne peut pas se connecter : %s"
 #: personal/mail/class_mailAccount.inc:162
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
-msgstr "Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
+msgstr ""
+"Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:305
 msgid ""
@@ -853,7 +854,8 @@ msgstr "Score requis"
 
 #: admin/systems/services/spam/goSpamServer.tpl:22
 msgid "Select required score to tag mail as spam"
-msgstr "Sélectionner le score requis pour marquer ce message comme étant un spam"
+msgstr ""
+"Sélectionner le score requis pour marquer ce message comme étant un spam"
 
 #: admin/systems/services/spam/goSpamServer.tpl:69
 #: admin/systems/services/spam/class_goSpamServer.inc:334
@@ -1153,7 +1155,8 @@ msgid "No delivery to own mailbox"
 msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 
 #: personal/mail/generic.tpl:151
-msgid "Select to automatically response with the vacation message defined below"
+msgid ""
+"Select to automatically response with the vacation message defined below"
 msgstr ""
 "Indiquez la réponse automatique en remplissant le message d'absence ci-"
 "dessous"
@@ -1245,7 +1248,8 @@ msgid ""
 "LDAP entry has been removed but cyrus mailbox (%s) is kept.\n"
 "Please delete it manually!"
 msgstr ""
-"L'entrée LDAP à été supprimée mais le compte de messagerie (%s) est toujours présent dans cyrus.\n"
+"L'entrée LDAP à été supprimée mais le compte de messagerie (%s) est toujours "
+"présent dans cyrus.\n"
 "Veuillez l'effacer manuellement ! "
 
 #: personal/mail/class_mail-methods-cyrus.inc:383
@@ -1726,7 +1730,8 @@ msgstr ""
 "d'authentification est vide."
 
 #: personal/mail/sieve/templates/management.tpl:6
-msgid "Please verify that the attributes uid and mail are not empty and try again."
+msgid ""
+"Please verify that the attributes uid and mail are not empty and try again."
 msgstr ""
 "Veuillez vérifier que les attributs uid et mail ne sont pas vide et "
 "réessayer."
@@ -1936,11 +1941,14 @@ msgid "Please specify a valid operator."
 msgstr "Veuillez spécifier un opérateur valide."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:654
-msgid "Invalid character found in address attribute. Quotes are not allowed here."
-msgstr "Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
+msgid ""
+"Invalid character found in address attribute. Quotes are not allowed here."
+msgstr ""
+"Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:669
-msgid "Invalid character found in value attribute. Quotes are not allowed here."
+msgid ""
+"Invalid character found in value attribute. Quotes are not allowed here."
 msgstr ""
 "Caractère non valide trouvé dans l'attribut. Les guillemets ne sont pas "
 "permis ici."
@@ -2024,7 +2032,8 @@ msgstr "L'analyse à réussi"
 
 #: personal/mail/sieve/class_sieveManagement.inc:156
 #, php-format
-msgid "The specified mail server '%s' does not exist within the GOsa configuration."
+msgid ""
+"The specified mail server '%s' does not exist within the GOsa configuration."
 msgstr ""
 "Le serveur de messagerie spécifié '%s' n'existe pas dans la configuration de "
 "GOsa."
@@ -2039,7 +2048,8 @@ msgstr "Veuillez seulement utiliser des nom de script en miniscules !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:212
 msgid "Please use only alphabetical characters in script names!"
-msgstr "Seul des caractères alphabétiques sont permis dans le nom des scripts !"
+msgstr ""
+"Seul des caractères alphabétiques sont permis dans le nom des scripts !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:218
 msgid "Script name already in use!"
@@ -2269,4 +2279,3 @@ msgstr "Illimités"
 #: personal/mail/mail_locals.tpl:35
 msgid "Select department"
 msgstr "Sélectionner un département"
-

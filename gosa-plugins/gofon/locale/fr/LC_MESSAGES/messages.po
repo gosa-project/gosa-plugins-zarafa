@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:12+0100\n"
 "PO-Revision-Date: 2010-01-18 22:54+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/ogroups/gofon/phonequeue.tpl:2
-msgid "Only users with the same asterisk home server will be included to this queue."
+msgid ""
+"Only users with the same asterisk home server will be included to this queue."
 msgstr ""
 "Seulement les utilisateurs du même serveur asterisk seront inclus dans cette "
 "queue."
@@ -645,7 +646,8 @@ msgstr "Configuration réseau"
 #: gofon/macro/class_gofonMacro.inc:458
 #, php-format
 msgid "Cannot delete entry because it is still in use by '%s'!"
-msgstr "Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
+msgstr ""
+"Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:331
 #: admin/systems/gofon/class_phoneGeneric.inc:334
@@ -1010,7 +1012,8 @@ msgstr "non défini"
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:342
 #: gofon/phoneaccount/class_phoneAccount.inc:342
 #, php-format
-msgid "Cannot identify telephone extension in database, please try to save again."
+msgid ""
+"Cannot identify telephone extension in database, please try to save again."
 msgstr ""
 "Impossible d'identifier l'extension téléphonique dans la base de données, "
 "veuillez essayer de sauver à nouveau."
@@ -1036,7 +1039,8 @@ msgstr ""
 #: gofon/phoneaccount/class_phoneAccount.inc:1583
 #, php-format
 msgid "GOsa identified problems with your MySQL table definition!"
-msgstr "GOsa à identifié des problèmes dans les définitions de vos tables MySQL !"
+msgstr ""
+"GOsa à identifié des problèmes dans les définitions de vos tables MySQL !"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:651
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:973
@@ -1314,7 +1318,8 @@ msgstr ""
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:379
 #, php-format
-msgid "The previously selected asterisk home server '%s' is no longer available!"
+msgid ""
+"The previously selected asterisk home server '%s' is no longer available!"
 msgstr ""
 "Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
 "disponible !"
@@ -1468,4 +1473,3 @@ msgstr "Statut"
 #: gofon/fonreports/contents.tpl:55
 msgid "Search returned no results..."
 msgstr "La recherche n'a renvoyé aucun résultat..."
-

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:12+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -151,9 +151,12 @@ msgstr "sticky"
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:348
 #: admin/fai/class_faiSummaryTab.inc:94 admin/fai/tabsProfile.inc:33
-#: admin/systems/services/repository/class_servRepository.inc:179
-#: admin/systems/services/repository/class_servRepository.inc:213
-#: admin/systems/services/repository/class_servRepository.inc:218
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:219
+#: admin/systems/services/repository/class_servRepository.inc:159
+#: admin/systems/services/repository/class_servRepository.inc:214
+#: admin/systems/services/repository/class_servRepository.inc:219
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Error"
 msgstr "Fout"
@@ -235,7 +238,8 @@ msgstr "Apparaat"
 #: admin/fai/class_faiPackage.inc:657 admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:299
 #: admin/fai/class_faiSummaryTab.inc:348 admin/fai/faiPartitionTable.tpl:9
-#: admin/systems/services/repository/class_servRepository.inc:213
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
+#: admin/systems/services/repository/class_servRepository.inc:214
 msgid "Name"
 msgstr "Naam"
 
@@ -339,6 +343,8 @@ msgstr "Ja"
 #: admin/fai/class_faiPartitionTableEntry.inc:252
 #: admin/fai/class_faiPartitionTableEntry.inc:254 admin/fai/fai-list.xml:107
 #: admin/fai/fai-list.xml:146
+#: admin/systems/services/repository/repository-list.xml:72
+#: admin/systems/services/repository/repository-list.xml:98
 msgid "Remove"
 msgstr "Verwijderen"
 
@@ -449,6 +455,7 @@ msgstr "Kies een te bewerken of verwijderen variabele"
 
 #: admin/fai/faiVariable.tpl:53 admin/fai/class_faiHook.inc:312
 #: admin/fai/class_faiHook.inc:314 admin/fai/fai-list.xml:138
+#: admin/systems/services/repository/repository-list.xml:91
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -581,15 +588,17 @@ msgid "List of scripts"
 msgstr "Lijst met scripts"
 
 #: admin/fai/faiPackage.tpl:33
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:402
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
-#: admin/systems/services/repository/class_servRepository.inc:406
+#: admin/systems/services/repository/class_servRepository.inc:402
 msgid "Repository"
 msgstr "Verzamelplaats"
 
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
 #: admin/fai/fai-filter.tpl:12 admin/fai/fai-filter.tpl:26
 #: admin/fai/class_faiPackage.inc:663
-#: admin/systems/services/repository/class_divListRepositories.inc:23
+#: admin/systems/services/repository/repository-list.xml:27
+#: admin/systems/services/repository/repository-list.xml:60
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_servRepositorySetup.inc:153
 msgid "Release"
@@ -732,7 +741,6 @@ msgid "Display objects matching"
 msgstr "Toon overeenkomende objecten"
 
 #: admin/fai/faiPackageEntry.tpl:50 admin/fai/faiProfileEntry.tpl:59
-#: admin/systems/services/repository/class_divListRepositories.inc:26
 msgid "Regular expression for matching object names"
 msgstr "Reguliere expressie voor overeenkomende objectnamen"
 
@@ -841,7 +849,8 @@ msgstr "Doorgaan"
 #: admin/fai/class_faiPackageEntry.inc:195 admin/fai/class_FAI.inc:574
 #: admin/fai/class_faiPackageConfiguration.inc:35
 #: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
-#: admin/systems/services/repository/class_servRepository.inc:362
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:357
+#: admin/systems/services/repository/class_servRepository.inc:357
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Zoek binnen subtree"
@@ -1134,10 +1143,12 @@ msgid "List of deployment classes and products"
 msgstr "Toon alleen klassen met pakketten"
 
 #: admin/fai/fai-list.xml:41
+#: admin/systems/services/repository/repository-list.xml:43
 msgid "Actions"
 msgstr "Acties"
 
 #: admin/fai/fai-list.xml:52
+#: admin/systems/services/repository/repository-list.xml:54
 msgid "Create"
 msgstr "Aanmaken"
 
@@ -1280,7 +1291,6 @@ msgid "missing"
 msgstr "Rechten"
 
 #: admin/fai/class_faiPartition.inc:312
-#: admin/systems/services/repository/class_divListRepositories.inc:25
 msgid "Options"
 msgstr "Opties"
 
@@ -1309,7 +1319,8 @@ msgid "FAI partition table"
 msgstr "Nieuwe partitietabel"
 
 #: admin/fai/branch_selector.tpl:2
-#: admin/systems/services/repository/class_servRepository.inc:421
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:417
+#: admin/systems/services/repository/class_servRepository.inc:417
 #, fuzzy
 msgid "Releases"
 msgstr "Distributie versie"
@@ -1498,6 +1509,7 @@ msgid "Tune options"
 msgstr "Koppelopties"
 
 #: admin/fai/fai-filter.tpl:3
+#: admin/systems/services/repository/repository-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Filters"
@@ -1654,7 +1666,8 @@ msgid "Unknown FAI information source!"
 msgstr "Persoonlijke informatie"
 
 #: admin/fai/class_faiSummaryTab.inc:183
-#: admin/systems/services/repository/class_servRepository.inc:93
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:201
+#: admin/systems/services/repository/class_servRepository.inc:201
 msgid "You can't use this plugin until FAI is activated."
 msgstr ""
 
@@ -1711,60 +1724,71 @@ msgid ""
 "effect."
 msgstr ""
 
-#: admin/systems/services/repository/class_divListRepositories.inc:19
+#: admin/systems/services/repository/repository-list.xml:10
 #, fuzzy
-msgid "List of configured repositories"
+msgid "List of repositories"
 msgstr "Lijst met gebruikers"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:20
+#: admin/systems/services/repository/repository-list.xml:14
 #, fuzzy
-msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
-"Dit menu maakt het mogelijk om FAI klassen aan te maken, bewerken en "
-"verwijderen."
+msgid "Service"
+msgstr "Services"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:24
-#: admin/systems/services/repository/class_divListRepositories.inc:64
+#: admin/systems/services/repository/repository-list.xml:35
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:419
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
-#: admin/systems/services/repository/class_servRepository.inc:423
+#: admin/systems/services/repository/class_servRepository.inc:419
 #, fuzzy
 msgid "Sections"
 msgstr "Sectie"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:33
-#, fuzzy
-msgid "Add repository"
-msgstr "Directory"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:8
-#: admin/systems/services/repository/class_servRepository.inc:420
-#, fuzzy
-msgid "Parent server"
-msgstr "Bewaar"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:28
-#: admin/systems/services/repository/class_servRepository.inc:422
-#: admin/systems/services/repository/class_servRepositorySetup.inc:157
-msgid "URL"
-msgstr ""
-
-#: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:344
-#: admin/systems/services/repository/class_servRepository.inc:388
-#: admin/systems/services/repository/class_servRepository.inc:407
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:27
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:339
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:383
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
+#: admin/systems/services/repository/class_servRepository.inc:27
+#: admin/systems/services/repository/class_servRepository.inc:339
+#: admin/systems/services/repository/class_servRepository.inc:383
+#: admin/systems/services/repository/class_servRepository.inc:403
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 #, fuzzy
 msgid "Repository service"
 msgstr "Verzamelplaats"
 
-#: admin/systems/services/repository/class_servRepository.inc:179
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
+#: admin/systems/services/repository/class_servRepository.inc:159
 #, fuzzy
 msgid "FAI release"
 msgstr "FAI klassen"
 
-#: admin/systems/services/repository/class_servRepository.inc:407
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
+#: admin/systems/services/repository/class_servRepository.inc:403
 msgid "Services"
 msgstr "Services"
+
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:416
+#: admin/systems/services/repository/servRepositorySetup.tpl:8
+#: admin/systems/services/repository/class_servRepository.inc:416
+#, fuzzy
+msgid "Parent server"
+msgstr "Bewaar"
+
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:418
+#: admin/systems/services/repository/servRepositorySetup.tpl:28
+#: admin/systems/services/repository/class_servRepository.inc:418
+#: admin/systems/services/repository/class_servRepositorySetup.inc:157
+msgid "URL"
+msgstr ""
+
+#, fuzzy
+#~ msgid "This menu allows you to create, delete and edit repository settings."
+#~ msgstr ""
+#~ "Dit menu maakt het mogelijk om FAI klassen aan te maken, bewerken en "
+#~ "verwijderen."
+
+#, fuzzy
+#~ msgid "Add repository"
+#~ msgstr "Directory"
 
 #~ msgid ""
 #~ "This includes 'all' object information. Please double check if your "

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:12+0100\n"
 "PO-Revision-Date: 2009-07-22 13:16+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
@@ -406,6 +406,8 @@ msgstr "Anwendungs-Einstellungen"
 #: admin/systems/goto/class_terminalGeneric.inc:453
 #: admin/systems/goto/class_terminalGeneric.inc:472
 #: admin/systems/goto/class_terminalGeneric.inc:698
+#: addons/goto/events/eventTargetSystems-list.xml:65
+#: addons/goto/events/eventTargetUser-list.xml:49
 #: personal/environment/class_logonManagementDialog.inc:103
 msgid "Name"
 msgstr "Name"
@@ -637,9 +639,9 @@ msgstr "Geräte"
 #: admin/systems/goto/class_workstationGeneric.inc:711
 #: admin/systems/goto/class_terminalGeneric.inc:700
 #: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
-#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
-#: addons/goto/events/class_EventTargetAddList.inc:161
-#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+#: addons/goto/goto_import_file.tpl:41
+#: addons/goto/events/eventTargetSystems-list.tpl:13
+#: addons/goto/events/eventTargetUser-list.tpl:13
 msgid "Base"
 msgstr "Basis"
 
@@ -686,6 +688,8 @@ msgstr "(idProduct)"
 #: admin/applications/application-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter-release.tpl:3
 #: admin/mimetypes/mimetype-filter.tpl:3
+#: addons/goto/events/eventTargetSystems-filter.tpl:3
+#: addons/goto/events/eventTargetUser-filter.tpl:3
 msgid "Filter"
 msgstr "Filter"
 
@@ -733,7 +737,6 @@ msgstr "iSerial"
 #: admin/systems/goto/class_workstationStartup.inc:247
 #: admin/systems/goto/class_workstationStartup.inc:324
 #: admin/systems/goto/class_workstationStartup.inc:432
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
 #: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 #: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:528
 #: addons/goto/class_gotomasses.inc:670 addons/goto/class_gotomasses.inc:706
@@ -786,13 +789,15 @@ msgstr "Geräte-ID"
 #: admin/devices/device-list.tpl:13 admin/applications/generic.tpl:82
 #: admin/applications/application-list.tpl:13 admin/mimetypes/generic.tpl:84
 #: admin/mimetypes/mimetype-list.tpl:13
+#: addons/goto/events/eventTargetSystems-list.tpl:13
+#: addons/goto/events/eventTargetUser-list.tpl:13
 msgid "Update"
 msgstr "Aktualisieren"
 
 #: admin/devices/device-list.tpl:13 admin/applications/application-list.tpl:13
-#: admin/mimetypes/mimetype-list.tpl:13 addons/goto/class_target_list.inc:154
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: admin/mimetypes/mimetype-list.tpl:13
+#: addons/goto/events/eventTargetSystems-list.tpl:13
+#: addons/goto/events/eventTargetUser-list.tpl:13
 msgid "Submit"
 msgstr "Übertragen"
 
@@ -1217,8 +1222,7 @@ msgstr "tragen-sie-den-dns-namen-des-servers-ein"
 #: admin/systems/services/nfs/servnfs.tpl:39
 #: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_SelectDeviceType.inc:38
-#: addons/goto/class_target_list.inc:201
-#: addons/goto/events/class_EventTargetAddList.inc:238
+#: addons/goto/events/eventTargetSystems-list.xml:15
 #: personal/environment/environment.tpl:135
 msgid "Server"
 msgstr "Server"
@@ -1513,8 +1517,7 @@ msgstr "Wählen Sie eine Objektgruppe als Vorlageobjekt"
 
 #: admin/systems/goto/ArpNewDevice.tpl:61
 #: admin/systems/goto/SelectDeviceType.tpl:37
-#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
-#: addons/goto/events/class_EventTargetAddList.inc:259
+#: addons/goto/goto_import_file.tpl:40
 msgid "Object group"
 msgstr "Objektgruppe"
 
@@ -1631,12 +1634,12 @@ msgstr "Drucker URL"
 
 #: admin/systems/goto/class_printGeneric.inc:971
 #: admin/systems/goto/class_printGeneric.inc:973
-#: addons/goto/events/class_EventTargetAddUsersList.inc:173
+#: addons/goto/events/eventTargetUser-list.xml:23
 msgid "Group"
 msgstr "Gruppe"
 
 #: admin/systems/goto/class_printGeneric.inc:976
-#: addons/goto/events/class_EventTargetAddUsersList.inc:171
+#: addons/goto/events/eventTargetUser-list.xml:15
 msgid "User"
 msgstr "Benutzer"
 
@@ -1797,8 +1800,7 @@ msgstr "System-Informationen"
 #: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_workstationGeneric.inc:705
 #: admin/systems/goto/class_SelectDeviceType.inc:38
-#: addons/goto/class_target_list.inc:203
-#: addons/goto/events/class_EventTargetAddList.inc:249
+#: addons/goto/events/eventTargetSystems-list.xml:23
 msgid "Workstation"
 msgstr "Arbeitsstation"
 
@@ -1806,6 +1808,7 @@ msgstr "Arbeitsstation"
 #: admin/systems/goto/class_SelectDeviceType.inc:38
 #: admin/systems/goto/class_terminalGeneric.inc:689
 #: admin/systems/goto/class_terminalGeneric.inc:695
+#: addons/goto/events/eventTargetSystems-list.xml:31
 msgid "Terminal"
 msgstr "Terminal"
 
@@ -2846,80 +2849,6 @@ msgstr "Auswahl der Drucker-PPD"
 msgid "delete"
 msgstr "Entfernen"
 
-#: addons/goto/class_target_list.inc:58
-msgid "Select the target objects for your scheduled action."
-msgstr "Wählen Sie die Zielobjekte für den geplanten Vorgang."
-
-#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
-msgid "Available targets"
-msgstr "Verfügbare Ziele"
-
-#: addons/goto/class_target_list.inc:69
-msgid "Object name"
-msgstr "Objektname"
-
-#: addons/goto/class_target_list.inc:72
-msgid "Select to see object groups"
-msgstr "Auswählen um Objektgruppen zu sehen"
-
-#: addons/goto/class_target_list.inc:72
-msgid "Show object groups"
-msgstr "Zeige Objektgruppen"
-
-#: addons/goto/class_target_list.inc:73
-msgid "Select to see servers"
-msgstr "Wählen um Server anzuzeigen"
-
-#: addons/goto/class_target_list.inc:73
-msgid "Show servers"
-msgstr "Zeige Server"
-
-#: addons/goto/class_target_list.inc:74
-msgid "Select to see workstations"
-msgstr "Auswählen um Arbeitsstationen zu sehen"
-
-#: addons/goto/class_target_list.inc:74
-msgid "Show workstations"
-msgstr "Zeige Arbeitsstationen"
-
-#: addons/goto/class_target_list.inc:75
-msgid "Select to see incoming objects"
-msgstr "Auswählen um neue Objekte zu sehen"
-
-#: addons/goto/class_target_list.inc:75
-msgid "Show new objects"
-msgstr "Zeige neue Objekte"
-
-#: addons/goto/class_target_list.inc:80
-msgid "Select to search for a specific IP range only"
-msgstr "Auswählen um nur in einem bestimmten IP-Bereich zu suchen"
-
-#: addons/goto/class_target_list.inc:80
-msgid "Match IP range"
-msgstr "IP-Bereich"
-
-#: addons/goto/class_target_list.inc:83
-msgid "Regular expression for matching group names"
-msgstr "Regulärer Ausdruck zum Erkennen von Gruppennamen"
-
-#: addons/goto/class_target_list.inc:84
-msgid "IP range start"
-msgstr "Beginn des IP-Bereichs"
-
-#: addons/goto/class_target_list.inc:85
-msgid "IP range end"
-msgstr "Ende des IP-Bereichs"
-
-#: addons/goto/class_target_list.inc:154
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-msgid "Submit department"
-msgstr "Aktualisieren"
-
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
-msgid "IP range"
-msgstr "IP-Bereich"
-
 #: addons/goto/goto_import_file.tpl:1
 msgid "Import jobs"
 msgstr "Vorgänge importieren"
@@ -3008,6 +2937,7 @@ msgid "FQDN"
 msgstr "FQDN"
 
 #: addons/goto/goto_import_file.tpl:43
+#: addons/goto/events/eventTargetSystems-list.xml:81
 msgid "IP"
 msgstr "IP"
 
@@ -3384,41 +3314,6 @@ msgstr "System aufwecken"
 msgid "Activate new"
 msgstr "Neue Geräte Aktivieren"
 
-#: addons/goto/events/class_EventTargetAddList.inc:51
-#: addons/goto/events/class_EventTargetAddUsersList.inc:45
-msgid "Targets"
-msgstr "Ziele"
-
-#: addons/goto/events/class_EventTargetAddList.inc:55
-msgid ""
-"This dialog shows all available targets for the event. Check the targets you "
-"want to add and use the 'Apply' button."
-msgstr ""
-"Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie die "
-"zu verwendenden Ziele und drücken Sie auf den Knopf 'Anwenden' um die "
-"Auswahl zu übernehmen."
-
-#: addons/goto/events/class_EventTargetAddList.inc:66
-#: addons/goto/events/class_EventTargetAddUsersList.inc:60
-msgid "System / Department"
-msgstr "System / Abteilung"
-
-#: addons/goto/events/class_EventTargetAddList.inc:73
-msgid "Display server"
-msgstr "Zeige Server"
-
-#: addons/goto/events/class_EventTargetAddList.inc:74
-msgid "Display workstation"
-msgstr "Zeige Arbeitsstation"
-
-#: addons/goto/events/class_EventTargetAddList.inc:75
-msgid "Display object groups"
-msgstr "Zeige die Objektgruppen, auf die Folgendes passt"
-
-#: addons/goto/events/class_EventTargetAddList.inc:76
-msgid "Filter by IP range"
-msgstr "IP-Bereichsfilter"
-
 #: addons/goto/events/timestamp_select.tpl:3
 msgid "Year"
 msgstr "Jahr"
@@ -3451,6 +3346,24 @@ msgstr "Periodischer Auftrag"
 msgid "Job intervall"
 msgstr "Aufstrags-Intervall"
 
+#: addons/goto/events/eventTargetSystems-filter.tpl:11
+msgid "Show servers"
+msgstr "Zeige Server"
+
+#: addons/goto/events/eventTargetSystems-filter.tpl:12
+msgid "Show workstations"
+msgstr "Zeige Arbeitsstationen"
+
+#: addons/goto/events/eventTargetSystems-filter.tpl:13
+#, fuzzy
+msgid "Show terminals"
+msgstr "Terminals"
+
+#: addons/goto/events/eventTargetSystems-filter.tpl:14
+#, fuzzy
+msgid "Filter by IP address range"
+msgstr "IP-Bereichsfilter"
+
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
 msgid "Reload LDAP config"
@@ -3465,22 +3378,36 @@ msgstr "Nachricht senden"
 msgid "From"
 msgstr "Von"
 
-#: addons/goto/events/class_EventTargetAddUsersList.inc:49
-msgid ""
-"This dialog shows all available targets for your event, check the targets "
-"you want to add and use the 'Use' button to accept."
-msgstr ""
-"Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie die "
-"zu verwendenden Ziele und drücken Sie auf den Knopf 'Verwenden' um die "
-"Auswahl zu übernehmen."
+#: addons/goto/events/eventTargetUser-filter.tpl:11
+#, fuzzy
+msgid "Show groups"
+msgstr "Zeige Mail Gruppen"
 
-#: addons/goto/events/class_EventTargetAddUsersList.inc:65
-msgid "Display users"
-msgstr "Zeige Benutzer"
+#: addons/goto/events/eventTargetUser-filter.tpl:12
+#, fuzzy
+msgid "Show users"
+msgstr "Zeige Server"
 
-#: addons/goto/events/class_EventTargetAddUsersList.inc:66
-msgid "Display groups"
-msgstr "Zeige Gruppen"
+#: addons/goto/events/eventTargetSystems-list.xml:11
+#, fuzzy
+msgid "List of systems"
+msgstr "Liste der Benutzer"
+
+#: addons/goto/events/eventTargetSystems-list.xml:39
+#, fuzzy
+msgid "Object Group"
+msgstr "Objektgruppe"
+
+#: addons/goto/events/eventTargetSystems-list.xml:73
+#: addons/goto/events/eventTargetUser-list.xml:57
+#, fuzzy
+msgid "Description name"
+msgstr "Beschreibung"
+
+#: addons/goto/events/eventTargetSystems-list.xml:89
+#, fuzzy
+msgid "Mac"
+msgstr "März"
 
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
@@ -3499,6 +3426,10 @@ msgstr "Zeitplan"
 #: addons/goto/events/DaemonEvent_reinstall.tpl:39
 msgid "Progress"
 msgstr "Fortschritt"
+
+#: addons/goto/events/eventTargetUser-list.xml:11
+msgid "List of users"
+msgstr "Liste der Benutzer"
 
 #: addons/goto/class_goto_import_file.inc:90
 msgid ""
@@ -3843,6 +3774,91 @@ msgstr "Zeige die Benutzer, auf die Folgendes passt"
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
 msgstr "Regulärer Ausdruck zum Erkennen von Hotplug-Geräten"
+
+#~ msgid "Select the target objects for your scheduled action."
+#~ msgstr "Wählen Sie die Zielobjekte für den geplanten Vorgang."
+
+#~ msgid "Available targets"
+#~ msgstr "Verfügbare Ziele"
+
+#~ msgid "Object name"
+#~ msgstr "Objektname"
+
+#~ msgid "Select to see object groups"
+#~ msgstr "Auswählen um Objektgruppen zu sehen"
+
+#~ msgid "Show object groups"
+#~ msgstr "Zeige Objektgruppen"
+
+#~ msgid "Select to see servers"
+#~ msgstr "Wählen um Server anzuzeigen"
+
+#~ msgid "Select to see workstations"
+#~ msgstr "Auswählen um Arbeitsstationen zu sehen"
+
+#~ msgid "Select to see incoming objects"
+#~ msgstr "Auswählen um neue Objekte zu sehen"
+
+#~ msgid "Show new objects"
+#~ msgstr "Zeige neue Objekte"
+
+#~ msgid "Select to search for a specific IP range only"
+#~ msgstr "Auswählen um nur in einem bestimmten IP-Bereich zu suchen"
+
+#~ msgid "Match IP range"
+#~ msgstr "IP-Bereich"
+
+#~ msgid "Regular expression for matching group names"
+#~ msgstr "Regulärer Ausdruck zum Erkennen von Gruppennamen"
+
+#~ msgid "IP range start"
+#~ msgstr "Beginn des IP-Bereichs"
+
+#~ msgid "IP range end"
+#~ msgstr "Ende des IP-Bereichs"
+
+#~ msgid "Submit department"
+#~ msgstr "Aktualisieren"
+
+#~ msgid "IP range"
+#~ msgstr "IP-Bereich"
+
+#~ msgid "Targets"
+#~ msgstr "Ziele"
+
+#~ msgid ""
+#~ "This dialog shows all available targets for the event. Check the targets "
+#~ "you want to add and use the 'Apply' button."
+#~ msgstr ""
+#~ "Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie "
+#~ "die zu verwendenden Ziele und drücken Sie auf den Knopf 'Anwenden' um die "
+#~ "Auswahl zu übernehmen."
+
+#~ msgid "System / Department"
+#~ msgstr "System / Abteilung"
+
+#~ msgid "Display server"
+#~ msgstr "Zeige Server"
+
+#~ msgid "Display workstation"
+#~ msgstr "Zeige Arbeitsstation"
+
+#~ msgid "Display object groups"
+#~ msgstr "Zeige die Objektgruppen, auf die Folgendes passt"
+
+#~ msgid ""
+#~ "This dialog shows all available targets for your event, check the targets "
+#~ "you want to add and use the 'Use' button to accept."
+#~ msgstr ""
+#~ "Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie "
+#~ "die zu verwendenden Ziele und drücken Sie auf den Knopf 'Verwenden' um "
+#~ "die Auswahl zu übernehmen."
+
+#~ msgid "Display users"
+#~ msgstr "Zeige Benutzer"
+
+#~ msgid "Display groups"
+#~ msgstr "Zeige Gruppen"
 
 #~ msgid "List of defined devices"
 #~ msgstr "Liste der definierten Geräte"

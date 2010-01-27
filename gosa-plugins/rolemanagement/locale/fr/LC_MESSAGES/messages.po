@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2010-01-18 23:06+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -189,4 +189,3 @@ msgstr "Afficher les objets correspondants"
 #: admin/roleManagement/occupantSelect.tpl:35
 msgid "Regular expression for matching object names"
 msgstr "Expression régulière pour trouver les objets correspondants"
-

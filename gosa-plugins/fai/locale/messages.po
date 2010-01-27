@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,9 +145,12 @@ msgstr ""
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:348
 #: admin/fai/class_faiSummaryTab.inc:94 admin/fai/tabsProfile.inc:33
-#: admin/systems/services/repository/class_servRepository.inc:179
-#: admin/systems/services/repository/class_servRepository.inc:213
-#: admin/systems/services/repository/class_servRepository.inc:218
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:219
+#: admin/systems/services/repository/class_servRepository.inc:159
+#: admin/systems/services/repository/class_servRepository.inc:214
+#: admin/systems/services/repository/class_servRepository.inc:219
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Error"
 msgstr ""
@@ -221,7 +224,8 @@ msgstr ""
 #: admin/fai/class_faiPackage.inc:657 admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:299
 #: admin/fai/class_faiSummaryTab.inc:348 admin/fai/faiPartitionTable.tpl:9
-#: admin/systems/services/repository/class_servRepository.inc:213
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
+#: admin/systems/services/repository/class_servRepository.inc:214
 msgid "Name"
 msgstr ""
 
@@ -319,6 +323,8 @@ msgstr ""
 #: admin/fai/class_faiPartitionTableEntry.inc:252
 #: admin/fai/class_faiPartitionTableEntry.inc:254 admin/fai/fai-list.xml:107
 #: admin/fai/fai-list.xml:146
+#: admin/systems/services/repository/repository-list.xml:72
+#: admin/systems/services/repository/repository-list.xml:98
 msgid "Remove"
 msgstr ""
 
@@ -415,6 +421,7 @@ msgstr ""
 
 #: admin/fai/faiVariable.tpl:53 admin/fai/class_faiHook.inc:312
 #: admin/fai/class_faiHook.inc:314 admin/fai/fai-list.xml:138
+#: admin/systems/services/repository/repository-list.xml:91
 msgid "Edit"
 msgstr ""
 
@@ -534,15 +541,17 @@ msgid "List of scripts"
 msgstr ""
 
 #: admin/fai/faiPackage.tpl:33
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:402
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
-#: admin/systems/services/repository/class_servRepository.inc:406
+#: admin/systems/services/repository/class_servRepository.inc:402
 msgid "Repository"
 msgstr ""
 
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
 #: admin/fai/fai-filter.tpl:12 admin/fai/fai-filter.tpl:26
 #: admin/fai/class_faiPackage.inc:663
-#: admin/systems/services/repository/class_divListRepositories.inc:23
+#: admin/systems/services/repository/repository-list.xml:27
+#: admin/systems/services/repository/repository-list.xml:60
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_servRepositorySetup.inc:153
 msgid "Release"
@@ -676,7 +685,6 @@ msgid "Display objects matching"
 msgstr ""
 
 #: admin/fai/faiPackageEntry.tpl:50 admin/fai/faiProfileEntry.tpl:59
-#: admin/systems/services/repository/class_divListRepositories.inc:26
 msgid "Regular expression for matching object names"
 msgstr ""
 
@@ -771,7 +779,8 @@ msgstr ""
 #: admin/fai/class_faiPackageEntry.inc:195 admin/fai/class_FAI.inc:574
 #: admin/fai/class_faiPackageConfiguration.inc:35
 #: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
-#: admin/systems/services/repository/class_servRepository.inc:362
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:357
+#: admin/systems/services/repository/class_servRepository.inc:357
 msgid "Service infrastructure"
 msgstr ""
 
@@ -1037,10 +1046,12 @@ msgid "List of deployment classes and products"
 msgstr ""
 
 #: admin/fai/fai-list.xml:41
+#: admin/systems/services/repository/repository-list.xml:43
 msgid "Actions"
 msgstr ""
 
 #: admin/fai/fai-list.xml:52
+#: admin/systems/services/repository/repository-list.xml:54
 msgid "Create"
 msgstr ""
 
@@ -1177,7 +1188,6 @@ msgid "missing"
 msgstr ""
 
 #: admin/fai/class_faiPartition.inc:312
-#: admin/systems/services/repository/class_divListRepositories.inc:25
 msgid "Options"
 msgstr ""
 
@@ -1203,7 +1213,8 @@ msgid "FAI partition table"
 msgstr ""
 
 #: admin/fai/branch_selector.tpl:2
-#: admin/systems/services/repository/class_servRepository.inc:421
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:417
+#: admin/systems/services/repository/class_servRepository.inc:417
 msgid "Releases"
 msgstr ""
 
@@ -1360,6 +1371,7 @@ msgid "Tune options"
 msgstr ""
 
 #: admin/fai/fai-filter.tpl:3
+#: admin/systems/services/repository/repository-filter.tpl:3
 msgid "Filter"
 msgstr ""
 
@@ -1495,7 +1507,8 @@ msgid "Unknown FAI information source!"
 msgstr ""
 
 #: admin/fai/class_faiSummaryTab.inc:183
-#: admin/systems/services/repository/class_servRepository.inc:93
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:201
+#: admin/systems/services/repository/class_servRepository.inc:201
 msgid "You can't use this plugin until FAI is activated."
 msgstr ""
 
@@ -1551,48 +1564,52 @@ msgid ""
 "effect."
 msgstr ""
 
-#: admin/systems/services/repository/class_divListRepositories.inc:19
-msgid "List of configured repositories"
+#: admin/systems/services/repository/repository-list.xml:10
+msgid "List of repositories"
 msgstr ""
 
-#: admin/systems/services/repository/class_divListRepositories.inc:20
-msgid "This menu allows you to create, delete and edit repository settings."
+#: admin/systems/services/repository/repository-list.xml:14
+msgid "Service"
 msgstr ""
 
-#: admin/systems/services/repository/class_divListRepositories.inc:24
-#: admin/systems/services/repository/class_divListRepositories.inc:64
+#: admin/systems/services/repository/repository-list.xml:35
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:419
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
-#: admin/systems/services/repository/class_servRepository.inc:423
+#: admin/systems/services/repository/class_servRepository.inc:419
 msgid "Sections"
 msgstr ""
 
-#: admin/systems/services/repository/class_divListRepositories.inc:33
-msgid "Add repository"
-msgstr ""
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:8
-#: admin/systems/services/repository/class_servRepository.inc:420
-msgid "Parent server"
-msgstr ""
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:28
-#: admin/systems/services/repository/class_servRepository.inc:422
-#: admin/systems/services/repository/class_servRepositorySetup.inc:157
-msgid "URL"
-msgstr ""
-
-#: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:344
-#: admin/systems/services/repository/class_servRepository.inc:388
-#: admin/systems/services/repository/class_servRepository.inc:407
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:27
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:339
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:383
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
+#: admin/systems/services/repository/class_servRepository.inc:27
+#: admin/systems/services/repository/class_servRepository.inc:339
+#: admin/systems/services/repository/class_servRepository.inc:383
+#: admin/systems/services/repository/class_servRepository.inc:403
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Repository service"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:179
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
+#: admin/systems/services/repository/class_servRepository.inc:159
 msgid "FAI release"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:407
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
+#: admin/systems/services/repository/class_servRepository.inc:403
 msgid "Services"
+msgstr ""
+
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:416
+#: admin/systems/services/repository/servRepositorySetup.tpl:8
+#: admin/systems/services/repository/class_servRepository.inc:416
+msgid "Parent server"
+msgstr ""
+
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:418
+#: admin/systems/services/repository/servRepositorySetup.tpl:28
+#: admin/systems/services/repository/class_servRepository.inc:418
+#: admin/systems/services/repository/class_servRepositorySetup.inc:157
+msgid "URL"
 msgstr ""

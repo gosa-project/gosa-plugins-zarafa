@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:12+0100\n"
 "PO-Revision-Date: 2010-01-18 22:53+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -143,9 +143,12 @@ msgstr "permanent"
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:348
 #: admin/fai/class_faiSummaryTab.inc:94 admin/fai/tabsProfile.inc:33
-#: admin/systems/services/repository/class_servRepository.inc:179
-#: admin/systems/services/repository/class_servRepository.inc:213
-#: admin/systems/services/repository/class_servRepository.inc:218
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:219
+#: admin/systems/services/repository/class_servRepository.inc:159
+#: admin/systems/services/repository/class_servRepository.inc:214
+#: admin/systems/services/repository/class_servRepository.inc:219
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Error"
 msgstr "Erreur"
@@ -161,7 +164,8 @@ msgstr ""
 
 #: admin/fai/class_faiTemplateEdit.inc:60
 #, php-format
-msgid "The file encodig has changed from '%s' to '%s'. Do you really want to save?"
+msgid ""
+"The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 "L'encodage du fichier à changé de '%s' vers '%s', voulez vous réellement le "
 "sauver ?"
@@ -228,7 +232,8 @@ msgstr "Périphérique"
 #: admin/fai/class_faiPackage.inc:657 admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:299
 #: admin/fai/class_faiSummaryTab.inc:348 admin/fai/faiPartitionTable.tpl:9
-#: admin/systems/services/repository/class_servRepository.inc:213
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
+#: admin/systems/services/repository/class_servRepository.inc:214
 msgid "Name"
 msgstr "Nom"
 
@@ -326,6 +331,8 @@ msgstr "Vrai"
 #: admin/fai/class_faiPartitionTableEntry.inc:252
 #: admin/fai/class_faiPartitionTableEntry.inc:254 admin/fai/fai-list.xml:107
 #: admin/fai/fai-list.xml:146
+#: admin/systems/services/repository/repository-list.xml:72
+#: admin/systems/services/repository/repository-list.xml:98
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -428,6 +435,7 @@ msgstr "Choisissez une variable à effacer ou éditer"
 
 #: admin/fai/faiVariable.tpl:53 admin/fai/class_faiHook.inc:312
 #: admin/fai/class_faiHook.inc:314 admin/fai/fai-list.xml:138
+#: admin/systems/services/repository/repository-list.xml:91
 msgid "Edit"
 msgstr "Editer"
 
@@ -474,7 +482,8 @@ msgstr "Taille"
 #: admin/fai/class_faiDiskEntry.inc:428
 #: admin/fai/class_faiPartitionTable.inc:245
 #, php-format
-msgid "The disk cannot be deleted while it is used in the '%s' disk definition!"
+msgid ""
+"The disk cannot be deleted while it is used in the '%s' disk definition!"
 msgstr ""
 "Ce disque ne peut pas être supprimé car il est utilisé par la définition de "
 "disque '%s' !"
@@ -552,15 +561,17 @@ msgid "List of scripts"
 msgstr "Liste des scripts"
 
 #: admin/fai/faiPackage.tpl:33
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:402
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
-#: admin/systems/services/repository/class_servRepository.inc:406
+#: admin/systems/services/repository/class_servRepository.inc:402
 msgid "Repository"
 msgstr "Dépôt"
 
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
 #: admin/fai/fai-filter.tpl:12 admin/fai/fai-filter.tpl:26
 #: admin/fai/class_faiPackage.inc:663
-#: admin/systems/services/repository/class_divListRepositories.inc:23
+#: admin/systems/services/repository/repository-list.xml:27
+#: admin/systems/services/repository/repository-list.xml:60
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_servRepositorySetup.inc:153
 msgid "Release"
@@ -670,8 +681,11 @@ msgid "List of available packages"
 msgstr "Liste des paquets disponibles"
 
 #: admin/fai/faiPackageEntry.tpl:17
-msgid "The search returned too many results, only the first 200 entries are shown."
-msgstr "La recherche à retourné trop de résultats. seulement les 200 premières entrées sont affichées."
+msgid ""
+"The search returned too many results, only the first 200 entries are shown."
+msgstr ""
+"La recherche à retourné trop de résultats. seulement les 200 premières "
+"entrées sont affichées."
 
 #: admin/fai/faiPackageEntry.tpl:26 admin/fai/faiProfileEntry.tpl:21
 msgid "Information"
@@ -695,7 +709,6 @@ msgid "Display objects matching"
 msgstr "Afficher les objets correspondants"
 
 #: admin/fai/faiPackageEntry.tpl:50 admin/fai/faiProfileEntry.tpl:59
-#: admin/systems/services/repository/class_divListRepositories.inc:26
 msgid "Regular expression for matching object names"
 msgstr "Expression régulière pour trouver les objets correspondants"
 
@@ -754,7 +767,8 @@ msgstr "Branche verrouillée"
 #: admin/fai/class_faiManagement.inc:393
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
-msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+msgstr ""
+"Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
 
 #: admin/fai/class_faiManagement.inc:411
 msgid "FAI object"
@@ -792,7 +806,8 @@ msgstr "Continuer"
 #: admin/fai/class_faiPackageEntry.inc:195 admin/fai/class_FAI.inc:574
 #: admin/fai/class_faiPackageConfiguration.inc:35
 #: admin/fai/class_faiPackage.inc:258 admin/fai/class_faiPackage.inc:554
-#: admin/systems/services/repository/class_servRepository.inc:362
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:357
+#: admin/systems/services/repository/class_servRepository.inc:357
 msgid "Service infrastructure"
 msgstr "Service d'infrastructure"
 
@@ -892,7 +907,8 @@ msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid "This list displays all assigned package names for this repository settings."
+msgid ""
+"This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/paste_generic.tpl:1
@@ -1029,7 +1045,8 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1084
 msgid "Could not create new release, the destination dn is already in use."
-msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr ""
+"Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1097
 msgid "Error while fetching source dn - aborted!"
@@ -1037,7 +1054,8 @@ msgstr "Une erreur s'est produite lors de la récupération du dn - Arrêt !"
 
 #: admin/fai/class_FAI.inc:1179
 #, php-format
-msgid "Release creation failed due to ldap errors. Additional informations '%s'."
+msgid ""
+"Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 "La création de la version à échoué du à des erreurs ldap. Information "
 "additionnelles '%s'."
@@ -1064,10 +1082,12 @@ msgid "List of deployment classes and products"
 msgstr "Listes des classes et des paquets de déploiement"
 
 #: admin/fai/fai-list.xml:41
+#: admin/systems/services/repository/repository-list.xml:43
 msgid "Actions"
 msgstr "Actions"
 
 #: admin/fai/fai-list.xml:52
+#: admin/systems/services/repository/repository-list.xml:54
 msgid "Create"
 msgstr "Créer"
 
@@ -1206,7 +1226,6 @@ msgid "missing"
 msgstr "manquant"
 
 #: admin/fai/class_faiPartition.inc:312
-#: admin/systems/services/repository/class_divListRepositories.inc:25
 msgid "Options"
 msgstr "Options"
 
@@ -1223,7 +1242,8 @@ msgid "Raid arrays must contain at least two partitions!"
 msgstr "Les ensembles RAID doit contenir au moins 2 partitions !"
 
 #: admin/fai/class_faiPartition.inc:406
-msgid "Raid 0 arrays can only be realized with a combination of two partitions!"
+msgid ""
+"Raid 0 arrays can only be realized with a combination of two partitions!"
 msgstr "Les ensembles RAID 0 ne peuvent être réalisé qu'avec deux partitions !"
 
 #: admin/fai/class_faiPartitionTable.inc:785
@@ -1231,7 +1251,8 @@ msgid "FAI partition table"
 msgstr "Table des partitions FAI"
 
 #: admin/fai/branch_selector.tpl:2
-#: admin/systems/services/repository/class_servRepository.inc:421
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:417
+#: admin/systems/services/repository/class_servRepository.inc:417
 msgid "Releases"
 msgstr "Versions"
 
@@ -1409,6 +1430,7 @@ msgid "Tune options"
 msgstr "Options de tuning"
 
 #: admin/fai/fai-filter.tpl:3
+#: admin/systems/services/repository/repository-filter.tpl:3
 msgid "Filter"
 msgstr "Filtre"
 
@@ -1482,7 +1504,8 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:522
-msgid "Please choose a valid release/section combination for your repository setup!"
+msgid ""
+"Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -1545,9 +1568,11 @@ msgid "Unknown FAI information source!"
 msgstr "Source d'information FAI inconnue !"
 
 #: admin/fai/class_faiSummaryTab.inc:183
-#: admin/systems/services/repository/class_servRepository.inc:93
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:201
+#: admin/systems/services/repository/class_servRepository.inc:201
 msgid "You can't use this plugin until FAI is activated."
-msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr ""
+"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/fai/class_faiSummaryTab.inc:225
 msgid "This object has no FAI classes assigned."
@@ -1605,49 +1630,61 @@ msgstr ""
 "être affichées ici. Le texte entré doit être un de ces choix pour être "
 "valide."
 
-#: admin/systems/services/repository/class_divListRepositories.inc:19
-msgid "List of configured repositories"
+#: admin/systems/services/repository/repository-list.xml:10
+#, fuzzy
+msgid "List of repositories"
 msgstr "Liste des dépôts configurés."
 
-#: admin/systems/services/repository/class_divListRepositories.inc:20
-msgid "This menu allows you to create, delete and edit repository settings."
-msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+#: admin/systems/services/repository/repository-list.xml:14
+#, fuzzy
+msgid "Service"
+msgstr "Services"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:24
-#: admin/systems/services/repository/class_divListRepositories.inc:64
+#: admin/systems/services/repository/repository-list.xml:35
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:419
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
-#: admin/systems/services/repository/class_servRepository.inc:423
+#: admin/systems/services/repository/class_servRepository.inc:419
 msgid "Sections"
 msgstr "Sections"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:33
-msgid "Add repository"
-msgstr "Ajouter un dépôt"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:8
-#: admin/systems/services/repository/class_servRepository.inc:420
-msgid "Parent server"
-msgstr "Serveur parent"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:28
-#: admin/systems/services/repository/class_servRepository.inc:422
-#: admin/systems/services/repository/class_servRepositorySetup.inc:157
-msgid "URL"
-msgstr "URL"
-
-#: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:344
-#: admin/systems/services/repository/class_servRepository.inc:388
-#: admin/systems/services/repository/class_servRepository.inc:407
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:27
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:339
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:383
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
+#: admin/systems/services/repository/class_servRepository.inc:27
+#: admin/systems/services/repository/class_servRepository.inc:339
+#: admin/systems/services/repository/class_servRepository.inc:383
+#: admin/systems/services/repository/class_servRepository.inc:403
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
 msgid "Repository service"
 msgstr "Service de dépôt"
 
-#: admin/systems/services/repository/class_servRepository.inc:179
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
+#: admin/systems/services/repository/class_servRepository.inc:159
 msgid "FAI release"
 msgstr "Version FAI"
 
-#: admin/systems/services/repository/class_servRepository.inc:407
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
+#: admin/systems/services/repository/class_servRepository.inc:403
 msgid "Services"
 msgstr "Services"
 
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:416
+#: admin/systems/services/repository/servRepositorySetup.tpl:8
+#: admin/systems/services/repository/class_servRepository.inc:416
+msgid "Parent server"
+msgstr "Serveur parent"
+
+#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:418
+#: admin/systems/services/repository/servRepositorySetup.tpl:28
+#: admin/systems/services/repository/class_servRepository.inc:418
+#: admin/systems/services/repository/class_servRepositorySetup.inc:157
+msgid "URL"
+msgstr "URL"
+
+#~ msgid "This menu allows you to create, delete and edit repository settings."
+#~ msgstr ""
+#~ "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+
+#~ msgid "Add repository"
+#~ msgstr "Ajouter un dépôt"

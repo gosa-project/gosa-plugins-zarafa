@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,21 +19,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/sudo/sudo-filter.tpl:3
+#: admin/sudo/sudo-filter.tpl:3 admin/sudo/selectUser-filter.tpl:3
+#: admin/sudo/selectSystem-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Filters"
 
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:547
-#: admin/sudo/class_sudoGeneric.inc:552 admin/sudo/class_sudoGeneric.inc:557
-#: admin/sudo/class_sudoGeneric.inc:566 admin/sudo/class_sudoGeneric.inc:669
+#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:549
+#: admin/sudo/class_sudoGeneric.inc:554 admin/sudo/class_sudoGeneric.inc:559
+#: admin/sudo/class_sudoGeneric.inc:568 admin/sudo/class_sudoGeneric.inc:671
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
+#: admin/sudo/selectUser-list.xml:49 admin/sudo/sudo-list.xml:32
+#: admin/sudo/paste_generic.tpl:5 admin/sudo/selectSystem-list.xml:57
 msgid "Name"
 msgstr "Naam"
 
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:384
-#: admin/sudo/class_target_list_users.inc:177
+#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:386
+#: admin/sudo/selectUser-list.xml:15
 msgid "User"
 msgstr "Gebruiker"
 
@@ -55,67 +57,66 @@ msgstr ""
 "Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
 "om te annuleren."
 
-#: admin/sudo/class_sudoGeneric.inc:295
+#: admin/sudo/class_sudoGeneric.inc:297
 msgid "Error"
 msgstr "Fout"
 
-#: admin/sudo/class_sudoGeneric.inc:337
+#: admin/sudo/class_sudoGeneric.inc:339
 msgid "disabled"
 msgstr "gedeactiveerd"
 
-#: admin/sudo/class_sudoGeneric.inc:338
+#: admin/sudo/class_sudoGeneric.inc:340
 msgid "full access"
 msgstr "volledige toegang"
 
-#: admin/sudo/class_sudoGeneric.inc:339
+#: admin/sudo/class_sudoGeneric.inc:341
 msgid "allow access to these hosts"
 msgstr "sta toegang op deze computers toe"
 
-#: admin/sudo/class_sudoGeneric.inc:385
-#: admin/sudo/class_target_list_users.inc:178
+#: admin/sudo/class_sudoGeneric.inc:387 admin/sudo/selectUser-list.xml:23
 msgid "Group"
 msgstr "Groep"
 
-#: admin/sudo/class_sudoGeneric.inc:533
+#: admin/sudo/class_sudoGeneric.inc:535
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP fout:"
 
-#: admin/sudo/class_sudoGeneric.inc:660 admin/sudo/class_sudoManagement.inc:25
+#: admin/sudo/class_sudoGeneric.inc:662 admin/sudo/class_sudoManagement.inc:25
 #, fuzzy
 msgid "Sudo"
 msgstr "Achternaam"
 
-#: admin/sudo/class_sudoGeneric.inc:661 admin/sudo/class_sudoGeneric.inc:666
+#: admin/sudo/class_sudoGeneric.inc:663 admin/sudo/class_sudoGeneric.inc:668
 #, fuzzy
 msgid "Sudo role"
 msgstr "! onbekend id"
 
-#: admin/sudo/class_sudoGeneric.inc:670 admin/sudo/generic.tpl:15
+#: admin/sudo/class_sudoGeneric.inc:672 admin/sudo/generic.tpl:15
 #: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr "Omschrijving"
 
-#: admin/sudo/class_sudoGeneric.inc:671
+#: admin/sudo/class_sudoGeneric.inc:673
 msgid "Users"
 msgstr "Gebruikers"
 
-#: admin/sudo/class_sudoGeneric.inc:672
+#: admin/sudo/class_sudoGeneric.inc:674
 #, fuzzy
 msgid "Host"
 msgstr "Inhakers"
 
-#: admin/sudo/class_sudoGeneric.inc:673
+#: admin/sudo/class_sudoGeneric.inc:675
 #, fuzzy
 msgid "Command"
 msgstr "en"
 
-#: admin/sudo/class_sudoGeneric.inc:674
+#: admin/sudo/class_sudoGeneric.inc:676
 #, fuzzy
 msgid "Run as user"
 msgstr "Windows gebruikers"
 
-#: admin/sudo/class_sudoGeneric.inc:675
+#: admin/sudo/class_sudoGeneric.inc:677
 #, fuzzy
 msgid "Access control list"
 msgstr "Toegangsopties"
@@ -180,71 +181,19 @@ msgstr "en"
 msgid "Run as"
 msgstr "Windows gebruikers"
 
-#: admin/sudo/class_target_list_systems.inc:50
-msgid "Select the target objects for your scheduled action."
-msgstr ""
-
-#: admin/sudo/class_target_list_systems.inc:51
-#: admin/sudo/class_target_list_systems.inc:52
+#: admin/sudo/selectUser-list.xml:11
 #, fuzzy
-msgid "Available systems"
-msgstr "Beschikbare programma's"
+msgid "List of users and groups"
+msgstr "groepen"
 
-#: admin/sudo/class_target_list_systems.inc:61
-#: admin/sudo/class_target_list_users.inc:58
-msgid "Object name"
-msgstr "Objectnaam"
+#: admin/sudo/selectUser-list.xml:57 admin/sudo/selectSystem-list.xml:65
+#, fuzzy
+msgid "Description name"
+msgstr "Omschrijving"
 
-#: admin/sudo/class_target_list_systems.inc:64
-msgid "Select to see terminals"
-msgstr "Selecteer om terminals te zien"
-
-#: admin/sudo/class_target_list_systems.inc:64
-msgid "Show terminals"
-msgstr "Toon terminals"
-
-#: admin/sudo/class_target_list_systems.inc:65
-msgid "Select to see servers"
-msgstr "Selecteer om servers te zien"
-
-#: admin/sudo/class_target_list_systems.inc:65
-msgid "Show servers"
-msgstr "Toon servers"
-
-#: admin/sudo/class_target_list_systems.inc:66
-msgid "Select to see workstations"
-msgstr "Selecteer om werkstations te zien"
-
-#: admin/sudo/class_target_list_systems.inc:66
-msgid "Show workstations"
-msgstr "Toon werkstations"
-
-#: admin/sudo/class_target_list_systems.inc:73
-#: admin/sudo/class_target_list_users.inc:70
-msgid "Regular expression for matching group names"
-msgstr "Reguliere expressie voor overeenkomende groepnamen"
-
-#: admin/sudo/class_target_list_systems.inc:140
-#: admin/sudo/class_target_list_users.inc:137
-msgid "Base"
-msgstr "Basis"
-
-#: admin/sudo/class_target_list_systems.inc:142
-#: admin/sudo/class_target_list_users.inc:139
-msgid "Submit"
-msgstr "Verwerk"
-
-#: admin/sudo/class_target_list_systems.inc:183
-msgid "Server"
-msgstr "Server"
-
-#: admin/sudo/class_target_list_systems.inc:185
-msgid "Workstation"
-msgstr "Werkstation"
-
-#: admin/sudo/class_target_list_systems.inc:187
-msgid "Terminal"
-msgstr "Terminal"
+#: admin/sudo/selectUser-list.xml:75
+msgid "Add"
+msgstr "Toevoegen"
 
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
@@ -282,39 +231,17 @@ msgstr "! onbekend id"
 msgid "Remove sudo role"
 msgstr "! onbekend id"
 
-#: admin/sudo/class_target_list_users.inc:47
-#, fuzzy
-msgid "Select the target objects"
-msgstr "Selecteer om afdelingen te zien"
+#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
+msgid "Base"
+msgstr "Basis"
 
-#: admin/sudo/class_target_list_users.inc:48
-#: admin/sudo/class_target_list_users.inc:49
-msgid "Available members"
+#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
+msgid "Update"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:60
-#, fuzzy
-msgid "Select to see users"
-msgstr "Selecteer om servers te zien"
-
-#: admin/sudo/class_target_list_users.inc:60
-#, fuzzy
-msgid "Show users"
-msgstr "Toon Samba gebruikers"
-
-#: admin/sudo/class_target_list_users.inc:61
-#, fuzzy
-msgid "Select to see groups"
-msgstr "Selecteer om GOsa groepen te zien"
-
-#: admin/sudo/class_target_list_users.inc:61
-#, fuzzy
-msgid "Show groups"
-msgstr "Toon Samba groepen"
-
-#: admin/sudo/class_target_list_users.inc:139
-msgid "Apply"
-msgstr "Toepassen"
+#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
+msgid "Submit"
+msgstr "Verwerk"
 
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
@@ -371,10 +298,83 @@ msgstr "Toon de overeenkomende systemen"
 msgid "Regular expression for matching addresses"
 msgstr "Reguliere expresie voor overeenkomende adressen"
 
+#: admin/sudo/selectSystem-list.xml:11
+#, fuzzy
+msgid "List of systems"
+msgstr "Lijst met gebruikers"
+
+#: admin/sudo/selectSystem-list.xml:15
+msgid "Server"
+msgstr "Server"
+
+#: admin/sudo/selectSystem-list.xml:23
+msgid "Workstation"
+msgstr "Werkstation"
+
+#: admin/sudo/selectSystem-list.xml:31
+msgid "Terminal"
+msgstr "Terminal"
+
+#: admin/sudo/selectUser-filter.tpl:11
+#, fuzzy
+msgid "Show users"
+msgstr "Toon Samba gebruikers"
+
+#: admin/sudo/selectUser-filter.tpl:12
+#, fuzzy
+msgid "Show groups"
+msgstr "Toon Samba groepen"
+
 #: admin/sudo/class_sudoManagement.inc:26
 #, fuzzy
 msgid "Sudo management"
 msgstr "Systeembeheer"
+
+#: admin/sudo/selectSystem-filter.tpl:11
+msgid "Show servers"
+msgstr "Toon servers"
+
+#: admin/sudo/selectSystem-filter.tpl:12
+msgid "Show workstations"
+msgstr "Toon werkstations"
+
+#: admin/sudo/selectSystem-filter.tpl:13
+msgid "Show terminals"
+msgstr "Toon terminals"
+
+#, fuzzy
+#~ msgid "Available systems"
+#~ msgstr "Beschikbare programma's"
+
+#~ msgid "Object name"
+#~ msgstr "Objectnaam"
+
+#~ msgid "Select to see terminals"
+#~ msgstr "Selecteer om terminals te zien"
+
+#~ msgid "Select to see servers"
+#~ msgstr "Selecteer om servers te zien"
+
+#~ msgid "Select to see workstations"
+#~ msgstr "Selecteer om werkstations te zien"
+
+#~ msgid "Regular expression for matching group names"
+#~ msgstr "Reguliere expressie voor overeenkomende groepnamen"
+
+#, fuzzy
+#~ msgid "Select the target objects"
+#~ msgstr "Selecteer om afdelingen te zien"
+
+#, fuzzy
+#~ msgid "Select to see users"
+#~ msgstr "Selecteer om servers te zien"
+
+#, fuzzy
+#~ msgid "Select to see groups"
+#~ msgstr "Selecteer om GOsa groepen te zien"
+
+#~ msgid "Apply"
+#~ msgstr "Toepassen"
 
 #, fuzzy
 #~ msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."

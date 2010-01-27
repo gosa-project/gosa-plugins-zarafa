@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:49+0100\n"
+"POT-Creation-Date: 2010-01-27 15:12+0100\n"
 "PO-Revision-Date: 2010-01-18 22:52+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -121,8 +121,10 @@ msgstr "Adresse réseau"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:488
 #: admin/systems/services/dns/class_servDNSeditZone.inc:494
 #, php-format
-msgid "The specified network address and the network class (%s/%s) do not match!"
-msgstr "L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
+msgid ""
+"The specified network address and the network class (%s/%s) do not match!"
+msgstr ""
+"L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:498
 #: admin/systems/services/dns/class_servDNS.inc:584
@@ -169,7 +171,8 @@ msgstr "Service DNS"
 #: admin/systems/services/dns/class_servDNS.inc:151
 #, php-format
 msgid "You are going to migrate the DNS setup from server '%s'."
-msgstr "Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
+msgstr ""
+"Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
 
 #: admin/systems/services/dns/class_servDNS.inc:152
 msgid ""
@@ -192,7 +195,8 @@ msgstr "Classe"
 #: admin/systems/services/dns/class_servDNS.inc:335
 #, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
-msgstr "Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
+msgstr ""
+"Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
 
 #: admin/systems/services/dns/class_servDNS.inc:445
 #: admin/systems/services/dns/class_servDNS.inc:461
@@ -273,12 +277,14 @@ msgstr "Les enregistrements '%s' ne peuvent pas être utilisés plus d'une fois.
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:309
 #, php-format
 msgid "Please fix the empty %s record for entry '%s'."
-msgstr "Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
+msgstr ""
+"Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:317
 #, php-format
 msgid "Please fix the duplicate %s record for entry '%s'."
-msgstr "Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
+msgstr ""
+"Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:457
 msgid "Remove"
@@ -287,7 +293,9 @@ msgstr "Supprimer"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
 #, php-format
 msgid "The syntax of entry %s (record type %s, value %s) is invalid!"
-msgstr "La syntaxe de l'entrée %s (enregistrement de type %s, valeur %s) est non valide !"
+msgstr ""
+"La syntaxe de l'entrée %s (enregistrement de type %s, valeur %s) est non "
+"valide !"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
 msgid "Example"
@@ -375,7 +383,8 @@ msgstr "Masque réseau"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:38
 msgid "Zone is in use, network settings can't be modified."
-msgstr "La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
+msgstr ""
+"La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
 
 #: admin/systems/services/dns/servdnseditzone.tpl:51
 msgid "Can't be edited because the zone wasn't saved right now."
@@ -404,4 +413,3 @@ msgstr "Enregistrements mx"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "Enregistrements pour la zone globale"
-
