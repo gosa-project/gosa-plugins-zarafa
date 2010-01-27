@@ -821,41 +821,33 @@ class environment extends plugin
       foreach($this->gotoHotplugDevices as $plugs){
         $tmp[] = $plugs['name'];
       }
-      $this->dialog = new hotplugDialog($this->config,$tmp);
+      $this->dialog = new hotplugSelect($this->config, get_userinfo());
       $this->is_dialog = true;
     }
 
     /* Dialog Aborted */
-    if(isset($_POST['HotPlugCancel'])){
-      unset($this->dialog);
+    if(isset($_POST['hotplugSelect_cancel'])){
       $this->dialog= FALSE;
       $this->is_dialog = false;
     }
 
     /* Dialod saved */
-    if(isset($_POST['HotPlugSave'])){
+    if(isset($_POST['hotplugSelect_save'])){
 
-      $this->dialog->save_object();
-      if(count($this->dialog->check())!=0){
-        foreach($this->dialog->check() as $msg){
-          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+      $res = $this->dialog->save();
+      foreach($res as $hotplug){
+        $name = $hotplug['cn'][0];
+        if($this->multiple_support_active){
+          $hotplug['UsedByAllUsers'] = TRUE;
         }
-      }else{
-        $this->dialog->save_object();
-        $a_tmp = $this->dialog->save();
-
-        if(is_array($a_tmp)){
-          foreach($a_tmp as $name => $hotplug){
-            if($this->multiple_support_active){
-              $hotplug['UsedByAllUsers'] = TRUE;
-            }
-            $this->gotoHotplugDevices[$name]= $hotplug; 
-          }
-        }
-        unset($this->dialog);
-        $this->dialog= FALSE;
-        $this->is_dialog = false;
+        $this->gotoHotplugDevices[$name]= $hotplug; 
       }
+      $this->dialog= FALSE;
+      $this->is_dialog = false;
+    }
+
+    if($this->dialog instanceOf hotplugSelect){
+      return($this->dialog->execute());
     }
 
     if($this->multiple_support_active){
