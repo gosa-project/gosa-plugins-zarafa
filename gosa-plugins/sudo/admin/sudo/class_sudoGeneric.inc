@@ -229,15 +229,11 @@ class sudo extends plugin
      *********************/ 
   
     if(isset($_POST['list_sudoHost']) && !is_object($this->dialog) && $this->acl_is_writeable("sudoHost")){
-      $used = array();
-      foreach($this->sudoHost as $name){
-        $used[] = preg_replace("/^!/","",$name);
-      }
-      $this->dialog =new target_list_systems($this->config,$used);
+      $this->dialog =new systemSelect($this->config,get_userinfo());
     }
    
     /* Add selected hosts  to the sudoHost list */ 
-    if(isset($_POST['SavetargetSelectDialog']) && $this->dialog instanceof target_list_systems){
+    if(isset($_POST['systemSelect_save']) && $this->dialog instanceof systemSelect){
       if($this->acl_is_writeable("sudoHost")){
         foreach($this->dialog->save() as $entry){
           $cn = trim($entry['cn'][0]);
@@ -250,16 +246,26 @@ class sudo extends plugin
       $this->dialog = NULL;
     }    
 
-
-    /*********************
-       Dialog handling / display / close  
-     *********************/ 
-  
-    if(isset($_POST['userGroupSelect_cancel']) && is_object($this->dialog)){
+    if(isset($_POST['systemSelect_cancel']) && $this->dialog instanceOf systemSelect){
       unset($this->dialog);
       $this->dialog = NULL;
     }    
 
+    if($this->dialog instanceOf systemSelect){
+      $used = array();
+      foreach($this->sudoHost as $name){
+        $used['cn'][] = preg_replace("/^!/","",$name);
+      }
+
+      // Build up blocklist
+      session::set('filterBlacklist', $used);
+      return($this->dialog->execute());
+    }
+  
+    /*********************
+       Dialog handling / display / close  
+     *********************/ 
+  
     if(is_object($this->dialog)){
       return($this->dialog->execute());
     }
