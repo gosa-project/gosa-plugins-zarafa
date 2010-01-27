@@ -837,10 +837,19 @@ class environment extends plugin
       $res = $this->dialog->save();
       foreach($res as $hotplug){
         $name = $hotplug['cn'][0];
+        $entry['dn'] = $hotplug['dn'];
+
+        /* Set class values */
+        $tmp = preg_split("/\|/",$hotplug['gotoHotplugDevice'][0]);
+        $entry['name']          = $hotplug['cn'][0];
+        $entry['description'] = $tmp[0];
+        $entry['id']       = $tmp[1];
+        $entry['produkt']      = $tmp[2];
+        $entry['vendor']     = $tmp[3];
         if($this->multiple_support_active){
-          $hotplug['UsedByAllUsers'] = TRUE;
+          $entry['UsedByAllUsers'] = TRUE;
         }
-        $this->gotoHotplugDevices[$name]= $hotplug; 
+        $this->gotoHotplugDevices[$name]= $entry; 
       }
       $this->dialog= FALSE;
       $this->is_dialog = false;
