@@ -27,7 +27,7 @@ class mailgroup extends plugin
   var $mailusers                  = array();  // Group member with mail account
   var $folder_acls                = array();
   var $MailMethod = NULL; 
-  var $forward_dialog             = FALSE;    
+  var $mailAddressSelect             = FALSE;    
   var $remove_folder_from_imap    = true;
   var $view_logged                = FALSE;
   var $mailDomainPart             = "";
@@ -324,30 +324,43 @@ class mailgroup extends plugin
     /****************
       Forward addresses
      ****************/
+
     if (isset($_POST['add_local_forwarder'])){
-      $this->forward_dialog= TRUE;
+      $this->mailAddressSelect= new mailAddressSelect($this->config, get_userinfo());
       $this->dialog= TRUE;
     }
-    if (isset($_POST['add_locals_cancel'])){
-      $this->forward_dialog= FALSE;
+
+    if (isset($_POST['mailAddressSelect_cancel'])){
+      $this->mailAddressSelect= FALSE;
       $this->dialog= FALSE;
     }
-    if (isset($_POST['add_locals_finish'])){
-      if (isset($_POST['local_list'])){
-        if($this->acl_is_writeable("gosaMailForwardingAddress")){
-          foreach ($_POST['local_list'] as $val){
-            if (!in_array ($val, $this->gosaMailAlternateAddress) &&
-                $val != $this->mail){
-              $this->addForwarder($val);
-              $this->is_modified= TRUE;
-            }
+
+    if (isset($_POST['mailAddressSelect_save'])){
+      if($this->acl_is_writeable("gosaMailForwardingAddress")){
+        $list = $this->mailAddressSelect->save();
+        foreach ($list as $entry){
+          $val = $entry['mail'][0];
+          if (!in_array ($val, $this->gosaMailAlternateAddress) && $val != $this->mail){
+            $this->addForwarder($val);
+            $this->is_modified= TRUE;
           }
         }
-        $this->forward_dialog= FALSE;
+        $this->mailAddressSelect= FALSE;
         $this->dialog= FALSE;
       } else {
         msg_dialog::display(_("Error"), _("Please select an entry!"), ERROR_DIALOG);
       }
+    }
+
+    if($this->mailAddressSelect instanceOf mailAddressSelect){
+      $used  = array();
+      $used['mail'] = array_values($this->gosaMailAlternateAddress);
+      $used['mail'] = array_merge($used['mail'], array_values($this->gosaMailForwardingAddress));
+      $used['mail'][] = $this->mail;
+
+      // Build up blocklist
+      session::set('filterBlacklist', $used);
+      return($this->mailAddressSelect->execute());
     }
 
     if (isset($_POST['add_forwarder'])){
@@ -380,9 +393,6 @@ class mailgroup extends plugin
     if (isset($_POST['delete_forwarder'])){
       $this->delForwarder ($_POST['forwarder_list']);
     }
-    if ($this->forward_dialog){
-      return($this->display_forward_dialog());
-    } 
 
  
     /****************
@@ -1105,90 +1115,6 @@ class mailgroup extends plugin
     }
     plugin::set_multi_edit_values($attrs);
     $this->gosaMailForwardingAddress = $forward;
-  }
-
-
-  /*! \brief  Displays a dialog that allows mail address selection.
-   */
-  function display_forward_dialog()
-  {
-    restore_error_handler();
-
-    $smarty = get_smarty();
-    $ldap= $this->config->get_ldap_link();
-
-    /* Save data */
-    $mailfilter= session::get("mailfilter");
-    foreach( array("depselect", "muser", "regex") as $type){
-      if (isset($_POST[$type])){
-        $mailfilter[$type]= $_POST[$type];
-      }
-    }
-    if (isset($_GET['search'])){
-      $s= mb_substr($_GET['search'], 0, 1, "UTF8")."*";
-      if ($s == "**"){
-        $s= "*";
-      }
-      $mailfilter['regex']= $s;
-    }
-    session::set("mailfilter", $mailfilter);
-
-    /* Get actual list */
-    $mailusers= array ();
-    if ($mailfilter['regex'] != '*' && $mailfilter['regex'] != ""){
-      $regex= $mailfilter['regex'];
-      $filter= "(|(mail=$regex)(gosaMailAlternateAddress=$regex))";
-    } else {
-      $filter= "";
-    }
-    if ($mailfilter['muser'] != ""){
-      $user= $mailfilter['muser'];
-      $filter= "$filter(|(uid=$user)(cn=$user)(givenName=$user)(sn=$user))";
-    }
-
-    /* Add already present people to the filter */
-    $exclude= "";
-    foreach ($this->gosaMailForwardingAddress as $mail){
-      $exclude.= "(mail=$mail)";
-    }
-    if ($exclude != ""){
-      $filter.= "(!(|$exclude))";
-    }
-    $res= get_list("(&(objectClass=gosaMailAccount)$filter)", "users", $mailfilter['depselect'],
-        array("sn", "mail", "givenName"), GL_SIZELIMIT | GL_SUBSEARCH);
-    $ldap->cd($mailfilter['depselect']);
-    $ldap->search ("(&(objectClass=gosaMailAccount)$filter)", array("sn", "mail", "givenName"));
-    while ($attrs= $ldap->fetch()){
-      if(preg_match('/%/', $attrs['mail'][0])){
-        continue;
-      }
-      $name= $this->make_name($attrs);
-      $mailusers[$attrs['mail'][0]]= $name."&lt;".
-        $attrs['mail'][0]."&gt;";
-    }
-    natcasesort ($mailusers);
-    reset ($mailusers);
-
-    /* Show dialog */
-    $smarty->assign("search_image", get_template_path('images/lists/search.png'));
-    $smarty->assign("usearch_image", get_template_path('images/lists/search-user.png'));
-    $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
-    $smarty->assign("infoimage", get_template_path('images/info.png'));
-    $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
-    $smarty->assign("mailusers", $mailusers);
-    if (isset($_POST['depselect'])){
-      $smarty->assign("depselect", $_POST['depselect']);
-    }
-    $smarty->assign("deplist", $this->config->idepartments);
-    $smarty->assign("apply", apply_filter());
-    $smarty->assign("alphabet", generate_alphabet());
-    $smarty->assign("hint", print_sizelimit_warning());
-    foreach( array("depselect", "muser", "regex") as $type){
-      $smarty->assign("$type", $mailfilter[$type]);
-    }
-    $smarty->assign("hint", print_sizelimit_warning());
-    $display= $smarty->fetch (get_template_path('mail_locals.tpl', TRUE, dirname(__FILE__)));
-    return ($display);
   }
 
 
