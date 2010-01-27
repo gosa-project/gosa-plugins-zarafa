@@ -518,24 +518,22 @@ class printgeneric extends plugin
       }
     }
 
-    /* Abort user / group adding dialog */
-    if(isset($_POST['PrinterCancel'])){
-      unset($this->dialog);
-      $this->dialog= FALSE;
+    // Abort user / group adding dialog 
+    if(isset($_POST['userGroupSelect_cancel'])){
+      $this->dialog=FALSE;
+      $this->userSelect = NULL;
+      $this->adminUserSelect = NULL;
     }
 
-    /* Save selected users / groups */
+    // Save selected users / groups 
     if(isset($_POST['userGroupSelect_save'])){
-
       $users = array();
       if($this->userSelect instanceOf userGroupSelect){
         $users = $this->userSelect->save();
       }elseif($this->adminUserSelect instanceOf userGroupSelect){
         $users = $this->adminUserSelect->save();
       }
-      
       foreach($users as $user){
-
         print_a($user);
 #       foreach($data as $mem){
 #         $this->AddMember($new['type'], $mem['dn']);
