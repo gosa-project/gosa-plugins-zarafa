@@ -874,34 +874,27 @@ class environment extends plugin
 
     /* First handle Add Post. Open a dialog that allows us to select a printer or two */ 
     if(isset($_POST['gotoPrinterAdd'])){
-
+      $this->dialog = new printerSelect($this->config,get_userinfo());
       $this->is_dialog=true;
-      $this->dialog = new selectPrinterDialog($this->config,$this->dn,$this->gotoPrinter);
     }
 
-    if(isset($_POST['PrinterCancel'])){
+    if(isset($_POST['selectPrinter_cancel']) && $this->dialog instanceOf printerSelect){
       $this->is_dialog=false;
-      unset($this->dialog);
       $this->dialog=FALSE;
     }
 
-    if(isset($_POST['PrinterSave'])){
-      if(count($this->dialog->check())!=0){
-        $tmp = $this->dialog->check();
-        foreach($tmp as $msg){
-          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
-        } 
-      }else{
-        $this->dialog->save_object();
-        $tmp = $this->dialog->save();
-        $tmp2= $this->dialog->getPrinter(true);
+    if(isset($_POST['selectPrinter_save'])  && $this->dialog instanceOf printerSelect){
 
-        foreach($tmp as $pname){
-          $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$tmp2[$pname]['dn'],"printer");
-          $printerObj->set_acl_base($tmp2[$pname]['dn']);
+      $res = $this->dialog->save();
+        foreach($res as $printer){
+
+          $pname = $printer['cn'][0];
+          $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'], $printer['dn'],"printer");
+          $printerObj->set_acl_base($printer['dn']);
 
           $type = false;
 
+          
           if($this->is_group){
             if($this->dn == "new"){  
               $type = "AddGroup";
@@ -921,7 +914,7 @@ class environment extends plugin
           }
 
           if($type){
-            $this->gotoPrinter[$pname]=$tmp2[$pname];
+            $this->gotoPrinter[$pname]=$printer;
             $this->gotoPrinter[$pname]['mode']="user";
             $this->add_del_printer_member_was_called = true;
 
@@ -935,7 +928,6 @@ class environment extends plugin
         $this->is_dialog=false;
         unset($this->dialog);
         $this->dialog   =FALSE;
-      }
     }
 
     if((isset($_POST['gotoPrinterDel']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
