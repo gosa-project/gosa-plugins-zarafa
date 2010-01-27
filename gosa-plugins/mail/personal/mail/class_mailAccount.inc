@@ -74,7 +74,7 @@ class mailAccount extends plugin
   var $sieveManagementUsed = FALSE;
   var $vacationTemplates = array();
   var $sieve_management = NULL;
-  var $selectMailAddress = FALSE;
+  var $mailAddressSelect = FALSE;
   var $initial_uid    = "";
   var $mailDomainPart = "";
   var $mailDomainParts = array();
@@ -281,18 +281,18 @@ class mailAccount extends plugin
      ****************/
 
     if (isset($_POST['add_local_forwarder'])){
-      $this->selectMailAddress=  new selectMailAddress($this->config, get_userinfo());
+      $this->mailAddressSelect=  new mailAddressSelect($this->config, get_userinfo());
       $this->dialog= TRUE;
     }
-    if (isset($_POST['selectMailAddress_cancel'])){
-      $this->selectMailAddress= FALSE;
+    if (isset($_POST['mailAddressSelect_cancel'])){
+      $this->mailAddressSelect= FALSE;
       $this->dialog= FALSE;
     }
 
-    if (isset($_POST['selectMailAddress_save']) && $this->selectMailAddress instanceOf selectMailAddress){
+    if (isset($_POST['mailAddressSelect_save']) && $this->mailAddressSelect instanceOf mailAddressSelect){
 
       if($this->acl_is_writeable("gosaMailForwardingAddress")){
-        $list = $this->selectMailAddress->save();
+        $list = $this->mailAddressSelect->save();
         foreach ($list as $entry){
           $val = $entry['mail'][0];
           if (!in_array ($val, $this->gosaMailAlternateAddress) && $val != $this->mail){
@@ -300,18 +300,18 @@ class mailAccount extends plugin
             $this->is_modified= TRUE;
           }
         }
-        $this->selectMailAddress= FALSE;
+        $this->mailAddressSelect= FALSE;
         $this->dialog= FALSE;
       } else {
         msg_dialog::display(_("Error"), _("Please select an entry!"), ERROR_DIALOG);
       }
     }
 
-    if($this->selectMailAddress instanceOf selectMailAddress){
+    if($this->mailAddressSelect instanceOf mailAddressSelect){
       $used  = array();
       $used['mail'] = array_values($this->gosaMailAlternateAddress);  
       $used['mail'][] = $this->mail;
-      return($this->selectMailAddress->execute());
+      return($this->mailAddressSelect->execute());
     }
 
     if (isset($_POST['add_forwarder'])){
@@ -344,9 +344,9 @@ class mailAccount extends plugin
     if (isset($_POST['delete_forwarder'])){
       $this->delForwarder ($_POST['forwarder_list']);
     }
-    if ($this->selectMailAddress instanceOf selectMailAddress){
+    if ($this->mailAddressSelect instanceOf mailAddressSelect){
     
-      return($this->selectMailAddress->execute());
+      return($this->mailAddressSelect->execute());
     }
 
 
