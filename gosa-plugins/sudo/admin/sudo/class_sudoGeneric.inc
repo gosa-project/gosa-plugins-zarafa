@@ -178,25 +178,19 @@ class sudo extends plugin
     /*********************
        Add users 
      *********************/ 
-  
+ 
     if(isset($_POST['list_sudoUser']) && !is_object($this->dialog) && $this->acl_is_writeable("sudoUser")){
-      $used = array();
-      foreach($this->sudoUser as $name){
-        $used[] = preg_replace("/^!/","",$name);
-      }
-      $this->dialog =new target_list_users($this->config,$used);
+      $this->dialog =new userGroupSelect($this->config,get_userinfo());
     }
    
     /* Add selected hosts  to the sudoUser list */ 
-    if(isset($_POST['SavetargetSelectDialog']) && $this->dialog instanceof target_list_users){
+    if(isset($_POST['userGroupSelect_save']) && $this->dialog instanceof userGroupSelect){
       if($this->acl_is_writeable("sudoUser")){
         foreach($this->dialog->save() as $entry){
           if(in_array("posixGroup",$entry['objectClass'])){
             $name = trim("%".$entry['cn'][0]);
           }elseif(isset($entry['uid'][0])){
             $name = trim($entry['uid'][0]);
-          }else{
-            print_a($entry);
           }
           if(!in_array($name,$this->sudoUser) && !in_array("!".$name,$this->sudoUser)){
             $this->sudoUser[] = $name;
@@ -206,6 +200,28 @@ class sudo extends plugin
       unset($this->dialog);
       $this->dialog = NULL;
     }    
+
+    if(isset($_POST['userGroupSelect_cancel']) && $this->dialog instanceOf userGroupSelect){
+      unset($this->dialog);
+      $this->dialog = NULL;
+    }    
+
+    if($this->dialog instanceOf userGroupSelect){
+      $used = array();
+      foreach($this->sudoUser as $name){
+        $str = preg_replace("/^!/","",$name);
+        if(preg_match("/^%/", $str)){
+          $used['cn'][] = preg_replace("/^%/","",$str);
+        }else{
+          $used['uid'][] = $str;
+        }
+      }
+
+      // Build up blocklist
+      session::set('filterBlacklist', $used);
+      return($this->dialog->execute());
+    }
+ 
 
 
     /*********************
@@ -239,7 +255,7 @@ class sudo extends plugin
        Dialog handling / display / close  
      *********************/ 
   
-    if(isset($_POST['ClosetargetSelectDialog']) && is_object($this->dialog)){
+    if(isset($_POST['userGroupSelect_cancel']) && is_object($this->dialog)){
       unset($this->dialog);
       $this->dialog = NULL;
     }    
@@ -461,10 +477,6 @@ class sudo extends plugin
     if($this->is_default){
       $this->cn = "defaults";
     }  
-
-    if(is_object($this->dialog)){
-      $this->dialog->save_object();
-    }
 
     /* Trust mode - special handling */
     if($this->acl_is_writeable("trustModel")){
