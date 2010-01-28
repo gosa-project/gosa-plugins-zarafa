@@ -9,8 +9,8 @@
 
   <search>
     <query>
-      <backend>LDAPBlacklist</backend>
-      <filter>(&amp;(|$USER $GROUP ) $NAME)</filter>
+      <backend>FAIClass</backend>
+      <filter>$NAME</filter>
       <attribute>dn</attribute>
       <attribute>objectClass</attribute>
       <attribute>cn</attribute>
@@ -30,11 +30,11 @@
     <maxlength>60</maxlength>
     <default></default>
     <unset></unset>
-    <set>(|(cn=*$*)(sn=*$*)(givenName=*$*))</set>
+    <set>*$</set>
     <alphabet>true</alphabet>
     <autocomplete>
-      <backend>LDAPBlacklist</backend>
-      <filter>(&amp;(objectClass=gosaAccount)(|(cn=*$NAME*)(sn=*$NAME*)(givenName=*$NAME*)))</filter>
+      <backend>FAIClass</backend>
+      <filter>$NAME</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>

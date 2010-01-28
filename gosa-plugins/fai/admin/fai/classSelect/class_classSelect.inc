@@ -42,8 +42,30 @@ class classSelect extends management
 
     // Build headpage
     $headpage = new listing(get_template_path("selectClass-list.xml", true, dirname(__FILE__)));
+    $headpage->registerElementFilter("filterProperties", "classSelect::filterProperties");
     $headpage->setFilter($filter);
-    parent::__construct($config, $ui, "object", $headpage);
+    parent::__construct($config, $ui, "FAI class", $headpage);
+  }
+
+  static function filterProperties($row, $classes)
+  {
+    /* Create different picture for each object type */
+    $objTypes['FAIhook']            = "<img src='plugins/fai/images/fai_hook.png' title='"._("Hook bundle")."' alt=''>&nbsp;";
+    $objTypes['FAItemplate']        = "<img src='plugins/fai/images/fai_template.png' title='"._("Template bundle")."' alt=''>&nbsp;";
+    $objTypes['FAIscript']          = "<img src='plugins/fai/images/fai_script.png' title='"._("Script bundle")."' alt=''>&nbsp;";
+    $objTypes['FAIvariable']        = "<img src='plugins/fai/images/fai_variable.png' title='"._("Variable bundle")."' alt=''>&nbsp;";
+    $objTypes['FAIpackageList']     = "<img src='plugins/fai/images/fai_packages.png' title='"._("Package bundle")."' alt=''>&nbsp;";
+    $objTypes['FAIpartitionTable']  = "<img src='plugins/fai/images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>&nbsp;";
+
+    $str = "";
+    foreach($objTypes as $class => $img){
+      if(in_array($class, $classes)){
+        $str .= $img;
+      }else{
+        $str .= "<img src='images/empty.png'>&nbsp;";
+      }
+    }
+    return($str);
   }
 
   function save()

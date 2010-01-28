@@ -257,7 +257,7 @@ class faiProfile extends plugin
       }
 
       /* Save Dialog */
-      if(isset($_POST['classSelect_save'])){
+      if(isset($_POST['classSelect_save']) && $this->classSelect instanceOf classSelect){
         $list = $this->classSelect->save();
         foreach($list as $entry){
           $class = $entry['cn'][0];
@@ -275,6 +275,8 @@ class faiProfile extends plugin
     }
 
     if($this->classSelect instanceOf classSelect){
+      session::set('filterFAIClass_base',$this->parent->parent->fai_release);
+      session::set('filterBlacklist', array('cn' => array_values($this->FAIclasses)));
       return($this->classSelect->execute());
     }
 

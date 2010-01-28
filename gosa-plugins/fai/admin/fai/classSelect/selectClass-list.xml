@@ -5,45 +5,24 @@
     <departmentBrowser>false</departmentBrowser>
     <departmentRootVisible>false</departmentRootVisible>
     <baseMode>false</baseMode>
-    <multiSelect>false</multiSelect>
+    <multiSelect>true</multiSelect>
     <template>../plugins/admin/fai/classSelect/selectClass-list.tpl</template>
     <module>users</module>
     <label>Please select the desired entries</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
-      <label>User</label>
-      <objectClass>gosaAccount</objectClass>
-      <category>users</category>
-      <class>user</class>
-      <image>plugins/users/images/select_user.png</image>
-    </objectType>
-
-    <objectType>
-      <label>Group</label>
-      <objectClass>posixGroup</objectClass>
-      <category>groups</category>
-      <class>group</class>
-      <image>plugins/groups/images/groups.png</image>
+      <label>FAI</label>
+      <objectClass>FAIclass</objectClass>
+      <category>fai</category>
+      <class>fai</class>
+      <image>plugins/fai/images/script.png</image>
     </objectType>
 
   </definition>
 
   <table>
-    <layout>|20px;c|220px||</layout>
-
-    <department>
-      <value>%{filter:objectType(dn,objectClass)}</value>
-    </department>
-
-    <department>
-      <value>%{filter:departmentLink(row,dn,description)}</value>
-      <span>1</span>
-    </department>
-
-    <column>
-      <value>%{filter:objectType(dn,objectClass)}</value>
-    </column>
+    <layout>|220px||</layout>
 
     <column>
       <label>Name</label>
@@ -54,11 +33,8 @@
     </column>
 
     <column>
-      <label>Description</label>
-      <sortAttribute>description</sortAttribute>
-      <sortType>string</sortType>
-      <value>%{description}</value>
-      <export>true</export>
+      <label>Properties</label>
+      <value>%{filter:filterProperties(row,objectClass)}</value>
     </column>
 
   </table>
@@ -67,12 +43,5 @@
   </actionmenu>
 
   <actiontriggers snapshot="false" copypaste="false">
-    <action>
-      <name>edit</name>
-      <type>entry</type>
-      <objectclass>gosaAccount</objectclass>
-      <image>images/lists/edit.png</image>
-      <label>Add</label>
-    </action>
   </actiontriggers>
 </list>
