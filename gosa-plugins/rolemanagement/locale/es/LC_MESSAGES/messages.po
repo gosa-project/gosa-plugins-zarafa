@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:14+0100\n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
 "PO-Revision-Date: 2010-01-20 00:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:401
+#: admin/roleManagement/class_roleGeneric.inc:406
 msgid "Roles"
 msgstr "Roles"
 
@@ -45,54 +45,54 @@ msgstr ""
 "Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
 "<i>Cancelar</i> para Abortar."
 
-#: admin/roleManagement/class_roleGeneric.inc:220
-#: admin/roleManagement/class_roleGeneric.inc:229
-#: admin/roleManagement/class_roleGeneric.inc:404
+#: admin/roleManagement/class_roleGeneric.inc:225
+#: admin/roleManagement/class_roleGeneric.inc:234
+#: admin/roleManagement/class_roleGeneric.inc:409
 #: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Nombre"
 
-#: admin/roleManagement/class_roleGeneric.inc:250
+#: admin/roleManagement/class_roleGeneric.inc:255
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: admin/roleManagement/class_roleGeneric.inc:268
-#: admin/roleManagement/class_roleGeneric.inc:310
+#: admin/roleManagement/class_roleGeneric.inc:273
+#: admin/roleManagement/class_roleGeneric.inc:315
 msgid "LDAP error"
 msgstr "Error LDAP"
 
-#: admin/roleManagement/class_roleGeneric.inc:395
+#: admin/roleManagement/class_roleGeneric.inc:400
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Genérico"
 
-#: admin/roleManagement/class_roleGeneric.inc:396
+#: admin/roleManagement/class_roleGeneric.inc:401
 msgid "Role generic"
 msgstr "Rol genérico"
 
-#: admin/roleManagement/class_roleGeneric.inc:405
+#: admin/roleManagement/class_roleGeneric.inc:410
 #: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Descripción"
 
-#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/class_roleGeneric.inc:411
 #: admin/roleManagement/role-list.tpl:13
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Base"
 
-#: admin/roleManagement/class_roleGeneric.inc:407
+#: admin/roleManagement/class_roleGeneric.inc:412
 msgid "Telefon number"
 msgstr "Número de teléfono"
 
-#: admin/roleManagement/class_roleGeneric.inc:408
+#: admin/roleManagement/class_roleGeneric.inc:413
 #: admin/roleManagement/roleGeneric.tpl:56
 msgid "Fax number"
 msgstr "Número de Fax"
 
-#: admin/roleManagement/class_roleGeneric.inc:409
+#: admin/roleManagement/class_roleGeneric.inc:414
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr "Ocupantes"
@@ -131,14 +131,6 @@ msgstr "Editar rol"
 msgid "Remove role"
 msgstr "Eliminar usuario"
 
-#: admin/roleManagement/role-list.tpl:13
-msgid "Update"
-msgstr "Actualizar"
-
-#: admin/roleManagement/role-list.tpl:13
-msgid "Submit"
-msgstr "Enviar"
-
 #: admin/roleManagement/paste_generic.tpl:4
 msgid "Role name"
 msgstr "Nombre del Rol"
@@ -165,37 +157,35 @@ msgstr "Seleccione una base"
 msgid "Phone number"
 msgstr "Número de teléfono"
 
-#: admin/roleManagement/occupantSelect.tpl:6
-msgid "Select objects to add"
-msgstr "Seleccione los objetos a añadir"
+#~ msgid "Update"
+#~ msgstr "Actualizar"
 
-#: admin/roleManagement/occupantSelect.tpl:20
-msgid "Filters"
-msgstr "Filtros"
+#~ msgid "Submit"
+#~ msgstr "Enviar"
 
-#: admin/roleManagement/occupantSelect.tpl:27
-msgid "Select to search within subtrees"
-msgstr "Seleccione para buscar dentro de subárboles"
+#~ msgid "Select objects to add"
+#~ msgstr "Seleccione los objetos a añadir"
 
-#: admin/roleManagement/occupantSelect.tpl:27
-msgid "Search in subtrees"
-msgstr "Buscar en subárboles"
+#~ msgid "Filters"
+#~ msgstr "Filtros"
 
-#: admin/roleManagement/occupantSelect.tpl:30
-msgid "Display objects of department"
-msgstr "Mostrar objetos del departamento"
+#~ msgid "Select to search within subtrees"
+#~ msgstr "Seleccione para buscar dentro de subárboles"
 
-#: admin/roleManagement/occupantSelect.tpl:31
-msgid "Choose the department the search will be based on"
-msgstr "Escoja el departamento base de la búsqueda"
+#~ msgid "Search in subtrees"
+#~ msgstr "Buscar en subárboles"
 
-#: admin/roleManagement/occupantSelect.tpl:34
-msgid "Display objects matching"
-msgstr "Mostrar objetos que coincidan"
+#~ msgid "Display objects of department"
+#~ msgstr "Mostrar objetos del departamento"
 
-#: admin/roleManagement/occupantSelect.tpl:35
-msgid "Regular expression for matching object names"
-msgstr "Expresiones regulares para buscar nombre de objetos"
+#~ msgid "Choose the department the search will be based on"
+#~ msgstr "Escoja el departamento base de la búsqueda"
+
+#~ msgid "Display objects matching"
+#~ msgstr "Mostrar objetos que coincidan"
+
+#~ msgid "Regular expression for matching object names"
+#~ msgstr "Expresiones regulares para buscar nombre de objetos"
 
 #~ msgid "Manage roles"
 #~ msgstr "Administrar roles"

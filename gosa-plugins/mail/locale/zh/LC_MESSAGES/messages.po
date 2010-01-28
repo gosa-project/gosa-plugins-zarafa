@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:13+0100\n"
+"POT-Creation-Date: 2010-01-28 22:30+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -33,21 +33,22 @@ msgstr "创建邮件账号"
 #: admin/ogroups/mail/class_mailogroup.inc:86
 #: admin/ogroups/mail/class_mailogroup.inc:93
 #: admin/ogroups/mail/class_mailogroup.inc:194
-#: admin/groups/mail/class_groupMail.inc:362
-#: admin/groups/mail/class_groupMail.inc:397
-#: admin/groups/mail/class_groupMail.inc:403
-#: admin/groups/mail/class_groupMail.inc:417
-#: admin/groups/mail/class_groupMail.inc:851
-#: admin/groups/mail/class_groupMail.inc:871
-#: admin/groups/mail/class_groupMail.inc:992
-#: personal/mail/class_mailAccount.inc:328
-#: personal/mail/class_mailAccount.inc:363
-#: personal/mail/class_mailAccount.inc:368
-#: personal/mail/class_mailAccount.inc:381
-#: personal/mail/class_mailAccount.inc:1081
-#: personal/mail/class_mailAccount.inc:1085
-#: personal/mail/class_mailAccount.inc:1103
-#: personal/mail/class_mailAccount.inc:1466
+#: admin/groups/mail/class_groupMail.inc:376
+#: admin/groups/mail/class_groupMail.inc:408
+#: admin/groups/mail/class_groupMail.inc:414
+#: admin/groups/mail/class_groupMail.inc:428
+#: admin/groups/mail/class_groupMail.inc:862
+#: admin/groups/mail/class_groupMail.inc:882
+#: admin/groups/mail/class_groupMail.inc:1003
+#: personal/mail/class_mailAccount.inc:330
+#: personal/mail/class_mailAccount.inc:366
+#: personal/mail/class_mailAccount.inc:371
+#: personal/mail/class_mailAccount.inc:384
+#: personal/mail/class_mailAccount.inc:1000
+#: personal/mail/class_mailAccount.inc:1004
+#: personal/mail/class_mailAccount.inc:1022
+#: personal/mail/class_mailAccount.inc:1385
+#: personal/mail/mailAddressSelect/selectMailAddress-list.xml:56
 msgid "Mail address"
 msgstr "邮件地址"
 
@@ -57,37 +58,37 @@ msgstr ""
 
 #: admin/ogroups/mail/class_mailogroup.inc:120
 #: admin/ogroups/mail/class_mailogroup.inc:157
-#: admin/groups/mail/class_groupMail.inc:542
-#: admin/groups/mail/class_groupMail.inc:771
+#: admin/groups/mail/class_groupMail.inc:553
+#: admin/groups/mail/class_groupMail.inc:782
 #: admin/systems/services/imap/class_goImapServer.inc:190
 #: admin/systems/services/mail/class_goMailServer.inc:582
 #: admin/systems/services/virus/class_goVirusServer.inc:154
 #: admin/systems/services/spam/class_goSpamServer.inc:277
-#: personal/mail/class_mailAccount.inc:898
-#: personal/mail/class_mailAccount.inc:971
+#: personal/mail/class_mailAccount.inc:817
+#: personal/mail/class_mailAccount.inc:890
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP 错误:"
 
 #: admin/ogroups/mail/class_mailogroup.inc:186
 #: admin/ogroups/mail/paste_mail.tpl:4
-#: admin/groups/mail/class_groupMail.inc:284
-#: admin/groups/mail/class_groupMail.inc:286
+#: admin/groups/mail/class_groupMail.inc:285
 #: admin/groups/mail/class_groupMail.inc:287
-#: admin/groups/mail/class_groupMail.inc:292
-#: admin/groups/mail/class_groupMail.inc:294
+#: admin/groups/mail/class_groupMail.inc:288
+#: admin/groups/mail/class_groupMail.inc:293
 #: admin/groups/mail/class_groupMail.inc:295
-#: admin/groups/mail/class_groupMail.inc:839
-#: admin/groups/mail/class_groupMail.inc:984
-#: personal/mail/class_mailAccount.inc:50
-#: personal/mail/class_mailAccount.inc:244
-#: personal/mail/class_mailAccount.inc:252
-#: personal/mail/class_mailAccount.inc:254
-#: personal/mail/class_mailAccount.inc:259
-#: personal/mail/class_mailAccount.inc:261
-#: personal/mail/class_mailAccount.inc:1065
-#: personal/mail/class_mailAccount.inc:1290
-#: personal/mail/class_mailAccount.inc:1456
+#: admin/groups/mail/class_groupMail.inc:296
+#: admin/groups/mail/class_groupMail.inc:850
+#: admin/groups/mail/class_groupMail.inc:995
+#: personal/mail/class_mailAccount.inc:49
+#: personal/mail/class_mailAccount.inc:232
+#: personal/mail/class_mailAccount.inc:240
+#: personal/mail/class_mailAccount.inc:242
+#: personal/mail/class_mailAccount.inc:247
+#: personal/mail/class_mailAccount.inc:249
+#: personal/mail/class_mailAccount.inc:984
+#: personal/mail/class_mailAccount.inc:1209
+#: personal/mail/class_mailAccount.inc:1375
 msgid "Mail"
 msgstr "邮件"
 
@@ -100,9 +101,9 @@ msgstr "显示邮件组"
 msgid "Mail distribution list"
 msgstr "邮件传递列表"
 
-#: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:849
+#: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:860
 #: admin/groups/mail/mail.tpl:7 admin/groups/mail/paste_mail.tpl:8
-#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:1077
+#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:996
 #: personal/mail/copypaste.tpl:7
 msgid "Primary address"
 msgstr "主要地址"
@@ -121,34 +122,34 @@ msgstr "请输入一个邮件地址"
 #: admin/groups/mail/class_groupMail.inc:140
 #: admin/groups/mail/class_groupMail.inc:145
 #: admin/groups/mail/class_groupMail.inc:148
-#: admin/groups/mail/class_groupMail.inc:554
-#: admin/groups/mail/class_groupMail.inc:558
-#: admin/groups/mail/class_groupMail.inc:562
-#: admin/groups/mail/class_groupMail.inc:784
-#: admin/groups/mail/class_groupMail.inc:788
-#: admin/groups/mail/class_groupMail.inc:792
-#: admin/groups/mail/class_groupMail.inc:801
-#: personal/mail/class_mailAccount.inc:147
-#: personal/mail/class_mailAccount.inc:154
-#: personal/mail/class_mailAccount.inc:159
-#: personal/mail/class_mailAccount.inc:162
-#: personal/mail/class_mailAccount.inc:907
-#: personal/mail/class_mailAccount.inc:911
-#: personal/mail/class_mailAccount.inc:985
-#: personal/mail/class_mailAccount.inc:989
-#: personal/mail/class_mailAccount.inc:993
+#: admin/groups/mail/class_groupMail.inc:565
+#: admin/groups/mail/class_groupMail.inc:569
+#: admin/groups/mail/class_groupMail.inc:573
+#: admin/groups/mail/class_groupMail.inc:795
+#: admin/groups/mail/class_groupMail.inc:799
+#: admin/groups/mail/class_groupMail.inc:803
+#: admin/groups/mail/class_groupMail.inc:812
+#: personal/mail/class_mailAccount.inc:146
+#: personal/mail/class_mailAccount.inc:153
+#: personal/mail/class_mailAccount.inc:158
+#: personal/mail/class_mailAccount.inc:161
+#: personal/mail/class_mailAccount.inc:826
+#: personal/mail/class_mailAccount.inc:830
+#: personal/mail/class_mailAccount.inc:904
+#: personal/mail/class_mailAccount.inc:908
+#: personal/mail/class_mailAccount.inc:912
 #, fuzzy
 msgid "Mail error"
 msgstr "邮件服务器"
 
 #: admin/groups/mail/class_groupMail.inc:119
-#: personal/mail/class_mailAccount.inc:147
+#: personal/mail/class_mailAccount.inc:146
 #, fuzzy, php-format
 msgid "Cannot read quota settings: %s"
 msgstr "无法创建文件 '%s'。"
 
 #: admin/groups/mail/class_groupMail.inc:126
-#: personal/mail/class_mailAccount.inc:154
+#: personal/mail/class_mailAccount.inc:153
 #, fuzzy, php-format
 msgid "Cannot get list of mailboxes: %s"
 msgstr "无法删除 IMAP 邮箱。服务器返回 '%s'。"
@@ -164,37 +165,37 @@ msgid "Cannot receive folder permissions: %s"
 msgstr "IMAP 共享目录"
 
 #: admin/groups/mail/class_groupMail.inc:145
-#: admin/groups/mail/class_groupMail.inc:554
-#: admin/groups/mail/class_groupMail.inc:784
-#: personal/mail/class_mailAccount.inc:159
-#: personal/mail/class_mailAccount.inc:907
-#: personal/mail/class_mailAccount.inc:985
+#: admin/groups/mail/class_groupMail.inc:565
+#: admin/groups/mail/class_groupMail.inc:795
+#: personal/mail/class_mailAccount.inc:158
+#: personal/mail/class_mailAccount.inc:826
+#: personal/mail/class_mailAccount.inc:904
 #, php-format
 msgid "Mail method cannot connect: %s"
 msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:148
-#: personal/mail/class_mailAccount.inc:162
+#: personal/mail/class_mailAccount.inc:161
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:305
+#: admin/groups/mail/class_groupMail.inc:306
 msgid ""
 "Remove shared folder from mail server database when entry gets removed in "
 "LDAP"
 msgstr "当条目从 LDAP 中删除后，从邮件服务器数据库中删除共享目录"
 
-#: admin/groups/mail/class_groupMail.inc:306
+#: admin/groups/mail/class_groupMail.inc:307
 msgid "Remove the shared folder and all its contents after saving this account"
 msgstr "在保存完毕该账号后，删除共享目录和其中所有内容"
 
-#: admin/groups/mail/class_groupMail.inc:349
-#: admin/groups/mail/class_groupMail.inc:362
-#: admin/groups/mail/class_groupMail.inc:368
-#: admin/groups/mail/class_groupMail.inc:397
-#: admin/groups/mail/class_groupMail.inc:403
-#: admin/groups/mail/class_groupMail.inc:417
+#: admin/groups/mail/class_groupMail.inc:352
+#: admin/groups/mail/class_groupMail.inc:376
+#: admin/groups/mail/class_groupMail.inc:382
+#: admin/groups/mail/class_groupMail.inc:408
+#: admin/groups/mail/class_groupMail.inc:414
+#: admin/groups/mail/class_groupMail.inc:428
 #: admin/systems/services/spam/class_goSpamServer.inc:143
 #: admin/systems/services/spam/class_goSpamServer.inc:216
 #: addons/mailqueue/class_mailqueue.inc:110
@@ -206,131 +207,131 @@ msgstr "在保存完毕该账号后，删除共享目录和其中所有内容"
 #: personal/mail/sieve/class_sieveManagement.inc:212
 #: personal/mail/sieve/class_sieveManagement.inc:218
 #: personal/mail/sieve/class_sieveManagement.inc:429
-#: personal/mail/class_mailAccount.inc:316
-#: personal/mail/class_mailAccount.inc:328
-#: personal/mail/class_mailAccount.inc:334
-#: personal/mail/class_mailAccount.inc:363
-#: personal/mail/class_mailAccount.inc:368
-#: personal/mail/class_mailAccount.inc:381
+#: personal/mail/class_mailAccount.inc:306
+#: personal/mail/class_mailAccount.inc:330
+#: personal/mail/class_mailAccount.inc:336
+#: personal/mail/class_mailAccount.inc:366
+#: personal/mail/class_mailAccount.inc:371
+#: personal/mail/class_mailAccount.inc:384
 msgid "Error"
 msgstr "错误"
 
-#: admin/groups/mail/class_groupMail.inc:349
-#: personal/mail/class_mailAccount.inc:316
+#: admin/groups/mail/class_groupMail.inc:352
+#: personal/mail/class_mailAccount.inc:306
 #, fuzzy
 msgid "Please select an entry!"
 msgstr "请选择一个有效的邮件服务器。"
 
-#: admin/groups/mail/class_groupMail.inc:368
-#: personal/mail/class_mailAccount.inc:334
+#: admin/groups/mail/class_groupMail.inc:382
+#: personal/mail/class_mailAccount.inc:336
 #, fuzzy
 msgid "Cannot add primary address to the list of forwarders!"
 msgstr "您正在尝试向转发列表添加一条无效邮件地址。"
 
-#: admin/groups/mail/class_groupMail.inc:413
-#: personal/mail/class_mailAccount.inc:377
-#: personal/mail/class_mailAccount.inc:1099
+#: admin/groups/mail/class_groupMail.inc:424
+#: personal/mail/class_mailAccount.inc:380
+#: personal/mail/class_mailAccount.inc:1018
 #, fuzzy, php-format
 msgid "Address is already in use by group '%s'."
 msgstr "您正在添加的地址已经被用户使用"
 
-#: admin/groups/mail/class_groupMail.inc:415
-#: personal/mail/class_mailAccount.inc:379
-#: personal/mail/class_mailAccount.inc:1101
+#: admin/groups/mail/class_groupMail.inc:426
+#: personal/mail/class_mailAccount.inc:382
+#: personal/mail/class_mailAccount.inc:1020
 #, fuzzy, php-format
 msgid "Address is already in use by user '%s'."
 msgstr "您正在添加的地址已经被用户使用"
 
-#: admin/groups/mail/class_groupMail.inc:558
-#: personal/mail/class_mailAccount.inc:911
+#: admin/groups/mail/class_groupMail.inc:569
+#: personal/mail/class_mailAccount.inc:830
 #, fuzzy, php-format
 msgid "Cannot remove mailbox: %s"
 msgstr "无法删除 IMAP 邮箱。服务器返回 '%s'。"
 
-#: admin/groups/mail/class_groupMail.inc:562
-#: admin/groups/mail/class_groupMail.inc:801
+#: admin/groups/mail/class_groupMail.inc:573
+#: admin/groups/mail/class_groupMail.inc:812
 #, fuzzy, php-format
 msgid "Cannot update shared folder permissions: %s"
 msgstr "IMAP 共享目录"
 
-#: admin/groups/mail/class_groupMail.inc:660
+#: admin/groups/mail/class_groupMail.inc:671
 #, fuzzy
 msgid "New"
 msgstr "添加用户"
 
-#: admin/groups/mail/class_groupMail.inc:788
-#: personal/mail/class_mailAccount.inc:989
+#: admin/groups/mail/class_groupMail.inc:799
+#: personal/mail/class_mailAccount.inc:908
 #, fuzzy, php-format
 msgid "Cannot update mailbox: %s"
 msgstr "无法创建 IMAP 邮箱。服务器返回 '%s'。"
 
-#: admin/groups/mail/class_groupMail.inc:792
-#: personal/mail/class_mailAccount.inc:993
+#: admin/groups/mail/class_groupMail.inc:803
+#: personal/mail/class_mailAccount.inc:912
 #, fuzzy, php-format
 msgid "Cannot write quota settings: %s"
 msgstr "无法创建文件 '%s'。"
 
-#: admin/groups/mail/class_groupMail.inc:833
+#: admin/groups/mail/class_groupMail.inc:844
 #, php-format
 msgid ""
 "The group 'cn' has changed. It can't be changed due to the fact that mail "
 "method '%s' relies on it!"
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:858
-#: admin/groups/mail/class_groupMail.inc:993 admin/groups/mail/mail.tpl:60
-#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1111
-#: personal/mail/class_mailAccount.inc:1296
-#: personal/mail/class_mailAccount.inc:1468
+#: admin/groups/mail/class_groupMail.inc:869
+#: admin/groups/mail/class_groupMail.inc:1004 admin/groups/mail/mail.tpl:60
+#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1030
+#: personal/mail/class_mailAccount.inc:1215
+#: personal/mail/class_mailAccount.inc:1387
 msgid "Quota size"
 msgstr "Quota 大小"
 
-#: admin/groups/mail/class_groupMail.inc:877
-#: personal/mail/class_mailAccount.inc:1480
+#: admin/groups/mail/class_groupMail.inc:888
+#: personal/mail/class_mailAccount.inc:1399
 #, fuzzy
 msgid "Mail max size"
 msgstr "邮件大小"
 
-#: admin/groups/mail/class_groupMail.inc:885
+#: admin/groups/mail/class_groupMail.inc:896
 msgid "You need to set the maximum mail size in order to reject anything."
 msgstr "为了退信，您需要设定最大的邮件大小。"
 
-#: admin/groups/mail/class_groupMail.inc:889
-#: admin/groups/mail/class_groupMail.inc:994
-#: personal/mail/class_mailAccount.inc:1467
+#: admin/groups/mail/class_groupMail.inc:900
+#: admin/groups/mail/class_groupMail.inc:1005
+#: personal/mail/class_mailAccount.inc:1386
 msgid "Mail server"
 msgstr "邮件服务器"
 
-#: admin/groups/mail/class_groupMail.inc:985
+#: admin/groups/mail/class_groupMail.inc:996
 #, fuzzy
 msgid "Group mail"
 msgstr "组名"
 
-#: admin/groups/mail/class_groupMail.inc:995 admin/groups/mail/mail.tpl:73
+#: admin/groups/mail/class_groupMail.inc:1006 admin/groups/mail/mail.tpl:73
 #, fuzzy
 msgid "Folder type"
 msgstr "过滤器"
 
-#: admin/groups/mail/class_groupMail.inc:995
+#: admin/groups/mail/class_groupMail.inc:1006
 msgid "Kolab"
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:996
+#: admin/groups/mail/class_groupMail.inc:1007
 #, fuzzy
 msgid "Alternate addresses"
 msgstr "替代地址"
 
-#: admin/groups/mail/class_groupMail.inc:997
+#: admin/groups/mail/class_groupMail.inc:1008
 #, fuzzy
 msgid "Forwarding addresses"
 msgstr "转发邮件到"
 
-#: admin/groups/mail/class_groupMail.inc:998
+#: admin/groups/mail/class_groupMail.inc:1009
 #, fuzzy
 msgid "Only local"
 msgstr "添加本地"
 
-#: admin/groups/mail/class_groupMail.inc:999
+#: admin/groups/mail/class_groupMail.inc:1010
 msgid "Permissions"
 msgstr "允许"
 
@@ -464,7 +465,7 @@ msgstr "选择一个特定的部门"
 msgid "Choose"
 msgstr "选择"
 
-#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1457
+#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1376
 #: personal/mail/copypaste.tpl:1
 msgid "Mail settings"
 msgstr "邮件选项"
@@ -945,6 +946,7 @@ msgid "Enabled bayes auto learning"
 msgstr "启用 bayes 自动学习"
 
 #: admin/systems/services/spam/goSpamServerRule.tpl:6
+#: personal/mail/mailAddressSelect/selectMailAddress-list.xml:48
 msgid "Name"
 msgstr "名称"
 
@@ -958,7 +960,7 @@ msgid "Mail queue"
 msgstr "邮件队列"
 
 #: addons/mailqueue/class_mailqueue.inc:7
-#: personal/mail/class_mailAccount.inc:51
+#: personal/mail/class_mailAccount.inc:50
 #, fuzzy
 msgid "This does something"
 msgstr "******"
@@ -1172,7 +1174,7 @@ msgstr "邮件头"
 msgid "Display header of this message"
 msgstr "显示此邮件邮件头"
 
-#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1488
+#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1407
 msgid "Use custom sieve script"
 msgstr "定制过滤脚本"
 
@@ -1202,8 +1204,8 @@ msgstr "选择用下面定义的假期信息作为自动回复"
 msgid "Activate vacation message"
 msgstr "启用假期信息"
 
-#: personal/mail/generic.tpl:160 personal/mail/class_mailAccount.inc:1140
-#: personal/mail/class_mailAccount.inc:1320
+#: personal/mail/generic.tpl:160 personal/mail/class_mailAccount.inc:1059
+#: personal/mail/class_mailAccount.inc:1239
 msgid "from"
 msgstr "从"
 
@@ -1241,7 +1243,7 @@ msgstr "MB"
 #: personal/mail/sieve/templates/element_vacation.tpl:44
 #: personal/mail/sieve/class_sieveManagement.inc:502
 #: personal/mail/sieve/class_sieveManagement.inc:720
-#: personal/mail/class_mailAccount.inc:1471
+#: personal/mail/class_mailAccount.inc:1390
 msgid "Vacation message"
 msgstr "假期信息"
 
@@ -2254,122 +2256,154 @@ msgstr ""
 msgid "User mail settings"
 msgstr "用户邮件选项"
 
-#: personal/mail/class_mailAccount.inc:615
+#: personal/mail/class_mailAccount.inc:618
 #: personal/mail/class_mail-methods.inc:140
 #: personal/mail/class_mail-methods.inc:485
 #, fuzzy
 msgid "Configuration error"
 msgstr "配置文件"
 
-#: personal/mail/class_mailAccount.inc:615
+#: personal/mail/class_mailAccount.inc:618
 #, fuzzy, php-format
 msgid "No DESC tag in vacation template '%s'!"
 msgstr "假期文件没有 DESC 标签："
 
-#: personal/mail/class_mailAccount.inc:644
-#: personal/mail/class_mailAccount.inc:657
-#: personal/mail/class_mailAccount.inc:691
-#: personal/mail/class_mailAccount.inc:704
+#: personal/mail/class_mailAccount.inc:647
+#: personal/mail/class_mailAccount.inc:660
+#: personal/mail/class_mailAccount.inc:694
+#: personal/mail/class_mailAccount.inc:707
 #, fuzzy
 msgid "Permission error"
 msgstr "允许"
 
-#: personal/mail/class_mailAccount.inc:644
-#: personal/mail/class_mailAccount.inc:657
-#: personal/mail/class_mailAccount.inc:691
-#: personal/mail/class_mailAccount.inc:704
+#: personal/mail/class_mailAccount.inc:647
+#: personal/mail/class_mailAccount.inc:660
+#: personal/mail/class_mailAccount.inc:694
+#: personal/mail/class_mailAccount.inc:707
 #, fuzzy
 msgid "You have no permission to modify these addresses!"
 msgstr "您无权删除这个部门。"
 
-#: personal/mail/class_mailAccount.inc:738
 #: personal/mail/class_mailAccount.inc:741
+#: personal/mail/class_mailAccount.inc:744
 #, fuzzy
 msgid "unknown"
 msgstr "未知"
 
-#: personal/mail/class_mailAccount.inc:1007
+#: personal/mail/class_mailAccount.inc:926
 #, fuzzy
 msgid "Mail error saving sieve settings"
 msgstr "定制过滤脚本"
 
-#: personal/mail/class_mailAccount.inc:1120
-#: personal/mail/class_mailAccount.inc:1128
-#: personal/mail/class_mailAccount.inc:1305
+#: personal/mail/class_mailAccount.inc:1039
+#: personal/mail/class_mailAccount.inc:1047
+#: personal/mail/class_mailAccount.inc:1224
 #, fuzzy
 msgid "Mail reject size"
 msgstr "邮件大小"
 
-#: personal/mail/class_mailAccount.inc:1132
-#: personal/mail/class_mailAccount.inc:1312
+#: personal/mail/class_mailAccount.inc:1051
+#: personal/mail/class_mailAccount.inc:1231
 #, fuzzy
 msgid "Spam folder"
 msgstr "到目录"
 
-#: personal/mail/class_mailAccount.inc:1144
-#: personal/mail/class_mailAccount.inc:1324
+#: personal/mail/class_mailAccount.inc:1063
+#: personal/mail/class_mailAccount.inc:1243
 #, fuzzy
 msgid "to"
 msgstr "停止"
 
-#: personal/mail/class_mailAccount.inc:1155
-#: personal/mail/class_mailAccount.inc:1335
+#: personal/mail/class_mailAccount.inc:1074
+#: personal/mail/class_mailAccount.inc:1254
 #, fuzzy
 msgid "Vacation interval"
 msgstr "假期信息"
 
-#: personal/mail/class_mailAccount.inc:1461
+#: personal/mail/class_mailAccount.inc:1380
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/mail/class_mailAccount.inc:1470
+#: personal/mail/class_mailAccount.inc:1389
 #, fuzzy
 msgid "Add vacation information"
 msgstr "组织信息"
 
-#: personal/mail/class_mailAccount.inc:1473
+#: personal/mail/class_mailAccount.inc:1392
 msgid "Use spam filter"
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1474
+#: personal/mail/class_mailAccount.inc:1393
 #, fuzzy
 msgid "Spam level"
 msgstr "日志级别"
 
-#: personal/mail/class_mailAccount.inc:1475
+#: personal/mail/class_mailAccount.inc:1394
 msgid "Spam mail box"
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1477
+#: personal/mail/class_mailAccount.inc:1396
 #, fuzzy
 msgid "Sieve management"
 msgstr "系统管理"
 
-#: personal/mail/class_mailAccount.inc:1479
+#: personal/mail/class_mailAccount.inc:1398
 #, fuzzy
 msgid "Reject due to mailsize"
 msgstr "拒绝邮件大小超过"
 
-#: personal/mail/class_mailAccount.inc:1482
-#: personal/mail/class_mailAccount.inc:1487
+#: personal/mail/class_mailAccount.inc:1401
+#: personal/mail/class_mailAccount.inc:1406
 #, fuzzy
 msgid "Forwarding address"
 msgstr "主要地址"
 
-#: personal/mail/class_mailAccount.inc:1483
+#: personal/mail/class_mailAccount.inc:1402
 #, fuzzy
 msgid "Local delivery"
 msgstr "最后传递"
 
-#: personal/mail/class_mailAccount.inc:1484
+#: personal/mail/class_mailAccount.inc:1403
 #, fuzzy
 msgid "No delivery to own mailbox "
 msgstr "不要发送到本人邮箱"
 
-#: personal/mail/class_mailAccount.inc:1485
+#: personal/mail/class_mailAccount.inc:1404
 #, fuzzy
 msgid "Mail alternative addresses"
 msgstr "替代地址"
+
+#: personal/mail/mailAddressSelect/selectMailAddress-list.tpl:13
+msgid "Base"
+msgstr "位置"
+
+#: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "过滤器"
+
+#: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:11
+#, fuzzy
+msgid "Show users"
+msgstr "显示 samba 用户"
+
+#: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:12
+#, fuzzy
+msgid "Show groups"
+msgstr "显示 samba 用户组"
+
+#: personal/mail/mailAddressSelect/selectMailAddress-list.xml:10
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "请选择一个打印机或者取消。"
+
+#: personal/mail/mailAddressSelect/selectMailAddress-list.xml:14
+msgid "User"
+msgstr "用户"
+
+#: personal/mail/mailAddressSelect/selectMailAddress-list.xml:22
+msgid "Group"
+msgstr "组"
 
 #: personal/mail/class_mail-methods.inc:141
 #, php-format

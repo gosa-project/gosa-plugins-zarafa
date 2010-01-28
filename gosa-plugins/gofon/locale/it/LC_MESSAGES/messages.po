@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -356,7 +356,7 @@ msgstr ""
 #: admin/systems/gofon/class_phoneGeneric.inc:428
 #: admin/systems/gofon/class_phoneGeneric.inc:442
 #: admin/systems/gofon/class_phoneGeneric.inc:459
-#: gofon/macro/class_gofonMacroParameters.inc:401
+#: gofon/macro/class_gofonMacroParameters.inc:400
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1518
@@ -821,46 +821,46 @@ msgstr ""
 "Quindi - Se sei sicuro - premi <i>Rimuovi</i> per continuare o <i>Annulla</"
 "i> per abortire."
 
-#: gofon/macro/class_gofonMacroParameters.inc:200
+#: gofon/macro/class_gofonMacroParameters.inc:199
 #: gofon/phoneaccount/generic.tpl:125 gofon/phoneaccount/generic.tpl:127
 msgid "Phone macro"
 msgstr "Macro telefonica"
 
-#: gofon/macro/class_gofonMacroParameters.inc:256
+#: gofon/macro/class_gofonMacroParameters.inc:255
 #, fuzzy
 msgid "String"
 msgstr "Ricerca"
 
-#: gofon/macro/class_gofonMacroParameters.inc:257
+#: gofon/macro/class_gofonMacroParameters.inc:256
 msgid "Combobox"
 msgstr ""
 
-#: gofon/macro/class_gofonMacroParameters.inc:258
+#: gofon/macro/class_gofonMacroParameters.inc:257
 msgid "Bool"
 msgstr ""
 
-#: gofon/macro/class_gofonMacroParameters.inc:264
+#: gofon/macro/class_gofonMacroParameters.inc:263
 #, fuzzy
 msgid "Delete unused"
 msgstr "Rimuovi"
 
-#: gofon/macro/class_gofonMacroParameters.inc:340
+#: gofon/macro/class_gofonMacroParameters.inc:339
 #, php-format
 msgid "Parameter %s contains invalid character. '!,#' is used as delimiter!"
 msgstr ""
 
-#: gofon/macro/class_gofonMacroParameters.inc:345
+#: gofon/macro/class_gofonMacroParameters.inc:344
 #, fuzzy, php-format
 msgid "Parameter %s is invalid!"
 msgstr "Il valore specificato per l'UID non è valido."
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
 #: gofon/phoneaccount/class_phoneAccount.inc:1701
 msgid "Information"
 msgstr "Informazioni"
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 msgid ""
 "Number of parameters for this macro has changed. Please update all users "
 "using it!"
@@ -1011,14 +1011,6 @@ msgstr "Rimuovi"
 #, fuzzy
 msgid "You are not allowed to view the macro parameter settings"
 msgstr "Non hai il permesso di cambiare la tua password."
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Update"
-msgstr ""
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Submit"
-msgstr ""
 
 #: gofon/phoneaccount/generic.tpl:42 gofon/phoneaccount/paste_generic.tpl:27
 msgid "Telephone hardware"

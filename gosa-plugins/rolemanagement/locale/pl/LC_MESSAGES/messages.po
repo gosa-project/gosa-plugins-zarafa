@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:14+0100\n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:401
+#: admin/roleManagement/class_roleGeneric.inc:406
 #, fuzzy
 msgid "Roles"
 msgstr "Pełniona funkcja"
@@ -41,56 +41,56 @@ msgstr ""
 "Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
 "anulować."
 
-#: admin/roleManagement/class_roleGeneric.inc:220
-#: admin/roleManagement/class_roleGeneric.inc:229
-#: admin/roleManagement/class_roleGeneric.inc:404
+#: admin/roleManagement/class_roleGeneric.inc:225
+#: admin/roleManagement/class_roleGeneric.inc:234
+#: admin/roleManagement/class_roleGeneric.inc:409
 #: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Imię"
 
-#: admin/roleManagement/class_roleGeneric.inc:250
+#: admin/roleManagement/class_roleGeneric.inc:255
 msgid "Unknown"
 msgstr "Nieznane"
 
-#: admin/roleManagement/class_roleGeneric.inc:268
-#: admin/roleManagement/class_roleGeneric.inc:310
+#: admin/roleManagement/class_roleGeneric.inc:273
+#: admin/roleManagement/class_roleGeneric.inc:315
 #, fuzzy
 msgid "LDAP error"
 msgstr "błąd LDAP:"
 
-#: admin/roleManagement/class_roleGeneric.inc:395
+#: admin/roleManagement/class_roleGeneric.inc:400
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Ogólne"
 
-#: admin/roleManagement/class_roleGeneric.inc:396
+#: admin/roleManagement/class_roleGeneric.inc:401
 #, fuzzy
 msgid "Role generic"
 msgstr "Zmień nazwę"
 
-#: admin/roleManagement/class_roleGeneric.inc:405
+#: admin/roleManagement/class_roleGeneric.inc:410
 #: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Opis"
 
-#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/class_roleGeneric.inc:411
 #: admin/roleManagement/role-list.tpl:13
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Kontener"
 
-#: admin/roleManagement/class_roleGeneric.inc:407
+#: admin/roleManagement/class_roleGeneric.inc:412
 msgid "Telefon number"
 msgstr "Numer telefonu"
 
-#: admin/roleManagement/class_roleGeneric.inc:408
+#: admin/roleManagement/class_roleGeneric.inc:413
 #: admin/roleManagement/roleGeneric.tpl:56
 msgid "Fax number"
 msgstr "Numer fax"
 
-#: admin/roleManagement/class_roleGeneric.inc:409
+#: admin/roleManagement/class_roleGeneric.inc:414
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
 msgstr ""
@@ -130,14 +130,6 @@ msgstr "Edytuj makro"
 msgid "Remove role"
 msgstr "Usuń obiekt"
 
-#: admin/roleManagement/role-list.tpl:13
-msgid "Update"
-msgstr "Aktualizuj"
-
-#: admin/roleManagement/role-list.tpl:13
-msgid "Submit"
-msgstr "Wyślij"
-
 #: admin/roleManagement/paste_generic.tpl:4
 #, fuzzy
 msgid "Role name"
@@ -165,38 +157,36 @@ msgstr "Wybierz bazę"
 msgid "Phone number"
 msgstr "Numer telefonu"
 
-#: admin/roleManagement/occupantSelect.tpl:6
-msgid "Select objects to add"
-msgstr "Wybierz obiekty do dodania"
+#~ msgid "Update"
+#~ msgstr "Aktualizuj"
 
-#: admin/roleManagement/occupantSelect.tpl:20
-msgid "Filters"
-msgstr "Filtry"
+#~ msgid "Submit"
+#~ msgstr "Wyślij"
 
-#: admin/roleManagement/occupantSelect.tpl:27
-msgid "Select to search within subtrees"
-msgstr "Zaznacz aby wyszukiwać wewnątrz poddrzew"
+#~ msgid "Select objects to add"
+#~ msgstr "Wybierz obiekty do dodania"
 
-#: admin/roleManagement/occupantSelect.tpl:27
+#~ msgid "Filters"
+#~ msgstr "Filtry"
+
+#~ msgid "Select to search within subtrees"
+#~ msgstr "Zaznacz aby wyszukiwać wewnątrz poddrzew"
+
 #, fuzzy
-msgid "Search in subtrees"
-msgstr "Szukaj wewnątrz tego poddrzewa"
+#~ msgid "Search in subtrees"
+#~ msgstr "Szukaj wewnątrz tego poddrzewa"
 
-#: admin/roleManagement/occupantSelect.tpl:30
-msgid "Display objects of department"
-msgstr "Wyświetl obiekty departamentu"
+#~ msgid "Display objects of department"
+#~ msgstr "Wyświetl obiekty departamentu"
 
-#: admin/roleManagement/occupantSelect.tpl:31
-msgid "Choose the department the search will be based on"
-msgstr "Wybierz departament na którym wyszukiwanie będzie bazować"
+#~ msgid "Choose the department the search will be based on"
+#~ msgstr "Wybierz departament na którym wyszukiwanie będzie bazować"
 
-#: admin/roleManagement/occupantSelect.tpl:34
-msgid "Display objects matching"
-msgstr "Wyświetl obiekty pasujące"
+#~ msgid "Display objects matching"
+#~ msgstr "Wyświetl obiekty pasujące"
 
-#: admin/roleManagement/occupantSelect.tpl:35
-msgid "Regular expression for matching object names"
-msgstr "Wyrażenie regularne dla dopasowania nazw obiektów"
+#~ msgid "Regular expression for matching object names"
+#~ msgstr "Wyrażenie regularne dla dopasowania nazw obiektów"
 
 #, fuzzy
 #~ msgid "Manage roles"

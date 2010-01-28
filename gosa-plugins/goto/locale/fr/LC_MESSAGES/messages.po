@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 17:05+0100\n"
+"POT-Creation-Date: 2010-01-28 22:30+0100\n"
 "PO-Revision-Date: 2010-01-18 22:56+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -39,7 +39,7 @@ msgstr ""
 #: admin/applications/class_applicationGeneric.inc:597
 #: admin/mimetypes/generic.tpl:4 admin/mimetypes/paste_generic.tpl:4
 #: admin/mimetypes/class_mimetypeGeneric.inc:715
-#: admin/systems/goto/class_printGeneric.inc:988
+#: admin/systems/goto/class_printGeneric.inc:1015
 #: admin/systems/goto/class_workstationGeneric.inc:699
 msgid "Generic"
 msgstr "Informations"
@@ -290,8 +290,8 @@ msgstr "Analyse du système"
 #: admin/systems/services/shares/class_goShareServer.inc:285
 #: admin/systems/services/shares/class_goShareServer.inc:301
 #: admin/systems/services/shares/class_goShareServer.inc:314
-#: admin/systems/goto/class_printGeneric.inc:660
-#: admin/systems/goto/class_printGeneric.inc:953
+#: admin/systems/goto/class_printGeneric.inc:687
+#: admin/systems/goto/class_printGeneric.inc:980
 #: admin/systems/goto/class_terminalStartup.inc:426
 #: admin/systems/goto/class_ArpNewDevice.inc:126
 #: admin/systems/goto/class_terminalService.inc:597
@@ -302,8 +302,8 @@ msgstr "Analyse du système"
 #: admin/systems/goto/class_workstationService.inc:460
 #: admin/systems/goto/class_terminalGeneric.inc:355
 #: admin/systems/goto/class_terminalGeneric.inc:613
-#: personal/environment/class_environment.inc:1058
-#: personal/environment/class_environment.inc:1315
+#: personal/environment/class_environment.inc:1063
+#: personal/environment/class_environment.inc:1320
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
@@ -382,10 +382,10 @@ msgstr "Préférences de l'application"
 #: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/nfs/class_servNfs.inc:235
 #: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/goto/class_printGeneric.inc:733
-#: admin/systems/goto/class_printGeneric.inc:738
-#: admin/systems/goto/class_printGeneric.inc:757
-#: admin/systems/goto/class_printGeneric.inc:997
+#: admin/systems/goto/class_printGeneric.inc:760
+#: admin/systems/goto/class_printGeneric.inc:765
+#: admin/systems/goto/class_printGeneric.inc:784
+#: admin/systems/goto/class_printGeneric.inc:1024
 #: admin/systems/goto/class_ArpNewDevice.inc:88
 #: admin/systems/goto/class_workstationGeneric.inc:457
 #: admin/systems/goto/class_workstationGeneric.inc:462
@@ -396,6 +396,8 @@ msgstr "Préférences de l'application"
 #: admin/systems/goto/class_terminalGeneric.inc:698
 #: addons/goto/events/eventTargetSystems-list.xml:65
 #: addons/goto/events/eventTargetUser-list.xml:49
+#: personal/environment/printerSelect/selectPrinter-list.xml:40
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:40
 #: personal/environment/class_logonManagementDialog.inc:103
 msgid "Name"
 msgstr "Nom"
@@ -560,6 +562,7 @@ msgstr "Liste des périphériques"
 #: admin/devices/class_deviceGeneric.inc:159
 #: admin/systems/goto/gotoLpdEnable.tpl:27
 #: admin/systems/goto/gotoLpdEnable.tpl:63
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:14
 msgid "Device"
 msgstr "Périphérique"
 
@@ -578,13 +581,15 @@ msgstr "Périphérique"
 #: admin/systems/services/nfs/servnfs.tpl:19
 #: admin/systems/goto/workstation.tpl:19
 #: admin/systems/goto/ArpNewDevice.tpl:17
-#: admin/systems/goto/class_printGeneric.inc:999
+#: admin/systems/goto/class_printGeneric.inc:1026
 #: admin/systems/goto/class_workstationGeneric.inc:709
 #: admin/systems/goto/class_terminalGeneric.inc:699
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
 #: addons/goto/class_gotomasses.inc:932
 #: addons/goto/events/eventTargetSystems-list.xml:73
 #: addons/goto/events/eventTargetUser-list.xml:57
+#: personal/environment/printerSelect/selectPrinter-list.xml:48
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:48
 #: personal/environment/class_logonManagementDialog.inc:111
 #: personal/environment/logonManagement.tpl:17
 msgid "Description"
@@ -626,13 +631,15 @@ msgstr "Périphériques"
 #: admin/mimetypes/class_mimetypeGeneric.inc:727
 #: admin/systems/services/ldap/class_goLdapServer.inc:82
 #: admin/systems/goto/workstation.tpl:35
-#: admin/systems/goto/class_printGeneric.inc:998
+#: admin/systems/goto/class_printGeneric.inc:1025
 #: admin/systems/goto/class_workstationGeneric.inc:711
 #: admin/systems/goto/class_terminalGeneric.inc:700
 #: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
 #: addons/goto/goto_import_file.tpl:41
 #: addons/goto/events/eventTargetSystems-list.tpl:13
 #: addons/goto/events/eventTargetUser-list.tpl:13
+#: personal/environment/printerSelect/selectPrinter-list.tpl:13
+#: personal/environment/hotplugSelect/selectHotplug-list.tpl:13
 msgid "Base"
 msgstr "Base"
 
@@ -681,6 +688,8 @@ msgstr "(Idproduit)"
 #: admin/mimetypes/mimetype-filter.tpl:3
 #: addons/goto/events/eventTargetSystems-filter.tpl:3
 #: addons/goto/events/eventTargetUser-filter.tpl:3
+#: personal/environment/printerSelect/selectPrinter-filter.tpl:3
+#: personal/environment/hotplugSelect/selectHotplug-filter.tpl:3
 msgid "Filter"
 msgstr "Filtre"
 
@@ -717,12 +726,11 @@ msgstr "ISérie"
 #: admin/systems/services/shares/class_goShareServer.inc:257
 #: admin/systems/services/nfs/class_servNfs.inc:43
 #: admin/systems/services/nfs/class_servNfs.inc:46
-#: admin/systems/goto/class_printGeneric.inc:488
-#: admin/systems/goto/class_printGeneric.inc:535
-#: admin/systems/goto/class_printGeneric.inc:642
-#: admin/systems/goto/class_printGeneric.inc:649
-#: admin/systems/goto/class_printGeneric.inc:1076
-#: admin/systems/goto/class_printGeneric.inc:1087
+#: admin/systems/goto/class_printGeneric.inc:490
+#: admin/systems/goto/class_printGeneric.inc:669
+#: admin/systems/goto/class_printGeneric.inc:676
+#: admin/systems/goto/class_printGeneric.inc:1103
+#: admin/systems/goto/class_printGeneric.inc:1114
 #: admin/systems/goto/class_terminalStartup.inc:223
 #: admin/systems/goto/class_workstationStartup.inc:234
 #: admin/systems/goto/class_workstationStartup.inc:247
@@ -738,9 +746,7 @@ msgstr "ISérie"
 #: personal/environment/class_environment.inc:675
 #: personal/environment/class_environment.inc:677
 #: personal/environment/class_environment.inc:688
-#: personal/environment/class_environment.inc:841
-#: personal/environment/class_environment.inc:892
-#: personal/environment/class_environment.inc:988
+#: personal/environment/class_environment.inc:993
 msgid "Error"
 msgstr "Erreur"
 
@@ -777,23 +783,8 @@ msgstr "Vendeur"
 msgid "Device ID"
 msgstr "ID du périphérique"
 
-#: admin/devices/device-list.tpl:13 admin/applications/generic.tpl:82
-#: admin/applications/application-list.tpl:13 admin/mimetypes/generic.tpl:84
-#: admin/mimetypes/mimetype-list.tpl:13
-#: addons/goto/events/eventTargetSystems-list.tpl:13
-#: addons/goto/events/eventTargetUser-list.tpl:13
-msgid "Update"
-msgstr "Mise à Jour"
-
-#: admin/devices/device-list.tpl:13 admin/applications/application-list.tpl:13
-#: admin/mimetypes/mimetype-list.tpl:13
-#: addons/goto/events/eventTargetSystems-list.tpl:13
-#: addons/goto/events/eventTargetUser-list.tpl:13
-msgid "Submit"
-msgstr "Soumettre"
-
 #: admin/devices/class_deviceManagement.inc:25
-#: personal/environment/class_environment.inc:1783
+#: personal/environment/class_environment.inc:1788
 #: personal/environment/environment.tpl:293
 msgid "Hotplug devices"
 msgstr "Périphériques Hotplug"
@@ -885,6 +876,10 @@ msgstr "Sélectionnez une base"
 #: admin/mimetypes/class_mimetypeGeneric.inc:730
 msgid "Icon"
 msgstr "Icône"
+
+#: admin/applications/generic.tpl:82 admin/mimetypes/generic.tpl:84
+msgid "Update"
+msgstr "Mise à Jour"
 
 #: admin/applications/generic.tpl:82
 msgid "Reload picture from LDAP"
@@ -1171,7 +1166,7 @@ msgid "Kiosk profile service"
 msgstr "Service de profil Kiosk"
 
 #: admin/systems/services/kiosk/class_goKioskService.inc:154
-#: personal/environment/class_environment.inc:1784
+#: personal/environment/class_environment.inc:1789
 #: personal/environment/environment.tpl:124
 #: personal/environment/environment.tpl:160
 msgid "Kiosk profile"
@@ -1281,7 +1276,7 @@ msgstr "Type de sessions supportées"
 #: admin/systems/goto/class_workstationStartup.inc:1034
 #: admin/systems/goto/terminalStartup.tpl:91
 #: admin/systems/goto/workstationStartup.tpl:209
-#: personal/environment/class_environment.inc:1782
+#: personal/environment/class_environment.inc:1787
 #: personal/environment/environment.tpl:212
 msgid "Shares"
 msgstr "Partages"
@@ -1371,7 +1366,7 @@ msgid "Workstation name"
 msgstr "Nom de la station de travail"
 
 #: admin/systems/goto/workstation.tpl:27
-#: admin/systems/goto/class_printGeneric.inc:1000
+#: admin/systems/goto/class_printGeneric.inc:1027
 #: admin/systems/goto/class_workstationGeneric.inc:710
 msgid "Location"
 msgstr "Lieu"
@@ -1390,8 +1385,6 @@ msgid "Inherit all values from group"
 msgstr "Hériter toutes les valeurs du groupe"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:3
-#: personal/environment/selectPrinterDialog.tpl:5
-#: personal/environment/selectPrinterDialog.tpl:10
 msgid "Select printer to add"
 msgstr "Sélectionnez une imprimante à ajouter"
 
@@ -1401,18 +1394,14 @@ msgstr "Sélectionnez les entrées à ajouter"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:22
 #: admin/systems/ppd/printerPPDSelectionDialog.tpl:18
-#: personal/environment/selectPrinterDialog.tpl:24
-#: personal/environment/hotplugDialog.tpl:24
 msgid "Filters"
 msgstr "Filtres"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:31
-#: personal/environment/selectPrinterDialog.tpl:42
 msgid "Select to search within subtrees"
 msgstr "Sélectionner pour chercher dans le sous arbre"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:31
-#: personal/environment/selectPrinterDialog.tpl:42
 msgid "Search in subtrees"
 msgstr "Chercher dans les sous arbre"
 
@@ -1421,7 +1410,6 @@ msgid "Display members of department"
 msgstr "Afficher les membres du département"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:41
-#: personal/environment/selectPrinterDialog.tpl:34
 msgid "Choose the department the search will be based on"
 msgstr "Sélectionner le département où sera effectuée la recherche"
 
@@ -1521,12 +1509,12 @@ msgstr "Groupes d'objets"
 msgid "none"
 msgstr "aucun"
 
-#: admin/systems/goto/class_printGeneric.inc:108
-#: admin/systems/goto/class_printGeneric.inc:1036
+#: admin/systems/goto/class_printGeneric.inc:113
+#: admin/systems/goto/class_printGeneric.inc:1063
 msgid "Internal error"
 msgstr "Erreur interne"
 
-#: admin/systems/goto/class_printGeneric.inc:108
+#: admin/systems/goto/class_printGeneric.inc:113
 #, php-format
 msgid ""
 "Cannot determine a valid department for this object. Setting base to '%s'!"
@@ -1534,16 +1522,16 @@ msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
 
-#: admin/systems/goto/class_printGeneric.inc:285
-#: admin/systems/goto/class_printGeneric.inc:293
+#: admin/systems/goto/class_printGeneric.inc:290
 #: admin/systems/goto/class_printGeneric.inc:298
-#: admin/systems/goto/class_printGeneric.inc:347
-#: admin/systems/goto/class_printGeneric.inc:363
-#: admin/systems/goto/class_printGeneric.inc:366
+#: admin/systems/goto/class_printGeneric.inc:303
+#: admin/systems/goto/class_printGeneric.inc:352
+#: admin/systems/goto/class_printGeneric.inc:368
+#: admin/systems/goto/class_printGeneric.inc:371
 msgid "Add printer extension"
 msgstr "Ajouter une extension d'imprimante"
 
-#: admin/systems/goto/class_printGeneric.inc:286
+#: admin/systems/goto/class_printGeneric.inc:291
 msgid ""
 "Could not initialize printer tab, parameter parent was missing while "
 "construction."
@@ -1551,25 +1539,25 @@ msgstr ""
 "Impossible d'initialiser l'onglet imprimante, le paramètre parent était "
 "manquant pendant la construction."
 
-#: admin/systems/goto/class_printGeneric.inc:294
+#: admin/systems/goto/class_printGeneric.inc:299
 msgid "This is a workstation template, printer tab is disabled."
 msgstr ""
 "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
-#: admin/systems/goto/class_printGeneric.inc:299
+#: admin/systems/goto/class_printGeneric.inc:304
 msgid "This is a terminal template, printer tab is disabled."
 msgstr "Ceci est un modèle de terminal, l'onglet imprimante est désactivé."
 
-#: admin/systems/goto/class_printGeneric.inc:340
-#: admin/systems/goto/class_printGeneric.inc:348
-#: admin/systems/goto/class_printGeneric.inc:356
-#: admin/systems/goto/class_printGeneric.inc:359
+#: admin/systems/goto/class_printGeneric.inc:345
+#: admin/systems/goto/class_printGeneric.inc:353
+#: admin/systems/goto/class_printGeneric.inc:361
 #: admin/systems/goto/class_printGeneric.inc:364
-#: admin/systems/goto/class_printGeneric.inc:367
+#: admin/systems/goto/class_printGeneric.inc:369
+#: admin/systems/goto/class_printGeneric.inc:372
 msgid "printer"
 msgstr "imprimante"
 
-#: admin/systems/goto/class_printGeneric.inc:348
+#: admin/systems/goto/class_printGeneric.inc:353
 msgid ""
 "You can't enable it while 'cn' is not present in entry. Possibly you are "
 "currently creating a new terminal template."
@@ -1577,111 +1565,112 @@ msgstr ""
 "Vous ne pourrez l'activer tant qu'un 'cn' n'est pas présent dans l'entrée. "
 "Vous êtes probablement occupé à créer un nouveau modèle de terminal."
 
-#: admin/systems/goto/class_printGeneric.inc:355
-#: admin/systems/goto/class_printGeneric.inc:358
+#: admin/systems/goto/class_printGeneric.inc:360
+#: admin/systems/goto/class_printGeneric.inc:363
 msgid "Remove printer extension"
 msgstr "Enlever l'extension d'impression"
 
-#: admin/systems/goto/class_printGeneric.inc:567
+#: admin/systems/goto/class_printGeneric.inc:594
 #, php-format
 msgid "Your currently selected PPD file '%s' doesn't exist."
 msgstr "Le fichier PPD sélectionné '%s' n'existe pas."
 
-#: admin/systems/goto/class_printGeneric.inc:573
+#: admin/systems/goto/class_printGeneric.inc:600
 msgid "Not defined"
 msgstr "Non défini"
 
-#: admin/systems/goto/class_printGeneric.inc:577
+#: admin/systems/goto/class_printGeneric.inc:604
 #: admin/systems/ppd/class_printerPPDDialog.inc:96
 msgid "Can't get ppd informations."
 msgstr "Impossible d'obtenir des informations sur les ppd."
 
-#: admin/systems/goto/class_printGeneric.inc:593
-#: admin/systems/goto/class_printGeneric.inc:595
+#: admin/systems/goto/class_printGeneric.inc:620
+#: admin/systems/goto/class_printGeneric.inc:622
 #, php-format
 msgid "This printer belongs to %s. You can't rename this printer."
 msgstr "Cette imprimante appartient à %s. Vous ne pouvez pas changer son nom."
 
-#: admin/systems/goto/class_printGeneric.inc:593
+#: admin/systems/goto/class_printGeneric.inc:620
 #: admin/systems/goto/class_terminalStartup.inc:180
 #: admin/systems/goto/class_terminalInfo.inc:68
 #: admin/systems/goto/class_terminalGeneric.inc:232
 msgid "terminal"
 msgstr "terminal"
 
-#: admin/systems/goto/class_printGeneric.inc:595
+#: admin/systems/goto/class_printGeneric.inc:622
 #: admin/systems/goto/class_workstationGeneric.inc:227
 #: admin/systems/goto/class_workstationStartup.inc:285
 msgid "workstation"
 msgstr "stations de travail"
 
-#: admin/systems/goto/class_printGeneric.inc:642
-#: admin/systems/goto/class_printGeneric.inc:649
+#: admin/systems/goto/class_printGeneric.inc:669
+#: admin/systems/goto/class_printGeneric.inc:676
 msgid "Object is no printer!"
 msgstr "L'objet n'est pas une Imprimante !"
 
-#: admin/systems/goto/class_printGeneric.inc:743
+#: admin/systems/goto/class_printGeneric.inc:770
 #: admin/systems/goto/printer.tpl:54
 msgid "Printer URL"
 msgstr "URL de l'imprimante"
 
-#: admin/systems/goto/class_printGeneric.inc:971
-#: admin/systems/goto/class_printGeneric.inc:973
+#: admin/systems/goto/class_printGeneric.inc:998
+#: admin/systems/goto/class_printGeneric.inc:1000
 #: addons/goto/events/eventTargetUser-list.xml:23
 msgid "Group"
 msgstr "Groupes"
 
-#: admin/systems/goto/class_printGeneric.inc:976
+#: admin/systems/goto/class_printGeneric.inc:1003
 #: addons/goto/events/eventTargetUser-list.xml:15
 msgid "User"
 msgstr "Utilisateur"
 
-#: admin/systems/goto/class_printGeneric.inc:989
+#: admin/systems/goto/class_printGeneric.inc:1016
 msgid "Print generic"
 msgstr "Imprimante générique"
 
-#: admin/systems/goto/class_printGeneric.inc:994
+#: admin/systems/goto/class_printGeneric.inc:1021
 #: admin/systems/goto/terminalService.tpl:245
+#: personal/environment/printerSelect/selectPrinter-list.xml:14
 #: personal/environment/environment.tpl:338
 #: personal/environment/environment.tpl:374
 msgid "Printer"
 msgstr "Imprimante"
 
-#: admin/systems/goto/class_printGeneric.inc:1001
+#: admin/systems/goto/class_printGeneric.inc:1028
 msgid "LabeledURL"
 msgstr "URL de l'imprimante"
 
-#: admin/systems/goto/class_printGeneric.inc:1002
+#: admin/systems/goto/class_printGeneric.inc:1029
 msgid "Printer PPD"
 msgstr "PPD de  l'Imprimante"
 
-#: admin/systems/goto/class_printGeneric.inc:1003
+#: admin/systems/goto/class_printGeneric.inc:1030
 #: admin/systems/goto/printer.tpl:91
 msgid "Permissions"
 msgstr "Permissions"
 
-#: admin/systems/goto/class_printGeneric.inc:1019
-#: admin/systems/goto/class_printGeneric.inc:1041
+#: admin/systems/goto/class_printGeneric.inc:1046
+#: admin/systems/goto/class_printGeneric.inc:1068
 #: personal/environment/class_environment.inc:583
 msgid "Permission error"
 msgstr "Erreur de permissions"
 
-#: admin/systems/goto/class_printGeneric.inc:1019
-#: admin/systems/goto/class_printGeneric.inc:1041
+#: admin/systems/goto/class_printGeneric.inc:1046
+#: admin/systems/goto/class_printGeneric.inc:1068
 msgid "printer user"
 msgstr "utilisateur de l'Imprimante"
 
-#: admin/systems/goto/class_printGeneric.inc:1036
+#: admin/systems/goto/class_printGeneric.inc:1063
 #, php-format
 msgid "Illegal member type '%s'!"
 msgstr "Type de membre illégal '%s' !"
 
-#: admin/systems/goto/class_printGeneric.inc:1076
+#: admin/systems/goto/class_printGeneric.inc:1103
 #, php-format
 msgid "'%s' is already used!"
 msgstr "'%s' est déjà utilisé !"
 
-#: admin/systems/goto/class_printGeneric.inc:1087
+#: admin/systems/goto/class_printGeneric.inc:1114
 #, php-format
 msgid "'%s' does not exist!"
 msgstr "'%s' n'existe pas !"
@@ -2216,7 +2205,7 @@ msgstr ""
 
 #: admin/systems/goto/terminalService.tpl:108
 #: admin/systems/goto/workstationService.tpl:122
-#: personal/environment/class_environment.inc:1786
+#: personal/environment/class_environment.inc:1791
 #: personal/environment/environment.tpl:183
 msgid "Resolution"
 msgstr "Résolution"
@@ -2560,19 +2549,11 @@ msgstr "Utilisateurs qui sont autorisés à utiliser cette imprimante"
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: admin/systems/goto/printer.tpl:105 admin/systems/goto/printer.tpl:129
-msgid "Add user"
-msgstr "Ajouter un utilisateur"
-
-#: admin/systems/goto/printer.tpl:108 admin/systems/goto/printer.tpl:132
-msgid "Add group"
-msgstr "Ajouter un groupe"
-
-#: admin/systems/goto/printer.tpl:122
+#: admin/systems/goto/printer.tpl:119
 msgid "Users which are allowed to administrate this printer"
 msgstr "Utilisateur qui sont autorisés à administrer cette imprimante"
 
-#: admin/systems/goto/printer.tpl:124
+#: admin/systems/goto/printer.tpl:121
 msgid "Admins"
 msgstr "Administrateurs"
 
@@ -3429,7 +3410,7 @@ msgstr ""
 #: personal/environment/class_environment.inc:479
 #: personal/environment/class_environment.inc:482
 #: personal/environment/class_environment.inc:483
-#: personal/environment/class_environment.inc:1766
+#: personal/environment/class_environment.inc:1771
 msgid "Environment"
 msgstr "Environnement"
 
@@ -3482,7 +3463,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:451
 #: personal/environment/class_environment.inc:483
-#: personal/environment/class_environment.inc:1148
+#: personal/environment/class_environment.inc:1153
 msgid "POSIX"
 msgstr "UNIX"
 
@@ -3518,65 +3499,71 @@ msgstr "Réinitialiser le mot de passe"
 msgid "Delete share entry"
 msgstr "Supprimer ce partage"
 
-#: personal/environment/class_environment.inc:988
+#: personal/environment/class_environment.inc:993
 msgid "Cannot set default printer flag for groups!"
 msgstr ""
 "Impossible de mettre le paramètre par défaut des imprimantes pour les "
 "groupes !"
 
-#: personal/environment/class_environment.inc:1141
-#: personal/environment/class_environment.inc:1711
-#: personal/environment/class_environment.inc:1780
+#: personal/environment/class_environment.inc:1146
+#: personal/environment/class_environment.inc:1716
+#: personal/environment/class_environment.inc:1785
 msgid "Profile quota"
 msgstr "Quota du profil"
 
-#: personal/environment/class_environment.inc:1148
+#: personal/environment/class_environment.inc:1153
 msgid "environment"
 msgstr "environnement"
 
-#: personal/environment/class_environment.inc:1329
+#: personal/environment/class_environment.inc:1334
 msgid "group share"
 msgstr "partage de groupe"
 
-#: personal/environment/class_environment.inc:1363
+#: personal/environment/class_environment.inc:1368
 msgid "Administrator"
 msgstr "Administrateur"
 
-#: personal/environment/class_environment.inc:1368
+#: personal/environment/class_environment.inc:1373
 msgid "Default printer"
 msgstr "Imprimante par défaut"
 
-#: personal/environment/class_environment.inc:1767
+#: personal/environment/class_environment.inc:1772
 msgid "Environment settings"
 msgstr "Préférences d'environnement"
 
-#: personal/environment/class_environment.inc:1771
+#: personal/environment/class_environment.inc:1776
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/environment/class_environment.inc:1775
+#: personal/environment/class_environment.inc:1780
 msgid "Command to extend the list of possible screen resolutions"
 msgstr "Commande pour étendre la liste des résolutions écrans possibles"
 
-#: personal/environment/class_environment.inc:1779
+#: personal/environment/class_environment.inc:1784
 msgid "Profile server"
 msgstr "Serveur de profil"
 
-#: personal/environment/class_environment.inc:1781
+#: personal/environment/class_environment.inc:1786
 #: personal/environment/environment.tpl:41
 #: personal/environment/environment.tpl:106
 msgid "Cache profile localy"
 msgstr "Cacher le profil localement"
 
-#: personal/environment/class_environment.inc:1785
+#: personal/environment/class_environment.inc:1790
 #: personal/environment/environment.tpl:174
 msgid "Resolution changeable during session"
 msgstr "La résolution peut être changée pendant la session"
 
-#: personal/environment/class_environment.inc:1787
+#: personal/environment/class_environment.inc:1792
 #: personal/environment/logonManagement.tpl:56
 msgid "Logon script"
 msgstr "Script de démarrage"
+
+#: personal/environment/printerSelect/selectPrinter-list.xml:10
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:10
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "Veuillez sélectionner la langue par défaut"
 
 #: personal/environment/environment.tpl:3
 msgid "The environment extension is currently disabled."
@@ -3685,26 +3672,6 @@ msgstr "Nom du script"
 msgid "User environment settings"
 msgstr "Utiliser les préférences d'environnement"
 
-#: personal/environment/class_selectPrinterDialog.inc:107
-msgid "Please select a printer!"
-msgstr "Veuillez sélectionner une imprimante !"
-
-#: personal/environment/class_hotplugDialog.inc:64
-msgid "Please select a hotplug device!"
-msgstr "Veuillez sélectionner un périphérique hotplug !"
-
-#: personal/environment/selectPrinterDialog.tpl:1
-msgid "Add printer devices"
-msgstr "Ajouter des d'imprimantes"
-
-#: personal/environment/selectPrinterDialog.tpl:48
-msgid "Display printers matching"
-msgstr "Afficher les imprimantes correspondantes"
-
-#: personal/environment/selectPrinterDialog.tpl:53
-msgid "Regular expression for matching printer names"
-msgstr "Expression régulière concordant avec les noms des imprimantes"
-
 #: personal/environment/logonManagement.tpl:8
 msgid "Logon script settings"
 msgstr "Paramètres des scripts de démarrage"
@@ -3725,30 +3692,48 @@ msgstr "Dernier script"
 msgid "Script can be replaced by user"
 msgstr "Le script peut être remplacé par l'utilisateur"
 
-#: personal/environment/hotplugDialog.tpl:1
-msgid "Add hotplug devices"
-msgstr "Ajouter des périphériques hotplug"
+#~ msgid "Submit"
+#~ msgstr "Soumettre"
 
-#: personal/environment/hotplugDialog.tpl:5
-msgid "Hotplug management"
-msgstr "Gestion des périphériques Hotplug"
+#~ msgid "Add user"
+#~ msgstr "Ajouter un utilisateur"
 
-#: personal/environment/hotplugDialog.tpl:10
-msgid "Select hotplug device to add"
-msgstr "Sélectionner le périphérique hotplug à ajouter"
+#~ msgid "Add group"
+#~ msgstr "Ajouter un groupe"
 
-#: personal/environment/hotplugDialog.tpl:34
-msgid "Choose the department the search will be based    on"
-msgstr "Sélectionner le département où sera effectuée la recherche"
+#~ msgid "Please select a printer!"
+#~ msgstr "Veuillez sélectionner une imprimante !"
 
-#: personal/environment/hotplugDialog.tpl:43
-msgid "Display users matching"
-msgstr "Afficher les utilisateurs correspondants"
+#~ msgid "Please select a hotplug device!"
+#~ msgstr "Veuillez sélectionner un périphérique hotplug !"
 
-#: personal/environment/hotplugDialog.tpl:48
-msgid "Regular expression for        matching hotplugs"
-msgstr ""
-"Expression régulière concordant avec les noms des périphériques hotplug"
+#~ msgid "Add printer devices"
+#~ msgstr "Ajouter des d'imprimantes"
+
+#~ msgid "Display printers matching"
+#~ msgstr "Afficher les imprimantes correspondantes"
+
+#~ msgid "Regular expression for matching printer names"
+#~ msgstr "Expression régulière concordant avec les noms des imprimantes"
+
+#~ msgid "Add hotplug devices"
+#~ msgstr "Ajouter des périphériques hotplug"
+
+#~ msgid "Hotplug management"
+#~ msgstr "Gestion des périphériques Hotplug"
+
+#~ msgid "Select hotplug device to add"
+#~ msgstr "Sélectionner le périphérique hotplug à ajouter"
+
+#~ msgid "Choose the department the search will be based    on"
+#~ msgstr "Sélectionner le département où sera effectuée la recherche"
+
+#~ msgid "Display users matching"
+#~ msgstr "Afficher les utilisateurs correspondants"
+
+#~ msgid "Regular expression for        matching hotplugs"
+#~ msgstr ""
+#~ "Expression régulière concordant avec les noms des périphériques hotplug"
 
 #, fuzzy
 #~ msgid "Description name"

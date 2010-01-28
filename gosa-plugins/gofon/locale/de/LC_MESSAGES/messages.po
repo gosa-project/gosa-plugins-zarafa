@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
 "PO-Revision-Date: 2008-07-28 08:22+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -344,7 +344,7 @@ msgstr "Fehler"
 #: admin/systems/gofon/class_phoneGeneric.inc:428
 #: admin/systems/gofon/class_phoneGeneric.inc:442
 #: admin/systems/gofon/class_phoneGeneric.inc:459
-#: gofon/macro/class_gofonMacroParameters.inc:401
+#: gofon/macro/class_gofonMacroParameters.inc:400
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1518
@@ -767,46 +767,46 @@ msgstr ""
 "Wenn Sie sicher sind, drücken Sie 'Entfernen' um fortzufahren oder "
 "'Abbrechen' zum Abbruch."
 
-#: gofon/macro/class_gofonMacroParameters.inc:200
+#: gofon/macro/class_gofonMacroParameters.inc:199
 #: gofon/phoneaccount/generic.tpl:125 gofon/phoneaccount/generic.tpl:127
 msgid "Phone macro"
 msgstr "Telefon-Makro"
 
-#: gofon/macro/class_gofonMacroParameters.inc:256
+#: gofon/macro/class_gofonMacroParameters.inc:255
 msgid "String"
 msgstr "Zeichenkette"
 
-#: gofon/macro/class_gofonMacroParameters.inc:257
+#: gofon/macro/class_gofonMacroParameters.inc:256
 msgid "Combobox"
 msgstr "Auswahl-Gruppe"
 
-#: gofon/macro/class_gofonMacroParameters.inc:258
+#: gofon/macro/class_gofonMacroParameters.inc:257
 msgid "Bool"
 msgstr "Schalter"
 
-#: gofon/macro/class_gofonMacroParameters.inc:264
+#: gofon/macro/class_gofonMacroParameters.inc:263
 msgid "Delete unused"
 msgstr "Entferne"
 
-#: gofon/macro/class_gofonMacroParameters.inc:340
+#: gofon/macro/class_gofonMacroParameters.inc:339
 #, php-format
 msgid "Parameter %s contains invalid character. '!,#' is used as delimiter!"
 msgstr ""
 "Der Parameter %s enthält ungültige Zeichen. '!,#' werden als Feldtrenner "
 "verwendet!"
 
-#: gofon/macro/class_gofonMacroParameters.inc:345
+#: gofon/macro/class_gofonMacroParameters.inc:344
 #, php-format
 msgid "Parameter %s is invalid!"
 msgstr "Der Parameter %s ist ungültig!"
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
 #: gofon/phoneaccount/class_phoneAccount.inc:1701
 msgid "Information"
 msgstr "Information"
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 msgid ""
 "Number of parameters for this macro has changed. Please update all users "
 "using it!"
@@ -943,14 +943,6 @@ msgstr "Standardwert"
 msgid "You are not allowed to view the macro parameter settings"
 msgstr ""
 "Sie haben keine Berechtigung, die Makro-Parameter Einstellungen anzuzeigen."
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Update"
-msgstr "Aktualisieren"
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Submit"
-msgstr "Übertragen"
 
 #: gofon/phoneaccount/generic.tpl:42 gofon/phoneaccount/paste_generic.tpl:27
 msgid "Telephone hardware"
@@ -1474,3 +1466,9 @@ msgstr "Status"
 #: gofon/fonreports/contents.tpl:55
 msgid "Search returned no results..."
 msgstr "Die Suche verlief ergebnislos..."
+
+#~ msgid "Update"
+#~ msgstr "Aktualisieren"
+
+#~ msgid "Submit"
+#~ msgstr "Übertragen"

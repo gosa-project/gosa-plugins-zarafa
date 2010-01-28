@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
 "PO-Revision-Date: 2010-01-25 01:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -342,7 +342,7 @@ msgstr "Error"
 #: admin/systems/gofon/class_phoneGeneric.inc:428
 #: admin/systems/gofon/class_phoneGeneric.inc:442
 #: admin/systems/gofon/class_phoneGeneric.inc:459
-#: gofon/macro/class_gofonMacroParameters.inc:401
+#: gofon/macro/class_gofonMacroParameters.inc:400
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1518
@@ -765,46 +765,46 @@ msgstr ""
 "Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
 "<i>Cancelar</i> para Abortar."
 
-#: gofon/macro/class_gofonMacroParameters.inc:200
+#: gofon/macro/class_gofonMacroParameters.inc:199
 #: gofon/phoneaccount/generic.tpl:125 gofon/phoneaccount/generic.tpl:127
 msgid "Phone macro"
 msgstr "Macro telefónica"
 
-#: gofon/macro/class_gofonMacroParameters.inc:256
+#: gofon/macro/class_gofonMacroParameters.inc:255
 msgid "String"
 msgstr "Cadena de texto"
 
-#: gofon/macro/class_gofonMacroParameters.inc:257
+#: gofon/macro/class_gofonMacroParameters.inc:256
 msgid "Combobox"
 msgstr "Cuadro combinado"
 
-#: gofon/macro/class_gofonMacroParameters.inc:258
+#: gofon/macro/class_gofonMacroParameters.inc:257
 msgid "Bool"
 msgstr "Booleano"
 
-#: gofon/macro/class_gofonMacroParameters.inc:264
+#: gofon/macro/class_gofonMacroParameters.inc:263
 msgid "Delete unused"
 msgstr "Eliminar sin usar"
 
-#: gofon/macro/class_gofonMacroParameters.inc:340
+#: gofon/macro/class_gofonMacroParameters.inc:339
 #, php-format
 msgid "Parameter %s contains invalid character. '!,#' is used as delimiter!"
 msgstr ""
 "¡El campo '%s' tiene caracteres no validos, '!,#' son usados como "
 "delimitadores!"
 
-#: gofon/macro/class_gofonMacroParameters.inc:345
+#: gofon/macro/class_gofonMacroParameters.inc:344
 #, php-format
 msgid "Parameter %s is invalid!"
 msgstr "¡El parámetro '%s' no es válido!"
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
 #: gofon/phoneaccount/class_phoneAccount.inc:1701
 msgid "Information"
 msgstr "Información"
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 msgid ""
 "Number of parameters for this macro has changed. Please update all users "
 "using it!"
@@ -941,14 +941,6 @@ msgstr "Valor por defecto"
 #: gofon/macro/parameter.tpl:19
 msgid "You are not allowed to view the macro parameter settings"
 msgstr "No tiene permisos para ver la configuración de parámetros de la macro"
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Update"
-msgstr "Actualizar"
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Submit"
-msgstr "Enviar"
 
 #: gofon/phoneaccount/generic.tpl:42 gofon/phoneaccount/paste_generic.tpl:27
 msgid "Telephone hardware"
@@ -1478,6 +1470,12 @@ msgstr "Estado"
 #: gofon/fonreports/contents.tpl:55
 msgid "Search returned no results..."
 msgstr "La búsqueda no ha encontrado resultados..."
+
+#~ msgid "Update"
+#~ msgstr "Actualizar"
+
+#~ msgid "Submit"
+#~ msgstr "Enviar"
 
 #~ msgid ""
 #~ "This menu allows you to add, edit and remove selected macros. You may "

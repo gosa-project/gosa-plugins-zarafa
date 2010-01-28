@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -342,7 +342,7 @@ msgstr "错误"
 #: admin/systems/gofon/class_phoneGeneric.inc:428
 #: admin/systems/gofon/class_phoneGeneric.inc:442
 #: admin/systems/gofon/class_phoneGeneric.inc:459
-#: gofon/macro/class_gofonMacroParameters.inc:401
+#: gofon/macro/class_gofonMacroParameters.inc:400
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1518
@@ -794,44 +794,44 @@ msgstr "请再次检查您是否要这么做，因为 GOsa 没有办法将您的
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
-#: gofon/macro/class_gofonMacroParameters.inc:200
+#: gofon/macro/class_gofonMacroParameters.inc:199
 #: gofon/phoneaccount/generic.tpl:125 gofon/phoneaccount/generic.tpl:127
 msgid "Phone macro"
 msgstr "电话宏"
 
-#: gofon/macro/class_gofonMacroParameters.inc:256
+#: gofon/macro/class_gofonMacroParameters.inc:255
 msgid "String"
 msgstr "字符串"
 
-#: gofon/macro/class_gofonMacroParameters.inc:257
+#: gofon/macro/class_gofonMacroParameters.inc:256
 msgid "Combobox"
 msgstr "单选框"
 
-#: gofon/macro/class_gofonMacroParameters.inc:258
+#: gofon/macro/class_gofonMacroParameters.inc:257
 msgid "Bool"
 msgstr "布尔值"
 
-#: gofon/macro/class_gofonMacroParameters.inc:264
+#: gofon/macro/class_gofonMacroParameters.inc:263
 msgid "Delete unused"
 msgstr "删除未使用的"
 
-#: gofon/macro/class_gofonMacroParameters.inc:340
+#: gofon/macro/class_gofonMacroParameters.inc:339
 #, fuzzy, php-format
 msgid "Parameter %s contains invalid character. '!,#' is used as delimiter!"
 msgstr "参数 %s 包含无效字符。'!,#' 用做分隔符"
 
-#: gofon/macro/class_gofonMacroParameters.inc:345
+#: gofon/macro/class_gofonMacroParameters.inc:344
 #, fuzzy, php-format
 msgid "Parameter %s is invalid!"
 msgstr "指定的 branch 名称无效。"
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
 #: gofon/phoneaccount/class_phoneAccount.inc:1701
 msgid "Information"
 msgstr "提示信息"
 
-#: gofon/macro/class_gofonMacroParameters.inc:374
+#: gofon/macro/class_gofonMacroParameters.inc:373
 msgid ""
 "Number of parameters for this macro has changed. Please update all users "
 "using it!"
@@ -973,14 +973,6 @@ msgstr "缺省值"
 #, fuzzy
 msgid "You are not allowed to view the macro parameter settings"
 msgstr "您无权删除这个宏！"
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Update"
-msgstr ""
-
-#: gofon/macro/macro-list.tpl:13 gofon/conference/conf-list.tpl:13
-msgid "Submit"
-msgstr "提交"
 
 #: gofon/phoneaccount/generic.tpl:42 gofon/phoneaccount/paste_generic.tpl:27
 msgid "Telephone hardware"
@@ -1524,6 +1516,9 @@ msgstr "状态"
 #: gofon/fonreports/contents.tpl:55
 msgid "Search returned no results..."
 msgstr "查无结果..."
+
+#~ msgid "Submit"
+#~ msgstr "提交"
 
 #~ msgid ""
 #~ "This menu allows you to add, edit and remove selected macros. You may "

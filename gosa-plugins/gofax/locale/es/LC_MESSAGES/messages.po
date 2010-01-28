@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
 "PO-Revision-Date: 2010-01-25 01:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -43,6 +43,7 @@ msgid "FAX ID"
 msgstr "FAX ID"
 
 #: gofax/faxreports/detail.tpl:21 gofax/faxreports/contents.tpl:30
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:14
 #: admin/systems/services/gofax/class_goFaxServer.inc:68
 msgid "User"
 msgstr "Usuario"
@@ -89,6 +90,7 @@ msgid "FAX reports"
 msgstr "Informes de FAX"
 
 #: gofax/faxreports/contents.tpl:2 gofax/blocklists/blocklist-filter.tpl:3
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-filter.tpl:3
 msgid "Filter"
 msgstr "Filtro"
 
@@ -149,7 +151,7 @@ msgstr "Esto hace algo"
 #: gofax/faxreports/class_faxreport.inc:158
 #: gofax/faxreports/class_faxreport.inc:304
 #: gofax/blocklists/class_blocklistGeneric.inc:132
-#: gofax/faxaccount/class_gofaxAccount.inc:242
+#: gofax/faxaccount/class_gofaxAccount.inc:258
 msgid "Error"
 msgstr "Error"
 
@@ -261,16 +263,9 @@ msgstr ""
 
 #: gofax/blocklists/blocklist-list.tpl:13 gofax/blocklists/generic.tpl:17
 #: gofax/blocklists/class_blocklistGeneric.inc:387
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.tpl:13
 msgid "Base"
 msgstr "Base"
-
-#: gofax/blocklists/blocklist-list.tpl:13
-msgid "Update"
-msgstr "Actualizar"
-
-#: gofax/blocklists/blocklist-list.tpl:13
-msgid "Submit"
-msgstr "Enviar"
 
 #: gofax/blocklists/generic.tpl:1 gofax/faxaccount/generic.tpl:6
 #: gofax/faxaccount/paste_generic.tpl:4
@@ -327,12 +322,12 @@ msgid "List of blocklists"
 msgstr "Lista de listas de bloqueos"
 
 #: gofax/blocklists/blocklist-list.xml:15
-#: gofax/faxaccount/class_gofaxAccount.inc:881
+#: gofax/faxaccount/class_gofaxAccount.inc:835
 msgid "Send blocklist"
 msgstr "Lista de bloqueo salientes"
 
 #: gofax/blocklists/blocklist-list.xml:23
-#: gofax/faxaccount/class_gofaxAccount.inc:880
+#: gofax/faxaccount/class_gofaxAccount.inc:834
 msgid "Receive blocklist"
 msgstr "Listas de bloqueos entrantes"
 
@@ -385,7 +380,7 @@ msgid "Fax blocklists"
 msgstr "Lista de bloqueos de Fax"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:132
-#: gofax/faxaccount/class_gofaxAccount.inc:242
+#: gofax/faxaccount/class_gofaxAccount.inc:258
 msgid "Phone number"
 msgstr "Número de teléfono"
 
@@ -399,14 +394,15 @@ msgstr "recibir"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:205
 #: gofax/blocklists/class_blocklistGeneric.inc:286
-#: gofax/faxaccount/class_gofaxAccount.inc:659
-#: gofax/faxaccount/class_gofaxAccount.inc:788
+#: gofax/faxaccount/class_gofaxAccount.inc:613
+#: gofax/faxaccount/class_gofaxAccount.inc:742
 msgid "LDAP error"
 msgstr "Error LDAP"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:375
 #: gofax/faxaccount/generic.tpl:10 gofax/faxaccount/paste_generic.tpl:8
-#: gofax/faxaccount/class_gofaxAccount.inc:863
+#: gofax/faxaccount/class_gofaxAccount.inc:817
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:56
 msgid "Fax"
 msgstr "Fax"
 
@@ -454,7 +450,7 @@ msgstr "Edición multiple"
 msgid "Fax number for GOfax to trigger on"
 msgstr "Numero de fax para activar GOfax"
 
-#: gofax/faxaccount/generic.tpl:24 gofax/faxaccount/class_gofaxAccount.inc:874
+#: gofax/faxaccount/generic.tpl:24 gofax/faxaccount/class_gofaxAccount.inc:828
 msgid "Language"
 msgstr "Idioma"
 
@@ -464,7 +460,7 @@ msgstr ""
 "Especificar el lenguaje de comunicación de GOfax para la pasarela de fax a "
 "correo"
 
-#: gofax/faxaccount/generic.tpl:37 gofax/faxaccount/class_gofaxAccount.inc:875
+#: gofax/faxaccount/generic.tpl:37 gofax/faxaccount/class_gofaxAccount.inc:829
 msgid "Delivery format"
 msgstr "Formato de envío"
 
@@ -484,11 +480,11 @@ msgstr "Desactivación temporal del uso del fax"
 msgid "Deliver fax as mail to"
 msgstr "Enviar fax como correo electrónico a"
 
-#: gofax/faxaccount/generic.tpl:73 gofax/faxaccount/class_gofaxAccount.inc:878
+#: gofax/faxaccount/generic.tpl:73 gofax/faxaccount/class_gofaxAccount.inc:832
 msgid "Deliver fax as mail"
 msgstr "Enviar fax como correo electrónico"
 
-#: gofax/faxaccount/generic.tpl:80 gofax/faxaccount/class_gofaxAccount.inc:879
+#: gofax/faxaccount/generic.tpl:80 gofax/faxaccount/class_gofaxAccount.inc:833
 msgid "Deliver fax to printer"
 msgstr "Enviar fax a la impresora"
 
@@ -539,47 +535,60 @@ msgstr "Eliminar cuenta de fax"
 msgid "Create fax account"
 msgstr "Crear cuenta de fax"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:453
-#: gofax/faxaccount/class_gofaxAccount.inc:535
+#: gofax/faxaccount/class_gofaxAccount.inc:407
+#: gofax/faxaccount/class_gofaxAccount.inc:489
 msgid "back"
 msgstr "atrás"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:675
-#: gofax/faxaccount/class_gofaxAccount.inc:679
-#: gofax/faxaccount/class_gofaxAccount.inc:873
+#: gofax/faxaccount/class_gofaxAccount.inc:629
+#: gofax/faxaccount/class_gofaxAccount.inc:633
+#: gofax/faxaccount/class_gofaxAccount.inc:827
 msgid "Fax number"
 msgstr "Número de Fax"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:687
+#: gofax/faxaccount/class_gofaxAccount.inc:641
 msgid "Mail delivery is requested without target address!"
 msgstr ""
 "¡Ha seleccionado envío de correo, pero no se ha introducido ninguna "
 "dirección de correo!"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:689
+#: gofax/faxaccount/class_gofaxAccount.inc:643
 msgid "Mail address"
 msgstr "Dirección correo electrónico"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:689
+#: gofax/faxaccount/class_gofaxAccount.inc:643
 msgid "your-name@your-domain.com"
 msgstr "your-name@your-domain.com"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:695
+#: gofax/faxaccount/class_gofaxAccount.inc:649
 msgid "Printing is requested without a target printer!"
 msgstr ""
 "¡Ha seleccionado impresión, pero no se ha introducido ninguna impresora!"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:864
+#: gofax/faxaccount/class_gofaxAccount.inc:818
 msgid "Fax account settings"
 msgstr "Configuración cuenta de FAX"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:876
+#: gofax/faxaccount/class_gofaxAccount.inc:830
 msgid "Alternate fax number"
 msgstr "Número de FAX alternativo"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:877
+#: gofax/faxaccount/class_gofaxAccount.inc:831
 msgid "Enable/Disable fax"
 msgstr "Activar/desactivar FAX"
+
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:10
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "Por favor seleccione su idioma preferido"
+
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:40
+msgid "Given name"
+msgstr "Nombre de pila"
+
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:48
+msgid "Surname"
+msgstr "Apellido"
 
 #: gofax/faxaccount/lists.tpl:5
 msgid "Blocked numbers/lists"
@@ -627,6 +636,12 @@ msgstr "Información de la base de datos del FAX"
 #: admin/systems/services/gofax/goFaxServer.tpl:4
 msgid "FAX DB user"
 msgstr "Base de datos de usuarios de FAX"
+
+#~ msgid "Update"
+#~ msgstr "Actualizar"
+
+#~ msgid "Submit"
+#~ msgstr "Enviar"
 
 #~ msgid ""
 #~ "Please double check if your really want to do this since there is no way "

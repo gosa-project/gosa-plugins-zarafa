@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:14+0100\n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,23 +14,20 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: admin/sudo/sudo-filter.tpl:3 admin/sudo/selectUser-filter.tpl:3
-#: admin/sudo/selectSystem-filter.tpl:3
+#: admin/sudo/sudo-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Filtry"
 
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:549
-#: admin/sudo/class_sudoGeneric.inc:554 admin/sudo/class_sudoGeneric.inc:559
-#: admin/sudo/class_sudoGeneric.inc:568 admin/sudo/class_sudoGeneric.inc:671
+#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:580
+#: admin/sudo/class_sudoGeneric.inc:585 admin/sudo/class_sudoGeneric.inc:590
+#: admin/sudo/class_sudoGeneric.inc:599 admin/sudo/class_sudoGeneric.inc:638
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/selectUser-list.xml:49 admin/sudo/sudo-list.xml:32
-#: admin/sudo/paste_generic.tpl:5 admin/sudo/selectSystem-list.xml:57
+#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
 msgid "Name"
 msgstr "Imię"
 
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:386
-#: admin/sudo/selectUser-list.xml:15
+#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:421
 msgid "User"
 msgstr "Użytkownik"
 
@@ -50,66 +47,66 @@ msgstr ""
 "Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
 "anulować."
 
-#: admin/sudo/class_sudoGeneric.inc:297
+#: admin/sudo/class_sudoGeneric.inc:332
 msgid "Error"
 msgstr "Błąd"
 
-#: admin/sudo/class_sudoGeneric.inc:339
+#: admin/sudo/class_sudoGeneric.inc:374
 msgid "disabled"
 msgstr "wyłączone"
 
-#: admin/sudo/class_sudoGeneric.inc:340
+#: admin/sudo/class_sudoGeneric.inc:375
 msgid "full access"
 msgstr "pełen dostęp"
 
-#: admin/sudo/class_sudoGeneric.inc:341
+#: admin/sudo/class_sudoGeneric.inc:376
 msgid "allow access to these hosts"
 msgstr "zezwól na dostęp do tych hostów"
 
-#: admin/sudo/class_sudoGeneric.inc:387 admin/sudo/selectUser-list.xml:23
+#: admin/sudo/class_sudoGeneric.inc:422
 msgid "Group"
 msgstr "Grupa"
 
-#: admin/sudo/class_sudoGeneric.inc:535
+#: admin/sudo/class_sudoGeneric.inc:566
 #, fuzzy
 msgid "LDAP error"
 msgstr "błąd LDAP:"
 
-#: admin/sudo/class_sudoGeneric.inc:662 admin/sudo/class_sudoManagement.inc:25
+#: admin/sudo/class_sudoGeneric.inc:629 admin/sudo/class_sudoManagement.inc:25
 #, fuzzy
 msgid "Sudo"
 msgstr "Nazwisko"
 
-#: admin/sudo/class_sudoGeneric.inc:663 admin/sudo/class_sudoGeneric.inc:668
+#: admin/sudo/class_sudoGeneric.inc:630 admin/sudo/class_sudoGeneric.inc:635
 #, fuzzy
 msgid "Sudo role"
 msgstr "! nieznane id"
 
-#: admin/sudo/class_sudoGeneric.inc:672 admin/sudo/generic.tpl:15
+#: admin/sudo/class_sudoGeneric.inc:639 admin/sudo/generic.tpl:15
 #: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr "Opis"
 
-#: admin/sudo/class_sudoGeneric.inc:673
+#: admin/sudo/class_sudoGeneric.inc:640
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: admin/sudo/class_sudoGeneric.inc:674
+#: admin/sudo/class_sudoGeneric.inc:641
 #, fuzzy
 msgid "Host"
 msgstr "Zaczepy"
 
-#: admin/sudo/class_sudoGeneric.inc:675
+#: admin/sudo/class_sudoGeneric.inc:642
 #, fuzzy
 msgid "Command"
 msgstr "i"
 
-#: admin/sudo/class_sudoGeneric.inc:676
+#: admin/sudo/class_sudoGeneric.inc:643
 #, fuzzy
 msgid "Run as user"
 msgstr "Użytkownicy domeny"
 
-#: admin/sudo/class_sudoGeneric.inc:677
+#: admin/sudo/class_sudoGeneric.inc:644
 #, fuzzy
 msgid "Access control list"
 msgstr "Kontrola dostępu"
@@ -174,20 +171,6 @@ msgstr "i"
 msgid "Run as"
 msgstr "Użytkownicy domeny"
 
-#: admin/sudo/selectUser-list.xml:11
-#, fuzzy
-msgid "List of users and groups"
-msgstr "grupy"
-
-#: admin/sudo/selectUser-list.xml:57 admin/sudo/selectSystem-list.xml:65
-#, fuzzy
-msgid "Description name"
-msgstr "Opis"
-
-#: admin/sudo/selectUser-list.xml:75
-msgid "Add"
-msgstr "Dodaj"
-
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
 msgid "List of sudo roles"
@@ -224,18 +207,6 @@ msgstr "! nieznane id"
 msgid "Remove sudo role"
 msgstr "! nieznane id"
 
-#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
-msgid "Base"
-msgstr "Kontener"
-
-#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
-msgid "Update"
-msgstr "Aktualizuj"
-
-#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
-msgid "Submit"
-msgstr "Wyślij"
-
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
 msgid "Unknown option"
@@ -271,69 +242,75 @@ msgstr "klasa"
 msgid "Sudo options"
 msgstr "Nieznane"
 
-#: admin/sudo/trust_machines.tpl:6
-msgid "Select systems to add"
-msgstr "Wybierz systemy do dodania"
-
-#: admin/sudo/trust_machines.tpl:26
-msgid "Display systems of department"
-msgstr "Wyświetl systemy departamentu"
-
-#: admin/sudo/trust_machines.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr "Wybierz departament na którym wyszukiwanie będzie bazować"
-
-#: admin/sudo/trust_machines.tpl:30
-msgid "Display systems matching"
-msgstr "Wyświetl systemy pasujące"
-
-#: admin/sudo/trust_machines.tpl:31
-msgid "Regular expression for matching addresses"
-msgstr "Wyrażenie regularne dla dopasowania adresów"
-
-#: admin/sudo/selectSystem-list.xml:11
-#, fuzzy
-msgid "List of systems"
-msgstr "Lista użytkowników"
-
-#: admin/sudo/selectSystem-list.xml:15
-msgid "Server"
-msgstr "Serwer"
-
-#: admin/sudo/selectSystem-list.xml:23
-msgid "Workstation"
-msgstr "Stacja robocza"
-
-#: admin/sudo/selectSystem-list.xml:31
-msgid "Terminal"
-msgstr "Terminal"
-
-#: admin/sudo/selectUser-filter.tpl:11
-#, fuzzy
-msgid "Show users"
-msgstr "Pokaż użytkowników Samby"
-
-#: admin/sudo/selectUser-filter.tpl:12
-#, fuzzy
-msgid "Show groups"
-msgstr "Pokaż grupy samba"
-
 #: admin/sudo/class_sudoManagement.inc:26
 #, fuzzy
 msgid "Sudo management"
 msgstr "Zarządzanie systemem"
 
-#: admin/sudo/selectSystem-filter.tpl:11
-msgid "Show servers"
-msgstr "Pokaż serwery"
+#, fuzzy
+#~ msgid "List of users and groups"
+#~ msgstr "grupy"
 
-#: admin/sudo/selectSystem-filter.tpl:12
-msgid "Show workstations"
-msgstr "Pokaż stacje robocze"
+#, fuzzy
+#~ msgid "Description name"
+#~ msgstr "Opis"
 
-#: admin/sudo/selectSystem-filter.tpl:13
-msgid "Show terminals"
-msgstr "Pokaż terminale"
+#~ msgid "Add"
+#~ msgstr "Dodaj"
+
+#~ msgid "Base"
+#~ msgstr "Kontener"
+
+#~ msgid "Update"
+#~ msgstr "Aktualizuj"
+
+#~ msgid "Submit"
+#~ msgstr "Wyślij"
+
+#~ msgid "Select systems to add"
+#~ msgstr "Wybierz systemy do dodania"
+
+#~ msgid "Display systems of department"
+#~ msgstr "Wyświetl systemy departamentu"
+
+#~ msgid "Choose the department the search will be based on"
+#~ msgstr "Wybierz departament na którym wyszukiwanie będzie bazować"
+
+#~ msgid "Display systems matching"
+#~ msgstr "Wyświetl systemy pasujące"
+
+#~ msgid "Regular expression for matching addresses"
+#~ msgstr "Wyrażenie regularne dla dopasowania adresów"
+
+#, fuzzy
+#~ msgid "List of systems"
+#~ msgstr "Lista użytkowników"
+
+#~ msgid "Server"
+#~ msgstr "Serwer"
+
+#~ msgid "Workstation"
+#~ msgstr "Stacja robocza"
+
+#~ msgid "Terminal"
+#~ msgstr "Terminal"
+
+#, fuzzy
+#~ msgid "Show users"
+#~ msgstr "Pokaż użytkowników Samby"
+
+#, fuzzy
+#~ msgid "Show groups"
+#~ msgstr "Pokaż grupy samba"
+
+#~ msgid "Show servers"
+#~ msgstr "Pokaż serwery"
+
+#~ msgid "Show workstations"
+#~ msgstr "Pokaż stacje robocze"
+
+#~ msgid "Show terminals"
+#~ msgstr "Pokaż terminale"
 
 #, fuzzy
 #~ msgid "Available systems"

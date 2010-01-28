@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:12+0100\n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -44,6 +44,7 @@ msgid "FAX ID"
 msgstr "Fax ID"
 
 #: gofax/faxreports/detail.tpl:21 gofax/faxreports/contents.tpl:30
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:14
 #: admin/systems/services/gofax/class_goFaxServer.inc:68
 msgid "User"
 msgstr "Gebruiker"
@@ -90,6 +91,7 @@ msgid "FAX reports"
 msgstr "Fax rapporten"
 
 #: gofax/faxreports/contents.tpl:2 gofax/blocklists/blocklist-filter.tpl:3
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-filter.tpl:3
 msgid "Filter"
 msgstr "Filter"
 
@@ -150,7 +152,7 @@ msgstr "Dit doet iets"
 #: gofax/faxreports/class_faxreport.inc:158
 #: gofax/faxreports/class_faxreport.inc:304
 #: gofax/blocklists/class_blocklistGeneric.inc:132
-#: gofax/faxaccount/class_gofaxAccount.inc:242
+#: gofax/faxaccount/class_gofaxAccount.inc:258
 msgid "Error"
 msgstr "Fout"
 
@@ -277,16 +279,9 @@ msgstr ""
 
 #: gofax/blocklists/blocklist-list.tpl:13 gofax/blocklists/generic.tpl:17
 #: gofax/blocklists/class_blocklistGeneric.inc:387
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.tpl:13
 msgid "Base"
 msgstr "Basis"
-
-#: gofax/blocklists/blocklist-list.tpl:13
-msgid "Update"
-msgstr ""
-
-#: gofax/blocklists/blocklist-list.tpl:13
-msgid "Submit"
-msgstr "Verwerk"
 
 #: gofax/blocklists/generic.tpl:1 gofax/faxaccount/generic.tpl:6
 #: gofax/faxaccount/paste_generic.tpl:4
@@ -343,13 +338,13 @@ msgid "List of blocklists"
 msgstr "Lijst met blokkeerlijsten"
 
 #: gofax/blocklists/blocklist-list.xml:15
-#: gofax/faxaccount/class_gofaxAccount.inc:881
+#: gofax/faxaccount/class_gofaxAccount.inc:835
 #, fuzzy
 msgid "Send blocklist"
 msgstr "Toon verstuur blokkeerlijsten"
 
 #: gofax/blocklists/blocklist-list.xml:23
-#: gofax/faxaccount/class_gofaxAccount.inc:880
+#: gofax/faxaccount/class_gofaxAccount.inc:834
 #, fuzzy
 msgid "Receive blocklist"
 msgstr "Toon ontvangst blokkeerlijsten"
@@ -405,7 +400,7 @@ msgid "Fax blocklists"
 msgstr "Fax blokkades"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:132
-#: gofax/faxaccount/class_gofaxAccount.inc:242
+#: gofax/faxaccount/class_gofaxAccount.inc:258
 #, fuzzy
 msgid "Phone number"
 msgstr "Geblokkeerde nummers"
@@ -420,15 +415,16 @@ msgstr "ontvangen"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:205
 #: gofax/blocklists/class_blocklistGeneric.inc:286
-#: gofax/faxaccount/class_gofaxAccount.inc:659
-#: gofax/faxaccount/class_gofaxAccount.inc:788
+#: gofax/faxaccount/class_gofaxAccount.inc:613
+#: gofax/faxaccount/class_gofaxAccount.inc:742
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP fout:"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:375
 #: gofax/faxaccount/generic.tpl:10 gofax/faxaccount/paste_generic.tpl:8
-#: gofax/faxaccount/class_gofaxAccount.inc:863
+#: gofax/faxaccount/class_gofaxAccount.inc:817
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:56
 msgid "Fax"
 msgstr "Fax"
 
@@ -477,7 +473,7 @@ msgstr ""
 msgid "Fax number for GOfax to trigger on"
 msgstr "Fax nummer waarop GOfax moet reageren"
 
-#: gofax/faxaccount/generic.tpl:24 gofax/faxaccount/class_gofaxAccount.inc:874
+#: gofax/faxaccount/generic.tpl:24 gofax/faxaccount/class_gofaxAccount.inc:828
 msgid "Language"
 msgstr "Taal"
 
@@ -485,7 +481,7 @@ msgstr "Taal"
 msgid "Specify the GOfax communication language for fax to mail gateway"
 msgstr "Specificeer de GOfax communicatie taal voor de Fax naar E-mail gateway"
 
-#: gofax/faxaccount/generic.tpl:37 gofax/faxaccount/class_gofaxAccount.inc:875
+#: gofax/faxaccount/generic.tpl:37 gofax/faxaccount/class_gofaxAccount.inc:829
 msgid "Delivery format"
 msgstr "Aflever formaat"
 
@@ -505,11 +501,11 @@ msgstr "Schakel Fax gebruik tijdelijk uit"
 msgid "Deliver fax as mail to"
 msgstr "Lever Fax als E-mail af aan"
 
-#: gofax/faxaccount/generic.tpl:73 gofax/faxaccount/class_gofaxAccount.inc:878
+#: gofax/faxaccount/generic.tpl:73 gofax/faxaccount/class_gofaxAccount.inc:832
 msgid "Deliver fax as mail"
 msgstr "Lever Fax als E-mail af"
 
-#: gofax/faxaccount/generic.tpl:80 gofax/faxaccount/class_gofaxAccount.inc:879
+#: gofax/faxaccount/generic.tpl:80 gofax/faxaccount/class_gofaxAccount.inc:833
 msgid "Deliver fax to printer"
 msgstr "Lever Fax af op printer"
 
@@ -563,48 +559,61 @@ msgstr "Fax account verwijderen"
 msgid "Create fax account"
 msgstr "Fax account aanmaken"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:453
-#: gofax/faxaccount/class_gofaxAccount.inc:535
+#: gofax/faxaccount/class_gofaxAccount.inc:407
+#: gofax/faxaccount/class_gofaxAccount.inc:489
 msgid "back"
 msgstr "terug"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:675
-#: gofax/faxaccount/class_gofaxAccount.inc:679
-#: gofax/faxaccount/class_gofaxAccount.inc:873
+#: gofax/faxaccount/class_gofaxAccount.inc:629
+#: gofax/faxaccount/class_gofaxAccount.inc:633
+#: gofax/faxaccount/class_gofaxAccount.inc:827
 #, fuzzy
 msgid "Fax number"
 msgstr "Serienummer"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:687
+#: gofax/faxaccount/class_gofaxAccount.inc:641
 msgid "Mail delivery is requested without target address!"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:689
+#: gofax/faxaccount/class_gofaxAccount.inc:643
 #, fuzzy
 msgid "Mail address"
 msgstr "Het E-mail adres dat u opgegeven heeft is ongeldig."
 
-#: gofax/faxaccount/class_gofaxAccount.inc:689
+#: gofax/faxaccount/class_gofaxAccount.inc:643
 msgid "your-name@your-domain.com"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:695
+#: gofax/faxaccount/class_gofaxAccount.inc:649
 msgid "Printing is requested without a target printer!"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:864
+#: gofax/faxaccount/class_gofaxAccount.inc:818
 #, fuzzy
 msgid "Fax account settings"
 msgstr "Samba Instellingen"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:876
+#: gofax/faxaccount/class_gofaxAccount.inc:830
 #, fuzzy
 msgid "Alternate fax number"
 msgstr "Alternatieve Fax nummers"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:877
+#: gofax/faxaccount/class_gofaxAccount.inc:831
 msgid "Enable/Disable fax"
 msgstr ""
+
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:10
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "Voorkeurstaal"
+
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:40
+msgid "Given name"
+msgstr "Naam"
+
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:48
+msgid "Surname"
+msgstr "Achternaam"
 
 #: gofax/faxaccount/lists.tpl:5
 msgid "Blocked numbers/lists"
@@ -656,6 +665,9 @@ msgstr "Free Busy informatie"
 #: admin/systems/services/gofax/goFaxServer.tpl:4
 msgid "FAX DB user"
 msgstr "FAX DB gebruiker"
+
+#~ msgid "Submit"
+#~ msgstr "Verwerk"
 
 #~ msgid ""
 #~ "Please double check if your really want to do this since there is no way "

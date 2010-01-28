@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:14+0100\n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,23 +16,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/sudo/sudo-filter.tpl:3 admin/sudo/selectUser-filter.tpl:3
-#: admin/sudo/selectSystem-filter.tpl:3
+#: admin/sudo/sudo-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "过滤器"
 
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:549
-#: admin/sudo/class_sudoGeneric.inc:554 admin/sudo/class_sudoGeneric.inc:559
-#: admin/sudo/class_sudoGeneric.inc:568 admin/sudo/class_sudoGeneric.inc:671
+#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:580
+#: admin/sudo/class_sudoGeneric.inc:585 admin/sudo/class_sudoGeneric.inc:590
+#: admin/sudo/class_sudoGeneric.inc:599 admin/sudo/class_sudoGeneric.inc:638
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/selectUser-list.xml:49 admin/sudo/sudo-list.xml:32
-#: admin/sudo/paste_generic.tpl:5 admin/sudo/selectSystem-list.xml:57
+#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
 msgid "Name"
 msgstr "名称"
 
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:386
-#: admin/sudo/selectUser-list.xml:15
+#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:421
 msgid "User"
 msgstr "用户"
 
@@ -50,66 +47,66 @@ msgstr "请再次检查您是否要这么做，因为 GOsa 没有办法将您的
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
-#: admin/sudo/class_sudoGeneric.inc:297
+#: admin/sudo/class_sudoGeneric.inc:332
 msgid "Error"
 msgstr "错误"
 
-#: admin/sudo/class_sudoGeneric.inc:339
+#: admin/sudo/class_sudoGeneric.inc:374
 msgid "disabled"
 msgstr "禁用"
 
-#: admin/sudo/class_sudoGeneric.inc:340
+#: admin/sudo/class_sudoGeneric.inc:375
 msgid "full access"
 msgstr "完全访问权限"
 
-#: admin/sudo/class_sudoGeneric.inc:341
+#: admin/sudo/class_sudoGeneric.inc:376
 msgid "allow access to these hosts"
 msgstr "允许访问这些主机"
 
-#: admin/sudo/class_sudoGeneric.inc:387 admin/sudo/selectUser-list.xml:23
+#: admin/sudo/class_sudoGeneric.inc:422
 msgid "Group"
 msgstr "组"
 
-#: admin/sudo/class_sudoGeneric.inc:535
+#: admin/sudo/class_sudoGeneric.inc:566
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP 错误:"
 
-#: admin/sudo/class_sudoGeneric.inc:662 admin/sudo/class_sudoManagement.inc:25
+#: admin/sudo/class_sudoGeneric.inc:629 admin/sudo/class_sudoManagement.inc:25
 #, fuzzy
 msgid "Sudo"
 msgstr "姓"
 
-#: admin/sudo/class_sudoGeneric.inc:663 admin/sudo/class_sudoGeneric.inc:668
+#: admin/sudo/class_sudoGeneric.inc:630 admin/sudo/class_sudoGeneric.inc:635
 #, fuzzy
 msgid "Sudo role"
 msgstr "! 未知 id"
 
-#: admin/sudo/class_sudoGeneric.inc:672 admin/sudo/generic.tpl:15
+#: admin/sudo/class_sudoGeneric.inc:639 admin/sudo/generic.tpl:15
 #: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr "描述"
 
-#: admin/sudo/class_sudoGeneric.inc:673
+#: admin/sudo/class_sudoGeneric.inc:640
 msgid "Users"
 msgstr "用户"
 
-#: admin/sudo/class_sudoGeneric.inc:674
+#: admin/sudo/class_sudoGeneric.inc:641
 #, fuzzy
 msgid "Host"
 msgstr "钩子"
 
-#: admin/sudo/class_sudoGeneric.inc:675
+#: admin/sudo/class_sudoGeneric.inc:642
 #, fuzzy
 msgid "Command"
 msgstr "和"
 
-#: admin/sudo/class_sudoGeneric.inc:676
+#: admin/sudo/class_sudoGeneric.inc:643
 #, fuzzy
 msgid "Run as user"
 msgstr "域用户"
 
-#: admin/sudo/class_sudoGeneric.inc:677
+#: admin/sudo/class_sudoGeneric.inc:644
 #, fuzzy
 msgid "Access control list"
 msgstr "访问选项"
@@ -174,20 +171,6 @@ msgstr "和"
 msgid "Run as"
 msgstr "域用户"
 
-#: admin/sudo/selectUser-list.xml:11
-#, fuzzy
-msgid "List of users and groups"
-msgstr "组"
-
-#: admin/sudo/selectUser-list.xml:57 admin/sudo/selectSystem-list.xml:65
-#, fuzzy
-msgid "Description name"
-msgstr "描述"
-
-#: admin/sudo/selectUser-list.xml:75
-msgid "Add"
-msgstr "添加"
-
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
 msgid "List of sudo roles"
@@ -224,18 +207,6 @@ msgstr "! 未知 id"
 msgid "Remove sudo role"
 msgstr "! 未知 id"
 
-#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
-msgid "Base"
-msgstr "位置"
-
-#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
-msgid "Update"
-msgstr ""
-
-#: admin/sudo/selectSystem-list.tpl:13 admin/sudo/selectUser-list.tpl:13
-msgid "Submit"
-msgstr "提交"
-
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
 msgid "Unknown option"
@@ -271,69 +242,72 @@ msgstr "类"
 msgid "Sudo options"
 msgstr "未知"
 
-#: admin/sudo/trust_machines.tpl:6
-msgid "Select systems to add"
-msgstr "选择要添加的系统"
-
-#: admin/sudo/trust_machines.tpl:26
-msgid "Display systems of department"
-msgstr "显示部门的系统"
-
-#: admin/sudo/trust_machines.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr "选择一个部门来做查询"
-
-#: admin/sudo/trust_machines.tpl:30
-msgid "Display systems matching"
-msgstr "显示匹配的系统"
-
-#: admin/sudo/trust_machines.tpl:31
-msgid "Regular expression for matching addresses"
-msgstr "匹配地址的正则表达式"
-
-#: admin/sudo/selectSystem-list.xml:11
-#, fuzzy
-msgid "List of systems"
-msgstr "用户列表"
-
-#: admin/sudo/selectSystem-list.xml:15
-msgid "Server"
-msgstr "服务器"
-
-#: admin/sudo/selectSystem-list.xml:23
-msgid "Workstation"
-msgstr "工作站"
-
-#: admin/sudo/selectSystem-list.xml:31
-msgid "Terminal"
-msgstr "终端"
-
-#: admin/sudo/selectUser-filter.tpl:11
-#, fuzzy
-msgid "Show users"
-msgstr "显示 samba 用户"
-
-#: admin/sudo/selectUser-filter.tpl:12
-#, fuzzy
-msgid "Show groups"
-msgstr "显示 samba 用户组"
-
 #: admin/sudo/class_sudoManagement.inc:26
 #, fuzzy
 msgid "Sudo management"
 msgstr "系统管理"
 
-#: admin/sudo/selectSystem-filter.tpl:11
-msgid "Show servers"
-msgstr "显示服务器"
+#, fuzzy
+#~ msgid "List of users and groups"
+#~ msgstr "组"
 
-#: admin/sudo/selectSystem-filter.tpl:12
-msgid "Show workstations"
-msgstr "显示工作站"
+#, fuzzy
+#~ msgid "Description name"
+#~ msgstr "描述"
 
-#: admin/sudo/selectSystem-filter.tpl:13
-msgid "Show terminals"
-msgstr "显示终端"
+#~ msgid "Add"
+#~ msgstr "添加"
+
+#~ msgid "Base"
+#~ msgstr "位置"
+
+#~ msgid "Submit"
+#~ msgstr "提交"
+
+#~ msgid "Select systems to add"
+#~ msgstr "选择要添加的系统"
+
+#~ msgid "Display systems of department"
+#~ msgstr "显示部门的系统"
+
+#~ msgid "Choose the department the search will be based on"
+#~ msgstr "选择一个部门来做查询"
+
+#~ msgid "Display systems matching"
+#~ msgstr "显示匹配的系统"
+
+#~ msgid "Regular expression for matching addresses"
+#~ msgstr "匹配地址的正则表达式"
+
+#, fuzzy
+#~ msgid "List of systems"
+#~ msgstr "用户列表"
+
+#~ msgid "Server"
+#~ msgstr "服务器"
+
+#~ msgid "Workstation"
+#~ msgstr "工作站"
+
+#~ msgid "Terminal"
+#~ msgstr "终端"
+
+#, fuzzy
+#~ msgid "Show users"
+#~ msgstr "显示 samba 用户"
+
+#, fuzzy
+#~ msgid "Show groups"
+#~ msgstr "显示 samba 用户组"
+
+#~ msgid "Show servers"
+#~ msgstr "显示服务器"
+
+#~ msgid "Show workstations"
+#~ msgstr "显示工作站"
+
+#~ msgid "Show terminals"
+#~ msgstr "显示终端"
 
 #, fuzzy
 #~ msgid "Available systems"

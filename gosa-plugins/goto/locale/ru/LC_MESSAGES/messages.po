@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 17:05+0100\n"
+"POT-Creation-Date: 2010-01-28 22:30+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -36,7 +36,7 @@ msgstr ""
 #: admin/applications/class_applicationGeneric.inc:597
 #: admin/mimetypes/generic.tpl:4 admin/mimetypes/paste_generic.tpl:4
 #: admin/mimetypes/class_mimetypeGeneric.inc:715
-#: admin/systems/goto/class_printGeneric.inc:988
+#: admin/systems/goto/class_printGeneric.inc:1015
 #: admin/systems/goto/class_workstationGeneric.inc:699
 msgid "Generic"
 msgstr "Общее"
@@ -298,8 +298,8 @@ msgstr "Системные журналы"
 #: admin/systems/services/shares/class_goShareServer.inc:285
 #: admin/systems/services/shares/class_goShareServer.inc:301
 #: admin/systems/services/shares/class_goShareServer.inc:314
-#: admin/systems/goto/class_printGeneric.inc:660
-#: admin/systems/goto/class_printGeneric.inc:953
+#: admin/systems/goto/class_printGeneric.inc:687
+#: admin/systems/goto/class_printGeneric.inc:980
 #: admin/systems/goto/class_terminalStartup.inc:426
 #: admin/systems/goto/class_ArpNewDevice.inc:126
 #: admin/systems/goto/class_terminalService.inc:597
@@ -310,8 +310,8 @@ msgstr "Системные журналы"
 #: admin/systems/goto/class_workstationService.inc:460
 #: admin/systems/goto/class_terminalGeneric.inc:355
 #: admin/systems/goto/class_terminalGeneric.inc:613
-#: personal/environment/class_environment.inc:1058
-#: personal/environment/class_environment.inc:1315
+#: personal/environment/class_environment.inc:1063
+#: personal/environment/class_environment.inc:1320
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
@@ -402,10 +402,10 @@ msgstr "Параметры приложения"
 #: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/nfs/class_servNfs.inc:235
 #: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/goto/class_printGeneric.inc:733
-#: admin/systems/goto/class_printGeneric.inc:738
-#: admin/systems/goto/class_printGeneric.inc:757
-#: admin/systems/goto/class_printGeneric.inc:997
+#: admin/systems/goto/class_printGeneric.inc:760
+#: admin/systems/goto/class_printGeneric.inc:765
+#: admin/systems/goto/class_printGeneric.inc:784
+#: admin/systems/goto/class_printGeneric.inc:1024
 #: admin/systems/goto/class_ArpNewDevice.inc:88
 #: admin/systems/goto/class_workstationGeneric.inc:457
 #: admin/systems/goto/class_workstationGeneric.inc:462
@@ -416,6 +416,8 @@ msgstr "Параметры приложения"
 #: admin/systems/goto/class_terminalGeneric.inc:698
 #: addons/goto/events/eventTargetSystems-list.xml:65
 #: addons/goto/events/eventTargetUser-list.xml:49
+#: personal/environment/printerSelect/selectPrinter-list.xml:40
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:40
 #: personal/environment/class_logonManagementDialog.inc:103
 msgid "Name"
 msgstr "Фамилия"
@@ -599,6 +601,7 @@ msgstr "Список пользователей"
 #: admin/devices/class_deviceGeneric.inc:159
 #: admin/systems/goto/gotoLpdEnable.tpl:27
 #: admin/systems/goto/gotoLpdEnable.tpl:63
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:14
 #, fuzzy
 msgid "Device"
 msgstr "Устройства"
@@ -618,13 +621,15 @@ msgstr "Устройства"
 #: admin/systems/services/nfs/servnfs.tpl:19
 #: admin/systems/goto/workstation.tpl:19
 #: admin/systems/goto/ArpNewDevice.tpl:17
-#: admin/systems/goto/class_printGeneric.inc:999
+#: admin/systems/goto/class_printGeneric.inc:1026
 #: admin/systems/goto/class_workstationGeneric.inc:709
 #: admin/systems/goto/class_terminalGeneric.inc:699
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
 #: addons/goto/class_gotomasses.inc:932
 #: addons/goto/events/eventTargetSystems-list.xml:73
 #: addons/goto/events/eventTargetUser-list.xml:57
+#: personal/environment/printerSelect/selectPrinter-list.xml:48
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:48
 #: personal/environment/class_logonManagementDialog.inc:111
 #: personal/environment/logonManagement.tpl:17
 msgid "Description"
@@ -668,13 +673,15 @@ msgstr "Устройства"
 #: admin/mimetypes/class_mimetypeGeneric.inc:727
 #: admin/systems/services/ldap/class_goLdapServer.inc:82
 #: admin/systems/goto/workstation.tpl:35
-#: admin/systems/goto/class_printGeneric.inc:998
+#: admin/systems/goto/class_printGeneric.inc:1025
 #: admin/systems/goto/class_workstationGeneric.inc:711
 #: admin/systems/goto/class_terminalGeneric.inc:700
 #: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
 #: addons/goto/goto_import_file.tpl:41
 #: addons/goto/events/eventTargetSystems-list.tpl:13
 #: addons/goto/events/eventTargetUser-list.tpl:13
+#: personal/environment/printerSelect/selectPrinter-list.tpl:13
+#: personal/environment/hotplugSelect/selectHotplug-list.tpl:13
 msgid "Base"
 msgstr "Ветка"
 
@@ -730,6 +737,8 @@ msgstr ""
 #: admin/mimetypes/mimetype-filter.tpl:3
 #: addons/goto/events/eventTargetSystems-filter.tpl:3
 #: addons/goto/events/eventTargetUser-filter.tpl:3
+#: personal/environment/printerSelect/selectPrinter-filter.tpl:3
+#: personal/environment/hotplugSelect/selectHotplug-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Фильтры"
@@ -769,12 +778,11 @@ msgstr "терминалы"
 #: admin/systems/services/shares/class_goShareServer.inc:257
 #: admin/systems/services/nfs/class_servNfs.inc:43
 #: admin/systems/services/nfs/class_servNfs.inc:46
-#: admin/systems/goto/class_printGeneric.inc:488
-#: admin/systems/goto/class_printGeneric.inc:535
-#: admin/systems/goto/class_printGeneric.inc:642
-#: admin/systems/goto/class_printGeneric.inc:649
-#: admin/systems/goto/class_printGeneric.inc:1076
-#: admin/systems/goto/class_printGeneric.inc:1087
+#: admin/systems/goto/class_printGeneric.inc:490
+#: admin/systems/goto/class_printGeneric.inc:669
+#: admin/systems/goto/class_printGeneric.inc:676
+#: admin/systems/goto/class_printGeneric.inc:1103
+#: admin/systems/goto/class_printGeneric.inc:1114
 #: admin/systems/goto/class_terminalStartup.inc:223
 #: admin/systems/goto/class_workstationStartup.inc:234
 #: admin/systems/goto/class_workstationStartup.inc:247
@@ -790,9 +798,7 @@ msgstr "терминалы"
 #: personal/environment/class_environment.inc:675
 #: personal/environment/class_environment.inc:677
 #: personal/environment/class_environment.inc:688
-#: personal/environment/class_environment.inc:841
-#: personal/environment/class_environment.inc:892
-#: personal/environment/class_environment.inc:988
+#: personal/environment/class_environment.inc:993
 msgid "Error"
 msgstr ""
 
@@ -834,23 +840,8 @@ msgstr "Идентификатор отправителя"
 msgid "Device ID"
 msgstr "Устройства"
 
-#: admin/devices/device-list.tpl:13 admin/applications/generic.tpl:82
-#: admin/applications/application-list.tpl:13 admin/mimetypes/generic.tpl:84
-#: admin/mimetypes/mimetype-list.tpl:13
-#: addons/goto/events/eventTargetSystems-list.tpl:13
-#: addons/goto/events/eventTargetUser-list.tpl:13
-msgid "Update"
-msgstr "Обновить"
-
-#: admin/devices/device-list.tpl:13 admin/applications/application-list.tpl:13
-#: admin/mimetypes/mimetype-list.tpl:13
-#: addons/goto/events/eventTargetSystems-list.tpl:13
-#: addons/goto/events/eventTargetUser-list.tpl:13
-msgid "Submit"
-msgstr ""
-
 #: admin/devices/class_deviceManagement.inc:25
-#: personal/environment/class_environment.inc:1783
+#: personal/environment/class_environment.inc:1788
 #: personal/environment/environment.tpl:293
 #, fuzzy
 msgid "Hotplug devices"
@@ -951,6 +942,10 @@ msgstr "Выберите, чтобы просмотреть серверы"
 #: admin/mimetypes/class_mimetypeGeneric.inc:730
 msgid "Icon"
 msgstr "Пиктограмма"
+
+#: admin/applications/generic.tpl:82 admin/mimetypes/generic.tpl:84
+msgid "Update"
+msgstr "Обновить"
 
 #: admin/applications/generic.tpl:82
 msgid "Reload picture from LDAP"
@@ -1275,7 +1270,7 @@ msgid "Kiosk profile service"
 msgstr "Почтовые настройки пользователя"
 
 #: admin/systems/services/kiosk/class_goKioskService.inc:154
-#: personal/environment/class_environment.inc:1784
+#: personal/environment/class_environment.inc:1789
 #: personal/environment/environment.tpl:124
 #: personal/environment/environment.tpl:160
 msgid "Kiosk profile"
@@ -1396,7 +1391,7 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:1034
 #: admin/systems/goto/terminalStartup.tpl:91
 #: admin/systems/goto/workstationStartup.tpl:209
-#: personal/environment/class_environment.inc:1782
+#: personal/environment/class_environment.inc:1787
 #: personal/environment/environment.tpl:212
 #, fuzzy
 msgid "Shares"
@@ -1495,7 +1490,7 @@ msgid "Workstation name"
 msgstr "Имя рабочий станции"
 
 #: admin/systems/goto/workstation.tpl:27
-#: admin/systems/goto/class_printGeneric.inc:1000
+#: admin/systems/goto/class_printGeneric.inc:1027
 #: admin/systems/goto/class_workstationGeneric.inc:710
 msgid "Location"
 msgstr "Местоположение"
@@ -1515,8 +1510,6 @@ msgid "Inherit all values from group"
 msgstr "Список групп"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:3
-#: personal/environment/selectPrinterDialog.tpl:5
-#: personal/environment/selectPrinterDialog.tpl:10
 #, fuzzy
 msgid "Select printer to add"
 msgstr "Выбрать номера для добавления"
@@ -1528,19 +1521,15 @@ msgstr "Выбрать пользователей для добавления"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:22
 #: admin/systems/ppd/printerPPDSelectionDialog.tpl:18
-#: personal/environment/selectPrinterDialog.tpl:24
-#: personal/environment/hotplugDialog.tpl:24
 msgid "Filters"
 msgstr "Фильтры"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:31
-#: personal/environment/selectPrinterDialog.tpl:42
 #, fuzzy
 msgid "Select to search within subtrees"
 msgstr "Искать в поддеревьях"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:31
-#: personal/environment/selectPrinterDialog.tpl:42
 #, fuzzy
 msgid "Search in subtrees"
 msgstr "Искать в поддеревьях"
@@ -1551,7 +1540,6 @@ msgid "Display members of department"
 msgstr "Показать номера из подразделения"
 
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:41
-#: personal/environment/selectPrinterDialog.tpl:34
 msgid "Choose the department the search will be based on"
 msgstr "Выбрать раздел, для которого будет осуществлен поиск"
 
@@ -1659,52 +1647,52 @@ msgstr "Объект группы"
 msgid "none"
 msgstr "нет"
 
-#: admin/systems/goto/class_printGeneric.inc:108
-#: admin/systems/goto/class_printGeneric.inc:1036
+#: admin/systems/goto/class_printGeneric.inc:113
+#: admin/systems/goto/class_printGeneric.inc:1063
 #, fuzzy
 msgid "Internal error"
 msgstr "Терминал-сервер"
 
-#: admin/systems/goto/class_printGeneric.inc:108
+#: admin/systems/goto/class_printGeneric.inc:113
 #, php-format
 msgid ""
 "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:285
-#: admin/systems/goto/class_printGeneric.inc:293
+#: admin/systems/goto/class_printGeneric.inc:290
 #: admin/systems/goto/class_printGeneric.inc:298
-#: admin/systems/goto/class_printGeneric.inc:347
-#: admin/systems/goto/class_printGeneric.inc:363
-#: admin/systems/goto/class_printGeneric.inc:366
+#: admin/systems/goto/class_printGeneric.inc:303
+#: admin/systems/goto/class_printGeneric.inc:352
+#: admin/systems/goto/class_printGeneric.inc:368
+#: admin/systems/goto/class_printGeneric.inc:371
 msgid "Add printer extension"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:286
+#: admin/systems/goto/class_printGeneric.inc:291
 msgid ""
 "Could not initialize printer tab, parameter parent was missing while "
 "construction."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:294
+#: admin/systems/goto/class_printGeneric.inc:299
 msgid "This is a workstation template, printer tab is disabled."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:299
+#: admin/systems/goto/class_printGeneric.inc:304
 msgid "This is a terminal template, printer tab is disabled."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:340
-#: admin/systems/goto/class_printGeneric.inc:348
-#: admin/systems/goto/class_printGeneric.inc:356
-#: admin/systems/goto/class_printGeneric.inc:359
+#: admin/systems/goto/class_printGeneric.inc:345
+#: admin/systems/goto/class_printGeneric.inc:353
+#: admin/systems/goto/class_printGeneric.inc:361
 #: admin/systems/goto/class_printGeneric.inc:364
-#: admin/systems/goto/class_printGeneric.inc:367
+#: admin/systems/goto/class_printGeneric.inc:369
+#: admin/systems/goto/class_printGeneric.inc:372
 #, fuzzy
 msgid "printer"
 msgstr "принтеры"
 
-#: admin/systems/goto/class_printGeneric.inc:348
+#: admin/systems/goto/class_printGeneric.inc:353
 #, fuzzy
 msgid ""
 "You can't enable it while 'cn' is not present in entry. Possibly you are "
@@ -1713,35 +1701,35 @@ msgstr ""
 "В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
 "ниже."
 
-#: admin/systems/goto/class_printGeneric.inc:355
-#: admin/systems/goto/class_printGeneric.inc:358
+#: admin/systems/goto/class_printGeneric.inc:360
+#: admin/systems/goto/class_printGeneric.inc:363
 #, fuzzy
 msgid "Remove printer extension"
 msgstr "Удалить параметры"
 
-#: admin/systems/goto/class_printGeneric.inc:567
+#: admin/systems/goto/class_printGeneric.inc:594
 #, php-format
 msgid "Your currently selected PPD file '%s' doesn't exist."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:573
+#: admin/systems/goto/class_printGeneric.inc:600
 #, fuzzy
 msgid "Not defined"
 msgstr "не определена"
 
-#: admin/systems/goto/class_printGeneric.inc:577
+#: admin/systems/goto/class_printGeneric.inc:604
 #: admin/systems/ppd/class_printerPPDDialog.inc:96
 #, fuzzy
 msgid "Can't get ppd informations."
 msgstr "Общая информация о пользователе"
 
-#: admin/systems/goto/class_printGeneric.inc:593
-#: admin/systems/goto/class_printGeneric.inc:595
+#: admin/systems/goto/class_printGeneric.inc:620
+#: admin/systems/goto/class_printGeneric.inc:622
 #, php-format
 msgid "This printer belongs to %s. You can't rename this printer."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:593
+#: admin/systems/goto/class_printGeneric.inc:620
 #: admin/systems/goto/class_terminalStartup.inc:180
 #: admin/systems/goto/class_terminalInfo.inc:68
 #: admin/systems/goto/class_terminalGeneric.inc:232
@@ -1749,86 +1737,87 @@ msgstr ""
 msgid "terminal"
 msgstr "Терминалы"
 
-#: admin/systems/goto/class_printGeneric.inc:595
+#: admin/systems/goto/class_printGeneric.inc:622
 #: admin/systems/goto/class_workstationGeneric.inc:227
 #: admin/systems/goto/class_workstationStartup.inc:285
 #, fuzzy
 msgid "workstation"
 msgstr "Рабочая станция"
 
-#: admin/systems/goto/class_printGeneric.inc:642
-#: admin/systems/goto/class_printGeneric.inc:649
+#: admin/systems/goto/class_printGeneric.inc:669
+#: admin/systems/goto/class_printGeneric.inc:676
 #, fuzzy
 msgid "Object is no printer!"
 msgstr "Сетевой принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:743
+#: admin/systems/goto/class_printGeneric.inc:770
 #: admin/systems/goto/printer.tpl:54
 msgid "Printer URL"
 msgstr "URL принтера"
 
-#: admin/systems/goto/class_printGeneric.inc:971
-#: admin/systems/goto/class_printGeneric.inc:973
+#: admin/systems/goto/class_printGeneric.inc:998
+#: admin/systems/goto/class_printGeneric.inc:1000
 #: addons/goto/events/eventTargetUser-list.xml:23
 msgid "Group"
 msgstr "Группа"
 
-#: admin/systems/goto/class_printGeneric.inc:976
+#: admin/systems/goto/class_printGeneric.inc:1003
 #: addons/goto/events/eventTargetUser-list.xml:15
 msgid "User"
 msgstr "Пользователь"
 
-#: admin/systems/goto/class_printGeneric.inc:989
+#: admin/systems/goto/class_printGeneric.inc:1016
 #, fuzzy
 msgid "Print generic"
 msgstr "Служба печати"
 
-#: admin/systems/goto/class_printGeneric.inc:994
+#: admin/systems/goto/class_printGeneric.inc:1021
 #: admin/systems/goto/terminalService.tpl:245
+#: personal/environment/printerSelect/selectPrinter-list.xml:14
 #: personal/environment/environment.tpl:338
 #: personal/environment/environment.tpl:374
 msgid "Printer"
 msgstr "Принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:1001
+#: admin/systems/goto/class_printGeneric.inc:1028
 msgid "LabeledURL"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:1002
+#: admin/systems/goto/class_printGeneric.inc:1029
 #, fuzzy
 msgid "Printer PPD"
 msgstr "Принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:1003
+#: admin/systems/goto/class_printGeneric.inc:1030
 #: admin/systems/goto/printer.tpl:91
 #, fuzzy
 msgid "Permissions"
 msgstr "Права для членов группы"
 
-#: admin/systems/goto/class_printGeneric.inc:1019
-#: admin/systems/goto/class_printGeneric.inc:1041
+#: admin/systems/goto/class_printGeneric.inc:1046
+#: admin/systems/goto/class_printGeneric.inc:1068
 #: personal/environment/class_environment.inc:583
 #, fuzzy
 msgid "Permission error"
 msgstr "Права для членов группы"
 
-#: admin/systems/goto/class_printGeneric.inc:1019
-#: admin/systems/goto/class_printGeneric.inc:1041
+#: admin/systems/goto/class_printGeneric.inc:1046
+#: admin/systems/goto/class_printGeneric.inc:1068
 #, fuzzy
 msgid "printer user"
 msgstr "Принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:1036
+#: admin/systems/goto/class_printGeneric.inc:1063
 #, php-format
 msgid "Illegal member type '%s'!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:1076
+#: admin/systems/goto/class_printGeneric.inc:1103
 #, fuzzy, php-format
 msgid "'%s' is already used!"
 msgstr "Указанное имя уже используется."
 
-#: admin/systems/goto/class_printGeneric.inc:1087
+#: admin/systems/goto/class_printGeneric.inc:1114
 #, fuzzy, php-format
 msgid "'%s' does not exist!"
 msgstr "Значение поля \"Файлы\" некорректно."
@@ -2395,7 +2384,7 @@ msgstr "Выберите подходящий драйвер для устано
 
 #: admin/systems/goto/terminalService.tpl:108
 #: admin/systems/goto/workstationService.tpl:122
-#: personal/environment/class_environment.inc:1786
+#: personal/environment/class_environment.inc:1791
 #: personal/environment/environment.tpl:183
 msgid "Resolution"
 msgstr "Разрешение"
@@ -2757,22 +2746,12 @@ msgstr "У вас недостаточно прав для удаления эт
 msgid "Users"
 msgstr "Пользователи"
 
-#: admin/systems/goto/printer.tpl:105 admin/systems/goto/printer.tpl:129
-#, fuzzy
-msgid "Add user"
-msgstr "Пользователи домена"
-
-#: admin/systems/goto/printer.tpl:108 admin/systems/goto/printer.tpl:132
-#, fuzzy
-msgid "Add group"
-msgstr "группы"
-
-#: admin/systems/goto/printer.tpl:122
+#: admin/systems/goto/printer.tpl:119
 #, fuzzy
 msgid "Users which are allowed to administrate this printer"
 msgstr "У вас недостаточно прав для удаления этого объекта!"
 
-#: admin/systems/goto/printer.tpl:124
+#: admin/systems/goto/printer.tpl:121
 #, fuzzy
 msgid "Admins"
 msgstr "DN администратора"
@@ -3704,7 +3683,7 @@ msgstr ""
 #: personal/environment/class_environment.inc:479
 #: personal/environment/class_environment.inc:482
 #: personal/environment/class_environment.inc:483
-#: personal/environment/class_environment.inc:1766
+#: personal/environment/class_environment.inc:1771
 msgid "Environment"
 msgstr "Окружение"
 
@@ -3752,7 +3731,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:451
 #: personal/environment/class_environment.inc:483
-#: personal/environment/class_environment.inc:1148
+#: personal/environment/class_environment.inc:1153
 msgid "POSIX"
 msgstr ""
 
@@ -3793,70 +3772,76 @@ msgstr "Изменить пароль"
 msgid "Delete share entry"
 msgstr "Удалить"
 
-#: personal/environment/class_environment.inc:988
+#: personal/environment/class_environment.inc:993
 msgid "Cannot set default printer flag for groups!"
 msgstr ""
 
-#: personal/environment/class_environment.inc:1141
-#: personal/environment/class_environment.inc:1711
-#: personal/environment/class_environment.inc:1780
+#: personal/environment/class_environment.inc:1146
+#: personal/environment/class_environment.inc:1716
+#: personal/environment/class_environment.inc:1785
 #, fuzzy
 msgid "Profile quota"
 msgstr "Путь к профилю"
 
-#: personal/environment/class_environment.inc:1148
+#: personal/environment/class_environment.inc:1153
 #, fuzzy
 msgid "environment"
 msgstr "Окружение"
 
-#: personal/environment/class_environment.inc:1329
+#: personal/environment/class_environment.inc:1334
 #, fuzzy
 msgid "group share"
 msgstr "группы"
 
-#: personal/environment/class_environment.inc:1363
+#: personal/environment/class_environment.inc:1368
 #, fuzzy
 msgid "Administrator"
 msgstr "Администрирование"
 
-#: personal/environment/class_environment.inc:1368
+#: personal/environment/class_environment.inc:1373
 msgid "Default printer"
 msgstr "Принтер по умолчанию"
 
-#: personal/environment/class_environment.inc:1767
+#: personal/environment/class_environment.inc:1772
 #, fuzzy
 msgid "Environment settings"
 msgstr "Почтовые настройки пользователя"
 
-#: personal/environment/class_environment.inc:1771
+#: personal/environment/class_environment.inc:1776
 msgid "My account"
 msgstr "Моя учетная запись"
 
-#: personal/environment/class_environment.inc:1775
+#: personal/environment/class_environment.inc:1780
 msgid "Command to extend the list of possible screen resolutions"
 msgstr ""
 
-#: personal/environment/class_environment.inc:1779
+#: personal/environment/class_environment.inc:1784
 #, fuzzy
 msgid "Profile server"
 msgstr "Сервер для хранения запросов и временных файлов"
 
-#: personal/environment/class_environment.inc:1781
+#: personal/environment/class_environment.inc:1786
 #: personal/environment/environment.tpl:41
 #: personal/environment/environment.tpl:106
 msgid "Cache profile localy"
 msgstr ""
 
-#: personal/environment/class_environment.inc:1785
+#: personal/environment/class_environment.inc:1790
 #: personal/environment/environment.tpl:174
 msgid "Resolution changeable during session"
 msgstr ""
 
-#: personal/environment/class_environment.inc:1787
+#: personal/environment/class_environment.inc:1792
 #: personal/environment/logonManagement.tpl:56
 #, fuzzy
 msgid "Logon script"
 msgstr "Служба печати"
+
+#: personal/environment/printerSelect/selectPrinter-list.xml:10
+#: personal/environment/hotplugSelect/selectHotplug-list.xml:10
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "Язык по умолчанию"
 
 #: personal/environment/environment.tpl:3
 msgid "The environment extension is currently disabled."
@@ -3983,31 +3968,6 @@ msgstr "Список"
 msgid "User environment settings"
 msgstr "Почтовые настройки пользователя"
 
-#: personal/environment/class_selectPrinterDialog.inc:107
-#, fuzzy
-msgid "Please select a printer!"
-msgstr "Введите корректный серийный номер"
-
-#: personal/environment/class_hotplugDialog.inc:64
-#, fuzzy
-msgid "Please select a hotplug device!"
-msgstr "Введите корректный серийный номер"
-
-#: personal/environment/selectPrinterDialog.tpl:1
-#, fuzzy
-msgid "Add printer devices"
-msgstr "Устройство печати"
-
-#: personal/environment/selectPrinterDialog.tpl:48
-#, fuzzy
-msgid "Display printers matching"
-msgstr "Показать совпадения номеров"
-
-#: personal/environment/selectPrinterDialog.tpl:53
-#, fuzzy
-msgid "Regular expression for matching printer names"
-msgstr "Регулярное выражение, соответствующее именам пользователей"
-
 #: personal/environment/logonManagement.tpl:8
 #, fuzzy
 msgid "Logon script settings"
@@ -4031,34 +3991,56 @@ msgstr "Изменить сертификаты"
 msgid "Script can be replaced by user"
 msgstr ""
 
-#: personal/environment/hotplugDialog.tpl:1
 #, fuzzy
-msgid "Add hotplug devices"
-msgstr "Дисковод"
+#~ msgid "Add user"
+#~ msgstr "Пользователи домена"
 
-#: personal/environment/hotplugDialog.tpl:5
 #, fuzzy
-msgid "Hotplug management"
-msgstr "Управление подразделениями"
+#~ msgid "Add group"
+#~ msgstr "группы"
 
-#: personal/environment/hotplugDialog.tpl:10
 #, fuzzy
-msgid "Select hotplug device to add"
-msgstr "Удалить"
+#~ msgid "Please select a printer!"
+#~ msgstr "Введите корректный серийный номер"
 
-#: personal/environment/hotplugDialog.tpl:34
 #, fuzzy
-msgid "Choose the department the search will be based    on"
-msgstr "Выбрать раздел, для которого будет осуществлен поиск"
+#~ msgid "Please select a hotplug device!"
+#~ msgstr "Введите корректный серийный номер"
 
-#: personal/environment/hotplugDialog.tpl:43
-msgid "Display users matching"
-msgstr "Фильтр"
-
-#: personal/environment/hotplugDialog.tpl:48
 #, fuzzy
-msgid "Regular expression for        matching hotplugs"
-msgstr "Регулярное выражение, соответствующее именам пользователей"
+#~ msgid "Add printer devices"
+#~ msgstr "Устройство печати"
+
+#, fuzzy
+#~ msgid "Display printers matching"
+#~ msgstr "Показать совпадения номеров"
+
+#, fuzzy
+#~ msgid "Regular expression for matching printer names"
+#~ msgstr "Регулярное выражение, соответствующее именам пользователей"
+
+#, fuzzy
+#~ msgid "Add hotplug devices"
+#~ msgstr "Дисковод"
+
+#, fuzzy
+#~ msgid "Hotplug management"
+#~ msgstr "Управление подразделениями"
+
+#, fuzzy
+#~ msgid "Select hotplug device to add"
+#~ msgstr "Удалить"
+
+#, fuzzy
+#~ msgid "Choose the department the search will be based    on"
+#~ msgstr "Выбрать раздел, для которого будет осуществлен поиск"
+
+#~ msgid "Display users matching"
+#~ msgstr "Фильтр"
+
+#, fuzzy
+#~ msgid "Regular expression for        matching hotplugs"
+#~ msgstr "Регулярное выражение, соответствующее именам пользователей"
 
 #, fuzzy
 #~ msgid "Description name"
