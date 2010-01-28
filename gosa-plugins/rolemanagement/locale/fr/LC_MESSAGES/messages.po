@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-01-18 23:06+0100\n"
+"PO-Revision-Date: 2010-01-22 21:13+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgstr "Numéro de fax"
 #: admin/roleManagement/class_roleGeneric.inc:414
 #: admin/roleManagement/roleGeneric.tpl:68
 msgid "Occupants"
-msgstr ""
+msgstr "Membres"
 
 #: admin/roleManagement/role-list.xml:11
 msgid "List of roles"

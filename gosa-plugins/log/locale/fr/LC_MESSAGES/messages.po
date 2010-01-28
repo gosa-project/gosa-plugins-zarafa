@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:30+0100\n"
-"PO-Revision-Date: 2010-01-18 23:00+0100\n"
+"PO-Revision-Date: 2010-01-22 21:07+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr "Administrateur"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 msgid "Logging database information"
-msgstr ""
+msgstr "Information sur la base de données des journaux systèmes"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
 msgid "Logging DB user"

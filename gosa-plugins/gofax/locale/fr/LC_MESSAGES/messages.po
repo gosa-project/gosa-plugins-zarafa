@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:29+0100\n"
-"PO-Revision-Date: 2008-07-23 23:10+0200\n"
+"PO-Revision-Date: 2010-01-28 22:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -291,8 +291,7 @@ msgstr "Type"
 
 #: gofax/blocklists/generic.tpl:43
 msgid "Select wether to filter incoming or outgoing calls"
-msgstr ""
-"Veuillez sélectionner si il faut filtrer sur les appels entrants ou sortants"
+msgstr "Veuillez sélectionner si il faut filtrer sur les appels entrants ou sortants"
 
 #: gofax/blocklists/generic.tpl:51 gofax/blocklists/blocklist-list.xml:57
 #: gofax/blocklists/class_blocklistGeneric.inc:386
@@ -578,9 +577,8 @@ msgid "Enable/Disable fax"
 msgstr "Activer/désactiver le fax"
 
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:10
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Veuillez sélectionner la langue par défaut"
+msgstr "Veuillez sélectionner les entrées désirées"
 
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:40
 msgid "Given name"
@@ -637,64 +635,3 @@ msgstr "Base de données des FAX"
 msgid "FAX DB user"
 msgstr "utilisateur de la base de données du FAX"
 
-#~ msgid "Update"
-#~ msgstr "Mise à jour"
-
-#~ msgid "Submit"
-#~ msgstr "Soumettre"
-
-#~ msgid ""
-#~ "Please double check if your really want to do this since there is no way "
-#~ "for GOsa to get your data back."
-#~ msgstr ""
-#~ "Veuillez vous assurez que vous voulez effectuer cette opération. Toutes "
-#~ "les données seront perdues étant donné qu'il est impossible pour GOsa de "
-#~ "récupérer vos données."
-
-#~ msgid "Select all"
-#~ msgstr "Sélectionner tout"
-
-#~ msgid "Department"
-#~ msgstr "Département"
-
-#~ msgid "Show send blocklists"
-#~ msgstr "Afficher les numéros d'appels de la liste rouge"
-
-#~ msgid "Show receive blocklists"
-#~ msgstr "Afficher les listes rouges de correspondants"
-
-#~ msgid "Regular expression for matching list names"
-#~ msgstr "Expression régulière pour trouver des listes correspondantes"
-
-#~ msgid "Submit department"
-#~ msgstr "Soumettre le département"
-
-#~ msgid "edit"
-#~ msgstr "éditer"
-
-#~ msgid "Edit user"
-#~ msgstr "Editer un utilisateur"
-
-#~ msgid "delete"
-#~ msgstr "supprimer"
-
-#~ msgid "Delete user"
-#~ msgstr "Supprimer un utilisateur"
-
-#~ msgid "Number of listed '%s'"
-#~ msgstr "Nombre de '%s'"
-
-#~ msgid "blocklists"
-#~ msgstr "Listes Rouges"
-
-#~ msgid "departments"
-#~ msgstr "département"
-
-#~ msgid "FAX blocklists"
-#~ msgstr "Liste Rouge des Fax"
-
-#~ msgid "Permission"
-#~ msgstr "Permissions"
-
-#~ msgid "blocklist"
-#~ msgstr "Listes Rouges"

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:29+0100\n"
-"PO-Revision-Date: 2010-01-18 22:52+0100\n"
+"PO-Revision-Date: 2010-01-22 21:00+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -331,8 +331,9 @@ msgid "Value 2 should be a DNS name."
 msgstr "La valeur doit être un nom DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:547
+#, fuzzy
 msgid "Value should be composed of 'preference target'."
-msgstr ""
+msgstr "Les valeur devraient être composée de 'preference target'"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:567
 msgid "Value 1 (priority) should be a number."
