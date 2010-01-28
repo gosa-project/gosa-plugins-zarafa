@@ -47,6 +47,8 @@ class faiPackage extends plugin
   var $base;
   var $FAIpackage ;
 
+  var $packageSelect ;
+
   var $FAIinstallMethods  = array( "install", "ninstall", "remove", 
       "dselect-upgrade", "taskinst", "taskrm",
       "hold", "clean", "aptitude", "aptitude-r",
@@ -271,12 +273,27 @@ class faiPackage extends plugin
       }
     }
 
-    /* + was pressed to open the package dialog */
-    if(isset($_POST['Addpkg']) && 
-        $this->acl_is_writeable("FAIpackage") && 
-        !preg_match("/freeze/",$this->FAIstate)){
-      $this->dialog = new faiPackageEntry($this->config, $this->FAIdebianRelease,$this->usedPackages);
+    // Open the packageSelect dialog to allow adding packages out of a list.
+    if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage") && !preg_match("/freeze/",$this->FAIstate)){
+      $this->packageSelect = new packageSelect($this->config, get_userinfo());
       $this->is_dialog =true;
+    }
+
+    // Close packageSelect dialog.
+    if(isset($_POST['packageSelect_cancel'])){
+      $this->packageSelect = FALSE;
+      $this->is_dialog =FALSE;
+    }
+
+    // Close packageSelect dialog and add the selected packages.
+    if(isset($_POST['packageSelect_save'])){
+      $this->packageSelect = FALSE;
+      $this->is_dialog =FALSE;
+    }
+
+    // Display package add dialog 
+    if($this->packageSelect instanceOf packageSelect){
+      return $this->packageSelect->execute();
     }
 
 
