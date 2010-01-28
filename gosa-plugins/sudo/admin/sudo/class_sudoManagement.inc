@@ -66,13 +66,13 @@ class sudoManagement extends management
 
   function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
-    management::newEntry($action,$target,$all,$altTabClass,$altTabType,$altAclCategory);
+    $str = management::newEntry($action,$target,$all,$altTabClass,$altTabType,$altAclCategory);
 
     /* This entry will become the default entry */
     if($action == "new_default"){
       $this->tabObject->set_default(TRUE);
     }
-
+    if(!empty($str)) return($str);
   }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
