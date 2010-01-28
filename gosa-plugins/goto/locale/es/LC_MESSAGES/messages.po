@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:30+0100\n"
-"PO-Revision-Date: 2010-01-25 01:52+0100\n"
+"PO-Revision-Date: 2010-01-28 23:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -113,9 +113,8 @@ msgstr ""
 "intercambio"
 
 #: admin/ogroups/goto/termgroup.tpl:106
-#, fuzzy
 msgid "Inherit all values to group members"
-msgstr "heredar todos los valores del grupo"
+msgstr "Que los miembros del grupo heredaran todos los valores"
 
 #: admin/ogroups/goto/termgroup.tpl:113 admin/systems/goto/workstation.tpl:130
 #: admin/systems/goto/terminal.tpl:155 addons/goto/class_gotomasses.inc:417
@@ -561,9 +560,8 @@ msgstr ""
 "<i>Cancelar</i> para Abortar."
 
 #: admin/devices/device-list.xml:11
-#, fuzzy
 msgid "List of devices"
-msgstr "Lista de dispositivos definidos"
+msgstr "Lista de dispositivos"
 
 #: admin/devices/device-list.xml:15 admin/devices/device-list.xml:74
 #: admin/devices/class_deviceGeneric.inc:159
@@ -618,14 +616,12 @@ msgid "Create"
 msgstr "Crear"
 
 #: admin/devices/device-list.xml:118
-#, fuzzy
 msgid "Edit device"
-msgstr "Tarjeta Sonido"
+msgstr "Editar dispositivo"
 
 #: admin/devices/device-list.xml:131
-#, fuzzy
 msgid "Remove device"
-msgstr "Eliminar foto"
+msgstr "Eliminar dispositivo"
 
 #: admin/devices/deviceGeneric.tpl:2 admin/devices/paste_deviceGeneric.tpl:2
 #: admin/devices/class_deviceGeneric.inc:257
@@ -699,9 +695,8 @@ msgstr "(idProducto)"
 #: addons/goto/events/eventTargetUser-filter.tpl:3
 #: personal/environment/printerSelect/selectPrinter-filter.tpl:3
 #: personal/environment/hotplugSelect/selectHotplug-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtros"
+msgstr "Filtro"
 
 #: admin/devices/class_deviceGeneric.inc:29
 msgid "Digital camera"
@@ -958,21 +953,18 @@ msgstr "Administración de aplicación"
 
 #: admin/applications/application-list.xml:11
 #: admin/applications/application-list-release.xml:11
-#, fuzzy
 msgid "List of applications"
 msgstr "Lista de aplicaciones"
 
 #: admin/applications/application-list.xml:118
 #: admin/applications/application-list-release.xml:118
-#, fuzzy
 msgid "Edit application"
-msgstr "Añadir aplicación"
+msgstr "Editar aplicación"
 
 #: admin/applications/application-list.xml:131
 #: admin/applications/application-list-release.xml:131
-#, fuzzy
 msgid "Remove application"
-msgstr "aplicación"
+msgstr "Eliminar aplicación"
 
 #: admin/applications/class_applicationGeneric.inc:95
 msgid "no example"
@@ -1101,21 +1093,18 @@ msgstr "Por favor introduzca una descripción para este tipo mime aquí"
 
 #: admin/mimetypes/mimetype-list-release.xml:11
 #: admin/mimetypes/mimetype-list.xml:11
-#, fuzzy
 msgid "List of mimetypes"
-msgstr "Listas de tipos mimes predefinidos"
+msgstr "Listas de tipos mimes"
 
 #: admin/mimetypes/mimetype-list-release.xml:118
 #: admin/mimetypes/mimetype-list.xml:118
-#, fuzzy
 msgid "Edit mimetype"
-msgstr "Actualizar icono de tipo mime"
+msgstr "Editar tipo mime"
 
 #: admin/mimetypes/mimetype-list-release.xml:131
 #: admin/mimetypes/mimetype-list.xml:131
-#, fuzzy
 msgid "Remove mimetype"
-msgstr "Eliminar foto"
+msgstr "Eliminar tipo mime"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:535
 msgid "File pattern"
@@ -2338,12 +2327,12 @@ msgstr ""
 "El repositorio FAI '%s' no es accesible, ¡Configurando el repositorio espejo "
 "a 'auto'!"
 
-#: admin/systems/goto/class_workstationStartup.inc:247
-#, fuzzy, php-format
+#: admin/systems/goto/class_workstationStartup.inc:247, php-format
 msgid ""
 "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
-"El repositorio FAI '%s' no es accesible, ¡Configurando la versión '%s'!"
+"El repositorio FAI '%s' no es accesible en el espejo '%s' - ¡Configurando la "
+"versión '%s'!"
 
 #: admin/systems/goto/class_workstationStartup.inc:266
 msgid "Please select a 'FAI server' or remove the 'FAI classes'."
@@ -2628,9 +2617,8 @@ msgid "Terminal name"
 msgstr "Nombre del terminal"
 
 #: admin/systems/goto/terminal.tpl:31
-#, fuzzy
 msgid "Choose subtree to place terminal in"
-msgstr "Elija el subárbol donde colocar al usuario"
+msgstr "Elija un subárbol donde colocar el terminal"
 
 #: admin/systems/goto/terminal.tpl:177
 msgid "Inherit all"
@@ -3012,9 +3000,8 @@ msgid "Task"
 msgstr "Tarea"
 
 #: addons/goto/class_gotomasses.inc:411
-#, fuzzy
 msgid "Period"
-msgstr "Permisos"
+msgstr "Periodo"
 
 #: addons/goto/class_gotomasses.inc:413
 #: addons/goto/events/DaemonEvent_update.tpl:9
@@ -3260,28 +3247,24 @@ msgid "Create '%s' job"
 msgstr "Crear trabajo '%s'"
 
 #: addons/goto/events/class_DaemonEvent.inc:218
-#, fuzzy
 msgid "Minutes"
-msgstr "Minuto"
+msgstr "Minutos"
 
 #: addons/goto/events/class_DaemonEvent.inc:219
-#, fuzzy
 msgid "Hours"
-msgstr "Hora"
+msgstr "Horas"
 
 #: addons/goto/events/class_DaemonEvent.inc:220
-#, fuzzy
 msgid "Days"
-msgstr "Día"
+msgstr "Días"
 
 #: addons/goto/events/class_DaemonEvent.inc:221
 msgid "Weeks"
-msgstr ""
+msgstr "Semanas"
 
 #: addons/goto/events/class_DaemonEvent.inc:222
-#, fuzzy
 msgid "Months"
-msgstr "Mes"
+msgstr "Meses"
 
 #: addons/goto/events/class_DaemonEvent.inc:260
 msgid "Add"
@@ -3327,11 +3310,11 @@ msgstr "Segundo"
 
 #: addons/goto/events/timestamp_select.tpl:49
 msgid "Periodical job"
-msgstr ""
+msgstr "Tareas periódicas"
 
 #: addons/goto/events/timestamp_select.tpl:55
 msgid "Job intervall"
-msgstr ""
+msgstr "Intervalo de trabajo"
 
 #: addons/goto/events/eventTargetSystems-filter.tpl:11
 msgid "Show servers"
@@ -3346,9 +3329,8 @@ msgid "Show terminals"
 msgstr "Mostrar terminales"
 
 #: addons/goto/events/eventTargetSystems-filter.tpl:14
-#, fuzzy
 msgid "Filter by IP address range"
-msgstr "Filtrar por rango IP"
+msgstr "Filtrar por rango de direcciones IP"
 
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
@@ -3365,24 +3347,20 @@ msgid "From"
 msgstr "Desde"
 
 #: addons/goto/events/eventTargetUser-filter.tpl:11
-#, fuzzy
 msgid "Show groups"
-msgstr "Mostrar los grupos samba"
+msgstr "Mostrar grupos"
 
 #: addons/goto/events/eventTargetUser-filter.tpl:12
-#, fuzzy
 msgid "Show users"
-msgstr "Mostrar servidores"
+msgstr "Mostrar usuarios"
 
 #: addons/goto/events/eventTargetSystems-list.xml:11
-#, fuzzy
 msgid "List of systems"
-msgstr "Lista de usuarios"
+msgstr "Lista de sistemas"
 
 #: addons/goto/events/eventTargetSystems-list.xml:89
-#, fuzzy
 msgid "Mac"
-msgstr "Marzo"
+msgstr "MAC"
 
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
@@ -3581,9 +3559,8 @@ msgstr "Script de inicio de sesión"
 
 #: personal/environment/printerSelect/selectPrinter-list.xml:10
 #: personal/environment/hotplugSelect/selectHotplug-list.xml:10
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Por favor seleccione su idioma preferido"
+msgstr "Por favor seleccione las entradas que desee"
 
 #: personal/environment/environment.tpl:3
 msgid "The environment extension is currently disabled."

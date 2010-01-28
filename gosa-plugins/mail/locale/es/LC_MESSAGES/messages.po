@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:30+0100\n"
-"PO-Revision-Date: 2010-01-25 01:05+0100\n"
+"PO-Revision-Date: 2010-01-28 23:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -231,10 +231,9 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:424
 #: personal/mail/class_mailAccount.inc:380
-#: personal/mail/class_mailAccount.inc:1018
-#, fuzzy, php-format
+#: personal/mail/class_mailAccount.inc:1018, php-format
 msgid "Address is already in use by group '%s'."
-msgstr "¡La dirección de correo ya esta usada por el usuario '%s'!"
+msgstr "La dirección de correo ya esta usada por el grupo '%s'"
 
 #: admin/groups/mail/class_groupMail.inc:426
 #: personal/mail/class_mailAccount.inc:382
@@ -244,8 +243,7 @@ msgid "Address is already in use by user '%s'."
 msgstr "¡La dirección de correo ya esta usada por el usuario '%s'!"
 
 #: admin/groups/mail/class_groupMail.inc:569
-#: personal/mail/class_mailAccount.inc:830
-#, fuzzy, php-format
+#: personal/mail/class_mailAccount.inc:830, php-format
 msgid "Cannot remove mailbox: %s"
 msgstr "No se puede eliminar el buzón de correo: 's'"
 
@@ -1237,9 +1235,8 @@ msgid "Cannot modify IMAP mailbox quota: %s"
 msgstr "No se puede modificar la cuota del buzón de correo IMAP: %s"
 
 #: personal/mail/class_mail-methods-cyrus.inc:298
-#, fuzzy
 msgid "Mail info"
-msgstr "Archivar en"
+msgstr "Información del correo"
 
 #: personal/mail/class_mail-methods-cyrus.inc:299
 #, php-format
@@ -1247,6 +1244,9 @@ msgid ""
 "LDAP entry has been removed but cyrus mailbox (%s) is kept.\n"
 "Please delete it manually!"
 msgstr ""
+"La entrada en LDAP ha sido eliminada, pero el buzón de correo cyrus (%s) "
+"existe.\n"
+"¡Por favor elimine el buzón manualmente!"
 
 #: personal/mail/class_mail-methods-cyrus.inc:383
 #: personal/mail/class_mail-methods-cyrus.inc:420
@@ -1260,7 +1260,7 @@ msgstr "¡El archivo %s no existe!"
 
 #: personal/mail/class_mail-methods-cyrus.inc:473
 msgid "The sieve script may not be written correctly."
-msgstr ""
+msgstr "El script sieve puede no estar escrito correctamente."
 
 #: personal/mail/class_mail-methods-cyrus.inc:474
 #: personal/mail/sieve/class_My_Tree.inc:245
@@ -2178,9 +2178,8 @@ msgid "unknown"
 msgstr "desconocido"
 
 #: personal/mail/class_mailAccount.inc:926
-#, fuzzy
 msgid "Mail error saving sieve settings"
-msgstr "Ha fallado al grabar el script sieve"
+msgstr "Hay un error de correo al grabar la configuración sieve"
 
 #: personal/mail/class_mailAccount.inc:1039
 #: personal/mail/class_mailAccount.inc:1047
@@ -2253,24 +2252,20 @@ msgid "Base"
 msgstr "Base"
 
 #: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtros"
+msgstr "Filtro"
 
 #: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:11
-#, fuzzy
 msgid "Show users"
-msgstr "Mostrar usuarios samba"
+msgstr "Mostrar usuarios"
 
 #: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:12
-#, fuzzy
 msgid "Show groups"
-msgstr "grupos de correo"
+msgstr "Mostrar grupos"
 
 #: personal/mail/mailAddressSelect/selectMailAddress-list.xml:10
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Por favor seleccione su idioma preferido"
+msgstr "Por favor seleccione las entradas que desee"
 
 #: personal/mail/mailAddressSelect/selectMailAddress-list.xml:14
 msgid "User"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:29+0100\n"
-"PO-Revision-Date: 2010-01-25 00:38+0100\n"
+"PO-Revision-Date: 2010-01-28 23:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -475,7 +475,6 @@ msgid "UUID"
 msgstr "UUID"
 
 #: admin/fai/class_faiDiskEntry.inc:327
-#, fuzzy
 msgid "Disks"
 msgstr "Discos"
 
@@ -494,37 +493,32 @@ msgstr ""
 "disco '%s'!"
 
 #: admin/fai/class_faiDiskEntry.inc:526
-#, fuzzy
 msgid "encrypted"
-msgstr "Encriptado"
+msgstr "encriptado"
 
 #: admin/fai/class_faiDiskEntry.inc:529
-#, fuzzy
 msgid "bootable"
-msgstr "Inicializable"
+msgstr "inicializable"
 
 #: admin/fai/class_faiDiskEntry.inc:532
-#, fuzzy
 msgid "preserve"
-msgstr "Preservar"
+msgstr "preservar"
 
 #: admin/fai/class_faiDiskEntry.inc:713
-#, fuzzy
 msgid ""
 "You have more than four primary partition table entries in your "
 "configuration, please check your configuration twice."
 msgstr ""
-"Tiene en la configuración mas de 3 entradas primarias en la tabla de "
+"Tiene en la configuración mas de 4 entradas primarias en la tabla de "
 "particiones, por favor vuelva a comprobar la configuración."
 
 #: admin/fai/class_faiDiskEntry.inc:717
-#, fuzzy
 msgid ""
 "You cannot have more than three primary partition while using logical "
 "partitions, please check your configuration twice."
 msgstr ""
-"Tiene en la configuración mas de 3 entradas primarias en la tabla de "
-"particiones, por favor vuelva a comprobar la configuración."
+"Tiene en la configuración mas de 3 entradas primarias usando "
+"particiones lógicas, por favor vuelva a comprobar la configuración."
 
 #: admin/fai/class_faiDiskEntry.inc:740
 msgid "Disk options"
@@ -614,15 +608,13 @@ msgstr "Añadir de la lista"
 #: admin/fai/packageSelect/selectPackage-filter.tpl:3
 #: admin/fai/fai-filter.tpl:3
 #: admin/systems/services/repository/repository-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtros"
+msgstr "Filtro"
 
 #: admin/fai/classSelect/selectClass-list.xml:11
 #: admin/fai/packageSelect/selectPackage-list.xml:10
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Por favor seleccione su idioma preferido"
+msgstr "Por favor seleccione las entradas que desee"
 
 #: admin/fai/classSelect/selectClass-list.xml:15
 #: admin/fai/class_faiManagement.inc:1142
@@ -998,13 +990,12 @@ msgid "OPSI local product"
 msgstr "Producto local OPSI"
 
 #: admin/fai/packageSelect/selectPackage-list.xml:48
-#, fuzzy
 msgid "Version"
-msgstr "Permiso"
+msgstr "Versión"
 
 #: admin/fai/packageSelect/selectPackage-filter.tpl:12
 msgid "A maximum of 200 entries will be shown here."
-msgstr ""
+msgstr "Un máximo de 200 entradas serán enseñadas."
 
 #: admin/fai/faiPackageConfiguration.tpl:1 admin/fai/class_faiPackage.inc:661
 msgid "Package"
@@ -1267,12 +1258,14 @@ msgstr "Tamaño máximo de la partición"
 
 #: admin/fai/class_faiPartition.inc:404
 msgid "Raid arrays must contain at least two partitions!"
-msgstr ""
+msgstr "¡La matriz de discos RAID debe tener al menos dos particiones!"
 
 #: admin/fai/class_faiPartition.inc:406
 msgid ""
 "Raid 0 arrays can only be realized with a combination of two partitions!"
 msgstr ""
+"¡La matriz de discos RAID 0 solo puede ser creada con al menos una "
+"combinación de dos particiones!"
 
 #: admin/fai/class_faiPartitionTable.inc:785
 msgid "FAI partition table"
@@ -1647,16 +1640,18 @@ msgid ""
 "here. The entered text needs to be one of the valid choices in order to take "
 "effect."
 msgstr ""
+"La cuestión debconf es generada dinámicamente durante la instalación del "
+"paquete y requiere elegir entre opciones especificas las cuales no pueden "
+"ser mostradas aquí. El texto introducido necesita ser una de las opciones "
+"válidas para tener funcionalidad."
 
 #: admin/systems/services/repository/repository-list.xml:10
-#, fuzzy
 msgid "List of repositories"
-msgstr "Lista de catálogos configurados"
+msgstr "Lista de catálogos"
 
 #: admin/systems/services/repository/repository-list.xml:14
-#, fuzzy
 msgid "Service"
-msgstr "Servicios"
+msgstr "Servicio"
 
 #: admin/systems/services/repository/repository-list.xml:35
 #: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:419

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:29+0100\n"
-"PO-Revision-Date: 2010-01-24 00:21+0100\n"
+"PO-Revision-Date: 2010-01-28 23:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -295,6 +295,7 @@ msgstr "Eliminar"
 #, php-format
 msgid "The syntax of entry %s (record type %s, value %s) is invalid!"
 msgstr ""
+"¡El formato de la entrada %s (registro tipo %s, valor %s) no es válido!"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:509
 msgid "Example"
@@ -305,53 +306,53 @@ msgstr "Ejemplo"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:531
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:562
 msgid "Entry should be a DNS name."
-msgstr ""
+msgstr "La entrada debe ser un nombre DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:518
 msgid "Value should be an IPv6 address."
-msgstr ""
+msgstr "El valor debe ser una dirección IPv6 válida."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:526
 msgid "Value should be an IPv4 address."
-msgstr ""
+msgstr "El valor debe ser una dirección IPv4 válida."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:534
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:552
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:557
 msgid "Value should be a DNS name."
-msgstr ""
+msgstr "El valor debe ser un nombre DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:541
 msgid "Value 1 should be a number."
-msgstr ""
+msgstr "El valor 1 debe ser un número."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:544
 msgid "Value 2 should be a DNS name."
-msgstr ""
+msgstr "El valor 2 debe ser un nombre DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:547
 msgid "Value should be composed of 'preference target'."
-msgstr ""
+msgstr "El valor debe estar compuesto por un 'objetivo preferente'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:567
 msgid "Value 1 (priority) should be a number."
-msgstr ""
+msgstr "El valor 1 (prioridad) debe ser un número."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:570
 msgid "Value 2 (weight) should be a number."
-msgstr ""
+msgstr "El valor 2 (peso) debe ser un número."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:573
 msgid "Value 3 (port) should be a number."
-msgstr ""
+msgstr "El valor 3 (puerto) debe ser un número."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:576
 msgid "Value 4 (target) should be a DNS name."
-msgstr ""
+msgstr "El valor 4 (objetivo) debe ser un nombre DNS."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:579
 msgid "Value should be composed of 'priority weight port target'."
-msgstr ""
+msgstr "El valor debe estar compuesto por 'puerto objetivo por prioridad'."
 
 #: admin/systems/services/dns/class_DNS.inc:161
 #, php-format

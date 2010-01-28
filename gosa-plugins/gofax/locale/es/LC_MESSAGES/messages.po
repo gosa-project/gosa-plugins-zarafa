@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:29+0100\n"
-"PO-Revision-Date: 2010-01-25 01:29+0100\n"
+"PO-Revision-Date: 2010-01-28 23:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -578,9 +578,8 @@ msgid "Enable/Disable fax"
 msgstr "Activar/desactivar FAX"
 
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:10
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Por favor seleccione su idioma preferido"
+msgstr "Por favor seleccione las entradas que desee"
 
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:40
 msgid "Given name"

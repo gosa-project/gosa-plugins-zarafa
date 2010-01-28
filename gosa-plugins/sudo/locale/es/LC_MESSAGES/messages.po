@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-01-20 00:39+0100\n"
+"PO-Revision-Date: 2010-01-28 23:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/sudo/sudo-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtros"
+msgstr "Filtro"
 
 #: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:580
 #: admin/sudo/class_sudoGeneric.inc:585 admin/sudo/class_sudoGeneric.inc:590
@@ -188,14 +187,12 @@ msgid "Remove"
 msgstr "Eliminar"
 
 #: admin/sudo/sudo-list.xml:117
-#, fuzzy
 msgid "Edit sudo role"
-msgstr "¡id desconocido!"
+msgstr "Editar rol Sudo"
 
 #: admin/sudo/sudo-list.xml:130
-#, fuzzy
 msgid "Remove sudo role"
-msgstr "¡id desconocido!"
+msgstr "Eliminar rol Sudo"
 
 #: admin/sudo/class_sudoOption.inc:154
 msgid "Unknown option"
@@ -228,9 +225,8 @@ msgid "Sudo options"
 msgstr "Opciones Sudo"
 
 #: admin/sudo/class_sudoManagement.inc:26
-#, fuzzy
 msgid "Sudo management"
-msgstr "Administración Samba"
+msgstr "Administración Sudo"
 
 #, fuzzy
 #~ msgid "List of users and groups"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:29+0100\n"
-"PO-Revision-Date: 2010-01-25 01:25+0100\n"
+"PO-Revision-Date: 2010-01-28 23:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -918,9 +918,8 @@ msgid "Filter"
 msgstr "Filtro"
 
 #: gofon/macro/class_gofonMacroManagement.inc:25
-#, fuzzy
 msgid "Macros"
-msgstr "Macro"
+msgstr "Macros"
 
 #: gofon/macro/class_gofonMacroManagement.inc:26
 msgid "Phone macro management"
@@ -1005,13 +1004,12 @@ msgid "undefined"
 msgstr "sin definir"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:342
-#: gofon/phoneaccount/class_phoneAccount.inc:342
-#, fuzzy, php-format
+#: gofon/phoneaccount/class_phoneAccount.inc:342, php-format
 msgid ""
 "Cannot identify telephone extension in database, please try to save again."
 msgstr ""
 "No se puede identificar la extensión telefónica en la base de datos, por "
-"favor intente guardarla de nuevo. Si el error persiste active depuración."
+"favor intente guardarla de nuevo."
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:557
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:564
@@ -1031,12 +1029,9 @@ msgstr ""
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1562
 #: gofon/phoneaccount/class_phoneAccount.inc:612
 #: gofon/phoneaccount/class_phoneAccount.inc:678
-#: gofon/phoneaccount/class_phoneAccount.inc:1583
-#, fuzzy, php-format
+#: gofon/phoneaccount/class_phoneAccount.inc:1583, php-format
 msgid "GOsa identified problems with your MySQL table definition!"
-msgstr ""
-"GOsa ha identificado problemas con su definición de tabla en MYSQL, por "
-"favor active depuración para mas información."
+msgstr "¡GOsa ha identificado problemas con su definición de tabla en MYSQL!"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:651
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:973
@@ -1102,11 +1097,9 @@ msgstr "parámetro de macro %s"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1492
 #: gofon/phoneaccount/class_phoneAccount.inc:1513
-#, fuzzy
 msgid "An error occured while updating the database entries!"
 msgstr ""
-"Un error ha ocurrido mientras actualizaba las entradas en la base de datos, "
-"active depuración para mas información."
+"¡Un error ha ocurrido mientras actualizaba las entradas en la base de datos!"
 
 #: gofon/phoneaccount/.svn/tmp/tempfile.tmp:1680
 #: gofon/phoneaccount/class_phoneAccount.inc:1701
@@ -1442,14 +1435,12 @@ msgid "Select subtree to base search on"
 msgstr "Seleccione el subárbol como base de la búsqueda"
 
 #: gofon/fonreports/contents.tpl:12
-#, fuzzy
 msgid "on"
-msgstr "Abajo"
+msgstr "activo"
 
 #: gofon/fonreports/contents.tpl:13
-#, fuzzy
 msgid "Select server to search on"
-msgstr "Seleccione el subárbol como base de la búsqueda"
+msgstr "Seleccione el servidor sobre el que buscar"
 
 #: gofon/fonreports/contents.tpl:16
 msgid "during"

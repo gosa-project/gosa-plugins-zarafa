@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-01-20 00:50+0100\n"
+"PO-Revision-Date: 2010-01-28 23:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -173,9 +173,8 @@ msgid "Access options"
 msgstr "Opciones de acceso"
 
 #: personal/samba/samba3.tpl:317
-#, fuzzy
 msgid "The password never expires"
-msgstr "La contraseña expira en"
+msgstr "La contraseña nunca expira"
 
 #: personal/samba/samba3.tpl:325 personal/samba/class_sambaAccount.inc:1355
 msgid "Login from windows client requires no password"
@@ -415,9 +414,8 @@ msgid "User attributes"
 msgstr "Atributo de usuario"
 
 #: personal/samba/class_sambaAccount.inc:835
-#, fuzzy
 msgid "SID"
-msgstr "GID"
+msgstr "SID"
 
 #: personal/samba/class_sambaAccount.inc:836
 msgid "Last failed login"
@@ -453,10 +451,11 @@ msgstr "La contraseña expira en"
 msgid "No"
 msgstr "No"
 
-#: personal/samba/class_sambaAccount.inc:846
-#, fuzzy, php-format
+#: personal/samba/class_sambaAccount.inc:846, php-format
 msgid "The password would expire on %s, but the password expiry is disabled."
-msgstr "No se ha asignado ningún valor al campo 'Nueva contraseña'."
+msgstr ""
+"La contraseña debió caducar en %s, pero caducidad de contraseña esta "
+"desactivada."
 
 #: personal/samba/class_sambaAccount.inc:852
 msgid "Password change available"
@@ -527,9 +526,8 @@ msgid "Allow user to change password"
 msgstr "Permitir al usuario cambiar su contraseña"
 
 #: personal/samba/class_sambaAccount.inc:1356
-#, fuzzy
 msgid "Password never expires"
-msgstr "La contraseña expira en"
+msgstr "La contraseña nunca expira"
 
 #: personal/samba/class_sambaAccount.inc:1358
 msgid "Account expires"
