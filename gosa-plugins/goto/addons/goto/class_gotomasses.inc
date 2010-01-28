@@ -20,35 +20,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class gotomasses extends plugin
+class gotomasses extends management
 {
-  /* Definitions */
-  var $plHeadline     = "Deployment status";
+
+  var $plHeadline     = "System deployment status";
   var $plDescription  = "System deployment status";
-  var $plIcon         = "plugins/goto/images/goto.png";
+  var $plIcon  = "plugins/goto/images/goto.png";
 
-  /* attribute list for save action */
-  var $attributes= array();
-  var $objectclasses= array();
-
-  /* Queue tasks */
   var $current        = FALSE;
   var $dialog         = FALSE;
   var $ids_to_remove  = array();
-  var $divlist        = NULL;
 
   var $events         = array();
   var $event_tags     = array();
-
-  var $sort_by  = "Schedule";
-  var $sort_dir = "up";
-  var $entries  = array();
-  var $range    = 25;
-  var $start    = 0;
-
   var $recently_removed = array();
 
-  function gotomasses(&$config, $dn= NULL)
+  function __construct(&$config, $ui)
   {
     /* Include config object */
     $this->config= &$config;
@@ -61,30 +48,119 @@ class gotomasses extends plugin
       $this->event_tags[] = $evt['s_Queued_Action'];
     }
 
-    /* Load filter settings */
-    if(!session::is_set("gotomasses_filter")){
-      $gotomasses_filter = 
-        array(
-            "range" => $this->range,
-            "sort_by" => $this->sort_by,
-            "sort_dir" => $this->sort_dir);
-      session::set("gotomasses_filter",$gotomasses_filter);
-    }
-    $gotomasses_filter = session::get("gotomasses_filter");
-    foreach(array("range","sort_by","sort_dir") as $attr) {
-      $this->$attr = $gotomasses_filter[$attr];
-    }
+    // Build filter
+   # if (session::global_is_set(get_class($this)."_filter")){
+  #    $filter= session::global_get(get_class($this)."_filter");
+ #   } else {
+      $filter = new filter(get_template_path("deploy-filter.xml", true));
+      $filter->setObjectStorage($this->storagePoints);
+#    }
+    $this->setFilter($filter);
+
+    // Build headpage
+    $headpage = new listing(get_template_path("deploy-list.xml", true));
+    $headpage->registerElementFilter("hostName",  "gotomasses::filterHostName");
+    $headpage->registerElementFilter("filterTask","gotomasses::filterTask");
+    $headpage->registerElementFilter("filterPeriod","gotomasses::filterPeriod");
+    $headpage->registerElementFilter("filterSchedule","gotomasses::filterSchedule");
+    $headpage->setFilter($filter);
+
+    parent::__construct($config, $ui, "Events", $headpage);
   }
 
+  static function filterHostName($mac, $name ="")
+  {
+    if(isset($name[0]) && $name[0] != "none"){
+      return($name[0]);
+    }
+    return($mac[0]);
+  }
 
-  function execute()
+  static function filterTask($tag)
+  {
+    $tag = $tag[0];
+    $str = $tag;
+
+    /* Check if this event exists as Daemon class
+     * In this case, display a more accurate entry.
+     */
+    $events  = DaemonEvent::get_event_types( SYSTEM_EVENT);
+    if(isset($events['QUEUED'][$tag])){
+      $evt_name   = $events['QUEUED'][$tag];
+      $event_type = $events['BY_CLASS'][$evt_name];
+      $str        = $event_type['s_Menu_Name'];
+
+      if(strlen($str) > 20){
+        $str = substr($str,0,18)."...";
+      }
+
+      if(isset($event_type['ListImage']) && !empty($event_type['ListImage'])){
+        $str = $event_type['ListImage']."&nbsp;".$str;
+      }
+    }
+    return($str);
+  }
+
+  static function filterPeriod($periodic=array())
+  {
+    $period = "";
+    if(isset($periodic[0]) && !preg_match("/none/i",$periodic[0])){
+      $tmp = explode("_", $periodic[0]);
+      if(count($tmp) == 2){
+        $period= $tmp[0]."&nbsp;"._($tmp[1]);
+      }
+    }
+    return($period);
+  }
+
+  static function filterSchedule($stamp)
+  {
+    if ($stamp['0'] == "19700101000000"){
+      return(_("immediately"));
+    } else {
+      return(date("d.m.Y H:i:s",strtotime($stamp[0])));
+    }
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function _execute()
   {
     $smarty = get_smarty();
- 
+
     /************
      * Handle posts 
      ************/
-    
+
     $s_entry = $s_action = "";
     $arr = array( 
 
@@ -115,7 +191,7 @@ class gotomasses extends plugin
     if(isset($_POST['menu_action']) && !empty($_POST['menu_action'])){
       $s_action = $_POST['menu_action'];
     }
-    
+
     /* Edit posted from list link */
     if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id']) && isset($this->tasks[$_GET['id']])){
       $s_action = "edit";
@@ -126,11 +202,11 @@ class gotomasses extends plugin
     /************
      * Import CSV file  
      ************/
-    
+
     if($s_action == "import_file" && $this->acl_is_writeable("")){
       $this->dialog = new goto_import_file($this->config,$this);
     }
-  
+
     if(isset($_POST['import_abort'])){
       $this->dialog = FALSE;
     }
@@ -178,7 +254,7 @@ class gotomasses extends plugin
     /************
      * ADD 
      ************/
-  
+
     if(preg_match("/^add_event_/",$s_action) && $this->acl_is_writeable("")){
       $type = preg_replace("/^add_event_/","",$s_action);
       if(isset($this->events['BY_CLASS'][$type])){
@@ -204,7 +280,7 @@ class gotomasses extends plugin
       }
     }
 
-    
+
     /************
      * LOG VIEW
      ************/
@@ -352,69 +428,69 @@ class gotomasses extends plugin
       }
     }
 
-    /************
-     * Handle Divlist 
-     ************/
+   /************
+    * Handle Divlist 
+    ************/
 
-    $divlist = new MultiSelectWindow($this->config,"gotoMasses",array("gotomasses"));
-    $divlist->SetInformation(_("This menu allows you to remove and change the properties of GOsa tasks."));
-    $divlist->SetSummary(_("List of queued jobs"));
-    $divlist->EnableCloseButton(FALSE);
-    $divlist->EnableSaveButton(FALSE);
-    $divlist->SetHeadpageMode();
-    $s = ".|"._("Actions")."|\n";
-    $s.= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
+   $divlist = new MultiSelectWindow($this->config,"gotoMasses",array("gotomasses"));
+   $divlist->SetInformation(_("This menu allows you to remove and change the properties of GOsa tasks."));
+   $divlist->SetSummary(_("List of queued jobs"));
+   $divlist->EnableCloseButton(FALSE);
+   $divlist->EnableSaveButton(FALSE);
+   $divlist->SetHeadpageMode();
+   $s = ".|"._("Actions")."|\n";
+   $s.= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
 
-    if($this->acl_is_writeable("")){
-      foreach($this->events['SCHEDULED'] as $name =>  $event){
-        $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
-      }
-    }
-    if($this->acl_is_removeable()){
-      $s.= "..|---|\n";
-      $s.= "..|<img src='images/lists/import.png' alt='' border='0' class='center'>&nbsp;"._("Import")."|import_file\n";
-      $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
-    }
-    if(preg_match("/w/",$this->getacl(""))){
-      $s.= "..|---|\n";
-      $s.= "..|<img alt='"._("Resume")."' src='images/status_start.png' border='0' class='center'>&nbsp;"._("Resume")."|resume_all\n";
-      $s.= "..|<img alt='"._("Pause")."' src='images/status_pause.png' border='0' class='center'>&nbsp;"._("Pause")."|pause_all\n";
-      $s.= "..|<img alt='"._("Abort")."' src='images/small_error.png'  border='0' class='center'>&nbsp;"._("Abort")."|abort_process_all\n";
-      $s.= "..|<img alt='"._("Execute")."' src='images/rocket.png'       border='0' class='center'>&nbsp;"._("Execute")."|execute_process_all\n";
-    }
+   if($this->acl_is_writeable("")){
+     foreach($this->events['SCHEDULED'] as $name =>  $event){
+       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
+     }
+   }
+   if($this->acl_is_removeable()){
+     $s.= "..|---|\n";
+     $s.= "..|<img src='images/lists/import.png' alt='' border='0' class='center'>&nbsp;"._("Import")."|import_file\n";
+     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
+   }
+   if(preg_match("/w/",$this->getacl(""))){
+     $s.= "..|---|\n";
+     $s.= "..|<img alt='"._("Resume")."' src='images/status_start.png' border='0' class='center'>&nbsp;"._("Resume")."|resume_all\n";
+     $s.= "..|<img alt='"._("Pause")."' src='images/status_pause.png' border='0' class='center'>&nbsp;"._("Pause")."|pause_all\n";
+     $s.= "..|<img alt='"._("Abort")."' src='images/small_error.png'  border='0' class='center'>&nbsp;"._("Abort")."|abort_process_all\n";
+     $s.= "..|<img alt='"._("Execute")."' src='images/rocket.png'       border='0' class='center'>&nbsp;"._("Execute")."|execute_process_all\n";
+   }
 
-    $divlist->SetDropDownHeaderMenu($s);
+   $divlist->SetDropDownHeaderMenu($s);
 
-    if($this->sort_dir == "up"){
-      $sort_img = "<img src='images/lists/sort-up.png' alt='/\' border=0>";
-    }else{
-      $sort_img = "<img src='images/lists/sort-down.png' alt='\/' border=0>";
-    }
+   if($this->sort_dir == "up"){
+     $sort_img = "<img src='images/lists/sort-up.png' alt='/\' border=0>";
+   }else{
+     $sort_img = "<img src='images/lists/sort-down.png' alt='\/' border=0>";
+   }
 
-    if($this->sort_by == "TargetName"){ $sort_img_1 = $sort_img; } else { $sort_img_1 = "" ;}
-    if($this->sort_by == "TaskID"){ $sort_img_2 = $sort_img; } else { $sort_img_2 = "" ;}
-    if($this->sort_by == "Schedule"){ $sort_img_3 = $sort_img; } else { $sort_img_3 = "" ;}
-    if($this->sort_by == "Action"){ $sort_img_4 = $sort_img; } else { $sort_img_4 = "" ;}
+   if($this->sort_by == "TargetName"){ $sort_img_1 = $sort_img; } else { $sort_img_1 = "" ;}
+   if($this->sort_by == "TaskID"){ $sort_img_2 = $sort_img; } else { $sort_img_2 = "" ;}
+   if($this->sort_by == "Schedule"){ $sort_img_3 = $sort_img; } else { $sort_img_3 = "" ;}
+   if($this->sort_by == "Action"){ $sort_img_4 = $sort_img; } else { $sort_img_4 = "" ;}
 
-    /* Create divlist */
-    $divlist->SetListHeader("<input type='image' src='images/lists/reload.png' title='"._("Reload")."'>");
+   /* Create divlist */
+   $divlist->SetListHeader("<input type='image' src='images/lists/reload.png' title='"._("Reload")."'>");
 
-    $plug  = $_GET['plug'];
-    $chk = "<input type='checkbox' id='select_all' name='select_all'
-               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+   $plug  = $_GET['plug'];
+   $chk = "<input type='checkbox' id='select_all' name='select_all'
+              onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
 
-    /* set Page header */
-    $divlist->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TargetName'>"._("Target").$sort_img_1."</a>"));
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task").$sort_img_2."</a>",
-                                      "attach"=>"style='width:120px;'"));
-    $divlist->AddHeader(array("string"=>_("Period"),
-                                      "attach"=>"style='width:60px;'"));
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Schedule'>"._("Schedule").$sort_img_3."</a>",
-                                      "attach"=>"style='width:140px;'"));
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Status").$sort_img_4."</a>",
-                                      "attach"=>"style='width:80px;'"));
-    $divlist->AddHeader(array("string"=>_("Action"),
+   /* set Page header */
+   $divlist->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
+   $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TargetName'>"._("Target").$sort_img_1."</a>"));
+   $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task").$sort_img_2."</a>",
+                                     "attach"=>"style='width:120px;'"));
+   $divlist->AddHeader(array("string"=>_("Period"),
+                                     "attach"=>"style='width:60px;'"));
+   $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Schedule'>"._("Schedule").$sort_img_3."</a>",
+                                     "attach"=>"style='width:140px;'"));
+   $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Status").$sort_img_4."</a>",
+                                     "attach"=>"style='width:80px;'"));
+   $divlist->AddHeader(array("string"=>_("Action"),
                                       "attach"=>"style='border-right:0px;width:140px;'"));
 
 
@@ -435,7 +511,7 @@ class gotomasses extends plugin
         $prio_actions.= "<input class='center' type='image' src='plugins/goto/images/prio_decrease.png' 
           title='"._("Move down")."' name='prio_down_".$key."'>&nbsp;";
       }
-    
+
       /* If WAITING add pause action
        */  
       if(in_array($task['STATUS'],array("waiting")) && $this->acl_is_writeable("")){
@@ -501,7 +577,7 @@ class gotomasses extends plugin
 
 
       $display2= $task['HEADERTAG'];
-      
+
       /* Check if this event exists as Daemon class 
        * In this case, display a more accurate entry.
        */ 
@@ -520,7 +596,7 @@ class gotomasses extends plugin
       } 
 
       $status = $task['STATUS'];
-  
+
       if($status == "waiting"){
         $status = "<img class='center' src='plugins/goto/images/clock.png' alt=''>&nbsp;"._("Waiting");
       }
@@ -532,7 +608,7 @@ class gotomasses extends plugin
       }
 
       /* Special handling for all entries that have 
-          STATUS == "processing" && PROGRESS == NUMERIC
+         STATUS == "processing" && PROGRESS == NUMERIC
        */
       if($status == "processing" && isset($task['PROGRESS'])){
         $percent = $task['PROGRESS'];
@@ -541,15 +617,15 @@ class gotomasses extends plugin
         if ($percent == "goto-activation"){
           $status = "<img class='center' src='images/lists/off.png' alt=''>&nbsp;"._("Locked");
 
-        /* Show hardware detect? */
+          /* Show hardware detect? */
         } elseif ($percent == "goto-hardware-detection") {
           $status = "<img class='center' src='plugins/goto/images/hardware.png' alt=''>&nbsp;"._("Detection");
 
-        /* Real percent */
+          /* Real percent */
         } else {
-         if (preg_match('/install/', $task['HEADERTAG'])){
+          if (preg_match('/install/', $task['HEADERTAG'])){
             $status = "<img src='progress.php?x=80&y=13&p=".$task['PROGRESS']."' alt=''
-                          id='progress_".preg_replace("/:/","_",$task['MACADDRESS'])."'>";
+              id='progress_".preg_replace("/:/","_",$task['MACADDRESS'])."'>";
           } else {
             $status = preg_replace('/ /', '&nbsp;', _("in progress"));
           }
@@ -567,49 +643,51 @@ class gotomasses extends plugin
 
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$key."'>" ,
-                      "attach" => "style='width:20px;".$color."'");
+          "attach" => "style='width:20px;".$color."'");
       $field1 = array("string" => $display,
-                      "attach" => $tooltip."style='".$color."'");
+          "attach" => $tooltip."style='".$color."'");
       $field1a= array("string" => $display2,
-                      "attach" => "style='".$color.";width:120px;'");
+          "attach" => "style='".$color.";width:120px;'");
       $field1b= array("string" => $period,
-                      "attach" => "style='".$color.";width:60px;'");
+          "attach" => "style='".$color.";width:60px;'");
       if ($task['TIMESTAMP'] == "19700101000000"){
-	      $field2 = array("string" => _("immediately"),"attach" => "style='".$color.";width:140px;'");
+        $field2 = array("string" => _("immediately"),"attach" => "style='".$color.";width:140px;'");
       } else {
-	      $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:140px;'");
+        $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:140px;'");
       }
       $field3 = array("string" => $status,"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:140px;border-right:0px;'");
       $divlist->AddElement(array($field0,$field1,$field1a,$field1b,$field2,$field3,$field4));
-    }
+   }
 
-    $smarty = get_smarty();
-    $smarty->assign("events",$this->events);
-    $smarty->assign("start",$this->start);
-    $smarty->assign("start_real", ($this->start + 1));
-    $smarty->assign("ranges", array("10" => "10",
-                                    "20" => "20",
-                                    "25" => "25",
-                                    "50" => "50",
-                                    "100"=> "100",
-                                    "200"=> "200",
-                                    "9999" => "*"));
+   $smarty = get_smarty();
+   $smarty->assign("events",$this->events);
+   $smarty->assign("start",$this->start);
+   $smarty->assign("start_real", ($this->start + 1));
+   $smarty->assign("ranges", array("10" => "10",
+         "20" => "20",
+         "25" => "25",
+         "50" => "50",
+         "100"=> "100",
+         "200"=> "200",
+         "9999" => "*"));
 
-    $count = $this->o_queue->number_of_queued_entries($this->event_tags);
-    if(!$count) $count = $this->range;
+   $count = $this->o_queue->number_of_queued_entries($this->event_tags);
+   if(!$count) $count = $this->range;
     $divlist->SetListFooter(range_selector($count, $this->start, $this->range,"range"));
-    $smarty->assign("range",$this->range);
+   $smarty->assign("range",$this->range);
     $smarty->assign("div",$divlist->Draw());
+
+    return(management::execute());
     return($smarty->fetch (get_template_path('gotomasses.tpl', TRUE, dirname(__FILE__))));
   }
 
 
   /*! \brief  Move an entry up or down in the queue, by updating its execution timestamp  
-      @param  $id     Integer  The ID of the entry which should be updated.
-      @param  $type   String   "up" / "down"
-      @return boolean TRUE in case of success else FALSE
-  */
+    @param  $id     Integer  The ID of the entry which should be updated.
+    @param  $type   String   "up" / "down"
+    @return boolean TRUE in case of success else FALSE
+   */
   public function update_priority($id,$type = "up")
   {
     if($type == "up"){
@@ -652,7 +730,7 @@ class gotomasses extends plugin
      *  'waiting'
      */
     $data = array("status"    => "waiting");
-  
+
     /* Check if given ids are valid and check if the status
      *  allows resuming.
      */
@@ -688,7 +766,7 @@ class gotomasses extends plugin
      *  waiting and setting the timestamp to current time.
      */
     $data = array(  "timestamp" => date("YmdHis",time()), 
-                    "status"    => "waiting");
+        "status"    => "waiting");
 
     /* Only allow execution of paused or waiting entries 
      */
@@ -745,7 +823,7 @@ class gotomasses extends plugin
       $tmp->add_targets($update_ids);
       $tmp->set_type(TRIGGERED_EVENT);
       $this->recently_removed = $update_ids;
-      
+
       if(!$this->o_queue->append($tmp)){
         msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
         return(FALSE);
@@ -822,7 +900,7 @@ class gotomasses extends plugin
         $sort.= " DESC";
       }
     }
-     
+
     /* Get entries. */ 
     $start  = $this->start; 
     $stop   = $this->range;
@@ -834,9 +912,9 @@ class gotomasses extends plugin
     /* Assign entries by id.
      */
     $this->entries = array();
-    
+
     foreach($entries as $entry){
-    
+
       /* Skip entries which will be removed within the next seconds */
       if(isset($entry['MACADDRESS']) && in_array($entry['MACADDRESS'],$this->recently_removed)){
         continue;
@@ -846,10 +924,11 @@ class gotomasses extends plugin
     $this->recently_removed = array();
   }
 
+  function save_object(){}
 
   /*! \brief  Handle post jobs, like sorting.
    */
-  function save_object()
+  function _save_object()
   {
     /* Check for sorting changes 
      */
@@ -870,14 +949,14 @@ class gotomasses extends plugin
     if(isset($_POST['range']) && is_numeric($_POST['range'])){
       $this->range = $_POST['range'];
     }
-  
+
     /* Save filter settings */ 
     $gotomasses_filter = session::get("gotomasses_filter");
     foreach(array("range","sort_by","sort_dir") as $attr){
       $gotomasses_filter[$attr] = $this->$attr;
     }
     session::set("gotomasses_filter",$gotomasses_filter);
- 
+
     /* Page changed. */
     if(isset($_GET['start'])){
       $start = $_GET['start'];
@@ -932,6 +1011,68 @@ class gotomasses extends plugin
           "plProvidedAcls" => array("Comment"   => _("Description")) 
           ));
   }
+
+
+  function set_acl_base($base)
+  {
+    $this->acl_base= $base;
+  }
+
+
+  function set_acl_category($category)
+  {
+    $this->acl_category= "$category/";
+  }
+
+
+  function acl_is_writeable($attribute,$skip_write = FALSE)
+  {
+    if($this->read_only) return(FALSE);
+    $ui= get_userinfo();
+    return preg_match('/w/', $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), $attribute, $skip_write));
+  }
+
+
+  function acl_is_readable($attribute)
+  {
+    $ui= get_userinfo();
+    return preg_match('/r/', $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), $attribute));
+  }
+
+
+  function acl_is_createable($base ="")
+  {
+    if($this->read_only) return(FALSE);
+    $ui= get_userinfo();
+    if($base == "") $base = $this->acl_base;
+    return preg_match('/c/', $ui->get_permissions($base, $this->acl_category.get_class($this), '0'));
+  }
+
+
+  function acl_is_removeable($base ="")
+  {
+    if($this->read_only) return(FALSE);
+    $ui= get_userinfo();
+    if($base == "") $base = $this->acl_base;
+    return preg_match('/d/', $ui->get_permissions($base, $this->acl_category.get_class($this), '0'));
+  }
+
+  function acl_is_moveable($base = "")
+  {
+    if($this->read_only) return(FALSE);
+    $ui= get_userinfo();
+    if($base == "") $base = $this->acl_base;
+    return preg_match('/m/', $ui->get_permissions($base, $this->acl_category.get_class($this), '0'));
+  }
+
+
+  function getacl($attribute,$skip_write= FALSE)
+  {
+    $ui= get_userinfo();
+    $skip_write |= $this->read_only;
+    return  $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), $attribute,$skip_write);
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
