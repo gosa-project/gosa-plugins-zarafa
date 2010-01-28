@@ -997,13 +997,12 @@ msgid "OPSI local product"
 msgstr "OPSI Local-Produkt"
 
 #: admin/fai/packageSelect/selectPackage-list.xml:48
-#, fuzzy
 msgid "Version"
-msgstr "Berechtigung"
+msgstr "Version"
 
 #: admin/fai/packageSelect/selectPackage-filter.tpl:12
 msgid "A maximum of 200 entries will be shown here."
-msgstr ""
+msgstr "Es werden maximal 200 Einträge angezeigt."
 
 #: admin/fai/faiPackageConfiguration.tpl:1 admin/fai/class_faiPackage.inc:661
 msgid "Package"
