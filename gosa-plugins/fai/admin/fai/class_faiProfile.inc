@@ -23,6 +23,8 @@ class faiProfile extends plugin
   var $FAIstate      = "";
   var $view_logged      = FALSE;
 
+  var $classSelect;
+
   function faiProfile(&$config, $dn= NULL)
   {
     /* Load Attributes */
@@ -250,39 +252,30 @@ class faiProfile extends plugin
       }
 
       if($s_action == "add" && $this->acl_is_writeable("FAIclass")){
-        $this->dialog = new faiProfileEntry($this->config,$this->dn,$this->FAIclasses,$this->parent->parent->fai_release);
-        $this->is_dialog  =true;
+        $this->classSelect = new classSelect($this->config, get_userinfo());
+        $this->dialog  =true;
       }
 
       /* Save Dialog */
-      if(isset($_POST['SaveSubObject'])){
-        $this->dialog->save_object();
-        $msgs= $this->dialog->check();
-        if(count($msgs)){
-          msg_dialog::display(_("Error"), $msgs, ERROR_DIALOG);
-        }else{
-          $ret = $this->dialog->save();
-          foreach($ret as $class){
-            $this->FAIclasses[$class] =$class; 
-          }
-          $this->is_dialog=false;
-          unset($this->dialog);
-          $this->dialog=FALSE;
-          //ksort($this->FAIclasses);
+      if(isset($_POST['classSelect_save'])){
+        $list = $this->classSelect->save();
+        foreach($list as $entry){
+          $class = $entry['cn'][0];
+          $this->FAIclasses[$class] =$class; 
         }
+        $this->dialog=false;
+        $this->classSelect=FALSE;
       }
     }
 
     /* Cancel Dialog */
-    if(isset($_POST['CancelSubObject'])){
-      $this->is_dialog=false;
-      unset($this->dialog);
-      $this->dialog=FALSE;
+    if(isset($_POST['classSelect_cancel']) && $this->classSelect instanceOf classSelect){
+      $this->dialog=false;
+      $this->classSelect=FALSE;
     }
 
-    if(is_object($this->dialog)){
-      $this->dialog->save_object();
-      return($this->dialog->execute());
+    if($this->classSelect instanceOf classSelect){
+      return($this->classSelect->execute());
     }
 
     $divlist  =new divSelectBox("Profile");
