@@ -435,7 +435,8 @@ class faiManagement extends management
         if(preg_match("/d/",$acl)){
 
           // Now save changes
-          management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+          $str = management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+          if(!empty($str)) return($str);
           FAI::save_release_changes_now();
           $to_del = FAI::clean_up_releases($dn);
           foreach($to_del as $dn){
