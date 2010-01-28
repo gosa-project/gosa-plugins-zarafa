@@ -276,23 +276,41 @@ class faiPackage extends plugin
     // Open the packageSelect dialog to allow adding packages out of a list.
     if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage") && !preg_match("/freeze/",$this->FAIstate)){
       $this->packageSelect = new packageSelect($this->config, get_userinfo());
-      $this->is_dialog =true;
+      $this->dialog =true;
     }
 
     // Close packageSelect dialog.
     if(isset($_POST['packageSelect_cancel'])){
       $this->packageSelect = FALSE;
-      $this->is_dialog =FALSE;
+      $this->dialog =FALSE;
     }
 
     // Close packageSelect dialog and add the selected packages.
-    if(isset($_POST['packageSelect_save'])){
+    if(isset($_POST['packageSelect_save']) && $this->packageSelect instanceOf packageSelect){
+      if(!preg_match("/freeze/i", $this->FAIstate)){
+        $use = $this->packageSelect->save();
+
+        foreach($use as $pkg){
+          $item = array();
+          for($i =0; $i < $pkg['count']; $i++){
+            $item[$pkg[$i]] = $pkg[$pkg[$i]][0];
+          }
+          $this->usedPackages[$item['PACKAGE']] = $item['PACKAGE']; 
+        }
+
+        ksort($this->usedPackages);
+
+        /* Generate package list */
+        $this->list= $this->genPkgs(TRUE);
+      }
       $this->packageSelect = FALSE;
-      $this->is_dialog =FALSE;
+      $this->dialog =FALSE;
     }
 
     // Display package add dialog 
     if($this->packageSelect instanceOf packageSelect){
+
+      session::set('filterBlacklist', array('PACKAGE' => $this->usedPackages));
       return $this->packageSelect->execute();
     }
 
@@ -354,30 +372,6 @@ class faiPackage extends plugin
     if(isset($_POST['CancelSubObject'])){
       $this->dialog = false;
       $this->is_dialog=false;
-    }
-
-    /* attach new packages */
-    if(isset($_POST['SaveSubObject'])) {
-      if(!preg_match("/freeze/i", $this->FAIstate)){
-        $this->dialog->save_object();
-        if(count($this->dialog->check())){
-          foreach($this->dialog->check() as $msgs){
-            msg_dialog::display(_("Error"), $msgs, ERROR_DIALOG);
-          }
-        }else{
-          $use = $this->dialog->save();
-          $this->usedPackages = $use;
-          $this->dialog = false;
-          $this->is_dialog=false;
-          ksort($this->usedPackages);
-
-          /* Generate package list */
-          $this->list= $this->genPkgs(TRUE);
-        }
-      }else{
-        $this->dialog = false;
-        $this->is_dialog=false;
-      }
     }
 
     /* Save Configuration */
