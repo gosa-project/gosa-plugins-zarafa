@@ -8,7 +8,7 @@
 					</td>
 					<td>
 {render acl=$zoneNameACL}					
-						<input type="text" name="zoneName" value="{$zoneName}" {if $NotNew | $Zone_is_used} disabled {/if}>
+						<input type="text" name="zoneName" value="{$zoneName}" {if $NotNew || $Zone_is_used} disabled {/if}>
 {/render}
 					</td>
 				</tr>
@@ -17,7 +17,7 @@
 					</td>
 					<td>
 {render acl=$ReverseZoneACL}					
-						<input type="text" name="ReverseZone" value="{$ReverseZone}" {if $NotNew | $Zone_is_used} disabled {/if}>
+						<input type="text" name="ReverseZone" value="{$ReverseZone}" {if $NotNew || $Zone_is_used} disabled {/if}>
 {/render}
 					</td>
 				</tr>
@@ -26,7 +26,7 @@
 					</td>
 					<td>
 {render acl=$NetworkClassACL}					
-						<select name="NetworkClass" {if $NotNew | $Zone_is_used} disabled {/if}>
+						<select name="NetworkClass" {if $NotNew || $Zone_is_used} disabled {/if}>
 							{html_options options=$NetworkClasses selected=$NetworkClass}
 						</select>
 {/render}
