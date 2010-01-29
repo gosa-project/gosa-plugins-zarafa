@@ -33,6 +33,7 @@ class wingeneric extends plugin
 
   var $orig_cn;
   var $orig_base;
+  var $baseSelector;
 
   /* attribute list for save action */
   var $ignore_account= TRUE;
@@ -69,6 +70,12 @@ class wingeneric extends plugin
     $this->orig_dn= $this->dn;
     $this->orig_base= $this->base;
     $this->orig_cn= $this->cn;
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
   }
 
 
@@ -104,40 +111,9 @@ class wingeneric extends plugin
       return($display);
     }
 
-    /* Base select dialog */
-    $once = true;
-    foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
-        $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
-        $this->dialog->setCurrentBase($this->base);
-      }
-    }
-
-    /* Dialog handling */
-    if(is_object($this->dialog)){
-      /* Must be called before save_object */
-      $this->dialog->save_object();
-
-      if($this->dialog->isClosed()){
-        $this->dialog = false;
-      }elseif($this->dialog->isSelected()){
-
-        /* A new base was selected, check if it is a valid one */
-        $tmp = $this->get_allowed_bases();
-        if(isset($tmp[$this->dialog->isSelected()])){
-          $this->base = $this->dialog->isSelected();
-        }
-
-        $this->dialog= false;
-      }else{
-        return($this->dialog->execute());
-      }
-    }
-
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("bases"   , $this->get_allowed_bases());
+    $smarty->assign("usePrototype", "true");
     
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
@@ -149,7 +125,7 @@ class wingeneric extends plugin
       $smarty->assign("$attr", $this->$attr);
     }
     
-    $smarty->assign("base_select", $this->base);
+    $smarty->assign("base", $this->baseSelector->render());
 
     /* Show main page */
     $str = $this->netConfigDNS->execute();
@@ -194,13 +170,17 @@ class wingeneric extends plugin
 
     $this->netConfigDNS->save_object();
 
-    /* Set new base if allowed */
-    $tmp = $this->get_allowed_bases();
-    if(isset($_POST['base'])){
-      if(isset($tmp[$_POST['base']])){
-        $this->base= $_POST['base'];
+    /* Refresh base */
+    if ($this->acl_is_moveable($this->base)){
+      if (!$this->baseSelector->update()) {
+        msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+      }
+      if ($this->base != $this->baseSelector->getBase()) {
+        $this->base= $this->baseSelector->getBase();
+        $this->is_modified= TRUE;
       }
     }
+
   }
 
 
