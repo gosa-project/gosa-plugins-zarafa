@@ -107,7 +107,7 @@ if ( $cleanup ){
   }
 
   $info= "";
-  if (($sambaAccount->is_account) && (!$sambaAccount->dialog) && (!$sambaAccount->show_ws_dialog) && empty($lock_msg)){
+  if (($sambaAccount->is_account) && (!$sambaAccount->dialog) && empty($lock_msg)){
     $display.= "<p class=\"plugbottom\">";
 
     /* Are we in edit mode? */
