@@ -136,19 +136,20 @@ class deviceGeneric extends plugin
 
   public function save_object()
   {
-    /* Refresh base */
-    if ($this->acl_is_moveable($this->base)){
-      if (!$this->baseSelector->update()) {
-        msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
-      }
-      if ($this->base != $this->baseSelector->getBase()) {
-        $this->base= $this->baseSelector->getBase();
-        $this->is_modified= TRUE;
-      }
-    }
-
     if(isset($_POST['deviceGeneric_posted'])){
       plugin::save_object();
+
+      /* Refresh base */
+      if ($this->acl_is_moveable($this->base)){
+        if (!$this->baseSelector->update()) {
+          msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+        }
+        if ($this->base != $this->baseSelector->getBase()) {
+          $this->base= $this->baseSelector->getBase();
+          $this->is_modified= TRUE;
+        }
+      }
+
     }
   }
 
