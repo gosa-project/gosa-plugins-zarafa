@@ -63,6 +63,7 @@ class gotomasses extends management
     $headpage->registerElementFilter("filterTask","gotomasses::filterTask");
     $headpage->registerElementFilter("filterPeriod","gotomasses::filterPeriod");
     $headpage->registerElementFilter("filterSchedule","gotomasses::filterSchedule");
+    $headpage->registerElementFilter("filterStatus","gotomasses::filterStatus");
     $headpage->setFilter($filter);
 
     parent::__construct($config, $ui, "Events", $headpage);
@@ -103,7 +104,7 @@ class gotomasses extends management
 
   static function filterPeriod($periodic=array())
   {
-    $period = "";
+    $period = "&nbsp;-";
     if(isset($periodic[0]) && !preg_match("/none/i",$periodic[0])){
       $tmp = explode("_", $periodic[0]);
       if(count($tmp) == 2){
@@ -121,24 +122,52 @@ class gotomasses extends management
       return(date("d.m.Y H:i:s",strtotime($stamp[0])));
     }
   }
-  
 
 
+  static function filterStatus($status, $mac,$headertag, $progress)
+  {
 
+    $mac = $mac[0];
+    $status = $status[0];
+    $progress = $progress[0];
+    $headertag = $headertag[0];
 
+    if($status == "waiting"){
+      $status = "<img class='center' src='plugins/goto/images/clock.png' alt=''>&nbsp;"._("Waiting");
+    }
+    if($status == "error"){
+      $status = "<img class='center' src='images/false.png' alt=''>&nbsp;"._("Error");
+    }
+    if($status == "processed"){
+      $status = "<img class='center' src='images/true.png' alt=''>&nbsp;"._("Processed");
+    }
 
+    /* Special handling for all entries that have
+       STATUS == "processing" && PROGRESS == NUMERIC
+     */
+    if($status == "processing" && $progress){
+      $percent = $progress;
 
+      /* Show activation? */
+      if ($percent == "goto-activation"){
+        $status = "<img class='center' src='images/lists/off.png' alt=''>&nbsp;"._("Locked");
 
+        /* Show hardware detect? */
+      } elseif ($percent == "goto-hardware-detection") {
+        $status = "<img class='center' src='plugins/goto/images/hardware.png' alt=''>&nbsp;"._("Detection");
 
-
-
-
-
-
-
-
-
-
+        /* Real percent */
+      } else {
+        if (preg_match('/install/', $headertag)){
+          $status = "<img src='progress.php?x=80&y=13&p=".$progress."' alt=''
+            id='progress_".preg_replace("/:/","_",$mac)."'>";
+        } else {
+          $status = preg_replace('/ /', '&nbsp;', _("in progress"));
+        }
+      }
+    }
+    return($status);
+  }
 
 
 

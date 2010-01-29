@@ -21,7 +21,7 @@
   </definition>
 
   <table>
-    <layout>|||||||</layout>
+    <layout>|160|160|20|20|20||</layout>
 
     <column>
       <label>Target</label>
@@ -59,7 +59,7 @@
       <label>Status</label>
       <sortAttribute>uid</sortAttribute>
       <sortType>string</sortType>
-      <value>%{filter:filterStatus(TIMESTAMP)}</value>
+      <value>%{filter:filterStatus(STATUS,MACADDRESS,HEADERTAG,PROGRESS)}</value>
       <export>true</export>
     </column>
 
@@ -181,59 +181,62 @@
   <actiontriggers snapshot="true" copypaste="true">
 
     <action>
-      <name>newfromtpl</name>
+      <name>prioUp</name>
       <type>entry</type>
-      <image>images/lists/new.png</image>
-      <objectclass>gosaUserTemplate</objectclass>
-      <label>New user from template</label>
+      <objectclass>FAKE_OC__prioUp</objectclass>
+      <image>plugins/goto/images/prio_increase.png</image>
+      <label>Up</label>
     </action>
 
     <action>
-      <name>cp</name>
-      <objectclass>!gosaUserTemplate</objectclass>
-      <type>copypaste</type>
+      <name>prioDown</name>
+      <type>entry</type>
+      <objectclass>FAKE_OC__prioDown</objectclass>
+      <image>plugins/goto/images/prio_decrease.png</image>
+      <label>Down</label>
+    </action>
+
+    <action>
+      <name>prioPause</name>
+      <type>entry</type>
+      <objectclass>FAKE_OC__prioPause</objectclass>
+      <image>images/status_pause.png</image>
+      <label>Pause</label>
+    </action>
+
+    <action>
+      <name>processNow</name>
+      <type>entry</type>
+      <objectclass>FAKE_OC__processNow</objectclass>
+      <image>images/rocket.png</image>
+      <label>Process now</label>
+    </action>
+
+    <action>
+      <name>viewLogs</name>
+      <type>entry</type>
+      <objectclass>FAKE_OC__viewLogs</objectclass>
+      <image>plugins/goto/images/view_logs.png</image>
+      <label>View logs</label>
     </action>
 
     <action>
       <name>edit</name>
       <type>entry</type>
-      <objectclass>gosaAccount</objectclass>
+      <objectclass>FAKE_OC__edit</objectclass>
       <image>images/lists/edit.png</image>
-      <label>Edit user</label>
-    </action>
-
-    <action>
-      <name>lock</name>
-      <type>entry</type>
-      <objectclass>!gosaUserTemplate</objectclass>
-      <image>%{filter:lockImage(userPassword)}</image>
-      <acl>uniBonnAccount/password[w]</acl>
-      <label>%{filter:lockLabel(userPassword)}</label>
-    </action>
-
-    <action>
-      <name>password</name>
-      <type>entry</type>
-      <objectclass>!gosaUserTemplate</objectclass>
-      <image>plugins/users/images/list_password.png</image>
-      <label>Change password</label>
-    </action>
-
-    <action>
-      <name>snapshot</name>
-      <type>snapshot</type>
-      <objectclass>!gosaUserTemplate</objectclass>
+      <label>Edit</label>
     </action>
 
     <action>
       <name>remove</name>
       <type>entry</type>
+      <objectclass>FAKE_OC__remove</objectclass>
       <image>images/lists/trash.png</image>
-      <objectclass>gosaAccount</objectclass>
-      <acl>users/user[d]</acl>
-      <label>Remove user</label>
+      <label>Remove</label>
     </action>
 
   </actiontriggers>
 
 </list>
+
