@@ -55,12 +55,12 @@ class gotomasses extends management
     }
 
     // Build filter
-   # if (session::global_is_set(get_class($this)."_filter")){
-  #    $filter= session::global_get(get_class($this)."_filter");
- #   } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("deploy-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-#    }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -554,131 +554,9 @@ class gotomasses extends management
     return(TRUE);
   }
 
-
-  /*! \brief  Request list of queued jobs.
-   *  @return Returns an array of all queued jobs.
-   */
-  function reload()
-  {
-
-    /* Sort map   html-post-name => daemon-col-name
-     */
-    $map = array(
-        "QueuePosition" => "id",
-        "Action"        => "status",
-        "TaskID"        => "headertag",
-        "TargetName"    => "macaddress",
-        "Schedule"      => "timestamp");
-
-    /* Create sort header 
-     */
-    if(!isset($map[$this->sort_by])){
-      $sort = "id DESC";
-    }else{
-      $sort   = $map[$this->sort_by]; 
-      if($this->sort_dir == "up"){
-        $sort.= " ASC";
-      }else{
-        $sort.= " DESC";
-      }
-    }
-
-    /* Get entries. */ 
-    $start  = $this->start; 
-    $stop   = $this->range;
-    $entries = $this->o_queue->get_queued_entries($this->event_tags,$start,$stop,$sort);
-    if ($this->o_queue->is_error()){
-      msg_dialog::display(_("Error"), sprintf(_("Cannot load queue entries: %s"), "<br><br>".$this->o_queue->get_error()), ERROR_DIALOG);
-    }
-
-    /* Assign entries by id.
-     */
-    $this->entries = array();
-
-    foreach($entries as $entry){
-
-      /* Skip entries which will be removed within the next seconds */
-      if(isset($entry['MACADDRESS']) && in_array($entry['MACADDRESS'],$this->recently_removed)){
-        continue;
-      }
-      $this->entries[$entry['ID']]= $entry;
-    }
-    $this->recently_removed = array();
-  }
-
   function save_object(){}
 
-  /*! \brief  Handle post jobs, like sorting.
-   */
-  function _save_object()
-  {
-    /* Check for sorting changes 
-     */
-    $sort_vals = array("Action","QueuePosition","TargetName","Schedule","TaskID");
-    if(isset($_GET['sort']) && in_array($_GET['sort'],$sort_vals)){
-      $sort = $_GET['sort'];
-      if($this->sort_by == $sort){
-        if($this->sort_dir == "up"){
-          $this->sort_dir = "down";
-        }else{
-          $this->sort_dir = "up";
-        }
-      }
-      $this->sort_by = $sort;
-    }
-
-    /* Range selection used? */
-    if(isset($_POST['range']) && is_numeric($_POST['range'])){
-      $this->range = $_POST['range'];
-    }
-
-    /* Save filter settings */ 
-    $gotomasses_filter = session::get("gotomasses_filter");
-    foreach(array("range","sort_by","sort_dir") as $attr){
-      $gotomasses_filter[$attr] = $this->$attr;
-    }
-    session::set("gotomasses_filter",$gotomasses_filter);
-
-    /* Page changed. */
-    if(isset($_GET['start'])){
-      $start = $_GET['start'];
-      if(is_numeric($start) || $start == 0){
-        $this->start = $start;
-      }
-    }
-
-    /* Check start stop and reset if necessary */
-    $count = $this->o_queue->number_of_queued_entries($this->event_tags);
-    if($this->start >= $count){
-      $this->start = $count -1;
-    }
-    if($this->start < 0){
-      $this->start = 0;
-    }
-  }
-
-
-  function save()
-  {
-    // We do not save anything here.
-  }
-
-
-  /*! \brief  Return a list of all selected items.
-    @return Array   Returns an array containing all selected item ids.
-   */
-  function list_get_selected_items()
-  {
-    $ids = array();
-    foreach($_POST as $name => $value){
-      if(preg_match("/^item_selected_[0-9]*$/",$name)){
-        $id   = preg_replace("/^item_selected_/","",$name);
-        $ids[$id] = $id;
-      }
-    }
-    return($ids);
-  }
-
+  function save(){}
 
   static function plInfo()
   {
