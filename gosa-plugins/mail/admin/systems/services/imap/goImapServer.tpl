@@ -108,7 +108,7 @@
     {html_options options=$Actions}
 </select>
 <input type='submit' name='ExecAction' title='{t}Set status{/t}' value='{t}Execute{/t}' 
-	{if $is_new == "new" | !$is_acc} disabled {/if}
+	{if $is_new == "new" || !$is_acc} disabled {/if}
 >
 
 <p class="seperator">&nbsp;</p>
