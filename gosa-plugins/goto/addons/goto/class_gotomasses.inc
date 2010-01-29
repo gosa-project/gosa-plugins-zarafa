@@ -79,6 +79,7 @@ class gotomasses extends management
     $this->registerAction('prioPause',  "prioPause");
     $this->registerAction('processNow', "processNow");
     $this->registerAction('viewLogs',   "viewLogs");
+    $this->registerAction('abort',      "abortEvent");
     $this->registerAction('saveEventDialog',   "saveEventDialog");
   }
 
@@ -268,6 +269,44 @@ class gotomasses extends management
       $this->save();
     }
   }
+ 
+ 
+  /*! \brief  Force queue job to be aborted.
+   */
+  function abortEvent($action="",$target=array(),$all=array())
+  {
+    /* Entries are paused by setting the status to
+     *  something different from 'waiting'.
+     * We simply use 'paused'.
+     */
+    $data = array("status"    => "paused");
+
+    /* Detect if the ids we got are valid and
+     *  check if the status allows pausing.
+     */
+    $update_ids = array();
+    $headpage = $this->getHeadpage();
+    foreach($target as $id){
+      $tmp = $headpage->getEntry($id);
+      $update_ids[] = $tmp['MACADDRESS'][0];
+    }
+
+    if(class_available("DaemonEvent_faireboot")){
+      $tmp = new DaemonEvent_faireboot($this->config);
+      $tmp->add_targets($update_ids);
+      $tmp->set_type(TRIGGERED_EVENT);
+      $this->recently_removed = $update_ids;
+      if(!$this->o_queue->append($tmp)){
+        msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
+        return(FALSE);
+      }
+    }else{
+      msg_dialog::display(_("Error"),
+          sprintf(_("Required class '%s' cannot be found: job not aborted!"),
+            "DaemonEvent_faireboot") , ERROR_DIALOG);
+    }
+  }
+
 
   function prioDown($action="",$target=array(),$all=array())
   {
@@ -421,13 +460,6 @@ class gotomasses extends management
      * EDIT 
      ************/
 
-
-    /* Close dialog */
-    if(isset($_POST['abort_event_dialog'])){
-      $this->dialog = FALSE;
-      $this->current = -1;
-    }
-
     /* Display dialogs if currently opened */
     if(is_object($this->dialog)){
       $this->dialog->save_object();
@@ -439,19 +471,6 @@ class gotomasses extends management
         return($display);
       }
     }
-
-   /************
-    * Handle Divlist 
-    ************/
-
-   $divlist = new MultiSelectWindow($this->config,"gotoMasses",array("gotomasses"));
-   $divlist->SetInformation(_("This menu allows you to remove and change the properties of GOsa tasks."));
-   $divlist->SetSummary(_("List of queued jobs"));
-   $divlist->EnableCloseButton(FALSE);
-   $divlist->EnableSaveButton(FALSE);
-   $divlist->SetHeadpageMode();
-   $s = ".|"._("Actions")."|\n";
-   $s.= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
 
    if($this->acl_is_writeable("")){
      foreach($this->events['SCHEDULED'] as $name =>  $event){
@@ -764,53 +783,6 @@ class gotomasses extends management
       }
     }
     return(TRUE);
-  }
-
-
-  /*! \brief  Force queue job to be done as far as possible.
-   *  @return Boolean TRUE in case of success, else FALSE.
-   */
-  private function abort_queue_entries($ids)
-  {
-    if(!count($ids)){
-      return;
-    }
-
-    /* Entries are paused by setting the status to
-     *  something different from 'waiting'.
-     * We simply use 'paused'.
-     */
-    $data = array("status"    => "paused");
-
-    /* Detect if the ids we got are valid and
-     *  check if the status allows pausing.
-     */
-    $update_ids = array();
-    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
-      if(isset($entry['STATUS']) && preg_match("/processing/",$entry['STATUS'])){
-        if(isset($entry['MACADDRESS'])){
-          $update_ids[] = $entry['MACADDRESS'];
-        }else{
-          trigger_error("No mac address found in event.");
-        }
-      }
-    }
-
-    if(class_available("DaemonEvent_faireboot")){
-      $tmp = new DaemonEvent_faireboot($this->config);
-      $tmp->add_targets($update_ids);
-      $tmp->set_type(TRIGGERED_EVENT);
-      $this->recently_removed = $update_ids;
-
-      if(!$this->o_queue->append($tmp)){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
-        return(FALSE);
-      }
-    }else{
-      msg_dialog::display(_("Error"),
-          sprintf(_("Required class '%s' cannot be found: job not aborted!"),
-            "DaemonEvent_faireboot") , ERROR_DIALOG);
-    }
   }
 
 
