@@ -7,8 +7,8 @@
     <baseMode>false</baseMode>
     <multiSelect>true</multiSelect>
     <template>deploy-list.tpl</template>
-    <label>List of events</label>
-    <defaultSortColumn>1</defaultSortColumn>
+    <label>List of queued jobs</label>
+    <defaultSortColumn>3</defaultSortColumn>
 
     <objectType>
       <label>Event</label>
@@ -75,20 +75,20 @@
     <action>
      <type>sub</type>
      <image>images/lists/new.png</image>
-     <label>Add</label>
+     <label>Create</label>
 
      <action>
       <name>halt</name>
       <type>entry</type>
       <image>images/lists/off.png</image>
-      <label>Shut down</label>
+      <label>Switch off</label>
      </action>
 
      <action>
       <name>reboot</name>
       <type>entry</type>
       <image>images/lists/reload.png</image>
-      <label>Restart</label>
+      <label>Reboot</label>
      </action>
 
      <action>
@@ -127,20 +127,23 @@
      </action>
     </action>
   
-  
-     <action>
-      <name>import</name>
-      <type>entry</type>
-      <image>images/lists/import.png</image>
-      <label>Import</label>
-     </action>
+    <action>
+      <type>separator</type>
+    </action>
 
-     <action>
-      <name>remove</name>
-      <type>entry</type>
-      <image>images/lists/trash.png</image>
-      <label>Remove</label>
-     </action>
+    <action>
+     <name>import</name>
+     <type>entry</type>
+     <image>images/lists/import.png</image>
+     <label>Import</label>
+    </action>
+
+    <action>
+     <name>remove</name>
+     <type>entry</type>
+     <image>images/lists/trash.png</image>
+     <label>Remove</label>
+    </action>
 
     <action>
       <type>separator</type>
@@ -166,6 +169,10 @@
       <image>images/small_error.png</image>
       <label>Abort</label>
      </action>
+
+    <action>
+      <type>separator</type>
+    </action>
 
      <action>
       <name>processNow</name>
