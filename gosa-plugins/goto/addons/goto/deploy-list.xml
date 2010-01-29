@@ -75,106 +75,104 @@
     <action>
      <type>sub</type>
      <image>images/lists/new.png</image>
-     <label>Create</label>
+     <label>Add</label>
 
      <action>
-      <name>new</name>
+      <name>halt</name>
       <type>entry</type>
-      <image>plugins/users/images/list_new_user.png</image>
-      <label>User</label>
+      <image>images/lists/off.png</image>
+      <label>Shut down</label>
      </action>
 
      <action>
-      <name>new_template</name>
+      <name>reboot</name>
       <type>entry</type>
-      <image>plugins/users/images/select_template.png</image>
-      <label>Template</label>
+      <image>images/lists/reload.png</image>
+      <label>Restart</label>
+     </action>
+
+     <action>
+      <name>wakeup</name>
+      <type>entry</type>
+      <image>images/lists/on.png</image>
+      <label>Wake up</label>
+     </action>
+
+     <action>
+      <name>update</name>
+      <type>entry</type>
+      <image>plugins/goto/images/update.png</image>
+      <label>Software update</label>
+     </action>
+
+     <action>
+      <name>lock</name>
+      <type>entry</type>
+      <image>images/lists/locked.png</image>
+      <label>Lock</label>
+     </action>
+
+     <action>
+      <name>activate</name>
+      <type>entry</type>
+      <image>images/lists/unlocked.png</image>
+      <label>Unlock</label>
+     </action>
+
+     <action>
+      <name>reinstall</name>
+      <type>entry</type>
+      <image>plugins/goto/images/reinstall.png</image>
+      <label>Reinstall</label>
      </action>
     </action>
-
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <name>edit</name>
+  
+  
+     <action>
+      <name>import</name>
       <type>entry</type>
-      <image>images/lists/edit.png</image>
-      <label>Edit</label>
-    </action>
+      <image>images/lists/import.png</image>
+      <label>Import</label>
+     </action>
 
-    <action>
+     <action>
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
       <label>Remove</label>
-    </action>
-
-    <action>
-      <name>password</name>
-      <type>entry</type>
-      <image>plugins/users/images/list_password.png</image>
-      <label>Change password</label>
-    </action>
+     </action>
 
     <action>
       <type>separator</type>
     </action>
 
-    <action>
-      <name>lockUsers</name>
+     <action>
+      <name>prioResume</name>
       <type>entry</type>
-      <image>images/lists/locked.png</image>
-      <acl>uniBonnAccount/password[w]</acl>
-      <label>Lock users</label>
-    </action>
+      <image>images/status_start.png</image>
+      <label>Resume</label>
+     </action>
 
-    <action>
-      <name>unlockUsers</name>
+     <action>
+      <name>prioPause</name>
       <type>entry</type>
-      <image>images/lists/unlocked.png</image>
-      <acl>uniBonnAccount/password[w]</acl>
-      <label>Unlock users</label>
-    </action>
+      <image>images/status_pause.png</image>
+      <label>Pause</label>
+     </action>
 
-    <action>
-      <name>sendMessage</name>
+     <action>
+      <name>abort</name>
       <type>entry</type>
-      <depends>DaemonEvent_notify</depends>
-      <image>plugins/goto/images/notify.png</image>
-      <label>Send message</label>
-    </action>
+      <image>images/small_error.png</image>
+      <label>Abort</label>
+     </action>
 
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <name>templatize</name>
+     <action>
+      <name>processNow</name>
       <type>entry</type>
-      <image>plugins/users/images/wizard.png</image>
-      <label>Apply template</label>
-    </action>
-
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <type>exporter</type>
-    </action>
-
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <type>copypaste</type>
-    </action>
-
-    <action>
-      <type>snapshot</type>
-    </action>
+      <image>images/rocket.png</image>
+      <label>Execute</label>
+     </action>
 
   </actionmenu>
 
@@ -202,6 +200,14 @@
       <objectclass>FAKE_OC__prioPause</objectclass>
       <image>images/status_pause.png</image>
       <label>Pause</label>
+    </action>
+
+    <action>
+      <name>prioResume</name>
+      <type>entry</type>
+      <objectclass>FAKE_OC__prioResume</objectclass>
+      <image>images/status_start.png</image>
+      <label>Resume</label>
     </action>
 
     <action>

@@ -77,10 +77,35 @@ class gotomasses extends management
     $this->registerAction('prioDown',   "prioDown");
     $this->registerAction('prioUp',     "prioUp");
     $this->registerAction('prioPause',  "prioPause");
+    $this->registerAction('prioResume', "prioResume");
     $this->registerAction('processNow', "processNow");
     $this->registerAction('viewLogs',   "viewLogs");
     $this->registerAction('abort',      "abortEvent");
     $this->registerAction('saveEventDialog',   "saveEventDialog");
+    $this->registerAction('halt', 'newEntry');
+    $this->registerAction('reboot', 'newEntry');
+    $this->registerAction('wakeup', 'newEntry');
+    $this->registerAction('update', 'newEntry');
+    $this->registerAction('lock', 'newEntry');
+    $this->registerAction('activate', 'newEntry');
+    $this->registerAction('reinstall', 'newEntry');
+    $this->registerAction('import', 'importEvents');
+  }
+
+  function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    if($this->acl_is_writeable("")){
+      $type = "DaemonEvent_".$action;
+      if(isset($this->events['BY_CLASS'][$type])){
+        $e_data = $this->events['BY_CLASS'][$type];
+        $this->dialogObject = new $e_data['CLASS_NAME']($this->config);
+      }
+    }
+  }
+
+  function importEvents()
+  {
+    $this->dialogObject = new goto_import_file($this->config,$this);
   }
 
   static function filterHostName($mac, $name ="")
@@ -325,18 +350,28 @@ class gotomasses extends management
   function prioPause($action="",$target=array(),$all=array())
   {
     $this->pause_queue_entries($target);
-#    $this->resume_queue_entries($target);
+  }
+
+  function prioResume($action="",$target=array(),$all=array())
+  {
+    $this->resume_queue_entries($target);
   }
 
   function processNow($action="",$target=array(),$all=array())
   {
     $this->execute_queue_entries($target);
-#    $this->abort_queue_entries($target);
   }
 
   function viewLogs($action="",$target=array(),$all=array())
   {
-    print_a($all);
+    if(count($target) == 1){
+      $id =  $target[0];
+      $type = FALSE;
+      $headpage = $this->getHeadpage();
+      $tmp = $headpage->getEntry($id);
+      $entry = $tmp['EVENT'];
+      $this->dialogObject = new gotoLogView($this->config,"",$entry,$this);
+    }
   }
 
   function saveEventDialog()
@@ -403,6 +438,7 @@ class gotomasses extends management
     if(isset($_POST['abort_event_dialog'])) $action['action'] = "cancel";
     if(isset($_POST['delete_multiple_confirm'])) $action['action'] = "removeConfirmed";
     if(isset($_POST['delete_cancel'])) $action['action'] = "cancel";
+    if(isset($_POST['import_abort'])) $action['action'] = "cancel";
     return($action);
   }
 
@@ -417,48 +453,7 @@ class gotomasses extends management
   {
 
     /************
-     * Import CSV file  
-     ************/
-
-    if($s_action == "import_file" && $this->acl_is_writeable("")){
-      $this->dialog = new goto_import_file($this->config,$this);
-    }
-
-    if(isset($_POST['import_abort'])){
-      $this->dialog = FALSE;
-    }
-
-
-    /************
      * ADD 
-     ************/
-
-    if(preg_match("/^add_event_/",$s_action) && $this->acl_is_writeable("")){
-      $type = preg_replace("/^add_event_/","",$s_action);
-      if(isset($this->events['BY_CLASS'][$type])){
-        $e_data = $this->events['BY_CLASS'][$type];
-        $this->dialog = new $e_data['CLASS_NAME']($this->config);
-      }
-    }
-
-    /************
-     * LOG VIEW
-     ************/
-
-    if($s_action == "logview"  && $this->acl_is_readable("")){  
-      $id =  $s_entry;
-      $type = FALSE;
-      if(isset($this->entries[$id])){
-        $event = $this->entries[$s_entry];
-        $this->dialog = new gotoLogView($this->config,"",$event,$this);
-      }
-    }
-
-
-    /************
-    /************
-     * EDIT 
-     ************/
 
     /* Display dialogs if currently opened */
     if(is_object($this->dialog)){
@@ -472,23 +467,6 @@ class gotomasses extends management
       }
     }
 
-   if($this->acl_is_writeable("")){
-     foreach($this->events['SCHEDULED'] as $name =>  $event){
-       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
-     }
-   }
-   if($this->acl_is_removeable()){
-     $s.= "..|---|\n";
-     $s.= "..|<img src='images/lists/import.png' alt='' border='0' class='center'>&nbsp;"._("Import")."|import_file\n";
-     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
-   }
-   if(preg_match("/w/",$this->getacl(""))){
-     $s.= "..|---|\n";
-     $s.= "..|<img alt='"._("Resume")."' src='images/status_start.png' border='0' class='center'>&nbsp;"._("Resume")."|resume_all\n";
-     $s.= "..|<img alt='"._("Pause")."' src='images/status_pause.png' border='0' class='center'>&nbsp;"._("Pause")."|pause_all\n";
-     $s.= "..|<img alt='"._("Abort")."' src='images/small_error.png'  border='0' class='center'>&nbsp;"._("Abort")."|abort_process_all\n";
-     $s.= "..|<img alt='"._("Execute")."' src='images/rocket.png'       border='0' class='center'>&nbsp;"._("Execute")."|execute_process_all\n";
-   }
 
    $divlist->SetDropDownHeaderMenu($s);
 
@@ -719,10 +697,6 @@ class gotomasses extends management
    */
   private function resume_queue_entries($ids)
   {
-    if(!count($ids)){
-      return;
-    }
-
     /* Entries are resumed by setting the status to 
      *  'waiting'
      */
@@ -732,7 +706,10 @@ class gotomasses extends management
      *  allows resuming.
      */
     $update_ids = array();
-    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
+    $headpage = $this->getHeadpage();
+    foreach($ids as $id){
+      $tmp = $headpage->getEntry($id);
+      $entry = $tmp['EVENT'];
       if(isset($entry['STATUS']) && preg_match("/paused/",$entry['STATUS'])){
         $update_ids[] = $entry['ID'];
       }
@@ -755,10 +732,6 @@ class gotomasses extends management
    */
   private function execute_queue_entries($ids)
   {
-    if(!count($ids)){
-      return;
-    }
-
     /* Execution is forced by updating the status to 
      *  waiting and setting the timestamp to current time.
      */
@@ -768,7 +741,10 @@ class gotomasses extends management
     /* Only allow execution of paused or waiting entries 
      */
     $update_ids = array();
-    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
+    $headpage = $this->getHeadpage();
+    foreach($ids as $id){
+      $tmp = $headpage->getEntry($id);
+      $entry = $tmp['EVENT'];
       if(in_array($entry['STATUS'],array("paused","waiting"))){
         $update_ids[] = $entry['ID'];
       }
@@ -791,10 +767,6 @@ class gotomasses extends management
    */
   private function pause_queue_entries($ids)
   {
-    if(!count($ids)){
-      return;
-    }
-
     /* Entries are paused by setting the status to 
      *  something different from 'waiting'.
      * We simply use 'paused'.
@@ -805,7 +777,10 @@ class gotomasses extends management
      *  check if the status allows pausing.
      */ 
     $update_ids = array();
-    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
+    $headpage = $this->getHeadpage();
+    foreach($ids as $id){
+      $tmp = $headpage->getEntry($id);
+      $entry = $tmp['EVENT']; 
       if(isset($entry['STATUS']) && preg_match("/waiting/",$entry['STATUS'])){
         $update_ids[] = $entry['ID'];
       }
