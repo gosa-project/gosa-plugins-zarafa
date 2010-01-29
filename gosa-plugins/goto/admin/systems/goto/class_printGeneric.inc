@@ -41,6 +41,7 @@ class printgeneric extends plugin
   var $gotoGroupAdminPrinter ;
   var $gotoGroupPrinter;
   var $gotoUserPrinter ;
+  var $baseSelector;
 
   /* attribute list for save action */
   var $attributes     = array("cn", "description", "l", "labeledURI", "gotoPrinterPPD","gotoUserPrinter", "macAddress", 
@@ -176,6 +177,12 @@ class printgeneric extends plugin
     }
     $this->orig_cn    = $this->cn;
     $this->orig_base  = $this->base;
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
   }
 
   function set_acl_base($base)
@@ -314,6 +321,7 @@ class printgeneric extends plugin
     }
 
     $smarty= get_smarty();
+    $smarty->assign("usePrototype", "true");
 
     /* Assign acls */
     $tmp = $this->plInfo();
@@ -375,50 +383,12 @@ class printgeneric extends plugin
       }
     }
 
-    /* Base select dialog */
-    $once = true;
-    foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
-        $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
-        $this->dialog->setCurrentBase($this->base);
-        $this->baseSelection = true;
-      }
-    }
-
-    /* Dialog handling for base select dialog
-     * Check if base was selected, dialog aborted etc */
-    if(is_object($this->dialog)){
-
-      $this->dialog->save_object();
-      if($this->baseSelection){
-        if($this->dialog->isClosed()){
-          $this->dialog = false;
-          $this->baseSelection = false;
-        }elseif($this->dialog->isSelected()){
-
-          /* A new base was selected, check if it is a valid one */
-          $tmp = $this->get_allowed_bases();
-          if(isset($tmp[$this->dialog->isSelected()])){
-            $this->base = $this->dialog->isSelected();
-          }
-
-          $this->dialog= false;
-          $this->baseSelection = false;
-        }else{
-          return($this->dialog->execute());
-        }
-      }
-    }
-
-    /* Fill templating stuff */
-    $smarty->assign("bases", $this->get_allowed_bases());
-    $smarty->assign("base_select", $this->base);
-
     /* Assign attributes */
     foreach ($this->attributes as $attr){
       $smarty->assign("$attr", $this->$attr);
     }
+
+    $smarty->assign("base", $this->baseSelector->render());
 
     // Act on add user/grouo requests 
     if(isset($_POST['AddUser'])){
@@ -724,13 +694,17 @@ class printgeneric extends plugin
       $this->netConfigDNS->save_object();
     }
     
-    /* Set new base if allowed */
-    $tmp = $this->get_allowed_bases();
-    if(isset($_POST['base'])){
-      if(isset($tmp[$_POST['base']])){
-        $this->base= $_POST['base'];
+    /* Refresh base */
+    if ($this->acl_is_moveable($this->base)){
+      if (!$this->baseSelector->update()) {
+        msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+      }
+      if ($this->base != $this->baseSelector->getBase()) {
+        $this->base= $this->baseSelector->getBase();
+        $this->is_modified= TRUE;
       }
     }
+
   }
 
   /* Check supplied data */
