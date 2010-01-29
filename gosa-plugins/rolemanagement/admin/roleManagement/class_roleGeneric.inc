@@ -52,6 +52,7 @@ class roleGeneric extends plugin {
  
   // 
   var $objCacheLoaded = FALSE;
+  var $baseSelector;
 
   /* Initialize the class 
    */
@@ -78,6 +79,12 @@ class roleGeneric extends plugin {
     $this->orig_base = $this->base;
     $this->orig_dn = $dn;
     $this->orig_cn = $this->cn;
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
   }
 
 
@@ -184,8 +191,8 @@ class roleGeneric extends plugin {
 
     // Get smarty instance and assign required variables.
     $smarty = get_smarty();
-    $smarty->assign("bases", $tmp);
-    $smarty->assign("base_select",$this->base);
+    $smarty->assign("usePrototype", "true");
+    $smarty->assign("base", $this->baseSelector->render());
     $smarty->assign("members",$this->convert_list());
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
@@ -351,8 +358,16 @@ class roleGeneric extends plugin {
   function save_object()
   {
     plugin::save_object();  
-    if(isset($_POST['base'])){
-      $this->base = get_post('base');
+
+    /* Refresh base */
+    if ($this->acl_is_moveable($this->base)){
+      if (!$this->baseSelector->update()) {
+        msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+      }
+      if ($this->base != $this->baseSelector->getBase()) {
+        $this->base= $this->baseSelector->getBase();
+        $this->is_modified= TRUE;
+      }
     }
   }  
 
