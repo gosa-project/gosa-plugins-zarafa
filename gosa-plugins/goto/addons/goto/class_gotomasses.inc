@@ -35,12 +35,18 @@ class gotomasses extends management
   var $event_tags     = array();
   var $recently_removed = array();
 
+  var $read_only = FALSE;
+  var $acl_base;
+  var $acl_category;
+
   function __construct(&$config, $ui)
   {
     /* Include config object */
     $this->config= &$config;
     $this->o_queue = new gosaSupportDaemon(TRUE,5);
     $this->events  = DaemonEvent::get_event_types( SYSTEM_EVENT);
+    $this->acl_base = $config->current['BASE'];
+    $this->acl_category = "gotomasses/";
 
     /* Get tags that will be used in queue searches */
     $this->event_tags = array("none");
@@ -73,6 +79,7 @@ class gotomasses extends management
     $this->registerAction('prioPause',  "prioPause");
     $this->registerAction('processNow', "processNow");
     $this->registerAction('viewLogs',   "viewLogs");
+    $this->registerAction('saveEventDialog',   "saveEventDialog");
   }
 
   static function filterHostName($mac, $name ="")
@@ -177,12 +184,89 @@ class gotomasses extends management
 
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
-    print_a($all);
+    if(count($target) == 1){
+      $headpage = $this->getHeadpage();
+      $entry = $headpage->getEntry($target[0]);
+      $event = $entry['EVENT'];
+      if($event['STATUS'] == "waiting" && isset($this->events['QUEUED'][$event['HEADERTAG']])){
+        $evt_name = $this->events['QUEUED'][$event['HEADERTAG']];
+        $type = $this->events['BY_CLASS'][$evt_name];
+        $this->dialogObject = new $type['CLASS_NAME']($this->config,$event);
+      }
+    }
   }
 
   function removeEntryRequested($action="",$target=array(),$all=array())
   {
-    print_a($all);
+    if(!$this->acl_is_removeable()){
+      msg_dialog::display(_("Permission"), msgPool::permDelete(), ERROR_DIALOG);
+    }else{
+
+      $deleteable_jobs = array();
+      $not_deleteable_jobs = array();
+      $headpage = $this->getHeadpage();
+
+      foreach($target as $dn){
+
+        $tmp = $headpage->getEntry($dn);
+        $task = $tmp['EVENT'];
+
+        /* Create a printable job name/description */
+        if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
+          $evt_name = $this->events['QUEUED'][$task['HEADERTAG']];
+          $evt = $this->events['BY_CLASS'][$evt_name];
+          $j_name = $task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
+        }else{
+          $j_name = $task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
+        }
+
+        /* Only remove WAITING or ERROR entries */
+        if(in_array($task['STATUS'],array("waiting","error","processed")) ||
+            ($task['STATUS'] == "processing" && !preg_match("/install/",$task['HEADERTAG'])) ){
+          $this->ids_to_remove[] = $task['ID'];
+          $deleteable_jobs[] = $j_name;
+        }else{
+          $not_deleteable_jobs[] = $j_name;
+        }
+      }
+      if(count($not_deleteable_jobs)){
+        msg_dialog::display(_("Remove"),
+            sprintf(_("The following jobs couldn't be deleted, they have to be aborted: %s"),
+              "<br>".msgPool::buildList($not_deleteable_jobs)),INFO_DIALOG);
+      }
+
+      if(count($this->ids_to_remove)){
+        $smarty = get_smarty();
+        $smarty->assign("multiple", TRUE);
+        $smarty->assign("info",msgPool::deleteInfo($deleteable_jobs));
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+  }
+
+  function removeEntryConfirmed($action="",$target=array(),$all=array(),$altTabClass="",$altTabType="",$altAclCategory="")
+  {
+    if($this->acl_is_removeable("")){
+      timezone::get_default_timezone();
+      foreach($this->ids_to_remove as $id){
+        $entry = $this->o_queue->get_entries_by_id(array($id));
+        if(isset($entry['ANSWER1'])){
+          $entry = $entry['ANSWER1'];
+          if( $entry['STATUS'] == "waiting" && 
+              $entry['HEADERTAG'] == "trigger_action_reinstall"){
+            $evt = new DaemonEvent_reinstall($this->config,$entry);
+            if($evt->get_timestamp(FALSE)  < time()){
+              $r_evt = new DaemonEvent_localboot($this->config);
+              $r_evt->add_targets(array($entry['MACADDRESS']));
+              $r_evt->set_type(TRIGGERED_EVENT);
+              $this->o_queue->append($r_evt);
+            }
+          }
+        }
+      }
+      $this->o_queue->remove_entries($this->ids_to_remove);
+      $this->save();
+    }
   }
 
   function prioDown($action="",$target=array(),$all=array())
@@ -201,18 +285,36 @@ class gotomasses extends management
 
   function prioPause($action="",$target=array(),$all=array())
   {
-    print_a($all);
+    $this->pause_queue_entries($target);
+#    $this->resume_queue_entries($target);
   }
 
   function processNow($action="",$target=array(),$all=array())
   {
-    print_a($all);
+    $this->execute_queue_entries($target);
+#    $this->abort_queue_entries($target);
   }
 
   function viewLogs($action="",$target=array(),$all=array())
   {
     print_a($all);
   }
+
+  function saveEventDialog()
+  {
+    if(is_object($this->dialogObject)){
+      $this->dialogObject->save_object();
+      if(!$this->o_queue->append($this->dialogObject)){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+      }else{
+        $this->current = -1;
+      } 
+    }
+    $this->closeDialogs();
+  }
+
+
+
 
   /*! \brief  Move an entry up or down in the queue, by updating its execution timestamp                             
     @param  $id     Integer  The ID of the entry which should be updated.                                            
@@ -248,15 +350,29 @@ class gotomasses extends management
     }
 
     if($type == "up" && $next != 0){
-      echo "Von: ".date('d.m.Y H:i:s', strtotime($entry['TIMESTAMP'][0]))." nach ".date('d.m.Y H:i:s',strtotime($next))."<br>";
       return($this->o_queue->update_entries(array($id),array("timestamp" => $next)));
     }elseif($type == "down" && $last != 0){
-      echo "Von: ".date('d.m.Y H:i:s', strtotime($entry['TIMESTAMP'][0]))." nach ".date('d.m.Y H:i:s',strtotime($last))."<br>";
       return($this->o_queue->update_entries(array($id),array("timestamp" => $last)));
     }
   }
 
 
+  function detectPostActions()
+  {
+    $action = management::detectPostActions();
+    if(isset($_POST['save_event_dialog'])) $action['action'] = "saveEventDialog";
+    if(isset($_POST['abort_event_dialog'])) $action['action'] = "cancel";
+    if(isset($_POST['delete_multiple_confirm'])) $action['action'] = "removeConfirmed";
+    if(isset($_POST['delete_cancel'])) $action['action'] = "cancel";
+    return($action);
+  }
+
+
+  function closeDialogs()
+  {
+    $this->current = FALSE;
+    management::closeDialogs();
+  }
 
   function _execute()
   {
@@ -275,45 +391,6 @@ class gotomasses extends management
 
 
     /************
-     * Handle Priority modifications  
-     ************/
-
-    if(preg_match("/^prio_/",$s_action) && $this->acl_is_writeable("")){
-      switch($s_action){
-        case 'prio_down'  : $this->update_priority($s_entry,"down");break;
-        case 'prio_up'    : $this->update_priority($s_entry,"up");break;
-      }
-    }
-
-    /************
-     * Handle pause/resume/execute modifications  
-     ************/
-
-    if(preg_match("/^resume/",$s_action) || 
-        preg_match("/^pause/",$s_action) || 
-        preg_match("/^abort_process/",$s_action) || 
-        preg_match("/^execute_process/",$s_action)){
-
-      if($this->acl_is_writeable("")){
-        switch($s_action){
-          case 'resume'         : $this->resume_queue_entries   (array($s_entry));break; 
-          case 'pause'          : $this->pause_queue_entries    (array($s_entry));break; 
-          case 'execute_process': $this->execute_queue_entries  (array($s_entry));break; 
-          case 'abort_process'  : $this->abort_queue_entries    (array($s_entry));break; 
-          case 'resume_all'         : $this->resume_queue_entries   ($this->list_get_selected_items());break; 
-          case 'pause_all'          : $this->pause_queue_entries    ($this->list_get_selected_items());break; 
-          case 'execute_process_all': $this->execute_queue_entries  ($this->list_get_selected_items());break; 
-          case 'abort_process_all'  : $this->abort_queue_entries    ($this->list_get_selected_items());break; 
-
-          default : trigger_error("Undefined action setting used (".$s_action.").");
-        }
-      }
-      if($this->o_queue->is_error()){
-        msg_dialog::display(_("Error"), $this->o_queue->get_error(), ERROR_DIALOG);
-      }
-    }
-
-    /************
      * ADD 
      ************/
 
@@ -324,24 +401,6 @@ class gotomasses extends management
         $this->dialog = new $e_data['CLASS_NAME']($this->config);
       }
     }
-
-    /************
-     * EDIT
-     ************/
-
-    if($s_action == "edit" && $this->acl_is_writeable("")){  
-      $id =  $s_entry;
-      $type = FALSE;
-      if(isset($this->entries[$id])){
-        $event = $this->entries[$s_entry];
-        if($event['STATUS'] == "waiting" && isset($this->events['QUEUED'][$event['HEADERTAG']])){
-          $evt_name = $this->events['QUEUED'][$event['HEADERTAG']];
-          $type = $this->events['BY_CLASS'][$evt_name];
-          $this->dialog = new $type['CLASS_NAME']($this->config,$event);
-        }
-      }
-    }
-
 
     /************
      * LOG VIEW
@@ -358,118 +417,9 @@ class gotomasses extends management
 
 
     /************
-     * REMOVE 
-     ************/
-
-    /* Remove multiple */
-    if($s_action == "remove_multiple" || $s_action == "remove"){
-
-      if(!$this->acl_is_removeable()){
-        msg_dialog::display(_("Permission"), msgPool::permDelete(), ERROR_DIALOG);
-      }else{
-
-        if($s_action == "remove"){
-          $ids = array($s_entry);
-        }else{
-          $ids = $this->list_get_selected_items();
-        }
-
-        $this->ids_to_remove = array();
-
-        if(count($ids)){
-          $ret = $this->o_queue->ids_exist($ids);
-          $ret = $this->o_queue->get_entries_by_id($ret);
-          $tmp = "";
-
-          $deleteable_jobs = array();      
-          $not_deleteable_jobs = array();      
-          foreach($ret as $task){
-
-            /* Create a printable job name/description */
-            if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
-              $evt_name = $this->events['QUEUED'][$task['HEADERTAG']];
-              $evt = $this->events['BY_CLASS'][$evt_name];
-              $j_name = $task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
-            }else{
-              $j_name = $task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
-            }
-
-            /* Only remove WAITING or ERROR entries */
-            if(in_array($task['STATUS'],array("waiting","error","processed")) || 
-                ($task['STATUS'] == "processing" && !preg_match("/install/",$task['HEADERTAG'])) ){
-              $this->ids_to_remove[] = $task['ID'];
-              $deleteable_jobs[] = $j_name;
-            }else{
-              $not_deleteable_jobs[] = $j_name;
-            }
-          }
-          if(count($not_deleteable_jobs)){
-            msg_dialog::display(_("Remove"),
-                sprintf(_("The following jobs couldn't be deleted, they have to be aborted: %s"),
-                  "<br>".msgPool::buildList($not_deleteable_jobs)),INFO_DIALOG);
-          }
-
-          if(count($this->ids_to_remove)){
-            $smarty->assign("multiple", TRUE); 
-            $smarty->assign("info",msgPool::deleteInfo($deleteable_jobs));
-            $this->current = $s_entry;
-            return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-          }
-        }
-      }
-    }
-
-    /* Remove specified tasks */
-    if(count($this->ids_to_remove) && isset($_POST['delete_multiple_confirm'])){
-
-      /* Reboot hosts with not yet startet installations and timestamps in the past 
-       */
-      if($this->acl_is_removeable("")){
-        timezone::get_default_timezone();
-        foreach($this->ids_to_remove as $id){
-          $entry = $this->o_queue->get_entries_by_id(array($id));
-          if(isset($entry['ANSWER1'])){
-            $entry = $entry['ANSWER1'];
-            if( $entry['STATUS'] == "waiting" && 
-                $entry['HEADERTAG'] == "trigger_action_reinstall"){
-              $evt = new DaemonEvent_reinstall($this->config,$entry);
-              if($evt->get_timestamp(FALSE)  < time()){
-                $r_evt = new DaemonEvent_localboot($this->config);
-                $r_evt->add_targets(array($entry['MACADDRESS']));
-                $r_evt->set_type(TRIGGERED_EVENT);
-                $this->o_queue->append($r_evt);
-              }
-            }
-          }
-        }
-
-        $this->o_queue->remove_entries($this->ids_to_remove);
-        $this->save();
-      }
-    }
-
-    /* Remove aborted */
-    if(isset($_POST['delete_cancel'])){
-      $this->ids_to_remove = array();;
-    }
-
-
     /************
      * EDIT 
      ************/
-
-    /* Close dialog */
-    if(isset($_POST['save_event_dialog'])){
-      if(is_object($this->dialog)){
-        $this->dialog->save_object();
-        if(!$this->o_queue->append($this->dialog)){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-        }else{
-          $this->dialog = FALSE; 
-          $this->current = -1;
-        } 
-      }
-    }
 
 
     /* Close dialog */

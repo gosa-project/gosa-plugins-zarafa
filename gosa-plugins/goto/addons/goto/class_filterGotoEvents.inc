@@ -85,6 +85,7 @@ class filterGotoEvents extends  filterLDAP {
 
       $item = array();
       $item['count'] = 0;
+      $item['EVENT'] = $entry;
       $item['dn']= $entry['MACADDRESS'].",".$entry['TIMESTAMP'];
 
       foreach($entry as $name => $value){

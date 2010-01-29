@@ -21,7 +21,7 @@
   </definition>
 
   <table>
-    <layout>|160|160|||||</layout>
+    <layout>|160|160||||||</layout>
 
     <column>
       <label>Target</label>
