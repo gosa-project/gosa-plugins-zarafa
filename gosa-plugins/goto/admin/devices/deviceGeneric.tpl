@@ -10,9 +10,7 @@
             </td>
             <td>
 {render acl=$baseACL}
-				<select name="base">
-					{html_options options=$bases selected=$base}
-				</select>
+              {$base}
 {/render}
             </td>
         </tr>

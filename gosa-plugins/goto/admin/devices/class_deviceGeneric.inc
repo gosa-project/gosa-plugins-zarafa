@@ -14,6 +14,7 @@ class deviceGeneric extends plugin
   public $base          = "";	
   public $types;
   public $type;
+  public $baseSelector;
 
   public $attributes      = array("cn","description","devID","serial","vendor", "type");
   public $objectclasses   = array("top","gotoDevice");
@@ -59,14 +60,20 @@ class deviceGeneric extends plugin
     }
     $this->orig_base = $this->base;
     $this->orig_dn   = $this->dn;
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
   }
 
 
   public function execute()
   {
     $smarty = get_smarty();
-    $smarty->assign("base",$this->base);
-    $smarty->assign("bases",$this->get_allowed_bases());
+    $smarty->assign("usePrototype", "true");
+    $smarty->assign("base", $this->baseSelector->render());
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -129,15 +136,19 @@ class deviceGeneric extends plugin
 
   public function save_object()
   {
+    /* Refresh base */
+    if ($this->acl_is_moveable($this->base)){
+      if (!$this->baseSelector->update()) {
+        msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+      }
+      if ($this->base != $this->baseSelector->getBase()) {
+        $this->base= $this->baseSelector->getBase();
+        $this->is_modified= TRUE;
+      }
+    }
+
     if(isset($_POST['deviceGeneric_posted'])){
       plugin::save_object();
-  
-      if(isset($_POST['base'])){
-        $tmp = $this->get_allowed_bases();
-        if(isset($tmp[get_post("base")])){
-          $this->base = get_post("base");
-        }
-      }
     }
   }
 
