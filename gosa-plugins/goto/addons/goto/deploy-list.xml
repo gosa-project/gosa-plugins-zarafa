@@ -21,7 +21,7 @@
   </definition>
 
   <table>
-    <layout>|||40||||</layout>
+    <layout>||120px|80px|120px;c|100px;c|180px;r|</layout>
 
     <column>
       <label>Target</label>

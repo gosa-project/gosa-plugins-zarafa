@@ -18,12 +18,9 @@
       <div style='height:4px;'>
       </div>
       
-      <input type="hidden" id="d_save" value="450">
+      <input type="hidden" id="d_save" value="190">
       <input type="hidden" id="d_space" value="760">
       {$LIST}
-    </td>
-    <td style='vertical-align:top'>
-      {$FILTER}
     </td>
   </tr>
 </table>
