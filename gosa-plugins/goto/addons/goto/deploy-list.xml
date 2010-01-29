@@ -21,7 +21,7 @@
   </definition>
 
   <table>
-    <layout>|160|160|20|20|20||</layout>
+    <layout>|160|160|||||</layout>
 
     <column>
       <label>Target</label>
@@ -49,8 +49,8 @@
 
     <column>
       <label>Schedule</label>
-      <sortAttribute>uid</sortAttribute>
-      <sortType>string</sortType>
+      <sortAttribute>Schedule</sortAttribute>
+      <sortType>date</sortType>
       <value>%{filter:filterSchedule(TIMESTAMP)}</value>
       <export>true</export>
     </column>

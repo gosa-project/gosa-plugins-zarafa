@@ -67,6 +67,12 @@ class gotomasses extends management
     $headpage->setFilter($filter);
 
     parent::__construct($config, $ui, "Events", $headpage);
+
+    $this->registerAction('prioDown',   "prioDown");
+    $this->registerAction('prioUp',     "prioUp");
+    $this->registerAction('prioPause',  "prioPause");
+    $this->registerAction('processNow', "processNow");
+    $this->registerAction('viewLogs',   "viewLogs");
   }
 
   static function filterHostName($mac, $name ="")
@@ -169,64 +175,91 @@ class gotomasses extends management
     return($status);
   }
 
+  function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    print_a($all);
+  }
 
+  function removeEntryRequested($action="",$target=array(),$all=array())
+  {
+    print_a($all);
+  }
 
+  function prioDown($action="",$target=array(),$all=array())
+  {
+    if(count($target) == 1){
+      $this->update_priority($target[0], 'down');
+    }
+  }
 
+  function prioUp($action="",$target=array(),$all=array())
+  {
+    if(count($target) == 1){
+      $this->update_priority($target[0], 'up');
+    }
+  }
 
+  function prioPause($action="",$target=array(),$all=array())
+  {
+    print_a($all);
+  }
 
+  function processNow($action="",$target=array(),$all=array())
+  {
+    print_a($all);
+  }
 
+  function viewLogs($action="",$target=array(),$all=array())
+  {
+    print_a($all);
+  }
 
+  /*! \brief  Move an entry up or down in the queue, by updating its execution timestamp                             
+    @param  $id     Integer  The ID of the entry which should be updated.                                            
+    @param  $type   String   "up" / "down"                                                                           
+    @return boolean TRUE in case of success else FALSE                                                               
+   */                                                                                                                
+  public function update_priority($id,$type = "up")                                                                  
+  {                                          
+    $headpage = $this->getHeadpage();
+    $entries = $headpage->getEntries();
+    $entry = $headpage->getEntry($id);
 
+    $map = array();
+    $last = 0;
+    $next = 0;
+    foreach($entries as $pa){
+      $map[$pa['TIMESTAMP'][0]] = $pa['TIMESTAMP'][0];
+    }
+    krsort($map);
+    $found = 0;
+    $cur = 0;
+    foreach($map as $ts){
+      if($found){
+        $next = $ts;
+        break;
+      }
+      if($ts == $entry['TIMESTAMP'][0]){
+        $found = TRUE;  
+        $cur = $ts;
+      }else{
+        $last = $ts;
+      }
+    }
 
-
+    if($type == "up" && $next != 0){
+      echo "Von: ".date('d.m.Y H:i:s', strtotime($entry['TIMESTAMP'][0]))." nach ".date('d.m.Y H:i:s',strtotime($next))."<br>";
+      return($this->o_queue->update_entries(array($id),array("timestamp" => $next)));
+    }elseif($type == "down" && $last != 0){
+      echo "Von: ".date('d.m.Y H:i:s', strtotime($entry['TIMESTAMP'][0]))." nach ".date('d.m.Y H:i:s',strtotime($last))."<br>";
+      return($this->o_queue->update_entries(array($id),array("timestamp" => $last)));
+    }
+  }
 
 
 
   function _execute()
   {
-    $smarty = get_smarty();
-
-    /************
-     * Handle posts 
-     ************/
-
-    $s_entry = $s_action = "";
-    $arr = array( 
-
-        "/^pause_/"           => "pause",
-        "/^resume_/"          => "resume",
-        "/^execute_process_/" => "execute_process",
-        "/^abort_process_/"   => "abort_process",
-
-        "/^prio_up_/"     => "prio_up",
-        "/^prio_down_/"   => "prio_down",
-
-        "/^edit_task_/"             =>  "edit",
-        "/^log_view_/"              =>  "logview",
-        "/^remove_task_/"           =>  "remove",
-        "/^new_task_/"              =>  "new_task");;
-
-    foreach($arr as $regex => $action){
-      foreach($_POST as $name => $value){
-        if(preg_match($regex,$name)){
-          $s_action = $action;
-          $s_entry  = preg_replace($regex,"",$name);
-          $s_entry  = preg_replace("/_(x|y)$/","",$s_entry);
-        }
-      }
-    }
-
-    /* Menu actions */
-    if(isset($_POST['menu_action']) && !empty($_POST['menu_action'])){
-      $s_action = $_POST['menu_action'];
-    }
-
-    /* Edit posted from list link */
-    if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id']) && isset($this->tasks[$_GET['id']])){
-      $s_action = "edit";
-      $s_entry = $_GET['id'];
-    }
-
 
     /************
      * Import CSV file  
@@ -709,40 +742,6 @@ class gotomasses extends management
 
     return(management::execute());
     return($smarty->fetch (get_template_path('gotomasses.tpl', TRUE, dirname(__FILE__))));
-  }
-
-
-  /*! \brief  Move an entry up or down in the queue, by updating its execution timestamp  
-    @param  $id     Integer  The ID of the entry which should be updated.
-    @param  $type   String   "up" / "down"
-    @return boolean TRUE in case of success else FALSE
-   */
-  public function update_priority($id,$type = "up")
-  {
-    if($type == "up"){
-      $tmp = $this->o_queue->get_queued_entries($this->event_tags,-1,-1,"timestamp DESC");
-    }else{
-      $tmp = $this->o_queue->get_queued_entries($this->event_tags,-1,-1,"timestamp ASC");
-    }
-    $last = array();
-    foreach($tmp as $entry){
-      if($entry['ID'] == $id){
-        if(count($last)){
-          $time = strtotime($last['TIMESTAMP']);
-          if($type == "up"){
-            $time ++;
-          }else{
-            $time --;
-          }
-          $time_str = date("YmdHis",$time); 
-          return($this->o_queue->update_entries(array($id),array("timestamp" => $time_str)));
-        }else{
-          return(FALSE);
-        }
-      }
-      $last = $entry;
-    }
-    return(FALSE);
   }
 
 
