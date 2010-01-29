@@ -108,7 +108,7 @@ if ( $cleanup ){
 
   $info= "";
   /* Show page footer depending on the mode */
-  if (!$mailAccount->forward_dialog && $mailAccount->is_account && empty($lock_msg)){
+  if (!$mailAccount->dialog && $mailAccount->is_account && empty($lock_msg)){
     $display.= "<p class=\"plugbottom\">";
 
     /* Are we in edit mode? */
