@@ -71,7 +71,7 @@ if ( $cleanup ){
         }
 
 	/* Execute formular */
-	if($lock_msg){
+	if(isset($lock_msg)){
 		$display.= $lock_msg;
 	}else{
 		$display.= $gofaxAccount->execute ();
@@ -85,7 +85,7 @@ if ( $cleanup ){
 	}
 
 	/* Show page footer depending on the mode */
-	if (!$gofaxAccount->locals_dialog &&
+	if (!$gofaxAccount->dialog &&
 		!$gofaxAccount->out_blocklist_dialog &&
 		!$gofaxAccount->in_blocklist_dialog &&
 		$gofaxAccount->is_account	&& 
