@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:30+0100\n"
-"PO-Revision-Date: 2010-01-22 21:04+0100\n"
+"PO-Revision-Date: 2010-01-30 11:38+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1516,8 +1516,7 @@ msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:113
 #, php-format
-msgid ""
-"Cannot determine a valid department for this object. Setting base to '%s'!"
+msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
@@ -1541,8 +1540,7 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:299
 msgid "This is a workstation template, printer tab is disabled."
-msgstr ""
-"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:304
 msgid "This is a terminal template, printer tab is disabled."
@@ -2319,13 +2317,11 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:234
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr ""
-"Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
+msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:247
 #, php-format
-msgid ""
-"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
 "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version "
 "sera '%s' !"
@@ -2472,8 +2468,7 @@ msgstr "Continuer"
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
@@ -2733,8 +2728,7 @@ msgstr "Impossible de lire le PPD '%s' !"
 #: admin/systems/ppd/class_printerPPDDialog.inc:121
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr ""
-"Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
+msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:140
 #: admin/systems/ppd/class_printerPPDDialog.inc:339
@@ -2755,8 +2749,7 @@ msgstr "Ecrasement du PPD existant"
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr ""
-"Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
+msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:463
 msgid "Section"
@@ -2940,13 +2933,11 @@ msgstr "Permissions"
 #: addons/goto/class_gotomasses.inc:270
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
-"Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
+msgstr "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:360
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
+msgstr "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
 
 #: addons/goto/class_gotomasses.inc:361
 msgid "List of queued jobs"
@@ -3101,8 +3092,7 @@ msgstr "Déploiement de système"
 
 #: addons/goto/class_gotomasses.inc:926
 msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
-"Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
+msgstr "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
 
 #: addons/goto/log_view.tpl:7
 msgid "Available logs"
@@ -3317,12 +3307,10 @@ msgid "Show workstations"
 msgstr "Station de travail Windows"
 
 #: addons/goto/events/eventTargetSystems-filter.tpl:13
-#, fuzzy
 msgid "Show terminals"
-msgstr "terminaux"
+msgstr "Terminaux"
 
 #: addons/goto/events/eventTargetSystems-filter.tpl:14
-#, fuzzy
 msgid "Filter by IP address range"
 msgstr "Filtrer les adresse IP par étendue"
 
@@ -3341,24 +3329,20 @@ msgid "From"
 msgstr "Depuis"
 
 #: addons/goto/events/eventTargetUser-filter.tpl:11
-#, fuzzy
 msgid "Show groups"
-msgstr "Groupes de messagerie"
+msgstr "Groupes"
 
 #: addons/goto/events/eventTargetUser-filter.tpl:12
-#, fuzzy
 msgid "Show users"
-msgstr "Montrez les serveurs"
+msgstr "Utilisateurs"
 
 #: addons/goto/events/eventTargetSystems-list.xml:11
-#, fuzzy
 msgid "List of systems"
-msgstr "Liste des utilisateurs"
+msgstr "Systèmes"
 
 #: addons/goto/events/eventTargetSystems-list.xml:89
-#, fuzzy
 msgid "Mac"
-msgstr "Mars"
+msgstr ""
 
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
@@ -3383,8 +3367,7 @@ msgid "List of users"
 msgstr "Liste des utilisateurs"
 
 #: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
 msgstr ""
 "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle "
 "contiennent. Voulez vous continuer ?"
@@ -3392,8 +3375,7 @@ msgstr ""
 #: addons/goto/class_goto_import_file.inc:131
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
-"L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
+msgstr "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
 
 #: personal/environment/class_environment.inc:9
 #: personal/environment/class_environment.inc:433
@@ -3455,8 +3437,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:364
 #, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -3561,9 +3542,8 @@ msgstr "Script de démarrage"
 
 #: personal/environment/printerSelect/selectPrinter-list.xml:10
 #: personal/environment/hotplugSelect/selectHotplug-list.xml:10
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Veuillez sélectionner la langue par défaut"
+msgstr "Veuillez sélectionner les entrées désirées"
 
 #: personal/environment/environment.tpl:3
 msgid "The environment extension is currently disabled."
@@ -3692,139 +3672,3 @@ msgstr "Dernier script"
 msgid "Script can be replaced by user"
 msgstr "Le script peut être remplacé par l'utilisateur"
 
-#~ msgid "Submit"
-#~ msgstr "Soumettre"
-
-#~ msgid "Add user"
-#~ msgstr "Ajouter un utilisateur"
-
-#~ msgid "Add group"
-#~ msgstr "Ajouter un groupe"
-
-#~ msgid "Please select a printer!"
-#~ msgstr "Veuillez sélectionner une imprimante !"
-
-#~ msgid "Please select a hotplug device!"
-#~ msgstr "Veuillez sélectionner un périphérique hotplug !"
-
-#~ msgid "Add printer devices"
-#~ msgstr "Ajouter des d'imprimantes"
-
-#~ msgid "Display printers matching"
-#~ msgstr "Afficher les imprimantes correspondantes"
-
-#~ msgid "Regular expression for matching printer names"
-#~ msgstr "Expression régulière concordant avec les noms des imprimantes"
-
-#~ msgid "Add hotplug devices"
-#~ msgstr "Ajouter des périphériques hotplug"
-
-#~ msgid "Hotplug management"
-#~ msgstr "Gestion des périphériques Hotplug"
-
-#~ msgid "Select hotplug device to add"
-#~ msgstr "Sélectionner le périphérique hotplug à ajouter"
-
-#~ msgid "Choose the department the search will be based    on"
-#~ msgstr "Sélectionner le département où sera effectuée la recherche"
-
-#~ msgid "Display users matching"
-#~ msgstr "Afficher les utilisateurs correspondants"
-
-#~ msgid "Regular expression for        matching hotplugs"
-#~ msgstr ""
-#~ "Expression régulière concordant avec les noms des périphériques hotplug"
-
-#, fuzzy
-#~ msgid "Description name"
-#~ msgstr "Description"
-
-#, fuzzy
-#~ msgid "Object Group"
-#~ msgstr "Groupes d'objets"
-
-#~ msgid "Select the target objects for your scheduled action."
-#~ msgstr ""
-#~ "Sélectionnez les objets de destination pour votre action programmée."
-
-#~ msgid "Available targets"
-#~ msgstr "Cibles disponibles"
-
-#~ msgid "Object name"
-#~ msgstr "Nom de l'objet"
-
-#~ msgid "Select to see object groups"
-#~ msgstr "Groupe d'objets"
-
-#~ msgid "Show object groups"
-#~ msgstr "Montrez les groupes d'objets"
-
-#~ msgid "Select to see servers"
-#~ msgstr "Sélectionnez pour voir les serveurs"
-
-#~ msgid "Select to see workstations"
-#~ msgstr "Station de travail Windows"
-
-#~ msgid "Select to see incoming objects"
-#~ msgstr "Sélectionner pour voir les objets qui arrivent"
-
-#~ msgid "Show new objects"
-#~ msgstr "Montrer les nouveaux objets"
-
-#~ msgid "Select to search for a specific IP range only"
-#~ msgstr "Sélectionnez pour rechercher dans plage IP spécifique"
-
-#~ msgid "Match IP range"
-#~ msgstr "Correspondance de la plage d'adresses IP"
-
-#~ msgid "Regular expression for matching group names"
-#~ msgstr "Expression régulière correspondant à des noms de groupe"
-
-#~ msgid "IP range start"
-#~ msgstr "Début de la plage ip"
-
-#~ msgid "IP range end"
-#~ msgstr "Fin de la plage ip"
-
-#~ msgid "Submit department"
-#~ msgstr "Soumettre le département"
-
-#~ msgid "IP range"
-#~ msgstr "Plage ip"
-
-#~ msgid "Targets"
-#~ msgstr "Cibles"
-
-#~ msgid ""
-#~ "This dialog shows all available targets for the event. Check the targets "
-#~ "you want to add and use the 'Apply' button."
-#~ msgstr ""
-#~ "Cette fenêtre montre tous les objets disponibles pour votre événement, "
-#~ "vérifier les objets quevous souhaitez ajouter et d'utiliser le bouton "
-#~ "'Utiliser' pour accepter."
-
-#~ msgid "System / Department"
-#~ msgstr "Systèmes / Département"
-
-#~ msgid "Display server"
-#~ msgstr "Afficher les serveurs"
-
-#~ msgid "Display workstation"
-#~ msgstr "Afficher les stations de travail"
-
-#~ msgid "Display object groups"
-#~ msgstr "Afficher les groupes objets correspondants"
-
-#~ msgid ""
-#~ "This dialog shows all available targets for your event, check the targets "
-#~ "you want to add and use the 'Use' button to accept."
-#~ msgstr ""
-#~ "Cette fenêtre montre tous les objets disponibles pour votre événement, "
-#~ "vérifier les objets quevous souhaitez ajouter et d'utiliser le bouton "
-#~ "'Utiliser' pour accepter."
-
-#~ msgid "Display users"
-#~ msgstr "Afficher les utilisateurs"
-
-#~ msgid "Display groups"
-#~ msgstr "Afficher les groupes"
