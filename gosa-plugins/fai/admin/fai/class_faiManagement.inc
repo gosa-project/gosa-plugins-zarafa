@@ -34,7 +34,7 @@ class faiManagement extends management
   protected $objectName   = "FAI object";
 
   //  Attributes Managed by this plugin can be used in post events
-  protected $attributes   = array("lock_type","lock_name","lock_dn");  
+  public $attributes   = array("lock_type","lock_name","lock_dn");  
 
   var $dispNewBranch=false;
   var $dispNewFreeze=false;
