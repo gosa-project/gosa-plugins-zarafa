@@ -333,12 +333,12 @@
 
    <h2>
 	<input type="checkbox" name="use_gotoPrinter" value="1" {if $use_gotoPrinter} checked {/if}
-		class="center" onClick="GOsa_toggle('div_gotoPrinter');">
+		class="center" onClick="$('div_gotoPrinter').toggle();">
     <img alt="" src="plugins/systems/images/select_printer.png" align="middle" class="center" />&nbsp;
     <label for="gotoPrinter">{t}Printer{/t}</label>
    </h2>
 
-   <div id="div_gotoPrinter" {if !$use_gotoPrinter} style="visibility:hidden;" {/if}>
+   <div id="div_gotoPrinter" {if !$use_gotoPrinter} style="display: none;" {/if}>
 	<b>{t}Using this option will overwrite the complete printer settings for all currently edited objects!{/t}</b>
    <table style="width:100%" summary="{t}Printer settings{/t}">
     <tr>
