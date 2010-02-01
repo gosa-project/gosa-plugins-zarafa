@@ -112,6 +112,11 @@ class deviceGeneric extends plugin
     if(empty($this->vendor) || !$this->is_2byteHex($this->vendor)){
       $message[]= msgPool::invalid(_("Vendor-ID"),"","","0x1234");
     }
+
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();
+    }
   
     /* Check if entry already exists */ 
     if($this->cn != $this->orig_cn || $this->dn == "new"){
