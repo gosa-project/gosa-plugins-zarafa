@@ -31,7 +31,9 @@
        {html_options values=$domains output=$domains selected=$sambaDomainName}
       </select>
 {/render}
+{render acl=$sambaDomainNameACL  checkbox=$multiple_support checked=$use_sambaDomainName}
      <input type='submit' name='display_information' value='{t}Show information{/t}'>
+{/render}
      </td>
     </tr>
    </table>
