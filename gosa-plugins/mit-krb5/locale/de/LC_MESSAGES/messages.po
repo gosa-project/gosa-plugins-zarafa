@@ -321,7 +321,7 @@ msgstr "Ticketweiterleitung verbieten"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:213
 msgid "Disallow proxiable tickets"
-msgstr "Proxyable-Ticekts verbieten"
+msgstr "Proxyable-Tickets verbieten"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:215
 msgid "Prohibit renewable tickets"
