@@ -387,6 +387,11 @@ class macro extends plugin
         $message[]= msgPool::duplicated(_("Name"));
       }
     }
+
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();;
+    }
   
     /* Check if display name is set */
     if($this->displayName == ""){

@@ -355,6 +355,11 @@ class conference extends plugin
       $message[]= msgPool::required(_("PIN"));
     }
 
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();;
+    }
+
     if($this->cn == ""){
       $message[] = msgPool::required(_("Name"));
     }

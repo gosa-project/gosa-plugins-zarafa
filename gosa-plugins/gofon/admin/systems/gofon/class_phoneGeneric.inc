@@ -314,6 +314,11 @@ class phoneGeneric extends plugin
       }
     }
 
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();;
+    }
+
     /* Check if given name is a valid host/dns name */
     if(!tests::is_dns_name($this->cn) ){
       $message[] = msgPool::invalid(_("Name"));
