@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-02-01 15:16+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -32,74 +32,74 @@ msgid ""
 msgstr ""
 
 #: admin/ogroups/goto/termgroup.tpl:6
-#: admin/devices/class_deviceGeneric.inc:251
-#: admin/applications/class_applicationGeneric.inc:597
+#: admin/devices/class_deviceGeneric.inc:263
+#: admin/applications/class_applicationGeneric.inc:567
 #: admin/mimetypes/generic.tpl:4 admin/mimetypes/paste_generic.tpl:4
-#: admin/mimetypes/class_mimetypeGeneric.inc:715
-#: admin/systems/goto/class_printGeneric.inc:1015
-#: admin/systems/goto/class_workstationGeneric.inc:699
+#: admin/mimetypes/class_mimetypeGeneric.inc:683
+#: admin/systems/goto/class_printGeneric.inc:989
+#: admin/systems/goto/class_workstationGeneric.inc:679
 msgid "Generic"
 msgstr "Общее"
 
 #: admin/ogroups/goto/termgroup.tpl:14
 #: admin/ogroups/goto/class_termgroup.inc:149
-#: admin/systems/goto/workstation.tpl:95
-#: admin/systems/goto/class_workstationGeneric.inc:490
-#: admin/systems/goto/class_terminalGeneric.inc:482
-#: admin/systems/goto/terminal.tpl:84
+#: admin/systems/goto/workstation.tpl:90
+#: admin/systems/goto/class_workstationGeneric.inc:470
+#: admin/systems/goto/class_terminalGeneric.inc:462
+#: admin/systems/goto/terminal.tpl:79
 msgid "NTP server"
 msgstr "Сервер NTP"
 
-#: admin/ogroups/goto/termgroup.tpl:17 admin/systems/goto/workstation.tpl:98
-#: admin/systems/goto/terminal.tpl:87
+#: admin/ogroups/goto/termgroup.tpl:17 admin/systems/goto/workstation.tpl:93
+#: admin/systems/goto/terminal.tpl:82
 msgid "Choose server to use for synchronizing time"
 msgstr "Выберите сервер для синхронизации времени"
 
 #: admin/ogroups/goto/termgroup.tpl:47
 #: admin/ogroups/goto/class_termgroup.inc:390
-#: admin/systems/goto/workstation.tpl:55
-#: admin/systems/goto/class_terminalGeneric.inc:702
-#: admin/systems/goto/terminal.tpl:47
+#: admin/systems/goto/workstation.tpl:50
+#: admin/systems/goto/class_terminalGeneric.inc:682
+#: admin/systems/goto/terminal.tpl:42
 msgid "Mode"
 msgstr "Режим"
 
-#: admin/ogroups/goto/termgroup.tpl:50 admin/systems/goto/workstation.tpl:58
-#: admin/systems/goto/terminal.tpl:50
+#: admin/ogroups/goto/termgroup.tpl:50 admin/systems/goto/workstation.tpl:53
+#: admin/systems/goto/terminal.tpl:45
 msgid "Select terminal mode"
 msgstr "Выберите режим терминала"
 
 #: admin/ogroups/goto/termgroup.tpl:58
 #: admin/ogroups/goto/class_termgroup.inc:391
-#: admin/systems/goto/workstation.tpl:65
-#: admin/systems/goto/class_workstationGeneric.inc:713
-#: admin/systems/goto/terminal.tpl:57
+#: admin/systems/goto/workstation.tpl:60
+#: admin/systems/goto/class_workstationGeneric.inc:693
+#: admin/systems/goto/terminal.tpl:52
 msgid "Syslog server"
 msgstr "Сервер системных журналов"
 
-#: admin/ogroups/goto/termgroup.tpl:61 admin/systems/goto/workstation.tpl:68
-#: admin/systems/goto/terminal.tpl:60
+#: admin/ogroups/goto/termgroup.tpl:61 admin/systems/goto/workstation.tpl:63
+#: admin/systems/goto/terminal.tpl:55
 msgid "Choose server to use for logging"
 msgstr "Выберите сервер для ведения системных журналов"
 
 #: admin/ogroups/goto/termgroup.tpl:69
 #: admin/ogroups/goto/class_termgroup.inc:394
-#: admin/systems/goto/class_terminalGeneric.inc:705
-#: admin/systems/goto/terminal.tpl:117
+#: admin/systems/goto/class_terminalGeneric.inc:685
+#: admin/systems/goto/terminal.tpl:112
 msgid "Root server"
 msgstr "Основной сервер"
 
-#: admin/ogroups/goto/termgroup.tpl:72 admin/systems/goto/terminal.tpl:120
+#: admin/ogroups/goto/termgroup.tpl:72 admin/systems/goto/terminal.tpl:115
 msgid "Select NFS root filesystem to use"
 msgstr "Выберите корневую файловую систему NFS"
 
 #: admin/ogroups/goto/termgroup.tpl:79
 #: admin/ogroups/goto/class_termgroup.inc:395
-#: admin/systems/goto/class_terminalGeneric.inc:706
-#: admin/systems/goto/terminal.tpl:131
+#: admin/systems/goto/class_terminalGeneric.inc:686
+#: admin/systems/goto/terminal.tpl:126
 msgid "Swap server"
 msgstr "Сервер подкачки"
 
-#: admin/ogroups/goto/termgroup.tpl:82 admin/systems/goto/terminal.tpl:134
+#: admin/ogroups/goto/termgroup.tpl:82 admin/systems/goto/terminal.tpl:129
 msgid "Choose NFS filesystem to place swap files on"
 msgstr "Выберите файловую систему NFS для файлов подкачки"
 
@@ -108,41 +108,41 @@ msgstr "Выберите файловую систему NFS для файлов
 msgid "Inherit all values to group members"
 msgstr "Список групп"
 
-#: admin/ogroups/goto/termgroup.tpl:113 admin/systems/goto/workstation.tpl:130
-#: admin/systems/goto/terminal.tpl:155 addons/goto/class_gotomasses.inc:417
+#: admin/ogroups/goto/termgroup.tpl:113 admin/systems/goto/workstation.tpl:125
+#: admin/systems/goto/terminal.tpl:150
 msgid "Action"
 msgstr "Действие"
 
-#: admin/ogroups/goto/termgroup.tpl:118 admin/systems/goto/workstation.tpl:137
-#: admin/systems/goto/terminal.tpl:160
+#: admin/ogroups/goto/termgroup.tpl:118 admin/systems/goto/workstation.tpl:132
+#: admin/systems/goto/terminal.tpl:155
 msgid "Select action to execute for this terminal"
 msgstr "Выберите действие, которое нужно выполнить на этом терминале"
 
 #: admin/ogroups/goto/termgroup.tpl:126 admin/applications/generic.tpl:24
-#: admin/applications/class_applicationGeneric.inc:438
-#: admin/applications/class_applicationGeneric.inc:609
-#: admin/systems/goto/workstation.tpl:146
-#: admin/systems/goto/workstation.tpl:150 admin/systems/goto/terminal.tpl:168
-#: addons/goto/class_gotomasses.inc:383
+#: admin/applications/class_applicationGeneric.inc:408
+#: admin/applications/class_applicationGeneric.inc:579
+#: admin/systems/goto/workstation.tpl:141
+#: admin/systems/goto/workstation.tpl:145 admin/systems/goto/terminal.tpl:163
+#: addons/goto/deploy-list.xml:181
 msgid "Execute"
 msgstr "Выполнить"
 
 #: admin/ogroups/goto/class_termgroup.inc:51
-#: admin/systems/goto/class_workstationGeneric.inc:139
-#: admin/systems/goto/class_terminalGeneric.inc:124
+#: admin/systems/goto/class_workstationGeneric.inc:140
+#: admin/systems/goto/class_terminalGeneric.inc:125
 #, fuzzy
 msgid "Activated"
 msgstr "Личный"
 
 #: admin/ogroups/goto/class_termgroup.inc:52
-#: admin/systems/goto/class_workstationGeneric.inc:140
-#: admin/systems/goto/class_terminalGeneric.inc:123
-#: addons/goto/class_gotomasses.inc:542
+#: admin/systems/goto/class_workstationGeneric.inc:141
+#: admin/systems/goto/class_terminalGeneric.inc:124
+#: addons/goto/class_gotomasses.inc:192
 msgid "Locked"
 msgstr ""
 
 #: admin/ogroups/goto/class_termgroup.inc:99
-#: admin/systems/goto/class_terminalGeneric.inc:283
+#: admin/systems/goto/class_terminalGeneric.inc:259
 #, fuzzy
 msgid "Local swap"
 msgstr "Местоположение"
@@ -161,7 +161,7 @@ msgstr "Местоположение"
 #: admin/systems/goto/class_terminalService.inc:283
 #: admin/systems/goto/class_terminalService.inc:286
 #: admin/systems/goto/class_terminalService.inc:289
-#: admin/systems/goto/class_workstationGeneric.inc:155
+#: admin/systems/goto/class_workstationGeneric.inc:156
 #: admin/systems/goto/class_workstationStartup.inc:180
 #: admin/systems/goto/class_workstationStartup.inc:210
 #: admin/systems/goto/class_workstationService.inc:197
@@ -179,53 +179,55 @@ msgstr "Местоположение"
 #: admin/systems/goto/class_workstationService.inc:233
 #: admin/systems/goto/class_workstationService.inc:234
 #: admin/systems/goto/class_workstationService.inc:235
-#: admin/systems/goto/class_terminalGeneric.inc:139
-#: admin/systems/goto/class_terminalGeneric.inc:289
-#: admin/systems/goto/class_terminalGeneric.inc:301
+#: admin/systems/goto/class_terminalGeneric.inc:140
+#: admin/systems/goto/class_terminalGeneric.inc:265
+#: admin/systems/goto/class_terminalGeneric.inc:277
 msgid "inherited"
 msgstr ""
 
 #: admin/ogroups/goto/class_termgroup.inc:207
 #: admin/systems/goto/class_terminalService.inc:678
-#: admin/systems/goto/class_workstationGeneric.inc:213
-#: admin/systems/goto/class_workstationGeneric.inc:636
+#: admin/systems/goto/class_workstationGeneric.inc:220
+#: admin/systems/goto/class_workstationGeneric.inc:616
 #: admin/systems/goto/class_workstationStartup.inc:938
 #: admin/systems/goto/class_workstationStartup.inc:1066
 #: admin/systems/goto/class_workstationStartup.inc:1127
 #: admin/systems/goto/class_workstationService.inc:572
-#: admin/systems/goto/class_terminalGeneric.inc:189
-#: admin/systems/goto/class_terminalGeneric.inc:627
-#: addons/goto/class_gotomasses.inc:328
+#: admin/systems/goto/class_terminalGeneric.inc:196
+#: admin/systems/goto/class_terminalGeneric.inc:607
+#: addons/goto/class_gotomasses.inc:382
 #: addons/goto/class_goto_import_file.inc:124
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Искать в поддеревьях"
 
 #: admin/ogroups/goto/class_termgroup.inc:211
-#: admin/systems/goto/class_workstationGeneric.inc:217
-#: admin/systems/goto/class_terminalGeneric.inc:193
+#: admin/systems/goto/class_workstationGeneric.inc:224
+#: admin/systems/goto/class_terminalGeneric.inc:200
 #, fuzzy
 msgid "Event error"
 msgstr "Состояние системы"
 
 #: admin/ogroups/goto/class_termgroup.inc:212
-#: admin/systems/goto/class_workstationGeneric.inc:218
-#: admin/systems/goto/class_terminalGeneric.inc:194
+#: admin/systems/goto/class_workstationGeneric.inc:225
+#: admin/systems/goto/class_terminalGeneric.inc:201
 #, fuzzy, php-format
 msgid "Event '%s' is not available!"
 msgstr "Сменить пароль"
 
 #: admin/ogroups/goto/class_termgroup.inc:261
-#: admin/systems/goto/class_workstationGeneric.inc:299
-#: admin/systems/goto/class_terminalGeneric.inc:267
+#: admin/systems/goto/class_workstationGeneric.inc:275
+#: admin/systems/goto/class_terminalGeneric.inc:243
+#: addons/goto/deploy-list.xml:84
 #: addons/goto/events/class_DaemonEvent_halt.inc:31
 #: addons/goto/events/class_DaemonEvent_halt.inc:32
 msgid "Switch off"
 msgstr "Выключить"
 
 #: admin/ogroups/goto/class_termgroup.inc:261
-#: admin/systems/goto/class_workstationGeneric.inc:299
-#: admin/systems/goto/class_terminalGeneric.inc:268
+#: admin/systems/goto/class_workstationGeneric.inc:275
+#: admin/systems/goto/class_terminalGeneric.inc:244
+#: addons/goto/deploy-list.xml:91
 #: addons/goto/events/class_DaemonEvent_reboot.inc:29
 #: addons/goto/events/class_DaemonEvent_reboot.inc:30
 msgid "Reboot"
@@ -247,15 +249,16 @@ msgid "Wake"
 msgstr "Вернуть в обычный режим"
 
 #: admin/ogroups/goto/class_termgroup.inc:265
-#: admin/systems/goto/class_workstationGeneric.inc:301
-#: admin/systems/goto/class_workstationGeneric.inc:309
+#: admin/systems/goto/class_workstationGeneric.inc:277
+#: admin/systems/goto/class_workstationGeneric.inc:285
+#: addons/goto/deploy-list.xml:126
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:32
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:33
 msgid "Reinstall"
 msgstr ""
 
 #: admin/ogroups/goto/class_termgroup.inc:266
-#: admin/systems/goto/class_workstationGeneric.inc:302
+#: admin/systems/goto/class_workstationGeneric.inc:278
 #: addons/goto/events/class_DaemonEvent_rescan.inc:28
 #: addons/goto/events/class_DaemonEvent_rescan.inc:29
 #, fuzzy
@@ -281,15 +284,15 @@ msgstr "Системные журналы"
 #: admin/groups/apps/class_groupApplication.inc:1330
 #: admin/groups/apps/class_groupApplication.inc:1344
 #: admin/groups/apps/class_groupApplication.inc:1358
-#: admin/devices/class_deviceGeneric.inc:196
+#: admin/devices/class_deviceGeneric.inc:208
 #: admin/applications/class_applicationParameters.inc:158
 #: admin/applications/class_applicationParameters.inc:221
-#: admin/applications/class_applicationGeneric.inc:271
-#: admin/applications/class_applicationGeneric.inc:285
-#: admin/applications/class_applicationGeneric.inc:515
-#: admin/mimetypes/class_mimetypeGeneric.inc:494
-#: admin/mimetypes/class_mimetypeGeneric.inc:506
-#: admin/mimetypes/class_mimetypeGeneric.inc:521
+#: admin/applications/class_applicationGeneric.inc:241
+#: admin/applications/class_applicationGeneric.inc:255
+#: admin/applications/class_applicationGeneric.inc:485
+#: admin/mimetypes/class_mimetypeGeneric.inc:462
+#: admin/mimetypes/class_mimetypeGeneric.inc:474
+#: admin/mimetypes/class_mimetypeGeneric.inc:489
 #: admin/systems/services/kiosk/class_goKioskService.inc:249
 #: admin/systems/services/ldap/class_goLdapServer.inc:117
 #: admin/systems/services/ntp/class_goNtpServer.inc:98
@@ -298,18 +301,18 @@ msgstr "Системные журналы"
 #: admin/systems/services/shares/class_goShareServer.inc:285
 #: admin/systems/services/shares/class_goShareServer.inc:301
 #: admin/systems/services/shares/class_goShareServer.inc:314
-#: admin/systems/goto/class_printGeneric.inc:687
-#: admin/systems/goto/class_printGeneric.inc:980
+#: admin/systems/goto/class_printGeneric.inc:657
+#: admin/systems/goto/class_printGeneric.inc:954
 #: admin/systems/goto/class_terminalStartup.inc:426
 #: admin/systems/goto/class_ArpNewDevice.inc:126
 #: admin/systems/goto/class_terminalService.inc:597
-#: admin/systems/goto/class_workstationGeneric.inc:365
-#: admin/systems/goto/class_workstationGeneric.inc:597
-#: admin/systems/goto/class_workstationGeneric.inc:614
+#: admin/systems/goto/class_workstationGeneric.inc:342
+#: admin/systems/goto/class_workstationGeneric.inc:577
+#: admin/systems/goto/class_workstationGeneric.inc:594
 #: admin/systems/goto/class_workstationStartup.inc:889
 #: admin/systems/goto/class_workstationService.inc:460
-#: admin/systems/goto/class_terminalGeneric.inc:355
-#: admin/systems/goto/class_terminalGeneric.inc:613
+#: admin/systems/goto/class_terminalGeneric.inc:332
+#: admin/systems/goto/class_terminalGeneric.inc:593
 #: personal/environment/class_environment.inc:1063
 #: personal/environment/class_environment.inc:1320
 #, fuzzy
@@ -327,14 +330,14 @@ msgid "System group"
 msgstr "Состояние системы"
 
 #: admin/ogroups/goto/class_termgroup.inc:392
-#: admin/systems/goto/class_workstationGeneric.inc:717
-#: admin/systems/goto/class_terminalGeneric.inc:711
+#: admin/systems/goto/class_workstationGeneric.inc:697
+#: admin/systems/goto/class_terminalGeneric.inc:691
 #, fuzzy
 msgid "Action flag"
 msgstr "Действие"
 
 #: admin/ogroups/goto/class_termgroup.inc:393
-#: admin/systems/goto/class_workstationGeneric.inc:714
+#: admin/systems/goto/class_workstationGeneric.inc:694
 #, fuzzy
 msgid "Ntp server"
 msgstr "Сервер NTP"
@@ -377,43 +380,43 @@ msgid "Reset"
 msgstr "сброс"
 
 #: admin/groups/apps/edit_entry.tpl:40
-#: admin/applications/class_applicationGeneric.inc:557
+#: admin/applications/class_applicationGeneric.inc:527
 #, fuzzy
 msgid "Application settings"
 msgstr "Параметры приложения"
 
 #: admin/groups/apps/edit_entry.tpl:43 admin/devices/device-list.xml:41
-#: admin/devices/class_deviceGeneric.inc:90
-#: admin/devices/class_deviceGeneric.inc:114
-#: admin/devices/class_deviceGeneric.inc:260
+#: admin/devices/class_deviceGeneric.inc:97
+#: admin/devices/class_deviceGeneric.inc:121
+#: admin/devices/class_deviceGeneric.inc:272
 #: admin/applications/class_applicationParameters.inc:190
 #: admin/applications/application-list.xml:41
 #: admin/applications/application-list-release.xml:41
-#: admin/applications/class_applicationGeneric.inc:430
-#: admin/applications/class_applicationGeneric.inc:434
-#: admin/applications/class_applicationGeneric.inc:606
-#: admin/applications/class_applicationGeneric.inc:610
+#: admin/applications/class_applicationGeneric.inc:400
+#: admin/applications/class_applicationGeneric.inc:404
+#: admin/applications/class_applicationGeneric.inc:576
+#: admin/applications/class_applicationGeneric.inc:580
 #: admin/mimetypes/mimetype-list-release.xml:41
 #: admin/mimetypes/mimetype-list.xml:41
-#: admin/mimetypes/class_mimetypeGeneric.inc:532
-#: admin/mimetypes/class_mimetypeGeneric.inc:724
+#: admin/mimetypes/class_mimetypeGeneric.inc:500
+#: admin/mimetypes/class_mimetypeGeneric.inc:692
 #: admin/systems/services/shares/class_goShareServer.inc:422
 #: admin/systems/services/nfs/class_servNfs.inc:199
 #: admin/systems/services/nfs/class_servNfs.inc:202
 #: admin/systems/services/nfs/class_servNfs.inc:235
 #: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/goto/class_printGeneric.inc:760
-#: admin/systems/goto/class_printGeneric.inc:765
-#: admin/systems/goto/class_printGeneric.inc:784
-#: admin/systems/goto/class_printGeneric.inc:1024
+#: admin/systems/goto/class_printGeneric.inc:734
+#: admin/systems/goto/class_printGeneric.inc:739
+#: admin/systems/goto/class_printGeneric.inc:758
+#: admin/systems/goto/class_printGeneric.inc:998
 #: admin/systems/goto/class_ArpNewDevice.inc:88
-#: admin/systems/goto/class_workstationGeneric.inc:457
-#: admin/systems/goto/class_workstationGeneric.inc:462
-#: admin/systems/goto/class_workstationGeneric.inc:480
-#: admin/systems/goto/class_terminalGeneric.inc:448
-#: admin/systems/goto/class_terminalGeneric.inc:453
-#: admin/systems/goto/class_terminalGeneric.inc:472
-#: admin/systems/goto/class_terminalGeneric.inc:698
+#: admin/systems/goto/class_workstationGeneric.inc:437
+#: admin/systems/goto/class_workstationGeneric.inc:442
+#: admin/systems/goto/class_workstationGeneric.inc:460
+#: admin/systems/goto/class_terminalGeneric.inc:428
+#: admin/systems/goto/class_terminalGeneric.inc:433
+#: admin/systems/goto/class_terminalGeneric.inc:452
+#: admin/systems/goto/class_terminalGeneric.inc:678
 #: addons/goto/events/eventTargetSystems-list.xml:65
 #: addons/goto/events/eventTargetUser-list.xml:49
 #: personal/environment/printerSelect/selectPrinter-list.xml:40
@@ -474,8 +477,8 @@ msgstr "Показать приложения"
 #: admin/applications/application-list.xml:74
 #: admin/applications/application-list-release.xml:15
 #: admin/applications/application-list-release.xml:74
-#: admin/applications/class_applicationGeneric.inc:603
-#: admin/mimetypes/class_mimetypeGeneric.inc:728
+#: admin/applications/class_applicationGeneric.inc:573
+#: admin/mimetypes/class_mimetypeGeneric.inc:696
 msgid "Application"
 msgstr "Приложение"
 
@@ -514,13 +517,13 @@ msgid "Folder"
 msgstr "Фильтры"
 
 #: admin/groups/apps/app_list.tpl:82 admin/groups/apps/app_list.tpl:103
-#: admin/groups/apps/app_list.tpl:128 addons/goto/class_gotomasses.inc:434
+#: admin/groups/apps/app_list.tpl:128
 #, fuzzy
 msgid "Move up"
 msgstr "Режим"
 
 #: admin/groups/apps/app_list.tpl:84 admin/groups/apps/app_list.tpl:105
-#: admin/groups/apps/app_list.tpl:130 addons/goto/class_gotomasses.inc:436
+#: admin/groups/apps/app_list.tpl:130
 #, fuzzy
 msgid "Move down"
 msgstr "Домен"
@@ -535,9 +538,8 @@ msgstr "Домен"
 #: admin/systems/goto/terminalService.tpl:212
 #: admin/systems/goto/terminalStartup.tpl:115
 #: admin/systems/goto/workstationStartup.tpl:233
-#: admin/systems/goto/printer.tpl:80 addons/goto/class_gotomasses.inc:269
-#: addons/goto/class_gotomasses.inc:376 addons/goto/class_gotomasses.inc:486
-#: addons/goto/class_gotomasses.inc:490
+#: admin/systems/goto/printer.tpl:75 addons/goto/class_gotomasses.inc:259
+#: addons/goto/deploy-list.xml:145 addons/goto/deploy-list.xml:249
 #: addons/goto/events/class_DaemonEvent.inc:256
 #: personal/environment/environment.tpl:238
 msgid "Remove"
@@ -545,7 +547,7 @@ msgstr "Удалить"
 
 #: admin/groups/apps/app_list.tpl:88 admin/groups/apps/app_list.tpl:134
 #: admin/systems/services/shares/goShareServer.tpl:17
-#: admin/systems/goto/printer.tpl:77 addons/goto/class_gotomasses.inc:471
+#: admin/systems/goto/printer.tpl:72 addons/goto/deploy-list.xml:241
 #: personal/environment/environment.tpl:274
 msgid "Edit"
 msgstr "Изменить"
@@ -598,7 +600,7 @@ msgid "List of devices"
 msgstr "Список пользователей"
 
 #: admin/devices/device-list.xml:15 admin/devices/device-list.xml:74
-#: admin/devices/class_deviceGeneric.inc:159
+#: admin/devices/class_deviceGeneric.inc:171
 #: admin/systems/goto/gotoLpdEnable.tpl:27
 #: admin/systems/goto/gotoLpdEnable.tpl:63
 #: personal/environment/hotplugSelect/selectHotplug-list.xml:14
@@ -606,26 +608,26 @@ msgstr "Список пользователей"
 msgid "Device"
 msgstr "Устройства"
 
-#: admin/devices/device-list.xml:49 admin/devices/deviceGeneric.tpl:29
-#: admin/devices/class_deviceGeneric.inc:93
-#: admin/devices/class_deviceGeneric.inc:262 admin/applications/generic.tpl:33
+#: admin/devices/device-list.xml:49 admin/devices/deviceGeneric.tpl:27
+#: admin/devices/class_deviceGeneric.inc:100
+#: admin/devices/class_deviceGeneric.inc:274 admin/applications/generic.tpl:33
 #: admin/applications/application-list.xml:49
 #: admin/applications/application-list-release.xml:49
-#: admin/applications/class_applicationGeneric.inc:608
+#: admin/applications/class_applicationGeneric.inc:578
 #: admin/mimetypes/generic.tpl:34 admin/mimetypes/paste_generic.tpl:21
 #: admin/mimetypes/mimetype-list-release.xml:49
 #: admin/mimetypes/mimetype-list.xml:49
-#: admin/mimetypes/class_mimetypeGeneric.inc:726
+#: admin/mimetypes/class_mimetypeGeneric.inc:694
 #: admin/systems/services/shares/class_goShareServer.inc:424
 #: admin/systems/services/nfs/class_servNfs.inc:207
 #: admin/systems/services/nfs/servnfs.tpl:19
 #: admin/systems/goto/workstation.tpl:19
 #: admin/systems/goto/ArpNewDevice.tpl:17
-#: admin/systems/goto/class_printGeneric.inc:1026
-#: admin/systems/goto/class_workstationGeneric.inc:709
-#: admin/systems/goto/class_terminalGeneric.inc:699
+#: admin/systems/goto/class_printGeneric.inc:1000
+#: admin/systems/goto/class_workstationGeneric.inc:689
+#: admin/systems/goto/class_terminalGeneric.inc:679
 #: admin/systems/goto/printer.tpl:16 admin/systems/goto/terminal.tpl:19
-#: addons/goto/class_gotomasses.inc:932
+#: addons/goto/class_gotomasses.inc:571
 #: addons/goto/events/eventTargetSystems-list.xml:73
 #: addons/goto/events/eventTargetUser-list.xml:57
 #: personal/environment/printerSelect/selectPrinter-list.xml:48
@@ -638,7 +640,7 @@ msgstr "Описание"
 #: admin/devices/device-list.xml:57 admin/applications/application-list.xml:57
 #: admin/applications/application-list-release.xml:57
 #: admin/mimetypes/mimetype-list-release.xml:57
-#: admin/mimetypes/mimetype-list.xml:57 addons/goto/class_gotomasses.inc:365
+#: admin/mimetypes/mimetype-list.xml:57 addons/goto/deploy-list.xml:67
 msgid "Actions"
 msgstr "Действия"
 
@@ -646,7 +648,7 @@ msgstr "Действия"
 #: admin/applications/application-list-release.xml:68
 #: admin/mimetypes/mimetype-list-release.xml:68
 #: admin/mimetypes/mimetype-list.xml:68 admin/systems/goto/chooser.tpl:16
-#: addons/goto/class_gotomasses.inc:366
+#: addons/goto/deploy-list.xml:78
 msgid "Create"
 msgstr "Создать"
 
@@ -661,72 +663,73 @@ msgid "Remove device"
 msgstr "Удалить изображение"
 
 #: admin/devices/deviceGeneric.tpl:2 admin/devices/paste_deviceGeneric.tpl:2
-#: admin/devices/class_deviceGeneric.inc:257
+#: admin/devices/class_deviceGeneric.inc:269
 msgid "Devices"
 msgstr "Устройства"
 
-#: admin/devices/deviceGeneric.tpl:9 admin/devices/class_deviceGeneric.inc:261
+#: admin/devices/deviceGeneric.tpl:9 admin/devices/class_deviceGeneric.inc:273
 #: admin/devices/device-list.tpl:13 admin/applications/generic.tpl:42
-#: admin/applications/class_applicationGeneric.inc:607
+#: admin/applications/class_applicationGeneric.inc:577
 #: admin/applications/application-list.tpl:13 admin/mimetypes/generic.tpl:44
 #: admin/mimetypes/mimetype-list.tpl:13
-#: admin/mimetypes/class_mimetypeGeneric.inc:727
+#: admin/mimetypes/class_mimetypeGeneric.inc:695
 #: admin/systems/services/ldap/class_goLdapServer.inc:82
 #: admin/systems/goto/workstation.tpl:35
-#: admin/systems/goto/class_printGeneric.inc:1025
-#: admin/systems/goto/class_workstationGeneric.inc:711
-#: admin/systems/goto/class_terminalGeneric.inc:700
+#: admin/systems/goto/class_printGeneric.inc:999
+#: admin/systems/goto/class_workstationGeneric.inc:691
+#: admin/systems/goto/class_terminalGeneric.inc:680
 #: admin/systems/goto/printer.tpl:27 admin/systems/goto/terminal.tpl:27
 #: addons/goto/goto_import_file.tpl:41
 #: addons/goto/events/eventTargetSystems-list.tpl:13
 #: addons/goto/events/eventTargetUser-list.tpl:13
+#: addons/goto/deploy-list.tpl:13
 #: personal/environment/printerSelect/selectPrinter-list.tpl:13
 #: personal/environment/hotplugSelect/selectHotplug-list.tpl:13
 msgid "Base"
 msgstr "Ветка"
 
-#: admin/devices/deviceGeneric.tpl:20 admin/devices/paste_deviceGeneric.tpl:9
+#: admin/devices/deviceGeneric.tpl:18 admin/devices/paste_deviceGeneric.tpl:9
 #, fuzzy
 msgid "Device name"
 msgstr "Имя сервера"
 
-#: admin/devices/deviceGeneric.tpl:38
+#: admin/devices/deviceGeneric.tpl:36
 #, fuzzy
 msgid "Device type"
 msgstr "Имя сервера"
 
-#: admin/devices/deviceGeneric.tpl:42
+#: admin/devices/deviceGeneric.tpl:40
 #, fuzzy
 msgid "Choose the device type"
 msgstr "Выберите тип мыши"
 
-#: admin/devices/deviceGeneric.tpl:53
+#: admin/devices/deviceGeneric.tpl:51
 #, fuzzy
 msgid "Serial number"
 msgstr "Телефонные номера"
 
-#: admin/devices/deviceGeneric.tpl:53
+#: admin/devices/deviceGeneric.tpl:51
 #, fuzzy
 msgid "(iSerial)"
 msgstr "терминалы"
 
-#: admin/devices/deviceGeneric.tpl:63
-#: admin/devices/class_deviceGeneric.inc:106
+#: admin/devices/deviceGeneric.tpl:61
+#: admin/devices/class_deviceGeneric.inc:113
 #, fuzzy
 msgid "Vendor-ID"
 msgstr "Идентификатор отправителя"
 
-#: admin/devices/deviceGeneric.tpl:63
+#: admin/devices/deviceGeneric.tpl:61
 #, fuzzy
 msgid "(idVendor)"
 msgstr "Идентификатор отправителя"
 
-#: admin/devices/deviceGeneric.tpl:72
-#: admin/devices/class_deviceGeneric.inc:103
+#: admin/devices/deviceGeneric.tpl:70
+#: admin/devices/class_deviceGeneric.inc:110
 msgid "Product-ID"
 msgstr ""
 
-#: admin/devices/deviceGeneric.tpl:72
+#: admin/devices/deviceGeneric.tpl:70
 msgid "(idProduct)"
 msgstr ""
 
@@ -743,32 +746,33 @@ msgstr ""
 msgid "Filter"
 msgstr "Фильтры"
 
-#: admin/devices/class_deviceGeneric.inc:29
+#: admin/devices/class_deviceGeneric.inc:30
 msgid "Digital camera"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:30
+#: admin/devices/class_deviceGeneric.inc:31
 #, fuzzy
 msgid "USB stick"
 msgstr "Состояние"
 
-#: admin/devices/class_deviceGeneric.inc:31
+#: admin/devices/class_deviceGeneric.inc:32
 msgid "CD/DVD drive"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:98
-#: admin/devices/class_deviceGeneric.inc:100
+#: admin/devices/class_deviceGeneric.inc:105
+#: admin/devices/class_deviceGeneric.inc:107
 #, fuzzy
 msgid "iSerial"
 msgstr "терминалы"
 
-#: admin/devices/class_deviceGeneric.inc:159
-#: admin/applications/class_applicationGeneric.inc:264
-#: admin/applications/class_applicationGeneric.inc:338
-#: admin/applications/class_applicationGeneric.inc:370
-#: admin/applications/class_applicationGeneric.inc:375
-#: admin/applications/class_applicationGeneric.inc:380
-#: admin/applications/class_applicationGeneric.inc:384
+#: admin/devices/class_deviceGeneric.inc:145
+#: admin/devices/class_deviceGeneric.inc:171
+#: admin/applications/class_applicationGeneric.inc:234
+#: admin/applications/class_applicationGeneric.inc:308
+#: admin/applications/class_applicationGeneric.inc:340
+#: admin/applications/class_applicationGeneric.inc:345
+#: admin/applications/class_applicationGeneric.inc:350
+#: admin/applications/class_applicationGeneric.inc:354
 #: admin/systems/services/kiosk/class_goKioskService.inc:69
 #: admin/systems/services/kiosk/class_goKioskService.inc:154
 #: admin/systems/services/kiosk/class_goKioskService.inc:161
@@ -778,21 +782,24 @@ msgstr "терминалы"
 #: admin/systems/services/shares/class_goShareServer.inc:257
 #: admin/systems/services/nfs/class_servNfs.inc:43
 #: admin/systems/services/nfs/class_servNfs.inc:46
-#: admin/systems/goto/class_printGeneric.inc:490
-#: admin/systems/goto/class_printGeneric.inc:669
-#: admin/systems/goto/class_printGeneric.inc:676
-#: admin/systems/goto/class_printGeneric.inc:1103
-#: admin/systems/goto/class_printGeneric.inc:1114
+#: admin/systems/goto/class_printGeneric.inc:460
+#: admin/systems/goto/class_printGeneric.inc:639
+#: admin/systems/goto/class_printGeneric.inc:646
+#: admin/systems/goto/class_printGeneric.inc:700
+#: admin/systems/goto/class_printGeneric.inc:1077
+#: admin/systems/goto/class_printGeneric.inc:1088
 #: admin/systems/goto/class_terminalStartup.inc:223
+#: admin/systems/goto/class_workstationGeneric.inc:393
 #: admin/systems/goto/class_workstationStartup.inc:234
 #: admin/systems/goto/class_workstationStartup.inc:247
 #: admin/systems/goto/class_workstationStartup.inc:324
 #: admin/systems/goto/class_workstationStartup.inc:432
+#: admin/systems/goto/class_terminalGeneric.inc:379
 #: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
-#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:528
-#: addons/goto/class_gotomasses.inc:670 addons/goto/class_gotomasses.inc:706
-#: addons/goto/class_gotomasses.inc:750 addons/goto/class_gotomasses.inc:754
-#: addons/goto/class_gotomasses.inc:790 addons/goto/class_gotomasses.inc:831
+#: addons/goto/class_gotomasses.inc:178 addons/goto/class_gotomasses.inc:325
+#: addons/goto/class_gotomasses.inc:329 addons/goto/class_gotomasses.inc:479
+#: addons/goto/class_gotomasses.inc:514 addons/goto/class_gotomasses.inc:550
+#: addons/goto/class_filterGotoEvents.inc:18
 #: personal/environment/class_environment.inc:591
 #: personal/environment/class_environment.inc:673
 #: personal/environment/class_environment.inc:675
@@ -802,17 +809,17 @@ msgstr "терминалы"
 msgid "Error"
 msgstr ""
 
-#: admin/devices/class_deviceGeneric.inc:252
+#: admin/devices/class_deviceGeneric.inc:264
 #, fuzzy
 msgid "Device generic"
 msgstr "Имя сервера"
 
-#: admin/devices/class_deviceGeneric.inc:252
+#: admin/devices/class_deviceGeneric.inc:264
 #, fuzzy
 msgid "Hotplug"
 msgstr "Дисковод"
 
-#: admin/devices/class_deviceGeneric.inc:263
+#: admin/devices/class_deviceGeneric.inc:275
 #: admin/systems/services/shares/class_goShareServer.inc:425
 #: admin/systems/services/nfs/class_servNfs.inc:193
 #: admin/systems/services/nfs/servnfs.tpl:56
@@ -824,18 +831,18 @@ msgstr "Дисковод"
 msgid "Type"
 msgstr "Тип"
 
-#: admin/devices/class_deviceGeneric.inc:264
+#: admin/devices/class_deviceGeneric.inc:276
 #: admin/systems/goto/class_gotoLpdEnabled.inc:51
 #, fuzzy
 msgid "Serial"
 msgstr "терминалы"
 
-#: admin/devices/class_deviceGeneric.inc:265
+#: admin/devices/class_deviceGeneric.inc:277
 #, fuzzy
 msgid "Vendor"
 msgstr "Идентификатор отправителя"
 
-#: admin/devices/class_deviceGeneric.inc:266
+#: admin/devices/class_deviceGeneric.inc:278
 #, fuzzy
 msgid "Device ID"
 msgstr "Устройства"
@@ -906,7 +913,7 @@ msgid "Application parameter settings"
 msgstr "Приложение"
 
 #: admin/applications/generic.tpl:7 admin/applications/generic.tpl:10
-#: admin/applications/class_applicationGeneric.inc:561
+#: admin/applications/class_applicationGeneric.inc:531
 msgid "Application name"
 msgstr "Приложение"
 
@@ -915,7 +922,7 @@ msgid "Display name"
 msgstr "Отображаемое имя"
 
 #: admin/applications/generic.tpl:19
-#: admin/applications/class_applicationGeneric.inc:566
+#: admin/applications/class_applicationGeneric.inc:536
 msgid "Application name to be displayed (i.e. below icons)"
 msgstr ""
 "Имя приложения, которое будет показано пользователям (например, под "
@@ -930,16 +937,14 @@ msgid "Choose subtree to place application in"
 msgstr "Выберите ветку, куда нужно поместить приложение"
 
 #: admin/applications/generic.tpl:52 admin/mimetypes/generic.tpl:53
-#: admin/systems/goto/workstation.tpl:43 admin/systems/goto/printer.tpl:35
-#: admin/systems/goto/terminal.tpl:36
 #, fuzzy
 msgid "Select a base"
 msgstr "Выберите, чтобы просмотреть серверы"
 
 #: admin/applications/generic.tpl:66
-#: admin/applications/class_applicationGeneric.inc:611
+#: admin/applications/class_applicationGeneric.inc:581
 #: admin/mimetypes/generic.tpl:67
-#: admin/mimetypes/class_mimetypeGeneric.inc:730
+#: admin/mimetypes/class_mimetypeGeneric.inc:698
 msgid "Icon"
 msgstr "Пиктограмма"
 
@@ -968,27 +973,27 @@ msgid "Options"
 msgstr "Параметры"
 
 #: admin/applications/generic.tpl:103
-#: admin/applications/class_applicationGeneric.inc:614
+#: admin/applications/class_applicationGeneric.inc:584
 msgid "Only executable for members"
 msgstr "Разрешено для выполнения только членам группы"
 
 #: admin/applications/generic.tpl:108
-#: admin/applications/class_applicationGeneric.inc:618
+#: admin/applications/class_applicationGeneric.inc:588
 msgid "Replace user configuration on startup"
 msgstr "Заменять настройки пользователя при запуске"
 
 #: admin/applications/generic.tpl:114
-#: admin/applications/class_applicationGeneric.inc:615
+#: admin/applications/class_applicationGeneric.inc:585
 msgid "Place icon on members desktop"
 msgstr "Помещать пиктограмму на рабочие столы членов группы"
 
 #: admin/applications/generic.tpl:119
-#: admin/applications/class_applicationGeneric.inc:617
+#: admin/applications/class_applicationGeneric.inc:587
 msgid "Place entry in members startmenu"
 msgstr "Помещать членам группы соответствующий элемент в меню запуска"
 
 #: admin/applications/generic.tpl:124
-#: admin/applications/class_applicationGeneric.inc:616
+#: admin/applications/class_applicationGeneric.inc:586
 #, fuzzy
 msgid "Place entry in members launch bar"
 msgstr "Помещать членам группы соответствующий элемент в меню запуска"
@@ -1000,8 +1005,7 @@ msgid "Script"
 msgstr "Путь к сценариям"
 
 #: admin/applications/generic.tpl:139 addons/goto/goto_import_file.tpl:84
-#: addons/goto/class_gotomasses.inc:375
-#: addons/goto/class_goto_import_file.inc:29
+#: addons/goto/deploy-list.xml:138 addons/goto/class_goto_import_file.inc:29
 #: addons/goto/class_goto_import_file.inc:89
 #: addons/goto/class_goto_import_file.inc:131
 #: personal/environment/logonManagement.tpl:65
@@ -1040,47 +1044,47 @@ msgstr "приложения"
 msgid "no example"
 msgstr "не полный"
 
-#: admin/applications/class_applicationGeneric.inc:264
+#: admin/applications/class_applicationGeneric.inc:234
 #, fuzzy, php-format
 msgid "Cannot remove application - it is still in use by these objects: %s"
 msgstr "У вас недостаточно прав для удаления этого группового объекта!"
 
-#: admin/applications/class_applicationGeneric.inc:370
+#: admin/applications/class_applicationGeneric.inc:340
 #, fuzzy
 msgid "no read permission"
 msgstr "Права для членов группы"
 
-#: admin/applications/class_applicationGeneric.inc:375
+#: admin/applications/class_applicationGeneric.inc:345
 msgid "cannot resize image"
 msgstr ""
 
-#: admin/applications/class_applicationGeneric.inc:380
+#: admin/applications/class_applicationGeneric.inc:350
 #, fuzzy
 msgid "cannot convert image"
 msgstr "Невозможно выбрать базу данных!"
 
-#: admin/applications/class_applicationGeneric.inc:384
+#: admin/applications/class_applicationGeneric.inc:354
 #, fuzzy, php-format
 msgid "cannot save image to '%s'"
 msgstr "Удалить"
 
-#: admin/applications/class_applicationGeneric.inc:413
+#: admin/applications/class_applicationGeneric.inc:383
 #, fuzzy
 msgid "Execute path"
 msgstr "Выполнить"
 
-#: admin/applications/class_applicationGeneric.inc:598
+#: admin/applications/class_applicationGeneric.inc:568
 #, fuzzy
 msgid "Application generic"
 msgstr "Приложение"
 
-#: admin/applications/class_applicationGeneric.inc:612
+#: admin/applications/class_applicationGeneric.inc:582
 #, fuzzy
 msgid "Script content"
 msgstr "Путь к сценариям"
 
 #: admin/mimetypes/class_mimetypeManagement.inc:25
-#: admin/mimetypes/class_mimetypeGeneric.inc:721
+#: admin/mimetypes/class_mimetypeGeneric.inc:689
 #, fuzzy
 msgid "Mime types"
 msgstr "Тип"
@@ -1104,7 +1108,7 @@ msgid "Please enter a name for the mime type here"
 msgstr "Введите корректный номер телефона!"
 
 #: admin/mimetypes/generic.tpl:22
-#: admin/mimetypes/class_mimetypeGeneric.inc:725
+#: admin/mimetypes/class_mimetypeGeneric.inc:693
 #, fuzzy
 msgid "Mime group"
 msgstr "Основная группа"
@@ -1133,7 +1137,7 @@ msgid "Left click"
 msgstr ""
 
 #: admin/mimetypes/generic.tpl:104
-#: admin/mimetypes/class_mimetypeGeneric.inc:731
+#: admin/mimetypes/class_mimetypeGeneric.inc:699
 #, fuzzy
 msgid "File patterns"
 msgstr "Фильтры"
@@ -1196,22 +1200,22 @@ msgstr "Редактиовать объект"
 msgid "Remove mimetype"
 msgstr "Удалить изображение"
 
-#: admin/mimetypes/class_mimetypeGeneric.inc:535
+#: admin/mimetypes/class_mimetypeGeneric.inc:503
 #, fuzzy
 msgid "File pattern"
 msgstr "Фильтры"
 
-#: admin/mimetypes/class_mimetypeGeneric.inc:716
+#: admin/mimetypes/class_mimetypeGeneric.inc:684
 #, fuzzy
 msgid "Mime type generic"
 msgstr "Тип"
 
-#: admin/mimetypes/class_mimetypeGeneric.inc:729
+#: admin/mimetypes/class_mimetypeGeneric.inc:697
 #, fuzzy
 msgid "Left click action"
 msgstr "Создать приложения"
 
-#: admin/mimetypes/class_mimetypeGeneric.inc:732
+#: admin/mimetypes/class_mimetypeGeneric.inc:700
 #, fuzzy
 msgid "Embedded applications"
 msgstr "Используемые приложения"
@@ -1485,26 +1489,22 @@ msgid "Workstation template"
 msgstr "Шаблон рабочей станции"
 
 #: admin/systems/goto/workstation.tpl:10
-#: admin/systems/goto/class_workstationGeneric.inc:708
+#: admin/systems/goto/class_workstationGeneric.inc:688
 msgid "Workstation name"
 msgstr "Имя рабочий станции"
 
 #: admin/systems/goto/workstation.tpl:27
-#: admin/systems/goto/class_printGeneric.inc:1027
-#: admin/systems/goto/class_workstationGeneric.inc:710
+#: admin/systems/goto/class_printGeneric.inc:1001
+#: admin/systems/goto/class_workstationGeneric.inc:690
 msgid "Location"
 msgstr "Местоположение"
 
-#: admin/systems/goto/workstation.tpl:38
-msgid "Choose subtree to place group in"
-msgstr "Выберите ветку для группы"
-
-#: admin/systems/goto/workstation.tpl:87 admin/systems/goto/workstation.tpl:90
-#: admin/systems/goto/terminal.tpl:76 admin/systems/goto/terminal.tpl:79
+#: admin/systems/goto/workstation.tpl:82 admin/systems/goto/workstation.tpl:85
+#: admin/systems/goto/terminal.tpl:71 admin/systems/goto/terminal.tpl:74
 msgid "Inherit time server attributes"
 msgstr ""
 
-#: admin/systems/goto/workstation.tpl:160
+#: admin/systems/goto/workstation.tpl:155
 #, fuzzy
 msgid "Inherit all values from group"
 msgstr "Список групп"
@@ -1647,52 +1647,52 @@ msgstr "Объект группы"
 msgid "none"
 msgstr "нет"
 
-#: admin/systems/goto/class_printGeneric.inc:113
-#: admin/systems/goto/class_printGeneric.inc:1063
+#: admin/systems/goto/class_printGeneric.inc:114
+#: admin/systems/goto/class_printGeneric.inc:1037
 #, fuzzy
 msgid "Internal error"
 msgstr "Терминал-сервер"
 
-#: admin/systems/goto/class_printGeneric.inc:113
+#: admin/systems/goto/class_printGeneric.inc:114
 #, php-format
 msgid ""
 "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:290
-#: admin/systems/goto/class_printGeneric.inc:298
-#: admin/systems/goto/class_printGeneric.inc:303
-#: admin/systems/goto/class_printGeneric.inc:352
-#: admin/systems/goto/class_printGeneric.inc:368
-#: admin/systems/goto/class_printGeneric.inc:371
+#: admin/systems/goto/class_printGeneric.inc:297
+#: admin/systems/goto/class_printGeneric.inc:305
+#: admin/systems/goto/class_printGeneric.inc:310
+#: admin/systems/goto/class_printGeneric.inc:360
+#: admin/systems/goto/class_printGeneric.inc:376
+#: admin/systems/goto/class_printGeneric.inc:379
 msgid "Add printer extension"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:291
+#: admin/systems/goto/class_printGeneric.inc:298
 msgid ""
 "Could not initialize printer tab, parameter parent was missing while "
 "construction."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:299
+#: admin/systems/goto/class_printGeneric.inc:306
 msgid "This is a workstation template, printer tab is disabled."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:304
+#: admin/systems/goto/class_printGeneric.inc:311
 msgid "This is a terminal template, printer tab is disabled."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:345
 #: admin/systems/goto/class_printGeneric.inc:353
 #: admin/systems/goto/class_printGeneric.inc:361
-#: admin/systems/goto/class_printGeneric.inc:364
 #: admin/systems/goto/class_printGeneric.inc:369
 #: admin/systems/goto/class_printGeneric.inc:372
+#: admin/systems/goto/class_printGeneric.inc:377
+#: admin/systems/goto/class_printGeneric.inc:380
 #, fuzzy
 msgid "printer"
 msgstr "принтеры"
 
-#: admin/systems/goto/class_printGeneric.inc:353
+#: admin/systems/goto/class_printGeneric.inc:361
 #, fuzzy
 msgid ""
 "You can't enable it while 'cn' is not present in entry. Possibly you are "
@@ -1701,77 +1701,77 @@ msgstr ""
 "В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
 "ниже."
 
-#: admin/systems/goto/class_printGeneric.inc:360
-#: admin/systems/goto/class_printGeneric.inc:363
+#: admin/systems/goto/class_printGeneric.inc:368
+#: admin/systems/goto/class_printGeneric.inc:371
 #, fuzzy
 msgid "Remove printer extension"
 msgstr "Удалить параметры"
 
-#: admin/systems/goto/class_printGeneric.inc:594
+#: admin/systems/goto/class_printGeneric.inc:564
 #, php-format
 msgid "Your currently selected PPD file '%s' doesn't exist."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:600
+#: admin/systems/goto/class_printGeneric.inc:570
 #, fuzzy
 msgid "Not defined"
 msgstr "не определена"
 
-#: admin/systems/goto/class_printGeneric.inc:604
+#: admin/systems/goto/class_printGeneric.inc:574
 #: admin/systems/ppd/class_printerPPDDialog.inc:96
 #, fuzzy
 msgid "Can't get ppd informations."
 msgstr "Общая информация о пользователе"
 
-#: admin/systems/goto/class_printGeneric.inc:620
-#: admin/systems/goto/class_printGeneric.inc:622
+#: admin/systems/goto/class_printGeneric.inc:590
+#: admin/systems/goto/class_printGeneric.inc:592
 #, php-format
 msgid "This printer belongs to %s. You can't rename this printer."
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:620
+#: admin/systems/goto/class_printGeneric.inc:590
 #: admin/systems/goto/class_terminalStartup.inc:180
 #: admin/systems/goto/class_terminalInfo.inc:68
-#: admin/systems/goto/class_terminalGeneric.inc:232
+#: admin/systems/goto/class_terminalGeneric.inc:209
 #, fuzzy
 msgid "terminal"
 msgstr "Терминалы"
 
-#: admin/systems/goto/class_printGeneric.inc:622
-#: admin/systems/goto/class_workstationGeneric.inc:227
+#: admin/systems/goto/class_printGeneric.inc:592
+#: admin/systems/goto/class_workstationGeneric.inc:234
 #: admin/systems/goto/class_workstationStartup.inc:285
 #, fuzzy
 msgid "workstation"
 msgstr "Рабочая станция"
 
-#: admin/systems/goto/class_printGeneric.inc:669
-#: admin/systems/goto/class_printGeneric.inc:676
+#: admin/systems/goto/class_printGeneric.inc:639
+#: admin/systems/goto/class_printGeneric.inc:646
 #, fuzzy
 msgid "Object is no printer!"
 msgstr "Сетевой принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:770
-#: admin/systems/goto/printer.tpl:54
+#: admin/systems/goto/class_printGeneric.inc:744
+#: admin/systems/goto/printer.tpl:49
 msgid "Printer URL"
 msgstr "URL принтера"
 
-#: admin/systems/goto/class_printGeneric.inc:998
-#: admin/systems/goto/class_printGeneric.inc:1000
+#: admin/systems/goto/class_printGeneric.inc:972
+#: admin/systems/goto/class_printGeneric.inc:974
 #: addons/goto/events/eventTargetUser-list.xml:23
 msgid "Group"
 msgstr "Группа"
 
-#: admin/systems/goto/class_printGeneric.inc:1003
+#: admin/systems/goto/class_printGeneric.inc:977
 #: addons/goto/events/eventTargetUser-list.xml:15
 msgid "User"
 msgstr "Пользователь"
 
-#: admin/systems/goto/class_printGeneric.inc:1016
+#: admin/systems/goto/class_printGeneric.inc:990
 #, fuzzy
 msgid "Print generic"
 msgstr "Служба печати"
 
-#: admin/systems/goto/class_printGeneric.inc:1021
+#: admin/systems/goto/class_printGeneric.inc:995
 #: admin/systems/goto/terminalService.tpl:245
 #: personal/environment/printerSelect/selectPrinter-list.xml:14
 #: personal/environment/environment.tpl:338
@@ -1779,45 +1779,45 @@ msgstr "Служба печати"
 msgid "Printer"
 msgstr "Принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:1028
+#: admin/systems/goto/class_printGeneric.inc:1002
 msgid "LabeledURL"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:1029
+#: admin/systems/goto/class_printGeneric.inc:1003
 #, fuzzy
 msgid "Printer PPD"
 msgstr "Принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:1030
-#: admin/systems/goto/printer.tpl:91
+#: admin/systems/goto/class_printGeneric.inc:1004
+#: admin/systems/goto/printer.tpl:86
 #, fuzzy
 msgid "Permissions"
 msgstr "Права для членов группы"
 
-#: admin/systems/goto/class_printGeneric.inc:1046
-#: admin/systems/goto/class_printGeneric.inc:1068
+#: admin/systems/goto/class_printGeneric.inc:1020
+#: admin/systems/goto/class_printGeneric.inc:1042
 #: personal/environment/class_environment.inc:583
 #, fuzzy
 msgid "Permission error"
 msgstr "Права для членов группы"
 
-#: admin/systems/goto/class_printGeneric.inc:1046
-#: admin/systems/goto/class_printGeneric.inc:1068
+#: admin/systems/goto/class_printGeneric.inc:1020
+#: admin/systems/goto/class_printGeneric.inc:1042
 #, fuzzy
 msgid "printer user"
 msgstr "Принтер"
 
-#: admin/systems/goto/class_printGeneric.inc:1063
+#: admin/systems/goto/class_printGeneric.inc:1037
 #, php-format
 msgid "Illegal member type '%s'!"
 msgstr ""
 
-#: admin/systems/goto/class_printGeneric.inc:1103
+#: admin/systems/goto/class_printGeneric.inc:1077
 #, fuzzy, php-format
 msgid "'%s' is already used!"
 msgstr "Указанное имя уже используется."
 
-#: admin/systems/goto/class_printGeneric.inc:1114
+#: admin/systems/goto/class_printGeneric.inc:1088
 #, fuzzy, php-format
 msgid "'%s' does not exist!"
 msgstr "Значение поля \"Файлы\" некорректно."
@@ -1933,7 +1933,7 @@ msgid "System informations"
 msgstr "Системная информация"
 
 #: admin/systems/goto/class_ArpNewDevice.inc:38
-#: admin/systems/goto/class_workstationGeneric.inc:705
+#: admin/systems/goto/class_workstationGeneric.inc:685
 #: admin/systems/goto/class_SelectDeviceType.inc:38
 #: addons/goto/events/eventTargetSystems-list.xml:23
 msgid "Workstation"
@@ -1941,8 +1941,8 @@ msgstr "Рабочая станция"
 
 #: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_SelectDeviceType.inc:38
-#: admin/systems/goto/class_terminalGeneric.inc:689
-#: admin/systems/goto/class_terminalGeneric.inc:695
+#: admin/systems/goto/class_terminalGeneric.inc:669
+#: admin/systems/goto/class_terminalGeneric.inc:675
 #: addons/goto/events/eventTargetSystems-list.xml:31
 #, fuzzy
 msgid "Terminal"
@@ -2256,57 +2256,59 @@ msgstr "Звук"
 msgid "GUI"
 msgstr "Графический интерфейс"
 
-#: admin/systems/goto/class_workstationGeneric.inc:300
-#: admin/systems/goto/class_workstationGeneric.inc:310
+#: admin/systems/goto/class_workstationGeneric.inc:276
+#: admin/systems/goto/class_workstationGeneric.inc:286
+#: addons/goto/deploy-list.xml:105
 #: addons/goto/events/class_DaemonEvent_update.inc:29
 #: addons/goto/events/class_DaemonEvent_update.inc:30
 #, fuzzy
 msgid "Software update"
 msgstr "Создать телефонный аккаунт"
 
-#: admin/systems/goto/class_workstationGeneric.inc:304
-#: admin/systems/goto/class_workstationGeneric.inc:312
+#: admin/systems/goto/class_workstationGeneric.inc:280
+#: admin/systems/goto/class_workstationGeneric.inc:288
 #: addons/goto/events/class_DaemonEvent_localboot.inc:28
 #: addons/goto/events/class_DaemonEvent_localboot.inc:29
 msgid "Force localboot"
 msgstr ""
 
-#: admin/systems/goto/class_workstationGeneric.inc:308
-#: admin/systems/goto/class_terminalGeneric.inc:273
+#: admin/systems/goto/class_workstationGeneric.inc:284
+#: admin/systems/goto/class_terminalGeneric.inc:249
+#: addons/goto/deploy-list.xml:98
 #: addons/goto/events/class_DaemonEvent_wakeup.inc:29
 msgid "Wake up"
 msgstr "Вернуть в обычный режим"
 
-#: admin/systems/goto/class_workstationGeneric.inc:501
+#: admin/systems/goto/class_workstationGeneric.inc:481
 msgid "A valid LDAP server assignement is missing!"
 msgstr ""
 
-#: admin/systems/goto/class_workstationGeneric.inc:511
+#: admin/systems/goto/class_workstationGeneric.inc:491
 #, fuzzy
 msgid "Software deployment"
 msgstr "Системы"
 
-#: admin/systems/goto/class_workstationGeneric.inc:512
+#: admin/systems/goto/class_workstationGeneric.inc:492
 msgid "This host is currently installing. If you want to save it, press 'OK'."
 msgstr ""
 
-#: admin/systems/goto/class_workstationGeneric.inc:700
+#: admin/systems/goto/class_workstationGeneric.inc:680
 #, fuzzy
 msgid "Workstation generic"
 msgstr "Имя рабочий станции"
 
-#: admin/systems/goto/class_workstationGeneric.inc:712
+#: admin/systems/goto/class_workstationGeneric.inc:692
 #, fuzzy
 msgid "Goto mode"
 msgstr "в папку"
 
-#: admin/systems/goto/class_workstationGeneric.inc:715
-#: admin/systems/goto/class_terminalGeneric.inc:709
+#: admin/systems/goto/class_workstationGeneric.inc:695
+#: admin/systems/goto/class_terminalGeneric.inc:689
 #, fuzzy
 msgid "Root password"
 msgstr "Изменить пароль"
 
-#: admin/systems/goto/class_workstationGeneric.inc:716
+#: admin/systems/goto/class_workstationGeneric.inc:696
 #, fuzzy
 msgid "Create FAI CD"
 msgstr "Создать"
@@ -2373,7 +2375,7 @@ msgstr "Телефон"
 
 #: admin/systems/goto/terminalService.tpl:98
 #: admin/systems/goto/workstationService.tpl:110
-#: admin/systems/goto/printer.tpl:75
+#: admin/systems/goto/printer.tpl:70
 msgid "Driver"
 msgstr "Драйвер"
 
@@ -2435,7 +2437,6 @@ msgstr "Выберите способ подключения к серверу �
 #: admin/systems/goto/terminalService.tpl:184
 #: admin/systems/goto/terminalStartup.tpl:14
 #: admin/systems/goto/workstationStartup.tpl:36
-#: addons/goto/class_gotomasses.inc:400
 #, fuzzy
 msgid "Reload"
 msgstr "чтение"
@@ -2696,17 +2697,17 @@ msgstr "Выберите тип мыши"
 msgid "set"
 msgstr "сброс"
 
-#: admin/systems/goto/class_terminalGeneric.inc:690
+#: admin/systems/goto/class_terminalGeneric.inc:670
 #, fuzzy
 msgid "Terminal generic"
 msgstr "Терминальный сервер"
 
-#: admin/systems/goto/class_terminalGeneric.inc:703
+#: admin/systems/goto/class_terminalGeneric.inc:683
 #, fuzzy
 msgid "Syslog server enabled"
 msgstr "Сервер системных журналов"
 
-#: admin/systems/goto/class_terminalGeneric.inc:708
+#: admin/systems/goto/class_terminalGeneric.inc:688
 #, fuzzy
 msgid "Ntp server settings"
 msgstr "Почтовые настройки пользователя"
@@ -2720,38 +2721,34 @@ msgstr "Общее"
 msgid "Printer name"
 msgstr "Имя принтера"
 
-#: admin/systems/goto/printer.tpl:30
-msgid "Choose subtree to place user in"
-msgstr "Выберите ветку для пользователя"
-
-#: admin/systems/goto/printer.tpl:43
+#: admin/systems/goto/printer.tpl:38
 msgid "Details"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:46
+#: admin/systems/goto/printer.tpl:41
 #, fuzzy
 msgid "Printer location"
 msgstr "Настройки телефона"
 
-#: admin/systems/goto/printer.tpl:63
+#: admin/systems/goto/printer.tpl:58
 msgid "PPD Provider"
 msgstr ""
 
-#: admin/systems/goto/printer.tpl:98
+#: admin/systems/goto/printer.tpl:93
 #, fuzzy
 msgid "Users which are allowed to use this printer"
 msgstr "У вас недостаточно прав для удаления этого объекта!"
 
-#: admin/systems/goto/printer.tpl:100
+#: admin/systems/goto/printer.tpl:95
 msgid "Users"
 msgstr "Пользователи"
 
-#: admin/systems/goto/printer.tpl:119
+#: admin/systems/goto/printer.tpl:114
 #, fuzzy
 msgid "Users which are allowed to administrate this printer"
 msgstr "У вас недостаточно прав для удаления этого объекта!"
 
-#: admin/systems/goto/printer.tpl:121
+#: admin/systems/goto/printer.tpl:116
 #, fuzzy
 msgid "Admins"
 msgstr "DN администратора"
@@ -2808,12 +2805,7 @@ msgstr "Шаблон терминала"
 msgid "Terminal name"
 msgstr "Терминал"
 
-#: admin/systems/goto/terminal.tpl:31
-#, fuzzy
-msgid "Choose subtree to place terminal in"
-msgstr "Выберите ветку для пользователя"
-
-#: admin/systems/goto/terminal.tpl:177
+#: admin/systems/goto/terminal.tpl:172
 #, fuzzy
 msgid "Inherit all"
 msgstr "Отчество"
@@ -3111,7 +3103,7 @@ msgstr "Таймаут (с)"
 msgid "MAC"
 msgstr "Доступ"
 
-#: addons/goto/goto_import_file.tpl:39
+#: addons/goto/goto_import_file.tpl:39 addons/goto/deploy-list.xml:14
 #: addons/goto/class_goto_import_file.inc:171
 #, fuzzy
 msgid "Event"
@@ -3150,56 +3142,76 @@ msgstr "Имя пользователя"
 msgid "GOto log view"
 msgstr "в папку"
 
-#: addons/goto/class_gotomasses.inc:26
-#, fuzzy
-msgid "Deployment status"
-msgstr "Состояние системы"
-
-#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:66
+#: addons/goto/class_gotomasses.inc:26 addons/goto/class_gotomasses.inc:27
 #, fuzzy
 msgid "System deployment status"
 msgstr "Системы"
 
-#: addons/goto/class_gotomasses.inc:230
+#: addons/goto/class_gotomasses.inc:159
+msgid "immediately"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:175
+#, fuzzy
+msgid "Waiting"
+msgstr "Предупреждение"
+
+#: addons/goto/class_gotomasses.inc:181
+#, fuzzy
+msgid "Processed"
+msgstr "Свойства"
+
+#: addons/goto/class_gotomasses.inc:196
+#, fuzzy
+msgid "Detection"
+msgstr "Действие"
+
+#: addons/goto/class_gotomasses.inc:204
+#, fuzzy
+msgid "in progress"
+msgstr "Свойства"
+
+#: addons/goto/class_gotomasses.inc:228
 #, fuzzy
 msgid "Permission"
 msgstr "Права для членов группы"
 
-#: addons/goto/class_gotomasses.inc:270
+#: addons/goto/class_gotomasses.inc:260
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
 msgstr ""
 
-#: addons/goto/class_gotomasses.inc:360
-#, fuzzy
-msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"С помощью этого меню вы можете добавлять, изменять и удалять свойства "
-"отдельных систем. Вы можете только добавлять системы которые однажды уже "
-"были запущены."
+#: addons/goto/class_gotomasses.inc:325 addons/goto/class_gotomasses.inc:479
+#: addons/goto/class_gotomasses.inc:550
+#, fuzzy, php-format
+msgid "Cannot update queue entry: %s"
+msgstr "состояние неизвестно"
 
-#: addons/goto/class_gotomasses.inc:361
+#: addons/goto/class_gotomasses.inc:330
+#, php-format
+msgid "Required class '%s' cannot be found: job not aborted!"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:514
+#, php-format
+msgid "Cannot update queue entries."
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:564 addons/goto/class_gotomasses.inc:570
+#, fuzzy
+msgid "System deployment"
+msgstr "Управление системами"
+
+#: addons/goto/class_gotomasses.inc:565
+msgid "Provide a mechanism to automatically activate systems"
+msgstr ""
+
+#: addons/goto/deploy-list.xml:10
 #, fuzzy
 msgid "List of queued jobs"
 msgstr "Список пользователей"
 
-#: addons/goto/class_gotomasses.inc:380
-#, fuzzy
-msgid "Resume"
-msgstr "сброс"
-
-#: addons/goto/class_gotomasses.inc:381
-#, fuzzy
-msgid "Pause"
-msgstr "Дата"
-
-#: addons/goto/class_gotomasses.inc:382
-#, fuzzy
-msgid "Abort"
-msgstr "Порт"
-
-#: addons/goto/class_gotomasses.inc:408
-#: addons/goto/events/DaemonEvent_update.tpl:47
+#: addons/goto/deploy-list.xml:27 addons/goto/events/DaemonEvent_update.tpl:47
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
 #: addons/goto/events/DaemonEvent_halt.tpl:47
 #: addons/goto/events/DaemonEvent_wakeup.tpl:47
@@ -3222,17 +3234,16 @@ msgstr "Порт"
 msgid "Target"
 msgstr "сброс"
 
-#: addons/goto/class_gotomasses.inc:409
+#: addons/goto/deploy-list.xml:35
 msgid "Task"
 msgstr ""
 
-#: addons/goto/class_gotomasses.inc:411
+#: addons/goto/deploy-list.xml:43
 #, fuzzy
 msgid "Period"
 msgstr "Права для членов группы"
 
-#: addons/goto/class_gotomasses.inc:413
-#: addons/goto/events/DaemonEvent_update.tpl:9
+#: addons/goto/deploy-list.xml:51 addons/goto/events/DaemonEvent_update.tpl:9
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
 #: addons/goto/events/DaemonEvent_halt.tpl:9
 #: addons/goto/events/DaemonEvent_wakeup.tpl:9
@@ -3251,8 +3262,7 @@ msgstr "Права для членов группы"
 msgid "Schedule"
 msgstr "Учетная запись Groupware"
 
-#: addons/goto/class_gotomasses.inc:415
-#: addons/goto/events/DaemonEvent_update.tpl:39
+#: addons/goto/deploy-list.xml:59 addons/goto/events/DaemonEvent_update.tpl:39
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
 #: addons/goto/events/DaemonEvent_halt.tpl:39
 #: addons/goto/events/DaemonEvent_wakeup.tpl:39
@@ -3271,84 +3281,56 @@ msgstr "Учетная запись Groupware"
 msgid "Status"
 msgstr "Состояние"
 
-#: addons/goto/class_gotomasses.inc:443
-#, fuzzy
-msgid "Pause job"
-msgstr "Дата"
+#: addons/goto/deploy-list.xml:112
+#: addons/goto/events/class_DaemonEvent_lock.inc:29
+#: addons/goto/events/class_DaemonEvent_lock.inc:30
+msgid "Lock"
+msgstr ""
 
-#: addons/goto/class_gotomasses.inc:450
+#: addons/goto/deploy-list.xml:119
+#: addons/goto/events/class_DaemonEvent_activate.inc:29
+#: addons/goto/events/class_DaemonEvent_activate.inc:30
+msgid "Unlock"
+msgstr ""
+
+#: addons/goto/deploy-list.xml:156 addons/goto/deploy-list.xml:217
 #, fuzzy
-msgid "Resume job"
+msgid "Resume"
 msgstr "сброс"
 
-#: addons/goto/class_gotomasses.inc:457
+#: addons/goto/deploy-list.xml:163 addons/goto/deploy-list.xml:209
 #, fuzzy
-msgid "Execute now"
-msgstr "Выполнить"
+msgid "Pause"
+msgstr "Дата"
 
-#: addons/goto/class_gotomasses.inc:464
+#: addons/goto/deploy-list.xml:170 addons/goto/deploy-list.xml:257
+#, fuzzy
+msgid "Abort"
+msgstr "Порт"
+
+#: addons/goto/deploy-list.xml:193
+msgid "Up"
+msgstr ""
+
+#: addons/goto/deploy-list.xml:201
+#, fuzzy
+msgid "Down"
+msgstr "Домен"
+
+#: addons/goto/deploy-list.xml:225
+#, fuzzy
+msgid "Process now"
+msgstr "Свойства"
+
+#: addons/goto/deploy-list.xml:233
 #, fuzzy
 msgid "View logs"
 msgstr "Доступные приложения"
 
-#: addons/goto/class_gotomasses.inc:479
-#, fuzzy
-msgid "Abort job"
-msgstr "Отчество"
-
-#: addons/goto/class_gotomasses.inc:525
-#, fuzzy
-msgid "Waiting"
-msgstr "Предупреждение"
-
-#: addons/goto/class_gotomasses.inc:531
-#, fuzzy
-msgid "Processed"
-msgstr "Свойства"
-
-#: addons/goto/class_gotomasses.inc:546
-#, fuzzy
-msgid "Detection"
-msgstr "Действие"
-
-#: addons/goto/class_gotomasses.inc:554
-#, fuzzy
-msgid "in progress"
-msgstr "Свойства"
-
-#: addons/goto/class_gotomasses.inc:578
-msgid "immediately"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:670 addons/goto/class_gotomasses.inc:750
-#: addons/goto/class_gotomasses.inc:790
-#, fuzzy, php-format
-msgid "Cannot update queue entry: %s"
-msgstr "состояние неизвестно"
-
-#: addons/goto/class_gotomasses.inc:706
-#, php-format
-msgid "Cannot update queue entries."
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:755
-#, php-format
-msgid "Required class '%s' cannot be found: job not aborted!"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:831
+#: addons/goto/class_filterGotoEvents.inc:18
 #, fuzzy, php-format
 msgid "Cannot load queue entries: %s"
 msgstr "состояние неизвестно"
-
-#: addons/goto/class_gotomasses.inc:925 addons/goto/class_gotomasses.inc:931
-#, fuzzy
-msgid "System deployment"
-msgstr "Управление системами"
-
-#: addons/goto/class_gotomasses.inc:926
-msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
 
 #: addons/goto/log_view.tpl:7
 #, fuzzy
@@ -3362,11 +3344,6 @@ msgstr "Удалить"
 
 #: addons/goto/log_view.tpl:17
 msgid "No logs for this host available!"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_lock.inc:29
-#: addons/goto/events/class_DaemonEvent_lock.inc:30
-msgid "Lock"
 msgstr ""
 
 #: addons/goto/events/DaemonEvent_update.tpl:18
@@ -3437,11 +3414,6 @@ msgstr "в папку"
 #, fuzzy
 msgid "Reload GOto settings"
 msgstr "Атрибуты UNIX"
-
-#: addons/goto/events/class_DaemonEvent_activate.inc:29
-#: addons/goto/events/class_DaemonEvent_activate.inc:30
-msgid "Unlock"
-msgstr ""
 
 #: addons/goto/events/class_DaemonEvent_faireboot.inc:28
 #: addons/goto/events/class_DaemonEvent_faireboot.inc:29
@@ -3625,7 +3597,7 @@ msgstr "Показать серверы"
 
 #: addons/goto/events/eventTargetSystems-list.xml:11
 #, fuzzy
-msgid "List of systems"
+msgid "List of target systems"
 msgstr "Список пользователей"
 
 #: addons/goto/events/eventTargetSystems-list.xml:89
@@ -3990,6 +3962,44 @@ msgstr "Изменить сертификаты"
 #: personal/environment/logonManagement.tpl:44
 msgid "Script can be replaced by user"
 msgstr ""
+
+#~ msgid "Choose subtree to place group in"
+#~ msgstr "Выберите ветку для группы"
+
+#~ msgid "Choose subtree to place user in"
+#~ msgstr "Выберите ветку для пользователя"
+
+#, fuzzy
+#~ msgid "Choose subtree to place terminal in"
+#~ msgstr "Выберите ветку для пользователя"
+
+#, fuzzy
+#~ msgid "Deployment status"
+#~ msgstr "Состояние системы"
+
+#, fuzzy
+#~ msgid ""
+#~ "This menu allows you to remove and change the properties of GOsa tasks."
+#~ msgstr ""
+#~ "С помощью этого меню вы можете добавлять, изменять и удалять свойства "
+#~ "отдельных систем. Вы можете только добавлять системы которые однажды уже "
+#~ "были запущены."
+
+#, fuzzy
+#~ msgid "Pause job"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Resume job"
+#~ msgstr "сброс"
+
+#, fuzzy
+#~ msgid "Execute now"
+#~ msgstr "Выполнить"
+
+#, fuzzy
+#~ msgid "Abort job"
+#~ msgstr "Отчество"
 
 #, fuzzy
 #~ msgid "Add user"
@@ -6007,10 +6017,6 @@ msgstr ""
 
 #~ msgid "Groups"
 #~ msgstr "Группы"
-
-#, fuzzy
-#~ msgid "Down"
-#~ msgstr "Домен"
 
 #, fuzzy
 #~ msgid "No ACL settings for this category!"
