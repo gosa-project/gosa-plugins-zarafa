@@ -734,6 +734,11 @@ class printgeneric extends plugin
       $message[]= msgPool::required(_("Name"));
     }
 
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();
+    }
+
     /* must: cn */
     if(($this->BelongsTo == "Printer") && !tests::is_dns_name($this->cn)){
       $message[]= msgPool::invalid(_("Name"));

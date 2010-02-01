@@ -442,6 +442,11 @@ class workgeneric extends plugin
       $message[] = msgPool::invalid(_("Name"));
     }
 
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();
+    }
+
     if ($this->orig_dn != $this->dn){
       $ldap= $this->config->get_ldap_link();
       $ldap->cd ($this->base);
