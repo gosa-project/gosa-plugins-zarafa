@@ -99,7 +99,7 @@ class printgeneric extends plugin
     /* Set base */
     if ($this->dn == "new"){
       $ui= get_userinfo();
-      $this->base= dn2base($ui->dn);
+      $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
       $this->cn= "";
     } else {
     
