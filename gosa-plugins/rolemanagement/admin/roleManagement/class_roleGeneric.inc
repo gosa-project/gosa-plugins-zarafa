@@ -70,7 +70,8 @@ class roleGeneric extends plugin {
 
     // Detect the objects base
     if ($this->dn == "new"){
-      $this->base = session::get('CurrentMainBase');
+      $ui = get_userinfo();
+      $this->base= dn2base(session::global_is_set("CurrentMainBase")?session::global_get("CurrentMainBase"):$ui->dn);
     } else {
       $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleRDN"), '/i')."/","",$this->dn);
     }
