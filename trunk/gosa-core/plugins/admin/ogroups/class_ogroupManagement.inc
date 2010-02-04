@@ -615,9 +615,9 @@ class ogroupManagement extends plugin
     $filter= "(&(cn=$Regex)(objectClass=gosaGroupOfNames)(|$filter))";
 
     if($this->DivListOGroup->SubSearch){
-      $res= get_sub_list($filter, "ogroups",get_ou('ogroupRDN'), $base, array("cn","objectClass","gosaGroupObjects"), GL_SIZELIMIT | GL_SUBSEARCH);
+      $res= get_sub_list($filter, "ogroups",get_ou('ogroupRDN'), $base, array("cn","objectClass","gosaGroupObjects", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
     }else{
-      $res= get_sub_list($filter, "ogroups",get_ou('ogroupRDN'), get_ou('ogroupRDN').$base, array("cn","objectClass","gosaGroupObjects"), GL_SIZELIMIT );
+      $res= get_sub_list($filter, "ogroups",get_ou('ogroupRDN'), get_ou('ogroupRDN').$base, array("cn","objectClass","gosaGroupObjects", "description"), GL_SIZELIMIT );
     }
 
     $this->ogrouplist= $res;
