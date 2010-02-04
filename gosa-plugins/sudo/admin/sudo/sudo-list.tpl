@@ -19,7 +19,7 @@
       </div>
       {$LIST}
     </td>
-    <td style='vertical-align:top;min-width:250px'>
+    <td style='vertical-align:top;min-width:270px'>
       {$FILTER}
     </td>
   </tr>
