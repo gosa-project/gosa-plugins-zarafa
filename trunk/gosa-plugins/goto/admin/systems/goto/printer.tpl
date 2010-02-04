@@ -42,6 +42,17 @@
 {/if}
    <h2>{t}Details{/t}</h2>
    <table summary="">
+   {if ! $StandAlone }
+    <tr>
+     <td><LABEL for="description">{t}Description{/t}</LABEL></td>
+     <td>
+{render acl=$descriptionACL}
+      <input id="description" name="description" size=25 maxlength=80 value="{$description}">
+{/render}
+     </td>
+    </tr>
+    <tr>
+    {/if}
      <tr>
        <td><LABEL for="l">{t}Printer location{/t}</LABEL></td>
        <td>
