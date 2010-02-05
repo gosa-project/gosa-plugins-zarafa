@@ -182,7 +182,7 @@ class faiManagement extends management
     }
 
     // Automatically disable pasting process since there is no entry left to paste.
-    if(!$this->cpHandler->entries_queued()){
+    if(isset($this->cpHandler) && !$this->cpHandler->entries_queued()){
       $this->cpPastingStarted = FALSE;
     }
     return("");
