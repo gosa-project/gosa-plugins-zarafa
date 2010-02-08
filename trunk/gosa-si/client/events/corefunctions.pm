@@ -452,7 +452,7 @@ sub new_ldap_config {
     # Allow custom scripts to be executed
     if (defined $ldap_config_exit_hook) {
         system($ldap_config_exit_hook);
-        daemon_log("executed hook $ldap_config_exit_hook", 5);
+        daemon_log("Hook $ldap_config_exit_hook returned with code ".($? >> 8), 5);
     }
 
     return;
