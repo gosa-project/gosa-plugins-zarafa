@@ -918,6 +918,7 @@ class systems extends plugin
             if(in_array($type,array("ArpNewDevice","NewDevice")) && class_available("termgeneric")){
               $this->systab= new termgeneric($this->config, $dn);
               $this->systab->set_acl_base($dn);
+              $this->systab->set_acl_category("terminal");
               $this->systab->remove_from_parent();
             }elseif($tabtype=="phonetabs"){
               $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $dn,$type);
