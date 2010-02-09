@@ -36,6 +36,10 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name='SubSearch' value='1' title='{t}Select to search within subtrees{/t}'  onClick='document.mainform.submit();' {$subtree}>&nbsp;{t}Search in subtrees{/t}
+                        </td>
                 </table>
                         <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
                             <tr>

@@ -9,6 +9,7 @@ class hotplugDialog extends plugin
   var $depselect                = "/";
   var $deplist                  = "/";
   var $skipThese                = array();
+  var $subtree                  = FALSE;
 
   function hotplugDialog (&$config,$skipThese = array())
   {
@@ -31,6 +32,8 @@ class hotplugDialog extends plugin
       $this->depselect = $_POST['depselectHot'];
     }
 
+    $this->subtree = isset($_POST['SubSearch']);
+
     if((isset($_GET['search']))&&(!empty($_GET['search']))){
       $this->regex=$_GET['search']."*";
       $this->regex=preg_replace("/\*\*/","*",$this->regex);
@@ -48,6 +51,7 @@ class hotplugDialog extends plugin
     $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
     $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
     $smarty->assign("deplist", $this->config->idepartments);
+    $smarty->assign("subtree", $this->subtree?"checked":"");
 
 
     $smarty->assign("hotplugDevices",$this->hotplugDevices);
@@ -80,34 +84,41 @@ class hotplugDialog extends plugin
 
   function getHotplugs()
   {
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd(get_ou('deviceRDN').$this->depselect);
-    $ldap->search("(&(objectClass=gotoDevice)(|(cn=".$this->regex.")(description=".$this->regex.")))",array("gotoHotplugDevice","cn","dn")); 
+    $filter = "(&(objectClass=gotoDevice)(|(cn=".$this->regex.")(description=".$this->regex.")))";
+    $base = get_ou('deviceRDN').$this->depselect;
+    $attrs = array("gotoHotplugDevice", "cn", "dn");
+    $cat = "devices";
+
+    if ($this->subtree) {
+      $res = get_list($filter, $cat, $this->depselect, $attrs, GL_SUBSEARCH);
+    } else {
+      $res = get_list($filter, $cat, $base, $attrs);
+    }
 
     $a_return = array();  
     $this->hotplugDeviceList = array();
-    while($attr = $ldap->fetch()){
+    foreach ($res as $device) {
 
-      if(isset($attr['gotoHotplugDevice'][0])){
+      if(isset($device['gotoHotplugDevice'][0])){
 
-        $hot_plug = $attr['gotoHotplugDevice'][0];
+        $hot_plug = $device['gotoHotplugDevice'][0];
         $tmp      = preg_split("/\|/",$hot_plug);
         $tmp2     = array();
           
-        if(in_array($attr['cn'][0],$this->skipThese)){
+        if(in_array($device['cn'][0],$this->skipThese)){
           continue;
         }
 
-        $tmp2['name']         = $attr['cn'][0];
+        $tmp2['name']         = $device['cn'][0];
         $tmp2['description']  = $tmp[0];
         $tmp2['id']           = $tmp[1];
         $tmp2['produkt']      = $tmp[2];
         $tmp2['vendor']       = $tmp[3];
-        $tmp2['dn']           = $attr['dn'];
+        $tmp2['dn']           = $device['dn'];
 
-        $a_return[$attr['cn'][0]]= $attr['cn'][0]." [".$tmp[0]."] ".$tmp[1];
+        $a_return[$device['cn'][0]]= $device['cn'][0]." [".$tmp[0]."] ".$tmp[1];
 
-        $this->hotplugDeviceList[$attr['cn'][0]]=$tmp2;
+        $this->hotplugDeviceList[$device['cn'][0]]=$tmp2;
       }
     }
     uksort($a_return,"strnatcasecmp");
