@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-16 17:38+0200\n"
+"POT-Creation-Date: 2010-02-10 15:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 #: admin/fai/class_faiPartitionTableEntry.inc:474
 #: admin/fai/class_faiTemplate.inc:421 admin/fai/class_faiTemplate.inc:545
 #: admin/fai/faiVariable.tpl:9 admin/fai/class_askClassName.inc:142
-#: admin/fai/class_askClassName.inc:146 admin/fai/class_askClassName.inc:150
+#: admin/fai/class_askClassName.inc:151 admin/fai/class_askClassName.inc:155
 #: admin/fai/class_faiManagement.inc:614 admin/fai/class_faiManagement.inc:620
 #: admin/fai/class_faiScriptEntry.inc:137
 #: admin/fai/class_faiScriptEntry.inc:142
@@ -613,7 +613,13 @@ msgstr ""
 msgid "Template bundle"
 msgstr ""
 
-#: admin/fai/class_askClassName.inc:175
+#: admin/fai/class_askClassName.inc:146
+#, php-format
+msgid ""
+"The specified classname '%s' is invalid. Scripts must not start with a dash."
+msgstr ""
+
+#: admin/fai/class_askClassName.inc:189
 #, php-format
 msgid "This FAI class name is already in use by the administrative unit '%s'."
 msgstr ""
