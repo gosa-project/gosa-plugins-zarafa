@@ -881,6 +881,23 @@ class group extends plugin
 
   }
 
+  /*! \brief Get a new SambaSID for a group */
+  function getSambaSID()
+  {
+    $ldap = $this->config->get_ldap_link();
+    $gidNumber= $this->gidNumber;
+    while(TRUE){
+      $sid= $this->SID."-".($gidNumber*2 + $this->ridBase+1);
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search("(sambaSID=$sid)",array("sambaSID"));
+      if ($ldap->count() == 0){
+        break;
+      }
+      $gidNumber++;
+    }
+
+    return $sid;
+  }
 
   /* Save to LDAP */
   function save()
@@ -972,16 +989,7 @@ class group extends plugin
       if ($this->groupType == 0){
 
         if ($this->sambaSID == "" || $this->oldgroupType != $this->groupType){
-          $gidNumber= $this->gidNumber;
-          while(TRUE){
-            $sid= $this->SID."-".($gidNumber*2 + $this->ridBase+1);
-            $ldap->cd($this->config->current['BASE']);
-            $ldap->search("(sambaSID=$sid)",array("sambaSID"));
-            if ($ldap->count() == 0){
-              break;
-            }
-            $gidNumber++;
-          }
+          $sid = $this->getSambaSID();
           $this->attrs['sambaSID']= $sid;
           $this->sambaSID= $sid;
         }
@@ -1410,6 +1418,10 @@ class group extends plugin
     $source_o = new group($this->config, $source['dn']);
     foreach($this->CopyPasteVars as $var) {
         $this->$var = $source_o->$var;
+    }
+
+    if ($this->smbgroup) {
+      $this->sambaSID = $this->getSambaSID();
     }
 
     $this->memberUid = array();
