@@ -477,11 +477,18 @@ class phoneAccount extends plugin
 
     /* Prepare some basic attributes */
     $oldnums = array();
+
+    /* Strip invalid chars, but maintain a leading + for international numbers */
+    $t_tele= preg_replace("/[^0-9]/","",$tele);
+    if (preg_match('/^\+/', $tele)) {
+      $t_tele= "+".$t_tele;
+    }
+    
     foreach($this->a_old_telenums as $tele){
-      $oldnums[]= preg_replace("/[^0-9]/","",$tele);
+      $oldnums[]= $t_tele;
     }
     foreach($this->phoneNumbers as $tele){
-      $newnums[]= preg_replace("/[^0-9]/","",$tele);
+      $newnums[]= $t_tele;
     }
 
     if(empty($this->uid)) trigger_error("Uid is empty.");
