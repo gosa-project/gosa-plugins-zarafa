@@ -271,8 +271,12 @@ sub modiffile_group()
 		$text.="\n\tmembers \t\t";
 		while(defined($groupmembers[$i][$j]))
 		{
-			$text.=$groupmembers[$i][$j]." ";
+			$text.=$groupmembers[$i][$j];
  			$j++;
+			
+			if(defined($groupmembers[$i][$j])) { 
+ 				$text.=","; 
+ 			}
 		}
 		$text.="\n}\n\n";
 	}
