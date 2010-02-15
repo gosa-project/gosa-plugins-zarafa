@@ -116,7 +116,17 @@ my $password=$config_bind{masterPw};
 	$i=0;
 	foreach $entry (@entries) {
 	$stdout.="\nGroupe $i : \nName\t\t";$groupname[$i]=$entry->get_value('cn');$stdout.=$groupname[$i];
-	$stdout.="\n\n\talias:\t\t";$groupdescription[$i]=$entry->get_value('description');$stdout.=$groupdescription[$i];
+
+	$stdout.="\n\n\talias:\t\t";
+	$groupdescription[$i]=$entry->get_value('description');
+
+	if(defined($groupdescription[$i])) { 
+		$stdout.=$groupdescription[$i];
+	} else { 
+		# We need a valid description entry, so we'll just use the groupname
+		$stdout.=$groupename[$i];
+ 	}
+
 	$stdout.="\n\tmembers:\t";
 	$j=0;
 	foreach $members($entry->get_value('memberUid'))
@@ -250,9 +260,14 @@ sub modiffile_group()
 	$stdout.="\n\n$nb_groupe group(s) added in file $file\n";
 	for($i=0;$i<$nb_groupe;$i++)
 	{
-		$text.="\n\ndefine contact{\n";
+		$text.="\n\ndefine contactgroup{\n";
 		$text.="\n\tcontactgroup_name \t".$groupname[$i];
-		$text.="\n\talias \t\t\t".$groupdescription[$i];
+		if(defined($groupdescription[$i])) {
+			$text.="\n\talias \t\t\t".$groupdescription[$i];
+		} else { 
+ 			# We need a valid alias entry, so we'll just use the groupname
+			$text.="\n\talias \t\t\t".$groupname[$i]; 
+ 		}
 		$text.="\n\tmembers \t\t";
 		while(defined($groupmembers[$i][$j]))
 		{
