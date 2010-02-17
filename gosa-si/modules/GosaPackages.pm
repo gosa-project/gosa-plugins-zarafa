@@ -288,7 +288,7 @@ sub process_job_msg {
     if (exists $msg_hash->{periodic})
     {
         $periodic = $msg_hash->{periodic}[0];
-        if (not $periodic =~ /[0-9]+_(hours|minutes|days|weeks|months)/)    # Periodic tag is not valid
+        if ($periodic ne 'none' and not $periodic =~ /[0-9]+_(hours|minutes|days|weeks|months)/)    # Periodic tag is not valid
         {
             &main::daemon_log("$session_id ERROR: Message contains invalid periodic-tag '$periodic'.".
                     " Please use the following pattern for the tag: 'INTEGER_[minutes|hours|days|weeks|months]'".
