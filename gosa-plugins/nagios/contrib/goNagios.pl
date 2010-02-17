@@ -124,7 +124,7 @@ my $password=$config_bind{masterPw};
 		$stdout.=$groupdescription[$i];
 	} else { 
 		# We need a valid description entry, so we'll just use the groupname
-		$stdout.=$groupename[$i];
+		$stdout.=$groupname[$i];
  	}
 
 	$stdout.="\n\tmembers:\t";
