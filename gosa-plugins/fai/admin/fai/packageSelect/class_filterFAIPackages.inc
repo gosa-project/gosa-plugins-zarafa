@@ -4,6 +4,7 @@ class filterFAIPackages {
 
   static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
+    $filter= preg_replace('/\*/', '', $filter);
     $pkgs = array();
     $q          = new gosaSupportDaemon();
     $filter     = array("%$filter%");
