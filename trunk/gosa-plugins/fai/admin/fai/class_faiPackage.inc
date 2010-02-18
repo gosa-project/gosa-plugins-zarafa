@@ -40,7 +40,7 @@ class faiPackage extends plugin
 
   var $usedPackages     = array();
   var $buffer           = NULL; 
-  var $newDialogShown   =false;
+  var $newDialogShown   = false;
 
   var $FAIstate         = "";
   var $view_logged      = FALSE;
@@ -51,6 +51,8 @@ class faiPackage extends plugin
       "dselect-upgrade", "taskinst", "taskrm",
       "hold", "clean", "aptitude", "aptitude-r",
       "pending", "dpkgc" );
+
+  var $direct_packages_add = FALSE;
 
 
   function faiPackage (&$config, $dn= NULL)
@@ -145,6 +147,11 @@ class faiPackage extends plugin
     if($this->dn == "new"){
       $this->is_new =TRUE;
     }
+    /* Check weither its allowed to directly add packages */
+    $direct_packages_add = $config->search("faiManagement","direct_packages_add",array("menu"));
+    if (preg_match("/^true$/i", $direct_packages_add) || preg_match("/yes/i", $direct_packages_add)) {
+        $this->direct_packages_add = TRUE;
+    }
 
     /* Generate package list */
     $this->list= $this->genPkgs(TRUE);
@@ -198,11 +205,88 @@ class faiPackage extends plugin
      * Add 
      ******/
 
+    if(isset($_POST['AddManualpkg']) && 
+        isset($_POST['addPpkgsText']) &&
+        strlen($_POST['addPpkgsText']) && 
+        $this->acl_is_writeable("FAIpackage") && 
+        !preg_match("/freeze/",$this->FAIstate)){
+
+      // Check all splitted packages for valid package names
+      $add_packages = preg_split( "/[\s,]+/", get_post('addPpkgsText'), -1, PREG_SPLIT_NO_EMPTY );
+      $valid_packages = array();
+      if( is_array($add_packages) ) {
+        $invalid_packages = array();
+        foreach ($add_packages as $value) {
+          if(!preg_match( "/^[a-z0-9][-0-9a-z+\.]+$/",$value)){
+            $invalid_packages[] = trim($value);
+          }else{
+            $valid_packages[] = trim($value);
+          }
+        }
+        if(count($invalid_packages)){
+          $str = implode(", ",$invalid_packages);
+          msg_dialog::display(_("Invalid package names"), 
+              sprintf(_("The following package names don't match the Debian policy: %s"),$str),
+              ERROR_DIALOG);
+        }
+
+
+        // If we have a complete list of valid packages, add them
+        if(count($valid_packages)){
+
+          foreach($valid_packages as $key =>  $value){
+            if(array_key_exists($value,$this->usedPackages)) {
+              unset($valid_packages[$key]);
+            }
+          }
+
+          // Query SI-Deamon for additional package information
+          $daemon       = new gosaSupportDaemon();
+          $query_attrs  = array("distribution", "package","version", "section", "description", "timestamp");
+          $do_si_query  = true;
+
+
+          foreach ($valid_packages as $value) {
+            
+            if( $do_si_query == true ) {
+              $res = $daemon->FAI_get_packages($this->FAIdebianRelease,$query_attrs,array($value),0,1);
+              if( ! $daemon->is_error()){
+                
+                if(count($res)){
+
+                  // We just use the last answer - there shouldn't be multiple
+                  $res_attrs = array_pop( $res );
+                  $this->list[$value] = $res_attrs;
+                  $this->usedPackages[$value] = $res_attrs['PACKAGE'];
+
+                }else{
+                  $this->usedPackages[$value] = $value;
+                }
+              }else{
+                msg_dialog::display(_("Service infrastructure"),
+                    msgPool::siError($daemon->get_error()),
+                    ERROR_DIALOG);
+                $do_si_query = false;
+              }
+            }
+          }
+
+          ksort($this->usedPackages);
+
+          /* Generate package list */
+          $this->list= $this->genPkgs(TRUE);
+        }
+      }
+    }
+
     /* + was pressed to open the package dialog */
-    if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage") && !preg_match("/freeze/",$this->FAIstate)){
+    if(isset($_POST['Addpkg']) && 
+        $this->acl_is_writeable("FAIpackage") && 
+        !preg_match("/freeze/",$this->FAIstate)){
       $this->dialog = new faiPackageEntry($this->config, $this->FAIdebianRelease,$this->usedPackages);
       $this->is_dialog =true;
     }
+
 
     /* Check image Posts 
      */
@@ -395,6 +479,7 @@ class faiPackage extends plugin
     $smarty->assign("release" ,$this->FAIdebianRelease);
     $smarty->assign("sections",$this->sections);
     $smarty->assign("section" ,$strsec);
+    $smarty->assign("direct_packages_add", $this->direct_packages_add);
     $display.= $smarty->fetch(get_template_path('faiPackage.tpl', TRUE));
     return($display);
   }

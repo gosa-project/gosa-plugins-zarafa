@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-10 15:41+0100\n"
+"POT-Creation-Date: 2010-02-11 13:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 #: admin/fai/tabsTemplate.inc:33 admin/fai/class_FAI.inc:548
 #: admin/fai/class_faiHook.inc:239 admin/fai/class_faiProfile.inc:259
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
-#: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:272
+#: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:356
 #: admin/fai/tabsVariable.inc:33
 msgid "Error"
 msgstr ""
@@ -83,8 +83,8 @@ msgstr ""
 #: admin/fai/class_faiVariable.inc:398 admin/fai/class_faiVariableEntry.inc:90
 #: admin/fai/class_faiVariableEntry.inc:99
 #: admin/fai/class_faiVariableEntry.inc:102
-#: admin/fai/class_faiVariableEntry.inc:137 admin/fai/class_faiPackage.inc:456
-#: admin/fai/class_faiPackage.inc:582 admin/fai/faiPartitionTable.tpl:9
+#: admin/fai/class_faiVariableEntry.inc:137 admin/fai/class_faiPackage.inc:541
+#: admin/fai/class_faiPackage.inc:667 admin/fai/faiPartitionTable.tpl:9
 #: admin/fai/faiPartitionTableEntry.tpl:6 admin/fai/faiProfile.tpl:9
 msgid "Name"
 msgstr ""
@@ -92,7 +92,8 @@ msgstr ""
 #: admin/systems/services/repository/class_servRepository.inc:352
 #: admin/fai/class_faiManagement.inc:788
 #: admin/fai/class_faiPackageConfiguration.inc:35 admin/fai/class_FAI.inc:566
-#: admin/fai/class_faiPackage.inc:478 admin/fai/class_faiPackageEntry.inc:53
+#: admin/fai/class_faiPackage.inc:266 admin/fai/class_faiPackage.inc:563
+#: admin/fai/class_faiPackageEntry.inc:53
 #: admin/fai/class_faiPackageEntry.inc:193
 msgid "Service infrastructure"
 msgstr ""
@@ -134,7 +135,7 @@ msgstr ""
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_divListRepositories.inc:23
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
-#: admin/fai/class_faiPackage.inc:588
+#: admin/fai/class_faiPackage.inc:673
 msgid "Release"
 msgstr ""
 
@@ -160,7 +161,7 @@ msgid "Add repository"
 msgstr ""
 
 #: admin/fai/faiPackageConfiguration.tpl:1 admin/fai/class_divListFai.inc:68
-#: admin/fai/class_faiPackage.inc:574
+#: admin/fai/class_faiPackage.inc:659
 msgid "Package"
 msgstr ""
 
@@ -278,7 +279,7 @@ msgstr ""
 #: admin/fai/faiHookEntry.tpl:19 admin/fai/faiHook.tpl:21
 #: admin/fai/class_faiHook.inc:563 admin/fai/class_faiProfile.inc:492
 #: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:399
-#: admin/fai/class_faiVariableEntry.inc:138 admin/fai/class_faiPackage.inc:583
+#: admin/fai/class_faiVariableEntry.inc:138 admin/fai/class_faiPackage.inc:668
 #: admin/fai/faiPartitionTable.tpl:21 admin/fai/faiPartitionTableEntry.tpl:13
 #: admin/fai/faiProfile.tpl:21
 msgid "Description"
@@ -341,7 +342,7 @@ msgstr ""
 msgid "Generic"
 msgstr ""
 
-#: admin/fai/faiPackage.tpl:45 admin/fai/class_faiPackage.inc:585
+#: admin/fai/faiPackage.tpl:45 admin/fai/class_faiPackage.inc:670
 msgid "Section"
 msgstr ""
 
@@ -355,6 +356,10 @@ msgstr ""
 
 #: admin/fai/faiPackage.tpl:71
 msgid "Used packages"
+msgstr ""
+
+#: admin/fai/faiPackage.tpl:82
+msgid "Add from list"
 msgstr ""
 
 #: admin/fai/class_faiPartitionTableEntry.inc:176
@@ -506,7 +511,7 @@ msgid "FAI template"
 msgstr ""
 
 #: admin/fai/class_faiTemplate.inc:545 admin/fai/class_faiScript.inc:646
-#: admin/fai/class_faiPackage.inc:585 admin/fai/class_faiPackage.inc:588
+#: admin/fai/class_faiPackage.inc:670 admin/fai/class_faiPackage.inc:673
 msgid "Readonly"
 msgstr ""
 
@@ -1344,48 +1349,57 @@ msgstr ""
 msgid "FAI variable entry "
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:329 admin/fai/class_faiPackage.inc:330
+#: admin/fai/class_faiPackage.inc:228
+msgid "Invalid package names"
+msgstr ""
+
+#: admin/fai/class_faiPackage.inc:229
+#, php-format
+msgid "The following package names don't match the Debian policy: %s"
+msgstr ""
+
+#: admin/fai/class_faiPackage.inc:413 admin/fai/class_faiPackage.inc:414
 msgid "Configured"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:336 admin/fai/class_faiPackage.inc:337
+#: admin/fai/class_faiPackage.inc:420 admin/fai/class_faiPackage.inc:421
 msgid "Package marked for removal"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:353
+#: admin/fai/class_faiPackage.inc:437
 msgid "Mark package for removal"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:359
+#: admin/fai/class_faiPackage.inc:443
 msgid "Configure this package"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:363
+#: admin/fai/class_faiPackage.inc:447
 msgid "Remove this package"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:442
+#: admin/fai/class_faiPackage.inc:527
 msgid "Please select a least one package!"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:446
+#: admin/fai/class_faiPackage.inc:531
 msgid ""
 "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:575
+#: admin/fai/class_faiPackage.inc:660
 msgid "FAI Package list"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:584
+#: admin/fai/class_faiPackage.inc:669
 msgid "Packages"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:586
+#: admin/fai/class_faiPackage.inc:671
 msgid "Install Method"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:587
+#: admin/fai/class_faiPackage.inc:672
 msgid "Package configuration"
 msgstr ""
 
