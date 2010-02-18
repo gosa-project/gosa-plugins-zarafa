@@ -410,6 +410,17 @@ class phoneAccount extends plugin
     return($ret);
   }
 
+  function stripInvalidChars($tele){
+    /* Strip invalid chars, but maintain a leading + for international numbers */
+    $t_tele= preg_replace("/[^0-9]/","",$tele);
+    if (preg_match('/^\+/', $tele)) {
+      $t_tele= "+".$t_tele;
+    }
+    return($t_tele);
+  }
+    
+
+
 
   /* This function generates the Database entries. 
    * The Parameter 'save' could be true or false.
@@ -478,17 +489,11 @@ class phoneAccount extends plugin
     /* Prepare some basic attributes */
     $oldnums = array();
 
-    /* Strip invalid chars, but maintain a leading + for international numbers */
-    $t_tele= preg_replace("/[^0-9]/","",$tele);
-    if (preg_match('/^\+/', $tele)) {
-      $t_tele= "+".$t_tele;
-    }
-    
     foreach($this->a_old_telenums as $tele){
-      $oldnums[]= $t_tele;
+      $oldnums[]= $this->stripInvalidChars($tele);
     }
     foreach($this->phoneNumbers as $tele){
-      $newnums[]= $t_tele;
+      $newnums[]= $this->stripInvalidChars($tele);
     }
 
     if(empty($this->uid)) trigger_error("Uid is empty.");
