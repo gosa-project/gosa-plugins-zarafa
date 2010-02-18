@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-08 13:18+0100\n"
+"POT-Creation-Date: 2010-02-08 13:22+0100\n"
 "PO-Revision-Date: 2009-01-15 11:49+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -229,7 +229,7 @@ msgstr "Es wurden %s doppelte Werte für das Attribute 'uidNumber' gefunden."
 #: ihtml/themes/default/msg_dialog.tpl:73
 #: ihtml/themes/default/msg_dialog.tpl:124
 #: ihtml/themes/default/msg_dialog.tpl:126
-#: ihtml/themes/default/msg_dialog.tpl:129 include/utils/class_msgPool.inc:315
+#: ihtml/themes/default/msg_dialog.tpl:129 include/utils/class_msgPool.inc:319
 #, php-format
 msgid "Ok"
 msgstr "Ok"
@@ -394,9 +394,9 @@ msgstr "Geben Sie eine gültige Benutzer ID an!"
 #: include/class_plugin.inc:1611 include/class_gosaSupportDaemon.inc:1160
 #: include/class_gosaSupportDaemon.inc:1180 include/class_msg_dialog.inc:99
 #: include/class_log.inc:138 include/class_log.inc:218
-#: include/utils/class_msgPool.inc:154 include/utils/class_msgPool.inc:166
-#: include/utils/class_msgPool.inc:184 include/utils/class_msgPool.inc:467
-#: include/utils/class_msgPool.inc:486 include/class_CopyPasteHandler.inc:117
+#: include/utils/class_msgPool.inc:158 include/utils/class_msgPool.inc:170
+#: include/utils/class_msgPool.inc:188 include/utils/class_msgPool.inc:471
+#: include/utils/class_msgPool.inc:490 include/class_CopyPasteHandler.inc:117
 #: include/class_CopyPasteHandler.inc:126
 #: include/class_CopyPasteHandler.inc:158
 #: include/class_CopyPasteHandler.inc:175
@@ -554,7 +554,7 @@ msgstr "Aktualisierung von '%s' ist fehlgeschlagen: %s"
 msgid "There are %s services that need to be migrated."
 msgstr "Es müssen %s Dienste migriert werden."
 
-#: setup/class_setupStep_Migrate.inc:2861 include/utils/class_msgPool.inc:333
+#: setup/class_setupStep_Migrate.inc:2861 include/utils/class_msgPool.inc:337
 #, php-format
 msgid "Add"
 msgstr "Hinzufügen"
@@ -1030,7 +1030,7 @@ msgstr "Suchen"
 #: setup/setup_migrate.tpl:521 setup/setup_migrate.tpl:565
 #: ihtml/themes/default/acl.tpl:29 ihtml/themes/default/acl.tpl:52
 #: ihtml/themes/default/acl.tpl:125 ihtml/themes/default/acl.tpl:140
-#: include/utils/class_msgPool.inc:321
+#: include/utils/class_msgPool.inc:325
 #, php-format
 msgid "Apply"
 msgstr "Anwenden"
@@ -1047,7 +1047,7 @@ msgstr "Anwenden"
 #: ihtml/themes/default/msg_dialog.tpl:130
 #: ihtml/themes/default/islocked.tpl:19
 #: ihtml/themes/default/copyPasteDialog.tpl:21
-#: ihtml/themes/default/remove.tpl:15 include/utils/class_msgPool.inc:309
+#: ihtml/themes/default/remove.tpl:15 include/utils/class_msgPool.inc:313
 #: include/class_baseSelectDialog.inc:62
 #, php-format
 msgid "Cancel"
@@ -2156,7 +2156,7 @@ msgstr ""
 #: ihtml/themes/default/snapshotdialog.tpl:20
 #: ihtml/themes/default/snapshotdialog.tpl:62
 #: plugins/admin/departments/class_departmentGeneric.inc:574
-#: include/utils/class_msgPool.inc:464 include/class_acl.inc:729
+#: include/utils/class_msgPool.inc:468 include/class_acl.inc:729
 #: include/class_acl.inc:736 include/class_acl.inc:743
 #: include/class_acl.inc:749
 msgid "Object"
@@ -2328,7 +2328,7 @@ msgstr ""
 
 #: ihtml/themes/default/sizelimit.tpl:14
 #: plugins/personal/generic/generic.tpl:137
-#: include/utils/class_msgPool.inc:345
+#: include/utils/class_msgPool.inc:349
 #, php-format
 msgid "Set"
 msgstr "Setzen"
@@ -2514,7 +2514,7 @@ msgstr ""
 "erhalten, wenn Sie das Objekt einfügen!"
 
 #: ihtml/themes/default/copyPasteDialog.tpl:19
-#: include/class_MultiSelectWindow.inc:149 include/utils/class_msgPool.inc:327
+#: include/class_MultiSelectWindow.inc:149 include/utils/class_msgPool.inc:331
 #, php-format
 msgid "Save"
 msgstr "Speichern"
@@ -2742,7 +2742,7 @@ msgid "Edit"
 msgstr "Bearbeiten"
 
 #: plugins/admin/acl/class_aclRole.inc:382
-#: plugins/admin/acl/class_aclRole.inc:433 include/utils/class_msgPool.inc:339
+#: plugins/admin/acl/class_aclRole.inc:433 include/utils/class_msgPool.inc:343
 #: include/class_acl.inc:477 include/class_acl.inc:525
 #, php-format
 msgid "Delete"
@@ -5696,279 +5696,287 @@ msgstr "Wählen Sie dies um Objekte aufzulisten die '%s' enthalten."
 msgid "Select to list objects that have '%s' enabled"
 msgstr "Auswählen um Objekte des Typs '%s' aufzulisten"
 
-#: include/utils/class_msgPool.inc:34
+#: include/utils/class_msgPool.inc:26
+msgid "Select to search within descriptions"
+msgstr "Wählen Sie diese Option um auch in Beschreibungen zu suchen"
+
+#: include/utils/class_msgPool.inc:28
+msgid "Search in descriptions"
+msgstr "Suche in Beschreibungen"
+
+#: include/utils/class_msgPool.inc:38
 msgid "This object will be deleted!"
 msgstr "Dieses objekt wird gelöscht!"
 
-#: include/utils/class_msgPool.inc:36
+#: include/utils/class_msgPool.inc:40
 #, php-format
 msgid "This '%s' object will be deleted!"
 msgstr "Dieses '%s'-Objekt wird gelöscht!"
 
-#: include/utils/class_msgPool.inc:41
+#: include/utils/class_msgPool.inc:45
 #, php-format
 msgid "This object will be deleted: %s"
 msgstr "Dieses Objekt wird gelöscht: %s"
 
-#: include/utils/class_msgPool.inc:43
+#: include/utils/class_msgPool.inc:47
 #, php-format
 msgid "This '%s' object will be deleted: %s"
 msgstr "Dieses '%s'-Objekt wird gelöscht: %s"
 
-#: include/utils/class_msgPool.inc:48
+#: include/utils/class_msgPool.inc:52
 msgid "This object will be deleted:"
 msgstr "Dieses Objekt wird gelöscht:"
 
-#: include/utils/class_msgPool.inc:50
+#: include/utils/class_msgPool.inc:54
 #, php-format
 msgid "This '%s' object will be deleted:"
 msgstr "Dieses '%s'-Objekt wird gelöscht:"
 
-#: include/utils/class_msgPool.inc:54
+#: include/utils/class_msgPool.inc:58
 #, php-format
 msgid "These objects will be deleted: %s"
 msgstr "Diese Objekte werden gelöscht: %s"
 
-#: include/utils/class_msgPool.inc:56
+#: include/utils/class_msgPool.inc:60
 #, php-format
 msgid "These '%s' objects will be deleted: %s"
 msgstr "Diese '%s'-Objekte werden gelöscht: %s"
 
-#: include/utils/class_msgPool.inc:64
+#: include/utils/class_msgPool.inc:68
 msgid "You have no permission to delete this object!"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu löschen!"
 
-#: include/utils/class_msgPool.inc:68 include/utils/class_msgPool.inc:72
+#: include/utils/class_msgPool.inc:72 include/utils/class_msgPool.inc:76
 msgid "You have no permission to delete the object:"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu löschen:"
 
-#: include/utils/class_msgPool.inc:75
+#: include/utils/class_msgPool.inc:79
 msgid "You have no permission to delete these objects:"
 msgstr "Sie sind nicht berechtigt dieses Objekte zu löschen:"
 
-#: include/utils/class_msgPool.inc:82
+#: include/utils/class_msgPool.inc:86
 msgid "You have no permission to create this object!"
 msgstr "Sie sind nicht berechtigt diese Objekt anzulegen!"
 
-#: include/utils/class_msgPool.inc:86 include/utils/class_msgPool.inc:90
+#: include/utils/class_msgPool.inc:90 include/utils/class_msgPool.inc:94
 msgid "You have no permission to create the object:"
 msgstr "Sie sind nicht berechtigt dieses Objekt anzulegen:"
 
-#: include/utils/class_msgPool.inc:93
+#: include/utils/class_msgPool.inc:97
 msgid "You have no permission to create these objects:"
 msgstr "Sie sind nicht berechtigt diese Objekte anzulegen:"
 
-#: include/utils/class_msgPool.inc:100
+#: include/utils/class_msgPool.inc:104
 msgid "You have no permission to modify this object!"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu verändern!"
 
-#: include/utils/class_msgPool.inc:104 include/utils/class_msgPool.inc:108
+#: include/utils/class_msgPool.inc:108 include/utils/class_msgPool.inc:112
 msgid "You have no permission to modify the object:"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu verändern:"
 
-#: include/utils/class_msgPool.inc:111
+#: include/utils/class_msgPool.inc:115
 msgid "You have no permission to modify these objects:"
 msgstr "Sie sind nicht berechtigt diese Objekte zu verändern:"
 
-#: include/utils/class_msgPool.inc:118
+#: include/utils/class_msgPool.inc:122
 msgid "You have no permission to view this object!"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu öffnen!"
 
-#: include/utils/class_msgPool.inc:122 include/utils/class_msgPool.inc:126
+#: include/utils/class_msgPool.inc:126 include/utils/class_msgPool.inc:130
 msgid "You have no permission to view the object:"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu öffnen:"
 
-#: include/utils/class_msgPool.inc:129
+#: include/utils/class_msgPool.inc:133
 msgid "You have no permission to view these objects:"
 msgstr "Sie sind nicht berechtigt diese Objekte zu öffnen:"
 
-#: include/utils/class_msgPool.inc:136
+#: include/utils/class_msgPool.inc:140
 msgid "You have no permission to move this object!"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu verschieben!"
 
-#: include/utils/class_msgPool.inc:140 include/utils/class_msgPool.inc:144
+#: include/utils/class_msgPool.inc:144 include/utils/class_msgPool.inc:148
 msgid "You have no permission to move the object:"
 msgstr "Sie sind nicht berechtigt dieses Objekt zu verschieben:"
 
-#: include/utils/class_msgPool.inc:147
+#: include/utils/class_msgPool.inc:151
 msgid "You have no permission to move these objects:"
 msgstr "Sie sind nicht berechtigt diese Objekte zu verschieben:"
 
-#: include/utils/class_msgPool.inc:157 include/utils/class_msgPool.inc:169
-#: include/utils/class_msgPool.inc:187
+#: include/utils/class_msgPool.inc:161 include/utils/class_msgPool.inc:173
+#: include/utils/class_msgPool.inc:191
 msgid "Connection information"
 msgstr "Verbindungs-Information"
 
-#: include/utils/class_msgPool.inc:159
+#: include/utils/class_msgPool.inc:163
 #, php-format
 msgid "Cannot connect to %s database!"
 msgstr "Kann keine Verbindung zur %s Datenbank aufbauen!"
 
-#: include/utils/class_msgPool.inc:171
+#: include/utils/class_msgPool.inc:175
 #, php-format
 msgid "Cannot select %s database!"
 msgstr "Kann die Datenbank %s nicht auswählen!"
 
-#: include/utils/class_msgPool.inc:177
+#: include/utils/class_msgPool.inc:181
 #, php-format
 msgid "No %s server defined!"
 msgstr "Kein Server für %s definiert!"
 
-#: include/utils/class_msgPool.inc:189
+#: include/utils/class_msgPool.inc:193
 #, php-format
 msgid "Cannot query %s database!"
 msgstr "Kann die Datenbank %s nicht abfragen!"
 
-#: include/utils/class_msgPool.inc:195
+#: include/utils/class_msgPool.inc:199
 #, php-format
 msgid "The field '%s' contains a reserved keyword!"
 msgstr "Das Feld '%s' enthält ein reserviertes Schlüsselwort!"
 
-#: include/utils/class_msgPool.inc:201
+#: include/utils/class_msgPool.inc:205
 #, php-format
 msgid "Command specified as %s hook for plugin '%s' does not exist!"
 msgstr ""
 "Das als '%s'-Erweiterung angegebene Kommando für Modul '%s' existiert nicht!"
 
-#: include/utils/class_msgPool.inc:208
+#: include/utils/class_msgPool.inc:212
 #, php-format
 msgid "'%s' command is invalid!"
 msgstr "'%s'-Kommando ist ungültig!"
 
-#: include/utils/class_msgPool.inc:210
+#: include/utils/class_msgPool.inc:214
 #, php-format
 msgid "'%s' command (%s) for plugin %s is invalid!"
 msgstr "'%s' Kommando (%s) für Modul %s ist ungültig!"
 
-#: include/utils/class_msgPool.inc:212
+#: include/utils/class_msgPool.inc:216
 #, php-format
 msgid "'%s' command for plugin %s is invalid!"
 msgstr "'%s' Kommando für Modul %s ist ungültig!"
 
-#: include/utils/class_msgPool.inc:214
+#: include/utils/class_msgPool.inc:218
 #, php-format
 msgid "'%s' command (%s) is invalid!"
 msgstr "'%s' Kommando (%s) ist ungültig!"
 
-#: include/utils/class_msgPool.inc:222
+#: include/utils/class_msgPool.inc:226
 #, php-format
 msgid "Cannot execute '%s' command!"
 msgstr "Kann '%s' Kommando nicht ausführen!"
 
-#: include/utils/class_msgPool.inc:224
+#: include/utils/class_msgPool.inc:228
 #, php-format
 msgid "Cannot execute '%s' command (%s) for plugin %s!"
 msgstr "Kann '%s' Kommando (%s) für Modul %s nicht ausführen!"
 
-#: include/utils/class_msgPool.inc:226
+#: include/utils/class_msgPool.inc:230
 #, php-format
 msgid "Cannot execute '%s' command for plugin %s!"
 msgstr "Kann '%s' Kommando für Modul %s nicht ausführen!"
 
-#: include/utils/class_msgPool.inc:228
+#: include/utils/class_msgPool.inc:232
 #, php-format
 msgid "Cannot execute '%s' command (%s)!"
 msgstr "Kann '%s' Kommando (%s) nicht ausführen!"
 
-#: include/utils/class_msgPool.inc:236
+#: include/utils/class_msgPool.inc:240
 #, php-format
 msgid "Value for '%s' is too large!"
 msgstr "Der Wert für '%s' ist zu groß!"
 
-#: include/utils/class_msgPool.inc:238
+#: include/utils/class_msgPool.inc:242
 #, php-format
 msgid "'%s' must be smaller than %d!"
 msgstr "'%s' muß kleiner sein als %d!"
 
-#: include/utils/class_msgPool.inc:246
+#: include/utils/class_msgPool.inc:250
 #, php-format
 msgid "Value for '%s' is too small!"
 msgstr "Der Wert für '%s' ist zu kein!"
 
-#: include/utils/class_msgPool.inc:248
+#: include/utils/class_msgPool.inc:252
 #, php-format
 msgid "'%s' must be %d or above!"
 msgstr "'%s' muß größer oder gleich %d sein!"
 
-#: include/utils/class_msgPool.inc:255
+#: include/utils/class_msgPool.inc:259
 #, php-format
 msgid "'%s' depends on '%s' - please provide both values!"
 msgstr "'%s' hängt von '%s' ab - bitte geben Sie beide Werte an!"
 
-#: include/utils/class_msgPool.inc:261
+#: include/utils/class_msgPool.inc:265
 #, php-format
 msgid "There is already an entry with this '%s' attribute in the system!"
 msgstr "Es existiert bereits ein Eintrag mit diesem '%s' Attribut im System!"
 
-#: include/utils/class_msgPool.inc:267
+#: include/utils/class_msgPool.inc:271
 #, php-format
 msgid "The required field '%s' is empty!"
 msgstr "Das Pflicht-Feld '%s' ist leer!"
 
-#: include/utils/class_msgPool.inc:275
+#: include/utils/class_msgPool.inc:279
 msgid "Example"
 msgstr "Beispiel"
 
-#: include/utils/class_msgPool.inc:292
+#: include/utils/class_msgPool.inc:296
 #, php-format
 msgid "The Field '%s' contains invalid characters"
 msgstr "Das Feld '%s' enthält ungültige Zeichen"
 
-#: include/utils/class_msgPool.inc:293
+#: include/utils/class_msgPool.inc:297
 #, php-format
 msgid "'%s' is not allowed:"
 msgstr "'%s' ist nicht erlaubt:"
 
-#: include/utils/class_msgPool.inc:293
+#: include/utils/class_msgPool.inc:297
 #, php-format
 msgid "'%s' are not allowed!"
 msgstr "'%s' sind nicht erlaubt!"
 
-#: include/utils/class_msgPool.inc:296
+#: include/utils/class_msgPool.inc:300
 #, php-format
 msgid "The Field '%s' contains invalid characters!"
 msgstr "Das Feld '%s' enthält ungültige Zeichen!"
 
-#: include/utils/class_msgPool.inc:303
+#: include/utils/class_msgPool.inc:307
 #, php-format
 msgid "Missing %s PHP extension!"
 msgstr "Fehlenden %s PHP-Erweiterung!"
 
-#: include/utils/class_msgPool.inc:333
+#: include/utils/class_msgPool.inc:337
 #, php-format
 msgid "Add %s"
 msgstr "%s hinzufügen"
 
-#: include/utils/class_msgPool.inc:339
+#: include/utils/class_msgPool.inc:343
 #, php-format
 msgid "Delete %s"
 msgstr "%s löschen"
 
-#: include/utils/class_msgPool.inc:345
+#: include/utils/class_msgPool.inc:349
 #, php-format
 msgid "Set %s"
 msgstr "%s einstellen"
 
-#: include/utils/class_msgPool.inc:351
+#: include/utils/class_msgPool.inc:355
 #, php-format
 msgid "Edit..."
 msgstr "Bearbeiten..."
 
-#: include/utils/class_msgPool.inc:351
+#: include/utils/class_msgPool.inc:355
 #, php-format
 msgid "Edit %s..."
 msgstr "%s bearbeiten..."
 
-#: include/utils/class_msgPool.inc:357
+#: include/utils/class_msgPool.inc:361
 msgid "Back"
 msgstr "Zurück"
 
-#: include/utils/class_msgPool.inc:377
+#: include/utils/class_msgPool.inc:381
 #, php-format
 msgid "This account has no valid %s extensions!"
 msgstr "Dieses Konto besitzt keine gültigen %s-Einstellungen."
 
-#: include/utils/class_msgPool.inc:383
+#: include/utils/class_msgPool.inc:387
 #, php-format
 msgid ""
 "This account has %s settings enabled. You can disable them by clicking below."
@@ -5976,7 +5984,7 @@ msgstr ""
 "Dieses Konto besitzt aktivierte %s-Einstellungen. Sie können diese durch "
 "einen Klick auf die untere Schaltfläche deaktivieren."
 
-#: include/utils/class_msgPool.inc:386 include/utils/class_msgPool.inc:393
+#: include/utils/class_msgPool.inc:390 include/utils/class_msgPool.inc:397
 #, php-format
 msgid ""
 "This account has %s settings enabled. To disable them, you'll need to remove "
@@ -5985,7 +5993,7 @@ msgstr ""
 "Dieses Konto besitzt aktivierte %s-Erweiterungen. Um sie zu deaktivieren, "
 "müssen Sie zunächst die %s Einstellungen entfernen!"
 
-#: include/utils/class_msgPool.inc:402
+#: include/utils/class_msgPool.inc:406
 #, php-format
 msgid ""
 "This account has %s settings disabled. You can enable them by clicking below."
@@ -5993,7 +6001,7 @@ msgstr ""
 "Dieses Konto hat keine %s-Einstellungen aktiviert. Sie können Sie durch "
 "einen Klick auf die Schaltfläche aktivieren."
 
-#: include/utils/class_msgPool.inc:405 include/utils/class_msgPool.inc:412
+#: include/utils/class_msgPool.inc:409 include/utils/class_msgPool.inc:416
 #, php-format
 msgid ""
 "This account has %s settings disabled. To enable them, you'll need to add "
@@ -6002,180 +6010,180 @@ msgstr ""
 "Dieses Konto besitzt aktuell keine aktivierten %s-Einstellungen. Um sie zu "
 "aktivieren, müssen Sie zunächst die %s Erweiterungen hinzufügen!"
 
-#: include/utils/class_msgPool.inc:420
+#: include/utils/class_msgPool.inc:424
 #, php-format
 msgid "Add %s settings"
 msgstr "%s Einstellungen hinzufügen"
 
-#: include/utils/class_msgPool.inc:426
+#: include/utils/class_msgPool.inc:430
 #, php-format
 msgid "Remove %s settings"
 msgstr "%s Einstellungen entfernen"
 
-#: include/utils/class_msgPool.inc:432
+#: include/utils/class_msgPool.inc:436
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
 "Dialog zu ändern"
 
-#: include/utils/class_msgPool.inc:438
+#: include/utils/class_msgPool.inc:442
 msgid "January"
 msgstr "Januar"
 
-#: include/utils/class_msgPool.inc:438
+#: include/utils/class_msgPool.inc:442
 msgid "February"
 msgstr "Februar"
 
-#: include/utils/class_msgPool.inc:438
+#: include/utils/class_msgPool.inc:442
 msgid "March"
 msgstr "März"
 
-#: include/utils/class_msgPool.inc:438
+#: include/utils/class_msgPool.inc:442
 msgid "April"
 msgstr "April"
 
-#: include/utils/class_msgPool.inc:439
+#: include/utils/class_msgPool.inc:443
 msgid "May"
 msgstr "Mai"
 
-#: include/utils/class_msgPool.inc:439
+#: include/utils/class_msgPool.inc:443
 msgid "June"
 msgstr "Juni"
 
-#: include/utils/class_msgPool.inc:439
+#: include/utils/class_msgPool.inc:443
 msgid "July"
 msgstr "Juli"
 
-#: include/utils/class_msgPool.inc:439
+#: include/utils/class_msgPool.inc:443
 msgid "August"
 msgstr "August"
 
-#: include/utils/class_msgPool.inc:439
+#: include/utils/class_msgPool.inc:443
 msgid "September"
 msgstr "September"
 
-#: include/utils/class_msgPool.inc:440
+#: include/utils/class_msgPool.inc:444
 msgid "October"
 msgstr "Oktober"
 
-#: include/utils/class_msgPool.inc:440
+#: include/utils/class_msgPool.inc:444
 msgid "November"
 msgstr "November"
 
-#: include/utils/class_msgPool.inc:440
+#: include/utils/class_msgPool.inc:444
 msgid "December"
 msgstr "Dezember"
 
-#: include/utils/class_msgPool.inc:446
+#: include/utils/class_msgPool.inc:450
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: include/utils/class_msgPool.inc:446
+#: include/utils/class_msgPool.inc:450
 msgid "Monday"
 msgstr "Montag"
 
-#: include/utils/class_msgPool.inc:446
+#: include/utils/class_msgPool.inc:450
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: include/utils/class_msgPool.inc:446
+#: include/utils/class_msgPool.inc:450
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: include/utils/class_msgPool.inc:446
+#: include/utils/class_msgPool.inc:450
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: include/utils/class_msgPool.inc:446
+#: include/utils/class_msgPool.inc:450
 msgid "Friday"
 msgstr "Freitag"
 
-#: include/utils/class_msgPool.inc:446
+#: include/utils/class_msgPool.inc:450
 msgid "Saturday"
 msgstr "Samstag"
 
-#: include/utils/class_msgPool.inc:453
+#: include/utils/class_msgPool.inc:457
 msgid "read operation"
 msgstr "Lese-Operation"
 
-#: include/utils/class_msgPool.inc:453
+#: include/utils/class_msgPool.inc:457
 msgid "add operation"
 msgstr "Hinzufügeoperation"
 
-#: include/utils/class_msgPool.inc:453
+#: include/utils/class_msgPool.inc:457
 msgid "modify operation"
 msgstr "Änderungs-Operation"
 
-#: include/utils/class_msgPool.inc:454
+#: include/utils/class_msgPool.inc:458
 msgid "delete operation"
 msgstr "Lösch-Operation"
 
-#: include/utils/class_msgPool.inc:454
+#: include/utils/class_msgPool.inc:458
 msgid "search operation"
 msgstr "Such-Operation"
 
-#: include/utils/class_msgPool.inc:454
+#: include/utils/class_msgPool.inc:458
 msgid "authentication"
 msgstr "Authentifizierung"
 
-#: include/utils/class_msgPool.inc:457
+#: include/utils/class_msgPool.inc:461
 #, php-format
 msgid "LDAP %s failed!"
 msgstr "LDAP %s fehlgeschlagen!"
 
-#: include/utils/class_msgPool.inc:459
+#: include/utils/class_msgPool.inc:463
 msgid "LDAP operation failed!"
 msgstr "LDAP-Operation fehlgeschlagen"
 
-#: include/utils/class_msgPool.inc:474
+#: include/utils/class_msgPool.inc:478
 msgid "Upload failed!"
 msgstr "Übertragung fehlgeschlagen!"
 
-#: include/utils/class_msgPool.inc:477
+#: include/utils/class_msgPool.inc:481
 #, php-format
 msgid "Upload failed: %s"
 msgstr "Übertragung fehlgeschlagen: %s"
 
-#: include/utils/class_msgPool.inc:484
+#: include/utils/class_msgPool.inc:488
 msgid "Communication failure with the infrastructure service!"
 msgstr "Kommunikationsfehler mit dem Infrastruktur Dienst!"
 
-#: include/utils/class_msgPool.inc:486
+#: include/utils/class_msgPool.inc:490
 #, php-format
 msgid "Communication failure with the infrastructure service: %s"
 msgstr "Kommunikationsfehler mit dem Infrastruktur Dienst: %s"
 
-#: include/utils/class_msgPool.inc:493 include/utils/class_msgPool.inc:496
+#: include/utils/class_msgPool.inc:497 include/utils/class_msgPool.inc:500
 #, php-format
 msgid "This '%s' is still in use by this object: %s"
 msgstr "Dieses '%s' ist noch in Gebrauch dieses Objekts: %s"
 
-#: include/utils/class_msgPool.inc:499
+#: include/utils/class_msgPool.inc:503
 #, php-format
 msgid "This '%s' is still in use."
 msgstr "Dieses '%s' ist noch in Benutzung."
 
-#: include/utils/class_msgPool.inc:501
+#: include/utils/class_msgPool.inc:505
 #, php-format
 msgid "This '%s' is still in use by these objects: %s"
 msgstr "Dieses '%s' ist noch in Gebrauch dieser Objekte: %s"
 
-#: include/utils/class_msgPool.inc:507
+#: include/utils/class_msgPool.inc:511
 #, php-format
 msgid "File '%s' does not exist!"
 msgstr "Die Datei '%s' existiert nicht!"
 
-#: include/utils/class_msgPool.inc:513
+#: include/utils/class_msgPool.inc:517
 #, php-format
 msgid "Cannot open file '%s' for reading!"
 msgstr "Kann Datei '%s' nicht zum Lesen öffnen!"
 
-#: include/utils/class_msgPool.inc:519
+#: include/utils/class_msgPool.inc:523
 #, php-format
 msgid "Cannot open file '%s' for writing!"
 msgstr "Kann Datei '%s' nicht zum Schreiben öffnen!"
 
-#: include/utils/class_msgPool.inc:525
+#: include/utils/class_msgPool.inc:529
 #, php-format
 msgid ""
 "The value for '%s' is currently unconfigured or invalid, please check your "
@@ -6184,32 +6192,32 @@ msgstr ""
 "Der Wert für '%s' ist momentan nicht konfiguriert oder ungültig. Bitte "
 "prüfen Sie Ihre Konfigurationsdatei!"
 
-#: include/utils/class_msgPool.inc:531
+#: include/utils/class_msgPool.inc:535
 #, php-format
 msgid "Cannot delete file '%s'!"
 msgstr "Kann Datei '%s' nicht löschen!"
 
-#: include/utils/class_msgPool.inc:537
+#: include/utils/class_msgPool.inc:541
 #, php-format
 msgid "Cannot create folder '%s'!"
 msgstr "Kann den Ordner '%s' nicht anlegen!"
 
-#: include/utils/class_msgPool.inc:543
+#: include/utils/class_msgPool.inc:547
 #, php-format
 msgid "Cannot delete folder '%s'!"
 msgstr "Kann den Ordner '%s' nicht löschen!"
 
-#: include/utils/class_msgPool.inc:549
+#: include/utils/class_msgPool.inc:553
 #, php-format
 msgid "Checking for %s support"
 msgstr "Prüfe auf %s-Unterstützung"
 
-#: include/utils/class_msgPool.inc:555
+#: include/utils/class_msgPool.inc:559
 #, php-format
 msgid "Install and activate the %s PHP module."
 msgstr "Installieren und aktivieren Sie das %s PHP-Modul."
 
-#: include/utils/class_msgPool.inc:561
+#: include/utils/class_msgPool.inc:565
 #, php-format
 msgid ""
 "Cannot initialize class '%s'! Maybe there is a plugin missing in your gosa "

@@ -44,6 +44,9 @@ class divListSystem extends MultiSelectWindow
   /* Subsearch checkbox */
   var $SubSearch;
 
+  /* Search descriptions checkbox */
+  var $DescSearch;
+
   var $parent             ;
   var $ui                 ;
 
@@ -141,6 +144,9 @@ class divListSystem extends MultiSelectWindow
     /* Add SubSearch checkbox */
     $this->AddCheckBox(SEPERATOR);
     $this->AddCheckBox("SubSearch",  msgPool::selectToView("","subsearch"), msgPool::selectToView("","subsearch_small"), false);
+
+    /* Add DescSearch checkbox */
+    $this->AddCheckBox("DescSearch", msgPool::selectToView("","descsearch"), msgPool::selectToView("","descsearch_small"), false);
 
     /*                  Name                 ,Text                              ,Default  , Connect with alphabet  */
     $this->AddRegex   ("Regex",     _("Display systems matching"),"*" , true);

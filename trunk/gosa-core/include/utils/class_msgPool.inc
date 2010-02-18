@@ -22,6 +22,10 @@ class msgPool
       return(_("Select to search within subtrees"));
     }elseif($o_type == "subsearch_small"){
       return(_("Search in subtrees"));
+    }elseif($o_type == "descsearch"){
+      return(_("Select to search within descriptions"));
+    }elseif($o_type == "descsearch_small"){
+      return(_("Search in descriptions"));
     }
 
   }

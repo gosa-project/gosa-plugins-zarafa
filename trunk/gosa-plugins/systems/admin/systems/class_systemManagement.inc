@@ -1252,7 +1252,14 @@ class systems extends plugin
         }else{
           /* User filter? */
           if($oc['CLASS'] != ""){
-            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";
+            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")";
+            /* Decide weither to search in description and CN or only in the CN */
+            if ($this->DivListSystem->DescSearch) {
+              $filter = $filter . "(|(cn=".$this->DivListSystem->Regex.")(description=".$this->DivListSystem->Regex.")))";
+            }
+            else {
+              $filter = $filter . "(cn=".$this->DivListSystem->Regex."))";
+            }
             $res = array_merge($res,get_list($filter,$sys_categories,$oc['TREE'].$base, $sys_attrs,  GL_SIZELIMIT));
           }
         }
@@ -1260,7 +1267,13 @@ class systems extends plugin
     }
 
     /* Search for incoming objects */ 
-    $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
+    $filter = "(|(&".$userregex."(objectClass=goHard)";
+    if ($this->DivListSystem->DescSearch) {
+      $filter = $filter . "(|(cn=".$this->DivListSystem->Regex.")(description=".$this->DivListSystem->Regex.")))";
+    }
+    else {
+      $filter = $filter . "(cn=".$this->DivListSystem->Regex.")))";
+    }
     $res = array_merge($res,get_list($filter,$sys_categories, get_ou('systemIncomingRDN').$base,$sys_attrs, GL_SIZELIMIT));
 
     /* Append opsi systems, the opsi extension have to installed.
