@@ -504,6 +504,7 @@ class faiManagement extends management
     // Now save changes
     FAI::save_release_changes_now();
     $to_del = FAI::clean_up_releases($this->last_dn);
+    $ldap= $this->config->get_ldap_link();
     foreach($to_del as $dn){
       $ldap->rmdir_recursive($dn);
     }
