@@ -144,7 +144,9 @@ class workgeneric extends plugin
     if ($this->dn == "new"){
       $ui= get_userinfo();
       $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
-    } else {
+    } elseif(preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", $this->dn)){
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", "", $this->dn);
+    }else{
       $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("workstationRDN"), '/')."/i", "", $this->dn);
     }
 

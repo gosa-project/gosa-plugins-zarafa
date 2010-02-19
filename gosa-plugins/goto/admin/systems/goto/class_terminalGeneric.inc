@@ -128,6 +128,8 @@ class termgeneric extends plugin
     if ($this->dn == "new"){
       $ui= get_userinfo();
       $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
+    } elseif(preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", $this->dn)){
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", "", $this->dn);
     } else {
       $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("terminalRDN"), '/')."/i", "", $this->dn);
     }
