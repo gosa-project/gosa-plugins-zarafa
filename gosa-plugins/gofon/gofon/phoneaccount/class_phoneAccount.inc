@@ -469,7 +469,8 @@ class phoneAccount extends plugin
     $s_host         = NULL;                   // Contains host for Sip entry
     $s_qualify      = "yes";                  // Qualify entry
     $s_pin          = NULL;                   // Entry for secret
-    $s_type         = NULL;                   // Entry for phone type (friend , peer ..)
+    $s_type         = "friend";               // Entry for phone type (friend , peer ..)
+                                              // Set the default to the default of the db
 
     $sip_data_array = array();                // Contains complete sip entry, to generate SQL syntax
     $i_old_key      = false;                  // Contains index for first old phonenumber, to delete old entries corectly
@@ -514,6 +515,7 @@ class phoneAccount extends plugin
 
     /* Get phonehardware to setup sip entry  */
     $ldap         = $this->config->get_ldap_link();
+    $ldap->cd ($this->config->current['BASE']);
     $r_res        = $ldap->search("(&(objectClass=goFonHardware)(cn=".$this->goFonHardware."))", array('*'));
     $a_ldap_attrs = $ldap->fetch();
 
@@ -1438,7 +1440,7 @@ class phoneAccount extends plugin
     }
 
     if ($this->initially_was_account != $this->is_account || $this->is_modified){
-      $str = $this->generate_mysql_entension_entries(true);
+      $str = $this->generate_mysql_entension_entries(false);
       if(empty($str)){
         msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
       }
