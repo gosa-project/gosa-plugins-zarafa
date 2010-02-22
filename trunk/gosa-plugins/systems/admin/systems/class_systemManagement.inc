@@ -1274,7 +1274,7 @@ class systems extends plugin
     else {
       $filter = $filter . "(cn=".$this->DivListSystem->Regex.")))";
     }
-    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('systemIncomingRDN').$base,$sys_attrs, GL_SIZELIMIT));
+    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('systemIncomingRDN').$this->config->get_cfg_value('base'),$sys_attrs, GL_SIZELIMIT));
 
     /* Append opsi systems, the opsi extension have to installed.
         (Only, if we are allowed to view opsi hosts)
