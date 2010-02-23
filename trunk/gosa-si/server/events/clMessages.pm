@@ -125,7 +125,7 @@ sub LOGIN {
     my $error_str;
 
     # Invoke set_last_system; message sets ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
-	$res = &set_last_system($msg, $msg_hash, $session_id);
+#    &set_last_system($msg, $msg_hash, $session_id);
 
     # Add user to login_users_db
     my %add_hash = ( table=>$main::login_users_tn, 
@@ -186,7 +186,7 @@ sub CURRENTLY_LOGGED_IN {
     }
 
     # Invoke set_last_system; message sets ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
-	my $res = &set_last_system($msg, $msg_hash, $session_id);
+#    &set_last_system($msg, $msg_hash, $session_id);
     
     # fetch all user currently assigned to the client at login_users_db
     my %currently_logged_in_user = (); 
