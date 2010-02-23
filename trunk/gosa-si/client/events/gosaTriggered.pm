@@ -281,24 +281,17 @@ sub trigger_action_reboot {
     my ($msg, $msg_hash) = @_;
     my $timeout;
 
-    if((not exists $msg_hash->{timeout} ) || (1 != @{$msg_hash->{timeout}} ) ) {
-        $timeout = 0;
-    } 
-    else {
-        $timeout = @{$msg_hash->{timeout}}[0];
-    }
-
     # check logged in user
     my @user_list = &get_logged_in_users;
     if( @user_list >= 1 ) {
     	system( "/usr/bin/goto-notify reboot" );
-        open(FILE, "> /etc/gosa-si/event");
-        print FILE "reboot\n";
-        close(FILE);
     }
-    else {
-    	system( "/sbin/shutdown -r +$timeout &" );
-    }
+
+    open(FILE, "> /etc/gosa-si/event");
+    print FILE "reboot\n";
+    close(FILE);
+
+    system( "/usr/sbin/goto-action &" );
 
     return;
 }
@@ -339,24 +332,17 @@ sub trigger_action_halt {
     my ($msg, $msg_hash) = @_;
     my $timeout;
 
-    if((not exists $msg_hash->{timeout} ) || (1 != @{$msg_hash->{timeout}} ) ) {
-        $timeout = 0;
-    } 
-    else {
-        $timeout = @{$msg_hash->{timeout}}[0];
-    }
-
     # check logged in user
     my @user_list = &get_logged_in_users;
     if( @user_list >= 1 ) {
     	system( "/usr/bin/goto-notify halt" );
-        open(FILE, "> /etc/gosa-si/event");
-        print FILE "halt\n";
-        close(FILE);
     }
-    else {
-    	system( "/sbin/shutdown -h +$timeout &" );
-    }
+
+    open(FILE, "> /etc/gosa-si/event");
+    print FILE "halt\n";
+    close(FILE);
+
+    system( "/usr/sbin/goto-action &" );
 
     return;
 }
@@ -404,9 +390,8 @@ sub trigger_action_reinstall {
         print FILE "install\n";
         close(FILE);
     }
-    else {
-    	system( "/sbin/shutdown -r now &" );
-    }
+
+    system( "/usr/sbin/goto-action &" );
 
     return;
 }
@@ -446,8 +431,16 @@ sub trigger_action_reinstall {
 sub trigger_action_update {
     my ($msg, $msg_hash) = @_;
 
-    # Execute update
-    system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &" );
+    # check logged in user
+    my @user_list = &get_logged_in_users;
+    if( @user_list >= 1 ) {
+    	system( "/usr/bin/goto-notify softupdate" );
+        open(FILE, "> /etc/gosa-si/event");
+        print FILE "softupdate\n";
+        close(FILE);
+    }
+
+    system( "/usr/sbin/goto-action &" );
 
     return;
 }
@@ -487,8 +480,16 @@ sub trigger_action_update {
 sub trigger_action_instant_update {
     my ($msg, $msg_hash) = @_;
 
-    # Execute update
-    system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &" );
+    # check logged in user
+    my @user_list = &get_logged_in_users;
+    if( @user_list >= 1 ) {
+    	system( "/usr/bin/goto-notify softupdate" );
+        open(FILE, "> /etc/gosa-si/event");
+        print FILE "softupdate\n";
+        close(FILE);
+    }
+
+    system( "/usr/sbin/goto-action &" );
 
     return;
 }
