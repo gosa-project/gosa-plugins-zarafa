@@ -361,11 +361,14 @@ class divListSystem extends MultiSelectWindow
       /* Add create FAI CD icon 
        */
       $acl_cd = preg_match("/w/",$ui->get_permissions($val['dn'],"workstation/workgeneric","createFAICD"));
-      if(in_array("gotoWorkstation",$val['objectClass']) && $acl_cd){
-        $action2= "<input class='center' type='image' src='plugins/systems/images/cdrom.png' alt='"._("Create CD")."'   
+      $isocd_command= $this->config->search("workgeneric", "ISOCMD",array('tabs'));
+      if (check_command($isocd_command)){
+        if(in_array("gotoWorkstation",$val['objectClass']) && $acl_cd){
+          $action2= "<input class='center' type='image' src='plugins/systems/images/cdrom.png' alt='"._("Create CD")."'   
                       name='gen_cd_%KEY%' title='"._("Create FAI CD")."'>&nbsp;".$action2;
-      }else{
-        $action2= $empty.$action2;
+        }else{
+          $action2= $empty.$action2;
+        }
       }
 
       if(isset($val['message'])){
