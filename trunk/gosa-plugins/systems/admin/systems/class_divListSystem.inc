@@ -353,7 +353,11 @@ class divListSystem extends MultiSelectWindow
       $display_key_for = array("terminal","workstation","server","component");
       $pwd_acl = $ui->get_permissions($val['dn'],$tabs[$type]['ACL'],"userPassword");
       if(preg_match("/w/",$pwd_acl) && in_array($type,$display_key_for)){
-        $action2 = "<input class='center' type='image' src='images/lists/key.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set password")."'>";
+        /* MAF
+        removed by patch, don't display key
+        */
+        //$action2 = "<input class='center' type='image' src='images/lists/key.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set password")."'>";
+        $action2 = $empty;
       }else{
         $action2 = $empty;
       }
