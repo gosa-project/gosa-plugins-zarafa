@@ -792,7 +792,7 @@ class config  {
             $this->tdepartments[$val] != $ui->gosaUnitTag){
 
 						#TODO: link with strict*
-						#continue;
+						continue;
         }
       }
 

@@ -84,9 +84,10 @@ class hotplugDialog extends plugin
 
   function getHotplugs()
   {
+    $ui = get_userinfo();
     $filter = "(&(objectClass=gotoDevice)(|(cn=".$this->regex.")(description=".$this->regex.")))";
     $base = get_ou('deviceRDN').$this->depselect;
-    $attrs = array("gotoHotplugDevice", "cn", "dn");
+    $attrs = array("gotoHotplugDevice", "cn", "dn", "gosaUnitTag");
     $cat = "devices";
 
     if ($this->subtree) {
@@ -98,6 +99,10 @@ class hotplugDialog extends plugin
     $a_return = array();  
     $this->hotplugDeviceList = array();
     foreach ($res as $device) {
+      /* Skip devices with a different unittag as those of the user */
+      if ($device['gosaUnitTag'][0] != $ui->gosaUnitTag) {
+        continue;
+      }
 
       if(isset($device['gotoHotplugDevice'][0])){
 
