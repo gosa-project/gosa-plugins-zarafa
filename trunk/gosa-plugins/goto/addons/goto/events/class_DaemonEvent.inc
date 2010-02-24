@@ -432,6 +432,10 @@ class DaemonEvent
       $ret[$attr] = $this->$attr;
     }
 
+    if(!isset($ret['timestamp'])){
+      $ret['timestamp'] = time();
+    }
+
     # Check if timestamp is in gosa-si-time-format 
     if(!tests::is_gosa_si_time($ret['timestamp'])){ 
       $ret['timestamp'] = $this->_timestamp_to_event($this->timestamp); 
