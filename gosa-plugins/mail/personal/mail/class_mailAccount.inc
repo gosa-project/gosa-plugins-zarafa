@@ -746,6 +746,10 @@ class mailAccount extends plugin
       }
 
       foreach ($attrs as $val){
+
+        // We can only replace strings here
+        if(!is_string($obj->$val)) continue;
+
         if(preg_match("/dateOfBirth/",$val)){
           if($obj->use_dob){
             $contents= preg_replace("/%$val/",date("Y-d-m",$obj->dateOfBirth),$contents);
