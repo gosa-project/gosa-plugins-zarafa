@@ -327,6 +327,7 @@
       <label for="no_password_required">{t}Login from windows client requires no password{/t}</label>
      </td>
     </tr>
+<!--
     <tr>
      <td colspan=2 style="vertical-align:top;">
       {render acl=$sambaPwdCanChangeACL  checkbox=$multiple_support checked=$use_allow_pwchange}
@@ -335,6 +336,7 @@
       <label for="allow_pwchange">{t}Allow user to change password from client{/t}</label>
      </td>   
     </tr>
+-->
     <tr>
      <td colspan=2>
       {render acl=$sambaAcctFlagsLACL  checkbox=$multiple_support checked=$use_temporary_disable}
@@ -343,6 +345,7 @@
       <label for="temporary_disable">{t}Lock samba account{/t}</label>
      </td>
     </tr>
+<!--
     <tr>
      <td>
       {render acl=$sambaPwdMustChangeACL  checkbox=$multiple_support checked=$use_password_expires}
@@ -364,6 +367,7 @@
       {/render}
      </td>
     </tr>
+  -->
 	{if $additional_info_PwdMustChange}
     <tr>
      <td colspan=2 style='padding-left: 10px;'>
