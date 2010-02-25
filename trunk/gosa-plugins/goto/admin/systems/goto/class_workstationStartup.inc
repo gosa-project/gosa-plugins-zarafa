@@ -991,7 +991,7 @@ class workstartup extends plugin
     plugin::PrepareForCopyPaste($source);    
     $source_o = new workstartup ($this->config, $source['dn']);
     foreach(array("FAIclass","gotoModules", "gotoAutoFs", "gotoFilesystem",
-          "gotoKernelParameters","gotoShares") as $attr){
+          "gotoKernelParameters","gotoShares","gotoLdapServers", "gotoLdap_inherit") as $attr){
       $this->$attr = $source_o->$attr;
     }
   }
