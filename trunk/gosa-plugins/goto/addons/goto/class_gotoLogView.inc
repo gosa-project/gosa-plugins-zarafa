@@ -13,6 +13,7 @@ class gotoLogView extends plugin
 
   var $selected_date;
   var $selected_file = 0;
+  var $selected_type;
 
   var $attributes = array("macAddress");
   var $macAddress = "";
@@ -77,11 +78,15 @@ class gotoLogView extends plugin
     $smarty->assign("mac",$this->mac);
     $smarty->assign("selected_file",$this->selected_file);
     $smarty->assign("selected_date",$this->selected_date);
-    $smarty->assign("log_file", $this->get_log($this->mac,$this->selected_date,$this->selected_file));        
+    $smarty->assign("selected_type",$this->selected_type);
+    $smarty->assign("log_file", $this->get_log($this->mac,$this->selected_date,$this->selected_file, $this->selected_type));        
     $smarty->assign("standalone",$this->standalone);
 
     if (isset($this->logs[$this->mac])){
 	    $date = date("d.m.Y H:i:s",$this->logs[$this->mac][$this->selected_date]['REAL_DATE']);
+    }
+    if (isset($this->logs[$this->mac])){
+      $type = $this->logs[$this->mac][$this->selected_date]['FAI_ACTION'];
     }
     $file = $this->selected_file;
     $smarty->assign("selected_log",_("none"));
@@ -98,22 +103,38 @@ class gotoLogView extends plugin
     }else{
       $img = "<img src='images/lists/sort-up.png' border='0' alt='/\\'";
     }
-    if($this->sort_by == "file"){
-      $img1 = $img;
-      $img2 = "";
-    }else{
-      $img1 = "";
-      $img2 = $img;
-    }
 
+    $file_img = "";
+    $type_img = "";
+    $date_img = "";
+    switch($this->sort_by) {
+      case "file":
+        $file_img = $img;
+        $type_img = "";
+        $date_img = "";
+        break;
+      case "time":
+        $date_img = $img;
+	$type_img = "";
+	$file_img = "";
+        break;
+      case "type":
+        $type_img = $img;
+	$date_img = "";
+	$file_img = "";
+        break;
+    }
 
     /* Create list header 
      */
     $divlist->SetHeader(array(
-          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=file'>"._("File")." ".$img1."</a>",
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=file'>"._("File")." ".$file_img."</a>",
                 "attach"=>"width='200px;'"),
-          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=time'>"._("Date")." ".$img2."</a>",
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=type'>"._("Type")." ".$type_img."</a>",
                 "attach" => "style='border-right:none;'"),
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=time'>"._("Date")." ".$date_img."</a>",
+                "attach" => "style='border-right:none;'"),
+    
           ));
 
     /* Create divlist list 
@@ -123,22 +144,33 @@ class gotoLogView extends plugin
 
     /* Create sortable array
      */ 
-    $link = "<a href='?plug=".$_GET['plug']."&time=%time%&file=%file%&mac=%mac%'>%str%</a>";
+    $link = "<a href='?plug=".$_GET['plug']."&time=%time%&file=%file%&mac=%mac%&type=%type%'>%str%</a>";
     $to_add = array();
     $sort_by = $this->sort_by;
     foreach($this->logs as $mac => $times){
       foreach($times as $time => $data){
         $rtime = $data['REAL_DATE'];
+        $type = $data['FAI_ACTION'];
+        switch($type) {
+            case 'softupdate':
+              $type = _("Software update");
+              break;
+            case 'install':
+              $type = _("Installation");
+              break;
+        }
         foreach($data['FILES'] as $file){
 
           $highlight = "";
-          if($file == $this->selected_file && $time == $this->selected_date && $mac == $this->mac){
+          if($file == $this->selected_file && $time == $this->selected_date && $mac == $this->mac && $type == $this->selected_type){
             $highlight = "background-color:#CCCCCC";
           }
 
           $use_link = preg_replace(array("/%mac%/","/%time%/","/%file%/"),array($mac,$time,$file),$link);
           $to_add[$$sort_by.$file.$time] = array(
             array("string" => preg_replace("/%str%/",$file,$use_link),
+                  "attach" => "style='width:200px; $highlight'"),
+            array("string" => preg_replace("/%str%/",$type,$use_link),
                   "attach" => "style='width:200px; $highlight'"),
             array("string" => preg_replace("/%str%/",date("d.m.Y H:i:s",$rtime),$use_link),
                   "attach" => "style='border-right:none; $highlight'"),
@@ -168,9 +200,9 @@ class gotoLogView extends plugin
   }
 
 
-  function get_log($mac,$date,$file)
+  function get_log($mac,$date,$file,$type)
   {
-    $res = $this->o_queue->get_log_file($mac,$date,$file);
+    $res = $this->o_queue->get_log_file($mac,$date,$file, $type);
     if($this->o_queue->is_configured() && $this->o_queue->is_error()){
       msg_dialog::display(_("Error"), $this->o_queue->get_error(), ERROR_DIALOG);
     }
@@ -181,12 +213,12 @@ class gotoLogView extends plugin
   
   function save_object()
   {
-    foreach(array("time"=>"selected_date","file"=>"selected_file") as $attr => $dest){
+    foreach(array("time"=>"selected_date","file"=>"selected_file","type"=>"selected_type") as $attr => $dest){
       if(isset($_GET[$attr])){
         $this->$dest = $_GET[$attr];
       }
     }
-    if(isset($_GET['sort_by']) && in_array($_GET['sort_by'],array("file","time"))){
+    if(isset($_GET['sort_by']) && in_array($_GET['sort_by'],array("file","time", "type"))){
       if($_GET['sort_by'] == $this->sort_by){
         $this->sort_dir = !$this->sort_dir;
       }

@@ -163,7 +163,6 @@ sub check_cmdline_param () {
     }
 }
 
-
 #===  FUNCTION  ================================================================
 #         NAME: check_pid
 #   PARAMETERS:
@@ -315,7 +314,6 @@ sub get_mac {
 	}
 	return $result;
 }
-
 
 
 #===  FUNCTION  ================================================================
@@ -898,7 +896,7 @@ sub fifo_got_record {
     &send_msg_to_target($clmsg, $server_address, $server_key, "CLMSG_$header");
 
     # if installation finished, save all log files 
-    if ($file_record eq "TASKBEGIN finish") {
+    if ($file_record eq "TASKBEGIN savelog") {
         &save_fai_log($fai_log_dir); 
     }
 
@@ -909,6 +907,7 @@ sub fifo_got_record {
 sub save_fai_log {
     my ($fai_log_dir) = @_ ;
     my $FAI_DIR;
+    my $fai_action;
 
 	# Directory for log files after a softupdate
     my $log_dir = File::Spec->catdir($fai_log_dir, "localhost/last");
@@ -920,6 +919,11 @@ sub save_fai_log {
 				daemon_log("ERROR: cannot open directory $log_dir", 1);
 				return; 
 		}
+        $fai_action = "install";
+    }
+    else {
+        # If we already have a logdir, we can assume that this is a softupdate
+        $fai_action = "softupdate";
     }
 
     opendir($FAI_DIR, "$log_dir");
@@ -949,6 +953,7 @@ sub save_fai_log {
     my $all_log_string = join("\n", @log_list); 
     my $msg_hash = &create_xml_hash("CLMSG_save_fai_log", $client_address, $server_address, $all_log_string);
     &add_content2xml_hash($msg_hash, "macaddress", $client_mac_address);
+    &add_content2xml_hash($msg_hash, "fai_action", $fai_action);
     my $msg = &create_xml_string($msg_hash);
     &send_msg_to_target($msg, $server_address, $server_key, "CLMSG_save_fai_log");
 
