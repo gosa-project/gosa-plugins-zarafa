@@ -358,6 +358,17 @@ class workservice extends plugin
 
   function remove_from_parent()
   {
+    /* Cancel if there's nothing to do here */
+    if ((!$this->acl_is_removeable())){
+      return;
+    }
+
+    /* Remove and write to LDAP */
+    plugin::remove_from_parent();
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $this->cleanup();
+    $ldap->modify($this->attrs);
     $this->handle_post_events("remove");
     new log("remove","workstation/".get_class($this),$this->dn);
   }

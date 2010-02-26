@@ -24,7 +24,23 @@ class ogrouptabs extends tabs
 {
   var $base= "";
   var $acl_category; 
- 
+  var $to_remove=array();
+
+  /*! \brief Stage an object for removal */
+  function remove($object) {
+    if (!isset($this->to_remove[$object])) {
+      $this->to_remove[$object] = $this->by_object[$object];
+      unset($this->by_object[$object]);
+    }
+  }
+
+  /*! \brief Unstage an object from removal */
+  function add($object) {
+    if (isset($this->to_remove[$object])) {
+      unset($this->to_remove[$object]);
+    }
+  }
+
   function reload($dd)
   {
     $objects      = preg_replace('/[\[\]]/', '', $dd);
@@ -54,7 +70,7 @@ class ogrouptabs extends tabs
       }
       if((!$usePhoneTab && isset($this->by_object['phonequeue']))||
          (!preg_match("/U/",$objects) && isset($this->by_object['phonequeue']))){
-        $this->by_object['phonequeue']->remove_from_parent();
+        $this->remove('phonequeue');
         unset($this->by_object['phonequeue']);
         unset($this->by_name['phonequeue']);
       }
@@ -64,7 +80,7 @@ class ogrouptabs extends tabs
      */
     if(class_available("mailogroup")){
       if(!preg_match("/U/",$objects) && isset($this->by_object['mailogroup'])){
-        $this->by_object['mailogroup']->remove_from_parent();
+        $this->remove('mailogroup');
         unset($this->by_object['mailogroup']);
         unset($this->by_name['mailogroup']);
       }
@@ -75,7 +91,7 @@ class ogrouptabs extends tabs
     if(class_available("termgroup")){
       if(($mixed_type && isset($this->by_object['termgroup'])) ||
           !preg_match("/T/",$objects) && !preg_match("/W/",$objects) && isset($this->by_object['termgroup'])){
-        $this->by_object['termgroup']->remove_from_parent();
+        $this->remove('termgroup');    
         unset($this->by_object['termgroup']);
         unset($this->by_name['termgroup']);
       }
@@ -83,7 +99,7 @@ class ogrouptabs extends tabs
     if(class_available("termservice")){
       if(($mixed_type && isset($this->by_object['termservice'])) ||
           !preg_match("/T/",$objects) &&(isset($this->by_object['termservice']))){
-        $this->by_object['termservice']->remove_from_parent();
+        $this->remove('termservice');    
         unset($this->by_object['termservice']);
         unset($this->by_name['termservice']);
       }
@@ -91,7 +107,7 @@ class ogrouptabs extends tabs
     if(class_available("termstartup")){
       if(($mixed_type && isset($this->by_object['termstartup'])) ||
           !preg_match("/T/",$objects)&&(isset($this->by_object['termstartup']))){
-        $this->by_object['termstartup']->remove_from_parent();
+        $this->remove('termstartup');
         unset($this->by_object['termstartup']);
         unset($this->by_name['termstartup']);
       }
@@ -101,7 +117,7 @@ class ogrouptabs extends tabs
     if(class_available("workservice")){
       if(($mixed_type && isset($this->by_object['workservice'])) ||
           (!preg_match("/W/",$objects))&&(isset($this->by_object['workservice']))){
-        $this->by_object['workservice']->remove_from_parent();
+        $this->remove('workservice');
         unset($this->by_object['workservice']);
         unset($this->by_name['workservice']);
       }
@@ -109,11 +125,10 @@ class ogrouptabs extends tabs
     if(class_available("workstartup")){
       if(($mixed_type && isset($this->by_object['workstartup'])) ||
           (!preg_match("/S/",$objects) && !preg_match("/W/",$objects))&&(isset($this->by_object['workstartup']))){
-        $this->by_object['workstartup']->remove_from_parent();
+        $this->remove('workstartup');
         unset($this->by_object['workstartup']);
         unset($this->by_name['workstartup']);
         if (isset($this->by_object['faiSummary'])){
-          $this->by_object['faiSummary']->remove_from_parent();
           unset($this->by_object['faiSummary']);
           unset($this->by_name['faiSummary']);
         }
@@ -133,6 +148,7 @@ class ogrouptabs extends tabs
                 $this->by_name['phonequeue']= _("Phone queue");
                 $this->by_object['phonequeue']= new phonequeue($this->config, $this->dn);
                 $this->by_object['phonequeue']->parent= &$this;
+                $this->add('phonequeue');
                 break;
               }
             }
@@ -148,6 +164,7 @@ class ogrouptabs extends tabs
           $this->by_name['mailogroup']= _("Mail");
           $this->by_object['mailogroup']= new mailogroup($this->config, $this->dn);
           $this->by_object['mailogroup']->parent= &$this;
+          $this->add('mailogroup');
         }
       }
     }
@@ -161,6 +178,7 @@ class ogrouptabs extends tabs
           $this->by_object['termgroup']= new termgroup($this->config, $this->dn);
           $this->by_object['termgroup']->inheritTimeServer = false;
           $this->by_object['termgroup']->parent= &$this;
+          $this->add('termgroup');
         }
       }
     }
@@ -170,8 +188,9 @@ class ogrouptabs extends tabs
         if(!isset($this->by_object['termstartup'])){
           $this->by_name['termstartup']= _("Startup");
           $this->by_object['termstartup']= new termstartup($this->config, $this->dn,$this->by_object['ogroup']);
-	  $this->by_object['termstartup']->parent= &$this;
-	  $this->by_object['termstartup']->acl = "#all#";
+          $this->by_object['termstartup']->parent= &$this;
+          $this->by_object['termstartup']->acl = "#all#";
+          $this->add('termstartup');
         }
       }
     }
@@ -181,8 +200,9 @@ class ogrouptabs extends tabs
         if(!isset($this->by_object['termservice'])){
           $this->by_name['termservice']= _("Devices");
           $this->by_object['termservice']= new termservice($this->config, $this->dn,$this->by_object['ogroup']);
-	  $this->by_object['termservice']->parent= &$this;
-	  $this->by_object['termservice']->acl = "#all#";
+          $this->by_object['termservice']->parent= &$this;
+          $this->by_object['termservice']->acl = "#all#";
+          $this->add('termservice');
         }
       }
     }
@@ -195,6 +215,7 @@ class ogrouptabs extends tabs
         $this->by_object['workstartup']= new workstartup($this->config, $this->dn);
         $this->by_object['workstartup']->parent= &$this;
         $this->by_object['workstartup']->acl = "#all#";
+        $this->add("workstartup");
       }
     }
     if(!$mixed_type &&
@@ -205,6 +226,7 @@ class ogrouptabs extends tabs
         $this->by_object['workservice']->inheritTimeServer = false;
         $this->by_object['workservice']->parent= &$this;
         $this->by_object['workservice']->acl = "#all#";
+        $this->add("workservice");
       }
     }
     if(class_available("faiSummary")){
@@ -213,6 +235,7 @@ class ogrouptabs extends tabs
         $this->by_name['faiSummary']= _("FAI summary");
         $this->by_object['faiSummary']= new faiSummaryTab($this->config, $this->dn);
         $this->by_object['faiSummary']->parent= &$this;
+        $this->add("faiSummary");
       }
     }
 
@@ -223,13 +246,14 @@ class ogrouptabs extends tabs
         $this->by_object['environment']= new environment($this->config, $this->dn);
         $this->by_object['environment']->acl = "#all#";
         $this->by_object['environment']->parent= &$this;
+        $this->add("environment");
       }
     }
 
     /* Remove environment tab if not required any longer */
     if(class_available("environment")){
       if(!preg_match("/G/",$objects) && !preg_match("/U/",$objects) && isset($this->by_name['environment'])){
-        $this->by_object['environment']->remove_from_parent();
+        $this->remove("environment");
         unset($this->by_name['environment']);
         unset($this->by_object['environment']);
       }
@@ -242,13 +266,14 @@ class ogrouptabs extends tabs
         $this->by_object['appgroup']= new appgroup($this->config, $this->dn);
         $this->by_object['appgroup']->acl = "#all#";
         $this->by_object['appgroup']->parent= &$this;
+        $this->add('appgroup');
       }
     }
 
     /* Remove application tab if not required any longer */
     if(class_available("appgroup")){
       if(!preg_match("/G/",$objects) && !preg_match("/U/",$objects) && isset($this->by_name['appgroup'])){
-        $this->by_object['appgroup']->remove_from_parent();
+        $this->remove('appgroup');
         unset($this->by_name['appgroup']);
         unset($this->by_object['appgroup']);
       }
@@ -355,6 +380,12 @@ class ogrouptabs extends tabs
       $this->dn= 'cn='.$baseobject->cn.','.get_ou('ogroupRDN').$baseobject->base;
     }
 
+    /* Only delete attributes if there are members left */
+    if (count($this->by_object['ogroup']->memberList) != 0) {
+      foreach(array_keys($this->to_remove) as $object) {
+        $this->to_remove[$object]->remove_from_parent();
+      }
+    }
     tabs::save();
   }
 

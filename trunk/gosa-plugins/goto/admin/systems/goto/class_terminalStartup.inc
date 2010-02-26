@@ -335,6 +335,12 @@ class termstartup extends plugin
   function remove_from_parent()
   {
     if($this->acl_is_removeable()){
+      plugin::remove_from_parent;
+
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->dn);
+      $this->cleanup();
+      $ldap->modify($this->attrs);
       $this->handle_post_events("remove");
       new log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs));
     }
