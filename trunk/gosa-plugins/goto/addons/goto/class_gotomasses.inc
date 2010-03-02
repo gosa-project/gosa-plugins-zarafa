@@ -324,12 +324,48 @@ class gotomasses extends plugin
     if(isset($_POST['save_event_dialog'])){
       if(is_object($this->dialog)){
         $this->dialog->save_object();
-        if(!$this->o_queue->append($this->dialog)){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-        }else{
-          $this->dialog = FALSE; 
+        if($this->dialog->multiple_events) {
+          $event_type = get_class($this->dialog);
+          $targets = $this->dialog->get_targets();
+          $timestamp = $this->dialog->timestamp;
+
+          $i = 1;
+          $count = count($targets);
+          while($i <= $count) {
+            $operations = $this->dialog->concurrent_operations;
+            $event = new $event_type($this->config);
+            $event->set_timestamp($timestamp);
+            $event->set_type(SCHEDULED_EVENT);
+
+            while($operations > 0) {
+              $i++;
+              $target = array_shift($targets);
+              $event->add_targets(array($target));
+              $operations--;
+            }
+
+            $event->save_object();
+            $event->get_targets();
+            if(!$this->o_queue->append($event)){
+              msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+            }
+
+            # Calculate start time for the next run
+            $timestamp = $timestamp + ($this->dialog->time_offset*60);
+          }
+
+          $this->dialog = FALSE;
           $this->current = -1;
-        } 
+        }
+        else {
+          $this->dialog->save_object();
+          if(!$this->o_queue->append($this->dialog)){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+          }else{
+            $this->dialog = FALSE; 
+            $this->current = -1;
+          } 
+        }
       }
     }
 

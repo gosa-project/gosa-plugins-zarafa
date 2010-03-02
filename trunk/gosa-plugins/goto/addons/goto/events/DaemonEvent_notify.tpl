@@ -30,6 +30,11 @@
         <tr>
           <td colspan="2" style='vertical-align:top'>{$timestamp}<br><br></td>
         </tr>
+        <tr>
+          <td style="vertical-align:top">
+          {$time_offset}
+          </td>
+        </tr>
 	  </table>
       <table style='width:100%;'>
         <tr>

@@ -9,6 +9,11 @@
           <td style='vertical-align:top'><b>{t}Time schedule{/t}</b><br><br>
           {$timestamp}</td>
         </tr>
+        <tr>
+          <td style="vertical-align:top">
+          {$time_offset}
+          </td>
+        </tr>
       </table>
     </td>
     <td style='width:50%; vertical-align:top;'>
