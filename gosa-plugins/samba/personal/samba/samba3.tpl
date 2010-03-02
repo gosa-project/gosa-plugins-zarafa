@@ -3,7 +3,8 @@
  <!-- Headline container -->
  <tr>
   <td colspan="2" style="width:50%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/rightarrow.png"/>&nbsp;{t}Generic{/t}</h2>
+   <h2>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
+</h2>
   </td>
  </tr>
  <tr>
@@ -32,7 +33,8 @@
       </select>
 {/render}
 {render acl=$sambaDomainNameACL  checkbox=$multiple_support checked=$use_sambaDomainName}
-     <input type='submit' name='display_information' value='{t}Show information{/t}'>
+     <button type='submit' name='display_information'>{t}Show information{/t}</button>
+
 {/render}
      </td>
     </tr>
@@ -66,7 +68,8 @@
 
 <p class="seperator">&nbsp;</p>
 
-<h2><img class="center" alt="" align="middle" src="plugins/samba/images/terminal_server.png" />&nbsp;{t}Terminal Server{/t}</h2>
+<h2>{image path="plugins/samba/images/terminal_server.png"}&nbsp;{t}Terminal Server{/t}
+</h2>
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
@@ -303,7 +306,8 @@
 
 <p class="seperator">&nbsp;</p>
 
-<h2><img class="center" alt="" align="middle" src="images/lists/key.png" />&nbsp;{t}Access options{/t}</h2>
+<h2>{image path="images/lists/key.png"}&nbsp;{t}Access options{/t}
+</h2>
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
@@ -401,7 +405,8 @@
     <tr>
      <td colspan=2>
       {render acl=$sambaLogonHoursACL mode=read_active  checkbox=$multiple_support checked=$use_SetSambaLogonHours}
-       {t}Samba logon times{/t}&nbsp;<input type='submit' name='SetSambaLogonHours' value='{t}Edit settings...{/t}'>
+       {t}Samba logon times{/t}&nbsp;<button type='submit' name='SetSambaLogonHours'>{t}Edit settings...{/t}</button>
+
       {/render}
      </td>
     </tr>
@@ -432,8 +437,10 @@
 	{/foreach}
    </select>
    <br>
-   <input type="submit" value="{msgPool type=addButton}" name="add_ws">
-   <input type="submit" value="{msgPool type=delButton}" name="delete_ws">
+   <button type='submit' name='add_ws'>{msgPool type=addButton}</button>
+
+   <button type='submit' name='delete_ws'>{msgPool type=delButton}</button>
+
 {else}
 	{render acl=$sambaUserWorkstationsACL}
 	   <select id="workstation_list" style="width:100%;" name="workstation_list[]" size=10 multiple>
@@ -442,10 +449,12 @@
 	{/render}
 	   <br>
 	{render acl=$sambaUserWorkstationsACL}
-	   <input type="submit" value="{msgPool type=addButton}" name="add_ws">
+	   <button type='submit' name='add_ws'>{msgPool type=addButton}</button>
+
 	{/render}
 	{render acl=$sambaUserWorkstationsACL}
-	   <input type="submit" value="{msgPool type=delButton}" name="delete_ws">
+	   <button type='submit' name='delete_ws'>{msgPool type=delButton}</button>
+
 	{/render}
 {/if}
   </td>

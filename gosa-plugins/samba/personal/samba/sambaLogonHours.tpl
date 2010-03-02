@@ -95,10 +95,12 @@
 <br>
 <p class="plugbottom">
 {if $acl}
-  <input type=submit name="save_logonHours" value="{msgPool type=saveButton}">
+  <button type='submit' name='save_logonHours'>{msgPool type=saveButton}</button>
+
   &nbsp;
 {/if}
-  <input type=submit name="cancel_logonHours" value="{msgPool type=cancelButton}">
+  <button type='submit' name='cancel_logonHours'>{msgPool type=cancelButton}</button>
+
 </p>
 
 <!--  

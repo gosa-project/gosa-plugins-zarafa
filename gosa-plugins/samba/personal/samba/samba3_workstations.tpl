@@ -16,18 +16,21 @@
   </td>
   <td style="vertical-align:top;width:350px">
    <div class="contentboxh" style="height:20px;">
-    <p class="contentboxh" style="font-size:12px"><img src="{$launchimage}" align="right" alt="[F]">
+    <p class="contentboxh" style="font-size:12px">{image path="{$launchimage}" align="right"}
+
 	<b>{t}Filters{/t}</b></p>
    </div>
    <div class="contentboxb">
      <table summary="" style="width:100%;border-top:1px solid #B0B0B0;background-color:#F8F8F8">
       {$alphabet}
      </table>
-    <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8"><tr><td><img class="center" alt="{t}Display workstations of department{/t}" src="{$tree_image}" align="middle">&nbsp;
+    <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8"><tr><td>{image path="{$tree_image}"}&nbsp;
+
     <select name="depselect" size=1 onChange="mainform.submit()" title="{t}Choose the department the search will be based on{/t}">
       {html_options options=$deplist selected=$depselect}
     </select></td></tr></table>
-    <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8"><tr><td width="18"><img class="center" alt="" src="{$search_image}" align="middle">&nbsp;</td>
+    <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8"><tr><td width="18">{image path="{$search_image}"}&nbsp;
+</td>
     <td><input type='text' name='regex' maxlength='20' style="width:99%" value='{$regex}' title='{t}Regular expression for matching addresses{/t}' onChange="mainform.submit()"></td></tr></table>
    {$apply}
    </div>
@@ -36,7 +39,9 @@
 </table>
 
 <p class="plugbottom">
-  <input type=submit name="add_ws_finish" value="{msgPool type=addButton}">
+  <button type='submit' name='add_ws_finish'>{msgPool type=addButton}</button>
+
   &nbsp;
-  <input type=submit name="add_ws_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='add_ws_cancel'>{msgPool type=cancelButton}</button>
+
 </p>
