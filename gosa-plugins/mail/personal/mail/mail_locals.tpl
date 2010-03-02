@@ -21,7 +21,8 @@
     <td style="vertical-align:top;width:350px">
       <div class="contentboxh" style="height:20px;">
         <p class="contentboxh" style="font-size:12px">
-          <img src="{$launchimage}" align="right" alt="[F]">
+          {image path="{$launchimage}" align="right"}
+
           <b>{t}Filters{/t}</b>
         </p>
       </div>
@@ -33,7 +34,8 @@
           <tr>
             <td>
               <LABEL for="depselect">{t}Select department{/t}</LABEL>
-              <img alt="" src="{$tree_image}" align=middle>&nbsp;
+              {image path="{$tree_image}"}&nbsp;
+
               <select id="depselect" name="depselect" size=1 onChange="mainform.submit()" 
                 title="{t}Choose the department the search will be based on{/t}">
                       {html_options options=$deplist selected=$depselect}
@@ -45,7 +47,8 @@
         <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
           <tr>
             <td style="width:18px">
-              <img alt="" src="{$search_image}" align="middle">
+              {image path="{$search_image}"}
+
             </td>
             <td>
               <input type='text' name='regex' maxlength='20' style="width:99%" value='{$regex}' 
@@ -57,7 +60,8 @@
         <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
           <tr>
             <td style="width:18px;">
-              <img src="{$usearch_image}" align=middle alt="{t}Display addresses of user{/t}">
+              {image path="{$usearch_image}"}
+
             </td>
             <td>
               <input type='text' name='muser' maxlength='20' style="width:99%" value='{$muser}' 
@@ -72,9 +76,11 @@
 </table>
 
 <p class="plugbottom">
-  <input type=submit name="add_locals_finish" value="{msgPool type=addButton}">
+  <button type='submit' name='add_locals_finish'>{msgPool type=addButton}</button>
+
   &nbsp;
-  <input type=submit name="add_locals_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='add_locals_cancel'>{msgPool type=cancelButton}</button>
+
 </p>
 <!-- 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

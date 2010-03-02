@@ -2,7 +2,8 @@
  <tr>
   <td style="width:50%; vertical-align:top;">
 
-   <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
+   <h2>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
+</h2>
    <table summary="">
 {if !$multiple_support}
     <tr>
@@ -70,7 +71,8 @@
   </td>
   <td>
 {if !$multiple_support}
-   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png" /><label for="alternates_list"> {t}Alternative addresses{/t}</    label></h2>
+   <h2>{image path="plugins/mail/images/alternatemail.png"}
+<label for="alternates_list"> {t}Alternative addresses{/t}</    label></h2>
 {render acl=$gosaMailAlternateAddressACL}
    <select id="alternates_list" style="width:100%;height:100px;" name="alternates_list[]" size="15" multiple
     title="{t}List of alternative mail addresses{/t}">
@@ -83,10 +85,12 @@
    <input type='text' name="alternate_address" size="30" align="middle" maxlength="65" value="">
 {/render}
 {render acl=$gosaMailAlternateAddressACL}
-   <input type=submit value="{msgPool type=addButton}" name="add_alternate">
+   <button type='submit' name='add_alternate'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gosaMailAlternateAddressACL}
-   <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
+   <button type='submit' name='delete_alternate'>{msgPool type=delButton}</button>
+
 {/render}
 {/if}
   </td>
@@ -120,7 +124,9 @@
     <tr>
      <td>
 {render acl=$sieveManagementACL}
-      <input {if $own_script == ""} disabled {/if} id='sieveManagement' type='submit' name='sieveManagement' value='{t}Sieve Management{/t}'>
+      <button type='submit' name='sieveManagement' id="sieveManagement" {if $own_script == ""} disabled {/if}
+>{t}Sieve Management{/t}</button>
+
 {/render}
      </td>
     </tr>
@@ -237,7 +243,9 @@
     </select>
  {/render}
  {render acl=$gosaVacationMessageACL}
-    <input {if $own_script != ""} disabled {/if} id='import_vacation' type="submit" value="{t}Import{/t}" name="import_vacation">
+    <button type='submit' name='import_vacation' id="import_vacation" {if $own_script != ""} disabled {/if}
+>{t}Import{/t}</button>
+
  {/render}
 {/if}
    </td>
@@ -263,20 +271,24 @@
     <input type='text' id='forward_address' name="forward_address" size=20 align="middle" maxlength=65 value="">
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-    <input id='add_forwarder' type="submit" value="{msgPool type=addButton}" name="add_forwarder" >&nbsp;
+    <button type='submit' name='add_forwarder' id="add_forwarder">{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-    <input id='add_local_forwarder' type="submit" value="{t}Add local{/t}" name="add_local_forwarder" >&nbsp;
+    <button type='submit' name='add_local_forwarder' id="add_local_forwarder">{t}Add local{/t}</button>&nbsp;
+
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-    <input id='delete_forwarder' type="submit" value="{msgPool type=delButton}" name="delete_forwarder">
+    <button type='submit' name='delete_forwarder' id="delete_forwarder">{msgPool type=delButton}</button>
+
 {/render}
    </td>
   </tr>
  </table>
 <p class="seperator">&nbsp;</p>
 
-<h2><img class="center" alt="" align="middle" src="images/false.png" />&nbsp;{t}Advanced mail options{/t}</h2>
+<h2>{image path="images/false.png"}&nbsp;{t}Advanced mail options{/t}
+</h2>
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="4" border="0">
  <tr>
   <td>
