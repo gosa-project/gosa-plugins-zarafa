@@ -2,7 +2,8 @@
  <tr>
   <td style="width:50%; vertical-align:top;">
    <h2>
-    <img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Nagios Account{/t}</h2>
+    {image path="images/rightarrow.png"}&nbsp;{t}Nagios Account{/t}
+</h2>
    <table summary="">
     <tr>
      <td><label for="NagiosAlias">{t}Alias{/t}</label>{$must}</td>
@@ -112,7 +113,8 @@
   </td>
   <td style="width:100%; vertical-align:top;">
    <h2> 
-    <img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Nagios authentification{/t}
+    {image path="images/rightarrow.png"}&nbsp;{t}Nagios authentification{/t}
+
    </h2>
    <table summary="">
     <tr>
