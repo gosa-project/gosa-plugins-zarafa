@@ -1,7 +1,8 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
+   <h2>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
+</h2>
 <!-- Hide user specific attributes when in group mode. -->
    <table summary="">
     <tr>
@@ -102,7 +103,8 @@
   </td>
 
   <td style="vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="plugins/scalix/images/envelope.png" /><label for="emails_list"> {t}Scalix email addresses{/t}</label></h2>
+   <h2>{image path="plugins/scalix/images/envelope.png"}
+<label for="emails_list"> {t}Scalix email addresses{/t}</label></h2>
 {render acl=$scalixEmailAddressACL}
    <select id="emails_list" style="width:100%;height:100px;" name="emails_list[]" size="15"
 		 multiple title="{t}List of scalix email addresses{/t}" >
@@ -115,10 +117,12 @@
    <input type='text' name="email_address" size="30" align="middle" maxlength="65" value="">
 {/render}
 {render acl=$scalixEmailAddressACL}
-   <input type=submit value="{msgPool type=addButton}" name="add_email">&nbsp;
+   <button type='submit' name='add_email'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$scalixEmailAddressACL}
-   <input type=submit value="{msgPool type=delButton}" name="delete_email">
+   <button type='submit' name='delete_email'>{msgPool type=delButton}</button>
+
 {/render}
   </td>
  </tr>

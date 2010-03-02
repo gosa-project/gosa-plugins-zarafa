@@ -1,7 +1,8 @@
 <table>
 	<tr>
   <td style="vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="plugins/scalix/images/envelope.png" /><label for="emails_list"> {t}Scalix email addresses{/t}</label></h2>
+   <h2>{image path="plugins/scalix/images/envelope.png"}
+<label for="emails_list"> {t}Scalix email addresses{/t}</label></h2>
    <select id="emails_list" style="width:100%;height:100px;" name="emails_list[]" size="15"
 		 multiple title="{t}List of scalix email addresses{/t}" >
             {html_options values=$scalixEmailAddress output=$scalixEmailAddress}
@@ -9,8 +10,10 @@
    </select>
    <br />
    <input type='text' name="email_address" size="30" align="middle" maxlength="65" value="">
-   <input type=submit value="{msgPool type=addButton}" name="add_email">&nbsp;
-   <input type=submit value="{msgPool type=delButton}" name="delete_email">
+   <button type='submit' name='add_email'>{msgPool type=addButton}</button>&nbsp;
+
+   <button type='submit' name='delete_email'>{msgPool type=delButton}</button>
+
   </td>
  </tr>
 </table>
