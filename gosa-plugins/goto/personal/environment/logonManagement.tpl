@@ -1,4 +1,5 @@
-<h2><img class="center" alt="" src="plugins/goto/images/logon_script.png" align="middle">&nbsp;{t}Logon script management{/t}</h2>
+<h2>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Logon script management{/t}
+</h2>
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
@@ -52,7 +53,8 @@
 	<table width="100%" summary="">
 		<tr>
 			<td colspan="2">
-			<h2><img class="center" alt="" src="plugins/goto/images/logon_script.png" align="middle">&nbsp;{t}Script{/t}</h2>
+			<h2>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Script{/t}
+</h2>
 					<table width="100%" summary="{t}Logon script{/t}">
 						<tr>
 							<td>
@@ -62,7 +64,8 @@
 						<tr>
 							<td>
 								<input type="file" name="importFile" id="importFile">
-								<input type="submit" value="{t}Import{/t}" name="StartImport" >
+								<button type='submit' name='StartImport'>{t}Import{/t}</button>
+
 							</td>
 						</tr>
 					</table>
@@ -72,8 +75,10 @@
 
 	<p class="seperator">&nbsp;</p>
     <p align="right">
-    <input type="submit" name="LogonSave"     value="{msgPool type=applyButton}">
-    <input type="submit" name="LogonCancel"   value="{msgPool type=cancelButton}">
+    <button type='submit' name='LogonSave'>{msgPool type=applyButton}</button>
+
+    <button type='submit' name='LogonCancel'>{msgPool type=cancelButton}</button>
+
     </p>
 
 <script language="JavaScript" type="text/javascript">

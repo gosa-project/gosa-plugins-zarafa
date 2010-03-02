@@ -1,5 +1,6 @@
 {if $is_account ne 'true'}
- <img alt="" class="center" src="images/small-error.png" align="middle">
+ {image path="images/small-error.png"}
+
  {t}The environment extension is currently disabled.{/t}
 {else}
 
@@ -7,7 +8,8 @@
 <input type="hidden" name="iamposted" value="1">
 
 <h2> 
- <img class="center" alt="" src="plugins/goto/images/fai_settings.png" align="middle" /> 
+ {image path="plugins/goto/images/fai_settings.png"} 
+
  {t}Profiles{/t}
 </h2>
 
@@ -208,7 +210,8 @@
  <tr>
   <td style="width:50%;border-right:1px solid #B0B0B0">
    <h2>
-    <img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle" />&nbsp;
+    {image path="plugins/goto/images/edit_share.png"}&nbsp;
+
     <label for="gotoShare">{t}Shares{/t}</label>
    </h2>
    <table summary="" style="width:100%">
@@ -233,7 +236,8 @@
       title="{t}Mount path{/t}">
 {/render}
 {render acl=$gotoShareACL}
-      <input type="submit" name="gotoShareAdd" value="{msgPool type=addButton}"> 
+      <button type='submit' name='gotoShareAdd'>{msgPool type=addButton}</button> 
+
 {/render}
       <!--   <input type="submit" name="gotoShareDel" value="{t}Remove{/t}"> -->
      </td>
@@ -242,7 +246,8 @@
   </td>
   <td style="vertical-align:top">
    <h2>
-    <img class="center" alt="" src="plugins/goto/images/logon_script.png" align="middle" />&nbsp;
+    {image path="plugins/goto/images/logon_script.png"}&nbsp;
+
     <label for="gotoLogonScript">{t}Logon scripts{/t}</label>
    </h2>
    <table summary="{t}Logon script management{/t}" style="width:100%">
@@ -268,13 +273,18 @@
 
       <br>
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" name="gotoLogonScriptNew" value="{msgPool type=addButton}">
+      <button type='submit' name='gotoLogonScriptNew'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" name="gotoLogonScriptEdit"  value="{t}Edit{/t}" {if $gotoLogonScriptKeysCnt ==0} disabled {/if}>
+      <button type='submit' name='gotoLogonScriptEdit' {if $gotoLogonScriptKeysCnt ==0} disabled {/if}
+>{t}Edit{/t}</button>
+
 {/render}
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" name="gotoLogonScriptDel"  value="{msgPool type=delButton}" {if $gotoLogonScriptKeysCnt ==0} disabled {/if}>
+      <button type='submit' name='gotoLogonScriptDel' {if $gotoLogonScriptKeysCnt ==0} disabled {/if}
+>{msgPool type=delButton}</button>
+
 {/render}
      </td>
     </tr>
@@ -289,7 +299,8 @@
  <tr>
   <td style="border-right:1px solid #B0B0B0; width:50%; vertical-align:top">
    <h2>
-    <img alt="" src="plugins/goto/images/hotplug.png" align="middle" class="center" />&nbsp;
+    {image path="plugins/goto/images/hotplug.png"}&nbsp;
+
     <label for="gotoHotplugDevice_post">{t}Hotplug devices{/t}</label>
    </h2> 
    <table style="width:100%" summary="{t}Hotplug device settings{/t}">
@@ -316,11 +327,11 @@
     <tr>
      <td>
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" name="gotoHotplugDeviceUse" value="{msgPool type=addButton}">
+      <button type='submit' name='gotoHotplugDeviceUse'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" name="gotoHotplugDeviceDel" value="{msgPool type=delButton}"
-      {if !$gotoHotplugDevices} disabled {/if}>
+      <button type='submit' name='gotoHotplugDeviceDel' {if !$gotoHotplugDevices} disabled {/if}>{msgPool type=delButton}</button>
 {/render}
      </td>
     </tr>
@@ -334,7 +345,8 @@
    <h2>
 	<input type="checkbox" name="use_gotoPrinter" value="1" {if $use_gotoPrinter} checked {/if}
 		class="center" onClick="$('div_gotoPrinter').toggle();">
-    <img alt="" src="plugins/systems/images/select_printer.png" align="middle" class="center" />&nbsp;
+    {image path="plugins/systems/images/select_printer.png"}&nbsp;
+
     <label for="gotoPrinter">{t}Printer{/t}</label>
    </h2>
 
@@ -351,16 +363,23 @@
 {/render}
       <br>
 {render acl=$gotoPrinterACL}
-      <input type="submit"  name="gotoPrinterAdd"     value="{msgPool type=addButton}">
+      <button type='submit' name='gotoPrinterAdd'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter} disabled {/if}>
+      <button type='submit' name='gotoPrinterDel' {if !$gotoPrinter} disabled {/if}
+>{msgPool type=delButton}</button>
+
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter} disabled {/if}>
+      <button type='submit' name='gotoPrinterEdit' {if !$gotoPrinter} disabled {/if}
+>{t}Toggle admin{/t}</button>
+
 {/render}
 {render acl=$gosaDefaultPrinterACL}
-      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter||$is_group} disabled {/if}>
+      <button type='submit' name='gotoPrinterDefault' {if !$gotoPrinter||$is_group} disabled {/if}
+>{t}Toggle default{/t}</button>
+
 {/render}
      </td>
     </tr>
@@ -370,7 +389,8 @@
 {else}
 
    <h2>
-    <img alt="" src="plugins/systems/images/select_printer.png" align="middle" class="center" />&nbsp;
+    {image path="plugins/systems/images/select_printer.png"}&nbsp;
+
     <label for="gotoPrinter">{t}Printer{/t}</label>
    </h2>
    <table style="width:100%" summary="{t}Printer settings{/t}">
@@ -384,16 +404,23 @@
 {/render}
       <br>
 {render acl=$gotoPrinterACL}
-      <input type="submit"  name="gotoPrinterAdd"     value="{msgPool type=addButton}">
+      <button type='submit' name='gotoPrinterAdd'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter} disabled {/if}>
+      <button type='submit' name='gotoPrinterDel' {if !$gotoPrinter} disabled {/if}
+>{msgPool type=delButton}</button>
+
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter} disabled {/if}>
+      <button type='submit' name='gotoPrinterEdit' {if !$gotoPrinter} disabled {/if}
+>{t}Toggle admin{/t}</button>
+
 {/render}
 {render acl=$gosaDefaultPrinterACL}
-      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter||$is_group} disabled {/if}>
+      <button type='submit' name='gotoPrinterDefault' {if !$gotoPrinter||$is_group} disabled {/if}
+>{t}Toggle default{/t}</button>
+
 {/render}
      </td>
     </tr>
