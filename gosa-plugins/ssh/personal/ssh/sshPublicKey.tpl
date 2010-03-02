@@ -9,13 +9,17 @@
 {render acl=$sshPublicKeyACL}
 <input type=file name="key">
 &nbsp;
-<input type=submit name="upload_sshpublickey" value="{t}Upload key{/t}">
+<button type='submit' name='upload_sshpublickey'>{t}Upload key{/t}</button>
+
 &nbsp;
-<input type=submit name="remove_sshpublickey" value="{t}Remove key{/t}">
+<button type='submit' name='remove_sshpublickey'>{t}Remove key{/t}</button>
+
 {/render}
 
 <p class="plugbottom">
-  <input type=submit name="save_sshpublickey" value="{msgPool type=saveButton}">
+  <button type='submit' name='save_sshpublickey'>{msgPool type=saveButton}</button>
+
   &nbsp;
-  <input type=submit name="cancel_sshpublickey" value="{msgPool type=cancelButton}">
+  <button type='submit' name='cancel_sshpublickey'>{msgPool type=cancelButton}</button>
+
 </p>
