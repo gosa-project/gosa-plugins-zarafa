@@ -1,4 +1,4 @@
-<h2><img class="center" alt="" src="images/rightarrow.png"> {t}Integrating unknown devices{/t}</h2>
+<h3><img class="center" alt="" src="images/rightarrow.png"> {t}Integrating unknown devices{/t}</h3>
 <p>
  {t}The current device has been detected by the ARP monitor used by GOsa. You can integrate this device into your running DHCP/DNS infrastructure by submitting this form. The device entry will disappear from the list of the systems and move to the DNS/DHCP configuration.{/t}
 </p>
@@ -28,7 +28,7 @@
 
 <p class="seperator"></p>
 
-<!--<h2><img class="center" alt="" src="images/rightarrow.png"> {t}GOto{/t}</h2>-->
+<!--<h3><img class="center" alt="" src="images/rightarrow.png"> {t}GOto{/t}</h3>-->
 <p>
 <input type='checkbox' value='1' name='gotoIntegration'
     onChange="changeState('SystemType');changeState('ObjectGroup');"

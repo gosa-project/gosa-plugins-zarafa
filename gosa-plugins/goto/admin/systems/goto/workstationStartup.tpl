@@ -1,7 +1,7 @@
 <table summary="" style="width:100%;">
  <tr>
   <td style="width:50%; vertical-align:top;">
-<h2><img class="center" alt="" align="middle" src="images/penguin.png"> {t}Boot parameters{/t}</h2>
+<h3><img class="center" alt="" align="middle" src="images/penguin.png"> {t}Boot parameters{/t}</h3>
 
    <table summary="" style="width:100%">
 	{if $fai_activated && $si_active && !$si_fai_action_failed}
@@ -61,7 +61,7 @@
   <td style="vertical-align:top;">
 
 	{if !$fai_activated}
-			<h2>{t}FAI Object assignment disabled. You can't use this feature until FAI is activated.{/t}</h2>			
+			<h3>{t}FAI Object assignment disabled. You can't use this feature until FAI is activated.{/t}</h3>			
 	{elseif !$si_active}
 		<b>{t}GOsa support daemon not configured{/t}</b><br>
 		{t}FAI settings cannot be modified{/t}
@@ -76,12 +76,12 @@
 			<table>
 				<tr>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
-						</h2>
+						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
+						</h3>
 					</td>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
-						</h2>
+						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
+						</h3>
 					</td>
 				</tr>
 				<tr>
@@ -105,9 +105,9 @@
 					</td>
 				</tr>
 			</table>
-			<h2>
+			<h3>
 				<img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Assigned FAI classes{/t}
-			</h2>
+			</h3>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	
 	{/render}
@@ -116,12 +116,12 @@
 			<table>
 				<tr>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
-						</h2>
+						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
+						</h3>
 					</td>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
-						</h2>
+						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
+						</h3>
 					</td>
 				</tr>
 				<tr>
@@ -154,9 +154,9 @@
 					</td>
 				</tr>
 			</table>
-			<h2>
+			<h3>
 				<img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Assigned FAI classes{/t}
-			</h2>
+			</h3>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	
 	{/render}
@@ -184,9 +184,9 @@
 
  <tr>
   <td style="width:50%; vertical-align:top; border-right:1px solid #B0B0B0">
-   <h2>
+   <h3>
     <img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
-   </h2>
+   </h3>
 {render acl=$gotoModulesACL}
     <select style="width:100%; height:150px;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
      {html_options values=$gotoModules output=$gotoModules}
@@ -206,7 +206,7 @@
   </td>
 
   <td style="vertical-align:top;">
-        <h2><img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle">&nbsp;<LABEL for="gotoShare">{t}Shares{/t}</LABEL></h2>
+        <h3><img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle">&nbsp;<LABEL for="gotoShare">{t}Shares{/t}</LABEL></h3>
         <table summary="" style="width:100%">
                 <tr>
                         <td>

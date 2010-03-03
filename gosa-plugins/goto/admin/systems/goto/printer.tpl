@@ -2,7 +2,7 @@
  <tr>
   <td style="vertical-align:top; width:50%; border-right:1px solid #B0B0B0">
 {if $StandAlone}
-   <h2>{t}General{/t}</h2>
+   <h3>{t}General{/t}</h3>
    <table summary="">
     <tr>
      <td><LABEL for="cn" >{t}Printer name{/t}</LABEL>{$must}</td>
@@ -35,7 +35,7 @@
   </td>
   <td>
 {/if}
-   <h2>{t}Details{/t}</h2>
+   <h3>{t}Details{/t}</h3>
    <table summary="">
 {if !$StandAlone}
       <tr> 
@@ -93,7 +93,7 @@
 
 <p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
 
-<h2><img class="center" alt="" align="middle" src="images/lists/locked.png"> {t}Permissions{/t}</h2>
+<h3><img class="center" alt="" align="middle" src="images/lists/locked.png"> {t}Permissions{/t}</h3>
 <table summary="" width="100%">
  <tr>
   <td style="border-right:1px solid #B0B0B0; width:50%">

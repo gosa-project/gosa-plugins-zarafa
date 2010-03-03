@@ -1,7 +1,7 @@
 <table style="width:100%;" summary="">
  <tr>
   <td style="width:33%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/keyboard.png"> {t}Keyboard{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="plugins/goto/images/keyboard.png"> {t}Keyboard{/t}</h3>
    <table summary="">
     <tr>
      <td><LABEL for="gotoXKbModel">{t}Model{/t}</LABEL></td>
@@ -48,7 +48,7 @@
   </td>
   
   <td style="vertical-align:top;width:32%">
-   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/mouse.png"> {t}Mouse{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="plugins/goto/images/mouse.png"> {t}Mouse{/t}</h3>
    <table summary="">
     <tr>
      <td><LABEL for="gotoXMouseType">{t}Type{/t}</LABEL></td>
@@ -83,7 +83,7 @@
   </td>
   
   <td style="vertical-align:top;width:33%">
-   <h2><img class="center" alt="" align="middle" src="plugins/systems/images/select_phone.png"> {t}Telephone hardware{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="plugins/systems/images/select_phone.png"> {t}Telephone hardware{/t}</h3>
    <table style="width:100%" border=0 summary="">
     <tr>
      <td>{t}Telephone{/t}&nbsp;
@@ -104,7 +104,7 @@
  <tr><td colspan=5><p class="plugbottom" style="text-align:left;"></p></td></tr>
  <tr>
    <td style="width:33%;vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Graphic device{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Graphic device{/t}</h3>
    <table summary="">
     <tr>
      <td><LABEL for="gotoXDriver">{t}Driver{/t}</LABEL></td>
@@ -150,7 +150,7 @@
   </td>
 
    <td style="width:32%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/display.png"> {t}Display device{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="plugins/goto/images/display.png"> {t}Display device{/t}</h3>
    <table summary="">
     <tr>
      <td>{t}Type{/t}</td>
@@ -198,7 +198,7 @@
   <td style="width:33%; vertical-align:top;">
   
 
-   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/scanner.png"> {t}Scan device{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="plugins/goto/images/scanner.png"> {t}Scan device{/t}</h3>
 
 {render acl=$gotoScannerEnableACL}
    <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable}>
