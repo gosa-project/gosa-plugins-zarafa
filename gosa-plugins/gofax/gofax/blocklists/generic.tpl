@@ -1,4 +1,4 @@
-<h2><img class="center" alt="" align="middle" src="images/rightarrow.png"> {t}Generic{/t}</h2>
+<h3><img class="center" alt="" align="middle" src="images/rightarrow.png"> {t}Generic{/t}</h3>
 <table summary="" style="width:100%; vertical-align:top; text-align:left;">
 
  <tr>
@@ -59,7 +59,7 @@
 <table summary="" style="width:100%">
  <tr>
    <td style="width:50%;">
-     <h2><img class="center" alt="" align="middle" src="images/false.png"> {t}Blocked numbers{/t}</h2>
+     <h3><img class="center" alt="" align="middle" src="images/false.png"> {t}Blocked numbers{/t}</h3>
 {render acl=$goFaxBlocklistACL}
      <select style="width:100%; height:200px;" name="numbers[]" size=15 multiple>
       {html_options values=$goFaxBlocklist output=$goFaxBlocklist}
@@ -81,7 +81,7 @@
    &nbsp;
   </td>
    <td style="vertical-align:top;" >
-     <h2><img class="center" alt="" align="middle" src="images/info_small.png"> {t}Information{/t}</h2>
+     <h3><img class="center" alt="" align="middle" src="images/info_small.png"> {t}Information{/t}</h3>
      <p>
       {t}Numbers can also contain wild cards.{/t}
      </p>
