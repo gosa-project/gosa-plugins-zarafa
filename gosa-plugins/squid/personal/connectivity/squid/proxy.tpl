@@ -1,4 +1,4 @@
-<h2>
+<h3>
 
 {if $multiple_support}
 	
@@ -34,7 +34,7 @@
 	">
 	{/render}
 {/if}
- {t}Proxy account{/t}</h2>
+ {t}Proxy account{/t}</h3>
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
