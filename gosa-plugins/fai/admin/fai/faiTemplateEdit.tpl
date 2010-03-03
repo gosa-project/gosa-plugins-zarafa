@@ -1,4 +1,4 @@
-<h2>Template entry</h2>
+<h3>Template entry</h3>
 
 {if !$mb_extension}
 

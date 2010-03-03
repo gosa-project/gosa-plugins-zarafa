@@ -1,7 +1,7 @@
 <table width="100%" summary="">
 	<tr>
 		<td width="50%" valign="top">
-				<h2><img class="center" alt="" src="plugins/fai/images/fai_small.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h2>
+				<h3><img class="center" alt="" src="plugins/fai/images/fai_small.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h3>
 				<table summary="" cellspacing="4">
 					<tr>
 						<td>
@@ -36,11 +36,11 @@
 		   &nbsp;
 	 	</td>
 		<td>
-				<h2><img class="center" alt="" src="plugins/fai/images/fai_partitionTable.png" align="middle" title="{t}Objects{/t}">&nbsp;
+				<h3><img class="center" alt="" src="plugins/fai/images/fai_partitionTable.png" align="middle" title="{t}Objects{/t}">&nbsp;
 					<LABEL for="SubObject">
 						{t}Discs{/t}
 					</LABEL>
-				</h2>
+				</h3>
                                 {$Entry_divlist}
 {if $sub_object_is_addable}
                                 <input type="submit" name="AddDisk" value="{t}Add disk{/t}" title="{t}Add disk{/t}">

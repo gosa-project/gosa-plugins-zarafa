@@ -892,7 +892,7 @@ class FAI
     $start = microtime(TRUE);
     $source_release = trim($source_release,"/");
 
-    echo "<h2>".sprintf(_("Creating group application release for %s"),$destination_name)."</h2>";
+    echo "<h3>".sprintf(_("Creating group application release for %s"),$destination_name)."</h3>";
 
     $sub_releases = array();
     $source_dn = "";
@@ -1060,7 +1060,7 @@ class FAI
     /* Display current action information.
      */
     if($is_first){
-      echo "<h2>".sprintf(_("Creating copy of %s"),"<i>".LDAP::fix($sourcedn)."</i>")."</h2>";
+      echo "<h3>".sprintf(_("Creating copy of %s"),"<i>".LDAP::fix($sourcedn)."</i>")."</h3>";
     }else{
       if(preg_match("/^ou=/",$sourcedn)){
         echo "<h3>"._("Processing")." <i>".LDAP::fix($destinationdn)."</i></h3>";

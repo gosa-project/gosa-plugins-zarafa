@@ -1,5 +1,5 @@
 
-<h2>{t}Partition{/t}</h2>
+<h3>{t}Partition{/t}</h3>
 
 <table style='width: 100%;' width="100%"> 
   <tr>
@@ -93,7 +93,7 @@
 
   <tr>
     <td colspan="4">
-      <h2>{t}Combined physical partitions{/t}</h2>      
+      <h3>{t}Combined physical partitions{/t}</h3>      
 
       <select name='physicalPartition[]' size=5 style="width:100%; font-family: monospace;"
         multiple>

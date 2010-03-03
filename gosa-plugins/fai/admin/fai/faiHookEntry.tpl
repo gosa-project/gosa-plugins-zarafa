@@ -2,7 +2,7 @@
 <table width="100%" summary="">
 	<tr>
 		<td valign="top" width="50%">
-			<h2><img class="center" alt="" src="images/forward.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h2>
+			<h3><img class="center" alt="" src="images/forward.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h3>
 				<table summary="">
 					<tr>
 						<td>
@@ -30,7 +30,7 @@
            &nbsp;
         </td>
 		<td style="vertical-align:top">
-				<h2><img class="center" alt="" src="plugins/fai/images/fai_hook.png" align="middle" title="{t}Hook attributes{/t}">&nbsp;{t}Hook attributes{/t}</h2>
+				<h3><img class="center" alt="" src="plugins/fai/images/fai_hook.png" align="middle" title="{t}Hook attributes{/t}">&nbsp;{t}Hook attributes{/t}</h3>
 				<table width="100%" summary="">
 					<tr>
 						<td>
@@ -51,11 +51,11 @@
 
 
 <p class="seperator">&nbsp;</p>
-<h2><img class="center" alt="" src="plugins/fai/images/fai_hook.png" align="middle" title="{t}Hook attributes{/t}">&nbsp;
+<h3><img class="center" alt="" src="plugins/fai/images/fai_hook.png" align="middle" title="{t}Hook attributes{/t}">&nbsp;
     <LABEL for="FAIscript">
         {t}Script{/t}
     </LABEL>
-    </h2>
+    </h3>
 <table width="99%" summary="">
     <tr>
         <td>

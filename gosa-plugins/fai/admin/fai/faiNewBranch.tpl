@@ -31,7 +31,7 @@
 </script>
 {else}
 
-<h2>{t}Processing the requested operation{/t}</h2>
+<h3>{t}Processing the requested operation{/t}</h3>
 {t}As soon as the copy operation has finished, you can scroll down to end of the page and press the 'Continue' button to continue with the fai management dialog.{/t}
 <br>
 <br>

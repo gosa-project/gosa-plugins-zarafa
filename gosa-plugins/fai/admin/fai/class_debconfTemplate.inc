@@ -215,7 +215,7 @@ class debconf
     $result="
       <tr>
       <td valign='top' style='width:100%'>
-      <h2>".$data['Topic']."</h2>".$data['Description']."
+      <h3>".$data['Topic']."</h3>".$data['Description']."
       </td>
       <td style=\"white-space:nowrap; vertical-align:top; border-left: 1px solid rgb(160, 160, 160);\">";
 
@@ -253,7 +253,7 @@ class debconf
       $result="
         <tr>
         <td valign='top'>
-        <h2>".$data['Topic']."</h2>".$data['Description']."
+        <h3>".$data['Topic']."</h3>".$data['Description']."
         </td>
         <td valign='top'  style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">
           <input type='hidden' name='multi-".$post_name."' value='1'>
@@ -289,7 +289,7 @@ class debconf
   {
     $result=  "";
     $result.= "<tr><td valign='top'>";
-    $result.= "<h2>".$data['Topic']."</h2>".$data['Description']."</td><td style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">&nbsp;<input type='text' name='".$data['post_name']."' value='".$data['Default']."'></b><br><br>";
+    $result.= "<h3>".$data['Topic']."</h3>".$data['Description']."</td><td style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">&nbsp;<input type='text' name='".$data['post_name']."' value='".$data['Default']."'></b><br><br>";
     $result.= $data['Description'];
     $result.= "</td>";
 
@@ -313,7 +313,7 @@ class debconf
         
         <tr>
         <td valign='top'>
-        <h2>".$data['Topic']."</h2>".$data['Description']."
+        <h3>".$data['Topic']."</h3>".$data['Description']."
         </td>
         <td  valign='top'  style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">
         ";
@@ -342,7 +342,7 @@ class debconf
     $result=  "
                 <tr>
                   <td valign='top'>
-                    <h2>".$data['Topic']."</h2>".$data['Description']."
+                    <h3>".$data['Topic']."</h3>".$data['Description']."
                   </td>
                   <td  style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\" valign='top'>
                     <input type='text' name='".$data['post_name']."' value='".$data['Default']."' style='width:300px;'>

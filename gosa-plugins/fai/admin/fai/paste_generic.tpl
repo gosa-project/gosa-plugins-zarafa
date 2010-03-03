@@ -1,4 +1,4 @@
-<h2>{t}FAI settings{/t}</h2>
+<h3>{t}FAI settings{/t}</h3>
 <table> 
  <tr>
   <td>
