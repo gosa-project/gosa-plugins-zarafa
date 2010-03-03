@@ -1,4 +1,4 @@
-<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Kerberos kadmin access{/t}</h2>
+<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Kerberos kadmin access{/t}</h3>
 
   <table style='width:100%;'>
    <tr>
@@ -16,7 +16,7 @@
 {if $MIT_KRB}
     <tr>
      <td>
-		<h2>{t}Policies{/t}</h2>
+		<h3>{t}Policies{/t}</h3>
 		<table style="width:100%;">
 		 <tr>
 		  <td>

@@ -1,4 +1,4 @@
-<h2>{t}Policy settings{/t}</h2>
+<h3>{t}Policy settings{/t}</h3>
 <table style="width:100%">
  <tr>
   <td style="border-right:1px solid #AAA">

@@ -1,7 +1,7 @@
 
 {if $si_error}
 
-	<h2>{t}Kerberos options{/t}</h2>
+	<h3>{t}Kerberos options{/t}</h3>
 	<p>
 		{msgPool type=siError p1=$si_error_msg}
 	</p>
@@ -18,7 +18,7 @@
 <table style="width:100%;">
 	<tr>
 		<td style="width:50%;vertical-align:top;">
-			<h2>{t}Kerberos options{/t}</h2>
+			<h3>{t}Kerberos options{/t}</h3>
 			<table style="width:100%;">
 				<tr>
 					<td>
@@ -170,7 +170,7 @@
 				</tr>
 			</table>
 			<p class='seperator'>&nbsp;</p>
-			<h2>{t}Status{/t}</h2>
+			<h3>{t}Status{/t}</h3>
 			<table>
 				<tr>
 					<td>{t}Failed logins{/t}</td>
@@ -201,7 +201,7 @@
 	
 		</td>	
 		<td style="vertical-align:top; border-left: solid 1px #BBBBBB; padding-left: 3px;">
-			<h2>Flags</h2>
+			<h3>Flags</h3>
 			<table width="100%">
 				<tr>
 					<td style="width:50%;">
