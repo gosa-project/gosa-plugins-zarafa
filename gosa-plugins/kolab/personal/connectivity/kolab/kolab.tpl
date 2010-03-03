@@ -1,10 +1,10 @@
 
 {if !$mail_account}
-	<h2>{t}Kolab account{/t}</h2>
+	<h3>{t}Kolab account{/t}</h3>
 	{t}The kolab account is currently disabled. It's features can be adjusted if you add a mail account.{/t}
 {else}
 
-<h2>
+<h3>
 {if $multiple_support}
 
 <input type="checkbox" name="use_kolabState" value="1" {if $use_kolabState} checked {/if}
@@ -40,7 +40,7 @@
 	{/if}">
 {/if}
 
-{t}Kolab account{/t}</h2>
+{t}Kolab account{/t}</h3>
 <table summary="" style="width:100%">
  <tr>
   <td style="width:50%; vertical-align:top;">
@@ -86,7 +86,7 @@
 	{/render}
 {/if}
 
-    <h2>{t}Mail size{/t}</h2>
+    <h3>{t}Mail size{/t}</h3>
 {render acl=$unrestrictedMailSizeACL checkbox=$multiple_support checked=$use_unrestrictedMailSize}
      &nbsp;<input class="center" type="checkbox" id='unrestrictedMailSize' name="unrestrictedMailSize" value="1" 
 		{if !$kolabState && !$multiple_support} disabled {/if} {$unrestrictedMailSizeState}> 
@@ -98,7 +98,7 @@
   </td>
   <td style="vertical-align:top;">
 
- <h2>{t}Free Busy information{/t}</h2>
+ <h3>{t}Free Busy information{/t}</h3>
  <table summary="">
   <tr>
    <td><LABEL for="calFBURL">{t}URL{/t}</LABEL></td>
@@ -122,7 +122,7 @@
  </table>
 
 
-<h2>{t}Invitation policy{/t}</h2>
+<h3>{t}Invitation policy{/t}</h3>
 {if $multiple_support}
 <input type="checkbox" name="use_kolabInvitationPolicy" {if $use_kolabInvitationPolicy} checked {/if} value="1" class="center">
 {/if}
