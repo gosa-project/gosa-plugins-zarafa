@@ -209,9 +209,8 @@ class netatalk extends plugin {
     /* Assign ACLs 
      */
     $tmp = $this->plInfo();
-    $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
     foreach($tmp['plProvidedAcls'] as $name => $desc){
-      $smarty->assign($name."ACL",$this->getacl($name,$SkipWrite));
+      $smarty->assign($name."ACL",$this->getacl($name));
     }
 
     /* Let smarty fetch and process the page. */
