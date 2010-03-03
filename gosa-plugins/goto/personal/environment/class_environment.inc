@@ -342,11 +342,8 @@ class environment extends plugin
       }
     }
 
-    /* Are we editing from MyAccount and not editing a user */
-    $WriteOnly = (!isset($this->parent)|| !$this->parent) && !session::is_set('edit');
-
     /* Check profile server */
-    if($this->acl_is_writeable("gotoProfileServer",$WriteOnly)){
+    if($this->acl_is_writeable("gotoProfileServer")){
 
       if(!empty($this->gotoProfileServer) && !isset($this->gotoProfileServers[$this->gotoProfileServer])){
 
@@ -389,7 +386,7 @@ class environment extends plugin
       }
 
       /* Prepare ACL settings*/
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr,$WriteOnly));
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
     }
 
     /* Is accout enabled | are we editing from usermenu or admin menu 
@@ -509,14 +506,14 @@ class environment extends plugin
       }
 
       /* Prepare ACL settings*/
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr,$WriteOnly));
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
     }
 
     foreach(array("gotoHotplugDevice","gotoProfileFlagC","gotoProfileFlagL") as $s_attr){
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr,$WriteOnly));
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
     }
 
-    if($WriteOnly) {
+    if($this->read_only) {
       $smarty->assign("gotoPrinterACL","r");
     }else{
       $smarty->assign("gotoPrinterACL","rw");
@@ -526,15 +523,15 @@ class environment extends plugin
     $smarty->assign("useProfile",$this->useProfile);
     if(empty($this->useProfile) && !$this->multiple_support_active){
       $smarty->assign("useProfileCHK","");
-      $smarty->assign("gotoProfileServerACL" , preg_replace("/w/","",$this->getacl("gotoProfileServer",$WriteOnly)));
-      $smarty->assign("gotoProfileQuotaACL" , preg_replace("/w/","",$this->getacl("gotoProfileQuota",$WriteOnly)));
-      $smarty->assign("gotoProfileFlagCACL" , preg_replace("/w/","",$this->getacl("gotoProfileFlagC",$WriteOnly)));
+      $smarty->assign("gotoProfileServerACL" , preg_replace("/w/","",$this->getacl("gotoProfileServer")));
+      $smarty->assign("gotoProfileQuotaACL" , preg_replace("/w/","",$this->getacl("gotoProfileQuota")));
+      $smarty->assign("gotoProfileFlagCACL" , preg_replace("/w/","",$this->getacl("gotoProfileFlagC")));
     }else{
       $smarty->assign("useProfileCHK"," checked ");
     }
     
-    $smarty->assign("gotoProfileServerWriteable", $this->acl_is_writeable("gotoProfileServer",$WriteOnly));
-    $smarty->assign("gotoProfileACL", $this->getacl("gotoProfileServer",$WriteOnly).$this->getacl("gotoProfileQuota",$WriteOnly));
+    $smarty->assign("gotoProfileServerWriteable", $this->acl_is_writeable("gotoProfileServer"));
+    $smarty->assign("gotoProfileACL", $this->getacl("gotoProfileServer").$this->getacl("gotoProfileQuota"));
 
     /* HANDLE Profile Settings here 
      * Assign available Quota and resolution settings
@@ -1074,10 +1071,9 @@ class environment extends plugin
     /* Get all Posted vars 
      * Setup checkboxes 
      */
-    $WriteOnly = (!isset($this->parent)|| !$this->parent) && !session::is_set('edit');
     if(isset($_POST['iamposted'])){
 
-      $PACL =  $this->getacl("gotoProfileServer",$WriteOnly).$this->getacl("gotoProfileQuota",$WriteOnly);
+      $PACL =  $this->getacl("gotoProfileServer").$this->getacl("gotoProfileQuota");
 
       if(isset($_POST['kiosk_server'])){
         $tmp = $_POST['kiosk_server'];
