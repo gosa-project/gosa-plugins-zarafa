@@ -746,12 +746,12 @@ class conference extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-      $this->handle_post_events('modify');
+      $mode = 'modify';
     } else {
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      $this->handle_post_events('add');
+      $mode = 'add';
     }
 
     /* Log last action */
@@ -763,10 +763,9 @@ class conference extends plugin
 
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }else{
+      $this->handle_post_events($mode);
     }
-
-    /* Optionally execute a command after we're done */
-    $this->postcreate();
   }
 
 
