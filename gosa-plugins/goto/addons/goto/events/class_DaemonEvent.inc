@@ -129,7 +129,7 @@ class DaemonEvent
     $this->time_select_used = FALSE;
     $this->target_list_used = FALSE;
 
-    $str = "<h2>"._("This job has no template!")."</h2>";
+    $str = "<h3>"._("This job has no template!")."</h3>";
     $str.= "<p class='seperator'></p>";
     $str.= "<div style='text-align:right;width:100%;padding:3px;'>
       <input type='submit' name='abort_event_dialog' value='".msgPool::cancelButton()."'>
@@ -145,7 +145,7 @@ class DaemonEvent
     if($this->target_add_list_used){
       return("");
     }
-    $str = "<h2>".sprintf(_("Create '%s' job"),$this->s_Event_Name)."</h2>";
+    $str = "<h3>".sprintf(_("Create '%s' job"),$this->s_Event_Name)."</h3>";
     return($str);
   }
 
