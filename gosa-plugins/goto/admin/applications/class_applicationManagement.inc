@@ -44,7 +44,7 @@ class applicationManagement extends management
       $this->app_release = get_ou('applicationRDN').$this->config->current['BASE'];
       $filter_xml = "application-filter-release.xml";
       $list_xml = "application-list-release.xml";
-      $this->storagePoints= array();
+      $this->storagePoints= array("");
     }else{
       $filter_xml = "application-filter.xml";
       $list_xml = "application-list.xml";
