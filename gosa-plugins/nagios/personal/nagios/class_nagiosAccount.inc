@@ -120,9 +120,8 @@ class nagiosAccount extends plugin
 
     /* Assign acls */
     $tmp = $this->plInfo();
-    $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
     foreach($tmp['plProvidedAcls'] as $acl => $desc){
-      $smarty->assign($acl."ACL",$this->getacl($acl,$SkipWrite));
+      $smarty->assign($acl."ACL",$this->getacl($acl));
     }
 
     /* Assign attributes an ACL to smarty */
