@@ -1,4 +1,4 @@
-<h2>{t}Generic{/t}</h2>
+<h3>{t}Generic{/t}</h3>
 <table summary="" width="100%">
 	<tr>
 		<td style="width:50%;vertical-align:top;border-right:1px	solid	#b0b0b0;">
@@ -27,7 +27,7 @@
 			<table summary="" width="100%">
 				<tr>
 					<td style="vertical-align:top;width:100%;border-right:1px	solid	#b0b0b0;">
-						<h2>{t}Server Alias{/t}</h2>
+						<h3>{t}Server Alias{/t}</h3>
 						<table width="100%">	
 							<tr>
 								<td>
@@ -39,10 +39,10 @@
 									<table width="100%">
 										<tr>
 											<td  style="vertical-align:top;width:30%;">
-												<h2>{t}URL Alias{/t}</h2>
+												<h3>{t}URL Alias{/t}</h3>
 											</td>
 											<td>
-												<h2>{t}Directory Path{/t}</h2>
+												<h3>{t}Directory Path{/t}</h3>
 											</td>
 										</tr>
 										<tr>
@@ -71,7 +71,7 @@
 <table summary="" width="100%">
 	<tr>
 		<td style="vertical-align:top;width:50%;border-right:1px	solid	#b0b0b0;">
-			<h2>{t}Script Alias{/t}</h2>
+			<h3>{t}Script Alias{/t}</h3>
 			<table width="100%">	
 				<tr>
 					<td>
@@ -83,10 +83,10 @@
 						<table width="100%">
 							<tr>
 								<td  style="vertical-align:top;width:30%;">
-									<h2>{t}Alias Directory{/t}</h2>
+									<h3>{t}Alias Directory{/t}</h3>
 								</td>
 								<td>
-									<h2>{t}Script Directory{/t}</h2>
+									<h3>{t}Script Directory{/t}</h3>
 								</td>
 							</tr>
 							<tr>
