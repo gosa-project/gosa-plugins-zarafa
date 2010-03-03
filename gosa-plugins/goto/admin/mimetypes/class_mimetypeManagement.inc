@@ -44,7 +44,7 @@ class mimetypeManagement extends management
       $this->mime_release = get_ou('mimetypeRDN').$this->config->current['BASE'];
       $filter_xml = "mimetype-filter-release.xml";
       $list_xml = "mimetype-list-release.xml";
-      $this->storagePoints= array();
+      $this->storagePoints= array("");
     }else{
       $filter_xml = "mimetype-filter.xml";
       $list_xml = "mimetype-list.xml";
