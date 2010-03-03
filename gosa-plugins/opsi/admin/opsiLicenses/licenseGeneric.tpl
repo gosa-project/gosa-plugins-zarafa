@@ -7,7 +7,7 @@
 <br>
 {else}
 
-<h2>{t}License{/t}</h2>
+<h3>{t}License{/t}</h3>
 
 <table style='width:100%'>
   <tr>
@@ -153,7 +153,7 @@
 
 <p class='separator'>&nbsp;</p>
 
-<h2>{t}License model{/t}</h2>
+<h3>{t}License model{/t}</h3>
 
 <table width="100%">
   <tr>

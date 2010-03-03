@@ -11,7 +11,7 @@
 <table width="100%">
   <tr>
     <td style='vertical-align:top;width: 50%; padding-right:5px; border-right: solid 1px #AAA; '>
-        <h2>{t}Reserved for{/t}</h2>
+        <h3>{t}Reserved for{/t}</h3>
 {render acl=$boundToHostACL}
         {$licenseReserved}
 {/render}
@@ -25,7 +25,7 @@
 {/render}
     </td>
     <td style='vertical-align:top;'>
-        <h2>{t}Licenses used{/t}</h2>
+        <h3>{t}Licenses used{/t}</h3>
 {render acl=$boundToHostACL}
         {$licenseUses}
 {/render}

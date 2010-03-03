@@ -12,7 +12,7 @@
   <tr> 
     <td style='vertical-align:top;'>
         <!-- GENERIC -->
-        <h2>{t}Generic{/t}</h2>
+        <h3>{t}Generic{/t}</h3>
         <table>
           <tr> 
             <td>{t}Name{/t}</td>
@@ -39,7 +39,7 @@
     </td>
     <td style='width:50%; border-left: 1px solid #AAA;padding: 5px;'>
         <!-- LICENSES -->
-        <h2>{t}Licenses{/t}</h2>
+        <h3>{t}Licenses{/t}</h3>
         <table style='width:100%;'>
           <tr> 
             <td>
@@ -61,7 +61,7 @@
   <tr>
     <td style='width:50%'>
         <!-- APPLICATIONS -->
-        <h2>{t}Applications{/t}</h2>
+        <h3>{t}Applications{/t}</h3>
         <table style='width:100%;'>
           <tr> 
             <td>
@@ -88,7 +88,7 @@
     </td>
     <td style="border-left: 1px solid #AAA; padding: 5px;vertical-align:top">
         <!-- SOFTWARE -->
-        <h2>{t}Windows software IDs{/t}</h2>
+        <h3>{t}Windows software IDs{/t}</h3>
         <table style='width:100%;'>
           <tr> 
             <td>

@@ -8,7 +8,7 @@
 {else}
 
 <!-- GENERIC -->
-<h2>{t}License usage{/t}</h2>
+<h3>{t}License usage{/t}</h3>
 
 {$licenseUses}
 
