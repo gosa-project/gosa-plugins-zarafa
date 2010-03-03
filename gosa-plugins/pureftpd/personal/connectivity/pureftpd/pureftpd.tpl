@@ -1,10 +1,10 @@
-<h2>
+<h3>
 	{render acl=$pureftpdACL checkbox=$multiple_support checked=$use_pureftpd}
 	<input type="checkbox" name="pureftpd" value="B" {$pureftpdState} 
 		onclick="{$changeState}" class="center">
 	{/render}
 	{t}FTP account{/t}
-</h2>
+</h3>
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
 
