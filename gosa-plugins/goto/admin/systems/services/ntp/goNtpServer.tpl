@@ -1,5 +1,5 @@
 <br>
-<h2>{t}Time server{/t}</h2>
+<h3>{t}Time server{/t}</h3>
 <br>
 <table summary="" style="width:100%">
 <tr>
