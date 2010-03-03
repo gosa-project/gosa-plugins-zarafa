@@ -1,5 +1,5 @@
 
-<h2><img src='plugins/opsi/images/client_generic.png' alt=' ' class='center'>&nbsp;{t}OPSI host{/t}</h2>
+<h3><img src='plugins/opsi/images/client_generic.png' alt=' ' class='center'>&nbsp;{t}OPSI host{/t}</h3>
 
 {if $init_failed}
 
@@ -101,13 +101,13 @@
   </td>
  </tr>
  <tr>
-  <td style="width:50%;"><h2><img class='center' src='plugins/opsi/images/product.png' 
-		alt=' '>&nbsp;{t}Installed products{/t}</h2>
+  <td style="width:50%;"><h3><img class='center' src='plugins/opsi/images/product.png' 
+		alt=' '>&nbsp;{t}Installed products{/t}</h3>
 {render acl=$localProductACL}
 	{$divSLP}
 {/render}
   </td>
-  <td style="width:50%;"><h2>{t}Available products{/t}</h2>
+  <td style="width:50%;"><h3>{t}Available products{/t}</h3>
 {render acl=$localProductACL}
 	{$divALP}
 {/render}
@@ -117,7 +117,7 @@
   <td colspan="2">
    <p class='seperator'>&nbsp;</p><br>
    {if $standalone}
-    <h2><img src='images/rocket.png' alt="" class="center">&nbsp;{t}Action{/t}</h2>
+    <h3><img src='images/rocket.png' alt="" class="center">&nbsp;{t}Action{/t}</h3>
 	<select name='opsi_action'>
 		<option>&nbsp;</option>
 		{if $is_installed}

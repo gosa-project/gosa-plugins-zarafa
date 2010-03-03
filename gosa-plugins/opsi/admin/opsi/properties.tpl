@@ -1,4 +1,4 @@
-<h2>{t}OPSI product properties{/t}</h2>
+<h3>{t}OPSI product properties{/t}</h3>
 
 
 {if $cfg_count == 0}
