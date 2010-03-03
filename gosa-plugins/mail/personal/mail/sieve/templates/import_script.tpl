@@ -1,4 +1,4 @@
-<h2>{t}Import sieve script{/t}</h2>
+<h3>{t}Import sieve script{/t}</h3>
 {t}Please select the sieve script you want to import. Use the import button to import the script or the cancel button to abort.{/t}
 <br>
 <br>

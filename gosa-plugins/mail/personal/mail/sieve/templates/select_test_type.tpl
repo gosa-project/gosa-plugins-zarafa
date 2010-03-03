@@ -1,4 +1,4 @@
-<h2>{t}Select the type of test you want to add{/t}</h2>
+<h3>{t}Select the type of test you want to add{/t}</h3>
 
 <b>{t}Available test types{/t}</b>&nbsp;:&nbsp;
 <select name='test_type_to_add_{$ID}'>

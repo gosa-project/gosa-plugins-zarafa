@@ -1,4 +1,4 @@
-<h2>{t}List of sieve scripts{/t}</h2>
+<h3>{t}List of sieve scripts{/t}</h3>
 <!--
 {if $uattrib_empty}
 		

@@ -1,4 +1,4 @@
-<h2>Create a new sieve script</h2>
+<h3>Create a new sieve script</h3>
 {t}Please enter the name for the new script below. Script names must consist of lower case characters only.{/t}
 
 <br>

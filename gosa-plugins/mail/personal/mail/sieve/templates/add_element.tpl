@@ -1,4 +1,4 @@
-<h2>{t}Add a new element{/t}</h2>
+<h3>{t}Add a new element{/t}</h3>
 {t}Please select the type of element you want to add{/t}
 <br>
 <select name='element_type'>
