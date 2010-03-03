@@ -1,4 +1,4 @@
-<h2>Used sudo role options</h2>
+<h3>Used sudo role options</h3>
 
 <table style="width:650px;">
  <tr>
@@ -83,7 +83,7 @@
 
 <p class="seperator">&nbsp;</p>
 <br>
-<h2>{t}Available options{/t}:</h2>
+<h3>{t}Available options{/t}:</h3>
 {render acl=$ACL}   
 <select name='option'>
 {foreach from=$options item=item key=key}

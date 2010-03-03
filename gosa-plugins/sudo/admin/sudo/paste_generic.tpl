@@ -1,4 +1,4 @@
-<h2>{t}Generic{/t} - {t}global defaults{/t}</h2>
+<h3>{t}Generic{/t} - {t}global defaults{/t}</h3>
 <table> 
  <tr>
   <td>
