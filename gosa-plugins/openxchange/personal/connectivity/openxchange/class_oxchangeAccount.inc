@@ -221,7 +221,7 @@ class oxchangeAccount extends plugin
     }
 
     /* Optionally execute a command after we're done */
-    $this->postremove(array("uid" => $this->uid));
+    $this->handle_post_events('remove');
 
     /* Finally remove data from postgresql server */
     foreach ($sqldeluser as $sqls){
@@ -330,8 +330,8 @@ class oxchangeAccount extends plugin
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }
 
-    /* Optionally execute a command after we're done */
-    $this->postcreate(array("uid" => $this->uid));
+    // Optionally execute a command after we're done
+    $this->handle_post_events('add');
 
     if($needupdate){
       $ldap->create_missing_trees("ou=addr,".$this->dn);
