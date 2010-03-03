@@ -1,7 +1,7 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
  <tr>
    <td style="vertical-align:top; width:50%">
-     <h2><img alt="" align="top" src="images/rightarrow.png"> {t}DFS Properties{/t}</h2>
+     <h3><img alt="" align="top" src="images/rightarrow.png"> {t}DFS Properties{/t}</h3>
      
      <table summary="">
       <tr>
@@ -27,7 +27,7 @@
     &nbsp;
    </td>
    <td style="vertical-align:top; width:50%">
-     <h2><img alt="" align="top" src="plugins/dfs/images/location.png"> {t}DFS Location{/t}</h2>
+     <h3><img alt="" align="top" src="plugins/dfs/images/location.png"> {t}DFS Location{/t}</h3>
 
      <table summary="" style="width:100%">
       <tr>
