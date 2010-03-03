@@ -127,7 +127,7 @@ class intranetAccount extends plugin
       }
 
       /* Optionally execute a command after we're done */
-      $this->postremove(array("uid"=>$this->uid));
+      $this->handle_post_events('remove');
     }
   }
 
@@ -185,16 +185,16 @@ class intranetAccount extends plugin
       /* Log last action */
       if($this->initially_was_account){
         new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        $this->handle_post_events('modify');
       }else{
         new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        $this->handle_post_events('add');
       }
 
       if (!$ldap->success()){
         msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
       }
 
-      /* Optionally execute a command after we're done */
-      $this->postcreate(array("uid" => $this->uid));
   }
 
 
