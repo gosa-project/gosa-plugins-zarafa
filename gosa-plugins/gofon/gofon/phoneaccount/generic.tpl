@@ -1,10 +1,10 @@
 <table summary="{t}Phone numbers{/t}" style="width:100%">
  <tr>
   <td style="vertical-align:top; border-right:1px solid #A0A0A0; width:50%">
-   <h2>
+   <h3>
     <img class="center" alt="" align="middle" src="plugins/gofon/images/banana.png" />
     &nbsp;{t}Phone numbers{/t}
-   </h2>
+   </h3>
 
 {if $multiple_support}
 
@@ -39,7 +39,7 @@
  <tr>
 
   <td style="vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="plugins/gofon/images/hardware.png" />&nbsp;{t}Telephone hardware{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="plugins/gofon/images/hardware.png" />&nbsp;{t}Telephone hardware{/t}</h3>
 
       <table summary="{t}Telephone{/t}" border=0>
 	   {if !$multiple_support}
@@ -120,10 +120,10 @@
  </tr>
  <tr style="vertical-align:top; border-top:1px solid #A0A0A0;">
  <td colspan=2 style="vertical-align:top;width:50%">
-  <h2>
+  <h3>
    <img class="center" alt="" src="plugins/gofon/images/select_macro.png" align="middle" />
    &nbsp;{t}Phone macro{/t}
-  </h2>
+  </h3>
   <table summary="{t}Phone macro{/t}">
    <tr>
     <td colspan=2>

@@ -1,10 +1,10 @@
-<h2>{t}Phone settings{/t}</h2>
+<h3>{t}Phone settings{/t}</h3>
 <table summary="{t}Phone numbers{/t}" style="width:100%" cellspacing=0>
  <tr>
   <td style="vertical-align:top; border-right:1px solid #A0A0A0; width:50%">
-   <h2>
+   <h3>
     <img class="center" alt="" align="middle" src="plugins/gofon/images/banana.png" />&nbsp;{t}Phone numbers{/t}
-   </h2>
+   </h3>
   </td>
  </tr>
  <tr>
@@ -22,10 +22,10 @@
    <table summary="" style="width:100%" border=0>
     <tr>
      <td style="vertical-align:top;">
-      <h2> 
+      <h3> 
        <img class="center" alt="" align="middle" src="plugins/gofon/images/hardware.png" />
        &nbsp;{t}Telephone hardware{/t}
-      </h2>
+      </h3>
       <table summary="{t}Telephone{/t}" border=0>
        <tr>
         <td>
