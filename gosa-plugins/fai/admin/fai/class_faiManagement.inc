@@ -618,7 +618,7 @@ class faiManagement extends management
           $this->fai_release = $this->fai_base;
           $this->lock_name   = $name;
           $this->lock_dn     = $bb;
-          $this->postremove();
+          $this->handle_post_events('remove');
 
           $fai_filter = session::get("fai_filter");
           $fai_filter['fai_release'] = $this->fai_release;
@@ -799,13 +799,11 @@ class faiManagement extends management
 
       $this->dispNewFreeze = false;
 
-      /* Postcreate */
-
       /* Assign possible attributes */
       $this->lock_type  = $type;
       $this->lock_name  = $name;
       $this->lock_dn    = $baseToUse;
-      $this->postcreate();
+      $this->handle_post_events('add');
 
       /* Send daemon event to reload the fai release database
        */
