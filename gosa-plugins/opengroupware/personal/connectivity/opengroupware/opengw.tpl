@@ -1,4 +1,4 @@
-<h2><input type="checkbox" value="1" name="is_account" {$is_account} {$opengwAccountACL} onClick="document.mainform.submit();">&nbsp;{t}Opengroupware{/t}</h2>
+<h3><input type="checkbox" value="1" name="is_account" {$is_account} {$opengwAccountACL} onClick="document.mainform.submit();">&nbsp;{t}Opengroupware{/t}</h3>
 <table width="100%" summary="">
 	<tr>
 		<td width="50%">
