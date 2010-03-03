@@ -1,6 +1,6 @@
 
 {if $type == "FOLDER"}
-<h2>{$entry.NAME}</h2>
+<h3>{$entry.NAME}</h3>
 
 <table>
 	<tr>
@@ -37,7 +37,7 @@
 {/if}
 
 {if $type == "ENTRY"}
-<h2>{t}Application settings{/t}</h2>
+<h3>{t}Application settings{/t}</h3>
 <table>
 	<tr>
 		<td>{t}Name{/t}</td>
