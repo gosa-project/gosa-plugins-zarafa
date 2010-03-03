@@ -2,7 +2,7 @@
 <table summary="" width="100%">
     <tr>
         <td style="width:100%;vertical-align:top;">
-            <h2>{t}DNS take over initiated{/t}</h2>
+            <h3>{t}DNS take over initiated{/t}</h3>
             {$warning}
             {t}This includes 'all' DNS zones that are located within this server. Please double check if your really want to do this.{/t}
             <p>
@@ -34,7 +34,7 @@
 {/if}
 <tr>
     <td style="width:100%;vertical-align:top;">
-<h2>{t}Zones{/t}</h2>
+<h3>{t}Zones{/t}</h3>
 		  {$ZoneList}
 		  {if $is_createable}
 		  <input type="submit" name="AddZone" value="{msgPool type=addButton}">

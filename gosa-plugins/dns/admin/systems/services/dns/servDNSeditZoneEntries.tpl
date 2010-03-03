@@ -1,4 +1,4 @@
-<h2>{t}This dialog allows you to configure all components of this DNS zone on a single list.{/t}</h2>
+<h3>{t}This dialog allows you to configure all components of this DNS zone on a single list.{/t}</h3>
 <p class="seperator">&nbsp;</p>
 {if $disableDialog}
 	<br><b>

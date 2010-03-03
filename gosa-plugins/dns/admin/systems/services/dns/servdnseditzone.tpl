@@ -1,4 +1,4 @@
-<h2>{t}Generic{/t}</h2>
+<h3>{t}Generic{/t}</h3>
 <table summary="" width="100%">
 	<tr>
 		<td style="width:50%;vertical-align:top;border-right:1px	solid	#b0b0b0;">
@@ -62,7 +62,7 @@
 	</tr>
 </table>
 <p class="seperator">&nbsp;</p>
-<h2>{t}SOA record{/t}</h2>
+<h3>{t}SOA record{/t}</h3>
 <table summary="" width="100%">
 	<tr>
 		<td style="vertical-align:top;width:50%;border-right:1px	solid	#b0b0b0;">
@@ -144,7 +144,7 @@
 <table summary="" width="100%">
 	<tr>
 		<td style="vertical-align:top;width:50%;border-right:1px	solid	#b0b0b0;">
-			<h2>{t}MxRecords{/t}</h2>
+			<h3>{t}MxRecords{/t}</h3>
 			<table width="100%">	
 				<tr>
 					<td>
@@ -162,7 +162,7 @@
 			</table>
 		</td>
 		<td style="vertical-align:top;">
-			<h2>{t}Global zone records{/t}</h2>
+			<h3>{t}Global zone records{/t}</h3>
 {render acl=$zoneRecordsACL}					
 			  {$records}
 {/render}
