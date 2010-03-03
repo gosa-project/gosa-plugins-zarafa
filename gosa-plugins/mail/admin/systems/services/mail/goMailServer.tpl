@@ -1,4 +1,4 @@
-<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Generic{/t}</h2>
+<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Generic{/t}</h3>
 <table  style="width:100%;">
 	<tr>
 		<td width="50%" style="vertical-align:top">
@@ -80,7 +80,7 @@
 	<tr>
 		<td colspan="2">
 			<p class='seperator'>&nbsp;</p>
-			<h2>{t}Domains and routing{/t}</h2>
+			<h3>{t}Domains and routing{/t}</h3>
 		</td>
 	</tr>	
 	<tr>
@@ -138,7 +138,7 @@
 	<tr>
 		<td colspan="2">
 			<p class='seperator'>&nbsp;</p>
-			<h2>{t}Restrictions{/t}</h2>
+			<h3>{t}Restrictions{/t}</h3>
 		</td>
 	</tr>	
 	<tr>
@@ -199,7 +199,7 @@
 
 <p class='seperator'>&nbsp;</p>
 <br>
-<h2><img class="center" alt="" src="images/rocket.png" align="middle"> Action</h2>
+<h3><img class="center" alt="" src="images/rocket.png" align="middle"> Action</h3>
 {if $is_new == "new"}
 	{t}The server must be saved before you can use the status flag.{/t}
 {elseif !$is_acc}
