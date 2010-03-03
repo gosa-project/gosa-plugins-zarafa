@@ -2,9 +2,9 @@
   <tr>
     <td style='width:50%; vertical-align:top; border-right:1px solid #A0A0A0; padding-right:10px;'>
 
-      <h2><img src='plugins/rolemanagement/images/role.png' alt='' class='center'>&nbsp;
+      <h3><img src='plugins/rolemanagement/images/role.png' alt='' class='center'>&nbsp;
         {t}Generic{/t}
-      </h2>
+      </h3>
 
       <table style='width:100%;'>
         <tr>
@@ -58,9 +58,9 @@
 
     </td>
     <td style=' vertical-align:top; padding-left:10px;'>
-      <h2><img src='plugins/rolemanagement/images/occupant.png' alt='' class='center'>&nbsp;
+      <h3><img src='plugins/rolemanagement/images/occupant.png' alt='' class='center'>&nbsp;
         {t}Occupants{/t}
-      </h2>
+      </h3>
 
 {render acl=$roleOccupantACL}
       <select style="width:100%; height:450px;" id="members" name="members[]" size="15" multiple>
