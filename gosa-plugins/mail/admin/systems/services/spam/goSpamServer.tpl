@@ -1,6 +1,6 @@
 <table style='width:100%'>
  <tr>
-  <td style='width:50%;vertical-align:top;'><h2>Spam tagging</h2>
+  <td style='width:50%;vertical-align:top;'><h3>Spam tagging</h3>
 
    <table>
     <tr>
@@ -28,7 +28,7 @@
    </table>
 
   </td>
-  <td style="vertical-align:top;border-left:1px solid #A0A0A0;"><h2>Trusted networks</h2>
+  <td style="vertical-align:top;border-left:1px solid #A0A0A0;"><h3>Trusted networks</h3>
 
    <table width='100%'>
     <tr>
@@ -60,7 +60,7 @@
  </tr>
  <tr>
   <td>
-	<h2>Flags</h2>
+	<h3>Flags</h3>
 	
    <table>
     <tr>
@@ -103,7 +103,7 @@
   </td>
  </tr>
  <tr>
-  <td colspan='2'><h2>Rules</h2>
+  <td colspan='2'><h3>Rules</h3>
 
    <table width='100%'>
     <tr>

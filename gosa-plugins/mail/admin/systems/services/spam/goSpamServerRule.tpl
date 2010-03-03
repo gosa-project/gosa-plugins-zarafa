@@ -1,4 +1,4 @@
-<h2>Edit spam rule</h2>
+<h3>Edit spam rule</h3>
 
 <table style='width:100%;'>
  <tr>
