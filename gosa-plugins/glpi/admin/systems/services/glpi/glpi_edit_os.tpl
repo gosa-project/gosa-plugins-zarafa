@@ -1,4 +1,4 @@
-<h2>{t}Manage OS-types{/t}</h2>
+<h3>{t}Manage OS-types{/t}</h3>
 {if $Method == "edit"}
 
 	<select name="select_os" size="12" style="width:100%">

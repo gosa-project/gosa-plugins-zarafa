@@ -1,4 +1,4 @@
-<h2>{t}Add/Edit manufacturer{/t}</h2>
+<h3>{t}Add/Edit manufacturer{/t}</h3>
 <table summary="" width="100%">
 	<tr>
 		<td width="50%">

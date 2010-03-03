@@ -1,7 +1,7 @@
 <table summary="" title="" style="width: 100%;">
 	<tr>
 		<td>
-			<h2>{t}Generic{/t}</h2>
+			<h3>{t}Generic{/t}</h3>
 			<table summary="" title="" width="100%" style="vertical-align:top;">	
 				<tr>
 					<td>{t}Name{/t}
@@ -19,7 +19,7 @@
 				</tr>
 			</table>
 			<p class="seperator">&nbsp;</p>
-			<h2>{t}Comments{/t}</h2>
+			<h3>{t}Comments{/t}</h3>
 			<table summary="" title="" width="100%" style="vertical-align:top;">	
 				<tr>
 					<td>{t}Comment{/t}
@@ -31,7 +31,7 @@
 			</table>
 		</td>
 		<td style="vertical-align:top;border-left: 1px solid rgb(160, 160, 160);padding-right: 5px;">
-			<h2>{t}Generic{/t}</h2>
+			<h3>{t}Generic{/t}</h3>
             <table summary="" title="" width="100%" style="vertical-align:top;">
                 <tr>
                     <td>{t}Type{/t}

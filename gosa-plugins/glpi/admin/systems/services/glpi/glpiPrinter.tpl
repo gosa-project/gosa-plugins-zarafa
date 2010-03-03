@@ -3,7 +3,7 @@
 		<td style="width:50%;vertical-align: top;">
 			<!--Upper left-->	
 			
-			<h2>{t}Generic{/t}</h2>
+			<h3>{t}Generic{/t}</h3>
 			<table summary="" cellpadding=5>
 				<tr>
 					<td width="150">{t}Printer type{/t}
@@ -36,7 +36,7 @@
 			</table>
 		</td>
 		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
-			<h2>{t}Supported interfaces{/t}</h2>
+			<h3>{t}Supported interfaces{/t}</h3>
 			<table summary="" width="100%">
 				<tr>
 					<td width="20">
@@ -77,7 +77,7 @@
 <table summary="" style="width:100%;">
 	<tr>
 		<td style="width:50%;vertical-align: top;">
-			<h2>{t}Contacts{/t}</h2>
+			<h3>{t}Contacts{/t}</h3>
 			<table summary="" cellpadding=5>
 				<tr>
 					<td>{t}Technical responsible{/t}&nbsp;
@@ -104,7 +104,7 @@
 			</table>
 		</td>
 		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
-			<h2>{t}Attachments{/t}</h2>
+			<h3>{t}Attachments{/t}</h3>
 			<table summary="" width="100%">	
 				<tr>
 					<td>
@@ -124,7 +124,7 @@
 <table summary="" style="width:100%;">
 	<tr>
 		<td style="width:50%;vertical-align: top;">
-			<h2>{t}Information{/t}</h2>
+			<h3>{t}Information{/t}</h3>
 			<table summary="" width="100%">
 				<tr>
 					<td width="100%">
@@ -136,7 +136,7 @@
 			</table>
 		</td>
 		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
-			<h2>{t}Installed cartridges{/t}</h2>
+			<h3>{t}Installed cartridges{/t}</h3>
 			<table summary="" width="100%">	
 				<tr>
 					<td>

@@ -3,7 +3,7 @@
 		<td style="width:50%;vertical-align:top;" >
 			<!--Upper left-->	
 			
-			<h2>{t}Generic{/t}</h2>
+			<h3>{t}Generic{/t}</h3>
 			<table summary="" cellpadding=5>
 				<tr>
 					<td >{t}System type{/t}
@@ -49,7 +49,7 @@
 				</tr>
 			<!--</table>
 			<p class="seperator">&nbsp;</p>
-			<h2>{t}Contacts{/t}</h2>
+			<h3>{t}Contacts{/t}</h3>
 			<table summary="" width="100%">-->
 				<tr>
 					<td>
@@ -76,7 +76,7 @@
 		</td>
 		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
 			<!--Upper right-->
-			<h2>{t}Comment{/t}</h2>
+			<h3>{t}Comment{/t}</h3>
 			<table summary="" width="100%">
 				<tr>
 					<td valign="top" colspan="2">
@@ -93,7 +93,7 @@
 <table summary="" style="width:100%;">
 	<tr>
 		<td style="width:50%;">
-			<h2>{t}Installed devices{/t}</h2>
+			<h3>{t}Installed devices{/t}</h3>
 			<table summary="" width="100%">	
 				<tr>
 					<td>
@@ -114,7 +114,7 @@
 			<input type="submit" value="{t}Contracts{/t}" name="Contracts">	-->
 		</td>
 		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
-			<h2>{t}Attachments{/t}</h2>
+			<h3>{t}Attachments{/t}</h3>
 			<table summary="" width="100%">	
 				<tr>
 					<td>

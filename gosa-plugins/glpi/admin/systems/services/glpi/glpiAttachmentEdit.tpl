@@ -1,5 +1,5 @@
 <br>
-<h2>{t}Attachment{/t}</h2>
+<h3>{t}Attachment{/t}</h3>
 	
 <table summary="" width="100%">
 	<tr>

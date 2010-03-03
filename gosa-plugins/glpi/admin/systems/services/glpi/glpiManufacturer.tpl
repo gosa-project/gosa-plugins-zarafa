@@ -1,4 +1,4 @@
-<h2>{t}Manage manufacturers{/t}</h2>
+<h3>{t}Manage manufacturers{/t}</h3>
 <select name="manufacturer" style="width:100%;" size="12">
   {html_options values=$ManuKeys output=$Manus}
 </select>
