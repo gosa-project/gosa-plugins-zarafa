@@ -1,4 +1,4 @@
-<h2>{t}Print Service{/t} {t}enabled{/t}</h2>
+<h3>{t}Print Service{/t} {t}enabled{/t}</h3>
 
 <p class='seperator'>&nbsp;</p>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
