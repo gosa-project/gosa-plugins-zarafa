@@ -244,9 +244,9 @@ class mailAccount extends plugin
         } else {
           $reason = "";
           if(!$this->mailMethod->accountCreateable($reason)){
-            $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Mail")),$reason ,TRUE,TRUE);
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Mail")),$reason ,TRUE,TRUE);
           }else{
-            $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Mail")),msgPool::featuresDisabled(_("Mail")));
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Mail")),msgPool::featuresDisabled(_("Mail")));
           }
           return ($display);
         }
