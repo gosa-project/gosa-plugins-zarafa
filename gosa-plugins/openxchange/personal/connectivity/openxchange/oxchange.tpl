@@ -1,7 +1,7 @@
 {if !$pg}
-<h2>{t}Open-Xchange Account{/t} - {t}disabled, no Postgresql support detected. Or the specified database can't be reached{/t}</h2>
+<h3>{t}Open-Xchange Account{/t} - {t}disabled, no Postgresql support detected. Or the specified database can't be reached{/t}</h3>
 {else}
-<h2>
+<h3>
 <input type="checkbox" name="oxchange" value="B" 
 	{$oxchangeState} {$oxchangeAccountACL} 
 	onCLick="	
@@ -15,7 +15,7 @@
 		changeState('OXTimeZone'); 
 	{/if}
 	">
-{t}Open-Xchange account{/t}</h2>
+{t}Open-Xchange account{/t}</h3>
 
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
