@@ -13,10 +13,10 @@
    <table summary="" width="100%" cellspacing=2 cellpadding=4>
     <tr>
      <td style="width:50%; vertical-align:top; background-color: #F0F0F0">
-      <h2>
+      <h3>
        <img class="center" alt="" src="{$personal_image}" align=middle> 
        {t}Personal{/t}
-      </h2>
+      </h3>
  
       <table summary="" width="100%">
        <tr>
@@ -48,10 +48,10 @@
      </td>
      <td style="vertical-align:top; background-color: #E8E8E8">
 
-      <h2>
+      <h3>
        <img class="center" alt="" src="{$home_image}" align=middle> 
        {t}Private{/t}
-      </h2>
+      </h3>
 
       <table summary="" width="100%">
         <tr>
@@ -94,10 +94,10 @@
      <tr>
       <td style="vertical-align:top; background-color: #E4E4E4" colspan=2>
 
-       <h2>
+       <h3>
         <img class="center" alt="" src="{$company_image}" align=middle> 
         {t}Organizational{/t}
-       </h2>
+       </h3>
 
        <table summary="" width="100%">
         <tr>
