@@ -1,20 +1,20 @@
 {if !$ACL}
 
-	<h2>{msgPool type=permView}</h2>
+	<h3>{msgPool type=permView}</h3>
 
 {else}
 	{if $logs_available}
-	<h2>{t}Available logs{/t}</h2>
+	<h3>{t}Available logs{/t}</h3>
 
 		<div style="width:99%;border: solid 1px #CCCCCC;">{$divlist}</div>
 	  <br>
 	  <p class="seperator"></p>
-		<h2>{t}Selected log{/t}: {$selected_log}</h2>
+		<h3>{t}Selected log{/t}: {$selected_log}</h3>
 		<div style="width:99%;height:350px;padding:3px;background-color:white; overflow-y: scroll;border: solid 1px;">
 			{$log_file}
 		</div>
 	{else}
-		<h2>{t}No logs for this host available!{/t}</h2>
+		<h3>{t}No logs for this host available!{/t}</h3>
 	{/if}
 {/if}
 

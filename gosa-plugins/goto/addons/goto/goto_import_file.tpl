@@ -1,4 +1,4 @@
-<h2>{t}Import jobs{/t}</h2>
+<h3>{t}Import jobs{/t}</h3>
 <p>
 {t}You can import a list of jobs into the GOsa job queue. This should be a semicolon seperated list of items in the following format:{/t}
 </p>
