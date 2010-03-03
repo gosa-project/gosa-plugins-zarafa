@@ -2,7 +2,7 @@
 <table style='width:100%;'>
  <tr>
   <td colspan=2>
-	<h2>{t}Generic virus filtering{/t}</h2>
+	<h3>{t}Generic virus filtering{/t}</h3>
   </td>
  </tr>
  <tr>
@@ -98,7 +98,7 @@
  <tr>
   <td colspan=2>
    <p class='seperator'>&nbsp;</p>
-	<h2>{t}Archive scanning{/t}</h2> 
+	<h3>{t}Archive scanning{/t}</h3> 
   </td>
  </tr>
  <tr>
