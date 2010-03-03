@@ -116,8 +116,6 @@ class scalixAccount extends plugin
       $this->is_account= !$this->is_account;
     }
 
-    $ReadOnly = !session::is_set("edit") && !isset($this->parent);
-
     /* Show main page */
     $mailboxClasses = array("", "LIMITED", "FULL");
     $serverLanguages= array("", "GERMAN", "ENGLISH");
@@ -162,7 +160,7 @@ class scalixAccount extends plugin
       "scalixLimitInboundMail", "scalixLimitNotifyUser", "scalixHideUserEntry", "scalixMailboxClass") as $val){
 
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", $this->getacl($val, $ReadOnly));
+      $smarty->assign("$val"."ACL", $this->getacl($val));
     }
 
     /* Fill checkboxes */
