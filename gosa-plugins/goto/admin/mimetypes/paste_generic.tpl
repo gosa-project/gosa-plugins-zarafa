@@ -1,7 +1,7 @@
 <table style="width:100%">
 	<tr>
 		<td colspan="2">
-			<h2><img src='images/head.png' class='center'>&nbsp;{t}Generic{/t}</h2>
+			<h3><img src='images/head.png' class='center'>&nbsp;{t}Generic{/t}</h3>
 		</td>
 	</tr>
 	<tr>

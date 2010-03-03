@@ -1,7 +1,7 @@
 <table style="width:100%">
 	<tr>
 		<td colspan="2">
-			<h2><img src='plugins/goto/images/list_mime.png' class='center' alt='[M]'>&nbsp;{t}Generic{/t}</h2>
+			<h3><img src='plugins/goto/images/list_mime.png' class='center' alt='[M]'>&nbsp;{t}Generic{/t}</h3>
 		</td>
 	</tr>
 	<tr>
@@ -96,7 +96,7 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<h2><img src='plugins/goto/images/mime_leftclick.png' class='center' alt='{t}Left click{/t}'>&nbsp;{t}Left click{/t}</h2>
+			<h3><img src='plugins/goto/images/mime_leftclick.png' class='center' alt='{t}Left click{/t}'>&nbsp;{t}Left click{/t}</h3>
 		</td>
 	</tr>
 	<tr>
@@ -140,7 +140,7 @@
 	</tr>
 	<tr>	
 		<td colspan="2">
-			<h2><img src='plugins/goto/images/mime_embedding.png' class='center' alt='{t}Embedding{/t}'>&nbsp;{t}Embedding{/t}</h2>
+			<h3><img src='plugins/goto/images/mime_embedding.png' class='center' alt='{t}Embedding{/t}'>&nbsp;{t}Embedding{/t}</h3>
 		</td>
 	</tr>
 	<tr>
