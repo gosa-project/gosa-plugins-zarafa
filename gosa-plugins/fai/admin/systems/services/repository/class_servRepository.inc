@@ -198,7 +198,7 @@ class servrepository extends goService
     }
 
     if(!$this->fai_activated){
-      $str = "<h2>"._("You can't use this plugin until FAI is activated.")."</h2>";
+      $str = "<h3>"._("You can't use this plugin until FAI is activated.")."</h3>";
       $display = $smarty->fetch(get_template_path('servRepository.tpl', TRUE,dirname(__FILE__)));
       return($str.$display);
     }

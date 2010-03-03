@@ -1,4 +1,4 @@
-<h2><img src="plugins/fai/images/fai_small.png" alt=''>&nbsp;{t}Repository{/t}</h2>
+<h3><img src="plugins/fai/images/fai_small.png" alt=''>&nbsp;{t}Repository{/t}</h3>
 
 <table width="100%" summary=''>
 	<tr>
