@@ -1,7 +1,7 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  	<tr>
    		<td style="width:50%; vertical-align:top;">
-     		<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
+     		<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h3>
      		<table summary="">
        			<tr>
          			<td>
