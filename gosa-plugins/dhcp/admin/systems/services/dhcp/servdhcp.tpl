@@ -2,7 +2,7 @@
 <table summary="" width="100%">
     <tr>
         <td style="width:100%;vertical-align:top;">
-			<h2>{t}DHCP take over will take place when saving this entry. Choose 'Cancel' to abort.{/t}</h2>
+			<h3>{t}DHCP take over will take place when saving this entry. Choose 'Cancel' to abort.{/t}</h3>
         </td>
     </tr>
 </table>
@@ -21,7 +21,7 @@
 {/if}
 <tr>
     <td style="width:100%;vertical-align:top;">
-    <h2>{t}DHCP sections{/t}</h2>
+    <h3>{t}DHCP sections{/t}</h3>
         {$DhcpList}
     </td>
 </tr>
