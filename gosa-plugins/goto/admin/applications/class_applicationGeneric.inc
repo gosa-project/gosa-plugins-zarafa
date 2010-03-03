@@ -524,7 +524,7 @@ class application extends plugin
   {
     $vars = array("cn");
 
-    $str ="<h2>"._("Application settings")."</h2>
+    $str ="<h3>"._("Application settings")."</h3>
       <table>
       <tr>
       <td>".

@@ -93,7 +93,7 @@
 
 <p class="plugbottom" style="height:4px; margin-bottom:0px;">&nbsp;</p>
 
-<h2><img src="images/lists/on.png" alt="{t}Options{/t}" align="middle">&nbsp;{t}Options{/t}</h2>
+<h3><img src="images/lists/on.png" alt="{t}Options{/t}" align="middle">&nbsp;{t}Options{/t}</h3>
 <table summary="" style="width:100%;">
   <tr>
     <td style="width:50%;border-right:1px solid #B0B0B0; vertical-align:top">
@@ -131,7 +131,7 @@
 <table width="99%" summary="">
 	<tr>
 		<td>
-			<h2><img src="plugins/goto/images/logon_script.png" alt="{t}Script{/t}" align="middle">&nbsp;{t}Script{/t}</h2>
+			<h3><img src="plugins/goto/images/logon_script.png" alt="{t}Script{/t}" align="middle">&nbsp;{t}Script{/t}</h3>
 {render acl=$gotoLogonScriptACL}
 			<textarea name="gotoLogonScript" style='width:99%;height:220px;'>{$gotoLogonScript}</textarea>
 {/render}
