@@ -1,4 +1,4 @@
-<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Shares{/t}</h2>
+<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Shares{/t}</h3>
    <table summary="" style="width:100%">
     <tr>
      <td>
