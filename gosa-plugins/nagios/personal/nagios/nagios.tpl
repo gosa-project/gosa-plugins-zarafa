@@ -1,9 +1,9 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
-   <h2>
+   <h3>
     {image path="images/rightarrow.png"}&nbsp;{t}Nagios Account{/t}
-</h2>
+</h3>
    <table summary="">
     <tr>
      <td><label for="NagiosAlias">{t}Alias{/t}</label>{$must}</td>
@@ -112,10 +112,10 @@
    &nbsp;
   </td>
   <td style="width:100%; vertical-align:top;">
-   <h2> 
+   <h3> 
     {image path="images/rightarrow.png"}&nbsp;{t}Nagios authentification{/t}
 
-   </h2>
+   </h3>
    <table summary="">
     <tr>
      <td>
