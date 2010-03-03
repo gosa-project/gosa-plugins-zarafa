@@ -1,7 +1,7 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
+   <h3><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h3>
    <table summary="">
     <tr>
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
@@ -98,9 +98,9 @@
 <!-- Alternate addresses -->
 {if !$multiple_support}
   <td style="vertical-align:top;padding-left:2px;">
-   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png"> 
+   <h3><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png"> 
 	{t}Alternative addresses{/t}
-   </h2>
+   </h3>
 
 {render acl=$gosaMailAlternateAddressACL}
    <select style="width:100%;" name="alternates_list[]" size=10 multiple 
@@ -132,9 +132,9 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
   <td style="vertical-align:top;width:50%; border-right:1px solid #A0A0A0">
-   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/shared_folder.png"> 
+   <h3><img class="center" alt="" align="middle" src="plugins/mail/images/shared_folder.png"> 
 		{t}IMAP shared folders{/t}
-   </h2>
+   </h3>
    <input type='hidden' name='mail_acls_posted' value='1'>
    <table summary="" cellpadding=0 border=0>
 	{foreach from=$folder_acls item=item key=user}
@@ -184,7 +184,7 @@
 
 <p class="seperator">&nbsp;</p>
 
-<h2><img class="center" alt="" align="middle" src="images/false.png" />&nbsp;{t}Advanced mail options{/t}</h2> 
+<h3><img class="center" alt="" align="middle" src="images/false.png" />&nbsp;{t}Advanced mail options{/t}</h3> 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="2" border="0">
  <tr>
   <td>
@@ -199,10 +199,10 @@
 
   </td>
   <td style="vertical-align:top;width:50%">
-   <h2>
+   <h3>
 	<img class="center" alt="" align="middle" src="plugins/mail/images/envelope.png">
 	{t}Forward messages to non group members{/t}
-   </h2>
+   </h3>
 
 {render acl=$gosaMailForwardingAddressACL}
    <select style="width:100%;" name="forwarder_list[]" size=10 multiple>

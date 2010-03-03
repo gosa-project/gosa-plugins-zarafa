@@ -301,7 +301,7 @@ class mailgroup extends plugin
             if($this->remove_folder_from_imap){
               $c= " checked ";
             }
-            $display .= "<h2>Shared folder delete options</h2>
+            $display .= "<h3>Shared folder delete options</h3>
               <input class='center' type='checkbox' name='remove_folder_from_imap' value='1' ".$c."
               title='"._("Remove shared folder from mail server database when entry gets removed in LDAP")."'>";
             $display .= _("Remove the shared folder and all its contents after saving this account");

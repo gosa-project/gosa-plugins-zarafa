@@ -1,4 +1,4 @@
-<h2>{t}Mail settings{/t}</h2>
+<h3>{t}Mail settings{/t}</h3>
 <table summary="" style="width:100%; vertical-align:top; text-align:left;">
  	<tr>
   		<td colspan=2>   
