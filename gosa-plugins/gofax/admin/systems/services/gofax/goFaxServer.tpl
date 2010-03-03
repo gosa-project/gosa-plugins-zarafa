@@ -1,4 +1,4 @@
-<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}FAX database information{/t}</h2>
+<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}FAX database information{/t}</h3>
  <table summary="">
     <tr>
      <td>{t}FAX DB user{/t}{$must}</td>
