@@ -1,5 +1,5 @@
 
-<h2>{t}Devices{/t}</h2>
+<h3>{t}Devices{/t}</h3>
 
 <table width="100%" summary="">
  <tr>
