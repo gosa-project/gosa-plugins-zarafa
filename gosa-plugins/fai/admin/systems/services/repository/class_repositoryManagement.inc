@@ -13,7 +13,7 @@ class repositoryManagement extends management
     $this->parent = $parent;
 
     // Set storage points - We do not have any - We just create a fake list which lists all services
-    $this->storagePoints = array();
+    $this->storagePoints = array("");
 
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){
