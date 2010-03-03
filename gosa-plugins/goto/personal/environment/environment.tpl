@@ -7,11 +7,11 @@
 
 <input type="hidden" name="iamposted" value="1">
 
-<h2> 
+<h3> 
  {image path="plugins/goto/images/fai_settings.png"} 
 
  {t}Profiles{/t}
-</h2>
+</h3>
 
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
@@ -209,11 +209,11 @@
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
   <td style="width:50%;border-right:1px solid #B0B0B0">
-   <h2>
+   <h3>
     {image path="plugins/goto/images/edit_share.png"}&nbsp;
 
     <label for="gotoShare">{t}Shares{/t}</label>
-   </h2>
+   </h3>
    <table summary="" style="width:100%">
     <tr>
      <td>
@@ -245,11 +245,11 @@
    </table>
   </td>
   <td style="vertical-align:top">
-   <h2>
+   <h3>
     {image path="plugins/goto/images/logon_script.png"}&nbsp;
 
     <label for="gotoLogonScript">{t}Logon scripts{/t}</label>
-   </h2>
+   </h3>
    <table summary="{t}Logon script management{/t}" style="width:100%">
     <tr>
      <td>
@@ -298,11 +298,11 @@
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
   <td style="border-right:1px solid #B0B0B0; width:50%; vertical-align:top">
-   <h2>
+   <h3>
     {image path="plugins/goto/images/hotplug.png"}&nbsp;
 
     <label for="gotoHotplugDevice_post">{t}Hotplug devices{/t}</label>
-   </h2> 
+   </h3> 
    <table style="width:100%" summary="{t}Hotplug device settings{/t}">
     <tr>
      <td>
@@ -342,13 +342,13 @@
 
 {if $multiple_support}
 
-   <h2>
+   <h3>
 	<input type="checkbox" name="use_gotoPrinter" value="1" {if $use_gotoPrinter} checked {/if}
 		class="center" onClick="$('div_gotoPrinter').toggle();">
     {image path="plugins/systems/images/select_printer.png"}&nbsp;
 
     <label for="gotoPrinter">{t}Printer{/t}</label>
-   </h2>
+   </h3>
 
    <div id="div_gotoPrinter" {if !$use_gotoPrinter} style="display: none;" {/if}>
 	<b>{t}Using this option will overwrite the complete printer settings for all currently edited objects!{/t}</b>
@@ -388,11 +388,11 @@
 
 {else}
 
-   <h2>
+   <h3>
     {image path="plugins/systems/images/select_printer.png"}&nbsp;
 
     <label for="gotoPrinter">{t}Printer{/t}</label>
-   </h2>
+   </h3>
    <table style="width:100%" summary="{t}Printer settings{/t}">
     <tr>
      <td>

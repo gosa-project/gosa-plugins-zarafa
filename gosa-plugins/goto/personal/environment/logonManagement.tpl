@@ -1,5 +1,5 @@
-<h2>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Logon script management{/t}
-</h2>
+<h3>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Logon script management{/t}
+</h3>
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
@@ -53,8 +53,8 @@
 	<table width="100%" summary="">
 		<tr>
 			<td colspan="2">
-			<h2>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Script{/t}
-</h2>
+			<h3>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Script{/t}
+</h3>
 					<table width="100%" summary="{t}Logon script{/t}">
 						<tr>
 							<td>
