@@ -16,7 +16,7 @@
 		{$vars}
 </table>
 {else}
-	<h2>{t}You are not allowed to view the macro parameter settings{/t}</h2>
+	<h3>{t}You are not allowed to view the macro parameter settings{/t}</h3>
 {/if}
 <input type="hidden" name="phoneparemeters">
 
