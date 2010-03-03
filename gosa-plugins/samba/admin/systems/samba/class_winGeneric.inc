@@ -279,9 +279,6 @@ class wingeneric extends plugin
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }
-
-    /* Optionally execute a command after we're done */
-    $this->postcreate();
   }
 
   /* Return plugin informations for acl handling
