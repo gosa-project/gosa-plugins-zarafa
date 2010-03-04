@@ -91,7 +91,7 @@
 	</tr>
 	<tr>
 		<td colspan=2>
-			<p class="seperator">&nbsp;</p>
+			<hr>
 		</td>
 	</tr>
 	<tr>
