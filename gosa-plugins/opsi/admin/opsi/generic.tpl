@@ -1,5 +1,5 @@
 
-<h3><img src='plugins/opsi/images/client_generic.png' alt=' ' class='center'>&nbsp;{t}OPSI host{/t}</h3>
+<h3>{t}OPSI host{/t}</h3>
 
 {if $init_failed}
 
@@ -117,7 +117,7 @@
   <td colspan="2">
    <p class='seperator'>&nbsp;</p><br>
    {if $standalone}
-    <h3><img src='images/rocket.png' alt="" class="center">&nbsp;{t}Action{/t}</h3>
+    <h3>{t}Action{/t}</h3>
 	<select name='opsi_action'>
 		<option>&nbsp;</option>
 		{if $is_installed}
