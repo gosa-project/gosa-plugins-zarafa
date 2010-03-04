@@ -1,10 +1,10 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
    <h3>
     {image path="images/rightarrow.png"}&nbsp;{t}Nagios Account{/t}
 </h3>
-   <table summary="">
+   <table >
     <tr>
      <td><label for="NagiosAlias">{t}Alias{/t}</label>{$must}</td>
      <td>
@@ -116,7 +116,7 @@
     {image path="images/rightarrow.png"}&nbsp;{t}Nagios authentification{/t}
 
    </h3>
-   <table summary="">
+   <table >
     <tr>
      <td>
 {render acl=$AuthorizedSystemInformationACL}
