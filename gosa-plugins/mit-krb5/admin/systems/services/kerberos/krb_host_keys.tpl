@@ -1,5 +1,5 @@
 {if !$service_plugin}
-<p class="seperator">&nbsp;</p>
+<hr>
 {/if}
 <h3>	{t}Kerberos keys{/t} </h3>
 
@@ -7,7 +7,7 @@
 {$list}
 </div>
 {if $service_plugin}
-<p class="seperator">&nbsp;</p>
+<hr>
 {/if}
 
 

@@ -40,7 +40,7 @@
   </tr>
  </table>
 <input type="hidden" name="Policy_Posted" value="1">
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <div style="text-align:right; padding:4px;">
 	<input type='submit' name="save_policy" value="{msgPool type=okButton}">
