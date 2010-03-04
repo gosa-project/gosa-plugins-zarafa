@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle">&nbsp;{t}Edit share{/t}</h3>
+<h3>{t}Edit share{/t}</h3>
 <table summary="{t}NFS setup{/t}" width="100%">
 	<tr>
 		<td width="45%" style="vertical-align:top">
