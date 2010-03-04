@@ -3,7 +3,7 @@
  <!-- Headline container -->
  <tr>
   <td colspan="2" style="width:50%; vertical-align:top;">
-   <h3>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
+   <h3>{t}Generic{/t}
 </h3>
   </td>
  </tr>
@@ -68,7 +68,7 @@
 
 <p class="seperator">&nbsp;</p>
 
-<h3>{image path="plugins/samba/images/terminal_server.png"}&nbsp;{t}Terminal Server{/t}
+<h3>{t}Terminal Server{/t}
 </h3>
 
 <table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
@@ -306,7 +306,7 @@
 
 <p class="seperator">&nbsp;</p>
 
-<h3>{image path="images/lists/key.png"}&nbsp;{t}Access options{/t}
+<h3>{t}Access options{/t}
 </h3>
 
 <table style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
