@@ -1,7 +1,7 @@
 <table width="100%" summary="">
 	<tr>
 		<td width="50%" valign="top" style="border-right:1px solid #A0A0A0">
-				<h3><img class="center" alt="" src="images/forward.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h3>
+				<h3>{t}Generic{/t}</h3>
 				<table summary="" cellspacing="4">
 					<tr>
 						<td>
@@ -30,7 +30,7 @@
 				</table>
 		</td>
 		<td width="50%" valign="top">
-			<h3><img class="center" alt="" src="plugins/fai/images/repository.png" align="middle" title="{t}Repository{/t}">&nbsp;{t}Repository{/t}</h3>
+			<h3>{t}Repository{/t}</h3>
 				<table summary="" cellspacing="4">
 					<tr>
 						<td>
@@ -68,7 +68,7 @@
 <table width="99%" summary="">
 	<tr>
 		<td> 
-			<h3><img class="center" alt="" src="plugins/fai/images/fai_packages.png" align="middle" title="{t}Used packages{/t}">&nbsp;{t}Used packages{/t}</h3>
+			<h3>{t}Used packages{/t}</h3>
 			{$divlist}
 		</td>
 	</tr>
