@@ -28,7 +28,7 @@
 </table>
 
 	{if  $count}
-		<p class="seperator">&nbsp;</p>
+		<hr>
 		<br>
 		<br>
 		<div style='width:100%; height:300px; overflow: scroll;'>
