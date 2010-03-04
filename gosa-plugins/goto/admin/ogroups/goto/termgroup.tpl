@@ -3,7 +3,7 @@
 <br>
 <br>
 <p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
-<h3><img class="center" alt="" align="middle" src="plugins/ogroups/images/generic.png"> {t}Generic{/t}</h3>
+<h3>{t}Generic{/t}</h3>
 
 <table width="100%">
 	<tr>
@@ -110,7 +110,7 @@
 <input name="workgeneric_posted" value="1" type="hidden">
 
 
-<h3><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h3>
+<h3>{t}Action{/t}</h3>
 				<table summary="">
 				 <tr>
 				  <td>
