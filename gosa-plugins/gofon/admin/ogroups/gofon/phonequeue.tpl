@@ -5,7 +5,7 @@
 <table summary="{t}Queue Settings{/t}" style="width: 100%; vertical-align: top; text-align: left;" border="0" cellpadding="4">
 <tr>
 <td valign='top'>
-		<h3><img class="center" alt="" src="plugins/gofon/images/select_phone.png" align="middle">&nbsp;{t}Phone numbers{/t}</h3>
+		<h3>{t}Phone numbers{/t}</h3>
 		<table summary="">
 		<tr>
 		<td colspan=2>
@@ -44,7 +44,7 @@
 		</table>
 		</tr>
 		<tr>
-		  <td colspan=2><h3><img class="center" alt="" src="plugins/gofon/images/options.png" align="middle">&nbsp;{t}Options{/t}</h3></td>
+		  <td colspan=2><h3>{t}Options{/t}</h3></td>
 		</tr>
                 <tr>
                 <td><LABEL for="goFonHomeServer">{t}Home server{/t}</LABEL>{$must}</td>
