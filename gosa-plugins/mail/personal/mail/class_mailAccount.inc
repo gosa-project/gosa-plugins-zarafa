@@ -399,10 +399,9 @@ class mailAccount extends plugin
     $smarty->assign("isModifyableServer", $this->mailMethod->isModifyableServer());
     $smarty->assign("mailEqualsCN", $this->mailMethod->mailEqualsCN());
 
-    $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
     $tmp  = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $transl){
-      $smarty->assign("$name"."ACL", $this->getacl($name,$SkipWrite));
+      $smarty->assign("$name"."ACL", $this->getacl($name));
     }
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
