@@ -36,10 +36,10 @@
 {/if}
  {t}Proxy account{/t}</h3>
 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
    <td>
-    <table summary="" border=0 width="100%" cellpadding=0>
+    <table border=0 width="100%" cellpadding=0>
     <tr><td colspan=2>
 
 {render acl=$gosaProxyFlagFACL checkbox=$multiple_support checked=$use_filterF}
@@ -57,7 +57,7 @@
 
     <LABEL for="startHour">{t}Limit proxy access to working time{/t}</LABEL>
     <br>
-    <table summary="" style="margin-left:20px;">
+    <table style="margin-left:20px;">
      <tr>
       <td>
 
@@ -99,7 +99,7 @@
 {/render}
     <LABEL for="quota_size">{t}Restrict proxy usage by quota{/t}</LABEL>
     <br>
-    <table summary="" style="margin-left:20px;">
+    <table style="margin-left:20px;">
      <tr>
       <td>
 {render acl=$gosaProxyFlagBACL}
