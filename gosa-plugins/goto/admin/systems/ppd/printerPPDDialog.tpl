@@ -24,7 +24,7 @@
 		</tr>
 	</table>
 	{if $showOptions eq 1}
-	<p class="seperator">&nbsp;</p>
+	<hr>
 	<h3>{t}Options{/t}</h3>
 	{$properties}
 	{/if}
