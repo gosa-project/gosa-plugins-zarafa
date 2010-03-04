@@ -1,7 +1,7 @@
 <table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
-   <h3>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
+   <h3>{t}Generic{/t}
 </h3>
 <!-- Hide user specific attributes when in group mode. -->
    <table >
@@ -103,7 +103,7 @@
   </td>
 
   <td style="vertical-align:top;">
-   <h3>{image path="plugins/scalix/images/envelope.png"}
+   <h3>
 <label for="emails_list"> {t}Scalix email addresses{/t}</label></h3>
 {render acl=$scalixEmailAddressACL}
    <select id="emails_list" style="width:100%;height:100px;" name="emails_list[]" size="15"
