@@ -1,4 +1,4 @@
-<table summary="">
+<table >
 <tr>
 	<td>
 		<label for="apple_user_share">{t}Share{/t}</label>
