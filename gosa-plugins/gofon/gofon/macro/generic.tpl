@@ -58,7 +58,7 @@
 		</td>
 	</tr>
 </table>
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 {t}Macro text{/t}
 <br>
