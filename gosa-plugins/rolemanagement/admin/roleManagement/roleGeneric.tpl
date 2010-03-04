@@ -36,7 +36,7 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2"><p class="seperator">&nbsp;</p><br></td>
+          <td colspan="2"><hr><br></td>
         </tr>
         <tr>
           <td>{t}Phone number{/t}</td>
