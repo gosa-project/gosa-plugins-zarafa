@@ -126,7 +126,7 @@
  </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 {if !$multiple_support}
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
@@ -182,7 +182,7 @@
    </table>
 {/if}      
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <h3>{t}Advanced mail options{/t}</h3> 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="2" border="0">
