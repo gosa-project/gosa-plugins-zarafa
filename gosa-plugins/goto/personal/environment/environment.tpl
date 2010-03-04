@@ -13,7 +13,7 @@
  {t}Profiles{/t}
 </h3>
 
-<table summary="{t}Environment managment settings{/t}" width="100%">
+<table {t}Environment managment settings{/t}" width="100%">
  <tr>
   <td style="width:50%;border-right:1px solid #B0B0B0;vertical-align:top;">
 
@@ -46,7 +46,7 @@
 {else}
 
 
-   <table summary="{t}Profile managment{/t}">
+   <table {t}Profile managment{/t}">
     <tr>
      <td style="vertical-align:top">
 {render acl=$gotoProfileACL}
@@ -61,7 +61,7 @@
      <td>&nbsp;
      </td>
      <td>
-      <table summary="{t}Profile server managment{/t}">
+      <table {t}Profile server managment{/t}">
        <tr>
         <td> 
          <label for="gotoProfileServer">{t}Profil path{/t}</label>
@@ -119,7 +119,7 @@
   <td style="vertical-align:top">
 
 
-  <table summary="{t}Kiosk profile settings{/t}">
+  <table {t}Kiosk profile settings{/t}">
 {if $kiosk_enabled}
     <tr>
      <td colwidth=2>
@@ -206,7 +206,7 @@
 
 <p class="seperator">&nbsp;</p>
 
-<table summary="{t}Environment managment settings{/t}" width="100%">
+<table {t}Environment managment settings{/t}" width="100%">
  <tr>
   <td style="width:50%;border-right:1px solid #B0B0B0">
    <h3>
@@ -214,7 +214,7 @@
 
     <label for="gotoShare">{t}Shares{/t}</label>
    </h3>
-   <table summary="" style="width:100%">
+   <table style="width:100%">
     <tr>
      <td>
 	
@@ -250,7 +250,7 @@
 
     <label for="gotoLogonScript">{t}Logon scripts{/t}</label>
    </h3>
-   <table summary="{t}Logon script management{/t}" style="width:100%">
+   <table {t}Logon script management{/t}" style="width:100%">
     <tr>
      <td>
 {render acl=$gotoLogonScriptACL}
@@ -295,7 +295,7 @@
 
 <p class="seperator">&nbsp;</p>
 
-<table summary="{t}Environment managment settings{/t}" width="100%">
+<table {t}Environment managment settings{/t}" width="100%">
  <tr>
   <td style="border-right:1px solid #B0B0B0; width:50%; vertical-align:top">
    <h3>
@@ -303,7 +303,7 @@
 
     <label for="gotoHotplugDevice_post">{t}Hotplug devices{/t}</label>
    </h3> 
-   <table style="width:100%" summary="{t}Hotplug device settings{/t}">
+   <table style="width:100%" {t}Hotplug device settings{/t}">
     <tr>
      <td>
 {render acl=$gotoHotplugDeviceACL}
@@ -352,7 +352,7 @@
 
    <div id="div_gotoPrinter" {if !$use_gotoPrinter} style="display: none;" {/if}>
 	<b>{t}Using this option will overwrite the complete printer settings for all currently edited objects!{/t}</b>
-   <table style="width:100%" summary="{t}Printer settings{/t}">
+   <table style="width:100%" {t}Printer settings{/t}">
     <tr>
      <td>
 {render acl=$gotoPrinterACL}
@@ -393,7 +393,7 @@
 
     <label for="gotoPrinter">{t}Printer{/t}</label>
    </h3>
-   <table style="width:100%" summary="{t}Printer settings{/t}">
+   <table style="width:100%" {t}Printer settings{/t}">
     <tr>
      <td>
 {render acl=$gotoPrinterACL}
