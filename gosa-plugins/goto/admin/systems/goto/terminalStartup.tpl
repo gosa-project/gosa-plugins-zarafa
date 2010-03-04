@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" align="middle" src="images/penguin.png"> {t}Boot parameters{/t}</h3>
+<h3>{t}Boot parameters{/t}</h3>
 <table summary="" style="width:100%;">
  <tr>
   <td style="width:50%; vertical-align:top;">
@@ -88,7 +88,7 @@
   </td>
 
   <td style="padding-left:10px;border-left:1px solid #A0A0A0;vertical-align:top">
-        <h3><img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle">&nbsp;<LABEL for="gotoShare">{t}Shares{/t}</LABEL></h3>
+        <h3><LABEL for="gotoShare">{t}Shares{/t}</LABEL></h3>
         <table summary="" style="width:100%">
                 <tr>
                         <td>
