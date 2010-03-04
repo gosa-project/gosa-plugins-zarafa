@@ -1,10 +1,10 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
 
    <h3>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
 </h3>
-   <table summary="">
+   <table >
 {if !$multiple_support}
     <tr>
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
@@ -98,7 +98,7 @@
  <tr>
   <td colspan="3">
    <p class="seperator">&nbsp;</p>
-   <table summary="" style="vertical-align:top; text-align:left;" cellpadding=4 border=0>
+   <table style="vertical-align:top; text-align:left;" cellpadding=4 border=0>
     <tr>
      <td>
 {render acl=$gosaMailDeliveryModeCACL}
@@ -141,7 +141,7 @@
  </tr>
 </table>
 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr style="padding-bottom:0px;">
   <td style="width:50%">
 {render acl=$gosaMailDeliveryModeIACL checkbox=$multiple_support checked=$use_drop_own_mails}
@@ -289,7 +289,7 @@
 
 <h3>{image path="images/false.png"}&nbsp;{t}Advanced mail options{/t}
 </h3>
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="4" border="0">
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="4" border="0">
  <tr>
   <td>
 {render acl=$gosaMailDeliveryModeLACL checkbox=$multiple_support checked=$use_only_local}
