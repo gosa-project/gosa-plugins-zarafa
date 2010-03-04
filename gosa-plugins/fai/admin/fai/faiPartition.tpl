@@ -58,7 +58,7 @@
   </tr>
   <tr>
     <td colspan="4">
-      <p class="seperator">&nbsp;</p>
+      <hr>
     </td>
   </tr>
   <tr>
@@ -85,7 +85,7 @@
 
   <tr>
     <td colspan="4">
-      <p class="seperator">&nbsp;</p>
+      <hr>
     </td>
   </tr>
 
@@ -111,7 +111,7 @@
   </tr>
   <tr>
     <td colspan="4">
-      <p class="seperator">&nbsp;</p>
+      <hr>
     </td>
   </tr>
 {/if}
@@ -146,7 +146,7 @@
   </tr>
   <tr>
     <td colspan="4">
-      <p class="seperator">&nbsp;</p>
+      <hr>
     </td>
   </tr>
   <tr>
@@ -176,7 +176,7 @@
 </table>
 
 <input type='hidden' name='faiPartition' value='1'>
-<p class='seperator'>&nbsp;</p>
+<hr>
 <div style='text-align:right; width:100%; padding:5px'>
   {if !$freeze}
   <input type='submit' name='PartitionSave' value='{msgPool type=okButton}'>

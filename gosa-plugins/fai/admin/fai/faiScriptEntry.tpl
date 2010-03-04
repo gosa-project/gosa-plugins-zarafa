@@ -50,7 +50,7 @@
 		</td>
 	</tr>
 </table>
-<p class="seperator">&nbsp;</p>
+<hr>
 <h3>
 	<LABEL for="FAIscript">
 		{t}Script{/t}

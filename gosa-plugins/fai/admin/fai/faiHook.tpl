@@ -31,7 +31,7 @@
 		</td>
 	</tr>
 </table>
-<p class="seperator">&nbsp;</p>
+<hr>
 <table width="100%" summary=''>
 	<tr>
 		<td>

@@ -1,6 +1,6 @@
 <h1><img class="center" alt="" src="images/forward.png" align="middle" title="{t}Package{/t}">&nbsp;{$headline}</h1>
 {$Config}
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <div align="right" style="align:right;">
     <input name="SaveObjectConfig" value="{msgPool type=applyButton}" type="submit">

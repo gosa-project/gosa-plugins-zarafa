@@ -49,7 +49,7 @@
 </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <table width="100%" summary="">
 <tr>
@@ -197,7 +197,7 @@
 <tr>
 <td colspan=2>
 <br>
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <div style="align:right;" align="right">
 {if !$freeze}

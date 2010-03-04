@@ -50,7 +50,7 @@
 </table>
 
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <h3>
     <LABEL for="FAIscript">
         {t}Script{/t}
@@ -79,7 +79,7 @@
 {/render}
 </div>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <div style="align:right;" align="right">
 {if !$freeze}

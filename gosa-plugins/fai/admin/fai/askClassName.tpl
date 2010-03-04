@@ -62,7 +62,7 @@
   </td>
  </tr>
 </table>
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <p style="text-align:right">
  <input type="submit" name="edit_continue" value="{t}Continue{/t}">&nbsp;

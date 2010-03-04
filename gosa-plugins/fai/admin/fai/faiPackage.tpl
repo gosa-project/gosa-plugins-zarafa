@@ -64,7 +64,7 @@
 		</td>
 	</tr>
 </table>
-<p class="seperator">&nbsp;</p>
+<hr>
 <table width="99%" summary="">
 	<tr>
 		<td> 

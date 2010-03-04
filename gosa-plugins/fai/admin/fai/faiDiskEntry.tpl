@@ -64,7 +64,7 @@
 
 {if $FAIdiskType == "lvm"}
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <table width="100%">
   <tr>
     <td>
@@ -85,7 +85,7 @@
 </table>
 
 {/if}
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <h3>{t}Partition entries{/t}</h3>
 {$setup}
@@ -99,7 +99,7 @@
 {/if}
 <br>	
 <br>
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <div style="align:right;" align="right">
 {if !$freeze}

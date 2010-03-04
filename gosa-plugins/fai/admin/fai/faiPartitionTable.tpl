@@ -28,7 +28,7 @@
 						</td>
 					</tr>
 				</table>
-                                <p class="seperator">&nbsp;</p>
+                                <hr>
                                 <p>
                                 <input type="checkbox" name="mode" value="1" {$mode} {$lockmode} onClick="changeState('AddRaid'); changeState('AddVolgroup');"> {t}Use 'setup-storage' to partition the disk{/t}                                      </p>
 		</td>

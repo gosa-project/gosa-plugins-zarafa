@@ -45,7 +45,7 @@
 </iframe>
 </div>
 <!--
-<p class="seperator">&nbsp;</p>
+<hr>
 <div style="text-align: right;width:99%;">
 	<p>
 		<input type="submit" name="CancelBranchName" value="{msgPool type=backButton}">
