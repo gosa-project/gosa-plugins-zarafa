@@ -3,7 +3,7 @@
 	<h3>{msgPool type=permView}</h3>
 {else}
 
-<h3><img class="center" alt="" align="middle" src="images/info_small.png"> {t}System information{/t}</h3>
+<h3>{t}System information{/t}</h3>
 <table summary="" style="width:100%;">
  <tr>
   <td style="vertical-align:top; width:50%">
