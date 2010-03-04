@@ -1,5 +1,5 @@
 <h3>{t}This dialog allows you to configure all components of this DNS zone on a single list.{/t}</h3>
-<p class="seperator">&nbsp;</p>
+<hr>
 {if $disableDialog}
 	<br><b>
 	{t}This dialog can't be used until the currently edited zone was saved or the zone entry exists in the ldap database.{/t}
@@ -14,7 +14,7 @@
 	{/render}
 {/if}
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <div style="text-algin:right;" align="right">
     <p>
 	{render acl=$acl}

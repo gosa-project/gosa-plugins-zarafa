@@ -61,7 +61,7 @@
 		</td>
 	</tr>
 </table>
-<p class="seperator">&nbsp;</p>
+<hr>
 <h3>{t}SOA record{/t}</h3>
 <table summary="" width="100%">
 	<tr>
@@ -139,7 +139,7 @@
 	</tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <table summary="" width="100%">
 	<tr>
