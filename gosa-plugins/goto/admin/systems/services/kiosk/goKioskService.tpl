@@ -1,4 +1,4 @@
-<h3><img alt="" class="center" src="plugins/goto/images/kiosk.png" align="middle">&nbsp;<LABEL for="gotoKioskProfile">{t}Kiosk profile management{/t}</ LABEL></h3>
+<h3><LABEL for="gotoKioskProfile">{t}Kiosk profile management{/t}</ LABEL></h3>
 
 {if $baseDir == ""}
 
