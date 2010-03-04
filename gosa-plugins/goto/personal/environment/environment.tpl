@@ -5,8 +5,7 @@
 
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
-  <td style="width:50%;border-right:1px solid #B0B0B0;vertical-align:top;">
-   
+  <td>   
    {if $multiple_support}
    {render acl=$gotoProfileACL checkbox=$multiple_support checked=$use_useProfile}
    <input class="center" type="checkbox" value="1" {if $useProfile} checked {/if} 
@@ -105,8 +104,7 @@
    {/if}
    
   </td>
-  <td style="vertical-align:top">
-   
+  <td style="vertical-align:top;width:50%;border-left:1px solid #B0B0B0">
    
    <table summary="{t}Kiosk profile settings{/t}">
     {if $kiosk_enabled}
@@ -193,7 +191,7 @@
 </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
@@ -274,7 +272,7 @@
  </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
