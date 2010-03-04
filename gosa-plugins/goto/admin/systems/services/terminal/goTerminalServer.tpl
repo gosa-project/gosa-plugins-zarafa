@@ -1,7 +1,7 @@
 <table summary="">
     <tr>
      <td colspan=2>
-		<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Terminal service{/t}</h3>
+		<h3>{t}Terminal service{/t}</h3>
 {render acl=$goXdmcpIsEnabledACL}
       <input type="checkbox" value="true" name="goXdmcpIsEnabled" id="Temporariid" {if $goXdmcpIsEnabled} checked {/if}>
 {/render}
