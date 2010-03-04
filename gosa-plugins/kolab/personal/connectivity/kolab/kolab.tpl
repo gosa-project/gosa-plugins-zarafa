@@ -41,7 +41,7 @@
 {/if}
 
 {t}Kolab account{/t}</h3>
-<table summary="" style="width:100%">
+<table style="width:100%">
  <tr>
   <td style="width:50%; vertical-align:top;">
 
@@ -99,7 +99,7 @@
   <td style="vertical-align:top;">
 
  <h3>{t}Free Busy information{/t}</h3>
- <table summary="">
+ <table >
   <tr>
    <td><LABEL for="calFBURL">{t}URL{/t}</LABEL></td>
    <td>
@@ -127,7 +127,7 @@
 <input type="checkbox" name="use_kolabInvitationPolicy" {if $use_kolabInvitationPolicy} checked {/if} value="1" class="center">
 {/if}
 {render acl=$kolabInvitationPolicyACL}
- <table summary="">
+ <table >
    {$invitation}
  </table>
 {/render}
