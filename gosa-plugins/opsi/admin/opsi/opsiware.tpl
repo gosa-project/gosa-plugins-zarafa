@@ -4,9 +4,9 @@
 	<input type='submit' name='reinit' value="{t}Retry{/t}">
 {else}
 	{if $type == 0}
-		<h3><img class='center' alt='' src='plugins/opsi/images/hardware_info.png'>&nbsp;{t}Hardware information{/t}</h3>
+		<h3>{t}Hardware information{/t}</h3>
 	{else}
-		<h3><img class='center' alt='' src='plugins/opsi/images/software_info.png'>&nbsp;{t}Software information{/t}</h3>
+		<h3>{t}Software information{/t}</h3>
 	{/if}
 
 	{foreach from=$info item=item key=key}
