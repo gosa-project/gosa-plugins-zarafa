@@ -15,7 +15,7 @@
 <input name='opsiLicenseUsagePosted' value='1' type='hidden'>
 {/if}
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <div style='width:100%; text-align: right; padding:3px;'>
   <input type='submit' name='save_properties' value='{msgPool type='saveButton'}'>
   &nbsp;
