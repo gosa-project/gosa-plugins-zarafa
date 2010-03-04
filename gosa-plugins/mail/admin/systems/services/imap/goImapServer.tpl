@@ -92,7 +92,7 @@
 		</td>
 	</tr>
 </table>
-<p class='seperator'>&nbsp;</p>
+<hr>
 <br>
 <h3>Action</h3>
 {if $is_new == "new"}
@@ -111,7 +111,7 @@
 	{if $is_new == "new" || !$is_acc} disabled {/if}
 >
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
     <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
     &nbsp;
