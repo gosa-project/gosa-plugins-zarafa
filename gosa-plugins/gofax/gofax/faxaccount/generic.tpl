@@ -3,7 +3,7 @@
  <!-- Headline container -->
  <tr>
    <td style="width:50%; vertical-align:top;">
-     <h3><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h3>
+     <h3>{t}Generic{/t}</h3>
 
      <table summary="">
        <tr>
@@ -51,7 +51,7 @@
     &nbsp;
    </td>
    <td style="vertical-align:top; width:100%">
-     <h3><img class="center" alt="" align="middle" src="plugins/gofax/images/printer.png" />&nbsp;{t}Delivery methods{/t}</h3>
+     <h3>{t}Delivery methods{/t}</h3>
 
 {render acl=$goFaxIsEnabledACL checkbox=$multiple_support checked=$use_goFaxIsEnabled}
      <input type=checkbox name="goFaxIsEnabled" value="1" {$goFaxIsEnabled} class="center">
@@ -96,7 +96,7 @@
 
 	{if !$multiple_support}
 
-    <h3><img class="center" alt="" align="middle" src="plugins/gofax/images/fax_small.png">&nbsp;{t}Alternate fax numbers{/t}</h3>
+    <h3>{t}Alternate fax numbers{/t}</h3>
 {render acl=$facsimileAlternateTelephoneNumberACL}
     <select style="width:100%" name="alternate_list[]" size="10" multiple>
 			{html_options values=$facsimileAlternateTelephoneNumber output=$facsimileAlternateTelephoneNumber}
@@ -119,7 +119,7 @@
 	{/if}
    </td>
    <td style="vertical-align:top; width:50%">
-      <h3><img class="center" alt="" align="middle" src="images/false.png" />&nbsp;{t}Blocklists{/t}</h3>
+      <h3>{t}Blocklists{/t}</h3>
       <table summary="" style="width:100%">
         <tr>
           <td>{t}Blocklists for incoming fax{/t}</td>
