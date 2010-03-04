@@ -3,7 +3,7 @@
 
 <br>
 <br>
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <b>{t}Script name{/t}</b> <input type='text' name='NewScriptName' value='{$NewScriptName}'>
 <br>
