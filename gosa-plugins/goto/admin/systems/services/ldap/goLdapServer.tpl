@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}LDAP service{/t}</h3>
+<h3>{t}LDAP service{/t}</h3>
 {t}LDAP URI{/t}{$must} 
 {render acl=$goLdapBaseACL}
 <input type="text" size="80" value="{$goLdapBase}"  name="goLdapBase" id="goLdapBaseId">
