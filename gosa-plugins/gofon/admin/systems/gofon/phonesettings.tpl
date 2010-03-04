@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" align="middle" src="plugins/gofon/images/select_phone.png"> {t}Advanced phone settings{/t}</h3>
+<h3>{t}Advanced phone settings{/t}</h3>
 
 <table summary="" style="width:100%" border=0>
 	<tr>
