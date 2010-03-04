@@ -1,4 +1,4 @@
-<h3><img alt="P" class="center" src="plugins/systems/images/select_printer.png" align="middle">&nbsp;{t}Printer driver{/t}</h3>
+<h3>{t}Printer driver{/t}</h3>
 {if !$path_valid}
 <p>
 	<b>{msgPool type=invalidConfigurationAttribute param=ppdPath}</b>
@@ -25,7 +25,7 @@
 	</table>
 	{if $showOptions eq 1}
 	<p class="seperator">&nbsp;</p>
-	<h3><img alt="L" class="center" src="images/lists/on.png" align="middle">&nbsp;{t}Options{/t}</h3>
+	<h3>{t}Options{/t}</h3>
 	{$properties}
 	{/if}
 {/if}
