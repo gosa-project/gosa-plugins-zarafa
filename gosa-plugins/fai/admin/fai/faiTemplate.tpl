@@ -1,7 +1,7 @@
 <table summary="" width="100%">
 	<tr>
 		<td valign="top" style="border-right:1px solid #A0A0A0; width:50%">
-				<h3><img class="center" alt="" src="plugins/fai/images/fai_small.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h3>
+				<h3>{t}Generic{/t}</h3>
 				<table summary="" cellspacing="4">
 					<tr>
 						<td>
@@ -30,7 +30,7 @@
 				</table>
 		</td>
 		<td style="width:50%">
-				<h3><img class="center" alt="" src="plugins/fai/images/fai_template.png" align="middle" title="{t}Objects{/t}">&nbsp;
+				<h3>
 					{t}List of template files{/t}
 				</h3>
 			{$Entry_divlist}
