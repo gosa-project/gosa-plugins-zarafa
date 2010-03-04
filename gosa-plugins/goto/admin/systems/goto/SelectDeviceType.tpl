@@ -46,7 +46,7 @@
   </td>
  </tr>
 </table>
-<p class="seperator">&nbsp;</p>
+<hr>
 <div style="align: right;" align="right"><p>
 	<input type="submit" name="systemTypeChosen" value="{t}Continue{/t}">
 	<input type="submit" name="SystemTypeAborted" value="{msgPool type=cancelButton}">
