@@ -74,7 +74,7 @@
 
 
 <br>
-<p class="seperator">&nbsp;</p>
+<hr>
 <div align="right">
 <p>
 	<input name="save_manufacturer" value="{msgPool type=saveButton}" type="submit">

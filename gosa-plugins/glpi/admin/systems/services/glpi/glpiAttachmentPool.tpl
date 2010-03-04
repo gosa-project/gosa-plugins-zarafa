@@ -45,7 +45,7 @@
 </table>
 
 <input type="hidden" name="ignore">
-<p class="seperator">&nbsp;</p>
+<hr>
 <div align="right">
 	<p>
 		<input type="submit" name="UseAttachment" value="{t}Use{/t}">

@@ -9,7 +9,7 @@
 	 <input type="submit" name="rename_type" 	value="{t}Rename{/t}" >
 	 <input type="submit" name="del_type" 		value="{msgPool type=delButton}" >
 
-	<p class="seperator">&nbsp;</p>
+	<hr>
 	<div align="right">
 	<p>
 	<input name="close_edit_type" value="{t}Close{/t}" type="submit">
@@ -22,7 +22,7 @@
 	</script>
 {else}
 {t}Please enter a new name{/t}&nbsp;<input type='text' name="string" value="{$string}">
-<p class="seperator">&nbsp;</p>
+<hr>
 	<p>
 		<div align="right" style="text-align: right;">
 			<input type="submit" name="Rename_type_OK" 		value="{t}Rename{/t}" >

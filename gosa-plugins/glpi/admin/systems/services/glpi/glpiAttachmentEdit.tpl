@@ -63,7 +63,7 @@
 </table>
 
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <div align="right">
 	<p>
 		<input type="submit" name="SaveAttachment" 		value="{msgPool type=saveButton}">

@@ -7,7 +7,7 @@
 <input name="edit_manu" 	value="{t}Edit{/t}" 	type="submit">
 <input name="remove_manu" 	value="{t}Remove{/t}" 	type="submit">
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <div align="right">
 <p>
 	<input name="close_edit_manufacturer" value="{t}Close{/t}" type="submit">

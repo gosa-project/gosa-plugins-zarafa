@@ -18,7 +18,7 @@
 					</td>
 				</tr>
 			</table>
-			<p class="seperator">&nbsp;</p>
+			<hr>
 			<h3>{t}Comments{/t}</h3>
 			<table summary="" title="" width="100%" style="vertical-align:top;">	
 				<tr>
@@ -62,13 +62,13 @@
                     </td>
                 </tr>
 			</table>
-			<p class="seperator">&nbsp;</p>
+			<hr>
 			{$PrinterTypeMatrix}
 		</td>
 	</tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <div style="text-align:right;">
 	<p>
 		<input type="submit" name="SaveCartridge" 	value="{msgPool type=saveButton}">&nbsp;

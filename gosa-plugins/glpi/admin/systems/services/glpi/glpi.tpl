@@ -48,7 +48,7 @@
 					</td>
 				</tr>
 			<!--</table>
-			<p class="seperator">&nbsp;</p>
+			<hr>
 			<h3>{t}Contacts{/t}</h3>
 			<table summary="" width="100%">-->
 				<tr>
@@ -89,7 +89,7 @@
 		</td>
 	</tr>
 </table>
-<p class="seperator" >&nbsp;</p>
+<hr>
 <table summary="" style="width:100%;">
 	<tr>
 		<td style="width:50%;">
@@ -108,7 +108,7 @@
 					</td>
 				</tr>
 			</table>
-<!--			<p class="seperator" >&nbsp;</p>
+<!--			<hr>
 			<input type="submit" value="{t}Trading{/t}" name="Trading">	
 			<input type="submit" value="{t}Software{/t}" name="Software">	
 			<input type="submit" value="{t}Contracts{/t}" name="Contracts">	-->
