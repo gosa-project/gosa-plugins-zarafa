@@ -17,7 +17,7 @@
 </script>
 <input type="hidden" name="servapache" value="1">
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <div style="width:100%; text-align:right;">
     <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
