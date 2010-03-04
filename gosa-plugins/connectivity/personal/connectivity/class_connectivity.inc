@@ -92,7 +92,7 @@ class connectivity extends plugin
     foreach ($this->plugin_name as $name){
       $this->plugin[$name]->read_only = &$this->read_only;
       if (!$is_first){
-        $display.= '<p class="seperator">&nbsp;</p>';
+        $display.= '<hr>';
       } else {
         $is_first= false;
       }
