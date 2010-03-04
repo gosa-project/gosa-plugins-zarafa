@@ -27,8 +27,7 @@ class faiProfile extends plugin
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);
-    $ldap=$this->config->get_ldap_link();
-
+    
     $this->ui = get_userinfo();
 
     /* Parse ldap attribute to get all assigned classes */
@@ -48,6 +47,21 @@ class faiProfile extends plugin
       }
     }
 
+
+    if($dn != "new"){
+      $this->dn =$dn;
+    }
+    $this->old_cn   = $this->cn;
+  }
+
+  function get_all_fai_classes()
+  {
+    if (count($this->FAIAllclasses)) {
+      return;
+    }
+    
+    $ldap=$this->config->get_ldap_link();
+
     $categories = array("FAIscript","FAItemplate","FAIhook","FAIvariable","FAIpartitionTable","FAIpackageList");
 
     /* Build filter */
@@ -56,15 +70,10 @@ class faiProfile extends plugin
       $filter.= "(objectClass=$cat)";
     }
     
-    /* Get ldap connection */ 
-    $base  = session::get('CurrentMainBase');
-    $ldap->cd($base);
     $sort = array();
-
     /* search all FAI classes */
-    $ldap->search("(|$filter)",array("*"));
-    while($attrs = $ldap->fetch()){
-
+    $res = FAI::get_all_objects_for_given_base($this->parent->parent->fai_release, "(|$filter)", true);
+    foreach($res as $attrs){
       /* Sort by categorie */
       foreach($categories as $cat){
         if(in_array($cat,$attrs['objectClass'])){
@@ -89,11 +98,6 @@ class faiProfile extends plugin
     /* Assign sorted classes */
     $this->FAIAllclasses = array();
     $this->FAIAllclasses = $tmp;
-
-    if($dn != "new"){
-      $this->dn =$dn;
-    }
-    $this->old_cn   = $this->cn;
   }
 
   function acl_base_for_current_object($dn)
@@ -319,6 +323,8 @@ class faiProfile extends plugin
 
         $str = "&nbsp;";
         $act = "";
+
+        $this->get_all_fai_classes();
 
         if(isset($this->FAIAllclasses[$usedClass])){
           foreach($this->FAIAllclasses[$usedClass] as $class => $obj){
