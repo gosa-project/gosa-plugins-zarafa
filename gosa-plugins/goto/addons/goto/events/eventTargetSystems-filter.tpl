@@ -16,7 +16,7 @@
  <div style="border-top:1px solid #AAAAAA"></div>
  {$SCOPE}
 
- <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+ <table summary='{t}Filter options{/t}' style="width:100%;border-top:1px solid #B0B0B0;">
   <tr>
    <td>
     <label for="NAME">
@@ -49,7 +49,7 @@
   </tr>
  </table>
 
- <table summary=""  width="100%"  style="background:#EEEEEE;border-top:1px solid #B0B0B0;">
+ <table summary='{t}Filter options{/t}'  width="100%"  style="background:#EEEEEE;border-top:1px solid #B0B0B0;">
   <tr>
    <td width="100%" align="right">
     {$APPLY}
