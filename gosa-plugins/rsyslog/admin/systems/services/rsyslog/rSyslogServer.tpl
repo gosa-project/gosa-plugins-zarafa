@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Syslog logging{/t}</h3>
+<h3>{t}Syslog logging{/t}</h3>
 
 <br>
 <input type="checkbox" name="use_database" value="1" {if $use_database} checked {/if}
