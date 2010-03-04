@@ -1,10 +1,10 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
    <h3>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
 </h3>
 <!-- Hide user specific attributes when in group mode. -->
-   <table summary="">
+   <table >
     <tr>
      <td><label for="scalixMailnode">{t}Scalix mailnode{/t}</label>{$must}</td>
      <td>
@@ -44,7 +44,7 @@
 {if !$scalixGroup}
    <p class="seperator">&nbsp;</p>
    
-   <table summary="">
+   <table >
     <tr>
      <td>
 {render acl=$scalixAdministratorACL}
@@ -66,7 +66,7 @@
    
    <p class="seperator">&nbsp;</p>
    
-   <table summary="">
+   <table >
     <tr>
      <td><label for="scalixLimitMailboxSize">{t}Limit mailbox size{/t}</label></td>
      <td>
