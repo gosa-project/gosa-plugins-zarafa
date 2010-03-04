@@ -2,7 +2,7 @@
  <tr>
   <td style="width:50%; vertical-align:top;">
 
-   <h3>{image path="images/rightarrow.png"}&nbsp;{t}Generic{/t}
+   <h3>{t}Generic{/t}
 </h3>
    <table >
 {if !$multiple_support}
@@ -71,7 +71,7 @@
   </td>
   <td>
 {if !$multiple_support}
-   <h3>{image path="plugins/mail/images/alternatemail.png"}
+   <h3>
 <label for="alternates_list"> {t}Alternative addresses{/t}</    label></h3>
 {render acl=$gosaMailAlternateAddressACL}
    <select id="alternates_list" style="width:100%;height:100px;" name="alternates_list[]" size="15" multiple
@@ -287,7 +287,7 @@
  </table>
 <p class="seperator">&nbsp;</p>
 
-<h3>{image path="images/false.png"}&nbsp;{t}Advanced mail options{/t}
+<h3>{t}Advanced mail options{/t}
 </h3>
 <table style="width:100%; vertical-align:top; text-align:left;" cellpadding="4" border="0">
  <tr>
