@@ -1,6 +1,6 @@
 <input type="hidden" name="SubObjectFormSubmitted" value="1">
 
-<h3><img class="middle" alt="" src="images/forward.png" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h3>
+<h3>{t}Generic{/t}</h3>
 <table width="100%" summary="">
 <tr>
   <td style="vertical-align:top;width:50%;border-right:1px solid #B0B0B0; padding-right:10px;">
