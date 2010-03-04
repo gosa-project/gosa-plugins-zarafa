@@ -1,5 +1,5 @@
 <input type="hidden" name="TableEntryFrameSubmitted" value="1">
-<h3><img class="center" alt="" src="plugins/fai/images/fai_partitionTable.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Device{/t}</h3>
+<h3>{t}Device{/t}</h3>
 <table style='width:100%' summary="">
 	<tr>
 		<td style='width:50%;border-right:1px solid #909090;'><LABEL for="DISKcn">
@@ -21,7 +21,7 @@
 <br>
 <p class="seperator">&nbsp;</p>
 <br>
-<h3><img class="center" alt="" src="images/lists/paste.png" align="middle" title="{t}Partition entries{/t}">&nbsp;{t}Partition entries{/t}</h3>
+<h3>{t}Partition entries{/t}</h3>
 {$setup}
 <br>
 {if !$freeze}
