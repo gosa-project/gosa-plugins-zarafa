@@ -52,7 +52,7 @@
    </table>
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
-   <h3><img alt="" class="center" align="middle" src="images/lists/locked.png" />&nbsp; {t}System trust{/t}</h3>
+   <h3>{t}System trust{/t}</h3>
     {t}Trust mode{/t}&nbsp; 
     {render acl=$trustModelACL}
         <select name="trustmode" id="trustmode" size=1
@@ -84,7 +84,7 @@
  <tr><td style="width:100%;"colspan="2"><p class="seperator">&nbsp;</p></td></tr>
  <tr>
   <td style="width:50%;padding-right:5px;">
-   <h3><img src="plugins/users/images/select_user.png" alt="" class="center">&nbsp;{t}Users and groups{/t}</h3>
+   <h3>{t}Users and groups{/t}</h3>
    {render acl=$sudoUserACL}
    {$divlist_sudoUser}
    {/render}
@@ -99,7 +99,7 @@
    {/render}
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
-   <h3><img src="plugins/sudo/images/select_workstation.png" alt="" class="center">&nbsp;{t}Systems{/t}</h3>
+   <h3>{t}Systems{/t}</h3>
    {render acl=$sudoHostACL}
    {$divlist_sudoHost}
    {/render}
@@ -117,7 +117,7 @@
  <tr><td style="width:100%;"colspan="2"><p class="seperator">&nbsp;</p></td></tr>
  <tr>
   <td style="padding-right:5px;">
-   <h3><img src="images/rocket.png" alt="" class="center">&nbsp;{t}Commands{/t}</h3>
+   <h3>{t}Commands{/t}</h3>
    {render acl=$sudoCommandACL}
    {$divlist_sudoCommand}
    {/render}
@@ -129,7 +129,7 @@
    {/render}
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
-   <h3><img src="plugins/users/images/select_user.png" alt="" class="center">&nbsp;{t}Run as{/t}</h3>
+   <h3>{t}Run as{/t}</h3>
    {render acl=$sudoRunAsACL}
    {$divlist_sudoRunAs}
    {/render}
