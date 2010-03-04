@@ -1,5 +1,5 @@
 {if $device_type=="monitor"}
-	<h3><img alt="" align="middle" src="plugins/glpi/images/monitor.png" class="center">&nbsp;{t}Add/Edit monitor{/t}</h3>
+	<h3>{t}Add/Edit monitor{/t}</h3>
 	<p class="seperator">&nbsp;</p>
 	<br>
 	<table summary="" width="100%">
@@ -94,7 +94,7 @@
 
 {elseif $device_type=="pci"}
 
-        <h3><img alt="" align="middle" src="plugins/glpi/images/glpi_device.png" class="center">&nbsp;{t}Add/Edit other device{/t}</h3>
+        <h3>{t}Add/Edit other device{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -135,7 +135,7 @@
 
 {elseif $device_type=="power"}
 
-        <h3><img alt="" align="middle" src="plugins/glpi/images/power.png" class="center">&nbsp;{t}Add/Edit power supply{/t}</h3>
+        <h3>{t}Add/Edit power supply{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -190,7 +190,7 @@
 	</table>
 {elseif $device_type=="gfxcard"}
 
-        <h3><img alt="" align="middle" src="plugins/glpi/images/gfx_hardware.png" class="center">&nbsp;{t}Add/Edit graphic card{/t}</h3>
+        <h3>{t}Add/Edit graphic card{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -246,7 +246,7 @@
 	</table>
 {elseif $device_type=="control"}
 
-        <h3><img alt="" align="middle" src="plugins/glpi/images/hardware.png" class="center">&nbsp;{t}Add/Edit controller{/t}</h3>
+        <h3>{t}Add/Edit controller{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -304,7 +304,7 @@
 
 {elseif $device_type=="drive"}
 
-        <h3><img alt="" align="middle" src="plugins/glpi/images/drives.png" class="center">&nbsp;{t}Add/Edit drive{/t}</h3>
+        <h3>{t}Add/Edit drive{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -368,7 +368,7 @@
 	</table>
 
 {elseif $device_type=="hdd"}
-        <h3><img alt="" align="middle" src="plugins/glpi/images/harddisk.png" class="center">&nbsp;{t}Add/Edit harddisk{/t}</h3>
+        <h3>{t}Add/Edit harddisk{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -440,7 +440,7 @@
 
 {elseif $device_type=="ram"}
 
-        <h3><img alt="" align="middle" src="plugins/glpi/images/memory.png" class="center">&nbsp;{t}Add/Edit memory{/t}</h3>
+        <h3>{t}Add/Edit memory{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -504,7 +504,7 @@
 	</table>
 
 {elseif $device_type=="sndcard"}
-        <h3><img alt="" align="middle" src="plugins/glpi/images/snd_hardware.png" class="center">&nbsp;{t}Add/Edit sound card{/t}</h3>
+        <h3>{t}Add/Edit sound card{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -550,7 +550,7 @@
 		</tr>
 	</table>
 {elseif $device_type=="iface"}
-    <h3><img alt="" align="middle" src="plugins/glpi/images/net_hardware.png" class="center">&nbsp;{t}Add/Edit network interface{/t}</h3>
+    <h3>{t}Add/Edit network interface{/t}</h3>
     <p class="seperator">&nbsp;</p>
     <br>
 
@@ -604,7 +604,7 @@
         </tr>
     </table>
 {elseif $device_type=="processor"}
-    <h3><img alt="" align="middle" src="plugins/glpi/images/processor.png" class="center">&nbsp;{t}Add/Edit processor{/t}</h3>
+    <h3>{t}Add/Edit processor{/t}</h3>
     <p class="seperator">&nbsp;</p>
     <br>
     <table summary="" width="100%">
@@ -658,7 +658,7 @@
     </table>
 
 {elseif $device_type=="moboard"}
-        <h3><img alt="" align="middle" src="plugins/glpi/images/mainboard.png" class="center">&nbsp;{t}Add/Edit motherboard{/t}</h3>
+        <h3>{t}Add/Edit motherboard{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
@@ -704,7 +704,7 @@
 		</tr>
 	</table>
 {elseif $device_type=="case"}
-        <h3><img alt="" align="middle" src="plugins/glpi/images/server.png" class="center">&nbsp;{t}Add/Edit computer case{/t}</h3>
+        <h3>{t}Add/Edit computer case{/t}</h3>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
