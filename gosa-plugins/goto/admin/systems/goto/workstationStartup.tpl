@@ -1,7 +1,7 @@
 <table summary="" style="width:100%;">
  <tr>
   <td style="width:50%; vertical-align:top;">
-<h3><img class="center" alt="" align="middle" src="images/penguin.png"> {t}Boot parameters{/t}</h3>
+<h3>{t}Boot parameters{/t}</h3>
 
    <table summary="" style="width:100%">
 	{if $fai_activated && $si_active && !$si_fai_action_failed}
@@ -76,11 +76,11 @@
 			<table>
 				<tr>
 					<td>
-						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
+						<h3>{t}FAI server{/t}
 						</h3>
 					</td>
 					<td>
-						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
+						<h3>{t}Release{/t}
 						</h3>
 					</td>
 				</tr>
@@ -116,11 +116,11 @@
 			<table>
 				<tr>
 					<td>
-						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
+						<h3>{t}FAI server{/t}
 						</h3>
 					</td>
 					<td>
-						<h3><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
+						<h3>{t}Release{/t}
 						</h3>
 					</td>
 				</tr>
@@ -206,7 +206,7 @@
   </td>
 
   <td style="vertical-align:top;">
-        <h3><img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle">&nbsp;<LABEL for="gotoShare">{t}Shares{/t}</LABEL></h3>
+        <h3><LABEL for="gotoShare">{t}Shares{/t}</LABEL></h3>
         <table summary="" style="width:100%">
                 <tr>
                         <td>
