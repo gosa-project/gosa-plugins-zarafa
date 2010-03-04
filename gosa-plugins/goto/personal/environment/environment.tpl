@@ -197,7 +197,7 @@
  <tr>
   <td style="width:50%;border-right:1px solid #B0B0B0">
    <h3><label for="gotoShare">{t}Shares{/t}</label></h3>
-   <table style="width:100%">
+   <table style="width:100%" summary="{t}Share settings{/t}">
     <tr>
      <td>
       
