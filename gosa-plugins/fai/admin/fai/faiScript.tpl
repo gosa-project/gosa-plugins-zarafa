@@ -1,7 +1,7 @@
 <table width="100%" summary="">
 	<tr>
 		<td width="50%" valign="top">
-				<h3><img class="center" alt="" src="plugins/fai/images/fai_small.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h3>
+				<h3>{t}Generic{/t}</h3>
 				<table summary="" cellspacing="4">
 					<tr>
 						<td>
@@ -35,7 +35,7 @@
 <table width="100%" summary="">
 	<tr>
 		<td>
-				<h3><img class="center" alt="" src="plugins/fai/images/fai_script.png" align="middle" title="{t}Objects{/t}">&nbsp;
+				<h3>
 						{t}List of scripts{/t}
 				</h3>
 				<table width="100%" summary="" style="border:1px solid #B0B0B0; " cellspacing=0 cellpadding=0>
