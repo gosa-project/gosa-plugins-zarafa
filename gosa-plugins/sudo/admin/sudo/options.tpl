@@ -81,7 +81,7 @@
 {/foreach}
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 <br>
 <h3>{t}Available options{/t}:</h3>
 {render acl=$ACL}   

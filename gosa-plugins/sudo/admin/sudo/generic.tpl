@@ -81,7 +81,7 @@
 
   </td>
  </tr> 
- <tr><td style="width:100%;"colspan="2"><p class="seperator">&nbsp;</p></td></tr>
+ <tr><td style="width:100%;"colspan="2"><hr></td></tr>
  <tr>
   <td style="width:50%;padding-right:5px;">
    <h3>{t}Users and groups{/t}</h3>
@@ -114,7 +114,7 @@
    {/render}
   </td>
  </tr> 
- <tr><td style="width:100%;"colspan="2"><p class="seperator">&nbsp;</p></td></tr>
+ <tr><td style="width:100%;"colspan="2"><hr></td></tr>
  <tr>
   <td style="padding-right:5px;">
    <h3>{t}Commands{/t}</h3>
