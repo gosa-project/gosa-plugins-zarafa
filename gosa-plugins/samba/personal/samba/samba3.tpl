@@ -66,7 +66,7 @@
  </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <h3>{t}Terminal Server{/t}
 </h3>
@@ -166,7 +166,7 @@
  </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
@@ -304,7 +304,7 @@
  </tr>
 </table>
 
-<p class="seperator">&nbsp;</p>
+<hr>
 
 <h3>{t}Access options{/t}
 </h3>
