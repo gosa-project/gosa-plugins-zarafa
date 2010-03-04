@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" align="middle" src="images/rightarrow.png"> {t}Properties{/t}</h3>
+<h3>{t}Properties{/t}</h3>
 <table summary="" style="width:100%;">
  <tr>
   <td style="width:50%; vertical-align:top;">
@@ -147,7 +147,7 @@
 	<tr>
 		<td style="width:50%; border-right:1px solid #AAA">
 		{if $fai_activated}
-			<h3><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h3>
+			<h3>{t}Action{/t}</h3>
 				<table summary="">
 				 	<tr>
 				  		<td>
