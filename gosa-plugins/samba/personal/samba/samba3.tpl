@@ -1,4 +1,4 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
 
  <!-- Headline container -->
  <tr>
@@ -9,7 +9,7 @@
  </tr>
  <tr>
   <td style="vertical-align:top;">
-   <table summary="">
+   <table >
     <tr>
      <td><label for="sambaHomePath">{t}Home directory{/t}</label></td>
      <td>
@@ -44,7 +44,7 @@
    &nbsp;
   </td>
   <td style="vertical-align:top;">
-   <table summary="">
+   <table >
     <tr>
      <td><label for="">{t}Script path{/t}</label></td>
      <td>
@@ -71,7 +71,7 @@
 <h3>{image path="plugins/samba/images/terminal_server.png"}&nbsp;{t}Terminal Server{/t}
 </h3>
 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
   <td style="vertical-align:top;width:50%">
 
@@ -107,7 +107,7 @@
 {/render}
 {/if}
    <i>{t}Allow login on terminal server{/t}</i>
-   <table summary="">
+   <table >
     <tr>
      <td><label for="CtxWFHomeDir">{t}Home directory{/t}</label></td>
      <td>
@@ -144,7 +144,7 @@
 	> 
 {/render}
    <i>{t}Inherit client config{/t}</i>
-   <table summary="">
+   <table >
     <tr>
      <td><label for="CtxInitialProgram">{t}Initial program{/t}</label></td>
      <td>
@@ -168,11 +168,11 @@
 
 <p class="seperator">&nbsp;</p>
 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
   <td style="vertical-align:top;">
    <i>{t}Timeout settings (in minutes){/t}</i>
-   <table summary="">
+   <table >
     <tr>
      <td>
 {if $multiple_support}
@@ -232,7 +232,7 @@
   <td style="vertical-align:top;">
 
    <i>{t}Client devices{/t}</i>
-   <table summary="">
+   <table >
     <tr>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_connectclientdrives}
@@ -265,7 +265,7 @@
   </td>
   <td style="vertical-align:top;width:50%">
    <i>{t}Miscellaneous{/t}</i>
-   <table summary="">
+   <table >
     <tr>
      <td>
       <label for="shadow">{t}Shadowing{/t}</label>
@@ -309,7 +309,7 @@
 <h3>{image path="images/lists/key.png"}&nbsp;{t}Access options{/t}
 </h3>
 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
   <td colspan=2 style="width:50%; vertical-align:top;">
 
