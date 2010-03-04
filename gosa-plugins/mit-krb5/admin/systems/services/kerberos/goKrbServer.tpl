@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Kerberos kadmin access{/t}</h3>
+<h3>{t}Kerberos kadmin access{/t}</h3>
 
   <table style='width:100%;'>
    <tr>
