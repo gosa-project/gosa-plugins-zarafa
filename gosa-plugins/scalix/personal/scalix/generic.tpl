@@ -42,7 +42,7 @@
    </table>
   
 {if !$scalixGroup}
-   <p class="seperator">&nbsp;</p>
+   <hr>
    
    <table >
     <tr>
@@ -64,7 +64,7 @@
 	  <br>
    </table>
    
-   <p class="seperator">&nbsp;</p>
+   <hr>
    
    <table >
     <tr>
