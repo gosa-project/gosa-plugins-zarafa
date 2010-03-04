@@ -27,14 +27,11 @@
   </tr>
 </table>
 
-<input type="hidden" value="1" name="PosixGroupDialogPosted">
-<p class="plugbottom">
+<hr>
+
+<div class="plugin-actions">
   <button type='submit' name='hotplugSelect_save'>{msgPool type=addButton}</button>
-
-  &nbsp;
   <button type='submit' name='hotplugSelect_cancel'>{msgPool type=cancelButton}</button>
-
-</p>
-
+</div>
 
 <input type="hidden" name="ignore">

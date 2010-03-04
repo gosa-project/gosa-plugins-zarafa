@@ -1,12 +1,11 @@
-<h3>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Logon script management{/t}
-</h3>
+<h3>{t}Logon script management{/t}</h3>
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
-    <table {t}Logon script management{/t}" width="100%">
+    <table summary="{t}Logon script management{/t}" width="100%">
     	<tr>
 			<td width="50%" style="vertical-align:top;border-right:1px solid #B0B0B0">
-					<table {t}Logon script settings{/t}">
+					<table summary="{t}Logon script settings{/t}">
 						<tr>
 							<td><LABEL for="LogonName">{t}Script name{/t}</LABEL>
 							</td>
@@ -32,7 +31,7 @@
 					</table>
 			</td>
 			<td style="vertical-align:top">
-					<table {t}Logon script flags{/t}">
+					<table summary="{t}Logon script flags{/t}">
 						<tr>
 							<td>
 								<input type="checkbox" value="L" name="LogonLast" {$LogonLastCHK} id="LogonLast">
@@ -49,37 +48,29 @@
 			</td>
 		</tr>
 	</table>
-	<p class="seperator">&nbsp;</p>
-	<table width="100%" >
-		<tr>
-			<td colspan="2">
-			<h3>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Script{/t}
-</h3>
-					<table width="100%" {t}Logon script{/t}">
-						<tr>
-							<td>
-								<textarea style="width:100%;height:400px;" name="LogonData">{$LogonData}</textarea>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="file" name="importFile" id="importFile">
-								<button type='submit' name='StartImport'>{t}Import{/t}</button>
+	
+  <hr>
 
-							</td>
-						</tr>
-					</table>
+	<h3>{t}Script{/t}</h3>
+	<table width="100%" summary="{t}Logon script{/t}">
+		<tr>
+			<td>
+				<textarea style="width:100%;height:400px;" name="LogonData">{$LogonData}</textarea>
 			</td>
 		</tr>
-	</table>	
+		<tr>
+			<td>
+				<input type="file" name="importFile" id="importFile">
+				<button type='submit' name='StartImport'>{t}Import{/t}</button>
+			</td>
+		</tr>
+	</table>
 
-	<p class="seperator">&nbsp;</p>
-    <p align="right">
+  <hr>
+  <div class="plugin-actions">
     <button type='submit' name='LogonSave'>{msgPool type=applyButton}</button>
-
     <button type='submit' name='LogonCancel'>{msgPool type=cancelButton}</button>
-
-    </p>
+  </div>
 
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
