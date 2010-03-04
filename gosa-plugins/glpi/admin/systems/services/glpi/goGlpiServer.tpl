@@ -1,4 +1,4 @@
-<h3><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}GLPI database information{/t}</h3>
+<h3>{t}GLPI database information{/t}</h3>
   <table summary="">
     <tr>
      <td>{t}Logging DB user{/t}{$must}</td>
