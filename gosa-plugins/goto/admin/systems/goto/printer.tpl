@@ -93,7 +93,7 @@
 
 <p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
 
-<h3><img class="center" alt="" align="middle" src="images/lists/locked.png"> {t}Permissions{/t}</h3>
+<h3>{t}Permissions{/t}</h3>
 <table summary="" width="100%">
  <tr>
   <td style="border-right:1px solid #B0B0B0; width:50%">
