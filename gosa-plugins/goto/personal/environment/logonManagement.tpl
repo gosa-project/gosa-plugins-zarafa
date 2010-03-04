@@ -3,10 +3,10 @@
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
-    <table summary="{t}Logon script management{/t}" width="100%">
+    <table {t}Logon script management{/t}" width="100%">
     	<tr>
 			<td width="50%" style="vertical-align:top;border-right:1px solid #B0B0B0">
-					<table summary="{t}Logon script settings{/t}">
+					<table {t}Logon script settings{/t}">
 						<tr>
 							<td><LABEL for="LogonName">{t}Script name{/t}</LABEL>
 							</td>
@@ -32,7 +32,7 @@
 					</table>
 			</td>
 			<td style="vertical-align:top">
-					<table summary="{t}Logon script flags{/t}">
+					<table {t}Logon script flags{/t}">
 						<tr>
 							<td>
 								<input type="checkbox" value="L" name="LogonLast" {$LogonLastCHK} id="LogonLast">
@@ -50,12 +50,12 @@
 		</tr>
 	</table>
 	<p class="seperator">&nbsp;</p>
-	<table width="100%" summary="">
+	<table width="100%" >
 		<tr>
 			<td colspan="2">
 			<h3>{image path="plugins/goto/images/logon_script.png"}&nbsp;{t}Script{/t}
 </h3>
-					<table width="100%" summary="{t}Logon script{/t}">
+					<table width="100%" {t}Logon script{/t}">
 						<tr>
 							<td>
 								<textarea style="width:100%;height:400px;" name="LogonData">{$LogonData}</textarea>
