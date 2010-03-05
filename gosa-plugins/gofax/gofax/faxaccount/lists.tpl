@@ -27,9 +27,8 @@
  </tr>
 </table>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="edit_blocklists_finish" value="{msgPool type=applyButton}">
-  &nbsp;
   <input type=submit name="edit_blocklists_cancel" value="{msgPool type=cancelButton}">
-</p>
-
+</div>
