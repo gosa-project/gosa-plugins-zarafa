@@ -8,8 +8,9 @@
 <p>
  {t}The ppd file will be removed from the server and can not be restored.{/t}
 </p>
-<p class="plugbottom">
+
+<hr>
+<div class="plugin-actions">
   <input type=submit name="delete_ppd_confirm" value="{msgPool type=delButton}">
-  &nbsp;
   <input type=submit name="delete_cancel" value="{msgPool type=cancelButton}">
-</p>
+</div>
