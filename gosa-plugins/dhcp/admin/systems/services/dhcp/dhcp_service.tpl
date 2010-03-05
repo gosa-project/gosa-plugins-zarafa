@@ -41,7 +41,7 @@
  </tr>
 </table>
 
-<p class="seperator"></p>
+<hr>
 
 <!-- Place cursor in correct field -->
 <script language="JavaScript" type="text/javascript">

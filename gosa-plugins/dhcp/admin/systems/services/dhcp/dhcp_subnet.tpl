@@ -48,7 +48,7 @@
   </tr>
 </table>
 <input type='hidden' name='dhcp_subnet_posted' value='1'>
-<p class="seperator"></p>
+<hr>
 
 <!-- Place cursor in correct field -->
 <script language="JavaScript" type="text/javascript">

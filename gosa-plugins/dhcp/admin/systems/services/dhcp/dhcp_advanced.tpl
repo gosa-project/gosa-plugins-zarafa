@@ -1,6 +1,6 @@
 {* GOsa dhcp sharedNetwork - smarty template *}
 
-<p class='seperator'></p>
+<hr>
 <br>
 
 {if $show_advanced}
@@ -59,4 +59,4 @@
 <input type='submit' name='show_advanced' value='{t}Show advanced settings{/t}'>
 
 {/if}
-<p class='seperator'>&nbsp;</p>
+<hr>
