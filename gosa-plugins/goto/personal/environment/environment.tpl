@@ -68,7 +68,7 @@
          </select>
          {else}
          <select id="dummy_pS" name="dummy_pS" disabled >
-          <option>{$gotoProfileServer}</option> 
+          <option>{$gotoProfileServer}&nbsp;</option> 
          </select>
          {/if}
          {/render}
