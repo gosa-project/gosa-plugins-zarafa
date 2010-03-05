@@ -155,15 +155,6 @@
 </tr>
 {/if}
 <tr>
- <td colspan=2>
-  <br>
-  {render acl=$gotoProfileFlagLACL checkbox=$multiple_support checked=$use_gotoProfileFlagL}
-  <input type="checkbox" name="gotoProfileFlagL" id="gotoProfileFlagL" value="L" {$gotoProfileFlagLCHK} class="center">
-  {/render}
-  <label for="gotoProfileFlagL">{t}Resolution changeable during session{/t}</label>
- </td>
-</tr>
-<tr>
  <td>
   {if $multiple_support}
   <input type="checkbox" value="1" class="center" name="use_gotoXResolution"
@@ -178,6 +169,14 @@
    <option disabled>&nbsp;</option>
   </select>
   {/render}
+ </td>
+</tr>
+<tr>
+ <td colspan=2>
+  {render acl=$gotoProfileFlagLACL checkbox=$multiple_support checked=$use_gotoProfileFlagL}
+  <input type="checkbox" name="gotoProfileFlagL" id="gotoProfileFlagL" value="L" {$gotoProfileFlagLCHK} class="center">
+  {/render}
+  <label for="gotoProfileFlagL">{t}Resolution changeable during session{/t}</label>
  </td>
 </tr>
 </table> 
@@ -317,10 +316,47 @@
    
    {if $multiple_support}
    
-    <input type="checkbox" name="use_gotoPrinter" value="1" {if $use_gotoPrinter} checked {/if} class="center" onClick="$('div_gotoPrinter').toggle();"><b><label for="gotoPrinter">{t}Printer{/t}</label></<>
-   
-   <div id="div_gotoPrinter" {if !$use_gotoPrinter} style="display: none;" {/if}>
-    <b>{t}Using this option will overwrite the complete printer settings for all currently edited objects!{/t}</b>
+   <input type="checkbox" name="use_gotoPrinter" value="1" {if $use_gotoPrinter} checked {/if} class="center" onClick="$('div_gotoPrinter').toggle();"><b><label for="gotoPrinter">{t}Printer{/t}</label></<>
+    
+    <div id="div_gotoPrinter" {if !$use_gotoPrinter} style="display: none;" {/if}>
+     <b>{t}Using this option will overwrite the complete printer settings for all currently edited objects!{/t}</b>
+     <table style="width:100%" summary="{t}Printer settings{/t}">
+      <tr>
+       <td>
+        {render acl=$gotoPrinterACL}
+        <select style="width:100%;" name="gotoPrinterSel[]" multiple size=5 id="gotoPrinter">
+         {html_options options=$gotoPrinter}
+         <option disabled>&nbsp;</option>
+        </select>
+        {/render}
+        <br>
+        {render acl=$gotoPrinterACL}
+        <button type='submit' name='gotoPrinterAdd'>{msgPool type=addButton}</button>
+        
+        {/render}
+        {render acl=$gotoPrinterACL}
+        <button type='submit' name='gotoPrinterDel' {if !$gotoPrinter} disabled {/if}
+        >{msgPool type=delButton}</button>
+        
+        {/render}
+        {render acl=$gotoPrinterACL}
+        <button type='submit' name='gotoPrinterEdit' {if !$gotoPrinter} disabled {/if}
+        >{t}Toggle admin{/t}</button>
+        
+        {/render}
+        {render acl=$gosaDefaultPrinterACL}
+        <button type='submit' name='gotoPrinterDefault' {if !$gotoPrinter||$is_group} disabled {/if}
+        >{t}Toggle default{/t}</button>
+        
+        {/render}
+       </td>
+      </tr>
+     </table>
+    </div>
+    
+    {else}
+    
+    <h3><label for="gotoPrinter">{t}Printer{/t}</label></h3>
     <table style="width:100%" summary="{t}Printer settings{/t}">
      <tr>
       <td>
@@ -353,46 +389,9 @@
       </td>
      </tr>
     </table>
-   </div>
-   
-   {else}
-   
-   <h3><label for="gotoPrinter">{t}Printer{/t}</label></h3>
-   <table style="width:100%" summary="{t}Printer settings{/t}">
-    <tr>
-     <td>
-      {render acl=$gotoPrinterACL}
-      <select style="width:100%;" name="gotoPrinterSel[]" multiple size=5 id="gotoPrinter">
-       {html_options options=$gotoPrinter}
-       <option disabled>&nbsp;</option>
-      </select>
-      {/render}
-      <br>
-      {render acl=$gotoPrinterACL}
-      <button type='submit' name='gotoPrinterAdd'>{msgPool type=addButton}</button>
-      
-      {/render}
-      {render acl=$gotoPrinterACL}
-      <button type='submit' name='gotoPrinterDel' {if !$gotoPrinter} disabled {/if}
-      >{msgPool type=delButton}</button>
-      
-      {/render}
-      {render acl=$gotoPrinterACL}
-      <button type='submit' name='gotoPrinterEdit' {if !$gotoPrinter} disabled {/if}
-      >{t}Toggle admin{/t}</button>
-      
-      {/render}
-      {render acl=$gosaDefaultPrinterACL}
-      <button type='submit' name='gotoPrinterDefault' {if !$gotoPrinter||$is_group} disabled {/if}
-      >{t}Toggle default{/t}</button>
-      
-      {/render}
-     </td>
-    </tr>
-   </table>
-   
-   {/if}
-   
+    
+    {/if}
+    
   </td>
  </tr>
 </table>
