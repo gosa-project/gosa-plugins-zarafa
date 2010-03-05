@@ -5,7 +5,7 @@
 	{html_options options=$element_types selected=$element_type}
 </select>
 
-<p class='seperator'>&nbsp;</p>
+<hr>
 <br>
 <div class='seperator' style='text-align:right; width:100%;'>
     <input type='submit' name='select_new_element_type' value='{t}Continue{/t}'>

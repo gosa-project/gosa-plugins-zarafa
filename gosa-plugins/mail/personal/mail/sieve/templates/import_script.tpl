@@ -6,7 +6,7 @@
 
 <br>
 <br>
-<p class='seperator'>&nbsp;</p>
+<hr>
 <br>
 <div class='seperator' style='text-align:right; width:100%;'>
     <input type='submit' name='Import_Script_Save' value='{t}Import{/t}'>

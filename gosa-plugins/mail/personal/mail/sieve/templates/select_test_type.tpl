@@ -5,7 +5,7 @@
 	{html_options options=$test_types_to_add}
 </select>
 
-<p class='seperator'>&nbsp;</p>
+<hr>
 <br>
 <div class='seperator' style='text-align:right; width:100%;'>
 	<input type='submit' name='add_type' value='{t}Continue{/t}'>
