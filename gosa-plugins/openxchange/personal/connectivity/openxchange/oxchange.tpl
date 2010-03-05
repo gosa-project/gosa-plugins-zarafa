@@ -1,7 +1,7 @@
 {if !$pg}
-<h3>{t}Open-Xchange Account{/t} - {t}disabled, no Postgresql support detected. Or the specified database can't be reached{/t}</h3>
+  <h3>{t}Open-Xchange Account{/t} - {t}disabled, no Postgresql support detected. Or the specified database can't be reached{/t}</h3>
 {else}
-<h3>
+  <h3>
 <input type="checkbox" name="oxchange" value="B" 
 	{$oxchangeState} {$oxchangeAccountACL} 
 	onCLick="	
@@ -18,12 +18,12 @@
 {t}Open-Xchange account{/t}</h3>
 
 
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table summary="{t}Open-Xchange configuration{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
 
  <!-- Headline container -->
  <tr>
    <td style="width:50%; vertical-align:top;">
-     <table style="margin-left:4px;">
+     <table style="margin-left:4px;" summary="{t}Open-Xchange configuration{/t}">
        <tr>
          <td colspan=2 style="vertical-align:top;">
            <b>{t}Remember{/t}</b>
@@ -55,7 +55,7 @@
      &nbsp;
    </td>
    <td style="vertical-align:top;">
-     <table >
+     <table summary="{t}Open-Xchange configuration{/t}">
        <tr>
          <td colspan=2 style="vertical-align:top;">
            <b>{t}User Information{/t}</b>
