@@ -1,4 +1,4 @@
-<table >
+<table summary="{t}Netatalk configuration{/t}">
 <tr>
 	<td>
 		<label for="apple_user_share">{t}Share{/t}</label>
