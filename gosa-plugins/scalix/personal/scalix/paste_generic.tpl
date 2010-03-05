@@ -1,4 +1,4 @@
-<table>
+<table summary="{t}Scalix paste{/t}">
 	<tr>
   <td style="vertical-align:top;">
    <h3>
