@@ -22,7 +22,8 @@
 <h1>{t}Specify the hours this user is allowed to log in{/t}</h1>
 <br>
 
-<table cellspacing=0 cellpadding=0 style='border: solid 1px #B0B0B0; background-color: #EEEEEE; width :100%;' >
+<table cellspacing=0 cellpadding=0 style='border: solid 1px #B0B0B0; background-color: #EEEEEE; width :100%;' 
+  summary="{t}Samba logon hours{/t}">
   <tr>
     <td>&nbsp;</td>
     <td colspan=24 style='text-align:center;height:24px;border-bottom: solid 1px #B0B0B0;'><b>{t}Hour{/t}</b></td>
