@@ -97,7 +97,7 @@
  </tr>
  <tr>
   <td colspan="2">
-   <p class='seperator'>&nbsp;</p>
+   <hr>
   </td>
  </tr>
  <tr>
@@ -115,7 +115,7 @@
  </tr>
  <tr>
   <td colspan="2">
-   <p class='seperator'>&nbsp;</p><br>
+   <hr><br>
    {if $standalone}
     <h3>{t}Action{/t}</h3>
 	<select name='opsi_action'>
