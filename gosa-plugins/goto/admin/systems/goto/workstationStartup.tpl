@@ -178,10 +178,8 @@
   		</td>
 	</tr>
 </table>
-
+<hr>
 <table summary="" style="width:100%;">
- <tr><td colspan=2><p class="plugbottom" style="margin-top:0px;"></p></td></tr>
-
  <tr>
   <td style="width:50%; vertical-align:top; border-right:1px solid #B0B0B0">
    <h3>
