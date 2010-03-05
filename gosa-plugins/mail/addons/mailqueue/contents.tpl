@@ -146,11 +146,11 @@
    <td>{$range_selector}</td>
   </tr>
  </table>
-<p class="plugbottom">&nbsp;</p>
 
 {/if}
 {/if}
 
+<hr>
 
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
