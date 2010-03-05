@@ -138,11 +138,11 @@
 </table>
 
 {if $cn neq 'default'}
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 {$netconfig}
 {/if}
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 <table width="100%">
 	<tr>
 		<td style="width:50%; border-right:1px solid #AAA">
