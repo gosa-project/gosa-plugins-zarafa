@@ -117,8 +117,8 @@ class scalixAccount extends plugin
     }
 
     /* Show main page */
-    $mailboxClasses = array("", "LIMITED", "FULL");
-    $serverLanguages= array("", "GERMAN", "ENGLISH");
+    $mailboxClasses = array("&nbsp;", "LIMITED", "FULL");
+    $serverLanguages= array("&nbsp;", "GERMAN", "ENGLISH");
 
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL){

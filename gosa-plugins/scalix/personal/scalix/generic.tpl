@@ -1,10 +1,10 @@
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table summary="{t}Scalix settings{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
    <h3>{t}Generic{/t}
 </h3>
 <!-- Hide user specific attributes when in group mode. -->
-   <table >
+   <table summary="{t}Mail settings{/t}" >
     <tr>
      <td><label for="scalixMailnode">{t}Scalix mailnode{/t}</label>{$must}</td>
      <td>
@@ -44,7 +44,7 @@
 {if !$scalixGroup}
    <hr>
    
-   <table >
+   <table summary="{t}Settings{/t}" >
     <tr>
      <td>
 {render acl=$scalixAdministratorACL}
@@ -66,7 +66,7 @@
    
    <hr>
    
-   <table >
+   <table summary="{t}Settings{/t}" >
     <tr>
      <td><label for="scalixLimitMailboxSize">{t}Limit mailbox size{/t}</label></td>
      <td>
