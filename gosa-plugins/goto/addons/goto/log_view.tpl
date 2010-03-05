@@ -8,7 +8,7 @@
 
 		<div style="width:99%;border: solid 1px #CCCCCC;">{$divlist}</div>
 	  <br>
-	  <p class="seperator"></p>
+	  <hr>
 		<h3>{t}Selected log{/t}: {$selected_log}</h3>
 		<div style="width:99%;height:350px;padding:3px;background-color:white; overflow-y: scroll;border: solid 1px;">
 			{$log_file}
@@ -21,7 +21,7 @@
 {if $standalone}
 <br>
 <input type="hidden" name="ignore" value="1">
-<p class='seperator'></p>
+<hr>
 <div style='text-align:right;width:99%; padding-right:5px; padding-top:5px;'>
 	<input type='submit' name='abort_event_dialog' value='{msgPool type=backButton}'>
 </div>

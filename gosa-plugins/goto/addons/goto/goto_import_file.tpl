@@ -13,7 +13,7 @@
 <br>
 {/if}
 
-<p class="seperator"></p>
+<hr>
 &nbsp;
 <table>
 	<tr>	
@@ -79,7 +79,7 @@
 		</div>
 	{/if}
 <br>
-<p class='seperator'></p>
+<hr>
 <div style='text-align:right;width:99%; padding-right:5px; padding-top:5px;'>
 	<input type='submit' name='start_import' value='{t}Import{/t}' >&nbsp;
 	<input type='submit' name='import_abort' value='{msgPool type=backButton}'>
