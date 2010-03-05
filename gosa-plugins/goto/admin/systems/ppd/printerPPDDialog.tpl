@@ -29,12 +29,15 @@
 	{$properties}
 	{/if}
 {/if}
-<p class="plugbottom">
-	<input type="hidden" name="PPDDisSubmitted" value="1">
+
+<hr>
+<div class="plugin-actions">
 	{if $path_valid}
-	{render acl=$acl}
-	<input type="submit" name="SavePPD" value="{msgPool type=applyButton}">
-	{/render}
+	  {render acl=$acl}
+	    <input type="submit" name="SavePPD" value="{msgPool type=applyButton}">
+	  {/render}
 	{/if}
 	<input type="submit" name="ClosePPD" value="{msgPool type=cancelButton}">
-</p>
+</div>
+	
+<input type="hidden" name="PPDDisSubmitted" value="1">
