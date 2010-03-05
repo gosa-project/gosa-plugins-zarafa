@@ -91,7 +91,7 @@
  </tr>
 </table>
 
-<p class="plugbottom" style="height:4px; margin-bottom:0px;">&nbsp;</p>
+<hr>
 
 <h3>{t}Options{/t}</h3>
 <table summary="" style="width:100%;">
@@ -126,7 +126,7 @@
   </tr>
 </table>
 
-<p class="plugbottom" style="height:4px; margin-bottom:0px;">&nbsp;</p>
+<hr>
 
 <table width="99%" summary="">
 	<tr>
