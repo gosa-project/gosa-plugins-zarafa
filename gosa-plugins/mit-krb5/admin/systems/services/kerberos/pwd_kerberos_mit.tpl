@@ -9,7 +9,7 @@
 	<br>
 	<br>
 
-<p class="seperator"></p>
+<hr>
 <p style="text-align:right;">
 	<input type="submit" name="pw_abort" value="{t}Cancel{/t}">
 </p>
@@ -69,7 +69,7 @@
 					</td>
 				</tr>
 			</table>
-			<p class='seperator'>&nbsp;</p>
+			<hr>
 			<table>
 				<tr>
 					<td>
@@ -169,7 +169,7 @@
 					</td>
 				</tr>
 			</table>
-			<p class='seperator'>&nbsp;</p>
+			<hr>
 			<h3>{t}Status{/t}</h3>
 			<table>
 				<tr>
@@ -236,7 +236,7 @@
 	</tr>
 </table>
 <input type="hidden" name="pwd_heimdal_posted" value="1">
-<p class="seperator"></p>
+<hr>
 <p style="text-align:right;">
 	<input type="submit" name="pw_save" value="{t}Save{/t}">
 	&nbsp;
