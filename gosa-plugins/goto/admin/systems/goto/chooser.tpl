@@ -12,10 +12,10 @@
 <input type="radio" name="system" value="phone">{t}Phone{/t}<br>
 <input type="radio" name="system" value="component">{t}Other network component{/t}<br>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
  <input type=submit name="create_system" value="{t}Create{/t}">
- &nbsp;
  <input type=submit name="cancel" value="{msgPool type=cancelButton}">
-</p>
+</div>
 
 <input type="hidden" name="ignore">
