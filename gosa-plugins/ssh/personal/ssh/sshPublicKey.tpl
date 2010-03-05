@@ -16,10 +16,9 @@
 
 {/render}
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <button type='submit' name='save_sshpublickey'>{msgPool type=saveButton}</button>
-
-  &nbsp;
   <button type='submit' name='cancel_sshpublickey'>{msgPool type=cancelButton}</button>
+</div>
 
-</p>
