@@ -1,4 +1,4 @@
-<table summary="{t}Mail settings{/t}">
+<table summary="{t}Mail settings{/t}" style='width:100%;'>
  <tr>
   <td style="width:50%; vertical-align:top;">  
    <h3>{t}Generic{/t}</h3>
