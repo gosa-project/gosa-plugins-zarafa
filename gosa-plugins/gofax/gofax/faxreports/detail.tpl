@@ -63,7 +63,7 @@
  </tr>
 </table>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="bck_to_list" value="{msgPool type=backButton}">
-</p>
-
+</div>
