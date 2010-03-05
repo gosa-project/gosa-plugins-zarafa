@@ -115,11 +115,11 @@
  </tr>
 </table>
 {if $cn neq 'wdefault'}
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 {$netconfig}
 {/if}
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 {if $fai_activated}
 <h3>{t}Action{/t}</h3>
