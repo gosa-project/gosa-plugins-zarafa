@@ -62,7 +62,9 @@
 </table>
 
 <table summary="" style="width:100%;">
- <tr><td colspan=2><p class="plugbottom" style="margin-top:0px;"></p></td></tr>
+ <tr><td colspan=2>
+  <hr>
+  </td></tr>
 
  <tr>
   <td style="width:50%; vertical-align:top;">
