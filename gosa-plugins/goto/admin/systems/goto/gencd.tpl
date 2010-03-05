@@ -5,11 +5,11 @@
   {t}This option enables you to generate FAI install CD images for the selected workstation. The procedure may take about 10 minutes to complete, so please be patient after pressing the 'Create ISO-Image' button.{/t}
 </p>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="cd_create" value="{t}Create ISO-Image{/t}">
-  &nbsp;
   <input type=submit name="cd_cancel" value="{msgPool type=cancelButton}">
-</p>
+</div>
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
