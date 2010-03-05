@@ -40,9 +40,10 @@
   </tr>
 </table>
 
-<p class="plugbottom">
-<input type="submit" name="ClosePPDSelection" value="{t}Close{/t}">
-</p>
+<hr>
+<div class="plugin-actions">
+  <input type="submit" name="ClosePPDSelection" value="{t}Close{/t}">
+</div>
 <!--
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 -->
