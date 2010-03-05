@@ -126,7 +126,7 @@
   </tr>
   <tr>
     <td colspan=3 style='width:100%;'>
-      <p class='seperator'>&nbsp;</p>
+      <hr>
     </td>
   </tr>
   <tr>
