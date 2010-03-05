@@ -4,7 +4,7 @@
 
 <b>{msgPool type=invalidConfigurationAttribute param=KIOSKPATH}</b>
 
-<p class='seperator'>&nbsp;</p>
+<hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
     <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
 </div>
@@ -26,7 +26,7 @@
 <input type="submit" name="profileAdd" value="{msgPool type=addButton}">
 {/render}
 
-<p class='seperator'>&nbsp;</p>
+<hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
     <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
     &nbsp;
