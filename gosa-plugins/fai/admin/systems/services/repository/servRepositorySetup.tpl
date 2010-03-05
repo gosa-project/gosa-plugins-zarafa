@@ -50,9 +50,10 @@
 	</tr>
 </table>
 <input type='hidden' name='servRepositorySetup_Posted' value='1'>
-<p class="plugbottom">
+
+<hr>
+<div class="plugin-actions">
   <input type=submit name="repository_setup_save" value="{msgPool type=applyButton}">
-  &nbsp;
   <input type=submit name="repository_setup_cancel" value="{msgPool type=cancelButton}">
-</p>
+</div>
 
