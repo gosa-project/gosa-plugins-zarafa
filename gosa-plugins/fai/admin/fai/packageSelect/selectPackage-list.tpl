@@ -25,10 +25,8 @@
   </tr>
 </table>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="packageSelect_save" value="{msgPool type=addButton}">
-  &nbsp;
   <input type=submit name="packageSelect_cancel" value="{msgPool type=cancelButton}">
-</p>
-
-<input type="hidden" name="ignore">
+</div>
