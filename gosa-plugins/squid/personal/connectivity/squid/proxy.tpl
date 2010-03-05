@@ -36,19 +36,17 @@
 {/if}
  {t}Proxy account{/t}</h3>
 
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table border=0 width="100%" cellpadding=0  summary="{t}Proxy configuration{/t}">
  <tr>
-   <td>
-    <table border=0 width="100%" cellpadding=0>
-    <tr><td colspan=2>
-
+  <td colspan=2>
 {render acl=$gosaProxyFlagFACL checkbox=$multiple_support checked=$use_filterF}
     <input type="checkbox" name="filterF" id="filterF" value="F" {$filterF} {$pstate} class="center">
 {/render}
     {t}Filter unwanted content (i.e. pornographic or violence related){/t}
-    </td></tr>
-     <tr>
-      <td width="50%">
+  </td>
+ </tr>
+ <tr>
+  <td width="50%">
 
 {render acl=$gosaProxyFlagTACL checkbox=$multiple_support checked=$use_filterT}
     <input type="checkbox" name="filterT" id="filterT" value="T" {$filterT} {$pstate}  onClick="javascript:
@@ -57,7 +55,7 @@
 
     <LABEL for="startHour">{t}Limit proxy access to working time{/t}</LABEL>
     <br>
-    <table style="margin-left:20px;">
+    <table style="margin-left:20px;"  summary="{t}Worktime restrictions{/t}">
      <tr>
       <td>
 
@@ -87,10 +85,9 @@
       </td>
      </tr>
     </table>
+
+
       </td>
-   <td rowspan=2 style="border-left:1px solid #A0A0A0">
-     &nbsp;
-   </td>
       <td>
 {render acl=$gosaProxyFlagBACL checkbox=$multiple_support checked=$use_filterB}
     <input type="checkbox" id="filterB" name="filterB" value="B" {$filterB} {if $pstate=="disabled"} disabled {/if} onClick="{$changeB}"
@@ -99,7 +96,7 @@
 {/render}
     <LABEL for="quota_size">{t}Restrict proxy usage by quota{/t}</LABEL>
     <br>
-    <table style="margin-left:20px;">
+    <table style="margin-left:20px;"  summary="{t}Quota configuration{/t}">
      <tr>
       <td>
 {render acl=$gosaProxyFlagBACL}
@@ -124,7 +121,4 @@
    </td>
    </tr>
    </table>
-  </td>
- </tr>
-</table>
 
