@@ -11,11 +11,11 @@
   {html_options options=$sections}
 </select>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="create_section" value="{t}Create{/t}">
-  &nbsp;
   <input type=submit name="cancel_section" value="{msgPool type=cancelButton}">
-</p>
+</div>
 	
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
