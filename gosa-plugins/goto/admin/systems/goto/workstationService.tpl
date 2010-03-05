@@ -101,7 +101,11 @@
 </table>
 
 <table style="width:100%;" summary="">
- <tr><td colspan=5><p class="plugbottom" style="text-align:left;"></p></td></tr>
+ <tr>
+  <td colspan=5>
+   <hr>
+  </td>
+ </tr>
  <tr>
    <td style="width:33%;vertical-align:top;">
    <h3>{t}Graphic device{/t}</h3>
