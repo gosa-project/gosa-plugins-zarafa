@@ -1,9 +1,9 @@
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table summary="{t}Mail settings{/t}">
  <tr>
   <td style="width:50%; vertical-align:top;">  
    <h3>{t}Generic{/t}</h3>
 
-   <table>
+   <table summary="{t}Mail address configuration{/t}">
     {if !$multiple_support}
     <tr>
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
@@ -97,7 +97,7 @@
 <tr>
  <td colspan="3">
   <hr>
-  <table style="vertical-align:top; text-align:left;" cellpadding=4 border=0>
+  <table summary="{t}Mail account configration flags{/t}">
    <tr>
     <td>
      {render acl=$gosaMailDeliveryModeCACL}
@@ -140,27 +140,43 @@
 </tr>
 </table>
 
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+<table summary="{t}Spam filter configuration{/t}">
  <tr style="padding-bottom:0px;">
-  <td style="width:50%">
-   {render acl=$gosaMailDeliveryModeIACL checkbox=$multiple_support checked=$use_drop_own_mails}
-   <input {if $own_script != ""} disabled {/if} class="center" id='drop_own_mails' 
-   type=checkbox name="drop_own_mails" value="1" {$drop_own_mails} 
-   title="{t}Select if you want to forward mails without getting own copies of them{/t}"> {t}No delivery to own mailbox{/t}
-   {/render}
-   <br>
+  <td style="width:50%; vertical-align: top;">
+
+   <div>
+    <div style='float:left'>
+     {render acl=$gosaMailDeliveryModeIACL checkbox=$multiple_support checked=$use_drop_own_mails}
+       <input {if $own_script != ""} disabled {/if} class="center" id='drop_own_mails' 
+          type=checkbox name="drop_own_mails" value="1" {$drop_own_mails} 
+          title="{t}Select if you want to forward mails without getting own copies of them{/t}">
+     {/render}
+    </div>
+    <div style='padding-left: 25px;'>
+     {t}No delivery to own mailbox{/t}
+    </div>
+   </div>
    
-   {render acl=$gosaMailDeliveryModeVACL checkbox=$multiple_support checked=$use_use_vacation}
-   <input type=checkbox name="use_vacation" value="1" {$use_vacation} 
-   id="use_vacation" {if $own_script != ""} disabled {/if}
-   title="{t}Select to automatically response with the vacation message defined below{/t}" class="center" 
-   onclick="changeStates()"> {t}Activate vacation message{/t}
-   {/render}
+   <div class='clear'></div>  
+  
+   <div>
+    <div style='float:left'>
+     {render acl=$gosaMailDeliveryModeVACL checkbox=$multiple_support checked=$use_use_vacation}
+       <input type=checkbox name="use_vacation" value="1" {$use_vacation} 
+         id="use_vacation" {if $own_script != ""} disabled {/if}
+         title="{t}Select to automatically response with the vacation message defined below{/t}" class="center" 
+         onclick="changeStates()">
+     {/render}
+    </div>
+    <div style='padding-left: 25px;'>
+      {t}Activate vacation message{/t}
+    </div>
+   </div>
    
-   <br>
+   <div class='clear'></div>  
    
    {if $rangeEnabled}
-   <table>
+   <table summary="{t}Spam filter configuration{/t}">
     <tr>
      <td>{t}from{/t}</td>
      <td style='width:140px'>
@@ -193,34 +209,52 @@
    {/if}
    <td rowspan=2 style="border-left:1px solid #A0A0A0">&nbsp;</td>
    <td style="vertical-align:top;">
-    {render acl=$gosaMailDeliveryModeSACL checkbox=$multiple_support checked=$use_use_spam_filter}
-    <input {if $own_script != ""} disabled {/if} id='use_spam_filter' type=checkbox name="use_spam_filter" 
-    value="1" {$use_spam_filter} title="{t}Select if you want to filter this mails through spamassassin{/t}" class="center">
-    {/render}
-    <label for="gosaSpamSortLevel">{t}Move mails tagged with spam level greater than{/t}</label>
-    {render acl=$gosaSpamSortLevelACL checkbox=$multiple_support checked=$use_gosaSpamSortLevel}
-    <select {if $own_script != ""} disabled {/if} id="gosaSpamSortLevel" size="1" name="gosaSpamSortLevel" 
-    title="{t}Choose spam level - smaller values are more sensitive{/t}">
-    {html_options values=$spamlevel output=$spamlevel selected=$gosaSpamSortLevel}
-</select>
-{/render}
-<label for="gosaSpamMailbox">{t}to folder{/t}</label>
-{render acl=$gosaSpamMailboxACL checkbox=$multiple_support checked=$use_gosaSpamMailbox}
-<select {if $own_script != ""} disabled {/if} size="1" id="gosaSpamMailbox" name="gosaSpamMailbox">
- {html_options values=$spambox output=$spambox selected=$gosaSpamMailbox}
- <option disabled>&nbsp;</option>
-</select>
-{/render}
-<br>
-{render acl=$gosaMailDeliveryModeRACL checkbox=$multiple_support checked=$use_use_mailsize_limit}
-<input {if $own_script != ""} disabled {/if} id='use_mailsize_limit' type=checkbox 
-name="use_mailsize_limit" value="1" {$use_mailsize_limit} class="center">
-{/render}
-<label for="gosaMailMaxSize">{t}Reject mails bigger than{/t}</label>
-{render acl=$gosaMailMaxSizeACL checkbox=$multiple_support checked=$use_gosaMailMaxSize}
-<input {if $own_script != ""} disabled {/if} id="gosaMailMaxSize" name="gosaMailMaxSize" 
-size="6" align="middle" maxlength="30" value="{$gosaMailMaxSize}"  class="center"> {t}MB{/t}
-{/render}
+
+   <div>
+    <div style='float:left'>
+     {render acl=$gosaMailDeliveryModeSACL checkbox=$multiple_support checked=$use_use_spam_filter}
+      <input {if $own_script != ""} disabled {/if} id='use_spam_filter' type=checkbox name="use_spam_filter" 
+        value="1" {$use_spam_filter} title="{t}Select if you want to filter this mails through spamassassin{/t}" class="center">
+     {/render}
+    </div>
+    <div style='padding-left: 25px;'>
+     <label for="gosaSpamSortLevel">{t}Move mails tagged with spam level greater than{/t}</label>
+     {render acl=$gosaSpamSortLevelACL checkbox=$multiple_support checked=$use_gosaSpamSortLevel}
+      <select {if $own_script != ""} disabled {/if} id="gosaSpamSortLevel" size="1" name="gosaSpamSortLevel" 
+        title="{t}Choose spam level - smaller values are more sensitive{/t}">
+        {html_options values=$spamlevel output=$spamlevel selected=$gosaSpamSortLevel}
+      </select>
+     {/render}
+     <label for="gosaSpamMailbox">{t}to folder{/t}</label>
+     {render acl=$gosaSpamMailboxACL checkbox=$multiple_support checked=$use_gosaSpamMailbox}
+     <select {if $own_script != ""} disabled {/if} size="1" id="gosaSpamMailbox" name="gosaSpamMailbox">
+      {html_options values=$spambox output=$spambox selected=$gosaSpamMailbox}
+      <option disabled>&nbsp;</option>
+     </select>
+     {/render}
+    </div>
+   </div>
+   
+   <div class='clear'></div>  
+
+   <div>
+    <div style='float:left;'>
+     {render acl=$gosaMailDeliveryModeRACL checkbox=$multiple_support checked=$use_use_mailsize_limit}
+      <input {if $own_script != ""} disabled {/if} id='use_mailsize_limit' type=checkbox 
+        name="use_mailsize_limit" value="1" {$use_mailsize_limit} class="center">
+     {/render}
+    </div>
+    <div style='padding-left: 25px;'>
+     <label for="gosaMailMaxSize">{t}Reject mails bigger than{/t}</label>
+      {render acl=$gosaMailMaxSizeACL checkbox=$multiple_support checked=$use_gosaMailMaxSize}
+       <input {if $own_script != ""} disabled {/if} id="gosaMailMaxSize" name="gosaMailMaxSize" 
+        size="6" align="middle" maxlength="30" value="{$gosaMailMaxSize}"  class="center"> {t}MB{/t}
+      {/render}
+    </div>
+   </div>
+
+   <div class='clear'></div>  
+
 </td>
 </tr>
 <tr>
@@ -288,7 +322,7 @@ name="gosaVacationMessage" rows="4" cols="512">{$gosaVacationMessage}</textarea>
 
 <h3>{t}Advanced mail options{/t}
 </h3>
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="4" border="0">
+<table summary="{t}Delivery settings{/t}">
  <tr>
   <td>
    {render acl=$gosaMailDeliveryModeLACL checkbox=$multiple_support checked=$use_only_local}
