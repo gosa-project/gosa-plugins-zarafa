@@ -10,8 +10,8 @@
  {t}Best thing to do before performing this action would be to save the current contents of your MySql database in a file. So - if you've done so - press 'Delete' to continue or 'Cancel' to abort.{/t}
 </p>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="delete_glpi_confirm" value="{msgPool type=delButton}">
-  &nbsp;
   <input type=submit name="delete_cancel" value="{msgPool type=cancelButton}">
-</p>
+</div>
