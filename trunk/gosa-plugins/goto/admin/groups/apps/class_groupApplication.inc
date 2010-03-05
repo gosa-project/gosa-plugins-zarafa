@@ -18,6 +18,12 @@ class appgroup extends plugin
   var $enableReleaseManagement = FALSE;
 
   var $copied_release = ""; 
+  var $gosaApplicationFlags;
+  var $app_flags = array(
+                    "placeOnDesktop" => "D",
+                    "placeOnKicker" => "L",
+                    "placeInStartmenu" => "M",
+                   );
    
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
@@ -325,8 +331,13 @@ class appgroup extends plugin
             if(isset($attrs['gosaApplicationParameter'])){
               for($p = 0 ; $p < $attrs['gosaApplicationParameter']['count'] ; $p ++){
                 if(preg_match("/:/",$attrs['gosaApplicationParameter'][$p])){
-                  $tmp = split(":",$attrs['gosaApplicationParameter'][$p]);
-                  $data['PARAMETER'][$tmp[0]] = preg_replace('/^[^:]+:/', '', $attrs['gosaApplicationParameter'][$p]);
+                  list($key, $value) = split(":",$attrs['gosaApplicationParameter'][$p]);
+                  if ($key == "gosaApplicationFlags") {
+                    $data['FLAGS'] = $value;
+                  }
+                  else {
+                    $data['PARAMETER'][$key] = $value;
+                  }
                 }elseif($attrs['gosaApplicationParameter'][$p] == "*separator*"){
                   $type = "SEPERATOR";
                   $data['PARAMETER'] = array();
@@ -397,8 +408,23 @@ class appgroup extends plugin
     $this->__construct($this->config,$this->dn);
 
     if(count($this->edit_entry)){
+      $smarty = get_smarty();
+      /* Checkboxes */
+      foreach ($this->app_flags as $name => $flag){
+        if (preg_match("/$flag/", $this->gosaApplicationFlags) && $this->acl_is_readable("$name")){
+
+          $smarty->assign("$name", "checked");
+        } else {
+          $smarty->assign("$name", "");
+        }
+       }
+      
+      $tmp = $this->plInfo();
+      foreach($tmp['plProvidedAcls'] as $name => $translation){
+          $smarty->assign($name."ACL",$this->getacl($name));
+      }
+
       if($this->edit_entry['TYPE'] == "ENTRY"){
-        $smarty = get_smarty();
         $smarty->assign("type", "ENTRY");
         $smarty->assign("entry",$this->edit_entry);
         $smarty->assign("paras",$this->app_parameter);
@@ -406,7 +432,6 @@ class appgroup extends plugin
         return($display);
       }
       if($this->edit_entry['TYPE'] == "FOLDER"){
-        $smarty = get_smarty();
 
         session::set("binarytype" , "image/jpeg");
         session::set("binary" , $this->edit_entry['ICON']);
@@ -573,6 +598,7 @@ class appgroup extends plugin
 
     if($entry['TYPE'] == "ENTRY"){
       $r_entry['PARAMETER'] = $this->app_parameter;
+      $r_entry['FLAGS'] = $this->gosaApplicationFlags;
       if($r_entry['STATUS'] != "ADDED"){
         $r_entry['STATUS'] = "EDITED";
       } 
@@ -605,7 +631,6 @@ class appgroup extends plugin
         }
       }
       if($found){
-      
         /* Create a list of editable parameter */
         if(isset($app['gosaApplicationParameter'])){
           for($i = 0 ; $i < $app['gosaApplicationParameter']['count'] ; $i++) {
@@ -615,9 +640,17 @@ class appgroup extends plugin
           }
         }
 
+        if(isset($app['gosaApplicationFlags'])) {
+          $this->gosaApplicationFlags = $app['gosaApplicationFlags'][0];
+        }
+
         /* Overwrite parameters with entry parameters */
         foreach($entry['PARAMETER'] as $name => $value){
           $this->app_parameter[$name] = $value;
+        }
+
+        if (isset($entry['FLAGS'])) {
+          $this->gosaApplicationFlags = $entry['FLAGS'];
         }
         
         $this->dialog = TRUE;
@@ -866,6 +899,7 @@ class appgroup extends plugin
         $this->app_parameter[$name] = $value;
       }
     }
+
     if(isset($_POST['FAIrelease'])){
       $this->FAIrelease = $_POST['FAIrelease'];
       $this->_check_missing_release($this->FAIrelease);
@@ -896,6 +930,16 @@ class appgroup extends plugin
       }
     }
     if(isset($_POST['app_entry_save'])){ 
+      foreach($this->app_flags as $name => $flag) {
+        if($this->acl_is_writeable($name)) {
+          if(!isset($_POST[$name]) && strstr($this->gosaApplicationFlags,$flag)){
+            $this->gosaApplicationFlags = str_replace($flag,"",$this->gosaApplicationFlags);
+          }elseif(isset($_POST[$name]) && !strstr($this->gosaApplicationFlags,$flag)){
+            $this->gosaApplicationFlags = str_replace("]", "$flag]", $this->gosaApplicationFlags);
+          }
+        }
+      }
+
       $this->_save_entry_edit();
     }
 
@@ -1246,7 +1290,27 @@ class appgroup extends plugin
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
           $attrs['gosaApplicationParameter'] = array(); 
-          
+
+          if (isset($entry['FLAGS'])) {
+            /* Check if the flags changed at all */
+            $diff = FALSE;
+            foreach($this->apps as $id => $app) {
+              if($app['cn'][0] == $entry['NAME']){
+                $orig_flags = $app['gosaApplicationFlags'][0];
+                foreach($this->app_flags as $name => $flag) {
+                  if((strstr($orig_flags, $flag) && !strstr($entry['FLAGS'],$flag)) || !strstr($orig_flags, $flag) && strstr($entry['FLAGS'], $flag)) {
+                    $diff = TRUE;
+                    break;
+                  }
+                }
+              }
+            }
+            /* Only store appflags into LDAP if its different from the original app */
+            if ($diff) {
+                $attrs['gosaApplicationParameter'][] = "gosaApplicationFlags:".$entry['FLAGS'];
+            }
+          }
+           
           foreach($entry['PARAMETER'] as $name => $value){
             $attrs['gosaApplicationParameter'][] = $name.":".$value; 
           }
@@ -1377,8 +1441,11 @@ class appgroup extends plugin
           "plProvidedAcls"=> array(
             "gosaMemberApplication"     => _("Application"),
             "FAIrelease"                => _("Release"),
-            "gosaApplicationParameter"  => _("Application parameter"))
-          ));
+            "gosaApplicationParameter"  => _("Application parameter"),
+            "placeOnDesktop"      => _("Place icon on members desktop"),            // D
+            "placeOnKicker"       => _("Place entry in members launch bar"),        // L
+            "placeInStartmenu"    => _("Place entry in members startmenu")         // M
+          )));
   }
 
 
