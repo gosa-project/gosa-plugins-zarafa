@@ -55,7 +55,7 @@
  </tr>
  <tr>
   <td colspan=2>
-   <p class='seperator'>&nbsp;</p>
+   <hr>
   </td>
  </tr>
  <tr>
@@ -99,7 +99,7 @@
  </tr>
  <tr>
   <td colspan=2>
-   <p class='seperator'>&nbsp;</p>
+   <hr>
   </td>
  </tr>
  <tr>
@@ -120,7 +120,7 @@
 </table>
 <input type='hidden' value='1' name='goSpamServer'>
 
-<p class='seperator'>&nbsp;</p>
+<hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
     <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
     &nbsp;
