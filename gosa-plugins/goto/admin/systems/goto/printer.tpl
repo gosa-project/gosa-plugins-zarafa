@@ -91,7 +91,7 @@
  </tr>
 </table>
 
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 <h3>{t}Permissions{/t}</h3>
 <table summary="" width="100%">
@@ -144,7 +144,7 @@
 
 
 {if $netconfig ne ''}
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 {$netconfig}
 {/if}
 
