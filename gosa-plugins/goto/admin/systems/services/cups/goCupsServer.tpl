@@ -1,6 +1,6 @@
 <h3>{t}Print Service{/t} {t}enabled{/t}</h3>
 
-<p class='seperator'>&nbsp;</p>
+<hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
     <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
     &nbsp;
