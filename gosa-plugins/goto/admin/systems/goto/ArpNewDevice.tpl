@@ -23,10 +23,10 @@
 </tr>
 </table>
 <br>
-<p class="seperator"></p>
+<hr>
 {$netconfig}
 
-<p class="seperator"></p>
+<hr>
 
 <!--<h3>{t}GOto{/t}</h3>-->
 <p>
@@ -70,4 +70,4 @@
 </table>
 <input type='hidden' name='ArpNewDevice_posted' value='1'>
 
-<p class="seperator"></p>
+<hr>
