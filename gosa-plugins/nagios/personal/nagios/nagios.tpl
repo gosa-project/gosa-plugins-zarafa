@@ -1,10 +1,9 @@
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table summary="{t}Nagios Account{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
-   <h3>
-    {image path="images/rightarrow.png"}&nbsp;{t}Nagios Account{/t}
-</h3>
-   <table >
+
+   <h3>{t}Nagios Account{/t}</h3>
+   <table summary="{t}Nagios Account{/t}">
     <tr>
      <td><label for="NagiosAlias">{t}Alias{/t}</label>{$must}</td>
      <td>
@@ -107,16 +106,15 @@
      </td>
     </tr>
    </table>
+
   </td>
   <td style="border-left:1px solid #A0A0A0">
    &nbsp;
   </td>
   <td style="width:100%; vertical-align:top;">
-   <h3> 
-    {image path="images/rightarrow.png"}&nbsp;{t}Nagios authentification{/t}
 
-   </h3>
-   <table >
+   <h3>&nbsp;{t}Nagios authentification{/t}</h3>
+   <table summary="{t}Nagios Account{/t}">
     <tr>
      <td>
 {render acl=$AuthorizedSystemInformationACL}
