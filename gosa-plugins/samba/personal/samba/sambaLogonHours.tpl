@@ -91,18 +91,15 @@
   </tr>
 {/foreach}
 </table>
-<br>
 <input type='hidden' name='sambaLogonHoursPosted' value='1'> 
-<br>
-<p class="plugbottom">
-{if $acl}
-  <button type='submit' name='save_logonHours'>{msgPool type=saveButton}</button>
+<hr>
 
-  &nbsp;
-{/if}
+<div class="plugin-actions">
+  {if $acl}
+   <button type='submit' name='save_logonHours'>{msgPool type=saveButton}</button>
+  {/if}
   <button type='submit' name='cancel_logonHours'>{msgPool type=cancelButton}</button>
-
-</p>
+</div>
 
 <!--  
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler: 
