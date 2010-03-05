@@ -108,12 +108,11 @@ if ( $cleanup ){
 
 	$info= "";
 	if ($phoneAccount->is_account && empty($lock_msg)){
-		$display.= "<p class=\"plugbottom\">";
+		$display.= "<hr><div class='plugin-actions'>";
 
 		/* Are we in edit mode? */
 		if (session::is_set('edit')){
 			$display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
-			$display.= "&nbsp;";
 			$display.= "<input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
 			$info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".$ui->dn."&nbsp;";
 		} else {
@@ -125,7 +124,7 @@ if ( $cleanup ){
 			}
 			$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 		}
-		$display.= "</p>\n";
+		$display.= "</div>\n";
 		$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 	}
 
