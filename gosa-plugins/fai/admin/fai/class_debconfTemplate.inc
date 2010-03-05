@@ -193,7 +193,7 @@ class debconf
           $fn= "render_".$entry['Type'];
           $str = $this->$fn($entry);
           if(!empty($str)){
-            $result.=$str."<tr><td colspan='2'><p class='seperator'>&nbsp;</p></td></tr>";
+            $result.=$str."<tr><td colspan='2'><hr></td></tr>";
           }
         } else {
           //php_error(E_WARNING, "An unknown type has been specified in the debconf template. Please fix.");

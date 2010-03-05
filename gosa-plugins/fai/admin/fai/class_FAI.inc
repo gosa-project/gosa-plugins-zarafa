@@ -1207,7 +1207,7 @@ class FAI
       }
     }
     if($is_first){
-      echo "<p class='seperator'>&nbsp;</p>";
+      echo "<hr>";
     }
   }
 
