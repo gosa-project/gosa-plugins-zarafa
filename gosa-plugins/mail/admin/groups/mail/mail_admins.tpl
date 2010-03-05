@@ -33,8 +33,9 @@
  </tr>
 </table>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
  <input type=submit name="edit_admins_finish" value="{msgPool type=applyButton}">
- &nbsp;
  <input type=submit name="edit_admins_cancel" value="{msgPool type=cancelButton}">
-</p>
+</div>
+
