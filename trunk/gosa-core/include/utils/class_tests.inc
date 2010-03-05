@@ -262,6 +262,14 @@ class tests {
   /* \brief Check if the specified IP address $address is inside the given network */
   public static function is_in_ip_range($from, $to, $address)
   {
+    if (!preg_match("/[0-2]?[0-9]?[0-9].[0-2]?[0-9]?[0-9].[0-2]?[0-9]?[0-9].[0-2]?[0-9]?[0-9]/", $address)) {
+      return FALSE;
+    }
+
+    if (($from == '*' && $to == '*') || ($from == '' && $to == '')) {
+      return TRUE;
+    }
+
     $from = split('\.', $from);
     $to   = split('\.', $to);
     $ad   = split('\.', $address);

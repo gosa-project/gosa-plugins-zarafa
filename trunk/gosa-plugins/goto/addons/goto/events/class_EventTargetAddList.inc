@@ -26,15 +26,26 @@ class EventTargetAddList extends MultiSelectWindow
   public $display_workstation = TRUE;
   public $display_ogroup = TRUE;
   public $filter_iprange = FALSE;
+  public $filter_mac_addr = FALSE;
+  public $filter_fai_release = FALSE;
+  public $filter_fai_class = FALSE;
 
   public $regex  = "*";
   public $ipfrom = "0.0.0.0";
   public $ipto   = "*";
+  public $mac_addr = "*:*:*:*:*:*";
+  public $fai_release = "*";
+  public $fai_class = "*";
   public $_target_list = array();
 
   public $workstation_list = array();
   public $server_list = array();
 
+  public $array_TextCheckboxes = array();
+
+  public $SubSearch = FALSE;
+  /* Define that Draw has to return a smarty object */
+  public $DrawReturnsSmartyObject = TRUE;
 
   function __construct(&$config,$parent)
   {
@@ -67,15 +78,31 @@ class EventTargetAddList extends MultiSelectWindow
 
     //$name,$string,$value,$conn,$image="images/lists/search.png")
     $this->AddRegex("regex" ,"regex"  ,"*"                , TRUE);
-    $this->AddRegex("ipfrom","ipfrom" ,"0.0.0.0"          , FALSE);
-    $this->AddRegex("ipto"  ,"ipto"   ,"255.255.255.255"  , FALSE);
 
     $this->AddCheckBox("display_server","1"     ,_("Display server"),TRUE);
     $this->AddCheckBox("display_workstation","1",_("Display workstation"),TRUE);
     $this->AddCheckBox("display_ogroup","1"     ,_("Display object groups"),TRUE);
-    $this->AddCheckBox("filter_iprange","1"     ,_("Filter by IP range"),FALSE);
+    
+    /* Add SubSearch checkbox */
+    $this->AddCheckBox(SEPERATOR);
+    $this->AddCheckBox("SubSearch",  msgPool::selectToView("","subsearch"), msgPool::selectToView("","subsearch_small"), false);
 
+    $regexes = array();
+    $regexes[] = $this->AddRegex("ipfrom","ipfrom" ,"0.0.0.0"          , FALSE, "images/lists/search.png", TRUE);
+    $regexes[] = $this->AddRegex("ipto"  ,"ipto"   ,"255.255.255.255"  , FALSE, "images/lists/search.png", TRUE);
+    $this->AddTextCheckBox("filter_iprange","1"     ,_("Filter by IP range"),FALSE, $regexes);
 
+    $regexes = array();
+    $regexes[] = $this->AddRegex("mac_addr", "mac_addr", "*:*:*:*:*:*", FALSE, "images/lists/search.png", TRUE);
+    $this->AddTextCheckBox("filter_mac_addr", "1", _("Filter by MAC address"), FALSE, $regexes);
+
+    $regexes = array();
+    $regexes[] = $this->AddRegex("fai_release", "fai_release", "*", FALSE, "images/lists/search.png", TRUE);
+    $this->AddTextCheckBox("filter_fai_release", "1", _("Filter by FAI release"), FALSE, $regexes);
+
+    $regexes = array();
+    $regexes[] = $this->AddRegex("fai_class", "fai_class", "*", FALSE, "images/lists/search.png", TRUE);
+    $this->AddTextCheckBox("filter_fai_class", "1", _("Filter by FAI class"), FALSE, $regexes);
 
     /* Create a list of servers
      */
@@ -194,22 +221,43 @@ class EventTargetAddList extends MultiSelectWindow
   {
     $_target_list = array();
     if($this->display_server){
-      $_target_list = array_merge($_target_list,
-            get_list("(&(cn=".$this->regex.")(objectClass=goServer))",
-            "server",get_ou("serverRDN").$this->selectedBase,
-            array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
+      if (!$this->SubSearch) {
+        $_target_list = array_merge($_target_list,
+              get_list("(&(cn=".$this->regex.")(objectClass=goServer))",
+              "server",get_ou("serverRDN").$this->selectedBase,
+              array("cn","objectClass","description","ipHostNumber","macAddress", "FAIclass"),GL_NONE));
+      }else {
+        $_target_list = array_merge($_target_list,
+              get_sub_list("(&(cn=".$this->regex.")(objectClass=goServer))",
+              "server",get_ou("serverRDN"),$this->selectedBase,
+              array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH));
+      }
     }
     if($this->display_workstation){
-      $_target_list = array_merge($_target_list,
-            get_list("(&(cn=".$this->regex.")(objectClass=gotoWorkstation))",
-            "workstation",get_ou("workstationRDN").$this->selectedBase,
-            array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
+      if (!$this->SubSearch) {
+        $_target_list = array_merge($_target_list,
+              get_list("(&(cn=".$this->regex.")(objectClass=gotoWorkstation))",
+              "workstation",get_ou("workstationRDN").$this->selectedBase,
+              array("cn","objectClass","description","ipHostNumber","macAddress", "FAIclass"),GL_NONE));
+      }else {
+        $_target_list = array_merge($_target_list,
+              get_sub_list("(&(cn=".$this->regex.")(objectClass=gotoWorkstation))",
+              "workstation",get_ou("workstationRDN"), $this->selectedBase,
+              array("cn","objectClass","description","ipHostNumber","macAddress", "FAIclass"),GL_SUBSEARCH));
+      }
     }
     if($this->display_ogroup){
-      $_target_list = array_merge($_target_list,
-            get_list("(&(cn=".$this->regex.")(member=*)(objectClass=gosaGroupOfNames))",
-            "ogroups",get_ou("ogroupRDN").$this->selectedBase,
-            array("cn","objectClass","description","member"),GL_NONE));
+      if (!$this->SubSearch) {
+        $_target_list = array_merge($_target_list,
+              get_list("(&(cn=".$this->regex.")(member=*)(objectClass=gosaGroupOfNames))",
+              "ogroups",get_ou("ogroupRDN").$this->selectedBase,
+              array("cn","objectClass","description","member", "FAIclass"),GL_NONE));
+      }else {
+        $_target_list = array_merge($_target_list,
+              get_sub_list("(&(cn=".$this->regex.")(member=*)(objectClass=gosaGroupOfNames))",
+              "ogroups",get_ou("ogroupRDN"), $this->selectedBase,
+              array("cn","objectClass","description","member", "FAIclass"),GL_SUBSEARCH));
+      }
     }
     $this->_target_list = $_target_list;
 
@@ -242,6 +290,52 @@ class EventTargetAddList extends MultiSelectWindow
             continue;
           }
         }
+
+        if($this->filter_mac_addr) {
+          if(!isset($obj['macAddress']) || !ldap_equality_check($obj['macAddress'][0], $this->mac_addr, "[0-9A-F]{2}", FALSE)) {
+            continue;
+          }
+        }
+
+        if($this->filter_fai_release) {
+          if(isset($obj['FAIclass'])) {
+            $fai_release = split(':', $obj['FAIclass'][0]);
+            if (isset($fai_release[1])) {
+              $fai_release = $fai_release[1];
+            } else {
+              continue;
+            }
+
+            if (!ldap_equality_check($fai_release, $this->fai_release)) {
+              continue;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+
+        if ($this->filter_fai_class) {
+          if(isset($obj['FAIclass'])) {
+            $fai_classes = split(':', $obj['FAIclass'][0]);
+            $fai_classes = split(' ', $fai_classes[0]);
+
+            $found = FALSE;
+            foreach($fai_classes as $used_class) {
+              if(ldap_equality_check($used_class, $this->fai_class)){
+                $found = TRUE;
+                break;
+              }
+            }
+            if (!$found) {
+              continue;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+
         if(!isset($this->server_list[$obj['dn']])){
           continue;
         }
@@ -252,10 +346,93 @@ class EventTargetAddList extends MultiSelectWindow
             continue;
           }
         }
+
+        if($this->filter_mac_addr){
+          if(!isset($obj['macAddress']) || !ldap_equality_check($obj['macAddress'][0], $this->mac_addr, "[0-9A-F]{2}", FALSE)) {
+            continue;
+          }
+        }
+
+        if($this->filter_fai_release) {
+          if (isset($obj['FAIclass'])) {
+            $fai_release = split(':', $obj['FAIclass'][0]);
+            if (isset($fai_release[1])) {
+              $fai_release = $fai_release[1];
+            } else {
+              continue;
+            }
+            if (!ldap_equality_check($fai_release, $this->fai_release)) {
+              continue;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+
+        if ($this->filter_fai_class) {
+          if(isset($obj['FAIclass'])) {
+            $fai_classes = split(':', $obj['FAIclass'][0]);
+            $fai_classes = split(' ', $fai_classes[0]);
+
+            $found = FALSE;
+            foreach($fai_classes as $used_class) {
+              if(ldap_equality_check($used_class, $this->fai_class)){
+                $found = TRUE;
+                break;
+              }
+            }
+            if (!$found) {
+              continue;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+
         if(!isset($this->workstation_list[$obj['dn']])){
           continue;
         }
       }elseif(in_array("gosaGroupOfNames",$obj['objectClass'])){
+        if($this->filter_fai_release) {
+          if (isset($obj['FAIclass'])) {
+            $fai_release = split(':', $obj['FAIclass'][0]);
+            if (isset($fai_release[1])) {
+              $fai_release = $fai_release[1];
+            } else {
+              continue;
+            }
+            if (!ldap_equality_check($fai_release, $this->fai_release)) {
+              continue;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+
+        if ($this->filter_fai_class) {
+          if(isset($obj['FAIclass'])) {
+            $fai_classes = split(':', $obj['FAIclass'][0]);
+            $fai_classes = split(' ', $fai_classes[0]);
+
+            $found = FALSE;
+            foreach($fai_classes as $used_class) {
+              if(ldap_equality_check($used_class, $this->fai_class)){
+                $found = TRUE;
+                break;
+              }
+            }
+            if (!$found) {
+              continue;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+
         $img = '<img class="center" src="plugins/ogroups/images/select_ogroup.png" alt="O" title="'._("Object group").'">';
       }
 
@@ -268,6 +445,42 @@ class EventTargetAddList extends MultiSelectWindow
     }
   }
 
+  function AddTextCheckbox($name,$value="Unset", $string="Unset", $default=false, $regexes=array())
+  {
+    $arr = array();
+    $MultiDialogFilters = session::get('MultiDialogFilters');
+    if(isset($MultiDialogFilters[$this->filterName][$name])){
+      $arr['default'] = $MultiDialogFilters[$this->filterName][$name];
+      $this->$name = $arr['default'];
+    }else {
+      $arr['default'] = $default;
+      $this->$name = $default;
+    }
+    $arr['name'] = $name;
+    $arr['string'] = $string;
+    $arr['value'] = $value;
+    $arr['enabled'] = true;
+    $arr['regexes'] = $regexes;
+
+    $this->array_TextCheckboxes[] = $arr;
+
+  }
+
+  function Draw() {
+    $smarty = MultiSelectWindow::Draw();
+    $special_filter = "";
+    foreach($this->array_TextCheckboxes as $textcheckbox) {
+      $special_filter .= "<table style='width:100%;border-top:1px solid #B0B0B0;'><tr><td>";
+      $special_filter .= $this->GetCheckbox($textcheckbox);
+      foreach($textcheckbox['regexes'] as $regex) {
+        $special_filter .= $this->GetRegex($regex, FALSE);
+      }
+    }
+    $special_filter .= "</table>";
+    $smarty->assign("special_filters"   , $special_filter);
+    $display = $smarty->fetch(get_template_path('EventTargetAddList.tpl', TRUE, dirname(__FILE__)));
+    return($display);
+  }
 
   /*! \brief  Returns a set of elements selected in a MultiSelectWindow
     @return Array[integer]=integer
@@ -282,6 +495,31 @@ class EventTargetAddList extends MultiSelectWindow
       }
     }
     return($ids);
+  }
+
+  function save_object()
+  {
+    MultiSelectWindow::save_object();
+    if(isset($_POST['MultiSelectWindow'.$this->filterName])){
+      foreach($this->array_TextCheckboxes as $key => $box) {
+          $MultiDialogFilters = session::get('MultiDialogFilters');
+          if(isset($_POST[$box['name']])){
+              $this->array_TextCheckboxes[$key]['default'] = true;
+              $this->$box['name'] = true;
+          }else{
+              $this->array_TextCheckboxes[$key]['default'] = false;
+              $this->$box['name'] = false;
+          }
+          $MultiDialogFilters[$this->filterName][$box['name']] = $this->$box['name'];
+
+      foreach($this->array_TextCheckboxes[$key]['regexes'] as $regex_key => $regex_box) {
+          $this->array_TextCheckboxes[$key]['regexes'][$regex_key]['value'] = $_POST[$regex_box['name']];
+          $this->$regex_box['name'] = $_POST[$regex_box['name']];
+          $MultiDialogFilters[$this->filterName][$regex_box['name']] = $this->$regex_box['name'];
+      }
+      session::set('MultiDialogFilters',$MultiDialogFilters);
+      }
+    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

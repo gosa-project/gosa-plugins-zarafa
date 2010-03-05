@@ -3225,6 +3225,35 @@ function set_object_info($str = "")
   session::set('objectinfo',$str);
 }
 
+/*! \brief Compare two strings similar as an LDAP search would do it
+ *
+ * This function compares a string similar as a LDAP equality match
+ * would do. It does so by replacing any occurence of a * with a
+ * regex pattern and test it with preg_match. The default mapping is '.*'
+ * but the  test can be extended  by changing that mapping, so that the asterisk
+ * can stand for a certain range of chars for example.
+ *
+ * Example:
+ * \code
+ * ldap_equality_check('halut', '*'); # true
+ * ldap_equality_check('halut/1.2.3', 'halut/*'); # true
+ * ldap_equality_check('halut/1.2.3', 'hal\*\/1.2.3'); # true
+ * \endcode
+ * 
+ * */
+function ldap_equality_check($string1, $string2, $mapping=".*", $case_sensitive=TRUE) {
+  if (!(strstr($string2, '*')) && ($string1 == $string2)) {
+    return TRUE;
+  }
+
+  /* Set modifier string to i if case insensitivity is requested */
+  $modifier = $case_sensitive ? "" : "i"; 
+  $string2 = preg_quote($string2, "/");
+  $string2 = str_replace('\*', $mapping, $string2);
+
+  $result = preg_match('/' . $string2 . '$/' . $modifier, $string1);
+  return $result;
+}
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

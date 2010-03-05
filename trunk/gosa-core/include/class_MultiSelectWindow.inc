@@ -70,6 +70,10 @@ class MultiSelectWindow{
   var $footer = "";
   var $post_id    = "1 2 3";
 
+  /*! \brief If this is set to TRUE the Draw() function returns a smarty object */
+  var $DrawReturnsSmartyObject = FALSE;
+  
+
 	function ClearElementsList()
 	{
     $ui =get_userinfo();
@@ -92,8 +96,8 @@ class MultiSelectWindow{
   }
 
 	/* Adds a regex input field to the current dialog */
-	function AddRegex($name,$string,$value,$conn,$image="images/lists/search.png")
-	{
+	function AddRegex($name,$string,$value,$conn,$image="images/lists/search.png", $return_array=FALSE)
+  {
 		$arr = array();
 
 		/* Check if the given input field name was already used 
@@ -109,8 +113,13 @@ class MultiSelectWindow{
 		$arr['name'] 		= $name;
 		$arr['string']		= $string;
 		$arr['image']		= $image;	
-		$arr['connAlpha']	= $conn;		// Connect with alphabet select 
-		$this->array_Regexes[] = $arr;
+    $arr['connAlpha']	= $conn;		// Connect with alphabet select
+    if (!$return_array) { 
+    	$this->array_Regexes[] = $arr;
+    }
+    else {
+      return($arr);
+    }
 	}
 
 
@@ -369,7 +378,60 @@ class MultiSelectWindow{
     $this->IgnoreAccount = !$ignore;
   }
 
-	/*! \brief Draw the list with all list elements and filters */
+  function GetCheckbox($box, $start_table=FALSE)
+  {
+    $ret = "";
+		$boxClick = " onClick='document.mainform.submit();' ";
+		if($box['name'] == SEPERATOR){
+				$ret = "</td></tr></table><table style='width:100%;border-top:1px solid #B0B0B0;'><tr><td>";
+				return($ret);
+			}
+
+    
+    /* Skip disabled boxes */
+		if(!$box['enabled']) return;
+
+		/* Check if box is checked */
+		if($box['default'] == true){
+		    $ret .="<input type='checkbox' name=\"".$box['name']."\" value='1' title=\"".htmlspecialchars($box['value'])."\" checked ".$boxClick.">&nbsp;".$box['string']."<br>";
+		}else{
+		    $ret .="<input type='checkbox' name=\"".$box['name']."\" value='1' title=\"".htmlspecialchars($box['value'])."\" ".$boxClick.">&nbsp;".$box['string']."<br>";
+    }
+
+    return($ret);
+  }
+
+  function GetRegex($regex, $draw_line=TRUE)
+  {
+      $ret = "";
+      $line_css = "";
+      if ($draw_line) {
+        $line_css = "solid #B0B0B0;";
+      }
+			$ret="<table summary=\"\" style=\"width:100%;border-top:1px $line_css\">
+				<tr>
+				<td>
+				<label for=\"".$regex['name']."\">
+				<img alt=\"".$regex['string']."\" src=\"".$regex['image']."\" align=middle>
+				</label>
+				</td>
+				<td width=\"99%\">
+				<input id=\"".$regex['name']."\" type=\"text\" style='width:99%' name=\"".$regex['name']."\" maxlength='20'
+				value=\"".htmlspecialchars($regex['value'])."\" title=\"".htmlspecialchars($regex['string'])."\"> 
+				</td>
+				</tr>
+				</table>";
+
+      return($ret);
+  }
+
+
+  /*! \brief Draw the list with all list elements and filters
+   *
+   * Returns a string with the HTML code that should be displayed.
+   * If this->DrawReturnsSmartyObject is TRUE (default: FALSE) it
+   * returns a smarty object.
+   * */
 	function Draw()
 	{
 
@@ -414,44 +476,17 @@ class MultiSelectWindow{
 		/* Create checkboxes fields 
 		 */
 		$boxes = "";
-		$boxClick = " onClick='document.mainform.submit();' ";
-		foreach($this->array_Checkboxes as $box){
-
-			if($box['name'] == SEPERATOR){
-				$boxes .= "</td></tr></table><table style='width:100%;border-top:1px solid #B0B0B0;'><tr><td>";
-				continue;
-			}
-
-			/* Skip disabled boxes */
-			if(!$box['enabled']) continue;
-
-			/* Check if box is checked */
-			if($box['default'] == true){
-				$boxes .="<input type='checkbox' name=\"".$box['name']."\" value='1' title=\"".htmlspecialchars($box['value'])."\" checked ".$boxClick.">&nbsp;".$box['string']."<br>";
-			}else{
-				$boxes .="<input type='checkbox' name=\"".$box['name']."\" value='1' title=\"".htmlspecialchars($box['value'])."\" ".$boxClick.">&nbsp;".$box['string']."<br>";
-			}
-		}
+    foreach($this->array_Checkboxes as $box){
+      $boxes .= $this->GetCheckbox($box);
+    }
 		$smarty->assign("CheckBoxes", $boxes);
 
 		/* Assign regex fields 
 		 */
 		$regexes = "";
-		foreach($this->array_Regexes as $regex){
-			$regexes.="<table summary=\"\" style=\"width:100%;border-top:1px solid #B0B0B0;\">
-				<tr>
-				<td>
-				<label for=\"".$regex['name']."\">
-				<img alt=\"".$regex['string']."\" src=\"".$regex['image']."\" align=middle>
-				</label>
-				</td>
-				<td width=\"99%\">
-				<input id=\"".$regex['name']."\" type=\"text\" style='width:99%' name=\"".$regex['name']."\" maxlength='20'
-				value=\"".htmlspecialchars($regex['value'])."\" title=\"".htmlspecialchars($regex['string'])."\"> 
-				</td>
-				</tr>
-				</table>";
-		}
+    foreach($this->array_Regexes as $regex){
+      $regexes .= $this->GetRegex($regex);
+    }
 		$smarty->assign("regexes"			, $regexes );
 
     /* Hide Filter Part if Requested or empty */
@@ -499,8 +534,13 @@ class MultiSelectWindow{
 		$smarty->assign("filterName"	,	$this->filterName);
 		$smarty->assign("is_headpage"	,	$this->is_headpage);
 
-		$display = $smarty->fetch(get_template_path("MultiSelectWindow.tpl"));
-		return($display);
+    if (!$this->DrawReturnsSmartyObject) {
+      $display = $smarty->fetch(get_template_path("MultiSelectWindow.tpl"));
+      return($display);
+    }
+    else {
+      return($smarty);
+    }
 	}
 
   /*! \brief Set the close var (simulates a press of the the close button) */
