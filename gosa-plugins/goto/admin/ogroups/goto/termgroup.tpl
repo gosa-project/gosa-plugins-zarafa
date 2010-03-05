@@ -1,8 +1,7 @@
 <br>
 <b>{t}Warning{/t}:</b> {t}Actions you choose here influence all systems in this object group. Additionally, all values editable here can be inherited by the clients assigned to this object group.{/t}
 <br>
-<br>
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 <h3>{t}Generic{/t}</h3>
 
 <table width="100%">
