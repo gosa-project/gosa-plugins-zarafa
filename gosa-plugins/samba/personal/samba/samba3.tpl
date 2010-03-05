@@ -446,7 +446,7 @@
 
 {else}
 	{render acl=$sambaUserWorkstationsACL}
-	   <select id="workstation_list" style="width:100%;" name="workstation_list[]" size=10 multiple>
+	   <select id="workstation_list" style="width:100%;" name="workstation_list[]" size=5 multiple>
 		{html_options values=$workstations output=$workstations}
 	   </select>
 	{/render}
