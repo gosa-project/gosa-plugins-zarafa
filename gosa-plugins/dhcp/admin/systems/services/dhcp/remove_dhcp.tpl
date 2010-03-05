@@ -10,8 +10,8 @@
  {t}Best thing to do before performing this action would be to save the current contents of your LDAP tree in a file. So - if you've done so - press 'Delete' to continue or 'Cancel' to abort.{/t}
 </p>
 
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="delete_dhcp_confirm" value="{msgPool type=delButton}">
-  &nbsp;
   <input type=submit name="cancel_section" value="{msgPool type=cancelButton}">
-</p>
+</div>
