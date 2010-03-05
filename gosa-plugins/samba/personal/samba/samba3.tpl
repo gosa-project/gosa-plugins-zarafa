@@ -1,15 +1,14 @@
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table summary="{t}Samba configuration{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
 
  <!-- Headline container -->
  <tr>
   <td colspan="2" style="width:50%; vertical-align:top;">
-   <h3>{t}Generic{/t}
-</h3>
+   <h3>{t}Generic{/t}</h3>
   </td>
  </tr>
  <tr>
   <td style="vertical-align:top;">
-   <table >
+   <table summary="{t}Path configuration{/t}">
     <tr>
      <td><label for="sambaHomePath">{t}Home directory{/t}</label></td>
      <td>
@@ -44,7 +43,7 @@
    &nbsp;
   </td>
   <td style="vertical-align:top;">
-   <table >
+   <table summary="{t}Profile and scirpt path settings{/t}">
     <tr>
      <td><label for="">{t}Script path{/t}</label></td>
      <td>
@@ -68,10 +67,10 @@
 
 <hr>
 
-<h3>{t}Terminal Server{/t}
-</h3>
+<h3>{t}Terminal Server{/t}</h3>
 
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0
+  summary="{t}Terminal server settings{/t}">
  <tr>
   <td style="vertical-align:top;width:50%">
 
@@ -107,7 +106,7 @@
 {/render}
 {/if}
    <i>{t}Allow login on terminal server{/t}</i>
-   <table >
+   <table summary="{t}Terminal server connection settings{/t}">
     <tr>
      <td><label for="CtxWFHomeDir">{t}Home directory{/t}</label></td>
      <td>
@@ -144,7 +143,7 @@
 	> 
 {/render}
    <i>{t}Inherit client config{/t}</i>
-   <table >
+   <table summary="{t}Client configuration{/t}">
     <tr>
      <td><label for="CtxInitialProgram">{t}Initial program{/t}</label></td>
      <td>
@@ -168,11 +167,11 @@
 
 <hr>
 
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table summary="{t}Connection timeout settings{/t}"style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
   <td style="vertical-align:top;">
    <i>{t}Timeout settings (in minutes){/t}</i>
-   <table >
+   <table summary="{t}Connection timeout settings{/t}">
     <tr>
      <td>
 {if $multiple_support}
@@ -232,7 +231,7 @@
   <td style="vertical-align:top;">
 
    <i>{t}Client devices{/t}</i>
-   <table >
+   <table summary="{t}Client devices{/t}">
     <tr>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_connectclientdrives}
@@ -265,7 +264,7 @@
   </td>
   <td style="vertical-align:top;width:50%">
    <i>{t}Miscellaneous{/t}</i>
-   <table >
+   <table summary="{t}Miscellaneous{/t}">
     <tr>
      <td>
       <label for="shadow">{t}Shadowing{/t}</label>
@@ -309,12 +308,12 @@
 <h3>{t}Access options{/t}
 </h3>
 
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+<table summary="{t}Access options{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
   <td colspan=2 style="width:50%; vertical-align:top;">
 
    <!-- Samba policies -->
-   <table>
+   <table summary="{t}Access options{/t}">
     <tr>
      <td colspan=2>
       {render acl=$sambaAcctFlagsXACL  checkbox=$multiple_support checked=$use_no_expiry}

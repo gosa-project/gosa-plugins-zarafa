@@ -352,7 +352,7 @@ class sambaAccount extends plugin
       $domains[]= $name;
     }
     $smarty->assign("domains", $domains);
-    $letters= array("");
+    $letters= array("&nbsp;");
     for ($i= 68; $i<91; $i++){
       $letters[]= chr($i).":";
     }
