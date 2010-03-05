@@ -54,7 +54,7 @@
  </tr>
 </table>
 
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 <table summary="" style="width:100%">
  <tr>
