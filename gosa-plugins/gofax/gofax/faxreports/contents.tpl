@@ -42,9 +42,7 @@
    <td>{$range_selector}</td>
   </tr>
  </table>
-<p class="plugbottom">
- &nbsp;
-</p>
+<hr>
 
 {else}
   <b>{t}Search returned no results...{/t}</b>
