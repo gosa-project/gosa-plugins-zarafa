@@ -69,7 +69,7 @@ class rsyslog extends plugin
         $this->servers[$name]['error']  = "";
 
         // Detect ACLs
-        $this->servers[$name]['ACL'] =  $ui->get_permissions($server['dn'], 'server/rsyslog','viewEntries');
+        $this->servers[$name]['ACL'] =  $ui->get_permissions($server['dn'], 'server/rSyslogServer','viewEntries');
 
         // Get list of Hosts using this log server..
         if(preg_match('/r/', $this->servers[$name]['ACL'])){
