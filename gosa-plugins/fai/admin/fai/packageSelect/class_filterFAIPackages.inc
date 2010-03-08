@@ -2,7 +2,7 @@
 
 class filterFAIPackages {
 
-  static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
+  static function query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
     $filter= preg_replace('/\*/', '', $filter);
     $pkgs = array();
