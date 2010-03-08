@@ -15,7 +15,7 @@
       <label>Role</label>
       <objectClass>organizationalRole</objectClass>
       <category>roles</category>
-      <class>role</class>
+      <class>roleGeneric</class>
       <image>plugins/rolemanagement/images/role.png</image>
     </objectType>
 
