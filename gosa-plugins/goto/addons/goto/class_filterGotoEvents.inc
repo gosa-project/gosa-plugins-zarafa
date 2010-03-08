@@ -1,6 +1,6 @@
 <?php
 class filterGotoEvents extends  filterLDAP {
-  static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
+  static function query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
     global $config;
 
