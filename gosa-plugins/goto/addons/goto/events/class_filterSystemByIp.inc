@@ -1,7 +1,7 @@
 <?php
 class filterSystemByIp  extends filterLDAP{
 
-  static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
+  static function query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
     
     // IP Range selection 
@@ -19,7 +19,7 @@ class filterSystemByIp  extends filterLDAP{
 
     // Get entries 
     $filter= preg_replace("/__IPSTART.*$/","",$filter);
-    $entries = filterLDAP::query($base, $scope, $filter, $attributes, $category, $objectStorage);
+    $entries = filterLDAP::query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage);
     
 
     // Filter entries by IP-Address
