@@ -2,7 +2,7 @@
 
 class filterOpsiLicense {
 
-  static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
+  static function query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
 
     if(!class_available('opsi')) return(array());
@@ -10,7 +10,7 @@ class filterOpsiLicense {
     $config= session::global_get('config');
     $ldap= $config->get_ldap_link(TRUE);
     $flag= ($scope == "sub")?GL_SUBSEARCH:0;
-    $result= filterOpsiLicense::get_list($base, $filter, $attributes, $category, $objectStorage, $flag);
+    $result= filterOpsiLicense::get_list($parent,$base, $filter, $attributes, $category, $objectStorage, $flag);
 
     // Simple filtering 
     if(!empty($filter)){
@@ -24,7 +24,7 @@ class filterOpsiLicense {
     return(filterACL::unifyResult($result));
   }
 
-  static function get_list($base, $filter, $attributes, $category, $objectStorage, $flags= GL_SUBSEARCH)
+  static function get_list($parent,$base, $filter, $attributes, $category, $objectStorage, $flags= GL_SUBSEARCH)
   {
     $config= session::global_get('config');
     $si = new opsiLicenceHandler($config);
