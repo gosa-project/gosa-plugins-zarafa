@@ -2,7 +2,7 @@
 
 class filterFAI extends filterLDAP{
 
-  static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
+  static function query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
   /* Create a new list of FAI object
      * Generate List of Partitions,Hooks,Scripts,Templates,Profiles ...
