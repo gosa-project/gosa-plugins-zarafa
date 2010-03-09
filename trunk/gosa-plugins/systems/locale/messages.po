@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-19 08:38+0100\n"
+"POT-Creation-Date: 2010-03-08 16:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,246 +16,371 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/systems/remove.tpl:2
-msgid "Warning"
+#: admin/systems/class_divListSystem.inc:66
+#: admin/systems/class_divListSystem.inc:67
+msgid "List of systems"
 msgstr ""
 
-#: admin/systems/remove.tpl:6
-msgid ""
-"This includes all system and setup informations. Please double check if your "
-"really want to do this since there is no way for GOsa to get your data back."
+#: admin/systems/class_divListSystem.inc:85
+msgid "Select all"
 msgstr ""
 
-#: admin/systems/remove.tpl:10
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-
+#: admin/systems/class_divListSystem.inc:91
 #: admin/systems/class_systemManagement.inc:26
-#: admin/systems/class_divListSystem.inc:88
 msgid "Systems"
 msgstr ""
 
-#: admin/systems/class_divListsystem.inc:395
-msgid "Member of %s object group"
+#: admin/systems/class_divListSystem.inc:91
+msgid "Department"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:27
-msgid "This does something"
+#: admin/systems/class_divListSystem.inc:95
+msgid "Release"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:239
-msgid "Back"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:286
-msgid "Creating the image failed. Please see the report below."
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:295
-#, php-format
-msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:344
-#: admin/systems/class_systemManagement.inc:459
-#: admin/systems/class_systemManagement.inc:496
-#: admin/systems/class_systemManagement.inc:504
-#: admin/systems/class_systemManagement.inc:554
-#: admin/systems/class_systemManagement.inc:561
-#: admin/systems/class_systemManagement.inc:576
-#: admin/systems/class_systemManagement.inc:584
-#: admin/systems/class_systemManagement.inc:623
-#: admin/systems/class_systemManagement.inc:717
-#: admin/systems/class_systemManagement.inc:1279
-#: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:236
-#: admin/systems/class_serverService.inc:363
-#: admin/systems/class_termDNS.inc:338
-msgid "Error"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:399
-msgid "Internal error"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:399
-msgid "Cannot set mode to 'active'!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:584
-msgid "Editing this type of object is not supported yet!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:611
-#: admin/systems/class_systemManagement.inc:714
-#: admin/systems/class_systemManagement.inc:943
-msgid "Permission error"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:611
-#: admin/systems/class_systemManagement.inc:714
-msgid "You have no permission to change this password!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:623
-msgid ""
-"The passwords you've entered as 'New password' and 'Repeated password' do "
-"not match!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:698
-msgid "Password method"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:698
-msgid "Password method crypt is missing. Cannot set system password."
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:704
-#: admin/systems/class_systemManagement.inc:1810
-#: admin/systems/services/class_goService.inc:122
-#: admin/systems/services/class_goService.inc:150
-#: admin/systems/services/class_goService.inc:183
-#: admin/systems/class_servGeneric.inc:281
-#: admin/systems/class_servGeneric.inc:433 admin/systems/class_termDNS.inc:483
-#: admin/systems/class_termDNS.inc:771 admin/systems/class_termDNS.inc:790
-#: admin/systems/class_termDNS.inc:811 admin/systems/class_termDNS.inc:816
-#: admin/systems/class_termDNS.inc:834 admin/systems/class_termDNS.inc:906
-#: admin/systems/class_componentGeneric.inc:160
-#: admin/systems/class_componentGeneric.inc:301
-msgid "LDAP error"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:717
-msgid "Cannot determine object to change password!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:824
-#: admin/systems/class_servGeneric.inc:165
-#: admin/systems/class_servGeneric.inc:453
-msgid "Service infrastructure"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:869
-msgid "Permission"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1308
-#: admin/systems/class_systemManagement.inc:1621
-msgid "New terminal"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1310
-#: admin/systems/class_systemManagement.inc:1622
-msgid "New workstation"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1312
-msgid "Unknown device"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1314
-msgid "New Device"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1339
-msgid "Terminal template for"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1355
-msgid "Workstation template for"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1598
-msgid "Template"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1599
-#: admin/systems/class_divListSystem.inc:199
-msgid "Phone"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1600
-#: admin/systems/class_componentGeneric.inc:315
-msgid "Network device"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1601
-#: admin/systems/class_divListSystem.inc:203
-msgid "Printer"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1603
-msgid "Windows workstation"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1605
-#: admin/systems/class_divListSystem.inc:191
-msgid "Workstation"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1606
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/class_servGeneric.inc:509
-msgid "Server"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1607
+#: admin/systems/class_divListSystem.inc:98
 #: admin/systems/class_divListSystem.inc:187
+#: admin/systems/class_divListSystemService.inc:51
+msgid "Actions"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:104
+#: admin/systems/class_divListSystem.inc:105
+#: admin/systems/class_divListSystem.inc:444
+msgid "servers"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:105
+#: admin/systems/class_divListSystem.inc:110
+#: admin/systems/class_divListSystem.inc:115
+#: admin/systems/class_divListSystem.inc:120
+#: admin/systems/class_divListSystem.inc:131
+#: admin/systems/class_divListSystem.inc:136
+#: admin/systems/class_divListSystem.inc:141
+#, php-format
+msgid "Show %s"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:109
+msgid "Linux terminals"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:110
+#: admin/systems/class_divListSystem.inc:446
+msgid "terminals"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:114
+msgid "Linux workstations"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:115
+#: admin/systems/class_divListSystem.inc:445
+msgid "workstations"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:119
+msgid "MicroSoft Windows based workstations"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:120
+msgid "windows based workstations"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:124
+#, php-format
+msgid "Display objects of type '%s'."
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:125
+msgid "OPSI installed client"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:125
+msgid "Show OPSI based clients"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:130
+#: admin/systems/class_divListSystem.inc:131
+msgid "network printers"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:135
+msgid "VoIP phones"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:136
+#: admin/systems/class_divListSystem.inc:447
+msgid "phones"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:140
+#: admin/systems/class_divListSystem.inc:141
+msgid "network devices"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:152
+msgid "Display systems matching"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:153
+msgid "Display systems of user"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:182 admin/systems/component.tpl:17
+#: admin/systems/class_componentGeneric.inc:319 admin/systems/server.tpl:22
+#: admin/systems/class_servGeneric.inc:511
+msgid "Base"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:184
+msgid "Submit department"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:184
+msgid "Submit"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:189
+#: admin/systems/class_askOgroup.inc:48
+msgid "Create"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:193
+#: admin/systems/class_systemManagement.inc:1651
 msgid "Terminal"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1609
-msgid "Locked workstation"
+#: admin/systems/class_divListSystem.inc:197
+#: admin/systems/class_systemManagement.inc:1649
+msgid "Workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1610
-msgid "Locked server"
+#: admin/systems/class_divListSystem.inc:201
+#: admin/systems/class_servGeneric.inc:506
+#: admin/systems/class_systemManagement.inc:1650
+msgid "Server"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1611
-msgid "Locked terminal"
+#: admin/systems/class_divListSystem.inc:205
+#: admin/systems/class_systemManagement.inc:1643
+msgid "Phone"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1613
-msgid "Workstation error"
+#: admin/systems/class_divListSystem.inc:209
+#: admin/systems/class_systemManagement.inc:1645
+msgid "Printer"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1614
-msgid "Server error"
+#: admin/systems/class_divListSystem.inc:213
+msgid "Component"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1615
-msgid "Terminal error"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1617
-msgid "Workstation busy"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1618
-msgid "Server busy"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1620
-msgid "New system from incoming"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:1626
-#: admin/systems/class_divListSystem.inc:214
+#: admin/systems/class_divListSystem.inc:220
+#: admin/systems/class_systemManagement.inc:1670
 msgid "Opsi client"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1826
-#: admin/systems/class_systemManagement.inc:1827
-msgid "Incoming objects"
+#: admin/systems/class_divListSystem.inc:227
+msgid "Trigger action"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1832
-msgid "Incoming"
+#: admin/systems/class_divListSystem.inc:233
+msgid "Schedule action"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:240
+msgid "Remove"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:243
+msgid "Activate systems"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:328
+msgid "edit"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:328
+msgid "Edit system"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:334
+msgid "delete"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:334
+msgid "Delete system"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:371
+msgid "Create CD"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:372
+msgid "Create FAI CD"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:409
+#, php-format
+msgid "Member of %s object group"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:428
+#: admin/systems/class_divListSystem.inc:429
+#, php-format
+msgid "Inherited from %s"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:444
+#: admin/systems/class_divListSystem.inc:445
+#: admin/systems/class_divListSystem.inc:446
+#: admin/systems/class_divListSystem.inc:447
+#: admin/systems/class_divListSystem.inc:448
+#: admin/systems/class_divListSystem.inc:449
+#: admin/systems/class_divListSystem.inc:450
+#: admin/systems/class_divListSystem.inc:451
+#: admin/systems/class_divListSystem.inc:452
+#, php-format
+msgid "Number of listed %s"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:448
+msgid "printers"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:449
+msgid "network components"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:450
+msgid "new devices"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:451
+msgid "windows workstations"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:452
+msgid "departments"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:27
+msgid "Stop"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:28
+msgid "Start"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:29
+msgid "Restart"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:189
+#: admin/systems/class_serverService.inc:239
+#: admin/systems/class_serverService.inc:366
+#: admin/systems/class_termDNS.inc:338
+#: admin/systems/class_systemManagement.inc:348
+#: admin/systems/class_systemManagement.inc:457
+#: admin/systems/class_systemManagement.inc:470
+#: admin/systems/class_systemManagement.inc:524
+#: admin/systems/class_systemManagement.inc:533
+#: admin/systems/class_systemManagement.inc:583
+#: admin/systems/class_systemManagement.inc:590
+#: admin/systems/class_systemManagement.inc:605
+#: admin/systems/class_systemManagement.inc:613
+#: admin/systems/class_systemManagement.inc:652
+#: admin/systems/class_systemManagement.inc:746
+#: admin/systems/class_systemManagement.inc:1323
+msgid "Error"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:354
+msgid "Information"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:354
+msgid "Cannot update service status until it has been saved!"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:366
+msgid "Cannot update service status!"
+msgstr ""
+
+#: admin/systems/component.tpl:6
+msgid "Device name"
+msgstr ""
+
+#: admin/systems/component.tpl:20 admin/systems/server.tpl:26
+msgid "Choose subtree to place group in"
+msgstr ""
+
+#: admin/systems/component.tpl:25 admin/systems/server.tpl:32
+msgid "Select a base"
+msgstr ""
+
+#: admin/systems/component.tpl:35 admin/systems/class_componentGeneric.inc:320
+#: admin/systems/server.tpl:14 admin/systems/class_servGeneric.inc:510
+msgid "Description"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:77
+msgid "component"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:160
+#: admin/systems/class_componentGeneric.inc:301
+#: admin/systems/services/class_goService.inc:122
+#: admin/systems/services/class_goService.inc:150
+#: admin/systems/services/class_goService.inc:183
+#: admin/systems/class_servGeneric.inc:278
+#: admin/systems/class_servGeneric.inc:430 admin/systems/class_termDNS.inc:483
+#: admin/systems/class_termDNS.inc:771 admin/systems/class_termDNS.inc:790
+#: admin/systems/class_termDNS.inc:811 admin/systems/class_termDNS.inc:816
+#: admin/systems/class_termDNS.inc:834 admin/systems/class_termDNS.inc:906
+#: admin/systems/class_systemManagement.inc:733
+#: admin/systems/class_systemManagement.inc:1854
+msgid "LDAP error"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:209
+#: admin/systems/class_componentGeneric.inc:214
+#: admin/systems/class_componentGeneric.inc:236
+#: admin/systems/paste_generic.tpl:44
+msgid "Component name"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:219
+#: admin/systems/class_componentGeneric.inc:222
+#: admin/systems/class_termDNS.inc:602 admin/systems/class_termDNS.inc:614
+#: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:982
+msgid "IP address"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:309
+#: admin/systems/class_servGeneric.inc:500
+msgid "Generic"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:310
+msgid "Component generic"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:315
+#: admin/systems/class_systemManagement.inc:1644
+msgid "Network device"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:318
+#: admin/systems/class_servGeneric.inc:509
+#: admin/systems/class_divListSystemService.inc:50
+msgid "Name"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:321
+#: admin/systems/class_servGeneric.inc:514
+msgid "Root password"
 msgstr ""
 
 #: admin/systems/services/class_goService.inc:44
@@ -289,268 +414,180 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: admin/systems/class_divListSystem.inc:63
-#: admin/systems/class_divListSystem.inc:64
-msgid "List of systems"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:82
-msgid "Select all"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:88
-msgid "Department"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:92
-msgid "Release"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:95
-#: admin/systems/class_divListSystem.inc:181
-#: admin/systems/class_divListSystemService.inc:51
-msgid "Actions"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:423
-msgid "servers"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:117
-#: admin/systems/class_divListSystem.inc:128
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:138
-#, php-format
-msgid "Show %s"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:106
-msgid "Linux terminals"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:425
-msgid "terminals"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:111
-msgid "Linux workstations"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:424
-msgid "workstations"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:116
-msgid "MicroSoft Windows based workstations"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:117
-msgid "windows based workstations"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:121
-#, php-format
-msgid "Display objects of type '%s'."
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:122
-msgid "OPSI installed client"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:122
-msgid "Show OPSI based clients"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:127
-#: admin/systems/class_divListSystem.inc:128
-msgid "network printers"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:132
-msgid "VoIP phones"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:426
-msgid "phones"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:137
-#: admin/systems/class_divListSystem.inc:138
-msgid "network devices"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:146
-msgid "Display systems matching"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:147
-msgid "Display systems of user"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:514 admin/systems/server.tpl:22
-#: admin/systems/class_componentGeneric.inc:319 admin/systems/component.tpl:17
-msgid "Base"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:178
-msgid "Submit department"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:178
-msgid "Submit"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:183
-msgid "Create"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:207
-msgid "Component"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:221
-msgid "Trigger action"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:227
-msgid "Schedule action"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:234
-msgid "Remove"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:237
-msgid "Activate systems"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "edit"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "Edit system"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "delete"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "Delete system"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "Password"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
-msgid "Set password"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:359
-msgid "Create CD"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:360
-msgid "Create FAI CD"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:407
-#: admin/systems/class_divListSystem.inc:408
-#, php-format
-msgid "Inherited from %s"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:423
-#: admin/systems/class_divListSystem.inc:424
-#: admin/systems/class_divListSystem.inc:425
-#: admin/systems/class_divListSystem.inc:426
-#: admin/systems/class_divListSystem.inc:427
-#: admin/systems/class_divListSystem.inc:428
-#: admin/systems/class_divListSystem.inc:429
-#: admin/systems/class_divListSystem.inc:430
-#: admin/systems/class_divListSystem.inc:431
-#, php-format
-msgid "Number of listed %s"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:427
-msgid "printers"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:428
-msgid "network components"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:429
-msgid "new devices"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:430
-msgid "windows workstations"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:431
-msgid "departments"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:27
-msgid "Stop"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:28
-msgid "Start"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:29
-msgid "Restart"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:351
-msgid "Information"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:351
-msgid "Cannot update service status until it has been saved!"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:363
-msgid "Cannot update service status!"
-msgstr ""
-
-#: admin/systems/paste_generic.tpl:4 admin/systems/class_servGeneric.inc:339
-#: admin/systems/class_servGeneric.inc:344
-#: admin/systems/class_servGeneric.inc:355 admin/systems/server.tpl:6
+#: admin/systems/server.tpl:6 admin/systems/class_servGeneric.inc:336
+#: admin/systems/class_servGeneric.inc:341
+#: admin/systems/class_servGeneric.inc:352 admin/systems/paste_generic.tpl:4
 msgid "Server name"
 msgstr ""
 
-#: admin/systems/paste_generic.tpl:14
-msgid "workstation name"
+#: admin/systems/server.tpl:42
+msgid "Mode"
 msgstr ""
 
-#: admin/systems/paste_generic.tpl:24
-msgid "Terminal name"
+#: admin/systems/server.tpl:45
+msgid "Select terminal mode"
 msgstr ""
 
-#: admin/systems/paste_generic.tpl:34
-msgid "Printer name"
+#: admin/systems/server.tpl:63
+msgid "Action"
 msgstr ""
 
-#: admin/systems/paste_generic.tpl:44
-#: admin/systems/class_componentGeneric.inc:209
-#: admin/systems/class_componentGeneric.inc:214
-#: admin/systems/class_componentGeneric.inc:236
-msgid "Component name"
+#: admin/systems/server.tpl:69
+msgid ""
+"System installation in progress, the FAI state cannot be changed right now."
+msgstr ""
+
+#: admin/systems/server.tpl:72
+msgid "Select action to execute for this server"
+msgstr ""
+
+#: admin/systems/server.tpl:80
+msgid "Execute"
+msgstr ""
+
+#: admin/systems/network.tpl:1
+msgid "Network\tsettings"
+msgstr ""
+
+#: admin/systems/network.tpl:9
+msgid "IP-address"
+msgstr ""
+
+#: admin/systems/network.tpl:30 admin/systems/network.tpl:32
+msgid "Propose ip"
+msgstr ""
+
+#: admin/systems/network.tpl:38
+msgid "MAC-address"
+msgstr ""
+
+#: admin/systems/network.tpl:45
+msgid "Autodetect"
+msgstr ""
+
+#: admin/systems/network.tpl:62 admin/systems/network.tpl:72
+msgid "Enable DHCP for this device"
+msgstr ""
+
+#: admin/systems/network.tpl:72 admin/systems/network.tpl:167
+msgid "not configured"
+msgstr ""
+
+#: admin/systems/network.tpl:80
+msgid "Parent node"
+msgstr ""
+
+#: admin/systems/network.tpl:93
+msgid "Edit settings"
+msgstr ""
+
+#: admin/systems/network.tpl:127 admin/systems/network.tpl:167
+msgid "Enable DNS for this device"
+msgstr ""
+
+#: admin/systems/network.tpl:136
+msgid "Zone"
+msgstr ""
+
+#: admin/systems/network.tpl:146
+msgid "TTL"
+msgstr ""
+
+#: admin/systems/network.tpl:154
+msgid "Dns records"
+msgstr ""
+
+#: admin/systems/askObjectGroup.tpl:6
+msgid ""
+"This dialog gives you the possibility to select an optional bundle of "
+"predefined settings to be inherited."
+msgstr ""
+
+#: admin/systems/askObjectGroup.tpl:17 admin/systems/askObjectGroup.tpl:23
+msgid "Select object group"
+msgstr ""
+
+#: admin/systems/askObjectGroup.tpl:22
+msgid "Choose an object group as template"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:85
+msgid "Activated"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:86
+msgid "Locked"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:147
+msgid "server"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:164
+#: admin/systems/class_servGeneric.inc:450
+#: admin/systems/class_systemManagement.inc:853
+msgid "Service infrastructure"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:168
+msgid "Event error"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:169
+#, php-format
+msgid "Event '%s' is not available!"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:224
+msgid "Switch off"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:224
+msgid "Reboot"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:225
+#: admin/systems/class_servGeneric.inc:233
+msgid "System update"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:226
+#: admin/systems/class_servGeneric.inc:232
+msgid "Reinstall"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:227
+msgid "Rescan hardware"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:228
+#: admin/systems/class_servGeneric.inc:234
+msgid "Force localboot"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:231
+msgid "Wake up"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:366
+msgid "Software deployment"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:367
+msgid ""
+"This host is currently installing, if you really want to save it, press 'OK'."
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:501
+msgid "Server generic"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:513
+msgid "Goto mode"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:515
+msgid "Action flag"
 msgstr ""
 
 #: admin/systems/class_divListSystemService.inc:38
@@ -560,12 +597,6 @@ msgstr ""
 
 #: admin/systems/class_divListSystemService.inc:42
 msgid "Add, remove and configure the properties of system services here."
-msgstr ""
-
-#: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/class_servGeneric.inc:512
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
 msgstr ""
 
 #: admin/systems/class_divListSystemService.inc:62
@@ -630,218 +661,24 @@ msgstr ""
 msgid "Remove service"
 msgstr ""
 
-#: admin/systems/network.tpl:1
-msgid "Network\tsettings"
+#: admin/systems/class_askOgroup.inc:32 admin/systems/class_askOgroup.inc:62
+msgid "None"
 msgstr ""
 
-#: admin/systems/network.tpl:9
-msgid "IP-address"
+#: admin/systems/class_askOgroup.inc:47
+msgid "Create workstation"
 msgstr ""
 
-#: admin/systems/network.tpl:30 admin/systems/network.tpl:32
-msgid "Propose ip"
+#: admin/systems/paste_generic.tpl:14
+msgid "workstation name"
 msgstr ""
 
-#: admin/systems/network.tpl:38
-msgid "MAC-address"
+#: admin/systems/paste_generic.tpl:24
+msgid "Terminal name"
 msgstr ""
 
-#: admin/systems/network.tpl:45
-msgid "Autodetect"
-msgstr ""
-
-#: admin/systems/network.tpl:62 admin/systems/network.tpl:72
-msgid "Enable DHCP for this device"
-msgstr ""
-
-#: admin/systems/network.tpl:72 admin/systems/network.tpl:167
-msgid "not configured"
-msgstr ""
-
-#: admin/systems/network.tpl:80
-msgid "Parent node"
-msgstr ""
-
-#: admin/systems/network.tpl:93
-msgid "Edit settings"
-msgstr ""
-
-#: admin/systems/network.tpl:127 admin/systems/network.tpl:167
-msgid "Enable DNS for this device"
-msgstr ""
-
-#: admin/systems/network.tpl:136
-msgid "Zone"
-msgstr ""
-
-#: admin/systems/network.tpl:146
-msgid "TTL"
-msgstr ""
-
-#: admin/systems/network.tpl:154
-msgid "Dns records"
-msgstr ""
-
-#: admin/systems/main.inc:54 admin/systems/main.inc:56
-msgid "System management"
-msgstr ""
-
-#: admin/systems/password.tpl:3
-msgid ""
-"To change the terminal root password use the fields below. The changes take "
-"effect during the next reboot. Please memorize the new password, because you "
-"wouldn't be able to log in."
-msgstr ""
-
-#: admin/systems/password.tpl:6
-msgid "Leave fields blank for password inheritance from default entries."
-msgstr ""
-
-#: admin/systems/password.tpl:10
-msgid "Changing the password impinges on authentification only."
-msgstr ""
-
-#: admin/systems/password.tpl:15
-msgid "New password"
-msgstr ""
-
-#: admin/systems/password.tpl:21
-msgid "Repeat new password"
-msgstr ""
-
-#: admin/systems/password.tpl:26
-msgid "Password strength"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:86
-msgid "Activated"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:87
-msgid "Locked"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:148
-msgid "server"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:169
-msgid "Event error"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:170
-#, php-format
-msgid "Event '%s' is not available!"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:225
-msgid "Switch off"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:225
-msgid "Reboot"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:226
-#: admin/systems/class_servGeneric.inc:235
-msgid "System update"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:227
-#: admin/systems/class_servGeneric.inc:234
-msgid "Reinstall"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:228
-msgid "Rescan hardware"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:229
-#: admin/systems/class_servGeneric.inc:236
-msgid "Memory test"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:230
-#: admin/systems/class_servGeneric.inc:237
-msgid "Force localboot"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:231
-#: admin/systems/class_servGeneric.inc:238
-msgid "System analysis"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:233
-msgid "Wake up"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:369
-msgid "Software deployment"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:370
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:503
-#: admin/systems/class_componentGeneric.inc:309
-msgid "Generic"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:504
-msgid "Server generic"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:513 admin/systems/server.tpl:14
-#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
-msgid "Description"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:516
-msgid "Goto mode"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:517
-#: admin/systems/class_componentGeneric.inc:321
-msgid "Root password"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:518
-msgid "Action flag"
-msgstr ""
-
-#: admin/systems/server.tpl:26 admin/systems/component.tpl:20
-msgid "Choose subtree to place group in"
-msgstr ""
-
-#: admin/systems/server.tpl:32 admin/systems/component.tpl:25
-msgid "Select a base"
-msgstr ""
-
-#: admin/systems/server.tpl:42
-msgid "Mode"
-msgstr ""
-
-#: admin/systems/server.tpl:45
-msgid "Select terminal mode"
-msgstr ""
-
-#: admin/systems/server.tpl:63
-msgid "Action"
-msgstr ""
-
-#: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
-msgstr ""
-
-#: admin/systems/server.tpl:72
-msgid "Select action to execute for this server"
-msgstr ""
-
-#: admin/systems/server.tpl:80
-msgid "Execute"
+#: admin/systems/paste_generic.tpl:34
+msgid "Printer name"
 msgstr ""
 
 #: admin/systems/class_termDNS.inc:444
@@ -851,13 +688,6 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:593
 #, php-format
 msgid "IP address %s"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:602 admin/systems/class_termDNS.inc:614
-#: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:982
-#: admin/systems/class_componentGeneric.inc:219
-#: admin/systems/class_componentGeneric.inc:222
-msgid "IP address"
 msgstr ""
 
 #: admin/systems/class_termDNS.inc:607 admin/systems/class_termDNS.inc:624
@@ -916,14 +746,195 @@ msgstr ""
 msgid "DHCP configuration"
 msgstr ""
 
-#: admin/systems/class_componentGeneric.inc:77
-msgid "component"
+#: admin/systems/class_systemManagement.inc:27
+msgid "This does something"
 msgstr ""
 
-#: admin/systems/class_componentGeneric.inc:310
-msgid "Component generic"
+#: admin/systems/class_systemManagement.inc:243
+msgid "Back"
 msgstr ""
 
-#: admin/systems/component.tpl:6
-msgid "Device name"
+#: admin/systems/class_systemManagement.inc:290
+msgid "Creating the image failed. Please see the report below."
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:299
+#, php-format
+msgid "Command '%s', specified for ISO creation doesn't seem to exist."
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:403
+msgid "Internal error"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:403
+msgid "Cannot set mode to 'active'!"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:613
+msgid "Editing this type of object is not supported yet!"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:640
+#: admin/systems/class_systemManagement.inc:743
+#: admin/systems/class_systemManagement.inc:973
+msgid "Permission error"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:640
+#: admin/systems/class_systemManagement.inc:743
+msgid "You have no permission to change this password!"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:652
+msgid ""
+"The passwords you've entered as 'New password' and 'Repeated password' do "
+"not match!"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:727
+msgid "Password method"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:727
+msgid "Password method crypt is missing. Cannot set system password."
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:746
+msgid "Cannot determine object to change password!"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:898
+msgid "Permission"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1352
+#: admin/systems/class_systemManagement.inc:1665
+msgid "New terminal"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1354
+#: admin/systems/class_systemManagement.inc:1666
+msgid "New workstation"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1356
+msgid "Unknown device"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1358
+msgid "New Device"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1383
+msgid "Terminal template for"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1399
+msgid "Workstation template for"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1642
+msgid "Template"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1647
+msgid "Windows workstation"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1653
+msgid "Locked workstation"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1654
+msgid "Locked server"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1655
+msgid "Locked terminal"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1657
+msgid "Workstation error"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1658
+msgid "Server error"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1659
+msgid "Terminal error"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1661
+msgid "Workstation busy"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1662
+msgid "Server busy"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1664
+msgid "New system from incoming"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1870
+#: admin/systems/class_systemManagement.inc:1871
+msgid "Incoming objects"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:1876
+msgid "Incoming"
+msgstr ""
+
+#: admin/systems/main.inc:52 admin/systems/main.inc:54
+msgid "System management"
+msgstr ""
+
+#: admin/systems/password.tpl:3
+msgid ""
+"To change the terminal root password use the fields below. The changes take "
+"effect during the next reboot. Please memorize the new password, because you "
+"wouldn't be able to log in."
+msgstr ""
+
+#: admin/systems/password.tpl:6
+msgid "Leave fields blank for password inheritance from default entries."
+msgstr ""
+
+#: admin/systems/password.tpl:10
+msgid "Changing the password impinges on authentification only."
+msgstr ""
+
+#: admin/systems/password.tpl:15
+msgid "New password"
+msgstr ""
+
+#: admin/systems/password.tpl:21
+msgid "Repeat new password"
+msgstr ""
+
+#: admin/systems/password.tpl:26
+msgid "Password strength"
+msgstr ""
+
+#: admin/systems/password.tpl:38
+msgid "Set password"
+msgstr ""
+
+#: admin/systems/remove.tpl:2
+msgid "Warning"
+msgstr ""
+
+#: admin/systems/remove.tpl:6
+msgid ""
+"This includes all system and setup informations. Please double check if your "
+"really want to do this since there is no way for GOsa to get your data back."
+msgstr ""
+
+#: admin/systems/remove.tpl:10
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
 msgstr ""

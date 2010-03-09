@@ -149,6 +149,10 @@ class systems extends plugin
       $s_entry  = preg_replace("/^newsystem_/","",$_POST['menu_action']);
     }
 
+    if (isset($_POST['edit_continue'])) {
+      $s_action = "select_ogroup_finished";
+    }
+
     /* handle C&P from layers menu */
     if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
       $s_action = "copy_multiple";
@@ -458,8 +462,34 @@ class systems extends plugin
     }
 
 
+    if ($s_action=="select_ogroup_finished") {
+      $this->systab->save_object();
+
+      if (count($this->systab->check())!=0) {
+        foreach($this->systab->check() as $msg){
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+        }
+      }elseif(isset($this->systab->objectClass) && isset($this->systab->sw)) {
+        $this->dn = "new";
+        $sw = $this->systab->sw;
+        $tabs = $this->get_tab_defs();
+        $class    = $tabs[$sw]["CLASS"];
+        $tabname  = $tabs[$sw]["TABNAME"];
+        $tabclass = $tabs[$sw]["TABCLASS"];
+        $acl_cat  = $tabs[$sw]["ACLC"];
+        $ogroup = $this->systab->save();
+        if (class_exists($tabclass)) {
+            $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$sw);
+            $this->systab->set_acl_base($this->DivListSystem->selectedBase);
+            $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
+            $this->systab->by_object[$tabname]->ogroup = $ogroup;
+            $this->systab->base = $this->DivListSystem->selectedBase;
+        }
+      }
+    }
+
     if (isset($_POST['create_system'])||$s_action=="newsystem") {
-    
+
       $this->last_action = "";
   
       /* If the current entry is an incoming object 
@@ -470,6 +500,7 @@ class systems extends plugin
       }else{
         $sw = $s_entry;
       }
+
       $this->dn= "new";
 
       $tabs = $this->get_tab_defs();
@@ -485,14 +516,18 @@ class systems extends plugin
         $ui       = get_userinfo();
         $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname);
         if(preg_match("/c/",$tabacl)){
-
-          if(!class_available($tabclass)){
-            msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
-          }else{
-            $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$sw);
+          if ($tabclass == 'worktabs') {
+            $this->systab = new askObjectGroup($this->config, $this->dn, $ui, $tabclass, $sw);
+          }
+          else {
+            if(!class_available($tabclass)){
+              msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
+            }else{
+              $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$sw);
             $this->systab->set_acl_base($this->DivListSystem->selectedBase);
             $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
             $this->systab->base = $this->DivListSystem->selectedBase;
+            }
           }
         }else{
           msg_dialog::display(_("Error"), msgPool::permCreate(), ERROR_DIALOG);
@@ -1098,6 +1133,7 @@ class systems extends plugin
         $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
         $display.= "</p>";
       }
+
       return ($display);
     }
 
