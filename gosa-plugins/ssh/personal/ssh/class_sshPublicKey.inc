@@ -20,10 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class sshPublicKey extends plugin
+class sshPublicKey 
 {
-  var $pathTitle = "SSH keys"; 
-
   var $config= null;
   var $publicKeys= array();
   var $storedPublicKeys= array();
