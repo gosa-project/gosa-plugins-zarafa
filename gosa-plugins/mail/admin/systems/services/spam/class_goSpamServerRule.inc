@@ -18,6 +18,8 @@ class goSpamServerRule extends plugin {
 
 	function execute()
 	{
+    plugin::execute();
+
 		$smarty = get_smarty();
 
     if($this->is_account && !$this->view_logged){
