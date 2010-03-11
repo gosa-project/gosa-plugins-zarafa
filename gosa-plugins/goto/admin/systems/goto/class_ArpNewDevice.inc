@@ -43,6 +43,8 @@ class ArpNewDevice extends plugin
 
   function execute()
   {
+    plugin::execute();
+
     /* Get object groups */
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->config->current['BASE']);
