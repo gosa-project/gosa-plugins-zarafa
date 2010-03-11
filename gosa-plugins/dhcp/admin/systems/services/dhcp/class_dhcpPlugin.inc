@@ -83,6 +83,7 @@ class dhcpPlugin extends plugin
 
   function execute()
   {
+    plugin::execute();
     return ("");
   }
 
