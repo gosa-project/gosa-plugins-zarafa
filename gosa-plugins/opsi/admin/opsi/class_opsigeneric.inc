@@ -246,6 +246,7 @@ class opsiGeneric extends plugin
    */
   public function execute()
   {
+    plugin::execute();
     $display ="";
 
     /* The pluign initialization failed due to communication problems with the gosa daemon. 
