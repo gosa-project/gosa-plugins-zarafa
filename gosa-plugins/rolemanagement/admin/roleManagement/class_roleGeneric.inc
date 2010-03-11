@@ -135,6 +135,7 @@ class roleGeneric extends plugin {
    */
   function execute()
   {
+    plugin::execute();
     // Get list of possible ldap bases, will be selectable in the ui.
     $tmp = $this->allowedBasesToMoveTo();
 
