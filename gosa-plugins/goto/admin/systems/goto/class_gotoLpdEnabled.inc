@@ -116,6 +116,8 @@ class gotoLpdEnable extends plugin
   */
 	public function execute()
 	{
+    plugin::execute();
+
     $display = "";
 
     /* Set smarty variables 
