@@ -32,6 +32,8 @@ class dakqueue extends plugin
 
   public function execute()
   {
+    plugin::execute();
+
     $smarty= get_smarty();
     $smarty->assign("Repositories"          , DAK::get_repositories($this->config));
     $smarty->assign("selected_Repository" , $this->selected_Repository);
