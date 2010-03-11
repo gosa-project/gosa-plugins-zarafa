@@ -101,6 +101,7 @@ class licenseUsageByHost extends plugin
 
   function execute()
   {
+    plugin::execute();
 
     // Handle initialization failures.
     if(isset($_POST['retry_init'])) $this->init();
