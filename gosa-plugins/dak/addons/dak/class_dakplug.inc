@@ -14,6 +14,7 @@ class dakplug extends plugin
 	
 	public function execute()
 	{
+    plugin::execute();
 		return($this->tabs->execute());
 	}
 
