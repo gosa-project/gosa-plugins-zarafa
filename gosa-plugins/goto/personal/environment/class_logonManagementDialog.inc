@@ -1,6 +1,8 @@
 <?php
 class logonManagementDialog extends plugin
 {
+  var $pathTitle = "Logon scripts";
+
   /* attribute list for save action */
   var $ignore_account       = TRUE;
   var $attributes           = array("LogonName","LogonPriority","LogonLast","LogonOverload","LogonData","LogonDescription");

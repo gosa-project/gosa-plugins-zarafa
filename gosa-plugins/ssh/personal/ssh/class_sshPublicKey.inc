@@ -20,8 +20,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class sshPublicKey
+class sshPublicKey extends plugin
 {
+  var $pathTitle = "SSH keys"; 
+
   var $config= null;
   var $publicKeys= array();
   var $storedPublicKeys= array();
@@ -74,6 +76,8 @@ class sshPublicKey
 
   function execute()
   {
+    plugin::execute();  
+
     global $ui;
 
     // Check if we need to open a dialog

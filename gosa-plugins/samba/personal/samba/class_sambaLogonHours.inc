@@ -2,6 +2,7 @@
 
 class sambaLogonHours extends plugin
 {
+  var $pathTitle = "Samba logon times";
 
   var $sambaLogonHours = "";
   var $Matrix          = array();
