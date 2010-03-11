@@ -42,7 +42,9 @@ class dhcpAdvanced extends plugin
 
   function execute()
   {
-	$acl_writeable = preg_match("/w/",$this->parent->getacl(""));
+    plugin::execute();
+
+  	$acl_writeable = preg_match("/w/",$this->parent->getacl(""));
 
     /* Check for interaction */
     if ($acl_writeable && isset($_POST['add_statement']) && $_POST['addstatement'] != ""){
