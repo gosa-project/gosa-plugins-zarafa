@@ -149,6 +149,7 @@ class mimetype extends plugin
 
   function execute()
   {
+    plugin::execute();
     $smarty = get_smarty();
 
     if(!$this->view_logged){
