@@ -59,6 +59,8 @@ class goto_import_file extends plugin
 
   public function execute()
   {
+    plugin::execute();
+
     /* Import file 
      */
     if(isset($_POST['import']) && isset($_FILES['file'])) {
