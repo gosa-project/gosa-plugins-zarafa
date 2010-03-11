@@ -176,6 +176,7 @@ class faiSummaryTab extends plugin{
   /* This function calls all nescessary functions to generate the fai class summary tree */
   function execute() 
   {
+    plugin::execute();
 
     /* Skip this if fai is deactivated */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
