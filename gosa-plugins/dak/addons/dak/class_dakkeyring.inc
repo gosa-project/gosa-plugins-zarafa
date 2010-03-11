@@ -53,6 +53,8 @@ class dakkeyring extends plugin
    */
   public function execute()
   {
+    plugin::execute();
+    
     if(isset($_POST['search'])){
       $this->refresh_list();
     }
