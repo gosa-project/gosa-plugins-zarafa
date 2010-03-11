@@ -201,6 +201,7 @@ class licensePoolGeneric extends plugin
 
   function execute()
   {
+    plugin::execute();
     // Handle initialization failures.
     if(isset($_POST['retry_init'])) $this->init();
     if(!$this->init_successfull){
