@@ -31,6 +31,7 @@ class opsiProperties extends plugin
    */
   public function execute()
   {
+    plugin::execute();
     $ui =get_userinfo();
     $acl =  $ui->get_permissions($this->config->current['BASE'],"opsi/opsiProperties","");
     $smarty = get_smarty();
