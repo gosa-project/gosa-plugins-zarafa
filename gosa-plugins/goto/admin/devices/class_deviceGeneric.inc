@@ -71,6 +71,7 @@ class deviceGeneric extends plugin
 
   public function execute()
   {
+    plugin::execute();
     $smarty = get_smarty();
     $smarty->assign("usePrototype", "true");
     $smarty->assign("base", $this->baseSelector->render());
