@@ -84,6 +84,8 @@ class blocklistGeneric extends plugin
 
   public function execute()
   {
+    plugin::execute();
+
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
