@@ -100,6 +100,8 @@ class rsyslog extends plugin
 
   function execute()
   {
+    plugin::execute();
+
     $smarty = get_smarty();
     $smarty->assign("usePrototype", "true");
     $ui = get_userinfo();
