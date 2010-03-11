@@ -36,6 +36,7 @@ class dhcpNetwork extends plugin
 
   function execute()
   {
+    plugin::execute();
 
     $acl_writeable = preg_match("/w/",$this->parent->getacl(""));
 
