@@ -71,6 +71,8 @@ class gotoLogView extends plugin
 
   function execute()
   {
+    plugin::execute();
+
     $smarty = get_smarty();
     $smarty->assign("logs",$this->logs);   
     $smarty->assign("logs_available", isset($this->logs[$this->mac]));
