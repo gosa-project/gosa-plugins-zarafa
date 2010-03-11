@@ -16,7 +16,7 @@
    <br>
 {render acl=$acl}
    <select name='dhcpstatements' style="width:100%;" size="14">
-    {html_options values=$dhcpstatements output=$dhcpstatements}
+    {html_options options=$dhcpstatements}
    </select>
 {/render}
    <br>
