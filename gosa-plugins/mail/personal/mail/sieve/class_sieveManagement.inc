@@ -164,6 +164,7 @@ class sieveManagement extends plugin
    */
   function execute()
   {
+    plugin::execute();
     /***************
      * Create a new Script 
      ***************/
