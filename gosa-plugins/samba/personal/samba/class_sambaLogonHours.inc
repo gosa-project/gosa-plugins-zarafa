@@ -57,6 +57,7 @@ class sambaLogonHours extends plugin
 
   function execute()
   {
+    plugin::execute();
 
     $week_days = msgPool::weekdays();
 
