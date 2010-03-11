@@ -125,6 +125,7 @@ class opengwAccount extends plugin
 
 	function execute()
 	{
+    plugin::execute();
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
