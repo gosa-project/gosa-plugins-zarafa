@@ -37,6 +37,8 @@ class dhcpNewSectionDialog extends plugin
 
   function execute()
   {
+    plugin::execute();
+
     /* Fill templating stuff */
     $smarty = get_smarty();
     $display= "";
