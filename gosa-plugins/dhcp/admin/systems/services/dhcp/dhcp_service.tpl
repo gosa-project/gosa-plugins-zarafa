@@ -4,7 +4,7 @@
  <tr>
   <td width="50%">
 {render acl=$acl}
-  <input id='authoritative' type=checkbox name="authoritative" value="1" {$authoritative}> {t}Authoritative service{/t}<br>
+  <input id='authoritative' type=checkbox name="authoritative" value="1" {if $authoritative} checked {/if}> {t}Authoritative service{/t}<br>
 {/render}
   <br>
   {t}Dynamic DNS update{/t} 
