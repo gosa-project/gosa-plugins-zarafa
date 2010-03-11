@@ -32,7 +32,7 @@
     <tr>
      <td>
 {render acl=$acl}
-      <input type=checkbox name="authoritative" value="1" {$authoritative}
+      <input type=checkbox name="authoritative" value="1" {if $authoritative} checked {/if}
        title="{t}Select if this server is authoritative for this shared network{/t}">{t}Authoritative server{/t}
 {/render}
      </td>

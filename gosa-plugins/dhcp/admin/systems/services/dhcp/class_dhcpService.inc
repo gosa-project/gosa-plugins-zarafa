@@ -67,7 +67,7 @@ class dhcpService extends dhcpPlugin
       $smarty->assign("$value", $this->statements->get(preg_replace('/_/', '-', $value)));
     }
 
-    $smarty->assign("authoritative", $this->statements->get('authoritative'));
+    $smarty->assign("authoritative", $this->statements->exists('authoritative'));
 
     /* Show main page */
     $display= $smarty->fetch(get_template_path('dhcp_service.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
