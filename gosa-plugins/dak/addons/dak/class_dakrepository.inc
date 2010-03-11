@@ -29,6 +29,8 @@ class dakrepository extends plugin
 
   public function execute()
   {
+    plugin::execute();
+
     $smarty= get_smarty();
     return($smarty->fetch (get_template_path('dak_repository.tpl', TRUE, dirname(__FILE__))));
   }
