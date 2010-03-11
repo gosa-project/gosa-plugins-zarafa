@@ -42,6 +42,7 @@ class opsiWare extends plugin
 
   public function execute()
   {
+    plugin::execute();
     if(isset($_POST['reinit']) && $this->init_failed){
       $this->init();
     }
