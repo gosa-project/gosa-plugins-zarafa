@@ -7,7 +7,6 @@ class workstartup extends plugin
   var $gotoLdap_inherit   = FALSE;
 
   /* Generic terminal attributes */
-  var $bootmode             = "G";
   var $gotoBootKernel       = "default-inherited";
   var $gotoKernelParameters = "";
   var $gotoLdapServer       = "default-inherited";
@@ -670,23 +669,6 @@ class workstartup extends plugin
     }// END FAI output generation 
     $smarty->assign("FAIScriptlist",$div->DrawList()); 
 
-    /* Radio button group */
-    if (preg_match("/G/", $this->bootmode)) {
-      $smarty->assign("graphicalbootup", "checked");
-    } else {
-      $smarty->assign("graphicalbootup", "");
-    }
-    if (preg_match("/T/", $this->bootmode)) {
-      $smarty->assign("textbootup", "checked");
-    } else {
-      $smarty->assign("textbootup", "");
-    }
-    if (preg_match("/D/", $this->bootmode)) {
-      $smarty->assign("debugbootup", "checked");
-    } else {
-      $smarty->assign("debugbootup", "");
-    }
-
     /* Show main page */
     $smarty->assign("gotoKernelParameters",$this->gotoKernelParameters);
     return($smarty->fetch (get_template_path('workstationStartup.tpl', TRUE,dirname(__FILE__))));
@@ -735,11 +717,6 @@ class workstartup extends plugin
         $this->gotoLdap_inherit = TRUE;
       }else{
         $this->gotoLdap_inherit = FALSE;
-      }
-
-      /* Save group radio buttons */
-      if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
-        $this->bootmode= $_POST["bootmode"];
       }
     }
   }
@@ -799,21 +776,6 @@ class workstartup extends plugin
         if ($tmp == ""){
           break;
         }
-      }
-    }
-
-    if ($this->gotoKernelParameters == "") {
-      /* Add semi automatic values if empty */
-      // FIXME: LDAP Server may not be set here...
-      $this->gotoKernelParameters= "ldap=".base64_encode($this->gotoLdapServer);
-      
-      switch ($this->bootmode){
-        case "D":
-          $this->gotoKernelParameters.= " debug";
-        break;
-        case "G":
-          $this->gotoKernelParameters.= " splash=silent";
-        break;
       }
     }
 
