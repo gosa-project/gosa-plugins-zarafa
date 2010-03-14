@@ -198,8 +198,7 @@ class gotomasses extends management
         /* Real percent */
       } else {
         if (preg_match('/install/', $headertag)){
-          $status = "<img src='progress.php?x=80&y=13&p=".$progress."' alt=''
-            id='progress_".preg_replace("/:/","_",$mac)."'>";
+          $status= progressbar($progress, 80, 13, true, false, "progress_".preg_replace("/:/","_",$mac));
         } else {
           $status = preg_replace('/ /', '&nbsp;', _("in progress"));
         }
