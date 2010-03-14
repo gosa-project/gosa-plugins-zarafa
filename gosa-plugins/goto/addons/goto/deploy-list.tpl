@@ -66,18 +66,17 @@ function loadContent()
 	/* Create array of available progress images once 
 	 */
 	if(!fai_status.length){
-		for (var i = 0; i < document.images.length; i++) {
-			var img = document.images[i];
-			var id  = img.id;
-			if(id.match(/^progress_/)){
-				var mac = id.replace(/^progress_/,''); 
-				mac = mac.replace(/_/g,':'); 
-				fai_status[c] = new Object();
-				fai_status[c]['MAC']  = mac;
-				fai_status[c]['PROGRESS'] = -1;
-				c ++;
-			}
-		}
+                var progressBars= Form.getElements("mainform");
+                progressBars.each(function(progressBar) {
+                        if(progressBar.id.match(/^progress_/)){
+                                var mac = id.replace(/^progress_/,'');
+                                mac = mac.replace(/_/g,':');
+                                fai_status[c] = new Object();
+                                fai_status[c]['MAC']  = mac;
+                                fai_status[c]['PROGRESS'] = -1;
+                                c ++;
+                        }
+                }
 	}
 
 	/* Create string of macs used as parameter for getFAIstatus.php
@@ -115,16 +114,13 @@ function handleContent()
 			   mac and progress value */
 			var found 	= false;
 
-			/* Create object id out of mac address 
-               12:34:56:12:34:56 => progress_12_34_56_12_34_56
-             */
+			/* Create object id out of mac address 12:34:56:12:34:56 => progress_12_34_56_12_34_56 */
 			var id 		= fai_status[e]["MAC"].replace(/:/g,"_"); 
 			id = "progress_" + id;
-			var img = document.getElementById(id);	
+			var progressBar = document.getElementById(id);
 
-			/* Continue if there is no image object iwth this id 
-		     */
-			if(!img){
+			/* Continue if there is no image object iwth this id */
+			if(!progressBar){
 			 	continue;
 			}
 
@@ -140,8 +136,15 @@ function handleContent()
 					/* Check if progress has changed 
 					 */	
 					if(fai_status[e]["PROGRESS"] != progress){
-						img.src = "progress.php?x=80&y=13&p=" + progress; 
-						fai_status[e]["PROGRESS"] = progress;
+                                                var woffset= Math.floor(0.85 * (100-progress));
+
+                                                progressBar.setStyle({
+                                                   -moz-box-shadow: "0 0 2px rgba(255, 255, 255, 0.4) inset, 0 4px 6px rgba(255, 255, 255, 0.4) inset, 0 10px 0 -2px rgba(255, 255, 255, 0.2) inset, -" + woffset + "px 0 0 -2px rgba(255, 255, 255, 0.2) inset, -" + (woffset+1) + "px 0 0 -2px rgba(0, 0, 0, 0.6) inset, 0pt 11px 8px rgba(0, 0, 0, 0.3) inset, 0pt 1px 0px rgba(0, 0, 0, 0.2)",
+                                                   -webkit-box-shadow: "0 0 2px rgba(255, 255, 255, 0.4) inset, 0 4px 6px rgba(255, 255, 255, 0.4) inset, 0 10px 0 -2px rgba(255, 255, 255, 0.2) inset, -" + woffset + "px 0 0 -2px rgba(255, 255, 255, 0.2) inset, -" + (woffset+1) + "px 0 0 -2px rgba(0, 0, 0, 0.6) inset, 0pt 11px 8px rgba(0, 0, 0, 0.3) inset, 0pt 1px 0px rgba(0, 0, 0, 0.2)",
+                                                   box-shadow: "0 0 2px rgba(255, 255, 255, 0.4) inset, 0 4px 6px rgba(255, 255, 255, 0.4) inset, 0 10px 0 -2px rgba(255, 255, 255, 0.2) inset, -" + woffset + "px 0 0 -2px rgba(255, 255, 255, 0.2) inset, -" + (woffset+1) + "px 0 0 -2px rgba(0, 0, 0, 0.6) inset, 0pt 11px 8px rgba(0, 0, 0, 0.3) inset, 0pt 1px 0px rgba(0, 0, 0, 0.2)"
+                                                });
+                                                fai_status[e]["PROGRESS"] = progress;
+
 					}
 					break;
 				}
