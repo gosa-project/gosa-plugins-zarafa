@@ -1,0 +1,120 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GOsa plugins - dak\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"PO-Revision-Date: 2010-03-11 21:10-0300\n"
+"Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
+"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+
+#: addons/dak/dak_keyring.tpl:2
+#: addons/dak/dak_queue.tpl:2
+msgid "Filter"
+msgstr "Filtro"
+
+#: addons/dak/dak_keyring.tpl:11
+msgid "Server"
+msgstr "Servidor"
+
+#: addons/dak/dak_keyring.tpl:18
+msgid "Search"
+msgstr "Procurar"
+
+#: addons/dak/dak_keyring.tpl:22
+msgid "Import"
+msgstr "Importar"
+
+#: addons/dak/class_dakkeyring.inc:114
+msgid "Key ID"
+msgstr "Chave ID"
+
+#: addons/dak/class_dakkeyring.inc:115
+msgid "Length"
+msgstr "Tamanho"
+
+#: addons/dak/class_dakkeyring.inc:116
+msgid "Status"
+msgstr "Estatus"
+
+#: addons/dak/class_dakkeyring.inc:117
+msgid "UID"
+msgstr "UID"
+
+#: addons/dak/class_dakkeyring.inc:118
+msgid "Action"
+msgstr "Ação"
+
+#: addons/dak/class_dakkeyring.inc:139
+#, php-format
+msgid "Created: %s"
+msgstr "Criado por: %s"
+
+#: addons/dak/class_dakkeyring.inc:140
+msgid "Valid"
+msgstr "Válido"
+
+#: addons/dak/class_dakkeyring.inc:141
+msgid "Expired: "
+msgstr "Expirado:"
+
+#: addons/dak/class_dakkeyring.inc:142
+msgid "Expires: "
+msgstr "Expira:"
+
+#: addons/dak/class_dakkeyring.inc:276
+msgid "DAK keyring"
+msgstr "Chaveiro DAK"
+
+#: addons/dak/class_dakkeyring.inc:276
+#: addons/dak/class_dakkeyring.inc:277
+#: addons/dak/class_dakrepository.inc:43
+#: addons/dak/class_dakrepository.inc:44
+#: addons/dak/class_dakqueue.inc:57
+#: addons/dak/class_dakqueue.inc:58
+msgid "Addon"
+msgstr "Addon"
+
+#: addons/dak/class_dakkeyring.inc:277
+msgid "DAK keyring management"
+msgstr "Gerenciamento de chaveiro DAK"
+
+#: addons/dak/dak_queue.tpl:11
+msgid "Repositories"
+msgstr "Repositórios"
+
+#: addons/dak/class_dakrepository.inc:43
+msgid "DAK repository"
+msgstr "Repositório DAK"
+
+#: addons/dak/class_dakrepository.inc:44
+msgid "DAK repository  management"
+msgstr "Gerenciamento de repositório DAK"
+
+#: addons/dak/class_DAK.inc:80
+#: addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "Erro"
+
+#: addons/dak/main.inc:46
+msgid "DAK"
+msgstr "DAK"
+
+#: addons/dak/class_dakqueue.inc:57
+msgid "DAK queue"
+msgstr "Fila DAK"
+
+#: addons/dak/class_dakqueue.inc:58
+msgid "DAK queue management"
+msgstr "Gerenciamento de fila DAK"
+

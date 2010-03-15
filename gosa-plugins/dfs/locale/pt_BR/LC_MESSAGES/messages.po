@@ -1,0 +1,152 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GOsa plugins - dfs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"PO-Revision-Date: 2010-03-11 21:06-0300\n"
+"Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
+"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+
+#: addons/godfs/class_dfsManagment.inc:8
+#, fuzzy
+msgid "DFS Management"
+msgstr "Gerenciamento Samba"
+
+#: addons/godfs/class_dfsManagment.inc:9
+#, fuzzy
+msgid "This does something"
+msgstr "Isto faz algo"
+
+#: addons/godfs/class_dfsManagment.inc:146
+#: addons/godfs/class_dfsgeneric.inc:171
+#: addons/godfs/class_dfsgeneric.inc:200
+#, fuzzy
+msgid "LDAP error"
+msgstr "Erro LDAP"
+
+#: addons/godfs/class_dfsManagment.inc:165
+#, fuzzy
+msgid "No DFS entries found"
+msgstr "Nenhum pacote encontrado casando com %s.\n"
+
+#: addons/godfs/class_dfsManagment.inc:208
+#, fuzzy
+msgid "Go up one dfsshare"
+msgstr "Subir um nível de departamento"
+
+#: addons/godfs/class_dfsManagment.inc:208
+#, fuzzy
+msgid "Up"
+msgstr "Acima"
+
+#: addons/godfs/class_dfsManagment.inc:209
+#, fuzzy
+msgid "Go to dfs root"
+msgstr "Ir para a raiz do departamento"
+
+#: addons/godfs/class_dfsManagment.inc:209
+#, fuzzy
+msgid "Root"
+msgstr "Raiz"
+
+#: addons/godfs/class_dfsManagment.inc:210
+#, fuzzy
+msgid "Create new dfsshare"
+msgstr "Criar nova lista de bloqueio"
+
+#: addons/godfs/class_dfsManagment.inc:212
+#, fuzzy
+msgid "Base"
+msgstr "Base"
+
+#: addons/godfs/class_dfsManagment.inc:213
+#, fuzzy
+msgid "Submit department"
+msgstr "Submeter departamento"
+
+#: addons/godfs/class_dfsManagment.inc:213
+#, fuzzy
+msgid "Submit"
+msgstr "Enviar"
+
+#: addons/godfs/class_dfsManagment.inc:242
+#, fuzzy
+msgid "Finish"
+msgstr "Finalizar"
+
+#: addons/godfs/generic.tpl:4
+#, fuzzy
+msgid "DFS Properties"
+msgstr "Editar propriedades"
+
+#: addons/godfs/generic.tpl:8
+#, fuzzy
+msgid "Name of dfs Share"
+msgstr "Deletar a entrada de compartilhamento"
+
+#: addons/godfs/generic.tpl:12
+#: addons/godfs/generic.tpl:38
+#, fuzzy
+msgid "Description"
+msgstr "Descrição"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr ""
+
+#: addons/godfs/generic.tpl:20
+#, fuzzy
+msgid "Share on Fileserver"
+msgstr "A senha expira em"
+
+#: addons/godfs/generic.tpl:30
+#, fuzzy
+msgid "DFS Location"
+msgstr "Nome"
+
+#: addons/godfs/generic.tpl:34
+#, fuzzy
+msgid "Location"
+msgstr "Localização"
+
+#: addons/godfs/main.inc:35
+#: addons/godfs/main.inc:41
+msgid "Distributed File System Administration"
+msgstr ""
+
+#: addons/godfs/contents.tpl:8
+msgid "DFS Shares"
+msgstr ""
+
+#: addons/godfs/contents.tpl:22
+#, fuzzy
+msgid "Information"
+msgstr "Informação"
+
+#: addons/godfs/contents.tpl:26
+msgid "This menu allows you to create, delete and edit selected dfs shares. Having a large numbers of dfs shares, you might prefer the range selectors on top of the dfs share list."
+msgstr ""
+
+#: addons/godfs/contents.tpl:31
+#, fuzzy
+msgid "Filters"
+msgstr "Filtros"
+
+#: addons/godfs/contents.tpl:40
+msgid "Display dfs shares matching"
+msgstr ""
+
+#: addons/godfs/contents.tpl:44
+msgid "Regular expression for matching dfs share names"
+msgstr ""
+

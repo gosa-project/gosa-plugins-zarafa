@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GOsa plugins - squid\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"PO-Revision-Date: 2010-03-11 20:56-0300\n"
+"Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
+"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:5
+#: personal/connectivity/squid/class_proxyAccount.inc:330
+#, fuzzy
+msgid "Proxy"
+msgstr "Proxy"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:6
+#, fuzzy
+msgid "This does something"
+msgstr "Isto faz algo"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+#, fuzzy
+msgid "KB"
+msgstr "KB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+#, fuzzy
+msgid "MB"
+msgstr "MB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+#, fuzzy
+msgid "GB"
+msgstr "GB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+#, fuzzy
+msgid "hour"
+msgstr "hora"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+#, fuzzy
+msgid "day"
+msgstr "dia"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+#, fuzzy
+msgid "week"
+msgstr "semana"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+#, fuzzy
+msgid "month"
+msgstr "mês"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:183
+#: personal/connectivity/squid/class_proxyAccount.inc:309
+#, fuzzy
+msgid "LDAP error"
+msgstr "Erro LDAP"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:204
+#: personal/connectivity/squid/class_proxyAccount.inc:206
+#, fuzzy
+msgid "Quota Setting"
+msgstr "Configurando %s (%s) ...\n"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:331
+#: personal/connectivity/squid/proxy.tpl:37
+#, fuzzy
+msgid "Proxy account"
+msgstr "Conta proxy"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:331
+msgid "Connectivity addon"
+msgstr "Addon conectividade"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:335
+#, fuzzy
+msgid "My account"
+msgstr "Minha conta"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:340
+#, fuzzy
+msgid "Filter unwanted content"
+msgstr "Opções de filtros adicional"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:341
+#, fuzzy
+msgid "Limit proxy access"
+msgstr "Lista de controle de acesso"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:342
+#: personal/connectivity/squid/proxy.tpl:100
+#, fuzzy
+msgid "Restrict proxy usage by quota"
+msgstr "Restringir uso do proxy por quota"
+
+#: personal/connectivity/squid/proxy.tpl:48
+#, fuzzy
+msgid "Filter unwanted content (i.e. pornographic or violence related)"
+msgstr "Filtrar conteúdo não desejado (ex. relacionados com pornografia ou violência)"
+
+#: personal/connectivity/squid/proxy.tpl:58
+#, fuzzy
+msgid "Limit proxy access to working time"
+msgstr "Limitar o acesso ao proxy para o horário de trabalho"
+
+#: personal/connectivity/squid/proxy.tpl:115
+#, fuzzy
+msgid "per"
+msgstr "por"
+

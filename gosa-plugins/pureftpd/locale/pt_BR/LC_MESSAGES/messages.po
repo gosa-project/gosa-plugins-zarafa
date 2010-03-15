@@ -1,0 +1,145 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GOsa plugins - pureftpd\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"PO-Revision-Date: 2010-03-12 18:02-0300\n"
+"Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
+"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:6
+msgid "FTP"
+msgstr "FTP"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:7
+msgid "This does something"
+msgstr "Isto faz algo"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
+msgid "LDAP error"
+msgstr "Erro LDAP"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Consumo banda de envio"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Consumo de banda de recebimento"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
+msgid "Quota file"
+msgstr "Cota por arquivo"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
+msgid "Quota size"
+msgstr "Cota"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+msgid "Upload ratio"
+msgstr "Taxa de Upload!"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:207
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
+msgid "Download ratio"
+msgstr "Taxa de Download"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
+msgid "Ftp"
+msgstr "Ftp"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+msgid "Pure ftp account"
+msgstr "Conta FTP"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+msgid "Connectivity addon"
+msgstr "Addon conectividade"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
+msgid "My account"
+msgstr "Minha conta"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+msgid "Quota files"
+msgstr "Cota por arquivos"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
+msgid "Quota MBytes"
+msgstr "Cota MBytes"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
+msgid "Upload bandwith"
+msgstr "Banda Upload"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
+msgid "Download bandwith"
+msgstr "Banda Download"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
+msgid "Status"
+msgstr "Estatus"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:6
+msgid "FTP account"
+msgstr "Conta FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:17
+msgid "Bandwidth"
+msgstr "Banda"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:26
+#: personal/connectivity/pureftpd/pureftpd.tpl:34
+msgid "kb/s"
+msgstr "kb/s"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:45
+msgid "Quota"
+msgstr "Cota"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:49
+msgid "Files"
+msgstr "Arquivos"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:57
+msgid "Size"
+msgstr "Tamanho"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:62
+msgid "MB"
+msgstr "MB"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:73
+msgid "Ratio"
+msgstr "Taxa"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:77
+msgid "Uploaded / downloaded files"
+msgstr "Arquivos enviados / recebidos"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:95
+msgid "Miscellaneous"
+msgstr "Diversos"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:100
+msgid "Check to disable FTP Access"
+msgstr "Desabilitar acesso FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:102
+msgid "Temporary disable FTP access"
+msgstr "Desabilitar temporariamente o acesso FTP "
+

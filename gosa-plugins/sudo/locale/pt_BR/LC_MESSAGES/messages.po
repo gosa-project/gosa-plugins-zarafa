@@ -1,0 +1,240 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GOsa plugins - sudo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"PO-Revision-Date: 2010-03-13 15:51-0300\n"
+"Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
+"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+
+#: admin/sudo/sudo-filter.tpl:3
+msgid "Filter"
+msgstr "Filtro"
+
+#: admin/sudo/sudo-filter.tpl:13
+#: admin/sudo/class_sudoGeneric.inc:580
+#: admin/sudo/class_sudoGeneric.inc:585
+#: admin/sudo/class_sudoGeneric.inc:590
+#: admin/sudo/class_sudoGeneric.inc:599
+#: admin/sudo/class_sudoGeneric.inc:638
+#: admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34
+#: admin/sudo/sudo-list.xml:32
+#: admin/sudo/paste_generic.tpl:5
+msgid "Name"
+msgstr "Nome"
+
+#: admin/sudo/sudo-filter.tpl:23
+#: admin/sudo/class_sudoGeneric.inc:421
+msgid "User"
+msgstr "Usuário"
+
+#: admin/sudo/remove.tpl:2
+msgid "Warning"
+msgstr "Aviso"
+
+#: admin/sudo/remove.tpl:6
+msgid "Please double check if you really want to do this since there is no way for GOsa to get your data back."
+msgstr "Por favor, verifique se você realmente quer fazer isso já que não há caminho para GOsa para obter seus dados de volta."
+
+#: admin/sudo/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr "Portanto - se você está certo - pressione 'Excluir' para continuar ou 'Cancelar' para abortar."
+
+#: admin/sudo/class_sudoGeneric.inc:332
+msgid "Error"
+msgstr "Erro"
+
+#: admin/sudo/class_sudoGeneric.inc:374
+msgid "disabled"
+msgstr "desabilitado"
+
+#: admin/sudo/class_sudoGeneric.inc:375
+msgid "full access"
+msgstr "acesso total"
+
+#: admin/sudo/class_sudoGeneric.inc:376
+msgid "allow access to these hosts"
+msgstr "permitir acesso a esses hosts"
+
+#: admin/sudo/class_sudoGeneric.inc:422
+msgid "Group"
+msgstr "Grupo"
+
+#: admin/sudo/class_sudoGeneric.inc:566
+msgid "LDAP error"
+msgstr "Erro LDAP"
+
+#: admin/sudo/class_sudoGeneric.inc:629
+#: admin/sudo/class_sudoManagement.inc:25
+msgid "Sudo"
+msgstr "Sudo"
+
+#: admin/sudo/class_sudoGeneric.inc:630
+#: admin/sudo/class_sudoGeneric.inc:635
+msgid "Sudo role"
+msgstr "Regra SUDO"
+
+#: admin/sudo/class_sudoGeneric.inc:639
+#: admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44
+#: admin/sudo/sudo-list.xml:40
+msgid "Description"
+msgstr "Descrição"
+
+#: admin/sudo/class_sudoGeneric.inc:640
+msgid "Users"
+msgstr "Usuários"
+
+#: admin/sudo/class_sudoGeneric.inc:641
+msgid "Host"
+msgstr "Host"
+
+#: admin/sudo/class_sudoGeneric.inc:642
+msgid "Command"
+msgstr "Comando"
+
+#: admin/sudo/class_sudoGeneric.inc:643
+msgid "Run as user"
+msgstr "Executar como o usuário"
+
+#: admin/sudo/class_sudoGeneric.inc:644
+msgid "Access control list"
+msgstr "Lista de controle de acesso"
+
+#: admin/sudo/options.tpl:5
+msgid "Option name"
+msgstr "Opção"
+
+#: admin/sudo/options.tpl:7
+msgid "Value"
+msgstr "Valor"
+
+#: admin/sudo/options.tpl:8
+#: admin/sudo/class_sudoOption.inc:536
+msgid "Options"
+msgstr "Opções"
+
+#: admin/sudo/options.tpl:86
+msgid "Available options"
+msgstr "Opções disponíveis"
+
+#: admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:30
+#: admin/sudo/paste_generic.tpl:1
+msgid "Generic"
+msgstr "Geral"
+
+#: admin/sudo/generic.tpl:3
+#: admin/sudo/paste_generic.tpl:1
+msgid "global defaults"
+msgstr "padrões globais"
+
+#: admin/sudo/generic.tpl:55
+msgid "System trust"
+msgstr "Sistema de confiança"
+
+#: admin/sudo/generic.tpl:56
+msgid "Trust mode"
+msgstr "Modo de confiança"
+
+#: admin/sudo/generic.tpl:87
+msgid "Users and groups"
+msgstr "Usuários e grupos"
+
+#: admin/sudo/generic.tpl:98
+#: admin/sudo/generic.tpl:113
+msgid "Add from list"
+msgstr "Adicionar da lista"
+
+#: admin/sudo/generic.tpl:102
+msgid "Systems"
+msgstr "Sistemas"
+
+#: admin/sudo/generic.tpl:120
+msgid "Commands"
+msgstr "Comandos"
+
+#: admin/sudo/generic.tpl:132
+msgid "Run as"
+msgstr "Executar como"
+
+#: admin/sudo/sudo-list.xml:11
+msgid "List of sudo roles"
+msgstr "Lista de papéis do sudo"
+
+#: admin/sudo/sudo-list.xml:15
+#: admin/sudo/sudo-list.xml:65
+msgid "Role"
+msgstr "Papéis"
+
+#: admin/sudo/sudo-list.xml:48
+msgid "Actions"
+msgstr "Ações"
+
+#: admin/sudo/sudo-list.xml:59
+msgid "Create"
+msgstr "Criar"
+
+#: admin/sudo/sudo-list.xml:72
+msgid "Default"
+msgstr "Padrão"
+
+#: admin/sudo/sudo-list.xml:85
+msgid "Remove"
+msgstr "Remover"
+
+#: admin/sudo/sudo-list.xml:117
+msgid "Edit sudo role"
+msgstr "Editar papel sudo"
+
+#: admin/sudo/sudo-list.xml:130
+msgid "Remove sudo role"
+msgstr "Remover papel sudo"
+
+#: admin/sudo/class_sudoOption.inc:154
+msgid "Unknown option"
+msgstr "Opção desconhecida"
+
+#: admin/sudo/class_sudoOption.inc:155
+#, php-format
+msgid "The sudo option '%s' is invalid!"
+msgstr "A opção '%s' é inválida"
+
+#: admin/sudo/class_sudoOption.inc:282
+#: admin/sudo/class_sudoOption.inc:284
+msgid "string"
+msgstr "string"
+
+#: admin/sudo/class_sudoOption.inc:282
+#: admin/sudo/class_sudoOption.inc:283
+#: admin/sudo/class_sudoOption.inc:284
+msgid "bool"
+msgstr "boleano"
+
+#: admin/sudo/class_sudoOption.inc:283
+msgid "integer"
+msgstr "inteiro"
+
+#: admin/sudo/class_sudoOption.inc:284
+msgid "list"
+msgstr "lista"
+
+#: admin/sudo/class_sudoOption.inc:537
+msgid "Sudo options"
+msgstr "Opções Sudo"
+
+#: admin/sudo/class_sudoManagement.inc:26
+msgid "Sudo management"
+msgstr "Gerenciamento Sudo"
+
