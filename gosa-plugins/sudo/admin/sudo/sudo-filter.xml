@@ -13,6 +13,8 @@
     <attribute>description</attribute>
     <attribute>sudoUser</attribute>
     <attribute>sudoHost</attribute>
+    <attribute>sudoCommand</attribute>
+    <attribute>sudoOption</attribute>
   </definition>
 
   <search>
