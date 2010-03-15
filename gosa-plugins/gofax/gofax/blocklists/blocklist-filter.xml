@@ -3,38 +3,57 @@
 <filterdef>
   <definition>
     <category>gofaxlist</category>
-    <template>blocklist-filter.tpl</template>
     <initial>true</initial>
+    <scope>auto</scope>
+    <default>default</default>
+    <attribute>dn</attribute>
+    <attribute>objectClass</attribute>
+    <attribute>cn</attribute>
+    <attribute>description</attribute>
+    <attribute>goFaxRBlocklist</attribute>
+    <attribute>goFaxSBlocklist</attribute>
   </definition>
 
   <search>
+    <tag>default</tag>
+    <label>Default filter</label>
     <query>
       <backend>LDAP</backend>
-      <filter>(&amp;(|(objectClass=goFaxSBlock)(objectClass=goFaxRBlock))$NAME)</filter>
-      <attribute>dn</attribute>
-      <attribute>objectClass</attribute>
-      <attribute>cn</attribute>
-      <attribute>description</attribute>
+      <filter>(&amp;(|(objectClass=goFaxSBlock)(objectClass=goFaxRBlock))(cn=$))</filter>
     </query>
-    <scope>auto</scope>
-  </search>
-
-  <element>
-    <type>textfield</type>
-    <tag>NAME</tag>
-    <size>20</size>
-    <maxlength>60</maxlength>
-    <default></default>
-    <unset></unset>
-    <set>(cn=*$*)</set>
-    <alphabet>false</alphabet>
     <autocomplete>
-      <backend>LDAP</backend>
-      <filter>(&amp;(|(objectClass=goFaxSBlock)(objectClass=goFaxRBlock))(cn=*$NAME*))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
-  </element>
+  </search>
+
+  <search>
+    <tag>onlyReceive</tag>
+    <label>Receive lists</label>
+    <query>
+      <backend>LDAP</backend>
+      <filter>(&amp;(objectClass=goFaxRBlock)(cn=$))</filter>
+    </query>
+    <autocomplete>
+      <attribute>cn</attribute>
+      <frequency>0.5</frequency>
+      <characters>3</characters>
+    </autocomplete>
+  </search>
+
+  <search>
+    <tag>onlySend</tag>
+    <label>Send lists</label>
+    <query>
+      <backend>LDAP</backend>
+      <filter>(&amp;(objectClass=goFaxSBlock)(cn=$))</filter>
+    </query>
+    <autocomplete>
+      <attribute>cn</attribute>
+      <frequency>0.5</frequency>
+      <characters>3</characters>
+    </autocomplete>
+  </search>
 
 </filterdef>
