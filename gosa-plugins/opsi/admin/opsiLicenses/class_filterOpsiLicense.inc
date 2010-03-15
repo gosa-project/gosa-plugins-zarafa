@@ -12,10 +12,17 @@ class filterOpsiLicense {
     $flag= ($scope == "sub")?GL_SUBSEARCH:0;
     $result= filterOpsiLicense::get_list($base, $filter, $attributes, $category, $objectStorage, $flag);
 
+    // Prepare filter and split it into attribute and value to search for
+    $filter=preg_replace("/\*/","",$filter);
+    $attr = $value = "";
+    if(!empty($filter) && preg_match("/=/", $filter)){
+      list($attr,$value) = preg_split("/=/", $filter);
+    }
+
     // Simple filtering 
-    if(!empty($filter)){
+    if(!empty($attr)){
       foreach($result as $key => $entry){
-        if(!preg_match($filter, $entry['cn'][0])){
+        if(!preg_match("/".$value."/i", $entry[$attr][0])){
           unset($result[$key]);
         }
       }
