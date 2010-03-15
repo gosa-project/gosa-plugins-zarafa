@@ -6,7 +6,7 @@
     <category>sudo</category>
     <initial>true</initial>
     <default>default</default>
-    <scope>auto</scope>
+    <scope>one</scope>
     <attribute>dn</attribute>
     <attribute>objectClass</attribute>
     <attribute>cn</attribute>
