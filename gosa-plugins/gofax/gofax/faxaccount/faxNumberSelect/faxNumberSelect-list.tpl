@@ -27,7 +27,9 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="faxNumberSelect_save" value="{msgPool type=addButton}">
-  <input type=submit name="faxNumberSelect_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='faxNumberSelect_save'>{msgPool type=addButton}</button>
+
+  <button type='submit' name='faxNumberSelect_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
 
