@@ -64,13 +64,13 @@
 
     <action>
      <type>sub</type>
-     <image>plugins/rolemanagement/images/role.png[new]</image>
+     <image>images/lists/element.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>plugins/rolemanagement/images/role.png</image>
+      <image>plugins/rolemanagement/images/role.png[new]</image>
       <label>Role</label>
      </action>
     </action>
