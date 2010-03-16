@@ -5,7 +5,8 @@
 
 {if $show_advanced}
 
-<input type='submit' name='hide_advanced' value='{t}Hide advanced settings{/t}'>
+<button type='submit' name='hide_advanced'>{t}Hide advanced settings{/t}</button>
+
 
 <table width="100%">
  <tr>
@@ -24,10 +25,12 @@
    <input type='text' name='addstatement' size='25' maxlength='250'>&nbsp;
 {/render}
 {render acl=$acl}
-   <input type='submit' name='add_statement' value='{msgPool type=addButton}'>&nbsp;
+   <button type='submit' name='add_statement'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$acl}
-   <input type='submit' name='delete_statement' value='{msgPool type=delButton}'> 
+   <button type='submit' name='delete_statement'>{msgPool type=delButton}</button> 
+
 {/render}
   </td>
 
@@ -45,10 +48,12 @@
    <input type='text' name='addoption' size='25' maxlength='250'>&nbsp;
 {/render}
 {render acl=$acl}
-   <input type='submit' name='add_option' value='{msgPool type=addButton}'>&nbsp;
+   <button type='submit' name='add_option'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$acl}
-   <input type='submit' name='delete_option' value='{msgPool type=delButton}'> 
+   <button type='submit' name='delete_option'>{msgPool type=delButton}</button> 
+
 {/render}
   </td>
  </tr>
@@ -56,7 +61,8 @@
 
 {else}
 
-<input type='submit' name='show_advanced' value='{t}Show advanced settings{/t}'>
+<button type='submit' name='show_advanced'>{t}Show advanced settings{/t}</button>
+
 
 {/if}
 <hr>

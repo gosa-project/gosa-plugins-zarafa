@@ -81,10 +81,12 @@
       <input type='text' name='addserver' size='25' maxlength='80' title='{t}DNS server do be added{/t}'>&nbsp;
 {/render}
 {render acl=$acl}
-      <input type='submit' name='add_dns' value='{msgPool type=addButton}' title='{t}Click here add the selected server to the list{/t}'>
+      <button type='submit' name='add_dns' title="{t}Click here add the selected server to the list{/t}">{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$acl}
-      <input type='submit' name='delete_dns' value='{msgPool type=delButton}' title='{t}Click here remove the selected servers from the list{/t}'>
+      <button type='submit' name='delete_dns' title="{t}Click here remove the selected servers from the list{/t}">{msgPool type=delButton}</button>
+
 {/render}
      </td>
     </tr>

@@ -15,7 +15,8 @@
         <select name='take_over_src'>
             {html_options options=$dhcp_server_list}
         </select>
-        <input type="submit" name="take_over" value="{msgPool type=applyButton}">
+        <button type='submit' name='take_over'>{msgPool type=applyButton}</button>
+
     </td>
 </tr>
 {/if}
@@ -29,7 +30,9 @@
 {/if}
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
     &nbsp;
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </div

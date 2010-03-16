@@ -12,6 +12,8 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="delete_dhcp_confirm" value="{msgPool type=delButton}">
-  <input type=submit name="cancel_section" value="{msgPool type=cancelButton}">
+  <button type='submit' name='delete_dhcp_confirm'>{msgPool type=delButton}</button>
+
+  <button type='submit' name='cancel_section'>{msgPool type=cancelButton}</button>
+
 </div>

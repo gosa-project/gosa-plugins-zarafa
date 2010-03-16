@@ -13,8 +13,10 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="create_section" value="{t}Create{/t}">
-  <input type=submit name="cancel_section" value="{msgPool type=cancelButton}">
+  <button type='submit' name='create_section'>{t}Create{/t}</button>
+
+  <button type='submit' name='cancel_section'>{msgPool type=cancelButton}</button>
+
 </div>
 	
 <!-- Place cursor -->
