@@ -16,7 +16,7 @@
       <objectClass>fake_opsiLicense</objectClass>
       <category>opsi</category>
       <class>licenseGeneric</class>
-      <image>plugins/opsi/images/license.png</image>
+      <image>plugins/opsi/images/select_license.png</image>
     </objectType>
 
   </definition>
