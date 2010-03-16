@@ -58,6 +58,8 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="add_locals_finish" value="{msgPool type=addButton}">
-  <input type=submit name="add_locals_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='add_locals_finish'>{msgPool type=addButton}</button>
+
+  <button type='submit' name='add_locals_cancel'>{msgPool type=cancelButton}</button>
+
 </div>

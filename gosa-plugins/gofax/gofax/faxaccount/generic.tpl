@@ -108,13 +108,16 @@
     <input type='text' name="forward_address" size=20 align="middle" maxlength=65 value="">
 {/render}
 {render acl=$facsimileAlternateTelephoneNumberACL}
-    <input type=submit value="{msgPool type=addButton}" name="add_alternate">&nbsp;
+    <button type='submit' name='add_alternate'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$facsimileAlternateTelephoneNumberACL}
-    <input type=submit value="{t}Add local{/t}" name="add_local_alternate" >&nbsp;
+    <button type='submit' name='add_local_alternate'>{t}Add local{/t}</button>&nbsp;
+
 {/render}
 {render acl=$facsimileAlternateTelephoneNumberACL}
-    <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
+    <button type='submit' name='delete_alternate'>{msgPool type=delButton}</button>
+
 {/render}
 	{/if}
    </td>
@@ -125,7 +128,8 @@
           <td>{t}Blocklists for incoming fax{/t}</td>
           <td>
 {render acl=$goFaxRBlocklistACL checkbox=$multiple_support checked=$use_edit_incoming}
-            <input type=submit name="edit_incoming" value="{t}Edit{/t}">
+            <button type='submit' name='edit_incoming'>{t}Edit{/t}</button>
+
 {/render}
           </td>
         </tr>
@@ -133,7 +137,8 @@
           <td>{t}Blocklists for outgoing fax{/t}</td>
           <td>
 {render acl=$goFaxSBlocklistACL checkbox=$multiple_support checked=$use_edit_outgoing}
-            <input type=submit name="edit_outgoing" value="{t}Edit{/t}">
+            <button type='submit' name='edit_outgoing'>{t}Edit{/t}</button>
+
 {/render}
           </td>
         </tr>

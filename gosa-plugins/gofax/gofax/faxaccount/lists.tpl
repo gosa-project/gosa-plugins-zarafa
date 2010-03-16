@@ -10,8 +10,10 @@
    </select>
    <br>
    <input type='text' name="block_number" size=25 align="middle" maxlength=30 value="">
-   <input type=submit value="{msgPool type=addButton}" name="add_blocklist_number" >&nbsp;
-   <input type=submit value="{msgPool type=delButton}" name="delete_blocklist_number" >
+   <button type='submit' name='add_blocklist_number'>{msgPool type=addButton}</button>&nbsp;
+
+   <button type='submit' name='delete_blocklist_number'>{msgPool type=delButton}</button>
+
   </td>
   <td>
 	<b>{t}List of predefined blocklists{/t}</b><br>
@@ -22,13 +24,16 @@
 			</td>
 		</tr>
 	</table>
-   <input type=submit value="{t}Add the list to the blocklists{/t}" name="add_blocklist"><br>
+   <button type='submit' name='add_blocklist'>{t}Add the list to the blocklists{/t}</button>
+<br>
   </td>
  </tr>
 </table>
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="edit_blocklists_finish" value="{msgPool type=applyButton}">
-  <input type=submit name="edit_blocklists_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='edit_blocklists_finish'>{msgPool type=applyButton}</button>
+
+  <button type='submit' name='edit_blocklists_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
