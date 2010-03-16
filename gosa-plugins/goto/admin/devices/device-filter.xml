@@ -3,38 +3,40 @@
 <filterdef>
   <definition>
     <category>devices</category>
-    <template>device-filter.tpl</template>
     <initial>true</initial>
+    <default>default</default>
+    <scope>auto</scope>
+    <attribute>dn</attribute>
+    <attribute>objectClass</attribute>
+    <attribute>cn</attribute>
+    <attribute>description</attribute>
   </definition>
 
   <search>
+    <tag>default</tag>
+    <label>Default filter</label>
     <query>
       <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gotoDevice)$NAME)</filter>
-      <attribute>dn</attribute>
-      <attribute>objectClass</attribute>
-      <attribute>cn</attribute>
-      <attribute>description</attribute>
+      <filter>(&amp;(objectClass=gotoDevice)(cn=$))</filter>
     </query>
-    <scope>auto</scope>
-  </search>
-
-  <element>
-    <type>textfield</type>
-    <tag>NAME</tag>
-    <size>20</size>
-    <maxlength>60</maxlength>
-    <default></default>
-    <unset></unset>
-    <set>(cn=*$*)</set>
-    <alphabet>false</alphabet>
     <autocomplete>
-      <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gotoDevice)(cn=*$NAME*))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
-  </element>
+  </search>
 
+  <search>
+    <tag>default2</tag>
+    <label>Default filter2</label>
+    <query>
+      <backend>LDAP</backend>
+      <filter>(&amp;(objectClass=gotoDevice)(cn=$))</filter>
+    </query>
+    <autocomplete>
+      <attribute>cn</attribute>
+      <frequency>0.5</frequency>
+      <characters>3</characters>
+    </autocomplete>
+  </search>
 </filterdef>
