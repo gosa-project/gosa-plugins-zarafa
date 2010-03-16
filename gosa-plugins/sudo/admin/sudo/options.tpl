@@ -95,7 +95,8 @@
 {/render}
 
 {render acl=$ACL}   
-<input type="submit" name="add_option" value="{msgPool type=addButton}">
+<button type='submit' name='add_option'>{msgPool type=addButton}</button>
+
 {/render}
 
 <script language="JavaScript" type="text/javascript">

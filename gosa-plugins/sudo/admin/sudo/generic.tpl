@@ -73,10 +73,12 @@
     {/render}
        <br>
     {render acl=$trustModelACL}
-       <input type="submit" id="add_ws" value="{msgPool type=addButton}" name="add_ws" {$trusthide}>&nbsp;
+       <button type='submit' name='add_ws' id="add_ws">{msgPool type=addButton}</button>&nbsp;
+
     {/render}
     {render acl=$trustModelACL}
-       <input type="submit" id="del_ws" value="{msgPool type=delButton}" name="delete_ws" {$trusthide}>
+       <button type='submit' name='delete_ws' id="del_ws">{msgPool type=delButton}</button>
+
     {/render}
 
   </td>
@@ -92,10 +94,12 @@
    <input type='text' value='' name='new_sudoUser'>
    {/render}
    {render acl=$sudoUserACL}
-   <input type='submit' name='add_sudoUser' value='{msgPool type=addButton}'>
+   <button type='submit' name='add_sudoUser'>{msgPool type=addButton}</button>
+
    {/render}
    {render acl=$sudoUserACL}
-   <input type='submit' name='list_sudoUser' value='{t}Add from list{/t}'>
+   <button type='submit' name='list_sudoUser'>{t}Add from list{/t}</button>
+
    {/render}
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
@@ -107,10 +111,12 @@
    <input type='text' value='' name='new_sudoHost'>
    {/render}
    {render acl=$sudoHostACL}
-   <input type='submit' name='add_sudoHost' value='{msgPool type=addButton}'>
+   <button type='submit' name='add_sudoHost'>{msgPool type=addButton}</button>
+
    {/render}
    {render acl=$sudoHostACL}
-   <input type='submit' name='list_sudoHost' value='{t}Add from list{/t}'>
+   <button type='submit' name='list_sudoHost'>{t}Add from list{/t}</button>
+
    {/render}
   </td>
  </tr> 
@@ -125,7 +131,8 @@
    <input type='text' value='' name='new_sudoCommand'>
    {/render}
    {render acl=$sudoCommandACL}
-   <input type='submit' name='add_sudoCommand' value='{msgPool type=addButton}'>
+   <button type='submit' name='add_sudoCommand'>{msgPool type=addButton}</button>
+
    {/render}
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
@@ -137,7 +144,8 @@
    <input type='text' value='' name='new_sudoRunAs'>
    {/render}
    {render acl=$sudoRunAsACL}
-   <input type='submit' name='add_sudoRunAs' value='{msgPool type=addButton}'>
+   <button type='submit' name='add_sudoRunAs'>{msgPool type=addButton}</button>
+
    {/render}
   </td>
  </tr>
