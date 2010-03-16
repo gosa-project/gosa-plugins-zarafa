@@ -24,12 +24,12 @@
 				  </select>
 {/render}
 {render acl=$gotoNtpServerACL}
-					<input type="submit" name="addNtpServer" value="{msgPool type=addButton}"     id="addNtpServer"
+					<button type='submit' name='addNtpServer' id="addNtpServer">{msgPool type=addButton}</button>
 					 {if ($inheritTimeServer) || (!$gotoNtpServers)} disabled {/if}>
 {/render}
 
 {render acl=$gotoNtpServerACL}
-					<input type="submit" name="delNtpServer" value="{msgPool type=delButton}"  id="delNtpServer"
+					<button type='submit' name='delNtpServer' id="delNtpServer">{msgPool type=delButton}</button>
 					 {if ($inheritTimeServer) || (!$gotoNtpServer_select)} disabled {/if} >
 {/render}
 				 </td>
@@ -122,7 +122,8 @@
 				  </td>
 				  <td>
 {render acl=$FAIstateACL}
-				   <input type=submit name="action" value="{t}Execute{/t}">
+				   <button type='submit' name='action'>{t}Execute{/t}</button>
+
 {/render}
 				  </td>
 				 </tr>
