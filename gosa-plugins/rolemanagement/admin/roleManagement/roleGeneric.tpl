@@ -69,10 +69,12 @@
 {/render}
       <br>
 {render acl=$roleOccupantACL}
-      <input type=submit value="{msgPool type=addButton}" name="edit_membership">&nbsp;
+      <button type='submit' name='edit_membership'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$roleOccupantACL}
-      <input type=submit value="{msgPool type=delButton}" name="delete_membership">
+      <button type='submit' name='delete_membership'>{msgPool type=delButton}</button>
+
 {/render}
     </td>
   </tr>
