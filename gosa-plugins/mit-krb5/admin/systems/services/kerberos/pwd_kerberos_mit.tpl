@@ -5,13 +5,15 @@
 	<p>
 		{msgPool type=siError p1=$si_error_msg}
 	</p>
-	<input type="submit" value="{t}Retry{/t}" name="retry_si">
+	<button type='submit' name='retry_si'>{t}Retry{/t}</button>
+
 	<br>
 	<br>
 
 <hr>
 <p style="text-align:right;">
-	<input type="submit" name="pw_abort" value="{t}Cancel{/t}">
+	<button type='submit' name='pw_abort'>{t}Cancel{/t}</button>
+
 </p>
 {else}
 
@@ -238,9 +240,11 @@
 <input type="hidden" name="pwd_heimdal_posted" value="1">
 <hr>
 <p style="text-align:right;">
-	<input type="submit" name="pw_save" value="{t}Save{/t}">
+	<button type='submit' name='pw_save'>{t}Save{/t}</button>
+
 	&nbsp;
-	<input type="submit" name="pw_abort" value="{t}Cancel{/t}">
+	<button type='submit' name='pw_abort'>{t}Cancel{/t}</button>
+
 </p>
 
 {/if}

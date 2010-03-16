@@ -43,7 +43,9 @@
 <hr>
 
 <div style="text-align:right; padding:4px;">
-	<input type='submit' name="save_policy" value="{msgPool type=okButton}">
+	<button type='submit' name='save_policy'>{msgPool type=okButton}</button>
+
 	&nbsp;
-	<input type='submit' name="cancel_policy" value="{msgPool type=cancelButton}">
+	<button type='submit' name='cancel_policy'>{msgPool type=cancelButton}</button>
+
 </div>
