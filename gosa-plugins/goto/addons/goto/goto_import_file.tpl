@@ -22,7 +22,8 @@
 		</td>
 		<td>
 			<input type='file' name='file' value="{t}Browse{/t}">
-			<input type='submit' name='import' value='{t}Upload{/t}'>
+			<button type='submit' name='import'>{t}Upload{/t}</button>
+
 		</td>
 	</tr>
 </table>
@@ -81,7 +82,9 @@
 <br>
 <hr>
 <div style='text-align:right;width:99%; padding-right:5px; padding-top:5px;'>
-	<input type='submit' name='start_import' value='{t}Import{/t}' >&nbsp;
-	<input type='submit' name='import_abort' value='{msgPool type=backButton}'>
+	<button type='submit' name='start_import'>{t}Import{/t}</button>&nbsp;
+
+	<button type='submit' name='import_abort'>{msgPool type=backButton}</button>
+
 </div>
 <br>

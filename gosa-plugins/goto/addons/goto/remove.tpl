@@ -12,10 +12,13 @@
 <hr>
 <div class="plugin-actions">
   {if $multiple}
-    <input type=submit name="delete_multiple_confirm" value="{msgPool type=delButton}">
+    <button type='submit' name='delete_multiple_confirm'>{msgPool type=delButton}</button>
+
   {else}
-    <input type=submit name="delete_confirm" value="{msgPool type=delButton}">
+    <button type='submit' name='delete_confirm'>{msgPool type=delButton}</button>
+
   {/if}
-  <input type=submit name="delete_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='delete_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
 
