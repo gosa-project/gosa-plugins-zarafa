@@ -42,7 +42,8 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type="submit" name="ClosePPDSelection" value="{t}Close{/t}">
+  <button type='submit' name='ClosePPDSelection'>{t}Close{/t}</button>
+
 </div>
 <!--
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -9,7 +9,8 @@
 			<td width="50%" style="vertical-align:top">
 				{t}Model{/t}: <i>{$ppdString}</i>&nbsp;
 				{render acl=$acl}
-				<input type="submit" name="SelectPPD" value="{t}Select{/t}">
+				<button type='submit' name='SelectPPD'>{t}Select{/t}</button>
+
 				{/render}
 			</td>
 			<td style="border-left: 1px solid rgb(160, 160, 160);padding-left:10px;">
@@ -18,7 +19,8 @@
 				<input type="file" value="" name="NewPPDFile">
 				{/render}
 				{render acl=$acl}
-				<input type="submit" name="SubmitNewPPDFile" value="{t}Upload{/t}">
+				<button type='submit' name='SubmitNewPPDFile'>{t}Upload{/t}</button>
+
 				{/render}
 			</td>
 		</tr>
@@ -34,10 +36,12 @@
 <div class="plugin-actions">
 	{if $path_valid}
 	  {render acl=$acl}
-	    <input type="submit" name="SavePPD" value="{msgPool type=applyButton}">
+	    <button type='submit' name='SavePPD'>{msgPool type=applyButton}</button>
+
 	  {/render}
 	{/if}
-	<input type="submit" name="ClosePPD" value="{msgPool type=cancelButton}">
+	<button type='submit' name='ClosePPD'>{msgPool type=cancelButton}</button>
+
 </div>
 	
 <input type="hidden" name="PPDDisSubmitted" value="1">

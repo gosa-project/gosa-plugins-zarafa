@@ -11,6 +11,8 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="delete_ppd_confirm" value="{msgPool type=delButton}">
-  <input type=submit name="delete_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='delete_ppd_confirm'>{msgPool type=delButton}</button>
+
+  <button type='submit' name='delete_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
