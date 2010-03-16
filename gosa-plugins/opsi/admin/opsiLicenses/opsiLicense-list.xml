@@ -64,13 +64,13 @@
 
     <action>
      <type>sub</type>
-     <image>plugins/opsi/images/license.png[new]</image>
+     <image>plugins/opsi/images/select_license.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>plugins/opsi/images/license.png</image>
+      <image>plugins/opsi/images/select_license.png</image>
       <label>License</label>
      </action>
     </action>
