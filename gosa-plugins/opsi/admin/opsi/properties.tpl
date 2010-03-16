@@ -33,7 +33,9 @@
 {/if}
 <hr>
 <div style='width:100%; text-align: right; padding:3px;'>
-	<input type='submit' name='save_properties' value='{msgPool type='saveButton'}'>
+	<button type='submit' name='save_properties'>{msgPool type=saveButton}</button>
+
 	&nbsp;
-	<input type='submit' name='cancel_properties' value='{msgPool type='cancelButton'}'>
+	<button type='submit' name='cancel_properties'>{msgPool type=cancelButton}</button>
+
 </div>

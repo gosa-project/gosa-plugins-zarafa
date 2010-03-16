@@ -1,7 +1,8 @@
 {if $init_failed}
 	<h3>{t}Information{/t}</h3>
 	<font style='color: #FF0000;'>{msgPool type=siError p=$message}</font>
-	<input type='submit' name='reinit' value="{t}Retry{/t}">
+	<button type='submit' name='reinit'>{t}Retry{/t}</button>
+
 {else}
 	{if $type == 0}
 		<h3>{t}Hardware information{/t}</h3>

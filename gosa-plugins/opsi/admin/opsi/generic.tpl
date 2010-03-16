@@ -5,7 +5,8 @@
 
 <font style='color: #FF0000;'>{msgPool type=siError p=$message}</font>
 
-<input type='submit' name='reinit' value="{t}Retry{/t}">
+<button type='submit' name='reinit'>{t}Retry{/t}</button>
+
 
 {else}
 
@@ -128,7 +129,8 @@
 		<option value="wake">{t}Wake{/t}</option>
 	</select>
 {render acl=$triggerActionACL}
-	<input type='submit' name='opsi_trigger_action' value="{t}Execute{/t}">
+	<button type='submit' name='opsi_trigger_action'>{t}Execute{/t}</button>
+
 {/render}
    {/if}
   </td>
