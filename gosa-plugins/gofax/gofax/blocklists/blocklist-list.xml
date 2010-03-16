@@ -72,13 +72,13 @@
 
     <action>
      <type>sub</type>
-     <image>images/lists/new.png</image>
+     <image>plugins/gofax/images/list_blocklist.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>plugins/gofax/images/list_new_blocklist.png</image>
+      <image>plugins/gofax/images/list_blocklist.png</image>
       <label>Blocklist</label>
      </action>
     </action>
