@@ -67,10 +67,12 @@
 						<input type="text" name="NewString_postfixMyNetworks" value="">
 {/render}
 {render acl=$postfixMyNetworksACL}
-						<input type="submit" name="AddpostfixMyNetworks" value="{msgPool type=addButton}">
+						<button type='submit' name='AddpostfixMyNetworks'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$postfixMyNetworksACL}
-						<input type="submit" name="DelpostfixMyNetworks" value="{t}Remove{/t}">
+						<button type='submit' name='DelpostfixMyNetworks'>{t}Remove{/t}</button>
+
 {/render}
 					</td>
 				</tr>
@@ -98,10 +100,12 @@
                         <input type="text" name="NewString_postfixMyDestinations" value="">
 {/render}
 {render acl=$postfixMyDestinationsACL}
-                        <input type="submit" name="AddpostfixMyDestinations" value="{msgPool type=addButton}">
+                        <button type='submit' name='AddpostfixMyDestinations'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$postfixMyDestinationsACL}
-                        <input type="submit" name="DelpostfixMyDestinations" value="{t}Remove{/t}">
+                        <button type='submit' name='DelpostfixMyDestinations'>{t}Remove{/t}</button>
+
 {/render}
                     </td>
                 </tr>
@@ -128,7 +132,8 @@
                         <input type="text" name="Destination_postfixTransportTable" value="">
 {/render}
 {render acl=$postfixTransportTableACL}
-                        <input type="submit" name="AddpostfixTransportTable" value="{msgPool type=addButton}">
+                        <button type='submit' name='AddpostfixTransportTable'>{msgPool type=addButton}</button>
+
 {/render}
                     </td>
                 </tr>
@@ -162,7 +167,8 @@
                         <input type="text" name="Destination_postfixSenderRestrictions" value="">
 {/render}
 {render acl=$postfixSenderRestrictionsACL}
-                        <input type="submit" name="AddpostfixSenderRestrictions" value="{msgPool type=addButton}">
+                        <button type='submit' name='AddpostfixSenderRestrictions'>{msgPool type=addButton}</button>
+
 {/render}
                     </td>
                 </tr>
@@ -188,7 +194,8 @@
                         <input type="text" name="Destination_postfixRecipientRestrictions" value="">
 {/render}
 {render acl=$postfixRecipientRestrictionsACL}
-                        <input type="submit" name="AddpostfixRecipientRestrictions" value="{msgPool type=addButton}">
+                        <button type='submit' name='AddpostfixRecipientRestrictions'>{msgPool type=addButton}</button>
+
 {/render}
                     </td>
                 </tr>
@@ -212,14 +219,16 @@
 	<option value="none">&nbsp;</option>
 	{html_options options=$Actions}	
 </select>
-<input type='submit' name='ExecAction' title='{t}Set status{/t}' value='{t}Execute{/t}' 
+<button type='submit' name='ExecAction' title="{t}Set status{/t}">{t}Execute{/t}</button>
 	{if $is_new == "new" || $is_acc == false} disabled {/if}
 >
 
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
     &nbsp;
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </p>
 
