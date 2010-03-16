@@ -51,7 +51,8 @@
 											</td>
 											<td>
 												<input type="text" 		name="StrSADir" value="">
-												<input type="submit" 	name="AddSARecord" value="{t}Add{/t}">
+												<button type='submit' name='AddSARecord'>{t}Add{/t}</button>
+
 											</td>
 										</tr>
 									</table>
@@ -95,7 +96,8 @@
 								</td>
 								<td>
 									<input type="text" 		name="StrSCDir" value="">
-									<input type="submit" 	name="AddSCRecord" value="{t}Add{/t}">
+									<button type='submit' name='AddSCRecord'>{t}Add{/t}</button>
+
 								</td>
 							</tr>
 						</table>
@@ -109,8 +111,10 @@
 </table>
 <div style="text-align:right;" align="right">
 	<p>
-		<input type="submit" name="SaveVhostChanges" value="{t}Save{/t}">
-		<input type="submit" name="CancelVhostChanges" value="{t}Cancel{/t}">
+		<button type='submit' name='SaveVhostChanges'>{t}Save{/t}</button>
+
+		<button type='submit' name='CancelVhostChanges'>{t}Cancel{/t}</button>
+
 	</p>
 </div>
 <script language="JavaScript" type="text/javascript">

@@ -5,7 +5,8 @@
 		{$VhostList}
 
 		{render acl=$VirtualHostACL}
-		<input type="submit" name="AddVhost" value="{t}Add{/t}">
+		<button type='submit' name='AddVhost'>{t}Add{/t}</button>
+
 		{/render}
 	</td>
 </tr>
@@ -20,8 +21,10 @@
 <hr>
 <br>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
     &nbsp;
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </div>
 
