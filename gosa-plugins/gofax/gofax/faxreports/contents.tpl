@@ -18,7 +18,8 @@
   {html_options values=$years output=$years selected=$year_select}
  </select>
  &nbsp;
- <input type=submit name="search" value="{t}Search{/t}">
+ <button type='submit' name='search'>{t}Search{/t}</button>
+
 </p>
 </div>
 

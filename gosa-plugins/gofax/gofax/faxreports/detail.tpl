@@ -65,5 +65,6 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="bck_to_list" value="{msgPool type=backButton}">
+  <button type='submit' name='bck_to_list'>{msgPool type=backButton}</button>
+
 </div>
