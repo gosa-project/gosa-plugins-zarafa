@@ -277,7 +277,7 @@ class sudo extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^neg_/",$name)){
         $attr = preg_replace("/^neg_([^_]*)_.*$/","\\1",$name);
-        $value= preg_replace("/^neg_[^_]*_([0-9]*)_.*$/","\\1",$name);
+        $value= preg_replace("/^neg_[^_]*_([0-9]*)$/","\\1",$name);
  
         if($this->acl_is_writeable($attr)){
           $attrs = $this->$attr;
@@ -300,8 +300,8 @@ class sudo extends plugin
      *********************/ 
     foreach($_POST as $name => $value){
       if(preg_match("/^del_/",$name)){
-        $attr = preg_replace("/^del_([^_]*)_.*$/","\\1",$name);
-        $value= preg_replace("/^del_[^_]*_([0-9]*)_.*$/","\\1",$name);
+        $attr = preg_replace("/^del_([^_]*).*$/","\\1",$name);
+        $value= preg_replace("/^del_[^_]*_([0-9]*)$/","\\1",$name);
         if($this->acl_is_writeable($attr)){
           $attrs = $this->$attr;
           if(isset( $attrs[$value])){
@@ -395,9 +395,9 @@ class sudo extends plugin
 
     /* Fill divlists
      */
-    $neg_img= "<img src='plugins/sudo/images/negate.png' alt='!' class='center'>"; 
-    $option = "<input type='image' src='plugins/sudo/images/negate.png'     name='neg_%ATTR%_%KEY%' class='center'>"; 
-    $option.= "<input type='image' src='images/lists/trash.png'  name='del_%ATTR%_%KEY%' class='center'>"; 
+    $neg_img= image('plugins/sudo/images/negate.png','','!');
+    $option = image('plugins/sudo/images/negate.png','neg_%ATTR%_%KEY%');
+    $option.= image('images/lists/trash.png', 'del_%ATTR%_%KEY%');
     foreach(array("sudoCommand","sudoHost","sudoRunAs") as $attr){
       if($this->acl_is_readable($attr)){
         foreach($this->$attr as $key => $entry){
@@ -418,8 +418,8 @@ class sudo extends plugin
     }
 
     foreach(array("sudoUser") as $attr){
-      $img1 = "<img src='plugins/users/images/select_user.png'   alt='"._("User")."' class='center'>";
-      $img2 = "<img src='plugins/groups/images/select_group.png' alt='"._("Group")."' class='center'>";
+      $img1 = image('plugins/users/images/select_user.png','',_("User"));
+      $img2 = image('plugins/groups/images/select_group.png','',_("Group"));
       if($this->acl_is_readable($attr)){
         foreach($this->$attr as $key => $entry){
           $neg = "";
