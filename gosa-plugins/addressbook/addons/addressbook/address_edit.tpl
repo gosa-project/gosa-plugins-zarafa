@@ -261,8 +261,10 @@
 			</table>
 
 			<p align=right>
-			<input type="submit" name="save" value="{msgPool type=saveButton}">
-			<input type="submit" name="cancel" value="{msgPool type=cancelButton}">
+			<button type='submit' name='save'>{msgPool type=saveButton}</button>
+
+			<button type='submit' name='cancel'>{msgPool type=cancelButton}</button>
+
 			</p>
 
 		</td>

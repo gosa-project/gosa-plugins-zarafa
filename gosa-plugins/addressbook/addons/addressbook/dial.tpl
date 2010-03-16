@@ -7,7 +7,9 @@
  <div style="height:50px;">&nbsp;</div>
  <a style="font-size:22px"><img alt="" src="{$phone_image}" align=middle>{$dial_info}</a>
  <div style="height:60px;">&nbsp;</div>
- <input type='submit' name='dial' id="dial" value='{t}Dial{/t}'>&nbsp;<input type='submit' name='cancel' value='{msgPool type=cancelButton}'>
+ <button type='submit' name='dial' id="dial">{t}Dial{/t}</button>&nbsp;
+<button type='submit' name='cancel'>{msgPool type=cancelButton}</button>
+
 
 </td>
 
