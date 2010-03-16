@@ -15,11 +15,13 @@
 					value='{$key}'>{$item.SERVER}</option>
 			{/foreach}
 			</select>
-			<input type='submit' name='search' value="{t}Search{/t}">
+			<button type='submit' name='search'>{t}Search{/t}</button>
+
    		</td>
 		<td width="50%">
 			<input type='FILE' name='import'>
-			<input type='submit' name='import_key' value='{t}Import{/t}'>
+			<button type='submit' name='import_key'>{t}Import{/t}</button>
+
    		</td> 
 	</tr>
 </table>
