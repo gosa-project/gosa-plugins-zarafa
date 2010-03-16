@@ -71,10 +71,12 @@
      <input type='text' id="number" name="number" size=25 maxlength=60 >&nbsp;
 {/render}
 {render acl=$goFaxBlocklistACL}
-     <input type=submit value="{msgPool type=addButton}" name="add_number">&nbsp;
+     <button type='submit' name='add_number'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$goFaxBlocklistACL}
-     <input type=submit value="{msgPool type=delButton}" name="delete_number">
+     <button type='submit' name='delete_number'>{msgPool type=delButton}</button>
+
 {/render}
    </td>
   <td style="border-left:1px solid #A0A0A0">
