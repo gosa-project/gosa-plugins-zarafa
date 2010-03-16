@@ -10,7 +10,8 @@
 	<br>
 
 	{render acl=$acl}
-	<input type='submit' name='UserRecord' value='{t}New entry{/t}' title='{t}Create a new DNS zone entry{/t}'>
+	<button type='submit' name='UserRecord' title="{t}Create a new DNS zone entry{/t}">{t}New entry{/t}</button>
+
 	{/render}
 {/if}
 
@@ -18,9 +19,11 @@
 <div style="text-algin:right;" align="right">
     <p>
 	{render acl=$acl}
-        <input type="submit" name="SaveZoneEntryChanges" value="{msgPool type=saveButton}">
+        <button type='submit' name='SaveZoneEntryChanges'>{msgPool type=saveButton}</button>
+
 	{/render}
-        <input type="submit" name="CancelZoneEntryChanges" value="{msgPool type=cancelButton}">
+        <button type='submit' name='CancelZoneEntryChanges'>{msgPool type=cancelButton}</button>
+
     </p>
 </div>
 

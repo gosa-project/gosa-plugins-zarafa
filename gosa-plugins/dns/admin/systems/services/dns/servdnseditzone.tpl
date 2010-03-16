@@ -53,7 +53,9 @@
 					</td>
 					<td>
 {render acl=$zoneEditorACL mode=read_active}
-						<input type="submit" name="EditZoneEntries" value="{t}Edit{/t}" {if $AllowZoneEdit == false} disabled {/if}> 
+						<button type='submit' name='EditZoneEntries' {if $AllowZoneEdit == false} disabled {/if}
+>{t}Edit{/t}</button> 
+
 {/render}
 					</td>
 				</tr>
@@ -155,7 +157,8 @@
 						<input type="text" 		name="StrMXRecord" value="">
 {/render}
 {render acl=$mXRecordACL}					
-						<input type="submit" 	name="AddMXRecord" value="{msgPool type=addButton}">
+						<button type='submit' name='AddMXRecord'>{msgPool type=addButton}</button>
+
 {/render}
 					</td>
 				</tr>
@@ -171,8 +174,10 @@
 </table>
 <div style="text-algin:right;" align="right">
 	<p>
-		<input type="submit" name="SaveZoneChanges" value="{msgPool type=saveButton}">
-		<input type="submit" name="CancelZoneChanges" value="{msgPool type=cancelButton}">
+		<button type='submit' name='SaveZoneChanges'>{msgPool type=saveButton}</button>
+
+		<button type='submit' name='CancelZoneChanges'>{msgPool type=cancelButton}</button>
+
 	</p>
 </div>
 <script language="JavaScript" type="text/javascript">

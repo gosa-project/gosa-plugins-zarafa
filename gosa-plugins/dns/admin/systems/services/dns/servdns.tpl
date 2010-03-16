@@ -8,7 +8,8 @@
             <p>
             {$warning2}
             <br>
-            <input type='submit' name='cancel_take_over' value='{msgPool type=cancelButton}'>
+            <button type='submit' name='cancel_take_over'>{msgPool type=cancelButton}</button>
+
             </p>
             <p>
             {t}Following objects will be taken over{/t}&nbsp;:
@@ -28,7 +29,8 @@
         <select name='take_over_src'>
             {html_options options=$dns_server_list}
         </select>
-        <input type="submit" name="take_over" value="{t}Take over{/t}">
+        <button type='submit' name='take_over'>{t}Take over{/t}</button>
+
     </td>
 </tr>
 {/if}
@@ -37,7 +39,8 @@
 <h3>{t}Zones{/t}</h3>
 		  {$ZoneList}
 		  {if $is_createable}
-		  <input type="submit" name="AddZone" value="{msgPool type=addButton}">
+		  <button type='submit' name='AddZone'>{msgPool type=addButton}</button>
+
 		  {else}
 		  <input type="button" value="{msgPool type=addButton}" disabled>
 		  {/if}
@@ -56,8 +59,10 @@
 <hr>
 <p>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
     &nbsp;
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </div>
 </p>
