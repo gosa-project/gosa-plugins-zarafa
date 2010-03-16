@@ -33,19 +33,19 @@ class mailAddressSelect extends management
 
     $this->storagePoints = array(get_ou("userRDN"), get_ou('groupRDN'));
 
-#   // Build filter
-#   if (session::global_is_set(get_class($this)."_filter")){
-#     $filter= session::global_get(get_class($this)."_filter");
-#   } else {
-  $filter = new filter(get_template_path("selectMailAddress-filter.xml", true, dirname(__FILE__)));
-  $filter->setObjectStorage($this->storagePoints);
-#   }
-  $this->setFilter($filter);
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
+      $filter = new filter(get_template_path("selectMailAddress-filter.xml", true, dirname(__FILE__)));
+      $filter->setObjectStorage($this->storagePoints);
+    }
+    $this->setFilter($filter);
 
-  // Build headpage
-  $headpage = new listing(get_template_path("selectMailAddress-list.xml", true, dirname(__FILE__)));
-  $headpage->setFilter($filter);
-  parent::__construct($config, $ui, "mail", $headpage);
+    // Build headpage
+    $headpage = new listing(get_template_path("selectMailAddress-list.xml", true, dirname(__FILE__)));
+    $headpage->setFilter($filter);
+    parent::__construct($config, $ui, "mail", $headpage);
   }
 
   function save()
