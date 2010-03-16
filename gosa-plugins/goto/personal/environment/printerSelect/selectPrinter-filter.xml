@@ -3,38 +3,28 @@
 <filterdef>
   <definition>
     <category>printer</category>
-    <template>../plugins/personal/environment/printerSelect/selectPrinter-filter.tpl</template>
     <initial>true</initial>
+    <default>default</default>
+    <scope>auto</scope>
+    <attribute>dn</attribute>
+    <attribute>objectClass</attribute>
+    <attribute>cn</attribute>
+    <attribute>description</attribute>
   </definition>
 
   <search>
+    <tag>default</tag>
+    <label>Default filter</label>
     <query>
       <backend>LDAPBlacklist</backend>
-      <filter>(&amp;(objectClass=gotoPrinter)$NAME)</filter>
-      <attribute>dn</attribute>
-      <attribute>objectClass</attribute>
-      <attribute>cn</attribute>
-      <attribute>description</attribute>
+      <filter>(&amp;(objectClass=gotoPrinter)(cn=$))</filter>
     </query>
-    <scope>auto</scope>
-  </search>
-
-  <element>
-    <type>textfield</type>
-    <tag>NAME</tag>
-    <size>20</size>
-    <maxlength>60</maxlength>
-    <default></default>
-    <unset></unset>
-    <set>(|(cn=*$*)(description=*$*))</set>
-    <alphabet>true</alphabet>
     <autocomplete>
-      <backend>LDAPBlacklist</backend>
-      <filter>(&amp;(objectClass=gotoPrinter)(|(cn=*$NAME*)(description=*$NAME*)))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
-  </element>
+  </search>
+
 
 </filterdef>
