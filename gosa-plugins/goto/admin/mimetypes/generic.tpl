@@ -81,7 +81,7 @@
 							accept="image/*.png" id="picture_file">
 {/render}
 {render acl=$gotoMimeIconACL}
-						<input type="submit" name="update_icon" value="{t}Update{/t}" 
+						<button type='submit' name='update_icon'>{t}Update{/t}</button>
 							title="{t}Update mime type icon{/t}">
 {/render}
 					</td>
@@ -110,7 +110,8 @@
 			<input type='text'	 name='NewFilePattern'	  value='' title='{t}Please specify a new file pattern{/t}'>
 {/render}
 {render acl=$gotoMimeFilePatternACL}	
-			<input type='submit' name='AddNewFilePattern' value='{msgPool type=addButton}' title='{t}Add a new file pattern{/t}'>
+			<button type='submit' name='AddNewFilePattern' title="{t}Add a new file pattern{/t}">{msgPool type=addButton}</button>
+
 {/render}
 		</td>
 		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
@@ -129,7 +130,8 @@
 			<input type='text'	 name='NewApplication'	  value='' title='{t}Enter an application name here{/t}'>
 {/render}
 {render acl=$gotoMimeApplicationACL}	
-			<input type='submit' name='AddNewApplication' value='{msgPool type=addButton}' title='{t}Add application{/t}'>
+			<button type='submit' name='AddNewApplication' title="{t}Add application{/t}">{msgPool type=addButton}</button>
+
 {/render}
 		</td>
 	</tr>
@@ -189,7 +191,7 @@
 				title='{t}Enter an application name here{/t}'>
 {/render}
 {render acl=$gotoMimeEmbeddedApplicationACL}
-			<input type='submit' name='AddNewEmbeddedApplication' value='{msgPool type=addButton}' 
+			<button type='submit' name='AddNewEmbeddedApplication'>{msgPool type=addButton}</button>
 				title='{t}Add application{/t}'>
 {/render}
 		</td>
