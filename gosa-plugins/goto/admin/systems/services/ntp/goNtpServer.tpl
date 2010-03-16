@@ -15,10 +15,12 @@
 	<input type="text" name="NewNTPExport"  id="NewNTPExportId">
 {/render}
 {render acl=$goTimeSourceACL}
-	<input type="submit"    value="{msgPool type=addButton}"      name="NewNTPAdd"  id="NewNTPAddId">
+	<button type='submit' name='NewNTPAdd' id="NewNTPAddId">{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$goTimeSourceACL}
-	<input type="submit"    value="{msgPool type=delButton}"   name="DelNTPEnt"  id="DelNTPEntId">
+	<button type='submit' name='DelNTPEnt' id="DelNTPEntId">{msgPool type=delButton}</button>
+
 {/render}
 </td>
 </tr>
@@ -26,7 +28,9 @@
 
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-	<input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+	<button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
 	&nbsp; 
-	<input type='submit' name='CancelService' value='{msgPool type=cancelButton}'> 
+	<button type='submit' name='CancelService'>{msgPool type=cancelButton}</button> 
+
 </div>
