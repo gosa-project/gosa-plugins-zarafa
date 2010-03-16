@@ -25,7 +25,8 @@
 	 {html_options values=$p_timeKeys output=$p_times selected=$p_time}
 	</select>
 	 &nbsp;
-	<input name="search" value="{t}Search{/t}" type="submit">
+	<button type='submit' name='search'>{t}Search{/t}</button>
+
 			</td>
 			<td style="border-left:1px solid #A0A0A0; text-align:right;">&nbsp;
 				{if $delAll_W}

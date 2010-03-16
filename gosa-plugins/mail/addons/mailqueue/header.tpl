@@ -3,5 +3,6 @@
 
 <hr>
 <div style='text-align:right; padding:5px;'>
-	<input type="submit" name="back" value="{msgPool type=backButton}"> 
+	<button type='submit' name='back'>{msgPool type=backButton}</button> 
+
 </div>
