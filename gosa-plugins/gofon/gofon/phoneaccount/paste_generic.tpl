@@ -15,8 +15,10 @@
    </select>
    <br>
    <input type='text' name="phonenumber" size=20 align=middle maxlength=60 value="">
-   <input type="submit" value="{msgPool type=addButton}" name="add_phonenumber"> 
-   <input type="submit" value="{msgPool type=delButton}" name="delete_phonenumber">
+   <button type='submit' name='add_phonenumber'>{msgPool type=addButton}</button> 
+
+   <button type='submit' name='delete_phonenumber'>{msgPool type=delButton}</button>
+
   </td>
   <td style="vertical-align:top; width:50%;">
    <table summary="" style="width:100%" border=0>

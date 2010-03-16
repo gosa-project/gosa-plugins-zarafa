@@ -26,10 +26,12 @@
    <input type='text' name="phonenumber" size=20 align=middle maxlength=60 value="">
 {/render}
 {render acl=$telephoneNumberACL}
-   <input type="submit" value="{msgPool type=addButton}" name="add_phonenumber">&nbsp;
+   <button type='submit' name='add_phonenumber'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$telephoneNumberACL}
-      <input type="submit" value="{msgPool type=delButton}" name="delete_phonenumber">
+      <button type='submit' name='delete_phonenumber'>{msgPool type=delButton}</button>
+
 {/render}
 
 {/if}
@@ -135,7 +137,8 @@
 {/render}
      {if $javascript eq 'false'}
 {render acl=$goFonMacroACL}
-      <input type="submit" name="refresh" value="{t}Refresh{/t}">
+      <button type='submit' name='refresh'>{t}Refresh{/t}</button>
+
 {/render}
      {/if}
     </td>
