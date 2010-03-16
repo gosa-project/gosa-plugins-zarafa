@@ -64,13 +64,13 @@
 
     <action>
      <type>sub</type>
-     <image>images/lists/new.png</image>
+     <image>images/lists/element.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>images/lists/new.png</image>
+      <image>plugins/goto/images/select_mimetype.png[new]</image>
       <label>Mime type</label>
      </action>
     </action>
