@@ -146,8 +146,10 @@
 				<option value="{$key}">{$item}</option>
 			{/foreach}
 			</select>
-			<input type="submit" name="add_menu_to_folder" value="{msgPool type=addButton}" title="{t}Add selected applications to this folder.{/t}">
-			<input type="submit" name="add_seperator" 	   value="{t}Separator{/t}" title="{t}Add a separator to this folder.{/t}">
+			<button type='submit' name='add_menu_to_folder' title="{t}Add selected applications to this folder.{/t}">{msgPool type=addButton}</button>
+
+			<button type='submit' name='add_seperator' title="{t}Add a separator to this folder.{/t}">{t}Separator{/t}</button>
+
 		</td>
 		<td style="vertical-align:top">
 			{$app_list}	
@@ -156,7 +158,8 @@
 				<option value="{$key}">{$item}</option>
 			{/foreach}
 			</select>
-			<input type="submit" name="add_to_folder" value="{msgPool type=addButton}" title="{t}Add selected applications to this folder.{/t}">
+			<button type='submit' name='add_to_folder' title="{t}Add selected applications to this folder.{/t}">{msgPool type=addButton}</button>
+
 		</td>
 	</tr>
 </table>

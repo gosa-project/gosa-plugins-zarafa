@@ -25,12 +25,14 @@
 		</td>
 		<td>
 			<input type="FILE" name="folder_image">
-			<input type='submit' name='folder_image_upload' value="{t}Upload{/t}">
+			<button type='submit' name='folder_image_upload'>{t}Upload{/t}</button>
+
 		</td>
 	</tr>
 	<tr>
 		<td>{t}Reset image{/t}</td>
-		<td><input type='submit' name='edit_reset_image' value='{t}Reset{/t}'></td>
+		<td><button type='submit' name='edit_reset_image'>{t}Reset{/t}</button>
+</td>
 	</tr>
 </table>
 <br>
@@ -64,7 +66,9 @@
 <p class="seperator">
 </p>
 <div style="width:100%; text-align:right; padding:3px;">
-	<input type="submit" name="app_entry_save" value="{msgPool type=saveButton}">
+	<button type='submit' name='app_entry_save'>{msgPool type=saveButton}</button>
+
 	&nbsp;
-	<input type="submit" name="app_entry_cancel" value="{msgPool type=cancelButton}">
+	<button type='submit' name='app_entry_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
