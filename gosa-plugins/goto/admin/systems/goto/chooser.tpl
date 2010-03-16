@@ -14,8 +14,10 @@
 
 <hr>
 <div class="plugin-actions">
- <input type=submit name="create_system" value="{t}Create{/t}">
- <input type=submit name="cancel" value="{msgPool type=cancelButton}">
+ <button type='submit' name='create_system'>{t}Create{/t}</button>
+
+ <button type='submit' name='cancel'>{msgPool type=cancelButton}</button>
+
 </div>
 
 <input type="hidden" name="ignore">

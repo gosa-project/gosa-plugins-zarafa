@@ -46,7 +46,8 @@
     </select>
 {/render}
 {render acl=$gotoLdapServerACL_inherit}
-	<input type='submit' name='add_ldap_server' value="{msgPool type=addButton}" id='add_ldap_server'>
+	<button type='submit' name='add_ldap_server' id="add_ldap_server">{msgPool type=addButton}</button>
+
 {/render}
      </td>
     </tr>
@@ -68,7 +69,8 @@
 	{elseif $si_fai_action_failed}
 		<b>{msgPool type=siError}</b><br>
 		{t}Check if the GOsa support daemon (gosa-si) is running.{/t}
-		<input type='submit' name='fai_si_retry' value="{t}retry{/t}">
+		<button type='submit' name='fai_si_retry'>{t}retry{/t}</button>
+
 	{elseif $fai_activated}
 
 		{if $FAIdebianMirror == "inherited"}
@@ -139,7 +141,8 @@
 	{/render}
 	{if $javascript eq 'false'}
 	{render acl=$FAIdebianMirrorACL}
-		<input type="submit" value="{t}set{/t}" name="refresh">
+		<button type='submit' name='refresh'>{t}set{/t}</button>
+
 	{/render}
 	{/if}
 					</td>
@@ -169,7 +172,8 @@
 			</select>	
 	{/render}
 	{render acl=$FAIclassACL}
-			<input name="AddClass" value="{msgPool type=addButton}" type="submit"> 
+			<button type='submit' name='AddClass'>{msgPool type=addButton}</button> 
+
 	{/render}
 	<!--		<input name="DelClass" value="{msgPool type=delButton}" type="submit"> -->
 			{/if}
@@ -196,10 +200,12 @@
     <input type='text' name="module" size=30 align=middle maxlength=30>
 {/render}
 {render acl=$gotoModulesACL}
-    <input type=submit value="{msgPool type=addButton}" name="add_module">&nbsp;
+    <button type='submit' name='add_module'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$gotoModulesACL}
-    <input type=submit value="{msgPool type=delButton}" name="delete_module">
+    <button type='submit' name='delete_module'>{msgPool type=delButton}</button>
+
 {/render}
   </td>
 
@@ -225,10 +231,13 @@
                                 <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
 {/render}
 {render acl=$gotoShareACL}
-                                <input type="submit" name="gotoShareAdd" value="{msgPool type=addButton}">
+                                <button type='submit' name='gotoShareAdd'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gotoShareACL}
-                                <input type="submit" name="gotoShareDel" value="{t}Remove{/t}" {if $gotoSharesCount == 0} disabled {/if}>
+                                <button type='submit' name='gotoShareDel' {if $gotoSharesCount == 0} disabled {/if}
+>{t}Remove{/t}</button>
+
 {/render}
                         </td>
                 </tr>

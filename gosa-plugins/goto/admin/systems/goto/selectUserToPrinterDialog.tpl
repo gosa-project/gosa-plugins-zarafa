@@ -64,7 +64,9 @@
 
 	<hr>
     <p align="right">
-    <input type="submit" name="PrinterSave"     value="{msgPool type=addButton}">
-    <input type="submit" name="PrinterCancel"   value="{msgPool type=cancelButton}">
+    <button type='submit' name='PrinterSave'>{msgPool type=addButton}</button>
+
+    <button type='submit' name='PrinterCancel'>{msgPool type=cancelButton}</button>
+
     </p>
 

@@ -48,6 +48,8 @@
 </table>
 <hr>
 <div style="align: right;" align="right"><p>
-	<input type="submit" name="systemTypeChosen" value="{t}Continue{/t}">
-	<input type="submit" name="SystemTypeAborted" value="{msgPool type=cancelButton}">
+	<button type='submit' name='systemTypeChosen'>{t}Continue{/t}</button>
+
+	<button type='submit' name='SystemTypeAborted'>{msgPool type=cancelButton}</button>
+
 </p></div>

@@ -7,8 +7,10 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="cd_create" value="{t}Create ISO-Image{/t}">
-  <input type=submit name="cd_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='cd_create'>{t}Create ISO-Image{/t}</button>
+
+  <button type='submit' name='cd_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
 
 <!-- Place cursor -->

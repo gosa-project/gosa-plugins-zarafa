@@ -79,10 +79,12 @@
       <br>
       {t}Driver{/t}: <i>{$driverInfo}</i>&nbsp;
 {render acl=$gotoPrinterPPDACL mode=read_active}
-       <input type="submit" name="EditDriver" value="{t}Edit{/t}">
+       <button type='submit' name='EditDriver'>{t}Edit{/t}</button>
+
 {/render}
 {render acl=$gotoPrinterPPDACL}
-       <input type="submit" name="RemoveDriver" value="{t}Remove{/t}">
+       <button type='submit' name='RemoveDriver'>{t}Remove{/t}</button>
+
 {/render}
      </td>
     </tr>
@@ -107,10 +109,12 @@
       </select><br>
 {/render}
 {render acl=$gotoUserPrinterACL}
-      <input type="submit" value="{msgPool type=addButton}"  name="AddUser">
+      <button type='submit' name='AddUser'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gotoUserPrinterACL}
-      <input type="submit" value="{msgPool type=delButton}" name="DelUser">
+      <button type='submit' name='DelUser'>{msgPool type=delButton}</button>
+
 {/render}
      </td>
     </tr>
@@ -128,10 +132,12 @@
                    </select><br>
 {/render}
 {render acl=$gotoUserPrinterACL}
-       <input type="submit" value="{msgPool type=addButton}"  name="AddAdminUser">
+       <button type='submit' name='AddAdminUser'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$gotoUserPrinterACL}
-       <input type="submit" value="{msgPool type=delButton}" name="DelAdmin">
+       <button type='submit' name='DelAdmin'>{msgPool type=delButton}</button>
+
 {/render}
   
      </td>
