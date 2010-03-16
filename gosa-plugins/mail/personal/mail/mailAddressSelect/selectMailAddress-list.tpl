@@ -26,11 +26,9 @@
 
 <input type="hidden" value="1" name="PosixGroupDialogPosted">
 
-<hr>
 <div class="plugin-actions">
   <button type='submit' name='mailAddressSelect_save'>{msgPool type=addButton}</button>
   <button type='submit' name='mailAddressSelect_cancel'>{msgPool type=cancelButton}</button>
 </div>
-
 
 <input type="hidden" name="ignore">
