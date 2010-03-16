@@ -13,7 +13,8 @@
     <td>{$key}</td>
     <td style="width:20px;">
      {if $entry.NEGATE}
-      <img src='plugins/sudo/images/negate.png' alt="!">
+      {image path="plugins/sudo/images/negate.png"}
+
      {/if}
     </td>
     <td>
@@ -70,10 +71,12 @@
     </td>
     <td style='width: 40px; text-align:right;'>
 {render acl=$ACL}   
-     <input type='image' src='plugins/sudo/images/negate.png'     name='negOption_{$key}_{$entry_key}' class='center'>
+     {image path="plugins/sudo/images/negate.png" action="negOption_{$key}_{$entry_key}"}
+
 {/render}
 {render acl=$ACL}   
-     <input type='image' src='images/lists/trash.png'  name='delOption_{$key}_{$entry_key}' class='center'>
+     {image path="images/lists/trash.png" action="delOption_{$key}_{$entry_key}"}
+
 {/render}
     </td>
    </tr>
