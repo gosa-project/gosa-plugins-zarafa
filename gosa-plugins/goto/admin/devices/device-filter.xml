@@ -26,17 +26,4 @@
     </autocomplete>
   </search>
 
-  <search>
-    <tag>default2</tag>
-    <label>Default filter2</label>
-    <query>
-      <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gotoDevice)(cn=$))</filter>
-    </query>
-    <autocomplete>
-      <attribute>cn</attribute>
-      <frequency>0.5</frequency>
-      <characters>3</characters>
-    </autocomplete>
-  </search>
 </filterdef>
