@@ -79,10 +79,12 @@
     <input name="picture_file" type="file" size="20" maxlength="255" accept="image/*.png" id="picture_file">
 {/render}
 {render acl=$gosaApplicationIconACL}
-<input type="submit" name="update" value="{t}Update{/t}" title="{t}Reload picture from LDAP{/t}">
+<button type='submit' name='update' title="{t}Reload picture from LDAP{/t}">{t}Update{/t}</button>
+
 {/render}
 {render acl=$gosaApplicationIconACL}
-<input type="submit" name="remove_picture" value="{t}Remove picture{/t}" title="{t}Remove picture from LDAP{/t}">
+<button type='submit' name='remove_picture' title="{t}Remove picture from LDAP{/t}">{t}Remove picture{/t}</button>
+
 {/render}
     </td>
     </tr>
@@ -139,7 +141,8 @@
 			<input type="file" name="ScriptFile" value="{t}Import{/t}">
 {/render}
 {render acl=$gotoLogonScriptACL}
-			<input type="submit" name="upLoad" value="{t}Upload{/t}">
+			<button type='submit' name='upLoad'>{t}Upload{/t}</button>
+
 {/render}
 			<input type='image' name='downloadScript'  src='images/save.png' title='{t}Download{/t}' class='center'>
 		</td>
