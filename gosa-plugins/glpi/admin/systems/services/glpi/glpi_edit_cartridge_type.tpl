@@ -3,14 +3,18 @@
                             {html_options values=$PrinterTypeKeys output=$PrinterTypes}
      </select><br>
 	 <input type='text' name="cartridge_type_string">
-	 <input type="submit" name="add_cartridge_type" 		value="{msgPool type=addButton}" >
-	 <input type="submit" name="rename_cartridge_type" 	value="{t}Rename{/t}" >
-	 <input type="submit" name="del_cartridge_type" 		value="{msgPool type=delButton}" >
+	 <button type='submit' name='add_cartridge_type'>{msgPool type=addButton}</button>
+
+	 <button type='submit' name='rename_cartridge_type'>{t}Rename{/t}</button>
+
+	 <button type='submit' name='del_cartridge_type'>{msgPool type=delButton}</button>
+
 
 <hr>
 <div align="right">
 <p>
-<input name="close_edit_type_cartridge" value="{t}Close{/t}" type="submit">
+<button type='submit' name='close_edit_type_cartridge'>{t}Close{/t}</button>
+
 </p>
 </div>
 <script language="JavaScript" type="text/javascript">

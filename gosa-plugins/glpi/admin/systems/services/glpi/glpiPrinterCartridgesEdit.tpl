@@ -40,7 +40,8 @@
 						<select name="type" >
                             {html_options values=$typeKeys output=$types selected=$type}
                         </select>
-                        <input type="submit" value="{t}edit{/t}" name="edit_type_cartridge">
+                        <button type='submit' name='edit_type_cartridge'>{t}edit{/t}</button>
+
                     </td>
 	    		</tr>
                 <tr>
@@ -50,7 +51,8 @@
 						<select name="FK_glpi_enterprise">
                             {html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
                         </select>
-                        <input type="submit" value="{t}edit{/t}" name="edit_manufacturer_cartridges">
+                        <button type='submit' name='edit_manufacturer_cartridges'>{t}edit{/t}</button>
+
                     </td>
 	    		</tr>
 				<tr>
@@ -58,7 +60,8 @@
                     </td>
                     <td>
                         <i>{$tech_num}&nbsp; </i>&nbsp;
-                        <input type="submit" value="{t}Choose{/t}" name="SelectCartridgeTechPerson">
+                        <button type='submit' name='SelectCartridgeTechPerson'>{t}Choose{/t}</button>
+
                     </td>
                 </tr>
 			</table>
@@ -71,8 +74,10 @@
 <hr>
 <div style="text-align:right;">
 	<p>
-		<input type="submit" name="SaveCartridge" 	value="{msgPool type=saveButton}">&nbsp;
-		<input type="submit" name="CancelCartridge" value="{msgPool type=cancelButton}"><br>
+		<button type='submit' name='SaveCartridge'>{msgPool type=saveButton}</button>&nbsp;
+
+		<button type='submit' name='CancelCartridge'>{msgPool type=cancelButton}</button>
+<br>
 	</p>
 </div>
 <script language="JavaScript" type="text/javascript">

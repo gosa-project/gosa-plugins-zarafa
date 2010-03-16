@@ -77,8 +77,10 @@
 <hr>
 <div align="right">
 <p>
-	<input name="save_manufacturer" value="{msgPool type=saveButton}" type="submit">
-	<input name="close_manufacturer" value="{t}Close{/t}" type="submit">
+	<button type='submit' name='save_manufacturer'>{msgPool type=saveButton}</button>
+
+	<button type='submit' name='close_manufacturer'>{t}Close{/t}</button>
+
 </p>
 </div>
 <script language="JavaScript" type="text/javascript">

@@ -757,7 +757,9 @@
 <hr>
 <div align="right">
 	<p>
-		<input type="submit" value="{msgPool type=saveButton}" name="SaveDeviceChanges">
-		<input type="submit" value="{msgPool type=cancelButton}" name="AbortDeviceChanges">
+		<button type='submit' name='SaveDeviceChanges'>{msgPool type=saveButton}</button>
+
+		<button type='submit' name='AbortDeviceChanges'>{msgPool type=cancelButton}</button>
+
 	</p> 
 </div>

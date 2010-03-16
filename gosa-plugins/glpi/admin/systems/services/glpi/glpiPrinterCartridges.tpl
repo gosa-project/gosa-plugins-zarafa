@@ -48,7 +48,9 @@
 <hr>
 <div align="right">
 	<p>
-	<input type="submit" name="SelectCartridgeSave" value="{t}Use{/t}">
-	<input type="submit" name="SelectCartridgeCancel" value="{msgPool type=cancelButton}">
+	<button type='submit' name='SelectCartridgeSave'>{t}Use{/t}</button>
+
+	<button type='submit' name='SelectCartridgeCancel'>{msgPool type=cancelButton}</button>
+
 	</p>
 </div>

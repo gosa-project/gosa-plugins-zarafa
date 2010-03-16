@@ -5,14 +5,18 @@
                             {html_options values=$SystemTypeKeys output=$SystemTypes}
      </select><br>
 	 <input type='text' name="type_string">
-	 <input type="submit" name="add_type" 		value="{msgPool type=addButton}" >
-	 <input type="submit" name="rename_type" 	value="{t}Rename{/t}" >
-	 <input type="submit" name="del_type" 		value="{msgPool type=delButton}" >
+	 <button type='submit' name='add_type'>{msgPool type=addButton}</button>
+
+	 <button type='submit' name='rename_type'>{t}Rename{/t}</button>
+
+	 <button type='submit' name='del_type'>{msgPool type=delButton}</button>
+
 
 	<hr>
 	<div align="right">
 	<p>
-	<input name="close_edit_type" value="{t}Close{/t}" type="submit">
+	<button type='submit' name='close_edit_type'>{t}Close{/t}</button>
+
 	</p>
 	</div>
 	<script language="JavaScript" type="text/javascript">
@@ -25,8 +29,10 @@
 <hr>
 	<p>
 		<div align="right" style="text-align: right;">
-			<input type="submit" name="Rename_type_OK" 		value="{t}Rename{/t}" >
-			<input type="submit" name="Rename_Cancel" 	value="{msgPool type=cancelButton}" >
+			<button type='submit' name='Rename_type_OK'>{t}Rename{/t}</button>
+
+			<button type='submit' name='Rename_Cancel'>{msgPool type=cancelButton}</button>
+
 		</div>
 	</p>
 	<script language="JavaScript" type="text/javascript">

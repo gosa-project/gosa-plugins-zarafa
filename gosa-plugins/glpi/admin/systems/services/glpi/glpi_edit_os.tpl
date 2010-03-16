@@ -5,14 +5,18 @@
 				{html_options values=$OSKeys output=$OSs}
 	</select><br>
 	<input type='text' name="is_string">
-	<input type="submit" name="add_os" 		value="{msgPool type=addButton}" >
-	<input type="submit" name="rename_os" 	value="{t}Rename{/t}" >
-	<input type="submit" name="del_os" 		value="{msgPool type=delButton}" >
+	<button type='submit' name='add_os'>{msgPool type=addButton}</button>
+
+	<button type='submit' name='rename_os'>{t}Rename{/t}</button>
+
+	<button type='submit' name='del_os'>{msgPool type=delButton}</button>
+
 
 <hr>
 <div align="right">
 <p>
-<input name="close_edit_os" value="{t}Close{/t}" type="submit">
+<button type='submit' name='close_edit_os'>{t}Close{/t}</button>
+
 </p>
 </div>
 <script language="JavaScript" type="text/javascript">
@@ -25,8 +29,10 @@
 <hr>
     <p>
         <div align="right" style="text-align: right;">
-            <input type="submit" name="Rename_os_OK"       value="{t}Rename{/t}" >
-            <input type="submit" name="Rename_Cancel"   value="{msgPool type=cancelButton}" >
+            <button type='submit' name='Rename_os_OK'>{t}Rename{/t}</button>
+
+            <button type='submit' name='Rename_Cancel'>{msgPool type=cancelButton}</button>
+
         </div>
     </p>
 <script language="JavaScript" type="text/javascript">

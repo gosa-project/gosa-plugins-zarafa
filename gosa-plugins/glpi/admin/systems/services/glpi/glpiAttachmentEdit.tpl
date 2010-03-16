@@ -30,7 +30,8 @@
 						{t}File{/t}
 					</td>
 					<td style="vertical-align:top;">
-						<input type="file" value="" name="filename"><input type="submit" name="upload" value="{t}Upload{/t}">
+						<input type="file" value="" name="filename"><button type='submit' name='upload'>{t}Upload{/t}</button>
+
 					</td>
 				</tr>
 				<tr>
@@ -66,8 +67,10 @@
 <hr>
 <div align="right">
 	<p>
-		<input type="submit" name="SaveAttachment" 		value="{msgPool type=saveButton}">
-		<input type="submit" name="CancelAttachment" 	value="{msgPool type=cancelButton}">
+		<button type='submit' name='SaveAttachment'>{msgPool type=saveButton}</button>
+
+		<button type='submit' name='CancelAttachment'>{msgPool type=cancelButton}</button>
+
 	</p>
 </div>
 <script language="JavaScript" type="text/javascript">

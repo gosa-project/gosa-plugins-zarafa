@@ -3,13 +3,17 @@
   {html_options values=$ManuKeys output=$Manus}
 </select>
 <br>
-<input name="add_manu" 		value="{msgPool type=addButton}" 		type="submit">
-<input name="edit_manu" 	value="{t}Edit{/t}" 	type="submit">
-<input name="remove_manu" 	value="{t}Remove{/t}" 	type="submit">
+<button type='submit' name='add_manu'>{msgPool type=addButton}</button>
+
+<button type='submit' name='edit_manu'>{t}Edit{/t}</button>
+
+<button type='submit' name='remove_manu'>{t}Remove{/t}</button>
+
 
 <hr>
 <div align="right">
 <p>
-	<input name="close_edit_manufacturer" value="{t}Close{/t}" type="submit">
+	<button type='submit' name='close_edit_manufacturer'>{t}Close{/t}</button>
+
 </p>
 </div>

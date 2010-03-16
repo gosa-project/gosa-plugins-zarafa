@@ -15,7 +15,8 @@
 						</select>
 {/render}
 {render acl=$typeACL}
-						<input type="submit" value="{t}edit{/t}" name="edit_type">	
+						<button type='submit' name='edit_type'>{t}edit{/t}</button>	
+
 {/render}
 					</td>
 				</tr>
@@ -29,7 +30,8 @@
 						</select>	
 {/render}
 {render acl=$osACL}
-						<input type="submit" value="{t}edit{/t}" name="edit_os">	
+						<button type='submit' name='edit_os'>{t}edit{/t}</button>	
+
 {/render}
 					</td>
 				</tr>
@@ -43,7 +45,8 @@
 						</select>	
 {/render}
 {render acl=$FK_glpi_enterpriseACL}
-						<input type="submit" value="{t}edit{/t}" name="edit_manufacturer">	
+						<button type='submit' name='edit_manufacturer'>{t}edit{/t}</button>	
+
 {/render}
 					</td>
 				</tr>
@@ -58,7 +61,8 @@
 					<td>
 						<i>{$contact_num}&nbsp; </i>&nbsp;
 {render acl=$contact_numACL}
-						<input type="submit" name="SelectContactPerson" value="{t}Edit{/t}">
+						<button type='submit' name='SelectContactPerson'>{t}Edit{/t}</button>
+
 {/render}
 					</td>
 				</tr>
@@ -68,7 +72,8 @@
 					<td>
 						<i>{$tech_num}&nbsp; </i>&nbsp;
 {render acl=$tech_numACL}
-						<input type="submit" value="{t}Edit{/t}" name="SelectTechPerson">
+						<button type='submit' name='SelectTechPerson'>{t}Edit{/t}</button>
+
 {/render}
 					</td>
 				</tr>
@@ -103,7 +108,8 @@
 						</select>
 {/render}
 {render acl=$DevicesACL}
-						<input name="AddDevice" value="{t}Edit{/t}" type="submit">	
+						<button type='submit' name='AddDevice'>{t}Edit{/t}</button>	
+
 {/render}
 					</td>
 				</tr>
@@ -122,7 +128,8 @@
 						{$AttachmentsDiv}
 {/render}
 {render acl=$AttachmentsACL}
-						<input name="AddAttachment" 	value="{msgPool type=addButton}" type="submit">	
+						<button type='submit' name='AddAttachment'>{msgPool type=addButton}</button>	
+
 {/render}
 					</td>
 				</tr>

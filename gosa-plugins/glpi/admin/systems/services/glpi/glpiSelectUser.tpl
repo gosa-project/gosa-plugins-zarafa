@@ -48,6 +48,7 @@
 <hr>
 <div align="right">
 	<p>
-	<input type="submit" name="{$AbortSelectUser}" value="{msgPool type=cancelButton}">
+	<button type='submit' name='{$AbortSelectUser}'>{msgPool type=cancelButton}</button>
+
 </p>
 </div>

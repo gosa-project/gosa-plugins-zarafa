@@ -48,7 +48,9 @@
 <hr>
 <div align="right">
 	<p>
-		<input type="submit" name="UseAttachment" value="{t}Use{/t}">
-		<input type="submit" name="AbortAttachment" value="{msgPool type=cancelButton}">
+		<button type='submit' name='UseAttachment'>{t}Use{/t}</button>
+
+		<button type='submit' name='AbortAttachment'>{msgPool type=cancelButton}</button>
+
 	</p>
 </div>
