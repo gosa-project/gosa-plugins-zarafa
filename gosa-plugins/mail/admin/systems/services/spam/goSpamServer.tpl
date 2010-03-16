@@ -42,10 +42,12 @@
       <input type='text'	name='NewTrustName' value=''>&nbsp;
 {/render}
 {render acl=$saTrustedNetworksACL}
-      <input type='submit'      name='AddNewTrust'  value='{msgPool type=addButton}'>
+      <button type='submit' name='AddNewTrust'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$saTrustedNetworksACL}
-      <input type='submit'      name='DelTrust'     value='{t}Remove{/t}'>
+      <button type='submit' name='DelTrust'>{t}Remove{/t}</button>
+
 {/render}
      </td>
     </tr>
@@ -110,7 +112,8 @@
      <td>
       {$divRules}<br>
 {render acl=$saTrustedNetworksACL}
-      <input type='submit' name='AddRule' value='{msgPool type=addButton}'> 
+      <button type='submit' name='AddRule'>{msgPool type=addButton}</button> 
+
 {/render}
      </td>
     </tr>
@@ -122,8 +125,10 @@
 
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
     &nbsp;
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </div>
 
