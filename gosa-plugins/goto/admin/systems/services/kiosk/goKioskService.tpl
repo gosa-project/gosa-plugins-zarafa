@@ -6,7 +6,8 @@
 
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </div>
 
 {else}
@@ -23,14 +24,17 @@
 <input type="file" size=50 name="newProfile" value="{t}Browse{/t}">
 {/render}
 {render acl=$ThisACL}
-<input type="submit" name="profileAdd" value="{msgPool type=addButton}">
+<button type='submit' name='profileAdd'>{msgPool type=addButton}</button>
+
 {/render}
 
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
     &nbsp;
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </div>
 <input type="hidden" name="goKioskPosted" value="1">
 
