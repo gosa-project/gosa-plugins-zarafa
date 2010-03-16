@@ -3,38 +3,27 @@
 <filterdef>
   <definition>
     <category>mimetypes</category>
-    <template>mimetype-filter.tpl</template>
     <initial>true</initial>
+    <default>default</default>
+    <scope>one</scope>
+    <attribute>dn</attribute>
+    <attribute>objectClass</attribute>
+    <attribute>cn</attribute>
+    <attribute>description</attribute>
   </definition>
 
   <search>
+    <tag>default</tag>
+    <label>Default filter</label>
     <query>
       <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gotoMimeType)$NAME)</filter>
-      <attribute>dn</attribute>
-      <attribute>objectClass</attribute>
-      <attribute>cn</attribute>
-      <attribute>description</attribute>
+      <filter>(&amp;(objectClass=gotoMimeType)(cn=$))</filter>
     </query>
-    <scope>one</scope>
-  </search>
-
-  <element>
-    <type>textfield</type>
-    <tag>NAME</tag>
-    <size>20</size>
-    <maxlength>60</maxlength>
-    <default></default>
-    <unset></unset>
-    <set>(|(cn=*$*)(description=*$*))</set>
-    <alphabet>true</alphabet>
     <autocomplete>
-      <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gotoMimeType)(|(cn=*$NAME*)(description=*$NAME*)))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
-  </element>
+  </search>
 
 </filterdef>
