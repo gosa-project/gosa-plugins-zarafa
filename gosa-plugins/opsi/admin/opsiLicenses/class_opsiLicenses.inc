@@ -37,16 +37,16 @@ class opsiLicenses extends management
   {
     $this->config = $config;
     $this->ui = $ui;
-   
+
     $this->storagePoints = array("");
- 
-#    // Build filter
- #   if (session::global_is_set(get_class($this)."_filter")){
-  #    $filter= session::global_get(get_class($this)."_filter");
-   # } else {
+
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("opsiLicense-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-    #}
+    }
     $this->setFilter($filter);
 
     // Build headpage
