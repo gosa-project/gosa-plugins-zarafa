@@ -64,7 +64,7 @@
 
     <action>
      <type>sub</type>
-     <image>images/lists/new.png</image>
+     <image>plugins/opsi/images/license.png[new]</image>
      <label>Create</label>
 
      <action>
