@@ -11,13 +11,18 @@
     <br>
 	
 {render acl=$nameACL}
-        <input type="submit"    value="{msgPool type=addButton}"  	name="NewNfsAdd"   id="NewNfsAddId" {if !$createable} disabled {/if}>
+        <button type='submit' name='NewNfsAdd' id="NewNfsAddId" {if !$createable} disabled {/if}
+>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$nameACL mode=read_active}
-        <input type="submit"    value="{t}Edit{/t}"     name="NewNfsEdit"  id="NewNfsEditId">
+        <button type='submit' name='NewNfsEdit' id="NewNfsEditId">{t}Edit{/t}</button>
+
 {/render}
 {render acl=$nameACL}
-        <input type="submit"    value="{msgPool type=delButton}"   name="DelNfsEnt"   id="DelNfsEntId" {if !$removeable} disabled {/if}>
+        <button type='submit' name='DelNfsEnt' id="DelNfsEntId" {if !$removeable} disabled {/if}
+>{msgPool type=delButton}</button>
+
 {/render}
     </td>
     </tr>
@@ -26,8 +31,10 @@
 
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
+    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+
     &nbsp;
-    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+
 </div>
 <input type="hidden" name="goShareServerPosted" value="1">
