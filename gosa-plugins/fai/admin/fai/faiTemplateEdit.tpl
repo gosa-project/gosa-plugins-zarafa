@@ -6,7 +6,8 @@
 
 <p class='seperator'>
   <div style='text-align:right;'>
-    <input type='submit' name='templateEditCancel' value='{msgPool type=cancelButton'}'>
+    <button type='submit' name='templateEditCancel'>{msgPool type=cancelButton}</button>
+
   </div>
 </p>
 
@@ -14,7 +15,8 @@
 
 {if $write_protect}
 {t}This FAI template is write protected. Editing may break it!{/t}
-<br><input type='submit' value='{t}Edit anyway{/t}' name='editAnyway'>
+<br><button type='submit' name='editAnyway'>{t}Edit anyway{/t}</button>
+
 {/if}
 
 <textarea {if $write_protect} disabled {/if}
@@ -24,9 +26,11 @@
 
 <p class='seperator'>
   <div style='text-align:right;'>
-    <input type='submit' name='templateEditSave' value='{msgPool type=okButton}'>
+    <button type='submit' name='templateEditSave'>{msgPool type=okButton}</button>
+
     &nbsp;
-    <input type='submit' name='templateEditCancel' value='{msgPool type=cancelButton'}'>
+    <button type='submit' name='templateEditCancel'>{msgPool type=cancelButton}</button>
+
   </div>
 </p>
 

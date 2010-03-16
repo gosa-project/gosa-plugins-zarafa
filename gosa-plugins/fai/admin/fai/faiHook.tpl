@@ -43,9 +43,11 @@
 					<td>
 						{$Entry_divlist}
 {if $sub_object_is_addable}
-						<input type="submit" name="AddSubObject"     value="{msgPool type=addButton}"	title="{msgPool type=addButton}">
+						<button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+
 {else}
-						<input type="submit" name="AddSubObject"     value="{msgPool type=addButton}"	title="{msgPool type=addButton}" disabled>
+						<button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+
 {/if}
 					</td>
 				</tr>

@@ -65,8 +65,10 @@
 <hr>
 
 <p style="text-align:right">
- <input type="submit" name="edit_continue" value="{t}Continue{/t}">&nbsp;
- <input type="submit" name="edit_cancel" value="{msgPool type='cancelButton'}">
+ <button type='submit' name='edit_continue'>{t}Continue{/t}</button>&nbsp;
+
+ <button type='submit' name='edit_cancel'>{msgPool type='cancelButton'}</button>
+
 </p>
 
 <!-- Place cursor -->

@@ -76,9 +76,11 @@
 	<tr>
 		<td>
       			<input type="text" size="25" name="addPpkgsText" value="" />
-			<input type="submit" name="AddManualpkg" value="{msgPool type=addButton}" />
+			<button type='submit' name='AddManualpkg'>{msgPool type=addButton}</button>
+
 			&nbsp;
-			<input type="submit" name="Addpkg" value="{t}Add from list{/t}" />
+			<button type='submit' name='Addpkg'>{t}Add from list{/t}</button>
+
 		</td>
 	</tr>
 {/render}

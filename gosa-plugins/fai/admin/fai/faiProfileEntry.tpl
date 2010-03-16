@@ -67,7 +67,9 @@
 </table>
 
 <div align="right" style="align:right;">
-	<input name="SaveSubObject" value="{msgPool type=applyButton}" type="submit">
-	<input name="CancelSubObject" value="{msgPool type=cancelButton}" type="submit">
+	<button type='submit' name='SaveSubObject'>{msgPool type=applyButton}</button>
+
+	<button type='submit' name='CancelSubObject'>{msgPool type=cancelButton}</button>
+
 </div>
 <!-- Place cursor -->

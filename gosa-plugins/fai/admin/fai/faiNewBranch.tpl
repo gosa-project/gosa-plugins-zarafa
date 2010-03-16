@@ -18,8 +18,10 @@
 
 <div align="right">
 	<p>
-		<input type="submit" value="{msgPool type=applyButton}" 	name="UseBranchName">		
-		<input type="submit" value="{msgPool type=cancelButton}" 	name="CancelBranchName">		
+		<button type='submit' name='UseBranchName'>{msgPool type=applyButton}</button>		
+
+		<button type='submit' name='CancelBranchName'>{msgPool type=cancelButton}</button>		
+
 	</p>
 </div>
 

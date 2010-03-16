@@ -46,15 +46,20 @@
 							{html_options options=$SubObjects}
 						</select><br>
 {if $is_createable}
-					<input type="submit" name="AddSubObject"     value="{msgPool type=addButton}"		title="{msgPool type=addButton}">
+					<button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+
 {else}
-					<input disabled type="submit" name="AddSubObject"     value="{msgPool type=addButton}"		title="{msgPool type=addButton}">
+					<button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+
 {/if}
-					<input type="submit" name="EditSubObject"    value="{t}Edit{/t}"    title="{t}Edit{/t}" >
+					<button type='submit' name='EditSubObject' title="{t}Edit{/t}">{t}Edit{/t}</button>
+
 {if $is_removeable}
-					<input type="submit" name="DelSubObject"     value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
+					<button type='submit' name='DelSubObject' title="{msgPool type=delButton}">{msgPool type=delButton}</button>
+
 {else}
-					<input disabled type="submit" name="DelSubObject"     value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
+					<button type='submit' name='DelSubObject' title="{msgPool type=delButton}">{msgPool type=delButton}</button>
+
 {/if}
 					</td>
 				</tr>

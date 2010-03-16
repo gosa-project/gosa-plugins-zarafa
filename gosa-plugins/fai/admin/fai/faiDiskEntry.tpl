@@ -78,8 +78,10 @@
       <select name='lvmPartitionAdd' style='width:240px;'>
         {html_options options=$physicalPartitionList}
       </select>
-      <input type="submit" name='addLvmPartition' value="{msgPool type="addButton"}">&nbsp;
-      <input type="submit" name='delLvmPartition' value="{msgPool type="delButton"}">&nbsp;
+      <button type='submit' name='addLvmPartition'>{msgPool type="addButton"}</button>&nbsp;
+
+      <button type='submit' name='delLvmPartition'>{msgPool type="delButton"}</button>&nbsp;
+
     </td>
   </tr>
 </table>
@@ -92,9 +94,11 @@
 <br>
 {if !$freeze}
 	{if $sub_object_is_createable}
-		<input type="submit" name="AddPartition" value="{t}Add partition{/t}">
+		<button type='submit' name='AddPartition'>{t}Add partition{/t}</button>
+
 	{else}
-		<input type="submit" name="restricted" value="{t}Add partition{/t}" disabled>
+		<button type='submit' name='restricted'>{t}Add partition{/t}</button>
+
 	{/if}
 {/if}
 <br>	
@@ -103,9 +107,11 @@
 <br>
 <div style="align:right;" align="right">
 {if !$freeze}
-	<input type="submit" name="SaveDisk" value="{msgPool type=saveButton}">
+	<button type='submit' name='SaveDisk'>{msgPool type=saveButton}</button>
+
 {/if}
-<input type="submit" name="CancelDisk" value="{msgPool type=cancelButton}" >
+<button type='submit' name='CancelDisk'>{msgPool type=cancelButton}</button>
+
 </div>
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

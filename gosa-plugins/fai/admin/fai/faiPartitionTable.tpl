@@ -43,13 +43,19 @@
 				</h3>
                                 {$Entry_divlist}
 {if $sub_object_is_addable}
-                                <input type="submit" name="AddDisk" value="{t}Add disk{/t}" title="{t}Add disk{/t}">
-                                <input type="submit" id="AddRaid" name="AddRaid" value="{t}Add RAID{/t}" title="{t}Add RAID{/t}" {$storage_mode} {$addraid}>
-                                <input type="submit" id="AddVolgroup" name="AddVolgroup" value="{t}Add volume group{/t}" title="{t}Add volume group{/t}" {$storage_mode}>
+                                <button type='submit' name='AddDisk' title="{t}Add disk{/t}">{t}Add disk{/t}</button>
+
+                                <button type='submit' name='AddRaid' id="AddRaid" title="{t}Add RAID{/t}">{t}Add RAID{/t}</button>
+
+                                <button type='submit' name='AddVolgroup' id="AddVolgroup" title="{t}Add volume group{/t}">{t}Add volume group{/t}</button>
+
 {else}
-                                <input type="submit" name="AddDisk" value="{t}Add disk{/t}" title="{t}Add disk{/t}" disabled>
-                                <input type="submit" name="AddRaid" value="{t}Add RAID{/t}" title="{t}Add RAID{/t}" disabled>
-                                <input type="submit" name="AddVolgroup" value="{t}Add volume group{/t}" title="{t}Add volume group{/t}" disabled>
+                                <button type='submit' name='AddDisk' title="{t}Add disk{/t}">{t}Add disk{/t}</button>
+
+                                <button type='submit' name='AddRaid' title="{t}Add RAID{/t}">{t}Add RAID{/t}</button>
+
+                                <button type='submit' name='AddVolgroup' title="{t}Add volume group{/t}">{t}Add volume group{/t}</button>
+
 {/if}
 
 		</td>

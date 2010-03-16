@@ -3,7 +3,9 @@
 <hr>
 <br>
 <div align="right" style="align:right;">
-    <input name="SaveObjectConfig" value="{msgPool type=applyButton}" type="submit">
-    <input name="CancelObjectConfig" value="{msgPool type=cancelButton}" type="submit">
+    <button type='submit' name='SaveObjectConfig'>{msgPool type=applyButton}</button>
+
+    <button type='submit' name='CancelObjectConfig'>{msgPool type=cancelButton}</button>
+
 </div>
 

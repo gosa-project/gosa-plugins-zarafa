@@ -40,7 +40,8 @@
 						{$divlist}
 						<br>
 {render acl=$FAIclassACL}
-						<input type="submit" name="AddClass" value="{msgPool type=addButton}">
+						<button type='submit' name='AddClass'>{msgPool type=addButton}</button>
+
 {/render}
 						<input type="hidden" name="edit_helper">
 					</td>

@@ -77,7 +77,9 @@
 <input type='hidden' value='faiGroupHandle' name='faiGroupHandle'>
 <p class='seperator'></div>
 <div style='text-align:right; padding:5px'>
-	<input type='submit' value='{msgPool type=applyButton}' name='faiGroupHandle_apply'>
+	<button type='submit' name='faiGroupHandle_apply'>{msgPool type=applyButton}</button>
+
 	&nbsp;
-	<input type='submit' value='{msgPool type=cancelButton}' name='faiGroupHandle_cancel'>
+	<button type='submit' name='faiGroupHandle_cancel'>{msgPool type=cancelButton}</button>
+
 </div>

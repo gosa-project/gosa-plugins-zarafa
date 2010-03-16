@@ -103,10 +103,14 @@
       <select name='physicalPartitionAdd' style='width:240px;'>
         {html_options options=$physicalPartitionList}
       </select>
-      <input type="submit" name='addPhysicalPartition' value="{msgPool type="addButton"}">&nbsp; 
-      <input type="submit" name='delPhysicalPartition' value="{msgPool type="delButton"}">&nbsp; 
-      <input type="submit" name='toggleMissing' value="{t}Toggle missing{/t}">&nbsp; 
-      <input type="submit" name='toggleSpare' value="{t}Toggle spare{/t}">&nbsp; 
+      <button type='submit' name='addPhysicalPartition'>{msgPool type=addButton}</button>&nbsp; 
+
+      <button type='submit' name='delPhysicalPartition'>{msgPool type=delButton}</button>&nbsp; 
+
+      <button type='submit' name='toggleMissing'>{t}Toggle missing{/t}</button>&nbsp; 
+
+      <button type='submit' name='toggleSpare'>{t}Toggle spare{/t}</button>&nbsp; 
+
     </td>
   </tr>
   <tr>
@@ -179,8 +183,10 @@
 <hr>
 <div style='text-align:right; width:100%; padding:5px'>
   {if !$freeze}
-  <input type='submit' name='PartitionSave' value='{msgPool type=okButton}'>
+  <button type='submit' name='PartitionSave'>{msgPool type=okButton}</button>
+
   &nbsp;
   {/if}
-  <input type='submit' name='PartitionCancel' value='{msgPool type=cancelButton}'>
+  <button type='submit' name='PartitionCancel'>{msgPool type=cancelButton}</button>
+
 </div>
