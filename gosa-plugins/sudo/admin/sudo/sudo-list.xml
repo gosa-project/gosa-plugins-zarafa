@@ -55,13 +55,13 @@
 
     <action>
      <type>sub</type>
-     <image>plugins/sudo/images/select_sudo.png[new]</image>
+     <image>images/lists/element.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>plugins/sudo/images/select_sudo.png</image>
+      <image>plugins/sudo/images/select_sudo.png[new]</image>
       <label>Role</label>
      </action>
 
