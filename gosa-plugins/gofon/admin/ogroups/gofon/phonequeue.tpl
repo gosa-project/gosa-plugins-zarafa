@@ -21,10 +21,12 @@
 		</td>
 		<td style="vertical-align:center">
 {render acl=$telephoneNumberACL}
-			<input type="submit" value="{t}Up{/t}" 		name="up_phonenumber"><br>
+			<button type='submit' name='up_phonenumber'>{t}Up{/t}</button>
+<br>
 {/render}
 {render acl=$telephoneNumberACL}
-			<input type="submit" value="{t}Down{/t}" 	name="down_phonenumber">
+			<button type='submit' name='down_phonenumber'>{t}Down{/t}</button>
+
 {/render}
 		</td>
 		</tr>
@@ -34,10 +36,12 @@
 			<input type='text' name="phonenumber" size=20 align=middle maxlength=60 value="">
 {/render}
 {render acl=$telephoneNumberACL}
-			<input type="submit" value="{msgPool type=addButton}" 	name="add_phonenumber" >&nbsp;
+			<button type='submit' name='add_phonenumber'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$telephoneNumberACL}
-			<input type="submit" value="{msgPool type=delButton}" 	name="delete_phonenumber" >
+			<button type='submit' name='delete_phonenumber'>{msgPool type=delButton}</button>
+
 {/render}
 	     </td>
 		</tr>
