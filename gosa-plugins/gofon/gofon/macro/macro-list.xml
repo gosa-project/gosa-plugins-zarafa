@@ -64,13 +64,13 @@
 
     <action>
      <type>sub</type>
-     <image>plugins/gofon/images/select_macro.png[new]</image>
+     <image>images/lists/element.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>plugins/gofon/images/select_macro.png</image>
+      <image>plugins/gofon/images/select_macro.png[new]</image>
       <label>Macro</label>
      </action>
     </action>
