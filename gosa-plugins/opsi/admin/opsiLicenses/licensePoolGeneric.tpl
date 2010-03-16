@@ -2,7 +2,8 @@
 <br>
 <b>{msgPool type=siError}</b><br>
 {t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
-<input type='submit' name='retry_init' value="{t}Retry{/t}">
+<button type='submit' name='retry_init'>{t}Retry{/t}</button>
+
 <br>
 <br>
 {else}
@@ -45,7 +46,8 @@
             <td>
               {$licenses}
 {render acl=$licensesACL}
-              <input type='submit' name='addLicense' value='{msgPool type=addButton}'>
+              <button type='submit' name='addLicense'>{msgPool type=addButton}</button>
+
 {/render}
             </td>
           </tr>
@@ -76,10 +78,12 @@
               </select>
 {/render}
 {render acl=$productIdsACL}
-              <input type='submit' name='addProduct' value='{msgPool type='addButton'}'>
+              <button type='submit' name='addProduct'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$productIdsACL}
-              <input type='submit' name='removeProduct' value='{msgPool type='delButton'}'>
+              <button type='submit' name='removeProduct'>{msgPool type=delButton}</button>
+
 {/render}
             </td>
           </tr>

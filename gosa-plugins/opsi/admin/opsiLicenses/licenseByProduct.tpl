@@ -2,7 +2,8 @@
 <br>
 <b>{msgPool type=siError}</b><br>
 {t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
-<input type='submit' name='retry_init' value="{t}Retry{/t}">
+<button type='submit' name='retry_init'>{t}Retry{/t}</button>
+
 <br>
 <br>
 {else}
@@ -17,8 +18,10 @@
 
 <hr>
 <div style='width:100%; text-align: right; padding:3px;'>
-  <input type='submit' name='save_properties' value='{msgPool type='saveButton'}'>
+  <button type='submit' name='save_properties'>{msgPool type=saveButton}</button>
+
   &nbsp;
-  <input type='submit' name='cancel_properties' value='{msgPool type='cancelButton'}'>
+  <button type='submit' name='cancel_properties'>{msgPool type=cancelButton}</button>
+
 </div>
 

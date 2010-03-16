@@ -2,7 +2,8 @@
 <br>
 <b>{msgPool type=siError}</b><br>
 {t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
-<input type='submit' name='retry_init' value="{t}Retry{/t}">
+<button type='submit' name='retry_init'>{t}Retry{/t}</button>
+
 <br>
 <br>
 {else}
@@ -21,7 +22,8 @@
           {html_options options=$availableLicenses}
         </select>
 {render acl=$boundToHostACL}
-        <input type='submit' name='addReservation' value='{msgPool type=addButton}'>
+        <button type='submit' name='addReservation'>{msgPool type=addButton}</button>
+
 {/render}
     </td>
     <td style='vertical-align:top;'>
