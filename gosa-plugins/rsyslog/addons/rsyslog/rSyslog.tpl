@@ -53,7 +53,8 @@
     <td>   
       <input type='text' name='search_for' value='{$search_for}' style='width:250px;'>
     </td>
-    <td><input type='submit' name='search' value="{t}Search{/t}"></td>
+    <td><button type='submit' name='search'>{t}Search{/t}</button>
+</td>
   </tr>
 </table>
 </div>
