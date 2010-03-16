@@ -137,13 +137,13 @@ class debconf
         /* special handling for arrays */
         if(is_array($_POST[$entry['post_name']])){
           $str = "";
-          foreach($_POST[$entry['post_name']] as $val){
+          foreach(get_post($entry['post_name']) as $val){
             $str.= $val.", ";
           }
           $str = preg_replace("/\,\ $/","",$str);
           $this->template[$post_name]['Default'] = $str;
         }else{
-          $this->template[$post_name]['Default'] = $_POST[$entry['post_name']];
+          $this->template[$post_name]['Default'] = get_post($entry['post_name']);
         }
       }
     }
@@ -152,6 +152,9 @@ class debconf
       if(isset($_POST["multi-".$entry['post_name']])){ 
         $this->template[$post_name]['Default']= "";
         foreach($_POST as $name => $value){
+          if (get_magic_quotes_gpc()) {
+              $value = stripcslashes($value);
+          }
           if(preg_match("/".$entry['post_name']."-multi-/",$name)){
             $this->template[$post_name]['Default'] .= $value.", ";
           }
@@ -224,9 +227,9 @@ class debconf
 
     foreach(array("true","false") as $value){
       if($data['Default'] == $value){
-        $result.="<input type='radio' name='".$data['post_name']."' value='".$value."' checked>"._($value);
+        $result.="<input type='radio' name='".$data['post_name']."' value=\"".$value."\" checked>"._($value);
       }else{
-        $result.="<input type='radio' name='".$data['post_name']."' value='".$value."' >"._($value);
+        $result.="<input type='radio' name='".$data['post_name']."' value=\"".$value."\" >"._($value);
       }
       $result.="<br>";
     }
@@ -265,9 +268,9 @@ class debconf
       $defs = split(", ",$data['Default']);
       foreach($choices as $value){
         if(in_array($value,$defs)){
-          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".htmlentities($value)."' checked>".$value."<br>";
+          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value=\"".htmlentities($value)."\" checked>".$value."<br>";
         }else{
-          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".htmlentities($value)."'>".$value."<br>";
+          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value=\"".htmlentities($value)."\">".$value."<br>";
         }
       }
 
@@ -292,7 +295,7 @@ class debconf
   {
     $result=  "";
     $result.= "<tr><td valign='top'>";
-    $result.= "<h2>".$data['Topic']."</h2>".$data['Description']."</td><td style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">&nbsp;<input type='text' name='".$data['post_name']."' value='".$data['Default']."'></b><br><br>";
+    $result.= "<h2>".$data['Topic']."</h2>".$data['Description']."</td><td style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\">&nbsp;<input type='text' name='".$data['post_name']."' value=\"".$data['Default']."\"></b><br><br>";
     $result.= $data['Description'];
     $result.= "</td>";
 
@@ -324,9 +327,9 @@ class debconf
 
       foreach($choices as $value){
         if($data['Default'] == $value){
-          $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."' checked >".htmlentities($value)."<br>";
+          $result.="\n<input type='radio' name='".$post_name."' value=\"".htmlentities($value)."\" checked >".htmlentities($value)."<br>";
         }else{
-          $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."'>".htmlentities($value)."<br>";
+          $result.="\n<input type='radio' name='".$post_name."' value=\"".htmlentities($value)."\">".htmlentities($value)."<br>";
         }
       }
 
@@ -349,7 +352,7 @@ class debconf
                     <h2>".$data['Topic']."</h2>".$data['Description']."
                   </td>
                   <td  style=\"white-space:nowrap; border-left: 1px solid rgb(160, 160, 160);\" valign='top'>
-                    <input type='text' name='".$data['post_name']."' value='".$data['Default']."' style='width:300px;'>
+                    <input type='text' name='".$data['post_name']."' value=\"".$data['Default']."\" style='width:300px;'>
                   </td>
                 </tr>
               ";

@@ -67,14 +67,16 @@
 <p class="seperator">&nbsp;</p>
 <table width="99%" summary="">
 	<tr>
-		<td> 
+		<td colspan="2"> 
 			<h2><img class="center" alt="" src="plugins/fai/images/fai_packages.png" align="middle" title="{t}Used packages{/t}">&nbsp;{t}Used packages{/t}</h2>
 			{$divlist}
 		</td>
 	</tr>
+</table>
+<table width="99%" summary="">
 {render acl=$FAIpackageACL}
 	<tr>
-		<td>
+		<td style="width:600px;">
 {if $direct_packages_add}
       			<input type="text" size="25" name="addPpkgsText" value="" />
 			<input type="submit" name="AddManualpkg" value="{msgPool type=addButton}" />
@@ -84,6 +86,10 @@
             <input type="submit" name="Addpkg" value="{msgPool type=addButton}">
 {/if}
 		</td>
+        <td style="text-align: right;">
+        <!-- ToDo: ACL? --!>
+        <input type="submit" name="EditConfigurations" value="{t}Edit package configurations{/t}">
+        </td>
 	</tr>
 {/render}
 </table>
