@@ -1,6 +1,3 @@
-{image path="images/empty.png" action="no_action_posted" value="do_nothing"}
-
-
 <table style="width:100%;height:100%; vertical-align:top; text-align:left;" cellpadding=2>
   <tr>
     <td style="vertical-align:top; width:100%;">
