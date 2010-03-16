@@ -44,7 +44,8 @@
 			<input type="text" 	name="SectionName" value="" style='width:100%;'>
 {/render}
 {render acl=$SectionACL}
-			<input type="submit" 	name="AddSection"  value="{msgPool type=addButton}">
+			<button type='submit' name='AddSection'>{msgPool type=addButton}</button>
+
 {/render}
 		</td>
 	</tr>
@@ -53,7 +54,9 @@
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="repository_setup_save" value="{msgPool type=applyButton}">
-  <input type=submit name="repository_setup_cancel" value="{msgPool type=cancelButton}">
+  <button type='submit' name='repository_setup_save'>{msgPool type=applyButton}</button>
+
+  <button type='submit' name='repository_setup_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
 
