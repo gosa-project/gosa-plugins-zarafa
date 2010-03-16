@@ -9,10 +9,12 @@
   </td>
 
   <td style="width:10%; vertical-align:middle; text-align:center;">
-   <input type=submit name="add_users" value="&larr;" style="width:50px;">
+   <button type='submit' name='add_users'>&larr;</button>
+
    <br>
    <br>
-   <input type=submit name="del_users" value="&rarr;" style="width:50px;">
+   <button type='submit' name='del_users'>&rarr;</button>
+
   </td>
 
   <td style="width:45%; vertical-align:top;">
@@ -27,7 +29,8 @@
    </select>
 
    {if $javascript ne "true"}
-   <input type=submit name="goButton" value="{t}Choose{/t}">
+   <button type='submit' name='goButton'>{t}Choose{/t}</button>
+
    {/if}
   </td>
  </tr>
@@ -35,7 +38,9 @@
 
 <hr>
 <div class="plugin-actions">
- <input type=submit name="edit_admins_finish" value="{msgPool type=applyButton}">
- <input type=submit name="edit_admins_cancel" value="{msgPool type=cancelButton}">
+ <button type='submit' name='edit_admins_finish'>{msgPool type=applyButton}</button>
+
+ <button type='submit' name='edit_admins_cancel'>{msgPool type=cancelButton}</button>
+
 </div>
 

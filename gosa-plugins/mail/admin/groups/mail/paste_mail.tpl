@@ -27,8 +27,10 @@
 						</select>
 						<br>
 						<input type='text' name="alternate_address" size="30" align=middle maxlength="60" value="">
-						<input type=submit value="{msgPool type=addButton}" name="add_alternate">&nbsp;
-						<input type=submit value="{msgPool type=delButton}" name="delete_alternate">
+						<button type='submit' name='add_alternate'>{msgPool type=addButton}</button>&nbsp;
+
+						<button type='submit' name='delete_alternate'>{msgPool type=delButton}</button>
+
 					</td>
 					<td style="vertical-align:top;width:50%">
 							{t}Forward messages to non group members{/t}
@@ -38,9 +40,12 @@
 						</select>
 						<br>
 						<input type='text' name="forward_address" size=20 align=middle maxlength=65 value="">
-						<input type=submit value="{msgPool type=addButton}" name="add_forwarder">&nbsp;
-						<input type=submit value="{t}Add local{/t}" name="add_local_forwarder">&nbsp;
-						<input type=submit value="{msgPool type=delButton}" name="delete_forwarder">
+						<button type='submit' name='add_forwarder'>{msgPool type=addButton}</button>&nbsp;
+
+						<button type='submit' name='add_local_forwarder'>{t}Add local{/t}</button>&nbsp;
+
+						<button type='submit' name='delete_forwarder'>{msgPool type=delButton}</button>
+
 					</td>
 				</tr>
 			</table>

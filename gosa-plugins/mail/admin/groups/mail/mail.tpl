@@ -115,11 +115,13 @@
 {/render}
 
 {render acl=$gosaMailAlternateAddressACL}
-   <input type=submit value="{msgPool type=addButton}" name="add_alternate">&nbsp;
+   <button type='submit' name='add_alternate'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 
 {render acl=$gosaMailAlternateAddressACL}
-   <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
+   <button type='submit' name='delete_alternate'>{msgPool type=delButton}</button>
+
 {/render}
   </td>
 {/if}
@@ -155,14 +157,17 @@
 		   <option disabled>&nbsp;</option>
 		  </select>
 			{if !($user == "__anyone__" || $user == "__member__")}
-		  		<input type='submit' value='{msgPool type=delButton}' name='remove_acl_user_{$item.post_name}'>
+		  		<button type='submit' name='remove_acl_user_{$item.post_name}'>{msgPool type=delButton}</button>
+
 			{/if}
 {/render}
 			{if $user == "__member__"}
 				{if $show_effective_memeber}
-					<input type='submit' name='show_effective_memeber' value='{t}Hide{/t}'> 
+					<button type='submit' name='show_effective_memeber'>{t}Hide{/t}</button> 
+
 				{else}
-					<input type='submit' name='show_effective_memeber' value='{t}Show{/t}'> 
+					<button type='submit' name='show_effective_memeber'>{t}Show{/t}</button> 
+
 				{/if}
 			{/if}
 		 </td>
@@ -177,7 +182,8 @@
 		
 		<tr>
 			<td colspan="1"></td>
-			<td><input type='submit' value='{msgPool type=addButton}' name='add_acl_user'>
+			<td><button type='submit' name='add_acl_user'>{msgPool type=addButton}</button>
+
 		</tr>
    </table>
 {/if}      
@@ -228,13 +234,16 @@
    <input type='text' name="forward_address" size=20 align=middle maxlength=65 value="">
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input type=submit value="{msgPool type=addButton}" name="add_forwarder">&nbsp;
+   <button type='submit' name='add_forwarder'>{msgPool type=addButton}</button>&nbsp;
+
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input type=submit value="{t}Add local{/t}" name="add_local_forwarder">&nbsp;
+   <button type='submit' name='add_local_forwarder'>{t}Add local{/t}</button>&nbsp;
+
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input type=submit value="{msgPool type=delButton}" name="delete_forwarder">
+   <button type='submit' name='delete_forwarder'>{msgPool type=delButton}</button>
+
 {/render}
 
   </td>
