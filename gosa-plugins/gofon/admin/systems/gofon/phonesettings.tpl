@@ -10,7 +10,8 @@
 		</select>
 {/render}
 		{if $javascript eq 'false'}
-			<input type="submit" value="{t}refresh{/t}" name="refresh">
+			<button type='submit' name='refresh'>{t}refresh{/t}</button>
+
 		{/if}
 		<br>
 		<br>
@@ -204,10 +205,12 @@
                             <input type='text' name="goFonPermitNew" size=30 align="middle" maxlength="65" value="">
 {/render}
 {render acl=$goFonPermitACL}
-                        <input type=submit value="{msgPool type=addButton}" name="goFonPermitAdd">
+                        <button type='submit' name='goFonPermitAdd'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$goFonPermitACL}
-                        <input type=submit value="{msgPool type=delButton}" name="goFonPermitDel">
+                        <button type='submit' name='goFonPermitDel'>{msgPool type=delButton}</button>
+
 {/render}
 						<br><br>
                     </td>
@@ -227,10 +230,12 @@
                             <input type='text' name="goFonDenyNew" size=30 align="middle" maxlength="65" value="">
 {/render}
 {render acl=$goFonDenyACL}
-                        <input type=submit value="{msgPool type=addButton}" name="goFonDenyAdd">
+                        <button type='submit' name='goFonDenyAdd'>{msgPool type=addButton}</button>
+
 {/render}
 {render acl=$goFonDenyACL}
-                        <input type=submit value="{msgPool type=delButton}" name="goFonDenyDel">
+                        <button type='submit' name='goFonDenyDel'>{msgPool type=delButton}</button>
+
 {/render}
                     </td>
                 </table>
