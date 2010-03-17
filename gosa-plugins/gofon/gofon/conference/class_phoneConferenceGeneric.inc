@@ -99,7 +99,7 @@ class conference extends plugin
 
       /* get config */
       if(!isset($this->goFonHomeServers[$this->goFonHomeServer])){
-        msg_dialog::display(_("Obsolete entry"), sprintf(_("The current home server is not available anymore. It will be moved to '%s' if you save this entry!"), preg_replace("/,/",", ",$this->goFonHomeServers[0]['DN'])), ERROR_DIALOG);
+        msg_dialog::display(_("Obsolete entry"), sprintf(_("The current home server is not available anymore. It will be moved to '%s' if you save this entry!"), preg_replace("/,/",", ",$this->goFonHomeServers[0]['SERVER'])), ERROR_DIALOG);
 
         $this->goFonHomeServer = $this->goFonHomeServers[0]['DN'];
         $this->init_HomeServer = $this->goFonHomeServers[0]['DN'];
