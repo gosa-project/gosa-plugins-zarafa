@@ -1,6 +1,7 @@
     <input type="hidden" name="dialogissubmitted" value="1">
 
-  	<table summary="{t}Select printer to add{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
+  	<table style='width:100%; ' summary="{t}Select printer to add{/t}">
+
         <tr>
             <td style="width:600px">
 	  			<div class="contentboxh" style="height:20px;">
@@ -19,23 +20,28 @@
             </td>
             <td valign="top">
 		   		<div class="contentboxh" style="height:20px">
-    				<p class="contentboxh" style="font-size:12px"><img src="{$launchimage}" align="right" alt="[F]">{t}Filters{/t}</p>
+    				<p class="contentboxh" style="font-size:12px">{image path="{$launchimage}" align="right"}{t}Filters{/t}
+</p>
    				</div>
    				<div class="contentboxb">
-     				<table summary="" style="width:100%;border-top:1px solid #B0B0B0;background-color:#F8F8F8">
+     				<table style='width:100%;background-color:#F8F8F8' summary="">
+
       				{$alphabet}
      				</table>
-    					<table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
+    					<table style='background-color:#F8F8F8' summary="" width="100%">
+
 						<tr>
 							<td>
 								<input type='checkbox' name='SubSearch' value='1' title='{t}Select to search within subtrees{/t}' onClick='document.mainform.submit();' {$subtree}>&nbsp;{t}Search in subtrees{/t}
 							</td>
 						</tr>
 					</table>
-				<table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
+				<table style='background-color:#F8F8F8' summary="" width="100%">
+
 					<tr>
 						<td>
-							<label for="dspselectPrinter"><img class="center" alt="" src="{$tree_image}" align="middle" title="{t}Display members of department{/t}"></label>
+							<label for="dspselectPrinter">{image path="{$tree_image}" title="{t}Display members of department{/t}"}
+</label>
 						</td>
 						<td style="width:99%">
 							<select style="width:99%" name="depselectPrinter" size=1 onChange="mainform.submit()" title="{t}Choose the department the search will be based on{/t}">
@@ -44,10 +50,12 @@
 						</td>
 					</tr>
 				</table>
-    					<table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
+    					<table style='background-color:#F8F8F8' summary="" width="100%">
+
 							<tr>
 								<td>
-									<LABEL for='filter'><img class="center" alt="Search" src="{$search_image}" align="middle" title="{t}Display members matching{/t}">
+									<LABEL for='filter'>{image path="{$search_image}" title="{t}Display members matching{/t}"}
+
 									</LABEL>
 								</td>
     							<td width="99%">
