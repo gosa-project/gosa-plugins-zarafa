@@ -1,8 +1,10 @@
 <script src="TreeMenu.js" language="JavaScript" type="text/javascript"></script>
 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
+<table style='width:100%; ' summary="">
+
 <tr>
-  <td style="vertical-align:top;width:600px">
+  <td style='width:600px'>
+
   <div class="contentboxh">
     <p class="contentboxh">
      {t}DFS Shares{/t} {$hint}
@@ -17,9 +19,11 @@
     <input type=hidden name="edit_helper">
   </div>
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
    <div class="contentboxh">
-    <p class="contentboxh"><img src="{$infoimage}" align="right" alt="[i]">{t}Information{/t}</p>
+    <p class="contentboxh">{image path="{$infoimage}" align="right"}{t}Information{/t}
+</p>
    </div>
    <div class="contentboxb">
    <p class="contentboxb">
@@ -28,16 +32,20 @@
    </div>
    <br>
    <div class="contentboxh">
-    <p class="contentboxh"><img src="{$launchimage}" align="right" alt="[F]">{t}Filters{/t}</p>
+    <p class="contentboxh">{image path="{$launchimage}" align="right"}{t}Filters{/t}
+</p>
    </div>
    <div class="contentboxb">
-     <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+     <table style='width:100%;' summary="">
+
       {$alphabet}
      </table>
-     <table summary=""  style="width:100%;border-top:1px solid #B0B0B0;">
+     <table style='width:100%;' summary="">
+
      <tr>
      <td>
-     <LABEL for "regex"><img alt="{t}Display dfs shares matching{/t}" src="{$search_image}" align=middle title='{t}Display dfs shares matching{/t}'></LABEL>
+     <LABEL for "regex">{image path="{$search_image}" title="{t}Display dfs shares matching{/t}"}
+</LABEL>
      </td>
      <td width="99%">
      <input type='text' name='regex' maxlength='20' style='width:99%' value='{*$regex*}' id='filter'
