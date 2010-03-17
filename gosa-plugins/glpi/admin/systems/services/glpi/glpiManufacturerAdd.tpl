@@ -18,7 +18,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top;">{t}Address{/t}
+					<td>{t}Address{/t}
+
 					</td>
 					<td>
 						<textarea  name="address">{$address}</textarea>
@@ -50,7 +51,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top;">{t}Comments{/t}
+					<td>{t}Comments{/t}
+
 					</td>
 					<td>
 						<textarea name="comments">{$comments}</textarea>
