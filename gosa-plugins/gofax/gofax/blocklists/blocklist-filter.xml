@@ -30,7 +30,7 @@
 
   <search>
     <tag>onlyReceive</tag>
-    <label>Receive lists</label>
+    <label>Receive</label>
     <query>
       <backend>LDAP</backend>
       <filter>(&amp;(objectClass=goFaxRBlock)(cn=$))</filter>
@@ -44,7 +44,7 @@
 
   <search>
     <tag>onlySend</tag>
-    <label>Send lists</label>
+    <label>Send</label>
     <query>
       <backend>LDAP</backend>
       <filter>(&amp;(objectClass=goFaxSBlock)(cn=$))</filter>

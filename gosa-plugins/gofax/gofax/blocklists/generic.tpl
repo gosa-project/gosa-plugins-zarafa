@@ -1,8 +1,8 @@
 <h3>{t}Generic{/t}</h3>
-<table summary="" style="width:100%; vertical-align:top; text-align:left;">
+<table summary="" style="width:100%;">
 
  <tr>
-   <td style="width:50%; vertical-align:top;">
+   <td style="width:50%;">
     <table summary="">
      <tr>
       <td><LABEL for="cn">{t}List name{/t}</LABEL>{$must}</td>
@@ -28,7 +28,7 @@
    &nbsp;
   </td>
 
-   <td style="vertical-align:top;">
+   <td>
     <table summary="">
      <tr>
        <td><LABEL for="type">{t}Type{/t}</LABEL></td>
@@ -82,7 +82,7 @@
   <td class='left-border'>
    &nbsp;
   </td>
-   <td style="vertical-align:top;" >
+   <td>
      <h3>{t}Information{/t}</h3>
      <p>
       {t}Numbers can also contain wild cards.{/t}
