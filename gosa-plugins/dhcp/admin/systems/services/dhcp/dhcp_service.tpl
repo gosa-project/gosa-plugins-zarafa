@@ -15,7 +15,8 @@
 {/render}
   </td>
 
-  <td style='vertical-align:top'>
+  <td>
+
 
    <table>
     <tr>
