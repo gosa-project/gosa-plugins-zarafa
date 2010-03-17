@@ -1,7 +1,8 @@
 <h3>{t}Generic{/t}</h3>
 <table  style="width:100%;">
 	<tr>
-		<td width="50%" style="vertical-align:top">
+		<td>
+
 			<table >
 				<tr>
 					<td>{t}Visible full qualified hostname{/t}
@@ -53,7 +54,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="border-left:1px solid #A0A0A0; ">
+		<td class='left-border'>
+
 			<table style="width:100%;">
 				<tr>
 					<td>
@@ -111,7 +113,8 @@
                 </tr>
             </table>
 		</td>
-		<td style="border-left:1px solid #A0A0A0; ">
+		<td class='left-border'>
+
 			  <table style="width:100%;">
                 <tr>
                     <td>
@@ -124,7 +127,7 @@
                         <input type="text" name="Source_postfixTransportTable" value="">
 {/render}
 {render acl=$postfixTransportTableACL}
-                        <select name='TransportProtocol' title='{t}Select a transport protocol.{/t}'>
+                        <select name='TransportProtocol' title='{t}Select a transport protocol.{/t}' size=1>
                             {html_options options=$TransportProtocols}
                         </select>
 {/render}
@@ -159,7 +162,7 @@
                         <input type="text" name="Source_postfixSenderRestrictions" value="">
 {/render}
 {render acl=$postfixSenderRestrictionsACL}
-                        <select name='SenderRestrictionFilter' title='{t}Restriction filter{/t}'>
+                        <select name='SenderRestrictionFilter' title='{t}Restriction filter{/t}' size=1>
                             {html_options options=$RestrictionFilters}
                         </select>
 {/render}
@@ -174,7 +177,8 @@
                 </tr>
             </table>
 		</td>
-		<td style="border-left:1px solid #A0A0A0;">
+		<td class='left-border'>
+
             <table style="width:100%;">
                 <tr>
                     <td>
@@ -186,7 +190,7 @@
                         <input type="text" name="Source_postfixRecipientRestrictions" value="">
 {/render}
 {render acl=$postfixRecipientRestrictionsACL}
-                        <select name='RecipientRestrictionFilter' title='{t}Restriction filter{/t}'>
+                        <select name='RecipientRestrictionFilter' title='{t}Restriction filter{/t}' size=1>
                             {html_options options=$RestrictionFilters}
                         </select>
 {/render}
