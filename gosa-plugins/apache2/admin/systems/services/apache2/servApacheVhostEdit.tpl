@@ -1,7 +1,8 @@
 <h3>{t}Generic{/t}</h3>
 <table summary="" width="100%">
 	<tr>
-		<td style="width:50%;vertical-align:top;border-right:1px	solid	#b0b0b0;">
+		<td style='width:50%;' class='right-border'>
+
 			<table summary="">
 				<tr>
 					<td>{t}Virtual host name{/t}{$must}
@@ -23,10 +24,12 @@
 				</tr>
 			</table>
 		</td>
-		<td style="vertical-align:top;">
+		<td>
+
 			<table summary="" width="100%">
 				<tr>
-					<td style="vertical-align:top;width:100%;border-right:1px	solid	#b0b0b0;">
+					<td style='width:100%;' class='right-border'>
+
 						<h3>{t}Server Alias{/t}</h3>
 						<table width="100%">	
 							<tr>
@@ -38,7 +41,8 @@
 								<td>
 									<table width="100%">
 										<tr>
-											<td  style="vertical-align:top;width:30%;">
+											<td style='width:30%;'>
+
 												<h3>{t}URL Alias{/t}</h3>
 											</td>
 											<td>
@@ -46,7 +50,8 @@
 											</td>
 										</tr>
 										<tr>
-											<td style="vertical-align:top;width:30%;">
+											<td style='width:30%;'>
+
 												<input type="text" 		name="StrSAAlias" value="">
 											</td>
 											<td>
@@ -71,7 +76,8 @@
 
 <table summary="" width="100%">
 	<tr>
-		<td style="vertical-align:top;width:50%;border-right:1px	solid	#b0b0b0;">
+		<td style='width:50%;' class='right-border'>
+
 			<h3>{t}Script Alias{/t}</h3>
 			<table width="100%">	
 				<tr>
@@ -83,7 +89,8 @@
 					<td>
 						<table width="100%">
 							<tr>
-								<td  style="vertical-align:top;width:30%;">
+								<td style='width:30%;'>
+
 									<h3>{t}Alias Directory{/t}</h3>
 								</td>
 								<td>
@@ -91,7 +98,8 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="vertical-align:top;width:30%;">
+								<td style='width:30%;'>
+
 									<input type="text" 		name="StrSCAlias" value="">
 								</td>
 								<td>
@@ -105,7 +113,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="vertical-align:top;">
+		<td>
+
 		</td>
 	</tr>
 </table>
