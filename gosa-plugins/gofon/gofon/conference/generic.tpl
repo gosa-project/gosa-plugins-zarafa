@@ -60,7 +60,7 @@
           <td><LABEL for="goFonHomeServer">{t}Home server{/t}</LABEL>{$must}</td>
           <td>
 {render acl=$goFonHomeServerACL}
-                <select name='goFonHomeServer'>
+                <select name='goFonHomeServer' size=1>
                  {html_options options=$goFonHomeServers selected=$goFonHomeServer}
                 </select>
 {/render}
@@ -71,7 +71,7 @@
           </td>
           <td>
 {render acl=$languageACL}
-            <select name="language" title="{t}Select language{/t}">
+            <select name="language" title="{t}Select language{/t}" size=1>
               {html_options options=$languages selected=$language}
             </select>
 {/render}
