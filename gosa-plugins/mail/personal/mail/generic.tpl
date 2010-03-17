@@ -1,6 +1,7 @@
 <table summary="{t}Mail settings{/t}" style='width:100%;'>
  <tr>
-  <td style="width:50%; vertical-align:top;">  
+  <td style='width:50%; '>  
+
    <h3>{t}Generic{/t}</h3>
    
    <table summary="{t}Mail address configuration{/t}">
@@ -15,7 +16,7 @@
       {render acl=$mailACL}
       <input type='text' id="mail" name="mail" size=20 maxlength=65 value="{$mail}">
       {/render}
-      @<select name='MailDomain'>
+      @<select name='MailDomain' size=1>
        {html_options values=$MailDomains output=$MailDomains selected=$MailDomain}
       </select>
       {else}
@@ -65,7 +66,8 @@
     {/if}
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0;vertical-align:top;">
+  <td class='left-border'>
+
    &nbsp;
   </td>
   <td>
@@ -142,7 +144,8 @@
 
 <table summary="{t}Spam filter configuration{/t}">
  <tr style="padding-bottom:0px;">
-  <td style="width:50%; vertical-align: top;">
+  <td style='width:50%; '>
+
    
    <div>
     <div style='float:left'>
@@ -207,8 +210,10 @@
     </tr>
    </table>
    {/if}
-   <td rowspan=2 style="border-left:1px solid #A0A0A0">&nbsp;</td>
-   <td style="vertical-align:top;">
+   <td class='left-border' rowspan="2">&nbsp;
+</td>
+   <td>
+
     
     <div>
      <div style='float:left'>
@@ -258,7 +263,8 @@
 </td>
 </tr>
 <tr>
- <td style="vertical-align:top; width:45%">
+ <td style='width:45%'>
+
   <p style="margin-bottom:0px;">
   <b><label for="gosaVacationMessage">{t}Vacation message{/t}</label></b>
   </p>
@@ -270,7 +276,7 @@ name="gosaVacationMessage" rows="4" cols="512">{$gosaVacationMessage}</textarea>
 
 {if $show_templates eq "true"}
 {render acl=$gosaVacationMessageACL}
-<select id='vacation_template' name="vacation_template" {if $own_script != ""} disabled {/if}>
+<select id='vacation_template' name="vacation_template" {if $own_script != ""} disabled {/if} size=1>
  {html_options options=$vacationtemplates selected=$template}
  <option disabled>&nbsp;</option>
 </select>
