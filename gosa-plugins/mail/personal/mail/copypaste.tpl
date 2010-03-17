@@ -21,7 +21,8 @@
 					    <button type='submit' name='delete_forwarder'>{msgPool type=delButton}</button>
 
 		</td>
-		<td style="vertical-align:bottom;border-left:1px solid #A0A0A0">
+		<td class='left-border'>
+
   	  <h3><label for="alternates_list">{t}Alternative addresses{/t}</label></h3>
 					   	<select id="alternates_list" style="width:100%;height:100px;" name="alternates_list[]" size="15"
 							 multiple title="{t}List of alternative mail addresses{/t}"> 
