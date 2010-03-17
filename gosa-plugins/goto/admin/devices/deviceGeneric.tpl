@@ -3,8 +3,10 @@
 
 <table width="100%" summary="">
  <tr>
-  <td width="50%" style="vertical-align:top">
-    <table style="border-right:1px solid #B0B0B0;width:100%">
+  <td>
+
+    <table style='width:100%' class='right-border'>
+
         <tr>
             <td><LABEL for="base">{t}Base{/t}</LABEL>
             </td>
@@ -45,7 +47,8 @@
         </tr>
     </table>
    </td>
-   <td style="vertical-align:top">
+   <td>
+
     <table summary="">
         <tr>
             <td><LABEL for="devID">{t}Serial number{/t}&nbsp;{t}(iSerial){/t}</LABEL>{$must}
