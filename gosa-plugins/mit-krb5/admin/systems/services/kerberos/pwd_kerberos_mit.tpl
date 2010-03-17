@@ -19,7 +19,8 @@
 
 <table style="width:100%;">
 	<tr>
-		<td style="width:50%;vertical-align:top;">
+		<td style='width:50%;'>
+
 			<h3>{t}Kerberos options{/t}</h3>
 			<table style="width:100%;">
 				<tr>
@@ -27,7 +28,7 @@
 						<label for="goKrbRealm">{t}Realm{/t}</label>
 					</td>
 					<td>
-						<select name="goKrbRealm" onChange="document.mainform.submit();">
+						<select name="goKrbRealm" onChange="document.mainform.submit();" size=1>
 						{foreach from=$server_list item=item key=key}
 							{if $item.goKrbRealm==$goKrbRealm}
 							<option selected value="{$item.goKrbRealm}">{$item.goKrbRealm}</option>
@@ -43,7 +44,7 @@
 						<label for="POLICY">{t}Policy{/t}</label>
 					</td>
 					<td>
-						<select name="POLICY">
+						<select name="POLICY" size=1>
 						{foreach from=$POLICIES item=item key=key}
 							{if $POLICY==$item}
 							<option selected value="{$key}">{$item}</option>
@@ -104,27 +105,27 @@
 						>
 					</td>
 					<td>
-						<select name="PRINC_EXPIRE_TIME_h" id="PRINC_EXPIRE_TIME_h" {if $PRINC_EXPIRE_TIME_clear} disabled {/if}>
+						<select name="PRINC_EXPIRE_TIME_h" id="PRINC_EXPIRE_TIME_h" {if $PRINC_EXPIRE_TIME_clear} disabled {/if} size=1>
 							{html_options options=$hours selected=$PRINC_EXPIRE_TIME_h}
 						</select>
 					</td>
 					<td>
-						<select name="PRINC_EXPIRE_TIME_i" id="PRINC_EXPIRE_TIME_i" {if $PRINC_EXPIRE_TIME_clear} disabled {/if}>
+						<select name="PRINC_EXPIRE_TIME_i" id="PRINC_EXPIRE_TIME_i" {if $PRINC_EXPIRE_TIME_clear} disabled {/if} size=1>
 							{html_options options=$minutes selected=$PRINC_EXPIRE_TIME_i}
 						</select>
 					</td>
 					<td>
-						<select name="PRINC_EXPIRE_TIME_d" id="PRINC_EXPIRE_TIME_d" {if $PRINC_EXPIRE_TIME_clear} disabled {/if}>
+						<select name="PRINC_EXPIRE_TIME_d" id="PRINC_EXPIRE_TIME_d" {if $PRINC_EXPIRE_TIME_clear} disabled {/if} size=1>
 							{html_options options=$days selected=$PRINC_EXPIRE_TIME_d}
 						</select>
 					</td>
 					<td>
-						<select name="PRINC_EXPIRE_TIME_m" id="PRINC_EXPIRE_TIME_m" {if $PRINC_EXPIRE_TIME_clear} disabled {/if}>
+						<select name="PRINC_EXPIRE_TIME_m" id="PRINC_EXPIRE_TIME_m" {if $PRINC_EXPIRE_TIME_clear} disabled {/if} size=1>
 							{html_options options=$month selected=$PRINC_EXPIRE_TIME_m}
 						</select>
 					</td>
 					<td>
-						<select name="PRINC_EXPIRE_TIME_y" id="PRINC_EXPIRE_TIME_y" {if $PRINC_EXPIRE_TIME_clear} disabled {/if}>
+						<select name="PRINC_EXPIRE_TIME_y" id="PRINC_EXPIRE_TIME_y" {if $PRINC_EXPIRE_TIME_clear} disabled {/if} size=1>
 							{html_options options=$years selected=$PRINC_EXPIRE_TIME_y}
 						</select>
 					</td>
@@ -144,28 +145,28 @@
 						>
 					</td>
 					<td>
-						<select name="PW_EXPIRATION_h" id="PW_EXPIRATION_h" {if $PW_EXPIRATION_clear} disabled {/if}>
+						<select name="PW_EXPIRATION_h" id="PW_EXPIRATION_h" {if $PW_EXPIRATION_clear} disabled {/if} size=1>
 							{html_options options=$hours selected=$PW_EXPIRATION_h}
 						</select>
 					</td>
 					<td>
-						<select name="PW_EXPIRATION_i" id="PW_EXPIRATION_i" {if $PW_EXPIRATION_clear} disabled {/if}>
+						<select name="PW_EXPIRATION_i" id="PW_EXPIRATION_i" {if $PW_EXPIRATION_clear} disabled {/if} size=1>
 							{html_options options=$minutes selected=$PW_EXPIRATION_i}
 						</select>
 
 					</td>
 					<td>
-						<select name="PW_EXPIRATION_d" id="PW_EXPIRATION_d" {if $PW_EXPIRATION_clear} disabled {/if}>
+						<select name="PW_EXPIRATION_d" id="PW_EXPIRATION_d" {if $PW_EXPIRATION_clear} disabled {/if} size=1>
 							{html_options options=$days selected=$PW_EXPIRATION_d}
 						</select>
 					</td>
 					<td>
-						<select name="PW_EXPIRATION_m" id="PW_EXPIRATION_m" {if $PW_EXPIRATION_clear} disabled {/if}>
+						<select name="PW_EXPIRATION_m" id="PW_EXPIRATION_m" {if $PW_EXPIRATION_clear} disabled {/if} size=1>
 							{html_options options=$month selected=$PW_EXPIRATION_m}
 						</select>
 					</td>
 					<td>
-						<select name="PW_EXPIRATION_y" id="PW_EXPIRATION_y" {if $PW_EXPIRATION_clear} disabled {/if}>
+						<select name="PW_EXPIRATION_y" id="PW_EXPIRATION_y" {if $PW_EXPIRATION_clear} disabled {/if} size=1>
 							{html_options options=$years selected=$PW_EXPIRATION_y}
 						</select>
 					</td>
@@ -202,7 +203,8 @@
 	
 	
 		</td>	
-		<td style="vertical-align:top; border-left: solid 1px #BBBBBB; padding-left: 3px;">
+		<td style='padding-left: 3px;' class='left-border'>
+
 			<h3>Flags</h3>
 			<table width="100%">
 				<tr>
