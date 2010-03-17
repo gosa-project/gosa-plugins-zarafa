@@ -1,6 +1,7 @@
 <table style="width:100%;" summary="">
  <tr>
-  <td style="width:33%; vertical-align:top;">
+  <td style='width:33%; '>
+
    <h3>{t}Keyboard{/t}</h3>
    <table summary="">
     <tr>
@@ -8,7 +9,7 @@
      <td>
 
 {render acl=$gotoXKbModelACL}
-      <select id="gotoXKbModel" name="gotoXKbModel" title="{t}Choose keyboard model{/t}">
+      <select id="gotoXKbModel" name="gotoXKbModel" title="{t}Choose keyboard model{/t}" size=1>
        {html_options options=$XKbModels selected=$gotoXKbModel_select}
       </select>
 {/render}
@@ -20,7 +21,7 @@
      <td>
 
 {render acl=$gotoXKbLayoutACL}
-      <select id="gotoXKbLayout" name="gotoXKbLayout" title="{t}Choose keyboard layout{/t}">
+      <select id="gotoXKbLayout" name="gotoXKbLayout" title="{t}Choose keyboard layout{/t}" size=1>
        {html_options options=$XKbLayouts selected=$gotoXKbLayout_select}
       </select>
 {/render}
@@ -32,7 +33,7 @@
      <td>
 
 {render acl=$gotoXKbVariantACL}
-      <select id="gotoXKbVariant" name="gotoXKbVariant" title="{t}Choose keyboard variant{/t}">
+      <select id="gotoXKbVariant" name="gotoXKbVariant" title="{t}Choose keyboard variant{/t}" size=1>
        {html_options options=$XKbVariants selected=$gotoXKbVariant_select}
       </select>
 {/render}
@@ -43,11 +44,13 @@
 
   </td>
 
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
   
-  <td style="vertical-align:top;width:32%">
+  <td style='width:32%'>
+
    <h3>{t}Mouse{/t}</h3>
    <table summary="">
     <tr>
@@ -55,7 +58,7 @@
      <td>
 
 {render acl=$gotoXMouseTypeACL}
-      <select name="gotoXMouseType" id="gotoXMouseType" title="{t}Choose mouse type{/t}">
+      <select name="gotoXMouseType" id="gotoXMouseType" title="{t}Choose mouse type{/t}" size=1>
        {html_options options=$MouseTypes selected=$gotoXMouseType_select}
       </select>
      </td>
@@ -67,7 +70,7 @@
      <td>
 
 {render acl=$gotoXMouseportACL}
-      <select id="gotoXMouseport" name="gotoXMouseport" title="{t}Choose mouse port{/t}">
+      <select id="gotoXMouseport" name="gotoXMouseport" title="{t}Choose mouse port{/t}" size=1>
        {html_options options=$MousePorts selected=$gotoXMouseport_select}
       </select>
 {/render}
@@ -78,11 +81,13 @@
 
   </td>
 
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
   
-  <td style="vertical-align:top;width:33%">
+  <td style='width:33%'>
+
    <h3>{t}Telephone hardware{/t}</h3>
    <table style="width:100%" border=0 summary="">
     <tr>
@@ -107,7 +112,8 @@
   </td>
  </tr>
  <tr>
-   <td style="width:33%;vertical-align:top;">
+   <td style='width:33%;'>
+
    <h3>{t}Graphic device{/t}</h3>
    <table summary="">
     <tr>
@@ -115,7 +121,7 @@
      <td>
 
 {render acl=$gotoXDriverACL}
-      <select id="gotoXDriver" name="gotoXDriver" title="{t}Choose graphic driver that is needed by the installed graphic board{/t}">
+      <select id="gotoXDriver" name="gotoXDriver" title="{t}Choose graphic driver that is needed by the installed graphic board{/t}" size=1>
        {html_options options=$XDrivers selected=$gotoXDriver_select}
       </select>
 {/render}
@@ -127,7 +133,7 @@
      <td>
 
 {render acl=$gotoXResolutionACL}
-      <select id="gotoXResolution" name="gotoXResolution" title="{t}Choose screen resolution used in graphic mode{/t}">
+      <select id="gotoXResolution" name="gotoXResolution" title="{t}Choose screen resolution used in graphic mode{/t}" size=1>
        {html_options options=$XResolutions selected=$gotoXResolution_select}
       </select>
 {/render}
@@ -139,7 +145,7 @@
      <td>
 
 {render acl=$gotoXColordepthACL}
-      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose colordepth used in graphic mode{/t}">
+      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose colordepth used in graphic mode{/t}" size=1>
        {html_options options=$XColordepths selected=$gotoXColordepth_select}
       </select>
 {/render}
@@ -149,11 +155,13 @@
    </table>
    </td>
 
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
 
-   <td style="width:32%; vertical-align:top;">
+   <td style='width:32%; '>
+
    <h3>{t}Display device{/t}</h3>
    <table summary="">
     <tr>
@@ -195,11 +203,13 @@
    </table>
 
    </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
 
-  <td style="width:33%; vertical-align:top;">
+  <td style='width:33%; '>
+
   
 
    <h3>{t}Scan device{/t}</h3>
