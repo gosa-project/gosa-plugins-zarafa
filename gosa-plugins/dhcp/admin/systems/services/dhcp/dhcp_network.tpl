@@ -1,7 +1,8 @@
 {* GOsa dhcp sharedNetwork - smarty template *}
 <table width="100%">
  <tr>
-  <td width="50%" style="vertical-align:top">
+  <td>
+
    <p><b>{t}Network configuration{/t}</b></p>
    <table>
     <tr>
@@ -55,7 +56,8 @@
    </table>
   
   </td>
-  <td style="vertical-align:top">
+  <td>
+
    <p><b>{t}Domain Name Service{/t}</b></p>
    <table>
     <tr>
