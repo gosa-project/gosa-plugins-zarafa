@@ -41,7 +41,8 @@
 				</tr>
 			</table>
 		</td>
-		<td valign="top" style="border-left: 1px solid rgb(160, 160, 160);">
+		<td class='left-border'>
+
 			<table summary="{t}Opengroupware{/t}">
 				<tr>
 					<td valign="top">
