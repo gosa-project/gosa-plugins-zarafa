@@ -1,6 +1,7 @@
 <table summary="" width="100%">
  <tr>
-  <td style="vertical-align:top; width:50%; border-right:1px solid #B0B0B0">
+  <td style='width:50%; ' class='right-border'>
+
 {if $StandAlone}
    <h3>{t}General{/t}</h3>
    <table summary="">
@@ -98,7 +99,8 @@
 <h3>{t}Permissions{/t}</h3>
 <table summary="" width="100%">
  <tr>
-  <td style="border-right:1px solid #B0B0B0; width:50%">
+  <td style='width:50%' class='right-border'>
+
    <table style="width:100%" summary=''>
     <tr>
      <td>
