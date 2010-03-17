@@ -16,7 +16,7 @@
 		<td>
 {render acl=$ACL}
 			{if isset($item.VALUE_CNT)}
-				<select name="value_{$key}" style='width:180px;'>
+				<select name="value_{$key}" style='width:180px;' size=1>
 				{foreach from=$item.VALUE key=k item=i}
 					<option {if $item.CURRENT == $i} selected {/if} value="{$i}">{$i}</option>
 				{/foreach}

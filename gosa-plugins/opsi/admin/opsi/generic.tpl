@@ -57,7 +57,7 @@
      <td>{t}Netboot product{/t}</td>
      <td>
 {render acl=$netbootProductACL}
-      <select name="opsi_netboot_product" onChange="document.mainform.submit();">
+      <select name="opsi_netboot_product" onChange="document.mainform.submit();" size=1>
 		{foreach from=$ANP item=item key=key}
 			<option {if $key == $SNP} selected {/if} value="{$key}">{$key}</option>
 		{/foreach}
@@ -65,8 +65,7 @@
 {/render}
       &nbsp;
       {if $netboot_configurable}
-		  <input type='image' name='configure_netboot' src='images/lists/edit.png'
-			title='{t}Configure product{/t}' class='center'>
+		  {image path="images/lists/edit.png" action="configure_netboot" title="{t}Configure product{/t}">
       {else}
 <!--		  <input type='image' name='dummy_10' src='images/lists/edit_gray.png'
 			title='{t}Configure product{/t}' class='center'>-->
@@ -75,7 +74,8 @@
     </tr>
    </table>
   </td>
-  <td style='vertical-align: top;'>
+  <td>
+
    <table>
     <tr>
      <td>{t}Description{/t}</td>
@@ -102,8 +102,7 @@
   </td>
  </tr>
  <tr>
-  <td style="width:50%;"><h3><img class='center' src='plugins/opsi/images/product.png' 
-		alt=' '>&nbsp;{t}Installed products{/t}</h3>
+  <td style="width:50%;"><h3>{image path="plugins/opsi/images/product.png"}&nbsp;{t}Installed products{/t}</h3>
 {render acl=$localProductACL}
 	{$divSLP}
 {/render}
@@ -119,7 +118,7 @@
    <hr><br>
    {if $standalone}
     <h3>{t}Action{/t}</h3>
-	<select name='opsi_action'>
+	<select name='opsi_action' size=1>
 		<option>&nbsp;</option>
 		{if $is_installed}
 		<option value="install">{t}Reinstall{/t}</option>
