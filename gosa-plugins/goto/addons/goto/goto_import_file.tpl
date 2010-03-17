@@ -33,7 +33,8 @@
 		<br>
 		<br>
 		<div style='width:100%; height:300px; overflow: scroll;'>
-		<table cellpadding="3" cellspacing="0" style='width:100%; background-color: #CCCCCC; border: solid 1px #CCCCCC;'>
+		<table style='width:100%; background-color: #CCCCCC; '>
+
 			<tr>
 				<td><b>{t}Timestamp{/t}</b></td>
 				<td><b>{t}MAC{/t}</b></td>
@@ -66,13 +67,20 @@
 					<tr class="rowxp1"> 
 				{/if}
 					<td>{$item.TIMESTAMP}</td>
-					<td style='border-left: solid 1px #BBBBBB;'>{$item.MAC}</td>
-					<td style='border-left: solid 1px #BBBBBB;'>{$item.HEADER}</td>
-					<td style='border-left: solid 1px #BBBBBB;'>{$item.OGROUP}</td>
-					<td style='border-left: solid 1px #BBBBBB;'>{$item.BASE}</td>
-					<td style='border-left: solid 1px #BBBBBB;'>{$item.FQDN}</td>
-					<td style='border-left: solid 1px #BBBBBB;'>{$item.IP}</td>
-					<td style='border-left: solid 1px #BBBBBB;'>{$item.DHCP}</td>
+					<td class='left-border'>{$item.MAC}
+</td>
+					<td class='left-border'>{$item.HEADER}
+</td>
+					<td class='left-border'>{$item.OGROUP}
+</td>
+					<td class='left-border'>{$item.BASE}
+</td>
+					<td class='left-border'>{$item.FQDN}
+</td>
+					<td class='left-border'>{$item.IP}
+</td>
+					<td class='left-border'>{$item.DHCP}
+</td>
 				</tr>
 			{/if}
 		{/foreach}

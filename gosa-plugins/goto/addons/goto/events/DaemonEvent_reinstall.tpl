@@ -3,15 +3,18 @@
 
 <table style='width:100%;'>
   <tr>
-    <td style='width:50%; vertical-align:top; border-right:1px solid #AAA'>
+    <td style='width:50%; ' class='right-border'>
+
       <table>
         <tr>
-          <td style='vertical-align:top'><b>{t}Schedule{/t}</b><br><br>
+          <td>
+<b>{t}Schedule{/t}</b><br><br>
           {$timestamp}</td>
         </tr>
       </table>
     </td>
-    <td style='width:50%; vertical-align:top;'>
+    <td style='width:50%; '>
+
       <table style='width:100%;'>
         <tr>
           <td>
@@ -29,7 +32,8 @@
 
 <table style='width:100%;'>
 	<tr>
-		<td style='width:50%; vertical-align:top;'>
+		<td style='width:50%; '>
+
 			<table>
 				<tr>
 					<td>{t}ID{/t}</td>
@@ -52,12 +56,14 @@
 					<td>{$data.MACADDRESS}</td>
 				</tr>
 				<tr>
-					<td style='vertical-align:top'>{t}Timestamp{/t}</td>
+					<td>{t}Timestamp{/t}
+</td>
 					<td>{$timestamp}</td>
 				</tr>
 			</table>
 		</td>
-		<td style='width:50%; vertical-align:top;'>
+		<td style='width:50%; '>
+
 			<table >
 			</table>
 		</td>

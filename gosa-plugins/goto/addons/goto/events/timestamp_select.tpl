@@ -10,33 +10,33 @@
 	</tr>
 	<tr>
 		<td>
-			<select name="time_year" onChange="document.mainform.submit();">
+			<select name="time_year" onChange="document.mainform.submit();" size=1>
 				{html_options values=$years options=$years selected=$time_year}
 			</select>&nbsp;
 		</td>
 		<td>
-			<select name="time_month" onChange="document.mainform.submit();">
+			<select name="time_month" onChange="document.mainform.submit();" size=1>
 				{html_options values=$months options=$months selected=$time_month}
 			</select>&nbsp;
 		</td>
 		<td>
-			<select name="time_day">
+			<select name="time_day" size=1>
 				{html_options values=$days options=$days selected=$time_day}
 			</select>&nbsp;
 		</td>
     <td>&nbsp;</td>
 		<td>
-			<select name="time_hour">
+			<select name="time_hour" size=1>
 				{html_options values=$hours options=$hours selected=$time_hour}
 			</select>&nbsp;
 		</td>
 		<td>
-			<select name="time_minute">
+			<select name="time_minute" size=1>
 				{html_options values=$minutes options=$minutes selected=$time_minute}
 			</select>&nbsp;
 		</td>
 		<td>
-			<select name="time_second">
+			<select name="time_second" size=1>
 				{html_options values=$seconds options=$seconds selected=$time_second}
 			</select>
 		</td>
@@ -56,7 +56,7 @@
     <td>
       <input {if !$activate_periodical_job} disabled {/if}
           size="4" type='text' id='periodValue' value='{$periodValue}' name='periodValue'>
-      <select name='periodType' id="periodType" {if !$activate_periodical_job} disabled {/if}>
+      <select name='periodType' id="periodType" {if !$activate_periodical_job} disabled {/if} size=1>
         {html_options options=$periodTypes selected=$periodType}
       </select>
     </td>

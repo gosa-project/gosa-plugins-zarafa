@@ -3,7 +3,8 @@
 
 <table style='width:100%;'>
   <tr>
-    <td style='width:50%; vertical-align:top; border-right:1px solid #AAA; padding:6px;'>
+    <td style='width:50%; padding:6px;' class='right-border'>
+
 	  <b>{t}Message settings{/t}</b>
       <table style="width:100%;">
         <tr>
@@ -24,11 +25,13 @@
         </tr>
       </table>
     </td>
-    <td style='width:50%; vertical-align:top;'>
+    <td style='width:50%; '>
+
 	    <b>{t}Schedule{/t}</b>
       <table>
         <tr>
-          <td colspan="2" style='vertical-align:top'>{$timestamp}<br><br></td>
+          <td colspan="2">{$timestamp}
+<br><br></td>
         </tr>
 	  </table>
       <table style='width:100%;'>
@@ -65,7 +68,8 @@
 
 <table style='width:100%;'>
 	<tr>
-		<td style='vertical-align:top;'>
+		<td>
+
 			<table>
 				<tr>
 					<td>{t}ID{/t}</td>
@@ -84,7 +88,8 @@
 					<td>{$data.MACADDRESS}</td>
 				</tr>
 				<tr>
-					<td style='vertical-align:top'>{t}Timestamp{/t}</td>
+					<td>{t}Timestamp{/t}
+</td>
 					<td>{$timestamp}</td>
 				</tr>
 			</table>
