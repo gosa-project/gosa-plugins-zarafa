@@ -53,7 +53,7 @@
 					<td>{t}Type{/t}</td>
 					<td>	
 						{render acl=$acl}
-						<select name='s_Type'  onChange="document.mainform.submit();">
+						<select name='s_Type'  onChange="document.mainform.submit();" size=1>
 							{html_options options=$a_Types selected=$s_Type}
 						</select>
 						{/render}
@@ -100,7 +100,7 @@
 					<td>{t}Bit rate{/t}</td>
 					<td>
 						{render acl=$acl}
-						<select name='s_Speed'>
+						<select name='s_Speed' size=1>
 							{html_options options=$a_Speeds selected=$s_Speed}
 						</select>
 						{/render}
@@ -110,7 +110,7 @@
 					<td>{t}Flow control{/t}</td>
 					<td>
 						{render acl=$acl}
-						<select name='s_FlowControl'>
+						<select name='s_FlowControl' size=1>
 							{html_options options=$a_FlowControl selected=$s_FlowControl}
 						</select>
 						{/render}
@@ -120,7 +120,7 @@
 					<td>{t}Parity{/t}</td>
 					<td>
 						{render acl=$acl}
-						<select name='s_Parity'>
+						<select name='s_Parity' size=1>
 							{html_options options=$a_Parities selected=$s_Parity}
 						</select>
 						{/render}
@@ -130,7 +130,7 @@
 					<td>{t}Bits{/t}</td>
 					<td>
 						{render acl=$acl}
-						<select name='i_Bit'>
+						<select name='i_Bit' size=1>
 							{html_options options=$a_Bits selected=$i_Bit}
 						</select>
 						{/render}
