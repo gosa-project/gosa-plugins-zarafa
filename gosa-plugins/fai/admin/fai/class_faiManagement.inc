@@ -374,6 +374,9 @@ class faiManagement extends management
    */
   function removeFAIObjects($to_delete)
   {
+    // Close dialogs and remove locks for currently handled dns
+    $this->cancelEdit();
+
     // Do not allow to remove objects with state freeezed
     $errors = $disallowed = array();
   
@@ -397,20 +400,35 @@ class faiManagement extends management
     }
 
     // Check entry locking
+    $smarty = get_smarty();
     if(count($this->dns)){
       if ($user= get_multiple_locks($this->dns)){
         return(gen_locked_message($user,$this->dns));
       }
       if(count($this->dns)){
-        $smarty = get_smarty();
+
+        // Add locks
         $dns_names = array();
-        foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
-          $dns_names[] = LDAP::fix($dn);
+        $types = array();
+        $h = $this->getHeadpage();
+
+        // Build list of object -labels
+        foreach($h->objectTypes as $type){
+          $map[$type['objectClass']]= $type['label'];
         }
-        $smarty->assign("info",msgPool::deleteInfo($dns_names,_("FAI object")));
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+
+        foreach($this->dns as $dn){
+          $tmp = $h->getType($dn);
+          if(isset($map[$tmp])){
+            $dns_names[] = '('._($map[$tmp]).')&nbsp;-&nbsp;'.LDAP::fix($dn);
+          }else{
+            $dns_names[] =LDAP::fix($dn);
+          }
+        }
+        add_lock ($this->dns, $this->ui->dn);
+
+        $smarty->assign("info",msgPool::deleteInfo($dns_names));
+        return($smarty->fetch(get_template_path('removeEntries.tpl', TRUE)));
       }
     }
   }
