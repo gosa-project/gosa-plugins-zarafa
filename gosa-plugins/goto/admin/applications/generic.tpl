@@ -49,17 +49,20 @@
 {/render}
 {if !$isReleaseApplikation}
 {render acl=$baseACL disable_picture='images/lists/folder_grey.png'}
-      <input type="image" name="chooseBase" src="images/lists/folder.png" class="center" title="{t}Select a base{/t}">
+      {image path="images/lists/folder.png" action="chooseBase" title="{t}Select a base{/t}"}
+
 {/render}
 {/if}
       </td>
      </tr>
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
    <table summary="">
     <tr>
     <td>
@@ -68,10 +71,12 @@
 {if $IconReadable}
     <img alt="" src="getbin.php?rand={$rand}" border=1 style="width:48px; height:48; background-color:white; vertical-align:bottom;">
 {else}
-	<img src='images/empty.png' style="width:48px; height:48; background-color:white; vertical-align:bottom;" border=1 >
+	{image path="images/empty.png"}
+
 {/if}
     </td>
-    <td style="vertical-align:top">
+    <td>
+
     &nbsp;<br>
 
     <input type="hidden" name="MAX_FILE_SIZE" value="100000">
@@ -98,7 +103,8 @@
 <h3>{t}Options{/t}</h3>
 <table summary="" style="width:100%;">
   <tr>
-    <td style="width:50%;border-right:1px solid #B0B0B0; vertical-align:top">
+    <td style='width:50%;' class='right-border'>
+
 {render acl=$execForGroupmembersACL}
       <input type=checkbox name="execForGroupmembers" value="1" {$execForGroupmembers}>
 {/render}
@@ -144,7 +150,8 @@
 			<button type='submit' name='upLoad'>{t}Upload{/t}</button>
 
 {/render}
-			<input type='image' name='downloadScript'  src='images/save.png' title='{t}Download{/t}' class='center'>
+			{image path="images/save.png" action="downloadScript" title="{t}Download{/t}"}
+
 		</td>
 	</tr>
 </table>

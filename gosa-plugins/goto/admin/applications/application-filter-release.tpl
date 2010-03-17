@@ -1,6 +1,7 @@
 <div class="contentboxh">
  <p class="contentboxh">
-  <img src="images/launch.png" align="right" alt="[F]">{t}Filter{/t}
+  {image path="images/launch.png" align="right"}{t}Filter{/t}
+
  </p>
 </div>
 
@@ -16,11 +17,13 @@
   </tr>
  </table>
 
- <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+ <table style='width:100%;' summary="">
+
   <tr>
    <td>
     <label for="NAME">
-     <img src="images/lists/search.png" align=middle>&nbsp;Name
+     {image path="images/lists/search.png"}&nbsp;Name
+
     </label>
    </td>
    <td>
@@ -29,7 +32,8 @@
   </tr>
  </table>
 
- <table summary=""  width="100%"  style="background:#EEEEEE;border-top:1px solid #B0B0B0;">
+ <table style='background:#EEEEEE;' summary="">
+
   <tr>
    <td width="100%" align="right">
     {$APPLY}
