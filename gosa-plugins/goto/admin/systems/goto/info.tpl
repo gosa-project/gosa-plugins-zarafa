@@ -6,10 +6,12 @@
 <h3>{t}System information{/t}</h3>
 <table summary="" style="width:100%;">
  <tr>
-  <td style="vertical-align:top; width:50%">
+  <td style='width:50%'>
+
    <table summary="">
     <tr>
-     <td style="vertical-align:top"><b>{t}CPU{/t}</b></td><td>{$ghCpuType}</td>
+     <td>
+<b>{t}CPU{/t}</b></td><td>{$ghCpuType}</td>
     </tr>
     <tr>
      <td><b>{t}Memory{/t}</b></td><td>{$ghMemSize}</td>
@@ -18,7 +20,8 @@
      <td><b>{t}Boot MAC{/t}</b></td><td>{$macAddress}</td>
     </tr>
     <tr>
-     <td style="vertical-align:top;"><b>{t}USB support{/t}</b></td><td>{$ghUsbSupport}<div style="height:20px;"></div></td>
+     <td>
+<b>{t}USB support{/t}</b></td><td>{$ghUsbSupport}<div style="height:20px;"></div></td>
     </tr>
     <tr>
      <td><b>{t}System status{/t}</b></td>
@@ -34,13 +37,15 @@
     </tr>
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
   <td>
    <table summary="">
     <tr>
-     <td style="vertical-align:top"><b>{t}Network devices{/t}</b></td>
+     <td>
+<b>{t}Network devices{/t}</b></td>
      <td>
       {foreach item=netcard from=$ghNetNic}
         {$netcard}<br>
@@ -49,7 +54,8 @@
     </tr>
     <tr><td colspan=2><div style="height:10px;"></div></td></tr>
     <tr>
-     <td style="vertical-align:top;"><b>{t}IDE devices{/t}</b></td>
+     <td>
+<b>{t}IDE devices{/t}</b></td>
      <td>
        {foreach item=idedev from=$ghIdeDev}
          {$idedev}<br>
@@ -58,7 +64,8 @@
     </tr>
     <tr><td colspan=2><div style="height:10px;"></div></td></tr>
     <tr>
-     <td style="vertical-align:top;"><b>{t}SCSI devices{/t}</b></td>
+     <td>
+<b>{t}SCSI devices{/t}</b></td>
      <td>
        {foreach item=scsidev from=$ghScsiDev}
          {$scsidev}<br>
@@ -75,11 +82,13 @@
     </tr>
     <tr><td colspan=2><div style="height:10px;"></div></td></tr>
     <tr>
-     <td style="vertical-align:top"><b>{t}Graphic device{/t}</b></td>
+     <td>
+<b>{t}Graphic device{/t}</b></td>
      <td>{$ghGfxAdapter}</td>
     </tr>
     <tr>
-     <td style="vertical-align:top"><b>{t}Audio device{/t}</b></td>
+     <td>
+<b>{t}Audio device{/t}</b></td>
      <td>{$ghSoundAdapter}</td>
     </tr>
    </table>
@@ -89,10 +98,12 @@
 
 {if $active eq "true"}
 <br>
-<h3 style="border-top:1px solid #A0A0A0; padding-top:5px;"><img class="center" alt="" align="middle" src="images/lists/on.png"> {t}System status{/t}</h3>
+<h3 style="border-top:1px solid #A0A0A0; padding-top:5px;">{image path="images/lists/on.png"} {t}System status{/t}
+</h3>
 <table summary="" style="width:100%">
  <tr>
-  <td style="vertical-align:top; width:50%">
+  <td style='width:50%'>
+
    <table summary="">
     <tr>
      <td><b>{t}Up since{/t}</b></td><td>{$uptime}</td>
@@ -112,10 +123,12 @@
     {$partitions}
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
    <table summary="">
     <tr>
      <td><b>{t}SSH service{/t}</b></td><td>{$sshd}</td>
