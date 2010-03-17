@@ -1,7 +1,8 @@
 <h3>{t}Properties{/t}</h3>
 <table summary="" style="width:100%;">
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
    <table summary="">
     <tr>
      {if $cn eq 'default'}
@@ -36,13 +37,14 @@
 	{$host_key}
 
   </td>
-  <td style="vertical-align:top;border-left:1px solid #A0A0A0;" >
+  <td class='left-border'>
+
    <table summary="" style='width:100%'>
     <tr>
      <td style='width:20%'><LABEL for="gotoMode">{t}Mode{/t}</LABEL></td>
      <td>
 {render acl=$gotoModeACL}
-      <select id="gotoMode" name="gotoMode" title="{t}Select terminal mode{/t}">
+      <select id="gotoMode" name="gotoMode" title="{t}Select terminal mode{/t}" size=1>
        {html_options options=$modes selected=$gotoMode_select}
       </select>
 {/render}
@@ -52,7 +54,7 @@
      <td><LABEL for="gotoSyslogServer">{t}Syslog server{/t}</LABEL></td>
      <td>
 {render acl=$gotoSyslogServerACL}
-      <select name="gotoSyslogServer" id="gotoSyslogServer" title="{t}Choose server to use for logging{/t}">
+      <select name="gotoSyslogServer" id="gotoSyslogServer" title="{t}Choose server to use for logging{/t}" size=1>
        {html_options options=$syslogservers selected=$gotoSyslogServer_select}
       </select>
 {/render}
@@ -85,7 +87,7 @@
 {/render}
 	 <br>
 {render acl=$gotoNtpServerACL}
-      <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if} >
+      <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if}  size=1>
        {html_options values=$ntpservers output=$ntpservers}
       </select>
 {/render}
@@ -106,13 +108,14 @@
 <p class="seperator" style="margin:0px; padding:0px;">&nbsp;</p>
 <table style="width:100%;">
  <tr>
-  <td style="width:50%;vertical-align:top;">
+  <td style='width:50%;'>
+
    <table summary="">
     <tr>
      <td><LABEL for="gotoTerminalPath">{t}Root server{/t}</LABEL></td>
      <td>
 {render acl=$gotoTerminalPathACL}
-      <select name="gotoTerminalPath" id="gotoTerminalPath" title="{t}Select NFS root filesystem to use{/t}">
+      <select name="gotoTerminalPath" id="gotoTerminalPath" title="{t}Select NFS root filesystem to use{/t}" size=1>
        {html_options options=$nfsservers selected=$gotoTerminalPath_select}
       </select>
 {/render}
@@ -120,13 +123,14 @@
     </tr>
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0;">
+  <td class='left-border'>
+
    <table summary="">
     <tr>
      <td><LABEL for="gotoSwapServer">{t}Swap server{/t}</LABEL></td>
      <td>
 {render acl=$gotoSwapServerACL}
-      <select name="gotoSwapServer" id="gotoSwapServer" title="{t}Choose NFS filesystem to place swap files on{/t}">
+      <select name="gotoSwapServer" id="gotoSwapServer" title="{t}Choose NFS filesystem to place swap files on{/t}" size=1>
        {html_options options=$swapservers selected=$gotoSwapServer_select}
       </select>
 {/render}
@@ -145,7 +149,8 @@
 <hr>
 <table width="100%">
 	<tr>
-		<td style="width:50%; border-right:1px solid #AAA">
+		<td style='width:50%; ' class='right-border'>
+
 		{if $fai_activated}
 			<h3>{t}Action{/t}</h3>
 				<table summary="">
