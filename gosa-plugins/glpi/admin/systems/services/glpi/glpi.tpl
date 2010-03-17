@@ -1,6 +1,7 @@
 <table summary="" style="width:100%;">
 	<tr>
-		<td style="width:50%;vertical-align:top;" >
+		<td style='width:50%;'>
+
 			<!--Upper left-->	
 			
 			<h3>{t}Generic{/t}</h3>
@@ -10,7 +11,7 @@
 					</td>
 					<td>
 {render acl=$typeACL}
-						<select name="type">
+						<select name="type" size=1>
 							{html_options values=$SystemTypeKeys output=$SystemTypes selected=$type}
 						</select>
 {/render}
@@ -25,7 +26,7 @@
 					</td>
 					<td>
 {render acl=$osACL}
-						<select name="os">
+						<select name="os" size=1>
 							{html_options values=$OSKeys output=$OSs selected=$os}
 						</select>	
 {/render}
@@ -40,7 +41,7 @@
 					</td>
 					<td>
 {render acl=$FK_glpi_enterpriseACL}
-						<select name="FK_glpi_enterprise">
+						<select name="FK_glpi_enterprise" size=1>
 							{html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
 						</select>	
 {/render}
@@ -79,7 +80,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
+		<td style='padding-right: 5px;' class='left-border'>
+
 			<!--Upper right-->
 			<h3>{t}Comment{/t}</h3>
 			<table summary="" width="100%">
@@ -103,7 +105,7 @@
 				<tr>
 					<td>
 {render acl=$DevicesACL}
-						<select name="InstalledDevices" style="height:130px;width:100%;" multiple>
+						<select name="InstalledDevices" style="height:130px;width:100%;" multiple size=1>
 							{html_options values=$InstalledDeviceKeys output=$InstalledDevices}
 						</select>
 {/render}
@@ -119,7 +121,8 @@
 			<input type="submit" value="{t}Software{/t}" name="Software">	
 			<input type="submit" value="{t}Contracts{/t}" name="Contracts">	-->
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
+		<td style='padding-right: 5px;' class='left-border'>
+
 			<h3>{t}Attachments{/t}</h3>
 			<table summary="" width="100%">	
 				<tr>
