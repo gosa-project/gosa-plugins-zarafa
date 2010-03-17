@@ -43,7 +43,8 @@
 {t}Kolab account{/t}</h3>
 <table style="width:100%" summary="{t}Kolab delegation configuration{/t}">
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
 
 {if $multiple_support}
 	<input type="checkbox" name="use_kolabDelegate" {if $use_kolabDelegate} checked {/if}
@@ -93,10 +94,12 @@
 	{t}No mail size restriction for this account{/t}
 {/render}
   </td>
-  <td rowspan=2 style="border-left:1px solid #A0A0A0">
+  <td class='left-border' rowspan="2">
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
 
  <h3>{t}Free Busy information{/t}</h3>
  <table summary="{t}Free Busy information{/}">
