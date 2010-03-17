@@ -1,6 +1,7 @@
 <table summary="" width="100%">
  <tr>
-  <td style="vertical-align:top; width:50%;">
+  <td style='width:50%;'>
+
 	<table summary="">
 	 <tr>
 	  <td><LABEL for="cn">{t}Machine name{/t}</LABEL>{$must}</td>
@@ -23,7 +24,8 @@
 	  </tr>
 	</table>
   </td>
-  <td style="vertical-align:top">
+  <td>
+
 	<table summary="">
 	 <tr>
 	  <td><LABEL for="description">{t}Description{/t}</LABEL></td>
