@@ -14,7 +14,7 @@
      				<td><LABEL for="displayName">{t}Display name{/t}</LABEL>{$must}</td>
      				<td>
 {render acl=$displayNameACL}
-        				<input name="displayName" id="displayName" size=35 maxlength=60 value="{$displayName}" 
+        				<input name="displayName" id="displayName" size=35 maxlength=60 value="{$displayName}" type='text' 
 						title="{t}Macro name to be displayed{/t}">
 {/render}
      				</td>

@@ -1,5 +1,5 @@
 {if $readable}
-<table width="100%" summary="">
+<table summary="">
 	<tr>
 		<td>{t}Argument{/t}
 		</td>
