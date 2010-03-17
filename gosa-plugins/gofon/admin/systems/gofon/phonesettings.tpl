@@ -19,7 +19,8 @@
 	</tr>
 {if $selected_categorie eq '0'}
 	<tr>
-		<td style="width:50%; border-right:1px solid #A0A0A0">
+		<td style='width:50%; ' class='right-border'>
+
 			<table summary="" border=0>
 			 <tr>
 				<td>
@@ -81,7 +82,8 @@
 {if $selected_categorie eq '1'}
 		
 	<tr>
-		<td style="vertical-align:top; width:50%; border-right:1px solid #A0A0A0">
+		<td style='width:50%; ' class='right-border'>
+
 			<table summary="" width="100%">
 			 <tr>
 				<td>
@@ -188,10 +190,12 @@
 
 			</table>
 		</td>
-		<td valign="top" style="vertical-align:top">
+		<td>
+
 			 <table summary="" width="100%">
                <tr>
-                    <td style="vertical-align:top;">
+                    <td>
+
                         <LABEL for="goFonPermitS">{t}Hosts that are allowed to connect{/t}</LABEL><br>
 {render acl=$goFonPermitACL}
                         <select id="goFonPermitS" style="width:100%; height:80px;" name="goFonPermitS" size=15
@@ -216,7 +220,8 @@
                     </td>
                 </tr>
 				<tr>
-                    <td style="vertical-align:top;">
+                    <td>
+
              	        <LABEL for="goFonDenyS">{t}Hosts that are not allowed to connect{/t}</LABEL><br>
 {render acl=$goFonDenyACL}
                         <select id="goFonDenyS" style="width:100%; height:80px;" name="goFonDenyS" size=15
