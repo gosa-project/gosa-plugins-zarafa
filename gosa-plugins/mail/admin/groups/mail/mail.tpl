@@ -1,6 +1,8 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style='width:100%; ' summary="">
+
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
    <h3>{t}Generic{/t}</h3>
    <table summary="">
     <tr>
@@ -15,7 +17,7 @@
 					{if $mailEqualsCN} disabled {/if}
 				>
 			{/render}
-			@<select name='MailDomain'>
+			@<select name='MailDomain' size=1>
 				{html_options values=$MailDomains output=$MailDomains selected=$MailDomain}
 			</select>
 		{else}
@@ -73,12 +75,12 @@
 			{t}Folder type{/t}
 		</td>
 		<td>
-			<select id="FolderTypeCAT" name="FolderTypeCAT" onChange="document.mainform.submit();">
+			<select id="FolderTypeCAT" name="FolderTypeCAT" onChange="document.mainform.submit();" size=1>
 				{foreach from=$AvailableFolderTypes.CAT item=item key=key}
 					<option {if $key == $FolderType.CAT} selected {/if} value="{$key}">{$item}</option>
 				{/foreach}
 			</select>
-			<select id="FolderTypeSUB_CAT" name="FolderTypeSUB_CAT" onChange="document.mainform.submit();">
+			<select id="FolderTypeSUB_CAT" name="FolderTypeSUB_CAT" onChange="document.mainform.submit();" size=1>
 				{foreach from=$AvailableFolderTypes.SUB_CAT item=item key=key}
                     {if $key == $FolderType.CAT} 
 						{foreach from=$item item=item2 key=key2}
@@ -88,7 +90,8 @@
 					{/if}
 				{/foreach}
 			</select>
-			<input type='image' src='images/lists/reload.png' class='center' alt='{t}Reload{/t}'>
+			{image path="images/lists/reload.png"}
+
 		</td>
 	</tr>
 	{/if}
@@ -97,7 +100,8 @@
 
 <!-- Alternate addresses -->
 {if !$multiple_support}
-  <td style="vertical-align:top;padding-left:2px;">
+  <td style='padding-left:2px;'>
+
    <h3>
 	{t}Alternative addresses{/t}
    </h3>
@@ -131,9 +135,11 @@
 <hr>
 
 {if !$multiple_support}
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+<table style='width:100%; ' summary="">
+
  <tr>
-  <td style="vertical-align:top;width:50%; border-right:1px solid #A0A0A0">
+  <td style='width:50%; ' class='right-border'>
+
    <h3>
 		{t}IMAP shared folders{/t}
    </h3>
@@ -191,7 +197,8 @@
 <hr>
 
 <h3>{t}Advanced mail options{/t}</h3> 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="2" border="0">
+<table style='width:100%; ' summary="">
+
  <tr>
   <td>
 {render acl=$gosaMailDeliveryModeIACL}
@@ -204,9 +211,11 @@
  </table> 
 
   </td>
-  <td style="vertical-align:top;width:50%">
+  <td style='width:50%'>
+
    <h3>
-	<img class="center" alt="" align="middle" src="plugins/mail/images/envelope.png">
+	{image path="plugins/mail/images/envelope.png"}
+
 	{t}Forward messages to non group members{/t}
    </h3>
 
