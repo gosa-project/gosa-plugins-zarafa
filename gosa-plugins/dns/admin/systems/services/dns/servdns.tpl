@@ -1,7 +1,8 @@
 {if $dns_take_over}
 <table summary="" width="100%">
     <tr>
-        <td style="width:100%;vertical-align:top;">
+        <td style='width:100%;'>
+
             <h3>{t}DNS take over initiated{/t}</h3>
             {$warning}
             {t}This includes 'all' DNS zones that are located within this server. Please double check if your really want to do this.{/t}
@@ -24,9 +25,10 @@
 <table summary="" width="100%">
 {if $dns_server_list_cnt}
 <tr>
-    <td style="width:100%;vertical-align:top;">
+    <td style='width:100%;'>
+
         <b>{t}Take over DNS configuration from{/t}</b>&nbsp;
-        <select name='take_over_src'>
+        <select name='take_over_src' size=1>
             {html_options options=$dns_server_list}
         </select>
         <button type='submit' name='take_over'>{t}Take over{/t}</button>
@@ -35,7 +37,8 @@
 </tr>
 {/if}
 <tr>
-    <td style="width:100%;vertical-align:top;">
+    <td style='width:100%;'>
+
 <h3>{t}Zones{/t}</h3>
 		  {$ZoneList}
 		  {if $is_createable}
