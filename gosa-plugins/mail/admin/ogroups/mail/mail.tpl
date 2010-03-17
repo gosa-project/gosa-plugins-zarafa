@@ -1,9 +1,11 @@
 <input type="hidden" name="mailedit" value="1">
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table style='width:100%; ' summary="">
+
 
  <!-- Headline container -->
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
    <h3>{t}Mail distribution list{/t}</h3>
    <table summary="">
     <tr>
