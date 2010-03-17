@@ -34,7 +34,7 @@
     {elseif $options[$entry.NAME].TYPE == "BOOLEAN"}
      <!-- BOOLEAN  
       -->
-     <select name="option_value__{$key}_{$entry_key}" style="width:80px;;">
+     <select name="option_value__{$key}_{$entry_key}" style="width:80px;" size=1>
       <option {if $entry.VALUE == "FALSE"} selected {/if}value="FALSE">FALSE</option>
       <option {if $entry.VALUE == "TRUE"} selected {/if}value="TRUE">TRUE</option>
      </select>
@@ -42,7 +42,7 @@
      <!-- BOOLEAN_INTEGER 
       -->
      <select name="option_selection__{$key}_{$entry_key}" id="option_selection__{$key}_{$entry_key}"
-       style="width:80px;;"
+       style="width:80px;" size=1
       onChange="toggle_bool_fields('option_selection__{$key}_{$entry_key}','option_value__{$key}_{$entry_key}');">
       <option {if $entry.VALUE == "FALSE"} selected {/if}value="FALSE">FALSE</option>
       <option {if $entry.VALUE == "TRUE"} selected {/if}value="TRUE">TRUE</option>
@@ -56,7 +56,7 @@
      <!-- STRING_BOOLEAN 
       -->
      <select name="option_selection__{$key}_{$entry_key}" id="option_selection__{$key}_{$entry_key}"
-       style="width:80px;;"
+       style="width:80px;" size=1
       onChange="toggle_bool_fields('option_selection__{$key}_{$entry_key}','option_value__{$key}_{$entry_key}');">
       <option {if $entry.VALUE == "FALSE"} selected {/if}value="FALSE">FALSE</option>
       <option {if $entry.VALUE == "TRUE"} selected {/if}value="TRUE">TRUE</option>
@@ -88,7 +88,7 @@
 <br>
 <h3>{t}Available options{/t}:</h3>
 {render acl=$ACL}   
-<select name='option'>
+<select name='option' size=1>
 {foreach from=$options item=item key=key}
  {if !isset($sudoOption.$key) || ($sudoOption.$key && $item.TYPE == "LISTS")}
  <option value='{$key}'>{$item.NAME} ({$map[$item.TYPE]})</option>
