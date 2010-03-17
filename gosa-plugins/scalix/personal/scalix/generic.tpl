@@ -1,6 +1,8 @@
-<table summary="{t}Scalix settings{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style='width:100%; ' summary="{t}Scalix settings{/t}">
+
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
    <h3>{t}Generic{/t}
 </h3>
 <!-- Hide user specific attributes when in group mode. -->
@@ -98,11 +100,13 @@
 {/if}
   </td>
 
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
 
-  <td style="vertical-align:top;">
+  <td>
+
    <h3>
 <label for="emails_list"> {t}Scalix email addresses{/t}</label></h3>
 {render acl=$scalixEmailAddressACL}
