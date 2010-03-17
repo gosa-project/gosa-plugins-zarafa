@@ -1,17 +1,20 @@
 <h3>{t}Boot parameters{/t}</h3>
 <table summary="" style="width:100%;">
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
 	<table>
     <tr>
-     <td colspan="2" style='vertical-align:top;padding-top:3px;width:100%'><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
+     <td style='padding-top:3px;width:100%' colspan="2">
+<LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
 {render acl=$gotoLdapServerACL}
 {if $member_of_ogroup}
 (<input type='checkbox' name='gotoLdap_inherit' {if $gotoLdap_inherit} checked {/if} value="1"
       onClick="document.mainform.submit();" class='center'>
 &nbsp;{t}inherit from group{/t})
 {if !$JS}
-      <input type='image' src="images/lists/reload.png" alt='{t}Reload{/t}' class='center'>
+      {image path="images/lists/reload.png"}
+
 {/if}
 {/if}
 {/render}
@@ -19,7 +22,7 @@
         {$gotoLdapServers}
 {/render}
 {render acl=$gotoLdapServerACL_inherit}
-      <select name='ldap_server_to_add' id='ldap_server_to_add'>
+      <select name='ldap_server_to_add' id='ldap_server_to_add' size=1>
         {html_options options=$gotoLdapServerList}
     </select>
 {/render}
@@ -31,17 +34,19 @@
     </tr>
 	</table>	
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
      &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
 
    <table summary="" style="width:100%">
     <tr>
      <td style="width:30%"><LABEL for="gotoBootKernel">{t}Boot kernel{/t}</LABEL></td>
      <td>
 {render acl=$gotoBootKernelACL}
-	<select id="gotoBootKernel" name="gotoBootKernel">
+	<select id="gotoBootKernel" name="gotoBootKernel" size=1>
 	{html_options options=$gotoBootKernels  selected=$gotoBootKernel}
 	<option disabled>&nbsp;</option>
 	</select>
@@ -68,9 +73,11 @@
   </td></tr>
 
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
    <h3>
-    <img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
+    {image path="plugins/goto/images/hardware.png"} {t}Kernel modules (format: name parameters){/t}
+
    </h3>
 {render acl=$gotoModulesACL}
     <select style="width:100%;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
@@ -92,7 +99,8 @@
 {/render}
   </td>
 
-  <td style="padding-left:10px;border-left:1px solid #A0A0A0;vertical-align:top">
+  <td style='padding-left:10px;' class='left-border'>
+
         <h3><LABEL for="gotoShare">{t}Shares{/t}</LABEL></h3>
         <table summary="" style="width:100%">
                 <tr>
@@ -105,7 +113,7 @@
 {/render}
                                 <br>
 {render acl=$gotoShareACL}
-        	                <select name="gotoShareSelection">
+        	                <select name="gotoShareSelection" size=1>
 				        {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
 				        <option disabled>&nbsp;</option>
                                 </select>
