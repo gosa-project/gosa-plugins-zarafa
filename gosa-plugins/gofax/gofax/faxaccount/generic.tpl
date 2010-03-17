@@ -15,7 +15,7 @@
 	<input type='text' name="dummy1" value="{t}Multiple edit{/t}" disabled id="facsimileTelephoneNumber">
 {else}
 {render acl=$facsimileTelephoneNumberACL}
-           <input name="facsimileTelephoneNumber" id="facsimileTelephoneNumber" size=20 maxlength=65
+           <input name="facsimileTelephoneNumber" id="facsimileTelephoneNumber" size=20 maxlength=65 type='text'
 		value="{$facsimileTelephoneNumber}" title="{t}Fax number for GOfax to trigger on{/t}">
 {/render}
 {/if}
