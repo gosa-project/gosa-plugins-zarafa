@@ -1,6 +1,8 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
+<table style='width:100%; ' summary="">
+
 <tr>
-  <td style="vertical-align:top;width:600px">
+  <td style='width:600px'>
+
 	<div class="contentboxh" style="height:20px">
     	<p class="contentboxh" style="font-size:12px">
      		{t}List of FAI objects (Fully Automatic Installation){/t}
@@ -15,10 +17,12 @@
    		<input type=hidden name="edit_helper">
 	</div>
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
    	<div class="contentboxh" style="height:20px;border-bottom:1px solid #B0B0B0">
     	<p class="contentboxh" style="font-size:12px">
-			<img src="{$infoimage}" align="right" alt="[i]">{t}Information{/t}
+			{image path="{$infoimage}" align="right"}{t}Information{/t}
+
 		</p>
    	</div>
    	<div class="contentboxb">
@@ -28,13 +32,16 @@
    	</div>
    	<br>
    	<div class="contentboxh" style="height:20px">
-    	<p class="contentboxh" style="font-size:12px"><img src="{$launchimage}" align="right" alt="[F]">{t}Filters{/t}</p>
+    	<p class="contentboxh" style="font-size:12px">{image path="{$launchimage}" align="right"}{t}Filters{/t}
+</p>
    	</div>
    	<div class="contentboxb">
-     	<table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+     	<table style='width:100%;' summary="">
+
       		{$alphabet}
      	</table>
-	 	<table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+	 	<table style='width:100%;' summary="">
+
 			<tr><td><input onClick='document.mainform.submit()' 
 								type="checkbox" name="SShowTemplates" 	{$SShowTemplatesCHK}>{t}Show only classes with templates{/t}</td></tr>
 			<tr><td><input onClick='document.mainform.submit()'
@@ -48,10 +55,11 @@
 			<tr><td><input onClick='document.mainform.submit()'
 								type="checkbox" name="SShowPartitions"	{$SShowPartitionsCHK}>{t}Show only classes with partitions{/t}</td></tr>
 		 </table>
-    	 <table summary=""  style="width:100%;border-top:1px solid #B0B0B0;">
+    	 <table style='width:100%;' summary="">
+
      		<tr>
      			<td>
-     					<img alt="{t}Display objects matching{/t}" src="{$search_image}" 
+     					{image path="{$search_image}"}
 							align=middle title='{t}Display objects matching{/t}'>
      			</td>
      			<td width="99%">

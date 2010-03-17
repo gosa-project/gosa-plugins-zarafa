@@ -1,12 +1,14 @@
  <div class="contentboxh" style="border-bottom:1px solid #B0B0B0;">
-    <p class="contentboxh"><img src="{$branchimage}" align="right" alt="[F]">{t}Releases{/t}</p>
+    <p class="contentboxh">{image path="{$branchimage}" align="right"}{t}Releases{/t}
+</p>
    </div>
    <div class="contentboxb">
-        <table summary="" style="width:100%;border-bottom:1px solid #B0B0B0;">
+        <table style='width:100%;' summary="">
+
      <tr>
       <td>
     {t}Current release{/t}&nbsp;
-    <select name="fai_release" onChange="document.mainform.submit();">
+    <select name="fai_release" onChange="document.mainform.submit();" size=1>
         {html_options output=$fai_releases values=$fai_releases selected=$fai_release}
     </select>
       </td>
@@ -16,22 +18,27 @@
      <tr>
       <td>
     {if $allow_create}
-        <input class="center" type="image" name="branch_branch" src="plugins/fai/images/branch_small.png">
+        {image path="plugins/fai/images/branch_small.png" action="branch_branch"}
+
         <a href="?plug={$plug_id}&act=branch_branch">{t}Create release{/t}</a>
         <br>
-        <input class="center" type="image" name="freeze_branch" src="plugins/fai/images/freeze.png">
+        {image path="plugins/fai/images/freeze.png" action="freeze_branch"}
+
 		<a href="?plug={$plug_id}&act=freeze_branch">{t}Create read-only release{/t}</a>
     {else}
-        <img src="plugins/fai/images/branch_small_grey.png" alt='{t}Release{/t}' class='center'>
+        {image path="plugins/fai/images/branch_small_grey.png"}
+
         {t}Create release{/t}
         <br>
-        <img src="plugins/fai/images/freeze_grey.png" alt='{t}Freeze{/t}' class='center'>
+        {image path="plugins/fai/images/freeze_grey.png"}
+
 		{t}Create read-only release{/t}
     {/if}
 
     {if $fai_release != $fai_base && $allow_remove}
     <br>
-        <input class="center" type="image" name="remove_branch" src="images/lists/trash.png">
+        {image path="images/lists/trash.png" action="remove_branch"}
+
 	    <a href="?plug={$plug_id}&act=remove_branch">{t}Delete current release{/t}</a>
     {/if}
       </td>

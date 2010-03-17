@@ -38,7 +38,8 @@
 				<h3>
 						{t}List of scripts{/t}
 				</h3>
-				<table width="100%" summary="" style="border:1px solid #B0B0B0; " cellspacing=0 cellpadding=0>
+				<table summary="" width="100%">
+
 				<tr>
 					<td>
 						{$Entry_divlist}

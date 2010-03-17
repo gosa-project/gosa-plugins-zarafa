@@ -8,14 +8,15 @@
 	<tr>
 		<td>
 			{if $item.freezed}
-				<img src="images/lists/locked.png" class='center'>
+				{image path="images/lists/locked.png"}
+
 			{else}
 				<input type='checkbox' name='{$mode}_{$key}'
     	     		{if $item.selected} checked {/if}>
 			{/if}
 		</td>
 		<td>
-			<img src='{$types.$key.IMG}' alt='{$types.$key.KZL}' title='{$types.$key.NAME}'
+			{image path="{$types.$key.IMG}" title="{$types.$key.NAME}"}
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
@@ -38,7 +39,7 @@
                {if $item.selected} checked {/if}>
 		</td>
 		<td>
-			<img src='{$types.$key.IMG}' alt='{$types.$key.KZL}' title='{$types.$key.NAME}'
+			{image path="{$types.$key.IMG}" title="{$types.$key.NAME}"}
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
@@ -61,7 +62,7 @@
     	   		{if $item.selected} checked {/if}>
 		</td>
 		<td>
-			<img src='{$types.$key.IMG}' alt='{$types.$key.KZL}' title='{$types.$key.NAME}'
+			{image path="{$types.$key.IMG}" title="{$types.$key.NAME}"}
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>

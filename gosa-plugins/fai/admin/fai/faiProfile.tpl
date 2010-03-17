@@ -29,10 +29,13 @@
 				</tr>
 			</table>
 		</td>
-		<td valign="top" style="border-left: 1px solid rgb(160, 160, 160);">
-			<table summary="" style="vertical-align:top; text-align:left;" cellpadding=4 width="100%">
+		<td class='left-border'>
+
+			<table summary="" width="100%">
+
 				<tr>
-					<td style="vertical-align:top;">
+					<td>
+
 						<h3>{t}FAI classes{/t}</h3> 
 <!--						<select name="FAIclass" title="{t}Choose a priority{/t}" size="20" style="width:100%;" multiple>
 							{html_options values=$FAIclasses output=$FAIclasses}

@@ -2,7 +2,8 @@
 <h3>{t}Device{/t}</h3>
 <table style='width:100%' summary="">
 	<tr>
-		<td style='width:50%;border-right:1px solid #909090;'><LABEL for="DISKcn">
+		<td style='width:50%;' class='right-border'>
+<LABEL for="DISKcn">
 			{t}Name{/t}
 			</LABEL>{$must}&nbsp;
 {render acl=$DISKcnACL}

@@ -32,7 +32,8 @@
                                 <p>
                                 <input type="checkbox" name="mode" value="1" {$mode} {$lockmode} onClick="changeState('AddRaid'); changeState('AddVolgroup');"> {t}Use 'setup-storage' to partition the disk{/t}                                      </p>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160);">
+		<td class='left-border'>
+
 		   &nbsp;
 	 	</td>
 		<td>

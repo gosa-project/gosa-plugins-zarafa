@@ -1,6 +1,7 @@
 <table summary="" width="100%">
 	<tr>
-		<td valign="top" style="border-right:1px solid #A0A0A0; width:50%">
+		<td style='width:50%' class='right-border'>
+
 				<h3>{t}Generic{/t}</h3>
 				<table summary="" cellspacing="4">
 					<tr>

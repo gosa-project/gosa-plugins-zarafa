@@ -1,4 +1,5 @@
-<h1><img class="center" alt="" src="images/forward.png" align="middle" title="{t}Package{/t}">&nbsp;{$headline}</h1>
+<h1>{image path="images/forward.png" title="{t}Package{/t}"}&nbsp;{$headline}
+</h1>
 {$Config}
 <hr>
 <br>

@@ -2,7 +2,8 @@
 <h3>{t}Device{/t}</h3>
 <table style='width:100%' summary="">
 	<tr>
-		<td style='width:50%;border-right:1px solid #909090;'>
+		<td style='width:50%;' class='right-border'>
+
 
       <table>
         <tr>
@@ -75,7 +76,7 @@
         {html_options options=$plist}
       </select>
       <br>
-      <select name='lvmPartitionAdd' style='width:240px;'>
+      <select name='lvmPartitionAdd' style='width:240px;' size=1>
         {html_options options=$physicalPartitionList}
       </select>
       <button type='submit' name='addLvmPartition'>{msgPool type="addButton"}</button>&nbsp;

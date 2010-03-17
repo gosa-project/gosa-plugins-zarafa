@@ -29,7 +29,8 @@
 					</tr>
 				</table>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160);">
+		<td class='left-border'>
+
 		   &nbsp;
 	 	</td>
 		<td>

@@ -3,7 +3,8 @@
 <h3>{t}Generic{/t}</h3>
 <table width="100%" summary="">
 <tr>
-  <td style="vertical-align:top;width:50%;border-right:1px solid #B0B0B0; padding-right:10px;">
+  <td style='width:50%;padding-right:10px;' class='right-border'>
+
 		<table style='width:100%;'>
 		  <tr>
 		    <td>
@@ -31,10 +32,12 @@
       </tr>
 		</table>
 	</td>
-  <td style='vertical-align:top;'>
+  <td>
+
 		<table style='width:100%;'>
       <tr>
-       	<td style='vertical-align:top;'>
+       	<td>
+
           {t}Description{/t}
         </td>
         <td style='width:100%;'>
@@ -62,7 +65,8 @@
   </td>
 </tr>
 <tr>
-  <td style="vertical-align:top;width:50%;border-right:1px solid #B0B0B0">
+  <td style='width:50%;' class='right-border'>
+
   <table summary="">
     <tr>
       <td>
@@ -87,7 +91,8 @@
     </tr>
     {/if}
     <tr>
-		  <td style="vertical-align:top" class="center">
+		  <td class='center'>
+
 {render acl=$FAItemplateFileACL}
 			  <input type="file" name="FAItemplateFile" value="" id="FAItemplateFile">
 {/render}
@@ -114,7 +119,8 @@
 {/render}
 		</td>
 	</tr><tr>
-		<td style="vertical-align:top">
+		<td>
+
 			<LABEL for="group">
 				{t}Group{/t}{$must}&nbsp;
 			</LABEL>
@@ -127,9 +133,11 @@
 			<br>
 		</td>
 	</tr><tr>
-		<td style="vertical-align:top">{t}Access{/t}{$must}&nbsp; </td>
+		<td>{t}Access{/t}{$must}&nbsp; 
+</td>
 		<td>
-	  <table summary="" style="border:1px solid #B0B0B0">
+	  <table summary="">
+
 	       <colgroup width="55" span="3">
 	        </colgroup>
 		<tr>

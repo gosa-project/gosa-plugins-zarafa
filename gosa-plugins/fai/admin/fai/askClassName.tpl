@@ -36,7 +36,8 @@
    <br>
    <br>
   </td>
-  <td style='border-left:1px solid #909090'>
+  <td class='left-border'>
+
   </td>
   <td>
    <table summary="" {$grey}>
@@ -51,7 +52,7 @@
     <tr>
      <td>&nbsp;</td>
      <td>
-      {t}Class name{/t}&nbsp;<select name="SelectedClass" title="{t}Choose class name{/t}" style="width:120px;" {$ClassNamesAvailable}>
+      {t}Class name{/t}&nbsp;<select name="SelectedClass" title="{t}Choose class name{/t}" style="width:120px;" {$ClassNamesAvailable} size=1>
        {html_options options=$ClassNames}
       </select>
      </td>

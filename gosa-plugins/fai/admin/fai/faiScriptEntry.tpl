@@ -26,7 +26,8 @@
 					</tr>
 				</table>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160);">
+		<td class='left-border'>
+
            &nbsp;
         </td>
 		<td valign="top">
@@ -40,7 +41,7 @@
 						</td>
 						<td>
 {render acl=$FAIpriorityACL}
-						    <select id="FAIpriority" name="FAIpriority" title="{t}Choose a priority. Low values result in an earlier, high values in a later execution.{/t}">
+						    <select id="FAIpriority" name="FAIpriority" title="{t}Choose a priority. Low values result in an earlier, high values in a later execution.{/t}" size=1>
                 				{html_options options=$FAIprioritys selected=$FAIpriority}
             				</select>
 {/render}

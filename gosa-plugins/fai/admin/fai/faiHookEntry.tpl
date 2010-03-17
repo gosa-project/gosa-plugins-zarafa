@@ -26,10 +26,12 @@
 					</tr>
 				</table>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160);">
+		<td class='left-border'>
+
            &nbsp;
         </td>
-		<td style="vertical-align:top">
+		<td>
+
 				<h3>{t}Hook attributes{/t}</h3>
 				<table width="100%" summary="">
 					<tr>
@@ -38,7 +40,7 @@
 							{t}Task{/t}&nbsp;
 							</LABEL>
 {render acl=$FAItaskACL}
-							<select id="FAItask" name="FAItask" title="{t}Choose an existing FAI task{/t}">
+							<select id="FAItask" name="FAItask" title="{t}Choose an existing FAI task{/t}" size=1>
 								{html_options values=$tasks output=$tasks selected=$FAItask}
 							</select>
 {/render}

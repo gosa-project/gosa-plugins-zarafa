@@ -11,7 +11,7 @@
 {else}
     <td>{t}Type{/t}</td>
     <td width="35%">
-      <select name="FAIpartitionType" onChange='document.mainform.submit();'>
+      <select name="FAIpartitionType" onChange='document.mainform.submit();' size=1>
         {html_options options=$partitionTypes selected=$FAIpartitionType}
       </select>
       {if $cn != ""}&nbsp;({$cn}){/if}
@@ -38,7 +38,7 @@
         </select>
       {else}
         <input type='text' name='dummy3' value='' size='5' disabled>
-        <select name='dummy4' disabled>
+        <select name='dummy4' disabled size=1>
           {html_options options=$sizeTypes}
         </select>
       {/if}
@@ -50,7 +50,7 @@
         </select>
       {else}
         <input type='text' name='dummy1' value='' size='5' disabled>
-        <select name='dummy2' disabled>
+        <select name='dummy2' disabled size=1>
           {html_options options=$sizeTypes}
         </select>
       {/if}
@@ -75,7 +75,7 @@
     <td colspan="4">
       <input id="preserve" type='checkbox' value='1' name='preserve' {if $preserve} checked {/if}>
       &nbsp;<label for="preserve">{t}Preserve{/t}</label>
-      <select name='preserveType'>
+      <select name='preserveType' size=1>
         {html_options options=$preserveTypes selected=$preserveType}
       </select>
     </td>
@@ -100,7 +100,7 @@
         {html_options options=$plist}
       </select>
       <br>
-      <select name='physicalPartitionAdd' style='width:240px;'>
+      <select name='physicalPartitionAdd' style='width:240px;' size=1>
         {html_options options=$physicalPartitionList}
       </select>
       <button type='submit' name='addPhysicalPartition'>{msgPool type=addButton}</button>&nbsp; 
@@ -125,7 +125,7 @@
       {t}Filesystem{/t}
     </td>
     <td>
-      <select name='FAIfsType' onChange="document.mainform.submit();">
+      <select name='FAIfsType' onChange="document.mainform.submit();" size=1>
         {html_options options=$FAIfsTypes selected=$FAIfsType}
       </select>
     </td>
