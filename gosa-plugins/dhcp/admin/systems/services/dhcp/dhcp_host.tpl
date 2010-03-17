@@ -2,7 +2,8 @@
 <p><b>{t}Generic{/t}</b></p>
 <table width="100%">
  <tr>
-  <td width="50%" style="vertical-align:top">
+  <td>
+
    <table>
     <tr>
      <td>{t}Name{/t}{$must}</td>
@@ -31,7 +32,7 @@
      <td>{t}Hardware type{/t}</td>
      <td>
 {render acl=$acl}
-      <select name='hwtype'  {if $realGosaHost} disabled {/if} >
+      <select name='hwtype'  {if $realGosaHost} disabled {/if}  size=1>
        {html_options options=$hwtypes selected=$hwtype}
       </select>
 {/render}
