@@ -3,23 +3,28 @@
 	<tr>
 		<td>
 			{t}Release{/t}
-			<select name="FAIrelease" onChange="document.mainform.submit();">
+			<select name="FAIrelease" onChange="document.mainform.submit();" size=1>
 			{foreach from=$releases item=item key=key}
 				<option value="{$key}" {if $key == $FAIrelease} selected {/if}>{$item.name} </option>
 			{/foreach}
 			</select>
-			<input type='image' src='images/lists/copy.png' title='{t}Copy menu{/t}' class='center' name='menu_copy'>
+			{image path="images/lists/copy.png" action="menu_copy" title="{t}Copy menu{/t}"}
+
 			{if $copied}
-				<input type='image' src='images/lists/paste.png' title='{t}Paste menu from{/t}&nbsp;{$copy_source}' class='center' name='menu_paste'>
+				{image path="images/lists/paste.png" action="menu_paste" title="{t}Paste menu from{/t}&nbsp;{$copy_source}"}
+
 			{else}
-				<input type='image' src='images/lists/paste-grey.png' class='center'>
+				{image path="images/lists/paste-grey.png"}
+
 			{/if}
-			<input type='image' src='images/lists/delete.png' title='{t}Delete menu{/t}' class='center' name='menu_delete'>
+			{image path="images/lists/delete.png" action="menu_delete" title="{t}Delete menu{/t}"}
+
 		</td>
 	</tr>
 	{/if}
 	<tr>
-		<td style="width:50%; vertical-align:top;">
+		<td style='width:50%; '>
+
 		<div style="height:290px; overflow:auto; 
 					border-top: solid 2px #999999;
 					border-left: solid 2px #999999;
@@ -50,7 +55,8 @@
 			<tr class="rowxp1">
 		{/if}
 			<td style='width:20px; padding-top:5px;padding-bottom:5px;background-color: transparent;'>
-				<img src='plugins/fai/images/fai_small.png' alt='{t}Release{/t}'>
+				{image path="plugins/fai/images/fai_small.png"}
+
 			</td>
 			<td style='background-color: transparent;'>
 				{$item.NAME}
@@ -67,11 +73,13 @@
 			<td width="22" style='width:22px; padding-top:3px;padding-bottom:3px; overflow:hidden;'>
 				{if $item.ICON != ""}
 					<div style="height:20px;width:20px; overflow:hidden;">
-					<img class="center" src='?plug={$plug_id}&amp;send={$item.UNIQID}' alt='{t}Folder{/t}'>
+					{image path="?plug={$plug_id}&amp;send={$item.UNIQID}"}
+
 					</div>
 				{else}
 					<div style="height:20px;width:20px; overflow:hidden">
-					<img class="center" src='images/lists/folder.png' alt='{t}Folder{/t}'>
+					{image path="images/lists/folder.png"}
+
 					</div>
 				{/if}
 			</td>
@@ -79,13 +87,13 @@
 				<b>{$item.NAME}&nbsp; </b> 
 			</td>
 			<td style='width:100px;text-align:right; background-color: transparent;'>
-				<input title="{t}Move up{/t}" 	class="center" type='image' 
+				{image title="{t}Move up{/t}"}
 					name='up_{$item.UNIQID}' src='images/move_object_up.png'>
-				<input title="{t}Move down{/t}" class="center" type='image' 
+				{image title="{t}Move down{/t}"}
 					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
-				<input title="{t}Remove{/t}" 	class="center" type='image' 
+				{image title="{t}Remove{/t}"}
 					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
-				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
+				{image title="{t}Edit{/t}"}
 					name='app_entry_edit{$item.UNIQID}' src='images/lists/edit.png'>
 			</td>
 		</tr>
@@ -100,13 +108,14 @@
 				<div style="height:3px; width:100%; background-color:#BBBBBB;"></div>
 			</td>
             <td style='width:100px;text-align:right; background-color: transparent;'>
-                <input title="{t}Move up{/t}"   class="center" type='image'
+                {image title="{t}Move up{/t}"}
                     name='up_{$item.UNIQID}' src='images/move_object_up.png'>
-                <input title="{t}Move down{/t}" class="center" type='image'
+                {image title="{t}Move down{/t}"}
                     name='down_{$item.UNIQID}' src='images/move_object_down.png'>
-                <input title="{t}Remove{/t}"    class="center" type='image'
+                {image title="{t}Remove{/t}"}
                     name='del_{$item.UNIQID}' src='images/lists/trash.png'>
-				<img src="images/empty.png" style="width:16px;" alt=" ">
+				{image path="images/empty.png"}
+
             </td>
 		</tr>
 	{elseif $item.TYPE == "ENTRY"}
@@ -118,20 +127,21 @@
 		{/if}
 			<td style='background-color: transparent;width:22px; padding-top:5px;padding-bottom:5px;'>
 				<div style="width:20px; overflow:hidden; text-align:center;">
-					<img src='plugins/goto/images/select_application.png' alt='{t}Entry{/t}' class="center">
+					{image path="plugins/goto/images/select_application.png"}
+
 				</div>
 			</td>
 			<td style="background-color: transparent;">
 				{$item.NAME} {$item.INFO}
 			</td>
 			<td style='width:100px;text-align:right;background-color: transparent;'>
-				<input title="{t}Move up{/t}" 	class="center" type='image' 
+				{image title="{t}Move up{/t}"}
 					name='up_{$item.UNIQID}' src='images/move_object_up.png'>
-				<input title="{t}Move down{/t}" class="center" type='image' 
+				{image title="{t}Move down{/t}"}
 					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
-				<input title="{t}Remove{/t}" 	class="center" type='image' 
+				{image title="{t}Remove{/t}"}
 					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
-				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
+				{image title="{t}Edit{/t}"}
 					name='app_entry_edit{$item.UNIQID}' src='images/lists/edit.png'>
 			</td>
 		</tr>
@@ -141,7 +151,7 @@
 		</div>
 			<input type="text" name="menu_folder_name" value="">
 			{t}add to{/t}
-			<select name="menu_folder">
+			<select name="menu_folder" size=1>
 			{foreach from=$folders item=item key=key}
 				<option value="{$key}">{$item}</option>
 			{/foreach}
@@ -151,9 +161,10 @@
 			<button type='submit' name='add_seperator' title="{t}Add a separator to this folder.{/t}">{t}Separator{/t}</button>
 
 		</td>
-		<td style="vertical-align:top">
+		<td>
+
 			{$app_list}	
-			<select name="folder">
+			<select name="folder" size=1>
 			{foreach from=$folders item=item key=key}
 				<option value="{$key}">{$item}</option>
 			{/foreach}
