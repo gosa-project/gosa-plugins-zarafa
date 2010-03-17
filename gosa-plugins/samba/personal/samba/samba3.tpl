@@ -1,13 +1,16 @@
-<table summary="{t}Samba configuration{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style='width:100%; ' summary="{t}Samba configuration{/t}">
+
 
  <!-- Headline container -->
  <tr>
-  <td colspan="2" style="width:50%; vertical-align:top;">
+  <td style='width:50%; ' colspan="2">
+
    <h3>{t}Generic{/t}</h3>
   </td>
  </tr>
  <tr>
-  <td style="vertical-align:top;">
+  <td>
+
    <table summary="{t}Path configuration{/t}">
     <tr>
      <td><label for="sambaHomePath">{t}Home directory{/t}</label></td>
@@ -39,10 +42,12 @@
     </tr>
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
    <table summary="{t}Profile and scirpt path settings{/t}">
     <tr>
      <td><label for="">{t}Script path{/t}</label></td>
@@ -69,10 +74,11 @@
 
 <h3>{t}Terminal Server{/t}</h3>
 
-<table style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0
+<table style='width:100%; '>
   summary="{t}Terminal server settings{/t}">
  <tr>
-  <td style="vertical-align:top;width:50%">
+  <td style='width:50%'>
+
 
 {if $multiple_support}
    	<input class="center" type=checkbox name="use_tslogin" id="use_tslogin" value="1" 
@@ -130,10 +136,12 @@
     </tr>
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_inherit}
    <input class="center" type=checkbox id="inherit" name="inherit" {if $inheritstate} checked {/if}
     {$tsloginstate}
@@ -167,9 +175,11 @@
 
 <hr>
 
-<table summary="{t}Connection timeout settings{/t}"style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table style='width:100%; ' summary="{t}Connection timeout settings{/t}">
+
  <tr>
-  <td style="vertical-align:top;">
+  <td>
+
    <i>{t}Timeout settings (in minutes){/t}</i>
    <table summary="{t}Connection timeout settings{/t}">
     <tr>
@@ -225,10 +235,12 @@
     </tr>
    </table>
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
 
    <i>{t}Client devices{/t}</i>
    <table summary="{t}Client devices{/t}">
@@ -259,10 +271,12 @@
    </table>
 
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;width:50%">
+  <td style='width:50%'>
+
    <i>{t}Miscellaneous{/t}</i>
    <table summary="{t}Miscellaneous{/t}">
     <tr>
@@ -308,9 +322,11 @@
 <h3>{t}Access options{/t}
 </h3>
 
-<table summary="{t}Access options{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+<table style='width:100%; ' summary="{t}Access options{/t}">
+
  <tr>
-  <td colspan=2 style="width:50%; vertical-align:top;">
+  <td style='width:50%; ' colspan="2">
+
 
 
    <div>
@@ -417,10 +433,12 @@
    <!-- /Samba policies -->
 
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="vertical-align:top;">
+  <td>
+
    <label for="workstation_list">{t}Allow connection from these workstations only{/t}</label>
    <br>
 
