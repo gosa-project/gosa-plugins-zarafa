@@ -1,8 +1,10 @@
 <p style='padding-left:7px;'>
- <img class='center' src='images/lists/on.png' alt='!'>&nbsp;<b>{t}Only users with the same asterisk home server will be included to this queue.{/t}</b>
+ {image path="images/lists/on.png"}&nbsp;
+<b>{t}Only users with the same asterisk home server will be included to this queue.{/t}</b>
 </p>
 
-<table summary="{t}Queue Settings{/t}" style="width: 100%; vertical-align: top; text-align: left;" border="0" cellpadding="4">
+<table style='width: 100%; ' summary="{t}Queue Settings{/t}">
+
 <tr>
 <td valign='top'>
 		<h3>{t}Phone numbers{/t}</h3>
@@ -19,7 +21,8 @@
 			</select>
 {/render}
 		</td>
-		<td style="vertical-align:center">
+		<td>
+
 {render acl=$telephoneNumberACL}
 			<button type='submit' name='up_phonenumber'>{t}Up{/t}</button>
 <br>
@@ -54,7 +57,7 @@
                 <td><LABEL for="goFonHomeServer">{t}Home server{/t}</LABEL>{$must}</td>
                 <td>
 {render acl=$goFonHomeServerACL}
-                        <select name='goFonHomeServer'>
+                        <select name='goFonHomeServer' size=1>
                          {html_options options=$goFonHomeServers selected=$goFonHomeServer}
                         </select>
 {/render}
@@ -67,7 +70,7 @@
 		</td>
 		<td>
 {render acl=$goFonQueueLanguageACL}
-			<select name="goFonQueueLanguage">
+			<select name="goFonQueueLanguage" size=1>
 			{html_options options=$goFonQueueLanguageOptions selected=$goFonQueueLanguage}
 			<option disabled>&nbsp;</option>
 			</select>
@@ -100,7 +103,7 @@
 		</td>
 		<td>
 {render acl=$goFonQueueStrategyACL}
-			<select name="goFonQueueStrategy">
+			<select name="goFonQueueStrategy" size=1>
             {html_options options=$goFonQueueStrategyOptions selected=$goFonQueueStrategy}
             <option disabled>&nbsp;</option>
             </select>
@@ -131,9 +134,11 @@
 		</tr>
 		</table>
 </td>
-<td valign='top' style="border-left: 1px solid rgb(160, 160, 160);">
+<td class='left-border'>
+
 	<h3>
-    <img class="center" alt="" src="plugins/gofon/images/sound.png" align="middle">
+    {image path="plugins/gofon/images/sound.png"}
+
     {t}Queue sound setup{/t}
     </h3>
 	<table summary="{t}Generic queue Settings{/t}">
@@ -268,11 +273,13 @@
 	</td>
 </tr>
 <tr>
-<td colspan=2><h3 style='margin-bottom:0px;'><img class="center" alt="" src="plugins/gofon/images/options.png" align="middle">&nbsp;{t}Phone attributes {/t}</h3></td>
+<td colspan=2><h3 style='margin-bottom:0px;'>{image path="plugins/gofon/images/options.png"}&nbsp;{t}Phone attributes {/t}
+</h3></td>
 </tr>
 <tr>
 <td>
-		<table summary="" style="width: 100%; vertical-align: top; text-align: left;" border="0" cellpadding="0">
+		<table style='width: 100%; ' summary="">
+
         <tr>
         <td colspan=2>
 {render acl=$goFonQueueAnnounceHoldtimeACL}
@@ -299,8 +306,10 @@
         </table>
 
 </td>
-<td valign='top' style="border-left: 1px solid rgb(160, 160, 160);">
-	 	<table summary=""  style="width: 100%; vertical-align: top; text-align: left;" border="0" cellpadding="0">
+<td class='left-border'>
+
+	 	<table style='width: 100%; ' summary="">
+
         <tr>
         <td colspan=2>
 {render acl=$goFonDialOptionhACL}
