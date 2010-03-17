@@ -1,7 +1,8 @@
 <h3>{t}Edit share{/t}</h3>
 <table summary="{t}NFS setup{/t}" width="100%">
 	<tr>
-		<td width="45%" style="vertical-align:top">
+		<td>
+
 		<!--Table left-top-->
 			<table summary="">
 				<tr>
@@ -46,12 +47,14 @@
 				</tr>
 			</table>
 		</td>
-		<td style="border-left:1px solid #A0A0A0">
+		<td class='left-border'>
+
 
 		<!--Table right-top-->
 			<table summary="">
 				<tr>
-					<td style="vertical-align:top">
+					<td>
+
 
 						{t}Type{/t}
 					</td>
