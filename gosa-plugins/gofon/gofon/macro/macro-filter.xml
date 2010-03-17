@@ -28,7 +28,7 @@
 
   <search>
     <tag>visibleOnly</tag>
-    <label>Visible only</label>
+    <label>Enabled</label>
     <query>
       <backend>LDAP</backend>
       <filter>(&amp;(objectClass=goFonMacro)(|(cn=$)(displayName=$))(goFonMacroVisible=1))</filter>
