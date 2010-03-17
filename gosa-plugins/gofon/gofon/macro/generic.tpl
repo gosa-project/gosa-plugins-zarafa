@@ -36,7 +36,7 @@
 		<td class='left-border'>
 		     &nbsp;
 		</td>
-		<td style="vertical-align:top;">
+		<td>
 			<table summary="">
     			<tr>
      				<td><LABEL for="description">{t}Description{/t}</LABEL></td>
