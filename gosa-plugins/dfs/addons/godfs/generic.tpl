@@ -1,6 +1,8 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
+<table style='width:100%; ' summary="">
+
  <tr>
-   <td style="vertical-align:top; width:50%">
+   <td style='width:50%'>
+
      <h3>{t}DFS Properties{/t}</h3>
      
      <table summary="">
@@ -23,10 +25,12 @@
      </table>
 
    </td>
-   <td style="border-left:1px solid #A0A0A0">
+   <td class='left-border'>
+
     &nbsp;
    </td>
-   <td style="vertical-align:top; width:50%">
+   <td style='width:50%'>
+
      <h3>{t}DFS Location{/t}</h3>
 
      <table summary="" style="width:100%">
