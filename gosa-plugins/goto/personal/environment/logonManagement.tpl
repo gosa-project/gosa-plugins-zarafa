@@ -4,7 +4,8 @@
 
     <table summary="{t}Logon script management{/t}" width="100%">
     	<tr>
-			<td width="50%" style="vertical-align:top;border-right:1px solid #B0B0B0">
+			<td class='right-border'>
+
 					<table summary="{t}Logon script settings{/t}">
 						<tr>
 							<td><LABEL for="LogonName">{t}Script name{/t}</LABEL>
@@ -23,14 +24,15 @@
 						<tr>
 							<td><LABEL for="LogonPriority">{t}Priority{/t}</LABEL>
 							</td><td>
-				            	<select name="LogonPriority" id="LogonPriority">
+				            	<select name="LogonPriority" id="LogonPriority" size=1>
                 					{html_options values=$LogonPriorityKeys output=$LogonPrioritys selected=$LogonPriority}
                 				</select>
 							</td>
 						</tr>
 					</table>
 			</td>
-			<td style="vertical-align:top">
+			<td>
+
 					<table summary="{t}Logon script flags{/t}">
 						<tr>
 							<td>
