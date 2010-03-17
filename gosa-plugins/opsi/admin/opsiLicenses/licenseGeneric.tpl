@@ -12,8 +12,7 @@
 
 <table style='width:100%'>
   <tr>
-    <td style='width:50%; border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
-        
+    <td style='width:50%; padding: 5px; ' class='right-border'>        
         <table>
           <tr>
             <td>
@@ -42,8 +41,7 @@
         </table>
 
     </td>
-    <td style='padding: 5px; vertical-align:top;'>
-
+    <td style='padding: 5px; '>
         <table>
           <tr>
             <td>
@@ -63,8 +61,7 @@
     <td colspan="2"><p class='separator'>&nbsp;</p></td>
   </tr>
   <tr>
-    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
-    
+    <td style='padding: 5px; ' class='right-border'>    
         <table>
           <tr>
             <td>
@@ -119,8 +116,7 @@
         </table>
  
     </td> 
-    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:bottom;'>
-   
+    <td style='padding: 5px; ' class='right-border'>   
         <table>
           <tr>
             <td>
@@ -158,8 +154,7 @@
 
 <table width="100%">
   <tr>
-    <td style='width:50%;border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
-    
+    <td style='width:50%;padding: 5px; ' class='right-border'>    
         <table>
           <tr>
             <td>
@@ -167,11 +162,11 @@
             </td>
             <td>
               {if $initially_was_account}
-                <select name='dummy223' disabled>
+                <select name='dummy223' disabled size=1>
                   {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
                 </select>
               {else}
-                <select name='licenseModel' onChange='document.mainform.submit();'>
+                <select name='licenseModel' onChange='document.mainform.submit();' size=1>
                   {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
                 </select>
               {/if}
@@ -187,8 +182,7 @@
 
 <table width="100%">
   <tr>
-    <td style='width:50%;border-right: solid 1px #AAA; padding: 5px; vertical-align:top;'>
-    
+    <td style='width:50%;padding: 5px; ' class='right-border'>    
         <table>
           <tr>
             <td>
@@ -219,7 +213,7 @@
             </td>
             <td>
 {render acl=$licenseACL}
-              <select name='boundToHost'>
+              <select name='boundToHost' size=1>
                 <option value="">{t}none{/t}</option>
                 {html_options options=$hosts selected=$boundToHost}
               </select>
@@ -230,8 +224,7 @@
         </table>
  
     </td> 
-    <td style='border-right: solid 1px #AAA; padding: 5px; vertical-align:bottom;'>
-   
+    <td style='padding: 5px; ' class='right-border'>   
         <table width="100%">
           <tr>
             <td colspan="2">

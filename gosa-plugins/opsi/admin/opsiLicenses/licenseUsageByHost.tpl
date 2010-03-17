@@ -11,13 +11,12 @@
 
 <table width="100%">
   <tr>
-    <td style='vertical-align:top;width: 50%; padding-right:5px; border-right: solid 1px #AAA; '>
-        <h3>{t}Reserved for{/t}</h3>
+    <td style='width: 50%; padding-right:5px; ' class='right-border'>        <h3>{t}Reserved for{/t}</h3>
 {render acl=$boundToHostACL}
         {$licenseReserved}
 {/render}
 {render acl=$boundToHostACL}
-        <select name='availableLicense'>
+        <select name='availableLicense' size=1>
 {/render}
           {html_options options=$availableLicenses}
         </select>
@@ -26,8 +25,7 @@
 
 {/render}
     </td>
-    <td style='vertical-align:top;'>
-        <h3>{t}Licenses used{/t}</h3>
+    <td>        <h3>{t}Licenses used{/t}</h3>
 {render acl=$boundToHostACL}
         {$licenseUses}
 {/render}

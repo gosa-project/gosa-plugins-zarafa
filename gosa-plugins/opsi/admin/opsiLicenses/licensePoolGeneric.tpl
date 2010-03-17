@@ -11,8 +11,7 @@
 
 <table width="100%">
   <tr> 
-    <td style='vertical-align:top;'>
-        <!-- GENERIC -->
+    <td>        <!-- GENERIC -->
         <h3>{t}Generic{/t}</h3>
         <table>
           <tr> 
@@ -38,8 +37,7 @@
         </table>
 
     </td>
-    <td style='width:50%; border-left: 1px solid #AAA;padding: 5px;'>
-        <!-- LICENSES -->
+    <td style='width:50%; padding: 5px;' class='left-border'>        <!-- LICENSES -->
         <h3>{t}Licenses{/t}</h3>
         <table style='width:100%;'>
           <tr> 
@@ -73,7 +71,7 @@
               </select><br>
 {/render}
 {render acl=$productIdsACL}
-              <select name='availableProduct'>
+              <select name='availableProduct' size=1>
                 {html_options options=$availableProductIds}
               </select>
 {/render}
@@ -90,8 +88,7 @@
         </table>
 
     </td>
-    <td style="border-left: 1px solid #AAA; padding: 5px;vertical-align:top">
-        <!-- SOFTWARE -->
+    <td style='padding: 5px;' class='left-border'>        <!-- SOFTWARE -->
         <h3>{t}Windows software IDs{/t}</h3>
         <table style='width:100%;'>
           <tr> 
