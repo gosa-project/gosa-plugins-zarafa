@@ -6,7 +6,8 @@
   </td>
  </tr>
  <tr>
-  <td style="vertical-align:top;">
+  <td>
+
 	<table>
 	 <tr>
 	  <td>
@@ -44,7 +45,7 @@
 	  </td>
 	  <td>
 {render acl=$avMaxThreadsACL}
-		<select name="avMaxThreads" title='{t}Select number of maximal threads{/t}'>
+		<select name="avMaxThreads" title='{t}Select number of maximal threads{/t}' size=1>
 		 {html_options options=$ThreadValues selected=$avMaxThreads}
 	 	</select>
 {/render}
@@ -53,7 +54,8 @@
 	</table>
  
   </td>
-  <td style='border-left:1px solid #A0A0A0;vertical-align:top;'>
+  <td class='left-border'>
+
   
 	<table>
 	 <tr>
@@ -102,7 +104,8 @@
   </td>
  </tr>
  <tr>
-  <td style='vertical-align:top;'>
+  <td>
+
 	<table>
 	 <tr>
 	  <td>
@@ -128,7 +131,8 @@
 	</table>
   
   </td>
-  <td  style="vertical-align:top;width:50%;border-left:1px solid #A0A0A0;">
+  <td style='width:50%;' class='left-border'>
+
 	<table>
 	 <tr>
 	  <td>{t}Maximum file size{/t}
