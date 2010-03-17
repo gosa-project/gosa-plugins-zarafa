@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 11:14+0100\n"
+"POT-Creation-Date: 2010-03-17 16:04+0100\n"
 "PO-Revision-Date: 2008-12-04 11:27+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -42,7 +42,7 @@ msgstr "Sie können diese Erweiterung erst verwenden, wenn FAI aktiviert wurde."
 #: admin/fai/class_faiSummaryTab.inc:89
 #: admin/fai/class_faiPartitionTable.inc:173 admin/fai/tabsHook.inc:32
 #: admin/fai/class_faiTemplate.inc:208
-#: admin/fai/class_faiDebconfConfigurations.inc:341
+#: admin/fai/class_faiDebconfConfigurations.inc:430
 #: admin/fai/tabsProfile.inc:33 admin/fai/class_faiManagement.inc:238
 #: admin/fai/class_faiManagement.inc:614 admin/fai/class_faiManagement.inc:620
 #: admin/fai/class_faiManagement.inc:906 admin/fai/class_faiManagement.inc:950
@@ -54,8 +54,8 @@ msgstr "Sie können diese Erweiterung erst verwenden, wenn FAI aktiviert wurde."
 #: admin/fai/tabsTemplate.inc:33 admin/fai/class_FAI.inc:548
 #: admin/fai/class_faiHook.inc:233 admin/fai/class_faiProfile.inc:263
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
-#: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:367
-#: admin/fai/class_faiPackage.inc:400 admin/fai/tabsVariable.inc:33
+#: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiPackage.inc:382
+#: admin/fai/class_faiPackage.inc:415 admin/fai/tabsVariable.inc:33
 msgid "Error"
 msgstr "Fehler"
 
@@ -91,8 +91,8 @@ msgstr "FAI Release"
 #: admin/fai/class_faiVariable.inc:397 admin/fai/class_faiVariableEntry.inc:90
 #: admin/fai/class_faiVariableEntry.inc:99
 #: admin/fai/class_faiVariableEntry.inc:102
-#: admin/fai/class_faiVariableEntry.inc:137 admin/fai/class_faiPackage.inc:572
-#: admin/fai/class_faiPackage.inc:707 admin/fai/faiPartitionTable.tpl:9
+#: admin/fai/class_faiVariableEntry.inc:137 admin/fai/class_faiPackage.inc:603
+#: admin/fai/class_faiPackage.inc:776 admin/fai/faiPartitionTable.tpl:9
 #: admin/fai/faiPartitionTableEntry.tpl:6 admin/fai/faiProfile.tpl:9
 msgid "Name"
 msgstr "Name"
@@ -101,7 +101,7 @@ msgstr "Name"
 #: admin/fai/class_faiDebconfConfigurations.inc:71
 #: admin/fai/class_faiManagement.inc:788
 #: admin/fai/class_faiPackageConfiguration.inc:35 admin/fai/class_FAI.inc:566
-#: admin/fai/class_faiPackage.inc:269 admin/fai/class_faiPackage.inc:594
+#: admin/fai/class_faiPackage.inc:274 admin/fai/class_faiPackage.inc:625
 #: admin/fai/class_faiPackageEntry.inc:53
 #: admin/fai/class_faiPackageEntry.inc:193
 msgid "Service infrastructure"
@@ -144,7 +144,7 @@ msgstr "Sektionen"
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_divListRepositories.inc:23
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
-#: admin/fai/class_faiPackage.inc:713
+#: admin/fai/class_faiPackage.inc:782
 msgid "Release"
 msgstr "Release"
 
@@ -172,9 +172,9 @@ msgid "Add repository"
 msgstr "Repository hinzufügen"
 
 #: admin/fai/faiPackageConfiguration.tpl:1
-#: admin/fai/class_faiDebconfConfigurations.inc:115
+#: admin/fai/class_faiDebconfConfigurations.inc:140
 #: admin/fai/NewDebconfConfiguration.tpl:16 admin/fai/class_divListFai.inc:68
-#: admin/fai/faiDebconfConfigurations.tpl:1 admin/fai/class_faiPackage.inc:699
+#: admin/fai/faiDebconfConfigurations.tpl:1 admin/fai/class_faiPackage.inc:768
 msgid "Package"
 msgstr "Paket"
 
@@ -258,7 +258,7 @@ msgstr "Mount-Punkt"
 
 #: admin/fai/class_faiSummaryTab.inc:348
 #: admin/fai/class_faiPartitionTableEntry.inc:183
-#: admin/fai/class_faiDebconfConfigurations.inc:117
+#: admin/fai/class_faiDebconfConfigurations.inc:142
 #: admin/fai/NewDebconfConfiguration.tpl:22
 msgid "Type"
 msgstr "Typ"
@@ -294,7 +294,7 @@ msgstr "Nur Lesen"
 #: admin/fai/faiHookEntry.tpl:19 admin/fai/faiHook.tpl:21
 #: admin/fai/class_faiHook.inc:553 admin/fai/class_faiProfile.inc:498
 #: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:398
-#: admin/fai/class_faiVariableEntry.inc:138 admin/fai/class_faiPackage.inc:708
+#: admin/fai/class_faiVariableEntry.inc:138 admin/fai/class_faiPackage.inc:777
 #: admin/fai/faiPartitionTable.tpl:21 admin/fai/faiPartitionTableEntry.tpl:13
 #: admin/fai/faiProfile.tpl:21
 msgid "Description"
@@ -359,7 +359,7 @@ msgstr "Zeige die Objekte, auf die Folgendes passt"
 msgid "Generic"
 msgstr "Allgemein"
 
-#: admin/fai/faiPackage.tpl:45 admin/fai/class_faiPackage.inc:710
+#: admin/fai/faiPackage.tpl:45 admin/fai/class_faiPackage.inc:779
 msgid "Section"
 msgstr "Section"
 
@@ -545,7 +545,7 @@ msgid "FAI template"
 msgstr "FAI-Vorlage"
 
 #: admin/fai/class_faiTemplate.inc:537 admin/fai/class_faiScript.inc:637
-#: admin/fai/class_faiPackage.inc:710 admin/fai/class_faiPackage.inc:713
+#: admin/fai/class_faiPackage.inc:779 admin/fai/class_faiPackage.inc:782
 msgid "Readonly"
 msgstr "Nur Lesen"
 
@@ -625,45 +625,56 @@ msgid "Choose a variable to delete or edit"
 msgstr "Wählen Sie eine Variable zum Entfernen oder Bearbeiten"
 
 #: admin/fai/faiVariable.tpl:53
-#: admin/fai/class_faiDebconfConfigurations.inc:127
+#: admin/fai/class_faiDebconfConfigurations.inc:152
 #: admin/fai/class_faiHook.inc:306 admin/fai/class_faiHook.inc:308
 #: admin/fai/faiPartitionTable.tpl:54
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: admin/fai/class_faiDebconfConfigurations.inc:116
+#: admin/fai/class_faiDebconfConfigurations.inc:107
+msgid "Currently saved"
+msgstr "Wird aktuell gespeichert"
+
+#: admin/fai/class_faiDebconfConfigurations.inc:110
+#: admin/fai/class_faiDebconfConfigurations.inc:115
+msgid "Currently not saved"
+msgstr "Wird aktuell nicht gespeichert"
+
+#: admin/fai/class_faiDebconfConfigurations.inc:141
 #: admin/fai/NewDebconfConfiguration.tpl:19 admin/fai/class_divListFai.inc:60
 #: admin/fai/class_divListFai.inc:66 admin/fai/class_faiVariable.inc:389
 msgid "Variable"
 msgstr "Variable"
 
-#: admin/fai/class_faiDebconfConfigurations.inc:118
+#: admin/fai/class_faiDebconfConfigurations.inc:143
 #: admin/fai/NewDebconfConfiguration.tpl:25
 #: admin/fai/NewDebconfConfiguration.tpl:43
 msgid "Value"
 msgstr "Wert"
 
-#: admin/fai/class_faiDebconfConfigurations.inc:123
+#: admin/fai/class_faiDebconfConfigurations.inc:148
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: admin/fai/class_faiDebconfConfigurations.inc:125
+#: admin/fai/class_faiDebconfConfigurations.inc:150
 #: admin/fai/class_faiHook.inc:310
 msgid "Delete"
 msgstr "Entfernen"
 
-#: admin/fai/class_faiDebconfConfigurations.inc:218
+#: admin/fai/class_faiDebconfConfigurations.inc:279
 #, php-format
 msgid "Debconf information for package list '%s'"
 msgstr "Debconf-Informationen für Paketliste '%s'"
 
-#: admin/fai/class_faiDebconfConfigurations.inc:400
+#: admin/fai/class_faiDebconfConfigurations.inc:496
 #, php-format
 msgid ""
 "The specified value '%s' for variable '%s' is not valid with the specified "
 "boolean variable type.<br><i>Allowed values: true, false, 1, 0.</i>"
-msgstr "Der angegebene Wert '%s' in der Variable '%s' ist mit dem angegebenen "
-"Variablen-Typ boolean nicht zulässig.<br><i>Erlaubte Werte: true, false, 1, 0.</i>"
+msgstr ""
+"Der angegebene Wert '%s' in der Variable '%s' ist mit dem angegebenen "
+"Variablen-Typ boolean nicht zulässig.<br><i>Erlaubte Werte: true, false, 1, "
+"0.</i>"
 
 #: admin/fai/class_askClassName.inc:79 admin/fai/class_askClassName.inc:80
 #: admin/fai/class_askClassName.inc:81 admin/fai/class_askClassName.inc:82
@@ -1147,11 +1158,11 @@ msgstr "Localboot-Produkte"
 msgid "List of scripts"
 msgstr "Liste der Skripte"
 
-#: admin/fai/class_debconfTemplate.inc:213
+#: admin/fai/class_debconfTemplate.inc:221
 msgid "This package has no debconf options."
 msgstr "Dieses Paket verfügt über keine debconf-Optionen."
 
-#: admin/fai/class_debconfTemplate.inc:250
+#: admin/fai/class_debconfTemplate.inc:267
 msgid ""
 "This debconf question is dynamically generated during package installation "
 "and requires choosing between specific options which cannot be presented "
@@ -1320,7 +1331,7 @@ msgstr "Datei-Berechtigungen"
 msgid "List of template files"
 msgstr "Liste der Vorlagen"
 
-#: admin/fai/class_faiPackageConfiguration.inc:68
+#: admin/fai/class_faiPackageConfiguration.inc:71
 #, php-format
 msgid "Debconf information for package '%s'"
 msgstr "Debconf-Information für Paket '%s'"
@@ -1333,12 +1344,13 @@ msgstr "Hinzufügen"
 msgid "OPSI local product"
 msgstr "OPSI Local-Produkt"
 
-#: admin/fai/class_NewDebconfConfiguration.inc:122
+#: admin/fai/class_NewDebconfConfiguration.inc:119
 #, php-format
 msgid ""
 "The specified value '%s' for the variable type boolean is invalid."
 "<br><i>Allowed values: true, false, 1, 0.</i>"
-msgstr "Der angegebene Wert '%s' für den Variablen-Typ Boolean ist unzulässig."
+msgstr ""
+"Der angegebene Wert '%s' für den Variablen-Typ Boolean ist unzulässig."
 "<br><i>Erlaubte Werte: true, false, 1, 0.</i>"
 
 #: admin/fai/faiHookEntry.tpl:33 admin/fai/faiHookEntry.tpl:54
@@ -1481,59 +1493,59 @@ msgstr "Variablen-Eintrag"
 msgid "FAI variable entry "
 msgstr "FAI-Variablen-Eintrag"
 
-#: admin/fai/class_faiPackage.inc:232
+#: admin/fai/class_faiPackage.inc:237
 msgid "Invalid package names"
 msgstr "Ungültige Paketnamen"
 
-#: admin/fai/class_faiPackage.inc:233
+#: admin/fai/class_faiPackage.inc:238
 #, php-format
 msgid "The following package names don't match the Debian policy: %s"
 msgstr "Die folgenden Paketnamen entsprechen nicht der Debian policy: %s"
 
-#: admin/fai/class_faiPackage.inc:444 admin/fai/class_faiPackage.inc:445
-msgid "Configured"
-msgstr "Konfiguriert"
+#: admin/fai/class_faiPackage.inc:475 admin/fai/class_faiPackage.inc:476
+msgid "Remove configuration"
+msgstr "Konfiguration löschen"
 
-#: admin/fai/class_faiPackage.inc:451 admin/fai/class_faiPackage.inc:452
+#: admin/fai/class_faiPackage.inc:482 admin/fai/class_faiPackage.inc:483
 msgid "Package marked for removal"
 msgstr "Paket zum Entfernen vorgemerkt"
 
-#: admin/fai/class_faiPackage.inc:468
+#: admin/fai/class_faiPackage.inc:499
 msgid "Mark package for removal"
 msgstr "Paket zum Entfernen vormerken"
 
-#: admin/fai/class_faiPackage.inc:474
+#: admin/fai/class_faiPackage.inc:505
 msgid "Configure this package"
 msgstr "Dieses Paket konfigurieren"
 
-#: admin/fai/class_faiPackage.inc:478
+#: admin/fai/class_faiPackage.inc:509
 msgid "Remove this package"
 msgstr "Dieses Paket entfernen"
 
-#: admin/fai/class_faiPackage.inc:558
+#: admin/fai/class_faiPackage.inc:589
 msgid "Please select a least one package!"
 msgstr "Bitte wählen Sie mindestens ein Paket!"
 
-#: admin/fai/class_faiPackage.inc:562
+#: admin/fai/class_faiPackage.inc:593
 msgid ""
 "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Bitte wählen Sie eine gültige Kombination aus Release und Sektion für Ihr "
 "gewünschtes Repository!"
 
-#: admin/fai/class_faiPackage.inc:700
+#: admin/fai/class_faiPackage.inc:769
 msgid "FAI Package list"
 msgstr "FAI-Paketliste"
 
-#: admin/fai/class_faiPackage.inc:709
+#: admin/fai/class_faiPackage.inc:778
 msgid "Packages"
 msgstr "Pakete"
 
-#: admin/fai/class_faiPackage.inc:711
+#: admin/fai/class_faiPackage.inc:780
 msgid "Install Method"
 msgstr "Installations-Methode"
 
-#: admin/fai/class_faiPackage.inc:712
+#: admin/fai/class_faiPackage.inc:781
 msgid "Package configuration"
 msgstr "Paket-Konfiguration"
 
