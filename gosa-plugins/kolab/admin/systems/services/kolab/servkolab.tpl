@@ -1,6 +1,7 @@
 <table summary="" style="width:100%">
  <tr>
-  <td style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;" width="50%">
+  <td style='padding-right:5px;' class='right-border'>
+
    <table summary="" width="100%">
     <tr>
 	 <td colspan="2"><b>{t}Generic{/t}</b></td>
@@ -144,7 +145,8 @@
    </table>
   
   </td>
-  <td style="vertical-align:top" width="50%">
+  <td>
+
 
    <table summary="">
     <tr>
