@@ -1,8 +1,9 @@
 <table summary="{t}Phone numbers{/t}" style="width:100%">
  <tr>
-  <td style="vertical-align:top; border-right:1px solid #A0A0A0; width:50%">
+  <td class='right-border'>
    <h3>
-    <img class="center" alt="" align="middle" src="plugins/gofon/images/banana.png" />
+    {image path="plugins/gofon/images/banana.png"}
+
     &nbsp;{t}Phone numbers{/t}
    </h3>
 
@@ -123,7 +124,8 @@
  <tr style="vertical-align:top; border-top:1px solid #A0A0A0;">
  <td colspan=2 style="vertical-align:top;width:50%">
   <h3>
-   <img class="center" alt="" src="plugins/gofon/images/select_macro.png" align="middle" />
+   {image path="plugins/gofon/images/select_macro.png"}
+
    &nbsp;{t}Phone macro{/t}
   </h3>
   <table summary="{t}Phone macro{/t}">
