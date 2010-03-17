@@ -1,6 +1,7 @@
 <table summary="" style="width:100%;">
 	<tr>
-		<td style="width:50%;vertical-align: top;">
+		<td style='width:50%;'>
+
 			<!--Upper left-->	
 			
 			<h3>{t}Generic{/t}</h3>
@@ -10,7 +11,7 @@
 					</td>
 					<td>
 {render acl=$typeACL}
-						<select name="type" >
+						<select name="type"  size=1>
 							{html_options values=$PrinterTypeKeys output=$PrinterTypes selected=$type}
 						</select>
 {/render}
@@ -25,7 +26,7 @@
 					</td>
 					<td>
 {render acl=$FKglpienterpriseACL}
-						<select name="FK_glpi_enterprise" >
+						<select name="FK_glpi_enterprise"  size=1>
 							{html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
 						</select>	
 {/render}
@@ -37,7 +38,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
+		<td style='padding-right: 5px;' class='left-border'>
+
 			<h3>{t}Supported interfaces{/t}</h3>
 			<table summary="" width="100%">
 				<tr>
@@ -78,7 +80,8 @@
 <p class="seperator" >&nbsp;</p>
 <table summary="" style="width:100%;">
 	<tr>
-		<td style="width:50%;vertical-align: top;">
+		<td style='width:50%;'>
+
 			<h3>{t}Contacts{/t}</h3>
 			<table summary="" cellpadding=5>
 				<tr>
@@ -107,7 +110,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
+		<td style='padding-right: 5px;' class='left-border'>
+
 			<h3>{t}Attachments{/t}</h3>
 			<table summary="" width="100%">	
 				<tr>
@@ -128,7 +132,8 @@
 <p class="seperator" >&nbsp;</p>
 <table summary="" style="width:100%;">
 	<tr>
-		<td style="width:50%;vertical-align: top;">
+		<td style='width:50%;'>
+
 			<h3>{t}Information{/t}</h3>
 			<table summary="" width="100%">
 				<tr>
@@ -140,13 +145,14 @@
 				</tr>
 			</table>
 		</td>
-		<td style="border-left: 1px solid rgb(160, 160, 160); vertical-align: top; padding-right: 5px;">
+		<td style='padding-right: 5px;' class='left-border'>
+
 			<h3>{t}Installed cartridges{/t}</h3>
 			<table summary="" width="100%">	
 				<tr>
 					<td>
 {render acl=$CartridgesACL}
-						<select name="Cartridges[]"  style="height:100px;width:100%;" multiple>
+						<select name="Cartridges[]"  style="height:100px;width:100%;" multiple size=1>
 							{html_options values=$CartridgeKeys output=$Cartridges}
 						</select>
 {/render}
