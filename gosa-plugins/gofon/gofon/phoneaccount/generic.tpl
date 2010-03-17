@@ -62,7 +62,7 @@
         </td>
         <td>
 {render acl=$goFonHomeServerACL checkbox=$multiple_support checked=$use_goFonHomeServer}
-         <select name='goFonHomeServer' title='{t}Select the accounts home server{/t}'>
+         <select name='goFonHomeServer' title='{t}Select the accounts home server{/t}' size=1>
           {html_options options=$goFonHomeServers selected=$goFonHomeServer}
          </select>
 {/render}
@@ -73,7 +73,7 @@
      </td>
      <td>
 {render acl=$goFonContextACL checkbox=$multiple_support checked=$use_goFonContext}
-      <select name='context' title='{t}Select the accounts context{/t}'>
+      <select name='context' title='{t}Select the accounts context{/t}' size=1>
         {html_options values=$sip_contexts output=$sip_contexts selected=$context}
       </select>
 {/render}
@@ -84,7 +84,7 @@
      </td>
      <td>
 {render acl=$goFonVoiceMailContextACL checkbox=$multiple_support checked=$use_goFonVoiceMailContext}
-      <select name='voice_context' title='{t}Select the accounts context{/t}'>
+      <select name='voice_context' title='{t}Select the accounts context{/t}' size=1>
         {html_options values=$voicemail_contexts output=$voicemail_contexts selected=$voice_context}
       </select>
 {/render}
@@ -132,7 +132,7 @@
    <tr>
     <td colspan=2>
 {render acl=$goFonMacroACL  checkbox=$multiple_support checked=$use_macro}
-     <select id="macro" name="macro" onchange="document.mainform.submit()">
+     <select id="macro" name="macro" onchange="document.mainform.submit()" size=1>
       {html_options options=$macros selected=$macro}
       <option disabled>&nbsp;</option>
      </select>
