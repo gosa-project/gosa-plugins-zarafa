@@ -1,6 +1,7 @@
 <table style='width:100%'>
  <tr>
-  <td style='width:50%;vertical-align:top;'><h3>Spam tagging</h3>
+  <td style='width:50%;'>
+<h3>Spam tagging</h3>
 
    <table>
     <tr>
@@ -19,7 +20,7 @@
      </td>
      <td>
 {render acl=$saRequiredScoreACL}
-      <select name='saRequiredScore' title='{t}Select required score to tag mail as spam{/t}'>
+      <select name='saRequiredScore' title='{t}Select required score to tag mail as spam{/t}' size=1>
        {html_options options=$SpamScore selected=$saRequiredScore}
       </select>
 {/render}
@@ -28,7 +29,8 @@
    </table>
 
   </td>
-  <td style="vertical-align:top;border-left:1px solid #A0A0A0;"><h3>Trusted networks</h3>
+  <td class='left-border'>
+<h3>Trusted networks</h3>
 
    <table width='100%'>
     <tr>
@@ -80,7 +82,8 @@
     </tr>
    </table>
   </td>
-  <td style="vertical-align:bottom;border-left:1px solid #A0A0A0;">
+  <td class='left-border'>
+
    <table>
     <tr>
      <td>
