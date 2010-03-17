@@ -1,35 +1,40 @@
 <div class="contentboxh">
- <p class="contentboxh"><img src="images/launch.png" align="right" alt="[F]">{t}Filter{/t}</p>
+ <p class="contentboxh">{image path="images/launch.png" align="right"}{t}Filter{/t}
+</p>
 </div>
 <div class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;">
 <table summary="" class="contentboxb" border=0>
   <tr>
-    <td><img src="plugins/rsyslog/images/server.png" alt="" class="center">&nbsp;{t}Server{/t}:</td>
+    <td>{image path="plugins/rsyslog/images/server.png"}&nbsp;{t}Server{/t}:
+</td>
     <td width="20%">
-      <select name='selected_server' onChange='document.mainform.submit();'>
+      <select name='selected_server' onChange='document.mainform.submit();' size=1>
         {foreach from=$servers item=item key=key}
           <option value='{$key}' {if $key == $selected_server} selected {/if}>{$item.cn}</option>
         {/foreach}
       </select>
     </td>
-    <td><img src="plugins/rsyslog/images/workstation.png" alt="" class="center">&nbsp;{t}Host{/t}:</td>
+    <td>{image path="plugins/rsyslog/images/workstation.png"}&nbsp;{t}Host{/t}:
+</td>
     <td width="20%">
-      <select name='selected_host' onChange='document.mainform.submit();'>
+      <select name='selected_host' onChange='document.mainform.submit();' size=1>
         {foreach from=$hosts item=item key=key}
           <option value='{$key}' {if $key == $selected_host} selected {/if}>{$item}</option>
         {/foreach}
       </select>
     </td>
-    <td><img src="images/small_warning.png" alt="" class="center">&nbsp;{t}Severity{/t}:</td>
+    <td>{image path="images/small_warning.png"}&nbsp;{t}Severity{/t}:
+</td>
     <td>   
-      <select name='selected_priority' onChange='document.mainform.submit();'>
+      <select name='selected_priority' onChange='document.mainform.submit();' size=1>
         {html_options values=$priorities options=$priorities selected=$selected_priority}
       </select>
     </td>
     <td width="">&nbsp;</td>
   </tr>
   <tr>
-    <td><img src="plugins/rsyslog/images/clock.png" alt="" class="center">&nbsp;{t}From{/t}:</td>
+    <td>{image path="plugins/rsyslog/images/clock.png"}&nbsp;{t}From{/t}:
+</td>
     <td>
       <input type="text" id="startTime" name="startTime" class="date" style='width:100px' value="{$startTime}">
       <script type="text/javascript">
@@ -49,7 +54,8 @@
         {/literal}
       </script> 
     </td>
-    <td><img src="images/lists/search.png" alt="" class="center">&nbsp;{t}Search{/t}:</td>
+    <td>{image path="images/lists/search.png"}&nbsp;{t}Search{/t}:
+</td>
     <td>   
       <input type='text' name='search_for' value='{$search_for}' style='width:250px;'>
     </td>
@@ -131,7 +137,7 @@
   {/if}
   <div style='width:40%;float:left;'>{$matches}</div>
   <div style='width:80px;float:right;'>
-    <select name='limit' onChange='document.mainform.submit();'>
+    <select name='limit' onChange='document.mainform.submit();' size=1>
       {html_options options=$limits selected=$limit}
     </select>
   </div>
