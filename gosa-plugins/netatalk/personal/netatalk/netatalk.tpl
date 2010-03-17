@@ -6,7 +6,7 @@
 	<td>
 
 {render acl=$netatalkShareACL}
-		<select name="apple_user_share" id="apple_user_share">
+		<select name="apple_user_share" id="apple_user_share" size=1>
 			{html_options options=$shares selected=$selectedshare}
 		</select>
 {/render}
