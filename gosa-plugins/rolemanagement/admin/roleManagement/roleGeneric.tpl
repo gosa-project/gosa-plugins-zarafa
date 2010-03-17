@@ -1,6 +1,7 @@
 <table style='width:100%;'>
   <tr>
-    <td style='width:50%; vertical-align:top; border-right:1px solid #A0A0A0; padding-right:10px;'>
+    <td style='width:50%; padding-right:10px;' class='right-border'>
+
 
       <h3>
         {t}Generic{/t}
@@ -57,7 +58,8 @@
       </table>
 
     </td>
-    <td style=' vertical-align:top; padding-left:10px;'>
+    <td style='padding-left:10px;'>
+
       <h3>
         {t}Occupants{/t}
       </h3>
