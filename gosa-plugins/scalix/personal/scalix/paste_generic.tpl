@@ -1,6 +1,7 @@
 <table summary="{t}Scalix paste{/t}">
 	<tr>
-  <td style="vertical-align:top;">
+  <td>
+
    <h3>
 <label for="emails_list"> {t}Scalix email addresses{/t}</label></h3>
    <select id="emails_list" style="width:100%;height:100px;" name="emails_list[]" size="15"
