@@ -18,14 +18,17 @@
 {t}Open-Xchange account{/t}</h3>
 
 
-<table summary="{t}Open-Xchange configuration{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
+<table style='width:100%; ' summary="{t}Open-Xchange configuration{/t}">
+
 
  <!-- Headline container -->
  <tr>
-   <td style="width:50%; vertical-align:top;">
+   <td style='width:50%; '>
+
      <table style="margin-left:4px;" summary="{t}Open-Xchange configuration{/t}">
        <tr>
-         <td colspan=2 style="vertical-align:top;">
+         <td colspan="2">
+
            <b>{t}Remember{/t}</b>
          </td>
        </tr>
@@ -51,13 +54,16 @@
        </tr>
      </table>
    </td>
-   <td rowspan=2 style="border-left:1px solid #A0A0A0">
+   <td class='left-border' rowspan="2">
+
      &nbsp;
    </td>
-   <td style="vertical-align:top;">
+   <td>
+
      <table summary="{t}Open-Xchange configuration{/t}">
        <tr>
-         <td colspan=2 style="vertical-align:top;">
+         <td colspan="2">
+
            <b>{t}User Information{/t}</b>
          </td>
        </tr>
