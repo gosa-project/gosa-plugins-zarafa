@@ -475,8 +475,8 @@ class EventTargetAddList extends MultiSelectWindow
       foreach($textcheckbox['regexes'] as $regex) {
         $special_filter .= $this->GetRegex($regex, FALSE);
       }
+      $special_filter .= "</table>";
     }
-    $special_filter .= "</table>";
     $smarty->assign("special_filters"   , $special_filter);
     $display = $smarty->fetch(get_template_path('EventTargetAddList.tpl', TRUE, dirname(__FILE__)));
     return($display);
