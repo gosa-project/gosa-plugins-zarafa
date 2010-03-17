@@ -11,10 +11,12 @@
 
  <!-- Headline container -->
  <tr>
-   <td style="width:50%; vertical-align:top;">
+   <td style='width:50%; '>
+
      <table style="margin-left:4px;" summary="{t}Bandwith settings{/t}">
        <tr>
-         <td colspan=2 style="vertical-align:top;">
+         <td colspan="2">
+
            <b>{t}Bandwidth{/t}</b>
          </td>
        </tr>
@@ -40,13 +42,15 @@
        </tr>
      </table>
    </td>
-   <td rowspan=2 style="border-left:1px solid #A0A0A0">
+   <td class='left-border' rowspan="2">
+
      &nbsp;
    </td>
    <td>
      <table summary="{t}Quota settings{/t}">
        <tr>
-         <td colspan=2 style="vertical-align:top;">
+         <td colspan="2">
+
            <b>{t}Quota{/t}</b>
          </td>
        </tr>
@@ -76,7 +80,8 @@
    <td>
      <table style="margin-left:4px;" summary="{t}Ratio settings{/t}">
        <tr>
-         <td colspan=2 style="vertical-align:top;">
+         <td colspan="2">
+
            <b>{t}Ratio{/t}</b>
          </td>
        </tr>
@@ -99,7 +104,8 @@
    <td>
      <table summary="{t}Miscellaneous{/t}">
        <tr>
-         <td colspan=2 style="vertical-align:top;">
+         <td colspan="2">
+
            <b>{t}Miscellaneous{/t}</b>
          </td>
        <tr>
