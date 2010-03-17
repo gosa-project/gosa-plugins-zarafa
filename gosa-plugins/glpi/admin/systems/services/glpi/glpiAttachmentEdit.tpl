@@ -3,10 +3,12 @@
 	
 <table summary="" width="100%">
 	<tr>
-		<td width="50%" style="vertical-align:top;">
+		<td>
+
 			<table summary="" width="100%">
 				<tr>
-					<td  style="vertical-align:top;">
+					<td>
+
 						{t}Name{/t}
 					</td>
 					<td>
@@ -14,47 +16,58 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top;">
+					<td>
+
 						{t}Comment{/t}
 					</td>
-					<td style="vertical-align:top;">
+					<td>
+
 						<textarea name="comment">{$comment}</textarea>
 					</td>
 				</tr>
 			</table>
 		</td>
-		<td  style="vertical-align:top;">
+		<td>
+
 			<table summary="" width="100%">
 				<tr>
-					<td style="vertical-align:top;">
+					<td>
+
 						{t}File{/t}
 					</td>
-					<td style="vertical-align:top;">
+					<td>
+
 						<input type="file" value="" name="filename"><button type='submit' name='upload'>{t}Upload{/t}</button>
 
 					</td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top;">
+					<td>
+
 						{t}Status{/t}
 					</td>
-					<td style="vertical-align:top;">
+					<td>
+
 						{$status}
 					</td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top;">
+					<td>
+
 						{t}Filename{/t}
 					</td>
-					<td style="vertical-align:top;">
+					<td>
+
 						{$filename}
 					</td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top;">
+					<td>
+
 						{t}Mime-type{/t}
 					</td>
-					<td style="vertical-align:top;">
+					<td>
+
 						{$mime}
 					</td>
 				</tr>
