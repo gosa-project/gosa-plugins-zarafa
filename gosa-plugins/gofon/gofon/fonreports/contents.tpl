@@ -32,8 +32,7 @@
 <br>
 
 {if $search_result}
- <table style="width:100%; vertical-align:top; text-align:left; border:1px solid #B0B0B0;" cellpadding=2 cellspacing=1 border=0 rules="cols" summary="">
-  <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
+ <table style='width:100%; '>  <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
    <td><a href="main.php{$plug}&amp;sort=0">{t}Date{/t} {$mode0}</a></td>
    <td><a href="main.php{$plug}&amp;sort=1">{t}Source{/t} {$mode1}</a></td>
    <td><a href="main.php{$plug}&amp;sort=2">{t}Destination{/t} {$mode2}</a></td>	
@@ -45,8 +44,7 @@
   {$search_result}
  </table>
 
- <table style="width:100%; vertical-align:top; text-align:center;" cellpadding=4 cellspacing=0 border=0 summary="">
-  <tr>
+ <table style='width:100%; text-align:center;'>  <tr>
    <td>{$range_selector}</td>
   </tr>
  </table>

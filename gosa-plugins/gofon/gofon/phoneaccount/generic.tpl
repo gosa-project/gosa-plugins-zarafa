@@ -37,12 +37,10 @@
 
 {/if}
   </td>
-  <td style="vertical-align:top; width:50%;">
-   <table summary="" style="width:100%" border=0>
+  <td style='width:50%;'>   <table summary="" style="width:100%" border=0>
  <tr>
 
-  <td style="vertical-align:top;">
-   <h3>{t}Telephone hardware{/t}</h3>
+  <td>   <h3>{t}Telephone hardware{/t}</h3>
 
       <table summary="{t}Telephone{/t}" border=0>
 	   {if !$multiple_support}
@@ -119,11 +117,9 @@
 
  </tr>
  <tr>
- <td style="vertical-align:top; border-top:1px solid #A0A0A0; width:50%" colspan="2">&nbsp;</td>
+ <td style='width:50%'></td>
  </tr>
- <tr style="vertical-align:top; border-top:1px solid #A0A0A0;">
- <td colspan=2 style="vertical-align:top;width:50%">
-  <h3>
+ <tr> <td style='width:50%'>  <h3>
    {image path="plugins/gofon/images/select_macro.png"}
 
    &nbsp;{t}Phone macro{/t}

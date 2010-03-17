@@ -21,11 +21,9 @@
    <button type='submit' name='delete_phonenumber'>{msgPool type=delButton}</button>
 
   </td>
-  <td style="vertical-align:top; width:50%;">
-   <table summary="" style="width:100%" border=0>
+  <td style='width:50%;'>   <table summary="" style="width:100%" border=0>
     <tr>
-     <td style="vertical-align:top;">
-      <h3> 
+     <td>      <h3> 
        {image path="plugins/gofon/images/hardware.png"}
 
        &nbsp;{t}Telephone hardware{/t}
