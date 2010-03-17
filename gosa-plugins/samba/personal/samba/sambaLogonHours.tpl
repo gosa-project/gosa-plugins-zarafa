@@ -22,19 +22,22 @@
 <h1>{t}Specify the hours this user is allowed to log in{/t}</h1>
 <br>
 
-<table cellspacing=0 cellpadding=0 style='border: solid 1px #B0B0B0; background-color: #EEEEEE; width :100%;' 
+<table style='background-color: #EEEEEE; width :100%;'>
   summary="{t}Samba logon hours{/t}">
   <tr>
     <td>&nbsp;</td>
-    <td colspan=24 style='text-align:center;height:24px;border-bottom: solid 1px #B0B0B0;'><b>{t}Hour{/t}</b></td>
+    <td style='text-align:center;height:24px;' colspan="24">
+<b>{t}Hour{/t}</b></td>
   </tr>
   <tr>
-    <td style='text-align: left;' class='list0'>&nbsp;</td>
+    <td class='list0'>&nbsp;
+</td>
     {foreach from=$Hours item=hours key=key_hours}
       {if (($hours)%2)==0}
         <td style="text-align:center;height: 22px; background-color: rgb(226, 226, 226); ">
       {else}
-        <td style="text-align:center;height: 22px; background-color: rgb(245, 245, 245); border-right: solid 1px #B0B0B0;">
+        <td style='text-align:center;height: 22px; background-color: rgb(245, 245, 245); ' class='right-border'>
+
       {/if}
       {$hours}
     </td>
@@ -44,14 +47,16 @@
 {if $acl}
   <!-- Add toggle buttons for hours -->
   <tr>
-    <td style='text-align: left;' class='list0'>
+    <td class='list0'>
+
       &nbsp;
     </td>
     {foreach from=$Hours item=hours key=key_hours}
       {if (($hours)%2)==0}
         <td style="text-align:center; height: 22px; background-color: rgb(226, 226, 226); text-align: right;">
       {else}
-        <td style="text-align:center; height: 22px; background-color: rgb(245, 245, 245); border-right: solid 1px #B0B0B0; text-align: right;">
+        <td style='text-align:center; height: 22px; background-color: rgb(245, 245, 245); text-align: right;' class='right-border'>
+
       {/if}
 
       <input type='button' onClick="toggle_chk('^day_[0-9]*_{$hours}$');" value='+/-' style='width:100%;'>
@@ -73,7 +78,8 @@
       {if (($key_hour)%2)==0}
         <td style="text-align:center;height: 22px; background-color: rgb(226, 226, 226); ">
       {else}
-        <td style="text-align:center;height: 22px; background-color: rgb(245, 245, 245); border-right: solid 1px;">
+        <td style='text-align:center;height: 22px; background-color: rgb(245, 245, 245); ' class='right-border'>
+
       {/if}
           <input type='checkbox' 
             {if $acl} id='day_{$key_day}_{$key_hour}' name='day_{$key_day}_{$key_hour}' {/if}
