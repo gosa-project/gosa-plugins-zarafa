@@ -1,9 +1,7 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
   <tr>
     <td colspan=3>
-      <h3 style='margin:0px; padding:0px;'><img class="center" alt="" align="middle" src="images/rightarrow.png"> 
-        {t}Properties{/t}
-      </h3>
+      <h3>{t}Properties{/t}</h3>
     </td>
   </tr>
   <tr>
@@ -131,9 +129,7 @@
   </tr>
   <tr>
     <td colspan=3>
-      <h3 style='margin:0px; padding:0px;'><img class="center" alt="" align="middle" src="plugins/gofon/images/options.png"> 
-        {t}Options{/t}
-      </h3>
+      <h3>{t}Options{/t}</h3>
     </td>
   </tr>
   <tr>
