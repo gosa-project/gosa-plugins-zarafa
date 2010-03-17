@@ -27,7 +27,8 @@
   
   </td>
   
-  <td style="vertical-align:top;">
+  <td>
+
    <table>
     <tr>
      <td>
@@ -82,7 +83,8 @@
    
   </td>
 
-  <td style="vertical-align:top">
+  <td>
+
    <p><b>{t}Access control{/t}</b></p>
    <table>
     <tr>
