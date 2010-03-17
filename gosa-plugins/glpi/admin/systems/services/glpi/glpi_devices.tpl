@@ -4,7 +4,8 @@
 	<br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -14,7 +15,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comments{/t}
+						<td>{t}Comments{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comments">{$comments}</textarea>
@@ -24,13 +26,14 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Monitor size{/t}
+						<td>{t}Monitor size{/t}
+
 						</td>	
 						<td>	
 							<input type='text' name="size" value="{$size}"> {t}Inch{/t}
@@ -73,14 +76,16 @@
                         </td>
                     </tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Serial number{/t}
+						<td>{t}Serial number{/t}
+
 						</td>	
 						<td>	
 							<input type='text' name="serial" value="{$serial}">
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Additional serial number{/t}
+						<td>{t}Additional serial number{/t}
+
 						</td>	
 						<td>	
 							<input type='text' name="otherserial" value="{$otherserial}">
@@ -99,7 +104,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -109,7 +115,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -123,7 +130,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -140,7 +147,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -150,7 +158,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -164,7 +173,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -195,7 +204,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -205,7 +215,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -219,7 +230,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -228,7 +239,7 @@
 						<td>{t}Interface{/t}
 						</td>	
 						<td>	
-							<select name="interface">
+							<select name="interface" size=1>
 								{html_options values=$GFXInterfaceKeys output=$GFXInterfaces selected=$interface}
 							</select>
 						</td>
@@ -251,7 +262,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -261,7 +273,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -275,7 +288,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -284,7 +297,7 @@
 						<td>{t}Interface{/t}
 						</td>	
 						<td>	
-							<select name="interface">
+							<select name="interface" size=1>
 								{html_options values=$HDDInterfaceKeys output=$HDDInterfaces selected=$interface}
 							</select>
 						</td>
@@ -309,7 +322,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -319,7 +333,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -333,7 +348,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -349,7 +364,7 @@
 						<td>{t}Interface{/t}
 						</td>	
 						<td>	
-							<select name="interface">
+							<select name="interface" size=1>
 								{html_options values=$HDDInterfaceKeys output=$HDDInterfaces selected=$interface}
 							</select>
 						</td>
@@ -373,7 +388,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -383,7 +399,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -397,7 +414,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -427,7 +444,7 @@
 						<td>{t}Type{/t}
 						</td>	
 						<td>	
-							<select name="interface">
+							<select name="interface" size=1>
 								{html_options values=$HDDInterfaceKeys output=$HDDInterfaces selected=$interface}
 							</select>
 						</td>
@@ -445,7 +462,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -455,7 +473,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -469,7 +488,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -492,7 +511,7 @@
 						<td>{t}Type{/t}
 						</td>	
 						<td>	
-							<select name="type">
+							<select name="type" size=1>
 								{html_options values=$RAMtypeKeys output=$RAMtypes selected=$type}
 							</select>
 						</td>
@@ -509,7 +528,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -519,7 +539,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -533,7 +554,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -556,7 +577,8 @@
 
     <table summary="" width="100%">
         <tr>
-            <td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+            <td style='padding-right:5px;' class='right-border'>
+
                 <table summary="" width="100%">
                     <tr>
                         <td>{t}Name{/t}
@@ -566,7 +588,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="vertical-align:top;">{t}Comment{/t}
+                        <td>{t}Comment{/t}
+
                         </td>
                         <td>
                             <textarea name="comment">{$comment}</textarea>
@@ -580,7 +603,7 @@
                         <td>{t}Manufacturer{/t}
                         </td>
                         <td>
-                            <select name="FK_glpi_enterprise">
+                            <select name="FK_glpi_enterprise" size=1>
                                 {html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
                             </select>
                         </td>
@@ -609,7 +632,8 @@
     <br>
     <table summary="" width="100%">
         <tr>
-            <td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+            <td style='padding-right:5px;' class='right-border'>
+
                 <table summary="" width="100%">
                     <tr>
                         <td>{t}Name{/t}
@@ -619,7 +643,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="vertical-align:top;">{t}Comment{/t}
+                        <td>{t}Comment{/t}
+
                         </td>
                         <td>
                             <textarea name="comment">{$comment}</textarea>
@@ -633,7 +658,7 @@
                         <td>{t}Manufacturer{/t}
                         </td>
                         <td>
-                            <select name="FK_glpi_enterprise">
+                            <select name="FK_glpi_enterprise" size=1>
                                 {html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
                             </select>
                         </td>
@@ -663,7 +688,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -673,7 +699,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -687,7 +714,7 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
@@ -709,7 +736,8 @@
         <br>
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;">
+			<td style='padding-right:5px;' class='right-border'>
+
 				<table summary="" width="100%">
 					<tr>
 						<td>{t}Name{/t}
@@ -719,7 +747,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}Comment{/t}
+						<td>{t}Comment{/t}
+
 						</td>	
 						<td>	
 							<textarea name="comment">{$comment}</textarea>
@@ -733,16 +762,17 @@
 						<td>{t}Manufacturer{/t}
 						</td>	
 						<td>	
-							<select name="FK_glpi_enterprise">
+							<select name="FK_glpi_enterprise" size=1>
 								{html_options values=$FK_glpi_enterpriseKeys output=$FK_glpi_enterprises selected=$FK_glpi_enterprise}
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top;">{t}format{/t}
+						<td>{t}format{/t}
+
 						</td>	
 						<td>	
-							<select name="format">
+							<select name="format" size=1>
 								{html_options values=$formatKeys output=$formats selected=$format}
 							</select>
 						</td>
