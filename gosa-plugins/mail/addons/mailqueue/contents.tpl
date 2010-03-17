@@ -1,13 +1,15 @@
 <div style="height: 5px;">&nbsp;</div>
 <div class="contentboxh">
- <p class="contentboxh"><img src="images/launch.png" alt="[F]" align="right">Filter</p>
+ <p class="contentboxh">{image path="images/launch.png" align="right"}Filter
+</p>
 </div>
 <div class="contentboxb">
   <div >
 	<table width="100%" summary="">
 		<tr>
 			<td>
-	<img class="center" alt="{t}Search{/t}" src="images/lists/search.png" align="middle" border="0">
+	{image path="images/lists/search.png"}
+
 	 &nbsp;{t}Search for{/t}
     <input type='text' name="search_for" size="12" maxlength="60" value="{$search_for}" title="{t}Please enter a search string here.{/t}" onchange="mainform.submit()">
  	 &nbsp;in 
@@ -28,7 +30,8 @@
 	<button type='submit' name='search'>{t}Search{/t}</button>
 
 			</td>
-			<td style="border-left:1px solid #A0A0A0; text-align:right;">&nbsp;
+			<td style='text-align:right;' class='left-border'>&nbsp;
+
 				{if $delAll_W}
 				<input name="all_del"  src="images/lists/trash.png"		
 					value="{t}Remove all messages{/t}" type="image" 
@@ -64,7 +67,7 @@
 <b>{t}Search returned no results{/t}...</b>
 {else}
 
-<table style="border: 1px solid rgb(176, 176, 176); width: 100%; vertical-align: top; text-align: left;" summary=""
+<table style='width: 100%; ' summary="">
  border="0" cellpadding="2" cellspacing="1" rules="cols">
 	<tr style="background-color: rgb(232, 232, 232); height: 26px; font-weight: bold;">
 		<td style='width:20px'>
@@ -91,7 +94,8 @@
 		<td><input id="selected_{$entries[$key].MailID}" type='checkbox' name='selected_{$entries[$key].MailID}_{$entries[$key].Server}' class='center'></td>
 		<td >
 			{if $entries[$key].Active == true}
-				<img class="center" src="plugins/mail/images/mailq_active.png" border=0 alt="{t}Active{/t}">
+				{image path="plugins/mail/images/mailq_active.png"}
+
 			{/if}
 			{$entries[$key].MailID}</td>
 		<td>{$entries[$key].ServerName}</td>
@@ -102,39 +106,44 @@
 		<td >{$entries[$key].Status}</td>
 		<td style="text-align:right">
 			{if $del_W}
-				<input type='image' name='del__{$entries[$key].MailID}__{$entries[$key].Server}' class="center" 
+				{image action="del__{$entries[$key].MailID}__{$entries[$key].Server}"}
 					src="images/lists/trash.png" alt="{t}delete{/t}" title="{t}Delete this message{/t}">
 			{else}
-				<img src='images/empty.png' alt=' '>
+				{image path="images/empty.png"}
+
 			{/if}
 			{if $entries[$key].Hold == true}
 
 				{if $unhold_W}
-					<input type='image' name='unhold__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+					{image action="unhold__{$entries[$key].MailID}__{$entries[$key].Server}"}
 						src="plugins/mail/images/mailq_unhold.png" alt="{t}unhold{/t}" title="{t}Release message{/t}">
 				{else}
-					<img src='images/empty.png' alt=' '>
+					{image path="images/empty.png"}
+
 				{/if}
 			{else}
 				{if $hold_W}
-					<input type='image' name='hold__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+					{image action="hold__{$entries[$key].MailID}__{$entries[$key].Server}"}
 						src="plugins/mail/images/mailq_hold.png" alt="{t}hold{/t}" title="{t}Hold message{/t}">
 				{else}
-					<img src='images/empty.png' alt=' '>
+					{image path="images/empty.png"}
+
 				{/if}
 			{/if}
 			{if $requeue_W}
-				<input type='image' name='requeue__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+				{image action="requeue__{$entries[$key].MailID}__{$entries[$key].Server}"}
 					src="images/lists/reload.png" alt="{t}requeue{/t}" title="{t}Requeue this message{/t}">
 			{else}
-				<img src='images/empty.png' alt=' '>
+				{image path="images/empty.png"}
+
 			{/if}
 			{if $header_W}
-				<input type='image' name='header__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+				{image action="header__{$entries[$key].MailID}__{$entries[$key].Server}"}
 					src="plugins/mail/images/mailq_header.png" alt="{t}header{/t}" 
 					title="{t}Display header of this message{/t}">
 			{else}
-				<img src='images/empty.png' alt=' '>
+				{image path="images/empty.png"}
+
 			{/if}
 		</td>
 	</tr>
@@ -142,7 +151,8 @@
 {/foreach}
 </table>
 
- <table summary="" style="width:100%; vertical-align:top; text-align:center;" cellpadding=4 cellspacing=0 border=0>
+ <table style='width:100%; text-align:center;' summary="">
+
   <tr>
    <td>{$range_selector}</td>
   </tr>
