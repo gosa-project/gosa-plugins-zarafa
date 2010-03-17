@@ -2,7 +2,8 @@
 	<tr>
 		<td>
 			<h3>{t}Generic{/t}</h3>
-			<table summary="" title="" width="100%" style="vertical-align:top;">	
+			<table summary="" width="100%">	
+
 				<tr>
 					<td>{t}Name{/t}
 					</td>
@@ -20,7 +21,8 @@
 			</table>
 			<hr>
 			<h3>{t}Comments{/t}</h3>
-			<table summary="" title="" width="100%" style="vertical-align:top;">	
+			<table summary="" width="100%">	
+
 				<tr>
 					<td>{t}Comment{/t}
 					</td>
@@ -30,14 +32,16 @@
 				</tr>
 			</table>
 		</td>
-		<td style="vertical-align:top;border-left: 1px solid rgb(160, 160, 160);padding-right: 5px;">
+		<td style='padding-right: 5px;' class='left-border'>
+
 			<h3>{t}Generic{/t}</h3>
-            <table summary="" title="" width="100%" style="vertical-align:top;">
+            <table summary="" width="100%">
+
                 <tr>
                     <td>{t}Type{/t}
                     </td>
                     <td>
-						<select name="type" >
+						<select name="type"  size=1>
                             {html_options values=$typeKeys output=$types selected=$type}
                         </select>
                         <button type='submit' name='edit_type_cartridge'>{t}edit{/t}</button>
@@ -48,7 +52,7 @@
                     <td>{t}Manufacturer{/t}
                     </td>
                     <td>
-						<select name="FK_glpi_enterprise">
+						<select name="FK_glpi_enterprise" size=1>
                             {html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
                         </select>
                         <button type='submit' name='edit_manufacturer_cartridges'>{t}edit{/t}</button>
