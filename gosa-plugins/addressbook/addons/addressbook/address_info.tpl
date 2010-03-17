@@ -1,4 +1,5 @@
-<table style='width:100%; border:1px solid #B0B0B0;' summary="">
+<table style='width:100%; ' summary="">
+
 
  <tr style="background-color: #E8E8E8; height:26px;font-weight:bold;">
   <td align=left width="100%">{$storage_info}

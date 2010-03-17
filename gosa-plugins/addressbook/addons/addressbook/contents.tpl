@@ -3,7 +3,8 @@
 <tr>
   <td>
 
-   <table style='border:1px solid #B0B0B0; width:100%; ' summary="">
+   <table style='width:100%;' summary="">
+
 
     <colgroup>
         <col width="32%">
@@ -76,11 +77,13 @@
 </p>
    </div>
    <div class="contentboxb">
-    <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+    <table style='width:100%;' summary="">
+
      {$alphabet}
     </table>
     
-<table summary=""  style="width:100%;border-top:1px solid #B0B0B0;">
+<table style='width:100%;' summary="">
+
 	<tr>
 		<td>
 <input type="checkbox" name="organizational" value="1" {$organizational} onClick="mainform.submit()" title="{t}Select to see regular users{/t}">{t}Show organizational entries{/t}<br>
@@ -89,7 +92,8 @@
 	</tr>
 </table>
 
-<table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+<table style='width:100%;' summary="">
+
 	<tr>
 		<td>
 			<label for="search_base">{image path="{$tree_image}" title="{t}Display results for department{/t}"}
@@ -103,7 +107,8 @@
 		</td>
 	</tr>
 </table>
-<table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+<table style='width:100%;' summary="">
+
 	<tr>
 		<td>
 			<label for="object_type">{image path="{$obj_image}" title="{t}Match object{/t}"}
@@ -117,7 +122,8 @@
 	    </td>
 	</tr>
 </table>
-<table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
+<table style='width:100%;' summary="">
+
 	<tr>
 		<td><label for="search_for">{image path="{$search_image}" title="{t}Search for{/t}"}
 </label>
