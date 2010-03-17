@@ -1,6 +1,7 @@
 <table summary="" style="width:100%;">
  <tr>
-  <td style="width:45%; vertical-align:top;">
+  <td style='width:45%; '>
+
   <LABEL for="admins"> {t}Folder administrators{/t}</LABEL>
    <br>
    <select id="admins" style="width:380px; height:300px;" name="admins[]" size=15 multiple>
@@ -8,7 +9,8 @@
    </select>
   </td>
 
-  <td style="width:10%; vertical-align:middle; text-align:center;">
+  <td style='width:10%; text-align:center;'>
+
    <button type='submit' name='add_users'>&larr;</button>
 
    <br>
@@ -17,7 +19,8 @@
 
   </td>
 
-  <td style="width:45%; vertical-align:top;">
+  <td style='width:45%; '>
+
    <br>
    <select style="width:380px; height:275px;" name="users[]" size=15 multiple>
     {html_options options=$mailusers}
