@@ -1,10 +1,12 @@
 <h3>{t}Generic{/t}</h3>
 <table summary="" width="100%">
 	<tr>
-		<td style="width:50%;vertical-align:top;border-right:1px	solid	#b0b0b0;">
+		<td style='width:50%;' class='right-border'>
+
 			<table summary="">
 				<tr>
-					<td style='vertical-align:top'>{t}Zone name{/t}{$must}
+					<td>{t}Zone name{/t}{$must}
+
 					</td>
 					<td>
 {render acl=$zoneNameACL}					
@@ -13,7 +15,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td style='vertical-align:top'>{t}Network address{/t}{$must}
+					<td>{t}Network address{/t}{$must}
+
 					</td>
 					<td>
 {render acl=$ReverseZoneACL}					
@@ -26,7 +29,7 @@
 					</td>
 					<td>
 {render acl=$NetworkClassACL}					
-						<select name="NetworkClass" {if $NotNew || $Zone_is_used} disabled {/if}>
+						<select name="NetworkClass" {if $NotNew || $Zone_is_used} disabled {/if} size=1>
 							{html_options options=$NetworkClasses selected=$NetworkClass}
 						</select>
 {/render}
@@ -41,7 +44,8 @@
 				{/if}
 			</table>
 		</td>
-		<td style="vertical-align:top;">
+		<td>
+
 			<table summary="">
 				<tr>
 					<td>
@@ -67,7 +71,8 @@
 <h3>{t}SOA record{/t}</h3>
 <table summary="" width="100%">
 	<tr>
-		<td style="vertical-align:top;width:50%;border-right:1px	solid	#b0b0b0;">
+		<td style='width:50%;' class='right-border'>
+
 			<table summary="">
 				<tr>
 					<td>{t}Primary dns server for this zone{/t}{$must}
@@ -98,7 +103,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="vertical-align:top;">
+		<td>
+
 			<table summary="">
 				<tr>
 					<td>{t}Refresh{/t}{$must}
@@ -145,7 +151,8 @@
 <br>
 <table summary="" width="100%">
 	<tr>
-		<td style="vertical-align:top;width:50%;border-right:1px	solid	#b0b0b0;">
+		<td style='width:50%;' class='right-border'>
+
 			<h3>{t}MxRecords{/t}</h3>
 			<table width="100%">	
 				<tr>
@@ -164,7 +171,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="vertical-align:top;">
+		<td>
+
 			<h3>{t}Global zone records{/t}</h3>
 {render acl=$zoneRecordsACL}					
 			  {$records}
