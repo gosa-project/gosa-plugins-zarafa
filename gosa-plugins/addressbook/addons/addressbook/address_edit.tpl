@@ -1,4 +1,5 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left; border:1px solid #B0B0B0;" cellpadding=4 cellspacing=0 border=0>
+<table style='width:100%; border:1px solid #B0B0B0;' summary="">
+
 	<tr style="background-color: #E8E8E8; height:26px;font-weight:bold;">
 		<td align=left width="100%">
 			<LABEL for="storage_base">
@@ -18,9 +19,11 @@
 		<td colspan=2>
 			<table summary="" width="100%" cellspacing=2 cellpadding=4>
 				<tr>
-					<td style="width:50%; vertical-align:top; background-color: #F0F0F0">
+					<td style='width:50%; background-color: #F0F0F0'>
+
 						<h3>
-							<img class="center" alt="" src="{$personal_image}" align=middle>
+							{image path="{$personal_image}"}
+
 								&nbsp;{t}Personal{/t}
 						</h3>
  						<table summary="" width="100%">
@@ -68,9 +71,11 @@
   							</tr>
  						</table>
 					</td>
-					<td style="width:50%; vertical-align:top;background-color:#E8E8E8">
+					<td style='width:50%; background-color:#E8E8E8'>
+
  						<h3>
-							<img class="center" alt="" src="{$home_image}" align=middle>
+							{image path="{$home_image}"}
+
 							&nbsp;{t}Private{/t}
 						</h3>
 						<table summary="" width="100%">
@@ -82,7 +87,8 @@
 								<br>
 								<br>
 								</td>
-						   		<td style="vertical-align:top;">
+						   		<td>
+
 {render acl=$homePostalAddressACL}
 									<textarea id="homePostalAddress" name="homePostalAddress" rows=1 cols=20>{$info_homePostalAddress}</textarea>
 {/render}
@@ -128,9 +134,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width:100%; vertical-align:top; background-color: #E4E4E4" colspan=2>
+					<td style='width:100%; background-color: #E4E4E4' colspan="2">
+
  						<h3>
-							<img class="center" alt="" src="{$company_image}" align=middle>
+							{image path="{$company_image}"}
+
 							&nbsp;{t}Organizational{/t}
 						</h3>
  						<table summary="" width="100%">
@@ -199,7 +207,8 @@
 									 	</tr>
 									</table>
 								   	</td>
-								   	<td style="vertical-align:top">
+								   	<td>
+
 									<table summary="" width="100%">
 										<tr>
 											<td>
@@ -209,7 +218,8 @@
 												<br>
 												<br>
 											</td>
-											<td style="vertical-align:top;">
+											<td>
+
 {render acl=$postalAddressACL}
 												<textarea id="postalAddress" name="postalAddress" rows=1 cols=20 >{$info_postalAddress}</textarea>
 {/render}

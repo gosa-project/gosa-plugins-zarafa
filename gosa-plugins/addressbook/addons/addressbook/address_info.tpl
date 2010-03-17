@@ -1,4 +1,5 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left; border:1px solid #B0B0B0;" cellpadding=4 cellspacing=0 border=0>
+<table style='width:100%; border:1px solid #B0B0B0;' summary="">
+
  <tr style="background-color: #E8E8E8; height:26px;font-weight:bold;">
   <td align=left width="100%">{$storage_info}
   </td>
@@ -12,9 +13,11 @@
 
    <table summary="" width="100%" cellspacing=2 cellpadding=4>
     <tr>
-     <td style="width:50%; vertical-align:top; background-color: #F0F0F0">
+     <td style='width:50%; background-color: #F0F0F0'>
+
       <h3>
-       <img class="center" alt="" src="{$personal_image}" align=middle> 
+       {image path="{$personal_image}"} 
+
        {t}Personal{/t}
       </h3>
  
@@ -46,19 +49,23 @@
       </table>
 
      </td>
-     <td style="vertical-align:top; background-color: #E8E8E8">
+     <td style='background-color: #E8E8E8'>
+
 
       <h3>
-       <img class="center" alt="" src="{$home_image}" align=middle> 
+       {image path="{$home_image}"} 
+
        {t}Private{/t}
       </h3>
 
       <table summary="" width="100%">
         <tr>
-         <td style='vertical-align:top; width: 40%;'>
+         <td style='width: 40%;'>
+
           {t}Address{/t}
          </td>
-         <td style="vertical-align:top;">
+         <td>
+
           <i>{$info_homePostalAddress}</i>
          </td>
         </tr>
@@ -92,10 +99,12 @@
      </tr>
 
      <tr>
-      <td style="vertical-align:top; background-color: #E4E4E4" colspan=2>
+      <td style='background-color: #E4E4E4' colspan="2">
+
 
        <h3>
-        <img class="center" alt="" src="{$company_image}" align=middle> 
+        {image path="{$company_image}"} 
+
         {t}Organizational{/t}
        </h3>
 
@@ -147,14 +156,16 @@
           </table>
 
          </td>
-         <td style="vertical-align:top">
+         <td>
+
 
           <table summary="" width="100%">
            <tr>
             <td style='vertical_align:top; width:40%;'>
              {t}Address{/t}
             </td>
-            <td style="vertical-align:top;">
+            <td>
+
              <i>{$info_postalAddress}</i>
             </td>
            </tr>

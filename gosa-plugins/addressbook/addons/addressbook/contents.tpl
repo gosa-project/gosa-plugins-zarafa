@@ -1,7 +1,10 @@
-<table summary="" style="table-layout:fixed; width:100%; vertical-align:top; text-align:left; table-layout:auto;" cellpadding="4" border="0">
+<table style='table-layout:fixed; width:100%; table-layout:auto;' summary="">
+
 <tr>
-  <td style="vertical-align:top;">
-   <table summary="" style="border:1px solid #B0B0B0; width:100%; vertical-align:top; text-align:left;"  cellpadding="4" cellspacing="0">
+  <td>
+
+   <table style='border:1px solid #B0B0B0; width:100%; ' summary="">
+
     <colgroup>
         <col width="32%">
         <col width="14%">
@@ -17,7 +20,8 @@
     {$search_result}
    </table>
 
-   <table summary="" style="vertical-align:top; text-align:center; width:100%;" cellpadding="4" cellspacing="0" border="0">
+   <table style='text-align:center; width:100%;' summary="">
+
     <tr>
      <td>{$range_selector}</td>
     </tr>
@@ -28,9 +32,11 @@
    {/if}
 
   </td>
-  <td style="vertical-align:top; width:270px;">
+  <td style='width:270px;'>
+
    <div class="contentboxh" style="border-bottom:1px solid #B0B0B0;">
-    <p class="contentboxh"><img src="{$infoimage}" align="right" alt="[i]">{t}Information{/t}</p>
+    <p class="contentboxh">{image path="{$infoimage}" align="right"}{t}Information{/t}
+</p>
    </div>
    <div class="contentboxb">
     <p class="contentboxb">
@@ -39,22 +45,26 @@
    </div>
    <br>
    <div class="contentboxh">
-    <p class="contentboxh" style="vertical-align:middle;"><img src="{$actionimage}" style="vertical-align:middle;" align="right" alt="[a]">{t}Actions{/t}</p>
+    <p class="contentboxh" style="vertical-align:middle;">{image path="{$actionimage}" align="right"}{t}Actions{/t}
+</p>
    </div>
    <div class="contentboxb">
     <p class="contentboxb" style="vertical-align:middle;">
 {if $internal_createable}
-     <img class="center" alt="" src="{$add_image}">&nbsp;
+     {image path="{$add_image}"}&nbsp;
+
      <a href="main.php{$plug}&amp;global=add" style="text-align:center;vertical-align:middle;">{t}Add entry{/t}</a><br>
 {/if}
 
 {if $internal eq 0}
  {if $internal_editable}
-     <img alt="" src="{$edit_image}" class="center">&nbsp;
+     {image path="{$edit_image}"}&nbsp;
+
      <a href="main.php{$plug}&amp;global=edit">{t}Edit entry{/t}</a><br>
  {/if}
  {if $internal_removeable}
-	     <img alt="" src="{$delete_image}" class="center">&nbsp;
+	     {image path="{$delete_image}"}&nbsp;
+
 	     <a href="main.php{$plug}&amp;global=remove" style="vertical-align:middle;">{t}Remove entry{/t}</a><br>
  {/if}
 {/if}
@@ -62,7 +72,8 @@
    </div>
    <br>
    <div class="contentboxh">
-    <p class="contentboxh"><img src="{$launchimage}" align="right" alt="[F]">{t}Filters{/t}</p>
+    <p class="contentboxh">{image path="{$launchimage}" align="right"}{t}Filters{/t}
+</p>
    </div>
    <div class="contentboxb">
     <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
@@ -81,10 +92,11 @@
 <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
 	<tr>
 		<td>
-			<label for="search_base"><img class="center" alt="" src="{$tree_image}" align=middle title='{t}Display results for department{/t}'></label>
+			<label for="search_base">{image path="{$tree_image}" title="{t}Display results for department{/t}"}
+</label>
 		</td>
     	<td>
-			<select name="search_base" style='width:220px' onChange="mainform.submit()" title="{t}Choose the department the search will be based on{/t}">
+			<select name="search_base" style='width:220px' onChange="mainform.submit()" title="{t}Choose the department the search will be based on{/t}" size=1>
 		      	{html_options options=$deplist selected=$depselect}
 				<option disabled>&nbsp;</option>
     		</select>
@@ -94,10 +106,11 @@
 <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
 	<tr>
 		<td>
-			<label for="object_type"><img class="center" alt="" src="{$obj_image}" align=middle title='{t}Match object{/t}'></label>
+			<label for="object_type">{image path="{$obj_image}" title="{t}Match object{/t}"}
+</label>
 		</td>
 	    <td>
-			<select id="object_type" style='width:220px' name="object_type" onChange="mainform.submit()" title="{t}Choose the object that will be searched in{/t}">
+			<select id="object_type" style='width:220px' name="object_type" onChange="mainform.submit()" title="{t}Choose the object that will be searched in{/t}" size=1>
     	   		{html_options options=$objlist selected=$object_type}
 				<option disabled>&nbsp;</option>
 	      	</select>
@@ -106,7 +119,8 @@
 </table>
 <table summary="" style="width:100%;border-top:1px solid #B0B0B0;">
 	<tr>
-		<td><label for="search_for"><img class="center" alt="" src="{$search_image}" style="text-align:center;" title='{t}Search for{/t}'></label>
+		<td><label for="search_for">{image path="{$search_image}" title="{t}Search for{/t}"}
+</label>
 		</td>
 	    <td>
 			<input id="search_for" style='width:99%' type='text' name='search_for' maxlength='20' value='{$search_for}' title='{t}Search string{/t}' onChange="mainform.submit()">
