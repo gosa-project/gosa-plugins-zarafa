@@ -1,11 +1,8 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
+<h3>{t}Properties{/t}</h3>
+
+<table summary="">
   <tr>
-    <td colspan=3>
-      <h3>{t}Properties{/t}</h3>
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align:top">
+    <td>
     	<table summary="">
         <tr>
           <td>
@@ -79,7 +76,7 @@
         </tr>
       </table>
     </td>
-    <td style="border-left:1px solid #A0A0A0">
+    <td class="left-border">
       &nbsp;
     </td>
     <td width="50%">
@@ -123,7 +120,7 @@
     </td>
   </tr>
   <tr>
-    <td colspan=3 style='width:100%;'>
+    <td colspan=3 >
       <hr>
     </td>
   </tr>
@@ -184,7 +181,7 @@
 	    </table>
 
     </td>
-    <td style="border-left:1px solid #A0A0A0">
+    <td class="left-border">
       &nbsp;
 	  </td>
     <td>
