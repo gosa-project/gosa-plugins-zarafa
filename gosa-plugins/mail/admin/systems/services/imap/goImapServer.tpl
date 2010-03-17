@@ -50,7 +50,8 @@
 				</tr>
 			</table>
 		</td>
-		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
+		<td class='left-border'>
+
 			<table>
 				<tr>
 					<td>
