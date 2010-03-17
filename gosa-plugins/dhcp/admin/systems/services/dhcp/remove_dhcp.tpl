@@ -1,5 +1,6 @@
 <div style="font-size:18px;">
-<img alt="" src="images/warning.png" align=top>&nbsp;{t}Warning{/t}
+{image path="images/warning.png" align="top"}&nbsp;{t}Warning{/t}
+
 </div>
 <p>
  {$warning}
