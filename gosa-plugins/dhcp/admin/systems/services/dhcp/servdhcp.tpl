@@ -1,7 +1,8 @@
 {if $dns_take_over}
 <table summary="" width="100%">
     <tr>
-        <td style="width:100%;vertical-align:top;">
+        <td style='width:100%;'>
+
 			<h3>{t}DHCP take over will take place when saving this entry. Choose 'Cancel' to abort.{/t}</h3>
         </td>
     </tr>
@@ -10,9 +11,10 @@
 <table summary="" width="100%">
 {if $dhcp_server_list_cnt}
 <tr>
-    <td style="width:100%;vertical-align:top;">
+    <td style='width:100%;'>
+
         <b>{t}Take over dhcp configuration from following server{/t}</b>&nbsp;
-        <select name='take_over_src'>
+        <select name='take_over_src' size=1>
             {html_options options=$dhcp_server_list}
         </select>
         <button type='submit' name='take_over'>{msgPool type=applyButton}</button>
@@ -21,7 +23,8 @@
 </tr>
 {/if}
 <tr>
-    <td style="width:100%;vertical-align:top;">
+    <td style='width:100%;'>
+
     <h3>{t}DHCP sections{/t}</h3>
         {$DhcpList}
     </td>
