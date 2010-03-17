@@ -26,8 +26,7 @@
 
 <table style="width:100%;" summary="{t}Generic{/t}">
  <tr>
-  <td style="vertical-align:top;width:50%">
-   <h3>{t}Generic{/t}</h3>
+  <td style='width:50%'>   <h3>{t}Generic{/t}</h3>
 
    <table  summary="{t}Generic{/t}"> 
     <tr>
