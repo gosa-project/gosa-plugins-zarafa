@@ -6,14 +6,16 @@
 {else}
 	<table summary="" width="100%">
 		<tr>
-			<td width="50%" style="vertical-align:top">
+			<td>
+
 				{t}Model{/t}: <i>{$ppdString}</i>&nbsp;
 				{render acl=$acl}
 				<button type='submit' name='SelectPPD'>{t}Select{/t}</button>
 
 				{/render}
 			</td>
-			<td style="border-left: 1px solid rgb(160, 160, 160);padding-left:10px;">
+			<td style='padding-left:10px;' class='left-border'>
+
 				{t}New driver{/t}&nbsp;
 				{render acl=$acl}
 				<input type="file" value="" name="NewPPDFile">
