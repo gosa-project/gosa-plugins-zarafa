@@ -74,8 +74,7 @@
 
 <h3>{t}Terminal Server{/t}</h3>
 
-<table style='width:100%; '>
-  summary="{t}Terminal server settings{/t}">
+<table style='width:100%; ' summary="{t}Terminal server settings{/t}">
  <tr>
   <td style='width:50%'>
 
