@@ -1,5 +1,6 @@
 <h3>{t}Mail settings{/t}</h3>
-<table summary="" style="width:100%; vertical-align:top; text-align:left;">
+<table style='width:100%; ' summary="">
+
  	<tr>
   		<td colspan=2>   
    			<table summary="">
@@ -17,9 +18,11 @@
  	</tr>
  	<tr>
 		<td>
-			<table style="width:100%; vertical-align:top; text-align:left;">
+			<table style='width:100%; '>
+
 				<tr>
-					<td style="width:50%; border-right:1px solid #A0A0A0; vertical-align:top">
+					<td style='width:50%; ' class='right-border'>
+
 							{t}Alternative addresses{/t}
 						<select style="width:100%;" name="alternates_list[]" size=10 multiple title="{t}List of alternative mail addresses{/t}">
 							{html_options values=$gosaMailAlternateAddress output=$gosaMailAlternateAddress}
@@ -32,7 +35,8 @@
 						<button type='submit' name='delete_alternate'>{msgPool type=delButton}</button>
 
 					</td>
-					<td style="vertical-align:top;width:50%">
+					<td style='width:50%'>
+
 							{t}Forward messages to non group members{/t}
 						<select style="width:100%;" name="forwarder_list[]" size=10 multiple>
 							{html_options values=$gosaMailForwardingAddress output=$gosaMailForwardingAddress}
