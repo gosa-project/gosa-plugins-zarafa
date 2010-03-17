@@ -1,8 +1,10 @@
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style='width:100%; ' summary="">
+
 
  <!-- Headline container -->
  <tr>
-   <td style="width:50%; vertical-align:top;">
+   <td style='width:50%; '>
+
      <h3>{t}Generic{/t}</h3>
 
      <table summary="">
@@ -47,10 +49,12 @@
      </table>
      
    </td>
-   <td style="border-left:1px solid #A0A0A0">
+   <td class='left-border'>
+
     &nbsp;
    </td>
-   <td style="vertical-align:top; width:100%">
+   <td style='width:100%'>
+
      <h3>{t}Delivery methods{/t}</h3>
 
 {render acl=$goFaxIsEnabledACL checkbox=$multiple_support checked=$use_goFaxIsEnabled}
@@ -90,9 +94,11 @@
 
 <hr>
 
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+<table style='width:100%; ' summary="">
+
   <tr>
-    <td style="width:50%; border-right:1px solid #A0A0A0">
+    <td style='width:50%; ' class='right-border'>
+
 
 	{if !$multiple_support}
 
@@ -121,7 +127,8 @@
 {/render}
 	{/if}
    </td>
-   <td style="vertical-align:top; width:50%">
+   <td style='width:50%'>
+
       <h3>{t}Blocklists{/t}</h3>
       <table summary="" style="width:100%">
         <tr>
