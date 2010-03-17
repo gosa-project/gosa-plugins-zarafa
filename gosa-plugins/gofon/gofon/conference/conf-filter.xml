@@ -29,7 +29,7 @@
 
   <search>
     <tag>byNumber</tag>
-    <label>By phone number</label>
+    <label>Phone number</label>
     <query>
       <backend>LDAP</backend>
       <filter>(&amp;(objectClass=goFonConference)(telephoneNumber=$))</filter>
