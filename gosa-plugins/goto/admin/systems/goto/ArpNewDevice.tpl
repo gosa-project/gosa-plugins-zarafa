@@ -9,7 +9,8 @@
    {t}DNS name{/t}{$must}
   </LABEL>
  </td>
- <td style='width:35%;border-right:1px solid #aaa'>
+ <td style='width:35%;' class='right-border'>
+
   <input type='text' name="cn" id="cn" size=18 maxlength=60 value="{$cn}">
  </td>
  <td style='width:15%'>
