@@ -1,6 +1,7 @@
 <table summary="" style="width:100%;">
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
 <h3>{t}Boot parameters{/t}</h3>
 
    <table summary="" style="width:100%">
@@ -9,7 +10,7 @@
      <td><LABEL for="gotoBootKernel">{t}Boot kernel{/t}</LABEL></td>
      <td style="width:70%">
 {render acl=$gotoBootKernelACL}
-        <select id="gotoBootKernel" name="gotoBootKernel">
+        <select id="gotoBootKernel" name="gotoBootKernel" size=1>
          {html_options options=$gotoBootKernels selected=$gotoBootKernel}
 		</select>
 {/render}
@@ -26,14 +27,16 @@
      </td>
     </tr>
     <tr>
-     <td colspan="2" style='vertical-align:top;padding-top:3px;'><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
+     <td style='padding-top:3px;' colspan="2">
+<LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
 {render acl=$gotoLdapServerACL}
 {if $member_of_ogroup}
 (<input type='checkbox' name='gotoLdap_inherit' {if $gotoLdap_inherit} checked {/if} value="1"
 	onClick="document.mainform.submit();" class='center'>
 &nbsp;{t}inherit from group{/t})
 {if !$JS}
-	<input type='image' src="images/lists/reload.png" alt='{t}Reload{/t}' class='center'>
+	{image path="images/lists/reload.png"}
+
 {/if}
 {/if}
 {/render}
@@ -41,7 +44,7 @@
 	  {$gotoLdapServers}	
 {/render}
 {render acl=$gotoLdapServerACL_inherit}
-	<select name='ldap_server_to_add' id='ldap_server_to_add'>
+	<select name='ldap_server_to_add' id='ldap_server_to_add' size=1>
 	  {html_options options=$gotoLdapServerList}	
     </select>
 {/render}
@@ -55,11 +58,13 @@
 
   </td>
 
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
      &nbsp;
   </td>
   
-  <td style="vertical-align:top;">
+  <td>
+
 
 	{if !$fai_activated}
 			<h3>{t}FAI Object assignment disabled. You can't use this feature until FAI is activated.{/t}</h3>			
@@ -89,7 +94,7 @@
 				<tr>
 					<td>
 	{render acl=$FAIdebianMirrorACL}
-						<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()'>
+						<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()' size=1>
 							{foreach from=$FAIservers item=val key=key}
 								{if $key == "inherited" || $key == "auto"} 
 								<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{t}{$key}{/t}</option>
@@ -101,14 +106,15 @@
 	{/render}
 					</td>
 					<td>
-						<select name="FAIrelease"  disabled>
+						<select name="FAIrelease"  disabled size=1>
 						{html_options options=$InheritedFAIrelease output=$InheritedFAIrelease selected=$InheritedFAIrelease}
 						</select>
 					</td>
 				</tr>
 			</table>
 			<h3>
-				<img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Assigned FAI classes{/t}
+				{image path="plugins/goto/images/fai_settings.png"}&nbsp;{t}Assigned FAI classes{/t}
+
 			</h3>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	
@@ -129,7 +135,7 @@
 				<tr>
 					<td>
 	{render acl=$FAIdebianMirrorACL}
-						<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()'>
+						<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()' size=1>
 							{foreach from=$FAIservers item=val key=key}
 								{if $key == "inherited" || $key == "auto"} 
 								<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{t}{$key}{/t}</option>
@@ -148,7 +154,7 @@
 					</td>
 					<td>
 	{render acl=$FAIreleaseACL}
-						<select name="FAIrelease"  onchange='document.mainform.submit()' {$FAIclassACL}>
+						<select name="FAIrelease"  onchange='document.mainform.submit()' {$FAIclassACL} size=1>
 							{foreach from=$FAIservers.$FAIdebianMirror item=val key=key}
 								<option value="{$val}" {if $FAIrelease == $key} selected {/if}>{$val}</option>
 							{/foreach}
@@ -158,14 +164,15 @@
 				</tr>
 			</table>
 			<h3>
-				<img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Assigned FAI classes{/t}
+				{image path="plugins/goto/images/fai_settings.png"}&nbsp;{t}Assigned FAI classes{/t}
+
 			</h3>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	
 	{/render}
 
 	{render acl=$FAIclassACL}
-			<select name="FAIclassesSel">
+			<select name="FAIclassesSel" size=1>
 				{foreach from=$FAIclasses item=val key=key}
 					<option value="{$key}">{$key}&nbsp;[{$val}]</option>
 				{/foreach}
@@ -185,9 +192,11 @@
 <hr>
 <table summary="" style="width:100%;">
  <tr>
-  <td style="width:50%; vertical-align:top; border-right:1px solid #B0B0B0">
+  <td style='width:50%; ' class='right-border'>
+
    <h3>
-    <img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
+    {image path="plugins/goto/images/hardware.png"} {t}Kernel modules (format: name parameters){/t}
+
    </h3>
 {render acl=$gotoModulesACL}
     <select style="width:100%; height:150px;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
@@ -209,7 +218,8 @@
 {/render}
   </td>
 
-  <td style="vertical-align:top;">
+  <td>
+
         <h3><LABEL for="gotoShare">{t}Shares{/t}</LABEL></h3>
         <table summary="" style="width:100%">
                 <tr>
@@ -222,7 +232,7 @@
 {/render}
                                 <br>
 {render acl=$gotoShareACL}
-                        <select name="gotoShareSelection">
+                        <select name="gotoShareSelection" size=1>
     						    {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
 						        <option disabled>&nbsp;</option>
                                 </select>
