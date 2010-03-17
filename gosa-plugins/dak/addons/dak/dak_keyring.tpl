@@ -1,15 +1,18 @@
 <div class="contentboxh">
- <p class="contentboxh"><img src="images/launch.png" align="right" alt="[F]">{t}Filter{/t}</p>
+ <p class="contentboxh">{image path="images/launch.png" align="right"}{t}Filter{/t}
+</p>
 </div>
 <div class="contentboxb">
  
-<table summary="" width="100%" class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;">
+<table style='padding:0px;' class='contentboxb' summary="">
+
 	<tr>
 		<td width="50%">
-			<img class="center" alt="" align="middle" border=0 src="plugins/systems/images/server.png">
+			{image path="plugins/systems/images/server.png"}
+
 				&nbsp;
 			<LABEL FOR="host">{t}Server{/t}</LABEL>
-			<select name="selected_Server">
+			<select name="selected_Server" size=1>
 			{foreach from=$Servers item=item key=key}
 				<option {if $key == $selected_Server} selected {/if} 
 					value='{$key}'>{$item.SERVER}</option>
