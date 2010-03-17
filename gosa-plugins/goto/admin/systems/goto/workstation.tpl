@@ -1,7 +1,8 @@
 <h3>{t}Properties{/t}</h3>
 <table summary="" style="width:100%;">
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
    <table summary="">
     <tr>
 {if $cn eq 'wdefault'}
@@ -44,13 +45,14 @@
 	{$host_key}
 
   </td>
-  <td  style="vertical-align:top;border-left:1px solid #A0A0A0;">
+  <td class='left-border'>
+
    <table summary="">
     <tr>
      <td>{t}Mode{/t}</td>
      <td>
 {render acl=$gotoModeACL}
-      <select name="gotoMode" title="{t}Select terminal mode{/t}">
+      <select name="gotoMode" title="{t}Select terminal mode{/t}" size=1>
        {html_options options=$modes selected=$gotoMode_select}
       </select>
 {/render}
@@ -60,7 +62,7 @@
      <td><LABEL for="gotoSyslogServer">{t}Syslog server{/t}</LABEL></td>
      <td>
 {render acl=$gotoSyslogServerACL}
-      <select id="gotoSyslogServer" name="gotoSyslogServer" title="{t}Choose server to use for logging{/t}">
+      <select id="gotoSyslogServer" name="gotoSyslogServer" title="{t}Choose server to use for logging{/t}" size=1>
        {html_options options=$syslogservers selected=$gotoSyslogServer_select}
       </select>
 {/render}
@@ -96,7 +98,7 @@
 {/render}
      <br>
 {render acl=$gotoNtpServerACL}
-      <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if} >
+      <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if}  size=1>
        {html_options options=$gotoNtpServers}
       </select>
 {/render}
@@ -124,7 +126,8 @@
 {if $fai_activated}
 <h3>{t}Action{/t}</h3>
 <table width="100%">
-<tr><td style="border-right:1px solid #AAA; width:50%">
+<tr><td style='width:50%' class='right-border'>
+
 <table summary="">
  <tr>
   <td>
