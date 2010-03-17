@@ -5,7 +5,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='width:50%; vertical-align:top;' >
+		<td style='width:50%; '>
+
 			<table>
 				<tr>
 					<td>
@@ -23,7 +24,7 @@
 					</td>
 					<td>
 {render acl=$gotoMimeGroupACL}
-						<select name='gotoMimeGroup' title='{t}Categorize this mime type{/t}'>
+						<select name='gotoMimeGroup' title='{t}Categorize this mime type{/t}' size=1>
 							{html_options output=$gotoMimeGroups values=$gotoMimeGroups selected=$gotoMimeGroup}
 						</select>
 {/render}
@@ -50,7 +51,8 @@
 	{/render}
 	{if !$isReleaseMimeType}
 		{render acl=$baseACL disable_picture='images/lists/folder_grey.png'}
-			<input type="image" name="chooseBase" src="images/lists/folder.png" class="center" title="{t}Select a base{/t}">
+			{image path="images/lists/folder.png" action="chooseBase" title="{t}Select a base{/t}"}
+
 		{/render}
 	{/if}
 				  	</td>
@@ -60,20 +62,22 @@
 			</table>
 			
 		</td>
-		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
+		<td class='left-border'>
+
 			<table summary="">
 				<tr>
 					<td>
 						<LABEL for="picture_file">{t}Icon{/t}</LABEL><br>
 {if $IconReadable}
-						<img src="{$gotoMimeIcon}" border=1 alt='{t}Mime icon{/t}' 
+						{image path="{$gotoMimeIcon}"}
 							style="width:48px; height:48; background-color:white; vertical-align:bottom;">
 {else}
-						<img src="images/empty.png" border=1 alt='{t}Mime icon{/t}' 
+						{image path="images/empty.png"}
 							style="width:48px; height:48; background-color:white; vertical-align:bottom;">
 {/if}
 					</td>
-					<td style="vertical-align:top">
+					<td>
+
 						&nbsp;<br>
 						<input type="hidden" name="MAX_FILE_SIZE" value="100000">
 {render acl=$gotoMimeIconACL}
@@ -100,7 +104,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='width:50%; vertical-align:top;' >
+		<td style='width:50%; '>
+
 			{t}File patterns{/t}{$must}
 {render acl=$gotoMimeFilePatternACL}	
 			{$gotoMimeFilePatterns}	
@@ -114,14 +119,15 @@
 
 {/render}
 		</td>
-		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
+		<td class='left-border'>
+
 			{t}Applications{/t}
 {render acl=$gotoMimeApplicationACL}	
 			{$gotoMimeApplications}		
 {/render}
 
 {render acl=$gotoMimeApplicationACL}	
-			<select name="NewApplicationSelect">
+			<select name="NewApplicationSelect" size=1>
 				<option value="">-</option>
 				{html_options options=$ApplicationList}
 			</select>
@@ -146,11 +152,13 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='width:50%; vertical-align:top;' >
+		<td style='width:50%; '>
+
 				
 			<table>
 				<tr>
-					<td style='vertical-align:top; '>
+					<td>
+
 {render acl=$gotoMimeLeftClickActionACL}
 						<input type='radio' name='gotoMimeLeftClickAction_IE' value='I' 
 							{if $gotoMimeLeftClickAction_I} checked {/if}>
@@ -175,13 +183,14 @@
 			</table>
 			
 		</td>
-		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
+		<td class='left-border'>
+
 			{t}Applications{/t}
 {render acl=$gotoMimeEmbeddedApplicationACL}
 			{$gotoMimeEmbeddedApplications}		
 {/render}
 {render acl=$gotoMimeEmbeddedApplicationACL}
-			<select name="NewEmbeddedApplicationSelect">
+			<select name="NewEmbeddedApplicationSelect" size=1>
 				<option value="">-</option>
 				{html_options options=$ApplicationList}
 			</select>

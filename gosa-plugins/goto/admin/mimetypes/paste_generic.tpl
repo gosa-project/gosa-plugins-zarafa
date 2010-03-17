@@ -5,7 +5,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='width:50%; vertical-align:top;' >
+		<td style='width:50%; '>
+
 				
 			<table>
 				<tr>
