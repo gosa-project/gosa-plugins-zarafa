@@ -2,14 +2,15 @@
 
 <table width="100%" summary=''>
 	<tr>
-		<td width="50%" valign="top" style="border-right:1px solid #A0A0A0">
+		<td class='right-border'>
+
 			<table summary=''>
 				<tr>
 					<td>{t}Parent server{/t}
 					</td>
 					<td>
 {render acl=$ParentServerACL}
-						<select name="ParentServer">
+						<select name="ParentServer" size=1>
 							{html_options options=$ParentServers values=$ParentServerKeys selected=$ParentServer} 
 						</select>
 {/render}
