@@ -14,7 +14,7 @@
    <br>
    {render acl=$gotoProfileServerACL checkbox=$multiple_support checked=$use_gotoProfileServer}
    {t}Profil path{/t}
-   <select id="gotoProfileServer" name="gotoProfileServer">
+   <select id="gotoProfileServer" name="gotoProfileServer" size=1>
     {foreach from=$gotoProfileServers key=key item=item}
     <option {if $gotoProfileServer == $key} selected {/if}value='{$key}'>{$item.DISPLAY}</option>
     {/foreach}
@@ -36,12 +36,14 @@
    
    <table summary="{t}Profile managment{/t}">
     <tr>
-     <td style="vertical-align:top">
+     <td>
+
       {render acl=$gotoProfileACL}
       <input class="center" type="checkbox" value="1" {$useProfileCHK} name="useProfile" id="useProfile" onclick="changeState('gotoProfileServer');changeState('gotoProfileFlagC');changeState('gotoProfileQuota');">
       {/render}
      </td>
-     <td style="vertical-align:middle;">
+     <td>
+
       <label for="useProfile">{t}Use profile managment{/t}</label>
      </td>
     </tr>
@@ -58,7 +60,7 @@
          {render acl=$gotoProfileServerACL}
          
          {if $gotoProfileServerWriteable}
-         <select id="gotoProfileServer" name="gotoProfileServer">
+         <select id="gotoProfileServer" name="gotoProfileServer" size=1>
           {foreach from=$gotoProfileServers key=key item=item}
           {if $item.ACL != ""}
           <option {if $gotoProfileServer == $key} selected {/if}value='{$key}'>{$item.DISPLAY}</option>
@@ -67,7 +69,7 @@
           <option disabled>&nbsp;</option>
          </select>
          {else}
-         <select id="dummy_pS" name="dummy_pS" disabled >
+         <select id="dummy_pS" name="dummy_pS" disabled  size=1>
           <option>{$gotoProfileServer}&nbsp;</option> 
          </select>
          {/if}
@@ -104,7 +106,8 @@
    {/if}
    
   </td>
-  <td style="vertical-align:top;width:50%;border-left:1px solid #B0B0B0">
+  <td style='width:50%;' class='left-border'>
+
    
    <table summary="{t}Kiosk profile settings{/t}">
     {if $kiosk_enabled}
@@ -149,7 +152,7 @@
   <label for="dummy1">{t}Kiosk profile{/t}</label>
  </td>
  <td>
-  <select name="dummy1" disabled id="dummy1"><option disabled>&nbsp;</option></select>
+  <select name="dummy1" disabled id="dummy1" size=1><option disabled>&nbsp;</option></select>
   <input type="button" disabled name="dummy2" value="{t}Manage{/t}">
  </td>
 </tr>
@@ -164,7 +167,7 @@
  </td>
  <td>
   {render acl=$gotoXResolutionACL}
-  <select name="gotoXResolution" id="gotoXResolution" {if !$use_gotoXResolution && $multiple_support} disabled {/if}>
+  <select name="gotoXResolution" id="gotoXResolution" {if !$use_gotoXResolution && $multiple_support} disabled {/if} size=1>
    {html_options values=$gotoXResolutionKeys output=$gotoXResolutions selected=$gotoXResolution}
    <option disabled>&nbsp;</option>
   </select>
@@ -194,7 +197,8 @@
 
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
-  <td style="width:50%;border-right:1px solid #B0B0B0">
+  <td style='width:50%;' class='right-border'>
+
    <h3><label for="gotoShare">{t}Shares{/t}</label></h3>
    <table style="width:100%" summary="{t}Share settings{/t}">
     <tr>
@@ -207,7 +211,7 @@
       <input type="text" size=15 name="ShareUser" value="%u" title="{t}User used to connect to the share{/t}">@
       {/render}
       {render acl=$gotoShareACL}
-      <select name="gotoShareSelection" title="{t}Select a share{/t}">
+      <select name="gotoShareSelection" title="{t}Select a share{/t}" size=1>
        {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
        <option disabled>&nbsp;</option>
       </select>
@@ -226,7 +230,8 @@
     </tr>
    </table>
   </td>
-  <td style="vertical-align:top">
+  <td>
+
    <h3><label for="gotoLogonScript">{t}Logon scripts{/t}</label></h3>
    <table summary="{t}Logon script management{/t}" style="width:100%">
     <tr>
@@ -275,7 +280,8 @@
 
 <table summary="{t}Environment managment settings{/t}" width="100%">
  <tr>
-  <td style="border-right:1px solid #B0B0B0; width:50%; vertical-align:top">
+  <td style='width:50%; ' class='right-border'>
+
    <h3><label for="gotoHotplugDevice_post">{t}Hotplug devices{/t}</label></h3> 
    <table style="width:100%" summary="{t}Hotplug device settings{/t}">
     <tr>
