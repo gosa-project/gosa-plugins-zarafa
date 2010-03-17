@@ -52,7 +52,7 @@
     </tr>
    </table>
   </td>
-  <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
+  <td class='left-border'>
    <h3>{t}System trust{/t}</h3>
     {t}Trust mode{/t}&nbsp; 
     {render acl=$trustModelACL}
@@ -103,7 +103,7 @@
 
    {/render}
   </td>
-  <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
+  <td class='left-border'>
    <h3>{t}Systems{/t}</h3>
    {render acl=$sudoHostACL}
    {$divlist_sudoHost}
@@ -136,7 +136,7 @@
 
    {/render}
   </td>
-  <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
+  <td class='left-border'>
    <h3>{t}Run as{/t}</h3>
    {render acl=$sudoRunAsACL}
    {$divlist_sudoRunAs}
