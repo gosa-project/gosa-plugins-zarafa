@@ -1,7 +1,7 @@
 {if $is_default}
 
 <h3>{t}Generic{/t} - {t}global defaults{/t}</h3>
-<table style="width:100%;">
+<table style="width:100%;" summary="{t}Generic{/t} - {t}global defaults{/t}">
  <tr>
   <td>
    {t}Name{/t}{$must}
@@ -24,11 +24,12 @@
 
 {else}
 
-<table style="width:100%;">
+<table style="width:100%;" summary="{t}Generic{/t}">
  <tr>
   <td style="vertical-align:top;width:50%">
    <h3>{t}Generic{/t}</h3>
-   <table> 
+
+   <table  summary="{t}Generic{/t}"> 
     <tr>
      <td>
       {t}Name{/t}{$must}

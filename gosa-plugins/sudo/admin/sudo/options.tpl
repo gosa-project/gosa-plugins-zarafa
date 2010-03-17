@@ -1,6 +1,6 @@
 <h3>Used sudo role options</h3>
 
-<table style="width:650px;">
+<table style="width:650px;" summary="{t}Sudo options{/t}">
  <tr>
   <td style="width: 140px;"><b>{t}Option name{/t}</b></td>
   <td style="width: 20px;"></td>
