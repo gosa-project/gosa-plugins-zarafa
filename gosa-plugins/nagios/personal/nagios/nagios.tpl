@@ -1,6 +1,8 @@
-<table summary="{t}Nagios Account{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
+<table style='width:100%; ' summary="{t}Nagios Account{/t}">
+
  <tr>
-  <td style="width:50%; vertical-align:top;">
+  <td style='width:50%; '>
+
 
    <h3>{t}Nagios Account{/t}</h3>
    <table summary="{t}Nagios Account{/t}">
@@ -28,7 +30,7 @@
      </td>
      <td>
 {render acl=$HostNotificationPeriodACL}
-      <select name="HostNotificationPeriod" id="HostNotificationPeriod">
+      <select name="HostNotificationPeriod" id="HostNotificationPeriod" size=1>
        {html_options options=$HostNotificationPeriodValues values=$HostNotificationPeriodValues selected=$HostNotificationPeriod}
       </select>
 {/render}
@@ -41,7 +43,7 @@
      </td>
      <td>
 {render acl=$ServiceNotificationPeriodACL}
-      <select name="ServiceNotificationPeriod" id="ServiceNotificationPeriod">
+      <select name="ServiceNotificationPeriod" id="ServiceNotificationPeriod" size=1>
        {html_options options=$ServiceNotificationPeriodValues values=$ServiceNotificationPeriodValues selected=$ServiceNotificationPeriod}
       </select>
 {/render}
@@ -54,7 +56,7 @@
      </td>
      <td>
 {render acl=$ServiceNotificationOptionsACL}
-      <select name="ServiceNotificationOptions" id="ServiceNotificationOptions">
+      <select name="ServiceNotificationOptions" id="ServiceNotificationOptions" size=1>
        {html_options options=$ServiceNotificationOptionsValues values=$ServiceNotificationOptionsValues selected=$ServiceNotificationOptions}
       </select>
 {/render}
@@ -67,7 +69,7 @@
      </td>
      <td>
 {render acl=$HostNotificationOptionsACL}
-      <select name="HostNotificationOptions" id="HostNotificationOptions">
+      <select name="HostNotificationOptions" id="HostNotificationOptions" size=1>
        {html_options options=$HostNotificationOptionsValues values=$HostNotificationOptionsValues selected=$HostNotificationOptions}
       </select>
 {/render}
@@ -108,10 +110,12 @@
    </table>
 
   </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
+
    &nbsp;
   </td>
-  <td style="width:100%; vertical-align:top;">
+  <td style='width:100%; '>
+
 
    <h3>&nbsp;{t}Nagios authentification{/t}</h3>
    <table summary="{t}Nagios Account{/t}">
