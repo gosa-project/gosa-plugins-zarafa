@@ -24,7 +24,7 @@
     </table>
    </td>
 
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
    &nbsp;
   </td>
 
@@ -79,7 +79,7 @@
 
 {/render}
    </td>
-  <td style="border-left:1px solid #A0A0A0">
+  <td class='left-border'>
    &nbsp;
   </td>
    <td style="vertical-align:top;" >
