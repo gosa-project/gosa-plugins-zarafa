@@ -145,6 +145,11 @@ class licenseGeneric extends plugin
     $smarty->assign("boundToHost", $this->boundToHost[0]);
     $smarty->assign("licenseKey", $this->licenseKey[0]);
 
+    // w3c fix, do not show empty options.
+    $tmp = $this->usedByHost;
+    if(isset($tmp[0]) && empty($tmp[0])) unset($tmp[0]);
+    $smarty->assign('usedByHost', $tmp);
+
     foreach(array("notificationDate","expirationDate","conclusionDate") as $date) {
       $smarty->assign($date."Writeable", $this->acl_is_writeable($date));
     }

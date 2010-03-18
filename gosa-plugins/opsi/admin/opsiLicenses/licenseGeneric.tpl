@@ -10,10 +10,12 @@
 
 <h3>{t}License{/t}</h3>
 
-<table style='width:100%'>
+<table style='width:100%' summary="{t}License settings{/t}">
   <tr>
     <td style='width:50%;'  class='right-border'>        
-        <table>
+
+
+        <table  summary="{t}Generic settings{/t}">
           <tr>
             <td>
               {t}Name{/t}{$must}
@@ -68,7 +70,7 @@
 
     </td>
     <td>
-        <table>
+        <table  summary="{t}Additional settings{/t}">
           <tr>
             <td>
               {t}Conclusion date{/t}
@@ -151,11 +153,12 @@
 </table>
 
 <hr>
+<h3>{t}License key settings{/t}</h3>
 
-<table width="100%">
+<table width="100%" summary="{t}License key settings{/t}">
   <tr>
-    <td style='width:50%;padding: 5px; ' class='right-border'>    
-        <table>
+    <td style='width:50%;' class='right-border'>
+        <table summary="{t}License key settings{/t}">
           <tr>
             <td>
               {t}License key{/t}{$must}
@@ -196,10 +199,7 @@
         </table>
  
     </td> 
-    <td style='padding: 5px; ' class='right-border'>   
-        <table width="100%">
-          <tr>
-            <td colspan="2">
+    <td class='right-border'>   
               <b>{t}Used by{/t}</b><br>
 {render acl=$licenseACL}
               <select   disabled
@@ -207,20 +207,6 @@
                 {html_options options=$usedByHost}
               </select><br>
 {/render}
-<!--
-    
-      Actually we can't modify the license usage, due to a lack of functions.
-      We can only assign a licensePool to a host, but not a specific license.
-
-              <select name='selectedHostToAdd'>
-                {html_options options=$notUsedHosts}
-              </select>
-              <input type="submit" name="addLicenseUsage" value="{msgPool type='addButton'}">
-              <input type="submit" name="removeLicenseUsage" value="{msgPool type='delButton'}">
--->
-            </td>
-          </tr>
-        </table>
     </td> 
   </tr>
 </table>
