@@ -1,17 +1,13 @@
 {* GOsa dhcp sharedNetwork - smarty template *}
 
 <hr>
-<br>
 
 {if $show_advanced}
 
 <button type='submit' name='hide_advanced'>{t}Hide advanced settings{/t}</button>
-
-
-<table width="100%">
+<table width="100%" summary="{t}DHCP advanced settings{/t}">
  <tr>
-
-  <td width="50%">
+  <td width="50%" class='right-border'>
    <br>
    <b>{t}DHCP statements{/t}</b>
    <br>
