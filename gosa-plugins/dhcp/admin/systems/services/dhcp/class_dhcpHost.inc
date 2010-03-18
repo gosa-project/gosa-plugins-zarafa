@@ -70,9 +70,9 @@ class dhcpHost extends dhcpPlugin
     /* Add footer */
     $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
 #    if(preg_match("/w/",$this->parent->getacl(""))){
-        $display.=   "<input type=submit name='save_dhcp' value='".msgPool::saveButton()."'>&nbsp;";
+        $display.=   "<button type='submit' name='save_dhcp'>".msgPool::saveButton()."</button>&nbsp;";
 #    }
-    $display.=   "<input type=submit name='cancel_dhcp' value='".msgPool::cancelButton()."'>";
+    $display.=   "<button type='submit' name='cancel_dhcp'>".msgPool::cancelButton()."</button>";
     $display.= "</div>";
 
     return ($display);
