@@ -100,7 +100,7 @@ class dhcpNetwork extends plugin
       }
       $smarty->assign("dnsservers", $servers);
     } else {
-      $smarty->assign("dnsservers", "");
+      $smarty->assign("dnsservers", array());
     }
 
     /* Netmask / Broadcast */
