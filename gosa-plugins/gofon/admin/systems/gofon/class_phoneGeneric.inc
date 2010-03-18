@@ -200,8 +200,6 @@ class phoneGeneric extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
-    $smarty->assign("staticAddress","<font class=\"must\">*</font>");// $this->config->idepartments);
-
     /* Create Arrays for samrty select boxes */
     $smarty->assign("categories",     array("SIP","IAX","CAPI"));
     $smarty->assign("goFonTypes",     array("peer"      =>"peer"      ,"user"   =>"user"    ,"friend" =>"friend"));
