@@ -1,4 +1,4 @@
-<p><b>{t}Generic{/t}</b></p>
+<h3>{t}Generic{/t}</h3>
 
 <table width="100%">
  <tr>
