@@ -255,17 +255,13 @@ class krbHostKeys extends plugin
     $this->last_list[$prefix] = array();
 
     /* Create actions */
-    $new = "<input type='image' class='center' name='create_%ID%'
-      alt='"._("Create key")."' 
-      title='"._("Create key")."' src='images/lists/new.png'>
-      <img src='images/empty.png' alt=' ' class='center'>
-      <img src='images/empty.png' alt=' ' class='center'>";
-    $rec ="
-      <img src='images/empty.png' alt=' ' class='center'>
-      <input type='image' class='center' name='recreate_%ID%'
-      alt='"._("Recreate key")."' title='"._("Recreate key")."' src='images/lists/reload.png'>
-      <input type='image' class='center' name='remove_%ID%'
-      alt='"._("Remove key")."' title='"._("Remove key")."' src='images/lists/trash.png'>";
+    $new = image('images/lists/element.png[new]', 'create_%ID%', _("Create key"));
+    $new.= image('images/empty.png');
+    $new.= image('images/empty.png');
+
+    $rec = image('images/empty.png');
+    $rec.= image('images/lists/reload.png', 'recreate_%ID%', _("Recreate key"));
+    $rec.= image('images/lists/trash.png',  'remove_%ID%', _("Remove key"));
 
     /* Check ACLs */
     if(!$this->acl_is_writeable("0")){
@@ -411,7 +407,7 @@ class krbHostKeys extends plugin
 
     foreach($_POST as $name => $value){
       if(preg_match("/^create_/",$name)){
-        $id = preg_replace("/^create_([0-9]*)_.*$/","\\1",$name);
+        $id = preg_replace("/^create_([0-9]*)$/","\\1",$name);
         if(isset($this->last_list[$prefix][$id])){
           $data = $this->last_list[$prefix][$id]; 
           $this->create_key($data['MAC'],$data['NAME']);
@@ -420,7 +416,7 @@ class krbHostKeys extends plugin
         break;
       }
       if(preg_match("/^recreate_/",$name)){
-        $id = preg_replace("/^recreate_([0-9]*)_.*$/","\\1",$name);
+        $id = preg_replace("/^recreate_([0-9]*)$/","\\1",$name);
         if(isset($this->last_list[$prefix][$id])){
           $data = $this->last_list[$prefix][$id]; 
           $this->recreate_key($data['MAC'],$data['NAME']);
@@ -429,7 +425,7 @@ class krbHostKeys extends plugin
         break;
       }
       if(preg_match("/^remove_/",$name)){
-        $id = preg_replace("/^remove_([0-9]*)_.*$/","\\1",$name);
+        $id = preg_replace("/^remove_([0-9]*)$/","\\1",$name);
         if(isset($this->last_list[$prefix][$id])){
           $data = $this->last_list[$prefix][$id]; 
           $this->delete_key($data['MAC'],$data['NAME']);
