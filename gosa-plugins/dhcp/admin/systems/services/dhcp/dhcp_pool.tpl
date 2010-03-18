@@ -1,5 +1,5 @@
 {* GOsa dhcp sharedNetwork - smarty template *}
-<p><b>{t}Generic{/t}</b></p>
+<h3>{t}Generic{/t}</h3>
 <table width="100%">
  <tr>
   <td width="50%">
