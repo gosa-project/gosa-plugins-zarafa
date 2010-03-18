@@ -214,14 +214,12 @@ class licensePoolGeneric extends plugin
     if($this->dialog instanceOf plugin){
       $this->dialog->save_object();
       $display = $this->dialog->execute();
-      $display.= "<p style=\"text-align:right\">";
-  
+      $display.= "<hr><div class='plugin-actions'>";
       if($this->acl_is_writeable("licenses")){
-        $display.="<input type=submit name=\"license_finish\" style=\"width:80px\"
-          value=\"".msgPool::okButton(). "\">&nbsp;";
+        $display.="<button type='submit' name='license_finish'>".msgPool::okButton()."</button>";
       }
-      
-      $display.="<input type=submit name=\"license_cancel\" value=\"".msgPool::cancelButton()."\"></p>";
+      $display.="<button type='submit' name='license_cancel'>".msgPool::cancelButton()."</button>";
+      $display.="</div>";
       return($display);
     }
 
