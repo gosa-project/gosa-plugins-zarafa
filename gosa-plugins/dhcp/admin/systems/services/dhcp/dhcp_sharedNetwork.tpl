@@ -1,5 +1,5 @@
 {* GOsa dhcp sharedNetwork - smarty template *}
-<p><b>{t}Generic{/t}</b></p>
+<h3>{t}Generic{/t}</h3>
 <table width="100%" border="0">
  <tr>
 
@@ -50,7 +50,7 @@
  <tr>
   <td width="50%">
   
-  <p><b>{t}Leases{/t}</b></p>
+  <h3>{t}Leases{/t}</h3>
    <table>
     <tr>
      <td>{t}Default lease time{/t}</td>
@@ -85,7 +85,7 @@
 
   <td>
 
-   <p><b>{t}Access control{/t}</b></p>
+   <h3>{t}Access control{/t}</h3>
    <table>
     <tr>
      <td>
