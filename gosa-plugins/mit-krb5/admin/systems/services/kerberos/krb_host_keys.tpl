@@ -1,5 +1,4 @@
 {if !$service_plugin}
-<hr>
 {/if}
 <h3>	{t}Kerberos keys{/t} </h3>
 
