@@ -133,7 +133,7 @@
     {/foreach}
   </table>
   {if !$result.count == 0}
-  <p class="separator">&nbsp;</p>
+  <hr>
   {/if}
   <div style='width:40%;float:left;'>{$matches}</div>
   <div style='width:80px;float:right;'>
