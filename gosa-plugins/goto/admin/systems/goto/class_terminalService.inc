@@ -404,7 +404,6 @@ class termservice extends plugin
     foreach(array("gotoXHsync", "gotoXVsync") as $val){
       $smarty->assign($val, $this->$val);
     }
-    $smarty->assign("staticAddress", "");
 
     /* Checkboxes */
     foreach(array("gotoScannerEnable") as $val){
