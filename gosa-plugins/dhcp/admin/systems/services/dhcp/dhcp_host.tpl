@@ -1,10 +1,11 @@
 {* GOsa dhcp host - smarty template *}
-<p><b>{t}Generic{/t}</b></p>
-<table width="100%">
- <tr>
-  <td>
+<h3>{t}Generic{/t}</h3>
 
-   <table>
+<table width="100%" summary="{t}DHCP host configuration{/t}">
+ <tr>
+  <td class='right-border' style='width:50%;'>
+
+   <table  summary="{t}DHCP host configuration{/t}">
     <tr>
      <td>{t}Name{/t}{$must}</td>
      <td>
@@ -27,7 +28,7 @@
    </table>
   </td>
   <td>
-   <table>
+   <table  summary="{t}DHCP host configuration{/t}">
     <tr>
      <td>{t}Hardware type{/t}</td>
      <td>
