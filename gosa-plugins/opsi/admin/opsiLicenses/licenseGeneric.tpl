@@ -1,18 +1,18 @@
 {if !$init_successfull}
-<br>
-<b>{msgPool type=siError}</b><br>
-{t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
-<button type='submit' name='retry_init'>{t}Retry{/t}</button>
 
-<br>
-<br>
+  <br>
+    <b>{msgPool type=siError}</b><br>
+    {t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
+    <button type='submit' name='retry_init'>{t}Retry{/t}</button>
+  <br>
+  <hr>
 {else}
 
 <h3>{t}License{/t}</h3>
 
 <table style='width:100%'>
   <tr>
-    <td style='width:50%; padding: 5px; ' class='right-border'>        
+    <td style='width:50%;'  class='right-border'>        
         <table>
           <tr>
             <td>
@@ -38,11 +38,6 @@
 {/render}
             </td>
           </tr>
-        </table>
-
-    </td>
-    <td style='padding: 5px; '>
-        <table>
           <tr>
             <td>
               {t}Description{/t}
@@ -53,15 +48,26 @@
 {/render}
             </td>
           </tr>
+          <tr>
+            <td>
+              {t}License model{/t}
+            </td>
+            <td>
+              {if $initially_was_account}
+                <select name='dummy223' disabled size=1>
+                  {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
+                </select>
+              {else}
+                <select name='licenseModel' onChange='document.mainform.submit();' size=1>
+                  {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
+                </select>
+              {/if}
+            </td>
+          </tr>
         </table>
 
     </td>
-  </tr>
-  <tr>
-    <td colspan="2"><p class='separator'>&nbsp;</p></td>
-  </tr>
-  <tr>
-    <td style='padding: 5px; ' class='right-border'>    
+    <td>
         <table>
           <tr>
             <td>
@@ -113,11 +119,6 @@
 {/render}
             </td>
           </tr>
-        </table>
- 
-    </td> 
-    <td style='padding: 5px; ' class='right-border'>   
-        <table>
           <tr>
             <td>
               {t}Notification date{/t}
@@ -144,41 +145,12 @@
             </td>
           </tr>
         </table>
-    </td> 
-  </tr>
-</table>
-
-<p class='separator'>&nbsp;</p>
-
-<h3>{t}License model{/t}</h3>
-
-<table width="100%">
-  <tr>
-    <td style='width:50%;padding: 5px; ' class='right-border'>    
-        <table>
-          <tr>
-            <td>
-              {t}Model{/t}
-            </td>
-            <td>
-              {if $initially_was_account}
-                <select name='dummy223' disabled size=1>
-                  {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
-                </select>
-              {else}
-                <select name='licenseModel' onChange='document.mainform.submit();' size=1>
-                  {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
-                </select>
-              {/if}
-            </td>
-          </tr>
-        </table>
  
     </td> 
   </tr>
 </table>
 
-<p class='separator'>&nbsp;</p>
+<hr>
 
 <table width="100%">
   <tr>
