@@ -93,7 +93,6 @@ class terminfo extends plugin
       } else {
 
         /* Get template object */
-        $smarty->assign("staticAddress", "");
 
         /* Prevent undefined variable .... */ 
         $smarty->assign("load", progressbar(0,100,15,true));
