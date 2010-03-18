@@ -457,7 +457,7 @@ class workstartup extends plugin
     /* Create divSelectBox for ldap server selection
      */
     $SelectBoxLdapServer = new divSelectBox("LdapServer");
-    $SelectBoxLdapServer->SetHeight(130);
+    $SelectBoxLdapServer->SetHeight(100);
 
     /* Add new ldap server to the list */
     if($this->acl_is_writeable("gotoLdapServer") && 
@@ -524,12 +524,14 @@ class workstartup extends plugin
       }
 
       $SelectBoxLdapServer->AddEntry(
-          array(array("string" => $server),
+          array(
+            array(
+              "string" => $server),
             array("string" => 
               "<input class='center' type='image' src='images/lists/sort-up.png' name='sort_ldap_up_".$key."'>&nbsp;".
               "<input class='center' type='image' src='images/lists/sort-down.png' name='sort_ldap_down_".$key."'>&nbsp;".
               "<input class='center' type='image' src='images/lists/trash.png' name='gotoLdapRemove_".$key."'>",
-              "attach" => "style='text-align:right;width:40px;border-right:0px;'")));
+              "attach" => "style='text-align:right;width:60px;border-right:0px;'")));
       }    
     }    
 
@@ -577,7 +579,7 @@ class workstartup extends plugin
     $smarty->assign("si_active",$this->si_active);
 
     $div = new divSelectBox("WSFAIscriptClasses");
-    $div -> SetHeight("110");
+    $div -> SetHeight("100");
   
     if(!$this->si_fai_action_failed && $this->si_active && $this->fai_activated){
 
@@ -678,7 +680,7 @@ class workstartup extends plugin
           $div->AddEntry(array(
                 array("string"=>$class.$marker),
                 array("string"=>$desc),
-                array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:50px;border-right:none;'")
+                array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:60px;border-right:none;'")
                 ));
         }  
       }// END FAI output generation 

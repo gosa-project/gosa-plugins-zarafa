@@ -28,16 +28,15 @@
     </tr>
     <tr>
      <td style='padding-top:3px;' colspan="2">
-<LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
+
+  <hr>
+
+<h3><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL></h3>
 {render acl=$gotoLdapServerACL}
 {if $member_of_ogroup}
 (<input type='checkbox' name='gotoLdap_inherit' {if $gotoLdap_inherit} checked {/if} value="1"
 	onClick="document.mainform.submit();" class='center'>
 &nbsp;{t}inherit from group{/t})
-{if !$JS}
-	{image path="images/lists/reload.png"}
-
-{/if}
 {/if}
 {/render}
 {render acl=$gotoLdapServerACL_inherit}
@@ -112,10 +111,7 @@
 					</td>
 				</tr>
 			</table>
-			<h3>
-				{image path="plugins/goto/images/fai_settings.png"}&nbsp;{t}Assigned FAI classes{/t}
-
-			</h3>
+			<h3>{t}Assigned FAI classes{/t}</h3>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	
 	{/render}
@@ -163,10 +159,7 @@
 					</td>
 				</tr>
 			</table>
-			<h3>
-				{image path="plugins/goto/images/fai_settings.png"}&nbsp;{t}Assigned FAI classes{/t}
-
-			</h3>
+			<h3>{t}Assigned FAI classes{/t}</h3>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	
 	{/render}
@@ -194,12 +187,9 @@
  <tr>
   <td style='width:50%; ' class='right-border'>
 
-   <h3>
-    {image path="plugins/goto/images/hardware.png"} {t}Kernel modules (format: name parameters){/t}
-
-   </h3>
+   <h3>{t}Kernel modules (format: name parameters){/t}</h3>
 {render acl=$gotoModulesACL}
-    <select style="width:100%; height:150px;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
+    <select style="width:100%; height:100px;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
      {html_options values=$gotoModules output=$gotoModules}
 	 <option disabled>&nbsp;</option>
     </select>
@@ -225,7 +215,7 @@
                 <tr>
                         <td>
 {render acl=$gotoShareACL}
-                        <select style="width:100%;height:150px;" name="gotoShare" multiple size=4 id="gotoShare">
+                        <select style="width:100%;height:100px;" name="gotoShare" multiple size=4 id="gotoShare">
    					     {html_options values=$gotoShareKeys output=$gotoShares}
 								<option disabled>&nbsp;</option>
                                 </select>
@@ -251,11 +241,13 @@
 {/render}
                         </td>
                 </tr>
-        </table>
+     </table>
   </td>
  </tr>
 </table>
 <input name="WorkstationStarttabPosted" type="hidden" value="1">
+
+
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
