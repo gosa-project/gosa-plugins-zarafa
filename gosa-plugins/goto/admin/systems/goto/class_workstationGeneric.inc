@@ -262,7 +262,6 @@ class workgeneric extends plugin
     $smarty->assign("cn", $this->cn);
     $smarty->assign("description", $this->description);
     $smarty->assign("l", $this->l);
-    $smarty->assign("staticAddress", "");
 
     $tmp = array();
     foreach($this->gotoNtpServers as $server){
