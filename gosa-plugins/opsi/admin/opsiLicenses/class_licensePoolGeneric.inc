@@ -291,6 +291,7 @@ class licensePoolGeneric extends plugin
       $id = trim($_GET['id']);
       if(isset($this->licenses[$id])){
         $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
+        $this->dialog->set_acl_category('opsi');
         $this->dialog->set_acl_base($this->config->current['BASE']);
       }
     }
@@ -368,6 +369,7 @@ class licensePoolGeneric extends plugin
       if(preg_match("/w/",$this->getacl("licenses"))){
         if(isset($_POST['addLicense'])){
           $this->dialog = new licenseGeneric($this->config,$this->dn,array(), $this->opsiHosts);
+          $this->dialog->set_acl_category('opsi');
           $this->dialog->set_acl_base($this->config->current['BASE']);
         }
       }
@@ -379,6 +381,7 @@ class licensePoolGeneric extends plugin
             $id = preg_replace("/^editLicense_(.*)$/","\\1",$name);
             if(isset($this->licenses[$id])){
               $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
+              $this->dialog->set_acl_category('opsi');
               $this->dialog->set_acl_base($this->config->current['BASE']);
             }
             break;
