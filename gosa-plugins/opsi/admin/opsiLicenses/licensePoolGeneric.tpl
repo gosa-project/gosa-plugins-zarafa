@@ -1,19 +1,21 @@
 {if !$init_successfull}
-<br>
-<b>{msgPool type=siError}</b><br>
-{t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
-<button type='submit' name='retry_init'>{t}Retry{/t}</button>
 
-<br>
-<br>
+  <br>
+    <b>{msgPool type=siError}</b><br>
+    {t}Check if the GOsa support daemon (gosa-si) is running.{/t}&nbsp;
+    <button type='submit' name='retry_init'>{t}Retry{/t}</button>
+  <br>
+  <br>
+
 {else}
 
-
-<table width="100%">
+<table width="100%" summary="{t}Lincense settings{/t}">
   <tr> 
-    <td>        <!-- GENERIC -->
+    <td>
+
+        <!-- GENERIC -->
         <h3>{t}Generic{/t}</h3>
-        <table>
+        <table summary="{t}Generic settings{/t}">
           <tr> 
             <td>{t}Name{/t}</td>
             <td>
@@ -38,33 +40,22 @@
 
     </td>
     <td style='width:50%; padding: 5px;' class='left-border'>        <!-- LICENSES -->
-        <h3>{t}Licenses{/t}</h3>
-        <table style='width:100%;'>
-          <tr> 
-            <td>
-              {$licenses}
+      <h3>{t}Licenses{/t}</h3>
+      {$licenses}
 {render acl=$licensesACL}
               <button type='submit' name='addLicense'>{msgPool type=addButton}</button>
 
 {/render}
-            </td>
-          </tr>
-        </table>
-
     </td>
   </tr>
   <tr> 
     <td colspan="2">
-      <p class='separator'>&nbsp;</p>
+      <hr>
     </td>
   </tr>
   <tr>
     <td style='width:50%'>
-        <!-- APPLICATIONS -->
         <h3>{t}Applications{/t}</h3>
-        <table style='width:100%;'>
-          <tr> 
-            <td>
 {render acl=$productIdsACL}
               <select name='productIds[]' multiple size="6" style="width:100%;">
                 {html_options options=$productIds}
@@ -83,36 +74,14 @@
               <button type='submit' name='removeProduct'>{msgPool type=delButton}</button>
 
 {/render}
-            </td>
-          </tr>
-        </table>
-
     </td>
     <td style='padding: 5px;' class='left-border'>        <!-- SOFTWARE -->
         <h3>{t}Windows software IDs{/t}</h3>
-        <table style='width:100%;'>
-          <tr> 
-            <td>
 {render acl=$windowsSoftwareIdsACL}
               <select name='softwareIds[]' multiple size="6" style="width:100%;">
                 {html_options options=$softwareIds}
               </select>
 {/render}
-<!--
-{render acl=$windowsSoftwareIdsACL}
-              <input type='text' name='newSoftwareId' value='' size=10>
-{/render}
-{render acl=$windowsSoftwareIdsACL}
-              <input type='submit' name='addSoftware' value='{msgPool type='addButton'}'>
-{/render}
-{render acl=$windowsSoftwareIdsACL}
-              <input type='submit' name='removeSoftware' value='{msgPool type='delButton'}'>
-{/render}
--->
-            </td>
-          </tr>
-        </table>
-
     </td>
   </tr>
 </table>

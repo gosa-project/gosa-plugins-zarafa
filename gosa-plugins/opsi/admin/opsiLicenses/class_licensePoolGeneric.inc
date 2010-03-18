@@ -253,9 +253,9 @@ class licensePoolGeneric extends plugin
     if($this->acl_is_readable("licenses")){
       $editlink = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=%s'>%s</a>";
       foreach($this->licenses as $i => $license){
-        $link = "<input type='image' class='center' src='images/lists/edit.png' name='editLicense_{$i}'>";
+        $link = image("images/lists/edit.png","editLicense_{$i}");
         if(preg_match("/w/", $this->getacl("licenses"))){
-          $link.= "<input type='image' class='center' src='images/lists/trash.png' name='removeLicense_{$i}'>";
+          $link.= image("images/lists/trash.png","removeLicense_{$i}");
         }
 
         $maxInst = "";
@@ -376,7 +376,7 @@ class licensePoolGeneric extends plugin
       if(preg_match("/r/",$this->getacl("licenses"))){
         foreach($_POST as $name => $value){
           if(preg_match("/^editLicense_/",$name)){
-            $id = preg_replace("/^editLicense_(.*)_.$/","\\1",$name);
+            $id = preg_replace("/^editLicense_(.*)$/","\\1",$name);
             if(isset($this->licenses[$id])){
               $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
               $this->dialog->set_acl_base($this->config->current['BASE']);
@@ -384,7 +384,7 @@ class licensePoolGeneric extends plugin
             break;
           }
           if(preg_match("/^removeLicense_/",$name)){
-            $id = preg_replace("/^removeLicense_(.*)_.$/","\\1",$name);
+            $id = preg_replace("/^removeLicense_(.*)$/","\\1",$name);
             if(isset($this->licenses[$id])){
               unset($this->licenses[$id]);
             }
