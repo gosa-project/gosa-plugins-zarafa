@@ -3,7 +3,7 @@
 <table summary="" style="width:100%" border=0>
 	<tr>
 		<td colspan="2">
-		<LABEL for="selected_categorie">{t}Phone type{/t}</LABEL>{$staticAddress}
+		<LABEL for="selected_categorie">{t}Phone type{/t}</LABEL>{$must}
 {render acl=$categorieACL}
 		<select id="selected_categorie" size="1" name="selected_categorie" title="{t}Choose a phone type{/t}" onchange="mainform.submit();">
 			{html_options options=$categories selected=$selected_categorie}
@@ -24,7 +24,7 @@
 			<table summary="" border=0>
 			 <tr>
 				<td>
-					<LABEL for="goFonType">{t}Mode{/t}</LABEL>{$staticAddress}
+					<LABEL for="goFonType">{t}Mode{/t}</LABEL>{$must}
 					
 				</td>
 				<td>
@@ -87,7 +87,7 @@
 			<table summary="" width="100%">
 			 <tr>
 				<td>
-					<LABEL for="goFonType">{t}Modus{/t}{$staticAddress}</LABEL>
+					<LABEL for="goFonType">{t}Modus{/t}{$must}</LABEL>
 				</td>
 				<td >
 {render acl=$goFonTypeACL}
