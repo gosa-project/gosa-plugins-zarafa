@@ -235,7 +235,6 @@ class termgeneric extends plugin
 
     $smarty->assign("cn", $this->cn);
     $smarty->assign("description", $this->description);
-    $smarty->assign("staticAddress", "");
 
     /* tell smarty the inherit checkbox state */
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
