@@ -1,5 +1,5 @@
 <h3>{t}Generic{/t}</h3>
-<table width="100%">
+<table width="100%" summary="{t}Generic{/t}">
 	<tr>
 		<td style='width:50%;'>
 			<table summary="">
@@ -51,73 +51,56 @@
 			</table>
 		</td>
 		<td class='left-border'>
+      {render acl=$cyrusImapACL}
+        <input type='checkbox' name='cyrusImap' value=1 {if $cyrusImap} checked {/if} > 
+      {/render}
+      {t}Start IMAP service{/t}
+      <br>
 
-			<table>
-				<tr>
-					<td>
-{render acl=$cyrusImapACL}
-						<input type='checkbox' name='cyrusImap' value=1 {if $cyrusImap} checked {/if} > 
-{/render}
-					</td>
-					<td>{t}Start IMAP service{/t}
-					</td>
-				</tr>
-				<tr>
-					<td>
-{render acl=$cyrusImapSSLACL}
-						<input type='checkbox' name='cyrusImapSSL' value=1 {if $cyrusImapSSL} checked {/if}> 
-{/render}
-					</td>
-					<td>{t}Start IMAP SSL service{/t}
-					</td>
-				</tr>
-				<tr>
-					<td>
-{render acl=$cyrusPop3ACL}
-						<input type='checkbox' name='cyrusPop3' value=1 {if $cyrusPop3} checked {/if} > 
-{/render}
-					</td>
-					<td>{t}Start POP3 service{/t}
-					</td>
-				</tr>
-				<tr>
-					<td>
-{render acl=$cyrusPop3SSLACL}
-						<input type='checkbox' name='cyrusPop3SSL' value=1 {if $cyrusPop3SSL} checked {/if} > 
-{/render}
-					</td>
-					<td>{t}Start POP3 SSL service{/t}
-					</td>
-				</tr>
-			</table>
+      {render acl=$cyrusImapSSLACL}
+       <input type='checkbox' name='cyrusImapSSL' value=1 {if $cyrusImapSSL} checked {/if}> 
+      {/render}
+      {t}Start IMAP SSL service{/t}
+      <br>
+
+      {render acl=$cyrusPop3ACL}
+        <input type='checkbox' name='cyrusPop3' value=1 {if $cyrusPop3} checked {/if} > 
+      {/render}
+      {t}Start POP3 service{/t}
+      <br>
+
+      {render acl=$cyrusPop3SSLACL}
+        <input type='checkbox' name='cyrusPop3SSL' value=1 {if $cyrusPop3SSL} checked {/if} > 
+      {/render}
+      {t}Start POP3 SSL service{/t}
 		</td>
 	</tr>
 </table>
 <hr>
 <br>
 <h3>Action</h3>
+
 {if $is_new == "new"}
-    {t}The server must be saved before you can use the status flag.{/t}
+ {t}The server must be saved before you can use the status flag.{/t}
 {elseif !$is_acc}
-    {t}The service must be saved before you can use the status flag.{/t}
+ {t}The service must be saved before you can use the status flag.{/t}
 {/if}
+
 <br>
-<select name="action" title='{t}Set new status{/t}' 
-	{if $is_new =="new" || !$is_acc} disabled {/if}
->
+<select name="action" title='{t}Set new status{/t}'
+	{if $is_new =="new" || !$is_acc} disabled {/if}>
 	<option value="none">&nbsp;</option>
     {html_options options=$Actions}
 </select>
-<button type='submit' name='ExecAction' title="{t}Set status{/t}">{t}Execute{/t}</button>
-	{if $is_new == "new" || !$is_acc} disabled {/if}
->
+
+<button type='submit' name='ExecAction' title="{t}Set status{/t}"
+	{if $is_new == "new" || !$is_acc} disabled {/if}>{t}Execute{/t}</button>
 
 <hr>
-<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
 
-    &nbsp;
-    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
-
+<div class="plugin-actions">
+ <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+ <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
 </div>
+
 <input type="hidden" name="goImapServerPosted" value="1">
