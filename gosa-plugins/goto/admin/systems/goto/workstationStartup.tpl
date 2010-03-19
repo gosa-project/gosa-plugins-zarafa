@@ -1,16 +1,18 @@
 <table summary="" style="width:100%;">
  <tr>
   <td style='width:50%; '>
-   
+
+
+   <!--
+    - Boot parameters 
+    -->
    <h3>{t}Boot parameters{/t}</h3>
-   
-   <table summary="" style="width:100%">
+   <table summary="">
     
     {if $fai_activated && $si_active && !$si_fai_action_failed}
     <tr>
      <td>
-      <label for="gotoBootKernel">
-      {t}Boot kernel{/t}</label>
+      <label for="gotoBootKernel">{t}Boot kernel{/t}</label>
      </td>
      <td style="width:70%">
       {render acl=$gotoBootKernelACL}
@@ -20,26 +22,32 @@
       {/render}
      </td>
     </tr>
-    
     {/if}
 
+
+   <!--
+    - Kernel parameters 
+    -->
     <tr>
      <td>
-      <label for="gotoKernelParameters">
-      {t}Custom options{/t}</label>
+      <label for="gotoKernelParameters">{t}Custom options{/t}</label>
      </td>
      <td>
       {render acl=$gotoKernelParametersACL}
        <input name="gotoKernelParameters" id="gotoKernelParameters" 
-          size=25 maxlength=500 value="{$gotoKernelParameters}" 
+          size=25 maxlength=500 value="{$gotoKernelParameters}"  type='text'
           title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}">
       {/render}
      </td>
     </tr>
+
+
+   <!--
+    - LDAP servers  
+    -->
     <tr>
-     <td style='padding-top:3px;' colspan="2">
+     <td colspan="2">
       <hr><h3><label for="gotoLdapServer">{t}LDAP server{/t}</label></h3>
-        
       {render acl=$gotoLdapServerACL}
         {if $member_of_ogroup}
           (<input type='checkbox' name='gotoLdap_inherit' {if $gotoLdap_inherit} checked {/if} value="1"
@@ -62,16 +70,18 @@
         <button type='submit' name='add_ldap_server' id="add_ldap_server">
         {msgPool type=addButton}</button>
       {/render}
+
      </td>
     </tr>
    </table>
    
   </td>
+
+
+   <!--
+    - FAI classes
+    -->
   <td class='left-border'>
-   &nbsp;
-  </td>
-  
-  <td>
    {if !$fai_activated}
     <h3>{t}FAI Object assignment disabled. You can't use this feature until FAI is activated.{/t}</h3>
    {elseif !$si_active}
@@ -94,16 +104,16 @@
    <table>
     <tr>
      <td>
-      <h3>{t}FAI server{/t}</h3>
+      <b>{t}FAI server{/t}</b>
      </td>
      <td>
-      <h3>{t}Release{/t}</h3>
+      <b>{t}Release{/t}</b>
      </td>
     </tr>
     <tr>
      <td>
       {render acl=$FAIdebianMirrorACL}
-       <select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()' size=1>
+       <select name="FAIdebianMirror"  onchange='document.mainform.submit()' size=1>
        {foreach from=$FAIservers item=val key=key}
         {if $key == "inherited" || $key == "auto"} 
          <option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{t}{$key}{/t}</option>
@@ -120,29 +130,33 @@
       </select>
      </td>
     </tr>
+    <tr>
+     <td colspan="2">
+   
+      <b>{t}Assigned FAI classes{/t}</b>
+     
+      {render acl=$FAIclassACL}
+       {$FAIScriptlist}	
+      {/render}
+     </td>
+    </tr>
    </table>
-   
-   <h3>{t}Assigned FAI classes{/t}</h3>
-   
-    {render acl=$FAIclassACL}
-     {$FAIScriptlist}	
-    {/render}
 
    {else} 
    
-   <table>
+   <table summary="{t}FAI class assignment{/t}">
     <tr>
      <td>
-      <h3>{t}FAI server{/t}</h3>
+      <b>{t}FAI server{/t}</b>
      </td>
      <td>
-      <h3>{t}Release{/t}</h3>
+      <b>{t}Release{/t}</b>
      </td>
     </tr>
     <tr>
      <td>
       {render acl=$FAIdebianMirrorACL}
-       <select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()' size=1>
+       <select name="FAIdebianMirror" onchange='document.mainform.submit()' size=1>
         {foreach from=$FAIservers item=val key=key}
          {if $key == "inherited" || $key == "auto"} 
           <option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{t}{$key}{/t}</option>
@@ -155,7 +169,7 @@
      </td>
      <td>
       {render acl=$FAIreleaseACL}
-       <select name="FAIrelease"  onchange='document.mainform.submit()' {$FAIclassACL} size=1>
+       <select name="FAIrelease"  onchange='document.mainform.submit()' size=1>
         {foreach from=$FAIservers.$FAIdebianMirror item=val key=key}
          <option value="{$val}" {if $FAIrelease == $key} selected {/if}>{$val}</option>
         {/foreach}
@@ -163,26 +177,32 @@
       {/render}
      </td>
     </tr>
-   </table>
-   <h3>{t}Assigned FAI classes{/t}</h3>
-   
-   {render acl=$FAIclassACL}
-    {$FAIScriptlist}	
-   {/render}
-   
-   {render acl=$FAIclassACL}
-    <select name="FAIclassesSel" size=1>
-     {foreach from=$FAIclasses item=val key=key}
-      <option value="{$key}">{$key}&nbsp;[{$val}]</option>
-     {/foreach}
-    </select>
-   {/render}
+    <tr>
+     <td colspan="2"> 
+      
+       <b>{t}Assigned FAI classes{/t}</b>
+       
+       {render acl=$FAIclassACL}
+        {$FAIScriptlist}	
+       {/render}
+       
+       {render acl=$FAIclassACL}
+        <select name="FAIclassesSel" size=1>
+         {foreach from=$FAIclasses item=val key=key}
+          <option value="{$key}">{$key}&nbsp;[{$val}]</option>
+         {/foreach}
+        </select>
+       {/render}
 
-   {render acl=$FAIclassACL}
-    <button type='submit' name='AddClass'>{msgPool type=addButton}</button>
-   {/render}
+       {render acl=$FAIclassACL}
+        <button type='submit' name='AddClass'>{msgPool type=addButton}</button>
+       {/render}
 
-   {/if} <!-- Inherited -->
+       {/if} <!-- Inherited -->
+      </td>
+     </tr>
+    </table>
+
    {/if} <!-- FAI active-->
 
   </td>
@@ -195,8 +215,11 @@
  <tr>
   <td style='width:50%; ' class='right-border'>
 
-   <h3>{t}Kernel modules (format: name parameters){/t}</h3>
 
+   <!--
+    - Kernel modules
+    -->
+   <h3>{t}Kernel modules (format: name parameters){/t}</h3>
    {render acl=$gotoModulesACL}
     <select style="width:100%; height:100px;" name="modules_list[]" size=15 multiple 
       title="{t}Add additional modules to load on startup{/t}">
@@ -224,44 +247,42 @@
   
   
   <td>
-   
+ 
+  
+   <!--
+    - Shares
+    -->
    <h3><label for="gotoShare">{t}Shares{/t}</label></h3>
+    
+   {render acl=$gotoShareACL}
+    <select style="width:100%;height:100px;" name="gotoShare" multiple size=4 id="gotoShare">
+     {html_options values=$gotoShareKeys output=$gotoShares}
+     <option disabled>&nbsp;</option>
+    </select>
+   {/render}
+
+   <br>
    
-   <table summary="" style="width:100%">
-    <tr>
-     <td>
-      
-      {render acl=$gotoShareACL}
-       <select style="width:100%;height:100px;" name="gotoShare" multiple size=4 id="gotoShare">
-        {html_options values=$gotoShareKeys output=$gotoShares}
-        <option disabled>&nbsp;</option>
-       </select>
-      {/render}
+   {render acl=$gotoShareACL}
+    <select name="gotoShareSelection" size=1>
+     {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
+     <option disabled>&nbsp;</option>
+    </select>
+   {/render}
 
-      <br>
-      
-      {render acl=$gotoShareACL}
-       <select name="gotoShareSelection" size=1>
-        {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
-        <option disabled>&nbsp;</option>
-       </select>
-      {/render}
+   {render acl=$gotoShareACL}
+    <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
+   {/render}
 
-      {render acl=$gotoShareACL}
-       <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
-      {/render}
+   {render acl=$gotoShareACL} 
+    <button type='submit' name='gotoShareAdd'>
+    {msgPool type=addButton}</button>
+   {/render}
 
-      {render acl=$gotoShareACL} 
-       <button type='submit' name='gotoShareAdd'>
-       {msgPool type=addButton}</button>
-      {/render}
+   {render acl=$gotoShareACL}
+    <button type='submit' name='gotoShareDel' {if $gotoSharesCount == 0} disabled {/if}>{t}Remove{/t}</button>
+   {/render}
 
-      {render acl=$gotoShareACL}
-       <button type='submit' name='gotoShareDel' {if $gotoSharesCount == 0} disabled {/if}>{t}Remove{/t}</button>
-      {/render}
-     </td>
-    </tr>
-   </table>
   </td>
  </tr>
 </table>
