@@ -281,8 +281,7 @@ class workstartup extends plugin
 
     /* Do we represent a valid terminal? */
     if (!$this->is_account && $this->parent === NULL){
-      $display= "<img alt=\"\" src=\"images/small-error.png\" align=middle>&nbsp;<b>".
-        msgPool::noValidExtension(_("workstation"))."</b>";
+      $display= image("images/small-error.png")."<b>".msgPool::noValidExtension(_("workstation"))."</b>";
       return ($display);
     }
 
@@ -476,7 +475,7 @@ class workstartup extends plugin
     if(!$this->gotoLdap_inherit && $this->acl_is_writeable("gotoLdapServer")){
       foreach($_POST as $name => $value){
         if(preg_match("/sort_ldap_up_/",$name)){
-          $id = preg_replace("/^sort_ldap_up_([0-9]*)_(x|y)$/","\\1",$name);
+          $id = preg_replace("/^sort_ldap_up_([0-9]*)$/","\\1",$name);
           $from =  $id;  
           $to   =  $id -1;
           $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
@@ -486,7 +485,7 @@ class workstartup extends plugin
           break;
         }
         if(preg_match("/sort_ldap_down_/",$name)){
-          $id = preg_replace("/^sort_ldap_down_([0-9]*)_(x|y)$/","\\1",$name);
+          $id = preg_replace("/^sort_ldap_down_([0-9]*)$/","\\1",$name);
           $from =  $id;  
           $to   =  $id +1;
           $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
@@ -496,7 +495,7 @@ class workstartup extends plugin
           break;
         }
         if(preg_match("/gotoLdapRemove_/",$name)){
-          $id = preg_replace("/^gotoLdapRemove_([0-9]*)_(x|y)$/","\\1",$name);
+          $id = preg_replace("/^gotoLdapRemove_([0-9]*)$/","\\1",$name);
           $value = $this->gotoLdapServers[$id];
           $this->gotoLdapServers = array_remove_entries(array($value),$this->gotoLdapServers);
           break;
@@ -527,10 +526,10 @@ class workstartup extends plugin
           array(
             array(
               "string" => $server),
-            array("string" => 
-              "<input class='center' type='image' src='images/lists/sort-up.png' name='sort_ldap_up_".$key."'>&nbsp;".
-              "<input class='center' type='image' src='images/lists/sort-down.png' name='sort_ldap_down_".$key."'>&nbsp;".
-              "<input class='center' type='image' src='images/lists/trash.png' name='gotoLdapRemove_".$key."'>",
+            array("string" =>
+              image('images/lists/sort-up.png',"sort_ldap_up_".$key,'',"top"). 
+              image('images/lists/sort-down.png',"sort_ldap_down_".$key,'',"bottom"). 
+              image('images/lists/trash.png',"gotoLdapRemove_".$key),
               "attach" => "style='text-align:right;width:60px;border-right:0px;'")));
       }    
     }    
