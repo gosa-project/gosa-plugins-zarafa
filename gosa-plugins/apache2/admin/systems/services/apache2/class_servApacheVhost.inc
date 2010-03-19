@@ -104,6 +104,7 @@ class servapache extends goService
      */
     if(isset($_POST['AddVhost']) && $this->acl_is_writeable("VirtualHosts")){
       $this->dialog = new servapacheVhostEdit($this->config,$this->dn);
+      $this->dialog->set_acl_category('server');
     }
 
     /* Check for edit vhost request 
@@ -118,6 +119,7 @@ class servapache extends goService
         $tmp = preg_replace("/^editVhost_/","",$name);
         $tmp = base64_decode(preg_replace("/_.*$/","",$tmp));
         $this->dialog= new servapacheVhostEdit($this->config,$this->dn,$this->Vhosts[$tmp]);
+        $this->dialog->set_acl_category('server');
       }
 
       /* check posts for delete vhost 
@@ -145,16 +147,19 @@ class servapache extends goService
     /* Create Listbox with existing Vhosts 
      */
     $VhostList = new divSelectBox("apacheConfigs");
-    $VhostList -> SetHeight(254);
+    $VhostList -> SetHeight(140);
 
     /* Add entries to divlist
      */
-    $editImg = "<input type='image' src='images/lists/edit.png' name='editVhost_%s'>
-      <input type='image' src='images/lists/trash.png' name='delVhost_%s'>";
+    $editImg = 
+      image('images/lists/edit.png','editVhost_%s').
+      image('images/lists/trash.png','delVhost_%s');
+            
     foreach($this->Vhosts as $vhost => $values ){
       $VhostList->AddEntry(array(
             array("string" => $vhost),
-            array("string" => str_replace("%s",base64_encode($vhost),$editImg))
+            array("string" => str_replace("%s",postEncode($vhost),$editImg),
+                   "attach" => "style='width:40px;'")
             ));
     }    
 

@@ -200,7 +200,7 @@ class servapacheVhostEdit extends plugin
         $once = false;
         $id = preg_replace("/^SAup_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
+        $id = postDecode($id);
         $this->apacheServerAlias = $this->ArrayUp(($id+1),$this->apacheServerAlias);
       }
 
@@ -211,7 +211,7 @@ class servapacheVhostEdit extends plugin
         
         $id = preg_replace("/^SAdown_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
+        $id = postDecode($id);
   
         $this->apacheServerAlias = $this->ArrayDown(($id+1),$this->apacheServerAlias);
       }
@@ -222,7 +222,7 @@ class servapacheVhostEdit extends plugin
         $once = false;
         $id = preg_replace("/^SAdel_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
+        $id = postDecode($id);
         unset($this->apacheServerAlias[$id]);
         $tmp  =array();
         foreach($this->apacheServerAlias as $entry){
@@ -237,7 +237,7 @@ class servapacheVhostEdit extends plugin
         $once = false;
         $id = preg_replace("/^SCup_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
+        $id = postDecode($id);
         $this->apacheScriptAlias = $this->ArrayUp(($id+1),$this->apacheScriptAlias);
       }
 
@@ -247,7 +247,7 @@ class servapacheVhostEdit extends plugin
         $once = false;
         $id = preg_replace("/^SCdown_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
+        $id = postDecode($id);
         $this->apacheScriptAlias = $this->ArrayDown(($id+1),$this->apacheScriptAlias);
       }
 
@@ -257,7 +257,7 @@ class servapacheVhostEdit extends plugin
         $once = false;
         $id = preg_replace("/^SCdel_/","",$name);
         $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
+        $id = postDecode($id);
         unset($this->apacheScriptAlias[$id]);
         $tmp  =array();
         foreach($this->apacheScriptAlias as $entry){
@@ -295,14 +295,15 @@ class servapacheVhostEdit extends plugin
     $div->setHeight(120);
     $recs = $this->apacheServerAlias;
 
-    $oneup    = "<input name='SAup_%s'    type='image' src='images/lists/sort-up.png'    title='"._("Up")."'      class='center'>&nbsp;"; 
-    $onedown  = "<input name='SAdown_%s'  type='image' src='images/lists/sort-down.png'  title='"._("Down")."'    class='center'>&nbsp;"; 
-    $onedel   = "<input name='SAdel_%s'   type='image' src='images/lists/trash.png'      title='"._("Delete")."'  class='center'>";
+    $oneup    = image('images/lists/sort-up.png','SAup_%s',_("Up"), "top");
+    $onedown  = image('images/lists/sort-down.png','SAdown_%s',_("Down"), "bottom");
+    $onedel   = image('images/lists/trash.png','SAdel_%s',_("Delete"));
+
     foreach($recs as $key => $rec){
       $div ->AddEntry(array(
             array("string"=>$rec),
-            array("string"=>str_replace("%s",base64_encode($key),$oneup.$onedown.$onedel),
-                  "attach"=>"style='width:70px;border-right:0px;'")
+            array("string"=>str_replace("%s",postEncode($key),$oneup.$onedown.$onedel),
+                  "attach"=>"style='width:50px;border-right:0px;'")
             ));
     }
     $smarty->assign("apacheServerAlias",  $div->DrawList());
@@ -314,15 +315,15 @@ class servapacheVhostEdit extends plugin
     $div->setHeight(120);
     $recs = $this->apacheScriptAlias;
 
-    $oneup    = "<input name='SCup_%s'    type='image' src='images/lists/sort-up.png'    title='"._("Up")."'      class='center'>&nbsp;"; 
-    $onedown  = "<input name='SCdown_%s'  type='image' src='images/lists/sort-down.png'  title='"._("Down")."'    class='center'>&nbsp;"; 
-    $onedel   = "<input name='SCdel_%s'   type='image' src='images/lists/trash.png'      title='"._("Delete")."'  class='center'>"; 
-    
+    $oneup    = image('images/lists/sort-up.png','SCup_%s',_("Up"), "top");
+    $onedown  = image('images/lists/sort-down.png','SCdown_%s',_("Down"), "bottom");
+    $onedel   = image('images/lists/trash.png','SCdel_%s',_("Delete"));
+
     foreach($recs as $key => $rec){
       $div ->AddEntry(array(
             array("string"=>$rec),
-            array("string"=>str_replace("%s",base64_encode($key),$oneup.$onedown.$onedel),
-                  "attach"=>"style='width:70px;border-right:0px;'")
+            array("string"=>str_replace("%s",postEncode($key),$oneup.$onedown.$onedel),
+                  "attach"=>"style='width:50px;border-right:0px;'")
             ));
     }
     $smarty->assign("apacheScriptAlias",  $div->DrawList());    
@@ -443,6 +444,13 @@ class servapacheVhostEdit extends plugin
     return($ret);
   }
 
+  function acl_is_writeable($attribute,$skip_write = FALSE)
+  {
+    if($this->read_only) return(FALSE);
+    $ui= get_userinfo();
+    return preg_match('/w/', $ui->get_permissions($this->acl_base, 
+          $this->acl_category."servapache", $attribute,      $skip_write));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

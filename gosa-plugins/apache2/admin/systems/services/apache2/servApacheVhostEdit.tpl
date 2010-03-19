@@ -1,7 +1,4 @@
 <h3>{t}Generic{/t}</h3>
-<table summary="" width="100%">
-	<tr>
-		<td style='width:50%;' class='right-border'>
 
 			<table summary="">
 				<tr>
@@ -23,97 +20,66 @@
 					</td>
 				</tr>
 			</table>
-		</td>
-		<td>
-
-			<table summary="" width="100%">
-				<tr>
-					<td style='width:100%;' class='right-border'>
-
-						<h3>{t}Server Alias{/t}</h3>
-						<table width="100%">	
-							<tr>
-								<td>
-									{$apacheServerAlias}
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<table width="100%">
-										<tr>
-											<td style='width:30%;'>
-
-												<h3>{t}URL Alias{/t}</h3>
-											</td>
-											<td>
-												<h3>{t}Directory Path{/t}</h3>
-											</td>
-										</tr>
-										<tr>
-											<td style='width:30%;'>
-
-												<input type="text" 		name="StrSAAlias" value="">
-											</td>
-											<td>
-												<input type="text" 		name="StrSADir" value="">
-												<button type='submit' name='AddSARecord'>{t}Add{/t}</button>
-
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
 
 <hr>
-<br>
 
 <table summary="" width="100%">
-	<tr>
+  <tr>
+    <td style='width:50%;' class='right-border'>
+
+  		<h3>{t}Server Alias{/t}</h3>
+
+ 			{$apacheServerAlias}
+ 			<table width="100%" summary="{t}Server Alias{/t}">
+ 				<tr>
+ 					<td style='width:30%;'>
+
+ 						<h3>{t}URL Alias{/t}</h3>
+ 					</td>
+ 					<td>
+ 						<h3>{t}Directory Path{/t}</h3>
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<td style='width:30%;'>
+
+ 						<input type="text" 		name="StrSAAlias" value="">
+ 					</td>
+ 					<td>
+ 						<input type="text" 		name="StrSADir" value="">
+ 						<button type='submit' name='AddSARecord'>{t}Add{/t}</button>
+
+ 					</td>
+ 				</tr>
+   		</table>
+
+		</td>
 		<td style='width:50%;' class='right-border'>
 
 			<h3>{t}Script Alias{/t}</h3>
-			<table width="100%">	
-				<tr>
-					<td>
-						{$apacheScriptAlias}
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<table width="100%">
-							<tr>
-								<td style='width:30%;'>
+  		{$apacheScriptAlias}
 
-									<h3>{t}Alias Directory{/t}</h3>
-								</td>
-								<td>
-									<h3>{t}Script Directory{/t}</h3>
-								</td>
-							</tr>
-							<tr>
-								<td style='width:30%;'>
+      <table width="100%" summary="{t}Script Alias{/t}">
+        <tr>
+          <td style='width:30%;'>
+            <h3>{t}Alias Directory{/t}</h3>
+          </td>
+          <td>
+            <h3>{t}Script Directory{/t}</h3>
+          </td>
+        </tr>
+        <tr>
+          <td style='width:30%;'>
 
-									<input type="text" 		name="StrSCAlias" value="">
-								</td>
-								<td>
-									<input type="text" 		name="StrSCDir" value="">
-									<button type='submit' name='AddSCRecord'>{t}Add{/t}</button>
+            <input type="text" 		name="StrSCAlias" value="">
+          </td>
+          <td>
+            <input type="text" 		name="StrSCDir" value="">
+            <button type='submit' name='AddSCRecord'>{t}Add{/t}</button>
 
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td>
+          </td>
+        </tr>
+      </table>
 
 		</td>
 	</tr>
