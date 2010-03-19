@@ -108,7 +108,7 @@ class servnfs extends plugin
     $smarty->assign("allow_mounts", $this->parent->allow_mounts);
     $smarty->assign("mount_checked", "");
 
-    $smarty->assign("appleMountsACL",    $this->getacl("appleMounts"));
+    $smarty->assign("appleMountsACL",    $this->parent->getacl("appleMounts"));
 
     if (($this->type == "netatalk") || ($this->type == "NFS")) {
       if ($this->create_mount_init) {
@@ -264,8 +264,6 @@ class servnfs extends plugin
   function should_create_mount() {
     return $this->create_mount;
   }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

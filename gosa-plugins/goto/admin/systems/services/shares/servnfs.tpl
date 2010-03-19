@@ -75,7 +75,7 @@
 						{/if}
 
 								{literal}
-									<script language="JavaScript">
+									<script type="text/javascript" language="JavaScript">
 										document.getElementById('sharetype').onchange=function() {
 											var foobar=this[this.selectedIndex].value;
 											var box=document.getElementById('netatalk_mount');
@@ -132,18 +132,11 @@
 			</table>
 		</td>
 	</tr>
-	<tr>
-		<td colspan=2>
-			<hr>
-		</td>
-	</tr>
-	<tr>
-		<td colspan=2 style="text-align:right">
-			<button type='submit' name='NFSsave'>{msgPool type=saveButton}</button>
-
-			<button type='submit' name='NFScancel'>{msgPool type=cancelButton}</button>
-
-		</td>
-	</tr>
 </table>
+
+<hr>
+<div class="plugin-actions">
+			<button type='submit' name='NFSsave'>{msgPool type=saveButton}</button>
+			<button type='submit' name='NFScancel'>{msgPool type=cancelButton}</button>
+</div>
 <input type='hidden' name='servnfs_posted' value='1'>
