@@ -665,7 +665,7 @@ class workstartup extends plugin
             $desc ="";
             foreach($this->cache['CLASSES'][$this->FAIrelease][$class] as $types ){
               if(isset($types['Abbr'])){
-                $desc.= "<img src='".$objects[$types['Abbr']]['IMG']."' class='center'> ";
+                $desc.= image($objects[$types['Abbr']]['IMG']);
                 if($types['Type'] == "FAIprofile"){
                   break;
                 }
