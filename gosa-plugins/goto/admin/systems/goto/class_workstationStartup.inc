@@ -341,7 +341,7 @@ class workstartup extends plugin
           }
 
           if(($sort_type)&&(!$sort)){
-            $value = base64_decode(preg_replace("/_.*$/i","",preg_replace("/".$sort_type."/i","",$name)));
+            $value = postDecode(preg_replace("/_.*$/i","",preg_replace("/".$sort_type."/i","",$name)));
             $sort = true;
 
             $last = -1;
@@ -388,7 +388,7 @@ class workstartup extends plugin
           }
 
           if(preg_match("/fai_remove/i",$name)){
-            $value = base64_decode(preg_replace("/fai_remove_/i","",$name));
+            $value = postDecode(preg_replace("/fai_remove_/i","",$name));
             unset($this->FAIclass[$value]);
           }
         }
@@ -679,7 +679,7 @@ class workstartup extends plugin
           $div->AddEntry(array(
                 array("string"=>$class.$marker),
                 array("string"=>$desc),
-                array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:60px;border-right:none;'")
+                array("string"=>preg_replace("/\%s/",postEncode($class),$str),"attach"=>"style='width:60px;border-right:none;'")
                 ));
         }  
       }// END FAI output generation 
