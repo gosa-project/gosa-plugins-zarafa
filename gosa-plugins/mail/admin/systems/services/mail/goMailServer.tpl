@@ -1,12 +1,12 @@
 <h3>{t}Generic{/t}</h3>
-<table  style="width:100%;">
+
+<table  style="width:100%;" summary="{t}Mail settings{/t}">
 	<tr>
 		<td>
 
-			<table >
+			<table summary="{t}Generic settings{/t}">
 				<tr>
-					<td>{t}Visible full qualified hostname{/t}
-					</td>
+					<td>{t}Visible full qualified hostname{/t}</td>
 					<td>
 {render acl=$postfixMyhostnameACL}
 						<input type="text" name='postfixMyhostname' value='{$postfixMyhostname}' title='{t}The full qualified host name.{/t}'>
@@ -56,7 +56,7 @@
 		</td>
 		<td class='left-border'>
 
-			<table style="width:100%;">
+			<table summary="{t}Network settings{/t}">
 				<tr>
 					<td>
 						{t}Local networks{/t}<br>
@@ -89,7 +89,7 @@
 	</tr>	
 	<tr>
 		<td>
-			  <table style="width:100%;">
+			<table summary="{t}Domains and routing{/t}">
                 <tr>
                     <td>
                         {t}Domains to accept mail for{/t}<br>
@@ -115,7 +115,7 @@
 		</td>
 		<td class='left-border'>
 
-			  <table style="width:100%;">
+			  <table style="width:100%;" summary="{t}Transports{/t}">
                 <tr>
                     <td>
                         {t}Transports{/t}<br>
@@ -151,7 +151,7 @@
 	</tr>	
 	<tr>
 		<td>
-            <table style="width:100%;">
+            <table style="width:100%;" summary="{t}Restrictions for sender{/t}">
                 <tr>
                     <td>
                         {t}Restrictions for sender{/t}<br>
@@ -179,7 +179,7 @@
 		</td>
 		<td class='left-border'>
 
-            <table style="width:100%;">
+            <table style="width:100%;" summary="{t}Restrictions for recipient{/t}">
                 <tr>
                     <td>
                         {t}Restrictions for recipient{/t}<br>
@@ -223,16 +223,14 @@
 	<option value="none">&nbsp;</option>
 	{html_options options=$Actions}	
 </select>
-<button type='submit' name='ExecAction' title="{t}Set status{/t}">{t}Execute{/t}</button>
+<button type='submit' name='ExecAction' title="{t}Set status{/t}"
 	{if $is_new == "new" || $is_acc == false} disabled {/if}
->
+>{t}Execute{/t}</button>
 
 <hr>
-<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
+
+<div class="plugin-actions">
     <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
-
-    &nbsp;
     <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
-
-</p>
+</div>
 

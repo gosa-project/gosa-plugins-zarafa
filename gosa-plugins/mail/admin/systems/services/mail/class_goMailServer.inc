@@ -220,9 +220,8 @@ class goMailServer extends goService{
           $s_entry = preg_replace("/_[xy]$/","",$s_entry);
         }
       }
-  
 
-      if(preg_match("/^TranslationUp_/",$name) && $once && ($this->acl_is_writeablei("postfixTransportTableACL"))){
+      if(preg_match("/^TranslationUp_/",$name) && $once && ($this->acl_is_writeable("postfixTransportTableACL"))){
         $once = false;
         $key = preg_replace("/^TranslationUp_/","",$name);
         $key = preg_replace("/_[xy]$/","",$key);
@@ -368,20 +367,11 @@ class goMailServer extends goService{
     $divTranslation->SetHeight(90);
     foreach($this->postfixTransportTable as $key => $entry){
       $img = "";
-
-      if($key != 0 && $this->acl_is_writeable("postfixTransportTable")){
-        $img.= "<input type='image' src='images/lists/sort-up.png' name='TranslationUp_".$key."' class='center'>&nbsp;";      
-      }else{
-        $img.= "<img src='images/empty.png' style='width:10px;'>";
-      }
-      if(($key+1) < count($this->postfixTransportTable) && $this->acl_is_writeable("postfixTransportTable")){
-        $img.= "<input type='image' src='images/lists/sort-down.png' name='TranslationDown_".$key."' class='center'>&nbsp;";      
-      }else{
-        $img.= "<img src='images/empty.png' style='width:10px;'>";
-      }
+      $img.= image('images/lists/sort-up.png','TranslationUp_'.$key);
+      $img.= image('images/lists/sort-down.png','TranslationDown_'.$key);
 
       if($this->acl_is_writeable("postfixTransportTable")){
-        $img.= "<input type='image' src='images/lists/trash.png' name='TranslationDel_".$key."' class='center'>&nbsp;";      
+        $img.= image('images/lists/trash.png','TranslationDel_'.$key);
       }
       $field1 = array("string"=> $entry['src']);
       $field2 = array("string"=> $entry['dst']);
@@ -397,20 +387,11 @@ class goMailServer extends goService{
     $DivSenderRestrict->SetHeight(90);
     foreach($this->postfixSenderRestrictions as $key => $entry){
       $img ="";
-
-      if($key != 0 && $this->acl_is_writeable("postfixSenderRestrictions")){
-        $img.= "<input type='image' src='images/lists/sort-up.png' name='SenderRestrictUp_".$key."' class='center'>&nbsp;";      
-      }else{
-        $img.= "<img src='images/empty.png' style='width:10px;'>";
-      }
-      if(($key+1) < count($this->postfixSenderRestrictions) && $this->acl_is_writeable("postfixSenderRestrictions")){
-        $img.= "<input type='image' src='images/lists/sort-down.png' name='SenderRestrictDown_".$key."' class='center'>&nbsp;";      
-      }else{
-        $img.= "<img src='images/empty.png' style='width:10px;'>";
-      }
+      $img.= image('images/lists/sort-up.png','SenderRestrictUp_'.$key);
+      $img.= image('images/lists/sort-down.png','SenderRestrictDown_'.$key);
 
       if($this->acl_is_writeable("postfixSenderRestrictions")){
-        $img.= "<input type='image' src='images/lists/trash.png' name='SenderRestrictDel_".$key."' class='center'>&nbsp;";     
+        $img.= image('images/lists/trash.png','SenderRestrictDel_'.$key);
       }
  
       $field1 = array("string"=> $entry['src']);
@@ -428,19 +409,11 @@ class goMailServer extends goService{
 
     foreach($this->postfixRecipientRestrictions as $key => $entry){
       $img = "";
-      if($key != 0 && $this->acl_is_writeable("postfixRecipientRestrictions")){
-        $img.= "<input type='image' src='images/lists/sort-up.png' name='RecipientRestrictUp_".$key."' class='center'>&nbsp;";      
-      }else{
-        $img.= "<img src='images/empty.png' style='width:10px;'>";
-      }
-      if(($key+1) < count($this->postfixRecipientRestrictions) && $this->acl_is_writeable("postfixRecipientRestrictions")){
-        $img.= "<input type='image' src='images/lists/sort-down.png' name='RecipientRestrictDown_".$key."' class='center'>&nbsp;";      
-      }else{
-        $img.= "<img src='images/empty.png' style='width:10px;'>";
-      }
+      $img.= image('images/lists/sort-up.png','RecipientRestrictUp_'.$key);
+      $img.= image('images/lists/sort-down.png','RecipientRestrictDown_'.$key);
 
       if($this->acl_is_writeable("postfixRecipientRestrictions")){
-        $img.= "<input type='image' src='images/lists/trash.png' name='RecipientRestrictDel_".$key."' class='center'>&nbsp;";      
+        $img.= image('images/lists/trash.png','RecipientRestrictDel_'.$key);
       }
       $field1 = array("string"=> $entry['src']);
       $field2 = array("string"=> $entry['dst']);
