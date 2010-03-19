@@ -101,12 +101,12 @@
    
     {if $FAIdebianMirror == "inherited"}
    
-   <table>
+   <table summary="{t}FAI class assignment{/t}">
     <tr>
-     <td>
+     <td style='width:50%'>
       <b>{t}FAI server{/t}</b>
      </td>
-     <td>
+     <td style='width:50%'>
       <b>{t}Release{/t}</b>
      </td>
     </tr>
@@ -146,10 +146,10 @@
    
    <table summary="{t}FAI class assignment{/t}">
     <tr>
-     <td>
+     <td style='width:50%'>
       <b>{t}FAI server{/t}</b>
      </td>
-     <td>
+     <td style='width:50%'>
       <b>{t}Release{/t}</b>
      </td>
     </tr>
@@ -198,16 +198,16 @@
         <button type='submit' name='AddClass'>{msgPool type=addButton}</button>
        {/render}
 
-       {/if} <!-- Inherited -->
       </td>
      </tr>
     </table>
 
-   {/if} <!-- FAI active-->
-
+   {/if} <!-- Inherited -->
   </td>
  </tr>
 </table>
+
+{/if} <!-- FAI active-->
 
 <hr>
 
