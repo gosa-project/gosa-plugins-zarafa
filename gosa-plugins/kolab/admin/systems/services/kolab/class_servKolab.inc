@@ -149,10 +149,8 @@ class servkolab extends goService {
     $divlist->setHeight(100);
     foreach($this->postfix_mydestination as $key => $domain){
       $f1 = array("string" => $domain);
-      $f2 = array("string" => "<input type='image' src='images/lists/trash.png' 
-                                  name='remove_domain_".$key."'
-                                  title='"._("Remove")."' alt='"._("Remove")."'>", 
-                  "attach" => "style='border-right:0px; width: 20px;'");
+      $f2 = array("string" => image('images/lists/trash.png', 'remove_domain_'.$key, _("Remove")),
+          "attach" => "style='border-right:0px; width: 20px;'");
       $divlist->AddEntry(array($f1,$f2));
     }
     $smarty->assign("mdDiv",$divlist->DrawList());
@@ -250,7 +248,7 @@ class servkolab extends goService {
        */
       foreach($_POST as $name => $value){
         if(preg_match("/^remove_domain_/",$name)){
-          $id = preg_replace("/^remove_domain_([0-9]*)_.*$/","\\1",$name);
+          $id = preg_replace("/^remove_domain_([0-9]*)$/","\\1",$name);
           if(isset($this->postfix_mydestination[$id])){
             unset($this->postfix_mydestination[$id]);
           }
@@ -259,8 +257,13 @@ class servkolab extends goService {
       }
       if(isset($_POST['add_domain_name']) && isset($_POST['new_domain_name'])){
         $new_domain = trim(get_post('new_domain_name'));
-        if(!empty($new_domain) && tests::is_domain($new_domain)){
-          $this->postfix_mydestination[] = $new_domain;
+        if(!empty($new_domain)){
+          if(tests::is_domain($new_domain)){
+            $this->postfix_mydestination[] = $new_domain;
+            $this->postfix_mydestination = array_unique($this->postfix_mydestination);
+          }else{
+            msg_dialog::display(_("Info"), msgPool::invalid(_("Mail domain")));
+          }
         }
       }
 

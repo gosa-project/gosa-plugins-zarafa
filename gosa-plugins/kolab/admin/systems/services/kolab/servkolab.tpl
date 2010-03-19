@@ -7,7 +7,7 @@
 	 <td colspan="2"><b>{t}Generic{/t}</b></td>
 	</tr>
 	<tr>
-		<td>{t}Postfix mydomain{/t}
+		<td>{t}Postfix mydomain{/t}&nbsp;{$must}
 		</td>
 		<td>
 {render acl=$postfixmydomainACL}
@@ -25,7 +25,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2">{t}Mail domains{/t}&nbsp;({t}Postfix mydestination{/t})<br>
+		<td colspan="2">{t}Mail domains{/t}&nbsp;({t}Postfix mydestination{/t})&nbsp;{$must}
+<br>
 {render acl=$postfixmydestinationACL}
 		{$mdDiv}
 {/render}
