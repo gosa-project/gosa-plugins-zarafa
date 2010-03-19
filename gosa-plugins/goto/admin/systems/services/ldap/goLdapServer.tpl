@@ -5,11 +5,8 @@
 {/render}
 
 <hr>
-<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
+<div class="plugin-actions">
     <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
-
-    &nbsp;
     <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
-
 </div>
 <input type="hidden" name="goLdapServerPosted" value="1">
