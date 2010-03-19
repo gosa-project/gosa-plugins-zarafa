@@ -2,40 +2,36 @@
 
 {if $baseDir == ""}
 
-<b>{msgPool type=invalidConfigurationAttribute param=KIOSKPATH}</b>
-
-<hr>
-<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
-
-</div>
+  <b>{msgPool type=invalidConfigurationAttribute param=KIOSKPATH}</b>
+  <hr>
+  <div class="plugin-actions">
+   <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+  </div>
 
 {else}
 
-    <input type="hidden" name="dialogissubmitted" value="1">
+<input type="hidden" name="dialogissubmitted" value="1">
 
 {t}Server path{/t}&nbsp;<input type='text' name="server_path" style="width:300px;" value="{$server_path}">
-<br>
-<br>
-{render acl=$ThisACL}
-{$divlist}
-{/render}
-{render acl=$ThisACL}
-<input type="file" size=50 name="newProfile" value="{t}Browse{/t}">
-{/render}
-{render acl=$ThisACL}
-<button type='submit' name='profileAdd'>{msgPool type=addButton}</button>
 
+{render acl=$ThisACL}
+ {$divlist}
+{/render}
+
+{render acl=$ThisACL}
+ <input type="file" size=50 name="newProfile" value="{t}Browse{/t}">
+{/render}
+
+{render acl=$ThisACL}
+ <button type='submit' name='profileAdd'>{msgPool type=addButton}</button>
 {/render}
 
 <hr>
-<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
-
-    &nbsp;
-    <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
-
+<div class="plugin-actions">
+ <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+ <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
 </div>
+
 <input type="hidden" name="goKioskPosted" value="1">
 
 <script language="JavaScript" type="text/javascript">

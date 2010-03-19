@@ -98,6 +98,8 @@ class goKioskService extends goService{
           if(file_exists($name)){
             $content = file_get_contents($name);    
             send_binary_content($content,$id);
+          }else{
+            msg_dialog::display(_("Warning"), sprintf(_("The profile does not exists '%s'!"), $name), ERROR_DIALOG);
           }
         }
       }
@@ -117,7 +119,17 @@ class goKioskService extends goService{
             'tmp_name'=> $file['tmp_name'],
             'content' => file_get_contents($file['tmp_name']),
             'exists'  => TRUE);
-        $this->gotoKioskProfiles[] = $tmp;
+
+
+        $used = array();
+        foreach($this->gotoKioskProfiles as $k){
+          $used[] = $k['name'];
+        }  
+        if(in_array($file['name'], $used)){
+          msg_dialog::display(_("Warning"), msgPool::duplicated(_("Profile")), WARNING_DIALOG);
+        }else{
+          $this->gotoKioskProfiles[] = $tmp;
+        }
       }
     }
 
@@ -128,8 +140,7 @@ class goKioskService extends goService{
   
         /* Get id, name and path */
         $only_once = false;
-        $id = preg_replace("/^delkiosk_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
+        $id = preg_replace("/^delkiosk_([0-9]*)$/","\\1",$name);
         $name = $this->gotoKioskProfiles[$id]['name'];
         $filename = $this->baseDir."/".$name;
 
@@ -178,11 +189,10 @@ class goKioskService extends goService{
     foreach($this->gotoKioskProfiles as $key => $val ){
       $del = "&nbsp;";
       if($this->acl_is_writeable("")){
-        $del = "<input type='image' src='images/lists/trash.png'
-          class='center' alt='delete' name='delkiosk_".$key."'>";
+        $del = image("images/lists/trash.png", 'delkiosk_'.$key);
       }
       $divlist->AddEntry(array(
-            array("string"=>"<a href='?plug=".$_GET['plug']."&getkiosk=".$val['name']."'>".$val['name']."</a>"),
+            array("string"=>"<a href='?plug=".$_GET['plug']."&amp;getkiosk=".$val['name']."'>".$val['name']."</a>"),
             array("string"=>$del,
               "attach"=>" style='border-right: 0px;width:24px; text-align:center;' ")
             ));
