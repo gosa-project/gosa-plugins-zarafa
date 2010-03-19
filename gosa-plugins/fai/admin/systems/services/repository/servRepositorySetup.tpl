@@ -56,8 +56,6 @@
 <hr>
 <div class="plugin-actions">
   <button type='submit' name='repository_setup_save'>{msgPool type=applyButton}</button>
-
   <button type='submit' name='repository_setup_cancel'>{msgPool type=cancelButton}</button>
-
 </div>
 
