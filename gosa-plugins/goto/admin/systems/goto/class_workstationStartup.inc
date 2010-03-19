@@ -388,7 +388,7 @@ class workstartup extends plugin
           }
 
           if(preg_match("/fai_remove/i",$name)){
-            $value = base64_decode(preg_replace("/_.*$/i","",preg_replace("/fai_remove_/i","",$name)));
+            $value = base64_decode(preg_replace("/fai_remove_/i","",$name));
             unset($this->FAIclass[$value]);
           }
         }
@@ -599,11 +599,11 @@ class workstartup extends plugin
       $smarty->assign("gotoBootKernels",$this->cache['KERNELS'][$release]);
       $smarty->assign("InheritedFAIrelease",$this->InheritedFAIrelease);
 
-      $str_empty  = " &nbsp;<img src='images/empty.png' alt=\"\" width='7'>"; 
+      $str_empty  = image('images/empty.png');
       if($this->acl_is_writeable("FAIclass")){
-        $str_up     = " &nbsp;<input type='image' src='images/lists/sort-up.png'    name='sort_up_%s'    value='%s'>";
-        $str_down   = " &nbsp;<input type='image' src='images/lists/sort-down.png'  name='sort_down_%s'  value='%s'>";
-        $str_remove = " &nbsp;<input type='image' src='images/lists/trash.png'  name='fai_remove_%s' value='%s'>";
+        $str_up     = image('images/lists/sort-up.png','sort_up_%s');
+        $str_down   = image('images/lists/sort-down.png','sort_down_%s');
+        $str_remove = image('images/lists/trash.png','fai_remove_%s');
       }else{
         $str_up=$str_down=$str_remove=$str_empty;
       }
