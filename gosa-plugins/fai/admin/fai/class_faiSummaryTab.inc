@@ -236,18 +236,16 @@ class faiSummaryTab extends plugin{
       $image = image($this->objs[$key]['Image']);
       if(!isset($entry['Open'])){
         $str .= "<tr>
-                  <td colspan=2>
-                   <a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>".
-                    image('images/lists/expand.png');
-        $str .=     $image."&nbsp;";
-        $str .= "   <b>".$this->objs[$key]['Name']."</b></a></td></tr>";
+          <td colspan=2>".
+          image('images/lists/expand.png').$image."&nbsp;".
+          "<a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>".
+          "<b>".$this->objs[$key]['Name']."</b></a></td></tr>";
       }else{
-        $str .= "<tr><td colspan=2>
-                    <a href='?plug=".$_GET['plug']."&amp;compress&amp;id=".$key."'>".
-                    image('images/lists/sort-down.png');
-        $str .= $image."&nbsp;";
-        $str .= "<b>".$this->objs[$key]['Name']."</b></a></td></tr>";
-   
+        $str .= "<tr><td colspan=2>".
+          image('images/lists/sort-down.png').$image."&nbsp;".
+          "<a href='?plug=".$_GET['plug']."&amp;compress&amp;id=".$key."'>".
+          "<b>".$this->objs[$key]['Name']."</b></a></td></tr>";
+
         /* Display FAItemplate FAIhook FAIscript entries */ 
         if(in_array($key,array("FAItemplate","FAIhook","FAIscript"))){
 
