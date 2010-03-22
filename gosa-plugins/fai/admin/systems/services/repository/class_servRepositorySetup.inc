@@ -84,7 +84,8 @@ class servRepositorySetup  extends plugin
         if(preg_match("/^delete_/",$name)){
 
           $val = preg_replace("/^delete_/","",$name);
-          $val = base64_decode(preg_replace("/_.*$/","",$val));
+          echo $val;
+          $val = postDecode($val);
 
           if(isset($this->Sections[$val])){
             unset($this->Sections[$val]);
@@ -95,16 +96,15 @@ class servRepositorySetup  extends plugin
 
     $divlist = new divSelectBox("servRepositorySetup");
     $divlist->setHeight("220");
+    $dellink = "";
     if(preg_match("/w/",$this->parent->getacl("Section"))){
-      $dellink = "<input type='image' src='images/lists/trash.png' title='delete' alt='delete' name='delete_%s' value='%s'>";
-    }else{
-      $dellink = "";
+      $dellink = image('images/lists/trash.png','delete_%s');
     }
-  
+ 
     foreach($this->Sections as $sec){
       $divlist->AddEntry(array(
             array("string"=>$sec),
-            array("string"=>sprintf($dellink,base64_encode($sec),$sec),
+            array("string"=>preg_replace("/%s/",postEncode($sec), $dellink),
               "attach"=>"style='border-right:0px;width:20px;'")
             ));
     }
