@@ -108,6 +108,8 @@ class gospamserver extends goService{
     /* Add a new rule */
     if(isset($_POST['AddRule']) && $this->acl_is_writeable("saRule")){
       $this->dialog = new goSpamServerRule($this->config,$this->dn);
+      $this->dialog->acl_base = $this->acl_base;
+      $this->dialog->acl_category = $this->acl_category;
     }
   
     /* Cancel adding/editing specified rule */
@@ -125,6 +127,8 @@ class gospamserver extends goService{
         $rule = $this->Rules[$entry];
         $name = $entry;
         $this->dialog = new goSpamServerRule($this->config,$this->dn,$name,$rule);
+        $this->dialog->acl_base = $this->acl_base;
+        $this->dialog->acl_category = $this->acl_category;
       }
       if(preg_match("/^delRule_/",$name) && $once && $this->acl_is_writeable("saRule")){
         $once = false;

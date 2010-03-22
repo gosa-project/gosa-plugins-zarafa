@@ -43,6 +43,12 @@ class goSpamServerRule extends plugin {
 		}
 	}
 
+  function acl_is_writeable($attribute,$skip_write = FALSE)
+  {
+    if($this->read_only) return(FALSE);
+    $ui= get_userinfo();
+    return preg_match('/w/', $ui->get_permissions($this->acl_base, $this->acl_category."gospamserver", $attribute,      $skip_write));
+  }
 
 	function save()
 	{
