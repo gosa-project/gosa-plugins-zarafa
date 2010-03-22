@@ -62,7 +62,7 @@ class faiSummaryTab extends plugin{
     /* Get classes & release name 
        There are 2 different tabs which use the summary tab
        faiProfile / Workstations */
-    
+   
     /* Check if given parent object is fai profile tabs */
     if(isset($this->parent->by_name['faiProfile'])){
       
@@ -75,6 +75,7 @@ class faiSummaryTab extends plugin{
   
     /* Check if parent tab is work tab */
     }elseif(isset($this->parent->by_name['workstartup'])){
+
       if($this->parent->by_object['workstartup']->FAIdebianMirror == "inherited"){
         $this->Classes = $this->parent->by_object['workstartup']->InheritedFAIclass;
         $this->Release = $this->parent->by_object['workstartup']->InheritedFAIrelease;
@@ -100,6 +101,9 @@ class faiSummaryTab extends plugin{
       }
     }
 
+    // All FAI stuff is located on the ldap base, isn't it?
+    $this->base = $this->config->current['BASE'];
+
     $tmp = array_flip($this->getBranches());
 
     $this->Classes[] = "LAST";
@@ -113,6 +117,7 @@ class faiSummaryTab extends plugin{
     /* Set all available releases */
     $this->Releases = $tmp;
     $this->usedClasses = array();
+
 
     /* Check the configuration */
     if(count($this->Classes) && (!empty($this->Release))){
@@ -156,9 +161,9 @@ class faiSummaryTab extends plugin{
         $value = preg_replace("/_.*$/","",$value); 
         unset($this->Result[$value]['Open']);
       }
-      if(preg_match("/^reloadList/",$name)){
-        $this->InitCalled = false;
-      }
+    }
+    if(isset($_POST['reloadList'])){
+      $this->InitCalled = false;
     }
   }
 
@@ -220,29 +225,26 @@ class faiSummaryTab extends plugin{
   function createSummary($data)
   {
     /* Don't generate any output, if there is no result */ 
-    $str ="<table cellspacing=0 cellpadding=2 style='width:100%;background:#F5F5F5;'> ";
     if(!count($this->Result)){
-      $str.="<tr><td>"; 
-      $str.= (_("This object has no FAI classes assigned."));
-      $str.= "</tr></td></table>";
-      return($str);
+      return("<h3>"._("This object has no FAI classes assigned.")."</h3>");
     }
 
+    $str ="<table style='width:100%;' summary='"._("FAI summary")."'> ";
     /* walk through all classes */	
     foreach($data as $key => $entry){
       
-      $image = "<img src='".$this->objs[$key]['Image']."' class='center' alt='".$this->objs[$key]['Name']."' border=0>";
+      $image = image($this->objs[$key]['Image']);
       if(!isset($entry['Open'])){
         $str .= "<tr>
                   <td colspan=2>
-                   <a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>
-                    <img border=0 class='center' src='images/lists/expand.png' alt='"._("Open")."'>&nbsp;";
+                   <a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>".
+                    image('images/lists/expand.png');
         $str .=     $image."&nbsp;";
         $str .= "   <b>".$this->objs[$key]['Name']."</b></a></td></tr>";
       }else{
         $str .= "<tr><td colspan=2>
-                    <a href='?plug=".$_GET['plug']."&amp;compress&amp;id=".$key."'>
-                   <img border=0 class='center' src='images/lists/sort-down.png' alt='"._("Close")."'>&nbsp;";
+                    <a href='?plug=".$_GET['plug']."&amp;compress&amp;id=".$key."'>".
+                    image('images/lists/sort-down.png');
         $str .= $image."&nbsp;";
         $str .= "<b>".$this->objs[$key]['Name']."</b></a></td></tr>";
    
