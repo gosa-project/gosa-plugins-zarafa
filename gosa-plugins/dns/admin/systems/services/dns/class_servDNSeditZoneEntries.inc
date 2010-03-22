@@ -90,10 +90,10 @@ class servDNSeditZoneEntries extends plugin
 
     foreach($_POST as $name => $value){
 
-      /* Add a new Record in given object  
+      /* Extract informations out of post name 
        */
-      $tmp    = preg_replace("/^.*_(.*)$/","\\1",$name);
-      $tmp2   = explode("|",$tmp);
+      $tmp    = preg_replace("/^[^_]*_/","\\1",$name);
+      $tmp2   = explode("|",postDecode($tmp));      
 
       /* Add new host entry
        */
@@ -108,7 +108,7 @@ class servDNSeditZoneEntries extends plugin
 
       if(count($tmp2) != 2) continue;
 
-      $Name     = postDecode($tmp2[0]);
+      $Name     = $tmp2[0];
       $RecordID = $tmp2[1];
 
       /* Add new REcord
@@ -146,13 +146,12 @@ class servDNSeditZoneEntries extends plugin
 
       /* Extract informations out of post name 
        */
-      $tmp    = preg_replace("/^.*_/","\\1",$name);
-      $tmp2   = explode("|",$tmp);      
+      $tmp    = preg_replace("/^[^_]*_/","\\1",$name);
+      $tmp2   = explode("|",postDecode($tmp));      
  
       if(count($tmp2) != 2) continue;
 
-      $Name     = postDecode($tmp2[0]);
-
+      $Name     = $tmp2[0];
       $RecordID = $tmp2[1];
 
       /* Check for value change 
@@ -204,12 +203,12 @@ class servDNSeditZoneEntries extends plugin
 
       /* Extract informations out of post name 
        */
-      $tmp    = preg_replace("/^.*_/","\\1",$name);
-      $tmp2   = explode("|",$tmp);      
- 
+      $tmp    = preg_replace("/^[^_]*_/","\\1",$name);
+      $tmp2   = explode("|",postDecode($tmp));      
+
       if(count($tmp2) != 2) continue;
 
-      $Name     = postDecode($tmp2[0]);
+      $Name     = $tmp2[0];
       $RecordID = $tmp2[1];
 
       /* Host renamed
@@ -430,7 +429,7 @@ class servDNSeditZoneEntries extends plugin
 
     /* Walk through all defined records 
      */
-    $str.= "<table cellspacing='0' cellpadding='0'>";
+    $str.= "<table summary=''>";
     foreach($obj['RECORDS'] as $id => $record){
 
       /* Skip not selectable entries */
@@ -440,7 +439,7 @@ class servDNSeditZoneEntries extends plugin
 
       /* Create unique post name
        */
-      $name = postEncode($objKey)."|".$id;
+      $name = postEncode($objKey."|".$id);
 
       /* Only first host entry name should be editable
        */
