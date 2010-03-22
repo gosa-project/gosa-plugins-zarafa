@@ -123,7 +123,6 @@ class gospamserver extends goService{
       if(preg_match("/^editRule_/",$name) && $once && $this->acl_is_readable("saRule")){
         $once = false;
         $entry = preg_replace("/^editRule_/","",$name);
-        $entry = preg_replace("/_(x|y)$/","",$entry);
         $rule = $this->Rules[$entry];
         $name = $entry;
         $this->dialog = new goSpamServerRule($this->config,$this->dn,$name,$rule);
@@ -133,7 +132,6 @@ class gospamserver extends goService{
       if(preg_match("/^delRule_/",$name) && $once && $this->acl_is_writeable("saRule")){
         $once = false;
         $entry = preg_replace("/^delRule_/","",$name);
-        $entry = preg_replace("/_(x|y)$/","",$entry);
         unset($this->Rules[$entry]);
       }
     }
@@ -185,15 +183,15 @@ class gospamserver extends goService{
     if(!$this->acl_is_writeable("saTrustedNetworks")){
       $actions = "";
     }else{
-      $actions = "<input type='image' src='images/lists/edit.png'      name='editRule_%s'>";
+      $actions = image('images/lists/edit.png', 'editRule_%s');
       if($this->acl_is_writeable("saRule")){
-        $actions.= "<input type='image' src='images/lists/trash.png' name='delRule_%s'>";
+        $actions.= image('images/lists/trash.png','delRule_%s');
       }
     }
 
     foreach($this->Rules as $key => $net){
       $field1 = array("string" => $key );
-      $field2 = array("string" => sprintf($actions,$key,$key) , "attach" => "style='border-right:0px;width:36px;'");
+      $field2 = array("string" => preg_replace("/%s/",$key,$actions) , "attach" => "style='border-right:0px;width:36px;'");
       $DivRules->AddEntry(array($field1,$field2));
     }
     $smarty->assign("divRules",$DivRules->DrawList()); 
