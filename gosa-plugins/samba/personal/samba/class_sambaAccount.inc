@@ -605,6 +605,7 @@ class sambaAccount extends plugin
 
   function get_samba_information()
   {
+    $zone = timezone::get_default_timezone();
 
     /* Defaults 
      */
