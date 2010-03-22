@@ -1,6 +1,6 @@
 <table style='width:100%; ' summary="{t}Summary of used FAI classes{/t}">
  <tr>
-  <td>{t}FAI object tree{/t}</td>
+  <td><h3>{t}FAI object tree{/t}</h3></td>
  </tr>
 {if $readable}
  <tr>
