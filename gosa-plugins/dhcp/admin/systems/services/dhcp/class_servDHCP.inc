@@ -231,8 +231,8 @@ class servdhcp extends goService
     foreach($_POST as $name => $value){
       
       /* Insert new section? */
-      if (preg_match('/^insertDhcp_.*_x$/', $name)){
-        $id= preg_replace('/^insertDhcp_([^_]+)_x$/', '\1', $name);
+      if (preg_match('/^insertDhcp_.*/', $name)){
+        $id= preg_replace('/^insertDhcp_(.*)$/', '\1', $name);
         $dn = $this->dhcpDNtoID[$id];
         if (isset($this->dhcpObjectCache[$dn])){
           $this->dialog= new dhcpNewSectionDialog($this->objectType($dn));
@@ -242,8 +242,8 @@ class servdhcp extends goService
       }
 
       /* Edit section? */
-      if (preg_match('/^editDhcp_.*_x$/', $name)){
-        $id= preg_replace('/^editDhcp_([^_]+)_x$/', '\1', $name);
+      if (preg_match('/^editDhcp_.*$/', $name)){
+        $id= preg_replace('/^editDhcp_(.*)$/', '\1', $name);
         $dn = $this->dhcpDNtoID[$id];
         if (isset($this->dhcpObjectCache[$dn])){
           $section= $this->objectType($dn);
@@ -253,8 +253,8 @@ class servdhcp extends goService
       }
 
       /* Remove section? */
-      if (preg_match('/^delDhcp_.*_x$/', $name)){
-        $id= preg_replace('/^delDhcp_([^_]+)_x$/', '\1', $name);
+      if (preg_match('/^delDhcp_.*$/', $name)){
+        $id= preg_replace('/^delDhcp_(.*)$/', '\1', $name);
         $dn = $this->dhcpDNtoID[$id];
         if (isset($this->dhcpObjectCache[$dn])){
           $this->current_object= $dn;
@@ -330,13 +330,15 @@ class servdhcp extends goService
 
     /* Add entries to divlist
      */
-    $editImgIns = "<input type='image' src='images/lists/new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
-      "<input type='image' src='images/lists/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>".
-      "<input type='image' src='images/lists/trash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";
-    $editImgInsNoDel = "<input type='image' src='images/lists/new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
-      "<input type='image' src='images/lists/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>";
-    $editImg = "<input type='image' src='images/lists/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>".
-      "<input type='image' src='images/lists/trash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";
+    $editImgIns = image('images/lists/element.png[new]', 'insertDhcp_%s', _("Insert new DHCP section"));
+    $editImgIns.= image('images/lists/edit.png', 'editDhcp_%s', _("Edit DHCP section"));
+    $editImgIns.= image('images/lists/trash.png', 'delDhcp_%s', _("Remove DHCP section"));
+    
+    $editImgInsNoDel = image('images/lists/element.png[new]', 'insertDhcp_%s', _("Insert new DHCP section"));
+    $editImgInsNoDel.= image('images/lists/edit.png', 'editDhcp_%s', _("Edit DHCP section"));
+
+    $editImg = image('images/lists/edit.png', 'editDhcp_%s', _("Edit DHCP section"));
+    $editImg.= image('images/lists/trash.png', 'delDhcp_%s', _("Remove DHCP section"));
       	
     $tmp = new dhcpNewSectionDialog(NULL);
     foreach($this->dhcpSections as $section => $values ){
@@ -349,7 +351,7 @@ class servdhcp extends goService
       // Get entry ID  
       $id = array_search($section,$this->dhcpDNtoID);
    
-      $values = "<a href='?plug=".$_GET['plug']."&act=edit&id=".$id."'>".$values."</a>";
+      $values = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$id."'>".$values."</a>";
 	
       $objtype = $this->objectType($section);
       $dhcpObject = new $objtype($this,$this->dhcpObjectCache[$section]);
@@ -559,7 +561,7 @@ class servdhcp extends goService
           }
 
           /* Optionally execute a command after we're done */
-          $this->handle_post_events("create");
+          $this->handle_post_events("add");
         }
       }
     }
