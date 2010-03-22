@@ -620,6 +620,13 @@ class servdnseditZone extends plugin
   }
 
 
+  function acl_is_writeable($attribute,$skip_write = FALSE)
+  {
+    if($this->read_only) return(FALSE);
+    $ui= get_userinfo();
+    return preg_match('/w/', $ui->get_permissions($this->acl_base, $this->acl_category."servdns", $attribute,      $skip_write));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

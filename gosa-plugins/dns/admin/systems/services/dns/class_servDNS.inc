@@ -197,6 +197,7 @@ class servdns extends goService
 		$this->dialog = new servdnseditZone($this->config,$this->dn);
 		if($this->is_new){
 			$this->dialog->acl_base = $this->acl_base;
+			$this->dialog->acl_category = $this->acl_category;
 		}
 	}
 
@@ -211,6 +212,8 @@ class servdns extends goService
         $once =true;
         $tmp = postDecode(preg_replace("/^editZone_/","",$name));
         $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$tmp]);
+        $this->dialog->acl_base = $this->acl_base;
+        $this->dialog->acl_category = $this->acl_category;
       }
 
       /* check posts for delete zone 
@@ -229,7 +232,9 @@ class servdns extends goService
     if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
       $id = postDecode($_GET['id']);
       if(isset($this->Zones[$id])){
-         $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$id]);
+        $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$id]);
+        $this->dialog->acl_base = $this->acl_base;
+        $this->dialog->acl_category = $this->acl_category;
       }
     }
 
@@ -237,6 +242,8 @@ class servdns extends goService
       $id = postDecode($_GET['id']);
       if(isset($this->Zones[$id])){
          $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$id]);
+         $this->dialog->acl_base = $this->acl_base;
+         $this->dialog->acl_category = $this->acl_category;
       }
     }
 

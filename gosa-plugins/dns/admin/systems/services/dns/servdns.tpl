@@ -13,8 +13,7 @@
      <button type='submit' name='cancel_take_over'>
      {msgPool type=cancelButton}</button>
     </p>
-    <p>
-     {t}Following objects will be taken over{/t}&nbsp;:
+    <p>{t}Following objects will be taken over{/t}&nbsp;:
     </p>
     <p>
      <pre>
@@ -37,31 +36,32 @@
      <button type='submit' name='take_over'>{t}Take over{/t}</button>
     </td>
    </tr>
+   
   {/if}
-
   <tr>
    <td style='width:100%;'>
-    <h3>{t}Zones{/t}</h3>
+    <h3>{t}Zones{/t}
+    </h3>
     {$ZoneList}
+    
     {if $is_createable}
-     <button type='submit' name='AddZone'>{msgPool type=addButton}</button>
+     <button type='submit' name='AddZone'>
+     {msgPool type=addButton}</button>
      {else}
-     <input type="button" value="{msgPool type=addButton}" disabled>
+     <input type="button" value="
+     {msgPool type=addButton}" disabled>
+     
     {/if}
    </td>
   </tr>
  </table>
-
- <script language="JavaScript" type="text/javascript">
-  <!-- // First input field on page   
-   focus_field('AddZone');  
-  -->
- </script>
+ <script language="JavaScript" type="text/javascript"><!-- // First input field on page      focus_field('AddZone');    --></script>
  
 {/if}
-
 <hr>
 <div class="plugin-actions">
- <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
- <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
+ <button type='submit' name='SaveService'>
+ {msgPool type=saveButton}</button>
+ <button type='submit' name='CancelService'>
+ {msgPool type=cancelButton}</button>
 </div>
