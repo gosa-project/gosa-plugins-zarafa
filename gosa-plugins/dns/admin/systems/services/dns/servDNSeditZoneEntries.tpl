@@ -1,6 +1,5 @@
 
-<h3>{t}This dialog allows you to configure all components of this DNS zone on a single list.{/t}
-</h3>
+<h3>{t}This dialog allows you to configure all components of this DNS zone on a single list.{/t}</h3>
 <hr>
 
 {if $disableDialog}
@@ -16,14 +15,14 @@
  
 {/if}
 <hr>
-<div style="text-algin:right;" align="right">
- <p>
+
+<div class="plugin-actions">
   {render acl=$acl}
-   <button type='submit' name='SaveZoneEntryChanges'>
-   {msgPool type=saveButton}</button>
+   <button type='submit' name='SaveZoneEntryChanges'>{msgPool type=saveButton}</button>
   {/render}
-  <button type='submit' name='CancelZoneEntryChanges'>
-  {msgPool type=cancelButton}</button>
- </p>
+  <button type='submit' name='CancelZoneEntryChanges'>{msgPool type=cancelButton}</button>
 </div>
-<script language="JavaScript" type="text/javascript"><!-- // First input field on page	focus_field('zoneName');  --></script>
+<script language="JavaScript" type="text/javascript">
+  <!-- // First input field on page	
+  focus_field('zoneName');  -->
+</script>

@@ -108,7 +108,7 @@ class servDNSeditZoneEntries extends plugin
 
       if(count($tmp2) != 2) continue;
 
-      $Name     = base64_decode($tmp2[0]);
+      $Name     = postDecode($tmp2[0]);
       $RecordID = $tmp2[1];
 
       /* Add new REcord
@@ -142,7 +142,6 @@ class servDNSeditZoneEntries extends plugin
 
     /* Possible attributes posted 
      */
-    print_a($_POST);
     foreach($_POST as $name => $value){
 
       /* Extract informations out of post name 
@@ -152,7 +151,7 @@ class servDNSeditZoneEntries extends plugin
  
       if(count($tmp2) != 2) continue;
 
-      $Name     = base64_decode($tmp2[0]);
+      $Name     = postDecode($tmp2[0]);
 
       $RecordID = $tmp2[1];
 
@@ -210,7 +209,7 @@ class servDNSeditZoneEntries extends plugin
  
       if(count($tmp2) != 2) continue;
 
-      $Name     = base64_decode($tmp2[0]);
+      $Name     = postDecode($tmp2[0]);
       $RecordID = $tmp2[1];
 
       /* Host renamed
@@ -441,7 +440,7 @@ class servDNSeditZoneEntries extends plugin
 
       /* Create unique post name
        */
-      $name = base64_encode($objKey)."|".$id;
+      $name = postEncode($objKey)."|".$id;
 
       /* Only first host entry name should be editable
        */
