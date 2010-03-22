@@ -92,7 +92,7 @@ class servDNSeditZoneEntries extends plugin
 
       /* Add a new Record in given object  
        */
-      $tmp    = preg_replace("/^.*_(.*)_.*$/","\\1",$name);
+      $tmp    = preg_replace("/^.*_(.*)$/","\\1",$name);
       $tmp2   = explode("|",$tmp);
 
       /* Add new host entry
@@ -142,6 +142,7 @@ class servDNSeditZoneEntries extends plugin
 
     /* Possible attributes posted 
      */
+    print_a($_POST);
     foreach($_POST as $name => $value){
 
       /* Extract informations out of post name 
@@ -152,6 +153,7 @@ class servDNSeditZoneEntries extends plugin
       if(count($tmp2) != 2) continue;
 
       $Name     = base64_decode($tmp2[0]);
+
       $RecordID = $tmp2[1];
 
       /* Check for value change 
@@ -241,6 +243,7 @@ class servDNSeditZoneEntries extends plugin
     $ldap->cd($this->config->current['BASE']);
 
     $names = array();
+
     foreach($this->Devices as $DevName => $device){
 
       /* Don't need to check empty values ... */
@@ -451,10 +454,8 @@ class servDNSeditZoneEntries extends plugin
       $field2 = $this->createRecordTypeSelection($record['type'],$name);
       $field3 = "<input type='text' $dis value='".$record['value']."' name='ValueSelection_".$name."' style='width:250px;'>";
       if(preg_match("/w/",$this->acl)){
-        $acl =  "<input type='image' name='AddRecord_".$name."'   
-          src='images/lists/new.png' alt='"._("Add")."' title='"._("Add")."'>
-          <input type='image' name='RemoveRecord_".$name."' 
-          src='images/lists/trash.png'      alt='"._("Remove")."' title='"._("Remove")."'>";
+        $acl = image('images/lists/element.png[new]',"AddRecord_".$name,_("Add"));
+        $acl.= image('images/lists/trash.png',"RemoveRecord_".$name,_("Remove"));
       }
 
       /* Display settings backwards for CNAMERecords 
