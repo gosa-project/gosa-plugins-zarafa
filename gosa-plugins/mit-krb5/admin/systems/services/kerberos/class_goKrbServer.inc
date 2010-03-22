@@ -139,8 +139,8 @@ class goKrbServer extends goService{
     }
 
     $divlist = new divSelectBox("Kerberos Policies");
-    $action  = "<input type='image' src='images/lists/edit.png' class='center' name='policy_edit_%id'>";
-    $action .= "<input type='image' src='images/lists/trash.png' class='center' name='policy_del_%id'>";
+    $action  = image('images/lists/edit.png','policy_edit_%id');
+    $action .= image('images/lists/trash.png','policy_del_%id');
     foreach($this->policies as $key => $policy){
       if($policy['STATUS'] == "REMOVED") continue;
 
@@ -295,7 +295,7 @@ class goKrbServer extends goService{
         /* Remove policy requested 
          */
         if(preg_match("/^policy_del/",$name)){
-          $id = preg_replace("/^policy_del_([0-9]*)_.*/i","\\1",$name);
+          $id = preg_replace("/^policy_del_([0-9]*)/i","\\1",$name);
           if(isset($this->policies[$id])){
             $this->RemovePolicy($id);
           }
@@ -305,7 +305,7 @@ class goKrbServer extends goService{
         /* Edit Policy requested 
          */
         if(preg_match("/^policy_edit/",$name)){
-          $id = preg_replace("/^policy_edit_([0-9]*)_.*/i","\\1",$name);
+          $id = preg_replace("/^policy_edit_([0-9]*)/i","\\1",$name);
           if(isset($this->policies[$id])){
 
             /* Load policy information, if not done before 
