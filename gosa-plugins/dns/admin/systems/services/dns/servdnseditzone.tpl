@@ -1,6 +1,6 @@
 
-<h3>{t}Generic{/t}
-</h3>
+<h3>{t}Generic{/t}</h3>
+
 <table summary="" width="100%">
  <tr>
   <td style='width:50%;' class='right-border'>
@@ -154,9 +154,8 @@
 <table summary="" width="100%">
  <tr>
   <td style='width:50%;' class='right-border'>
-   <h3>{t}MxRecords{/t}
-   </h3>
-   <table width="100%">
+   <h3>{t}MxRecords{/t}</h3>
+   <table width="100%" summary="">
     <tr>
      <td>
       {render acl=$mXRecordACL}
@@ -166,8 +165,7 @@
        <input type="text" 		name="StrMXRecord" value="">
       {/render}
       {render acl=$mXRecordACL}
-       <button type='submit' name='AddMXRecord'>
-       {msgPool type=addButton}</button>
+       <button type='submit' name='AddMXRecord'>{msgPool type=addButton}</button>
       {/render}
      </td>
     </tr>
@@ -182,12 +180,14 @@
   </td>
  </tr>
 </table>
-<div style="text-algin:right;" align="right">
- <p>
-  <button type='submit' name='SaveZoneChanges'>
-  {msgPool type=saveButton}</button>
-  <button type='submit' name='CancelZoneChanges'>
-  {msgPool type=cancelButton}</button>
- </p>
+
+<hr>
+<div class="plugin-actions">
+  <button type='submit' name='SaveZoneChanges'>{msgPool type=saveButton}</button>
+  <button type='submit' name='CancelZoneChanges'>{msgPool type=cancelButton}</button>
 </div>
-<script language="JavaScript" type="text/javascript"><!-- // First input field on page	focus_field('zoneName');  --></script>
+<script language="JavaScript" type="text/javascript">
+ <!-- // First input field on page	
+  focus_field('zoneName');  
+ -->
+</script>

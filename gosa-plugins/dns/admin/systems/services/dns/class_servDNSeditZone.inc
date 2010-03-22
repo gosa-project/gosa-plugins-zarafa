@@ -277,31 +277,21 @@ class servdnseditZone extends plugin
     foreach($_POST as $name => $value){
       if((preg_match("/^MXup_/",$name)) && ($once)){
         $once = false;
-
         $id = preg_replace("/^MXup_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
-    
+        $id = postDecode($id);
         $this->mXRecords = $this->ArrayUp(($id+1),$this->mXRecords);
       }
       if((preg_match("/^MXdown_/",$name)) && ($once)){
         $once = false;
-        
         $id = preg_replace("/^MXdown_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
-  
+        $id = postDecode($id);
         $this->mXRecords = $this->ArrayDown(($id+1),$this->mXRecords);
       }
       if((preg_match("/^MXdel_/",$name)) && ($once)){
         $once = false;
-        
         $id = preg_replace("/^MXdel_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
-        
+        $id = postDecode($id);
         unset($this->mXRecords[$id]);
-
         $tmp  =array();
         foreach($this->mXRecords as $entry){
           $tmp[] = $entry;
@@ -344,17 +334,14 @@ class servdnseditZone extends plugin
     $div->setHeight(120);
     $recs = $this->mXRecords;
 
-    $oneup    = "<input name='MXup_%s'    type='image' src='images/lists/sort-up.png'    title='"._("Up")."'      class='center'>&nbsp;"; 
-    $onedown  = "<input name='MXdown_%s'  type='image' src='images/lists/sort-down.png'  title='"._("Down")."'    class='center'>&nbsp;"; 
-    $onedel   = "<img src='images/empty.png' width='20' class='center'>
-                 <input name='MXdel_%s'   type='image' src='images/lists/trash.png'  title='"._("Delete")."'  class='center'>"; 
+    $oneup   = image('images/lists/sort-up.png','MXup_%s',_("Up"),"top");
+    $onedown = image('images/lists/sort-down.png','MXdown_%s',_("Down"),"bottom");
+    $onedel  = image('images/lists/trash.png','MXdel_%s',_("Delete"));
 
     foreach($recs as $key => $rec){
       $div ->AddEntry(array(
             array("string"=>$rec['value']),
-/*            array("string"=>$key,
-                  "attach"=>"style='width:20px;'"),*/
-            array("string"=>str_replace("%s",base64_encode($key),$oneup.$onedown.$onedel),
+            array("string"=>str_replace("%s",postEncode($key),$oneup.$onedown.$onedel),
                   "attach"=>"style='width:70px;border-right:0px;'")
             ));
     }
@@ -582,16 +569,23 @@ class servdnseditZone extends plugin
       $changeStateForRecords.= "changeState('RecordValue_".$key."');\n";
       $changeStateForRecords.= "changeState('RemoveRecord_".$key."');\n";
 
-      $str.=" <tr>".
+      $str.=
+        " <tr>".
         "   <td>".$this->generateRecordListBox($entry['type'],"RecordTypeSelectedFor_".$key)."</td>".
-        "   <td><input type='text' value='".$entry['value']."' name='RecordValue_".$key."' id='RecordValue_".$key."'></td>".
-        "   <td><input type='submit' name='RemoveRecord_".$key."' value='"._("Delete")."' id='RemoveRecord_".$key."'></td>".
+        "   <td>".
+        "     <input type='text' value='".$entry['value']."' ".
+        "       name='RecordValue_".$key."' id='RecordValue_".$key."'>".
+        "   </td>".
+        "   <td>".
+        "     <button type='submit' name='RemoveRecord_".$key."' id='RemoveRecord_".$key."'>"._("Delete")."</button>".
+        "  </td>".
         "</tr>";
     }
 
-    $str.= "  <tr>".
+    $str.= 
+      "  <tr>".
       "    <td colspan=2></td><td>".
-      "      <input type='submit' value='"._("Add")."' name='AddNewRecord'>".
+      "      <button type='submit' name='AddNewRecord'>"._("Add")."</button>".
       "    </td>".
       "  </tr>".
       "</table>";
