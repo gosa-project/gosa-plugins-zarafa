@@ -133,7 +133,7 @@ class printerPPDSelectionDialog extends plugin
     $div ->SetSummary(_("Printer ppd selection."));
     
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>
-                  <img src='images/lists/folder.png' class='center' border=0>&nbsp;%s
+                  <img src='images/lists/folder.png' class='center' alt='' border=0>&nbsp;%s
                  </a>";
     $uselink  = "<a href='?plug=".$_GET['plug']."&amp;act=use&amp;id=%s'>%s</a>";
     $dellink  = "<a href='?plug=".$_GET['plug']."&amp;act=del&amp;id=%s'>

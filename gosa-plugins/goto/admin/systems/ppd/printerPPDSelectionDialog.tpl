@@ -4,9 +4,7 @@
 		<td style='width=50%;'>
 
 			<div class="contentboxh" style="height:20px;">
-				<p class="contentboxh" style="font-size:12px">
 					<b>{t}Select objects to add{/t}</b>
-				</p>
 			</div>
 			<div class="contentboxb">
           {$List}
@@ -16,11 +14,8 @@
 		<td>
 
 			<div class="contentboxh" style="height:20px;">
-				<p class="contentboxh" style="font-size:12px">
           {image path="{$launchimage}" align="right"}
-
           <b>{t}Filters{/t}</b>
-        </p>
       </div>
       <div class="contentboxb">
         <table style='width:100%;background-color:#F8F8F8' summary="">
