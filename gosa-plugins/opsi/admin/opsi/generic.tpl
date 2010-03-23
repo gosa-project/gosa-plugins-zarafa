@@ -65,7 +65,7 @@
 {/render}
       &nbsp;
       {if $netboot_configurable}
-		  {image path="images/lists/edit.png" action="configure_netboot" title="{t}Configure product{/t}">
+  		  {image path="images/lists/edit.png" action="configure_netboot" title="{t}Configure product{/t}"}
       {else}
 <!--		  <input type='image' name='dummy_10' src='images/lists/edit_gray.png'
 			title='{t}Configure product{/t}' class='center'>-->
