@@ -79,6 +79,8 @@ class addressbook extends plugin
     /* Include config object */
     $this->config= &$config;
 
+    $this->base = $this->config->current['BASE'];
+
     /* Check if there is a special ldap-sub-tree specified, instead of dc=addressbook, */
     $aoc = $this->config->search("addressbook", "addressbookBaseDN",array('menu'));
     if ($aoc != ""){
@@ -148,8 +150,10 @@ class addressbook extends plugin
     session::set("phonefilter", $phonefilter);
 
     /* Assign create acl */
-    $acl = $this->get_entry_acls($this->dn);
+    $acl = $this->get_entry_acls($this->base);
     $smarty->assign("internal_createable", preg_match("/c/",$acl));
+
+    $acl = $this->get_entry_acls($this->dn);
     $smarty->assign("internal_removeable", preg_match("/d/",$acl));
     $smarty->assign("internal_editable",   preg_match("/w/",$acl));
 
