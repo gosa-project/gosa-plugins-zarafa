@@ -1,9 +1,9 @@
 <h3>{t}Properties{/t}</h3>
-<table summary="" style="width:100%;">
+<table summary="{t}Properties{/t}" style="width:100%;">
  <tr>
   <td style='width:50%; '>
 
-   <table summary="">
+   <table summary="{t}Properties{/t}">
     <tr>
 {if $cn eq 'wdefault'}
      <td colspan=2>{t}Workstation template{/t}</td>
@@ -70,7 +70,7 @@
     </tr>
    </table>
 <hr>
-   <table width="100%">
+   <table width="100%" summary="{t}NTP server{/t}">
     <tr>
      <td colspan="2">
 {if $member_of_ogroup}
@@ -124,44 +124,28 @@
 <hr>
 
 {if $fai_activated}
-<h3>{t}Action{/t}</h3>
-<table width="100%">
-<tr><td style='width:50%' class='right-border'>
-
-<table summary="">
- <tr>
-  <td>
-{render acl=$FAIstateACL}
-   <select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
-    <option>&nbsp;</option>
-    {html_options options=$actions}
-   </select>
-{/render}
-  </td>
-  <td>
-{if $currently_installing}
-{render acl=r}
-   <button type='submit' name='action'>{t}Execute{/t}</button>
-
-{/render}
-{else}
-{render acl=$FAIstateACL}
-   <button type='submit' name='action'>{t}Execute{/t}</button>
-
-{/render}
+  <h3>{t}Action{/t}</h3>
+  {render acl=$FAIstateACL}
+     <select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
+      <option>&nbsp;</option>
+      {html_options options=$actions}
+     </select>
+  {/render}
+  {if $currently_installing}
+    {render acl=r}
+       <button type='submit' name='action'>{t}Execute{/t}</button>
+    {/render}
+    {else}
+    {render acl=$FAIstateACL}
+       <button type='submit' name='action'>{t}Execute{/t}</button>
+    {/render}
+  {/if}
 {/if}
-  </td>
- </tr>
-</table>
-{/if}
-</td>
-<td>
+
 {if $member_of_ogroup}
    <button type='submit' name='inheritAll'>{t}Inherit all values from group{/t}</button>
-
 {/if}
-</td>
-</tr></table>
+
 <input type="hidden" name="workgeneric_posted" value="1">
  {if $cn eq 'wdefault'}
 <!-- Place cursor -->
