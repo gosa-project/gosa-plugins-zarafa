@@ -316,7 +316,7 @@ class opsiGeneric extends plugin
     foreach($this->a_availableLocalProducts as $name => $data){
       if(isset($this->a_selectedLocalProducts[$name])) continue;
 
-      $add_tab  = array("string"   => "<input type='image' src='images/back.png' name='add_lp_".$name."'>");
+      $add_tab  = array("string"   => image('images/back.png','add_lp_'.$name));
       $name_tab = array("string"   => $name);
       $desc_tab = array("string"   => "<div style='height: 14px;overflow:hidden;'>".$data['DESC']."</div>",
           "attach"   => "title='".$data['DESC']."' style='border-right:0px;'");
@@ -341,11 +341,11 @@ class opsiGeneric extends plugin
 
         /* Only display edit button, if there is something to edit 
          */
-        $edit = "<img src='images/empty.png' alt=' '>";
+        $edit = image('images/empty.png');
         if(count($data['CFG'])){
-          $edit = "<input type='image' src='images/lists/edit.png' name='edit_lp_".$name."'>";
+          $edit = image('images/lists/edit.png','edit_lp_'.$name);
         }
-        $del  = "<input type='image' src='images/lists/trash.png' name='del_lp_".$name."'>";  
+        $del = image('images/lists/trash.png','del_lp_'.$name);
 
         $opt_tab  = array("string" => $edit.$del,
             "attach" => "style='border-right:0px; width: 40px; text-align:right;'");
@@ -666,7 +666,7 @@ class opsiGeneric extends plugin
         /* Add product 
          */
         if(preg_match("/^add_lp_/",$name) && $this->acl_is_writeable("localProduct")){
-          $product = preg_replace("/^add_lp_(.*)_.$/","\\1",$name);
+          $product = preg_replace("/^add_lp_(.*)$/","\\1",$name);
           if(isset($this->a_availableLocalProducts[$product]) && !isset($this->a_selectedLocalProducts[$product])){
             $this->a_selectedLocalProducts[$product] = $this->a_availableLocalProducts[$product];
             $CFG = $this->opsi->get_product_properties($product);
@@ -682,7 +682,7 @@ class opsiGeneric extends plugin
         /* Delete product 
          */
         if(preg_match("/^del_lp_/",$name) && $this->acl_is_writeable("localProduct")){
-          $product = preg_replace("/^del_lp_(.*)_.$/","\\1",$name);
+          $product = preg_replace("/^del_lp_(.*)$/","\\1",$name);
           if(isset($this->a_selectedLocalProducts[$product])){
             unset($this->a_selectedLocalProducts[$product]);
           }
@@ -692,7 +692,7 @@ class opsiGeneric extends plugin
         /* Edit a product  
          */
         if(preg_match("/^edit_lp_/",$name) && $this->acl_is_readable("localProduct")){
-          $product = preg_replace("/^edit_lp_(.*)_.$/","\\1",$name);
+          $product = preg_replace("/^edit_lp_(.*)$/","\\1",$name);
           $this->dialog = new opsiProperties($this->config,
               $product,$this->a_selectedLocalProducts[$product]['CFG'],$this->hostId);
           break;
