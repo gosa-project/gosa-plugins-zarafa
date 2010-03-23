@@ -129,6 +129,25 @@ class ArpNewDevice extends plugin
       }
     }
   }
+
+
+  /*! \brief  !! Incoming dummy acls, required to defined acls for incoming objects
+   */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Unknown incoming objects"),
+          "plDescription" => _("Unknown incoming objects"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 99,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
+              "objectClass"  => "")),
+          "plProvidedAcls"=> array()
+          ));
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
