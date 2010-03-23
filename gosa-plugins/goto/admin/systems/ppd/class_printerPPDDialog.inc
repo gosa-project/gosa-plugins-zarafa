@@ -505,7 +505,7 @@ class printerPPDDialog extends plugin
           /* If type is PickOne, create a select box */
           if(($type == "PickOne")||(($type=="Boolean")&&(count($values)>1))){
 
-            $str  .=  "<select name='".base64_encode($name)."' $acl >\n";
+            $str  .=  "<select name='".base64_encode($name)."' $acl size='1'>\n";
             foreach($values as $optionKey => $value){
               $selected = "";
               if($optionKey == $default){
@@ -518,7 +518,7 @@ class printerPPDDialog extends plugin
           }elseif($type == "Boolean"){
 
             /* If type is Boolean & no values are given */
-            $str  .=  "<select name='".base64_encode($name)."' $acl>\n";
+            $str  .=  "<select name='".base64_encode($name)."' $acl size='1'>\n";
             if($default == "False"){
               $str  .=    "<option value='True' >"._("True")."</option>\n";
               $str  .=    "<option value='False' selected>"._("False")."</option>\n";
