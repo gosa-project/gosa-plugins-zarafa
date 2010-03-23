@@ -42,7 +42,8 @@
     </tr>
    </table>
 
-	{$host_key}
+   <hr>
+	  {$host_key}
 
   </td>
   <td class='left-border'>
