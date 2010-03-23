@@ -70,53 +70,48 @@
      </td>
     </tr>
    </table>
-<hr>
-   <table width="100%" summary="{t}NTP server{/t}">
-    <tr>
-     <td colspan="2">
-{if $member_of_ogroup}
-{render acl=$gotoNtpServerACL}
-        <input type="checkbox" value="1" name="inheritTimeServer"
-            {if $inheritTimeServer} checked {/if}
-            onClick="javascript:
-                    changeState('gotoNtpServerSelected');
-                    changeState('gotoNtpServers');
-                    changeState('addNtpServer');
-                    changeState('delNtpServer');">{t}Inherit time server attributes{/t}
-{/render}
-{else}
-	<input disabled type='checkbox' name='option_disabled'>{t}Inherit time server attributes{/t}
-{/if}
-     </td>
-    </tr>
-    <tr>
-     <td colspan="2" style='padding-left:14px;padding-top:5px;'><LABEL for="gotoNtpServerSelected">{t}NTP server{/t}</LABEL><br>
-{render acl=$gotoNtpServerACL}
-      <select name="gotoNtpServerSelected[]" id="gotoNtpServerSelected" multiple size=5 style="width:100%;"
-            title="{t}Choose server to use for synchronizing time{/t}" {if $inheritTimeServer} disabled {/if}>
-       {html_options options=$gotoNtpServer_select}
-      </select>
-{/render}
-     <br>
-{render acl=$gotoNtpServerACL}
-      <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if}  size=1>
-       {html_options options=$gotoNtpServers}
-      </select>
-{/render}
-{render acl=$gotoNtpServerACL}
-        <button type='submit' name='addNtpServer' id="addNtpServer">{msgPool type=addButton}</button>
-         {if $inheritTimeServer} disabled {/if}>
-{/render}
-{render acl=$gotoNtpServerACL}
-        <button type='submit' name='delNtpServer' id="delNtpServer">{msgPool type=delButton}</button>
-         {if $inheritTimeServer} disabled {/if}>
-{/render}
-     </td>
-    </tr>
-   </table>
+
+   <hr>
+
+    {if $member_of_ogroup}
+    {render acl=$gotoNtpServerACL}
+            <input type="checkbox" value="1" name="inheritTimeServer"
+                {if $inheritTimeServer} checked {/if}
+                onClick="javascript:
+                        changeState('gotoNtpServerSelected');
+                        changeState('gotoNtpServers');
+                        changeState('addNtpServer');
+                        changeState('delNtpServer');">{t}Inherit time server attributes{/t}
+    {/render}
+    {else}
+      <input disabled type='checkbox' name='option_disabled'>{t}Inherit time server attributes{/t}
+    {/if}
+         <LABEL for="gotoNtpServerSelected">{t}NTP server{/t}</LABEL>
+    {render acl=$gotoNtpServerACL}
+          <select name="gotoNtpServerSelected[]" id="gotoNtpServerSelected" multiple size=5 style="width:100%;"
+                title="{t}Choose server to use for synchronizing time{/t}" {if $inheritTimeServer} disabled {/if}>
+           {html_options options=$gotoNtpServer_select}
+          </select>
+    {/render}
+         <br>
+    {render acl=$gotoNtpServerACL}
+          <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if}  size=1>
+           {html_options options=$gotoNtpServers}
+          </select>
+    {/render}
+    {render acl=$gotoNtpServerACL}
+            <button type='submit' name='addNtpServer' id="addNtpServer"
+             {if $inheritTimeServer} disabled {/if}>{msgPool type=addButton}</button>
+    {/render}
+    {render acl=$gotoNtpServerACL}
+            <button type='submit' name='delNtpServer' id="delNtpServer"
+             {if $inheritTimeServer} disabled {/if}>{msgPool type=delButton}</button>
+    {/render}
+
   </td>
  </tr>
 </table>
+
 {if $cn neq 'wdefault'}
 <hr>
 
@@ -148,18 +143,19 @@
 {/if}
 
 <input type="hidden" name="workgeneric_posted" value="1">
- {if $cn eq 'wdefault'}
+{if $cn eq 'wdefault'}
+
 <!-- Place cursor -->
-		<script language="JavaScript" type="text/javascript">
-		  <!-- // First input field on page
-			focus_field('l');
-		  -->
-		</script>
-     {else}
-		<script language="JavaScript" type="text/javascript">
-		  <!-- // First input field on page
-			focus_field('cn');
-		  -->
-		</script>
-     {/if}
+  <script language="JavaScript" type="text/javascript">
+    <!-- // First input field on page
+    focus_field('l');
+    -->
+  </script>
+{else}
+  <script language="JavaScript" type="text/javascript">
+    <!-- // First input field on page
+    focus_field('cn');
+    -->
+  </script>
+{/if}
 
