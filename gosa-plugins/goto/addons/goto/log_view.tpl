@@ -6,13 +6,14 @@
 	{if $logs_available}
 	<h3>{t}Available logs{/t}</h3>
 
-		<div style="width:99%;border: solid 1px #CCCCCC;">{$divlist}</div>
+
+    <table style='width:100%;height:40px;'><tr><td>
+		{$divlist}
+    </td></tr></table>
 	  <br>
 	  <hr>
 		<h3>{t}Selected log{/t}: {$selected_log}</h3>
-		<div style="width:99%;height:350px;padding:3px;background-color:white; overflow-y: scroll;border: solid 1px;">
 			{$log_file}
-		</div>
 	{else}
 		<h3>{t}No logs for this host available!{/t}</h3>
 	{/if}
