@@ -60,8 +60,8 @@
 {/render}
      </td>
     </tr>
-    <tr>
-	 <td colspan="2">
+   </table>
+
 {if $member_of_ogroup}
 {render acl=$gotoNtpServerACL}
 		<input type="checkbox" value="1" name="inheritTimeServer"
@@ -75,10 +75,7 @@
 {else}
 	<input disabled type='checkbox' name='option_disabled'>{t}Inherit time server attributes{/t}
 {/if}
-	 </td>
-	</tr>
-	<tr>
-     <td colspan="2" style='padding-left:14px;padding-top:5px;'><LABEL for="gotoNtpServerSelected">{t}NTP server{/t}</LABEL><br>
+     <LABEL for="gotoNtpServerSelected">{t}NTP server{/t}</LABEL><br>
 {render acl=$gotoNtpServerACL}
       <select name="gotoNtpServerSelected[]" id="gotoNtpServerSelected" multiple size=5 style="width:100%;"
 			title="{t}Choose server to use for synchronizing time{/t}" {if $inheritTimeServer} disabled {/if}>
@@ -92,36 +89,27 @@
       </select>
 {/render}
 {render acl=$gotoNtpServerACL}
-		<button type='submit' name='addNtpServer' id="addNtpServer">{msgPool type=addButton}</button>
-		 {if $inheritTimeServer} disabled {/if}>
+		<button type='submit' name='addNtpServer' id="addNtpServer"
+		 {if $inheritTimeServer} disabled {/if}>{msgPool type=addButton}</button>
 {/render}
 {render acl=$gotoNtpServerACL}
-		<button type='submit' name='delNtpServer' id="delNtpServer">{msgPool type=delButton}</button>
-		 {if $inheritTimeServer} disabled {/if}>
+		<button type='submit' name='delNtpServer' id="delNtpServer"
+		 {if $inheritTimeServer} disabled {/if}
+      >{msgPool type=delButton}</button>
 {/render}
-     </td>
-    </tr>
-	</table>
+
   </td>
  </tr>
-</table>
-<p class="seperator" style="margin:0px; padding:0px;">&nbsp;</p>
-<table style="width:100%;">
  <tr>
   <td style='width:50%;'>
 
-   <table summary="">
-    <tr>
-     <td><LABEL for="gotoTerminalPath">{t}Root server{/t}</LABEL></td>
-     <td>
+     <LABEL for="gotoTerminalPath">{t}Root server{/t}</LABEL>
 {render acl=$gotoTerminalPathACL}
       <select name="gotoTerminalPath" id="gotoTerminalPath" title="{t}Select NFS root filesystem to use{/t}" size=1>
        {html_options options=$nfsservers selected=$gotoTerminalPath_select}
       </select>
 {/render}
-     </td>
-    </tr>
-   </table>
+
   </td>
   <td class='left-border'>
 
@@ -147,40 +135,23 @@
 {$netconfig}
 {/if}
 <hr>
-<table width="100%">
-	<tr>
-		<td style='width:50%; ' class='right-border'>
 
-		{if $fai_activated}
-			<h3>{t}Action{/t}</h3>
-				<table summary="">
-				 	<tr>
-				  		<td>
-							{render acl=$gotoNtpServerACL}
-	   						<select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
-								<option disabled>&nbsp;</option>
-								{html_options options=$actions}
-							</select>
-							{/render}
-						</td>
-	  					<td>
-							{render acl=$gotoNtpServerACL}
-							<button type='submit' name='action'>{t}Execute{/t}</button>
+{if $fai_activated}
+<h3>{t}Action{/t}</h3>
+        {render acl=$gotoNtpServerACL}
+          <select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
+          <option disabled>&nbsp;</option>
+          {html_options options=$actions}
+        </select>
+        {/render}
+        {render acl=$gotoNtpServerACL}
+        <button type='submit' name='action'>{t}Execute{/t}</button>
+        {/render}
+{/if}
+{if $member_of_ogroup}
+   <button type='submit' name='inheritAll'>{t}Inherit all{/t}</button>
 
-							{/render}
-					  	</td>
-					</tr>
-				</table>
-			{/if}
-		</td>
-		<td>
-			{if $member_of_ogroup}
-			   <button type='submit' name='inheritAll'>{t}Inherit all{/t}</button>
-
-			{/if}
-		</td>
-	</tr>
-</table>
+{/if}
 
 <input type="hidden" name="termgeneric_posted" value="1">
 <!-- Place cursor -->
