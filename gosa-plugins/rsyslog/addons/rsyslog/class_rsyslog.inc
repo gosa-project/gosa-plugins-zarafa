@@ -192,8 +192,13 @@ class rsyslog extends plugin
       $prio = "%%";
       if($this->selected_priority != "all") $prio = $this->selected_priority;
 
-      $filter = "FROM SystemEvents WHERE FromHost like '{$host}' ";
-      $filter.= "AND Priority like '{$prio}' ";
+      $filter = "FROM SystemEvents WHERE 1=1 ";
+      if($host != "%%"){
+        $filter.= " AND FromHost like '{$host}' ";
+      }
+      if($prio != "%%"){
+        $filter.= "AND Priority like '{$prio}' ";
+      }
       $filter.= "AND DeviceReportedTime >= '".(date("Y.m.d 00:00:00", strtotime($this->startTime)))."' ";     
       $filter.= "AND DeviceReportedTime <= '".(date("Y.m.d 23:59:59", strtotime($this->stopTime)))."' ";     
 
@@ -230,6 +235,11 @@ class rsyslog extends plugin
             $attrs['Facility']= $this->facility2string($attrs['Facility']);
             $attrs['Priority']= $this->severity2string($attrs['Priority']);
             $attrs['SysLogTag']= preg_replace("/:$/", "", $attrs['SysLogTag']);
+
+            foreach($attrs as $key => $val){
+              $attrs[$key] = htmlentities($val, ENT_COMPAT, 'UTF-8');
+            }
+
             $result['entries'][] = $attrs;
           }
           $this->servers[$name]['status'] = "ok";
