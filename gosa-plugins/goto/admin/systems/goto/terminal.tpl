@@ -34,7 +34,9 @@
      </td>
     </tr>
    </table>
-	{$host_key}
+
+   <hr>
+   {$host_key}
 
   </td>
   <td class='left-border'>
@@ -60,7 +62,29 @@
 {/render}
      </td>
     </tr>
+    <tr>
+     <td><LABEL for="gotoSwapServer">{t}Swap server{/t}</LABEL></td>
+     <td>
+{render acl=$gotoSwapServerACL}
+      <select name="gotoSwapServer" id="gotoSwapServer" title="{t}Choose NFS filesystem to place swap files on{/t}" size=1>
+       {html_options options=$swapservers selected=$gotoSwapServer_select}
+      </select>
+{/render}
+     </td>
+    </tr>
+    <tr>
+     <td><LABEL for="gotoTerminalPath">{t}Root server{/t}</LABEL></td>
+      <td>
+{render acl=$gotoTerminalPathACL}
+      <select name="gotoTerminalPath" id="gotoTerminalPath" title="{t}Select NFS root filesystem to use{/t}" size=1>
+       {html_options options=$nfsservers selected=$gotoTerminalPath_select}
+      </select>
+{/render}
+     </td>
+    </tr>
    </table>
+
+   <hr> 
 
 {if $member_of_ogroup}
 {render acl=$gotoNtpServerACL}
@@ -98,33 +122,6 @@
       >{msgPool type=delButton}</button>
 {/render}
 
-  </td>
- </tr>
- <tr>
-  <td style='width:50%;'>
-
-     <LABEL for="gotoTerminalPath">{t}Root server{/t}</LABEL>
-{render acl=$gotoTerminalPathACL}
-      <select name="gotoTerminalPath" id="gotoTerminalPath" title="{t}Select NFS root filesystem to use{/t}" size=1>
-       {html_options options=$nfsservers selected=$gotoTerminalPath_select}
-      </select>
-{/render}
-
-  </td>
-  <td class='left-border'>
-
-   <table summary="">
-    <tr>
-     <td><LABEL for="gotoSwapServer">{t}Swap server{/t}</LABEL></td>
-     <td>
-{render acl=$gotoSwapServerACL}
-      <select name="gotoSwapServer" id="gotoSwapServer" title="{t}Choose NFS filesystem to place swap files on{/t}" size=1>
-       {html_options options=$swapservers selected=$gotoSwapServer_select}
-      </select>
-{/render}
-     </td>
-    </tr>
-   </table>
   </td>
  </tr>
 </table>
