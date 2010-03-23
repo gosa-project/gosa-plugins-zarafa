@@ -343,7 +343,6 @@ class faiDiskEntry extends plugin
    */ 
   function getAvailablePartitions()
   {
-
     $may = $used = array();
     foreach($this->parent->disks as $disk){
 
@@ -364,8 +363,8 @@ class faiDiskEntry extends plugin
           }
         }
 
-        // Collect all available disks
-        if($disk['FAIdiskType'] == "disk"){
+        // Collect all available partitions
+        if($disk['FAIdiskType'] == "disk" || $disk['FAIdiskType'] == "raid"){
           $name = $part['cn'];
           if(!isset($this->lvmDevices[$name])){
             $may[] = $name;
