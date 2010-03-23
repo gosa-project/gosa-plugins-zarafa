@@ -238,6 +238,7 @@ class termstartup extends plugin
     }
 
     $smarty->assign("gotoShares",$this->printOutAssignedShares());
+    $smarty->assign("gotoSharesCount",count($this->printOutAssignedShares()));
     $smarty->assign("gotoShareKeys",array_flip($this->printOutAssignedShares()));
 
     /* Create divSelectBox for ldap server selection
@@ -256,10 +257,10 @@ class termstartup extends plugin
     }
 
     /* Move ldap servers up and down */
-    if(!$this->gotoLdap_inherit){
+    if(!$this->gotoLdap_inherit && $this->acl_is_writeable("gotoLdapServer")){
       foreach($_POST as $name => $value){
         if(preg_match("/sort_ldap_up_/",$name)){
-          $id = preg_replace("/^sort_ldap_up_([0-9]*)_(x|y)$/","\\1",$name);
+          $id = preg_replace("/^sort_ldap_up_([0-9]*)$/","\\1",$name);
           $from =  $id;
           $to   =  $id -1;
           $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
@@ -269,7 +270,7 @@ class termstartup extends plugin
           break;
         }
         if(preg_match("/sort_ldap_down_/",$name)){
-          $id = preg_replace("/^sort_ldap_down_([0-9]*)_(x|y)$/","\\1",$name);
+          $id = preg_replace("/^sort_ldap_down_([0-9]*)$/","\\1",$name);
           $from =  $id;
           $to   =  $id +1;
           $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
@@ -279,28 +280,46 @@ class termstartup extends plugin
           break;
         }
         if(preg_match("/gotoLdapRemove_/",$name)){
-          $id = preg_replace("/^gotoLdapRemove_([0-9]*)_(x|y)$/","\\1",$name);
+          $id = preg_replace("/^gotoLdapRemove_([0-9]*)$/","\\1",$name);
           $value = $this->gotoLdapServers[$id];
           $this->gotoLdapServers = array_remove_entries(array($value),$this->gotoLdapServers);
           break;
         }
       }
     }
-  /* Add Entries
+
+    /* Add Entries 
      */
-    foreach($this->gotoLdapServers as $key => $server){
-      if(!in_array($server,$this->gotoLdapServerList)){
-        $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
+    if($this->acl_is_readable("gotoLdapServer")){
+
+      foreach($this->gotoLdapServers as $key => $server){
+
+        /* Announce missing entries */
+        if(!in_array($server,$this->gotoLdapServerList)){
+          $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
+        }
+
+        /* Convert old style entry */
+        if (!preg_match('%:ldaps?://%', $server)){
+          $server= "ldap://".preg_replace('/^([^:]+):/', '\1/', $server);
+
+        /* Beautify new style entries */
+      } else {
+        $server= preg_replace("/^[^:]+:/", "", $server);
       }
 
       $SelectBoxLdapServer->AddEntry(
-          array(array("string" => $server),
+          array(
+            array(
+              "string" => $server),
             array("string" =>
-              "<input class='center' type='image' src='images/lists/sort-up.png' name='sort_ldap_up_".$key."'>&nbsp;".
-              "<input class='center' type='image' src='images/lists/sort-down.png' name='sort_ldap_down_".$key."'>&nbsp;".
-              "<input class='center' type='image' src='images/lists/trash.png' name='gotoLdapRemove_".$key."'>",
-              "attach" => "style='text-align:right;width:40px;border-right:0px;'")));
+              image('images/lists/sort-up.png',"sort_ldap_up_".$key,'',"top").
+              image('images/lists/sort-down.png',"sort_ldap_down_".$key,'',"bottom").
+              image('images/lists/trash.png',"gotoLdapRemove_".$key),
+              "attach" => "style='text-align:right;width:60px;border-right:0px;'")));
+      }
     }
+
 
     if($this->gotoLdap_inherit){
       $smarty->assign("gotoLdapServerACL_inherit", preg_replace("/w/","",$this->getacl("gotoLdapServer")));;
