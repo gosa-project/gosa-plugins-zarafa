@@ -1,7 +1,7 @@
 
 <h3>{t}Devices{/t}</h3>
 
-<table width="100%" summary="">
+<table width="100%" summary="{t}Paste device{/t}">
  <tr>
   <td>
 
