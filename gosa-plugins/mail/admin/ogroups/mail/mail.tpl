@@ -1,5 +1,5 @@
 <input type="hidden" name="mailedit" value="1">
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Mail settings{/t}">
 
 
  <!-- Headline container -->
@@ -7,7 +7,7 @@
   <td style='width:50%; '>
 
    <h3>{t}Mail distribution list{/t}</h3>
-   <table summary="">
+   <table summary="{t}Mail distribution list{/t}">
     <tr>
      <td><LABEL for="mail">{t}Primary address{/t}</LABEL>{$must}</td>
      <td>
