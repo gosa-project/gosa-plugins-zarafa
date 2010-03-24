@@ -25,6 +25,8 @@ class faxNumberSelect extends management
   protected $skipFooter = TRUE;
   protected $skipHeader = TRUE;
 
+  var $plHeadline = "Fax number selection";
+
   function __construct($config,$ui)
   {
     $this->config = $config;

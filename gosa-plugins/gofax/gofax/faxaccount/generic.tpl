@@ -83,7 +83,7 @@
 {/render}
      {t}Deliver fax to printer{/t}&nbsp;
 {render acl=$faxtoprinterACL checkbox=$multiple_support checked=$use_goFaxPrinter}
-     <select size="1" name="goFaxPrinter">
+     <select size="1" name="goFaxPrinterSelected">
       {html_options options=$printers selected=$goFaxPrinter}
 		<option disabled>&nbsp;</option>
      </select>
