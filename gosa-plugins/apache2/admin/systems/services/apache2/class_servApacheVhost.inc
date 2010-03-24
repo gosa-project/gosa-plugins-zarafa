@@ -308,7 +308,13 @@ class servapache extends goService
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-              "VirtualHost"           => _("Virtual hosts"))
+              "VirtualHosts"        => _("Virtual hosts"),
+              "apacheServerName"    => _("Server name"),
+              "apacheDocumentRoot"  => _("Document root"),
+              "apacheServerAlias"   => _("Server alias"),
+              "apacheServerAdmin"   => _("Server admin"),
+              "apacheScriptAlias"   => _("Script alias")
+              )
             ));
   }
 }
