@@ -80,7 +80,7 @@ class goFonServer extends goService{
       $message[]= msgPool::required(_("Local dial prefix"));
     }
     if (empty($this->goFonCountryCode)){
-      $message[]= msgPool::requierd(_("Country prefix"));
+      $message[]= msgPool::required(_("Country prefix"));
     }
     return($message);
   }
