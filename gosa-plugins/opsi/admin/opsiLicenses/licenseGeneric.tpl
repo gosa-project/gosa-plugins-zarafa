@@ -24,7 +24,7 @@
               {if $initially_was_account}
                 <input type='text' name='dummy12' disabled value='{$cn}'>
               {else}
-{render acl=$licenseACL}
+{render acl=$cnACL}
                 <input type='text' name='cn' value='{$cn}'>
 {/render}
               {/if}
@@ -35,7 +35,7 @@
               {t}Partner{/t}
             </td>
             <td>
-{render acl=$licenseACL}
+{render acl=$partnerACL}
               <input type='text' name='partner' value='{$partner}'>
 {/render}
             </td>
@@ -45,7 +45,7 @@
               {t}Description{/t}
             </td>
             <td>
-{render acl=$licenseACL}
+{render acl=$descriptionACL}
               <input type='text' name='description' value='{$description}'>
 {/render}
             </td>
@@ -55,6 +55,7 @@
               {t}License model{/t}
             </td>
             <td>
+{render acl=$licenseModelACL}
               {if $initially_was_account}
                 <select name='dummy223' disabled size=1>
                   {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
@@ -64,6 +65,7 @@
                   {html_options options=$licenseModels values=$licenseModels selected=$licenseModel}
                 </select>
               {/if}
+{/render}
             </td>
           </tr>
         </table>
@@ -76,7 +78,7 @@
               {t}Conclusion date{/t}
             </td>
             <td style='width:300px;'>
-{render acl=$licenseACL}
+{render acl=$conclusionDateACL}
               <input type="text" id="date1" name="conclusionDate" value="{$conclusionDate}" class="date" />
               {if $conclusionDateWriteable}
               {literal}
@@ -101,7 +103,7 @@
               {t}Expiration date{/t}
             </td>
             <td style='width:300px;'>
-{render acl=$licenseACL}
+{render acl=$expirationDateACL}
               <input type="text" id="date2" name="expirationDate" value="{$expirationDate}" class="date" />
               {if $expirationDateWriteable}
               {literal}
@@ -126,7 +128,7 @@
               {t}Notification date{/t}
             </td>
             <td style='width:300px;'>
-{render acl=$licenseACL}
+{render acl=$notificationDateACL}
               <input type="text" id="date3" name="notificationDate" value="{$notificationDate}" class="date" >
               {if $notificationDateWriteable}
               {literal}
@@ -164,7 +166,7 @@
               {t}License key{/t}{$must}
             </td>
             <td>
-{render acl=$licenseACL}
+{render acl=$licenseKeyACL}
               <input type='text' name='licenseKey' value='{$licenseKey}'>
 {/render}
             </td>
@@ -175,7 +177,7 @@
               {t}Maximum installations{/t}
             </td>
             <td>
-{render acl=$licenseACL}
+{render acl=$maximumInstallationsACL}
               <input type='text' name='maximumInstallations' value='{$maximumInstallations}'>
 {/render}
             </td>
@@ -187,7 +189,7 @@
               {t}Reserved for{/t}
             </td>
             <td>
-{render acl=$licenseACL}
+{render acl=$boundToHostACL}
               <select name='boundToHost' size=1>
                 <option value="">{t}none{/t}</option>
                 {html_options options=$hosts selected=$boundToHost}
@@ -201,7 +203,7 @@
     </td> 
     <td class='right-border'>   
               <b>{t}Used by{/t}</b><br>
-{render acl=$licenseACL}
+{render acl=$usedByHostACL}
               <select   disabled
                 name='selectedUsedHosts[]' multiple size=4 style='width:100%;'>
                 {html_options options=$usedByHost}

@@ -281,8 +281,18 @@ class licenseGeneric extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("opsi"),
           "plProvidedAcls"=> array(
-            "cn"                => _("Name"),
-            "description" => _("Description"))
+            "cn"                  => _("Name"),
+            "partner"             => _("Partner"),
+            "licenseKey"          => _("License key"),
+            "licenseModel"        => _("License model"),
+            "licensePoolId"       => _("License pool id"),
+            "maximumInstallations"=> _("Maximum installations"),
+            "boundToHost"         => _("Reserved for host"),
+            "usedByHost"          => _("Usage"),
+            "notificationDate"    => _("Notification date"),
+            "conclusionDate"      => _("Conclusion date"),
+            "expirationDate"      => _("Expiration date"),
+            "description"         => _("Description"))
           ));
   }
 }
