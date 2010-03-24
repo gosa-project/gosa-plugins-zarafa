@@ -712,8 +712,7 @@ class environment extends plugin
         if((preg_match("/^gotoShareDel_/",$name)) && ($once)){
           $once = false;  
           $key  = preg_replace("/^gotoShareDel_/","",$name);
-          $key  = preg_replace("/_+[xy]$/","",$key);
-          $key  = base64_decode($key);
+          $key  = postDecode($key);
           if(isset($this->gotoShares[$key])) {
             unset($this->gotoShares[$key]);
           }
@@ -728,8 +727,7 @@ class environment extends plugin
         if((preg_match("/^gotoShareResetPwd_/",$name)) && ($once)){
           $once = false;
           $key  = preg_replace("/^gotoShareResetPwd_/","",$name);
-          $key  = preg_replace("/_+[xy]$/","",$key);
-          $key  = base64_decode($key);
+          $key  = postDecode($key);
           $this->gotoShares[$key]['PwdHash'] = "";
           if(preg_match("/^!/",$this->gotoShares[$key]['server'])){
             unset($this->gotoShares[$key]);
@@ -776,9 +774,10 @@ class environment extends plugin
 
         /* Create pwd reset images */
         if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 
-            'src='plugins/goto/images/list_reset_password.png' alt='"._("Reset password hash")."' 
-            title='"._("Reset password hash")."'>";
+          $img.= 
+            image('plugins/goto/images/list_reset_password.png',
+                'gotoShareResetPwd_'.postEncode($key),
+                _("Reset password hash"));
         }
         $field1 = array("string" => "<font style=\"color:#C0C0C0\">".$value."</font>" , "attach" => "style='".$color."'");
         $field2 = array("string" => $img   , "attach" => "style='border-right:0px;'");
@@ -786,13 +785,13 @@ class environment extends plugin
 
         /* Create pwd reset img && delete image */
         if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 
-            'src='plugins/goto/images/list_reset_password.png' alt='"._("Reset password hash")."' 
-            title='"._("Reset password hash")."'>";
+          $img.= 
+            image('plugins/goto/images/list_reset_password.png',
+                'gotoShareResetPwd_'.postEncode($key),
+                _("Reset password hash"));
           $img.= "&nbsp;";
         }
-        $img.= "<input type='image' name='gotoShareDel_".base64_encode($key)." 'src='images/lists/trash.png' alt='".msgPool::delButton()."' 
-          title='"._("Delete share entry")."'>";
+        $img.= image('images/lists/trash.png',"gotoShareDel_".postEncode($key),msgPool::delButton());
         $field1 = array("string" => $value , "attach" => "style='".$color."'");
         $field2 = array("string" => $img   , "attach" => "style='border-right:0px;'");
       }

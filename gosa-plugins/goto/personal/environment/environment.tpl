@@ -112,7 +112,7 @@
    <table summary="{t}Kiosk profile settings{/t}">
     {if $kiosk_enabled}
     <tr>
-     <td colwidth=2>
+     <td colspan=2>
       <label for="kiosk_server">{t}Kiosk profile{/t}</label>
      </td>
     </tr>
