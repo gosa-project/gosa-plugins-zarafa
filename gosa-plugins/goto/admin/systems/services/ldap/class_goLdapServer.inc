@@ -134,6 +134,9 @@ class goLdapServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
+            "start"         => _("Start"),
+            "stop"          => _("Stop"),
+            "restart"       => _("Restart"),
             "goLdapBase" => _("Ldap base"))
           ));
   }
