@@ -1,11 +1,11 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Share settings{/t}">
 
  <tr>
    <td style='width:50%'>
 
      <h3>{t}DFS Properties{/t}</h3>
      
-     <table summary="">
+     <table summary="{t}Share settings{/t}">
       <tr>
        <td><LABEL for="sambaShareName">{t}Name of dfs Share{/t}</LABEL>{$must}</td>
        <td><input type='text' id="sambaShareName" name="sambaShareName" size=40 maxlength=100 value="{$sambasharename}"></td>
@@ -33,7 +33,7 @@
 
      <h3>{t}DFS Location{/t}</h3>
 
-     <table summary="" style="width:100%">
+     <table summary="{t}Share settings{/t}" style="width:100%">
       <tr>
        <td><LABEL for="location">{t}Location{/t}</LABEL>{$must}</td>
        <td><input type='text' id="location" name="location" size=40 maxlength=100 value="{$location}"></td>
