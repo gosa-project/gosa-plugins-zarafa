@@ -8,7 +8,7 @@
 <tr>
 <td valign='top'>
 		<h3>{t}Phone numbers{/t}</h3>
-		<table summary="">
+		<table summary="{t}Phone numbers{/t}">
 		<tr>
 		<td colspan=2>
 		  <table summary="{t}Generic queue Settings{/t}">
@@ -278,7 +278,7 @@
 </tr>
 <tr>
 <td>
-		<table style='width: 100%; ' summary="">
+		<table style='width: 100%; ' summary="{t}Additional queue settings{/t}">
 
         <tr>
         <td colspan=2>
@@ -308,7 +308,7 @@
 </td>
 <td class='left-border'>
 
-	 	<table style='width: 100%; ' summary="">
+	 	<table style='width: 100%; ' summary="{t}Dial options{/t}">
 
         <tr>
         <td colspan=2>
