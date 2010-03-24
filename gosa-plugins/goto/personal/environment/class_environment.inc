@@ -384,9 +384,11 @@ class environment extends plugin
       }else{
         $smarty->assign($s_attr."CHK"," checked ");
       }
+    }
 
-      /* Prepare ACL settings*/
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $val => $desc){
+      $smarty->assign("$val"."ACL", $this->getacl($val));
     }
 
     /* Is accout enabled | are we editing from usermenu or admin menu 
@@ -504,9 +506,11 @@ class environment extends plugin
       }else{
         $smarty->assign($s_attr."CHK"," checked ");
       }
+    }
 
-      /* Prepare ACL settings*/
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $val => $desc){
+      $smarty->assign("$val"."ACL", $this->getacl($val));
     }
 
     foreach(array("gotoProfileFlagC","gotoProfileFlagL") as $s_attr){
