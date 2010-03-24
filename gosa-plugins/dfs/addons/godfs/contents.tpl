@@ -1,6 +1,6 @@
 <script src="TreeMenu.js" language="JavaScript" type="text/javascript"></script>
 
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Share settings{/t}">
 
 <tr>
   <td style='width:600px'>
@@ -36,11 +36,11 @@
 </p>
    </div>
    <div class="contentboxb">
-     <table style='width:100%;' summary="">
+     <table style='width:100%;' summary="{t}Share settings{/t}">
 
       {$alphabet}
      </table>
-     <table style='width:100%;' summary="">
+     <table style='width:100%;' summary="{t}Share settings{/t}">
 
      <tr>
      <td>
