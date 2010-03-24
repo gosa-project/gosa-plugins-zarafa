@@ -27,7 +27,7 @@ class servapacheVhostEdit extends plugin
   var $ignore_account= TRUE;
   
   var $attributes	= array("apacheServerName","apacheDocumentRoot","apacheServerAlias",
-	  	"apacheServerAdmin","apacheScriptAlias","apacheSuexecUid","apacheSuexecGid");
+	  	"apacheServerAdmin","apacheScriptAlias");
       
   var $objectclasses  = array("whatever");
 
