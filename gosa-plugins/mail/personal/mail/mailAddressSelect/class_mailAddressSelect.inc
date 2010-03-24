@@ -26,6 +26,8 @@ class mailAddressSelect extends management
   protected $skipFooter = TRUE;
   protected $skipHeader = TRUE;
 
+  var $plHeadline = "Mail address selection";
+
   function __construct($config,$ui)
   {
     $this->config = $config;
