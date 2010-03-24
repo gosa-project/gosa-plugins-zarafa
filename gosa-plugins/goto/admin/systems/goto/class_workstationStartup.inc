@@ -1029,6 +1029,7 @@ class workstartup extends plugin
           "plProvidedAcls"=> array(
             "gotoLdapServer"        => _("Ldap server"),
             "gotoBootKernel"        => _("Boot kernel"),
+            "bootmode"              => _("Boot mode"),
             "gotoKernelParameters"  => _("Kernel parameter"),
 
             "gotoModules"           => _("Kernel modules"),
