@@ -144,7 +144,11 @@ class ArpNewDevice extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
               "objectClass"  => "")),
-          "plProvidedAcls"=> array()
+          "plProvidedAcls"=> array(
+            "cn"  => _("Name"),
+            "description"  => _("Description")
+            
+          )
           ));
   }
 
