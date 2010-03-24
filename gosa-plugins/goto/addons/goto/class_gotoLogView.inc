@@ -4,7 +4,6 @@ class gotoLogView extends plugin
 {
   
   var $mac;
-  var $logs;
   var $event;
   var $parent;
   var $config;
@@ -23,6 +22,7 @@ class gotoLogView extends plugin
   var $ignore_account = TRUE;
   var $standalone = FALSE;
 
+  var $logs = array();
   var $logSelector = NULL;
  
   function __construct(&$config,$dn,$parent)
