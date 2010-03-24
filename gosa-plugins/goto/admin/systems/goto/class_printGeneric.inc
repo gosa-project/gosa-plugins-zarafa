@@ -1005,6 +1005,7 @@ class printgeneric extends plugin
             "description"       => _("Description"), 
             "l"                 => _("Location"), 
             "labeledURI"        => _("LabeledURL"), 
+            "macAddress"        => _("Mac address"), 
             "gotoPrinterPPD"    => _("Printer PPD"),
             "gotoUserPrinter"   => _("Permissions")) 
           ));
