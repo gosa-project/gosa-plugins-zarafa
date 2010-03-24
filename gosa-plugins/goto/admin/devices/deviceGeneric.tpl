@@ -1,11 +1,11 @@
 
 <h3>{t}Devices{/t}</h3>
 
-<table width="100%" summary="">
+<table width="100%" summary="{t}Edit devices{/t}">
  <tr>
   <td>
 
-   <table style='width:100%' class='right-border' summary="">
+   <table style='width:100%' class='right-border' summary="{t}Generic settings{/t}">
     <tr>
      <td><LABEL for="base">{t}Base{/t}</LABEL></td>
      <td>
@@ -43,7 +43,7 @@
    </table>
   </td>
   <td>
-   <table summary="">
+   <table summary="{t}Serial settings{/t}">
     <tr>
      <td><LABEL for="devID">{t}Serial number{/t}&nbsp;{t}(iSerial){/t}</LABEL>{$must}</td>
      <td>
