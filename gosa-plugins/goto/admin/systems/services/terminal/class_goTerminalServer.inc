@@ -170,6 +170,9 @@ class goTerminalServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
+            "start"           => _("Start"),
+            "stop"            => _("Stop"),
+            "restart"         => _("Restart"),
             "goXdmcpIsEnabled"  => _("Temporary disable login"))
           ));
   }
