@@ -153,7 +153,7 @@
      		<td><LABEL for="member_permissions">{t}Member permission{/t}</LABEL></td>
 		{else}
      		<td>
-				<input type='input' name='acl_user_{$item.post_name}' value='{$user}'>
+				<input type='text' name='acl_user_{$item.post_name}' value='{$user}'>
 			</td>
 		{/if}
 		 <td>
@@ -213,11 +213,7 @@
   </td>
   <td style='width:50%'>
 
-   <h3>
-	{image path="plugins/mail/images/envelope.png"}
-
-	{t}Forward messages to non group members{/t}
-   </h3>
+   <h3>{t}Forward messages to non group members{/t}</h3>
 
 {render acl=$gosaMailForwardingAddressACL}
    <select style="width:100%;" name="forwarder_list[]" size=10 multiple>

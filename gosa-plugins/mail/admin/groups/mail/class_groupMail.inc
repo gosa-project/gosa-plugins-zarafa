@@ -645,7 +645,7 @@ class mailgroup extends plugin
       if(isset($_POST['mail_acls_posted'])){
         $new_acls = array();
         foreach(array("__anyone__","__member__") as $attr){
-          $pname = base64_encode($attr);
+          $pname = postEncode($attr);
           if(get_post('acl_value_'.$pname)){ 
             $new_acls[$attr] = get_post('acl_value_'.$pname);
           }else{
@@ -654,7 +654,7 @@ class mailgroup extends plugin
         }
 
         foreach($this->folder_acls as $user => $acl){
-          $pname = base64_encode($user);
+          $pname = postEncode($user);
           if($user == "__member__" || $user == "__anyone__") continue;
           if(isset($_POST['remove_acl_user_'.$pname])){
           }elseif(isset($_POST['acl_user_'.$pname])){
@@ -688,14 +688,15 @@ class mailgroup extends plugin
        V - Use vacation message
        C - Use custom sieve script
        I - Only insider delivery */
-      $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
-      if($this->acl_is_writeable("gosaMailDeliveryModeL")){
-        if(!preg_match("/L/",$tmp) && !isset($_POST['drop_own_mails'])){
-          $tmp.="L";
-        }elseif(preg_match("/L/",$tmp) && isset($_POST['drop_own_mails'])){
-          $tmp = preg_replace("/L/","",$tmp);
-        }
-      }
+     $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
+
+#     if($this->acl_is_writeable("gosaMailDeliveryModeL")){
+#       if(!preg_match("/L/",$tmp) && !isset($_POST['drop_own_mails'])){
+#         $tmp.="L";
+#       }elseif(preg_match("/L/",$tmp) && isset($_POST['drop_own_mails'])){
+#         $tmp = preg_replace("/L/","",$tmp);
+#       }
+#     }
 
       $opts = array(
           "I"   => "only_local");
@@ -1204,7 +1205,7 @@ class mailgroup extends plugin
   {
     $ret = array();
     foreach($this->folder_acls as $name => $acl){
-      $ret[$name] = array("name" => $name,"acl" => $acl,"post_name" => base64_encode($name));
+      $ret[$name] = array("name" => $name,"acl" => $acl,"post_name" => postEncode($name));
     }
     return($ret);
   }
