@@ -1,4 +1,4 @@
-<table width='100%'>
+<table width='100%' summary="{t}Paste role{/t}">
 	<tr>
 		<td width='120'>
 			<LABEL for="cn">{t}Role name{/t}</LABEL>{$must}
