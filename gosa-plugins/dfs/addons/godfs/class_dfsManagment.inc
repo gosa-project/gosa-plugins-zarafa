@@ -234,19 +234,10 @@ class dfsManagment extends plugin {
 
     $display = $this->dfstab->execute();
    
-    $display .= "<p>\n";
-    $display .= "  <table width=100\%>\n";
-    $display .= "    <tbody>\n";
-    $display .= "      <tr>\n";
-    $display .= "        <td style=\"text-align: right\">\n";
-    $display .= "          <input type=submit name=\"edit_finish\" value=\""._("Finish")."\">\n";
-    $display .= "          &nbsp;\n";
-    $display .= "          <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
-    $display .= "        </td>\n";
-    $display .= "      </tr>\n";
-    $display .= "    </tbody>\n";
-    $display .= "  </table>\n";
-    $display .= "</p>\n";
+    $display .= "<div class='plugin-actions'>\n";
+    $display .= " <button type=submit name=\"edit_finish\">"._("Finish")."</button>\n";
+    $display .= " <button type=submit name=\"edit_cancel\">".msgPool::cancelButton()."</button>\n";
+    $display .= "</div>\n";
     
     return ($display);
 
