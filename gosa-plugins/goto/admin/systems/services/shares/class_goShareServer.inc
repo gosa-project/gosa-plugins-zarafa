@@ -419,14 +419,16 @@ class goShareServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-              "name"        => _("Name"),
+              "name"          => _("Name"),
+              "goExportEntry" => _("Share entries"),
+              "appleMounts"   => _("Apple mounts"),
               "netatalkmount" => _("Apple mounts"),
-              "description" => _("Description"),
-              "type"        => _("Type"),
-              "charset"     => _("Charset"),
-              "path"        => _("Path"),
-              "option"      => _("Option"),
-              "volume"      => _("Volume"))
+              "description"   => _("Description"),
+              "type"          => _("Type"),
+              "charset"       => _("Charset"),
+              "path"          => _("Path"),
+              "option"        => _("Option"),
+              "volume"        => _("Volume"))
 
           ));
   }
