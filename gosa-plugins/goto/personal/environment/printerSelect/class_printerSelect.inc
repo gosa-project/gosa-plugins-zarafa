@@ -26,6 +26,8 @@ class printerSelect extends management
   protected $skipFooter = TRUE;
   protected $skipHeader = TRUE;
 
+  var $plHeadline = "Printer selection";
+
   function __construct($config,$ui)
   {
     $this->config = $config;
