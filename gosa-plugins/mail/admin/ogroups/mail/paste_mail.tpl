@@ -1,4 +1,4 @@
-<table width='100%'>
+<table width='100%' summary="{t}Paste group mail settings{/t}">
         <tr>
                 <td width='120'>
 			<LABEL for="mail">{t}Mail{/t}</LABEL>{$must}
