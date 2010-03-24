@@ -1,4 +1,4 @@
-<table style='width:100%;'>
+<table style='width:100%;' summary="{t}Edit role{/t}">
   <tr>
     <td style='width:50%; padding-right:10px;' class='right-border'>
 
@@ -7,7 +7,7 @@
         {t}Generic{/t}
       </h3>
 
-      <table style='width:100%;'>
+      <table style='width:100%;' summary="{t}Generic settings{/t}">
         <tr>
           <td>{t}Name{/t}{$must}</td>
           <td>
