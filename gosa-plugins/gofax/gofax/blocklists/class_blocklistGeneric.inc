@@ -101,7 +101,10 @@ class blocklistGeneric extends plugin
     /* Handle interactions: add */
     if (isset($_POST['add_number']) && $_POST['number'] != ""){
       if (tests::is_phone_nr($_POST['number']) || preg_match ("/^[\/0-9 ()\^\.\$+*-]+$/",$_POST['number'])){
-        $this->addNumber ($_POST['number']);
+        $acl =  ($this->type == 1) ? "goFaxSBlocklist" : "goFaxRBlocklist";
+        if($this->acl_is_writeabel($acl)){
+          $this->addNumber ($_POST['number']);
+        }
       } else {
         msg_dialog::display(_("Error"), msgPool::invalid(_("Phone number")), ERROR_DIALOG);
       }
@@ -114,7 +117,11 @@ class blocklistGeneric extends plugin
 
     /* Handle interactions: delete */
     if (isset($_POST['delete_number']) && isset($_POST['numbers']) && count($_POST['numbers']) > 0){
-      $this->delNumber ($_POST['numbers']);
+
+      $acl = ($this->type == 1) ? "goFaxSBlocklist" : "goFaxRBlocklist";
+      if($this->acl_is_writeabel($acl)){
+        $this->delNumber ($_POST['numbers']);
+      }
     }
 
 
@@ -131,6 +138,13 @@ class blocklistGeneric extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
+    
+    if($this->type == 1){
+      $smarty->assign("goFaxBlocklistACL", $this->getacl('goFaxSBlocklist'));
+    }else{
+      $smarty->assign("goFaxBlocklistACL", $this->getacl('goFaxRBlocklist'));
+    }
+
     $smarty->assign("goFaxBlocklist",$this->goFaxBlocklist);
     $smarty->assign("cnACL",$this->getacl("cn",$this->readonly));
     $smarty->assign("typeACL",$this->getacl("type",$this->readonly));
@@ -369,7 +383,8 @@ class blocklistGeneric extends plugin
             "cn"              => _("Name"),
             "description"     => _("Description"),
             "base"            => _("Base"),
-            "goFaxBlocklist"  => _("Blocklist"),
+            "goFaxSBlocklist"  => _("Send blocklist entries"),
+            "goFaxRBlocklist"  => _("Receive blocklist entries"),
             "type"            => _("Blocklist type"))
           ));
   }

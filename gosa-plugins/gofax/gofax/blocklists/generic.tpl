@@ -59,6 +59,7 @@
 <table summary="" style="width:100%">
  <tr>
    <td style="width:50%;">
+
      <h3>{t}Blocked numbers{/t}</h3>
 {render acl=$goFaxBlocklistACL}
      <select style="width:100%; height:200px;" name="numbers[]" size=15 multiple>
