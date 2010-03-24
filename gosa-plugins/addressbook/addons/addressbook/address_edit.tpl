@@ -1,4 +1,4 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Edit entry{/t}">
 
 
 	<tr style="background-color: #E8E8E8; height:26px;font-weight:bold;">
@@ -18,16 +18,12 @@
 	</tr>
 	<tr style="background-color: white">
 		<td colspan=2>
-			<table summary="" width="100%" cellspacing=2 cellpadding=4>
+			<table summary="{t}Generic settings{/t}" width="100%" cellspacing=2 cellpadding=4>
 				<tr>
-					<td style='width:50%; background-color: #F0F0F0'>
+					<td style='width:50%; background-color: #F0F0F0' summary="{t}Generic settings{/t}">
 
-						<h3>
-							{image path="{$personal_image}"}
-
-								&nbsp;{t}Personal{/t}
-						</h3>
- 						<table summary="" width="100%">
+						<h3>{t}Personal{/t}</h3>
+ 						<table summary="{t}Generic settings{/t}" width="100%">
   							<tr>
    								<td>
 									<LABEL for="sn">
@@ -79,7 +75,7 @@
 
 							&nbsp;{t}Private{/t}
 						</h3>
-						<table summary="" width="100%">
+						<table summary="{t}Generic settings{/t}" width="100%">
 						  	<tr>
 						   		<td>
 									<LABEL for="homePostalAddress">
@@ -142,10 +138,10 @@
 
 							&nbsp;{t}Organizational{/t}
 						</h3>
- 						<table summary="" width="100%">
+ 						<table summary="{t}Generic settings{/t}" width="100%">
 							<tr>
 						   		<td>
-									<table summary="" width="100%">
+									<table summary="{t}Generic settings{/t}" width="100%">
 									 	<tr>
 									  		<td>
 												<LABEL for="">	
@@ -210,7 +206,7 @@
 								   	</td>
 								   	<td>
 
-									<table summary="" width="100%">
+									<table summary="{t}Generic settings{/t}" width="100%">
 										<tr>
 											<td>
 												<LABEL for="">
