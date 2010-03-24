@@ -6,7 +6,7 @@
    {$SIZELIMIT}
   </p>
   <div class="mainlist-nav">
-   <table summary="">
+   <table summary="{t}Device listing{/t}">
     <tr>
      <td>
       {$ROOT}
