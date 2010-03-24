@@ -426,7 +426,7 @@ class gofaxAccount extends plugin
         if(!isset($this->config->departments[trim($key)])){
           $this->config->departments[trim($key)]="";
         }
-        $field1 = array("string" => "<img src='images/lists/folder.png' alt='department'>","attach"=>"style='width:16px;text-align:center;'");
+        $field1 = array("string" => image("images/lists/folder.png"),"attach"=>"style='width:16px;  text-align:center;'");
         $field2 = array("string" => sprintf($linkopen,base64_encode($key),$val),"attach"=>" style='border:none'");
         $divSel->AddEntry(array($field1,$field2));
       }
@@ -509,7 +509,7 @@ class gofaxAccount extends plugin
           $this->config->departments[trim($key)]="";
         }
 
-        $field1 = array("string" => "<img src='images/lists/folder.png' alt='department'>","attach"=>"style='width:16px;text-align:center;'");
+        $field1 = array("string" => image("images/lists/folder.png"),"attach"=>"style='width:16px;  text-align:center;'");
         $field2 = array("string" => sprintf($linkopen,base64_encode($key),$val),"attach"=>" style='border:none'");
         $divSel->AddEntry(array($field1,$field2));
       }
