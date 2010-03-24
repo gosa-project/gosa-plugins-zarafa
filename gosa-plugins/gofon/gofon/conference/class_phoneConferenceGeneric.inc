@@ -272,8 +272,11 @@ class conference extends plugin
         }
       }
 
-      foreach(array("goFonConferenceOption_P","goFonConferenceOption_r","goFonConferenceOption_M","goFonConferenceOption_s",
-            "goFonConferenceOption_i","goFonConferenceOption_c","goFonConferenceOption_D") as $attrs){
+      foreach(
+          array("goFonConferenceOption_P","goFonConferenceOption_r",
+            "goFonConferenceOption_M","goFonConferenceOption_s",
+            "goFonConferenceOption_i","goFonConferenceOption_c",
+            "goFonConferenceOption_D") as $attrs){
 
         /* Acl can't contain _ so we remove it here. */
         $acl_name = preg_replace("/_/","",$attrs);
