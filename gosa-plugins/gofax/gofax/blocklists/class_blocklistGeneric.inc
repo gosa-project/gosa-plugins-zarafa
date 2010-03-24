@@ -102,7 +102,7 @@ class blocklistGeneric extends plugin
     if (isset($_POST['add_number']) && $_POST['number'] != ""){
       if (tests::is_phone_nr($_POST['number']) || preg_match ("/^[\/0-9 ()\^\.\$+*-]+$/",$_POST['number'])){
         $acl =  ($this->type == 1) ? "goFaxSBlocklist" : "goFaxRBlocklist";
-        if($this->acl_is_writeabel($acl)){
+        if($this->acl_is_writeable($acl)){
           $this->addNumber ($_POST['number']);
         }
       } else {
@@ -119,7 +119,7 @@ class blocklistGeneric extends plugin
     if (isset($_POST['delete_number']) && isset($_POST['numbers']) && count($_POST['numbers']) > 0){
 
       $acl = ($this->type == 1) ? "goFaxSBlocklist" : "goFaxRBlocklist";
-      if($this->acl_is_writeabel($acl)){
+      if($this->acl_is_writeable($acl)){
         $this->delNumber ($_POST['numbers']);
       }
     }
