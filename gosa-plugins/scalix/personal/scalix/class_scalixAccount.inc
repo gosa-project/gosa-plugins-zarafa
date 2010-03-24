@@ -160,7 +160,11 @@ class scalixAccount extends plugin
       "scalixLimitInboundMail", "scalixLimitNotifyUser", "scalixHideUserEntry", "scalixMailboxClass") as $val){
 
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", $this->getacl($val));
+    }
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $desc){
+      $smarty->assign($name."ACL", $this->getacl($name));
     }
 
     /* Fill checkboxes */
