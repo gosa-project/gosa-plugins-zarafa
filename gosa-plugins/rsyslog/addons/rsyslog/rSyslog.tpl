@@ -3,7 +3,7 @@
 </p>
 </div>
 <div class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;">
-<table summary="" class="contentboxb" border=0>
+<table summary="{t}Filter{/t}" class="contentboxb" border=0>
   <tr>
     <td>{image path="plugins/rsyslog/images/server.png"}&nbsp;{t}Server{/t}:
 </td>
@@ -71,7 +71,7 @@
 {else}
 
   <br>
-  <table style="width:100%;background-color: #B0B0B0;" cellspacing=1 cellpadding=2>
+  <table summary="{t}Entry list{/t}" style="width:100%;background-color: #B0B0B0;" cellspacing=1 cellpadding=2>
     <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
       <td>
         <a href='?plug={$plug_id}&amp;sort_value=DeviceReportedTime'>{t}Date{/t}
