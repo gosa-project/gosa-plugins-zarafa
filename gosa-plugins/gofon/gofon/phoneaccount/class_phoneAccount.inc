@@ -1340,8 +1340,8 @@ class phoneAccount extends plugin
 
 
       /* Every macro in the select box are available */
-      if((isset($_POST['macro']))){
-        $this->macro = $_POST['macro'];
+      if((isset($_POST['selectedMacro']))){
+        $this->macro = get_post('selectedMacro');
         $this->macrostillavailable=true;
       }
 

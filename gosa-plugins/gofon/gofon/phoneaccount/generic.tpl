@@ -1,11 +1,7 @@
 <table summary="{t}Phone numbers{/t}" style="width:100%">
  <tr>
   <td class='right-border'>
-   <h3>
-    {image path="plugins/gofon/images/banana.png"}
-
-    &nbsp;{t}Phone numbers{/t}
-   </h3>
+   <h3>{t}Phone numbers{/t}</h3>
 
 {if $multiple_support}
 
@@ -119,16 +115,14 @@
  <tr>
  <td style='width:50%'></td>
  </tr>
- <tr> <td style='width:50%'>  <h3>
-   {image path="plugins/gofon/images/select_macro.png"}
-
-   &nbsp;{t}Phone macro{/t}
-  </h3>
+ <tr> 
+  <td style='width:50%'>  
+  <h3>&nbsp;{t}Phone macro{/t}</h3>
   <table summary="{t}Phone macro{/t}">
    <tr>
     <td colspan=2>
 {render acl=$goFonMacroACL  checkbox=$multiple_support checked=$use_macro}
-     <select id="macro" name="macro" onchange="document.mainform.submit()" size=1>
+     <select id="macro" name="selectedMacro" onchange="document.mainform.submit()" size=1>
       {html_options options=$macros selected=$macro}
       <option disabled>&nbsp;</option>
      </select>
