@@ -9,7 +9,7 @@
 {else}
 
 
-<table width="100%">
+<table width="100%" summary="{t}License usage{/t}">
   <tr>
     <td style='width: 50%; padding-right:5px; ' class='right-border'>        <h3>{t}Reserved for{/t}</h3>
 {render acl=$boundToHostACL}
