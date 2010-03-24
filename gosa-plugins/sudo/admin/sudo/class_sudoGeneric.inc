@@ -635,6 +635,7 @@ class sudo extends plugin
           "plCategory"    => array("sudo" => array("objectClass" => "sudoRole", "description" => _("Sudo role"))),
 
           "plProvidedAcls"    => array(
+            "accessTo"          => _("System trust"),
             "cn"                => _("Name"),
             "description"       => _("Description"),
             "sudoUser"          => _("Users"),

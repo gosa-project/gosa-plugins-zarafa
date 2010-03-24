@@ -538,7 +538,9 @@ class sudoOption extends plugin
           "plPriority"    => 2,
           "plSection"     => array("administration"),
           "plCategory"    => array("sudo"),
-          "plProvidedAcls"    => array()
+          "plProvidedAcls"    => array(
+            "sudoOption"  => _("Sudo options") 
+            )
         ));
   }
 
