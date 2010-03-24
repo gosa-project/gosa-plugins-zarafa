@@ -1329,13 +1329,13 @@ class phoneAccount extends plugin
 
       /* Save checkbox */
       $tmp = preg_replace("/[^a-z]/i","",$this->goFonDeliveryMode);
-      if($this->acl_is_writeable("goFonDeliveryMode",$SkipWrite)){
-        if(isset($_POST['fon_to_mail']) && !preg_match("/M/",$this->goFonDeliveryMode)){
-          $tmp .= "M";
-        }elseif(!isset($_POST['fon_to_mail']) && preg_match("/M/",$this->goFonDeliveryMode)){
-          $tmp  = preg_replace ("/M/","",$tmp);
-        }
-      }
+//     if($this->acl_is_writeable("goFonDeliveryMode",$SkipWrite)){
+//       if(isset($_POST['fon_to_mail']) && !preg_match("/M/",$this->goFonDeliveryMode)){
+//         $tmp .= "M";
+//       }elseif(!isset($_POST['fon_to_mail']) && preg_match("/M/",$this->goFonDeliveryMode)){
+//         $tmp  = preg_replace ("/M/","",$tmp);
+//       }
+//     }
       $this->goFonDeliveryMode= "[".$tmp."]";
 
 
