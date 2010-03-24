@@ -1,9 +1,9 @@
 <h3>{t}Mail settings{/t}</h3>
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Paste mail settings{/t}">
 
  	<tr>
   		<td colspan=2>   
-   			<table summary="">
+   			<table summary="{t}Address settings{/t}">
     			<tr>
      				<td>
 						<LABEL for="mail">{t}Primary address{/t}</LABEL>{$must}
@@ -18,7 +18,7 @@
  	</tr>
  	<tr>
 		<td>
-			<table style='width:100%; '>
+			<table style='width:100%;' summary="{t}Additional mail settings{/t}">
 
 				<tr>
 					<td style='width:50%; ' class='right-border'>
