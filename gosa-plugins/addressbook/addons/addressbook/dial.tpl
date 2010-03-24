@@ -1,4 +1,4 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Dial entry{/t}">
 
 
 <tr style="background-color: #E8E8E8; height:26px;font-weight:bold;">
