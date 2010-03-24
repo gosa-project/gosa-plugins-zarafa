@@ -2,7 +2,7 @@
 {if $type == "FOLDER"}
 <h3>{$entry.NAME}</h3>
 
-<table>
+<table summary="{t}Edit application image{/t}" >
 	<tr>
 		<td>
 			{t}Folder image{/t}
@@ -40,7 +40,7 @@
 
 {if $type == "ENTRY"}
 <h3>{t}Application settings{/t}</h3>
-<table>
+<table summary="{t}Edit application settings{/t}">
 	<tr>
 		<td>{t}Name{/t}</td>
 		<td>{$entry.NAME}</td>
