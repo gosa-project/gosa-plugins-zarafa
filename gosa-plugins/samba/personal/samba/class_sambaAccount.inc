@@ -645,6 +645,7 @@ class sambaAccount extends plugin
     /* Get user infos
      */
     foreach($user_attributes as $attr){
+      $$attr =  "unset";
       if(isset($this->attrs[$attr])){
         $$attr = $this->attrs[$attr][0];
       }
@@ -669,6 +670,13 @@ class sambaAccount extends plugin
     /* DOMAIN Attributes 
      */
 
+    /* sambaMinPwdLength: Password length has a default of 5 
+     */
+    if($sambaSID == "unset"){
+      $sambaSID  = "<i>("._("unset").")</i>";
+    }
+
+    /* sambaPwdHistoryLength: Length of Password History Entries (default: 0 => off)
     /* sambaMinPwdLength: Password length has a default of 5 
      */
     if($sambaMinPwdLength == "unset" || $sambaMinPwdLength == 5){
@@ -809,7 +817,7 @@ class sambaAccount extends plugin
 
     $str =
       "\n<div style='height:200px; overflow: auto;'>".
-      "\n<table style='width:100%;'>".
+      "\n<table style='width:100%;' summary=\""._("Domain settings")."\">".
       "\n<tr><td><b>"._("Domain attributes")."</b></td></tr>". 
       "\n<tr><td>"._("Min password length").":           </td><td>".$sambaMinPwdLength."</td></tr>". 
       "\n<tr><td>"._("Min password length").":           </td><td>".$sambaMinPwdLength."</td></tr>". 
