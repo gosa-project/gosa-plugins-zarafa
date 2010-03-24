@@ -1,4 +1,4 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Entry info{/t}">
 
 
  <tr style="background-color: #E8E8E8; height:26px;font-weight:bold;">
@@ -12,7 +12,7 @@
  <tr style="background-color: white">
   <td colspan=2>
 
-   <table summary="" width="100%" cellspacing=2 cellpadding=4>
+   <table summary="{t}Entry info{/t}" width="100%" cellspacing=2 cellpadding=4>
     <tr>
      <td style='width:50%; background-color: #F0F0F0'>
 
@@ -22,7 +22,7 @@
        {t}Personal{/t}
       </h3>
  
-      <table summary="" width="100%">
+      <table summary="{t}Entry info{/t}" width="100%">
        <tr>
         <td style='width:40%;'>
          {t}Name{/t}
@@ -59,7 +59,7 @@
        {t}Private{/t}
       </h3>
 
-      <table summary="" width="100%">
+      <table summary="{t}Entry info{/t}" width="100%">
         <tr>
          <td style='width: 40%;'>
 
@@ -109,11 +109,11 @@
         {t}Organizational{/t}
        </h3>
 
-       <table summary="" width="100%">
+       <table summary="{t}Entry info{/t}" width="100%">
         <tr>
          <td width='50%'>
   
-          <table summary="" width="100%">
+          <table summary="{t}Entry info{/t}" width="100%">
            <tr>
             <td style='width:40%;'>
              {t}Company{/t}
@@ -160,7 +160,7 @@
          <td>
 
 
-          <table summary="" width="100%">
+          <table summary="{t}Entry info{/t}" width="100%">
            <tr>
             <td style='vertical_align:top; width:40%;'>
              {t}Address{/t}
