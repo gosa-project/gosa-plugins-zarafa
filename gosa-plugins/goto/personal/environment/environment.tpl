@@ -199,7 +199,7 @@
  <tr>
   <td style='width:50%;' class='right-border'>
 
-   <h3><label for="gotoShare">{t}Shares{/t}</label></h3>
+   <h3>{t}Shares{/t}</h3>
    <table style="width:100%" summary="{t}Share settings{/t}">
     <tr>
      <td>
@@ -286,7 +286,7 @@
    <table style="width:100%" summary="{t}Hotplug device settings{/t}">
     <tr>
      <td>
-      {render acl=$gotoHotplugDeviceACL}
+      {render acl=$gotoHotplugDeviceDNACL}
       <select name="gotoHotplugDevice_post[]" size=5  style="width:100%;" id="gotoHotplugDevice_post" multiple>
        {if $multiple_support}
        {foreach from=$gotoHotplugDevices item=item key=key}
@@ -306,11 +306,11 @@
     </tr>
     <tr>
      <td>
-      {render acl=$gotoHotplugDeviceACL}
+      {render acl=$gotoHotplugDeviceDNACL}
       <button type='submit' name='gotoHotplugDeviceUse'>{msgPool type=addButton}</button>
       
       {/render}
-      {render acl=$gotoHotplugDeviceACL}
+      {render acl=$gotoHotplugDeviceDNACL}
       <button type='submit' name='gotoHotplugDeviceDel' {if !$gotoHotplugDevices} disabled {/if}>{msgPool type=delButton}</button>
       {/render}
      </td>
