@@ -1,9 +1,9 @@
-<table style='table-layout:fixed; width:100%; table-layout:auto;' summary="">
+<table style='table-layout:fixed; width:100%; table-layout:auto;' summary="{t}Entry info{/t}">
 
 <tr>
   <td>
 
-   <table style='width:100%;' summary="">
+   <table style='width:100%;' summary="{t}Entry info{/t}">
 
 
     <colgroup>
@@ -21,7 +21,7 @@
     {$search_result}
    </table>
 
-   <table style='text-align:center; width:100%;' summary="">
+   <table style='text-align:center; width:100%;' summary="{t}Entry info{/t}">
 
     <tr>
      <td>{$range_selector}</td>
@@ -77,12 +77,12 @@
 </p>
    </div>
    <div class="contentboxb">
-    <table style='width:100%;' summary="">
+    <table style='width:100%;' summary="{t}Entry info{/t}">
 
      {$alphabet}
     </table>
     
-<table style='width:100%;' summary="">
+<table style='width:100%;' summary="{t}Entry info{/t}">
 
 	<tr>
 		<td>
@@ -92,7 +92,7 @@
 	</tr>
 </table>
 
-<table style='width:100%;' summary="">
+<table style='width:100%;' summary="{t}Entry info{/t}">
 
 	<tr>
 		<td>
@@ -107,7 +107,7 @@
 		</td>
 	</tr>
 </table>
-<table style='width:100%;' summary="">
+<table style='width:100%;' summary="{t}Entry info{/t}">
 
 	<tr>
 		<td>
@@ -122,7 +122,7 @@
 	    </td>
 	</tr>
 </table>
-<table style='width:100%;' summary="">
+<table style='width:100%;' summary="{t}Entry info{/t}">
 
 	<tr>
 		<td><label for="search_for">{image path="{$search_image}" title="{t}Search for{/t}"}
