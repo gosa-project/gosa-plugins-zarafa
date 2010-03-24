@@ -68,9 +68,9 @@ class environment extends plugin
 
   var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDeviceDN",
       "gotoXResolution","gotoProfileQuota",
-      "gotoLogonScripts","gotoLogonScript",
+      "gotoLogonScript",
       "gotoPrinter", "gosaDefaultPrinter",
-      "gotoShares","gotoShare",
+      "gotoShare",
       "gotoKioskProfile");
   var $objectclasses      = array("gotoEnvironment"); // Specifies the objectClass which contains the attributes edited here 
   var $cn;
@@ -509,7 +509,7 @@ class environment extends plugin
       $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
     }
 
-    foreach(array("gotoHotplugDevice","gotoProfileFlagC","gotoProfileFlagL") as $s_attr){
+    foreach(array("gotoProfileFlagC","gotoProfileFlagL") as $s_attr){
       $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
     }
 
@@ -1115,7 +1115,7 @@ class environment extends plugin
       plugin::save_object();
       foreach($this->attributes as $s_attr){
         if((!isset($_POST[$s_attr])) || 
-            in_array($s_attr,array("gosaDefaultPrinter","gotoShares","gotoHotplugDevices","gotoPrinter","gotoLogonScripts","uid"))) continue;
+            in_array($s_attr,array("gosaDefaultPrinter","gotoShare","gotoHotplugDevices","gotoPrinter","gotoLogonScripts","uid"))) continue;
         if(!$this->acl_is_writeable($s_attr)){
           continue;
         }else{ 
@@ -1777,11 +1777,13 @@ class environment extends plugin
 
           "plProvidedAcls"  => array(
 
+            "gotoPrinter"         => _("Printer") ,
             "gotoProfileServer"   => _("Profile server") ,
+            "gosaDefaultPrinter"  => _("Default printer"),
             "gotoProfileQuota"    => _("Profile quota") ,
             "gotoProfileFlagC"    => _("Cache profile localy") ,
-            "gotoShare"           => _("Shares"),
-            "gotoHotplugDevice"   => _("Hotplug devices"),
+            "gotoShare"          => _("Shares"),
+            "gotoHotplugDeviceDN" => _("Hotplug devices"),
             "gotoKioskProfile"    => _("Kiosk profile") ,
             "gotoProfileFlagL"    => _("Resolution changeable during session") ,
             "gotoXResolution"     => _("Resolution") ,
