@@ -1,10 +1,10 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Mail settings{/t}">
 
  <tr>
   <td style='width:50%; '>
 
    <h3>{t}Generic{/t}</h3>
-   <table summary="">
+   <table summary="{t}Address and mail server settings{/t}">
     <tr>
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
      <td>
@@ -135,7 +135,7 @@
 <hr>
 
 {if !$multiple_support}
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Mail folder configuration{/t}">
 
  <tr>
   <td style='width:50%; ' class='right-border'>
@@ -144,7 +144,7 @@
 		{t}IMAP shared folders{/t}
    </h3>
    <input type='hidden' name='mail_acls_posted' value='1'>
-   <table summary="" cellpadding=0 border=0>
+   <table summary="{t}Folder permissions{/t}" cellpadding=0 border=0>
 	{foreach from=$folder_acls item=item key=user}
 		<tr>
 		{if $user == "__anyone__"}
@@ -197,7 +197,7 @@
 <hr>
 
 <h3>{t}Advanced mail options{/t}</h3> 
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Advanced mail options{/t}">
 
  <tr>
   <td>
