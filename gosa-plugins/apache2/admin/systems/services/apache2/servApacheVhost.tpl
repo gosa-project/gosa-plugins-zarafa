@@ -3,7 +3,7 @@
 <tr>
 	<td style='width:100%;'>
 		{$VhostList}
-		{render acl=$VirtualHostACL}
+		{render acl=$VirtualHostsACL}
 		  <button type='submit' name='AddVhost'>{t}Add{/t}</button>
 		{/render}
 	</td>
