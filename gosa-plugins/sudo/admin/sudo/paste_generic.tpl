@@ -1,5 +1,5 @@
 <h3>{t}Generic{/t} - {t}global defaults{/t}</h3>
-<table> 
+<table summary="{t}Paste sudo entry{/t}"> 
  <tr>
   <td>
    {t}Name{/t}
