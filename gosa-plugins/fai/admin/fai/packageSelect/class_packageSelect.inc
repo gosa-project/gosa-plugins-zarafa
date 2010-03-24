@@ -26,6 +26,8 @@ class packageSelect extends management
   protected $skipFooter = TRUE;
   protected $skipHeader = TRUE;
 
+  var $plHeadline = "Package selection";
+
   function __construct($config,$ui)
   {
     $this->config = $config;
