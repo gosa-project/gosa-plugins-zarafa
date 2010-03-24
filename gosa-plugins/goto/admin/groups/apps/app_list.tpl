@@ -1,4 +1,4 @@
-<table style="width:100%;">
+<table style="width:100%;" summary="{t}Group application settings{/t}">
 	{if $enableReleaseManagement}
 	<tr>
 		<td>
@@ -31,7 +31,7 @@
 					padding:5px; 
 					">
 			
-<table style='width:100%' cellpadding=0 cellspacing=0>
+<table style='width:100%' cellpadding=0 cellspacing=0 summary="{t}Application menu{/t}">
 {foreach from=$entries item=item key=key}
 	{if $item.TYPE == "OPEN"}
 		<tr>
@@ -39,7 +39,7 @@
 		</tr>
 		<tr>
 			<td style='padding-left:20px;' colspan=3>
-				<table style='width:100%;' cellpadding=0 cellspacing=0>
+				<table style='width:100%;' cellpadding=0 cellspacing=0 summary="{t}Sub entry{/t}">
 
 	{elseif $item.TYPE == "CLOSE"}
 				</table>
@@ -87,14 +87,10 @@
 				<b>{$item.NAME}&nbsp; </b> 
 			</td>
 			<td style='width:100px;text-align:right; background-color: transparent;'>
-				{image title="{t}Move up{/t}"}
-					name='up_{$item.UNIQID}' src='images/move_object_up.png'>
-				{image title="{t}Move down{/t}"}
-					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
-				{image title="{t}Remove{/t}"}
-					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
-				{image title="{t}Edit{/t}"}
-					name='app_entry_edit{$item.UNIQID}' src='images/lists/edit.png'>
+				{image title="{t}Move up{/t}" action="up_{$item.UNIQID}" path='images/lists/sort-up.png'}
+				{image title="{t}Move down{/t}" action="down_{$item.UNIQID}" path='images/lists/sort-down.png'}
+				{image title="{t}Edit{/t}" action="app_entry_edit{$item.UNIQID}" path='images/lists/edit.png'}
+				{image title="{t}Remove{/t}" action="del_{$item.UNIQID}" path='images/lists/trash.png'}
 			</td>
 		</tr>
 	{elseif $item.TYPE == "SEPERATOR"}
@@ -104,18 +100,13 @@
 		{else}
 			<tr class="rowxp1">
 		{/if}
-			<td style='background-color: transparent;width:22px; padding-top:5px;padding-bottom:5px;' colspan="2">
+			<td style='background-color: transparent;width:22px; padding-top:8px;padding-bottom:8px;' colspan="2">
 				<div style="height:3px; width:100%; background-color:#BBBBBB;"></div>
 			</td>
             <td style='width:100px;text-align:right; background-color: transparent;'>
-                {image title="{t}Move up{/t}"}
-                    name='up_{$item.UNIQID}' src='images/move_object_up.png'>
-                {image title="{t}Move down{/t}"}
-                    name='down_{$item.UNIQID}' src='images/move_object_down.png'>
-                {image title="{t}Remove{/t}"}
-                    name='del_{$item.UNIQID}' src='images/lists/trash.png'>
-				{image path="images/empty.png"}
-
+                {image title="{t}Move up{/t}" action="up_{$item.UNIQID}" path='images/lists/sort-up.png'}
+                {image title="{t}Move down{/t}" action="down_{$item.UNIQID}" path='images/lists/sort-down.png'}
+                {image title="{t}Remove{/t}" action="del_{$item.UNIQID}" path='images/lists/trash.png'}
             </td>
 		</tr>
 	{elseif $item.TYPE == "ENTRY"}
@@ -135,14 +126,10 @@
 				{$item.NAME} {$item.INFO}
 			</td>
 			<td style='width:100px;text-align:right;background-color: transparent;'>
-				{image title="{t}Move up{/t}"}
-					name='up_{$item.UNIQID}' src='images/move_object_up.png'>
-				{image title="{t}Move down{/t}"}
-					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
-				{image title="{t}Remove{/t}"}
-					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
-				{image title="{t}Edit{/t}"}
-					name='app_entry_edit{$item.UNIQID}' src='images/lists/edit.png'>
+				{image title="{t}Move up{/t}" action="up_{$item.UNIQID}" path='images/lists/sort-up.png'}
+				{image title="{t}Move down{/t}" action="down_{$item.UNIQID}" path='images/lists/sort-down.png'}
+				{image title="{t}Edit{/t}" action="app_entry_edit{$item.UNIQID}" path='images/lists/edit.png'}
+				{image title="{t}Remove{/t}" action="del_{$item.UNIQID}" path='images/lists/trash.png'}
 			</td>
 		</tr>
 	{/if}

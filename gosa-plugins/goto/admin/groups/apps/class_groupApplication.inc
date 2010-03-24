@@ -447,7 +447,7 @@ class appgroup extends plugin
     $base_back = preg_replace("/^[^,]+,/","",$this->curbase);
     if((strlen($base_back)>= strlen($this->config->current['BASE']))&&($this->curbase!=$this->config->current['BASE'])){
       $div->AddEntry(array(
-            array("string"=>sprintf($linkopen,base64_encode($base_back),".. ["._("back")."]"),
+            array("string"=>sprintf($linkopen,postEncode($base_back),".. ["._("back")."]"),
               "attach"=>"style='border:0px;'")
             ));
     }
@@ -455,8 +455,8 @@ class appgroup extends plugin
     /* Append departments for current base */
     foreach($departments as $key => $app){
       $div->AddEntry(array(
-            array("string"=>"<img class='center' src='images/lists/folder.png' alt='"._("department")."'>&nbsp;".sprintf($linkopen,
-                base64_encode($key),$app),
+            array("string"=>image('images/lists/folder.png')."&nbsp;".
+                sprintf($linkopen,postEncode($key),$app),
               "attach"=>"style='border:0px;'")
             ));
     }
@@ -478,7 +478,7 @@ class appgroup extends plugin
       }
       $div->AddEntry(array(
             array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
-              "<img class='center' src='plugins/goto/images/select_application.png' alt='"._("application")."'>&nbsp;".$name,
+              image('plugins/goto/images/select_application.png')."&nbsp;".$name,
               "attach"=>"style='border:0px;'")
             ));
     }
@@ -841,25 +841,21 @@ class appgroup extends plugin
 
       if(preg_match("/del_/",$name)){
         $id = preg_replace("/^del_/","",$name);
-        $id = preg_replace("/_(x|y)$/","",$id);
         $this->_remove_entry_id($id);
         break;
       }
       if(preg_match("/app_entry_edit/",$name)){
         $id = preg_replace("/^app_entry_edit/","",$name);
-        $id = preg_replace("/_(x|y)$/","",$id);
         $this->_edit_entry_edit($id);
         break;
       }
       if(preg_match("/up_/",$name)){
         $id = preg_replace("/^up_/","",$name);
-        $id = preg_replace("/_(x|y)$/","",$id);
         $this->_move_entry($id,"up");
         break;
       }
       if(preg_match("/down_/",$name)){
         $id = preg_replace("/^down_/","",$name);
-        $id = preg_replace("/_(x|y)$/","",$id);
         $this->_move_entry($id,"down");
         break;
       }
@@ -874,7 +870,7 @@ class appgroup extends plugin
       $this->_check_missing_release($this->FAIrelease);
     }
     if(isset($_GET['act']) && $_GET['act'] == 'depopen'){
-      $this->curbase = base64_decode($_GET['depid']);
+      $this->curbase = postDecode($_GET['depid']);
     }
     if(isset($_POST['add_to_folder']) && isset($_POST['folder'])){
       $folder = $_POST['folder'];
