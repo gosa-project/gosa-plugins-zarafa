@@ -45,7 +45,7 @@
   </td>
   <td class='left-border'><!-- Upper right -->
 
-   <table summary=""> 
+   <table summary="{t}Goto settings{/t}"> 
     <tr>
      <td>{t}Mode{/t}</td>
      <td>
