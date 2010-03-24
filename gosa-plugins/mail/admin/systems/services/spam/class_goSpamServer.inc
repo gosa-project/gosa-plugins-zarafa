@@ -168,7 +168,7 @@ class gospamserver extends goService{
     /* Assign checkbox states */
     foreach($this->Flags as $Flag){
       $var = "saFlags".$Flag;
-      $smarty->assign("saFlags".$Flag."ACL", $this->getacl($Flag));
+      $smarty->assign("saFlags".$Flag."ACL", $this->getacl($var));
       if($this->$var){
         $smarty->assign("saFlags".$Flag."CHK"," checked " );
       }else{
@@ -333,12 +333,17 @@ class gospamserver extends goService{
             "saRequiredScore"   => _("Required score"),
             "saRule"            => _("Rules"),
 
-            "saFlagB"           => _("Enable use of bayes filtering"),
-            "saFlagb"           => _("Enabled bayes auto learning"),
-            "saFlagC"           => _("Enable RBL checks"),
-            "saFlagR"           => _("Enable use of Razor"),
-            "saFlagD"           => _("Enable use of DDC"),
-            "saFlagP"           => _("Enable use of Pyzor"))
+
+            "start"           => _("Start"),
+            "stop"            => _("Stop"),
+            "restart"         => _("Restart"),
+
+            "saFlagsB"           => _("Enable use of bayes filtering"),
+            "saFlagsb"           => _("Enabled bayes auto learning"),
+            "saFlagsC"           => _("Enable RBL checks"),
+            "saFlagsR"           => _("Enable use of Razor"),
+            "saFlagsD"           => _("Enable use of DDC"),
+            "saFlagsP"           => _("Enable use of Pyzor"))
           ));
   }
 
