@@ -5,7 +5,7 @@
 </div>
 <div class="contentboxb">
   <div >
-	<table width="100%" summary="">
+	<table width="100%" summary="{t}Filter{/t}">
 		<tr>
 			<td>
 	{image path="images/lists/search.png"}
@@ -67,7 +67,7 @@
 <b>{t}Search returned no results{/t}...</b>
 {else}
 
-<table style='width: 100%; ' summary="">
+<table style='width: 100%; ' summary="{t}Entries{/t}">
  border="0" cellpadding="2" cellspacing="1" rules="cols">
 	<tr style="background-color: rgb(232, 232, 232); height: 26px; font-weight: bold;">
 		<td style='width:20px'>
@@ -151,7 +151,7 @@
 {/foreach}
 </table>
 
- <table style='width:100%; text-align:center;' summary="">
+ <table style='width:100%; text-align:center;' summary="{t}Page selection{/t}">
 
   <tr>
    <td>{$range_selector}</td>
