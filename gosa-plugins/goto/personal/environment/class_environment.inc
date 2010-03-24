@@ -807,8 +807,8 @@ class environment extends plugin
      */
 
     /* We have to delete the selected hotplug from the list*/
-    if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice_post'])) && $this->acl_is_writeable("gotoHotplugDevice")){
-      if($this->acl_is_writeable("gotoHotplugDevice")){
+    if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice_post'])) && $this->acl_is_writeable("gotoHotplugDeviceDN")){
+      if($this->acl_is_writeable("gotoHotplugDeviceDN")){
         foreach($_POST['gotoHotplugDevice_post'] as $name){
           unset($this->gotoHotplugDevices[$name]);
         }
@@ -816,7 +816,7 @@ class environment extends plugin
     }
 
     /* There are already defined hotplugs from other users we could use */
-    if(isset($_POST['gotoHotplugDeviceUse']) && $this->acl_is_writeable("gotoHotplugDevice")){
+    if(isset($_POST['gotoHotplugDeviceUse']) && $this->acl_is_writeable("gotoHotplugDeviceDN")){
       $tmp  =array();
       foreach($this->gotoHotplugDevices as $plugs){
         $tmp[] = $plugs['name'];
