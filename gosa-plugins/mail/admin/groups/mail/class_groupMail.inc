@@ -698,13 +698,10 @@ class mailgroup extends plugin
       }
 
       $opts = array(
-          "R"   => "use_mailsize_limit",
-          "S"   => "use_spam_filter",
-          "V"   => "use_vacation",
-          "C"   => "own_script",
           "I"   => "only_local");
 
       foreach($opts as $flag => $post){
+        
         if($this->acl_is_writeable("gosaMailDeliveryMode".$flag)){
           if(!preg_match("/".$flag."/",$tmp) && isset($_POST[$post])){
             $tmp.= $flag;
