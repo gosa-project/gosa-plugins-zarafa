@@ -675,6 +675,9 @@ class gofaxAccount extends plugin
         }elseif($tmp & 64){
           $tmp &= !64;
         }
+        if(isset($_POST['goFaxPrinter'])){
+          $this->goFaxPrinter =get_post('goFaxPrinter');
+        }
       }
       $this->goFaxDeliveryMode = $tmp;
 
