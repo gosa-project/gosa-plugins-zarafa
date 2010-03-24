@@ -26,6 +26,8 @@ class hotplugSelect extends management
   protected $skipFooter = TRUE;
   protected $skipHeader = TRUE;
 
+  var $plHeadline = "Device selection";
+
   function __construct($config,$ui)
   {
     $this->config = $config;
