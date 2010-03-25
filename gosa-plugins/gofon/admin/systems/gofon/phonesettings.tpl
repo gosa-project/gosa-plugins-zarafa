@@ -1,6 +1,6 @@
 <h3>{t}Advanced phone settings{/t}</h3>
 
-<table summary="" style="width:100%" border=0>
+<table summary="{t}Advanced phone settings{/t}" style="width:100%" border=0>
 	<tr>
 		<td colspan="2">
 		<LABEL for="selected_categorie">{t}Phone type{/t}</LABEL>{$must}
@@ -21,7 +21,7 @@
 	<tr>
 		<td style='width:50%; ' class='right-border'>
 
-			<table summary="" border=0>
+			<table summary="{t}Generic settings{/t}" border=0>
 			 <tr>
 				<td>
 					<LABEL for="goFonType">{t}Mode{/t}</LABEL>{$must}
@@ -50,7 +50,7 @@
 		</table>
 	   </td>
 	   <td>
-		<table summary="" border=0>
+		<table summary="{t}Additional settings{/t}" border=0>
 			<tr>
 				<td >
 					<LABEL for="goFonDefaultIP">{t}Default IP{/t}</LABEL>
@@ -84,7 +84,7 @@
 	<tr>
 		<td style='width:50%; ' class='right-border'>
 
-			<table summary="" width="100%">
+			<table summary="{t}Advanced phone settings{/t}" width="100%">
 			 <tr>
 				<td>
 					<LABEL for="goFonType">{t}Modus{/t}{$must}</LABEL>
@@ -192,7 +192,7 @@
 		</td>
 		<td>
 
-			 <table summary="" width="100%">
+			 <table summary="{t}Permissions{/t}" width="100%">
                <tr>
                     <td>
 
@@ -251,7 +251,7 @@
 {if $selected_categorie eq '2'}
 	<tr>
 		<td style="width:50%">
-			<table summary="" width="100%">
+			<table summary="{t}Advanced phone settings{/t}" width="100%">
 				<tr>
 					<td>
 						<LABEL for="goFonMSN">{t}MSN{/t}</LABEL>&nbsp;
