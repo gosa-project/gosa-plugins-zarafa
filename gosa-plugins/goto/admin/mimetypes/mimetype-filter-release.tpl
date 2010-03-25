@@ -1,43 +1,25 @@
-<div class="contentboxh">
- <p class="contentboxh">
-  {image path="images/launch.png" align="right"}{t}Filter{/t}
+<div id="mainlist">
+  <div class="mainlist-header">
+   <p>{$HEADLINE}&nbsp;{$SIZELIMIT}</p>
+   <div class="mainlist-nav">
+    <table summary="{$HEADLINE}">
+     <tr>
+      <td>{$ROOT}</td>
+      <td>{$BACK}</td>
+      <td>{$HOME}</td>
+      <td>{$RELOAD}</td>
+      <td class="left-border">{t}Base{/t} {$BASE}</td>
+      <td class="left-border">{$ACTIONS}</td>
+      <td class="left-border">{$FILTER}</td>
+     </tr>
+    </table>
+   </div>
+  </div>
 
- </p>
+  {$LIST}
 </div>
 
-<div class="contentboxb">
+<div class="clear"></div>
 
-<div style="border-top:1px solid #AAAAAA"></div>
+<input type="hidden" name="ignore">
 
- <table summary="" style="width:100%;">
-  <tr>
-   <td>
-     <LABEL for='RELEASE'>{t}Release{/t}</LABEL>&nbsp;{$RELEASE}<br>
-   </td>
-  </tr>
- </table>
-
- <table style='width:100%;' summary="">
-
-  <tr>
-   <td>
-    <label for="NAME">
-     {image path="images/lists/search.png"}&nbsp;Name
-
-    </label>
-   </td>
-   <td>
-    {$NAME}
-   </td>
-  </tr>
- </table>
-
- <table style='background:#EEEEEE;' summary="">
-
-  <tr>
-   <td width="100%" align="right">
-    {$APPLY}
-   </td>
-  </tr>
- </table>
-</div>
