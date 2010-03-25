@@ -525,7 +525,7 @@ class application extends plugin
     $vars = array("cn");
 
     $str ="<h3>"._("Application settings")."</h3>
-      <table>
+      <table summary=\""._("Application settings")."\">
       <tr>
       <td>".
       _("Application name"). 
