@@ -14,10 +14,10 @@
 <br>
 </p>
 <br>
-<table summary="" style='width:100%'>
+<table summary="{t}FAI class creator{/t}" style='width:100%' >
  <tr>
   <td style='width:49%'>
-   <table summary="">
+   <table summary="{t}Class settings{/t}">
     <tr>
      <td>
        <input type=radio name="classSelector" value="1" checked>
@@ -40,7 +40,7 @@
 
   </td>
   <td>
-   <table summary="" {$grey}>
+   <table summary="{t}Class name selector{/t}" {$grey}>
     <tr>
      <td>
        <input type=radio name="classSelector" value="2" {$ClassNamesAvailable}>
