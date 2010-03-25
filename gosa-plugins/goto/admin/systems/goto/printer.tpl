@@ -1,10 +1,10 @@
-<table summary="" width="100%">
+<table summary="{t}Printer{/t}" width="100%">
  <tr>
   <td style='width:50%; ' class='right-border'>
 
 {if $StandAlone}
    <h3>{t}General{/t}</h3>
-   <table summary="">
+   <table summary="{t}Generic settings{/t}">
     <tr>
      <td><LABEL for="cn" >{t}Printer name{/t}</LABEL>{$must}</td>
      <td>
@@ -37,7 +37,7 @@
   <td>
 {/if}
    <h3>{t}Details{/t}</h3>
-   <table summary="">
+   <table summary="{t}Details{/t}">
 {if !$StandAlone}
       <tr> 
 	 <td><LABEL for="description">{t}Description{/t}</LABEL></td> 
@@ -74,7 +74,7 @@
     </tr>
 {/if}
    </table>
-   <table summary="">
+   <table summary="{t}Driver configuration{/t}">
     <tr> 
      <td>
       <br>
@@ -97,11 +97,11 @@
 <hr>
 
 <h3>{t}Permissions{/t}</h3>
-<table summary="" width="100%">
+<table summary="{t}Permissions{/t}" width="100%">
  <tr>
   <td style='width:50%' class='right-border'>
 
-   <table style="width:100%" summary=''>
+   <table style="width:100%" summary='{t}Permissions{/t}'>
     <tr>
      <td>
       {t}Users which are allowed to use this printer{/t}<br>
@@ -124,7 +124,7 @@
  
   </td>
   <td>
-   <table style="width:100%" summary=''>
+   <table style="width:100%" summary='{t}Permissions{/t}'>
     <tr>
      <td>
       {t}Users which are allowed to administrate this printer{/t}<br>
