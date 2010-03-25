@@ -4,7 +4,7 @@
 </div>
 <div class="contentboxb">
  
-<table style='padding:0px;' class='contentboxb' summary="">
+<table style='padding:0px;' class='contentboxb' summary="{t}DAK key ring{/t}">
 
 	<tr>
 		<td width="50%">
