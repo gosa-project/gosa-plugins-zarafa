@@ -1,8 +1,8 @@
 <h3>{t}Generic{/t}</h3>
-<table width="100%" summary="{t}Generic{/t}">
+<table width="100%" summary="{t}IMAP service{/t}">
 	<tr>
 		<td style='width:50%;'>
-			<table summary="">
+			<table summary="{t}Generic settings{/t}">
 				<tr>
 					<td>{t}Server identifier{/t}{$must}
 					</td>
