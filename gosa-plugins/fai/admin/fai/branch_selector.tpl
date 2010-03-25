@@ -3,7 +3,7 @@
 </p>
    </div>
    <div class="contentboxb">
-        <table style='width:100%;' summary="">
+        <table style='width:100%;' summary="{t}FAI release selector{/t}">
 
      <tr>
       <td>
@@ -14,7 +14,7 @@
       </td>
      </tr>
         </table>
-        <table summary="" style="width:100%;">
+        <table summary="{t}FAI release selector{/t}" style="width:100%;">
      <tr>
       <td>
     {if $allow_create}
