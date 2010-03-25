@@ -14,10 +14,10 @@
 <br>
 <br>
 </p>
-<table summary="" style='width:100%'>
+<table summary="{t}System activation{/t}" style='width:100%'>
  <tr>
   <td style='width:49%'>
-   <table summary="">
+   <table summary="{t}Target system type selection{/t}">
     <tr>
      <td> 
       {t}System type{/t}&nbsp;
@@ -30,7 +30,7 @@
    </table>
   </td>
   <td>
-   <table summary="">
+   <table summary="{t}Object group selection{/t}">
     <tr>
      <td> 
       {t}Choose an object group as template{/t}&nbsp;
