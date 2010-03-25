@@ -1,9 +1,9 @@
 <input type="hidden" name="SubObjectFormSubmitted" value="1">
-<table width="100%" summary="">
+<table width="100%" summary="{t}FAI variable entry{/t}">
 	<tr>
 		<td valign="top" width="50%">
 			<h3>{t}Generic{/t}</h3>
-				<table summary="">
+				<table summary="{t}Generic settings{/t}">
 					<tr>
 						<td>
 							{t}Name{/t}{$must}&nbsp;
@@ -32,7 +32,7 @@
         </td>
 		<td valign="top">
 				<h3>{t}Variable attributes{/t}</h3>
-				<table  summary="" width="100%">
+				<table  summary="{t}Variable attributes{/t}" width="100%">
 					<tr>
 						<td>
 							<LABEL for="Content">
