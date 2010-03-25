@@ -1,32 +1,25 @@
-<table style='width:100%;height:100%; ' summary="">
+<div id="mainlist">
 
-  <tr>
-    <td style='width:100%;'>
+  <div class="mainlist-header">
+   <p>{$HEADLINE}&nbsp;{$SIZELIMIT}</p>
+   <div class="mainlist-nav">
+    <table summary="{$HEADLINE}">
+     <tr>
+      <td>{$ROOT}</td>
+      <td>{$BACK}</td>
+      <td>{$HOME}</td>
+      <td>{$RELOAD}</td>
+      <td class="left-border">{t}Base{/t} {$BASE}</td>
+      <td class="left-border">{$ACTIONS}</td>
+      <td class="left-border">{$FILTER}</td>
+     </tr>
+    </table>
+   </div>
+  </div>
 
-      <div class="contentboxh">
-        <p class="contentboxh">&nbsp;{$HEADLINE}&nbsp;{$SIZELIMIT}</p>
-      </div>
-      
-      <div class="contentboxb">
-       <div style='background:white;padding:3px;'>
-        <table><tr>
-          <td>{$RELOAD}&nbsp;</td><td>{$SEPARATOR}&nbsp;</td>
-          <td>{image path="images/rocket.png"}
-</td>
-          <td> {$ACTIONS}</td>
-        </tr></table>
-       </div>
-      </div>
-      
-      <div style='height:4px;'>
-      </div>
-      {$LIST}
-    </td>
-    <td style='min-width:250px'>
+  {$LIST}
+</div>
 
-      {$FILTER}
-    </td>
-  </tr>
-</table>
+<div class="clear"></div>
 
 <input type="hidden" name="ignore">
