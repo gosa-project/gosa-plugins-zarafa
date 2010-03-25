@@ -1,4 +1,4 @@
-<table summary="">
+<table summary="{t}Paste confernece{/t}">
 	<tr>
 		<td>
 			<LABEL for="cn">
