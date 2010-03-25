@@ -1,9 +1,9 @@
-<table style="width:100%;" summary="">
+<table style="width:100%;" summary="{t}Terminal service{/t}">
  <tr>
   <td style='width:33%; '>
 
    <h3>{t}Keyboard{/t}</h3>
-   <table summary="">
+   <table summary="{t}Keyboard settings{/t}">
     <tr>
      <td><LABEL for="gotoXKbModel">{t}Model{/t}</LABEL></td>
      <td>
@@ -46,7 +46,7 @@
   <td style='width:32%'>
 
    <h3>{t}Mouse{/t}</h3>
-   <table summary="">
+   <table summary="{t}Mouse{/t}">
     <tr>
      <td><LABEL for="gotoXMouseType">{t}Type{/t}</LABEL></td>
      <td>
@@ -79,7 +79,7 @@
   <td style='width:33%'>
 
    <h3>{t}Telephone hardware{/t}</h3>
-   <table style="width:100%" border=0 summary="">
+   <table style="width:100%" border=0 summary="{t}Telephone hardware{/t}">
     <tr>
      <td>{t}Telephone{/t}&nbsp;
 {render acl=$goFonHardwareACL}
@@ -93,17 +93,13 @@
  </tr>
 </table>
 
-<table style="width:100%;" summary="">
- <tr>
-   <td colspan=5>
     <hr>
-   </td>
-  </tr>
+<table style="width:100%;" summary="{t}Graphic device{/t}">
  <tr>
    <td style='width:33%;'>
 
    <h3>{t}Graphic device{/t}</h3>
-   <table summary="">
+   <table summary="{t}Graphic device{/t}">
     <tr>
      <td><LABEL for="gotoXDriver">{t}Driver{/t}</LABEL></td>
      <td>
@@ -145,7 +141,7 @@
    <td style='width:32%; '>
 
    <h3>{t}Display device{/t}</h3>
-   <table summary="">
+   <table summary="{t}Display device{/t}">
     <tr>
      <td>{t}Type{/t}</td>
      <td>{$gotoXMonitor}</td>
@@ -185,7 +181,7 @@
   <td style='width:33%; '>
 
    <h3>{t}Remote desktop{/t}</h3>
-   <table summary="">
+   <table summary="{t}Remote desktop{/t}">
     <tr>
      <td></td>
      <td><LABEL for="gotoXMethod">{t}Connect method{/t}</LABEL></td>
@@ -236,12 +232,8 @@
  </tr>
 </table>
 
-<table style="width:100%;" summary="">
- <tr>
-	<td colspan="4">
    <hr>
-	</td>
- </tr>
+<table style="width:100%;" summary="{t}Scan device{/t}">
  <tr>
   <td style='width:50%;'>
 
