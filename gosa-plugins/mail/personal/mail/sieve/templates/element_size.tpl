@@ -1,4 +1,4 @@
-<table class='sieve_test_case'>
+<table class='sieve_test_case' summary="{t}Sieve test case: size{/t}">
 	<tr>
 		<td>
 			<b>{t}Size{/t}</b>
