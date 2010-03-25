@@ -1,4 +1,4 @@
-<table style="width:100%">
+<table style="width:100%" summary="{t}Mimetype generic{/t}">
 	<tr>
 		<td colspan="2">
 			<h3>{t}Generic{/t}</h3>
@@ -7,7 +7,7 @@
 	<tr>
 		<td style='width:50%; '>
 
-			<table>
+			<table summary="{t}Mimetype settings{/t}">
 				<tr>
 					<td>
 						{t}Mime type{/t}{$must}
@@ -64,7 +64,7 @@
 		</td>
 		<td class='left-border'>
 
-			<table summary="">
+			<table summary="{t}Picture settings{/t}">
 				<tr>
 					<td>
 						<LABEL for="picture_file">{t}Icon{/t}</LABEL><br>
@@ -155,7 +155,7 @@
 		<td style='width:50%; '>
 
 				
-			<table>
+			<table summary="{t}Left click actions{/t}">
 				<tr>
 					<td>
 
