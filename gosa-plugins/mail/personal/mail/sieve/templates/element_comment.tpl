@@ -1,4 +1,4 @@
-<table class='sieve_comment_container'> 
+<table class='sieve_comment_container' summary="{t}Sieve comment{/t}">  
 	<tr>
 		<td>
 			<b>{t}Comment{/t}</b>
