@@ -3,7 +3,7 @@
  <tr>
   <td style='width:50%; '>
 
-   <table summary="{t}Properties{/t}">
+   <table summary="{t}Gneric settings{/t}">
     <tr>
 {if $cn eq 'wdefault'}
      <td colspan=2>{t}Workstation template{/t}</td>
@@ -48,7 +48,7 @@
   </td>
   <td class='left-border'>
 
-   <table summary="">
+   <table summary="{t}Terminal server settings{/t}">
     <tr>
      <td>{t}Mode{/t}</td>
      <td>
