@@ -1,4 +1,4 @@
-<table class='sieve_fileinto_container'>
+<table class='sieve_fileinto_container' summary="{t}Sieve: File into{/t}">
 	<tr>
 		<td colspan=2>
 			<b>{t}Move mail into folder{/t}</b>
