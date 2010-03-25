@@ -1,5 +1,5 @@
 <h3>{t}FAX database information{/t}</h3>
- <table summary="">
+ <table summary="{t}Fax database{/t}">
   <tr>
    <td>{t}FAX DB user{/t}{$must}</td>
    <td>
