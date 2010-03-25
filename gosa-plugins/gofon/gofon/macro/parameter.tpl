@@ -1,5 +1,5 @@
 {if $readable}
-<table summary="">
+<table summary="{t}Macro parameter{/t}">
 	<tr>
 		<td>{t}Argument{/t}
 		</td>
