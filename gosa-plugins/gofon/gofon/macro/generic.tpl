@@ -1,7 +1,7 @@
-<table width="100%" summary="">
+<table width="100%" summary="{t}Macro{/t}">
   <tr>
     <td>
-   			<table summary="">
+   			<table summary="{t}Macro generic{/t}">
      			<tr>
       				<td><LABEL for="cn">{t}Macro name{/t}</LABEL>{$must}</td>
       				<td>
@@ -37,7 +37,7 @@
 		     &nbsp;
 		</td>
 		<td>
-			<table summary="">
+			<table summary="{t}Visibility{/t}">
     			<tr>
      				<td><LABEL for="description">{t}Description{/t}</LABEL></td>
      				<td>
