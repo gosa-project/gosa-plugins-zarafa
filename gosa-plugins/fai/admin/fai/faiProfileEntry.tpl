@@ -1,4 +1,4 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}FAI profile entry{/t}">
 
 <tr>
   <td style='width:600px'>
@@ -36,11 +36,11 @@
 </p>
    	</div>
    	<div class="contentboxb">
-     	<table style='width:100%;' summary="">
+     	<table style='width:100%;' summary="{t}Filter options{/t}">
 
       		{$alphabet}
      	</table>
-	 	<table style='width:100%;' summary="">
+	 	<table style='width:100%;' summary="{t}Filter options{/t}">
 
 			<tr><td><input onClick='document.mainform.submit()' 
 								type="checkbox" name="SShowTemplates" 	{$SShowTemplatesCHK}>{t}Show only classes with templates{/t}</td></tr>
@@ -55,7 +55,7 @@
 			<tr><td><input onClick='document.mainform.submit()'
 								type="checkbox" name="SShowPartitions"	{$SShowPartitionsCHK}>{t}Show only classes with partitions{/t}</td></tr>
 		 </table>
-    	 <table style='width:100%;' summary="">
+    	 <table style='width:100%;' summary="{t}Filter options{/t}">
 
      		<tr>
      			<td>
