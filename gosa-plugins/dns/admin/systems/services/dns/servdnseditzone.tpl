@@ -1,10 +1,10 @@
 
 <h3>{t}Generic{/t}</h3>
 
-<table summary="" width="100%">
+<table summary="{t}DNS zone{/t}" width="100%">
  <tr>
   <td style='width:50%;' class='right-border'>
-   <table summary="">
+   <table summary="{t}Generic settings{/t}">
     <tr>
      <td>{t}Zone name{/t}
       {$must}
@@ -46,7 +46,7 @@
    </table>
   </td>
   <td>
-   <table summary="">
+   <table summary="{t}Zone records{/t}">
     <tr>
      <td>{t}Zone records{/t}
       <br>
@@ -67,10 +67,10 @@
 
 <h3>{t}SOA record{/t}</h3>
 
-<table summary="" width="100%">
+<table summary="{t}Zone settings{/t}" width="100%">
  <tr>
   <td style='width:50%;' class='right-border'>
-   <table summary="">
+   <table summary="{t}SOA record{/t}">
     <tr>
      <td>
       {t}Primary dns server for this zone{/t}
@@ -104,7 +104,7 @@
    </table>
   </td>
   <td>
-   <table summary="">
+   <table summary="{t}SOA record{/t}">
     <tr>
      <td>{t}Refresh{/t}
       {$must}
@@ -151,11 +151,11 @@
 </table>
 <hr>
 <br>
-<table summary="" width="100%">
+<table summary="{t}Mx record{/t}" width="100%">
  <tr>
   <td style='width:50%;' class='right-border'>
    <h3>{t}MxRecords{/t}</h3>
-   <table width="100%" summary="">
+   <table width="100%" summary="{t}MxRecords{/t}">
     <tr>
      <td>
       {render acl=$mXRecordACL}
