@@ -1,4 +1,4 @@
-<table class='sieve_anyof_container'>
+<table class='sieve_anyof_container' summary="{t}Sieve filter{/t}">
 	<tr>
     	<td class='sieve_anyof_left'>
             {if $Inverse}
