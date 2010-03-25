@@ -15,7 +15,7 @@
 
 <hr>
 &nbsp;
-<table>
+<table summary="{t}Goto import{/t}">
 	<tr>	
 		<td>
 			{t}Select list to import{/t}
@@ -33,7 +33,7 @@
 		<br>
 		<br>
 		<div style='width:100%; height:300px; overflow: scroll;'>
-		<table style='width:100%; background-color: #CCCCCC; '>
+		<table style='width:100%; background-color: #CCCCCC; ' summary="{t}Import summary{/t}">
 
 			<tr>
 				<td><b>{t}Timestamp{/t}</b></td>
