@@ -1,4 +1,4 @@
-<table class='sieve_vacation_container'>
+<table class='sieve_vacation_container' summary="{t}Sieve element{/t}">
 
 	{foreach from=$LastError item=val key=key}
 		<tr>
