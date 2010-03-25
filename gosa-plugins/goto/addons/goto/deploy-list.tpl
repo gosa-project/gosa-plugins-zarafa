@@ -1,4 +1,4 @@
-<table style='width:100%;height:100%; ' summary="">
+<table style='width:100%;height:100%; ' summary="{t}List of running and planed goto actions{/t}">
 
   <tr>
     <td style='width:100%;'>
