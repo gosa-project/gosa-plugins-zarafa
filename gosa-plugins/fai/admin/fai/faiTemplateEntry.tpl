@@ -1,11 +1,11 @@
 <input type="hidden" name="SubObjectFormSubmitted" value="1">
 
 <h3>{t}Generic{/t}</h3>
-<table width="100%" summary="">
+<table width="100%" summary="{t}FAI template entry{/t}">
 <tr>
   <td style='width:50%;padding-right:10px;' class='right-border'>
 
-		<table style='width:100%;'>
+		<table style='width:100%;' summary="{t}Generic settings{/t}">
 		  <tr>
 		    <td>
 		{t}File name{/t}{$must}&nbsp;
@@ -34,27 +34,18 @@
 	</td>
   <td>
 
-		<table style='width:100%;'>
-      <tr>
-       	<td>
-
-          {t}Description{/t}
-        </td>
-        <td style='width:100%;'>
+    {t}Description{/t}
 {render acl=$descriptionACL}
-		      <input  style='width:100%;' maxlength="80" 
-            value="{$description}" name="description">
+    <input  style='width:100%;' maxlength="80" 
+      value="{$description}" name="description">
 {/render}
-	      </td>
-      </tr>
-    </table>
   </td>
 </tr>
 </table>
 
 <hr>
 
-<table width="100%" summary="">
+<table width="100%" summary="{t}Template attributes{/t}">
 <tr>
   <td colspan=2>
     <h3>
@@ -67,7 +58,7 @@
 <tr>
   <td style='width:50%;' class='right-border'>
 
-  <table summary="">
+  <table summary="{t}Template file status{/t}">
     <tr>
       <td>
         {t}File{/t}{$must}:&nbsp; {$status}
@@ -105,7 +96,7 @@
 	</table>
 	</td>
 	<td>
-	  <table summary="">
+	  <table summary="{t}File attributes{/t}">
 		<tr>
 	
 		<td>
@@ -136,7 +127,7 @@
 		<td>{t}Access{/t}{$must}&nbsp; 
 </td>
 		<td>
-	  <table summary="">
+	  <table summary="{t}File permissions{/t}">
 
 	       <colgroup width="55" span="3">
 	        </colgroup>
