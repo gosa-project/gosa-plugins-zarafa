@@ -1,11 +1,11 @@
 
 {if $is_new}
 
-<table style='width:100%;'>
+<table style='width:100%;' summary="{t}Goto daemon event: Activate{/t}">
   <tr>
     <td style='width:50%; ' class='right-border'>
 
-      <table>
+      <table summary="{t}Schedule options{/t}">
         <tr>
           <td>
 <b>{t}Schedule{/t}</b><br><br>
@@ -15,7 +15,7 @@
     </td>
     <td style='width:50%; '>
 
-      <table style='width:100%;'>
+      <table style='width:100%;'  summary="{t}Target list{/t}">
         <tr>
           <td>
             <b>{t}System list{/t}</b>
@@ -30,11 +30,11 @@
 
 {else}
 
-<table style='width:100%;'>
+<table style='width:100%;' summary="{t}Generic settings{/t}">
 	<tr>
 		<td style='width:50%; '>
 
-			<table>
+			<table summary="{t}Generic settings{/t}">
 				<tr>
 					<td>{t}ID{/t}</td>
 					<td>{$data.ID}</td>
@@ -56,11 +56,6 @@
 </td>
 					<td>{$timestamp}</td>
 				</tr>
-			</table>
-		</td>
-		<td style='width:50%; '>
-
-			<table >
 			</table>
 		</td>
 	</tr>
