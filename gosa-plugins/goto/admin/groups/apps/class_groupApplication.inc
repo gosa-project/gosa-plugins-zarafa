@@ -814,7 +814,7 @@ class appgroup extends plugin
   {
     foreach($_POST as $name => $value){
 
-      if(preg_match("/^menu_copy_/",$name)){
+      if(preg_match("/^menu_copy/",$name)){
         $this->copied_release = $this->FAIrelease;
         break;
       }
@@ -823,7 +823,7 @@ class appgroup extends plugin
         $this->_remove_entry_id($current_rel);
         break;
       }
-      if(preg_match("/^menu_paste_/",$name)){
+      if(preg_match("/^menu_paste/",$name)){
         $source_rel   = $this->_get_release_key($this->copied_release); 
         $current_rel  = $this->_get_release_key($this->FAIrelease);
 
