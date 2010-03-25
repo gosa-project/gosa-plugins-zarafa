@@ -1,12 +1,12 @@
 
 {if $is_new}
 
-<table style='width:100%;'>
+<table style='width:100%;' summary="{t}Goto daemon event: Notification message{/t}">
   <tr>
     <td style='width:50%; padding:6px;' class='right-border'>
 
 	  <b>{t}Message settings{/t}</b>
-      <table style="width:100%;">
+      <table style="width:100%;" summary="{t}Subject{/t}">
         <tr>
           <td>{t}Sender{/t}</td>
           <td><input type='text' name="from" value="{$from}" style="width:100%;"></td>
@@ -28,13 +28,13 @@
     <td style='width:50%; '>
 
 	    <b>{t}Schedule{/t}</b>
-      <table>
+      <table summary="{t}Schedule options{/t}">
         <tr>
           <td colspan="2">{$timestamp}
 <br><br></td>
         </tr>
 	  </table>
-      <table style='width:100%;'>
+      <table style='width:100%;' summary="{t}Recipient{/t}">
         <tr>
           <td style="width:50%;">
             <b>{t}Target users{/t}</b>
@@ -66,11 +66,11 @@
 
 {else}
 
-<table style='width:100%;'>
+<table style='width:100%;' summary="{t}Generic settings{/t}">
 	<tr>
 		<td>
 
-			<table>
+			<table summary="{t}Generic settings{/t}">
 				<tr>
 					<td>{t}ID{/t}</td>
 					<td>{$data.ID}</td>
