@@ -1,5 +1,5 @@
 <h3>{t}FAI settings{/t}</h3>
-<table> 
+<table summary="{t}Paste FAI class{/t}"> 
  <tr>
   <td>
    {t}Class name{/t}
