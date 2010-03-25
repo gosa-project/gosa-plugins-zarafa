@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GOsa plugins - openxchange\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:30+0100\n"
-"PO-Revision-Date: 2010-03-11 21:02-0300\n"
+"PO-Revision-Date: 2010-03-25 10:05-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
@@ -21,12 +21,10 @@ msgstr ""
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
-#, fuzzy
 msgid "Open-Xchange"
 msgstr "Open-Xchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
-#, fuzzy
 msgid "This does something"
 msgstr "Isto faz algo"
 
@@ -36,19 +34,16 @@ msgstr "Isto faz algo"
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
-#, fuzzy
 msgid "Error"
 msgstr "Erro"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
-#, fuzzy
 msgid "Open-Xchange database"
-msgstr "Conta Open-Xchange"
+msgstr "Banco de dados Open-Xchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:197
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:310
-#, fuzzy
 msgid "Configuration error"
 msgstr "Erro de configuração"
 
@@ -56,86 +51,75 @@ msgstr "Erro de configuração"
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:220
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:330
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:339
-#, fuzzy
 msgid "LDAP error"
 msgstr "Erro LDAP"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
 msgid "Open-Xchange account name"
-msgstr ""
+msgstr "Nome da conta do Open-Xchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
 msgid "Cannot save Open-Xchange account!"
-msgstr ""
+msgstr "Não foi possível salvar a conta do Open-Xchange!"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
 msgid "Open-Xchange account settings"
-msgstr ""
+msgstr "Configurações da conta do Open-Exchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
 msgid "Connectivity addon"
-msgstr ""
+msgstr "Addon conectividade"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
-#, fuzzy
 msgid "My account"
 msgstr "Minha conta"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:448
 msgid "OXAppointmentDays"
-msgstr ""
+msgstr "OXAppointmentDays"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:449
 msgid "OXTaskDays"
-msgstr ""
+msgstr "OXTaskDays"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
 msgid "OXTimeZone"
-msgstr ""
+msgstr "OXTimeZone"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
-#, fuzzy
 msgid "Open-Xchange Account"
 msgstr "Conta Open-Xchange"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
-#, fuzzy
 msgid "disabled, no Postgresql support detected. Or the specified database can't be reached"
-msgstr "desabilitado, suporte a Postgresql não detectado.Ou o banco de dados especificado não foi encontrado"
+msgstr "desabilitado, suporte a Postgresql não detectado. Ou o banco de dados especificado não foi encontrado"
 
 #: personal/connectivity/openxchange/oxchange.tpl:18
-#, fuzzy
 msgid "Open-Xchange account"
 msgstr "Conta Open-Xchange"
 
 #: personal/connectivity/openxchange/oxchange.tpl:29
-#, fuzzy
 msgid "Remember"
 msgstr "Lembrar"
 
 #: personal/connectivity/openxchange/oxchange.tpl:33
-#, fuzzy
 msgid "Appointment Days"
 msgstr "Dias de nomeação"
 
 #: personal/connectivity/openxchange/oxchange.tpl:39
 #: personal/connectivity/openxchange/oxchange.tpl:49
-#, fuzzy
 msgid "days"
 msgstr "dias"
 
 #: personal/connectivity/openxchange/oxchange.tpl:42
-#, fuzzy
 msgid "Task Days"
-msgstr "Dias de tarefa"
+msgstr "Tarefas diárias"
 
 #: personal/connectivity/openxchange/oxchange.tpl:61
-#, fuzzy
 msgid "User Information"
 msgstr "Informações do usuário"
 
 #: personal/connectivity/openxchange/oxchange.tpl:65
-#, fuzzy
 msgid "User Timezone"
 msgstr "Fuso horário do usuário"
 

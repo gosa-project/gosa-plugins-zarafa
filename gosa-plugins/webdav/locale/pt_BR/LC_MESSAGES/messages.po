@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GOsa plugins - webdav\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-03-11 21:05-0300\n"
+"PO-Revision-Date: 2010-03-25 10:08-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:7
 msgid "This does something"
-msgstr ""
+msgstr "Isto faz algo"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:91
 #: personal/connectivity/webdav/class_webdavAccount.inc:147

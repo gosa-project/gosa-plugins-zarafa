@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GOsa plugins - scalix\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-03-13 17:48-0300\n"
+"PO-Revision-Date: 2010-03-25 10:10-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,8 @@ msgstr ""
 
 #: admin/groups/scalix/class_scalixGroup.inc:15
 #: personal/scalix/class_scalixAccount.inc:456
-#, fuzzy
 msgid "Scalix account"
-msgstr "Remover conta scalix"
+msgstr "Conta Scalix"
 
 #: admin/groups/scalix/class_scalixGroup.inc:25
 #: personal/scalix/class_scalixAccount.inc:466

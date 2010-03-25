@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GOsa plugins - heimdal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:30+0100\n"
-"PO-Revision-Date: 2010-03-11 21:04-0300\n"
+"PO-Revision-Date: 2010-03-25 10:27-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
@@ -18,131 +18,113 @@ msgstr ""
 "X-Poedit-Country: BRAZIL\n"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
-#, fuzzy
 msgid "Heimdal options"
 msgstr "Opções Heimdal"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:6
 msgid "Use empty values for infinite"
-msgstr ""
+msgstr "Use valores em branco para infinito"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:10
-#, fuzzy
 msgid "Ticket max life"
-msgstr "Tempo de vida"
+msgstr "Tempo de vida do bilhete"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:18
-#, fuzzy
 msgid "Ticket max renew"
-msgstr "Número máximo de palavras não encontradas:"
+msgstr "Máximo para renovação do bilhete"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:32
 msgid "infinite"
-msgstr ""
+msgstr "infinito"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:34
-#, fuzzy
 msgid "Hour"
 msgstr "Hora"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:36
-#, fuzzy
 msgid "Minute"
 msgstr "Minuto"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:38
-#, fuzzy
 msgid "Day"
 msgstr "Dia"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:40
-#, fuzzy
 msgid "Month"
 msgstr "Mês"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:42
-#, fuzzy
 msgid "Year"
 msgstr "Ano:"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:47
 msgid "Valid ticket start time"
-msgstr ""
+msgstr "Hora inicio de validade do bilhete"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:87
 msgid "Valid ticket end time"
-msgstr ""
+msgstr "Hora final de validade do bilhete"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:127
-#, fuzzy
 msgid "Password end"
-msgstr "Senha antiga"
+msgstr ""
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:198
-#, fuzzy
 msgid "Save"
 msgstr "Salvar"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:200
-#, fuzzy
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:58
-#, fuzzy
 msgid "Kerberos service"
-msgstr "Serviço DNS"
+msgstr "Serviço Kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:74
 #: admin/systems/services/kerberos/class_goKrbServer.inc:358
 #: admin/systems/services/kerberos/class_goKrbServer.inc:367
 #: admin/systems/services/kerberos/class_goKrbServer.inc:371
-#, fuzzy
 msgid "Service infrastructure"
-msgstr "Erro de infraestrutura"
+msgstr "Serviços de infraestrutura"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:165
 msgid "Kerberos service (kadmin access informations)"
-msgstr ""
+msgstr "Serviço Kerberos (informações de acesso kadmin)"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:178
 #: admin/systems/services/kerberos/class_goKrbServer.inc:394
 msgid "Realm"
-msgstr ""
+msgstr "Nome real"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
 msgid "In order to save policy changes, the server requires a valid mac address."
-msgstr ""
+msgstr "A fim de salvar as alterações de política, o servidor requer um válido endereço MAC."
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
-#, fuzzy
 msgid "Remove"
 msgstr "Remover"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
-#, fuzzy
 msgid "Policy"
-msgstr "Política de convite"
+msgstr "Política"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
-#, fuzzy
 msgid "Kerberos"
 msgstr "Kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#, fuzzy
 msgid "Kerberos access information"
-msgstr "Informações gerais do usuário"
+msgstr "Informações de acesso kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#, fuzzy
 msgid "Services"
 msgstr "Serviços"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:393
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
 msgid "Policies"
-msgstr ""
+msgstr "Políticas"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
@@ -150,51 +132,43 @@ msgstr ""
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:189
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:226
 msgid "Heimdal"
-msgstr ""
+msgstr "Heimdal"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #, php-format
 msgid "Error loading heimdal configuration, more than one configuration entry was found for '%s'."
-msgstr ""
+msgstr "Erro ao carregar configuração Heimdal, mais de uma entrada de configuração foi encontrado para '%s'."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:157
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:413
-#, fuzzy
 msgid "LDAP error"
 msgstr "Erro LDAP"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:333
-#, fuzzy
 msgid "Max life"
-msgstr "Tempo de vida"
+msgstr "Tempo máx. de vida"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:336
-#, fuzzy
 msgid "Max renew"
-msgstr "Número máximo de palavras não encontradas:"
+msgstr "Máximo para renovação"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:339
-#, fuzzy
 msgid "Valid start"
-msgstr "Iniciar servidor"
+msgstr "Inicio da validade"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:342
-#, fuzzy
 msgid "Valid end"
-msgstr "Prioridades válidas são : %s"
+msgstr "Final da validade"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
-#, fuzzy
 msgid "Valid password"
-msgstr "Senha antiga"
+msgstr "Senha válida"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:1
-#, fuzzy
 msgid "Kerberos kadmin access"
-msgstr "Lista de controle de acesso"
+msgstr "Acesso kadmin kerberos"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
 msgid "Kerberos Realms"
-msgstr "Usar SASL para Kerberos"
+msgstr "Nomes reais kerberos"
 

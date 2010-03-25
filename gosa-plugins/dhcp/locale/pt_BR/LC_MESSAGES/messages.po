@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GOsa plugins - dhcp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:29+0100\n"
-"PO-Revision-Date: 2010-03-13 16:49-0300\n"
+"PO-Revision-Date: 2010-03-25 10:07-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
@@ -305,7 +305,7 @@ msgstr "Atribuir nomes de hosts encontrados através do mapeamento reverso"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:99
 msgid "Assign hostnames from host declarations"
-msgstr ""
+msgstr "Atribuir nome de host a partir das declarações"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 msgid "Create new DHCP section"
@@ -433,8 +433,9 @@ msgstr "Grupo"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:44
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:31
+#, fuzzy
 msgid "Pool"
-msgstr ""
+msgstr "Pool"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:45
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
@@ -442,6 +443,7 @@ msgid "Subnet"
 msgstr "Subrede"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:46
+#, fuzzy
 msgid "Failover peer"
 msgstr ""
 

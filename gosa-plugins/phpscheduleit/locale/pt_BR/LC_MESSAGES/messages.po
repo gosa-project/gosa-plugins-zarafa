@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GOsa plugins - phpscheduleit\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-03-11 21:03-0300\n"
+"PO-Revision-Date: 2010-03-25 10:12-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
@@ -18,41 +18,35 @@ msgstr ""
 "X-Poedit-Country: BRAZIL\n"
 
 #: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
-#, fuzzy
 msgid "PHPscheduleit account"
-msgstr "Conta PHPscheduleit"
+msgstr "Conta de Agendamento PHP"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
-#, fuzzy
 msgid "PHPscheduleit"
-msgstr "PHPscheduleit"
+msgstr "Agendamento PHP"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:28
-#, fuzzy
 msgid "This does something"
 msgstr "Isto faz algo"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:86
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:143
-#, fuzzy
 msgid "LDAP error"
 msgstr "Erro LDAP"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:163
-#, fuzzy
 msgid "PHP Schedule it"
-msgstr "Eu uso ele desde"
+msgstr "Agendamento PHP"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
 msgid "PHP Schedule it settings"
-msgstr ""
+msgstr "Configurações de Agendamento PHP"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
 msgid "Connectivity addon"
-msgstr ""
+msgstr "Addon conectividade"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:168
-#, fuzzy
 msgid "My account"
 msgstr "Minha conta"
 
