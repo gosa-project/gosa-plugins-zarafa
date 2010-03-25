@@ -1,8 +1,8 @@
-<table width="100%" summary="">
+<table width="100%" summary="{t}FAI profile{/t}">
 	<tr>
 		<td width="50%" valign="top">
 			<h3>{t}Generic{/t}</h3>
-			<table summary="" cellspacing="4">
+			<table summary="{t}Generic settings{/t}" cellspacing="4">
 				<tr>
 					<td>
 						<LABEL for="cn">
@@ -31,7 +31,7 @@
 		</td>
 		<td class='left-border'>
 
-			<table summary="" width="100%">
+			<table summary="{t}FAI classes{/t}" width="100%">
 
 				<tr>
 					<td>
