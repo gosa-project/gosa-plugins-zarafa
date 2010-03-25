@@ -28,7 +28,7 @@
 <br>
 
 {if $search_result ne ""}
- <table style='width:100%; ' summary="">
+ <table style='width:100%; ' summary="{t}Entry list{/t}">
 
   <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
    <td><a href="main.php{$plug}&amp;sort=0">{t}User{/t} {$mode0}</a></td>
@@ -41,7 +41,7 @@
   {$search_result}
  </table>
 
- <table style='width:100%; text-align:center;' summary="">
+ <table style='width:100%; text-align:center;' summary="{t}Page selector{/t}">
 
   <tr>
    <td>{$range_selector}</td>
