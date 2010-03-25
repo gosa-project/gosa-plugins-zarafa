@@ -93,7 +93,7 @@ class applicationParameters extends plugin
 
 
     $acl = $this->getacl("gosaApplicationParameter")	;
-    $table= "<table summary=\"\"><tr><td>"._("Variable")."</td><td>"._("Default value")."</td><td></td></tr>";
+    $table= "<table summary=\""._("Application parameter")."\"><tr><td>"._("Variable")."</td><td>"._("Default value")."</td><td></td></tr>";
     if (count ($this->option_name)){
 
       for ($i= 0; $i < count($this->option_name); $i++){
