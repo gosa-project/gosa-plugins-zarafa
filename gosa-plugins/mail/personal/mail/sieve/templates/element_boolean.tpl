@@ -1,4 +1,4 @@
-<table class='sieve_test_case'>
+<table class='sieve_test_case' summary="{t}Sieve element{/t}">
 	<tr>
 		<td>
 			<b>{t}Bool{/t}</b>
