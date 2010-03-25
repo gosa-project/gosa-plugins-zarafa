@@ -1,9 +1,9 @@
-<table style="width:100%;" summary="">
+<table style="width:100%;" summary="{t}Workstation service{/t}">
  <tr>
   <td style='width:33%; '>
 
    <h3>{t}Keyboard{/t}</h3>
-   <table summary="">
+   <table summary="{t}Keyboard{/t}">
     <tr>
      <td><LABEL for="gotoXKbModel">{t}Model{/t}</LABEL></td>
      <td>
@@ -52,7 +52,7 @@
   <td style='width:32%'>
 
    <h3>{t}Mouse{/t}</h3>
-   <table summary="">
+   <table summary="{t}Mouse{/t}">
     <tr>
      <td><LABEL for="gotoXMouseType">{t}Type{/t}</LABEL></td>
      <td>
@@ -89,7 +89,7 @@
   <td style='width:33%'>
 
    <h3>{t}Telephone hardware{/t}</h3>
-   <table style="width:100%" border=0 summary="">
+   <table style="width:100%" border=0 summary="{t}Telephone hardware{/t}">
     <tr>
      <td>{t}Telephone{/t}&nbsp;
 
@@ -105,17 +105,12 @@
  </tr>
 </table>
 
-<table style="width:100%;" summary="">
- <tr>
-  <td colspan=5>
-   <hr>
-  </td>
- </tr>
+<hr>
+<table style="width:100%;" summary="{t}Graphic device{/t}">
  <tr>
    <td style='width:33%;'>
-
    <h3>{t}Graphic device{/t}</h3>
-   <table summary="">
+   <table summary="{t}Graphic device{/t}">
     <tr>
      <td><LABEL for="gotoXDriver">{t}Driver{/t}</LABEL></td>
      <td>
@@ -163,7 +158,7 @@
    <td style='width:32%; '>
 
    <h3>{t}Display device{/t}</h3>
-   <table summary="">
+   <table summary="{t}Display device{/t}">
     <tr>
      <td>{t}Type{/t}</td>
      <td>{if $gotoXMonitor==""}{t}unknown{/t}{/if}{$gotoXMonitor}</td>
