@@ -1,4 +1,4 @@
-    <table summary="">
+    <table summary="{t}Paste phone{/t}">
      <tr>
       <td><LABEL for="cn">{t}Phone name{/t}</LABEL>{$must}</td>
       <td>
