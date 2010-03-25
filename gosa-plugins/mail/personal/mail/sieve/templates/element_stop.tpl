@@ -1,4 +1,4 @@
-<table class='sieve_stop_container'>
+<table class='sieve_stop_container' summary="{t}Sieve element stop{/t}">
 	<tr>
 		<td>
 			<b>{t}Stop{/t}</b><br>
