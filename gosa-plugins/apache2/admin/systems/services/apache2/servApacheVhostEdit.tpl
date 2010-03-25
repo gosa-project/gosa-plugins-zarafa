@@ -1,6 +1,6 @@
 <h3>{t}Generic{/t}</h3>
 
-			<table summary="">
+			<table summary="{t}Apache Virutal Host{/t}">
 				<tr>
 					<td>{t}Virtual host name{/t}{$must}
 					</td>
@@ -23,7 +23,7 @@
 
 <hr>
 
-<table summary="" width="100%">
+<table summary="{t}Server settings{/t}" width="100%">
   <tr>
     <td style='width:50%;' class='right-border'>
 
