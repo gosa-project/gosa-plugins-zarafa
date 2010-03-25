@@ -1,4 +1,4 @@
-<table summary="" style="width:100%;">
+<table summary="{t}Workstation startup{/t}" style="width:100%;">
  <tr>
   <td style='width:50%; '>
 
@@ -7,7 +7,7 @@
     - Boot parameters 
     -->
    <h3>{t}Boot parameters{/t}</h3>
-   <table summary="">
+   <table summary="{t}Boot parameters{/t}">
     
     {if $fai_activated && $si_active && !$si_fai_action_failed}
     <tr>
@@ -211,7 +211,7 @@
 
 <hr>
 
-<table summary="" style="width:100%;">
+<table summary="{t}Boot options{/t}" style="width:100%;">
  <tr>
   <td style='width:50%; ' class='right-border'>
 
