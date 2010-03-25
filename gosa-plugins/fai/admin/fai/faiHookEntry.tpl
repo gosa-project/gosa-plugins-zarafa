@@ -1,9 +1,9 @@
 <input type="hidden" name="SubObjectFormSubmitted" value="1">
-<table width="100%" summary="">
+<table width="100%" summary="{t}FAI hook entry{/t}">
 	<tr>
 		<td valign="top" width="50%">
 			<h3>{t}Generic{/t}</h3>
-				<table summary="">
+				<table summary="{t}Generic settings{/t}">
 					<tr>
 						<td>
 							{t}Name{/t}{$must}&nbsp;
@@ -33,20 +33,12 @@
 		<td>
 
 				<h3>{t}Hook attributes{/t}</h3>
-				<table width="100%" summary="">
-					<tr>
-						<td>
-							<LABEL for="FAItask">
-							{t}Task{/t}&nbsp;
-							</LABEL>
+        <LABEL for="FAItask">{t}Task{/t}&nbsp;</LABEL>
 {render acl=$FAItaskACL}
-							<select id="FAItask" name="FAItask" title="{t}Choose an existing FAI task{/t}" size=1>
-								{html_options values=$tasks output=$tasks selected=$FAItask}
-							</select>
+        <select id="FAItask" name="FAItask" title="{t}Choose an existing FAI task{/t}" size=1>
+          {html_options values=$tasks output=$tasks selected=$FAItask}
+        </select>
 {/render}
-						</td>
-					</tr>
-				</table>
 		</td>
 	</tr>
 </table>
@@ -58,16 +50,10 @@
         {t}Script{/t}
     </LABEL>
     </h3>
-<table width="99%" summary="">
-    <tr>
-        <td>
 {render acl=$FAIscriptACL}
             <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript" 
 				rows=20 cols=120>{$FAIscript}</textarea>
 {/render}
-        </td>
-    </tr>
-</table>
 <br>
 <div>
 {render acl=$FAIscriptACL}
