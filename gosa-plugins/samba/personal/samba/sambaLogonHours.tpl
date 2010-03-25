@@ -22,7 +22,7 @@
 <h1>{t}Specify the hours this user is allowed to log in{/t}</h1>
 <br>
 
-<table style='background-color: #EEEEEE; width :100%;'>
+<table style='background-color: #EEEEEE; width :100%;' summary="{t}Samba logon hours{/t}">
   summary="{t}Samba logon hours{/t}">
   <tr>
     <td>&nbsp;</td>
