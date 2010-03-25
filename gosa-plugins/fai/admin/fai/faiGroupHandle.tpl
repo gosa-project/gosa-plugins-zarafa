@@ -3,7 +3,7 @@
 <b>{t}Please select the objects you want to remove:{/t}</b>
 <br>
 <br>
-<table>
+<table summary="{t}FAI object removal{/t}">
 {foreach from=$FAI_group item=item key=key}
 	<tr>
 		<td>
@@ -31,7 +31,7 @@
 <b>{t}Select the object you want to edit:{/t}</b>
 <br>
 <br>
-<table>
+<table summary="{t}FAI group edit{/t}">
 {foreach from=$FAI_group item=item key=key}
 	<tr>
 		<td>
@@ -54,7 +54,7 @@
 <b>{t}Select the object you want to copy:{/t}</b>
 <br>
 <br>
-<table>
+<table summary="{t}FAI group copy{/t}">
 {foreach from=$FAI_group item=item key=key}
 	<tr>
 		<td>
