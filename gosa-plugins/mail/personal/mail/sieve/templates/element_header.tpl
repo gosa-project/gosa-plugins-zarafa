@@ -1,6 +1,6 @@
 	{if $Expert}
     	{if $LastError != ""}
-		<table class='sieve_test_case'>
+		<table class='sieve_test_case' summary="{t}Sieve header{/t}">
         	<tr>
 				<td colspan=4>
 		            <font color='red'><b>{$LastError}</b></font>
@@ -10,7 +10,7 @@
         {/if}
 
 
-<table class='sieve_test_case'>
+<table class='sieve_test_case' summary="{t}Sieve element{/t}">
 	<tr>
 		<td>
 			<b>{t}Header{/t}</b>
@@ -20,7 +20,7 @@
         </td>
     </tr>
 </table>
-<table>
+<table summary="{t}Sieve element{/t}">
     <tr>
 		<td>
             {t}Match type{/t}
@@ -71,7 +71,7 @@
         <td colspan=2>&nbsp;</td>
     </tr>
    </table>
-   <table class='sieve_test_case'>
+   <table class='sieve_test_case' summary="{t}Sieve element{/t}">
     <tr>
         <td >
             {t}Address fields to include{/t}<br>
@@ -86,7 +86,7 @@
 
 	{else}
     	{if $LastError != ""}
-		<table class='sieve_test_case'>
+		<table class='sieve_test_case' summary="{t}Sieve element{/t}">
         	<tr>
 				<td colspan=4>
 		            <font color='red'><b>{$LastError}</b></font>
@@ -96,7 +96,7 @@
         {/if}
 
 		
-<table class='sieve_test_case'>
+<table class='sieve_test_case' summary="{t}Sieve element{/t}">
     <tr>
 		{if $match_type == ":count" || $match_type == ":value"}
 		<td style='vertical-align:top; width:350px;'>
