@@ -1,5 +1,5 @@
 
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Blocklist settings{/t}">
 
  <tr>
   <td style='width:50%;' class='right-border'> 
@@ -19,7 +19,7 @@
   </td>
   <td>
 	<b>{t}List of predefined blocklists{/t}</b><br>
-	<table style="width:100%;height:300px;" summary="">
+	<table style="width:100%;height:300px;" summary="{t}List of blocked numbers{/t}">
 		<tr>
 			<td valign="top">
 					{$divSelectPredefined}
