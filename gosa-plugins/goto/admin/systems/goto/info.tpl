@@ -4,11 +4,11 @@
 {else}
 
 <h3>{t}System information{/t}</h3>
-<table summary="" style="width:100%;">
+<table summary="{t}System information{/t}" style="width:100%;">
  <tr>
   <td style='width:50%'>
 
-   <table summary="">
+   <table summary="{t}Hardware information{/t}">
     <tr>
      <td>
 <b>{t}CPU{/t}</b></td><td>{$ghCpuType}</td>
@@ -42,7 +42,7 @@
    &nbsp;
   </td>
   <td>
-   <table summary="">
+   <table summary="{t}Device information{/t}">
     <tr>
      <td>
 <b>{t}Network devices{/t}</b></td>
@@ -100,11 +100,11 @@
 <br>
 <h3 style="border-top:1px solid #A0A0A0; padding-top:5px;">{image path="images/lists/on.png"} {t}System status{/t}
 </h3>
-<table summary="" style="width:100%">
+<table summary="{t}System information{/t}" style="width:100%">
  <tr>
   <td style='width:50%'>
 
-   <table summary="">
+   <table summary="{t}Status{/t}">
     <tr>
      <td><b>{t}Up since{/t}</b></td><td>{$uptime}</td>
     </tr>
@@ -129,7 +129,7 @@
   </td>
   <td>
 
-   <table summary="">
+   <table summary="{t}Service information{/t}">
     <tr>
      <td><b>{t}SSH service{/t}</b></td><td>{$sshd}</td>
     </tr>
