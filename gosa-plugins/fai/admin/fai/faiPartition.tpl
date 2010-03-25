@@ -1,7 +1,7 @@
 
 <h3>{t}Partition{/t}</h3>
 
-<table style='width: 100%;' width="100%"> 
+<table style='width: 100%;' width="100%" summary="{t}FAI partition{/t}"> 
   <tr>
 {if $FAIdiskType == "lvm"}
     <td>{t}Name{/t}</td>
