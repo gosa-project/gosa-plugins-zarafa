@@ -1,11 +1,11 @@
 <input type="hidden" name="TableEntryFrameSubmitted" value="1">
 <h3>{t}Device{/t}</h3>
-<table style='width:100%' summary="">
+<table style='width:100%' summary="{t}FAI disk entry{/t}">
 	<tr>
 		<td style='width:50%;' class='right-border'>
 
 
-      <table>
+      <table summary="{t}Disk options{/t}">
         <tr>
           <td>
             <LABEL for="DISKcn">{t}Name{/t}</LABEL>{$must}&nbsp;
@@ -33,7 +33,7 @@
     </td>
 		<td>
 
-      <table>
+      <table summary="{t}Generic settings{/t}">
         <tr>
           <td>
             <LABEL for="DISKdescription">{t}Description{/t}</LABEL>&nbsp;
@@ -66,9 +66,6 @@
 {if $FAIdiskType == "lvm"}
 
 <hr>
-<table width="100%">
-  <tr>
-    <td>
       <h3>{t}Combined physical partitions{/t}</h3>
 
       <select style='font-family: monospace; width: 100%;' 
@@ -80,12 +77,7 @@
         {html_options options=$physicalPartitionList}
       </select>
       <button type='submit' name='addLvmPartition'>{msgPool type="addButton"}</button>&nbsp;
-
       <button type='submit' name='delLvmPartition'>{msgPool type="delButton"}</button>&nbsp;
-
-    </td>
-  </tr>
-</table>
 
 {/if}
 <hr>
