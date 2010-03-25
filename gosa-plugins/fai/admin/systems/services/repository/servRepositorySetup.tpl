@@ -1,10 +1,10 @@
 <h3>{t}Repository{/t}</h3>
 
-<table width="100%" summary=''>
+<table width="100%" summary='{t}FAI Repository{/t}'>
 	<tr>
 		<td class='right-border'>
 
-			<table summary=''>
+			<table summary='{t}Generic settings{/t}'>
 				<tr>
 					<td>{t}Parent server{/t}
 					</td>
