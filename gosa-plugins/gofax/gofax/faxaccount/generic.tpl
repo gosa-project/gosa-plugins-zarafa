@@ -1,4 +1,4 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Fax account{/t}">
 
 
  <!-- Headline container -->
@@ -7,7 +7,7 @@
 
      <h3>{t}Generic{/t}</h3>
 
-     <table summary="">
+     <table summary="{t}Generic settings{/t}">
        <tr>
          <td><label for="facsimileTelephoneNumber">{t}Fax{/t}</label>{$must}</td>
          <td>
@@ -94,7 +94,7 @@
 
 <hr>
 
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Alternative numbers{/t}">
 
   <tr>
     <td style='width:50%; ' class='right-border'>
@@ -130,7 +130,7 @@
    <td style='width:50%'>
 
       <h3>{t}Blocklists{/t}</h3>
-      <table summary="" style="width:100%">
+      <table summary="{t}Blocklists{/t}" style="width:100%">
         <tr>
           <td>{t}Blocklists for incoming fax{/t}</td>
           <td>
