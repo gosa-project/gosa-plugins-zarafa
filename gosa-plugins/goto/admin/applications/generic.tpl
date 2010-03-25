@@ -1,8 +1,8 @@
-<table summary="" style="width:100%;">
+<table summary="{t}Application{/t}" style="width:100%;">
  <tr>
   <td style="width:50%;">
 
-   <table summary="">
+   <table summary="{t}Generic settings{/t}">
      <tr>
       <td><LABEL for="cn">{t}Application name{/t}{$must}</LABEL></td>
       <td>
@@ -63,7 +63,7 @@
   </td>
   <td>
 
-   <table summary="">
+   <table summary="{t}Picture settings{/t}">
     <tr>
     <td>
     <LABEL for="picture_file">{t}Icon{/t}</LABEL>
@@ -101,7 +101,7 @@
 <hr>
 
 <h3>{t}Options{/t}</h3>
-<table summary="" style="width:100%;">
+<table summary="{t}Application options{/t}" style="width:100%;">
   <tr>
     <td style='width:50%;' class='right-border'>
 
@@ -136,7 +136,7 @@
 
 <hr>
 
-<table width="99%" summary="">
+<table width="99%" summary="{t}Logon script{/t}">
 	<tr>
 		<td>
 			<h3>{t}Script{/t}</h3>
