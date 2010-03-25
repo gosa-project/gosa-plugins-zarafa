@@ -4,18 +4,10 @@
 <table width="100%" summary="{t}Paste device{/t}">
  <tr>
   <td>
-
-   <table style='width:100%' class='right-border' summary="">
-    <tr>
-     <td><LABEL for="cn">{t}Device name{/t}</LABEL>
-      {$must}
-     </td>
-     <td>
-      <input type="text" size=40 value="{$cn}" name="cn" id="cn">
-     </td>
-    </tr>
-   </table>
-
+   <LABEL for="cn">{t}Device name{/t}</LABEL>{$must}
+  </td>
+  <td>
+   <input type="text" size=40 value="{$cn}" name="cn" id="cn">
   </td>
  </tr> 
 </table>
