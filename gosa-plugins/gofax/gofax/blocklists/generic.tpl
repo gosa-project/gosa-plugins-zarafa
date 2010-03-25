@@ -1,9 +1,9 @@
 <h3>{t}Generic{/t}</h3>
-<table summary="" style="width:100%;">
+<table summary="{t}Blocklist{/t}" style="width:100%;">
 
  <tr>
    <td style="width:50%;">
-    <table summary="">
+    <table summary="{t}Blocklist generic{/t}">
      <tr>
       <td><LABEL for="cn">{t}List name{/t}</LABEL>{$must}</td>
       <td>
@@ -29,7 +29,7 @@
   </td>
 
    <td>
-    <table summary="">
+    <table summary="{t}Blocklist type{/t}">
      <tr>
        <td><LABEL for="type">{t}Type{/t}</LABEL></td>
        <td>
@@ -56,7 +56,7 @@
 
 <hr>
 
-<table summary="" style="width:100%">
+<table summary="{t}Blocked numbers{/t}" style="width:100%">
  <tr>
    <td style="width:50%;">
 
