@@ -1,9 +1,9 @@
-<table width="100%" summary="">
+<table width="100%" summary="{t}FAI package{/t}">
 	<tr>
 		<td class='right-border'>
 
 				<h3>{t}Generic{/t}</h3>
-				<table summary="" cellspacing="4">
+				<table summary="{t}Generic settings{/t}" cellspacing="4">
 					<tr>
 						<td>
 							<LABEL for="cn">
@@ -32,7 +32,7 @@
 		</td>
 		<td width="50%" valign="top">
 			<h3>{t}Repository{/t}</h3>
-				<table summary="" cellspacing="4">
+				<table summary="{t}Repository settings{/t}" cellspacing="4">
 					<tr>
 						<td>
 							{t}Release{/t} : 
@@ -66,7 +66,7 @@
 	</tr>
 </table>
 <hr>
-<table width="99%" summary="">
+<table width="99%" summary="{t}Package settings{/t}">
 	<tr>
 		<td> 
 			<h3>{t}Used packages{/t}</h3>
