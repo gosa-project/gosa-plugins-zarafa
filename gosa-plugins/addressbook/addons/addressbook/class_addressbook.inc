@@ -454,7 +454,7 @@ class addressbook extends plugin
   
           $this->telephone_list[$attrs['sn'][0].$attrs['dn']]=
 
-            "<td class=\"phonelist\" title=\"".$attrs['sn'][0].", ".$attrs['givenName'][0].
+            "<td class=\"list1\" title=\"".$attrs['sn'][0].", ".$attrs['givenName'][0].
               "\"onClick='location.href=\"main.php?plug=".validate($_GET['plug']).
                           "&amp;start=".validate($_GET['start']).
                           "&amp;show=".urlencode(base64_encode($attrs['dn']))."\"'>
@@ -464,22 +464,22 @@ class addressbook extends plugin
                $attrs['sn'][0].", ".$attrs['givenName'][0].
             "</a>
             &nbsp;</td>
-            <td class=\"phonelist\" title=\""._("Dial")." ".$attrs['telephoneNumber'][0]."\">
+            <td class=\"list1\" title=\""._("Dial")." ".$attrs['telephoneNumber'][0]."\">
             <a style='vertical-align:middle;' href=\"main.php?plug=".validate($_GET['plug'])."&amp;dial=telephoneNumber&amp;start=".validate($_GET['start'])."&amp;target=".base64_encode($attrs['dn'])."\">".$attrs['telephoneNumber'][0]."
             </a>
             &nbsp;</td>
-            <td class=\"phonelist\" title=\"".$attrs['facsimileTelephoneNumber'][0]."\">
+            <td class=\"list1\" title=\"".$attrs['facsimileTelephoneNumber'][0]."\">
             ".$attrs['facsimileTelephoneNumber'][0]."
             &nbsp;</td>
-            <td class=\"phonelist\" title=\""._("Dial")." ".$attrs['mobile'][0]."\">
+            <td class=\"list1\" title=\""._("Dial")." ".$attrs['mobile'][0]."\">
             <a style='vertical-align:middle;' href=\"main.php?plug=".validate($_GET['plug'])."&amp;dial=mobile&amp;start=".validate($_GET['start'])."&amp;target=".base64_encode($attrs['dn'])."\">".$attrs['mobile'][0]."
             </a>
             &nbsp;</td>
-            <td class=\"phonelist\" title=\""._("Dial")." ".$attrs['homePhone'][0]."\">
+            <td class=\"list1\" title=\""._("Dial")." ".$attrs['homePhone'][0]."\">
             <a style='vertical-align:middle;' href=\"main.php?plug=".validate($_GET['plug'])."&amp;dial=homePhone&amp;start=".validate($_GET['start'])."&amp;target=".base64_encode($attrs['dn'])."\">".$attrs['homePhone'][0]."
             </a>
             &nbsp;</td>
-            <td>
+            <td class=\"list1\">
             <a href=\"plugins/addressbook/getvcard.php?dn=".base64_encode($attrs['dn'])."\">
             <img align=\"top\" border=0 src=\"images/save.png\" alt=\"vcf\" title=\"".sprintf(_("Save contact for %s as vcard"), $attrs['givenName'][0]." ".$attrs['sn'][0])."\">
             </a>";
@@ -511,7 +511,7 @@ class addressbook extends plugin
     /* Create list of readable departments */
     $deps = array();
     foreach($this->config->idepartments as $dn => $name){
-      if( $this->acl_is_readable($dn) || $dn == $this->config->current['BASE']){
+      if(preg_match("/r/",$this->ui->get_permissions($dn,'users/user')) || $dn == $this->config->current['BASE']){
         $deps[$dn] = $name;
       }
     }
@@ -643,12 +643,8 @@ class addressbook extends plugin
         $mod++;
         break;
       }
-      if ( ($mod++) & 1){
-        $col= "style=\"background-color: #FFFFFF;\"";
-      } else {
-        $col= "style=\"background-color: #F5F5F5;\"";
-      }
-      $output.= "<tr $col>\n$val</tr>\n";
+        $mod++;
+      $output.= "<tr>\n$val</tr>\n";
     }
 
     $smarty->assign("search_result", $output);

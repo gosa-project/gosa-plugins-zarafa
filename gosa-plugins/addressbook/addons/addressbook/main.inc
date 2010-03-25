@@ -39,9 +39,6 @@ if ( $cleanup ){
 	$display= $addressbook->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
-	/* Page header*/
-	$display= print_header(get_template_path('plugins/addressbook/images/plugin.png'), _("Addressbook")).$display;
-
 	/* Store changes  in session */
 	session::set('addressbook',$addressbook);
 }
