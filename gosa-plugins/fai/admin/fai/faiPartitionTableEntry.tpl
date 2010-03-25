@@ -1,6 +1,6 @@
 <input type="hidden" name="TableEntryFrameSubmitted" value="1">
 <h3>{t}Device{/t}</h3>
-<table style='width:100%' summary="">
+<table style='width:100%' summary="{t}FAI partition table entry{/t}">
 	<tr>
 		<td style='width:50%;' class='right-border'>
 <LABEL for="DISKcn">
