@@ -1,4 +1,4 @@
-<table class='sieve_test_case'>
+<table class='sieve_test_case' summary="{t}Sieve filter{/t}">
     <tr>
         <td style='vertical-align:top; width:200px;'>
             {if $LastError != ""}
