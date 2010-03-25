@@ -1,5 +1,5 @@
 <h3>{t}VoIP database information{/t}</h3>
-  <table summary="">
+  <table summary="{t}VoIP database information{/t}">
     <tr>
      <td>{t}Asterisk DB user{/t}{$must}</td>
      <td>
