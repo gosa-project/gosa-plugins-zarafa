@@ -1,4 +1,4 @@
-<table style="width:100%">
+<table style="width:100%" summary="{t}Mimetype settings{/t}">
 	<tr>
 		<td colspan="2">
 			<h3>{t}Generic{/t}</h3>
@@ -8,7 +8,7 @@
 		<td style='width:50%; '>
 
 				
-			<table>
+			<table summary="{t}Mimetype generic{/t}">
 				<tr>
 					<td>
 						{t}Mime type{/t}
