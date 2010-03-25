@@ -1,4 +1,4 @@
-<table cellspacing="0" cellpadding="0">
+ <table cellspacing="0" cellpadding="0" summary="{t}Event scheduling options{/t}">
 	<tr>
 		<td>{t}Year{/t}</td>
 		<td>{t}Month{/t}</td>
@@ -40,10 +40,10 @@
 				{html_options values=$seconds options=$seconds selected=$time_second}
 			</select>
 		</td>
-	</tr>
+	</tr >
 </table>
 <br>
-<table width="100%">
+<table width="100%" summary="{t}Periodical jobs{/t}">
   <tr>
     <td colspan="2">
       <b>{t}Periodical job{/t}</b>
