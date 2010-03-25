@@ -1,4 +1,4 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}PPD selection dialog{/t}">
 
 	<tr>
 		<td style='width=50%;'>
@@ -18,12 +18,9 @@
           <b>{t}Filters{/t}</b>
       </div>
       <div class="contentboxb">
-        <table style='width:100%;background-color:#F8F8F8' summary="">
 
           {$alphabet}
-        </table>
-        <table style='background-color:#F8F8F8' summary="" width="100%">
-
+        <table style='background-color:#F8F8F8' summary="{t}Filter options{/t}" width="100%">
           <tr>
             <td style="width:18px">
               {image path="{$search_image}" title="{t}Display objects matching{/t}"}
