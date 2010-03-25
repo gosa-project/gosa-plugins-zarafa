@@ -4,32 +4,31 @@
   <p>{t}System logs{/t}</p>
 
   <div class="mainlist-nav">
-   <table summary="{t}Filter{/t}" style="width: 100%; table-layout: fixed;" 
+   <table summary="{t}Filter{/t}" style="width: 100%;" 
       id="t_scrolltable" cellpadding="0" cellspacing="0">
     <tr>
-     <td class='listhead' colspan="2">{t}Server{/t}:
+     <td colspan="2" style='width:25%;'>{t}Server{/t}:
       <select name='selected_server' onChange='document.mainform.submit();' size=1>
        {foreach from=$servers item=item key=key}
         <option value='{$key}' {if $key == $selected_server} selected {/if}>{$item.cn}</option>
        {/foreach}
       </select>
      </td>
-     <td class='listhead' colspan="2" >{t}Host{/t}:
+     <td colspan="2" style='width:25%;'>{t}Host{/t}:
       <select name='selected_host' onChange='document.mainform.submit();' size=1>
        {foreach from=$hosts item=item key=key}
         <option value='{$key}' {if $key == $selected_host} selected {/if}>{$item}</option>
        {/foreach}
       </select>
      </td>
-     <td>{t}Severity{/t}:
+     <td colspan="2">{t}Severity{/t}:
       <select name='selected_priority' onChange='document.mainform.submit();' size=1>
        {html_options values=$priorities options=$priorities selected=$selected_priority}
       </select>
      </td>
-     <td>&nbsp;</td>
     </tr>
     <tr>
-     <td class='listhead' style='width:5%'>{t}From{/t}:</td>
+     <td>{t}From{/t}:</td>
      <td>
       <input type="text" id="startTime" name="startTime" class="date" style='width:100px' value="{$startTime}">
       <script type="text/javascript">  
@@ -151,26 +150,26 @@
     <tbody class="listScrollContent listBodyFormat" id="t_nscrollbody">
      {foreach from=$result.entries item=item key=key}
       <tr>
-       <td title='{$item.DeviceReportedTime}' style='width:120px' class='list1'>
+       <td title="{$item.DeviceReportedTime}" style='width:120px' class='list1'>
         {$item.DeviceReportedTime}
        </td>
-       <td title='{$item.FromHost}' class='list1'>
+       <td title="{$item.FromHost}" class='list1'>
         {$item.FromHost}
        </td>
        
-       <td title='{$item.SysLogTag}' class='list1'>
+       <td title="{$item.SysLogTag}" class='list1'>
         {$item.SysLogTag}
        </td>
        
-       <td title='{$item.Facility}' class='list1'>
+       <td title="{$item.Facility}" class='list1'>
         {$item.Facility}
        </td>
        
-       <td title='{$item.Priority}' class='list1'>
+       <td title="{$item.Priority}" class='list1'>
         {$item.Priority}
        </td>
        
-       <td title='{$item.Message}' style="width:400px" class='list1'>
+       <td title="{$item.Message}" style="width:400px" class='list1'>
         <div style='overflow:hidden; width:400px'>
          {$item.Message}
         </div>
@@ -187,20 +186,25 @@
      </tr>
     </tbody>
    </table>
-  </div>
- 
-  <div style='width:40%;float:left;'>
-   {$matches}
-  </div>
-  
-  <div style='width:80px;float:right;'>
-   <select name='limit' onChange='document.mainform.submit();' size=1>
-    {html_options options=$limits selected=$limit}
-   </select>
-  </div>
-  
-  <div style='width:300px;float:left;'>
-   {$page_sel}
+  </div >
+
+  <div class="nlistFooter">
+
+    <div style='width:40%;float:left;'>
+     {$matches}
+    </div>
+   
+    <div style='width:80px;float:right;'>
+     <select name='limit' onChange='document.mainform.submit();' size=1>
+      {html_options options=$limits selected=$limit}
+     </select>
+    </div>
+    
+    <div style='width:300px;float:left;'>
+     {$page_sel}
+    </div>
+    <div class='clear'></div>
   </div>
  {/if}
 </div>
+<br>
