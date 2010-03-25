@@ -1,5 +1,5 @@
 
-<table class='editing_surface'>
+<table class='editing_surface' summary="{t}Sieve editor{/t}">
 	<tr>
 		<td class='editing_surface_menu'>
 			
