@@ -1,10 +1,10 @@
-<table summary="" style="width:100%">
+<table summary="{t}Kolab service{/t}" style="width:100%">
  <tr>
   <td style='width:50%' class='right-border'>
 
    <h3>{t}Generic{/t}</h3>
 
-   <table summary="" width="100%">
+   <table summary="{t}Generic settings{/t}" width="100%">
     <tr>
      <td>
       {t}Postfix mydomain{/t}&nbsp;{$must}
@@ -45,7 +45,7 @@
    <hr>
 
    <h3>{t}Services{/t}</h3>
-   <table summary="">
+   <table summary="{t}Service settings{/t}">
     <tr>
      <td>
       {render acl=$cyruspop3ACL}
@@ -140,7 +140,7 @@
    <hr>
 
    <h3>{t}Quota settings{/t}</h3>
-   <table summary="">
+   <table summary="{t}Quota settings{/t}">
     <tr>
      <td>
       {render acl=$cyrusquotawarnACL}
@@ -154,7 +154,7 @@
   <td>
 
    <h3>{t}Free/Busy settings{/t}</h3>
-   <table summary="">
+   <table summary="{t}Free/Busy settings{/t}">
     <tr>
      <td>
       {render acl=$apacheallowunauthenticatedfbACL}
@@ -175,7 +175,7 @@
    <hr>
 
    <h3>{t}SMTP privileged networks{/t}</h3>
-   <table summary="">
+   <table summary="{t}SMTP privileged networks{/t}">
     <tr>
      <td>
       <label for="postfix_mynetworks">
@@ -191,7 +191,7 @@
    <hr>
 
    <h3>{t}SMTP smarthost/relayhost{/t}</h3>
-   <table summary="">
+   <table summary="{t}SMTP smarthost/relayhost{/t}">
     <tr>
      <td>
       {render acl=$postfixrelayhostACL}
@@ -218,7 +218,7 @@
 
 
    <h3>{t}Accept Internet Mail{/t}</h3>
-   <table summary="">
+   <table summary="{t}Accept Internet Mail{/t}">
     <tr>
      <td>
       {render acl=$postfixallowunauthenticatedACL}
@@ -234,10 +234,8 @@
 </table>
 <input type="hidden" name="kolabtab">
 <hr>
-<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
- <button type='submit' name='SaveService'>
- {msgPool type=saveButton}</button>
- &nbsp;
- <button type='submit' name='CancelService'>
- {msgPool type=cancelButton}</button>
+
+<div class="plugin-actions">
+ <button type='submit' name='SaveService'>{msgPool type=saveButton}</button>
+ <button type='submit' name='CancelService'>{msgPool type=cancelButton}</button>
 </div>
