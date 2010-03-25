@@ -24,11 +24,11 @@
 </p>
    				</div>
    				<div class="contentboxb">
-     				<table style='width:100%;background-color:#F8F8F8' summary="">
+     				<table style='width:100%;background-color:#F8F8F8' summary="{t}Filter options{/t}">
 
       				{$alphabet}
      				</table>
-    					<table style='background-color:#F8F8F8' summary="" width="100%">
+    					<table style='background-color:#F8F8F8' summary="{t}Filter options{/t}" width="100%">
 
 						<tr>
 							<td>
@@ -36,7 +36,7 @@
 							</td>
 						</tr>
 					</table>
-				<table style='background-color:#F8F8F8' summary="" width="100%">
+				<table style='background-color:#F8F8F8' summary="{t}Filter options{/t}" width="100%">
 
 					<tr>
 						<td>
@@ -50,7 +50,7 @@
 						</td>
 					</tr>
 				</table>
-    					<table style='background-color:#F8F8F8' summary="" width="100%">
+    					<table style='background-color:#F8F8F8' summary="{t}Filter options{/t}" width="100%">
 
 							<tr>
 								<td>
