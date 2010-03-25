@@ -1,4 +1,4 @@
-<table class='sieve_test_container'>
+<table class='sieve_test_container'  summary="{t}Sieve test case{/t}">
 	<tr>
 		<td style='width:20px; ; text-align:center; vertical-align:top;'>	
 			{if $DisplayAdd}
