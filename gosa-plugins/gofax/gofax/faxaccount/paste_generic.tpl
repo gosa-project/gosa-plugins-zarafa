@@ -1,10 +1,10 @@
-<table style='width:100%; ' summary="">
+<table style='width:100%; ' summary="{t}Paste fax account settings{/t}">
 
  	<tr>
    		<td style='width:50%; '>
 
      		<h3>{t}Generic{/t}</h3>
-     		<table summary="">
+     		<table summary="{t}Generic settings{/t}">
        			<tr>
          			<td>
 					<label for="facsimileTelephoneNumber">{t}Fax{/t}</label>{$must}
