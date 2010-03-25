@@ -2,7 +2,7 @@
 <p>
  {t}The current device has been detected by the ARP monitor used by GOsa. You can integrate this device into your running DHCP/DNS infrastructure by submitting this form. The device entry will disappear from the list of the systems and move to the DNS/DHCP configuration.{/t}
 </p>
-<table summary="" style="width:100%">
+<table summary="{t}Integrating unknown devices{/t}" style="width:100%">
 <tr>
  <td style>
   <LABEL for="cn">
@@ -35,12 +35,9 @@
     onChange="changeState('SystemType');changeState('ObjectGroup');"
     {if $gotoIntegration} checked {/if}>&nbsp;{t}GOto integration{/t}
 </p>
-<table summary="" style='width:100%'>
+<table summary="{t}Target type selection{/t}" style='width:100%'>
  <tr>
   <td style='width:49%'>
-   <table summary="">
-    <tr>
-     <td> 
       {t}System type{/t}&nbsp;
 	  <select {if !$gotoIntegration} disabled {/if}
       id="SystemType"
@@ -48,14 +45,8 @@
 			onChange="document.mainform.submit();">
        {html_options values=$SystemTypeKeys output=$SystemTypes selected=$SystemType}
       </select>
-     </td>
-    </tr>
-   </table>
   </td>
   <td>
-   <table summary="">
-    <tr>
-     <td> 
       {t}Choose an object group as template{/t}&nbsp;
 	    <select {if !$gotoIntegration} disabled {/if}
         id="ObjectGroup"
@@ -63,9 +54,6 @@
 		  <option value='none'>{t}none{/t}</option>	
        {html_options options=$ogroups selected=$ObjectGroup}
       </select>
-     </td>
-    </tr>
-   </table>
   </td>
  </tr>
 </table>
