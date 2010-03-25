@@ -1,45 +1,21 @@
 {if !$is_account}
 
-<table style='width:100%;'>
+<table style='width:100%;' summary="{t}Printer settings{/t}">
 	<tr>
 		<td style='width:55%;'>
-			<table>
-				<tr>
-					<td colspan="2">
-						{render acl=$acl}
-						<input class="center" type='checkbox' onChange="document.mainform.submit();" 
-							{if $is_account} checked {/if}
-							name='gotoLpdEnable_enabled'>&nbsp;{t}Enable printer settings{/t}</td>
-						{/render}
-					</td>
-				</tr>
-			</table>
+      {render acl=$acl}
+      <input class="center" type='checkbox' onChange="document.mainform.submit();" 
+        {if $is_account} checked {/if}
+        name='gotoLpdEnable_enabled'>&nbsp;{t}Enable printer settings{/t}</td>
+      {/render}
 		</td>
 	</tr>
 </table>
 {else}
-<table style='width:100%;'>
+<table style='width:100%;' summary="{t}Generic settings{/t}">
 	<tr>
-		<td style='width:55%;'>
-			<table>
-<!--
-				<tr>
-					<td>{t}Device{/t}&nbsp;#</td>
-					<td>
-						<select name='DevID' onChange="document.mainform.submit();">
-							{foreach from=$data key=key item=item}
-	<option {if $key == $DevID} selected {/if} value='{$key}'>{$key+1}: {$item.s_Type} {$item.s_Device}</option>
-							{/foreach}
-						</select>
-						{if $data_cnt >= 3}
-						<input type="button" disabled name="dummy1" value="{msgPool type=addButton}">
-						{else}
-						<input type="submit" name="add_printer" value="{msgPool type=addButton}">
-						{/if}
-						<input type="submit" name="del_printer" value="{msgPool type=delButton}">
-					</td>
-				</tr>
--->
+		<td>
+			<table summary="{t}Generic settings{/t}">
 				<tr>
 					<td colspan="2">
 						{render acl=$acl}
@@ -95,7 +71,7 @@
 		</td>
 		<td>
 {if $s_Type == "S"}
-			<table>
+			<table summary="{t}Generic settings{/t}">
 				<tr>
 					<td>{t}Bit rate{/t}</td>
 					<td>
