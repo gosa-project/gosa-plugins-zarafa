@@ -1,4 +1,4 @@
-<table summary="">
+<table summary="{t}Paste blocklist{/t}">
  <tr>
   <td><LABEL for="cn">{t}List name{/t}</LABEL></td>
   <td>
