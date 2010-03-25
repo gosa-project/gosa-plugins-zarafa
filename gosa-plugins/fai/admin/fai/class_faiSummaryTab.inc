@@ -343,7 +343,8 @@ class faiSummaryTab extends plugin{
             ksort($data['partitions']);
 
             $str .= "<tr><td colspan=2  style='padding-left:20px;'>";
-            $str .= "<table cellspacing=0 cellpadding=2 style='background:#FFFFFF;border:1px solid #B0B0B0'>
+            $str .= "<table \""._("Summary of fai classes")."\"
+                        cellspacing=0 cellpadding=2 style='background:#FFFFFF;border:1px solid #B0B0B0'>
                       <tr style='background-color:#DBDBDB;'>
                        <td class='tbhead'>"._("No.")."</td>
                        <td class='tbhead'>"._("Name")."</td>
