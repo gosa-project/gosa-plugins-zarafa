@@ -32,7 +32,7 @@
 <br>
 
 {if $search_result}
- <table style='width:100%; '>  <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
+ <table style='width:100%; ' summary="{t}Phone reports{/t}">  <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
    <td><a href="main.php{$plug}&amp;sort=0">{t}Date{/t} {$mode0}</a></td>
    <td><a href="main.php{$plug}&amp;sort=1">{t}Source{/t} {$mode1}</a></td>
    <td><a href="main.php{$plug}&amp;sort=2">{t}Destination{/t} {$mode2}</a></td>	
@@ -44,7 +44,7 @@
   {$search_result}
  </table>
 
- <table style='width:100%; text-align:center;'>  <tr>
+ <table summary="{t}Page selector{/t}" style='width:100%; text-align:center;'>  <tr>
    <td>{$range_selector}</td>
   </tr>
  </table>
