@@ -4,7 +4,7 @@
 		<td>
 
 		<!--Table left-top-->
-			<table summary="">
+			<table summary="{t}Generic settings{/t}">
 				<tr>
 					<td>
 						{t}Name{/t} {$must}
@@ -51,7 +51,7 @@
 
 
 		<!--Table right-top-->
-			<table summary="">
+			<table summary="{t}Share type{/t}">
 				<tr>
 					<td>
 
