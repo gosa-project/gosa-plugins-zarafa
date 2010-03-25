@@ -7,7 +7,7 @@
 	<h3>{t}Available logs{/t}</h3>
 
 
-    <table style='width:100%;height:40px;'><tr><td>
+    <table style='width:100%;height:40px;' summary="{t}View system logs{/t}"><tr><td>
 		{$divlist}
     </td></tr></table>
 	  <br>
@@ -23,9 +23,8 @@
 <br>
 <input type="hidden" name="ignore" value="1">
 <hr>
-<div style='text-align:right;width:99%; padding-right:5px; padding-top:5px;'>
+<div class="plugin-actions">
 	<button type='submit' name='abort_event_dialog'>{msgPool type=backButton}</button>
-
 </div>
 <br>
 {/if}
