@@ -1,8 +1,8 @@
-<table width="100%" summary="">
+<table width="100%" summary="{t}FAI script{/t}">
 	<tr>
 		<td width="50%" valign="top">
 				<h3>{t}Generic{/t}</h3>
-				<table summary="" cellspacing="4">
+				<table summary="{t}Generic settings{/t}" cellspacing="4">
 					<tr>
 						<td>
 							<LABEL for="cn">
@@ -32,27 +32,20 @@
 	</tr>
 </table>
 <hr>
-<table width="100%" summary="">
+<table width="100%" summary="{t}List of scripts{/t}">
 	<tr>
 		<td>
 				<h3>
 						{t}List of scripts{/t}
 				</h3>
-				<table summary="" width="100%">
-
-				<tr>
-					<td>
-						{$Entry_divlist}
+      {$Entry_divlist}
 {if $sub_object_is_addable}
-						<button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+      <button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
 
 {else}
-						<button type='submit' name='Dummy2' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+      <button type='submit' name='Dummy2' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
 
 {/if}
-					</td>
-				</tr>
-				</table>
 		</td>
 	</tr>
 </table>
