@@ -1,8 +1,8 @@
-<table summary="" width="100%">
+<table summary="{t}Phone{/t}" width="100%">
  <tr>
   <td style='width:50%; ' class='right-border'>
 
-	<table summary="">
+	<table summary="{t}Generic settings{/t}">
 	 <tr>
 	  <td><LABEL for="cn">{t}Phone name{/t}</LABEL>{$must}</td>
 	  <td>
@@ -26,16 +26,10 @@
   </td>
   <td>
 
-	<table summary="">
-	 <tr>
-	  <td><LABEL for="description">{t}Description{/t}</LABEL></td>
-	  <td>
+	  <LABEL for="description">{t}Description{/t}</LABEL>
 {render acl=$descriptionACL}
 	   <input type='text' name="description" id="description" size=25 maxlength=80 value="{$description}">
 {/render}
-          </td>
-	 </tr>
-	</table>
   </td>
  </tr>
 </table>
