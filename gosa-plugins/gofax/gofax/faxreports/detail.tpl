@@ -1,4 +1,4 @@
-<table summary="">
+<table summary="{t}Fax reports{/t}">
  <tr>
   <td> 
    <a href="plugins/gofax/getfax.php?id={$detail}&amp;download=1">
@@ -14,7 +14,7 @@
   </td>
   <td>
 
-    <table summary="" border=0 cellspacing=5>
+    <table summary="{t}Entry list{/t}" border=0 cellspacing=5>
      <tr>
       <td><b>{t}FAX ID{/t}</b></td>
       <td>{$fax_id}</td>
