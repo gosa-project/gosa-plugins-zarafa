@@ -1,9 +1,9 @@
 <h3>{t}Properties{/t}</h3>
 
-<table summary="">
+<table summary="{t}Conference{/t}">
   <tr>
     <td>
-    	<table summary="">
+    	<table summary="{t}Generic settings{/t}">
         <tr>
           <td>
             <LABEL for="cn">
@@ -80,7 +80,7 @@
       &nbsp;
     </td>
     <td width="50%">
-      <table summary="">
+      <table summary="{t}Additional settings{/t}">
         <tr>
           <td>
             <LABEL for="description">
@@ -132,7 +132,7 @@
   <tr>
     <td>
 
-	    <table summary="">
+	    <table summary="{t}Options{/t}">
         <tr>
 	        <td>
 {render acl=$goFonConferenceOptionPACL}
@@ -186,7 +186,7 @@
 	  </td>
     <td>
 
-      <table summary="">
+      <table summary="{t}Flags{/t}">
         <tr>
           <td>
 {render acl=$goFonConferenceOptionMACL}
