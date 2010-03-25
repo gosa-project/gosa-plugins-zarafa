@@ -1,9 +1,9 @@
 <input type="hidden" name="SubObjectFormSubmitted" value="1">
-<table width="100%" summary="">
+<table width="100%" summary="{t}FAI script{/t}">
 	<tr>
 		<td valign="top" width="50%">
 			<h3>{t}Generic{/t}</h3>
-				<table summary="">
+				<table summary="{t}Generic settings{/t}">
 					<tr>
 						<td>
 							{t}Name{/t}{$must}&nbsp;
@@ -32,7 +32,7 @@
         </td>
 		<td valign="top">
 				<h3>{t}Script attributes{/t}</h3>
-				<table summary="" width="100%">
+				<table summary="{t}Priority configuration{/t}" width="100%">
 					<tr>
 						<td>
 							<LABEL for="FAIpriority">
@@ -57,16 +57,10 @@
 		{t}Script{/t}
 	</LABEL>
 	</h3>
-<table summary="" width="99%">
-    <tr>
-        <td>
 {render acl=$FAIscriptACL}
             <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript"  
 				rows="20" cols="120">{$FAIscript}</textarea>
 {/render}
-        </td>
-    </tr>
-</table>
 <br>
 <div>
 {render acl=$FAIscriptACL}
