@@ -1,4 +1,4 @@
-<table summary="">
+<table summary="{t}Paste macro{/t}">
 	<tr>
     	<td>
 			<LABEL for="cn">{t}Macro name{/t}</LABEL>{$must}</td>
