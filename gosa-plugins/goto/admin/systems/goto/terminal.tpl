@@ -1,9 +1,9 @@
 <h3>{t}Properties{/t}</h3>
-<table summary="" style="width:100%;">
+<table summary="{t}Terminal{/t}" style="width:100%;">
  <tr>
   <td style='width:50%; '>
 
-   <table summary="">
+   <table summary="{t}Generic settings{/t}">
     <tr>
      {if $cn eq 'default'}
      <td colspan=2>{t}Terminal template{/t}</td>
@@ -41,7 +41,7 @@
   </td>
   <td class='left-border'>
 
-   <table summary="" style='width:100%'>
+   <table summary="{t}Server and mode settings{/t}" style='width:100%'>
     <tr>
      <td style='width:20%'><LABEL for="gotoMode">{t}Mode{/t}</LABEL></td>
      <td>
