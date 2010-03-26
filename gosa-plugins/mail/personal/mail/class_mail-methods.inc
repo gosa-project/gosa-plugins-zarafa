@@ -80,6 +80,7 @@ class mailMethod{
       "lrswp"    => "post",
       "p"        => "external post",
       "lrswip"   => "append",
+      "lrswidp"  => "delete",
       "lrswipcd" => "write",
       "lrswipcda"=> "admin",
       " "         => "none");
