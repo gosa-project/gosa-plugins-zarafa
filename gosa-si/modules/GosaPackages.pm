@@ -12,6 +12,7 @@ use XML::Simple;
 use File::Spec;
 use Data::Dumper;
 use MIME::Base64;
+use Net::ARP;
 
 my $event_dir = "/usr/lib/gosa-si/server/GosaPackages";
 use lib "/usr/lib/gosa-si/server/GosaPackages";
@@ -73,29 +74,16 @@ sub get_module_info {
 sub get_mac {
     my $ifreq= shift;
     my $result;
-    if ($ifreq && length($ifreq) > 0) { 
+    if ($ifreq && length($ifreq) > 0) {
         if($ifreq eq "all") {
             $result = "00:00:00:00:00:00";
         } else {
-            my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
-
                 # A configured MAC Address should always override a guessed value
                 if ($gosa_mac_address and length($gosa_mac_address) > 0) {
                     $result= $gosa_mac_address;
                 }
 
-            socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
-                or die "socket: $!";
-
-            if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
-                my ($if, $mac)= unpack 'h36 H12', $ifreq;
-
-                if (length($mac) > 0) {
-                    $mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
-                    $mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
-                    $result = $mac;
-                }
-            }
+          $result = Net::ARP::get_mac($ifreq);
         }
     }
     return $result;
