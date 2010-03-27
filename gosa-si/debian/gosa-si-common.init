@@ -13,7 +13,7 @@
 #                    signaling for all communication partners.
 ### END INIT INFO
 
-# Start/stop the ctftpd daemon.
+# variables for the gosa-si server and client.
 SERVER="gosa-si-server"
 CLIENT="gosa-si-client"
 DAEMON_SERVER="/usr/sbin/${SERVER}"
