@@ -1,10 +1,11 @@
 package ArpHandler;
 
-use Exporter;
-@ISA = ("Exporter");
+
 
 use strict;
 use warnings;
+
+use Exporter;
 use GOSA::GosaSupportDaemon;
 use POSIX;
 use Fcntl;
@@ -15,6 +16,8 @@ use Net::DNS;
 use Switch;
 use Data::Dumper;
 use Socket;
+
+@ISA = ("Exporter");
 
 # Don't start if some of the modules are missing
 my $start_service=1;
