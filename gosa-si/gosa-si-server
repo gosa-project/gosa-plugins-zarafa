@@ -2993,6 +2993,9 @@ sub create_packages_list_db {
 				&parse_package_info( $baseurl, $dist, $section, $session_id );
 			}
 		}
+    else {
+        daemon_log("$session_id ERROR: cannot parse line '$line'", 1);
+    }
 	}
 
 	close (CONFIG);
