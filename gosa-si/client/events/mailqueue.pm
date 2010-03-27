@@ -25,7 +25,15 @@ Andreas Rettenberger <rettenberger at gonicus dot de>
 
 
 package mailqueue;
+
+
+use strict;
+use warnings;
+
 use Exporter;
+use GOSA::GosaSupportDaemon;
+use MIME::Base64;
+
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
@@ -37,11 +45,6 @@ my @events = (
     "mailqueue_header",
     );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use MIME::Base64;
 
 BEGIN {}
 
@@ -120,12 +123,12 @@ sub mailqueue_query {
     my $error = 0;
     my $error_string;
     my $msg_id;
-    my $msg_hold;
-    my $msg_size;
-    my $arrival_time;
+#my $msg_hold;
+#my $msg_size;
+#my $arrival_time;
     my $sender;
     my $recipient;
-    my $status_message;
+#my $status_message;
     my $out_hash;
     my $out_msg;
 
