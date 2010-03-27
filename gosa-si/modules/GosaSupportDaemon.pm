@@ -1,12 +1,27 @@
 package GOSA::GosaSupportDaemon;
 
+use strict;
+use warnings;
+
 use Exporter;
+use IO::Socket::INET;
+use Crypt::Rijndael;
+use Digest::MD5  qw(md5 md5_hex md5_base64);
+use MIME::Base64;
+use XML::Quote qw(:all);
+use XML::Simple;
+use Data::Dumper;
+use Net::DNS;
+use Net::ARP;
+use DateTime;
+
 @ISA = qw(Exporter);
+
 my @functions = (
     "create_passwd",
     "create_xml_hash",
-	  "createXmlHash",
-	  "myXmlHashToString",
+    "createXmlHash",
+    "myXmlHashToString",
     "get_content_from_xml_hash",
     "add_content2xml_hash",
     "create_xml_string",
@@ -40,18 +55,6 @@ my @functions = (
     "opsi_callobj2string",
     ); 
 @EXPORT = @functions;
-use strict;
-use warnings;
-use IO::Socket::INET;
-use Crypt::Rijndael;
-use Digest::MD5  qw(md5 md5_hex md5_base64);
-use MIME::Base64;
-use XML::Quote qw(:all);
-use XML::Simple;
-use Data::Dumper;
-use Net::DNS;
-use Net::ARP;
-use DateTime;
 
 my $op_hash = {
     'eq' => '=',
@@ -510,8 +513,8 @@ sub get_orderby_statement {
 sub get_dns_domains() {
         my $line;
         my @searches;
-        open(RESOLV, "</etc/resolv.conf") or return @searches;
-        while(<RESOLV>){
+        open($RESOLV, "<", "/etc/resolv.conf") or return @searches;
+        while(<$RESOLV>){
                 $line= $_;
                 chomp $line;
                 $line =~ s/^\s+//;
@@ -523,7 +526,7 @@ sub get_dns_domains() {
                         push(@searches, split(/ /, $1));
                 }
         }
-        close(RESOLV);
+        close($RESOLV);
 
         my %tmp = map { $_ => 1 } @searches;
         @searches = sort keys %tmp;
@@ -723,12 +726,12 @@ sub get_interfaces {
 	my @result;
 	my $PROC_NET_DEV= ('/proc/net/dev');
 
-	open(PROC_NET_DEV, "<$PROC_NET_DEV")
+	open($FD_PROC_NET_DEV, "<", "$PROC_NET_DEV")
 		or die "Could not open $PROC_NET_DEV";
 
-	my @ifs = <PROC_NET_DEV>;
+	my @ifs = <$FD_PROC_NET_DEV>;
 
-	close(PROC_NET_DEV);
+	close($FD_PROC_NET_DEV);
 
 	# Eat first two line
 	shift @ifs;
@@ -751,12 +754,12 @@ sub get_local_ip_for_remote_ip {
     if($remote_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
         my $PROC_NET_ROUTE= ('/proc/net/route');
 
-        open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+        open($FD_PROC_NET_ROUTE, "<", "$PROC_NET_ROUTE")
             or die "Could not open $PROC_NET_ROUTE";
 
-        my @ifs = <PROC_NET_ROUTE>;
+        my @ifs = <$FD_PROC_NET_ROUTE>;
 
-        close(PROC_NET_ROUTE);
+        close($FD_PROC_NET_ROUTE);
 
         # Eat header line
         shift @ifs;
@@ -855,10 +858,10 @@ sub run_as {
 		&main::daemon_log("ERROR: The sudo utility is not available! Please fix this!");
 	}
 	my $cmd_line= "$sudo_cmd su - $uid -c '$command'";
-	open(PIPE, "$cmd_line |");
+	open($PIPE, "$cmd_line |");
 	my $result = {'command' => $cmd_line};
-	push @{$result->{'output'}}, <PIPE>;
-	close(PIPE);
+	push @{$result->{'output'}}, <$PIPE>;
+	close($PIPE);
 	my $exit_value = $? >> 8;
 	$result->{'resultCode'} = $exit_value;
 	return $result;

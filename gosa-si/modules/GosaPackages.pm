@@ -1,10 +1,9 @@
 package GosaPackages;
 
-use Exporter;
-@ISA = ("Exporter");
-
 use strict;
 use warnings;
+
+use Exporter;
 use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use Socket;
@@ -13,6 +12,8 @@ use File::Spec;
 use Data::Dumper;
 use MIME::Base64;
 use Net::ARP;
+
+@ISA = ("Exporter");
 
 my $event_dir = "/usr/lib/gosa-si/server/GosaPackages";
 use lib "/usr/lib/gosa-si/server/GosaPackages";
