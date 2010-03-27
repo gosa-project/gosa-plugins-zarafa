@@ -1,12 +1,11 @@
 package ClientPackages;
 
-use Exporter;
-@ISA = ("Exporter");
-
 # Each module has to have a function 'process_incoming_msg'. This function works as a interface to gosa-sd and receives the msg hash from gosa-sd. 'process_incoming_function checks, wether it has a function to process the incoming msg and forward the msg to it. 
 
 use strict;
 use warnings;
+
+use Exporter;
 use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
@@ -16,6 +15,8 @@ use Net::LDAP;
 use Net::LDAP::Util;
 use Socket;
 use Net::hostent;
+
+@ISA = ("Exporter");
 
 my $event_dir = "/usr/lib/gosa-si/server/ClientPackages";
 use lib "/usr/lib/gosa-si/server/ClientPackages";
@@ -451,9 +452,9 @@ sub here_i_am {
     if ( defined($msg_hash->{'force-hostname'}[0]) &&
        length($msg_hash->{'force-hostname'}[0]) > 0){
     #      $heap->{force-hostname}->{$mac_address}= $msg_hash->{'force-hostname'}[0];
-	    open (TFILE, ">/var/tmp/$mac_address");
-	    print TFILE $msg_hash->{'force-hostname'}[0];
-	    close (TFILE); 
+	    open ($TFILE, ">", "/var/tmp/$mac_address");
+	    print $TFILE $msg_hash->{'force-hostname'}[0];
+	    close ($TFILE); 
     } else {
     #      $heap->{force-hostname}->{$mac_address}= undef;
 	if ( -e "/var/tmp/$mac_address") {
@@ -1081,12 +1082,12 @@ sub server_matches {
 		} else {
 			my $PROC_NET_ROUTE= ('/proc/net/route');
 
-			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+			open($FD_PROC_NET_ROUTE, "<", "$PROC_NET_ROUTE")
 				or die "Could not open $PROC_NET_ROUTE";
 
-			my @ifs = <PROC_NET_ROUTE>;
+			my @ifs = <$FD_PROC_NET_ROUTE>;
 
-			close(PROC_NET_ROUTE);
+			close($FD_PROC_NET_ROUTE);
 
 			# Eat header line
 			shift @ifs;
