@@ -170,7 +170,7 @@ sub mailqueue_header {
     my ($sql, $res);
 
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
