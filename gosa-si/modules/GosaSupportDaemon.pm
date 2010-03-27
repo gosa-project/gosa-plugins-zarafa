@@ -803,7 +803,7 @@ sub get_local_ip_for_remote_ip {
 sub get_mac_for_interface {
 	my $ifreq= shift;
 	my $result;
-	if ($ifreq && length($ifreq) > 0) { 
+	if ($ifreq && length($ifreq) > 0) {
 		if($ifreq eq "all") {
 			$result = "00:00:00:00:00:00";
 		} else {
