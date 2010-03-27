@@ -1,5 +1,14 @@
 package krb5;
+
+
+use strict;
+use warnings;
+
 use Exporter;
+use GOSA::GosaSupportDaemon;
+use Authen::Krb5;
+use Authen::Krb5::Admin qw(:constants);
+
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
@@ -16,12 +25,6 @@ my @events = (
     "krb5_set_password",
     );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Authen::Krb5;
-use Authen::Krb5::Admin qw(:constants);
 
 BEGIN {}
 
