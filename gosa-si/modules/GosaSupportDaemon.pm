@@ -5,8 +5,8 @@ use Exporter;
 my @functions = (
     "create_passwd",
     "create_xml_hash",
-	"createXmlHash",
-	"myXmlHashToString",
+	  "createXmlHash",
+	  "myXmlHashToString",
     "get_content_from_xml_hash",
     "add_content2xml_hash",
     "create_xml_string",
@@ -50,6 +50,7 @@ use XML::Quote qw(:all);
 use XML::Simple;
 use Data::Dumper;
 use Net::DNS;
+use Net::ARP;
 use DateTime;
 
 my $op_hash = {
@@ -806,25 +807,7 @@ sub get_mac_for_interface {
 		if($ifreq eq "all") {
 			$result = "00:00:00:00:00:00";
 		} else {
-			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
-
-			# A configured MAC Address should always override a guessed value
-			if ($main::server_mac_address and length($main::server_mac_address) > 0) {
-				$result= $main::server_mac_address;
-			}
-
-			socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
-				or die "socket: $!";
-
-			if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
-				my ($if, $mac)= unpack 'h36 H12', $ifreq;
-
-				if (length($mac) > 0) {
-					$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
-					$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
-					$result = $mac;
-				}
-			}
+        $result = Net::ARP::get_mac($ifreq);
 		}
 	}
 	return $result;
