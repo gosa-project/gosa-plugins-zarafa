@@ -22,7 +22,7 @@ use Fcntl;
 use GOSA::GosaSupportDaemon;
 use File::Basename;
 
-my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
+my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath, $ldap_config_exit_hook);
 
 my $chrony_file = "/etc/chrony/chrony.conf";
 my $syslog_file = "/etc/syslog.conf";
@@ -35,6 +35,7 @@ my %cfg_defaults = (
 		"pam-config" => [\$pam_config, "/etc/pam_ldap.conf"],
 		"nss-config" => [\$nss_config, "/etc/libnss-ldap.conf"],
 		"fai-logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
+		"ldap-config-exit-hook" => [\$ldap_config_exit_hook, undef],
 	},
 );
 
@@ -446,6 +447,12 @@ sub new_ldap_config {
 	# Set permissions and ownership structure of 
 	chown(0, 0, $cfg_name);
 	chmod(0644, $cfg_name);
+
+    # Allow custom scripts to be executed
+    if (defined $ldap_config_exit_hook) {
+        system($ldap_config_exit_hook);
+        daemon_log("executed hook $ldap_config_exit_hook", 5);
+    }
 
     return;
 }
