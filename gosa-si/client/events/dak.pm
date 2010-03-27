@@ -3,7 +3,14 @@
 # @brief Implementation of a GOsa-SI-client event module. 
 
 package dak;
+
+use strict;
+use warnings;
 use Exporter;
+
+use GOSA::GosaSupportDaemon;
+use MIME::Base64;
+
 @ISA = qw(Exporter);
 my @events = (
     "get_events", 
@@ -12,12 +19,6 @@ my @events = (
     "remove_dak_key",
     );
 @EXPORT = @events;
-
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use MIME::Base64;
 
 BEGIN {}
 
@@ -129,7 +130,7 @@ sub import_dak_key {
         &add_content2xml_hash($out_hash, "error", "DAK Keyring is not writable");
     } else {
         my $keyfile;
-        open($keyfile, ">/tmp/gosa_si_tmp_dak_key");
+        open($keyfile, ">","/tmp/gosa_si_tmp_dak_key");
         print $keyfile $key;
         close($keyfile);
         my $command = "$gpg --import /tmp/gosa_si_tmp_dak_key";
