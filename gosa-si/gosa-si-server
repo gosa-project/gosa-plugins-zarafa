@@ -248,7 +248,7 @@ our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minu
     "messaging"             => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
     "foreign-clients"       => [\$foreign_clients_file_name, '/var/lib/gosa-si/foreign_clients.db'],
     "source-list"           => [\$sources_list, '/etc/apt/sources.list'],
-    "repo-path"             => [\$repo_path, '/srv/www/repository'],
+    "repo-path"             => [\$repo_path, '/srv/www'],
     "debian-arch"           => [\$arch, 'i386'],     
     "ldap-uri"              => [\$ldap_uri, ""],
     "ldap-base"             => [\$ldap_base, ""],
