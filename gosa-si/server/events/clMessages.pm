@@ -3,7 +3,16 @@
 # @details A GOsa-SI event module containing all functions to handle incoming messages from clients.
 
 package clMessages;
+
+
+use strict;
+use warnings;
+
 use Exporter;
+use Data::Dumper;
+use GOSA::GosaSupportDaemon;
+use MIME::Base64;
+
 @ISA = qw(Exporter);
 my @events = (
     "confirm_usr_msg",
@@ -21,13 +30,6 @@ my @events = (
     "save_fai_log",
     );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use Data::Dumper;
-use GOSA::GosaSupportDaemon;
-use MIME::Base64;
-
 
 BEGIN {}
 
@@ -101,7 +103,7 @@ sub save_fai_log {
         my ($log_file, $log_string) = split(":", $log);
         my $client_fai_log_file = File::Spec->catfile( $client_fai_log_dir, $log_file);
 
-		open(my $LOG_FILE, ">$client_fai_log_file"); 
+		open(my $LOG_FILE, ">", "$client_fai_log_file"); 
 		print $LOG_FILE &decode_base64($log_string);
 		close($LOG_FILE);
 		chown($main::root_uid, $main::adm_gid, $client_fai_log_file);
