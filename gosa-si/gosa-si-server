@@ -20,8 +20,6 @@
 #     REVISION:  ---
 #===============================================================================
 
-my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev$';
-
 use strict;
 use warnings;
 use Getopt::Long;
@@ -51,6 +49,7 @@ use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
 
+my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev$';
 
 # revision number of server and program name
 my $server_headURL;
@@ -455,15 +454,15 @@ sub check_cmdline_param () {
 sub check_pid {
     $pid = -1;
     # Check, if we are already running
-    if( open(LOCK_FILE, "<$pid_file") ) {
-        $pid = <LOCK_FILE>;
+    if( open($LOCK_FILE, "<","$pid_file") ) {
+        $pid = <$LOCK_FILE>;
         if( defined $pid ) {
             chomp( $pid );
             if( -f "/proc/$pid/stat" ) {
                 my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
                 if( $stat ) {
 					print STDERR "\nERROR: Already running!\n";
-                    close( LOCK_FILE );
+                    close( $LOCK_FILE );
                     exit -1;
                 }
             }
@@ -475,8 +474,8 @@ sub check_pid {
     # create a syslog msg if it is not to possible to open PID file
     if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
         my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open(LOCK_FILE, '<', $pid_file)
-                && ($pid = <LOCK_FILE>))
+        if (open($LOCK_FILE, '<', $pid_file)
+                && ($pid = <$LOCK_FILE>))
         {
             chomp($pid);
             $msg .= "(PID $pid)\n";
@@ -2881,7 +2880,7 @@ sub create_sources_list {
 	}
 
 	my $fh;
-	open($fh, ">$result");
+	open($fh, ">","$result");
 	if (not defined $fh) {
 		&main::daemon_log("$session_id DEBUG: cannot open '$result' for writing", 7); 
 		return undef;
@@ -2964,7 +2963,7 @@ sub create_packages_list_db {
 
 	my $line;
 
-	open(CONFIG, "<$sources_file") or do {
+	open($CONFIG, "<","$sources_file") or do {
 		daemon_log( "$session_id ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
     		unlink($packages_list_under_construction);
 		return;
@@ -2998,7 +2997,7 @@ sub create_packages_list_db {
     }
 	}
 
-	close (CONFIG);
+	close ($CONFIG);
 
 	if(keys(%repo_dirs)) {
 		find(\&cleanup_and_extract, keys( %repo_dirs ));
@@ -3194,7 +3193,7 @@ sub parse_package {
         return;
     }
 
-    open($PACKAGES, "<$path.in");
+    open($PACKAGES, "<","$path.in");
     if(not defined($PACKAGES)) {
         daemon_log("$session_id ERROR: create_packages_list_db: parse_package: cannot open '$path.in'",1); 
         return;
@@ -3285,9 +3284,9 @@ sub cleanup_and_extract {
 
 			my $tmpl= ""; {
 				local $/=undef;
-				open FILE, "$dir/DEBIAN/templates";
+				open($FILE, "$dir/DEBIAN/templates");
 				$tmpl = &encode_base64(<FILE>);
-				close FILE;
+				close($FILE);
 			}
 			rmtree("$dir/DEBIAN/templates");
 
@@ -3497,9 +3496,9 @@ if( ! $foreground ) {
 
 # Do something useful - put our PID into the pid_file
 if( 0 != $pid ) {
-    open( LOCK_FILE, ">$pid_file" );
-    print LOCK_FILE "$pid\n";
-    close( LOCK_FILE );
+    open( $LOCK_FILE, ">","$pid_file" );
+    print $LOCK_FILE "$pid\n";
+    close( $LOCK_FILE );
     if( !$foreground ) { 
         exit( 0 ) 
     };
@@ -3519,8 +3518,8 @@ if ($server_headURL =~ /\/tag\// ||
 # Prepare log file and set permissions
 $root_uid = getpwnam('root');
 $adm_gid = getgrnam('adm');
-open(FH, ">>$log_file");
-close FH;
+open($FH, ">>","$log_file");
+close($FH);
 chmod(0440, $log_file);
 chown($root_uid, $adm_gid, $log_file);
 chown($root_uid, $adm_gid, "/var/lib/gosa-si");
