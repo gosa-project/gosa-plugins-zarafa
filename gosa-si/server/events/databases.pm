@@ -1,5 +1,12 @@
 package databases;
+
+use strict;
+use warnings;
+
 use Exporter;
+use GOSA::GosaSupportDaemon;
+use Data::Dumper;
+
 @ISA = qw(Exporter);
 my @events = (
     "get_events", 
@@ -16,11 +23,6 @@ my @events = (
     "count_fai_release",
     );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Data::Dumper;
 
 BEGIN {}
 
