@@ -130,7 +130,7 @@ sub import_dak_key {
         &add_content2xml_hash($out_hash, "error", "DAK Keyring is not writable");
     } else {
         my $keyfile;
-        open($keyfile, ">","/tmp/gosa_si_tmp_dak_key");
+        open(my $keyfile, ">","/tmp/gosa_si_tmp_dak_key");
         print $keyfile $key;
         close($keyfile);
         my $command = "$gpg --import /tmp/gosa_si_tmp_dak_key";

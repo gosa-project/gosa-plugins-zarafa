@@ -193,7 +193,7 @@ sub trigger_action_localboot {
 		# Check logged in user
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
-			open($FILE, ">", "/etc/gosa-si/event");
+			open(my $FILE, ">", "/etc/gosa-si/event");
 			print $FILE "trigger_action_localboot\n";
 			close($FILE);
 		}
@@ -293,7 +293,7 @@ sub trigger_action_reboot {
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
 			system( "/usr/bin/goto-notify reboot" );
-			open($FILE, ">", "/etc/gosa-si/event");
+			open(my $FILE, ">", "/etc/gosa-si/event");
 			print $FILE "reboot\n";
 			close($FILE);
 		}
@@ -355,7 +355,7 @@ sub trigger_action_halt {
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
 			system( "/usr/bin/goto-notify halt" );
-			open($FILE, ">", "/etc/gosa-si/event");
+			open(my $FILE, ">", "/etc/gosa-si/event");
 			print $FILE "halt\n";
 			close($FILE);
 		}
@@ -407,7 +407,7 @@ sub trigger_action_reinstall {
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
 			system( "/usr/bin/goto-notify install" );
-			open($FILE, ">", "/etc/gosa-si/event");
+			open(my $FILE, ">", "/etc/gosa-si/event");
 			print $FILE "install\n";
 			close($FILE);
 		}

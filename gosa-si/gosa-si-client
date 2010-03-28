@@ -175,14 +175,14 @@ sub check_cmdline_param () {
 sub check_pid {
     $pid = -1;
     # Check, if we are already running
-    if( open($LOCK_FILE, "<","$pid_file") ) {
+    if( open(my $LOCK_FILE, "<","$pid_file") ) {
         $pid = <$LOCK_FILE>;
         if( defined $pid ) {
             chomp( $pid );
             if( -f "/proc/$pid/stat" ) {
                 my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
                 if( $0 eq $stat ) {
-                    close( $LOCK_FILE );
+                    close($LOCK_FILE);
                     exit -1;
                 }
             }
@@ -194,7 +194,7 @@ sub check_pid {
     # create a syslog msg if it is not to possible to open PID file
     if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
         my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open($LOCK_FILE, '<', $pid_file)
+        if (open(my $LOCK_FILE, '<', $pid_file)
                 && ($pid = <$LOCK_FILE>))
         {
             chomp($pid);
@@ -334,7 +334,7 @@ sub get_local_mac_for_remote_ip {
 	if($server_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
 		my $PROC_NET_ROUTE= ('/proc/net/route');
 
-		open($PROC_NET_ROUTE, "<","$PROC_NET_ROUTE")
+		open(my $PROC_NET_ROUTE, "<","$PROC_NET_ROUTE")
 			or die "Could not open $PROC_NET_ROUTE";
 
 		my @ifs = <$PROC_NET_ROUTE>;
@@ -505,7 +505,7 @@ sub write_to_file {
 
         chomp($string);
     
-        if (open($FILE, ">>", "$file")){
+        if (open(my $FILE, ">>", "$file")){
           print $FILE $string."\n";
           close($FILE);
         }
@@ -828,7 +828,7 @@ sub trigger_seen_messages {
 
     # Check if file has 'seen' tag
     foreach my $goto_file (@goto_files) {
-        open($FILE, "$goto_dir/$goto_file");
+        open(my $FILE, "$goto_dir/$goto_file");
         my @lines = <$FILE>;
         close($FILE);
 
@@ -994,7 +994,7 @@ sub save_fai_log {
             next;
         }
 
-        open($FILE, "<","$log_file");
+        open(my $FILE, "<","$log_file");
         my @lines = <$FILE> ;
         close ($FILE);
         my $log_string = join("", @lines); 
@@ -1161,7 +1161,7 @@ if( ! $foreground ) {
 
 # Do something useful - put our PID into the pid_file
 if( 0 != $pid ) {
-    open( $LOCK_FILE, ">","$pid_file" );
+    open( my $LOCK_FILE, ">", "$pid_file" );
     print $LOCK_FILE "$pid\n";
     close( $LOCK_FILE );
     if( !$foreground ) { 

@@ -14,9 +14,9 @@ END {}
 my @events = (
     "get_events",
     "get_terminal_server",
-  "get_load",
-  "report_load",
-  "set_terminal_server",
+    "get_load",
+    "report_load",
+    "set_terminal_server",
     );
 @EXPORT = @events;
 
@@ -58,7 +58,7 @@ sub get_load
 
 	my $file = "/proc/loadavg";
 	if ((not -f $file) || (not -r $file)) { return }
-	open($FHD, "<", "$file");
+	open(my $FHD, "<", "$file");
 	my $line = <$FHD>;
 	close($FHD);
 	chomp($line);
@@ -86,7 +86,7 @@ sub set_terminal_server
 	{
 		$file_content .= "$ts $load\n";
 	}
-	open($FHD, ">", "$ts_load_file.part");
+	open(my $FHD, ">", "$ts_load_file.part");
 	printf $FHD $file_content;
 	close($FHD);
 

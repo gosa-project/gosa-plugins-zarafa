@@ -513,7 +513,7 @@ sub get_orderby_statement {
 sub get_dns_domains() {
         my $line;
         my @searches;
-        open($RESOLV, "<", "/etc/resolv.conf") or return @searches;
+        open(my $RESOLV, "<", "/etc/resolv.conf") or return @searches;
         while(<$RESOLV>){
                 $line= $_;
                 chomp $line;
@@ -726,7 +726,7 @@ sub get_interfaces {
 	my @result;
 	my $PROC_NET_DEV= ('/proc/net/dev');
 
-	open($FD_PROC_NET_DEV, "<", "$PROC_NET_DEV")
+	open(my $FD_PROC_NET_DEV, "<", "$PROC_NET_DEV")
 		or die "Could not open $PROC_NET_DEV";
 
 	my @ifs = <$FD_PROC_NET_DEV>;
@@ -754,7 +754,7 @@ sub get_local_ip_for_remote_ip {
     if($remote_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
         my $PROC_NET_ROUTE= ('/proc/net/route');
 
-        open($FD_PROC_NET_ROUTE, "<", "$PROC_NET_ROUTE")
+        open(my $FD_PROC_NET_ROUTE, "<", "$PROC_NET_ROUTE")
             or die "Could not open $PROC_NET_ROUTE";
 
         my @ifs = <$FD_PROC_NET_ROUTE>;
@@ -858,7 +858,7 @@ sub run_as {
 		&main::daemon_log("ERROR: The sudo utility is not available! Please fix this!");
 	}
 	my $cmd_line= "$sudo_cmd su - $uid -c '$command'";
-	open($PIPE, "$cmd_line |");
+	open(my $PIPE, "$cmd_line |");
 	my $result = {'command' => $cmd_line};
 	push @{$result->{'output'}}, <$PIPE>;
 	close($PIPE);

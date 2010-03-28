@@ -454,7 +454,7 @@ sub check_cmdline_param () {
 sub check_pid {
     $pid = -1;
     # Check, if we are already running
-    if( open($LOCK_FILE, "<","$pid_file") ) {
+    if( open( my $LOCK_FILE, "<", "$pid_file" ) ) {
         $pid = <$LOCK_FILE>;
         if( defined $pid ) {
             chomp( $pid );
@@ -474,7 +474,7 @@ sub check_pid {
     # create a syslog msg if it is not to possible to open PID file
     if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
         my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open($LOCK_FILE, '<', $pid_file)
+        if (open(my $LOCK_FILE, '<', $pid_file)
                 && ($pid = <$LOCK_FILE>))
         {
             chomp($pid);
@@ -2880,7 +2880,7 @@ sub create_sources_list {
 	}
 
 	my $fh;
-	open($fh, ">","$result");
+	open(my $fh, ">", "$result");
 	if (not defined $fh) {
 		&main::daemon_log("$session_id DEBUG: cannot open '$result' for writing", 7); 
 		return undef;
@@ -2963,7 +2963,7 @@ sub create_packages_list_db {
 
 	my $line;
 
-	open($CONFIG, "<","$sources_file") or do {
+	open(my $CONFIG, "<", "$sources_file") or do {
 		daemon_log( "$session_id ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
     		unlink($packages_list_under_construction);
 		return;
@@ -3193,7 +3193,7 @@ sub parse_package {
         return;
     }
 
-    open($PACKAGES, "<","$path.in");
+    open(my $PACKAGES, "<", "$path.in");
     if(not defined($PACKAGES)) {
         daemon_log("$session_id ERROR: create_packages_list_db: parse_package: cannot open '$path.in'",1); 
         return;
@@ -3284,8 +3284,8 @@ sub cleanup_and_extract {
 
 			my $tmpl= ""; {
 				local $/=undef;
-				open($FILE, "$dir/DEBIAN/templates");
-				$tmpl = &encode_base64(<FILE>);
+				open(my $FILE, "$dir/DEBIAN/templates");
+				$tmpl = &encode_base64(<$FILE>);
 				close($FILE);
 			}
 			rmtree("$dir/DEBIAN/templates");
@@ -3496,7 +3496,7 @@ if( ! $foreground ) {
 
 # Do something useful - put our PID into the pid_file
 if( 0 != $pid ) {
-    open( $LOCK_FILE, ">","$pid_file" );
+    open( my $LOCK_FILE, ">", "$pid_file" );
     print $LOCK_FILE "$pid\n";
     close( $LOCK_FILE );
     if( !$foreground ) { 
@@ -3518,7 +3518,7 @@ if ($server_headURL =~ /\/tag\// ||
 # Prepare log file and set permissions
 $root_uid = getpwnam('root');
 $adm_gid = getgrnam('adm');
-open($FH, ">>","$log_file");
+open(my $FH, ">>", "$log_file");
 close($FH);
 chmod(0440, $log_file);
 chown($root_uid, $adm_gid, $log_file);

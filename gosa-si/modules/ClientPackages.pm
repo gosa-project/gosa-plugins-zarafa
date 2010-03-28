@@ -452,7 +452,7 @@ sub here_i_am {
     if ( defined($msg_hash->{'force-hostname'}[0]) &&
        length($msg_hash->{'force-hostname'}[0]) > 0){
     #      $heap->{force-hostname}->{$mac_address}= $msg_hash->{'force-hostname'}[0];
-	    open ($TFILE, ">", "/var/tmp/$mac_address");
+	    open (my $TFILE, ">", "/var/tmp/$mac_address");
 	    print $TFILE $msg_hash->{'force-hostname'}[0];
 	    close ($TFILE); 
     } else {
@@ -1082,7 +1082,7 @@ sub server_matches {
 		} else {
 			my $PROC_NET_ROUTE= ('/proc/net/route');
 
-			open($FD_PROC_NET_ROUTE, "<", "$PROC_NET_ROUTE")
+			open(my $FD_PROC_NET_ROUTE, "<", "$PROC_NET_ROUTE")
 				or die "Could not open $PROC_NET_ROUTE";
 
 			my @ifs = <$FD_PROC_NET_ROUTE>;
