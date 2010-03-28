@@ -1,5 +1,14 @@
 package server_server_com;
+
+use strict;
+use warnings;
+
 use Exporter;
+use Data::Dumper;
+use GOSA::GosaSupportDaemon;
+use Time::HiRes qw( usleep);
+use Socket;
+
 @ISA = qw(Exporter);
 my @events = (
     'information_sharing',
@@ -11,14 +20,6 @@ my @events = (
     'confirm_usr_msg',
     );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use Data::Dumper;
-use GOSA::GosaSupportDaemon;
-use Time::HiRes qw( usleep);
-use Socket;
-
 
 BEGIN {}
 
