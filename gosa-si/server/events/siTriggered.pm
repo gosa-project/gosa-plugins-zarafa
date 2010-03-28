@@ -1,22 +1,22 @@
 package siTriggered;
+
+use strict;
+use warnings;
+
 use Exporter;
+use Data::Dumper;
+use GOSA::GosaSupportDaemon;
+use Socket;
+
 @ISA = qw(Exporter);
 my @events = (
     "got_ping",
     "detected_hardware",
     "trigger_wake",
     "reload_ldap_config",
-	"get_terminal_server",
+    "get_terminal_server",
     );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use Data::Dumper;
-use GOSA::GosaSupportDaemon;
-use Socket;
-
-
 
 BEGIN {}
 
@@ -225,9 +225,9 @@ sub detected_hardware {
 		#	$dnsname= $heap->{force-hostname}->{$macaddress};
 		#	&main::daemon_log("INFO: Using forced hostname $dnsname for client $address", 4);
 		if (-e "/var/tmp/$macaddress" ){
-			open(TFILE, "< /var/tmp/$macaddress");
-			$dnsname= <TFILE>;
-			close(TFILE);
+			open(my $TFILE, "<", "/var/tmp/$macaddress");
+			$dnsname= <$TFILE>;
+			close($TFILE);
 		} else {
 			$dnsname= gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
 		}
