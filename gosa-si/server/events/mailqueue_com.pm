@@ -21,7 +21,16 @@ be automatically imported by GOsa-SI if it is under F</usr/lib/gosa-si/server/E<
 =cut
 
 package mailqueue_com;
+
+use strict;
+use warnings;
+
 use Exporter;
+use GOSA::GosaSupportDaemon;
+use Data::Dumper;
+use Time::HiRes qw( usleep);
+use MIME::Base64;
+
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
@@ -29,14 +38,6 @@ my @events = (
     "mailqueue_header",
 );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Data::Dumper;
-use Time::HiRes qw( usleep);
-use MIME::Base64;
-
 
 BEGIN {}
 
