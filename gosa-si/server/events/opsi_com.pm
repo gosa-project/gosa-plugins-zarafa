@@ -4,8 +4,15 @@
 
 
 package opsi_com;
+
+use strict;
+use warnings;
+
 use Exporter;
 use UNIVERSAL 'isa';
+use GOSA::GosaSupportDaemon;
+use Data::Dumper;
+use XML::Quote qw(:all);
 
 @ISA = qw(Exporter);
 my @events = (
@@ -46,11 +53,6 @@ my @events = (
    );
 @EXPORT = @events;
 
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Data::Dumper;
-use XML::Quote qw(:all);
 
 BEGIN {}
 
