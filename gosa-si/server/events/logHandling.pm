@@ -1,5 +1,15 @@
 package logHandling;
+
+
+use strict;
+use warnings;
+
 use Exporter;
+use GOSA::GosaSupportDaemon;
+use Data::Dumper;
+use File::Spec;
+use MIME::Base64;
+
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
@@ -12,13 +22,6 @@ my @events = (
     "delete_log_by_date_and_mac",
     );
 @EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Data::Dumper;
-use File::Spec;
-use MIME::Base64;
 
 BEGIN {}
 
@@ -301,9 +304,9 @@ sub get_log_file_by_date_and_mac {
     
     # read log file
     my $log_content;
-    open(FILE, "<$act_log_file");
-    my @log_lines = <FILE>;
-    close(FILE);
+    open(my $FILE, "<", "$act_log_file");
+    my @log_lines = <$FILE>;
+    close($FILE);
 
     # prepare content for xml sending
     $log_content = join("", @log_lines); 
