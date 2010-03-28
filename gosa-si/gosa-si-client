@@ -59,6 +59,7 @@ my $default_server_key;
 my @servers;
 my $gotoHardwareChecksum;
 my $system_com;
+my $servers_string;
 $verbose= 1;
 
 # globalise variables which are used in imported events
@@ -73,6 +74,8 @@ our $client_dnsname;
 our $client_force_hostname;
 our $server_key;
 our $terminal_server_hash;
+our $opts_dnslookup;
+
 
 # default variables
 my $REGISTERED = 0;
@@ -116,11 +119,12 @@ my $fai_log_dir = "/var/log/fai";
      "system-com"	  => [\$system_com, "disabled"],
     },
 "server" => {
-    "ip"          => [\$server_ip, "127.0.0.1"],
+    "ip"          => [\$servers_string, "127.0.0.1"],
     "port"         => [\$server_port, "20081"],
     "key"          => [\$server_key, ""],
     "timeout"      => [\$server_timeout, 10],
-    "key-lifetime" => [\$server_key_lifetime, 600], 
+    "key-lifetime" => [\$server_key_lifetime, 600],
+    "dns-lookup"   => [\$opts_dnslookup, "true"],
     },
 
 );
@@ -1126,6 +1130,91 @@ sub post_processing_and_sending
 	return;
 }
 
+sub find_servers {
+    # add gosa-si-server address from config file at first position of server list
+    my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
+
+    # Parse servers string
+    my @conf_servers = split(',', $servers_string);
+
+    # Now search for fallback servers in the configuration
+    foreach my $cur_server (@conf_servers) {
+        # Remove spaces from the IP
+        $cur_server =~ s/\s//g;
+
+        my $ip = $cur_server;
+        if(not $cur_server =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/) {
+            my $ip_address = inet_ntoa(scalar gethostbyname($ip));
+            if(defined($ip_address) && $ip_address =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/) {
+                # Write ip address to $server_ip variable
+                $ip = $ip_address;
+            }
+        }
+
+        my $server_addr = sprintf("%s:%s", $ip, $server_port);
+        if (not grep { $_ eq $server_addr } @servers) {
+           push(@servers, $server_addr);
+        }
+    }
+
+    my $servers_string = join(", ", @servers);
+    daemon_log("INFO: found servers in configuration file: $servers_string", 1);
+
+    # Last but not least search for fallback servers in the DNS
+    if (defined($opts_dnslookup) and $opts_dnslookup eq "true") {
+        my @tmp_servers;
+        if ( !$server_domain) {
+            # Try our DNS Searchlist
+            my @domain_list = &get_dns_domains();
+            my $tmp_domains;
+            my $error_string;
+            for my $domain (@domain_list) {
+                chomp($domain);
+                ($tmp_domains, $error_string) = &get_server_addresses($domain);
+                if(@$tmp_domains) {
+                    for my $tmp_server(@$tmp_domains) {
+                        push @tmp_servers, $tmp_server;
+                    }
+                }
+            }
+
+            if (0 == @tmp_servers) {
+                daemon_log("INFO: No servers found in DNS.", 1);
+            }
+            else {
+                my $servers_string = join(", ", @tmp_servers);
+                daemon_log("INFO: found servers in DNS: $servers_string", 1);
+            }
+        } else {
+            @tmp_servers = &get_server_addresses($server_domain);
+            if( 0 == @tmp_servers ) {
+            daemon_log("INFO: No servers found in DNS for domain '$server_domain'",1);
+            }
+        }
+
+        if ( 0 != @tmp_servers ) {
+            foreach my $server_addr (@tmp_servers) {
+                if (not grep { $_ eq $server_addr } @servers) {
+                   push(@servers, $server_addr);
+                }
+            }
+        }
+    }
+
+    if (0 == scalar(@servers)) {
+        daemon_log("ERROR: No servers found in the configuration or DNS.", 1);
+        exit(1);
+    }
+
+    # Define first server as server_ip
+    $server_ip = $servers[0];
+
+    # prepare variables
+    if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
+    if (defined $server_ip && defined $server_port) {
+        $server_address = $server_ip.":".$server_port;
+    }
+}
 
 #==== MAIN = main ==============================================================
 #  parse commandline options
@@ -1234,67 +1323,15 @@ POE::Component::Server::TCP->new(
 );
 daemon_log("INFO: start socket for incoming xml messages at port '$client_port' ", 1);
 
-
-# prepare variables
-if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
-if (defined $server_ip && defined $server_port) {
-    $server_address = $server_ip.":".$server_port;
-}
 $xml = new XML::Simple();
 $default_server_key = $server_key;
-
-# add gosa-si-server address from config file at first position of server list
-my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
-my $server_check = (defined($server_check_cfg))?$server_check_cfg->val( "server", "ip"):undef;
-if( defined $server_check ) {
-	unshift(@servers, $server_address);
-	my $servers_string = join(", ", @servers);
-	daemon_log("INFO: found servers in configuration file: $servers_string", 1);
-} else {
-	my @tmp_servers;
-	if ( !$server_domain) {
-		# Try our DNS Searchlist
-		my @domain_list = &get_dns_domains();
-		my $tmp_domains;
-		my $error_string;
-		for my $domain (@domain_list) {
-			chomp($domain);
-			($tmp_domains, $error_string) = &get_server_addresses($domain);
-			if(@$tmp_domains) {
-				for my $tmp_server(@$tmp_domains) {
-					push @tmp_servers, $tmp_server;
-				}
-			}
-		}
-		if (0 == @tmp_servers) {
-                        my $log_string = "no gosa-si-server found in DNS for domain: ".join(", ", @domain_list) if (@domain_list);
-                        my $log_string2 = "server addresses in domain: ".join(", ",@$tmp_domains) if (defined($tmp_domains));
-                        daemon_log("ERROR: $log_string", 1) if (defined($log_string));
-                        daemon_log("ERROR: $log_string2", 1) if (defined($log_string2));
-			daemon_log("ERROR: $error_string", 1) if (defined($error_string));
-			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
-			kill 2, $$;
-		}
-	} else {
-		@tmp_servers = &get_server_addresses($server_domain);
-		if( 0 == @tmp_servers ) {
-			daemon_log("ERROR: no gosa-si-server found in DNS for domain '$server_domain'",1);
-			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
-			kill 2, $$;
-		} 
-	}
-
-	foreach my $server (@tmp_servers) { 
-		unshift(@servers, $server); 
-	}
-	my $servers_string = join(", ", @servers);
-	daemon_log("INFO: found servers in DNS: $servers_string", 1);
-}
-
 
 # Open a new fifo for FAI messages to gosa-si-server
 if (-p $fai_com_fifo) { unlink $fai_com_fifo }
 POSIX::mkfifo("$fai_com_fifo", 0600);
+
+# Find servers from config and DNS
+&find_servers;
 
 # Open a new fifo for system communication, 
 if (-p $system_com_fifo) { unlink $system_com_fifo }
