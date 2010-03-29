@@ -263,7 +263,7 @@ class faiManagement extends management
 
       if(class_exists($type[0])){
         $this->closeDialogs();
-        $str = management::newEntry('newEntry',array(),array(),$type[0],$type[2],$type[1]);
+        $str = management::newEntry('newEntry',array(),array(),$type[0],$type[2],"fai");
         if($str) return($str);
         $this->tabObject->set_acl_base($this->acl_base);
         $this->tabObject->by_object[$type[1]]->cn = $name;
@@ -303,7 +303,7 @@ class faiManagement extends management
           if(count($entry['GROUPS']) == 1){
             $data = array_pop($entry['GROUPS']);
             $type = $this->get_type($data);
-            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],"fai");
             if($str) return($str);
             $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
             $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
