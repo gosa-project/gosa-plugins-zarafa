@@ -166,6 +166,18 @@ class DaemonEvent
   {
     $this->time_offset_used = TRUE;
     $smarty = get_smarty();
+    
+    $opts_minutes = array();
+    $opts_operations = array();
+    foreach(range(0,60) as $i) {
+      $opts_minutes[$i] = $i;
+    }
+    foreach(range(1,99) as $i) {
+      $opts_operations[$i] = $i;
+    }
+
+    $smarty->assign('offset_minutes', $opts_minutes);
+    $smarty->assign('offset_operations', $opts_operations);
     $smarty->assign('time_offset', $this->time_offset);
     $smarty->assign('concurrent_operations', $this->concurrent_operations);
     return($smarty->fetch(get_template_path('time_offset.tpl', TRUE, dirname(__FILE__))));
@@ -304,7 +316,7 @@ class DaemonEvent
     if ($this->time_offset_used){
         /* Check that multiple events makes sense at all (e.g. there are more targets
          * then allowed concurrent operations */
-        if (count($this->a_targets) > $this->concurrent_operations) {
+        if ($this->concurrent_operations != 0 && count($this->a_targets) > $this->concurrent_operations) {
             if ($this->time_offset > 0) {
                 $this->multiple_events = TRUE;
             }
