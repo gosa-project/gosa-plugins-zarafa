@@ -456,6 +456,7 @@ class faiManagement extends management
           // Now save changes
           $str = management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],"fai",$type[1]);
           if(!empty($str)) return($str);
+          FAI::save_release_changes_now();
           $to_del = FAI::clean_up_releases($dn);
           foreach($to_del as $dn){
             $ldap->rmdir_recursive($dn);
@@ -466,9 +467,6 @@ class faiManagement extends management
           new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
       }
-    }
-    if(count($this->dns)){
-      FAI::save_release_changes_now();
     }
 
     /* Normally this shouldn't be reached, send some extra
