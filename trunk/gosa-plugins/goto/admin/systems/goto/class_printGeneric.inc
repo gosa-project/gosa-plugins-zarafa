@@ -11,6 +11,7 @@ class printgeneric extends plugin
   var $cn               = "";
   var $l                = "";
   var $description      = "";
+  var $printer_description = "";
   var $labeledURI       = "";
   var $gotoPrinterPPD   = "";
   var $initial_PPD      = "";
@@ -149,6 +150,10 @@ class printgeneric extends plugin
     }
     $this->orig_cn    = $this->cn;
     $this->orig_base  = $this->base;
+
+    if (!preg_match('/Printer/i', $this->BelongsTo)) {
+      $this->printer_description = $this->description;
+    }
   }
 
   function set_acl_base($base)
@@ -391,7 +396,11 @@ class printgeneric extends plugin
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
-      $smarty->assign("$attr", $this->$attr);
+        $smarty->assign("$attr", $this->$attr);
+    }
+
+    if (!preg_match("/Printer/", $this->BelongsTo)) {
+        $smarty->assign("printer_description", $this->printer_description);
     }
 
     if(isset($_POST['AddUser'])){
@@ -659,6 +668,10 @@ class printgeneric extends plugin
     if(is_object($this->netConfigDNS)){
       $this->netConfigDNS->save_object();
     }
+
+    if (!isset($_POST['edit_cancel']) && isset($_POST['printer_description'])) {
+      $this->printer_description = get_post('printer_description');
+    }
     
     /* Set new base if allowed */
     $tmp = $this->get_allowed_bases();
@@ -748,7 +761,7 @@ class printgeneric extends plugin
     if(preg_match("/workstation/i",$this->BelongsTo)){
       $this->dn= preg_replace("/".preg_quote(get_ou('workstationRDN'), '/')."/",get_ou('printerRDN'),$this->dn);
     }
-    
+
     if(!$this->is_account) return;
     if(isset($this->parent->by_object['workgeneric'])){
       if($this->parent->by_object['workgeneric']->cn == "wdefault"){
@@ -843,6 +856,10 @@ class printgeneric extends plugin
         $attrs[$key]= $val;
       }
       $this->attrs= $attrs;
+    }
+
+    if (!empty($this->printer_description)) {
+      $this->attrs['description'] = $this->printer_description;
     }
 
     /* Append printer user 

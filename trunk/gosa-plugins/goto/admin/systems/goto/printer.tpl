@@ -47,7 +47,7 @@
      <td><LABEL for="description">{t}Description{/t}</LABEL></td>
      <td>
 {render acl=$descriptionACL}
-      <input id="description" name="description" size=25 maxlength=80 value="{$description}">
+      <input id="printer_description" name="printer_description" size=25 maxlength=80 value="{$printer_description}">
 {/render}
      </td>
     </tr>
