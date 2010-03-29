@@ -430,7 +430,7 @@ class faiManagement extends management
         add_lock ($this->dns, $this->ui->dn);
 
         $smarty->assign("info",msgPool::deleteInfo($dns_names));
-        return($smarty->fetch(get_template_path('removeEntries.tpl', TRUE)));
+        return($smarty->fetch(get_template_path('removeEntries.tpl')));
       }
     }
   }
@@ -439,7 +439,7 @@ class faiManagement extends management
   /*! \brief   Entry removal is confirmed, now remove objects
    */
   function removeEntryConfirmed($action="",$target=array(),$all=array(),
-      $altTabClass="",$altTabType="",$altAclCategory="")
+      $altTabClass="",$altTabType="",$altAclCategory="", $altAclPlugin="")
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']); 
@@ -450,14 +450,12 @@ class faiManagement extends management
       if($ldap->count()){
         $attrs = $ldap->fetch();
         $type= $this->get_type($attrs);
-
         $acl  = $this->ui->get_permissions($dn,"fai/".$type[1]);
         if(preg_match("/d/",$acl)){
 
           // Now save changes
-          $str = management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],$type[1]);
+          $str = management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],"fai",$type[1]);
           if(!empty($str)) return($str);
-          FAI::save_release_changes_now();
           $to_del = FAI::clean_up_releases($dn);
           foreach($to_del as $dn){
             $ldap->rmdir_recursive($dn);
@@ -468,6 +466,9 @@ class faiManagement extends management
           new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
       }
+    }
+    if(count($this->dns)){
+      FAI::save_release_changes_now();
     }
 
     /* Normally this shouldn't be reached, send some extra
