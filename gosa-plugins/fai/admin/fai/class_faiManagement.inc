@@ -32,6 +32,7 @@ class faiManagement extends management
   protected $aclCategory = "";
   protected $aclPlugin   = "";
   protected $objectName   = "FAI object";
+  protected $releaseSelector = NULL;
 
   //  Attributes Managed by this plugin can be used in post events
   public $attributes   = array("lock_type","lock_name","lock_dn");  
@@ -85,7 +86,7 @@ class faiManagement extends management
         get_ou('faiTemplateRDN'));
 
     // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
+    if (0 && session::global_is_set(get_class($this)."_filter")){
       $filter= session::global_get(get_class($this)."_filter");
     } else {
       $filter = new filter(get_template_path("fai-filter.xml", true));
@@ -123,6 +124,7 @@ class faiManagement extends management
     $this->registerAction("saveBranch","saveBranch");
     $this->registerAction("PerformBranch","PerformBranch");
 
+    $this->releaseSelector = new releaseSelector($releases, $this->fai_release, $this->fai_release);
     parent::__construct($config, $ui, "FAI object", $headpage);
   }
 
@@ -1071,21 +1073,15 @@ class faiManagement extends management
   {
     $filter = $this->getFilter();
     $headpage = $this->getHeadpage();
-    $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
-
-    if(isset($_POST['RELEASE'])){
-      $this->fai_release = get_post('RELEASE');
-    }
-    $headpage->setBase($this->fai_release);
+    $this->releaseSelector->update();
+    $headpage->setBase($this->releaseSelector->getBase());
     $headpage->update();
     $smarty = get_smarty();
-    $smarty->assign("fai_release", $this->fai_release);
-    $smarty->assign("opsi_available", (is_object($this->opsi) && $this->opsi->enabled()));
-    $smarty->assign("fai_base", $this->fai_base);
     $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
     $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));
     $smarty->assign("allow_create", $c);
     $smarty->assign("allow_remove", $r);
+    $smarty->assign("RELEASE", $this->releaseSelector->render());
     $display = $headpage->render();
     return($this->getHeader().$display);
   }
