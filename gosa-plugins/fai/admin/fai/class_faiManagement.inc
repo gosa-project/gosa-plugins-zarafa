@@ -142,7 +142,7 @@ class faiManagement extends management
         if(count($entry['GROUPS']) == 1){
           $data = array_pop($entry['GROUPS']);
           $type = $this->get_type($data);
-          $this->cpHandler->add_to_queue($g['dn'],"copy",$type[0],$type[2],'fai',$this);
+          $this->cpHandler->add_to_queue($data['dn'],"copy",$type[0],$type[2],'fai',$this);
           @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$g['dn'],"Entry copied!");
         }else{
           $this->dialogObject = new faiGroupHandle($entry['GROUPS'],"copy");
