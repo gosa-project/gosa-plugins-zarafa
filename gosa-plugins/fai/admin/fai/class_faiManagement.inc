@@ -453,9 +453,15 @@ class faiManagement extends management
         $acl  = $this->ui->get_permissions($dn,"fai/".$type[1]);
         if(preg_match("/d/",$acl)){
 
-          // Now save changes
-          $str = management::removeEntryConfirmed($action,array($dn),$all,$type[0],$type[2],"fai",$type[1]);
-          if(!empty($str)) return($str);
+          // Delete the object
+          $this->dn = $dn;
+          $tabClass = $type[0];
+          $this->tabObject= new $tabClass($this->config,$this->config->data['TABS'][$type[2]], 
+              $this->dn, "fai", true, true);
+          $this->tabObject->set_acl_base($this->dn);
+          $this->tabObject->parent = &$this;
+          $this->tabObject->by_object[$type[1]]->remove_from_parent ();
+
           FAI::save_release_changes_now();
           $to_del = FAI::clean_up_releases($dn);
           foreach($to_del as $dn){
@@ -468,6 +474,9 @@ class faiManagement extends management
         }
       }
     }
+   
+    $this->remove_lock();
+    $this->closeDialogs();
 
     /* Normally this shouldn't be reached, send some extra
        logs to notify the administrator */
