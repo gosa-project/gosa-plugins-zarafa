@@ -1082,7 +1082,8 @@ class faiManagement extends management
     $filter = $this->getFilter();
     $headpage = $this->getHeadpage();
     $this->releaseSelector->update();
-    $headpage->setBase($this->releaseSelector->getBase());
+    $this->fai_release = $this->releaseSelector->getBase();
+    $headpage->setBase($this->fai_release);
     $headpage->update();
     $smarty = get_smarty();
     $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
