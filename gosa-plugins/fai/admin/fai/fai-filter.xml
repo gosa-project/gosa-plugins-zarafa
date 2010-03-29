@@ -32,7 +32,7 @@
       </filter>
     </query>
     <query>
-      <backend>OPSIPACKAGE</backend>
+      <backend>FAI</backend>
       <filter>cn=$</filter>
     </query>
     <autocomplete>
@@ -41,13 +41,5 @@
       <characters>3</characters>
     </autocomplete>
   </search>
-
-  <element>
-    <tag>RELEASE</tag>
-    <type>combobox</type>
-    <value>Loading.</value>
-    <value>Loading..</value>
-    <value>Loading...</value>
-  </element>
 
 </filterdef>
