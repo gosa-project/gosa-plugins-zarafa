@@ -108,6 +108,20 @@
     </action>
 
     <action>
+     <name>createBranch</name>
+     <type>entry</type>
+     <image>images/lists/element.png[new]</image>
+     <label>Create branch</label>
+    </action>
+
+    <action>
+     <name>createFreeze</name>
+     <type>entry</type>
+     <image>images/lists/element.png[new]</image>
+     <label>Create freeze</label>
+    </action>
+
+    <action>
       <type>exporter</type>
     </action>
 
