@@ -838,7 +838,7 @@ class faiPartitionTable extends plugin
 
         /* Check if we must decode some attributes */
         if(in_array_ics($attrs,$this->sub64coded)){
-          $var = postDecode($var);
+          $var = base64_decode($var);
         }
 
         /*  check if this is a binary entry */

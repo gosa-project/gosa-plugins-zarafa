@@ -113,7 +113,7 @@ class faiScript extends plugin
 
         /* Check if we must decode some attributes */
         if(in_array_ics($attrs,$this->sub64coded)){
-          $var = postDecode($var);
+          $var = base64_decode($var);
         }
 
         /*  check if this is a binary entry */
@@ -440,7 +440,7 @@ class faiScript extends plugin
     foreach($Objects as $name => $obj){
 
       foreach($this->sub64coded as $codeIt){
-        $obj[$codeIt]=postEncode(stripslashes($obj[$codeIt]));
+        $obj[$codeIt]=base64_encode(stripslashes($obj[$codeIt]));
       }
 
       $tmp = array();

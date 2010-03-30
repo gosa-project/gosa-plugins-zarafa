@@ -120,7 +120,7 @@ class faiTemplate extends plugin
       if(preg_match("/^editscript_/",$name)&&($once)){
         $once = false;
         $entry = preg_replace("/^editscript_/","",$name);
-        $entry = base64_decode(preg_replace("/_.*/","",$entry));
+        $entry = postDecode(preg_replace("/^editscript_/","",$name));
         $obj  = $this->SubObjects[$entry];
 
         $acl_dn = $this->acl_base_for_current_object($obj['dn']);
@@ -142,7 +142,7 @@ class faiTemplate extends plugin
       if(preg_match("/^deletescript_/",$name)&&($once) && !preg_match("/freeze/",$this->FAIstate)){
         $once = false;
         $entry = preg_replace("/^deletescript_/","",$name);
-        $entry = base64_decode(preg_replace("/_.*/","",$entry));
+        $entry = postDecode(preg_replace("/^deletescript_/","",$name));
         $obj  = $this->SubObjects[$entry];
 
         $acl_dn = $this->acl_base_for_current_object($obj['dn']);
@@ -156,15 +156,18 @@ class faiTemplate extends plugin
           }
         }
       }
-    }
 
-    /* File download requested */
-    if(isset($_GET['getFAItemplate'])){
-      if(isset($this->SubObjects[$_GET['getFAItemplate']])){
-        $obj = $this->SubObjects[$_GET['getFAItemplate']];
+      if(preg_match("/^download_/",$name)&&($once) && !preg_match("/freeze/",$this->FAIstate)){
+        $once = false;
+        $entry = postDecode(preg_replace("/^download_/","",$name));
+        $obj  = $this->SubObjects[$entry];
         $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        send_binary_content($obj['FAItemplateFile'],$obj['cn'].".FAItemplate");
-      }
+        if(!isset($obj['cn'])){
+          trigger_error("Something wen't wrong here!");
+        }else{
+          send_binary_content($obj['FAItemplateFile'],$obj['cn'].".FAItemplate");
+        }
+      } 
     }
 
     /* Edit entries via GET */
@@ -283,11 +286,11 @@ class faiTemplate extends plugin
 
       /* Hide delete icon if this object is freezed */
       if(preg_match("/freeze/",$this->FAIstate)){
-        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        $act .= image('images/lists/edit.png','editscript_%s', msgPool::editButton());
       }else{
-        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        $act .= image('images/lists/edit.png','editscript_%s', msgPool::editButton());
         if(preg_match("/d/",$acl)){
-          $act .="<input type='image' src='images/lists/trash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+          $act .= image('images/lists/trash.png','deletescript_%s', msgPool::delButton());
         }
       }
 
@@ -296,9 +299,7 @@ class faiTemplate extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='?plug=".$_GET['plug']."&getFAItemplate=".$key."'>
-          <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
-          </a>";
+        $down = image('images/save.png','download_'.postEncode($key), _("Download"));
       }
 
       /* Check if we are allowed to view this object */
@@ -308,7 +309,7 @@ class faiTemplate extends plugin
         $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$tmp[$key]."</a>";
         $divlist->AddEntry(array( array("string"=> $edit_link), 
               array("string"=>$down , "attach" => "style='width:20px;'"),
-              array("string"=>str_replace("%s",base64_encode($key),$act),
+              array("string"=>str_replace("%s",postEncode($key),$act),
                 "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
       }
     }

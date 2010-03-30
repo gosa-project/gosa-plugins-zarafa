@@ -432,7 +432,7 @@ class faiPackage extends plugin
         /* Get description */
         $description = "&nbsp;";
         if(isset($this->list[$usedName]['DESCRIPTION'])){
-          $description = postDecode($this->list[$usedName]['DESCRIPTION']);
+          $description = base64_decode($this->list[$usedName]['DESCRIPTION']);
         }
  
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
