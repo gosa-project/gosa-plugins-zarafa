@@ -33,7 +33,14 @@ class filterFAIClass {
       $attrs = $ldap->fetch();
 
       /* Only use objects which have cn set */
-      if(isset($attrs['cn'][0]) && preg_match("/".preg_quote($filter,'/')."/i", $attrs['cn'][0])){
+      $name = preg_replace("/[\*\.]/","",$filter);
+      if(empty($name)){
+        $regex = '.*';
+      }else{
+        $regex = preg_quote($name,'/');
+      }
+    
+      if(isset($attrs['cn'][0]) && preg_match("/".$regex."/i", $attrs['cn'][0])){
         foreach($categories as $cat => $acl){
           if(in_array($cat,$attrs['objectClass'])){
             $acl =  $ui->get_permissions($attrs['dn'],"fai/".$acl);

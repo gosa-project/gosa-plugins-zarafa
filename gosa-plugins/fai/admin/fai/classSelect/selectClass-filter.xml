@@ -21,7 +21,7 @@
     <label>Default filter</label>
     <query>
       <backend>FAIClass</backend>
-      <filter>(cn=$)</filter>
+      <filter>$</filter>
     </query>
     <autocomplete>
       <attribute>cn</attribute>
