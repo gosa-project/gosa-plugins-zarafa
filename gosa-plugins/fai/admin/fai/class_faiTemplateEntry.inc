@@ -152,7 +152,8 @@ class faiTemplateEntry extends plugin
       }
     }
 
-    foreach($this->attributes as $attr){
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $attr => $desc){
       $smarty->assign($attr."ACL",$this->getacl($attr,preg_match("/freeze/",$this->FAIstate)));
     }
 
