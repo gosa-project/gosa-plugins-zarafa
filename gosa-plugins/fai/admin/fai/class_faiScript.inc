@@ -72,7 +72,7 @@ class faiScript extends plugin
  
     $this->ui = get_userinfo();
 
-    $this->scriptListWidget= new sortableListing($this->SubObjects, $this->convertList());
+    $this->scriptListWidget= new sortableListing($this->convertList(TRUE), $this->convertList());
     $this->scriptListWidget->setDeleteable(true);
     $this->scriptListWidget->setInstantDelete(false);
     $this->scriptListWidget->setEditable(true);
@@ -81,12 +81,16 @@ class faiScript extends plugin
     $this->scriptListWidget->setHeader(array(_("Name"),_("Description")));
   }
 
-  function convertList()
+  function convertList($type = FALSE)
   {
     $data = array();
     foreach($this->SubObjects as $cn => $entry){
       if($entry['status'] == "delete") continue;
-      $data[$cn] = array('data' => array($entry['cn'], $entry['description']));
+      if($type){
+        $data[$cn] = $entry;
+      }else{
+        $data[$cn] = array('data' => array($entry['cn'], $entry['description']));
+      }
     }
     return($data);
   }
@@ -219,7 +223,8 @@ class faiScript extends plugin
       }
     }
 
-      /* Save the edited entry */
+
+    /* Save the edited entry */
     if(isset($_POST['SaveSubObject'])){
 
       /* Check if there are still errors remaining that must be fixed before saving */
@@ -280,7 +285,7 @@ class faiScript extends plugin
       return($display);
     }
 
-    $this->scriptListWidget->setListData($this->SubObjects, $this->convertList());
+    $this->scriptListWidget->setListData($this->convertList(TRUE), $this->convertList());
     $this->scriptListWidget->update();
     $smarty->assign("Entry_divlist",$this->scriptListWidget->render());
 
