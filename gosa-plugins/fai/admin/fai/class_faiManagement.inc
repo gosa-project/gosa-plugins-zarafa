@@ -1184,6 +1184,7 @@ class faiManagement extends management
         $entry = $headpage->entries[$id];
 
         if(in_array('FAKE_OC_FAI', $entry['objectClass'])){
+          unset($_POST[$name]);
           if(isset($headpage->entries[$id]['GROUPS'][$tab])){
             $data =$headpage->entries[$id]['GROUPS'][$tab];
             $type = $this->get_type($data);

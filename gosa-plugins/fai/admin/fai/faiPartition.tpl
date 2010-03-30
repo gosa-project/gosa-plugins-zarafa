@@ -162,7 +162,7 @@
   </td>
  </tr>
  <tr>
-  <td>{t}Mount point{/t}
+  <td>{t}Mount point{/t}{$must}
   </td>
   <td>
    

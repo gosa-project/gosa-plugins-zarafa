@@ -355,14 +355,14 @@ class faiPartition extends plugin
 
       // Toggle spare flag for partition entries
       if(isset($_POST['toggleSpare']) && isset($_POST['physicalPartition'])){
-        $this->raidDevices[$_POST['physicalPartition']]['spare'] = 
-            !$this->raidDevices[$_POST['physicalPartition']]['spare'];
+        $this->raidDevices[$_POST['physicalPartition'][0]]['spare'] = 
+            !$this->raidDevices[$_POST['physicalPartition'][0]]['spare'];
       }
 
       // Toggle missing flag for partition entries
       if(isset($_POST['toggleMissing']) && isset($_POST['physicalPartition'])){
-        $this->raidDevices[$_POST['physicalPartition']]['missing'] = 
-            !$this->raidDevices[$_POST['physicalPartition']]['missing'];
+        $this->raidDevices[$_POST['physicalPartition'][0]]['missing'] = 
+            !$this->raidDevices[$_POST['physicalPartition'][0]]['missing'];
       }
     } 
   }
