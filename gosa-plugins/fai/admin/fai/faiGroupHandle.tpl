@@ -11,16 +11,11 @@
     {if $item.freezed}
      {image path="images/lists/locked.png"}
      {else}
-     
-     
      <input type='checkbox' name='{$mode}_{$key}'    	     		{if $item.selected} checked {/if}>
-     
     {/if}
    </td>
    <td>
-    {image path="
-    {$types.$key.IMG}" title="
-    {$types.$key.NAME}"}class='center'>
+    {image path="{$types.$key.IMG}" title="{$types.$key.NAME}"}
    </td>
    <td style='width:150px;'>
     {$types.$key.NAME}
@@ -48,9 +43,7 @@
     <input type='radio' name='{$mode}_selected' value='{$key}'               {if $item.selected} checked {/if}>
    </td>
    <td>
-    {image path="
-    {$types.$key.IMG}" title="
-    {$types.$key.NAME}"}class='center'>
+    {image path="{$types.$key.IMG}" title="{$types.$key.NAME}"}
    </td>
    <td style='width:150px;'>
     {$types.$key.NAME}
@@ -72,9 +65,7 @@
     <input type='checkbox' name='{$mode}_{$key}'    	   		{if $item.selected} checked {/if}>
    </td>
    <td>
-    {image path="
-    {$types.$key.IMG}" title="
-    {$types.$key.NAME}"}class='center'>
+    {image path="{$types.$key.IMG}" title="{$types.$key.NAME}"}
    </td>
    <td style='width:150px;'>
     {$types.$key.NAME}
@@ -87,13 +78,9 @@
  
 {/if}
 <br>
-<br>
 <input type='hidden' value='faiGroupHandle' name='faiGroupHandle'>
-<p class='seperator'>
-</div>
-<div style='text-align:right; padding:5px'>
- <button type='submit' name='faiGroupHandle_apply'>
- {msgPool type=applyButton}</button>&nbsp;
- <button type='submit' name='faiGroupHandle_cancel'>
- {msgPool type=cancelButton}</button>
+<hr>
+<div class="plugin-actions">
+ <button type='submit' name='faiGroupHandle_apply'>{msgPool type=applyButton}</button>&nbsp;
+ <button type='submit' name='faiGroupHandle_cancel'>{msgPool type=cancelButton}</button>
 </div>
