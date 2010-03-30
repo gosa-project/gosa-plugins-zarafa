@@ -3,26 +3,20 @@
 <br>
 <p class="seperator">
 {t}You are now going to create a branch or locked branch. This action clones the existing release to another release name. Branches can be modified as usual. FAI classes of locked branches cannot be modified, just additional classes are possible. Branch names should be alphanumeric, excluding the reserved names 'scripts', 'hooks', 'partitions', 'variables', 'templates' and 'fai'.{/t}
-<br>
+</p>
+<p>
 {t}Branches are created as subreleases of the currently selected branch. Creating a new branch named 1.0.2 in SARGE for example, will result in a new release called SARGE/1.0.2.{/t}
  <br>
 <br>
 </p>
-<p class="seperator">
-<br>
+<hr>
 <b>{t}Please enter a name for the branch{/t}</b> &nbsp;
 <input type="text" id="BranchName" name="BranchName" value="{$BranchName}" style="width:120px;">
-<br>
-<br>
-</p>
+<hr>
 
-<div align="right">
-	<p>
-		<button type='submit' name='UseBranchName'>{msgPool type=applyButton}</button>		
-
-		<button type='submit' name='CancelBranchName'>{msgPool type=cancelButton}</button>		
-
-	</p>
+<div class="plugin-actions">
+  <button type='submit' name='UseBranchName'>{msgPool type=applyButton}</button>		
+  <button type='submit' name='CancelBranchName'>{msgPool type=cancelButton}</button>		
 </div>
 
 <!-- Place cursor -->
