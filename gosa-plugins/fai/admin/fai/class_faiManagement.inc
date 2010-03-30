@@ -124,6 +124,7 @@ class faiManagement extends management
     $this->registerAction("saveBranch","saveBranch");
     $this->registerAction("PerformBranch","PerformBranch");
 
+    $releases = $this->getReleaseStates($this->config,$this->fai_base);
     $this->releaseSelector = new releaseSelector($releases, $this->fai_release, $this->fai_release);
     parent::__construct($config, $ui, "FAI object", $headpage);
   }
@@ -650,7 +651,7 @@ class faiManagement extends management
           $this->handle_post_events('remove');
 
           // Update list and release selector to point to a valid release again.
-          $releases = $this->getReleaseList();
+          $releases = $this->getReleaseStates($this->config,$this->fai_base);
           if(!isset($releases[$this->fai_releaes])){
             $this->fai_release = $this->fai_base;
           }
@@ -873,7 +874,7 @@ class faiManagement extends management
       $headpage->setBase($this->fai_release);
       $headpage->update();
  
-      $releases = $this->getReleaseList();
+      $releases = $this->getReleaseStates($this->config,$this->fai_base);
       $this->releaseSelector->setBases($releases);
       $this->releaseSelector->setBase($this->fai_release);
       exit();
@@ -952,10 +953,36 @@ class faiManagement extends management
 
     $ldap = $this->config->get_ldap_link();
     $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
-
     while($release = $ldap->fetch()){
       $list[$release['dn']] = $prefix.$release['ou'][0];
       $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
+    }
+    return($list);
+  }
+
+
+  /*! \brief   Returns a list of all releases for the releaseSelector
+   *                      ou=fai... 
+   *              ou=siga,ou=fai... "branch"
+   *         ou=1,ou=siga,ou=fai... "freeze"
+   */
+  static function getReleaseStates($config,$base = "", $fai_base="")
+  {
+    $list = array();
+    if(empty($fai_base)){
+      $fai_base = $base;
+      $list[$base] = "";
+    }
+
+    $ldap = $config->get_ldap_link();
+    $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
+
+    while($release = $ldap->fetch()){
+      $list[$release['dn']] = _("Branch");
+      if(isset($release['FAIstate'][0]) && preg_match("/freeze/i",$release['FAIstate'][0])){
+        $list[$release['dn']] = _("Freeze");
+      }
+      $list = array_merge($list,faiManagement::getReleaseStates($config,$release['dn'], $fai_base));
     }
     return($list);
   }
