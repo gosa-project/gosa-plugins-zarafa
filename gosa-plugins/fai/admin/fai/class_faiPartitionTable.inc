@@ -181,8 +181,8 @@ class faiPartitionTable extends plugin
 
     /* New Listhandling */
     foreach($_POST as $name => $value){
-      if(preg_match("/^edit_/",$name)){
-        $s_entry = preg_replace("/^edit_/","",$name);
+      if(preg_match("/^editEntry_/",$name)){
+        $s_entry = preg_replace("/^editEntry_/","",$name);
         $s_entry = postDecode($s_entry);
         $s_action = "edit"; 
         break;
@@ -389,7 +389,7 @@ class faiPartitionTable extends plugin
       $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
       if(preg_match("/(r|w)/",$acl)) {
 
-        $act .= image('images/lists/edit.png','edit_%s',msgPool::editButton());
+        $act .= image('images/lists/edit.png','editEntry_%s',msgPool::editButton());
         if(preg_match("/d/",$acl) && !preg_match("/freeze/", $this->FAIstate)){
           $act .= image('images/lists/trash.png','delete_%s',msgPool::delButton());
         }

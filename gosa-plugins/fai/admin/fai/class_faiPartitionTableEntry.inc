@@ -375,12 +375,13 @@ class faiPartitionTableEntry extends plugin
       }
 
       $tmp = explode("-",$part['FAIpartitionSize']);
+
       switch (count($tmp)){
         case 0:
                 $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
                 break;
         case 1:
-                if (!tests::is_id($tmp[0]) &&(!empty($tmp[1]))){
+                if (!tests::is_id($tmp[0]) || empty($tmp[0])){
                   $message[]=  msgPool::invalid(sprintf(_("partition %s size"),$key));
                 }
                 break;
