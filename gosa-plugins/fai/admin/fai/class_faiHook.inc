@@ -64,6 +64,31 @@ class faiHook extends plugin
       $this->is_new =TRUE;
     }
     $this->ui = get_userinfo();
+
+    $this->hookListWidget= new sortableListing($this->convertList(TRUE), $this->convertList());
+    $this->hookListWidget->setDeleteable(true);
+    $this->hookListWidget->setInstantDelete(false);
+    $this->hookListWidget->setEditable(true);
+    $this->hookListWidget->setWidth("100%");
+    $this->hookListWidget->setHeight("140px");
+    $this->hookListWidget->setHeader(array(_("Name"),_("Description")));
+  }
+
+
+  function convertList($type = FALSE)
+  {
+    $data = array();
+    $s_acl = $this->ui->get_permissions($this->dn,"fai/faiScriptEntry","FAIscript");
+    foreach($this->SubObjects as $cn => $entry){
+      if($entry['status'] == "delete") continue;
+      if($type){
+        $data[$cn] = $entry;
+      }else{
+        if(!isset($entry['description'])) $entry['description']="";
+        $data[$cn] = array('data' => array($entry['cn'], $entry['description']));
+      }
+    }
+    return($data);
   }
 
 
@@ -142,13 +167,15 @@ class faiHook extends plugin
     /* New Listhandling
      */
     $once = true;
-    foreach($_POST as $name => $value){
-      if(preg_match("/^editscript_/",$name)&&($once)){
-        $once = false;
-        $entry = preg_replace("/^editscript_/","",$name);
-        $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
-        $obj  = $this->SubObjects[$entry];
+    $this->hookListWidget->setAcl($this->getacl(""));
+    $this->hookListWidget->save_object();
+    $action = $this->hookListWidget->getAction();
+
+    if($action['action'] =="edit"){
+      $s_entry = $this->hookListWidget->getKey($action['targets'][0]);
+      if(isset($this->SubObjects[$s_entry])){
+        $obj  = $this->SubObjects[$s_entry];
         if($obj['status'] == "FreshLoaded"){
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
@@ -162,58 +189,26 @@ class faiHook extends plugin
         $this->dialog->parent = &$this;
         $this->is_dialog=true;
       }
-      if(preg_match("/^deletescript_/",$name)&&($once)){
-        $entry = preg_replace("/^deletescript_/","",$name);
-        $entry = base64_decode(preg_replace("/_.*/","",$entry));
+    }
 
-        $dn = $this->acl_base_for_current_object($this->SubObjects[$entry]['dn']);
+    if($action['action'] =="delete"){
+      $s_entry = $this->hookListWidget->getKey($action['targets'][0]);
+      if(isset($this->SubObjects[$s_entry])){
+        $dn = $this->acl_base_for_current_object($this->SubObjects[$s_entry]['dn']);
         $acl = $this->ui -> get_permissions($dn,"fai/faiScriptEntry")  ;
-
         if(preg_match("/d/",$acl)){
-          $once = false;
-
-          $status = $this->SubObjects[$entry]['status'];
+          $status = $this->SubObjects[$s_entry]['status'];
           if($status == "edited" || $status == "FreshLoaded"){
-            $this->SubObjects[$entry]['status']= "delete";
+            $this->SubObjects[$s_entry]['status']= "delete";
           }else{
-            unset($this->SubObjects[$entry]);
+            unset($this->SubObjects[$s_entry]);
           }
         }
       }
     }
 
-    /* File download requested */
-    if(isset($_GET['getFAIHook'])){
-      if(isset($this->SubObjects[base64_decode($_GET['getFAIHook'])])){
-        $obj = $this->SubObjects[base64_decode($_GET['getFAIHook'])];
-        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIhook");
-      }
-    }
-
-    /* Edit entries via GET */
-    if(isset($_GET['act']) && isset($_GET['id'])){
-      if($_GET['act'] == "edit" && isset($this->SubObjects[base64_decode($_GET['id'])])){
-        $obj = $this->SubObjects[base64_decode($_GET['id'])];
-        if($obj['status'] == "FreshLoaded"){
-          $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        }
-        $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-        $this->dialog->FAIstate = $this->FAIstate;
-        $this->dialog->acl = $this->acl;
-        $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
-        $this->dialog->set_acl_category("fai");
-        set_object_info($obj['dn']);
-        $this->dialog->parent = &$this;
-        $this->is_dialog=true;
-      }
-    }
-
-    ///// Ende new list handling
-
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
-
       $c_dn = $this->acl_base_for_current_object($this->dn);
       $this->dialog= new $this->subClassName($this->config,"new");
       $this->dialog->set_acl_base($c_dn);
@@ -292,57 +287,9 @@ class faiHook extends plugin
       return($display);
     }
 
-
-
-    /* Divlist            added 28.02.2006
-       Containing FAIscripts
-     */
-
-    $divlist = new divSelectBox("FAIhooks");
-    $divlist->setHeight(400);
-
-    foreach($this->getList(true) as $key => $name){
-
-      $dn= $this->acl_base_for_current_object($name['dn']);
-      $acl = $this->ui->get_permissions($dn,"fai/faiHookEntry")  ;
-      $act = "";
-
-      /* Check if this object is freezed, in this case hide the delete icon */
-      if(preg_match("/^freeze/", $this->FAIstate)){
-        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
-      }else{
-        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
-        if(preg_match("/d/",$acl)){
-          $act .="<input type='image' src='images/lists/trash.png' name='deletescript_%s'  title='"._("Delete")."' alt='"._("Delete")."'>";
-        }
-      }
-
-      /* Check if we are allowed to use the export button for this object */
-      $s_acl = $this->ui->get_permissions($dn,"fai/faiHookEntry","FAIscript")  ;
-      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
-        $down = "";
-      }else{
-        $down = "<a href='?plug=".$_GET['plug']."&getFAIHook=".base64_encode($key)."'>
-          <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
-          </a>";
-      }
-
-      /* Check if we are allowed to view the object */
-      $s_acl = $this->ui->get_permissions($dn,"fai/faiHookEntry","cn")  ;
-      if(preg_match("/r/",$s_acl)){
-
-        $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".base64_encode($key)."'>".$name['name']."</a>";
-        $divlist->AddEntry(array( array("string"=>$edit_link),
-              array("string"=>$down , "attach" => "style='width:20px;'"),
-              array("string"=>str_replace("%s",base64_encode($key),$act),
-                "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
-      }
-    }
-    $smarty->assign("Entry_divlist",$divlist->DrawList());
-    /* Divlist creation complete
-     */
-
-    $smarty->assign("SubObjects",$this->getList());
+    $this->hookListWidget->setListData($this->convertList(TRUE), $this->convertList());
+    $this->hookListWidget->update();
+    $smarty->assign("Entry_divlist",$this->hookListWidget->render());
 
     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again

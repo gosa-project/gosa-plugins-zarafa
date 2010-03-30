@@ -81,6 +81,7 @@ class faiScript extends plugin
     $this->scriptListWidget->setHeader(array(_("Name"),_("Description")));
   }
 
+
   function convertList($type = FALSE)
   {
     $data = array();
@@ -90,6 +91,7 @@ class faiScript extends plugin
       if($type){
         $data[$cn] = $entry;
       }else{
+        if(!isset($entry['description'])) $entry['description']="";
         $data[$cn] = array('data' => array($entry['cn'], $entry['description']));
       }
     }
