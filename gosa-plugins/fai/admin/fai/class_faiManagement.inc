@@ -746,6 +746,9 @@ class faiManagement extends management
           $NewReleaseName   = $name;
         }
       }
+
+      $targetReleaseDN = "ou=".$name.",".$baseToUse;
+
       $appsrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou('applicationRDN'),$baseToUse);
       $appdst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou('applicationRDN'),"ou=".$name.",".$baseToUse) ;
 
@@ -853,6 +856,10 @@ class faiManagement extends management
             "Daemon events called but classes where not accessible, DaemonEvent gosaSupportDaemon",
             FATAL_ERROR_DIALOG);
       }
+      
+      $releases = $this->getReleaseList();
+      $this->releaseSelector->setBases($releases);
+      $this->releaseSelector->setBase($targetReleaseDN);
       exit();
     }
   }
