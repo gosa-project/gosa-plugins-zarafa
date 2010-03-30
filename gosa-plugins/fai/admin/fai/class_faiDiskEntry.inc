@@ -533,7 +533,7 @@ class faiDiskEntry extends plugin
 
       // Combine options to a single table col. 
       $opt    =array(
-          "string" => "<i>".preg_replace('/, $/',"",$opt)."</i>");
+          "string" => "<i>".preg_replace('/, $/',"",$opt)."&nbsp;</i>");
 
       // Depending on the FAIstatus (freeze?) we will display different options. 
       // We can't remove freezed branches -> Hide remove button.
