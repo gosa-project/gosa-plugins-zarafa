@@ -71,6 +71,24 @@ class faiScript extends plugin
     }
  
     $this->ui = get_userinfo();
+
+    $this->scriptListWidget= new sortableListing($this->SubObjects, $this->convertList());
+    $this->scriptListWidget->setDeleteable(true);
+    $this->scriptListWidget->setInstantDelete(false);
+    $this->scriptListWidget->setEditable(true);
+    $this->scriptListWidget->setWidth("100%");
+    $this->scriptListWidget->setHeight("70px");
+    $this->scriptListWidget->setHeader(array(_("Name"),_("Description")));
+  }
+
+  function convertList()
+  {
+    $data = array();
+    foreach($this->SubObjects as $cn => $entry){
+      if($entry['status'] == "delete") continue;
+      $data[$cn] = array('data' => array($entry['cn'], $entry['description']));
+    }
+    return($data);
   }
 
 
@@ -150,7 +168,6 @@ class faiScript extends plugin
     /* Handle posts */
     $s_action = $s_entry = "";
     foreach($_POST as $name => $value){
-
       if(preg_match("/^download_/",$name)){
         $s_entry = postDecode(preg_replace("/^download_/","",$name));
         $obj = $this->SubObjects[$s_entry];
@@ -158,61 +175,46 @@ class faiScript extends plugin
         send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIscript"); 
         break;
       }
-
-      /* Edit script posted */
-      if(preg_match("/^editscript_/",$name)){
-        $s_action = "edit";
-        $s_entry = preg_replace("/^editscript_/","",$name);
-        $s_entry = postDecode(preg_replace("/_.*/","",$s_entry));
-        break;
-      }
-
-      /* Delete script requested */
-      if(preg_match("/^deletescript_/",$name) && !preg_match("/freeze/i",$this->FAIstate)){
-        $s_action = "remove";
-        $s_entry = preg_replace("/^deletescript_/","",$name);
-        $s_entry = postDecode(preg_replace("/_.*/","",$s_entry));
-        break;
-      }
     }
 
-    if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
-      $s_entry = postDecode($_GET['id']);
-      if(isset($this->SubObjects[$s_entry])){
-        $s_action = "edit";
+    $this->scriptListWidget->setAcl($this->getacl(""));
+    $this->scriptListWidget->save_object();
+    $action = $this->scriptListWidget->getAction();
+    if($action['action'] =="edit"){
+      $s_entry = $this->scriptListWidget->getKey($action['targets'][0]);
+      if(isset($this->SubObjects[$s_entry])){ 
+
+        $obj  = $this->SubObjects[$s_entry];
+        if($obj['status'] == "FreshLoaded"){
+          $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+        }
+
+        /* Create new dialog and set acl attributes  */
+        $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+        $this->dialog->FAIstate = $this->FAIstate;
+        $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
+        $this->dialog->set_acl_category("fai");
+
+        /* Assign some additional dialog informations like headline and parent  */
+        set_object_info($obj['dn']);
+        $this->dialog->parent = &$this;
+        $this->is_dialog=true;
       }
-    }
-
-    if($s_action =="edit" && isset($this->SubObjects[$s_entry])){
-
-      /* Get object, and load missing entry values */
-      $obj  = $this->SubObjects[$s_entry];
-      if($obj['status'] == "FreshLoaded"){
-        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-      }
-
-      /* Create new dialog and set acl attributes  */
-      $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-      $this->dialog->FAIstate = $this->FAIstate;
-      $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
-      $this->dialog->set_acl_category("fai");
-
-      /* Assign some additional dialog informations like headline and parent  */
-      set_object_info($obj['dn']);
-      $this->dialog->parent = &$this;
-      $this->is_dialog=true;
     }
 
     /* Check acls, are we allowed to delete an entry */
-    if($s_action == "remove" && isset($this->SubObjects[$s_entry])){
-      $entry = $this->SubObjects[$s_entry];  
-      $acl = $this->ui->get_permissions($this->acl_base_for_current_object($entry['dn']),"fai/faiScriptEntry")  ;
-      if(preg_match("/d/",$acl)){
-        $status = $entry['status'];
-        if($status == "edited" || $status == "FreshLoaded"){
-          $this->SubObjects[$s_entry]['status']= "delete";
-        }else{
-          unset($this->SubObjects[$s_entry]);
+    if($action['action'] =="delete"){
+      $s_entry = $this->scriptListWidget->getKey($action['targets'][0]);
+      if(isset($this->SubObjects[$s_entry])){ 
+        $entry = $this->SubObjects[$s_entry];  
+        $acl = $this->ui->get_permissions($this->acl_base_for_current_object($entry['dn']),"fai/faiScriptEntry")  ;
+        if(preg_match("/d/",$acl)){
+          $status = $entry['status'];
+          if($status == "edited" || $status == "FreshLoaded"){
+            $this->SubObjects[$s_entry]['status']= "delete";
+          }else{
+            unset($this->SubObjects[$s_entry]);
+          }
         }
       }
     }
@@ -264,30 +266,6 @@ class faiScript extends plugin
       }
     }
 
-    /* Sort entries */
-    $tmp = $keys = array();
-
-    if($this->sort_by == "name"){
-      foreach($this->SubObjects as $key => $entry){
-        $keys[$key]=$entry['cn'];
-      }
-    }elseif($this->sort_by == "priority"){
-      foreach($this->SubObjects as $key => $entry){
-        $keys[$key]=$entry['FAIpriority'];
-      }
-    }
-
-    natcasesort($keys);
-
-    if($this->sort_order == "down"){
-      $keys =array_reverse($keys);
-    }
-
-    foreach($keys as $key => $order_var){
-      $tmp[$key]=$this->SubObjects[$key];
-    }
-    $this->SubObjects = $tmp;
-
     /* Cancel Dialog */
     if(isset($_POST['CancelSubObject'])){
       $this->is_dialog=false; 
@@ -302,71 +280,9 @@ class faiScript extends plugin
       return($display);
     }
 
-    /* Divlist            added 23.02.2006 
-       Containing FAIscripts 
-     */
-    $divlist = new divlist("FAIscripts");
-    $divlist->SetEntriesPerPage(0);
-    $plug = $_GET['plug'];
-   
-    if($this->sort_order == "up"){
-      $dir = image('images/lists/sort-up.png');
-    }else{
-      $dir = image('images/lists/sort-down.png');
-    }
- 
-    if($this->sort_by == "name"){
-      $sort_name = $dir;
-      $sort_prio = "";
-    }else{
-      $sort_name = "";
-      $sort_prio = $dir;
-    }
-
-    $divlist->SetHeader(array(  array("string"=>"<a href='?plug=".$plug."&amp;sort=name'>"._("Name")."</a>".$sort_name),
-                                array("string"=>"<a href='?plug=".$plug."&amp;sort=priority'>".$sort_prio._("Priority")."</a>",
-                                      "attach"=>"style='width:100px;'"),
-                                array("string"=>_("Download"),
-                                      "attach"=>"style='width:100px;'"),
-                                array("string"=>_("Action"),
-                                      "attach"=>"style='border-right: 0px;width:100px;text-align:right;'")));
-    $divlist->SetHeight(300);
-    $divlist->SetWidth("100%");
-    foreach($this->getList(true) as $key => $name){
-
-      $dn= $this->acl_base_for_current_object($name['dn']);
-      $acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry")  ;
-      $act = "";
-      
-      /* Hide delete icon if this object is freezed */
-      if(preg_match("/freeze/", $this->FAIstate)){
-        $act .= image('images/lists/edit.png', 'editscript_%s',msgPool::editButton());
-      }else{
-        $act .= image('images/lists/edit.png', 'editscript_%s',msgPool::editButton());
-        if(preg_match("/d/",$acl)){
-          $act .= image('images/lists/trash.png', 'deletescript_%s',msgPool::delButton());
-        }
-      }
-
-      /* Check acls for download icon */
-      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
-      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
-        $down = "";
-      }else{
-        $down = image('images/save.png', 'download_'.postEncode($key));
-      } 
-
-      /* Check if we are allowed to view this object */
-      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
-      if(preg_match("/r/",$s_acl)){
-        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".postEncode($key)."'>".$name['name']."</a>"),
-              array("string"=>$name['FAIpriority'] , "attach" => "style='width:100px;'"),
-              array("string"=>$down , "attach" => "style='width:100px;'"),
-              array("string"=>str_replace("%s",postEncode($key),$act),
-                "attach"=>"style='border-right: 0px;width:100px;text-align:right;'")));
-      }
-    }
-    $smarty->assign("Entry_divlist",$divlist->DrawList());
+    $this->scriptListWidget->setListData($this->SubObjects, $this->convertList());
+    $this->scriptListWidget->update();
+    $smarty->assign("Entry_divlist",$this->scriptListWidget->render());
 
     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again

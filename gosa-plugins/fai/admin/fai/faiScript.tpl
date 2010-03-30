@@ -35,17 +35,16 @@
 <table width="100%" summary="{t}List of scripts{/t}">
 	<tr>
 		<td>
-				<h3>
-						{t}List of scripts{/t}
-				</h3>
+			<h3>
+					{t}List of scripts{/t}
+			</h3>
       {$Entry_divlist}
-{if $sub_object_is_addable}
-      <button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
-
-{else}
-      <button type='submit' name='Dummy2' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
-
-{/if}
+      <hr>
+      {if $sub_object_is_addable}
+        <button type='submit' name='AddSubObject' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+      {else}
+        <button type='submit' name='Dummy2' title="{msgPool type=addButton}">{msgPool type=addButton}</button>
+      {/if}
 		</td>
 	</tr>
 </table>
