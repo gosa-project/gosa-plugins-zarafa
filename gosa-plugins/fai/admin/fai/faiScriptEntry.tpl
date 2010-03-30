@@ -75,13 +75,12 @@
 {/render}
 </div>
 <br>
-<div style="align:right;" align="right">
+<hr>
+<div class="plugin-actions">
 {if !$freeze}
 	<button type='submit' name='SaveSubObject'>{msgPool type=applyButton}</button>&nbsp;
-
 {/if}
 	<button type='submit' name='CancelSubObject'>{msgPool type=cancelButton}</button>
-
 </div>
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

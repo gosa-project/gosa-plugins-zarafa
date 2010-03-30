@@ -98,7 +98,7 @@
 <br>
 <hr>
 <br>
-<div style="align:right;" align="right">
+<div class="plugin-actions">
 {if !$freeze}
 	<button type='submit' name='SaveDisk'>{msgPool type=saveButton}</button>
 

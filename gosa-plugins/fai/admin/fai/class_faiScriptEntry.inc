@@ -78,15 +78,13 @@ class faiScriptEntry extends plugin
     }
 
     /* File download requested */
-    if(isset($_GET['getFAIScript'])){
+    if(isset($_POST['download'])){
       send_binary_content(stripslashes($this->FAIscript),$this->cn.".FAIscript");
     }
 
     /* Create download button*/
     if($this->dn != "new" && $this->acl_is_readable("FAIscript")){
-      $smarty->assign("DownMe","<a href='?plug=".$_GET['plug']."&getFAIScript'>
-        <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0 class='center'>
-        </a>");
+      $smarty->assign("DownMe", image('images/save.png','download',_("Download")));
     }else{
       $smarty->assign("DownMe","");
     }
