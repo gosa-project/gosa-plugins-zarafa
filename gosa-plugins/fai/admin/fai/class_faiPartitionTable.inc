@@ -181,15 +181,15 @@ class faiPartitionTable extends plugin
 
     /* New Listhandling */
     foreach($_POST as $name => $value){
-      if(preg_match("/^edit_[^_]*_/",$name)){
+      if(preg_match("/^edit_/",$name)){
         $s_entry = preg_replace("/^edit_/","",$name);
-        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        $s_entry = postDecode($s_entry);
         $s_action = "edit"; 
         break;
       }
       if (!preg_match("/freeze/i", $this->FAIstate) && preg_match("/^delete_[^_]*_/",$name)){
         $s_entry = preg_replace("/^delete_/","",$name);
-        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        $s_entry = postDecode($s_entry);
         $s_action = "remove";
         break;
       }
@@ -389,23 +389,25 @@ class faiPartitionTable extends plugin
       $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
       if(preg_match("/(r|w)/",$acl)) {
 
-        $act .= "<input type='image' src='images/lists/edit.png'   name='edit_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        $act .= image('images/lists/edit.png','edit_%s',msgPool::editButton());
         if(preg_match("/d/",$acl) && !preg_match("/freeze/", $this->FAIstate)){
-          $act .="<input type='image' src='images/lists/trash.png' name='delete_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+          $act .= image('images/lists/trash.png','delete_%s',msgPool::delButton());
         }
 
         $cnt= count($disk['partitions']);
 
         $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$key."</a>";
-        $types= array("old" => "plugins/fai/images/fai_partitionTable.png", "disk" => "plugins/fai/images/fai_partitionTable.png",
+        $types= array(
+            "old"  => "plugins/fai/images/fai_partitionTable.png", 
+            "disk" => "plugins/fai/images/fai_partitionTable.png",
             "raid" => "plugins/fai/images/raid.png", "lvm" => "plugins/ogroups/images/list_ogroup.png");
         $type = isset($disk['FAIdiskType'])?$types[$disk['FAIdiskType']]:$types['old'];
         $divlist->AddEntry(array( 
-              array("string"=> "<img border='0' src='".$type."'>", "attach"=>"style='width:16px'"),
+              array("string"=> image($type), "attach"=>"style='width:16px'"),
               array("string"=> $edit_link, "attach"=>"style='width:100px'"),
               array("string"=> $disk['description']),
               array("string"=> $cnt,  "attach"=>"style='width:16px'"),
-              array("string"=>str_replace("%s",base64_encode($key),$act),
+              array("string"=>str_replace("%s",postEncode($key),$act),
                 "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
       }
     }
@@ -836,7 +838,7 @@ class faiPartitionTable extends plugin
 
         /* Check if we must decode some attributes */
         if(in_array_ics($attrs,$this->sub64coded)){
-          $var = base64_decode($var);
+          $var = postDecode($var);
         }
 
         /*  check if this is a binary entry */
