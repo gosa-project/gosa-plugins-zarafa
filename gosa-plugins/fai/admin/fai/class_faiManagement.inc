@@ -652,7 +652,7 @@ class faiManagement extends management
 
           // Update list and release selector to point to a valid release again.
           $releases = $this->getReleaseStates($this->config,$this->fai_base);
-          if(!isset($releases[$this->fai_releaes])){
+          if(!isset($releases[$this->fai_release])){
             $this->fai_release = $this->fai_base;
           }
 
