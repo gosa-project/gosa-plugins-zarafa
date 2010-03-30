@@ -196,7 +196,7 @@ class faiPartitionTableEntry extends plugin
        */
       $FAIfsType= "";
       if($this->acl_is_writeable("FAIfsType")){
-        $FAIfsType= "<select name='FAIfsType_".$key."' id='FAIfsType_".$key."' ".$dis." ".$disableALL.">";
+        $FAIfsType= "<select size='1' name='FAIfsType_".$key."' id='FAIfsType_".$key."' ".$dis." ".$disableALL.">";
         foreach($FAIfsTypes as $type){
           if($part['FAIfsType'] == $type){
             $FAIfsType  .="<option value='".$type."' selected >".$type."</option>";
@@ -212,7 +212,7 @@ class faiPartitionTableEntry extends plugin
       foreach(array("FAImountPoint","FAIpartitionSize","FAImountOptions","FAIfsOptions") as $attr){
         $$attr  = "";
         if($this->acl_is_writeable($attr)){
-          $$attr = "<input name='".$attr."_".$key."'  ".$disableALL."  ".$dis."
+          $$attr = "<input type='text' name='".$attr."_".$key."'  ".$disableALL."  ".$dis."
             value='".$part[$attr]."'    id='".$attr."_".$key."'>";
 
         }elseif($this->acl_is_readable($attr)){
@@ -249,9 +249,9 @@ class faiPartitionTableEntry extends plugin
         }
       }
       if($this->acl_is_removeable()){
-        $str .= "\n<td><input type='submit' name='Delete_".$key."' value='"._("Remove")."' ".$disableALL."></td>";    
+        $str .= "\n<td><button type='submit' {$disableALL} name='Delete_".$key."'>"._("Remove")."</button></td>";    
       }else{
-        $str .= "\n<td><input type='submit' name='restricted' disabled value='"._("Remove")."'></td>";    
+        $str .= "\n<td><button type='button' disabled name='restricted'>"._("Remove")."</button></td>";    
       }
       $str .= "\n</tr>";    
     }
@@ -295,7 +295,8 @@ class faiPartitionTableEntry extends plugin
 
       foreach($this->partitions as $key => $part){
         foreach($this->UsedAttrs as $attrs){
-
+          if(in_array($attrs,array('cn','description'))) continue;
+          
           if($this->acl_is_writeable($attrs)){
 
             if(isset($_POST[$attrs."_".$key])){

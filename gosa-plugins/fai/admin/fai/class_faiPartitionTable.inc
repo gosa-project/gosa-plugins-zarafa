@@ -458,11 +458,11 @@ class faiPartitionTable extends plugin
     if(isset($_POST['FAIpartitionTablePosted'])){
       if (preg_match("/freeze/", $this->FAIstate)) return;
       plugin::save_object();
-      foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }
-      }
+#     foreach($this->attributes as $attrs){
+#       if(isset($_POST[$attrs])){
+#         $this->$attrs = $_POST[$attrs];
+#       }
+#     }
       if(!count($this->disks)){
         if(isset($_POST['mode'])){
           $this->FAIpartitionMethod = "setup-storage";
