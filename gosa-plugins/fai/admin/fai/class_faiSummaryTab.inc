@@ -197,7 +197,7 @@ class faiSummaryTab extends plugin{
 
     if(isset($_GET['show'])){
       $ldap = $this->config->get_ldap_link();
-      $ldap->cat(base64_decode($_GET['id']), array('FAIscript', 'FAIhook', 'FAItemplateFile'));
+      $ldap->cat(postDecode($_GET['id']), array('FAIscript', 'FAIhook', 'FAItemplateFile'));
       $attrs = $ldap->fetch();
       if($_GET['type'] == "FAIscript"){
         $str = $attrs['FAIscript'][0];
@@ -289,8 +289,8 @@ class faiSummaryTab extends plugin{
               $str .="<tr><td style='padding-left:20px;'>";
             }
 
-            $str .= "<a target='_blank' href='?plug=".$_GET['plug']."&amp;show&amp;type=".$key."&amp;id=".base64_encode($data['dn'])."'>";
             $str .= $image."&nbsp;";
+            $str .= "<a target='_blank' href='?plug=".$_GET['plug']."&amp;show&amp;type=".$key."&amp;id=".postEncode($data['dn'])."'>";
             if(isset($data['FAIpriority'][0])){
               $str .= "(".$data['FAIpriority'][0].")";
             }
