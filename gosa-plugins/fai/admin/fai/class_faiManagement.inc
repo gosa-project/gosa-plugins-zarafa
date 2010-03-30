@@ -1063,10 +1063,9 @@ class faiManagement extends management
     $icon_list = "";
     foreach($objects as $type => $type_data){
       if(in_array($type, $classes)){
-        $icon_list .= "<input type='image' src='".$type_data['IMG']."' title='".$type_data['NAME']."'
-          alt='".$type_data['KZL']."' class='center' name='edit_".$row."_".$type."'>\n";
+        $icon_list .= image($type_data['IMG'],'edit_'.$row.'_'.$type,$type_data['NAME']);
       }else{
-        $icon_list .= "<img src='images/empty.png' alt=' ' class='center'>\n";
+        $icon_list .= image('images/empty.png');
       }
     }
 
@@ -1127,9 +1126,9 @@ class faiManagement extends management
     if(isset($_GET['act']) && $_GET['act'] == "remove_branch")  $action['action'] = "removeBranch";
 
     foreach($_POST as $name => $value){
-      if(preg_match("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i", $name)){
-        $id = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\1", $name);
-        $tab = preg_replace("/^edit_([0-9]*)_([a-z_]*)_(x|y)/i","\\2", $name);
+      if(preg_match("/^edit_([0-9]*)_([a-z_]*)/i", $name)){
+        $id = preg_replace("/^edit_([0-9]*)_([a-z_]*)/i","\\1", $name);
+        $tab = preg_replace("/^edit_([0-9]*)_([a-z_]*)/i","\\2", $name);
 
         $headpage = $this->getHeadpage();
         $entry = $headpage->entries[$id];
@@ -1138,7 +1137,7 @@ class faiManagement extends management
           if(isset($headpage->entries[$id]['GROUPS'][$tab])){
             $data =$headpage->entries[$id]['GROUPS'][$tab];
             $type = $this->get_type($data);
-            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]); 
+            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],"fai"); 
             if($str) return($str);
           } 
         }else{
