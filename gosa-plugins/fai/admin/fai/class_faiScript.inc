@@ -77,13 +77,14 @@ class faiScript extends plugin
     $this->scriptListWidget->setInstantDelete(false);
     $this->scriptListWidget->setEditable(true);
     $this->scriptListWidget->setWidth("100%");
-    $this->scriptListWidget->setHeight("70px");
+    $this->scriptListWidget->setHeight("140px");
     $this->scriptListWidget->setHeader(array(_("Name"),_("Description")));
   }
 
   function convertList($type = FALSE)
   {
     $data = array();
+    $s_acl = $this->ui->get_permissions($this->dn,"fai/faiScriptEntry","FAIscript");
     foreach($this->SubObjects as $cn => $entry){
       if($entry['status'] == "delete") continue;
       if($type){
@@ -167,18 +168,6 @@ class faiScript extends plugin
 
     if($this->dn != "new"){
       set_object_info($this->dn);
-    }
-
-    /* Handle posts */
-    $s_action = $s_entry = "";
-    foreach($_POST as $name => $value){
-      if(preg_match("/^download_/",$name)){
-        $s_entry = postDecode(preg_replace("/^download_/","",$name));
-        $obj = $this->SubObjects[$s_entry];
-        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIscript"); 
-        break;
-      }
     }
 
     $this->scriptListWidget->setAcl($this->getacl(""));
