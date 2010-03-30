@@ -178,7 +178,7 @@ class debconf
   /* Display all possible options in html*/
   function get_dialog()
   {
-    if ($this->loaded_template) {
+    if ($this->loaded_template && count($this->template)) {
       $result= "<table summary=''>";
 
       foreach ($this->template as $post_name => $entry){
@@ -199,9 +199,10 @@ class debconf
           //php_error(E_WARNING, "An unknown type has been specified in the debconf template. Please fix.");
         }
       }
+      $result.="</table>";
 
     
-      $result .= "<input type='hidden' post_name='check_post' value='1'></table>";
+      $result .= "<input type='hidden' post_name='check_post' value='1'>";
       return ($result);
     } else {
       return _("This package has no debconf options.");
