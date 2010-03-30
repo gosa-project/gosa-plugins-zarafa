@@ -39,8 +39,7 @@
 <table width="100%" summary="{t}Template attributes{/t}">
  <tr>
   <td colspan=2>
-   <h3><img class="center" alt=""         src="plugins/fai/images/fai_template.png"         title="{t}Template attributes{/t}">&nbsp;{t}Template attributes{/t}
-   </h3>
+   <h3>{t}Template attributes{/t}</h3>
   </td>
  </tr>
  <tr>
@@ -52,9 +51,8 @@
       {$status}
       
       {if $bStatus}
-       <a href="{$plug}&amp;getFAItemplate"><img class="center" alt="{t}Save template{/t}..."             title="{t}Save template{/t}..." src="images/save.png" border="0" /></a>
-       <a href="{$plug}&amp;editFAItemplate"><img class="center" alt="{t}Edit template{/t}..."             title="{t}Edit template{/t}..." src="images/lists/edit.png" border="0" /></a>
-       
+        {image path='images/save.png' action='getFAItemplate' title='{t}Save template{/t}...'}
+        {image path='images/lists/edit.png' action='editFAItemplate' title='{t}Edit template{/t}...'}
       {/if}
      </td>
     </tr>

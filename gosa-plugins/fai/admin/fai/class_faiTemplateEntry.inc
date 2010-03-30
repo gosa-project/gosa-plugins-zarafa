@@ -83,12 +83,12 @@ class faiTemplateEntry extends plugin
     }
    
     /* File download requested */
-    if(isset($_GET['getFAItemplate'])){
+    if(isset($_POST['getFAItemplate'])){
       send_binary_content($this->FAItemplateFile,$this->cn.".FAItemplate");
     }
 
     /* File edit requested */
-    if(isset($_GET['editFAItemplate'])){
+    if(isset($_POST['editFAItemplate'])){
       $this->dialog = new faiTemplateEdit($this->config,$this->dn,$this->FAItemplateFile);
     }
 
