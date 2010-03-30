@@ -104,21 +104,36 @@
       <name>remove_multiple</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <label>Remove</label>
+      <label>Remove entries</label>
+    </action>
+
+    <action>
+      <type>separator</type>
     </action>
 
     <action>
      <name>createBranch</name>
      <type>entry</type>
-     <image>images/lists/element.png[new]</image>
+     <image>plugins/fai/images/branch_small.png[new]</image>
      <label>Create branch</label>
     </action>
 
     <action>
      <name>createFreeze</name>
      <type>entry</type>
-     <image>images/lists/element.png[new]</image>
+     <image>plugins/fai/images/freeze.png[new]</image>
      <label>Create freeze</label>
+    </action>
+
+    <action>
+     <name>removeBranch</name>
+     <type>entry</type>
+     <image>images/lists/trash.png</image>
+     <label>Remove release</label>
+    </action>
+
+    <action>
+      <type>separator</type>
     </action>
 
     <action>

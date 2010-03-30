@@ -643,14 +643,24 @@ class faiManagement extends management
           }
 
           /* Post remove */
-          $this->fai_release = $this->fai_base;
+          $this->fai_release = preg_replace("/^[^,]*+,/","", $this->fai_release);
+
           $this->lock_name   = $name;
           $this->lock_dn     = $bb;
           $this->handle_post_events('remove');
 
-          $fai_filter = session::get("fai_filter");
-          $fai_filter['fai_release'] = $this->fai_release;
-          session::set("fai_filter",$fai_filter);
+          // Update list and release selector to point to a valid release again.
+          $releases = $this->getReleaseList();
+          if(!isset($releases[$this->fai_releaes])){
+            $this->fai_release = $this->fai_base;
+          }
+
+          $headpage = $this->getHeadpage();
+          $headpage->setBase($this->fai_release);
+          $headpage->update();
+
+          $this->releaseSelector->setBases($releases);
+          $this->releaseSelector->setBase($this->fai_release);
 
           new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
         }
@@ -856,10 +866,16 @@ class faiManagement extends management
             "Daemon events called but classes where not accessible, DaemonEvent gosaSupportDaemon",
             FATAL_ERROR_DIALOG);
       }
-      
+    
+      // Update list and release selector to point to the newly created release 
+      $headpage = $this->getHeadpage();
+      $this->fai_release = $targetReleaseDN;
+      $headpage->setBase($this->fai_release);
+      $headpage->update();
+ 
       $releases = $this->getReleaseList();
       $this->releaseSelector->setBases($releases);
-      $this->releaseSelector->setBase($targetReleaseDN);
+      $this->releaseSelector->setBase($this->fai_release);
       exit();
     }
   }
