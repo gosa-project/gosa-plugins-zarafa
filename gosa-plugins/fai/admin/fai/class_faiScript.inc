@@ -88,7 +88,7 @@ class faiScript extends plugin
 
         /* Check if we must decode some attributes */
         if(in_array_ics($attrs,$this->sub64coded)){
-          $var = base64_decode($var);
+          $var = postDecode($var);
         }
 
         /*  check if this is a binary entry */
@@ -147,24 +147,23 @@ class faiScript extends plugin
       set_object_info($this->dn);
     }
 
-    /* File download requested */
-    if(isset($_GET['getFAIscript'])){
-      if(isset($this->SubObjects[base64_decode($_GET['getFAIscript'])])){
-        $obj = $this->SubObjects[base64_decode($_GET['getFAIscript'])];
-        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIscript"); 
-      }
-    }
-    
     /* Handle posts */
     $s_action = $s_entry = "";
     foreach($_POST as $name => $value){
+
+      if(preg_match("/^download_/",$name)){
+        $s_entry = postDecode(preg_replace("/^download_/","",$name));
+        $obj = $this->SubObjects[$s_entry];
+        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+        send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIscript"); 
+        break;
+      }
 
       /* Edit script posted */
       if(preg_match("/^editscript_/",$name)){
         $s_action = "edit";
         $s_entry = preg_replace("/^editscript_/","",$name);
-        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        $s_entry = postDecode(preg_replace("/_.*/","",$s_entry));
         break;
       }
 
@@ -172,13 +171,13 @@ class faiScript extends plugin
       if(preg_match("/^deletescript_/",$name) && !preg_match("/freeze/i",$this->FAIstate)){
         $s_action = "remove";
         $s_entry = preg_replace("/^deletescript_/","",$name);
-        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        $s_entry = postDecode(preg_replace("/_.*/","",$s_entry));
         break;
       }
     }
 
     if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
-      $s_entry = base64_decode($_GET['id']);
+      $s_entry = postDecode($_GET['id']);
       if(isset($this->SubObjects[$s_entry])){
         $s_action = "edit";
       }
@@ -311,9 +310,9 @@ class faiScript extends plugin
     $plug = $_GET['plug'];
    
     if($this->sort_order == "up"){
-      $dir = "<img src='images/lists/sort-up.png' title='"._("Sort direction")."' alt='\/' border=0>";
+      $dir = image('images/lists/sort-up.png');
     }else{
-      $dir = "<img src='images/lists/sort-down.png' title='"._("Sort direction")."' alt='/\' border=0>";
+      $dir = image('images/lists/sort-down.png');
     }
  
     if($this->sort_by == "name"){
@@ -324,7 +323,7 @@ class faiScript extends plugin
       $sort_prio = $dir;
     }
 
-    $divlist->SetHeader(array(  array("string"=>"<a href='?plug=".$plug."&amp;sort=name'>"._("Name").$sort_name."</a>"),
+    $divlist->SetHeader(array(  array("string"=>"<a href='?plug=".$plug."&amp;sort=name'>"._("Name")."</a>".$sort_name),
                                 array("string"=>"<a href='?plug=".$plug."&amp;sort=priority'>".$sort_prio._("Priority")."</a>",
                                       "attach"=>"style='width:100px;'"),
                                 array("string"=>_("Download"),
@@ -341,11 +340,11 @@ class faiScript extends plugin
       
       /* Hide delete icon if this object is freezed */
       if(preg_match("/freeze/", $this->FAIstate)){
-        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        $act .= image('images/lists/edit.png', 'editscript_%s',msgPool::editButton());
       }else{
-        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        $act .= image('images/lists/edit.png', 'editscript_%s',msgPool::editButton());
         if(preg_match("/d/",$acl)){
-          $act .="<input type='image' src='images/lists/trash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+          $act .= image('images/lists/trash.png', 'deletescript_%s',msgPool::delButton());
         }
       }
 
@@ -354,18 +353,16 @@ class faiScript extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='?plug=".$_GET['plug']."&getFAIscript=".base64_encode($key)."'>
-          <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
-          </a>"; 
+        $down = image('images/save.png', 'download_'.postEncode($key));
       } 
 
       /* Check if we are allowed to view this object */
       $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
-        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".base64_encode($key)."'>".$name['name']."</a>"),
+        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".postEncode($key)."'>".$name['name']."</a>"),
               array("string"=>$name['FAIpriority'] , "attach" => "style='width:100px;'"),
               array("string"=>$down , "attach" => "style='width:100px;'"),
-              array("string"=>str_replace("%s",base64_encode($key),$act),
+              array("string"=>str_replace("%s",postEncode($key),$act),
                 "attach"=>"style='border-right: 0px;width:100px;text-align:right;'")));
       }
     }
@@ -531,7 +528,7 @@ class faiScript extends plugin
     foreach($Objects as $name => $obj){
 
       foreach($this->sub64coded as $codeIt){
-        $obj[$codeIt]=base64_encode(stripslashes($obj[$codeIt]));
+        $obj[$codeIt]=postEncode(stripslashes($obj[$codeIt]));
       }
 
       $tmp = array();
