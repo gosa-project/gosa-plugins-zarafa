@@ -21,13 +21,10 @@
  
  <textarea {if $write_protect} disabled {/if}  style='width:100%; height: 350px;'  {if !$write_protect}name="templateValue"{/if}>
  {$templateValue}</textarea>
- <p class='seperator'>
-  <div style='text-align:right;'>
-   <button type='submit' name='templateEditSave'>
-   {msgPool type=okButton}</button>&nbsp;
-   <button type='submit' name='templateEditCancel'>
-   {msgPool type=cancelButton}</button>
-  </div>
- </p>
+
+ <div class="plugin-actions">
+  <button type='submit' name='templateEditSave'>{msgPool type=okButton}</button>&nbsp;
+  <button type='submit' name='templateEditCancel'>{msgPool type=cancelButton}</button>
+ </div>
  
 {/if}
