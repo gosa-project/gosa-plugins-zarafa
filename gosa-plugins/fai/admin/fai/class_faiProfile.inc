@@ -217,7 +217,7 @@ class faiProfile extends plugin
         if(preg_match("/DEL_/i",$name) && $this->acl_is_writeable("FAIclass")){
           $s_action = "delete";
           $s_entry  = preg_replace("/DEL_/","",$name);
-          $s_entry  = base64_decode(preg_replace("/_.*$/","",$s_entry));
+          $s_entry  = postDecode($s_entry);
         }elseif(preg_match("/Add_class/i",$name)&& $this->acl_is_writeable("FAIclass")){
           $s_action  = "add";
         }elseif(preg_match("/DelClass/i",$name) && $this->acl_is_writeable("FAIclass")){
@@ -231,8 +231,7 @@ class faiProfile extends plugin
         if((preg_match("/sortup_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
           $sort_once = true;
           $val = preg_replace("/sortup_/","",$name);
-          $val = preg_replace("/_.*$/","",$val);
-          $val = base64_decode($val);
+          $val = postDecode($val);
           $this->catUp($val);
         }
 
@@ -240,8 +239,7 @@ class faiProfile extends plugin
         if((preg_match("/sortdown_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
           $sort_once = true;
           $val = preg_replace("/sortdown_/","",$name);
-          $val = preg_replace("/_.*$/","",$val);
-          $val = base64_decode($val);
+          $val = postDecode($val);
           $this->catDown($val);
         }
 
@@ -284,19 +282,21 @@ class faiProfile extends plugin
     $divlist->SetSummary(_("This list displays all assigned class names for this profile."));
 
     /* item images */
-    $objTypes['FAIhook']            = "<img src='plugins/fai/images/fai_hook.png' title='"._("Hook bundle")."' alt=''>";
-    $objTypes['FAItemplate']        = "<img src='plugins/fai/images/fai_template.png' title='"._("Template bundle")."' alt=''>";
-    $objTypes['FAIscript']          = "<img src='plugins/fai/images/fai_script.png' title='"._("Script bundle")."' alt=''>";
-    $objTypes['FAIvariable']        = "<img src='plugins/fai/images/fai_variable.png' title='"._("Variable bundle")."' alt=''>";
-    $objTypes['FAIpackageList']        = "<img src='plugins/fai/images/fai_packages.png' title='"._("Package bundle")."' alt=''>";
-    $objTypes['FAIpartitionTable']  = "<img src='plugins/fai/images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>";
+    $objTypes['FAIhook']            = image('plugins/fai/images/fai_hook.png','',_("Hook bundle"));
+    $objTypes['FAItemplate']        = image('plugins/fai/images/fai_template.png','',_("Template bundle"));
+    $objTypes['FAIscript']          = image('plugins/fai/images/fai_script.png','',_("Script bundle"));
+    $objTypes['FAIvariable']        = image('plugins/fai/images/fai_variable.png','',_("Variable bundle"));
+    $objTypes['FAIpackageList']     = image('plugins/fai/images/fai_packages.png','',_("Package bundle"));
+    $objTypes['FAIpartitionTable']  = image('plugins/fai/images/fai_partitionTable.png','',_("Partition table"));
+
+    $emp = image('images/empty.png');
 
     /* Delete button */
-    $actions = "<input type='image' src='images/lists/trash.png' title='"._("Remove class from profile")."' name='DEL_%KEY%'>"; 
+    $actions = image('images/lists/trash.png','DEL_%KEY%',_("Remove class from profile")); 
     
     /* Up down buttons */
-    $linkupdown = "&nbsp;<input type='image' name='sortup_%s'   alt='up'    title='"._("Up")."'   src='images/lists/sort-up.png' align='top' >";
-    $linkupdown.= "<input type='image' name='sortdown_%s' alt='down'  title='"._("Down")."' src='images/lists/sort-down.png' >";
+    $linkupdown = image('images/lists/sort-up.png','sortup_%s',_("Up"), 'top');
+    $linkupdown.= image('images/lists/sort-down.png','sortdown_%s',_("Down"), 'bottom');
 
     /* Append fai classes to divlist */
     if($this->acl_is_readable("FAIclass")){
@@ -313,8 +313,8 @@ class faiProfile extends plugin
         $field1 = array("string"=> $usedClass,"attach"=>"");
         $field2 = array("string"=> $str,"attach"=>"");
         if(!preg_match("/freeze/", $this->FAIstate) && $this->acl_is_writeable("FAIclass")){
-          $field3 = array("string"=> preg_replace("/%KEY%/",base64_encode($usedClass),$actions).
-              preg_replace("/%s/",base64_encode($usedClass),$linkupdown),
+          $field3 = array("string"=> preg_replace("/%KEY%/",postEncode($usedClass),$actions).
+              preg_replace("/%s/",postEncode($usedClass),$linkupdown),
               "attach"=>"style='border-right:none;'");
         }else{
           $field3 = array("string"=>"&nbsp;", "attach"=>"style='border-right:none;'");
