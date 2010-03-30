@@ -41,12 +41,12 @@
    
    {if $sub_object_is_addable}
     <button type='submit' name='AddDisk' title="{t}Add disk{/t}">{t}Add disk{/t}</button>
-    <button type='submit' name='AddRaid' id="AddRaid" title="{t}Add RAID{/t}">{t}Add RAID{/t}</button>
-    <button type='submit' name='AddVolgroup' id="AddVolgroup" title="{t}Add volume group{/t}">{t}Add volume group{/t}</button>
+    <button {$storage_mode} {$addraid} type='submit' name='AddRaid' id="AddRaid" title="{t}Add RAID{/t}">{t}Add RAID{/t}</button>
+    <button {$storage_mode} type='submit' name='AddVolgroup' id="AddVolgroup" title="{t}Add volume group{/t}">{t}Add volume group{/t}</button>
     {else}
-    <button type='submit' name='AddDisk' title="{t}Add disk{/t}">{t}Add disk{/t}</button>
-    <button type='submit' name='AddRaid' title="{t}Add RAID{/t}">{t}Add RAID{/t}</button>
-    <button type='submit' name='AddVolgroup' title="{t}Add volume group{/t}">{t}Add volume group{/t}</button>
+    <button type='button' disabled name='AddDisk' title="{t}Add disk{/t}">{t}Add disk{/t}</button>
+    <button type='button' disabled name='AddRaid' title="{t}Add RAID{/t}">{t}Add RAID{/t}</button>
+    <button type='button' disabled name='AddVolgroup' title="{t}Add volume group{/t}">{t}Add volume group{/t}</button>
     
    {/if}
   </td>
