@@ -978,7 +978,7 @@ class faiManagement extends management
     $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
 
     while($release = $ldap->fetch()){
-      $list[$release['dn']] = _("Branch");
+      $list[$release['dn']] = _("Release");
       if(isset($release['FAIstate'][0]) && preg_match("/freeze/i",$release['FAIstate'][0])){
         $list[$release['dn']] = _("Freeze");
       }
