@@ -539,12 +539,14 @@ class faiDiskEntry extends plugin
       // We can't remove freezed branches -> Hide remove button.
       if(!preg_match("/freeze/", $this->FAIstate)){
         $action =array(
-            "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>".
-            "<input type='image' src='images/lists/trash.png' name='RemovePartition_".$key."'>",
+            "string" => 
+              image('images/lists/edit.png','EditPartition_'.$key).
+              image('images/lists/trash.png','RemovePartition_'.$key),
             "attach" => "style='width:40px; border-right: 0px;'");
       }else{
         $action =array(
-            "string" => "<input type='image' src='images/lists/edit.png' name='EditPartition_".$key."'>",
+            "string" => 
+              image('images/lists/edit.png','EditPartition_'.$key),
             "attach" => "style='width:40px; border-right: 0px;'");
       }
 
