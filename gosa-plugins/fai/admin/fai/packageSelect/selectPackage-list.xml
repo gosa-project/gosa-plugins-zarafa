@@ -13,7 +13,7 @@
     <objectType>
       <label>FAI</label>
       <objectClass>FAKE_OC__FaiPackage</objectClass>
-      <category>faiPackage</category>
+      <category>fai</category>
       <class>faiPackage</class>
       <image>plugins/fai/images/fai_packages.png</image>
     </objectType>

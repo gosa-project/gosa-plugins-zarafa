@@ -325,7 +325,7 @@ class faiPackage extends plugin
        ******/
       
       if(!preg_match('/freeze/i', $this->FAIstate) && preg_match("/^removal_package_/",$name)){
-        $id = @base64_decode(preg_replace("/^removal_package_(.*)_[xy]*$/","\\1",$name));
+        $id = @postDecode(preg_replace("/^removal_package_(.*)$/","\\1",$name));
         if(isset($this->usedPackages[$id])){
           $pkg = $this->usedPackages[$id]; 
           if (preg_match('/\-$/', $pkg)){
@@ -342,7 +342,7 @@ class faiPackage extends plugin
        * Delete Pkgs   
        ******/
       if(!preg_match('/freeze/i', $this->FAIstate) && preg_match("/^remove_package_/",$name)){
-        $id = @base64_decode(preg_replace("/^remove_package_(.*)_[xy]*$/","\\1",$name));
+        $id = @postDecode(preg_replace("/^remove_package_(.*)$/","\\1",$name));
         if(isset($this->usedPackages[$id])){
           unset($this->usedPackages[$id]);
         }
@@ -353,7 +353,7 @@ class faiPackage extends plugin
        * Configure Pkgs   
        ******/
       if(!preg_match('/freeze/i', $this->FAIstate) && preg_match("/^configure_package_/",$name)){
-        $pkg = @base64_decode(preg_replace("/^configure_package_(.*)_[xy]*$/","\\1",$name));
+        $pkg = @postDecode(preg_replace("/^configure_package_(.*)$/","\\1",$name));
          
         if(isset($this->usedPackages[$pkg])){
 
@@ -412,17 +412,15 @@ class faiPackage extends plugin
         $actions = "";
 
         /* Append message if package is configured */
-        $configured = "<img src='images/empty.png' alt=' '  class='center'>";
+        $configured = image('images/empty.png');
         if(isset($this->ConfiguredPackages[$usedName])){
-          $configured = "<img src='plugins/fai/images/package_configure.png' alt='"._("Configured")."'
-                      title='"._("Configured")."' class='center'>";
+          $configured = image('plugins/fai/images/package_configure.png','',_("Configured"));
         }
 
         /* Adapt used name if we're marked for removal */
-        $removal = "<img src='images/empty.png' alt=' '  class='center'>";
+        $removal = image('images/empty.png');
         if (preg_match('/\-$/', $name)){
-          $removal = "<img src='plugins/fai/images/removal_mark.png' alt='"._("Package marked for removal")."'
-                      title='"._("Package marked for removal")."' class='center'>";
+          $removal = image('plugins/fai/images/removal_mark.png','',_("Package marked for removal"));
         }
 
         /* Get Version */
@@ -434,28 +432,31 @@ class faiPackage extends plugin
         /* Get description */
         $description = "&nbsp;";
         if(isset($this->list[$usedName]['DESCRIPTION'])){
-          $description = base64_decode($this->list[$usedName]['DESCRIPTION']);
+          $description = postDecode($this->list[$usedName]['DESCRIPTION']);
         }
  
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
-          $actions = "<input type='image' class='center' title='"._("Mark package for removal")."' 
-            src='plugins/fai/images/removal_mark.png' name='removal_package_".base64_encode($usedName)."' >";
+          $actions.= image('plugins/fai/images/removal_mark.png',
+              'removal_package_'.postEncode($usedName),
+              _("Mark package for removal"));
         }
 
         if(isset($this->list[$usedName]['TEMPLATE']) && 
            !preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
-          $actions.= "&nbsp;<input type='image' class='center' title='"._("Configure this package")."' 
-            src='plugins/fai/images/package_configure.png' name='configure_package_".base64_encode($usedName)."' >";
+          $actions.= image('plugins/fai/images/package_configure.png',
+              'configure_package_'.postEncode($usedName),
+              _("Configure this package"));
         }
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
-          $actions.= "&nbsp;<input type='image' class='center' title='"._("Remove this package")."' 
-            src='images/lists/trash.png' name='remove_package_".base64_encode($usedName)."' >";
+          $actions.= image('images/lists/trash.png',
+              'remove_package_'.postEncode($usedName),
+              _("Remove this package"));
         }
 
         $field1 = array("string" => $configured."&nbsp;".$removal,"attach" => "style='width:40px;'");
         $field2 = array("string" => $usedName ,"attach" => "style='width:200px;'");
         $field3 = array("string" => $version);
-        $field4 = array("string" => $description);
+        $field4 = array("string" => htmlentities($description));
         $field5 = array("string" => $actions ,"attach" => "style='width:60px; border-right:0px;'");
         $divlist->AddEntry(array($field1,$field2,$field3,$field4,$field5));
       }
