@@ -20,10 +20,10 @@
    <table summary="{t}Class settings{/t}">
     <tr>
      <td>
-       <input type=radio name="classSelector" value="1" checked>
+       <input type=radio name="classSelector" id="classSelector1" value="1" checked>
      </td>
      <td> 
-       <h1>{t}Enter FAI class name manually{/t}</h1>
+       <h1><label for='classSelector1'>{t}Enter FAI class name manually{/t}</label></h1>
      </td>
    </tr>
    <tr>
@@ -43,10 +43,10 @@
    <table summary="{t}Class name selector{/t}" {$grey}>
     <tr>
      <td>
-       <input type=radio name="classSelector" value="2" {$ClassNamesAvailable}>
+       <input type=radio name="classSelector" value="2" id="classSelector2" {$ClassNamesAvailable}>
      </td>
      <td>
-      <h1 {$grey}>{t}Choose FAI class name from a list of existing classes{/t}</h1>
+      <h1 {$grey}><label for='classSelector2'>{t}Choose FAI class name from a list of existing classes{/t}</label></h1>
      </td>
     </tr>
     <tr>
