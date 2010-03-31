@@ -51,21 +51,22 @@
 
    <table summary="{t}Picture settings{/t}">
     <tr>
-     <td><LABEL for="picture_file">{t}Icon{/t}</LABEL>
+     <td>
+      <LABEL for="picture_file">{t}Icon{/t}</LABEL>
       <br>
-      
       {if $IconReadable}
-       <img src="{$gotoMimeIcon}" border=1 alt='{t}Mime icon{/t}' style="width:48px; height:48; background-color:white; vertical-align:bottom;">
+       <img src="{$gotoMimeIcon}" border=1 alt='{t}Mime icon{/t}' 
+         style="width:48px; height:48; background-color:white; vertical-align:bottom;">
        {else}
        {image path="images/empty.png"}
-       
       {/if}
      </td>
      <td>&nbsp;
       <br>
       <input type="hidden" name="MAX_FILE_SIZE" value="100000">
       {render acl=$gotoMimeIconACL}
-       <input name="picture_file" type="file" size="20" maxlength="255" 							accept="image/*.png" id="picture_file">
+       <input name="picture_file" type="file" size="20" maxlength="255" 							
+        accept="image/*.png" id="picture_file">
       {/render}
       {render acl=$gotoMimeIconACL}
        <button type='submit' name='update_icon'title="{t}Update mime type icon{/t}">{t}Update{/t}</button>
@@ -73,22 +74,26 @@
      </td>
     </tr>
    </table>
+
   </td>
  </tr>
  <tr>
   <td colspan="2">
+
    <hr>
+
   </td>
  </tr>
  <tr>
   <td colspan="2">
-   <h3>{t}Left click{/t}
-   </h3>
+   <h3>{t}Left click{/t}</h3>
   </td>
  </tr>
  <tr>
-  <td style='width:50%; '>{t}File patterns{/t}
-   {$must}
+  <td style='width:50%; '>
+    
+   {t}File patterns{/t}{$must}
+
    {render acl=$gotoMimeFilePatternACL}
     {$gotoMimeFilePatterns}
    {/render}
@@ -99,8 +104,12 @@
     <button type='submit' name='AddNewFilePattern' title="{t}Add a new file pattern{/t}">
     {msgPool type=addButton}</button>
    {/render}
+
   </td>
-  <td class='left-border'>{t}Applications{/t}
+  <td class='left-border'>
+
+   {t}Applications{/t}
+
    {render acl=$gotoMimeApplicationACL}
     {$gotoMimeApplications}
    {/render}
@@ -116,46 +125,45 @@
     <button type='submit' name='AddNewApplication' title="{t}Add application{/t}">
     {msgPool type=addButton}</button>
    {/render}
+
   </td>
  </tr>
  <tr>
   <td colspan="2">
+
    <hr>
+
   </td>
  </tr>
  <tr>
   <td colspan="2">
-   <h3>{t}Embedding{/t}
-   </h3>
+
+   <h3>{t}Embedding{/t}</h3>
+
   </td>
  </tr>
  <tr>
   <td style='width:50%; '>
-   <table summary="{t}Left click actions{/t}">
-    <tr>
-     <td>
-      {render acl=$gotoMimeLeftClickActionACL}
-       
-       
-       <input type='radio' name='gotoMimeLeftClickAction_IE' value='I' 							{if $gotoMimeLeftClickAction_I} checked {/if}>
-      {/render}{t}Show file in embedded viewer{/t}
-      <br>
-      {render acl=$gotoMimeLeftClickActionACL}
-       
-       
-       <input type='radio' name='gotoMimeLeftClickAction_IE' value='E' 							{if $gotoMimeLeftClickAction_E} checked {/if}>
-      {/render}{t}Show file in external viewer{/t}
-      <br>
-      {render acl=$gotoMimeLeftClickActionACL}
-       
-       
-       <input type='checkbox' name='gotoMimeLeftClickAction_Q' value='1' 							{if $gotoMimeLeftClickAction_Q} checked {/if}>
-      {/render}{t}Ask whether to save to local disk{/t}
-     </td>
-    </tr>
-   </table>
+
+   {render acl=$gotoMimeLeftClickActionACL}
+    <input type='radio' name='gotoMimeLeftClickAction_IE' value='I' 							
+       {if $gotoMimeLeftClickAction_I} checked {/if}>
+   {/render}{t}Show file in embedded viewer{/t}
+   <br>
+   {render acl=$gotoMimeLeftClickActionACL}
+    <input type='radio' name='gotoMimeLeftClickAction_IE' value='E' 							
+       {if $gotoMimeLeftClickAction_E} checked {/if}>
+   {/render}{t}Show file in external viewer{/t}
+   <br>
+   {render acl=$gotoMimeLeftClickActionACL}
+    <input type='checkbox' name='gotoMimeLeftClickAction_Q' value='1' 							
+       {if $gotoMimeLeftClickAction_Q} checked {/if}>
+   {/render}{t}Ask whether to save to local disk{/t}
+
   </td>
-  <td class='left-border'>{t}Applications{/t}
+  <td class='left-border'>
+
+   {t}Applications{/t}
    {render acl=$gotoMimeEmbeddedApplicationACL}
     {$gotoMimeEmbeddedApplications}
    {/render}
@@ -171,6 +179,7 @@
     <button type='submit' name='AddNewEmbeddedApplication' 
       title='{t}Add application{/t}'>{msgPool type=addButton}</button>
    {/render}
+
   </td>
  </tr>
 </table>

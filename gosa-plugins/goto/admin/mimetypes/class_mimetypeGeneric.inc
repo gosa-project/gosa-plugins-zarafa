@@ -279,25 +279,28 @@ class mimetype extends plugin
 
 
     if($this->acl_is_writeable("gotoMimeFilePattern") && !preg_match("/freeze/i",$this->FAIstate)){
-      $Pattern_Actions= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='Pattern_SortUp_%s' >&nbsp;
-      <input type='image' src='images/lists/sort-down.png' 	class='center'  name='Pattern_SortDown_%s'>&nbsp;
-      <input type='image' src='images/lists/trash.png'	class='center'  name='Pattern_Remove_%s'>";
+      $Pattern_Actions= 
+        image('images/lists/sort-up.png','Pattern_SortUp_%s','','top').
+        image('images/lists/sort-down.png','Pattern_SortDown_%s','','bottom').
+        image('images/lists/trash.png','Pattern_Remove_%s');
     }else{
       $Pattern_Actions= "";	
     }
 
     if($this->acl_is_writeable("gotoMimeApplication") && !preg_match("/freeze/i",$this->FAIstate)){
-      $Apps_Actions 	= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='Apps_SortUp_%s' >&nbsp;
-      <input type='image' src='images/lists/sort-down.png' 	class='center'  name='Apps_SortDown_%s'>&nbsp;
-      <input type='image' src='images/lists/trash.png'	class='center'  name='Apps_Remove_%s'>";
+      $Apps_Actions 	=  
+        image('images/lists/sort-up.png','Apps_SortUp_%s','','top').
+        image('images/lists/sort-down.png','Apps_SortDown_%s','','bottom').
+        image('images/lists/trash.png','Apps_Remove_%s');
     }else{
       $Apps_Actions= "";	
     }
 
     if($this->acl_is_writeable("gotoMimeEmbeddedApplication") && !preg_match("/freeze/i",$this->FAIstate)){
-      $EApps_Actions 	= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='EApps_SortUp_%s' >&nbsp;
-      <input type='image' src='images/lists/sort-down.png' 	class='center'  name='EApps_SortDown_%s'>&nbsp;
-      <input type='image' src='images/lists/trash.png'	class='center'  name='EApps_Remove_%s'>";
+      $EApps_Actions 	= 
+        image('images/lists/sort-up.png','EApps_SortUp_%s','','top').
+        image('images/lists/sort-down.png','EApps_SortDown_%s','','bottom').
+        image('images/lists/trash.png','EApps_Remove_%s');
     }else{
       $EApps_Actions= "";	
     }
