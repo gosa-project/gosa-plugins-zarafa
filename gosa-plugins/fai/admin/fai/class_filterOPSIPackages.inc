@@ -8,6 +8,7 @@ class filterOPSIPackages extends filterLDAP{
     $ui = get_userinfo();
     $ldap = $config->get_ldap_link();
     $ldap->cd($config->current['BASE']);
+    $entries = array();
 
     // Append opsi stuff ...
     if(class_available('opsi') && $base == get_ou("faiBaseRDN").$config->current['BASE']){
@@ -40,19 +41,34 @@ class filterOPSIPackages extends filterLDAP{
           }
         }
       }
-      $cn_filter = "";
-      if(preg_match("/^.*cn=([^)]*).*/",$filter)){
-        $cn_filter = trim(preg_replace("/^.*cn=([^)]*).*/","\\1",$filter),"*");
+
+      // Parse filter string 
+      list($type,$filter) = preg_split("/;/",$filter);
+      $types = preg_split("/,/", $type);
+
+      // Remove automatically added '*' from filter 
+      $filter= trim(preg_replace("/\*/",'', $filter));
+      if(empty($filter)){
+        $filter = ".*";
+      }else{
+        $filter = preg_quote($filter,'/');
       }
 
+
+      // Build up ldap like object list.
       foreach($objects as $name => $data)
       {
         $data = array_pop($data);
-        if(!empty($cn_filter) && !preg_match("/".preg_quote($cn_filter,'/')."/",  $data['cn'])){
+
+        // Display only requested object types
+        if(!in_array($data['type'], $types)) continue;
+
+        // Filter out those entries that doesn't match the filter.
+        if(!preg_match("/".$filter."/i",  $data['cn'])){
           continue;
         }
-        $item =array();
 
+        $item =array();
         $item['objectClass']  = array('count' => 2, $data['type'],"FAKE_OC_OPSI");
         $item[] = 'objectClass';
         $item['cn']  = $data['cn'];
@@ -65,7 +81,6 @@ class filterOPSIPackages extends filterLDAP{
         $item[] = 'TYPES';
         $item['count'] = '5';
         $entries[] = $item;
-
       }
     }
     return($entries);

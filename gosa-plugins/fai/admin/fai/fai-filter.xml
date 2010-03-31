@@ -17,23 +17,11 @@
     <label>Default filter</label>
     <query>
       <backend>FAI</backend>
-      <filter>(&amp;
-                (|  
-                  (objectClass=FAIprofile)
-                  (objectClass=FAIhook)
-                  (objectClass=FAItemplate)
-                  (objectClass=FAIscript)
-                  (objectClass=FAIvariable)
-                  (objectClass=FAIpackageList)
-                  (objectClass=FAIpartitionTable)
-                )
-                (cn=$)
-              )
-      </filter>
+      <filter>(&amp;(|(objectClass=FAIprofile)(objectClass=FAIhook)(objectClass=FAItemplate)(objectClass=FAIscript)(objectClass=FAIvariable)(objectClass=FAIpackageList)(objectClass=FAIpartitionTable))(cn=$))</filter>
     </query>
     <query>
       <backend>OPSIPackages</backend>
-      <filter>cn=$</filter>
+      <filter>opsi_netboot,opsi_local;$</filter>
     </query>
     <autocomplete>
       <attribute>cn</attribute>

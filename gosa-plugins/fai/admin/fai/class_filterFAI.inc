@@ -4,18 +4,24 @@ class filterFAI extends filterLDAP{
 
   static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
-  /* Create a new list of FAI object
+    /* Create a new list of FAI object
      * Generate List of Partitions,Hooks,Scripts,Templates,Profiles ...
      */
     $ObjectTypes = array(
-        "FAIpartitionTable"  => array("OU"=> get_ou('faiPartitionRDN') , "CHKBOX"=>"ShowPartitions"  ,"ACL" => "faiPartitionTable"),
-        "FAIpackageList"     => array("OU"=> get_ou('faiPackageRDN')   , "CHKBOX"=>"ShowPackages"    ,"ACL" => "faiPackage"),
-        "FAIscript"          => array("OU"=> get_ou('faiScriptRDN')    , "CHKBOX"=>"ShowScripts"     ,"ACL" => "faiScript"),
-        "FAIvariable"        => array("OU"=> get_ou('faiVariableRDN')  , "CHKBOX"=>"ShowVariables"   ,"ACL" => "faiVariable"),
-        "FAIhook"            => array("OU"=> get_ou('faiHookRDN')      , "CHKBOX"=>"ShowHooks"       ,"ACL" => "faiHook"),
-        "FAIprofile"         => array("OU"=> get_ou('faiProfileRDN')   , "CHKBOX"=>"ShowProfiles"    ,"ACL" => "faiProfile"),
-        "FAItemplate"        => array("OU"=> get_ou('faiTemplateRDN')  , "CHKBOX"=>"ShowTemplates"   ,"ACL" => "faiTemplate"));
-
+        "FAIpartitionTable"  => array("OU"=> get_ou('faiPartitionRDN') , "CHKBOX"=>"ShowPartitions"  ,
+          "ACL" => "faiPartitionTable"),
+        "FAIpackageList"     => array("OU"=> get_ou('faiPackageRDN')   , "CHKBOX"=>"ShowPackages"    ,
+          "ACL" => "faiPackage"),
+        "FAIscript"          => array("OU"=> get_ou('faiScriptRDN')    , "CHKBOX"=>"ShowScripts"     ,
+          "ACL" => "faiScript"),
+        "FAIvariable"        => array("OU"=> get_ou('faiVariableRDN')  , "CHKBOX"=>"ShowVariables"   ,
+          "ACL" => "faiVariable"),
+        "FAIhook"            => array("OU"=> get_ou('faiHookRDN')      , "CHKBOX"=>"ShowHooks"       ,
+          "ACL" => "faiHook"),
+        "FAIprofile"         => array("OU"=> get_ou('faiProfileRDN')   , "CHKBOX"=>"ShowProfiles"    ,
+          "ACL" => "faiProfile"),
+        "FAItemplate"        => array("OU"=> get_ou('faiTemplateRDN')  , "CHKBOX"=>"ShowTemplates"   ,
+          "ACL" => "faiTemplate"));
 
 
     global $config;
@@ -23,7 +29,7 @@ class filterFAI extends filterLDAP{
     $ui = get_userinfo();
     $ldap = $config->get_ldap_link();
     $ldap->cd($config->current['BASE']);
-
+   
     $result = array();
     foreach($tmp as $entry){
 
