@@ -83,6 +83,7 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
+      <objectclass>FAKE_OC_branch</objectclass>
       <label>Remove</label>
     </action>
 

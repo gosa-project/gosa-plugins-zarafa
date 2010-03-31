@@ -20,11 +20,10 @@
     <tag>default</tag>
     <label>Default filter</label>
     <query>
-      <backend>LDAP</backend>
+      <backend>APPLICATIONS</backend>
       <filter>(&amp;(objectClass=gosaApplication)(|(cn=$)(description=$)))</filter>
     </query>
     <autocomplete>
-      <backend>LDAP</backend>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>

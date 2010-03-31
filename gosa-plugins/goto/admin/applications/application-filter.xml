@@ -17,7 +17,7 @@
     <tag>default</tag>
     <label>Default filter</label>
     <query>
-      <backend>LDAP</backend>
+      <backend>APPLICATIONS</backend>
       <filter>(&amp;(objectClass=gosaApplication)(cn=$))</filter>
     </query>
     <autocomplete>

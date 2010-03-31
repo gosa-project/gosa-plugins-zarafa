@@ -128,6 +128,7 @@
       <type>entry</type>
       <image>images/lists/trash.png</image>
       <acl>application/application[d]</acl>
+      <objectclass>FAKE_OC_branch</objectclass>
       <label>Remove application</label>
     </action>
 
