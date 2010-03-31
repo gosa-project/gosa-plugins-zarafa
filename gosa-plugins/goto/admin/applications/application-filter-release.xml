@@ -9,6 +9,7 @@
     <attribute>objectClass</attribute>
     <attribute>cn</attribute>
     <attribute>description</attribute>
+    <attribute>FAIstate</attribute>
   
     <scope>auto</scope>
     <default>default</default>

@@ -86,6 +86,41 @@ class applicationManagement extends management
   }
 
 
+  /*! \brief   Someone wants to remove some object(s)
+   *            ask for a confirmation now.
+   */
+  function removeEntryRequested($action="",$target=array(),$all=array(), 
+      $altTabClass ="", $altTabType = "",             $altAclCategory="")
+  {
+    // Close dialogs and remove locks for currently handled dns
+    $this->cancelEdit();
+
+    // Do not allow to remove objects with state freeezed
+    $errors = $disallowed = array();
+    $headpage = $this->getHeadpage();
+    foreach($target as $dn){
+  
+      $obj = $headpage->getEntry($dn);
+      $acl  = $this->ui->get_permissions($obj['dn'],"application/application");
+      if(!preg_match("/d/",$acl)){
+        $disallowed[] = $obj['dn'];
+      }elseif(isset($obj['FAIstate']) && preg_match('/freeze/i', $obj['FAIstate'][0])){
+        $errors[] = $obj['dn'];
+      }else{
+        $this->dns[] = $obj['dn'];
+      }
+    }
+    if(count($errors)){
+      msg_dialog::display(_("Branch locked"),
+          sprintf(_("The following entries are locked, you can't remove them %s."),msgPool::buildList($errors)),         INFO_DIALOG);
+    }
+    if(count($disallowed)){
+      msg_dialog::display(_("Permission error"), msgPool::permDelete($disallowed), ERROR_DIALOG);
+    }
+    return(management::removeEntryRequested($action, $this->dns));
+  }
+
+
   /*! \brief   Overridden render method of class mangement.
    *            this allows us to add a release selection box.
    */
