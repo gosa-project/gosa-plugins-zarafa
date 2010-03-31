@@ -3,8 +3,8 @@
 #
 ### BEGIN INIT INFO
 # Provides:          gosa-si
-# Required-Start:    $network $named $syslog $time
-# Required-Stop:     $network $named $syslog $time
+# Required-Start:    $network $remote_fs $named $syslog $time
+# Required-Stop:     $network $remote_fs $named $syslog $time
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: GOsa message server/client component

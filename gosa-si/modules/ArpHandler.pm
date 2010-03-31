@@ -15,7 +15,7 @@ use Switch;
 use Data::Dumper;
 use Socket;
 
-@ISA = ("Exporter");
+our @ISA = ("Exporter");
 
 # Don't start if some of the modules are missing
 my $start_service=1;

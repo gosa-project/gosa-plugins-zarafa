@@ -1314,7 +1314,6 @@ foreach my $log_line (@$result) {
 $gotoHardwareChecksum= &generate_hw_digest();
 daemon_log("INFO: gotoHardwareChecksum detected: $gotoHardwareChecksum", 1);
 
-
 # create socket for incoming xml messages
 POE::Component::Server::TCP->new(
     Alias => 'gosa-si-client',

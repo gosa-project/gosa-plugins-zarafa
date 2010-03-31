@@ -17,7 +17,8 @@ use Time::HiRes qw( usleep);
 use MIME::Base64;
 use Data::Dumper;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events", 
     "get_login_usr_for_client",
@@ -50,7 +51,8 @@ my @events = (
   "trigger_activate_new",
     "get_hosts_with_module",    
     );
-@EXPORT = @events;
+    
+our @EXPORT = @events;
 
 BEGIN {}
 

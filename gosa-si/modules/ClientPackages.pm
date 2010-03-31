@@ -16,7 +16,7 @@ use Net::LDAP::Util;
 use Socket;
 use Net::hostent;
 
-@ISA = ("Exporter");
+our @ISA = ("Exporter");
 
 my $event_dir = "/usr/lib/gosa-si/server/ClientPackages";
 use lib "/usr/lib/gosa-si/server/ClientPackages";

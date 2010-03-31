@@ -13,7 +13,8 @@ use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use MIME::Base64;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "confirm_usr_msg",
     "PROGRESS",
@@ -29,7 +30,7 @@ my @events = (
     "CURRENTLY_LOGGED_IN",
     "save_fai_log",
     );
-@EXPORT = @events;
+our @EXPORT = @events;
 
 BEGIN {}
 

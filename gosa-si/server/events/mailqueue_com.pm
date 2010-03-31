@@ -31,13 +31,15 @@ use Data::Dumper;
 use Time::HiRes qw( usleep);
 use MIME::Base64;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "mailqueue_query",
     "mailqueue_header",
 );
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 BEGIN {}
 

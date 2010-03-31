@@ -10,7 +10,8 @@ use Data::Dumper;
 use File::Spec;
 use MIME::Base64;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "show_log_by_mac",
@@ -21,7 +22,8 @@ my @events = (
     "get_recent_log_by_mac",
     "delete_log_by_date_and_mac",
     );
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 BEGIN {}
 

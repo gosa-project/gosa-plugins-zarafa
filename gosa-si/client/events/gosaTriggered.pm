@@ -36,7 +36,8 @@ use GOSA::GosaSupportDaemon;
 use MIME::Base64;
 use File::Temp qw/ tempfile/;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "usr_msg",
@@ -49,7 +50,8 @@ my @events = (
     "trigger_action_instant_update",
     "trigger_goto_settings_reload",
     );
-@EXPORT = @events;
+    
+our @EXPORT = @events;
 
 BEGIN {}
 

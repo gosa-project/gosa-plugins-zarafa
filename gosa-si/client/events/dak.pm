@@ -11,14 +11,16 @@ use Exporter;
 use GOSA::GosaSupportDaemon;
 use MIME::Base64;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events", 
     "get_dak_keyring",
     "import_dak_key",
     "remove_dak_key",
     );
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 BEGIN {}
 

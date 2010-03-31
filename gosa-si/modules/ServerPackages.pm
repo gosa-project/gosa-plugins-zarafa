@@ -11,7 +11,7 @@ use Exporter;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 
-@ISA = ("Exporter");
+our @ISA = ("Exporter");
 
 my $event_dir = "/usr/lib/gosa-si/server/ServerPackages";
 use lib "/usr/lib/gosa-si/server/ServerPackages";

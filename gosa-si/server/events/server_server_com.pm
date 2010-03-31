@@ -9,7 +9,8 @@ use GOSA::GosaSupportDaemon;
 use Time::HiRes qw( usleep);
 use Socket;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     'information_sharing',
     'new_server',
@@ -19,7 +20,8 @@ my @events = (
     'foreign_job_updates',
     'confirm_usr_msg',
     );
-@EXPORT = @events;
+    
+our @EXPORT = @events;
 
 BEGIN {}
 

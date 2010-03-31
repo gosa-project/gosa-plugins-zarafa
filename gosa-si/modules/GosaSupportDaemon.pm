@@ -15,7 +15,7 @@ use Net::DNS;
 use Net::ARP;
 use DateTime;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
 
 my @functions = (
     "create_passwd",
@@ -53,8 +53,9 @@ my @functions = (
     "check_opsi_res",
     "calc_timestamp",
     "opsi_callobj2string",
-    ); 
-@EXPORT = @functions;
+    );
+    
+our @EXPORT = @functions;
 
 my $op_hash = {
     'eq' => '=',

@@ -9,7 +9,8 @@ use GOSA::GosaSupportDaemon;
 use Authen::Krb5;
 use Authen::Krb5::Admin qw(:constants);
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "krb5_list_principals",  
@@ -24,7 +25,8 @@ my @events = (
     "krb5_del_policy",
     "krb5_set_password",
     );
-@EXPORT = @events;
+    
+our @EXPORT = @events;
 
 BEGIN {}
 

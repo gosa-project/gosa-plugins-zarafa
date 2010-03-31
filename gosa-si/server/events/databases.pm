@@ -7,7 +7,8 @@ use Exporter;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events", 
     "query_jobdb",
@@ -22,7 +23,8 @@ my @events = (
     "query_fai_release",
     "count_fai_release",
     );
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 BEGIN {}
 

@@ -10,7 +10,8 @@ use GOSA::GosaSupportDaemon;
 BEGIN {}
 END {}
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "get_terminal_server",
@@ -18,7 +19,8 @@ my @events = (
     "report_load",
     "set_terminal_server",
     );
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 my $ts_load_file;
 my $waiting_for_ts_info;

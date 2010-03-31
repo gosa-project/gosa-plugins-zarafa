@@ -7,7 +7,8 @@ use Fcntl;
 use GOSA::GosaSupportDaemon;
 use File::Basename;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
   "get_events",
   "registered",
@@ -21,7 +22,8 @@ my @events = (
   "ping",
   "import_events",    # no implementations
   );
-@EXPORT = @events;
+  
+our @EXPORT = @events;
 
 my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath, $ldap_config_exit_hook);
 

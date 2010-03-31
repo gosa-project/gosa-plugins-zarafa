@@ -34,7 +34,8 @@ use Exporter;
 use GOSA::GosaSupportDaemon;
 use MIME::Base64;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "mailqueue_query",
@@ -44,7 +45,8 @@ my @events = (
     "mailqueue_del",
     "mailqueue_header",
     );
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 BEGIN {}
 

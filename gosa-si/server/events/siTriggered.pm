@@ -8,7 +8,8 @@ use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Socket;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "got_ping",
     "detected_hardware",
@@ -16,7 +17,8 @@ my @events = (
     "reload_ldap_config",
     "get_terminal_server",
     );
-@EXPORT = @events;
+    
+our @EXPORT = @events;
 
 BEGIN {}
 

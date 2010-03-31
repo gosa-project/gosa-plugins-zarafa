@@ -2,6 +2,7 @@ package GOSA::DBsqlite;
 
 use strict;
 use warnings;
+
 use Carp;
 use DBI;
 use GOSA::GosaSupportDaemon;

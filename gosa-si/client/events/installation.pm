@@ -6,9 +6,11 @@ use warnings;
 use Exporter;
 use Fcntl;
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = qw(get_events set_activated_for_installation);
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 BEGIN {}
 

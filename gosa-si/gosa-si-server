@@ -467,12 +467,12 @@ sub check_pid {
                 }
             }
         }
-        close( LOCK_FILE );
+        close( $LOCK_FILE );
         unlink( $pid_file );
     }
 
     # create a syslog msg if it is not to possible to open PID file
-    if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
+    if (not sysopen(my $LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
         my($msg) = "Couldn't obtain lockfile '$pid_file' ";
         if (open(my $LOCK_FILE, '<', $pid_file)
                 && ($pid = <$LOCK_FILE>))
@@ -2879,7 +2879,6 @@ sub create_sources_list {
 		&main::daemon_log("$session_id DEBUG: remove an old version of '$result'", 7); 
 	}
 
-	my $fh;
 	open(my $fh, ">", "$result");
 	if (not defined $fh) {
 		&main::daemon_log("$session_id DEBUG: cannot open '$result' for writing", 7); 
@@ -2970,7 +2969,7 @@ sub create_packages_list_db {
 	};
 
 	# Read lines
-	while ($line = <CONFIG>){
+	while ($line = <$CONFIG>){
 		# Unify
 		chop($line);
 		$line =~ s/^\s+//;
@@ -3185,7 +3184,6 @@ sub parse_package {
     my ($path, $dist, $srv_path, $session_id)= @_;
     if (not defined $session_id) { $session_id = 0;}
     my ($package, $version, $section, $description);
-    my $PACKAGES;
     my $timestamp = &get_time();
 
     if(not stat("$path.in")) {

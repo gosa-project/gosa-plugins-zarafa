@@ -14,7 +14,8 @@ use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use XML::Quote qw(:all);
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "opsi_install_client",
@@ -51,7 +52,8 @@ my @events = (
     "opsi_unboundHostFromLicense",
     "opsi_test",
    );
-@EXPORT = @events;
+
+our @EXPORT = @events;
 
 
 BEGIN {}
