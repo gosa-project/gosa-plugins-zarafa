@@ -37,6 +37,7 @@
 {/render}
      </td>
     </tr>
+{if !$isReleaseApplikation}
     <tr><td colspan=2><div style="height:15px;"></div></td></tr>
     <tr>
       <td><LABEL for="base">{t}Base{/t}{$must}</LABEL></td>
@@ -55,6 +56,7 @@
 {/if}
       </td>
      </tr>
+{/if}
    </table>
   </td>
   <td class='left-border'>

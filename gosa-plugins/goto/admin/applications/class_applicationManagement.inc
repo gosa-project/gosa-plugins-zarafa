@@ -58,7 +58,7 @@ class applicationManagement extends management
     }
 
     // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
+    if (0 && session::global_is_set(get_class($this)."_filter")){
       $filter= session::global_get(get_class($this)."_filter");
     } else {
       $filter = new filter(get_template_path($filter_xml, true));
@@ -95,34 +95,19 @@ class applicationManagement extends management
     $filter = $this->getFilter();
     $headpage = $this->getHeadpage();
 
-    $this->releaseSelector->update();
-    $this->app_release = $this->releaseSelector->getBase();
+    // Display release selector
+    if($this->IsReleaseManagementActivated()){
+      $this->releaseSelector->update();
+      $this->app_release = $this->releaseSelector->getBase();
+      $headpage->setBase($this->app_release);
+      $smarty->assign("RELEASE", $this->releaseSelector->render());
+    }
 
-    $headpage->setBase($this->app_release);
     $headpage->update();
-    $smarty->assign("RELEASE", $this->releaseSelector->render());
     $display = $headpage->render();
     return($this->getHeader().$display);
   }
 
-
-  function getReleaseList($base = "", $prefix ="")
-  {
-    $list = array();
-    if(empty($base)){
-      $base = get_ou('applicationRDN').$this->config->current['BASE'];
-      $list[$base] = "/";
-    }
-
-    $ldap = $this->config->get_ldap_link();
-    $ldap->ls("(objectClass=FAIbranch)",$base,array("ou","FAIstate"));
-    while($release = $ldap->fetch()){
-      $list[$release['dn']] = $prefix.$release['ou'][0];
-      $list = array_merge($list,$this->getReleaseList($release['dn'],$prefix."&nbsp; "));
-    }
-    return($list);
-  }
-  
 
   function IsReleaseManagementActivated()
   {
