@@ -5,7 +5,7 @@
     <category>mimetypes</category>
     <initial>true</initial>
     <default>default</default>
-    <scope>one</scope>
+    <scope>auto</scope>
     <attribute>dn</attribute>
     <attribute>objectClass</attribute>
     <attribute>cn</attribute>
@@ -16,7 +16,7 @@
     <tag>default</tag>
     <label>Default filter</label>
     <query>
-      <backend>LDAP</backend>
+      <backend>MIMETYPES</backend>
       <filter>(&amp;(objectClass=gotoMimeType)(cn=$))</filter>
     </query>
     <autocomplete>
