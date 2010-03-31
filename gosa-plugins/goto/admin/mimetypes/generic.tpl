@@ -63,7 +63,7 @@
      </td>
      <td>&nbsp;
       <br>
-      <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+      <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
       {render acl=$gotoMimeIconACL}
        <input name="picture_file" type="file" size="20" maxlength="255" 							
         accept="image/*.png" id="picture_file">
