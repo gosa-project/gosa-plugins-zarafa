@@ -121,6 +121,25 @@ class applicationManagement extends management
   }
 
 
+    /*! \brief  This method opens an existing object or a list of existing objects to be edited.
+   *
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    management::editEntry($action,$target,$all,$altTabClass,$altTabType,$altAclCategory);
+    if($this->tabObject){
+      if(isset($this->tabObject->by_object['application']->attrs['FAIstate'][0])){
+        $state = $this->tabObject->by_object['application']->attrs['FAIstate'][0];
+        $this->tabObject->setReadOnly(preg_match("/freeze/i", $state));
+      }
+    }
+  }
+
+
   /*! \brief   Overridden render method of class mangement.
    *            this allows us to add a release selection box.
    */
