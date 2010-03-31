@@ -1,18 +1,13 @@
 
+<h3>{t}Generic{/t}</h3>
+
 <table style="width:100%" summary="{t}Mimetype generic{/t}">
  <tr>
-  <td colspan="2">
-   <h3>{t}Generic{/t}
-   </h3>
-  </td>
- </tr>
- <tr>
   <td style='width:50%; '>
+ 
    <table summary="{t}Mimetype settings{/t}">
     <tr>
-     <td>{t}Mime type{/t}
-      {$must}
-     </td>
+     <td>{t}Mime type{/t}{$must}</td>
      <td>
       {render acl=$cnACL}
        <input type="text" name='cn' value="{$cn}" title='{t}Please enter a name for the mime type here{/t}'>
@@ -20,8 +15,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Mime group{/t}
-     </td>
+     <td>{t}Mime group{/t}</td>
      <td>
       {render acl=$gotoMimeGroupACL}
        <select name='gotoMimeGroup' title='{t}Categorize this mime type{/t}' size=1>
@@ -31,8 +25,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Description{/t}
-     </td>
+     <td>{t}Description{/t}</td>
      <td>
       {render acl=$descriptionACL}
        <input type="text" name='description' value="{$description}" title='{t}Please specify a description{/t}'>
@@ -42,29 +35,20 @@
     
     {if !$isReleaseMimeType}
      <tr>
-      <td><LABEL for="base">{t}Base{/t}
-       {$must}</LABEL>
-      </td>
+      <td><br><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
       <td>
-       {render acl=$baseACL}
-        <select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}">
-         {html_options options=$bases selected=$base_select}
-        </select>
-       {/render}
-       
-       {if !$isReleaseMimeType}
-        {render acl=$baseACL disable_picture='images/lists/folder_grey.png'}
-         {image path="images/lists/folder.png" action="chooseBase" title="{t}Select a base{/t}"}
-        {/render}
-        
-       {/if}
+       <br>
+{render acl=$baseACL}
+           {$base}
+{/render}
       </td>
      </tr>
-     
     {/if}
    </table>
+
   </td>
   <td class='left-border'>
+
    <table summary="{t}Picture settings{/t}">
     <tr>
      <td><LABEL for="picture_file">{t}Icon{/t}</LABEL>
@@ -181,11 +165,11 @@
     </select>
    {/render}
    {render acl=$gotoMimeEmbeddedApplicationACL}
-    <input type='text'	 name='NewEmbeddedApplication'	  value='' 				title='{t}Enter an application name here{/t}'>
+    <input type='text' name='NewEmbeddedApplication' value=''	title='{t}Enter an application name here{/t}'>
    {/render}
    {render acl=$gotoMimeEmbeddedApplicationACL}
-    <button type='submit' name='AddNewEmbeddedApplication'>
-    {msgPool type=addButton}</button>title='{t}Add application{/t}'>
+    <button type='submit' name='AddNewEmbeddedApplication' 
+      title='{t}Add application{/t}'>{msgPool type=addButton}</button>
    {/render}
   </td>
  </tr>

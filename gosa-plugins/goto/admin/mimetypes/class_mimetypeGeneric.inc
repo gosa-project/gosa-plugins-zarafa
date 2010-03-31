@@ -53,6 +53,8 @@ class mimetype extends plugin
   var $orig_dn			= "";
   var $orig_base	  = "";
 
+  var $baseSelector;
+
   function mimetype(&$config,$dn= NULL)
   {
     plugin::plugin ($config, $dn);
@@ -143,6 +145,13 @@ class mimetype extends plugin
     }
     session::set('binary',$this->iconData);
     session::set('binarytype',"image/jpeg");
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
+
     $this->orig_base = $this->base;
   }
 
@@ -151,6 +160,9 @@ class mimetype extends plugin
   {
     plugin::execute();
     $smarty = get_smarty();
+
+    /* Assign base ACL */
+    $smarty->assign("base", $this->baseSelector->render());
 
     if(!$this->view_logged){
       $this->view_logged =TRUE;
@@ -366,6 +378,17 @@ class mimetype extends plugin
 
       }
 
+      /* Refresh base */
+      if ($this->acl_is_moveable($this->base)){
+        if (!$this->baseSelector->update()) {
+          msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+        }
+        if ($this->base != $this->baseSelector->getBase()) {
+          $this->base= $this->baseSelector->getBase();
+          $this->is_modified= TRUE;
+        }
+      }
+
       /* Save radio buttons */
       if($this->acl_is_writeable("gotoMimeLeftClickAction")){
         if(isset($_POST['gotoMimeLeftClickAction_IE'])){
@@ -502,6 +525,11 @@ class mimetype extends plugin
     }
     if(!count($this->use_gotoMimeFilePattern)){
       $message[] = msgPool::required(_("File pattern"));
+    }
+
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();;
     }
 
     /* Check if there is already a mime type with this cn */
