@@ -206,7 +206,6 @@ class mimetype extends plugin
 
             /* Get entry id */
             $s_entry  	= preg_replace($regex,"",$name);
-            $s_entry 	= preg_replace("/_[xy]$/","",$s_entry); 
 
             /* Execute a command with the given attribute and entry 
                e.g. $this->gotoMimeFilePattern = $this->ArrayUp(3,$this->gotoMimeFilePattern) */
