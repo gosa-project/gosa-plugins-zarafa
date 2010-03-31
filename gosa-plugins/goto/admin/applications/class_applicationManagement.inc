@@ -27,6 +27,7 @@ class applicationManagement extends management
   var $plIcon  = "plugins/goto/images/application.png";
 
   var $app_release = ""; // The currently selected release while in release management mode!
+  var $app_base = ""; // The currently selected release while in release management mode!
 
   // Tab definition 
   protected $tabClass = "apptabs";
@@ -35,16 +36,21 @@ class applicationManagement extends management
   protected $aclPlugin   = "application";
   protected $objectName   = "application";
 
+  var $releaseSelector = NULL;
+
   function __construct($config,$ui)
   {
     $this->config = $config;
     $this->ui = $ui;
+    $this->app_base    = get_ou('applicationRDN').$this->config->current['BASE'];
+    $this->app_release = get_ou('applicationRDN').$this->config->current['BASE'];
 
     if($this->IsReleaseManagementActivated()){
-      $this->app_release = get_ou('applicationRDN').$this->config->current['BASE'];
       $filter_xml = "application-filter-release.xml";
       $list_xml = "application-list-release.xml";
       $this->storagePoints= array("");
+      $releases = faiManagement::getReleaseStates($this->config,$this->app_base);
+      $this->releaseSelector = new releaseSelector($releases, $this->app_release, $this->app_release);
     }else{
       $filter_xml = "application-filter.xml";
       $list_xml = "application-list.xml";
@@ -79,23 +85,26 @@ class applicationManagement extends management
     $this->registerAction("edit_mailapplication","editEntry");
   }
 
+
+  /*! \brief   Overridden render method of class mangement.
+   *            this allows us to add a release selection box.
+   */
   function renderList()
   {
+    $smarty = get_smarty();
     $filter = $this->getFilter();
     $headpage = $this->getHeadpage();
-    if($this->IsReleaseManagementActivated()){    
-      $filter->setComboBoxOptions("RELEASE",$this->getReleaseList());
 
-      if(isset($_POST['RELEASE'])){
-        $this->app_release = get_post('RELEASE');
-      }
-      $headpage->setBase($this->app_release);
-    }
+    $this->releaseSelector->update();
+    $this->app_release = $this->releaseSelector->getBase();
 
+    $headpage->setBase($this->app_release);
     $headpage->update();
+    $smarty->assign("RELEASE", $this->releaseSelector->render());
     $display = $headpage->render();
     return($this->getHeader().$display);
   }
+
 
   function getReleaseList($base = "", $prefix ="")
   {

@@ -3,46 +3,31 @@
 <filterdef>
   <definition>
     <category>application</category>
-    <template>application-filter-release.tpl</template>
     <initial>true</initial>
+
+    <attribute>dn</attribute>
+    <attribute>objectClass</attribute>
+    <attribute>cn</attribute>
+    <attribute>description</attribute>
+  
+    <scope>auto</scope>
+    <default>default</default>
+
   </definition>
 
   <search>
+    <tag>default</tag>
+    <label>Default filter</label>
     <query>
       <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gosaApplication)$NAME)</filter>
-      <attribute>dn</attribute>
-      <attribute>objectClass</attribute>
-      <attribute>cn</attribute>
-      <attribute>description</attribute>
+      <filter>(&amp;(objectClass=gosaApplication)(|(cn=$)(description=$)))</filter>
     </query>
-    <scope>auto</scope>
-  </search>
-
-  <element>
-    <tag>RELEASE</tag>
-    <type>combobox</type>
-    <value>Loading.</value>
-    <value>Loading..</value>
-    <value>Loading...</value>
-  </element>
-
-  <element>
-    <type>textfield</type>
-    <tag>NAME</tag>
-    <size>20</size>
-    <maxlength>60</maxlength>
-    <default></default>
-    <unset></unset>
-    <set>(|(cn=*$*)(description=*$*))</set>
-    <alphabet>true</alphabet>
     <autocomplete>
       <backend>LDAP</backend>
-      <filter>(&amp;(objectClass=gosaApplication)(|(cn=*$NAME*)(description=*$NAME*)))</filter>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
-  </element>
+  </search>
 
 </filterdef>
