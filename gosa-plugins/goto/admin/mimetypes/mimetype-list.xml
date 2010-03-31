@@ -84,6 +84,7 @@
       <type>entry</type>
       <image>images/lists/trash.png</image>
       <label>Remove</label>
+      <objectclass>FAKE_OC_branch</objectclass>
     </action>
 
     <action>
@@ -127,7 +128,7 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>mimetype/mimetype[d]</acl>
+      <acl>mimetypes/mimetype[d]</acl>
       <label>Remove mimetype</label>
     </action>
 

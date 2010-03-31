@@ -10,6 +10,7 @@
     <attribute>objectClass</attribute>
     <attribute>cn</attribute>
     <attribute>description</attribute>
+    <attribute>FAIstate</attribute>
   </definition>
 
   <search>

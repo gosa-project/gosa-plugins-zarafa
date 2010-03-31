@@ -96,6 +96,7 @@
 
     <action>
       <type>copypaste</type>
+      <cut>false</cut>
     </action>
 
     <action>
@@ -109,6 +110,7 @@
     <action>
       <name>cp</name>
       <type>copypaste</type>
+      <cut>false</cut>
     </action>
 
     <action>
@@ -127,8 +129,9 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>mimetype/mimetype[d]</acl>
+      <acl>mimetypes/mimetype[d]</acl>
       <label>Remove mimetype</label>
+      <objectclass>FAKE_OC_branch</objectclass>
     </action>
 
   </actiontriggers>
