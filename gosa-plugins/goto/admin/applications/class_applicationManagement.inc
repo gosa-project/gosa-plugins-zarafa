@@ -58,7 +58,7 @@ class applicationManagement extends management
     }
 
     // Build filter
-    if (0 && session::global_is_set(get_class($this)."_filter")){
+    if (session::global_is_set(get_class($this)."_filter")){
       $filter= session::global_get(get_class($this)."_filter");
     } else {
       $filter = new filter(get_template_path($filter_xml, true));
@@ -99,7 +99,7 @@ class applicationManagement extends management
     $errors = $disallowed = array();
     $headpage = $this->getHeadpage();
     foreach($target as $dn){
-  
+
       $obj = $headpage->getEntry($dn);
       $acl  = $this->ui->get_permissions($obj['dn'],"application/application");
       if(!preg_match("/d/",$acl)){
@@ -112,7 +112,8 @@ class applicationManagement extends management
     }
     if(count($errors)){
       msg_dialog::display(_("Branch locked"),
-          sprintf(_("The following entries are locked, you can't remove them %s."),msgPool::buildList($errors)),         INFO_DIALOG);
+          sprintf(_("The following entries are locked, you can't remove them %s."),
+            msgPool::buildList($errors)),INFO_DIALOG);
     }
     if(count($disallowed)){
       msg_dialog::display(_("Permission error"), msgPool::permDelete($disallowed), ERROR_DIALOG);
@@ -121,7 +122,7 @@ class applicationManagement extends management
   }
 
 
-    /*! \brief  This method opens an existing object or a list of existing objects to be edited.
+  /*! \brief  This method opens an existing object or a list of existing objects to be edited.
    *
    *
    *  @param  String  'action'  The name of the action which was the used as trigger.

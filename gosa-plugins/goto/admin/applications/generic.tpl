@@ -38,24 +38,15 @@
      </td>
     </tr>
 {if !$isReleaseApplikation}
-    <tr><td colspan=2><div style="height:15px;"></div></td></tr>
-    <tr>
-      <td><LABEL for="base">{t}Base{/t}{$must}</LABEL></td>
-      <td>
+   <tr>
+    <td><br><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
+    <td>
+     <br>
 {render acl=$baseACL}
-       <select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}" 
-        {if $isReleaseApplikation} disabled {/if}>
-        {html_options options=$bases selected=$base_select}
-       </select>
+           {$base}
 {/render}
-{if !$isReleaseApplikation}
-{render acl=$baseACL disable_picture='images/lists/folder_grey.png'}
-      {image path="images/lists/folder.png" action="chooseBase" title="{t}Select a base{/t}"}
-
-{/render}
-{/if}
-      </td>
-     </tr>
+     </td>
+    </tr>
 {/if}
    </table>
   </td>

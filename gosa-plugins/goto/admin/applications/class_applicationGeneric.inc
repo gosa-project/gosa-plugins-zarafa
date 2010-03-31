@@ -28,6 +28,8 @@ class application extends plugin
   var $objectclasses= array("top", "gosaApplication");
   var $FAIstate ="";
 
+  var $baseSelector;
+
   function application (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
@@ -63,6 +65,12 @@ class application extends plugin
     $this->orig_cn = $this->cn;
     $this->orig_base = $this->base;
     $this->gosaApplicationFlags = preg_replace("/[^GDLMO]/","",$this->gosaApplicationFlags);
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
   }
 
 
@@ -114,6 +122,9 @@ class application extends plugin
     }
 
     $smarty= get_smarty();
+
+    /* Assign base ACL */
+    $smarty->assign("base", $this->baseSelector->render());
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
@@ -274,6 +285,20 @@ class application extends plugin
       plugin::save_object();
       $this->base = $base_tmp;
 
+      /* Refresh base */
+      if(!$this->is_release()){
+        if ($this->acl_is_moveable($this->base)){
+          if (!$this->baseSelector->update()) {
+            msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+          }
+          if ($this->base != $this->baseSelector->getBase()) {
+            $this->base= $this->baseSelector->getBase();
+            $this->is_modified= TRUE;
+          }
+        }
+      }
+
+
       /* Save attributes */
       parent::save_object();
 
@@ -360,15 +385,6 @@ class application extends plugin
         /* Activate new picture */
         $this->set_picture($_FILES['picture_file']['tmp_name']);
       }	
-
-      if(!$this->is_release()){
-        $tmp = $this->get_allowed_bases();
-        if(isset($_POST['base'])){
-          if(isset($tmp[$_POST['base']])){
-            $this->base= $_POST['base'];
-          }
-        }
-      }
     }
   }
 
@@ -381,6 +397,11 @@ class application extends plugin
 
     if(!preg_match("#^/#",$this->gosaApplicationExecute)){
       $message[]=msgPool::invalid(_("Execute path"),"","","/some/path");
+    }
+
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();;
     }
 
     /* Permissions for that base? */
