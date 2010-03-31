@@ -56,9 +56,6 @@ binary-indep: install
 	
 	dh_install --sourcedir=debian/tmp
 	
-	install -D -m 644 debian/gosa-si-server.lintian-overrides debian/gosa-si-server/usr/share/lintian/overrides/gosa-si-server
-	install -D -m 644 debian/gosa-si-client.lintian-overrides debian/gosa-si-client/usr/share/lintian/overrides/gosa-si-client
-
 	dh_installdocs 
 	dh_installcron
 	dh_installexamples

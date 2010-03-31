@@ -188,7 +188,7 @@ the user is marked to be no longer logged in or the host is no longer running.
 
 =item address = 
 
-Comma seperated list of GOsa-si-servers (1.2.3.4:20081,9.8.7.6:123) in network where this SI-server should register. These given SI-servers extend the list of SI-servers found in DNS. 
+Comma separated list of GOsa-si-servers (1.2.3.4:20081,9.8.7.6:123) in network where this SI-server should register. These given SI-servers extend the list of SI-servers found in DNS. 
 
 =item dns-lookup = true
 
@@ -208,7 +208,7 @@ Defines the lifetime in seconds of a GOsa-SI-server key. After expiring the key 
 
 =item job-synchronization-enabled = true
 
-Defines whether job queue informations are be shared with other GOsa-SI-server in network.
+Defines whether job queue information are be shared with other GOsa-SI-server in network.
 
 =item synchronization-loog = 5
 
@@ -237,7 +237,7 @@ Space- or comma-separated list of interfaces on which to start an ARP-Daemon. En
 
 =item enabled = false
 
-Defines wheter Opsi integration is being enabled or not.
+Defines whether Opsi integration is being enabled or not.
 
 =item server = localhost
 
