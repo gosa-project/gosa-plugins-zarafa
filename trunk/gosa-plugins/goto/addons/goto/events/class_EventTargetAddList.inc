@@ -230,7 +230,7 @@ class EventTargetAddList extends MultiSelectWindow
         $_target_list = array_merge($_target_list,
               get_sub_list("(&(cn=".$this->regex.")(objectClass=goServer))",
               "server",get_ou("serverRDN"),$this->selectedBase,
-              array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH));
+              array("cn","objectClass","description","ipHostNumber","macAddress", "FAIclass"),GL_SUBSEARCH));
       }
     }
     if($this->display_workstation){
@@ -395,6 +395,11 @@ class EventTargetAddList extends MultiSelectWindow
           continue;
         }
       }elseif(in_array("gosaGroupOfNames",$obj['objectClass'])){
+        /* Do not show object groups if ip or mac filter is enabled */
+        if($this->filter_iprange || $this->filter_mac_addr) {
+          continue;
+        }
+
         if($this->filter_fai_release) {
           if (isset($obj['FAIclass'])) {
             $fai_release = split(':', $obj['FAIclass'][0]);
