@@ -257,7 +257,8 @@ class faxreport extends plugin
         $query_entries = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') as queuing_time,".
             "status,sender_id,receiver_id,pages FROM faxlog ".
             "WHERE {$userfilter} AND queuing_time <= {$end} AND ".
-            "queuing_time >= {$start} ORDER BY ".$this->fields[$this->sort].
+            "queuing_time >= {$start} ".
+            "ORDER BY ".$this->fields[$this->sort].
             " {$desc } ";
 
 
@@ -355,10 +356,12 @@ class faxreport extends plugin
         mysql_close($link);
 
         $entry_count = count($report_list);
+        if($this->start >=$entry_count) $this->start =0;
 
         /* Generate output */
         $mod= 0;
         $output= "";
+        $report_list = array_slice($report_list, $this->start, $this->range);
         foreach ($report_list as $val){
             $output.= "\n<tr>{$val}</tr>";
         }
