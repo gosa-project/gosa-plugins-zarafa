@@ -142,8 +142,8 @@ class askClassName extends plugin
       $message[] = msgPool::invalid(_("Name"),preg_replace("/ /","_",$this->ClassName),"/[^_]/");
     }
 
-    if($this->objectClass == "FAIscript" && preg_match("/^-/", $this->ClassName)) {
-      $message[] = sprintf(_("The specified classname '%s' is invalid. Scripts must not start with a dash."), $this->ClassName);
+    if(preg_match("/^-/", $this->ClassName)) {
+      $message[] = sprintf(_("The specified classname '%s' is invalid. Classnames must not start with a dash."), $this->ClassName);
 
     }
 

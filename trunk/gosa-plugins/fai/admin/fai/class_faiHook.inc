@@ -435,6 +435,14 @@ class faiHook extends plugin
       }
     }
 
+    if (preg_match("/^-/", $this->cn)) {
+      $message[] = sprintf(_("The specified classname '%s' is invalid. Classnames must not start with a dash."), $this->cn);
+    }
+
+    if($this->cn != preg_replace("/ /","",trim($this->cn))){
+      $message[] = msgPool::invalid(_("Name"),preg_replace("/ /","_",$this->cn),"/[^_]/");
+    }
+
     return ($message);
   }
 

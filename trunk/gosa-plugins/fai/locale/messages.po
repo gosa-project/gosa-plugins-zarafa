@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-17 16:04+0100\n"
+"POT-Creation-Date: 2010-03-29 14:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,11 +60,11 @@ msgstr ""
 #: admin/systems/services/repository/class_servRepository.inc:177
 #: admin/fai/class_faiSummaryTab.inc:343
 #: admin/fai/class_faiPartitionTable.inc:364
-#: admin/fai/class_faiPartitionTable.inc:536 admin/fai/faiPackage.tpl:9
+#: admin/fai/class_faiPartitionTable.inc:541 admin/fai/faiPackage.tpl:9
 #: admin/fai/class_faiPartitionTableEntry.inc:375
 #: admin/fai/class_faiPartitionTableEntry.inc:378
 #: admin/fai/class_faiPartitionTableEntry.inc:474
-#: admin/fai/class_faiTemplate.inc:417 admin/fai/class_faiTemplate.inc:537
+#: admin/fai/class_faiTemplate.inc:417 admin/fai/class_faiTemplate.inc:541
 #: admin/fai/faiVariable.tpl:9 admin/fai/class_askClassName.inc:142
 #: admin/fai/class_askClassName.inc:151 admin/fai/class_askClassName.inc:155
 #: admin/fai/class_faiManagement.inc:614 admin/fai/class_faiManagement.inc:620
@@ -73,20 +73,20 @@ msgstr ""
 #: admin/fai/class_faiScriptEntry.inc:145
 #: admin/fai/class_faiScriptEntry.inc:189 admin/fai/faiVariableEntry.tpl:9
 #: admin/fai/faiScript.tpl:9 admin/fai/class_faiScript.inc:322
-#: admin/fai/class_faiScript.inc:478 admin/fai/class_faiScript.inc:637
+#: admin/fai/class_faiScript.inc:478 admin/fai/class_faiScript.inc:641
 #: admin/fai/faiScriptEntry.tpl:9 admin/fai/class_faiTemplateEntry.inc:207
 #: admin/fai/class_faiTemplateEntry.inc:273 admin/fai/faiTemplate.tpl:9
 #: admin/fai/faiHookEntry.tpl:9 admin/fai/faiHook.tpl:9
-#: admin/fai/class_faiHook.inc:434 admin/fai/class_faiHook.inc:552
+#: admin/fai/class_faiHook.inc:434 admin/fai/class_faiHook.inc:556
 #: admin/fai/class_faiProfile.inc:413 admin/fai/class_faiProfile.inc:423
-#: admin/fai/class_faiProfile.inc:497 admin/fai/class_faiHookEntry.inc:145
+#: admin/fai/class_faiProfile.inc:501 admin/fai/class_faiHookEntry.inc:145
 #: admin/fai/class_faiHookEntry.inc:150 admin/fai/class_faiHookEntry.inc:153
 #: admin/fai/class_faiHookEntry.inc:196 admin/fai/class_faiVariable.inc:296
-#: admin/fai/class_faiVariable.inc:397 admin/fai/class_faiVariableEntry.inc:90
+#: admin/fai/class_faiVariable.inc:401 admin/fai/class_faiVariableEntry.inc:90
 #: admin/fai/class_faiVariableEntry.inc:99
 #: admin/fai/class_faiVariableEntry.inc:102
 #: admin/fai/class_faiVariableEntry.inc:137 admin/fai/class_faiPackage.inc:603
-#: admin/fai/class_faiPackage.inc:776 admin/fai/faiPartitionTable.tpl:9
+#: admin/fai/class_faiPackage.inc:781 admin/fai/faiPartitionTable.tpl:9
 #: admin/fai/faiPartitionTableEntry.tpl:6 admin/fai/faiProfile.tpl:9
 msgid "Name"
 msgstr ""
@@ -95,7 +95,7 @@ msgstr ""
 #: admin/fai/class_faiDebconfConfigurations.inc:71
 #: admin/fai/class_faiManagement.inc:788
 #: admin/fai/class_faiPackageConfiguration.inc:35 admin/fai/class_FAI.inc:566
-#: admin/fai/class_faiPackage.inc:274 admin/fai/class_faiPackage.inc:625
+#: admin/fai/class_faiPackage.inc:274 admin/fai/class_faiPackage.inc:630
 #: admin/fai/class_faiPackageEntry.inc:53
 #: admin/fai/class_faiPackageEntry.inc:193
 msgid "Service infrastructure"
@@ -138,7 +138,7 @@ msgstr ""
 #: admin/systems/services/repository/servRepositorySetup.tpl:19
 #: admin/systems/services/repository/class_divListRepositories.inc:23
 #: admin/fai/faiPackage.tpl:37 admin/fai/branch_selector.tpl:25
-#: admin/fai/class_faiPackage.inc:782
+#: admin/fai/class_faiPackage.inc:787
 msgid "Release"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 #: admin/fai/faiPackageConfiguration.tpl:1
 #: admin/fai/class_faiDebconfConfigurations.inc:140
 #: admin/fai/NewDebconfConfiguration.tpl:16 admin/fai/class_divListFai.inc:68
-#: admin/fai/faiDebconfConfigurations.tpl:1 admin/fai/class_faiPackage.inc:768
+#: admin/fai/faiDebconfConfigurations.tpl:1 admin/fai/class_faiPackage.inc:773
 msgid "Package"
 msgstr ""
 
@@ -191,7 +191,7 @@ msgid "Templates"
 msgstr ""
 
 #: admin/fai/class_faiSummaryTab.inc:48
-#: admin/fai/class_faiPartitionTable.inc:528
+#: admin/fai/class_faiPartitionTable.inc:533
 #: admin/fai/class_askClassName.inc:79 admin/fai/class_divListFai.inc:154
 #: admin/fai/class_divListFai.inc:208 admin/fai/class_faiGroupHandle.inc:100
 #: admin/fai/class_faiProfileEntry.inc:143 admin/fai/class_faiProfile.inc:298
@@ -267,26 +267,36 @@ msgstr ""
 msgid "%s partition(s)"
 msgstr ""
 
-#: admin/fai/class_faiPartitionTable.inc:529
+#: admin/fai/class_faiPartitionTable.inc:369
+#: admin/fai/class_faiTemplate.inc:422 admin/fai/class_faiScript.inc:483
+#: admin/fai/class_faiHook.inc:439 admin/fai/class_faiProfile.inc:428
+#: admin/fai/class_faiVariable.inc:301 admin/fai/class_faiPackage.inc:608
+#, php-format
+msgid ""
+"The specified classname '%s' is invalid. Classnames must not start with a "
+"dash."
+msgstr ""
+
+#: admin/fai/class_faiPartitionTable.inc:534
 msgid "FAI partition table"
 msgstr ""
 
-#: admin/fai/class_faiPartitionTable.inc:536 admin/fai/class_faiHook.inc:552
-#: admin/fai/class_faiVariable.inc:397
+#: admin/fai/class_faiPartitionTable.inc:541 admin/fai/class_faiHook.inc:556
+#: admin/fai/class_faiVariable.inc:401
 msgid "Read only"
 msgstr ""
 
-#: admin/fai/class_faiPartitionTable.inc:537 admin/fai/faiPackage.tpl:21
+#: admin/fai/class_faiPartitionTable.inc:542 admin/fai/faiPackage.tpl:21
 #: admin/fai/class_faiPartitionTableEntry.inc:475
-#: admin/fai/class_faiTemplate.inc:538 admin/fai/faiVariable.tpl:21
+#: admin/fai/class_faiTemplate.inc:542 admin/fai/faiVariable.tpl:21
 #: admin/fai/class_faiScriptEntry.inc:190 admin/fai/faiVariableEntry.tpl:19
 #: admin/fai/faiScript.tpl:21 admin/fai/faiTemplateEntry.tpl:33
-#: admin/fai/class_faiScript.inc:638 admin/fai/faiScriptEntry.tpl:19
+#: admin/fai/class_faiScript.inc:642 admin/fai/faiScriptEntry.tpl:19
 #: admin/fai/class_faiTemplateEntry.inc:274 admin/fai/faiTemplate.tpl:21
 #: admin/fai/faiHookEntry.tpl:19 admin/fai/faiHook.tpl:21
-#: admin/fai/class_faiHook.inc:553 admin/fai/class_faiProfile.inc:498
-#: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:398
-#: admin/fai/class_faiVariableEntry.inc:138 admin/fai/class_faiPackage.inc:777
+#: admin/fai/class_faiHook.inc:557 admin/fai/class_faiProfile.inc:502
+#: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiVariable.inc:402
+#: admin/fai/class_faiVariableEntry.inc:138 admin/fai/class_faiPackage.inc:782
 #: admin/fai/faiPartitionTable.tpl:21 admin/fai/faiPartitionTableEntry.tpl:13
 #: admin/fai/faiProfile.tpl:21
 msgid "Description"
@@ -349,7 +359,7 @@ msgstr ""
 msgid "Generic"
 msgstr ""
 
-#: admin/fai/faiPackage.tpl:45 admin/fai/class_faiPackage.inc:779
+#: admin/fai/faiPackage.tpl:45 admin/fai/class_faiPackage.inc:784
 msgid "Section"
 msgstr ""
 
@@ -513,16 +523,16 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: admin/fai/class_faiTemplate.inc:529
+#: admin/fai/class_faiTemplate.inc:533
 msgid "Template"
 msgstr ""
 
-#: admin/fai/class_faiTemplate.inc:530
+#: admin/fai/class_faiTemplate.inc:534
 msgid "FAI template"
 msgstr ""
 
-#: admin/fai/class_faiTemplate.inc:537 admin/fai/class_faiScript.inc:637
-#: admin/fai/class_faiPackage.inc:779 admin/fai/class_faiPackage.inc:782
+#: admin/fai/class_faiTemplate.inc:541 admin/fai/class_faiScript.inc:641
+#: admin/fai/class_faiPackage.inc:784 admin/fai/class_faiPackage.inc:787
 msgid "Readonly"
 msgstr ""
 
@@ -604,7 +614,7 @@ msgstr ""
 
 #: admin/fai/class_faiDebconfConfigurations.inc:141
 #: admin/fai/NewDebconfConfiguration.tpl:19 admin/fai/class_divListFai.inc:60
-#: admin/fai/class_divListFai.inc:66 admin/fai/class_faiVariable.inc:389
+#: admin/fai/class_divListFai.inc:66 admin/fai/class_faiVariable.inc:393
 msgid "Variable"
 msgstr ""
 
@@ -664,7 +674,7 @@ msgstr ""
 
 #: admin/fai/class_askClassName.inc:84 admin/fai/class_divListFai.inc:58
 #: admin/fai/class_divListFai.inc:149 admin/fai/class_divListFai.inc:218
-#: admin/fai/class_faiGroupHandle.inc:110 admin/fai/class_faiProfile.inc:489
+#: admin/fai/class_faiGroupHandle.inc:110 admin/fai/class_faiProfile.inc:493
 msgid "Profile"
 msgstr ""
 
@@ -676,7 +686,8 @@ msgstr ""
 #: admin/fai/class_askClassName.inc:146
 #, php-format
 msgid ""
-"The specified classname '%s' is invalid. Scripts must not start with a dash."
+"The specified classname '%s' is invalid. A classname must not start with a "
+"dash."
 msgstr ""
 
 #: admin/fai/class_askClassName.inc:189
@@ -854,7 +865,7 @@ msgid "file is empty"
 msgstr ""
 
 #: admin/fai/class_faiScriptEntry.inc:150 admin/fai/class_divListFai.inc:62
-#: admin/fai/class_faiScript.inc:629 admin/fai/faiScriptEntry.tpl:56
+#: admin/fai/class_faiScript.inc:633 admin/fai/faiScriptEntry.tpl:56
 #: admin/fai/faiHookEntry.tpl:56 admin/fai/class_faiHookEntry.inc:158
 msgid "Script"
 msgstr ""
@@ -962,7 +973,7 @@ msgstr ""
 msgid "Show scripts"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:64 admin/fai/class_faiHook.inc:544
+#: admin/fai/class_divListFai.inc:64 admin/fai/class_faiHook.inc:548
 msgid "Hook"
 msgstr ""
 
@@ -1204,7 +1215,7 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: admin/fai/class_faiScript.inc:630 admin/fai/class_faiHookEntry.inc:199
+#: admin/fai/class_faiScript.inc:634 admin/fai/class_faiHookEntry.inc:199
 msgid "FAI script"
 msgstr ""
 
@@ -1370,7 +1381,7 @@ msgstr ""
 msgid "This list displays all assigned class names for this profile."
 msgstr ""
 
-#: admin/fai/class_faiHook.inc:545
+#: admin/fai/class_faiHook.inc:549
 msgid "FAI hook"
 msgstr ""
 
@@ -1390,11 +1401,11 @@ msgstr ""
 msgid "No class specified for this profile!"
 msgstr ""
 
-#: admin/fai/class_faiProfile.inc:490
+#: admin/fai/class_faiProfile.inc:494
 msgid "FAI profile"
 msgstr ""
 
-#: admin/fai/class_faiProfile.inc:499 admin/fai/faiProfile.tpl:36
+#: admin/fai/class_faiProfile.inc:503 admin/fai/faiProfile.tpl:36
 msgid "FAI classes"
 msgstr ""
 
@@ -1406,7 +1417,7 @@ msgstr ""
 msgid "FAI hook entry"
 msgstr ""
 
-#: admin/fai/class_faiVariable.inc:390
+#: admin/fai/class_faiVariable.inc:394
 msgid "FAI variable"
 msgstr ""
 
@@ -1460,19 +1471,19 @@ msgid ""
 "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:769
+#: admin/fai/class_faiPackage.inc:774
 msgid "FAI Package list"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:778
+#: admin/fai/class_faiPackage.inc:783
 msgid "Packages"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:780
+#: admin/fai/class_faiPackage.inc:785
 msgid "Install Method"
 msgstr ""
 
-#: admin/fai/class_faiPackage.inc:781
+#: admin/fai/class_faiPackage.inc:786
 msgid "Package configuration"
 msgstr ""
 
