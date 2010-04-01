@@ -207,11 +207,25 @@ class fonreport extends plugin
       Get Query String && Search
      *****************/
 
-    $query  = $this->CreateQuerySyntax();
     $link   = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
 
     @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
 
+    // Get all matching entries to be able to fill the pager
+    $query  = $this->CreateQuerySyntax($limit = FALSE);
+    $count = @mysql_query($query);
+    if ($count === false){
+      msg_dialog::display(_("Error"), msgPool::dbquery(_("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
+      return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+    }
+    $tmp = mysql_fetch_array($count, MYSQL_ASSOC);
+    $res_count = $tmp['count']; 
+    if($res_count < $this->start){
+      $this->start = 0;
+    }
+
+    // Get entries for the selected range only.
+    $query  = $this->CreateQuerySyntax($limit = TRUE);
     $result = @mysql_query($query);
     if ($result === false){
       msg_dialog::display(_("Error"), msgPool::dbquery(_("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
@@ -232,16 +246,16 @@ class fonreport extends plugin
 
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 
+      // Check attribute permissions
       foreach($line as $attr => $value){
-
         if($attr == "duration") continue;
-  
         $acl = $this->ui->get_permissions($this->search_base,"fonreport/fonreport",$attr);
         if(!preg_match("/r/",$acl)){
           $line[$attr] = $no_acl;
         }
       }
 
+      // Check date permissions
       if($this->ui->get_permissions($this->search_base,"fonreport/fonreport","calldate")){
         $hour=  substr($line["calldate"], 11, 2);
         $minute=substr($line["calldate"], 14, 2);
@@ -254,19 +268,16 @@ class fonreport extends plugin
         $date_str = $no_acl;
       }
   
-      $append_str = "";
-      $append_str .= 	"<td>".$date_str."</td>";
-
+      $append_str = 	"<td class='list1'>".$date_str."</td>";
       foreach(array("src","dst","channel","lastapp","disposition") as $atr){
         if(isset($line[$atr])){
-          $append_str .= 	"<td>".$line[$atr]."</td>";
+          $append_str .= 	"<td class='list1'>".$line[$atr]."</td>";
         }
       }
-
       if($this->ui->get_permissions($this->search_base,"fonreport/fonreport","duration")){
-        $append_str .= 	"<td>".$this->gen_duration($line["duration"])."</td>";
+        $append_str .= 	"<td class='list1'>".$this->gen_duration($line["duration"])."</td>";
       }else{
-        $append_str .= 	"<td>".$no_acl."</td>";
+        $append_str .= 	"<td class='list1'>".$no_acl."</td>";
       }
       $report_list[] = $append_str;
     }
@@ -282,24 +293,8 @@ class fonreport extends plugin
     /* Generate output */
     $mod      = 0;
     $output   = "";
-    if(count($this->report_list) < $this->start){
-      $this->start = 0;
-    }
     foreach($this->report_list as $val){
-      if ($mod < $this->start) {
-        $mod++;
-        continue;
-      }
-      if ($mod >= ($this->start + $this->range)){
-        $mod++;
-        break;
-      }
-      if ( ($mod++) & 1){
-        $col= "background-color: #ECECEC;";
-      } else {
-        $col= "background-color: #F5F5F5;";
-      }
-      $output.= "<tr style=\"height:22px; $col\">$val</tr>";
+      $output.= "<tr>$val</tr>";
     }
 
     /*****************
@@ -308,7 +303,7 @@ class fonreport extends plugin
 
     if ($output != ""){
       $smarty->assign("search_result", $output);
-      $smarty->assign("range_selector", range_selector(count($this->report_list), $this->start,$this->range,"EntryPerPage"));
+      $smarty->assign("range_selector", range_selector($res_count, $this->start,$this->range,"EntryPerPage"));
     } else {
       $smarty->assign("search_result", "");
     }
@@ -372,7 +367,7 @@ class fonreport extends plugin
 
 
   /* Create query string */
-  function CreateQuerySyntax()
+  function CreateQuerySyntax($limit = TRUE)
   {
     /* Get extended search filter which contain uids and so on */
     $uidstring = $this->GetUidMatchingFilter();
@@ -396,13 +391,34 @@ class fonreport extends plugin
     /* Create times */
     $start= date ("YmdHis", mktime(0,0,0,$this->month,1,$this->year));
     $end=   date ("YmdHis", mktime(23,59,59,($this->month +1),0,$this->year));
-    $query = "SELECT ".$fields_str.",calldate FROM cdr ".
+
+    if(!$limit){
+      $fieldset = "count(dst) as `count`";
+    }else{
+
+      /* Create string with all fields seperated by ,*/
+      $fields_str ="";
+      foreach($this->fields as $field){
+        if($field == "calldate") continue;
+        $fields_str .= $field.", ";
+      }
+      $fields_str = preg_replace("/, $/","",$fields_str);
+      $fieldset = $fields_str.",calldate"; 
+    }
+
+    $query = "SELECT {$fieldset} FROM cdr ".
       "WHERE   
       calldate <= $end 
       AND 
       calldate >= $start 
       ". $uidstring." 
-      ORDER BY ".$this->fields[$this->sort]." $desc;";
+      ORDER BY ".$this->fields[$this->sort]." $desc";
+   
+    // Set limitations  
+    if($limit){
+      $query.=" LIMIT ".($this->start).", ".$this->range;
+    }
+    $query.=";";
     return($query);
   }
 

@@ -18,9 +18,6 @@ if ( $cleanup ){
 	$display= $fonreport->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
-	/* Page header*/
-	$display= print_header(get_template_path('plugins/gofon/images/phonereport.png'), _("Phone reports")).$display;
-
 	/* Store changes  in session */
 	session::set('fonreport',$fonreport);
 }
