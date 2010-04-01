@@ -4,7 +4,7 @@ class faxreport extends plugin
 {
     /* Definitions */
     var $plHeadline     = "FAX Reports";
-    var $plDescription  = "This does something";
+    var $plDescription  = "This plugin lists fax reports";
     var $plIcon         = "plugins/gofax/images/reports.png";
 
     /* For internal use */
@@ -17,7 +17,7 @@ class faxreport extends plugin
     var $sort_direction = "down";
     var $ui             = NULL;
     var $range          = 20;
-    var $view_logged = FALSE;
+    var $view_logged    = FALSE;
 
     /* Constant stuff */
     var $status= array( "SENT", "MAILED", "SERROR", "RERROR", "SBLOCK", "RBLOCK",
@@ -27,8 +27,9 @@ class faxreport extends plugin
     var $fields= array("uid", "queuing_time", "status", "sender_id", "receiver_id", "pages");
 
     /* these vars will be stored in session to be able to remember last search config */
-    var $attributes_SO= array("search_for","search_base","month","year",
+    var $attributes_SO= array("search_for","month","year",
         "start","year","month","sort","sort_direction","range");
+
     var $objectclasses= array();
     var $fax_users    = array();
 
@@ -173,7 +174,7 @@ class faxreport extends plugin
             // Get dn to check ACLs for
             // Existing ldap-user -> use its dn  
             // Not existing user  -> use ldap base dn  
-            $dn = $this->config->current['BASE'];
+            $dn = $this->search_base;
             if(isset($this->uidToDN[$line['uid']])){
                 $dn = $this->uidToDN[$line['uid']];
             }
@@ -295,7 +296,7 @@ class faxreport extends plugin
             // Get dn to check ACLs for
             // Existing ldap-user -> use its dn  
             // Not existing user  -> use ldap base dn  
-            $dn = $this->config->current['BASE'];
+            $dn = $this->search_base;
             if(isset($this->uidToDN[$line['uid']])){
                 $dn = $this->uidToDN[$line['uid']];
             }
@@ -412,7 +413,7 @@ class faxreport extends plugin
                 $this->sort= 0;
             }
         }
-        foreach( array("year", "month", "search_for", "search_base") as $type){
+        foreach( array("year", "month", "search_for") as $type){
             if (isset($_POST[$type])){
                 $faxreportfilter[$type]= $_POST[$type];
 
