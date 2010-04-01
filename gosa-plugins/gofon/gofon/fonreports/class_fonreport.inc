@@ -426,7 +426,7 @@ class viewFonEntries{
                     "plDescription" => _("View phone reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
                     "plSelfModify"  => TRUE,
                     "plDepends"     => array(),
-                    "plPriority"    => 0,
+                    "plPriority"    => 88,
                     "plSection"     => array("administration"),
                     "plCategory"    => array("users"),
 
