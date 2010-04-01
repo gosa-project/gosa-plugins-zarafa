@@ -386,8 +386,7 @@ class faxreport extends plugin
     }
 
 
-  /* Save ui input, and store it in session::get() 
-  to remember last search next time*/
+    // Save posted filter settings
     function save_object()
     {
         $faxreportfilter = session::get("faxreportfilter");
