@@ -94,8 +94,12 @@ class goFaxServer extends goService {
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-             "goFaxAdmin"     => _("Login name"),
-             "goFaxPassword"  => _("Password"))
+            "goFaxAdmin"     => _("Login name"),
+            "goFaxPassword"  => _("Password"),
+
+            "start"         => _("Start"),
+            "stop"          => _("Stop"),
+            "restart"       => _("Restart"))
           ));
   }
 }
