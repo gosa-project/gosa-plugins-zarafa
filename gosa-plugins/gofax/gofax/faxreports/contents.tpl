@@ -40,7 +40,7 @@
      <td class='listheader'><a href="main.php{$plug}&amp;sort=3">{t}Sender{/t}</a> {$mode3}</td>
      <td class='listheader'><a href="main.php{$plug}&amp;sort=4">{t}Receiver{/t}</a> {$mode4}</td>
      <td class='listheader'><a href="main.php{$plug}&amp;sort=5">{t}# pages{/t}</a> {$mode5}</td>
-     <td class='listheader'>&nbsp;</td>
+     <td class='listheader' style='border-right: 0pt none;'>&nbsp;</td>
     </tr>
    </thead>
    <tbody class="listScrollContent listBodyFormat" id="t_nscrollbody">
@@ -52,7 +52,7 @@
      <td class="list0">&nbsp;</td>
      <td class="list0">&nbsp;</td>
      <td class="list0">&nbsp;</td>
-     <td class="list0">&nbsp;</td>
+     <td class="list0" style='border-right: 0pt none;'>&nbsp;</td>
     </tr>
    </tbody>
   </table>

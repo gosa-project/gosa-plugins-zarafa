@@ -356,9 +356,10 @@ class faxreport extends plugin
             }
             /* Create entry html str */
             if(preg_match("/r/",$detailedViewACL)){
-                $str.= " \n<td class='list0'>".image('images/info_small.png', 'detail_'.postEncode($line["id"]))."</td>";
+                $str.= " \n<td class='list0' style='border-right: 0pt none;'>".
+                    image('images/info_small.png', 'detail_'.postEncode($line["id"]))."</td>";
             }else{
-                $str.= " \n<td class='list0'>&nbsp;</td>";
+                $str.= " \n<td class='list0' style='border-right: 0pt none;'>&nbsp;</td>";
             }
             $report_list[] =  $str;
         }
