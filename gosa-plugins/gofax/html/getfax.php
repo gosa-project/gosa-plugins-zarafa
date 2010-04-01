@@ -29,18 +29,11 @@ session::set('errorsAlreadyPosted',array());
 
 /* Logged in? Simple security check */
 if (!session::is_set('ui')){
-  new log("security","faxreport/faxreport","",array(),"Error: getfax.php called without session") ;
-  header ("Location: index.php");
+  new log("security","users/viewFaxEntries","",array(),"Error: getfax.php called without session") ;
+  header ("Location: ../../index.php");
   exit;
 }
 $ui= session::is_set("ui");
-
-/* User object present? */
-if (!session::is_set('fuserfilter')){
-  new log("security","faxreport/faxreport","",array(),"getfax.php called without propper session data") ;
-  header ("Location: index.php");
-  exit;
-}
 
 /* Get loaded servers */
 foreach (array("FAX_SERVER", "FAX_LOGIN", "FAX_PASSWORD") as $val){
@@ -51,6 +44,8 @@ foreach (array("FAX_SERVER", "FAX_LOGIN", "FAX_PASSWORD") as $val){
 
 /* Load fax entry */
 $config= session::get('config');
+restore_error_handler();
+
 $cfg= $config->data['SERVERS']['FAX'];
 $link = mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD'])
                   or die(_("Could not connect to database server!"));
@@ -62,17 +57,15 @@ mysql_select_db("gofax") or die(_("Could not select database!"));
 $query = "SELECT id,uid FROM faxlog WHERE id = '".validate(stripcslashes($_GET['id']))."'";
 $result = mysql_query($query) or die(_("Database query failed!"));
 $line = mysql_fetch_array($result, MYSQL_ASSOC);
-if (!preg_match ("/'".$line["uid"]."'/", session::get('fuserfilter'))){
-  die ("No permissions to view fax!");
-}
 
-$query = "SELECT id,fax_data FROM faxdata WHERE id = '".
-         validate(stripcslashes($_GET['id']))."'";
+$query = "SELECT id,fax_data FROM faxdata WHERE id = '".validate(stripcslashes($_GET['id']))."'";
 $result = mysql_query($query) or die(_("Database query failed!"));
 
 /* Load pic */
 $data = mysql_result ($result, 0, "fax_data");
 mysql_close ($link);
+
+
 
 if (!isset($_GET['download'])){
 
@@ -142,6 +135,29 @@ if (!isset($_GET['download'])){
 
 }
 
+// Get ALL valid FAX-Accounts and their dns, this allows us to perform correct
+//  permissions checks later.
+$filter= "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))(objectClass=goFaxAccount)(uid=*))";
+$tmp= get_list($filter, "users/viewFaxEntries", $config->current['BASE'],
+    array("uid"), GL_SUBSEARCH | GL_NO_ACL_CHECK);
+$uidToDN = array();
+$uid = $line['uid'];
+foreach($tmp as $attrs){
+    $uidToDN[$attrs['uid'][0]] = $attrs['dn'];
+}
+
+// Detect dn to check for
+$dn = $config->current['BASE'];
+if(isset($uidToDN[$uid])){
+    $dn = $uidToDN[$uid];
+}
+
+// We do not have any ACLs for this entry, so continue.
+$ui = session::get('ui');
+$acls = $ui->get_permissions($dn,"users/viewFaxEntries","detailedView");
+if(!preg_match("/r/",$acls)){
+    $data = file_get_contents("../../images/lists/locked.png");
+}
 /* print the tiff image and close the connection */
 echo "$data";
 
