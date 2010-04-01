@@ -15,7 +15,6 @@ class faxreport extends plugin
     var $month          = "";
     var $sort           = 1;
     var $sort_direction = "down";
-    var $report_list    = array();
     var $ui             = NULL;
     var $range          = 20;
     var $view_logged = FALSE;
@@ -248,22 +247,37 @@ class faxreport extends plugin
         foreach ($fax_users as $user){
             $userfilter.= "uid = '$user' OR ";
         }
-        $userfilter= " AND (".preg_replace("/OR $/", "", $userfilter).")";
+        $userfilter= "(".preg_replace("/OR $/", "", $userfilter).")";
 
         // Add date settings
         $desc = ($this->sort_direction == "down")? "": "DESC";
         $start= date ("YmdHis", mktime(0,0,0,$this->month,1,$this->year));
         $end=   date ("YmdHis", mktime(23,59,59,$this->month+1,0,$this->year));
-        $query = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') as queuing_time,".
+        $query_entries = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') as queuing_time,".
             "status,sender_id,receiver_id,pages FROM faxlog ".
-            "WHERE 1=1 ".$userfilter." AND queuing_time <= $end AND ".
-            "queuing_time >= $start ORDER BY ".$this->fields[$this->sort]." $desc;";
+            "WHERE {$userfilter} AND queuing_time <= {$end} AND ".
+            "queuing_time >= {$start} ORDER BY ".$this->fields[$this->sort].
+            " {$desc } LIMIT {$this->start},{$this->range};" ;
 
-        // Get the results 
+        $query_count = "SELECT count(uid) as `count` FROM faxlog ".
+            "WHERE {$userfilter} AND queuing_time <= {$end} AND ".
+            "queuing_time >= {$start} ;";
+
+        // Get result count
         $cfg= $this->config->data['SERVERS']['FAX'];
         $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-        $result =@mysql_query($query);
+        $result =@mysql_query($query_count);
+        if ($result === false){
+            msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
+            return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+        }
+        $tmp = mysql_fetch_assoc($result);
+        $entry_count = $tmp['count'];
+
+        // Get the results 
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+        $result =@mysql_query($query_entries);
         if ($result === false){
             msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
             return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
@@ -274,7 +288,7 @@ class faxreport extends plugin
             _("Insufficient permissions to view this attribute"));
 
         // Add found entries to result list.
-        $this->report_list= array();
+        $report_list= array();
         $user_ids = array_flip($fax_users);
         while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 
@@ -346,7 +360,7 @@ class faxreport extends plugin
             }else{
                 $str.= " \n<td class='list0'>&nbsp;</td>";
             }
-            $this->report_list[] =  $str;
+            $report_list[] =  $str;
         }
         mysql_close($link);
 
@@ -354,12 +368,12 @@ class faxreport extends plugin
         /* Generate output */
         $mod= 0;
         $output= "";
-        foreach ($this->report_list as $val){
+        foreach ($report_list as $val){
             $output.= "\n<tr>{$val}</tr>";
         }
         $smarty->assign("search_result", $output);
         $smarty->assign("range_selector", 
-            range_selector(count($this->report_list), $this->start, $this->range,"EntriesPerPage"));
+            range_selector($entry_count, $this->start, $this->range,"EntriesPerPage"));
 
         // Add sorting links
         $smarty->assign("plug", "?plug=".validate($_GET['plug']));
