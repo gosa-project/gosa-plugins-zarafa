@@ -331,7 +331,7 @@ class appgroup extends plugin
             if(isset($attrs['gosaApplicationParameter'])){
               for($p = 0 ; $p < $attrs['gosaApplicationParameter']['count'] ; $p ++){
                 if(preg_match("/:/",$attrs['gosaApplicationParameter'][$p])){
-                  list($key, $value) = split(":",$attrs['gosaApplicationParameter'][$p]);
+                  list($key, $value) = explode(":",$attrs['gosaApplicationParameter'][$p], 2);
                   if ($key == "gosaApplicationFlags") {
                     $data['FLAGS'] = $value;
                   }
@@ -635,7 +635,7 @@ class appgroup extends plugin
         if(isset($app['gosaApplicationParameter'])){
           for($i = 0 ; $i < $app['gosaApplicationParameter']['count'] ; $i++) {
             $para = $app['gosaApplicationParameter'][$i];
-            $tmp  = split(":",$para);
+            $tmp  = explode(":",$para, 2);
             $this->app_parameter[$tmp[0]] = $tmp[1];
           }
         }
