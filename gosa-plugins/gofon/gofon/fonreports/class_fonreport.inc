@@ -7,35 +7,34 @@ class fonreport extends plugin
     var $plDescription= "This does something";
     var $plIcon       = "plugins/gofon/images/phonereport.png";
 
-    /* For internal use */
-    var $start				  = 0;
-    var $search_for		  = "*";
-    var $search_base	  = "";
-    var $fields				  = array("calldate", "src", "dst", "channel", "lastapp", "disposition", "duration");
-    var $year					  = "";
-    var $month				  = "";
-    var $sort					  = 0;
-    var $sort_direction	= "down";
-    var $report_list		= array();
-    var $userfilter			= "";
-    var $ui					    = NULL;
-    var $range 				  = 20;
-    var $EntryPerPage   = 20;
+    var $ui             = NULL;
 
-    var $selected_server = "";
+    /* For internal use */
+    var $start          = 0;
+    var $search_for     = "*";
+    var $search_base    = "";
+    var $year           = "";
+    var $month          = "";
+    var $sort           = 0;
+    var $sort_direction = "down";
+    var $range          = 20;
+    var $selected_server= "";
 
     /* attribute list for save action */
+    var $fields         = array("calldate", "src", "dst", "channel", "lastapp", "disposition", "duration");
     var $attributes_SO  = array("start","search_for","search_base","range","month","sort_direction","sort","year");
     var $objectclasses  = array();
     var $view_logged = FALSE;
+
+    var $telephoneNumberToDN = array();
 
     /* Construct class */
     function fonreport (&$config, $ui)
     {
         /* Include config object */
-        $this->config			= $config;
-        $this->ui				  = $ui;
-        $this->search_base= get_base_from_people($ui->dn);
+        $this->config   = $config;
+        $this->ui      = $ui;
+        $this->search_base= $this->config->current['BASE'];
 
         $this->month      = date("m");
         $this->year       = date("Y");
@@ -53,6 +52,19 @@ class fonreport extends plugin
                 $this->$name = $fonfilter[$name];
             }
         }
+
+        // Get ALL valid FAX-Accounts and their dns, this allows us to perform correct
+        //  permissions checks later.
+        $filter= "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".      
+            "(objectClass=goFonAccount)(telephoneNumber=*))";
+        $tmp= get_list($filter, "users/viewFonEntries", $this->search_base,
+            array("telephoneNumber"), GL_SUBSEARCH | GL_NO_ACL_CHECK);
+        $this->telephoneNumberToDN = array();
+        foreach($tmp as $attrs){
+            for($i=0;$i<$attrs['telephoneNumber']['count']; $i++){
+                $this->telephoneNumberToDN[$attrs['telephoneNumber'][$i]] = $attrs['dn'];
+            }
+        }
     }
 
 
@@ -67,7 +79,7 @@ class fonreport extends plugin
         if (isset($_GET['start'])){
             $this->start= (int)$_GET['start'];
         }
-        foreach( array("year", "month", "search_for", "search_base","selected_server") as $type){
+        foreach( array("year", "month", "search_for","selected_server") as $type){
             if (isset($_POST[$type])){
                 $this->$type= get_post($type);
             }
@@ -137,24 +149,9 @@ class fonreport extends plugin
         /*****************
           Smarty 
          *****************/
-        $bases      = array();
-        $cat_bases  = $this->ui->get_module_departments("fonreport");
-        foreach($this->config->idepartments as $dn => $name){
-            if(in_array_ics($dn,$cat_bases)){
-                $bases[$dn] = $name;
-            }
-        }
-
-        if(!isset($bases[$this->search_base])){
-            $this->search_base = key($bases);
-        }
 
         $smarty->assign("plug",           "?plug=".validate($_GET['plug']));
-        $smarty->assign("launchimage",    get_template_path('images/launch.png'));
-        $smarty->assign("search_image",   get_template_path('images/lists/search.png'));
         $smarty->assign("search_for",     htmlentities($this->search_for));
-        $smarty->assign("bases",          $bases);
-        $smarty->assign("base_select",    $this->search_base);
         $smarty->assign("months",         $months);
         $smarty->assign("month_select",   $this->month);
         $smarty->assign("years",          $years);
@@ -176,7 +173,8 @@ class fonreport extends plugin
 
         /* Connecting, selecting database */
         if (!isset($this->config->data['SERVERS']['FON'][0])){
-            msg_dialog::display(_("Configuration error"), msgPool::noserver(_("GOfon")), WARNING_DIALOG);
+            msg_dialog::display(_("Configuration error"), msgPool::noserver(
+                    _("GOfon")), WARNING_DIALOG);
             return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
         }elseif(!is_callable("mysql_connect")){
             msg_dialog::display(_("Configuration error"), msgPool::missingext("php-mysql"), WARNING_DIALOG);
@@ -196,11 +194,13 @@ class fonreport extends plugin
 
             $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
             if ($link === FALSE){
-                msg_dialog::display(_("Error"), msgPool::dbconnect(_("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
+                msg_dialog::display(_("Error"), msgPool::dbconnect(
+                    _("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
                 return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
             }
             if (! @mysql_select_db("gophone")){
-                msg_dialog::display(_("Error"), msgPool::dbselect(_("GOfon"),@mysql_error(),$cfg['DB']),ERROR_DIALOG);
+                msg_dialog::display(_("Error"), msgPool::dbselect(
+                    _("GOfon"),@mysql_error(),$cfg['DB']),ERROR_DIALOG);
                 return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
             }
         }
@@ -210,30 +210,17 @@ class fonreport extends plugin
           Get Query String && Search
          *****************/
 
-        $link   = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
-
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-
-        // Get all matching entries to be able to fill the pager
-        $query  = $this->CreateQuerySyntax($limit = FALSE);
-        $count = @mysql_query($query);
-        if ($count === false){
-            msg_dialog::display(_("Error"), msgPool::dbquery(_("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
-            return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-        }
-        $tmp = mysql_fetch_array($count, MYSQL_ASSOC);
-        $res_count = $tmp['count']; 
-        if($res_count < $this->start){
-            $this->start = 0;
-        }
-
         // Get entries for the selected range only.
-        $query  = $this->CreateQuerySyntax($limit = TRUE);
+        $link   = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+        $query  = $this->CreateQuerySyntax();
         $result = @mysql_query($query);
         if ($result === false){
-            msg_dialog::display(_("Error"), msgPool::dbquery(_("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::dbquery(
+                    _("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
             return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
         }
+
 
         /*****************
           Fetch results 
@@ -245,21 +232,34 @@ class fonreport extends plugin
         $no_acl = "<img class='center' src='images/lists/locked.png'
             title='".msgPool::permView()."' alt='"._("Insufficient permissions")."'>";
 
-        $no_acl = "&nbsp;";
+        $no_acl = "&nbsp;-";
 
         while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+
+            // Get dn to check ACLs for
+            // Existing ldap-user -> use its dn
+            // Not existing user  -> use ldap base dn
+            $dn = $this->search_base;
+            if(isset($this->telephoneNumberToDN[$line['src']])){
+                $dn = $this->telephoneNumberToDN[$line['src']];
+            }
+            // We do not have any ACLs for this entry, so continue.
+            $acls = $this->ui->get_permissions($dn,"users/viewFonEntries","");
+            if(!preg_match("/r/",$acls)){
+                continue;
+            }
 
             // Check attribute permissions
             foreach($line as $attr => $value){
                 if($attr == "duration") continue;
-                $acl = $this->ui->get_permissions($this->search_base,"fonreport/fonreport",$attr);
+                $acl = $this->ui->get_permissions($dn,"users/viewFonEntries",$attr);
                 if(!preg_match("/r/",$acl)){
                     $line[$attr] = $no_acl;
                 }
             }
 
             // Check date permissions
-            if($this->ui->get_permissions($this->search_base,"fonreport/fonreport","calldate")){
+            if($this->ui->get_permissions($dn,"users/viewFonEntries","calldate")){
                 $hour=  substr($line["calldate"], 11, 2);
                 $minute=substr($line["calldate"], 14, 2);
                 $format= _("Y-M-D");
@@ -271,21 +271,22 @@ class fonreport extends plugin
                 $date_str = $no_acl;
             }
 
-            $append_str = 	"<td class='list1'>".$date_str."</td>";
+            $append_str =  "<td class='list1'>".$date_str."</td>";
             foreach(array("src","dst","channel","lastapp","disposition") as $atr){
                 if(isset($line[$atr])){
-                    $append_str .= 	"<td class='list1'>".$line[$atr]."</td>";
+                    $append_str .=  "<td class='list1'>".$line[$atr]."</td>";
                 }
             }
-            if($this->ui->get_permissions($this->search_base,"fonreport/fonreport","duration")){
-                $append_str .= 	"<td class='list1' style='border-right: 0pt none;'>".$this->gen_duration($line["duration"])."</td>";
+            if($this->ui->get_permissions($dn,"users/viewFonEntries","duration")){
+                $append_str .=  "<td class='list1' style='border-right: 0pt none;'>".
+                    $this->gen_duration($line["duration"])."</td>";
             }else{
-                $append_str .= 	"<td class='list1' style='border-right: 0pt none;'>".$no_acl."</td>";
+                $append_str .=  "<td class='list1' style='border-right: 0pt none;'>".
+                    $no_acl."</td>";
             }
             $report_list[] = $append_str;
         }
 
-        $this->report_list= $report_list;
         @mysql_close($link);
 
 
@@ -293,10 +294,13 @@ class fonreport extends plugin
           Create list of results  
          *****************/
 
+        $res_count = count($report_list);
+        $report_list = array_slice($report_list, $this->start, $this->range);
+        if($res_count < $this->start) $this->start = 0;
+
         /* Generate output */
-        $mod      = 0;
-        $output   = "";
-        foreach($this->report_list as $val){
+        $output ="";
+        foreach($report_list as $val){
             $output.= "<tr>$val</tr>";
         }
 
@@ -304,12 +308,8 @@ class fonreport extends plugin
           Tell smarty what we have found  
          *****************/
 
-        if ($output != ""){
-            $smarty->assign("search_result", $output);
-            $smarty->assign("range_selector", range_selector($res_count, $this->start,$this->range,"EntryPerPage"));
-        } else {
-            $smarty->assign("search_result", "");
-        }
+        $smarty->assign("search_result", $output);
+        $smarty->assign("range_selector", range_selector($res_count, $this->start,$this->range,"EntryPerPage"));
 
         /* Show main page */
         for($i= 0; $i<7; $i++){
@@ -348,7 +348,7 @@ class fonreport extends plugin
             "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)(title=$s)))";
 
         $attrs  = array("uid");
-        $res    = get_list($filter,"users/user",$this->search_base,$attrs);
+        $res    = get_list($filter,"users/viewFonEntries",$this->search_base,$attrs);
 
         $str = " AND (";
         $fields = array("dstchannel","channel");
@@ -362,15 +362,15 @@ class fonreport extends plugin
         }
         $str .= " channel     like '%".$s."%' OR  
             dstchannel  like '%".$s."%' OR  
-            dst         like '".$s2."' OR 
-            src         like '".$s2."' OR 
-            lastapp     like '".$s2."')"; 
+            dst         like '%".$s2."%' OR 
+            src         like '%".$s2."%' OR 
+            lastapp     like '%".$s2."%')"; 
             return($str);
     }
 
 
     /* Create query string */
-    function CreateQuerySyntax($limit = TRUE)
+    function CreateQuerySyntax()
     {
         /* Get extended search filter which contain uids and so on */
         $uidstring = $this->GetUidMatchingFilter();
@@ -379,7 +379,7 @@ class fonreport extends plugin
         $fields_str ="";
         foreach($this->fields as $field){
             if($field == "calldate") {
-                continue;	
+                continue; 
             }
             $fields_str .= $field.", ";
         }
@@ -395,19 +395,14 @@ class fonreport extends plugin
         $start= date ("YmdHis", mktime(0,0,0,$this->month,1,$this->year));
         $end=   date ("YmdHis", mktime(23,59,59,($this->month +1),0,$this->year));
 
-        if(!$limit){
-            $fieldset = "count(dst) as `count`";
-        }else{
-
-            /* Create string with all fields seperated by ,*/
-            $fields_str ="";
-            foreach($this->fields as $field){
-                if($field == "calldate") continue;
-                $fields_str .= $field.", ";
-            }
-            $fields_str = preg_replace("/, $/","",$fields_str);
-            $fieldset = $fields_str.",calldate"; 
+        /* Create string with all fields seperated by ,*/
+        $fields_str ="";
+        foreach($this->fields as $field){
+            if($field == "calldate") continue;
+            $fields_str .= $field.", ";
         }
+        $fields_str = preg_replace("/, $/","",$fields_str);
+        $fieldset = $fields_str.",calldate"; 
 
         $query = "SELECT {$fieldset} FROM cdr ".
             "WHERE   
@@ -417,31 +412,23 @@ class fonreport extends plugin
             ". $uidstring." 
             ORDER BY ".$this->fields[$this->sort]." $desc";
 
-        // Set limitations  
-        if($limit){
-            $query.=" LIMIT ".($this->start).", ".$this->range;
-        }
         $query.=";";
         return($query);
     }
+}
 
+class viewFonEntries{
 
-    /* Return plugin informations for acl handling 
-#FIXME You can only read attributes within this report plugin */
     static function plInfo()
     {
         return (array(
-                    "plShortName"   => _("Phone reports"),
-                    "plDescription" => _("Phone reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
+                    "plShortName"   => _("View phone reports"),
+                    "plDescription" => _("View phone reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
                     "plSelfModify"  => TRUE,
                     "plDepends"     => array(),
                     "plPriority"    => 0,
                     "plSection"     => array("administration"),
-                    "plCategory"    => array(
-                        "fonreport" => array(
-                            "description" => _("Phone reports"),
-                            "objectClass" => "None")),
-
+                    "plCategory"    => array("users"),
 
                     "plProvidedAcls" => array(
                         "calldate"      =>_("Date"), 
