@@ -56,8 +56,8 @@ class fonreport extends plugin
     }
 
 
-  /* Save ui interactions and store results in session, 
-  to remember settings */
+    /* Save ui interactions and store results in session, 
+       to remember settings */
     function save_object()
     {
         $fonfilter= session::get("fonfilter");
@@ -116,9 +116,9 @@ class fonreport extends plugin
             new log("view","fonreport/".get_class($this),$this->dn);
         }
 
-    /*****************
-      Variable Init
-    *****************/
+        /*****************
+          Variable Init
+         *****************/
 
         $fields_str = "";
 
@@ -134,9 +134,9 @@ class fonreport extends plugin
             $years[$y]= $y;
         }
 
-    /*****************
-      Smarty 
-    *****************/
+        /*****************
+          Smarty 
+         *****************/
         $bases      = array();
         $cat_bases  = $this->ui->get_module_departments("fonreport");
         foreach($this->config->idepartments as $dn => $name){
@@ -162,9 +162,9 @@ class fonreport extends plugin
         $smarty->assign("search_result",  "");
 
 
-    /*****************
-      Check Database , Table , Connection 
-    *****************/
+        /*****************
+          Check Database , Table , Connection 
+         *****************/
 
         // Collect servers and allow to select the server in the ui.
         $servers = array();
@@ -206,9 +206,9 @@ class fonreport extends plugin
         }
 
 
-    /*****************
-      Get Query String && Search
-    *****************/
+        /*****************
+          Get Query String && Search
+         *****************/
 
         $link   = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
 
@@ -235,9 +235,9 @@ class fonreport extends plugin
             return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
         }
 
-    /*****************
-      Fetch results 
-    *****************/
+        /*****************
+          Fetch results 
+         *****************/
 
         $report_list= array();
 
@@ -289,9 +289,9 @@ class fonreport extends plugin
         @mysql_close($link);
 
 
-    /*****************
-      Create list of results  
-    *****************/
+        /*****************
+          Create list of results  
+         *****************/
 
         /* Generate output */
         $mod      = 0;
@@ -300,9 +300,9 @@ class fonreport extends plugin
             $output.= "<tr>$val</tr>";
         }
 
-    /*****************
-      Tell smarty what we have found  
-    *****************/
+        /*****************
+          Tell smarty what we have found  
+         *****************/
 
         if ($output != ""){
             $smarty->assign("search_result", $output);
@@ -365,7 +365,7 @@ class fonreport extends plugin
             dst         like '".$s2."' OR 
             src         like '".$s2."' OR 
             lastapp     like '".$s2."')"; 
-        return($str);
+            return($str);
     }
 
 
@@ -426,33 +426,33 @@ class fonreport extends plugin
     }
 
 
-  /* Return plugin informations for acl handling 
-  #FIXME You can only read attributes within this report plugin */
-      static function plInfo()
-      {
-          return (array(
-              "plShortName"   => _("Phone reports"),
-              "plDescription" => _("Phone reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
-              "plSelfModify"  => TRUE,
-              "plDepends"     => array(),
-              "plPriority"    => 0,
-              "plSection"     => array("administration"),
-              "plCategory"    => array(
-                  "fonreport" => array(
-                      "description" => _("Phone reports"),
-                      "objectClass" => "None")),
+    /* Return plugin informations for acl handling 
+#FIXME You can only read attributes within this report plugin */
+    static function plInfo()
+    {
+        return (array(
+                    "plShortName"   => _("Phone reports"),
+                    "plDescription" => _("Phone reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
+                    "plSelfModify"  => TRUE,
+                    "plDepends"     => array(),
+                    "plPriority"    => 0,
+                    "plSection"     => array("administration"),
+                    "plCategory"    => array(
+                        "fonreport" => array(
+                            "description" => _("Phone reports"),
+                            "objectClass" => "None")),
 
 
-              "plProvidedAcls" => array(
-                  "calldate"      =>_("Date"), 
-                  "src"           =>_("Source"), 
-                  "dst"           =>_("Destination"), 
-                  "channel"       =>_("Channel"), 
-                  "lastapp"       =>_("Application called"),
-                  "disposition"   =>_("Disposition"), 
-                  "duration"      =>_("Duration"))
-              ));
-      }
+                    "plProvidedAcls" => array(
+                        "calldate"      =>_("Date"), 
+                        "src"           =>_("Source"), 
+                        "dst"           =>_("Destination"), 
+                        "channel"       =>_("Channel"), 
+                        "lastapp"       =>_("Application called"),
+                        "disposition"   =>_("Disposition"), 
+                        "duration"      =>_("Duration"))
+                        ));
+    }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
