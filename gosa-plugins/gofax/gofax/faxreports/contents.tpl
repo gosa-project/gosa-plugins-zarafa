@@ -29,8 +29,6 @@
  </div>
 </div>
 
-<br>
-
 {if $search_result ne ""}
  <div class="listContainer" id="d_scrollbody" style="min-height: 475px; height: 444px;">
   <table summary="{t}Phone reports{/t}" style="width:100%;" cellpadding="0" cellspacing="0">

@@ -2,504 +2,505 @@
 
 class faxreport extends plugin
 {
-  /* Definitions */
-  var $plHeadline     = "FAX Reports";
-  var $plDescription  = "This does something";
-  var $plIcon         = "plugins/gofax/images/reports.png";
+    /* Definitions */
+    var $plHeadline     = "FAX Reports";
+    var $plDescription  = "This does something";
+    var $plIcon         = "plugins/gofax/images/reports.png";
 
-  /* For internal use */
-  var $start          = 0;
-  var $search_for     = "*";
-  var $search_base    = "";
-  var $year           = "";
-  var $month          = "";
-  var $sort           = 1;
-  var $sort_direction = "down";
-  var $report_list    = array();
-  var $ui             = NULL;
-  var $range          = 20;
-  var $view_logged = FALSE;
+    /* For internal use */
+    var $start          = 0;
+    var $search_for     = "*";
+    var $search_base    = "";
+    var $year           = "";
+    var $month          = "";
+    var $sort           = 1;
+    var $sort_direction = "down";
+    var $report_list    = array();
+    var $ui             = NULL;
+    var $range          = 20;
+    var $view_logged = FALSE;
 
-  /* Constant stuff */
-  var $status= array( "SENT", "MAILED", "SERROR", "RERROR", "SBLOCK", "RBLOCK",
-      "DELETED", "REQUEUED", "DISABLED", "PRINTED", "DIVERTED",
-      "UNDEFINED", "UNDEFINED", "UNDEFINED", "UNDEFINED",
-      "UNDEFINED");
-  var $fields= array("uid", "queuing_time", "status", "sender_id", "receiver_id", "pages");
+    /* Constant stuff */
+    var $status= array( "SENT", "MAILED", "SERROR", "RERROR", "SBLOCK", "RBLOCK",
+        "DELETED", "REQUEUED", "DISABLED", "PRINTED", "DIVERTED",
+        "UNDEFINED", "UNDEFINED", "UNDEFINED", "UNDEFINED",
+        "UNDEFINED");
+    var $fields= array("uid", "queuing_time", "status", "sender_id", "receiver_id", "pages");
 
-  /* these vars will be stored in session to be able to remember last search config */
-  var $attributes_SO= array("search_for","search_base","month","year","start","year","month","sort","sort_direction","range");
-  var $objectclasses= array();
-  var $fax_users    = array();
+    /* these vars will be stored in session to be able to remember last search config */
+    var $attributes_SO= array("search_for","search_base","month","year","start","year","month","sort","sort_direction","range");
+    var $objectclasses= array();
+    var $fax_users    = array();
 
 
-  /* Create class */
-  function faxreport (&$config, &$ui)
-  {
-    /* Include config object */
-    $this->config       = $config;
-    $this->ui           = &$ui;
-    $this->search_base  = $this->config->current['BASE'];
-    $this->year         = date("Y");
-    $this->month        = date("m");
+    /* Create class */
+    function faxreport (&$config, &$ui)
+    {
+        /* Include config object */
+        $this->config       = $config;
+        $this->ui           = &$ui;
+        $this->search_base  = $this->config->current['BASE'];
+        $this->year         = date("Y");
+        $this->month        = date("m");
 
     /* Get global filter config and set class vars , 
-       or create a filter */
-    if (!session::is_set("faxreportfilter")){
-      $faxreportfilter = array();
-      foreach($this->attributes_SO as $name){
-        $faxreportfilter[$name] = $this->$name;
-      } 
-      session::set("faxreportfilter",$faxreportfilter);
-    }else{
-      $faxreportfilter = session::get("faxreportfilter");
-      foreach($this->attributes_SO as $name){
-        $this->$name = $faxreportfilter[$name];
-      }
+    or create a filter */
+        if (!session::is_set("faxreportfilter")){
+            $faxreportfilter = array();
+            foreach($this->attributes_SO as $name){
+                $faxreportfilter[$name] = $this->$name;
+            } 
+            session::set("faxreportfilter",$faxreportfilter);
+        }else{
+            $faxreportfilter = session::get("faxreportfilter");
+            foreach($this->attributes_SO as $name){
+                $this->$name = $faxreportfilter[$name];
+            }
+        }
     }
-  }
 
-  
-  /* Create Filter & Search & Display results */
-  function execute()
-  {
-    /* Call parent execute */
-    plugin::execute();
 
-    /* Log view */
-    if(!$this->view_logged){
-      $this->view_logged = TRUE;
-      new log("view","users/".get_class($this),$this->dn);
-    }
+    /* Create Filter & Search & Display results */
+    function execute()
+    {
+        /* Call parent execute */
+        plugin::execute();
+
+        /* Log view */
+        if(!$this->view_logged){
+            $this->view_logged = TRUE;
+            new log("view","users/".get_class($this),$this->dn);
+        }
 
     /************ 
       Variable initialisation 
-     ************/
- 
-    /* Create months */ 
-    $months= array();
-    for($i = 1 ; $i <= 12 ; $i ++ ){
-      $months[$i] = _(date("F",gmmktime(0,0,0,$i,1)));
-    }
+    ************/
 
-    /* Create years */
-    $current= date("Y");
-    $years= array();
-    for ($y= $current - 5; $y<=$current; $y++){
-      $years[]= $y;
-    }
+        /* Create months */ 
+        $months= array();
+        for($i = 1 ; $i <= 12 ; $i ++ ){
+            $months[$i] = _(date("F",gmmktime(0,0,0,$i,1)));
+        }
 
-    
+        /* Create years */
+        $current= date("Y");
+        $years= array();
+        for ($y= $current - 5; $y<=$current; $y++){
+            $years[]= $y;
+        }
+
+
     /************ 
       Set smarty defaults  
-     ************/
+    ************/
 
-    $smarty= get_smarty();
-    $smarty->assign("search_for"		, $this->search_for);
-    $smarty->assign("months"			  , $months);
-    $smarty->assign("month_select"	, $this->month);
-    $smarty->assign("years"				  , $years);
-    $smarty->assign("year_select"		, $this->year);
-    $smarty->assign("search_result"	, "");
-    
+        $smarty= get_smarty();
+        $smarty->assign("search_for"		, $this->search_for);
+        $smarty->assign("months"			  , $months);
+        $smarty->assign("month_select"	, $this->month);
+        $smarty->assign("years"				  , $years);
+        $smarty->assign("year_select"		, $this->year);
+        $smarty->assign("search_result"	, "");
+
     /************ 
       Check database accessibility 
-     ************/
+    ************/
 
-    /* Some checks */
-    if(!isset($this->config->data['SERVERS']['FAX'])){
-      msg_dialog::display(_("Error"), _("No fax server found!"), ERROR_DIALOG);
-      return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-    }elseif(!is_callable("mysql_connect")){
-      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
-      return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-    }else{
-      /* Connecting, selecting database */
-      $cfg	= $this->config->data['SERVERS']['FAX'];
-      $link 	= @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
-      if ($link === FALSE){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "GOfax"), ERROR_DIALOG);
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
-      if (! @mysql_select_db("gofax")){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOfax"), ERROR_DIALOG);
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
+        /* Some checks */
+        if(!isset($this->config->data['SERVERS']['FAX'])){
+            msg_dialog::display(_("Error"), _("No fax server found!"), ERROR_DIALOG);
+            return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+        }elseif(!is_callable("mysql_connect")){
+            msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+            return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+        }else{
+            /* Connecting, selecting database */
+            $cfg	= $this->config->data['SERVERS']['FAX'];
+            $link 	= @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
+            if ($link === FALSE){
+                msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "GOfax"), ERROR_DIALOG);
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
+            if (! @mysql_select_db("gofax")){
+                msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOfax"), ERROR_DIALOG);
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
 
-      if (! mysql_query("SELECT * FROM faxlog;")){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
-    }		
+            if (! mysql_query("SELECT * FROM faxlog;")){
+                msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
+        }		
 
-    
+
     /************ 
       Perform a deatil view 
-     ************/
+    ************/
 
-    $detail = -1;
-    foreach($_POST as $name => $desc){
-      if(preg_match("/^detail_/", $name)){
-        $detail = postDecode(preg_replace("/^detail_/","",$name));
-      }
-    }
-
-    /* Do detail view? */
-    if ($detail != -1){
-
-      /* Create query */
-      $query = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') as queuing_time,status,sender_id,sender_msn,receiver_id,".
-        "receiver_msn,pages,status_message,transfer_time FROM faxlog WHERE id=".$detail.";";
-
-      /* Connecting, selecting database */
-      $cfg= $this->config->data['SERVERS']['FAX'];
-
-      /* Check if everything went ok*/
-      $result = @mysql_query($query);
-      if ($result === false){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query failed");
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
-
-      $line = mysql_fetch_array($result, MYSQL_ASSOC);
-      mysql_close($link);
-
-      if (!preg_match ("/'".$line["uid"]."'/", $this->userfilter)){
-        msg_dialog::display(_("Permission error"), _("You have no permission to view this fax id!"), ERROR_DIALOG);
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
-
-      /* Check acls */
-      $fax_uids = array_flip($this->fax_users);
-      $uid = $line['uid'];
-      $dn = $fax_uids[$uid];
-      $acls = $this->ui->get_permissions($dn,"faxreport/faxreport");
-      if(!preg_match("/r/",$acls)){
-        msg_dialog::display(_("Permission error"), _("You have no permission to view this fax id!"), ERROR_DIALOG);
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
-
-      $parts= array( "id", "uid", "queuing_time", "status", "sender_id", "sender_msn",
-          "receiver_id", "receiver_msn", "pages", "status_message", "transfer_time" );
-
-      foreach ($parts as $vname) {
-
-        $final="fax_$vname";
-        if($vname != "uid"){
-          $v_acl = $this->ui->get_permissions($dn,"faxreport/faxreport",preg_replace("/_/","",$vname));
-        }else{
-          $v_acl = "r";
+        $detail = -1;
+        foreach($_POST as $name => $desc){
+            if(preg_match("/^detail_/", $name)){
+                $detail = postDecode(preg_replace("/^detail_/","",$name));
+            }
         }
 
-        if ($line[$vname] != "" && preg_match("/r/",$v_acl)){
-          $smarty->assign("$final", $line[$vname]);
-        } else {
-          $smarty->assign("$final", "-");
-        }
-      }
-      $queuing_time= $line['queuing_time'];
+        /* Do detail view? */
+        if ($detail != -1){
+
+            /* Create query */
+            $query = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') ".
+                "as queuing_time,status,sender_id,sender_msn,receiver_id,".
+                "receiver_msn,pages,status_message,transfer_time FROM faxlog WHERE id=".$detail.";";
+
+            /* Connecting, selecting database */
+            $cfg= $this->config->data['SERVERS']['FAX'];
+
+            /* Check if everything went ok*/
+            $result = @mysql_query($query);
+            if ($result === false){
+                msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
+                @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query failed");
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
+
+            $line = mysql_fetch_array($result, MYSQL_ASSOC);
+            mysql_close($link);
+
+            if (!preg_match ("/'".$line["uid"]."'/", $this->userfilter)){
+                msg_dialog::display(_("Permission error"), _("You have no permission to view this fax id!"), ERROR_DIALOG);
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
+
+            /* Check acls */
+            $fax_uids = array_flip($this->fax_users);
+            $uid = $line['uid'];
+            $dn = $fax_uids[$uid];
+            $acls = $this->ui->get_permissions($dn,"faxreport/faxreport");
+            if(!preg_match("/r/",$acls)){
+                msg_dialog::display(_("Permission error"), _("You have no permission to view this fax id!"), ERROR_DIALOG);
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
+
+            $parts= array( "id", "uid", "queuing_time", "status", "sender_id", "sender_msn",
+                "receiver_id", "receiver_msn", "pages", "status_message", "transfer_time" );
+
+            foreach ($parts as $vname) {
+
+                $final="fax_$vname";
+                if($vname != "uid"){
+                    $v_acl = $this->ui->get_permissions($dn,"faxreport/faxreport",preg_replace("/_/","",$vname));
+                }else{
+                    $v_acl = "r";
+                }
+
+                if ($line[$vname] != "" && preg_match("/r/",$v_acl)){
+                    $smarty->assign("$final", $line[$vname]);
+                } else {
+                    $smarty->assign("$final", "-");
+                }
+            }
+            $queuing_time= $line['queuing_time'];
 
       /* The user is allowed to download all fax images from those users 
           that are listed in session::get('fuserfilter') 
-         Don't forget to check getfax.php if you change somthing here */
-      session::set('fuserfilter',$this->userfilter);
-      $smarty->assign("plug", "?plug=".validate($_GET['plug']));
-      $smarty->assign("detail", validate($detail));
+      Don't forget to check getfax.php if you change somthing here */
+            session::set('fuserfilter',$this->userfilter);
+            $smarty->assign("plug", "?plug=".validate($_GET['plug']));
+            $smarty->assign("detail", validate($detail));
 
-      $format= _("Y-M-D");
-      $date= preg_replace("/Y/", substr($queuing_time,0,4), $format);
-      $date= preg_replace("/M/", substr($queuing_time,4,2), $date);
-      $date= preg_replace("/D/", substr($queuing_time,6,2), $date);
-      $smarty->assign("date", $date);
-      $smarty->assign("time", substr($queuing_time,8,2).":".
-          substr($queuing_time,10,2).":".
-          substr($queuing_time,12,2));
-      return($smarty->fetch(get_template_path('detail.tpl', TRUE)));
-    }
+            $format= _("Y-M-D");
+            $date= preg_replace("/Y/", substr($queuing_time,0,4), $format);
+            $date= preg_replace("/M/", substr($queuing_time,4,2), $date);
+            $date= preg_replace("/D/", substr($queuing_time,6,2), $date);
+            $smarty->assign("date", $date);
+            $smarty->assign("time", substr($queuing_time,8,2).":".
+                substr($queuing_time,10,2).":".
+                substr($queuing_time,12,2));
+            return($smarty->fetch(get_template_path('detail.tpl', TRUE)));
+        }
 
-    
+
     /************ 
       Search for uids matching the filter  
-     ************/
+    ************/
 
-    /* Search button has been pressed */
-    $fax_users= array();
-    if ($this->search_for != ""){
+        /* Search button has been pressed */
+        $fax_users= array();
+        if ($this->search_for != ""){
 
-      if (is_integer (strpos($this->search_for, "*"))){
-        $s= $this->search_for;
-      } else {
-        $s= "*".$this->search_for."*";
-      }
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cd ($this->search_base);
+            if (is_integer (strpos($this->search_for, "*"))){
+                $s= $this->search_for;
+            } else {
+                $s= "*".$this->search_for."*";
+            }
+            $ldap= $this->config->get_ldap_link();
+            $ldap->cd ($this->search_base);
 
-      /* Perform ldap search for potential users */
-      $filter= "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".
-          "(|(uid=$s)(l=$s)(homePhone=$s)".
-          "(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
-          "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)".
-          "(title=$s)))";
- 
-      $res = get_list($filter, "users/user", $this->search_base, array("uid"), GL_SUBSEARCH );
+            /* Perform ldap search for potential users */
+            $filter= "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".
+                "(|(uid=$s)(l=$s)(homePhone=$s)".
+                "(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
+                "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)".
+                "(title=$s)))";
 
-      /* Check if we are allowed to collect fax data */
-      foreach($res as $attrs){
-        $acl = $this->ui->get_permissions($attrs['dn'],"users/user","uid");
-        if(preg_match("/r/",$acl)){
-          $fax_users[ $attrs['dn']]= $attrs["uid"][0];
+            $res = get_list($filter, "users/user", $this->search_base, array("uid"), GL_SUBSEARCH );
+
+            /* Check if we are allowed to collect fax data */
+            foreach($res as $attrs){
+                $acl = $this->ui->get_permissions($attrs['dn'],"users/user","uid");
+                if(preg_match("/r/",$acl)){
+                    $fax_users[ $attrs['dn']]= $attrs["uid"][0];
+                }
+            }
+
+            /* Add self uid, if we have self acl
+             */   
+            if(preg_match("/(r|w)/",$this->ui->get_permissions($this->ui->dn,"faxreport/faxreport",""))){
+                $fax_users[$this->ui->dn] = $this->ui->uid;
+            }
+
+            $this->fax_users = $fax_users;
+
+            /* Prepare SQL query */
+            $this->userfilter= "";
+            foreach ($fax_users as $user){
+                $this->userfilter.= "uid = '$user' OR ";
+            }
+            $this->userfilter= preg_replace("/OR $/", "", $this->userfilter);
         }
-      }
-
-      /* Add self uid, if we have self acl
-       */   
-      if(preg_match("/(r|w)/",$this->ui->get_permissions($this->ui->dn,"faxreport/faxreport",""))){
-        $fax_users[$this->ui->dn] = $this->ui->uid;
-      }
-
-      $this->fax_users = $fax_users;
-
-      /* Prepare SQL query */
-      $this->userfilter= "";
-      foreach ($fax_users as $user){
-        $this->userfilter.= "uid = '$user' OR ";
-      }
-      $this->userfilter= preg_replace("/OR $/", "", $this->userfilter);
-    }
 
     /************ 
       Create filter  
-     ************/
+    ************/
 
-    /* Perform SQL query */
-    if ($this->userfilter){
-      if ($this->sort_direction == "down"){
-        $desc= "DESC";
-      } else {
-        $desc= "";
-      }
-      $start= date ("YmdHis", mktime(0,0,0,$this->month,1,$this->year));
-      $end=   date ("YmdHis", mktime(23,59,59,$this->month+1,0,$this->year));
-      $query = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') as queuing_time,status,sender_id,receiver_id,pages FROM faxlog ".
-        "WHERE ( ".$this->userfilter." ) AND queuing_time <= $end AND ".
-        "queuing_time >= $start ORDER BY ".$this->fields[$this->sort]." $desc;";
+        /* Perform SQL query */
+        if ($this->userfilter){
+            if ($this->sort_direction == "down"){
+                $desc= "DESC";
+            } else {
+                $desc= "";
+            }
+            $start= date ("YmdHis", mktime(0,0,0,$this->month,1,$this->year));
+            $end=   date ("YmdHis", mktime(23,59,59,$this->month+1,0,$this->year));
+            $query = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') as queuing_time,status,sender_id,receiver_id,pages FROM faxlog ".
+                "WHERE ( ".$this->userfilter." ) AND queuing_time <= $end AND ".
+                "queuing_time >= $start ORDER BY ".$this->fields[$this->sort]." $desc;";
 
-      if(!is_callable("mysql_connect")){
-        msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
+            if(!is_callable("mysql_connect")){
+                msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
 
-    
+
     /************ 
       Create results  
-     ************/
+    ************/
 
-      /* Connecting, selecting database */
-      $cfg= $this->config->data['SERVERS']['FAX'];
-      $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
-      
-      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-      $result = @mysql_query($query);
-      if ($result === false){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
-        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-      }
+            /* Connecting, selecting database */
+            $cfg= $this->config->data['SERVERS']['FAX'];
+            $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
 
-      $this->report_list= array();
-      $user_ids = array_flip($fax_users);
-      while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+            $result = @mysql_query($query);
+            if ($result === false){
+                msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
+                return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+            }
 
-        /* Check permissions for each field */
-        $dn = $user_ids[$line['uid']];
+            $this->report_list= array();
+            $user_ids = array_flip($fax_users);
+            while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 
-        /* Hide restricted attributes */ 
-        foreach(array("pages","receiverid","senderid","status","queuingtime","detailedView") as $attr){
-          $var = $attr."ACL";
-          $$var = $this->ui->get_permissions($dn,"faxreport/faxreport",$attr);
+                /* Check permissions for each field */
+                $dn = $user_ids[$line['uid']];
+
+                /* Hide restricted attributes */ 
+                foreach(array("pages","receiverid","senderid","status","queuingtime","detailedView") as $attr){
+                    $var = $attr."ACL";
+                    $$var = $this->ui->get_permissions($dn,"faxreport/faxreport",$attr);
+                }
+
+                /* Restricted attributes will not be displayed, this will be displayed instead */
+                $no_acl = image('images/lists/locked.png','',_("Insufficient permissions to view this attribute"));
+
+                /* Create date */ 
+                if((!empty($line["queuing_time"])) && preg_match("/r/",$queuingtimeACL)){
+                    $hour=  substr($line["queuing_time"], 8, 2);
+                    $minute=substr($line["queuing_time"], 10, 2);
+                    $format= _("Y-M-D");
+                    $date= preg_replace("/Y/", substr($line["queuing_time"], 0, 4), $format);
+                    $date= preg_replace("/M/", substr($line["queuing_time"], 4, 2), $date);
+                    $date= preg_replace("/D/", substr($line["queuing_time"], 6, 2), $date);
+                    $str_date = $date." ".$hour.":".$minute;
+                }else{
+                    $str_date = $no_acl;
+                }
+
+                /* Create entry html str */
+                $str = "<td class='list0'>".$line["uid"]."</td>";
+                $str.= "<td class='list0'>".$str_date."</td>";
+
+                /* Add Status td */
+                if(preg_match("/r/",$statusACL)){
+                    $str.="<td class='list0'>".$this->status[$line["status"]]."</td>";
+                }else{
+                    $str.="<td class='list0'>".$no_acl."</td>";
+                }
+
+                /* Add sender_id td */
+                if(preg_match("/r/",$senderidACL)){
+                    $str.="<td class='list0'>".$line["sender_id"]."</td>";
+                }else{
+                    $str.="<td class='list0'>".$no_acl."</td>";
+                }
+
+                /* Add receiver_id td */
+                if(preg_match("/r/",$receiveridACL)){
+                    $str.="<td class='list0'>".$line["receiver_id"]."</td>";
+                }else{
+                    $str.="<td class='list0'>".$no_acl."</td>";
+                }
+
+                /* Add receiver_id td */
+                if(preg_match("/r/",$pagesACL)){
+                    $str.="<td class='list0'>".$line["pages"]."</td>";
+                }else{
+                    $str.="<td class='list0'>".$no_acl."</td>";
+                }
+                /* Create entry html str */
+                if(preg_match("/r/",$detailedViewACL)){
+                    $str.= "<td class='list0'>".image('images/info_small.png', 'detail_'.postEncode($line["id"]))."</td>";
+                }else{
+                    $str.= "<td class='list0'>&nbsp;</td>";
+                }
+                $this->report_list[] =  $str;
+            }
+
+            mysql_close($link);
         }
-
-        /* Restricted attributes will not be displayed, this will be displayed instead */
-        $no_acl = image('images/lists/locked.png','',_("Insufficient permissions to view this attribute"));
-
-        /* Create date */ 
-        if((!empty($line["queuing_time"])) && preg_match("/r/",$queuingtimeACL)){
-          $hour=  substr($line["queuing_time"], 8, 2);
-          $minute=substr($line["queuing_time"], 10, 2);
-          $format= _("Y-M-D");
-          $date= preg_replace("/Y/", substr($line["queuing_time"], 0, 4), $format);
-          $date= preg_replace("/M/", substr($line["queuing_time"], 4, 2), $date);
-          $date= preg_replace("/D/", substr($line["queuing_time"], 6, 2), $date);
-          $str_date = $date." ".$hour.":".$minute;
-        }else{
-          $str_date = $no_acl;
-        }
-
-        /* Create entry html str */
-        $str = "<td class='list0'>".$line["uid"]."</td>";
-        $str.= "<td class='list0'>".$str_date."</td>";
-
-        /* Add Status td */
-        if(preg_match("/r/",$statusACL)){
-          $str.="<td class='list0'>".$this->status[$line["status"]]."</td>";
-        }else{
-          $str.="<td class='list0'>".$no_acl."</td>";
-        }
-
-        /* Add sender_id td */
-        if(preg_match("/r/",$senderidACL)){
-          $str.="<td class='list0'>".$line["sender_id"]."</td>";
-        }else{
-          $str.="<td class='list0'>".$no_acl."</td>";
-        }
-
-        /* Add receiver_id td */
-        if(preg_match("/r/",$receiveridACL)){
-          $str.="<td class='list0'>".$line["receiver_id"]."</td>";
-        }else{
-          $str.="<td class='list0'>".$no_acl."</td>";
-        }
-
-        /* Add receiver_id td */
-        if(preg_match("/r/",$pagesACL)){
-          $str.="<td class='list0'>".$line["pages"]."</td>";
-        }else{
-          $str.="<td class='list0'>".$no_acl."</td>";
-        }
-        /* Create entry html str */
-        if(preg_match("/r/",$detailedViewACL)){
-          $str.= "<td class='list0'>".image('images/info_small.png', 'detail_'.postEncode($line["id"]))."</td>";
-        }else{
-          $str.= "<td class='list0'>&nbsp;</td>";
-        }
-        $this->report_list[] =  $str;
-      }
-
-      mysql_close($link);
-    }
 
     /************ 
       Create output out of results  
-     ************/
+    ************/
 
-    /* Generate output */
-    $mod= 0;
-    $output= "";
-    foreach ($this->report_list as $val){
-      if ($mod < $this->start) {
-        $mod++;
-        continue;
-      }
-      if ($mod >= ($this->start + $this->range)){
-        $mod++;
-        break;
-      }
-      if ( ($mod++) & 1){
-        $col= "background-color: #ECECEC;";
-      } else {
-        $col= "background-color: #F5F5F5;";
-      }
-      $output.= "<tr style=\"height:22px; $col\">$val</tr>";
-    }
+        /* Generate output */
+        $mod= 0;
+        $output= "";
+        foreach ($this->report_list as $val){
+            if ($mod < $this->start) {
+                $mod++;
+                continue;
+            }
+            if ($mod >= ($this->start + $this->range)){
+                $mod++;
+                break;
+            }
+            if ( ($mod++) & 1){
+                $col= "background-color: #ECECEC;";
+            } else {
+                $col= "background-color: #F5F5F5;";
+            }
+            $output.= "<tr style=\"height:22px; $col\">$val</tr>";
+        }
 
-    
+
     /************ 
       Display results  
-     ************/
+    ************/
 
-    if (isset($fax_users) && count($fax_users)){
-      $smarty->assign("search_result", $output);
-      $smarty->assign("range_selector", range_selector(count($this->report_list), $this->start, $this->range,"EntriesPerPage"));
-    }else{
-      $smarty->assign("search_result", "");
-    }
+        if (isset($fax_users) && count($fax_users)){
+            $smarty->assign("search_result", $output);
+            $smarty->assign("range_selector", range_selector(count($this->report_list), $this->start, $this->range,"EntriesPerPage"));
+        }else{
+            $smarty->assign("search_result", "");
+        }
 
-    /* Show main page */
-    $smarty->assign("plug", "?plug=".validate($_GET['plug']));
-    for($i= 0; $i<7; $i++){
-      $smarty->assign("mode$i", "");
+        /* Show main page */
+        $smarty->assign("plug", "?plug=".validate($_GET['plug']));
+        for($i= 0; $i<7; $i++){
+            $smarty->assign("mode$i", "");
+        }
+        $smarty->assign("mode".$this->sort, image("images/lists/sort-".$this->sort_direction.".png"));
+        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }
-    $smarty->assign("mode".$this->sort, image("images/lists/sort-".$this->sort_direction.".png"));
-    return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-  }
 
 
   /* Save ui input, and store it in session::get() 
-     to remember last search next time*/
-  function save_object()
-  {
-    $faxreportfilter = session::get("faxreportfilter");
-    if(isset($_POST['EntriesPerPage'])){
-      $this->range = $_POST['EntriesPerPage'];
-    }
-
-    if (isset($_GET['start'])){
-      $this->start= (int)$_GET['start'];
-    }
-
-    /* Adapt sorting */
-    if (isset($_GET['sort'])){
-      if ($this->sort == (int)$_GET['sort']){
-        if ($this->sort_direction == "down"){
-          $this->sort_direction= "up";
-        } else {
-          $this->sort_direction= "down";
+  to remember last search next time*/
+    function save_object()
+    {
+        $faxreportfilter = session::get("faxreportfilter");
+        if(isset($_POST['EntriesPerPage'])){
+            $this->range = $_POST['EntriesPerPage'];
         }
-      }
-      $this->sort= (int)$_GET['sort'];
-      if ($this->sort < 0 || $this->sort > 5){
-        $this->sort= 0;
-      }
-    }
-    foreach( array("year", "month", "search_for", "search_base") as $type){
-      if (isset($_POST[$type])){
-        $faxreportfilter[$type]= $_POST[$type];
 
-        /* reset start page, if filter has changed */ 
-        if(!isset($_GET['start'])){
-          $this->start = 0;
+        if (isset($_GET['start'])){
+            $this->start= (int)$_GET['start'];
         }
-      }
-      $this->$type= $faxreportfilter[$type];
-   
+
+        /* Adapt sorting */
+        if (isset($_GET['sort'])){
+            if ($this->sort == (int)$_GET['sort']){
+                if ($this->sort_direction == "down"){
+                    $this->sort_direction= "up";
+                } else {
+                    $this->sort_direction= "down";
+                }
+            }
+            $this->sort= (int)$_GET['sort'];
+            if ($this->sort < 0 || $this->sort > 5){
+                $this->sort= 0;
+            }
+        }
+        foreach( array("year", "month", "search_for", "search_base") as $type){
+            if (isset($_POST[$type])){
+                $faxreportfilter[$type]= $_POST[$type];
+
+                /* reset start page, if filter has changed */ 
+                if(!isset($_GET['start'])){
+                    $this->start = 0;
+                }
+            }
+            $this->$type= $faxreportfilter[$type];
+
+        }
+        foreach($this->attributes_SO as $name){
+            $faxreportfilter[$name] = $this->$name;
+        }  
+        session::set("faxreportfilter",$faxreportfilter);
     }
-    foreach($this->attributes_SO as $name){
-      $faxreportfilter[$name] = $this->$name;
-    }  
-    session::set("faxreportfilter",$faxreportfilter);
-  }
 
 
   /* Return plugin informations for acl handling
-    #FIXME You can only read attributes within this report plugin */
-  static function plInfo()
-  {
-  
-    return (array(
-          "plShortName"     => _("Fax report"),
-          "plDescription"   => _("Fax report")."&nbsp;<i>"._("All entries are readonly")."</i>",
-          "plSelfModify"    => TRUE,
-          "plDepends"       => array(),
-          "plPriority"      => 1,                                 // Position in tabs
-          "plSection"       => array("administration"),                     // This belongs to personal
-          "plCategory"      => array("faxreport" => array("description" => _("Fax reports"),
-                                                         "objectClass" => array())),
-          "plOptions"       => array(),
+  #FIXME You can only read attributes within this report plugin */
+      static function plInfo()
+      {
 
-          "plProvidedAcls" => array(
-            "detailedView"   => _("Detailed view"),
-            "id"             => _("Fax ID"),
-            "queuingtime"    => _("Date")."&nbsp;/&nbsp;"._("Time"),
-            "status"         => _("Status"),
-            "senderid"       => _("Sender ID"),
-            "sendermsn"      => _("Sender MSN"),
-            "receiverid"     => _("Receiver ID"),
-            "receivermsn"    => _("Receiver MSN"),
-            "pages"          => _("Number of pages"),
-            "statusmessage"  => _("Status Message"),
-            "transfertime"   => _("Transfer time"))
-        ));
-  }
+          return (array(
+              "plShortName"     => _("Fax report"),
+              "plDescription"   => _("Fax report")."&nbsp;<i>"._("All entries are readonly")."</i>",
+              "plSelfModify"    => TRUE,
+              "plDepends"       => array(),
+              "plPriority"      => 1,                                 // Position in tabs
+              "plSection"       => array("administration"),                     // This belongs to personal
+              "plCategory"      => array("faxreport" => array("description" => _("Fax reports"),
+              "objectClass" => array())),
+              "plOptions"       => array(),
+
+              "plProvidedAcls" => array(
+                  "detailedView"   => _("Detailed view"),
+                  "id"             => _("Fax ID"),
+                  "queuingtime"    => _("Date")."&nbsp;/&nbsp;"._("Time"),
+                  "status"         => _("Status"),
+                  "senderid"       => _("Sender ID"),
+                  "sendermsn"      => _("Sender MSN"),
+                  "receiverid"     => _("Receiver ID"),
+                  "receivermsn"    => _("Receiver MSN"),
+                  "pages"          => _("Number of pages"),
+                  "statusmessage"  => _("Status Message"),
+                  "transfertime"   => _("Transfer time"))
+              ));
+      }
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
