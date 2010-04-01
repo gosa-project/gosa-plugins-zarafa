@@ -73,7 +73,7 @@ class FAI
           $name = preg_replace("/".preg_quote($release, '/')."/i","",$attr['dn']);
 
           if(isset($attr['FAIstate'][0])){
-            if(preg_match("/removed$/",$attr['FAIstate'][0])){
+            if(preg_match("/removed/",$attr['FAIstate'][0])){
               if(isset($res[$name])){
                 unset($res[$name]);
               }
