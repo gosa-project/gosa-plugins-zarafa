@@ -258,23 +258,11 @@ class faxreport extends plugin
             "status,sender_id,receiver_id,pages FROM faxlog ".
             "WHERE {$userfilter} AND queuing_time <= {$end} AND ".
             "queuing_time >= {$start} ORDER BY ".$this->fields[$this->sort].
-            " {$desc } LIMIT {$this->start},{$this->range};" ;
+            " {$desc } ";
 
-        $query_count = "SELECT count(uid) as `count` FROM faxlog ".
-            "WHERE {$userfilter} AND queuing_time <= {$end} AND ".
-            "queuing_time >= {$start} ;";
 
-        // Get result count
         $cfg= $this->config->data['SERVERS']['FAX'];
         $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-        $result =@mysql_query($query_count);
-        if ($result === false){
-            msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
-            return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
-        }
-        $tmp = mysql_fetch_assoc($result);
-        $entry_count = $tmp['count'];
 
         // Get the results 
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
@@ -366,6 +354,7 @@ class faxreport extends plugin
         }
         mysql_close($link);
 
+        $entry_count = count($report_list);
 
         /* Generate output */
         $mod= 0;
