@@ -104,6 +104,9 @@ class fonreport extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    // Use the configured global timezone settings 
+    timezone::get_default_timezone();
+
     /* GVet template engine */
     $smarty= get_smarty();
 
