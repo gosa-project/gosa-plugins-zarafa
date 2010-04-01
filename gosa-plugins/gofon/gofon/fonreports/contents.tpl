@@ -1,6 +1,6 @@
 <div id="mainlist">
  <div class="mainlist-header">
-  <p>{t}System logs{/t}</p>
+  <p>{t}Phone reports{/t}</p>
 
   <div class="mainlist-nav">
    <table summary="{t}Filter{/t}" style="width: 100%;"
@@ -42,13 +42,13 @@
   <table summary="{t}Phone reports{/t}" style="width:100%;" cellpadding="0" cellspacing="0">
    <thead class="fixedListHeader listHeaderFormat">
     <tr>
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=0">{t}Date{/t} {$mode0}</a></td>
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=1">{t}Source{/t} {$mode1}</a></td>
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=2">{t}Destination{/t} {$mode2}</a></td>	
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=3">{t}Channel{/t} {$mode3}</a></td>	
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=4">{t}Application{/t} {$mode4}</a></td>	
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=5">{t}Status{/t} {$mode5}</a></td>	
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=6">{t}Duration{/t} {$mode6}</a></td>	
+     <td class='listheader'><a href="main.php{$plug}&amp;sort=0">{t}Date{/t}</a> {$mode0}</td>
+     <td class='listheader'><a href="main.php{$plug}&amp;sort=1">{t}Source{/t}</a> {$mode1}</td>
+     <td class='listheader'><a href="main.php{$plug}&amp;sort=2">{t}Destination{/t}</a> {$mode2}</td>	
+     <td class='listheader'><a href="main.php{$plug}&amp;sort=3">{t}Channel{/t}</a> {$mode3}</td>	
+     <td class='listheader'><a href="main.php{$plug}&amp;sort=4">{t}Application{/t}</a> {$mode4}</td>	
+     <td class='listheader'><a href="main.php{$plug}&amp;sort=5">{t}Status{/t}</a> {$mode5}</td>	
+     <td class='listheader'><a href="main.php{$plug}&amp;sort=6">{t}Duration{/t}</a> {$mode6}</td>	
     </tr>
    </thead>
    <tbody class="listScrollContent listBodyFormat" id="t_nscrollbody">

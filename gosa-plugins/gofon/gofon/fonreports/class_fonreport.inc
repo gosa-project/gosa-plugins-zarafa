@@ -312,7 +312,7 @@ class fonreport extends plugin
     for($i= 0; $i<7; $i++){
       $smarty->assign("mode$i", "");
     }
-    $smarty->assign("mode".$this->sort, "<img alt=\"\" src=\"images/sort_".$this->sort_direction.".png\" border=0 align=middle>");
+    $smarty->assign("mode".$this->sort, image("images/lists/sort-".$this->sort_direction.".png"));
 
     return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
   }
