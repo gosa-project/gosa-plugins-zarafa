@@ -336,19 +336,19 @@ class fonreport extends plugin
   /* Create WHERE part for our mysql serach */
   function GetUidMatchingFilter()
   {
-    $ldap       = $this->config->get_ldap_link();
-    $ldap->cd     ($this->search_base);
-    $s          = $this->search_for;
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->search_base);
+    $s = $this->search_for;
 
-    $s          = preg_replace("/\%/","",$s);  
-    $s2         = preg_replace("/\*/","%",$s);  
+    $s = preg_replace("/\%/","",$s);  
+    $s2 = preg_replace("/\*/","%",$s);  
 
     $filter = "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".
         "(|(uid=$s)(l=$s)(homePhone=$s)(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
         "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)(title=$s)))";
 
     $attrs  = array("uid");
-    $res    = get_sub_list($filter,"fonreport/fonreport",get_people_ou(),$this->search_base,$attrs);
+    $res    = get_list($filter,"fonreport/fonreport",$this->search_base,$attrs);
     
     $str = " AND (";
     $fields = array("dstchannel","channel");
