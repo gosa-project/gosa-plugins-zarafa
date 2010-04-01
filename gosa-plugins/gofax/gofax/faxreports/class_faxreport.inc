@@ -310,41 +310,41 @@ class faxreport extends plugin
             }
 
             /* Create entry html str */
-            $str = "<td class='list0'>".$line["uid"]."</td>";
-            $str.= "<td class='list0'>".$str_date."</td>";
+            $str = " \n<td class='list0'>".$line["uid"]."</td>";
+            $str.= " \n<td class='list0'>".$str_date."</td>";
 
             /* Add Status td */
             if(preg_match("/r/",$statusACL)){
-                $str.="<td class='list0'>".$this->status[$line["status"]]."</td>";
+                $str.=" \n<td class='list0'>".$this->status[$line["status"]]."</td>";
             }else{
-                $str.="<td class='list0'>".$no_acl."</td>";
+                $str.=" \n<td class='list0'>".$no_acl."</td>";
             }
 
             /* Add sender_id td */
             if(preg_match("/r/",$senderidACL)){
-                $str.="<td class='list0'>".$line["sender_id"]."</td>";
+                $str.=" \n<td class='list0'>".htmlentities($line["sender_id"],ENT_COMPAT,'UTF-8')."</td>";
             }else{
-                $str.="<td class='list0'>".$no_acl."</td>";
+                $str.=" \n<td class='list0'>".$no_acl."</td>";
             }
 
             /* Add receiver_id td */
             if(preg_match("/r/",$receiveridACL)){
-                $str.="<td class='list0'>".$line["receiver_id"]."</td>";
+                $str.=" \n<td class='list0'>".htmlentities($line["receiver_id"],ENT_COMPAT,'UTF-8')."</td>";
             }else{
-                $str.="<td class='list0'>".$no_acl."</td>";
+                $str.=" \n<td class='list0'>".$no_acl."</td>";
             }
 
             /* Add receiver_id td */
             if(preg_match("/r/",$pagesACL)){
-                $str.="<td class='list0'>".$line["pages"]."</td>";
+                $str.=" \n<td class='list0'>".$line["pages"]."</td>";
             }else{
-                $str.="<td class='list0'>".$no_acl."</td>";
+                $str.=" \n<td class='list0'>".$no_acl."</td>";
             }
             /* Create entry html str */
             if(preg_match("/r/",$detailedViewACL)){
-                $str.= "<td class='list0'>".image('images/info_small.png', 'detail_'.postEncode($line["id"]))."</td>";
+                $str.= " \n<td class='list0'>".image('images/info_small.png', 'detail_'.postEncode($line["id"]))."</td>";
             }else{
-                $str.= "<td class='list0'>&nbsp;</td>";
+                $str.= " \n<td class='list0'>&nbsp;</td>";
             }
             $this->report_list[] =  $str;
         }
@@ -355,7 +355,7 @@ class faxreport extends plugin
         $mod= 0;
         $output= "";
         foreach ($this->report_list as $val){
-            $output.= "<tr>{$val}</tr>";
+            $output.= "\n<tr>{$val}</tr>";
         }
         $smarty->assign("search_result", $output);
         $smarty->assign("range_selector", 
