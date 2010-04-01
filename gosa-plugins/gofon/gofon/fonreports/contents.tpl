@@ -34,8 +34,6 @@
  </div>
 </div>
 
-<br>
-
 {if $search_result}
 
  <div class="listContainer" id="d_scrollbody" style="min-height: 475px; height: 444px;">
@@ -48,7 +46,7 @@
      <td class='listheader'><a href="main.php{$plug}&amp;sort=3">{t}Channel{/t}</a> {$mode3}</td>	
      <td class='listheader'><a href="main.php{$plug}&amp;sort=4">{t}Application{/t}</a> {$mode4}</td>	
      <td class='listheader'><a href="main.php{$plug}&amp;sort=5">{t}Status{/t}</a> {$mode5}</td>	
-     <td class='listheader'><a href="main.php{$plug}&amp;sort=6">{t}Duration{/t}</a> {$mode6}</td>	
+     <td class='listheader'  style='border-right: 0pt none;'><a href="main.php{$plug}&amp;sort=6">{t}Duration{/t}</a> {$mode6}</td>	
     </tr>
    </thead>
    <tbody class="listScrollContent listBodyFormat" id="t_nscrollbody">
