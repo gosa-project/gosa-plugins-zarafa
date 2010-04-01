@@ -2,12 +2,9 @@
  <tr>
   <td> 
    <a href="plugins/gofax/getfax.php?id={$detail}&amp;download=1">
-     {image path="plugins/gofax/getfax.php?id={$detail}" align="bottom"}
-
+     <img src='plugins/gofax/getfax.php?id={$detail}' align="bottom" alt="{t}Click on fax to download{/t}">
+     <br> {t}Click on fax to download{/t}
    </a>
-   <p style="margin-top-width:0px; text-align:center;">
-    {t}Click on fax to download{/t}
-   </p>
   </td>
   <td style="width:20px;">
     &nbsp;

@@ -39,7 +39,7 @@ class faxreport extends plugin
     /* Include config object */
     $this->config       = $config;
     $this->ui           = &$ui;
-    $this->search_base  = get_base_from_people($ui->dn);
+    $this->search_base  = $this->config->current['BASE'];
     $this->year         = date("Y");
     $this->month        = date("m");
 
@@ -95,17 +95,12 @@ class faxreport extends plugin
      ************/
 
     $smarty= get_smarty();
-    $smarty->assign("launchimage"		, get_template_path('images/launch.png'));
-    $smarty->assign("search_image"  , get_template_path('images/lists/search.png'));
     $smarty->assign("search_for"		, $this->search_for);
-    $smarty->assign("bases"				  , $this->config->idepartments);
-    $smarty->assign("base_select"		, $this->search_base);
     $smarty->assign("months"			  , $months);
     $smarty->assign("month_select"	, $this->month);
     $smarty->assign("years"				  , $years);
     $smarty->assign("year_select"		, $this->year);
     $smarty->assign("search_result"	, "");
-
     
     /************ 
       Check database accessibility 
@@ -142,12 +137,19 @@ class faxreport extends plugin
       Perform a deatil view 
      ************/
 
+    $detail = -1;
+    foreach($_POST as $name => $desc){
+      if(preg_match("/^detail_/", $name)){
+        $detail = postDecode(preg_replace("/^detail_/","",$name));
+      }
+    }
+
     /* Do detail view? */
-    if (isset($_GET['detail'])){
+    if ($detail != -1){
 
       /* Create query */
       $query = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') as queuing_time,status,sender_id,sender_msn,receiver_id,".
-        "receiver_msn,pages,status_message,transfer_time FROM faxlog WHERE id=".$_GET['detail'].";";
+        "receiver_msn,pages,status_message,transfer_time FROM faxlog WHERE id=".$detail.";";
 
       /* Connecting, selecting database */
       $cfg= $this->config->data['SERVERS']['FAX'];
@@ -203,7 +205,7 @@ class faxreport extends plugin
          Don't forget to check getfax.php if you change somthing here */
       session::set('fuserfilter',$this->userfilter);
       $smarty->assign("plug", "?plug=".validate($_GET['plug']));
-      $smarty->assign("detail", validate($_GET['detail']));
+      $smarty->assign("detail", validate($detail));
 
       $format= _("Y-M-D");
       $date= preg_replace("/Y/", substr($queuing_time,0,4), $format);
@@ -222,6 +224,7 @@ class faxreport extends plugin
      ************/
 
     /* Search button has been pressed */
+    $fax_users= array();
     if ($this->search_for != ""){
 
       if (is_integer (strpos($this->search_for, "*"))){
@@ -234,16 +237,14 @@ class faxreport extends plugin
 
       /* Perform ldap search for potential users */
       $filter= "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".
-          "(objectClass=goFaxAccount)".
           "(|(uid=$s)(l=$s)(homePhone=$s)".
           "(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
           "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)".
           "(title=$s)))";
  
-      $res = get_list($filter, "users", $this->search_base, array("uid"), GL_SUBSEARCH );
+      $res = get_list($filter, "users/user", $this->search_base, array("uid"), GL_SUBSEARCH );
 
       /* Check if we are allowed to collect fax data */
-      $fax_users= array();
       foreach($res as $attrs){
         $acl = $this->ui->get_permissions($attrs['dn'],"users/user","uid");
         if(preg_match("/r/",$acl)){
@@ -319,8 +320,7 @@ class faxreport extends plugin
         }
 
         /* Restricted attributes will not be displayed, this will be displayed instead */
-        $no_acl = "<img class='center' src='images/lists/locked.png' 
-                    title='"._("Insufficient permissions to view this attribute")."' alt='"._("Insufficient permissions")."'>";
+        $no_acl = image('images/lists/locked.png','',_("Insufficient permissions to view this attribute"));
 
         /* Create date */ 
         if((!empty($line["queuing_time"])) && preg_match("/r/",$queuingtimeACL)){
@@ -334,52 +334,45 @@ class faxreport extends plugin
         }else{
           $str_date = $no_acl;
         }
-  
-        /* Create entry html str */
 
-        if(preg_match("/r/",$detailedViewACL)){
-          $str = "<td class=\"phonelist\">
-            <a href=\"main.php?plug=".validate($_GET['plug'])."&amp;detail=".$line["id"]."\">
-            <img class='center' alt=\"\" align=\"middle\" border=0 src=\"".get_template_path('images/info_small.png')."\">
-            &nbsp;".$line["uid"].
-            "</a>
-            </td>
-            <td>$str_date</td>";
-        }else{
-          $str = "<td>
-            <img class='center' alt=\"\" align=\"middle\" border=0 src=\"".get_template_path('images/info_small.png')."\">
-            &nbsp;".$line["uid"]."</td>
-            <td>$str_date</td>";
-        }
-        
+        /* Create entry html str */
+        $str = "<td class='list0'>".$line["uid"]."</td>";
+        $str.= "<td class='list0'>".$str_date."</td>";
+
         /* Add Status td */
         if(preg_match("/r/",$statusACL)){
-          $str.="<td>".$this->status[$line["status"]]."</td>";
+          $str.="<td class='list0'>".$this->status[$line["status"]]."</td>";
         }else{
-          $str.="<td>".$no_acl."</td>";
+          $str.="<td class='list0'>".$no_acl."</td>";
         }
 
         /* Add sender_id td */
         if(preg_match("/r/",$senderidACL)){
-          $str.="<td>".$line["sender_id"]."</td>";
+          $str.="<td class='list0'>".$line["sender_id"]."</td>";
         }else{
-          $str.="<td>".$no_acl."</td>";
+          $str.="<td class='list0'>".$no_acl."</td>";
         }
 
         /* Add receiver_id td */
         if(preg_match("/r/",$receiveridACL)){
-          $str.="<td>".$line["receiver_id"]."</td>";
+          $str.="<td class='list0'>".$line["receiver_id"]."</td>";
         }else{
-          $str.="<td>".$no_acl."</td>";
+          $str.="<td class='list0'>".$no_acl."</td>";
         }
 
         /* Add receiver_id td */
         if(preg_match("/r/",$pagesACL)){
-          $str.="<td>".$line["pages"]."</td>";
+          $str.="<td class='list0'>".$line["pages"]."</td>";
         }else{
-          $str.="<td>".$no_acl."</td>";
+          $str.="<td class='list0'>".$no_acl."</td>";
         }
-      $this->report_list[] =  $str;
+        /* Create entry html str */
+        if(preg_match("/r/",$detailedViewACL)){
+          $str.= "<td class='list0'>".image('images/info_small.png', 'detail_'.postEncode($line["id"]))."</td>";
+        }else{
+          $str.= "<td class='list0'>&nbsp;</td>";
+        }
+        $this->report_list[] =  $str;
       }
 
       mysql_close($link);
@@ -426,8 +419,7 @@ class faxreport extends plugin
     for($i= 0; $i<7; $i++){
       $smarty->assign("mode$i", "");
     }
-    $smarty->assign("mode".$this->sort, "<img alt=\"\" src=\"images/sort_".$this->sort_direction.
-        ".png\" border=0 align=middle>");
+    $smarty->assign("mode".$this->sort, image("images/lists/sort-".$this->sort_direction.".png"));
     return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
   }
 

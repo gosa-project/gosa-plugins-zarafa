@@ -16,7 +16,6 @@ if ( $cleanup ){
 	$faxreport->save_object();
 	$display= $faxreport->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
-	$display= print_header(get_template_path($faxreport->plIcon), _("FAX reports")).$display;
 
 	/* Store changes  in session */
 	session::set('faxreport',$faxreport);
