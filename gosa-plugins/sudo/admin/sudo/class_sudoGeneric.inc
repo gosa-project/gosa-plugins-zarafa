@@ -123,9 +123,11 @@ class sudo extends plugin
             $this->$ll->setWidth("100%");
             $this->$ll->setHeight("100px");
             $this->$ll->setAcl($this->getacl($l));
+            $this->$ll->setDefaultSortColumn(1);
         }
         $this->sudoUserList->setHeader(array("!",_("Type"),_("Member"),_("Option")));
         $this->sudoUserList->setColspecs(array('24px','24px','*','46px'));
+        $this->sudoUserList->setDefaultSortColumn(2);
         $this->sudoHostList->setHeader(array("!",_("System"),_("Option")));
         $this->sudoHostList->setColspecs(array('24px','*','46px'));
         $this->sudoCommandList->setHeader(array("!",_("Command"),_("Option")));
@@ -413,50 +415,46 @@ class sudo extends plugin
         }
 
         foreach(array("sudoCommand","sudoHost","sudoRunAs") as $attr){
-            if($this->acl_is_readable($attr)){
-                $tmp =array();
-                $list = $attr."List";
-                $data = $attr."Data";
-                foreach($this->$attr as $id => $entry){
-                    $neg = "";
-                    if(preg_match("/^!/",$entry)){
-                        $neg = $neg_img;
-                    }
-                    $entry = preg_replace("/^!/","",$entry);
-
-                    $action =preg_replace(array("/%KEY%/","/%ATTR%/"),array($id,$attr),$option);
-                    $tmp[$id] = array('data'=>array($neg,$entry,$action)) ;
-                }
-                $this->$list->setListData($this->$attr, $tmp);
-                $this->$list->update();
-                $smarty->assign("divlist_{$attr}", $this->$list->render());
-            }
-        }
-
-
-        if($this->acl_is_readable($attr)){
-            $img1 = image('plugins/users/images/select_user.png','',_("User"));
-            $img2 = image('plugins/groups/images/select_group.png','',_("Group"));
-            $sudoUserData  = array();
-            foreach($this->sudoUser as $id => $entry){
+            $tmp =array();
+            $list = $attr."List";
+            $data = $attr."Data";
+            foreach($this->$attr as $id => $entry){
                 $neg = "";
                 if(preg_match("/^!/",$entry)){
                     $neg = $neg_img;
                 }
                 $entry = preg_replace("/^!/","",$entry);
 
-                $img = $img1;
-                if(preg_match("/^%/",$entry)){
-                    $img = $img2;
-                }
-                $entry = preg_replace("/^%/","",$entry);
-                $action =preg_replace(array("/%KEY%/","/%ATTR%/"),array($id,'sudoUser'),$option);
-                $sudoUserData[$id] = array('data'=>array($neg,$img,$entry,$action)) ;
+                $action =preg_replace(array("/%KEY%/","/%ATTR%/"),array($id,$attr),$option);
+                $tmp[$id] = array('data'=>array($neg,$entry,$action)) ;
             }
-            $this->sudoUserList->setListData($this->sudoUser,$sudoUserData);
-            $this->sudoUserList->update();
-            $smarty->assign("divlist_sudoUser", $this->sudoUserList->render());
+            $this->$list->setListData($this->$attr, $tmp);
+            $this->$list->update();
+            $smarty->assign("divlist_{$attr}", $this->$list->render());
         }
+
+
+        $img1 = image('plugins/users/images/select_user.png','',_("User"));
+        $img2 = image('plugins/groups/images/select_group.png','',_("Group"));
+        $sudoUserData  = array();
+        foreach($this->sudoUser as $id => $entry){
+            $neg = "";
+            if(preg_match("/^!/",$entry)){
+                $neg = $neg_img;
+            }
+            $entry = preg_replace("/^!/","",$entry);
+
+            $img = $img1;
+            if(preg_match("/^%/",$entry)){
+                $img = $img2;
+            }
+            $entry = preg_replace("/^%/","",$entry);
+            $action =preg_replace(array("/%KEY%/","/%ATTR%/"),array($id,'sudoUser'),$option);
+            $sudoUserData[$id] = array('data'=>array($neg,$img,$entry,$action)) ;
+        }
+        $this->sudoUserList->setListData($this->sudoUser,$sudoUserData);
+        $this->sudoUserList->update();
+        $smarty->assign("divlist_sudoUser", $this->sudoUserList->render());
         return($smarty->fetch(get_template_path('generic.tpl', TRUE)));
     }
 
