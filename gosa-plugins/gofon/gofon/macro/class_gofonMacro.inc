@@ -211,6 +211,7 @@ class macro extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "ERROR");
           return ( msgPool::dbquery("GOfon",@mysql_error($r_current),$Server['SERVER']));
         }
         @mysql_close($r_current);
@@ -273,12 +274,20 @@ class macro extends plugin
        */
       $tmp  = explode(",", $s_linestr,3);
 
+      // No priority given ... somehow
+      if(count($tmp) == 2){
+        $tmp = array($tmp[0],"1",$tmp[1]); 
+      }
+
       /* Check if there is an application given */
-      if(empty($tmp[1])){
+      if($tmp[2] == ""){
         return(sprintf(_("Application missing in line %s!"),$i_linenum));
       } 
+      if($tmp[1] == ""){
+        return(sprintf(_("Priority missing in line %s!"),$i_linenum));
+      } 
       /* Check if there is an extension given */
-      if(empty($tmp[0])){
+      if($tmp[0] == ""){
         return(sprintf(_("Extension missing in line %s!"),$i_linenum));
       } 
 
@@ -308,6 +317,7 @@ class macro extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_con));
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "ERROR");
         }
         @mysql_close($r_con);
       }
