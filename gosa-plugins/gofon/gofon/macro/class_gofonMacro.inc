@@ -212,7 +212,11 @@ class macro extends plugin
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
           @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "ERROR");
-          return ( msgPool::dbquery("GOfon",@mysql_error($r_current),$Server['SERVER']));
+          trigger_error(mysql_error($r_current));
+          return(
+            sprintf(
+              _("Macro could not be removed from server '%s', please check database consistency!"), 
+              $Server['SERVER']));
         }
         @mysql_close($r_current);
       }
@@ -318,6 +322,11 @@ class macro extends plugin
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_con));
           @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "ERROR");
+          trigger_error(mysql_error($r_con));
+          return(
+            sprintf(
+              _("Macro could not be added to server '%s', please check database consistency!"), 
+              $cfg['SERVER']));
         }
         @mysql_close($r_con);
       }
