@@ -32,9 +32,9 @@ class phoneAccount extends plugin
   var $goFonHomeServers       = array();        // Contains all available server configurations 
 
   var $context                = "default";
-  var $sip_contexts           = "default";
+  var $sip_contexts           = array();
   var $voice_context          = "default";
-  var $voicemail_contexts     = "default";
+  var $voicemail_contexts     = array();
 
   /* attribute list for save action */
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
@@ -1144,6 +1144,9 @@ class phoneAccount extends plugin
           $string = $paras['default'];
 
           $string=preg_replace("/%uid/i",$this->uid,$string);
+          $string=preg_replace("/%pager/i",$this->pager,$string);
+          $string=preg_replace("/%context/i",$this->context,$string);
+          $string=preg_replace("/%voicemailcontext/i",$this->voice_context,$string);
 
           if(isset($this->cn)){
             $string=preg_replace("/%cn/i",$this->cn,$string);
