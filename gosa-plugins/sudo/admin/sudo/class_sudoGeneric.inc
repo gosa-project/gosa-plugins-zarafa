@@ -258,9 +258,9 @@ class sudo extends plugin
           Delete values 
          *********************/ 
         foreach($_POST as $name => $value){
-            if(preg_match("/^del_/",$name)){
-                $attr = preg_replace("/^del_([^_]*).*$/","\\1",$name);
-                $value= preg_replace("/^del_[^_]*_([0-9]*)$/","\\1",$name);
+            if(preg_match("/^delS_/",$name)){
+                $attr = preg_replace("/^delS_([^_]*).*$/","\\1",$name);
+                $value= preg_replace("/^delS_[^_]*_([0-9]*)$/","\\1",$name);
                 if($this->acl_is_writeable($attr)){
                     $attrs = $this->$attr;
                     if(isset( $attrs[$value])){
@@ -323,7 +323,7 @@ class sudo extends plugin
          */
         $neg_img= image('plugins/sudo/images/negate.png','','!');
         $option = image('plugins/sudo/images/negate.png','neg_%ATTR%_%KEY%');
-        $option.= image('images/lists/trash.png', 'del_%ATTR%_%KEY%');
+        $option.= image('images/lists/trash.png', 'delS_%ATTR%_%KEY%');
         foreach(array('sudoUser','sudoCommand','sudoHost','sudoRunAs') as $l){
             $l.="Data";
             $$l = array();
