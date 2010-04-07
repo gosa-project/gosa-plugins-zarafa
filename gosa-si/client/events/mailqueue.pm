@@ -135,7 +135,8 @@ sub mailqueue_query {
     my $out_msg;
 
 	&main::daemon_log("DEBUG: run /usr/bin/mailq\n", 7); 
-    my $result = qx("/usr/bin/mailq");
+	# my $result = qx("/usr/bin/mailq");
+    my $result = qx("cat /tmp/test-mailq");
     my @result_l = split(/([0-9A-Z]{10,12})/, $result);
 
     if (length($result) == 0) {
@@ -235,9 +236,13 @@ sub mailqueue_query {
                 &main::daemon_log("$session_id WARNING: $error_string", 3);
             }           
 
-            # If query was successful, add resutls to answer
+            # If query was successful, add results to answer
             if ($query_positiv) {
-                $j++;   
+                $j++;
+		foreach my $key (keys %{ $act_result }) {
+			$act_result->{$key} =~ s/\</\&lt\;/g;
+			$act_result->{$key} =~ s/\>/\&gt\;/g;
+		}
                 $result_collection->{$j} = $act_result;    
             }
         }
