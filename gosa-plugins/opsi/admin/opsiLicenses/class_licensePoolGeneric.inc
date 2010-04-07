@@ -80,6 +80,17 @@ class licensePoolGeneric extends plugin
     }
 
     $this->init();
+
+    // Prepare lists
+    $this->licenseList = new sortableListing();
+    $this->licenseList->setDeleteable(true);
+    $this->licenseList->setEditable(true);
+    $this->licenseList->setWidth("100%");
+    $this->licenseList->setHeight("120px");
+    $this->licenseList->setColspecs(array('200px','*'));
+    $this->licenseList->setHeader(array(_("Section"),_("Description")));
+    $this->licenseList->setDefaultSortColumn(1);
+
   }
 
   
@@ -202,6 +213,9 @@ class licensePoolGeneric extends plugin
   function execute()
   {
     plugin::execute();
+
+    $this->licenseList->setAcl($this->getacl('licenses'));
+
     // Handle initialization failures.
     if(isset($_POST['retry_init'])) $this->init();
     if(!$this->init_successfull){
@@ -246,16 +260,11 @@ class licensePoolGeneric extends plugin
   // Creates a divSelectBox and fills it with license entries
   function getLicenseList()
   {
-    $list = new divSelectBox("test");
-    $list->setHeight(100);
-    if($this->acl_is_readable("licenses")){
-      $editlink = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=%s'>%s</a>";
-      foreach($this->licenses as $i => $license){
-        $link = image("images/lists/edit.png","editLicense_{$i}");
-        if(preg_match("/w/", $this->getacl("licenses"))){
-          $link.= image("images/lists/trash.png","removeLicense_{$i}");
-        }
 
+    $data = $lData = array();
+
+    if($this->acl_is_readable("licenses")){
+      foreach($this->licenses as $i => $license){
         $maxInst = "";
         if($license['maximumInstallations'] == 0){
           $maxInst = _("unlimited");
@@ -263,20 +272,18 @@ class licensePoolGeneric extends plugin
           $maxInst = $license['maximumInstallations'];
         }
 
-
         $map = array(
           "VOLUME" => sprintf(_("Volume license (#%s)"), $maxInst),
           "OEM"=>_("OEM"),
           "RETAIL"=>_("Retail"),
           "CONCURRENT"=>_("Concurrent"));
 
-        $f1 = array("string" => sprintf($editlink,$i,$license['cn']));
-        $f2 = array("string" => sprintf($editlink,$i,$map[$license['licenseModel']]));
-        $f6 = array("string" => $link, "attach" => "style='border-right: 0px; width:32px;'");
-        $list->addEntry(array($f1,$f2,$f6));
+        $data[$license['cn']] = $license['cn'];
+        $lData[$license['cn']] = array('data' => array($license['cn'],$map[$license['licenseModel']]));
       }
     }
-    return($list->DrawList());
+    $this->licenseList->setListData($data,$lData);
+    return($this->licenseList->render());
   }
  
  
@@ -284,16 +291,26 @@ class licensePoolGeneric extends plugin
    */
   function save_object()
   {
+
+    $this->licenseList->save_object();
+    $tmp = $this->licenseList->getAction();
+
     // Allow license edit via href links
-    if(isset($_GET['act']) && $_GET['act'] == 'edit' && isset($_GET['id'])){
-      $id = trim($_GET['id']);
-      if(isset($this->licenses[$id])){
-        $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
-        $this->dialog->set_acl_category('opsi');
-        $this->dialog->set_acl_base($this->config->current['BASE']);
-      }
+    if($tmp['action'] == 'edit'){
+        $id = $this->licenseList->getKey($tmp['targets'][0]); 
+        if(isset($this->licenses[$id])){
+            $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
+            $this->dialog->set_acl_category('opsi');
+            $this->dialog->set_acl_base($this->config->current['BASE']);
+        }
     }
-  
+    if($tmp['action'] == 'delete'){
+        $id = $this->licenseList->getKey($tmp['targets'][0]); 
+        if(isset($this->licenses[$id])){
+            unset($this->licenses[$id]);
+        }
+    }
+
     // Close license edit dialogs.
     if($this->dialog instanceOf plugin && isset($_POST['license_cancel'])){
       $this->dialog = NULL;
@@ -369,28 +386,6 @@ class licensePoolGeneric extends plugin
           $this->dialog = new licenseGeneric($this->config,$this->dn,array(), $this->opsiHosts);
           $this->dialog->set_acl_category('opsi');
           $this->dialog->set_acl_base($this->config->current['BASE']);
-        }
-      }
-
-      // Search post for image button clicks.
-      if(preg_match("/r/",$this->getacl("licenses"))){
-        foreach($_POST as $name => $value){
-          if(preg_match("/^editLicense_/",$name)){
-            $id = preg_replace("/^editLicense_(.*)$/","\\1",$name);
-            if(isset($this->licenses[$id])){
-              $this->dialog = new licenseGeneric($this->config,$this->dn,$this->licenses[$id], $this->opsiHosts);
-              $this->dialog->set_acl_category('opsi');
-              $this->dialog->set_acl_base($this->config->current['BASE']);
-            }
-            break;
-          }
-          if(preg_match("/^removeLicense_/",$name)){
-            $id = preg_replace("/^removeLicense_(.*)$/","\\1",$name);
-            if(isset($this->licenses[$id])){
-              unset($this->licenses[$id]);
-            }
-            break;
-          }
         }
       }
     }
