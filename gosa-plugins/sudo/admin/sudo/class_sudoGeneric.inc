@@ -34,20 +34,15 @@ class sudo extends plugin
     protected $sudoCommand= array();
     protected $sudoHost   = array("ALL");
     protected $sudoRunAs  = array("ALL");
-    protected $accessTo         = array();
-    protected $trustModel       = "";
 
     private $is_default = FALSE;
-    private $was_trust_account= FALSE;
 
     public $objectclasses = array("top","sudoRole");
-    public $attributes    = array("cn","description","sudoUser","sudoCommand","sudoHost","sudoRunAs","accessTo","trustModel");
+    public $attributes    = array("cn","description","sudoUser","sudoCommand","sudoHost","sudoRunAs");
 
     public $ignore_account = TRUE;
 
     public $orig_dn;
-
-    protected $trustSelect;
 
     /*! \brief  Returns to the base department for sudo roles.
       This department is then used to store new roles.
@@ -68,6 +63,9 @@ class sudo extends plugin
     {
         plugin::plugin ($config, $dn);
 
+        $this->trustModeDialog = new trustModeDialog($this->config, $this->dn,NULL);
+        $this->trustModeDialog->setAcl('sudo/sudo');
+
         if($this->initially_was_account){
             foreach(array("sudoUser","sudoCommand","sudoHost","sudoRunAs") as $attr){
                 $this->$attr = array();
@@ -79,24 +77,6 @@ class sudo extends plugin
                     $this->$attr = $tmp;
                 }
             }
-
-            /* Is this account a trustAccount? */
-            if (isset($this->attrs['trustModel'])){
-                $this->trustModel= $this->attrs['trustModel'][0];
-                $this->was_trust_account= TRUE;
-            } else {
-                $this->was_trust_account= FALSE;
-                $this->trustModel= "";
-            }
-
-            $this->accessTo = array();
-            if (isset($this->attrs['accessTo'])){
-                for ($i= 0; $i<$this->attrs['accessTo']['count']; $i++){
-                    $tmp= $this->attrs['accessTo'][$i];
-                    $this->accessTo[$tmp]= $tmp;
-                }
-            }
-
         }
 
         if(preg_match("/^defaults$/i",$this->cn)){
@@ -145,56 +125,14 @@ class sudo extends plugin
         /* Call parent execute */
         plugin::execute();
 
-        /*********************
-          Access control list / trust mode 
-         *********************/ 
+        // Handle trust mode dialog
+        $trustModeDialog = $this->trustModeDialog->execute();
+        if($this->trustModeDialog->trustSelect){
+            $this->dialog = TRUE;
+            return($trustModeDialog);
 
-        /* Add user workstation? */
-        if (isset($_POST["add_ws"])){
-            $this->trustSelect= new trustSelect($this->config,get_userinfo());
-            $this->dialog= TRUE;
         }
-
-        // Add selected machines to trusted ones.
-        if (isset($_POST["add_ws_finish"]) &&  $this->trustSelect){
-            $trusts = $this->trustSelect->detectPostActions();
-            if(isset($trusts['targets'])){
-
-                $headpage = $this->trustSelect->getHeadpage();
-                foreach($trusts['targets'] as $id){
-                    $attrs = $headpage->getEntry($id);
-                    $this->accessTo[$attrs['cn'][0]]= $attrs['cn'][0];
-                }
-                ksort($this->accessTo);
-                $this->is_modified= TRUE;
-            }
-            $this->trustSelect= NULL;
-            $this->dialog= FALSE;
-        }
-
-
-        /* Remove user workstations? */
-        if (isset($_POST["delete_ws"]) && isset($_POST['workstation_list'])){
-            foreach($_POST['workstation_list'] as $name){
-                unset ($this->accessTo[$name]);
-            }
-            $this->is_modified= TRUE;
-        }
-
-        /* Add user workstation finished? */
-        if (isset($_POST["add_ws_finish"]) || isset($_POST["add_ws_cancel"])){
-            $this->trustSelect= NULL;
-            $this->dialog= FALSE;
-        }
-
-        /* Show ws dialog */
-        if ($this->trustSelect){
-
-            // Build up blocklist
-            session::set('filterBlacklist', array('cn' => array_values($this->accessTo)));
-            return($this->trustSelect->execute());
-        }
-
+        $this->dialog = FALSE;
 
         /*********************
           Add users 
@@ -370,6 +308,7 @@ class sudo extends plugin
          *********************/
 
         $smarty = get_smarty();
+        $smarty->assign("trustModeDialog" , $trustModeDialog);
         $smarty->assign("is_default",$this->is_default);
         foreach($this->attributes as $attr){
             if(is_string($this->$attr)){
@@ -379,30 +318,6 @@ class sudo extends plugin
             }
             $smarty->assign($attr."ACL",$this->getacl($attr));
         }
-
-        /* Work on trust modes */
-        $smarty->assign("trusthide", " disabled ");
-        if ($this->trustModel == "fullaccess"){
-            $trustmode= 1;
-        } elseif ($this->trustModel == "byhost"){
-            $trustmode= 2;
-            $smarty->assign("trusthide", "");
-        } else {
-            $trustmode= 0;
-        }
-        $smarty->assign("trustmode", $trustmode);
-        $smarty->assign("trustmodes", array( 
-                    0 => _("disabled"), 
-                    1 => _("full access"),
-                    2 => _("allow access to these hosts")));
-
-        if((count($this->accessTo))==0){
-            $smarty->assign("emptyArrAccess",true);
-        }else{
-            $smarty->assign("emptyArrAccess",false);
-        }
-        $smarty->assign("workstations", $this->accessTo);
-
 
         /* Fill divlists
          */
@@ -479,27 +394,18 @@ class sudo extends plugin
     function save_object()
     {
         plugin::save_object();
+        $this->trustModeDialog->save_object();
 
         if($this->is_default){
             $this->cn = "defaults";
         }  
+    }
 
-        /* Trust mode - special handling */
-        if($this->acl_is_writeable("trustModel")){
-            if (isset($_POST['trustmode'])){
-                $saved= $this->trustModel;
-                if ($_POST['trustmode'] == "1"){
-                    $this->trustModel= "fullaccess";
-                } elseif ($_POST['trustmode'] == "2"){
-                    $this->trustModel= "byhost";
-                } else {
-                    $this->trustModel= "";
-                }
-                if ($this->trustModel != $saved){
-                    $this->is_modified= TRUE;
-                }
-            }
-        }
+
+    function set_acl_base($base)
+    {
+        plugin::set_acl_base($base); 
+        $this->trustModeDialog->set_acl_base($base);
     }
 
 
@@ -508,32 +414,6 @@ class sudo extends plugin
     function save()
     {
         plugin::save();
-        /* Trust accounts */
-        $objectclasses= array();
-        foreach ($this->attrs['objectClass'] as $key => $class){
-            if (preg_match('/trustAccount/i', $class)){
-                continue;
-            }
-            $objectclasses[]= $this->attrs['objectClass'][$key];
-        }
-
-        $this->attrs['objectClass']= $objectclasses;
-        if ($this->trustModel != ""){
-            $this->attrs['objectClass'][]= "trustAccount";
-            $this->attrs['trustModel']= $this->trustModel;
-            $this->attrs['accessTo']= array();
-            if ($this->trustModel == "byhost"){
-                foreach ($this->accessTo as $host){
-                    $this->attrs['accessTo'][]= $host;
-                }
-            }
-        } else {
-            if ($this->was_trust_account){
-                $this->attrs['accessTo']= array();
-                $this->attrs['trustModel']= array();
-            }
-        }
-
 
         /* Ensure a correct array index 
          */ 
@@ -561,6 +441,8 @@ class sudo extends plugin
             /* Send signal to the world that we've done */
             $this->handle_post_events("modify");
         }
+        $this->trustModeDialog->dn = $this->dn;
+        $this->trustModeDialog->save();
 
         if (!$ldap->success()){
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
@@ -662,23 +544,6 @@ class sudo extends plugin
                     $tmp[] = $source[$attr][$i];
                 }
                 $this->$attr = $tmp;
-            }
-        }
-
-        /* Is this account a trustAccount? */
-        if (isset($source['trustModel'])){
-            $this->trustModel= $source['trustModel'][0];
-            $this->was_trust_account= TRUE;
-        } else {
-            $this->was_trust_account= FALSE;
-            $this->trustModel= "";
-        }
-
-        $this->accessTo = array();
-        if (isset($source['accessTo'])){
-            for ($i= 0; $i<$source['accessTo']['count']; $i++){
-                $tmp= $source['accessTo'][$i];
-                $this->accessTo[$tmp]= $tmp;
             }
         }
     }
