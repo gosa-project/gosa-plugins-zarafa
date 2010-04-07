@@ -134,9 +134,8 @@ sub mailqueue_query {
     my $out_hash;
     my $out_msg;
 
-	&main::daemon_log("DEBUG: run /usr/bin/mailq\n", 7); 
-	# my $result = qx("/usr/bin/mailq");
-    my $result = qx("cat /tmp/test-mailq");
+    &main::daemon_log("DEBUG: run /usr/bin/mailq\n", 7); 
+    my $result = qx("/usr/bin/mailq");
     my @result_l = split(/([0-9A-Z]{10,12})/, $result);
 
     if (length($result) == 0) {
