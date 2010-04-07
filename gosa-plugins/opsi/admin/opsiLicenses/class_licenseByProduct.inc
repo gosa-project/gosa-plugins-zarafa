@@ -47,6 +47,15 @@ class licenseByProduct extends plugin
     }
 
     $this->init();
+
+    // Prepare lists
+    $this->usageList = new sortableListing();
+    $this->usageList->setDeleteable(false);
+    $this->usageList->setEditable(false);
+    $this->usageList->setWidth("100%");
+    $this->usageList->setHeight("300px");
+    $this->usageList->setHeader(array(_("Host"),_("Key"),_("Pool"), _("License")));
+    $this->usageList->setDefaultSortColumn(1);
   }
 
   
@@ -87,21 +96,22 @@ class licenseByProduct extends plugin
   
     $ui = get_userinfo();
     $readable = $ui->get_permissions($this->config->current['BASE'], "opsi/licenseByProduct","");
-    if($readable) {
-      foreach($this->licenseUses as $license){
-        $f1 = array("string" => $license['HOSTID'][0]['VALUE']);
-        $f2 = array("string" => $license['SOFTWARELICENSEID'][0]['VALUE']);
-        $f3 = array("string" => $license['LICENSEPOOLID'][0]['VALUE'],
-            "attach" => "style='border-right:0px;'");
-        $list->addEntry(array($f1,$f2,$f3));
-      } 
+    $data = array();
+    $this->usageList->setAcl($readable);
+    foreach($this->licenseUses as $license){
+        $data[] = array('data'=> array($license['HOSTID'][0]['VALUE'],
+                    $license['SOFTWARELICENSEID'][0]['VALUE'],
+                    $license['LICENSEPOOLID'][0]['VALUE'])); 
     } 
+    $this->usageList->setListData($data,$data);
+    $this->usageList->update();
+    
 
     $smarty = get_smarty();
 
     // Assign ACls 
     $plInfo = $this->plInfo();
-    $smarty->assign("licenseUses", $list->DrawList());
+    $smarty->assign("licenseUses", $this->usageList->render());
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
     return($smarty->fetch(get_template_path('licenseByProduct.tpl',TRUE,dirname(__FILE__))));
