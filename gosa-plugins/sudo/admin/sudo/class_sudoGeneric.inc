@@ -536,6 +536,9 @@ class sudo extends plugin
     function PrepareForCopyPaste($source)
     {
         plugin::PrepareForCopyPaste($source);
+        
+        $this->trustModeDialog->PrepareForCopyPaste($source);
+
         foreach(array("sudoUser","sudoCommand","sudoHost","sudoRunAs") as $attr){
             $this->$attr = array();
             if(isset($source[$attr])){
