@@ -45,6 +45,15 @@ class licenseUsage extends plugin
 
     // Extract pool name out of the fake dn.
     $this->init();
+
+    // Prepare lists
+    $this->usageList = new sortableListing();
+    $this->usageList->setDeleteable(false);
+    $this->usageList->setEditable(false);
+    $this->usageList->setWidth("100%");
+    $this->usageList->setHeight("300px");
+    $this->usageList->setHeader(array(_("Host"),_("Key"),_("Pool"), _("License")));
+    $this->usageList->setDefaultSortColumn(1);
   }
 
   
@@ -71,6 +80,11 @@ class licenseUsage extends plugin
   function execute()
   {
     plugin::execute();
+
+    $ui = get_userinfo();
+    $readable = $ui->get_permissions($this->config->current['BASE'], "opsi/licenseUsage","");
+    $this->usageList->setAcl($readable);
+
     // Handle initialization failures.
     if(isset($_POST['retry_init'])) $this->init();
     if(!$this->init_successfull){
@@ -80,20 +94,17 @@ class licenseUsage extends plugin
     }
     
     // Create usage list
-    $list = new divSelectBox("licenseUsage");
-    $ui = get_userinfo();
-    $readable = $ui->get_permissions($this->config->current['BASE'], "opsi/licenseUsage","");
+    $data = array();
     if($readable) {
       foreach($this->licenseUses as $license){
-        $f1 = array("string" => $license['hostId'][0]);
-        $f2 = array("string" => $license['licenseKey'][0]);
-        $f3 = array("string" => $license['licensePoolId'][0]);
-        $f4 = array("string" => $license['softwareLicenseId'][0],
-            "attach" => "style='border-right:0px;'");
-        $list->addEntry(array($f1,$f2,$f3,$f4));
+        $data[] = array('data'=>array(
+                $license['hostId'][0],
+                $license['licenseKey'][0],
+                $license['licensePoolId'][0],
+                $license['softwareLicenseId'][0]));
       } 
     } 
-
+    $this->usageList->setListData($data,$data);
     $smarty = get_smarty();
 
     // Assign ACls 
@@ -105,7 +116,7 @@ class licenseUsage extends plugin
       $smarty->assign($attr,$this->$attr);
     }
 
-    $smarty->assign("licenseUses", $list->DrawList());
+    $smarty->assign("licenseUses", $this->usageList->render());
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
     return($smarty->fetch(get_template_path('licenseUsage.tpl',TRUE,dirname(__FILE__))));
