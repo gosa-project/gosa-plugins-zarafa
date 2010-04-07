@@ -89,7 +89,7 @@
           </td>
           <td>
 {render acl=$descriptionACL}
-            <input id="description" name="description" size=40 maxlength=80  
+            <input id="description" name="description" size=40 maxlength=80 type='text' 
               value="{$description}" title="{t}Descriptive text for department{/t}">
 {/render} 
           </td>
