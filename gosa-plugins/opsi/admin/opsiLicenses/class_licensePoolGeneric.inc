@@ -257,12 +257,9 @@ class licensePoolGeneric extends plugin
   }
 
 
-  // Creates a divSelectBox and fills it with license entries
   function getLicenseList()
   {
-
     $data = $lData = array();
-
     if($this->acl_is_readable("licenses")){
       foreach($this->licenses as $i => $license){
         $maxInst = "";
