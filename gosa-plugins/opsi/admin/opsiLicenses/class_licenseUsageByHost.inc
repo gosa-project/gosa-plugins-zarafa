@@ -47,6 +47,27 @@ class licenseUsageByHost extends plugin
 
     // Extract pool name out of the fake dn.
     $this->init();
+
+    // Prepare lists
+    $this->reservedList = new sortableListing();
+    $this->reservedList->setDeleteable(true);
+    $this->reservedList->setEditable(false);
+    $this->reservedList->setWidth("100%");
+    $this->reservedList->setHeight("220px");
+    $this->reservedList->setColspecs(array('200px','*'));
+    $this->reservedList->setHeader(array(_("Pool"),_("License ID")));
+    $this->reservedList->setDefaultSortColumn(1);
+    $this->reservedList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
+
+    $this->usedList = new sortableListing();
+    $this->usedList->setDeleteable(false);
+    $this->usedList->setEditable(false);
+    $this->usedList->setWidth("100%");
+    $this->usedList->setHeight("220px");
+    $this->usedList->setColspecs(array('200px','*'));
+    $this->usedList->setHeader(array(_("Key"),_("Pool"),_("License ID")));
+    $this->usedList->setDefaultSortColumn(1);
+    $this->usedList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
   }
 
   
@@ -110,42 +131,32 @@ class licenseUsageByHost extends plugin
       $smarty->assign("init_successfull", $this->init_successfull);
       return($smarty->fetch(get_template_path('licenseGeneric.tpl',TRUE,dirname(__FILE__))));
     }
-    
+   
     // Create usage list
-    $list = new divSelectBox("licenseUsage");
-    $list->setHeight(150);
+    $data = array();
+    $this->usedList->setAcl($this->getacl('hostId'));
     foreach($this->licenseUses as $license){
-      if(preg_match("/r/i",$this->getacl('hostId'))){
-        $f3 = array("string" => $license['licenseKey'][0]);
-        $f2 = array("string" => $license['licensePoolId'][0]);
-        $f4 = array("string" => $license['softwareLicenseId'][0]);
-        $list->addEntry(array($f2,$f3,$f4));
-      }
+        $data[] = array('data' => array(
+                    $license['licenseKey'][0],
+                    $license['licensePoolId'][0],
+                    $license['softwareLicenseId'][0]));
     } 
+    $this->usedList->setListData($data,$data);
+    $this->usedList->update();
 
     // Create reserved list
-    $list2 = new divSelectBox("reservedLicenses");
-    $list2->setHeight(150);
+    $data = $lData = array();
+    $this->reservedList->setAcl($this->getacl('boundToHost'));
     foreach($this->reservedLicenses as $key => $license){
-      if(preg_match("/r/i",$this->getacl('boundToHost'))){
-
         $l = $this->availableLicenses[$key];
-
-        // Display remove button in case of write permissions
-        $action = "";
-        if(preg_match("/w/i",$this->getacl('boundToHost'))){
-          $action = "<input class='center' type='image' src='images/lists/trash.png' 
-            name='removeReservation_{$key}'>";
-        }
-  
-        $f1 = array("string" => $l['softwareLicenseId'][0]);
-        $f2 = array("string" => $l['licensePoolId'][0]);
-        $f4 = array("string" => $action,
-            "attach" => "style='border-right:0px; width:16px;'");
-        $list2->addEntry(array($f1,$f4));
-      }
+        $data[$key] = $key;
+        $lData[$key] = array('data' => array(
+                    $l['softwareLicenseId'][0],
+                    $l['licensePoolId'][0]));
     } 
-
+    $this->reservedList->setListData($data,$lData);
+    $this->reservedList->update();
+    
     $smarty = get_smarty();
 
     // Assign ACls 
@@ -165,8 +176,8 @@ class licenseUsageByHost extends plugin
       }
     }
 
-    $smarty->assign("licenseUses", $list->DrawList());
-    $smarty->assign("licenseReserved", $list2->DrawList());
+    $smarty->assign("licenseUses", $this->usedList->render());
+    $smarty->assign("licenseReserved", $this->reservedList->render());
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("availableLicenses", $licenses);
     $smarty->assign("initially_was_account", $this->initially_was_account);
@@ -183,16 +194,14 @@ class licenseUsageByHost extends plugin
   
       if(preg_match("/w/i",$this->getacl('boundToHost'))){
 
-        // Check if we've to remove reservations 
-        foreach($_POST as $name => $value){
-          if(preg_match("/^removeReservation_/", $name)){
-            $id = preg_replace("/^removeReservation_(.*)_.$/", "\\1" ,$name);
+        $this->reservedList->save_object();
+        $action = $this->reservedList->getAction();
+        if($action['action'] == "delete") {
+            $id = $this->reservedList->getKey($action['targets'][0]);
             if(isset($this->reservedLicenses[$id])) {
-              unset($this->reservedLicenses[$id]);
+                unset($this->reservedLicenses[$id]);
             }
-            break;
-          }
-        } 
+        }
 
         // Check if we've to add reservations
         if(isset($_POST['availableLicense']) && isset($_POST['addReservation'])){
