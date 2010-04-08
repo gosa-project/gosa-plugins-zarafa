@@ -58,7 +58,7 @@ class appgroup extends plugin
     $this->applicationList->setDeleteable(false);
     $this->applicationList->setEditable(true);
     $this->applicationList->setWidth("100%");
-    $this->applicationList->setHeight("400px");
+    $this->applicationList->setHeight("300px");
     $this->applicationList->setColspecs(array('20px','20px','*'));
     $this->applicationList->setHeader(array("&nbsp;","&nbsp;",_("Application")));
     $this->applicationList->setDefaultSortColumn(2);
