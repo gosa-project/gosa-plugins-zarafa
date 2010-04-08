@@ -3,21 +3,20 @@
 		<td class='object_container_cell_top_left'>
 			&nbsp;	
 		</td>
-		<td class='object_container_cell_top_right'>
-			<input type='image' src='plugins/mail/images/sieve_move_object_up.png' name='Move_Up_Object_{$ID}' 
-				title='{t}Move object up one position{/t}' alt='{t}Up{/t}' class='center'>
-			<a href='{$plug}&amp;Move_Up_Object_ID={$ID}'>{t}Move up{/t}</a>
-			&nbsp;&nbsp;&nbsp;
-			<input type='image' src='plugins/mail/images/sieve_move_object_down.png' name='Move_Down_Object_{$ID}' 
-				title='{t}Move object down one position{/t}' alt='{t}Down{/t}' class='center'>
-			<a href='{$plug}&amp;Move_Down_Object_ID={$ID}'>{t}Move down{/t}</a>
-			&nbsp;&nbsp;&nbsp;
-			<input type='image' src='plugins/mail/images/sieve_del_object.png' name='Remove_Object_{$ID}' 
-				title='{t}Remove object{/t}' alt='R' class='center'>
-			<a href='{$plug}&amp;Remove_Object_ID={$ID}'>{t}Remove element{/t}</a>
-			&nbsp;&nbsp;&nbsp;
+		<td style='width:200px;' >
+            {image path='plugins/mail/images/sieve_move_object_up.png' 
+                action="Move_Up_Object_{$ID}" title="{t}Move object up one position{/t}"}
+
+            {image path='plugins/mail/images/sieve_move_object_down.png' 
+                action="Move_Down_Object_{$ID}" title="{t}Move object down one position{/t}"}
+
+            {image path='images/lists/trash.png' action="Remove_Object_{$ID}" 
+                title="{t}Remove object{/t}"}
+
+         </td>   
+         <td>
 	
-			<select name='element_type_{$ID}'>
+			<select name='element_type_{$ID}' size=1>
 				<option value=''>&lt;{t}choose element{/t}&gt;</option>
 				<option value='sieve_keep'>{t}Keep{/t}</option>
 				<option value='sieve_comment'>{t}Comment{/t}</option>
@@ -34,20 +33,16 @@
 				<option value='sieve_elsif'>{t}Else If{/t}</option>
 			</select>
 
-			<input type='image' src='plugins/mail/images/sieve_add_new_top.png' name='Add_Object_Top_{$ID}'
-				alt='{t}Add new{/t}' title='{t}Add a new object above this one.{/t}' class='center'>
-			<input type='image' src='plugins/mail/images/truly_not_available_image' name='Add_Object_Top_{$ID}'
-				alt='{t}Add element above{/t}' title='{t}Add a new object above this one.{/t}' class='center'>
-			<input type='image' src='plugins/mail/images/sieve_add_new_bottom.png' name='Add_Object_Bottom_{$ID}'
-				alt='{t}Add new{/t}' title='{t}Add a new object below this one.{/t}' class='center'>	
-			<input type='image' src='plugins/mail/images/truly_not_available_image' name='Add_Object_Bottom_{$ID}'
-				alt='{t}Add element below{/t}' title='{t}Add a new object below this one.{/t}' class='center'>	
+            {image path="plugins/mail/images/sieve_move_object_up.png[new]" 
+                action="Add_Object_Top_{$ID}" title="{t}Add a new object above this one.{/t}"}
+            {image path="plugins/mail/images/sieve_move_object_down.png[new]" 
+                action="Add_Object_Bottom_{$ID}" title="{t}Add a new object below this one.{/t}"}
 		</td>
 	</tr>
 	<tr>
 		<td class='object_container_cell_bottom_left'>
 		</td>
-		<td>
+		<td colspan=2>
 			%%OBJECT_CONTENT%%
 		</td>
 	</tr>

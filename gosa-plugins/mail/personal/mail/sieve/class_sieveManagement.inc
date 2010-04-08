@@ -920,7 +920,7 @@ class sieveManagement extends plugin
       $once = TRUE;
       foreach($_POST as $name => $value){
         foreach($data as $key => $obj){
-          if(isset($obj->object_id) && preg_match("/^Add_Object_Top_".$obj->object_id."_/",$name) && $once){
+          if(isset($obj->object_id) && preg_match("/^Add_Object_Top_".$obj->object_id."/",$name) && $once){
             $once = FALSE;
             $this->add_element_type   =  $_POST['element_type_'.$obj->object_id];
             $this->add_new_element    = FALSE;
@@ -928,7 +928,7 @@ class sieveManagement extends plugin
             $this->add_above_below    = "above";
             $this->add_new_element_to_current_script($this->add_element_type,$this->add_new_id,$this->add_above_below);
           }
-          if(isset($obj->object_id) && preg_match("/^Add_Object_Bottom_".$obj->object_id."_/",$name) && $once){
+          if(isset($obj->object_id) && preg_match("/^Add_Object_Bottom_".$obj->object_id."/",$name) && $once){
             $once = FALSE;
             $this->add_element_type   =  $_POST['element_type_'.$obj->object_id];
             $this->add_new_element    = FALSE;
@@ -937,15 +937,15 @@ class sieveManagement extends plugin
             $this->add_new_element_to_current_script($this->add_element_type,$this->add_new_id,$this->add_above_below);
           }
         
-          if(isset($obj->object_id) && preg_match("/^Remove_Object_".$obj->object_id."_/",$name) && $once){
+          if(isset($obj->object_id) && preg_match("/^Remove_Object_".$obj->object_id."/",$name) && $once){
             $once = FALSE;
             $this->current_handler->tree_->remove_object($key);
           }
-          if(isset($obj->object_id) && preg_match("/^Move_Up_Object_".$obj->object_id."_/",$name) && $once){
+          if(isset($obj->object_id) && preg_match("/^Move_Up_Object_".$obj->object_id."/",$name) && $once){
             $this->current_handler->tree_->move_up_down($key,"up");
             $once = FALSE;
           }
-          if(isset($obj->object_id) && preg_match("/^Move_Down_Object_".$obj->object_id."_/",$name) && $once){
+          if(isset($obj->object_id) && preg_match("/^Move_Down_Object_".$obj->object_id."/",$name) && $once){
             $this->current_handler->tree_->move_up_down($key,"down");
             $once = FALSE;
           }
