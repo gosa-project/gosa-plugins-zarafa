@@ -205,7 +205,7 @@
      <td>
       
       {render acl=$gotoShareACL}
-      {$divlistShares}
+      {$shareList}
       {/render}
       {render acl=$gotoShareACL}
       <input type="text" size=15 name="ShareUser" value="%u" title="{t}User used to connect to the share{/t}">@

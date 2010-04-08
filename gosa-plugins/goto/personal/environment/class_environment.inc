@@ -80,6 +80,8 @@ class environment extends plugin
   var $multiple_support =TRUE;
 
   var $use_gotoPrinter;
+  var $shareList = NULL;
+
 
   function environment (&$config, $dn= NULL)
   {
@@ -260,6 +262,16 @@ class environment extends plugin
       }
     }
     $this->update_kiosk_profiles();
+
+    // Prepare lists
+    $this->shareList = new sortableListing();
+    $this->shareList->setDeleteable(false);
+    $this->shareList->setEditable(false);
+    $this->shareList->setWidth("100%");
+    $this->shareList->setHeight("120px");
+    $this->shareList->setHeader(array(_("Server"),_("Share name"),_("Mount point"), 
+            _("User"), _("Type"), _("Action")));
+    $this->shareList->setDefaultSortColumn(1);
   }
 
 
@@ -735,30 +747,23 @@ class environment extends plugin
         }
       }
     }
-    $divlistShares = new divSelectBox("gotoShares");
-    $divlistShares->SetHeight(100);
 
-
-    $tmp = array();
-    if($this->acl_is_readable("gotoShare")){
-      $tmp = $this->printOutAssignedShares();
-    }
-
-    
-    foreach($tmp as $key => $value){
+    // Build up share list
+    $data = $lData = array(); 
+    foreach($this->gotoShares as $key => $entry){
       $img = "";
 
-      /* Skip apssword only entries */
-      if( empty($this->gotoShares[$key]['server']) && 
-          empty($this->gotoShares[$key]['name']) &&
-          empty($this->gotoShares[$key]['mountPoint']) &&
-          empty($this->gotoShares[$key]['Username'])){
+      // Skip password only entries
+      if( empty($entry['server']) && empty($entry['name']) &&
+          empty($entry['mountPoint']) && empty($entry['Username'])){
         continue;
       } 
 
+      // While editing mutlipe users at once we've to seperate 
+      //  entries used by all users and those used by only some.
       $color = "";
       if($this->multiple_support_active){
-        if($this->gotoShares[$key]['UsedByAllUsers']){
+        if($entry['UsedByAllUsers']){
           $value .= "&nbsp;(<b>"._("Used by all users")."</b>)";
         }else{
           $color = "color: #999999;";
@@ -766,38 +771,44 @@ class environment extends plugin
         }
       }
 
-      /* Check if entry starts with an ! */
+      // Create password reset image button 
+      if($entry['PwdHash'] != ""){
+          $img.= 
+              image('plugins/goto/images/list_reset_password.png',
+                      'gotoShareResetPwd_'.postEncode($key),
+                      _("Reset password hash"));
+      }
+
+      // Build up list entries - Handle entries starting with '!' here.
+      $data[$key]=$key;
       if(preg_match("/^!/",$this->gotoShares[$key]['server'])){
 
-        /* If we are currently editing groups environment, skip those ! entries */ 
+        // If we are currently editing groups environment, skip those ! entries */ 
         if($this->is_group) continue;
 
-        /* Create pwd reset images */
-        if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= 
-            image('plugins/goto/images/list_reset_password.png',
-                'gotoShareResetPwd_'.postEncode($key),
-                _("Reset password hash"));
-        }
-        $field1 = array("string" => "<font style=\"color:#C0C0C0\">".$value."</font>" , "attach" => "style='".$color."'");
-        $field2 = array("string" => $img   , "attach" => "style='border-right:0px;'");
+        $lData[$key] = array('data' => array(
+                    $entry['server']."://",
+                    $entry['name'], 
+                    "",
+                    "",
+                    image("plugins/groups/images/select_group.png","",_("Group share")),
+                    $img));
       }else{
 
-        /* Create pwd reset img && delete image */
-        if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= 
-            image('plugins/goto/images/list_reset_password.png',
-                'gotoShareResetPwd_'.postEncode($key),
-                _("Reset password hash"));
-          $img.= "&nbsp;";
-        }
         $img.= image('images/lists/trash.png',"gotoShareDel_".postEncode($key),msgPool::delButton());
-        $field1 = array("string" => $value , "attach" => "style='".$color."'");
-        $field2 = array("string" => $img   , "attach" => "style='border-right:0px;'");
+        $lData[$key] = array('data' => array(
+                    $entry['server']."://",
+                    $entry['name'], 
+                    $entry['mountPoint'], 
+                    $entry['Username'], 
+                    image("plugins/users/images/select_user.png","",_("User share")),
+                    $img));
       }
-      $divlistShares->AddEntry(array($field1,$field2));
     }
-    $smarty->assign("divlistShares",$divlistShares->DrawList());
+    $this->shareList->setListData($data,$lData);
+    $this->shareList->update();
+    $this->shareList->setAcl($this->getacl("gotoShare"));
+    $smarty->assign("shareList",$this->shareList->render());
 
     /* Hotplug devices will be handled here 
      * There are 3 possible methods for this feature
@@ -1321,24 +1332,6 @@ class environment extends plugin
     $this->handle_post_events($mode,array("uid"=>$this->uid));
   }
 
-  /* Generate ListBox frindly output for the defined shares 
-   * Possibly Add or remove an attribute here, 
-   */
-  function printOutAssignedShares()
-  {
-    $a_return = array();
-    if(is_array($this->gotoShares)){
-      foreach($this->gotoShares as $share){
-        if(preg_match("/^!/",$share['server'])){
-          $a_return[$share['name']."|".$share['server']]= preg_replace("/^!/","",$share['server'])."://".$share['name']." - "._("group share"); 
-        }else{
-          $a_return[$share['name']."|".$share['server']]= $share['server']."://".$share['name']." on ".$share['mountPoint']." as ".$share['Username'];
-        }
-      }
-      natcasesort($a_return);
-    }
-    return($a_return);
-  }
 
   /* Generate ListBox frindly output for the definedhotplugs 
    * Possibly Add or remove an attribute here,
