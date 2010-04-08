@@ -380,11 +380,6 @@ class faiPartitionTable extends plugin
       $smarty->assign("addraid", "");
     }
 
-    /* Divlist containing disks */
-    $divlist = new divSelectBox("FAItemplates");
-    $divlist->setHeight(400);
-
-
     $dn = $this->acl_base_for_current_object($this->dn);
     $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
     $this->diskList->setAcl($acl);
