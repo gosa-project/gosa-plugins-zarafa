@@ -253,9 +253,6 @@ class faiProfile extends plugin
             return($this->classSelect->execute());
         }
 
-        $divlist  =new divSelectBox("Profile");
-        $divlist->SetSummary(_("This list displays all assigned class names for this profile."));
-
         /* item images */
         $objTypes['FAIhook']            = image('plugins/fai/images/fai_hook.png','',_("Hook bundle"));
         $objTypes['FAItemplate']        = image('plugins/fai/images/fai_template.png','',_("Template bundle"));
@@ -272,8 +269,6 @@ class faiProfile extends plugin
         /* Up down buttons */
         $linkupdown = image('images/lists/sort-up.png','sortup_%s',_("Up"), 'top');
         $linkupdown.= image('images/lists/sort-down.png','sortdown_%s',_("Down"), 'bottom');
-
-        /* Append fai classes to divlist */
 
         $this->classList->setAcl($this->getacl('FAIclass',preg_match('/^freeze/', $this->FAIstate)));
         $data = $lData = array();
