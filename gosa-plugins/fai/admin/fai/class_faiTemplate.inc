@@ -66,6 +66,17 @@ class faiTemplate extends plugin
       $this->is_new =TRUE;
     }
     $this->ui = get_userinfo();
+
+    // Prepare lists
+    $this->templateList = new sortableListing();
+    $this->templateList->setDeleteable(true);
+    $this->templateList->setEditable(true);
+    $this->templateList->setWidth("100%");
+    $this->templateList->setHeight("120px");
+    $this->templateList->setColspecs(array('200px','*'));
+    $this->templateList->setHeader(array(_("Name"),_("Download")));
+    $this->templateList->setDefaultSortColumn(1);
+
   }
 
 
@@ -115,48 +126,44 @@ class faiTemplate extends plugin
 
     /* New Listhandling
      */
-    $once = true;
-    foreach($_POST as $name => $value){
-      if(preg_match("/^editscript_/",$name)&&($once)){
-        $once = false;
-        $entry = preg_replace("/^editscript_/","",$name);
-        $entry = postDecode(preg_replace("/^editscript_/","",$name));
-        $obj  = $this->SubObjects[$entry];
-
-        $acl_dn = $this->acl_base_for_current_object($obj['dn']);
-        $acl = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
-        if(preg_match("/r/",$acl)){
-          if($obj['status'] == "FreshLoaded"){
-            $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-          }
-          $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-          $this->dialog->set_acl_base($this->acl_base);
-          $this->dialog->FAIstate = $this->FAIstate;
-          $this->dialog->set_acl_category("fai");
-
-          set_object_info($obj['dn']);
-          $this->dialog->parent = &$this;
-          $this->is_dialog=true;
-        }
-      }
-      if(preg_match("/^deletescript_/",$name)&&($once) && !preg_match("/freeze/",$this->FAIstate)){
-        $once = false;
-        $entry = preg_replace("/^deletescript_/","",$name);
-        $entry = postDecode(preg_replace("/^deletescript_/","",$name));
-        $obj  = $this->SubObjects[$entry];
-
+    $this->templateList->save_object();
+    $action = $this->templateList->getAction();
+    if($action['action'] == 'delete'){
+        $id = $this->templateList->getKey($action['targets'][0]);
+        $obj  = $this->SubObjects[$id];
         $acl_dn = $this->acl_base_for_current_object($obj['dn']);
         $acl = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
         if(preg_match("/d/",$acl)){
-          $status = $this->SubObjects[$entry]['status'];
-          if($status == "edited" || $status == "FreshLoaded"){
-            $this->SubObjects[$entry]['status']= "delete";
-          }else{
-            unset($this->SubObjects[$entry]);
-          }
+            $status = $this->SubObjects[$id]['status'];
+            if($status == "edited" || $status == "FreshLoaded"){
+                $this->SubObjects[$id]['status']= "delete";
+            }else{
+                unset($this->SubObjects[$id]);
+            }
         }
-      }
+    }
+    if($action['action'] == 'edit'){
+        $id = $this->templateList->getKey($action['targets'][0]);
+        $obj  = $this->SubObjects[$id];
+        $acl_dn = $this->acl_base_for_current_object($obj['dn']);
+        $acl = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
+        if(preg_match("/r/",$acl)){
+            if($obj['status'] == "FreshLoaded"){
+                $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+            }
+            $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+            $this->dialog->set_acl_base($this->acl_base);
+            $this->dialog->FAIstate = $this->FAIstate;
+            $this->dialog->set_acl_category("fai");
 
+            set_object_info($obj['dn']);
+            $this->dialog->parent = &$this;
+            $this->is_dialog=true;
+        }
+    }
+
+    $once = true;
+    foreach($_POST as $name => $value){
       if(preg_match("/^download_/",$name)&&($once) && !preg_match("/freeze/",$this->FAIstate)){
         $once = false;
         $entry = postDecode(preg_replace("/^download_/","",$name));
@@ -268,54 +275,35 @@ class faiTemplate extends plugin
     }
 
      /* Divlist Containing FAItemplates */
-    $divlist = new divSelectBox("FAItemplates");
-    $divlist->setHeight(400);
+    $dn  = $this->acl_base_for_current_object($this->dn);
+    $acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry")  ;
+    $this->templateList->setAcl($acl,preg_match('/^freeze/', $this->FAIstate));
 
     $tmp = $this->getList(true);
-  
-    /* Create div list with all sub entries listed */
     foreach($this->SubObjects as $key => $name){
 
       /* Skip removed entries */ 
       if($name['status'] == "delete") continue;
 
-      /* Get permissions */
-      $dn  = $this->acl_base_for_current_object($name['dn']);
-      $acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry")  ;
       $act = "";
 
-      /* Hide delete icon if this object is freezed */
-      if(preg_match("/freeze/",$this->FAIstate)){
-        $act .= image('images/lists/edit.png','editscript_%s', msgPool::editButton());
-      }else{
-        $act .= image('images/lists/edit.png','editscript_%s', msgPool::editButton());
-        if(preg_match("/d/",$acl)){
-          $act .= image('images/lists/trash.png','deletescript_%s', msgPool::delButton());
-        }
-      }
-
       /* Check acls for download icon */
+      $dn  = $this->acl_base_for_current_object($name['dn']);
       $s_acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry","FAItemplateFile")  ;
-      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
+      if(($this->SubObjects[$key]['status'] == "new") || 
+              ($this->SubObjects[$key]['dn'] == "new") || 
+              !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
         $down = image('images/save.png','download_'.postEncode($key), _("Download"));
       }
-
-      /* Check if we are allowed to view this object */
-      $s_acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry","cn")  ;
-      if(preg_match("/r/",$s_acl)){
-
-        $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$tmp[$key]."</a>";
-        $divlist->AddEntry(array( array("string"=> $edit_link), 
-              array("string"=>$down , "attach" => "style='width:20px;'"),
-              array("string"=>str_replace("%s",postEncode($key),$act),
-                "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
-      }
+      $data[$key] = $key;
+      $lData[$key] = array('data' => array($name['cn'], $down));
     }
-    $smarty->assign("Entry_divlist",$divlist->DrawList());
-    /* Divlist creation complete
-     */
+
+    $this->templateList->setListData($data,$lData);
+    $this->templateList->update();
+    $smarty->assign("Entry_divlist",$this->templateList->render());
 
      /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
