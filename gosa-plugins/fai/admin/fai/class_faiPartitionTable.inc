@@ -104,6 +104,17 @@ class faiPartitionTable extends plugin
       $this->is_new =TRUE;
     }
     ksort($this->disks);
+
+    // Prepare lists
+    $this->diskList = new sortableListing();
+    $this->diskList->setDeleteable(true);
+    $this->diskList->setEditable(true);
+    $this->diskList->setWidth("100%");
+    $this->diskList->setHeight("400px");
+    $this->diskList->setColspecs(array('20px','*','*','40px'));
+    $this->diskList->setHeader(array(("?"),_("Name"),_("Description"),"#"));
+    $this->diskList->setDefaultSortColumn(1);
+
   }
 
 
@@ -179,22 +190,16 @@ class faiPartitionTable extends plugin
       }
     }
 
-    /* New Listhandling */
-    foreach($_POST as $name => $value){
-      if(preg_match("/^editEntry_/",$name)){
-        $s_entry = preg_replace("/^editEntry_/","",$name);
-        $s_entry = postDecode($s_entry);
-        $s_action = "edit"; 
-        break;
-      }
-      if (!preg_match("/freeze/i", $this->FAIstate) && preg_match("/^delete_[^_]*_/",$name)){
-        $s_entry = preg_replace("/^delete_/","",$name);
-        $s_entry = postDecode($s_entry);
-        $s_action = "remove";
-        break;
-      }
+    $this->diskList->save_object();
+    $action = $this->diskList->getAction();
+    if($action['action'] == 'edit'){
+        $s_entry = $this->diskList->getKey($action['targets'][0]);
+        $s_action ="edit";
     }
-
+    if($action['action'] == 'delete'){
+        $s_entry = $this->diskList->getKey($action['targets'][0]);
+        $s_action ="remove";
+    }
 
     /* Disk remove was requested. 
      * Now check if the disk is still in use, in this case 
@@ -378,6 +383,12 @@ class faiPartitionTable extends plugin
     /* Divlist containing disks */
     $divlist = new divSelectBox("FAItemplates");
     $divlist->setHeight(400);
+
+
+    $dn = $this->acl_base_for_current_object($this->dn);
+    $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
+    $this->diskList->setAcl($acl);
+    $data = $lData = array();
     foreach($this->disks as $key => $disk){
       $act = "";
 
@@ -388,30 +399,19 @@ class faiPartitionTable extends plugin
       $dn = $this->acl_base_for_current_object($dn);
       $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
       if(preg_match("/(r|w)/",$acl)) {
-
-        $act .= image('images/lists/edit.png','editEntry_%s',msgPool::editButton());
-        if(preg_match("/d/",$acl) && !preg_match("/freeze/", $this->FAIstate)){
-          $act .= image('images/lists/trash.png','delete_%s',msgPool::delButton());
-        }
-
         $cnt= count($disk['partitions']);
-
-        $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$key."</a>";
         $types= array(
             "old"  => "plugins/fai/images/fai_partitionTable.png", 
             "disk" => "plugins/fai/images/fai_partitionTable.png",
             "raid" => "plugins/fai/images/raid.png", "lvm" => "plugins/ogroups/images/list_ogroup.png");
         $type = isset($disk['FAIdiskType'])?$types[$disk['FAIdiskType']]:$types['old'];
-        $divlist->AddEntry(array( 
-              array("string"=> image($type), "attach"=>"style='width:16px'"),
-              array("string"=> $edit_link, "attach"=>"style='width:100px'"),
-              array("string"=> $disk['description']),
-              array("string"=> $cnt,  "attach"=>"style='width:16px'"),
-              array("string"=>str_replace("%s",postEncode($key),$act),
-                "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
+        $data[$key] = $key;
+        $lData[$key] = array('data' => array(image($type),$key,$disk['description'],$cnt));
       }
     }
-    $smarty->assign("Entry_divlist",$divlist->DrawList());
+    $this->diskList->setListData($data,$lData);
+    $this->diskList->update();
+    $smarty->assign("Entry_divlist",$this->diskList->render());
 
     $display.= $smarty->fetch(get_template_path('faiPartitionTable.tpl', TRUE));
     return($display);
