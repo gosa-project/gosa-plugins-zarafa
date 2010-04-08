@@ -22,7 +22,8 @@ class printerPPDSelectionDialog extends plugin
 
         // Prepare lists
         $this->ppdList = new sortableListing();
-        $this->ppdList->setDeleteable(false);
+        $this->ppdList->setDeleteable(true);
+        $this->ppdList->setInstantDelete(false);
         $this->ppdList->setEditable(true);
         $this->ppdList->setWidth("100%");
         $this->ppdList->setColspecs(array('*','20px'));
@@ -44,33 +45,32 @@ class printerPPDSelectionDialog extends plugin
         $smarty= get_smarty();
         $display= "";
 
-        /* Delete requested, check if everything is ok and display confirmation dialog */
-        if(isset($_GET['act']) && $_GET['act'] == "del"){
 
-            /* Get id and check if id is valid */
-            $id_to_del = base64_decode($_GET['id']);
-            $found = "";
-            foreach($this->list[$this->Vendor] as $key => $data){
-                if($data['link'] == $id_to_del){
-                    $found = $key;
-                    break;
+        $this->ppdList->save_object();
+        $action = $this->ppdList->getAction();
+        if($action['action'] == "delete"){
+            $data = $this->ppdList->getData($action['targets'][0]);
+            if($data['TYPE'] == 'PPD'){
+                $found = "";
+                foreach($this->list[$this->Vendor] as $key => $ppd){
+                    if($ppd['link'] == $data['ID']){
+                        $found = $key;
+                        break;
+                    }
                 }
-            }
-            if(!empty($found)){
-                $this->current_del_id = $id_to_del;
-
-                $smarty->assign("warning", sprintf(msgPool::deleteInfo($found)));
-                return($smarty->fetch(get_template_path('remove_ppd.tpl', TRUE)));
-
-            }else{
-                msg_dialog::display(_("PPD error"), msgPool::fileDoesNotExist($id_to_del), ERROR_DIALOG);
+                if(!empty($found)){
+                    $this->current_del_id = $ppd['link'];
+                    $smarty->assign("warning", sprintf(msgPool::deleteInfo($found)));
+                    return($smarty->fetch(get_template_path('remove_ppd.tpl', TRUE, dirname(__FILE__))));
+                }else{
+                    msg_dialog::display(_("PPD error"), 
+                            msgPool::fileDoesNotExist($this->current_del_id), ERROR_DIALOG);
+                }
             }
         }
 
         /* Deletion confirmed */
         if(isset($_POST['delete_ppd_confirm']) && !empty($this->current_del_id)){
-
-            /* check if file is removeable */
             $is_ok = false;
             if(is_writeable($this->current_del_id)){
                 $is_ok = @unlink($this->current_del_id);
@@ -86,13 +86,11 @@ class printerPPDSelectionDialog extends plugin
                     }
                 }
             }
-
             if(!$is_ok){
-                msg_dialog::display(_("PPD error"), msgPool::cannotDeleteFile($this->current_del_id), ERROR_DIALOG);
+                msg_dialog::display(_("PPD error"), 
+                        msgPool::cannotDeleteFile($this->current_del_id), ERROR_DIALOG);
             }
         }
-
-
         // Build up ppd 
         $list = array();
         foreach($this->list as $cat => $ppds){
@@ -105,6 +103,8 @@ class printerPPDSelectionDialog extends plugin
 
         $data = $lData = array();
         if(empty($this->Vendor)){
+            
+            $this->ppdList->setDeleteable(false);
             foreach($this->header as $key => $entry){
                 $data[$key] = array('TYPE' => 'VENDOR' , 'ID' => $key);
                 $lData[$key] = array('data'=>array($key));
@@ -114,6 +114,7 @@ class printerPPDSelectionDialog extends plugin
             $data[] = array('TYPE' => 'VENDOR' , 'ID' => '..');
             $lData[] = array('data'=>array(".. ["._("back")."]"));
 
+            $this->ppdList->setDeleteable(true);
             foreach($list as $key => $ppd){
                 $name = $ppd['ppd']['name'];
                 if(preg_match("/^".$this->Vendor."/", $name)){
@@ -127,7 +128,7 @@ class printerPPDSelectionDialog extends plugin
         $this->ppdList->setListData($data,$lData);
         $this->ppdList->update();
 
-        $smarty->assign("List",         $this->ppdList->render());
+        $smarty->assign("List", $this->ppdList->render());
 
         $display.= $smarty->fetch(get_template_path('printerPPDSelectionDialog.tpl', TRUE,dirname(__FILE__)));
         return($display);
@@ -141,6 +142,7 @@ class printerPPDSelectionDialog extends plugin
             $data = $this->ppdList->getData($action['targets'][0]);
             if($data['TYPE'] == "VENDOR"){
                 $this->Vendor = $data['ID'];
+                if($this->Vendor == "..") $this->Vendor = "";
             }
             if($data['TYPE'] == "PPD"){
                 $this->selectedPPD = $data['ID'];

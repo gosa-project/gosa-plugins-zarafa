@@ -11,6 +11,6 @@
 <div class="plugin-actions">
  <button type='submit' name='delete_ppd_confirm'>
  {msgPool type=delButton}</button>
- <button type='submit' name='delete_cancel'>
+ <button type='submit' name='delete_ppd_cancel'>
  {msgPool type=cancelButton}</button>
 </div>
