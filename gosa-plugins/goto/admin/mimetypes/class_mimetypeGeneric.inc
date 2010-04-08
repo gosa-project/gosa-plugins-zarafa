@@ -329,16 +329,24 @@ class mimetype extends plugin
   function save_object()
   {
       if(isset($_POST['MimeGeneric']) && !preg_match("/freeze/i",$this->FAIstate)){
-
-
+        
           // Act on list actions here
           $this->patternList->save_object();
           $this->applicationList->save_object();
           $this->embeddedList->save_object();
 
-          $this->use_gotoMimeFilePattern = array_values($this->patternList->getMaintainedData());
-          $this->use_gotoMimeApplication = array_values($this->applicationList->getMaintainedData());
-          $this->use_gotoMimeEmbeddedApplication = array_values($this->embeddedList->getMaintainedData());
+          $action=$this->patternList->getAction();
+          if(in_array($action['action'],array('delete', 'reorder'))){
+              $this->use_gotoMimeFilePattern = array_values($this->patternList->getMaintainedData());
+          }
+          $action=$this->applicationList->getAction();
+          if(in_array($action['action'],array('delete', 'reorder'))){
+              $this->use_gotoMimeApplication = array_values($this->applicationList->getMaintainedData());
+          }
+          $action=$this->embeddedList->getAction();
+          if(in_array($action['action'],array('delete', 'reorder'))){
+              $this->use_gotoMimeEmbeddedApplication = array_values($this->embeddedList->getMaintainedData());
+          }
 
       /* Create a base backup and reset the
          base directly after calling plugin::save_object();
