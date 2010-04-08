@@ -55,6 +55,8 @@ class sieveManagement extends plugin
    */
   var $Import_Script = FALSE;
 
+  var $scriptList = NULL;
+
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
    */ 
@@ -69,11 +71,27 @@ class sieveManagement extends plugin
     $this->parent = &$parent;
     plugin::plugin($config,$dn);
 
+    // Prepare lists
+    $this->scriptList = new sortableListing();
+    $this->scriptList->setDeleteable(true);
+    $this->scriptList->setEditable(true);
+    $this->scriptList->setWidth("100%");
+    $this->scriptList->setHeight("400px");
+    $this->scriptList->setColspecs(array('20px','*','*','40px','20px','40px'));
+    $this->scriptList->setHeader(
+        array(
+            _("Status"),
+            _("Name"),
+            _("Information"),
+            _("Length"),
+            "!"));
+    $this->scriptList->setDefaultSortColumn(1);
+    $this->scriptList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
+
     /* Get sieve, if this fail abort class initialization */
     if(!$this->sieve_handle = $this->get_sieve()){
       return;
     }
-
 
     /* Get all sieve scripts names */
     if($this->sieve_handle->sieve_listscripts()){
@@ -121,6 +139,7 @@ class sieveManagement extends plugin
       $this->scripts[$key]['EDITED'] = FALSE;
     }
     $this->sieve_handle = $this->sieve_handle;
+
   }
 
 
@@ -267,32 +286,25 @@ class sieveManagement extends plugin
      * Handle several posts 
      *************/
 
+    $this->scriptList->save_object();
+    $action = $this->scriptList->getAction();
+    if($action['action'] == 'edit'){
+        $id = $this->scriptList->getKey($action['targets'][0]);
+        $this->current_script = $id;
+        $this->current_handler = $this->scripts[$id]['PARSER'];
+        $this->scripts[$id]['SCRIPT_BACKUP'] = $this->scripts[$id]['SCRIPT'];
+    }
+    if($action['action'] == 'delete'){
+        $id = $this->scriptList->getKey($action['targets'][0]);
+        $this->script_to_delete = $id;
+    }
+
     $once = TRUE;
     foreach($_POST as $name => $value){
-
-      /* Edit script requested */
-      if(preg_match("/^editscript_/",$name) && $once && !$this->current_handler){
-        $script = preg_replace("/^editscript_/","",$name);
-        $script = preg_replace("/_(x|y)/","",$script);
-        $once = FALSE;
-
-        $this->current_script = $script;
-        $this->current_handler = $this->scripts[$script]['PARSER'];
-        $this->scripts[$script]['SCRIPT_BACKUP'] = $this->scripts[$script]['SCRIPT'];
-      }
-
-      /* remove script requested */
-      if($this->parent->acl_is_writeable("sieveManagement") && preg_match("/^delscript_/",$name) && $once && !$this->current_handler){
-        $script = preg_replace("/^delscript_/","",$name);
-        $script = preg_replace("/_(x|y)/","",$script);
-        $once = FALSE;
-        $this->script_to_delete = $script;  
-      }
 
       /* Activate script */
       if($this->parent->acl_is_writeable("sieveManagement") && preg_match("/^active_script_/",$name) && $once && !$this->current_handler){
         $script = preg_replace("/^active_script_/","",$name);
-        $script = preg_replace("/_(x|y)/","",$script);
         $once = FALSE;
 
         /* We can only activate existing scripts */
@@ -306,14 +318,18 @@ class sieveManagement extends plugin
           /* Try to activate the given script and update 
            *  class script array. 
            */
-          if(!$this->sieve_handle->sieve_setactivescript($this->scripts[$script]['NAME'])){
-            msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot retrieve SIEVE script: %s"), '<br><br><i>'.to_string($this->sieve_handler->error_raw).'</i>'), ERROR_DIALOG);
+          if(!$this->sieve_handle){
+            // No sieve handler here... - A warning message will already appear.            
           }else{
-            foreach($this->scripts as $key => $data){
-              if($key == $script){
-                $this->scripts[$key]['ACTIVE'] = TRUE;
-              }else{
-                $this->scripts[$key]['ACTIVE'] = FALSE;
+            if(!$this->sieve_handle->sieve_setactivescript($this->scripts[$script]['NAME'])){
+              msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot retrieve SIEVE script: %s"), '<br><br><i>'.to_string($this->sieve_handler->error_raw).'</i>'), ERROR_DIALOG);
+            }else{
+              foreach($this->scripts as $key => $data){
+                if($key == $script){
+                  $this->scripts[$key]['ACTIVE'] = TRUE;
+                }else{
+                  $this->scripts[$key]['ACTIVE'] = FALSE;
+                }
               }
             }
           }
@@ -623,45 +639,28 @@ class sieveManagement extends plugin
 
     /* Create list of available sieve scripts 
      */
-    $List = new divSelectBox("sieveManagement");
+    $data = $lData = array();
+    $this->scriptList->setAcl($this->parent->getacl("sieveManagement"));
     foreach($this->scripts as $key => $script){
-  
-      $edited =  $script['EDITED'];
       $active =  $script['ACTIVE'];
-      
-      $field1 = array("string" => "&nbsp;",
-                      "attach" => "style='width:20px;'");  
+      $state = "&nbsp;";
       if($active){
-        $field1 = array("string" => "<img src='images/true.png' alt='"._("Active")."' 
-                                      title='"._("This script is marked as active")."'>",
-                        "attach" => "style='width:20px;'");  
+        $state = image('images/true.png','',_("This script is marked as active"));
       }
-      $field2 = array("string" => $script['NAME']);  
-      $field3 = array("string" => $script['MSG']);
-      $field4 = array("string" => _("Script length").":&nbsp;".strlen($script['SCRIPT']));
-
-      if($this->parent->acl_is_writeable("sieveManagement")){
-        $del = "<input type='image' name='delscript_".$key."' src='images/lists/trash.png'
-                  title='"._("Remove script")."'>";
+      $name = $script['NAME'];
+      $msg = $script['MSG'];
+      $length = strlen($script['SCRIPT']);
+      if($active || $script['IS_NEW']){
+          $activate = "&nbsp;";
       }else{
-        $del = "<img src='images/empty.png' alt=' '>";
+          $activate = image('images/true.png','active_script_'.$key,_("Activate script"));
       }
-
-      if($active || $script['IS_NEW'] || !$this->parent->acl_is_writeable("sieveManagement")){
-        $activate = "<img src='images/empty.png' alt=' '>";
-      }else{
-        $activate = "<input type='image' name='active_script_".$key."' src='images/true.png'
-                       title='"._("Activate script")."'>";
-      }
-
-      $field6 = array("string" => $activate."<input type='image' name='editscript_".$key."' src='images/lists/edit.png'
-                        title='"._("Edit script")."'>".$del,
-                      "attach" => "style='border-right:0px; width:70px;'");
-      $List->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 
+      $data[$key] = $key;
+      $lData[$key] = array('data' => array($state, $name, $msg, $length,$activate));
     }
+    $this->scriptList->setListData($data,$lData);
+    $this->scriptList->update();
 
-    $List->SetHeight(400);
- 
     /* If the uattrib is empty   (Attribute to use for authentification with sieve)
      *  Display a message that the connection can't be established.
      */
@@ -677,7 +676,7 @@ class sieveManagement extends plugin
     }
 
     $smarty->assign("uattrib_empty",empty($this->parent->$uattrib));
-    $smarty->assign("List",$List->DrawList());
+    $smarty->assign("List",$this->scriptList->render());
     return($smarty->fetch(get_template_path("templates/management.tpl",TRUE,dirname(__FILE__))));
   }
 
