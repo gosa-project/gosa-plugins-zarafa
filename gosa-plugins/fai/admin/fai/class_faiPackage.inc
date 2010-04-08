@@ -150,6 +150,16 @@ class faiPackage extends plugin
 
     /* Generate package list */
     $this->list= $this->genPkgs(TRUE);
+
+    // Prepare lists
+    $this->packageList = new sortableListing();
+    $this->packageList->setDeleteable(false);
+    $this->packageList->setEditable(false);
+    $this->packageList->setWidth("100%");
+    $this->packageList->setHeight("200px");
+    $this->packageList->setColspecs(array('20px','*','*','100px','60px'));
+    $this->packageList->setHeader(array(_("Status"),_("Name"),_("Description"),_("Version")));
+    $this->packageList->setDefaultSortColumn(1);
   }
 
 
@@ -401,66 +411,61 @@ class faiPackage extends plugin
      * Display UI / HTML / smarty 
      ******/
 
-    /* Create divlist to display a list of all currently used packages
+    /* Create list to display a list of all currently used packages
      */
-    $divlist = new divSelectBox("faiPackages");
-
-    ksort($this->usedPackages);
+    $data = $lData = array();
     if(is_array($this->usedPackages)){
-      foreach($this->usedPackages as $usedName => $name){
-    
-        $actions = "";
+        foreach($this->usedPackages as $usedName => $name){
 
-        /* Append message if package is configured */
-        $configured = image('images/empty.png');
-        if(isset($this->ConfiguredPackages[$usedName])){
-          $configured = image('plugins/fai/images/package_configure.png','',_("Configured"));
-        }
+            /* Append message if package is configured */
+            $configured = image('images/empty.png');
+            if(isset($this->ConfiguredPackages[$usedName])){
+                $configured = image('plugins/fai/images/package_configure.png','',_("Configured"));
+            }
 
-        /* Adapt used name if we're marked for removal */
-        $removal = image('images/empty.png');
-        if (preg_match('/\-$/', $name)){
-          $removal = image('plugins/fai/images/removal_mark.png','',_("Package marked for removal"));
-        }
+            /* Adapt used name if we're marked for removal */
+            $removal = image('images/empty.png');
+            if (preg_match('/\-$/', $name)){
+                $removal = image('plugins/fai/images/removal_mark.png','',_("Package marked for removal"));
+            }
 
-        /* Get Version */
-        $version = "&nbsp;";
-        if(isset($this->list[$usedName]['VERSION'])){
-          $version = $this->list[$usedName]['VERSION'];
-        }
-    
-        /* Get description */
-        $description = "&nbsp;";
-        if(isset($this->list[$usedName]['DESCRIPTION'])){
-          $description = base64_decode($this->list[$usedName]['DESCRIPTION']);
-        }
- 
-        if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
-          $actions.= image('plugins/fai/images/removal_mark.png',
-              'removal_package_'.postEncode($usedName),
-              _("Mark package for removal"));
-        }
+            /* Get Version */
+            $version = "";
+            if(isset($this->list[$usedName]['VERSION'])){
+                $version = $this->list[$usedName]['VERSION'];
+            }
 
-        if(isset($this->list[$usedName]['TEMPLATE']) && 
-           !preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
-          $actions.= image('plugins/fai/images/package_configure.png',
-              'configure_package_'.postEncode($usedName),
-              _("Configure this package"));
-        }
-        if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
-          $actions.= image('images/lists/trash.png',
-              'remove_package_'.postEncode($usedName),
-              _("Remove this package"));
-        }
+            /* Get description */
+            $description = "";
+            if(isset($this->list[$usedName]['DESCRIPTION'])){
+                $description = base64_decode($this->list[$usedName]['DESCRIPTION']);
+            }
 
-        $field1 = array("string" => $configured."&nbsp;".$removal,"attach" => "style='width:40px;'");
-        $field2 = array("string" => $usedName ,"attach" => "style='width:200px;'");
-        $field3 = array("string" => $version);
-        $field4 = array("string" => htmlentities($description));
-        $field5 = array("string" => $actions ,"attach" => "style='width:60px; border-right:0px;'");
-        $divlist->AddEntry(array($field1,$field2,$field3,$field4,$field5));
-      }
+            $actions= image('plugins/fai/images/removal_mark.png',
+                    'removal_package_'.postEncode($usedName),
+                    _("Mark package for removal"));
+
+            if(isset($this->list[$usedName]['TEMPLATE']) && 
+                    !preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
+                $actions.= image('plugins/fai/images/package_configure.png',
+                        'configure_package_'.postEncode($usedName),
+                        _("Configure this package"));
+            }
+            if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
+                $actions.= image('images/lists/trash.png',
+                        'remove_package_'.postEncode($usedName),
+                        _("Remove this package"));
+            }
+            $data[$usedName] = $usedName;
+            $lData[$usedName] = array('data'=>
+                    array(
+                        $configured."&nbsp;".$removal,
+                        $usedName ,$version,htmlentities($description), $actions));
+        }
     }
+    $this->packageList->setAcl($this->getacl("FAIpackage",preg_match('/^freeze/', $this->FAIstate)));
+    $this->packageList->setListData($data,$lData);
+    $this->packageList->update();
 
     /* Assign variables */
     foreach($this->attributes as $attrs){
@@ -480,7 +485,7 @@ class faiPackage extends plugin
     }
  
     $smarty->assign("freeze", preg_match("/freeze/",$this->FAIstate));
-    $smarty->assign("divlist",$divlist->DrawList());
+    $smarty->assign("divlist",$this->packageList->render());
     $smarty->assign("release" ,$this->FAIdebianRelease);
     $smarty->assign("sections",$this->sections);
     $smarty->assign("section" ,$strsec);
