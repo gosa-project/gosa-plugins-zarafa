@@ -52,6 +52,18 @@ class appgroup extends plugin
       $this->is_account= TRUE;
     }   
     $this->initially_was_account = $this->is_account;
+
+    // Prepare lists
+    $this->applicationList = new sortableListing();
+    $this->applicationList->setDeleteable(false);
+    $this->applicationList->setEditable(true);
+    $this->applicationList->setWidth("100%");
+    $this->applicationList->setHeight("400px");
+    $this->applicationList->setColspecs(array('20px','20px','*'));
+    $this->applicationList->setHeader(array("&nbsp;","&nbsp;",_("Application")));
+    $this->applicationList->setDefaultSortColumn(2);
+    $this->applicationList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
+
   }
 
 
@@ -441,47 +453,40 @@ class appgroup extends plugin
       }
     }
 
-    $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=depopen&amp;depid=%s'>%s</a>";
-
     /* Create base back entry */
     $base_back = preg_replace("/^[^,]+,/","",$this->curbase);
     if((strlen($base_back)>= strlen($this->config->current['BASE']))&&($this->curbase!=$this->config->current['BASE'])){
-      $div->AddEntry(array(
-            array("string"=>sprintf($linkopen,postEncode($base_back),".. ["._("back")."]"),
-              "attach"=>"style='border:0px;'")
-            ));
+      $departments[$base_back]=".. ["._("back")."]";
     }
 
-    /* Append departments for current base */
+    // Append departments for current base 
+    $data = $lData = array();
     foreach($departments as $key => $app){
-      $div->AddEntry(array(
-            array("string"=>image('images/lists/folder.png')."&nbsp;".
-                sprintf($linkopen,postEncode($key),$app),
-              "attach"=>"style='border:0px;'")
-            ));
+        $img = image('images/lists/folder.png');
+        $data[$key] = array('TYPE'=>'DEP','ID'=> $app);
+        $lData[$key] = array('data' => array($img,"&nbsp;",$app));
+
     }
 
-  
-    /* Add applications found on this base */
+    // Add applications found on this base 
     $used_apps = $this->_get_used_entry_name();
     foreach($this->apps as $key => $app){
-      if(in_array($app['cn'][0],$used_apps)){
-        continue;
-      }
-      if(!preg_match("/".get_ou('applicationRDN').preg_quote($this->curbase, '/')."$/",$app['dn'])){
-        continue;
-      }
+        if(in_array($app['cn'][0],$used_apps)) continue;
+        if(!preg_match("/".get_ou('applicationRDN').preg_quote($this->curbase, '/')."$/",$app['dn'])){
+            continue;
+        }
 
-      $name = $app['cn'][0];
-      if(isset($app['description'])){
-        $name .= "&nbsp;[".$app['description'][0]."]";
-      }
-      $div->AddEntry(array(
-            array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
-              image('plugins/goto/images/select_application.png')."&nbsp;".$name,
-              "attach"=>"style='border:0px;'")
-            ));
+        $name = $app['cn'][0];
+        if(isset($app['description'])){
+            $name .= "&nbsp;[".$app['description'][0]."]";
+        }
+        $img = image('plugins/goto/images/select_application.png');
+        $chk = "<input class='center' type='checkbox' value='1' name='AddApp_".$key."'>";
+        $data[$key] = array('TYPE'=>'APP','ID'=> $app);
+        $lData[$key] = array('data' => array($img,$chk,$name));
     }
+    $this->applicationList->setListData($data,$lData);
+    $this->applicationList->update();
 
     /* Assign copy / paste values 
      */
@@ -493,7 +498,7 @@ class appgroup extends plugin
     }
     $smarty->assign("enableReleaseManagement",$this->enableReleaseManagement);
     $smarty->assign("FAIrelease",$this->FAIrelease);
-    $smarty->assign("app_list",$div->DrawList());
+    $smarty->assign("app_list",$this->applicationList->render());
     $smarty->assign("i",0);
     $smarty->assign("releases",$this->Releases);
     $smarty->assign("folders" , $this->_get_folder_names());
@@ -869,8 +874,17 @@ class appgroup extends plugin
       $this->FAIrelease = $_POST['FAIrelease'];
       $this->_check_missing_release($this->FAIrelease);
     }
-    if(isset($_GET['act']) && $_GET['act'] == 'depopen'){
-      $this->curbase = postDecode($_GET['depid']);
+    
+    $this->applicationList->save_object();
+    $action = $this->applicationList->getAction();
+    if($action['action'] == "edit"){
+        $data= $this->applicationList->getData($action['targets'][0]);
+        $dn= $this->applicationList->getKey($action['targets'][0]);
+        if($data['TYPE'] == 'DEP'){
+            $this->curbase = $dn; 
+        }elseif($data['TYPE'] == 'APP' && isset($_POST['folder'])){
+            $this->_add_app_id($_POST['folder'],$dn); 
+        }
     }
     if(isset($_POST['add_to_folder']) && isset($_POST['folder'])){
       $folder = $_POST['folder'];
