@@ -870,7 +870,7 @@ class workstartup extends plugin
     $this->handle_post_events("modify");
 
     /* Check if LDAP server has changed */
-    if ((isset($this->attrs['gotoLdapServer']) && class_available("DaemonEvent")) || $this->gotoLdap_inherit){
+    if ($this->si_active && (isset($this->attrs['gotoLdapServer']) && class_available("DaemonEvent") || $this->gotoLdap_inherit)){
       $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['TRIGGERED']['DaemonEvent_reload_ldap_config'])){
