@@ -153,6 +153,41 @@ class mimetype extends plugin
     $this->baseSelector->update(true);
 
     $this->orig_base = $this->base;
+
+
+    // Prepare lists
+    $this->patternList = new sortableListing(array(),array(),TRUE);
+    $this->patternList->setDeleteable(true);
+    $this->patternList->setInstantDelete(true);
+    $this->patternList->setEditable(false);
+    $this->patternList->setWidth("100%");
+    $this->patternList->setHeight("100px");
+    $this->patternList->setColspecs(array('200px','*'));
+    $this->patternList->setHeader(array(_("Section"),_("Description")));
+    $this->patternList->setDefaultSortColumn(1);
+    $this->patternList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
+
+    $this->applicationList = new sortableListing(array(),array(),TRUE);
+    $this->applicationList->setDeleteable(true);
+    $this->applicationList->setEditable(false);
+    $this->applicationList->setWidth("100%");
+    $this->applicationList->setHeight("100px");
+    $this->applicationList->setColspecs(array('200px','*'));
+    $this->applicationList->setHeader(array(_("Section"),_("Description")));
+    $this->applicationList->setInstantDelete(true);
+    $this->applicationList->setDefaultSortColumn(1);
+    $this->applicationList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
+
+    $this->embeddedList = new sortableListing(array(),array(),TRUE);
+    $this->embeddedList->setDeleteable(true);
+    $this->embeddedList->setEditable(false);
+    $this->embeddedList->setWidth("100%");
+    $this->embeddedList->setInstantDelete(true);
+    $this->embeddedList->setHeight("100px");
+    $this->embeddedList->setColspecs(array('200px','*'));
+    $this->embeddedList->setHeader(array(_("Section"),_("Description")));
+    $this->embeddedList->setDefaultSortColumn(1);
+    $this->embeddedList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
   }
 
 
@@ -175,46 +210,8 @@ class mimetype extends plugin
     }
     $smarty->assign("IconReadable", preg_match("/r/",$this->getacl("gotoMimeIcon",preg_match("/freeze/i",$this->FAIstate))));
 
-    /* Check Posts */
-    $posts = array(	
-        "/^Pattern_SortUp_/" 	=> array("Action" => "Pattern_SortUp",	"Func" => "ArrayUp",	"Attr" => "use_gotoMimeFilePattern"),
-        "/^Pattern_SortDown_/" 	=> array("Action" => "Pattern_SortDown","Func" => "ArrayDown",	"Attr" => "use_gotoMimeFilePattern"),
-        "/^Pattern_Remove_/" 	=> array("Action" => "Pattern_Remove",	"Func" => "ArrayRemove","Attr" => "use_gotoMimeFilePattern"),
-        "/^Apps_SortUp_/" 		=> array("Action" => "Apps_SortUp",		"Func" => "ArrayUp",    "Attr" => "use_gotoMimeApplication"),
-        "/^Apps_SortDown_/" 	=> array("Action" => "Apps_SortDown",	"Func" => "ArrayDown",  "Attr" => "use_gotoMimeApplication"),
-        "/^Apps_Remove_/" 		=> array("Action" => "Apps_Remove",		"Func" => "ArrayRemove","Attr" => "use_gotoMimeApplication"),
-        "/^EApps_SortUp_/" 		=> array("Action" => "EApps_SortUp",	"Func" => "ArrayUp",    "Attr" => "use_gotoMimeEmbeddedApplication"),
-        "/^EApps_SortDown_/" 	=> array("Action" => "EApps_SortDown",	"Func" => "ArrayDown",  "Attr" => "use_gotoMimeEmbeddedApplication"),
-        "/^EApps_Remove_/" 		=> array("Action" => "EApps_Remove",	"Func" => "ArrayRemove","Attr" => "use_gotoMimeEmbeddedApplication"));		
-    $once = true;
-
     /* Walk through posts and try to find some commands for us. */
     if(!preg_match("/freeze/i",$this->FAIstate)){
-      foreach($_POST as $name => $value){
-
-        /* Walk through possible commands */
-        foreach($posts as $regex => $action){
-
-          /* Check if there is a command posted */
-          if(preg_match($regex,$name) && $once){
-            $once = false;
-
-            /* Get action vars */
-            $func 		= $action['Func'];		// Get function name 
-            $attr 		= $action['Attr'];		// Get attribute name
-            $acl_a 		= preg_replace("/^use_/","",$action['Attr']);		// Get attribute name
-
-            /* Get entry id */
-            $s_entry  	= preg_replace($regex,"",$name);
-
-            /* Execute a command with the given attribute and entry 
-               e.g. $this->gotoMimeFilePattern = $this->ArrayUp(3,$this->gotoMimeFilePattern) */
-            if($this->acl_is_writeable($acl_a)){
-              $this->$attr= $this->$func($s_entry,$this->$attr,true);					 
-            }
-          }
-        }
-      }
 
       /* Set a new icon was requested */
       if(isset($_POST['update_icon']) && (isset($_FILES['picture_file']['name']))){
@@ -268,74 +265,47 @@ class mimetype extends plugin
       }	
     }	
 
-    /* Create divlists */
-    $DivPatterns 	= new divSelectBox("gotoMimePatterns");
-    $DivApps 		= new divSelectBox("gotoMimeApplications");
-    $DivEApps 		= new divSelectBox("gotoMimeEmbeddedApplications");
-    $DivPatterns	-> SetHeight(100);
-    $DivApps		-> SetHeight(100);
-    $DivEApps		-> SetHeight(100);
+    // Set list acls 
+    $this->patternList->setAcl($this->getacl("gotoMimeFilePattern", 
+                preg_match("/freeze/i",$this->FAIstate)));
+    $this->applicationList->setAcl($this->getacl("gotoMimeApplication",
+                preg_match("/freeze/i",$this->FAIstate)));
+    $this->embeddedList->setAcl($this->getacl("gotoMimeEmbeddedApplication",
+                preg_match("/freeze/i",$this->FAIstate)));
 
-
-    if($this->acl_is_writeable("gotoMimeFilePattern") && !preg_match("/freeze/i",$this->FAIstate)){
-      $Pattern_Actions= 
-        image('images/lists/sort-up.png','Pattern_SortUp_%s','','top').
-        image('images/lists/sort-down.png','Pattern_SortDown_%s','','bottom').
-        image('images/lists/trash.png','Pattern_Remove_%s');
-    }else{
-      $Pattern_Actions= "";	
-    }
-
-    if($this->acl_is_writeable("gotoMimeApplication") && !preg_match("/freeze/i",$this->FAIstate)){
-      $Apps_Actions 	=  
-        image('images/lists/sort-up.png','Apps_SortUp_%s','','top').
-        image('images/lists/sort-down.png','Apps_SortDown_%s','','bottom').
-        image('images/lists/trash.png','Apps_Remove_%s');
-    }else{
-      $Apps_Actions= "";	
-    }
-
-    if($this->acl_is_writeable("gotoMimeEmbeddedApplication") && !preg_match("/freeze/i",$this->FAIstate)){
-      $EApps_Actions 	= 
-        image('images/lists/sort-up.png','EApps_SortUp_%s','','top').
-        image('images/lists/sort-down.png','EApps_SortDown_%s','','bottom').
-        image('images/lists/trash.png','EApps_Remove_%s');
-    }else{
-      $EApps_Actions= "";	
-    }
 
     /* Before adding some entries check acls */
-    if($this->acl_is_readable("gotoMimeFilePattern")){
-      foreach($this->use_gotoMimeFilePattern as $key => $pattern){
-        $field1 = array("string" => $pattern);
-        $field2 = array("string" => preg_replace("/%s/",$key,$Pattern_Actions),"attach"=>"style='border-right:0px;width:50px;'");
-        $fields = array($field1,$field2);
-        $DivPatterns -> AddEntry($fields);
-      }			
-    }
+    $data = $lData = array();
+    foreach($this->use_gotoMimeFilePattern as $key => $pattern){
+        $data[$key] = $pattern;
+        $lData[$key] = array('data'=>array($pattern));
+    }			
+    $this->patternList->setListData($data, $lData);
+    $this->patternList->update();
 
-    if($this->acl_is_readable("gotoMimeApplication")){
-      foreach($this->use_gotoMimeApplication as $key => $pattern){
-        $field1 = array("string" => $pattern);
-        $field2 = array("string" => preg_replace("/%s/",$key,$Apps_Actions),"attach"=>"style='border-right:0px;width:50px;'");
-        $fields = array($field1,$field2);
-        $DivApps -> AddEntry($fields);
-      }			
+    $data = $lData = array();
+    foreach($this->use_gotoMimeApplication as $key => $pattern){
+        $data[$key] = $pattern;
+        $lData[$key] = array('data'=>array($pattern));
     }			
-    if($this->acl_is_readable("gotoMimeEmbeddedApplication")){
-      foreach($this->use_gotoMimeEmbeddedApplication as $key => $pattern){
-        $field1 = array("string" => $pattern);
-        $field2 = array("string" => preg_replace("/%s/",$key,$EApps_Actions),"attach"=>"style='border-right:0px;width:50px;'");
-        $fields = array($field1,$field2);
-        $DivEApps -> AddEntry($fields);
-      }
-    }			
+    $this->applicationList->setListData($data, $lData);
+    $this->applicationList->update();
+
+    $data = $lData = array();
+    foreach($this->use_gotoMimeEmbeddedApplication as $key => $pattern){
+        $data[$key] = $pattern;
+        $lData[$key] = array('data'=>array($pattern));
+    }
+    $this->embeddedList->setListData($data, $lData);
+    $this->embeddedList->update();
+
+    $smarty->assign("usePrototype", "true");
     $smarty->assign("bases", 						$this->get_allowed_bases());		
     $smarty->assign("base_select", 					$this->base);		
     $smarty->assign("isReleaseMimeType",			$this->is_release());
-    $smarty->assign("gotoMimeFilePatterns",			$DivPatterns->DrawList());
-    $smarty->assign("gotoMimeApplications",			$DivApps->DrawList());
-    $smarty->assign("gotoMimeEmbeddedApplications",	$DivEApps->DrawList());
+    $smarty->assign("gotoMimeFilePatterns",			$this->patternList->render());
+    $smarty->assign("gotoMimeApplications",			$this->applicationList->render());
+    $smarty->assign("gotoMimeEmbeddedApplications",	$this->embeddedList->render());
 
     $smarty->assign("ApplicationList",$this->ApplicationList);
   
@@ -358,7 +328,17 @@ class mimetype extends plugin
 
   function save_object()
   {
-    if(isset($_POST['MimeGeneric']) && !preg_match("/freeze/i",$this->FAIstate)){
+      if(isset($_POST['MimeGeneric']) && !preg_match("/freeze/i",$this->FAIstate)){
+
+
+          // Act on list actions here
+          $this->patternList->save_object();
+          $this->applicationList->save_object();
+          $this->embeddedList->save_object();
+
+          $this->use_gotoMimeFilePattern = array_values($this->patternList->getMaintainedData());
+          $this->use_gotoMimeApplication = array_values($this->applicationList->getMaintainedData());
+          $this->use_gotoMimeEmbeddedApplication = array_values($this->embeddedList->getMaintainedData());
 
       /* Create a base backup and reset the
          base directly after calling plugin::save_object();
