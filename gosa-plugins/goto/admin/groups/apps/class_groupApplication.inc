@@ -436,8 +436,6 @@ class appgroup extends plugin
     $smarty->assign("plug_id" , $_GET['plug']);
 
     /* Create application list */
-    $div = new divSelectBox("appgroup");
-    $div->SetHeight(300);
     $departments = array();
     if(!$this->enableReleaseManagement){
       $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
