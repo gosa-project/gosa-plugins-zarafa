@@ -282,7 +282,6 @@ class faiPartition extends plugin
    */
   function getRaidList()
   {
-    $divlist = new divSelectBox("RaidList");
     $disks = $this->parent->parent->disks;
     $objs = array();
     foreach($disks as $disk){
