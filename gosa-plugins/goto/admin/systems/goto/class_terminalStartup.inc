@@ -156,6 +156,15 @@ class termstartup extends plugin
       }
 
     }
+
+    // Prepare lists
+    $this->ldapList = new sortableListing(array(),array(), TRUE);
+    $this->ldapList->setDeleteable(true);
+    $this->ldapList->setEditable(false);
+    $this->ldapList->setWidth("100%");
+    $this->ldapList->setHeight("100px");
+    $this->ldapList->setHeader(array(_("LDAP server")));
+    $this->ldapList->setDefaultSortColumn(0);
     
   }
 
@@ -241,12 +250,8 @@ class termstartup extends plugin
     $smarty->assign("gotoSharesCount",count($this->printOutAssignedShares()));
     $smarty->assign("gotoShareKeys",array_flip($this->printOutAssignedShares()));
 
-    /* Create divSelectBox for ldap server selection
-     */
-    $SelectBoxLdapServer = new divSelectBox("LdapServer");
-    $SelectBoxLdapServer->SetHeight(80);
 
- /* Add new ldap server to the list */
+    /* Add new ldap server to the list */
     if(!$this->gotoLdap_inherit && isset($_POST['add_ldap_server']) && isset($_POST['ldap_server_to_add'])){
       if(isset($this->gotoLdapServerList[$_POST['ldap_server_to_add']])){
         $to_add = $this->gotoLdapServerList[$_POST['ldap_server_to_add']];
@@ -256,69 +261,43 @@ class termstartup extends plugin
       }
     }
 
+    
     /* Move ldap servers up and down */
-    if(!$this->gotoLdap_inherit && $this->acl_is_writeable("gotoLdapServer")){
-      foreach($_POST as $name => $value){
-        if(preg_match("/sort_ldap_up_/",$name)){
-          $id = preg_replace("/^sort_ldap_up_([0-9]*)$/","\\1",$name);
-          $from =  $id;
-          $to   =  $id -1;
-          $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
-          if($tmp){
-            $this->gotoLdapServers = $tmp;
-          }
-          break;
-        }
-        if(preg_match("/sort_ldap_down_/",$name)){
-          $id = preg_replace("/^sort_ldap_down_([0-9]*)$/","\\1",$name);
-          $from =  $id;
-          $to   =  $id +1;
-          $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
-          if($tmp){
-            $this->gotoLdapServers = $tmp;
-          }
-          break;
-        }
-        if(preg_match("/gotoLdapRemove_/",$name)){
-          $id = preg_replace("/^gotoLdapRemove_([0-9]*)$/","\\1",$name);
-          $value = $this->gotoLdapServers[$id];
-          $this->gotoLdapServers = array_remove_entries(array($value),$this->gotoLdapServers);
-          break;
-        }
-      }
+    $this->ldapList->save_object();
+    $action = $this->ldapList->getAction();
+    if($action['action'] == 'reorder'){
+        $this->gotoLdapServers = array_values($this->ldapList->getMaintainedData());
+    }
+    if($action['action'] == 'delete'){
+        $id = $this->ldapList->getKey($action['targets'][0]);
+        $value = $this->gotoLdapServers[$id];
+        $this->gotoLdapServers = array_remove_entries(array($value),$this->gotoLdapServers);
     }
 
-    /* Add Entries 
-     */
-    if($this->acl_is_readable("gotoLdapServer")){
+    $this->ldapList->setAcl($this->getacl('gotoLdapServer'));
 
-      foreach($this->gotoLdapServers as $key => $server){
+    /* Add Entries */
+    $data = $lData = array();
+    foreach($this->gotoLdapServers as $key => $server){
+        $data[$key]=$server;
 
         /* Announce missing entries */
         if(!in_array($server,$this->gotoLdapServerList)){
-          $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
+            $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
         }
 
         /* Convert old style entry */
         if (!preg_match('%:ldaps?://%', $server)){
-          $server= "ldap://".preg_replace('/^([^:]+):/', '\1/', $server);
-
-        /* Beautify new style entries */
-      } else {
-        $server= preg_replace("/^[^:]+:/", "", $server);
-      }
-
-      $SelectBoxLdapServer->AddEntry(
-          array(
-            array(
-              "string" => $server),
-            array("string" =>
-              image('images/lists/sort-up.png',"sort_ldap_up_".$key,'',"top").
-              image('images/lists/sort-down.png',"sort_ldap_down_".$key,'',"bottom").
-              image('images/lists/trash.png',"gotoLdapRemove_".$key),
-              "attach" => "style='text-align:right;width:60px;border-right:0px;'")));
-      }
+            $server= "ldap://".preg_replace('/^([^:]+):/', '\1/', $server);
+        } else {
+            $server= preg_replace("/^[^:]+:/", "", $server);
+            $lData[$key] = array('data'=>array($server));
+        }
     }
+    $this->ldapList->setListData($data,$lData);
+    $this->ldapList->update();
+    $smarty->assign("usePrototype", "true");
+
 
 
     if($this->gotoLdap_inherit){
@@ -333,7 +312,7 @@ class termstartup extends plugin
         $list[$key] = $entry;
       }
     }
-    $smarty->assign("gotoLdapServers",    $SelectBoxLdapServer->DrawList());
+    $smarty->assign("gotoLdapServers",    $this->ldapList->render());
     $smarty->assign("gotoLdapServerList", $list);
     $smarty->assign("gotoLdap_inherit",   $this->gotoLdap_inherit);
     $smarty->assign("JS",  session::get('js'));
