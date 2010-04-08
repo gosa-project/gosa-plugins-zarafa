@@ -203,11 +203,11 @@
     </table>
 
    {/if} <!-- Inherited -->
+{/if} <!-- FAI active-->
   </td>
  </tr>
 </table>
 
-{/if} <!-- FAI active-->
 
 <hr>
 
@@ -244,11 +244,7 @@
     {msgPool type=delButton}</button>
    {/render}
   </td>
-  
-  
   <td>
- 
-  
    <!--
     - Shares
     -->
