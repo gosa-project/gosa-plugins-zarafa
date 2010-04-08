@@ -144,6 +144,17 @@ class faiDiskEntry extends plugin
         $this->fstabkey= "device";
       }
     }
+
+    // Prepare lists
+    $this->diskList = new sortableListing();
+    $this->diskList->setDeleteable(true);
+    $this->diskList->setEditable(true);
+    $this->diskList->setWidth("100%");
+    $this->diskList->setHeight("400px");
+    $this->diskList->setColspecs(array('200px','*'));
+    $this->diskList->setHeader(array("Name",_("Description"),_("Type"),_("Mount point"),_("Options")));
+    $this->diskList->setDefaultSortColumn(1);
+    $this->diskList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
   }
 
 
@@ -174,35 +185,20 @@ class faiDiskEntry extends plugin
       }
     }
 
-    /* Check all Posts if there is something usefull for us,
-     * For example : Delete is posted as Delete_1 
-     * The number specifies the index we want to delete
-     */
-    foreach($_POST as $name => $value){
-      if((preg_match("/RemovePartition_/",$name)) && 
-          $this->acl_is_removeable() && 
-          !preg_match("/freeze/i",$this->FAIstate)){
-        $tmp = explode("_",$name);
-        $this->removePartition($tmp[1]);
-        break;
-      }
-      if(preg_match("/^EditPartition_/",$name)){
-        $id = preg_replace("/^EditPartition_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
+    // Get list actions
+    $this->diskList->save_object();
+    $action = $this->diskList->getAction();
+    if($action['action'] == 'edit'){
+        $id = $this->diskList->getKey($action['targets'][0]);
         if(isset($this->partitions[$id])){
-          $this->dialog = new faiPartition($this->config,$this->partitions[$id], $this,$this->FAIdiskType);
-          break;
+            $this->dialog = new faiPartition($this->config,$this->partitions[$id], $this,$this->FAIdiskType);
         }
-      } 
     }
-
-    /* Act on _GET edit request
-     */
-    if(isset($_GET['act']) && $_GET['act'] == "editPart" && isset($_GET['id'])){
-      $id = $_GET['id'];
-      if(isset($this->partitions[$id])){
-        $this->dialog = new faiPartition($this->config,$this->partitions[$id], $this,$this->FAIdiskType);
-      }
+    if($action['action'] == 'delete'){
+        $id = $this->diskList->getKey($action['targets'][0]);
+        if(isset($this->partitions[$id])){
+            $this->removePartition($id);
+        }
     }
 
     /* Create a new partition for this disk.
@@ -282,8 +278,6 @@ class faiDiskEntry extends plugin
    */
   function getPartitionList()
   {
-    $divlist = new divSelectBox("RaidList");
-
     /* Create a list of all available disks and partitions. 
      * This list will then be used to display detailed info.
      */
@@ -487,37 +481,23 @@ class faiDiskEntry extends plugin
 
   /* This method generates the partition listing with all necessary info,
    *  depending on the disk type.
-   * The list is of type divSelectBox.
    */
   function generateParts()
   {
-    $divlist = new divSelectBox("DiskEntries"); 
+    $data = $lData = array();
     foreach($this->partitions as $key => $part){
-
-      // Create default table cols 
-      $cn =array(
-          "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".$part['cn']."</a>",
-          "attach" => "style='width:160px;'");
-      $desc =array(
-          "string" => "<a href='?plug=".$_GET['plug']."&amp;act=editPart&amp;id={$key}'>".
-          $part['description']."</a>",
-          "attach" => "style='width:200px;'");
-      $number =array(
-          "string" => $part['FAIpartitionNr'],
-          "attach" => "style='width:20px;'");
-      $size   =array(
-          "string" => $part['FAIpartitionSize'],
-          "attach" => "style='width:100px;'");
-      $type   =array(
-          "string" => $part['FAIpartitionType'],
-          "attach" => "style='width:80px;'");
+    
+      $cn       = $part['cn'];
+      $desc     = $part['description'];
+      $number   = $part['FAIpartitionNr'];
+      $size     = $part['FAIpartitionSize'];
+      $type     = $part['FAIpartitionType'];
 
       // Remove encryption info from the mount point.
       $mnt = $part['FAImountPoint'];
       if(preg_match("/:encrypt/", $mnt)){
         $mnt = preg_replace("/:encrypt/","",$mnt);
       }
-      $mntp   =array("string" => $mnt);
 
       // create human readable strings out of the flags.
       $opt = "";
@@ -532,37 +512,25 @@ class faiDiskEntry extends plugin
       }     
 
       // Combine options to a single table col. 
-      $opt    =array(
-          "string" => "<i>".preg_replace('/, $/',"",$opt)."&nbsp;</i>");
-
-      // Depending on the FAIstatus (freeze?) we will display different options. 
-      // We can't remove freezed branches -> Hide remove button.
-      if(!preg_match("/freeze/", $this->FAIstate)){
-        $action =array(
-            "string" => 
-              image('images/lists/edit.png','EditPartition_'.$key).
-              image('images/lists/trash.png','RemovePartition_'.$key),
-            "attach" => "style='width:40px; border-right: 0px;'");
-      }else{
-        $action =array(
-            "string" => 
-              image('images/lists/edit.png','EditPartition_'.$key),
-            "attach" => "style='width:40px; border-right: 0px;'");
-      }
+      $opt = "<i>".preg_replace('/, $/',"",$opt)."&nbsp;</i>";
 
       // Build up info table, depending on the disk type. 
-      if($this->FAIdiskType == "lvm"){ 
-        $fields = array($cn,$desc,$mntp,$opt,$size, $action);
+      $data[$key]=$key;
+      if($this->FAIdiskType == "lvm"){
+        $lData[$key]=array('data' => array($cn,$desc,"",$mnt,$opt,$size));
       }elseif($this->FAIdiskType == "raid"){
-        $raid_str = $part['FAIpartitionType']." (".$part['FAIpartitionSize'].")";
-        $raid = array("string" => $raid_str);
-        $fields = array($cn,$desc,$raid,$mntp,$opt,$action);
+        $raid = $part['FAIpartitionType']." (".$part['FAIpartitionSize'].")";
+        $lData[$key]=array('data' => array($cn,$desc,$raid,$mnt,$opt));
       }else{
-        $fields = array($desc,$type,$mntp,$opt,$size,$action);
+        $lData[$key]=array('data' => array("",$desc,$type,$mnt,$opt,$size));
       }
-      $divlist->AddEntry($fields);
     }
-    return($divlist->DrawList());    
+    $this->diskList->setListData($data,$lData);
+    $acl = "rwcdm";
+    if(preg_match("/freeze/", $this->FAIstate)) $acl = "r";
+    $this->diskList->setAcl($acl);;
+    $this->diskList->update();
+    return($this->diskList->render());
   }
 
 
