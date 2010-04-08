@@ -79,6 +79,27 @@ class opsiGeneric extends plugin
 
     /* Try to plugin */
     $this->init();
+
+    // Prepare lists
+    $this->selectedList = new sortableListing();
+    $this->selectedList->setDeleteable(false);
+    $this->selectedList->setEditable(false);
+    $this->selectedList->setWidth("100%");
+    $this->selectedList->setHeight("200px");
+    $this->selectedList->setColspecs(array('*','*'));
+    $this->selectedList->setHeader(array(_("Name"),_("Description")));
+    $this->selectedList->setDefaultSortColumn(1);
+    $this->selectedList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
+
+    // Prepare lists
+    $this->availableList = new sortableListing();
+    $this->availableList->setDeleteable(false);
+    $this->availableList->setEditable(false);
+    $this->availableList->setWidth("100%");
+    $this->availableList->setHeight("200px");
+    $this->availableList->setColspecs(array('20px','*','*'));
+    $this->availableList->setHeader(array("",_("Name"),_("Description")));
+    $this->availableList->setDefaultSortColumn(1);
   }
   
 
@@ -308,55 +329,38 @@ class opsiGeneric extends plugin
 
     $smarty->assign("is_installed", $this->is_installed);
     $smarty->assign("init_failed",FALSE);
-    $divSLP = new divSelectBox();
-    $divALP = new divSelectBox();
 
     /* Create list of available local products 
      */
+    $data = $lData=array();
     foreach($this->a_availableLocalProducts as $name => $data){
-      if(isset($this->a_selectedLocalProducts[$name])) continue;
-
-      $add_tab  = array("string"   => image('images/back.png','add_lp_'.$name));
-      $name_tab = array("string"   => $name);
-      $desc_tab = array("string"   => "<div style='height: 14px;overflow:hidden;'>".$data['DESC']."</div>",
-          "attach"   => "title='".$data['DESC']."' style='border-right:0px;'");
-
-      if($this->acl_is_writeable("localProduct")){
-        $divALP->AddEntry(array($add_tab,$name_tab,$desc_tab));
-      }else{
-        $divALP->AddEntry(array($name_tab,$desc_tab));
-      }
+        if(isset($this->a_selectedLocalProducts[$name])) continue;
+        $add_tab = "";
+        if($this->acl_is_writeable("localProduct")){
+            $add_tab  = image('images/back.png','add_lp_'.$name);
+        }
+        $data[$name] = $name;
+        $lData[$name] = array('data' => array($add_tab,$name,$data['DESC']));
     }
+    $this->availableList->setAcl($this->getacl("localProduct"));
+    $this->availableList->setListData($data,$lData);
+    $this->availableList->update();
 
     /* Create list of selected local products 
      */
-    ksort($this->a_selectedLocalProducts);
-    if($this->acl_is_readable("localProduct")){
-      foreach($this->a_selectedLocalProducts as $name => $data){
-
-        $name_tab = array("string"   => $name);
-        $desc_tab = array(
-            "string" => "<div style='height: 14px;overflow:hidden;'>".$data['DESC']."</div>",
-            "attach" => "title='".$data['DESC']."'");
-
-        /* Only display edit button, if there is something to edit 
-         */
+    $data = $lData=array();
+    foreach($this->a_selectedLocalProducts as $name => $data){
         $edit = image('images/empty.png');
         if(count($data['CFG'])){
-          $edit = image('images/lists/edit.png','edit_lp_'.$name);
+            $edit = image('images/lists/edit.png','edit_lp_'.$name);
         }
         $del = image('images/lists/trash.png','del_lp_'.$name);
-
-        $opt_tab  = array("string" => $edit.$del,
-            "attach" => "style='border-right:0px; width: 40px; text-align:right;'");
-
-        if($this->acl_is_writeable("localProduct")){
-          $divSLP->AddEntry(array($name_tab,$desc_tab,$opt_tab));
-        }else{
-          $divSLP->AddEntry(array($name_tab,$desc_tab));
-        }
-      }
+        $data[$name] = $name;
+        $lData[$name] = array('data' => array( $name,$data['DESC'],$edit.$del));
     }
+    $this->selectedList->setAcl($this->getacl("localProduct"));
+    $this->selectedList->setListData($data,$lData);
+    $this->selectedList->update();
 
     /* Check if netboot product is configurable 
      */
@@ -375,8 +379,8 @@ class opsiGeneric extends plugin
 
     $smarty->assign("netboot_configurable",$cfg_able);
     $smarty->assign("hostId", $this->hostId);
-    $smarty->assign("divSLP", $divSLP->DrawList());
-    $smarty->assign("divALP", $divALP->DrawList());
+    $smarty->assign("divSLP", $this->selectedList->render());
+    $smarty->assign("divALP", $this->availableList->render());
     $smarty->assign("SNP", $this->s_selectedNetbootProduct);
     $smarty->assign("ANP", $this->a_availableNetbootProducts);
     return($display.$smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
