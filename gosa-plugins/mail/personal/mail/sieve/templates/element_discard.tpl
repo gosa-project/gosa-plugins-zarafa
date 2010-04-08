@@ -1,4 +1,4 @@
-<table class='sieve_discard_container' summary="{t}Sieve element discard{/t}">
+<table width='100%' class='sieve_discard_container' summary="{t}Sieve element discard{/t}">
 	<tr>
 		<td>
 			<b>{t}Discard{/t}</b>

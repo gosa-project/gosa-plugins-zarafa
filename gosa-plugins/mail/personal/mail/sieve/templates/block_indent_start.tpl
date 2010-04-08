@@ -1,5 +1,5 @@
 
-<table class='object_container_container' summary="{t}Sieve element{/t}"> 
+<table width='100%' class='object_container_container' summary="{t}Sieve element{/t}"> 
 	<tr>
 		<td class='object_container_cell_top_left'>
 			&nbsp;	

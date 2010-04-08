@@ -1,4 +1,4 @@
-<table class='sieve_vacation_container' summary="{t}Sieve element{/t}">
+<table width='100%' class='sieve_vacation_container' summary="{t}Sieve element{/t}">
 
 	{foreach from=$LastError item=val key=key}
 		<tr>
@@ -12,8 +12,10 @@
 		<td style='width:20%'>	
 			<b>{t}Vacation Message{/t}</b>
 		</td>	
-        <td style='text-align:right; vertical-align:top;'>
-            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal view{/t}'>
+        <td style='text-align:right; '>
+
+            <button type='submit' name='Toggle_Expert_{$ID}'>{t}Normal view{/t}</button>
+
         </td>
 	</tr>
 	<tr>
@@ -43,8 +45,10 @@
 		<td>	
 			<b>{t}Vacation message{/t}</b>
 		</td>	
-		<td width='10%' style='vertical-align:top;'>
-            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert view{/t}'>
+		<td>
+
+            <button type='submit' name='Toggle_Expert_{$ID}'>{t}Expert view{/t}</button>
+
 		</td>
 	</tr>
 	<tr>

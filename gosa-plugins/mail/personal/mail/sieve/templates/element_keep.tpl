@@ -1,4 +1,4 @@
-<table class='sieve_keep_container' summary="{t}Sieve element keep{/t}">
+<table width='100%' class='sieve_keep_container' summary="{t}Sieve element keep{/t}">
 	<tr>
 		<td>
 			<b>{t}Keep{/t}</b>

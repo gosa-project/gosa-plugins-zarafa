@@ -1,10 +1,12 @@
-<table class='sieve_allof_container' summary="{t}Sieve filter{/t}">
+<table width='100%' class='sieve_allof_container' summary="{t}Sieve filter{/t}">
 	<tr>
     	<td class='sieve_allof_left'>
             {if $Inverse}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}' title='{t}Inverse match{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}' title="{t}Inverse match{/t}">{t}Not{/t}</button>
+
             {else}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}-{/t}' title='{t}Inverse match{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}' title="{t}Inverse match{/t}">{t}-{/t}</button>
+
             {/if}
 			<br>
 			<b>{t}All of{/t}</b>

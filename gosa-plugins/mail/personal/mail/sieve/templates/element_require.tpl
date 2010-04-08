@@ -1,4 +1,4 @@
-<table class='sieve_require_container'  summary="{t}Sieve: require{/t}">
+<table width='100%' class='sieve_require_container'  summary="{t}Sieve: require{/t}">
 	{foreach from=$LastError item=val key=key}
 		<tr>
 			<td colspan=4>

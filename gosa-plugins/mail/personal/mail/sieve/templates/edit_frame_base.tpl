@@ -1,5 +1,5 @@
 
-<table class='editing_surface' summary="{t}Sieve editor{/t}" width="100%">
+<table width='100%' class='editing_surface' summary="{t}Sieve editor{/t}">
 	<tr>
 		<td class='editing_surface_menu'>
 			

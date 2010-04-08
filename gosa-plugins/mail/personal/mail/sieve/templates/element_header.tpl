@@ -1,6 +1,6 @@
 	{if $Expert}
     	{if $LastError != ""}
-		<table class='sieve_test_case' summary="{t}Sieve header{/t}">
+		<table width='100%' class='sieve_test_case' summary="{t}Sieve header{/t}">
         	<tr>
 				<td colspan=4>
 		            <font color='red'><b>{$LastError}</b></font>
@@ -10,23 +10,25 @@
         {/if}
 
 
-<table class='sieve_test_case' summary="{t}Sieve element{/t}">
+<table width='100%' class='sieve_test_case' summary="{t}Sieve element{/t}">
 	<tr>
 		<td>
 			<b>{t}Header{/t}</b>
 		</td>
-        <td style='text-align:right; vertical-align:top;'>
-            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal view{/t}'>
+        <td style='text-align:right; '>
+
+            <button type='submit' name='Toggle_Expert_{$ID}'>{t}Normal view{/t}</button>
+
         </td>
     </tr>
 </table>
-<table summary="{t}Sieve element{/t}">
+<table width='100%' summary="{t}Sieve element{/t}">
     <tr>
 		<td>
             {t}Match type{/t}
         </td>
         <td>
-            <select name='matchtype_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();'>
+            <select name='matchtype_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();' size=1>
                 {html_options options=$match_types selected=$match_type}
             </select>
 
@@ -38,9 +40,11 @@
         </td>
         <td>
             {if $Inverse}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Yes{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}'>{t}Yes{/t}</button>
+
             {else}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}No{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}'>{t}No{/t}</button>
+
             {/if}
         </td>
     </tr>
@@ -49,7 +53,7 @@
             {t}Comparator{/t}
         </td>
         <td>
-            <select name='comparator_{$ID}' title='{t}Boolean value{/t}'>
+            <select name='comparator_{$ID}' title='{t}Boolean value{/t}' size=1>
                 {html_options options=$comparators selected=$comparator}
             </select>
         </td>
@@ -60,7 +64,7 @@
             {t}operator{/t}
         </td>
         <td>
-            <select name='operator_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();'>
+            <select name='operator_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();' size=1>
                 {html_options options=$operators selected=$operator}
             </select>
         </td>
@@ -71,7 +75,7 @@
         <td colspan=2>&nbsp;</td>
     </tr>
    </table>
-   <table class='sieve_test_case' summary="{t}Sieve element{/t}">
+   <table width='100%' class='sieve_test_case' summary="{t}Sieve element{/t}">
     <tr>
         <td >
             {t}Address fields to include{/t}<br>
@@ -86,7 +90,7 @@
 
 	{else}
     	{if $LastError != ""}
-		<table class='sieve_test_case' summary="{t}Sieve element{/t}">
+		<table width='100%' class='sieve_test_case' summary="{t}Sieve element{/t}">
         	<tr>
 				<td colspan=4>
 		            <font color='red'><b>{$LastError}</b></font>
@@ -96,27 +100,31 @@
         {/if}
 
 		
-<table class='sieve_test_case' summary="{t}Sieve element{/t}">
+<table width='100%' class='sieve_test_case' summary="{t}Sieve element{/t}">
     <tr>
 		{if $match_type == ":count" || $match_type == ":value"}
-		<td style='vertical-align:top; width:350px;'>
+		<td style='width:350px;'>
+
 		{else}
-		<td style='vertical-align:top; width:200px;'>
+		<td style='width:200px;'>
+
 		{/if}
             <b>{t}Header{/t}</b>
 
             {if $Inverse}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}'>{t}Not{/t}</button>
+
             {else}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}-{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}'>{t}-{/t}</button>
+
             {/if}
             &nbsp;
-            <select onChange='document.mainform.submit();' name='matchtype_{$ID}' title='{t}Boolean value{/t}'>
+            <select onChange='document.mainform.submit();' name='matchtype_{$ID}' title='{t}Boolean value{/t}' size=1>
                 {html_options options=$match_types selected=$match_type}
             </select>
 
             {if $match_type == ":count" || $match_type == ":value"}
-            <select name='operator_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();'>
+            <select name='operator_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();' size=1>
                 {html_options options=$operators selected=$operator}
             </select>
             {/if}
@@ -127,8 +135,10 @@
         <td>
             <textarea style='width:100%;height:40px;' name='values_{$ID}'>{$values}</textarea>
         </td>
-        <td style='text-align:right; vertical-align:top; width:120px;'>
-            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert view{/t}'>
+        <td style='text-align:right; width:120px;'>
+
+            <button type='submit' name='Toggle_Expert_{$ID}'>{t}Expert view{/t}</button>
+
         </td>
     </tr>
 

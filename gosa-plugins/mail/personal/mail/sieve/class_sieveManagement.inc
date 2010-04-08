@@ -600,7 +600,6 @@ class sieveManagement extends plugin
       foreach($_POST as $name => $value){
         if(preg_match("/^Add_Test_Object_/",$name)) {
           $name = preg_replace("/^Add_Test_Object_/","",$name);
-          $name = preg_replace("/_(x|y)$/","",$name);
 
           $test_types_to_add = array(
               "address" =>_("Address"),

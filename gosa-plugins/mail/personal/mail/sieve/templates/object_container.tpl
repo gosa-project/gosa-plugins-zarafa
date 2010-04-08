@@ -1,9 +1,9 @@
-<table class='object_container_container' summary="{t}Sieve element{/t}"> 
+<table width='100%' class='object_container_container' summary="{t}Sieve element{/t}">
 	<tr>
-		<td class='object_container_cell_top_left'>
+	    <td style='width:20px;background-color: #B8B8B8'>
 			&nbsp;	
 		</td>
-		<td style='width:200px;' >
+		<td style='width:200px; background-color: #B8B8B8; vertical-align:middle;' >
             {image path='plugins/mail/images/sieve_move_object_up.png' 
                 action="Move_Up_Object_{$ID}" title="{t}Move object up one position{/t}"}
 
@@ -14,8 +14,7 @@
                 title="{t}Remove object{/t}"}
 
          </td>   
-         <td>
-	
+		 <td style=' background-color: #B8B8B8'>
 			<select name='element_type_{$ID}' size=1>
 				<option value=''>&lt;{t}choose element{/t}&gt;</option>
 				<option value='sieve_keep'>{t}Keep{/t}</option>

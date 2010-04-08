@@ -1,4 +1,4 @@
-<table class='sieve_reject_container'  summary="{t}Sieve: reject{/t}">
+<table width='100%' class='sieve_reject_container'  summary="{t}Sieve: reject{/t}">
 
 {foreach from=$LastError item=val key=key}
         <tr>

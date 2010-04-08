@@ -1,15 +1,18 @@
-<table class='sieve_test_case' summary="{t}Sieve filter{/t}">
+<table width='100%' class='sieve_test_case' summary="{t}Sieve filter{/t}">
     <tr>
-        <td style='vertical-align:top; width:200px;'>
+        <td style='width:200px;'>
+
             {if $LastError != ""}
                 <font color='red'>{$LastError}</font>
                 <br>
             {/if}
             <b>{t}Exists{/t}</b>
             {if $Inverse}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}' title='{t}Inverse match{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}' title="{t}Inverse match{/t}">{t}Not{/t}</button>
+
             {else}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}-{/t}' title='{t}Inverse match{/t}'>
+                <button type='submit' name='toggle_inverse_{$ID}' title="{t}Inverse match{/t}">{t}-{/t}</button>
+
             {/if}
 
 		</td>

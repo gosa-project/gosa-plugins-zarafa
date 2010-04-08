@@ -540,7 +540,7 @@ class sieve_if
       $element_id = $this->object_id."_".$id."_".$obj_id;
       
       foreach($_POST as $name => $value){
-        if(preg_match("/Remove_Test_Object_".$element_id."_(x|y)/",$name)) {
+        if(preg_match("/Remove_Test_Object_".$element_id."/",$name)) {
           return(false); 
         }
       }

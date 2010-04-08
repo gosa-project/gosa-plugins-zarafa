@@ -1,4 +1,4 @@
-<table class='sieve_redirect_container' summary="{t}Sieve element redirect{/t}">
+<table width='100%' class='sieve_redirect_container' summary="{t}Sieve element redirect{/t}">
 	{foreach from=$LastError item=val key=key}
         <tr>
             <td colspan=4>
