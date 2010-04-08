@@ -91,9 +91,6 @@ class licenseByProduct extends plugin
       return($smarty->fetch(get_template_path('licenseByProduct.tpl',TRUE,dirname(__FILE__))));
     }
     
-    // Create usage list
-    $list = new divSelectBox("licenseUsage");
-  
     $ui = get_userinfo();
     $readable = $ui->get_permissions($this->config->current['BASE'], "opsi/licenseByProduct","");
     $data = array();
