@@ -165,17 +165,19 @@ class printerPPDDialog extends plugin
     }
 
     /* Div Selection */ 
-    if((isset($_GET['act']))&&($_GET['act']=="use")){
-      $this->SelectPPD(base64_decode($_GET['id']));
-      unset($this->dialog);
-      $this->dialog=FALSE;
-
+    if($this->dialog instanceOf printerPPDSelectionDialog){
+        $this->dialog->save_object();
+        if($this->dialog->isSelected()){
+            $this->SelectPPD($this->dialog->save());
+            unset($this->dialog);
+            $this->dialog=FALSE;
+        }
     }
 
     /* if a dialog is open, print the dialog instead of this class */
     if(is_object($this->dialog)){
-      $display = $this->dialog->execute();
-      return($display);
+        $display = $this->dialog->execute();
+        return($display);
     }
 
     // ENDE  PPD selection / upload / dialog handling 

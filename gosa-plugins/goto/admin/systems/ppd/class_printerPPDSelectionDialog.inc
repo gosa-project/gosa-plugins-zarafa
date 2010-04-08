@@ -11,6 +11,7 @@ class printerPPDSelectionDialog extends plugin
   var $header               =array();
   var $current_del_id       = "";
   var $Vendor               = "";
+  var $selectedPPD = "";
 
   function printerPPDSelectionDialog (&$config, $dn= NULL,$list=false,$headers=false,$ppd=false)
   {
@@ -18,14 +19,21 @@ class printerPPDSelectionDialog extends plugin
     $this->list       = $list;
     $this->header     = $headers;
     $this->depselect  = $this->config->current['BASE'];
-    
-    if(!session::is_set('printerPPDSelectionDialog')){
-      session::set("printerPPDSelectionDialog",array('regex'=> "*"));
-    }  
 
-    /* Order the manufacturers index */
-    ksort($this->header);
+    // Prepare lists
+    $this->ppdList = new sortableListing();
+    $this->ppdList->setDeleteable(false);
+    $this->ppdList->setEditable(true);
+    $this->ppdList->setWidth("100%");
+    $this->ppdList->setColspecs(array('*','20px'));
+    $this->ppdList->setHeight("200px");
+    $this->ppdList->setHeader(array(_("PPD")));
+    $this->ppdList->setDefaultSortColumn(0);
   }
+
+    function isSelected(){
+        return(!empty($this->selectedPPD));
+    }
 
   function execute()
   {
@@ -35,24 +43,7 @@ class printerPPDSelectionDialog extends plugin
     /* Fill templating stuff */
     $smarty= get_smarty();
     $display= "";
-    $s_action = "none";
  
-    $printerPPDSelectionDialog = session::get('printerPPDSelectionDialog');
-    $regex = $printerPPDSelectionDialog['regex'];
-
-    if(isset($_GET['search'])){
-      $regex = $_GET['search']."*";
-    }
-  
-    if(isset($_POST['regex'])){
-      $regex= $_POST['regex'];
-    }
-    
-    $regex = str_replace("**","*",$regex);
-    $printerPPDSelectionDialog['regex'] = $regex;
-    session::set('printerPPDSelectionDialog',$printerPPDSelectionDialog);
- 
-
     /* Delete requested, check if everything is ok and display confirmation dialog */
     if(isset($_GET['act']) && $_GET['act'] == "del"){
 
@@ -102,81 +93,41 @@ class printerPPDSelectionDialog extends plugin
     }
 
 
-    /** Added **/
+    // Build up ppd 
     $list = array();
     foreach($this->list as $cat => $ppds){
-      foreach($ppds as $ppd){
-       $name = $ppd['ppd']['name'];
-        if(preg_match("/^".str_replace("*",".*",$regex)."/i",$name)){
-          if(is_readable($ppd['link'])){
+        foreach($ppds as $ppd){
+            $name = $ppd['ppd']['name'];
             $list[$ppd['link']] = $ppd;
-          }
         }
-      }
     }
 
-    /* Sort the list alphabetically */
-    asort($list);
- 
-    if((isset($_GET['act']))&&($_GET['act']=="open"))  {
-      
-      if((!empty($_GET['id'])) && (!isset( $this->header[base64_decode($_GET['id'])]))){
-        msg_dialog::display(_("PPD error"), sprintf(_("Cannot locate vendor '%s' in available PPDs!"), base64_decode($_GET['id'])), ERROR_DIALOG);
-        $this->Vendor = ""; 
-      }else{
-        $this->Vendor = base64_decode($_GET['id']);
-      }
-    }
 
-    $div = new divSelectBox("printerPPDSelectionDialog");
-    $div ->SetHeight(450);
-    $div ->SetSummary(_("Printer ppd selection."));
-    
-    $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>
-                  <img src='images/lists/folder.png' class='center' alt='' border=0>&nbsp;%s
-                 </a>";
-    $uselink  = "<a href='?plug=".$_GET['plug']."&amp;act=use&amp;id=%s'>%s</a>";
-    $dellink  = "<a href='?plug=".$_GET['plug']."&amp;act=del&amp;id=%s'>
-                  <img src='images/lists/trash.png' alt='"._("delete")."' border=0>
-                 </a>"; 
-
+    $data = $lData = array();
     if(empty($this->Vendor)){
-      foreach($this-> header as $key => $entry){
-        $div ->AddEntry (array(
-                 
-              array("string"=>sprintf($linkopen,base64_encode($key),$key),"attach"=>"style='border-right:0px;'")
-              ));
-      }
+      foreach($this->header as $key => $entry){
+        $data[$key] = array('TYPE' => 'VENDOR' , 'ID' => $key);
+        $lData[$key] = array('data'=>array($key));
+      } 
+      
     }else{
-      $div ->AddEntry (array(
-            array("string"=>sprintf($linkopen,"",".. ["._("back")."]"),"attach"=>"style='border-right:0px;'")
-            ));
+      $data[] = array('TYPE' => 'VENDOR' , 'ID' => '..');
+      $lData[] = array('data'=>array(".. ["._("back")."]"));
+
       foreach($list as $key => $ppd){
        $name = $ppd['ppd']['name'];
         if(preg_match("/^".$this->Vendor."/", $name)){
-
-          if(is_writeable($ppd['link'])){
-            $del_str = sprintf($dellink,base64_encode($key));
-          }else{
-            $del_str = "";
-          }
-
-          $div ->AddEntry (array(
-                                  array("string"=>sprintf($uselink,base64_encode($key),$name)),
-                                  array("string"=>$del_str,"attach"=>"style='border-right:0px;'")
-
-                ));
+          $data[$key] = array('TYPE' => 'PPD' , 'ID' => $key);
+          $lData[$key] = array('data'=>array($name));
         }
       }
     }
-
-    $smarty->assign("List",         $div -> DrawList());
-    $smarty->assign("search_image", get_template_path('images/lists/search.png'));
-    $smarty->assign("launchimage",  get_template_path('images/lists/action.png'));
-    $smarty->assign("tree_image",   get_template_path('images/lists/search-subtree.png'));
-    $smarty->assign("alphabet",     generate_alphabet());
-    $smarty->assign("apply",        apply_filter());
-    $smarty->assign("regex",        $regex);
+   
+    $this->ppdList->setAcl('rwcdm');
+    $this->ppdList->setListData($data,$lData);
+    $this->ppdList->update();
+    
+    $smarty->assign("List",         $this->ppdList->render());
   
     $display.= $smarty->fetch(get_template_path('printerPPDSelectionDialog.tpl', TRUE,dirname(__FILE__)));
     return($display);
@@ -184,6 +135,18 @@ class printerPPDSelectionDialog extends plugin
 
   function save_object()
   {
+    $this->ppdList->save_object();
+    $action = $this->ppdList->getAction();
+    if($action['action'] == "edit"){
+        $data = $this->ppdList->getData($action['targets'][0]);
+        if($data['TYPE'] == "VENDOR"){
+            $this->Vendor = $data['ID'];
+        }
+        if($data['TYPE'] == "PPD"){
+            $this->selectedPPD = $data['ID'];
+        }
+    } 
+
   } 
 
   function check(){
