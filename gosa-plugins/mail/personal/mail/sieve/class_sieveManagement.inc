@@ -343,7 +343,7 @@ class sieveManagement extends plugin
      *************/
 
     /* Remove aborted */
-    if(isset($_POST['delete_cancel'])){
+    if(isset($_POST['delete_script_cancel'])){
       $this->script_to_delete = -1;
     }
 
