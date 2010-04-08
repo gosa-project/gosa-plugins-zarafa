@@ -1,17 +1,17 @@
 
-<table class='editing_surface' summary="{t}Sieve editor{/t}">
+<table class='editing_surface' summary="{t}Sieve editor{/t}" width="100%">
 	<tr>
 		<td class='editing_surface_menu'>
 			
-			<input type='submit' name='Save_Copy' value="{t}Export{/t}">
-			<input type='submit' name='Import_Script' value="{t}Import{/t}">
+			<button type='submit' name='Save_Copy'>{t}Export{/t}</button>
+			<button type='submit' name='Import_Script'>{t}Import{/t}</button>
 
 			{if $Mode != "Source-Only"}			
 				
 				{if $Mode == "Source"}
-				<input type='submit' name='View_Structured' value="{t}View structured{/t}">
+				<button type='submit' name='View_Structured'>{t}View structured{/t}</button>
 				{else}
-				<input type='submit' name='View_Source' value="{t}View source{/t}">
+				<button type='submit' name='View_Source'>{t}View source{/t}</button>
 				{/if}
 			{/if}
 		</td>
@@ -29,14 +29,14 @@
 			{if $Mode == "Structured"}
 				{$Contents}
 			{else}
-				<textarea class='editing_source' name='script_contents'>{$Contents}</textarea>
+				<textarea style='width:100%; height:300px;' class='editing_source' name='script_contents'>{$Contents}</textarea>
 			{/if}
 
 		</td>
 	</tr>
 </table>
-<div class='seperator' style='text-align:right; width:100%;'>
-	<input type='submit' name='save_sieve_changes' value='{msgPool type=saveButton}'>
-        &nbsp;
-    <input type='submit' name='cancel_sieve_changes' value='{msgPool type=cancelButton}'>
+<hr>
+<div class="plugin-actions">
+	<button type='submit' name='save_sieve_changes'>{msgPool type=saveButton}</button>
+    <button type='submit' name='cancel_sieve_changes'>{msgPool type=cancelButton}</button>
 </div>

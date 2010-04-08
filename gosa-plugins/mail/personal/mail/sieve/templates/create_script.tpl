@@ -9,11 +9,12 @@
 <br>
 <br>
 
-<div class='seperator' style='border-top:1px solid #999; text-align:right; width:100%; padding-top:10px;'>
-   <input type='submit' name='create_script_save' value='{msgPool type=applyButton}' id='create_script_save'>
-   &nbsp;
-   <input type='submit' name='create_script_cancel' value='{msgPool type=cancelButton}'>
+<hr>
+<div class="plugin-actions">
+   <button type='submit' name='create_script_save'>{msgPool type=applyButton}</button>
+   <button type='submit' name='create_script_cancel'>{msgPool type=cancelButton}</button>
 </div>
+
 <script language="JavaScript" type="text/javascript">
 	<!--
 	focus_field('NewScriptName');

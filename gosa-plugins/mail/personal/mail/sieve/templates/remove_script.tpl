@@ -1,18 +1,15 @@
-<div style="font-size:18px;">
-<img alt="" src="images/warning.png" align=top>&nbsp;{t}Warning{/t}
-</div>
+{image path='images/warning.png'}
+<hr>
 <p>
- {$Warning}<br>
- {t}Please double check if your really want to do this since there is no way for GOsa to get your data back.{/t}
+ {$Warning}
 </p>
-
-<p>
+ {t}Please double check if your really want to do this since there is no way for GOsa to get your data back.{/t}
  {t}Best thing to do before performing this action would be to save the current script in a file. So - if you've done so - press 'Delete' to continue or 'Cancel' to abort.{/t}
 </p>
 
 <hr>
 <div class="plugin-actions">
-  <input type=submit name="delete_script_confirm" value="{msgPool type=delButton}">
-  <input type=submit name="delete_cancel" value="{msgPool type=cancelButton}">
+  <button type=submit name="delete_script_confirm">{msgPool type=delButton}</button>
+  <button type=submit name="delete_script_cancel">{msgPool type=cancelButton}</button>
 </div>
 
