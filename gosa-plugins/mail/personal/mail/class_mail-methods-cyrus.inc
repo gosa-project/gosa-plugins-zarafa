@@ -548,7 +548,7 @@ class mailMethodCyrus extends mailMethod{
     $script= "";
     if (is_integer(strpos($gosaMailDeliveryMode, "R")) ||
         is_integer(strpos($gosaMailDeliveryMode, "C")) ||
-        !is_integer(strpos($gosaMailDeliveryMode, "I")) ||
+        is_integer(strpos($gosaMailDeliveryMode, "I")) ||
         is_integer(strpos($gosaMailDeliveryMode, "V")) ||
         is_integer(strpos($gosaMailDeliveryMode, "S"))){
 
@@ -587,7 +587,7 @@ class mailMethodCyrus extends mailMethod{
     }
 
     /* If no local delivery is wanted, tell the script to discard the mail */
-    if (!is_integer(strpos($gosaMailDeliveryMode, "I"))){
+    if (is_integer(strpos($gosaMailDeliveryMode, "I"))){
       $text= preg_replace('/"/', '\\"', implode ("", file(CONFIG_DIR."/sieve-discard.txt")));
       eval ("\$script.=\"$text\";");
     }
