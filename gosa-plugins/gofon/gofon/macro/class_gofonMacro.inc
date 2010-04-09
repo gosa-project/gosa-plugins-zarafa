@@ -255,6 +255,9 @@ class macro extends plugin
       " VALUES ";
       
     $a_contentLines = preg_split("/\n/",$this->goFonMacroContent);
+
+    // Keep all macro priorities to avoid duplicates!
+    $priorities = array();
     foreach($a_contentLines as $i_linenum => $s_linestr){
 
       /* Remove the 'exten => ' string in front of the macro content line 
@@ -278,22 +281,27 @@ class macro extends plugin
        */
       $tmp  = explode(",", $s_linestr,3);
 
-      // No priority given ... somehow
-      if(count($tmp) == 2){
-        $tmp = array($tmp[0],"1",$tmp[1]); 
-      }
-
       /* Check if there is an application given */
-      if($tmp[2] == ""){
+      if(!isset($tmp[2]) || $tmp[2]  == ""){
         return(sprintf(_("Application missing in line %s!"),$i_linenum));
       } 
-      if($tmp[1] == ""){
+      if(!isset($tmp[1]) || $tmp[1] == ""){
         return(sprintf(_("Priority missing in line %s!"),$i_linenum));
       } 
       /* Check if there is an extension given */
-      if($tmp[0] == ""){
+      if(!isset($tmp[0]) || $tmp[0] == ""){
         return(sprintf(_("Extension missing in line %s!"),$i_linenum));
       } 
+
+      // Table 'extensions' has a primary key over the following fields 
+      //  'context', 'exten' and 'priority' - 
+      // Ensure that we do not write duplicates here.
+      $du = $context.$tmp[0].$tmp[1];
+      if(!isset($priorities[$du])){
+        $priorities[$du] = 1;
+      }else{
+        return(sprintf(_("Duplicate combination of 'extension' and 'priority' in line %s!"),$i_linenum));
+      }
 
       /* Create extension entry for current line 
        *  and add this line to an array that will be inserted 
