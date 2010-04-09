@@ -508,35 +508,35 @@ class macro extends plugin
     $str = $this->add_to_database(true);
     if($str){
       msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
-    }else{
-      /* Write back to ldap */
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cat($this->dn, array('dn'));
-      $a= $ldap->fetch();
+    }
 
-      if (count($a)){
+    /* Write back to ldap */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cat($this->dn, array('dn'));
+    $a= $ldap->fetch();
+
+    if (count($a)){
         $ldap->cd($this->dn);
         $this->cleanup();
         $ldap->modify ($this->attrs); 
 
         $this->handle_post_events("modify");
-      } else {
+    } else {
         $ldap->cd($this->config->current['BASE']);
         $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
         $ldap->cd($this->dn);
         $ldap->add($this->attrs);
         $this->handle_post_events("add");
-      }
-      if (!$ldap->success()){
+    }
+    if (!$ldap->success()){
         msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
-      }
+    }
 
-      /* Log last action */
-      if($this->initially_was_account){
+    /* Log last action */
+    if($this->initially_was_account){
         new log("modify","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      }else{
+    }else{
         new log("create","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      }
     }
   }
 
