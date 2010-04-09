@@ -255,6 +255,9 @@ class macro extends plugin
       " VALUES ";
       
     $a_contentLines = preg_split("/\n/",$this->goFonMacroContent);
+
+    // Keep all macro priorities to avoid duplicates!
+    $priorities = array();
     foreach($a_contentLines as $i_linenum => $s_linestr){
 
       /* Remove the 'exten => ' string in front of the macro content line 
@@ -278,22 +281,27 @@ class macro extends plugin
        */
       $tmp  = explode(",", $s_linestr,3);
 
-      // No priority given ... somehow
-      if(count($tmp) == 2){
-        $tmp = array($tmp[0],"1",$tmp[1]); 
+      /* Check if there is an application given */
+      if(!isset($tmp[2]) || $tmp[2]  == ""){
+        return(sprintf(_("Application missing in line %s!"),$i_linenum));
+      }
+      if(!isset($tmp[1]) || $tmp[1] == ""){
+        return(sprintf(_("Priority missing in line %s!"),$i_linenum));
+      }
+      /* Check if there is an extension given */
+      if(!isset($tmp[0]) || $tmp[0] == ""){
+        return(sprintf(_("Extension missing in line %s!"),$i_linenum));
       }
 
-      /* Check if there is an application given */
-      if($tmp[2] == ""){
-        return(sprintf(_("Application missing in line %s!"),$i_linenum));
-      } 
-      if($tmp[1] == ""){
-        return(sprintf(_("Priority missing in line %s!"),$i_linenum));
-      } 
-      /* Check if there is an extension given */
-      if($tmp[0] == ""){
-        return(sprintf(_("Extension missing in line %s!"),$i_linenum));
-      } 
+      // Table 'extensions' has a primary key over the following fields
+      //  'context', 'exten' and 'priority' -
+      // Ensure that we do not write duplicates here.
+      $du = $context.$tmp[0].$tmp[1];
+      if(!isset($priorities[$du])){
+        $priorities[$du] = 1;
+      }else{
+        return(sprintf(_("Duplicate combination of 'extension' and 'priority' in line %s!"),$i_linenum));
+      }
 
       /* Create extension entry for current line 
        *  and add this line to an array that will be inserted 
@@ -508,35 +516,35 @@ class macro extends plugin
     $str = $this->add_to_database(true);
     if($str){
       msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
-    }else{
-      /* Write back to ldap */
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cat($this->dn, array('dn'));
-      $a= $ldap->fetch();
+    }
 
-      if (count($a)){
+    /* Write back to ldap */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cat($this->dn, array('dn'));
+    $a= $ldap->fetch();
+
+    if (count($a)){
         $ldap->cd($this->dn);
         $this->cleanup();
         $ldap->modify ($this->attrs); 
 
         $this->handle_post_events("modify");
-      } else {
+    } else {
         $ldap->cd($this->config->current['BASE']);
         $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
         $ldap->cd($this->dn);
         $ldap->add($this->attrs);
         $this->handle_post_events("add");
-      }
-      if (!$ldap->success()){
+    }
+    if (!$ldap->success()){
         msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
-      }
+    }
 
-      /* Log last action */
-      if($this->initially_was_account){
+    /* Log last action */
+    if($this->initially_was_account){
         new log("modify","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      }else{
+    }else{
         new log("create","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      }
     }
   }
 
