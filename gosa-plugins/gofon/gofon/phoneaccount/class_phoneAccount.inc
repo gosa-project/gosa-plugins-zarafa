@@ -244,23 +244,49 @@ class phoneAccount extends plugin
 
       /* Go through available parameters and parse all attributes, like parametername, type, default ...*/
       if((isset($attrs['goFonMacroParameter']))&&(is_array($attrs['goFonMacroParameter']))){
+          foreach($attrs['goFonMacroParameter'] as $pkey=>$pval){
+              /* Split Data in readable values, by delimiter !  */
+              $data = explode("!",$attrs['goFonMacroParameter'][$pkey]);
 
-        foreach($attrs['goFonMacroParameter'] as $pkey=>$pval){
-          /* Split Data in readable values, by delimiter !  */
-          $data = explode("!",$attrs['goFonMacroParameter'][$pkey]);
+              $string = $data[3];
+              $string=preg_replace("/%uid/i",$this->uid,$string);
+              $string=preg_replace("/%pager/i",$this->pager,$string);
+              $string=preg_replace("/%context/i",$this->context,$string);
+              $string=preg_replace("/%voicemailcontext/i",$this->voice_context,$string);
 
-          /* Set all attrs */
-          $id = $data[0];
-          $this->macroarray[$attrs['dn']][$id]['var']    ="var".$id;
-          $this->macroarray[$attrs['dn']][$id]['choosen']=$data[3]; 
-          $this->macroarray[$attrs['dn']][$id]['id']     =$id;
-          $this->macroarray[$attrs['dn']][$id]['name']   =$data[1];
-          $this->macroarray[$attrs['dn']][$id]['type']   =$data[2];
-          $this->macroarray[$attrs['dn']][$id]['default']=$data[3];
-          if($data[2] == "bool"){
-            $this->macroarray[$attrs['dn']][$id]['choosen']=$data[3];
-          }
-        }//foreach
+              if(isset($this->cn)){
+                  $string=preg_replace("/%cn/i",$this->cn,$string);
+              }
+
+
+              $tmp = array();
+              foreach($this->phoneNumbers as $phonenum){
+                  $tmp[] = $phonenum;
+              }
+
+              for($i = 0 ; $i < 10; $i++){
+                  if(isset($tmp[$i])){
+                      $string = preg_replace("/%telephoneNumber_".($i+1)."/i",$tmp[$i],$string);
+                  }
+              }
+              if(isset($tmp[0])){
+                  $string = preg_replace("/%telephoneNumber/i",$tmp[0],$string);
+              }
+              $data[3] = $string;
+
+
+              /* Set all attrs */
+              $id = $data[0];
+              $this->macroarray[$attrs['dn']][$id]['var']    ="var".$id;
+              $this->macroarray[$attrs['dn']][$id]['choosen']=$data[3];
+              $this->macroarray[$attrs['dn']][$id]['id']     =$id;
+              $this->macroarray[$attrs['dn']][$id]['name']   =$data[1];
+              $this->macroarray[$attrs['dn']][$id]['type']   =$data[2];
+              $this->macroarray[$attrs['dn']][$id]['default']=$data[3];
+              if($data[2] == "bool"){
+                  $this->macroarray[$attrs['dn']][$id]['choosen']=$data[3];
+              }
+          }//foreach
       }//is_array
     }//while
 
