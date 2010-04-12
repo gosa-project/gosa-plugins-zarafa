@@ -17,6 +17,8 @@ class worktabs extends tabs
 
     $baseobject= NULL;
 
+    $this->acl_category = $category;
+
     foreach ($data as $tab){
 
       if(!class_available($tab['CLASS'])) continue;
