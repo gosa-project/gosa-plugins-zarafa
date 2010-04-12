@@ -137,7 +137,7 @@ class gospamserver extends goService{
     }
 
     /* Save rules */
-    if(isset($_POST['SaveRule'])){
+    if(isset($_POST['SaveRule']) && $this->dialog instanceOf goSpamServerRule){
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)){
