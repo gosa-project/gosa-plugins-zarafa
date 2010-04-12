@@ -118,6 +118,18 @@ class DaemonEvent
         $this->periodType = $tmp[1];
       }
     }
+
+    // Prepare lists
+    $this->targetList = new sortableListing();
+    $this->targetList->setDeleteable(true);
+    $this->targetList->setInstantDelete(false);
+    $this->targetList->setEditable(false);
+    $this->targetList->setWidth("100%");
+    $this->targetList->setHeight("200px");
+    $this->targetList->setColspecs(array('*'));
+    $this->targetList->setHeader(array(_("Mac")));
+    $this->targetList->setDefaultSortColumn(0);
+    $this->targetList->setAcl('rwcdm');
   }
 
 
@@ -131,9 +143,8 @@ class DaemonEvent
 
     $str = "<h3>"._("This job has no template!")."</h3>";
     $str.= "<hr>";
-    $str.= "<div style='text-align:right;width:100%;padding:3px;'>
-      <input type='submit' name='abort_event_dialog' value='".msgPool::cancelButton()."'>
-      </div>";
+    $str.= "<div class='plugin-actions'>
+      <button type='submit' name='abort_event_dialog'>".msgPool::cancelButton()."</button> </div>";
     return($str);
   }
 
@@ -159,9 +170,9 @@ class DaemonEvent
       return("");
     }
     $str = "<hr>";
-    $str.= "<div style='text-align:right;width:99%;padding:5px;'>
-      <input type='submit' name='save_event_dialog' value='".msgPool::saveButton()."'>&nbsp;
-    <input type='submit' name='abort_event_dialog' value='".msgPool::cancelButton()."'>
+    $str.= "<div class='plugin-actions'>
+        <button type='submit' name='save_event_dialog'>".msgPool::saveButton()."</button>&nbsp;
+        <button type='submit' name='abort_event_dialog'>".msgPool::cancelButton()."</button>
       </div>";
     return($str);
   }
@@ -243,22 +254,22 @@ class DaemonEvent
   } 
 
 
-  /*! \brief  HTML representation of all currently assigned targets using (divSelectBox).
+  /*! \brief  HTML representation of all currently assigned targets.
     @return String Returns a listbox with all used targets.
    */
   public function get_target_list()
   {
+    $data = $lData = array();
+
     $this->target_list_used = TRUE;
-    $divlist = new divSelectBox("EventTargets");
     foreach($this->a_targets as $key => $target){
-      $divlist->AddEntry(array(
-            array("string"  => $target),
-            array("string"  => "<input type='image' src='images/lists/trash.png' title='"._("Remove")."' name='del_target_".$key."'>",
-              "attach"  => "style='width:20px; border-right:0px;'")
-            ));
+      $data[$key] = $target;
+      $lData[$key] = array('data' => array($target));
     }
-    $list_footer = "<input type='submit' name='open_target_list' value='"._("Add")."'>";
-    return($divlist->DrawList().$list_footer);
+    $this->targetList->setListData($data, $lData);
+    $this->targetList->update();
+    $list_footer = "<button type='submit' name='open_target_list'>"._("Add")."</button>";
+    return($this->targetList->render().$list_footer);
   }
 
 
@@ -326,16 +337,11 @@ class DaemonEvent
       }
     }
 
-    if($this->target_list_used){
-      foreach($_POST as $name => $value){
-        if(preg_match("/^del_target_/",$name)){
-          $id = preg_replace("/^del_target_([0-9]*)_.*/","\\1",$name);
-          if(isset($this->a_targets[$id])){
-            unset($this->a_targets[$id]);
-          }
-          break; 
-        }
-      }
+    $this->targetList->save_object();
+    $action = $this->targetList->getAction();
+    if($action['action'] == 'delete'){
+        $id = $this->targetList->getKey($action['targets'][0]);
+        unset($this->a_targets[$id]);
     } 
   }
 
