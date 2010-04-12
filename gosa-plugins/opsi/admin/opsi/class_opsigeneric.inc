@@ -86,7 +86,7 @@ class opsiGeneric extends plugin
     $this->selectedList->setEditable(false);
     $this->selectedList->setWidth("100%");
     $this->selectedList->setHeight("200px");
-    $this->selectedList->setColspecs(array('*','*'));
+    $this->selectedList->setColspecs(array('*','*','40px'));
     $this->selectedList->setHeader(array(_("Name"),_("Description")));
     $this->selectedList->setDefaultSortColumn(1);
     $this->selectedList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
