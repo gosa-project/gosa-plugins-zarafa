@@ -261,6 +261,16 @@ class workstartup extends plugin
     $this->ldapList->setHeight("100px");
     $this->ldapList->setHeader(array(_("LDAP server")));
     $this->ldapList->setDefaultSortColumn(0);
+
+    $this->faiList = new sortableListing(array(),array(), TRUE);
+    $this->faiList->setDeleteable(true);
+    $this->faiList->setEditable(false);
+    $this->faiList->setWidth("100%");
+    $this->faiList->setHeight("160px");
+    $this->faiList->setColspecs(array('50%','50%'));
+    $this->faiList->setHeader(array(_("Name"),_("Classes")));
+    $this->faiList->setDefaultSortColumn(0);
+
   }
 
   
@@ -336,66 +346,21 @@ class workstartup extends plugin
         }
       }
 
-      $sort = false;
+
+        $this->faiList->save_object();
+        $action = $this->faiList->getAction();
+        if($action['action'] == 'delete'){
+            $id = $this->faiList->getKey($action['targets'][0]);
+            unset($this->FAIclass[$id]);
+        }
+        if($action['action'] == 'reorder'){
+            $this->FAIclass= $this->faiList->getMaintainedData();
+        }
 
       /* Move one used class class one position up or down */
       if($this->acl_is_writeable("FAIclass")){
         foreach($_POST as $name => $val){
 
-          $sort_type = false;
-          if((preg_match("/sort_up/",$name))&&(!$sort)){
-            $sort_type = "sort_up_";
-          }
-          if((preg_match("/sort_down/",$name))&&(!$sort)){
-            $sort_type = "sort_down_";
-          }
-
-          if(($sort_type)&&(!$sort)){
-            $value = postDecode(preg_replace("/_.*$/i","",preg_replace("/".$sort_type."/i","",$name)));
-            $sort = true;
-
-            $last = -1;
-            $change_down  = -1;
-
-            /* Create array with numeric index */ 
-            $tmp = array();
-            foreach($this->FAIclass as $class){
-              $tmp [] = $class;
-            }
-
-            /* Walk trough array */
-            foreach($tmp as $key => $faiName){
-              if($faiName == $value){
-                if($sort_type == "sort_up_"){
-                  if($last != -1){
-                    $change_down= $last;
-                  }
-                }else{
-                  if(isset($tmp[$key+1])){
-                    $change_down = $key;
-                  }
-                }
-              }
-              $last = $key;
-            }
-
-            $tmp2 = array();
-            $skip = false;    
-
-            foreach($tmp as $ky => $vl){
-
-              if($ky == $change_down){
-                $skip = $vl;
-              }else{
-                $tmp2[$vl] = $vl;
-              }
-              if(($skip != false)&&($ky != $change_down)){
-                $tmp2[$skip]  = $skip;
-                $skip =false;
-              }
-            }   
-            $this->FAIclass = $tmp2; 
-          }
 
           if(preg_match("/fai_remove/i",$name)){
             $value = postDecode(preg_replace("/fai_remove_/i","",$name));
@@ -554,9 +519,6 @@ class workstartup extends plugin
     $this->update_fai_cache();
     $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
     $smarty->assign("si_active",$this->si_active);
-
-    $div = new divSelectBox("WSFAIscriptClasses");
-    $div -> SetHeight("100");
   
     if(!$this->si_fai_action_failed && $this->si_active && $this->fai_activated){
 
@@ -577,15 +539,6 @@ class workstartup extends plugin
       $smarty->assign("gotoBootKernels",$this->cache['KERNELS'][$release]);
       $smarty->assign("InheritedFAIrelease",$this->InheritedFAIrelease);
 
-      $str_empty  = image('images/empty.png');
-      if($this->acl_is_writeable("FAIclass")){
-        $str_up     = image('images/lists/sort-up.png','sort_up_%s');
-        $str_down   = image('images/lists/sort-down.png','sort_down_%s');
-        $str_remove = image('images/lists/trash.png','fai_remove_%s');
-      }else{
-        $str_up=$str_down=$str_remove=$str_empty;
-      }
-
       /* Get classes */
       if($this->FAIdebianMirror == "inherited"){
         $tmp = $this->InheritedFAIclass;
@@ -595,6 +548,7 @@ class workstartup extends plugin
 
       /* Get invalid classes */
       $invalid = $this->get_invalid_classes($tmp);
+      $data = $lData = array();
 
       /* Draw every single entry */
       $i = 1;
@@ -608,20 +562,6 @@ class workstartup extends plugin
             $marker = "&nbsp;<font color='red'>("._("Not available in current setup").")</font>";
           }
 
-          /* Create up/down priority icons  
-           * Skip this, if we have inherited the FAI classes.
-           */
-          if($this->FAIdebianMirror == "inherited"){
-            $str = "";
-          }else{
-            if($i==1){
-              $str = $str_empty.$str_down.$str_remove;
-            }elseif($i == count($this->FAIclass)){
-              $str = $str_up.$str_empty.$str_remove;
-            }else{
-              $str = $str_up.$str_down.$str_remove;
-            }
-          }
           $i ++ ; 
 
           /* Get Description tag 
@@ -654,15 +594,18 @@ class workstartup extends plugin
             $desc = "&nbsp;".trim($desc)."";
           }        
 
-          $div->AddEntry(array(
-                array("string"=>$class.$marker),
-                array("string"=>$desc),
-                array("string"=>preg_replace("/\%s/",postEncode($class),$str),"attach"=>"style='width:60px;border-right:none;'")
-                ));
+          $data[$class] = $class;
+          $lData[$class] = array('data' => array($class,$desc));
         }  
       }// END FAI output generation 
     }// END FAI output generation 
-    $smarty->assign("FAIScriptlist",$div->DrawList()); 
+
+    $this->faiList->setAcl('rwcdm');
+    $this->faiList->setReorderable($this->FAIdebianMirror != "inherited");
+    $this->faiList->setListData($data,$lData);
+    $this->faiList->update();
+
+    $smarty->assign("FAIScriptlist", $this->faiList->render());
 
     /* Radio button group */
     if (preg_match("/G/", $this->bootmode)) {
