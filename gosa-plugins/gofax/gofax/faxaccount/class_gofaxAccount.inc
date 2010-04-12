@@ -7,7 +7,6 @@ class gofaxAccount extends plugin
   var $plDescription= "This does something";
   var $plIcon = "plugins/gofax/images/plugin.png";
 
-  /* Department list shown in the divSelectList*/
   var $departments;
 
   /* Fax attributes */
@@ -59,7 +58,6 @@ class gofaxAccount extends plugin
     }
 
     /* Hickert : 11.11.05
-     * Added to be able to handle department selection in divSelelect
      */
     if(!session::is_set("Fax_Filter")){
       $Fax_Filter = array();
@@ -95,15 +93,15 @@ class gofaxAccount extends plugin
       $this->printerList[$this->goFaxPrinter] = "[".$this->goFaxPrinter."]";
     }
 
-    /* Get global filter config */
-    if (!session::is_set("faxfilter")){
-      $ui= get_userinfo();
-      $base= get_base_from_people($ui->dn);
-      $faxfilter= array( "depselect"       => $base,
-          "fuser"            => "*",
-          "regex"           => "");
-      session::set("faxfilter", $faxfilter);
-    }
+    // Prepare lists
+    $this->predefinedList = new sortableListing();
+    $this->predefinedList->setDeleteable(false);
+    $this->predefinedList->setEditable(false);
+    $this->predefinedList->setWidth("100%");
+    $this->predefinedList->setHeight("300px");
+    $this->predefinedList->setColspecs(array('20px','*'));
+    $this->predefinedList->setHeader(array("~",_("Name")));
+    $this->predefinedList->setDefaultSortColumn(1);
   }
 
   function execute()
@@ -117,11 +115,9 @@ class gofaxAccount extends plugin
       new log("view","users/".get_class($this),$this->dn);
     }
 
-    /* Hickert : 11.11.05
-     * Added to be able to handle department selection in divSelelect
+    /* Department selection handling
      */
     if((isset($_GET['act']))&&($_GET['act']=="dep_open")){
-
       $Fax_Filter = session::get('Fax_Filter');
       if(strlen(base64_decode($_GET['dep_id']))>= strlen($this->config->current['BASE'])){
         $Fax_Filter['depselect']= base64_decode($_GET['dep_id']);
@@ -264,9 +260,6 @@ class gofaxAccount extends plugin
       }
     }
 
-    /* Hickert : 11.11.05
-     * Add selection from divSelelect to our Blocklist 
-     */
     /* Add list to blocklist */
     if (isset($_POST['add_blocklist'])){
       foreach($_POST as $name => $value){
@@ -361,8 +354,6 @@ class gofaxAccount extends plugin
     /* Manage incoming blocklists */
     if ($this->in_blocklist_dialog){
 
-      /* This handles the divSelectBox */
-
       /* The base specifies the current position in the ldap tree 
        * The current base was specified by $_GET['dep_id'] before. Or contains the default value.
        */
@@ -383,10 +374,6 @@ class gofaxAccount extends plugin
           $list[$attrs['cn'][0]]= $attrs['cn'][0];
         }
       }
-
-      /* Create our divselect box */
-      $divSel = new divSelectBox("divSelectPredefined");
-      $divSel->setHeight(296);
 
       /* NEW LIST MANAGMENT
        * We also need to search for the departments
@@ -422,27 +409,35 @@ class gofaxAccount extends plugin
       $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
 
       /* Insert departments in divsel */
+        $data = $lData = array();
       foreach($this->departments as $key=> $val){
         if(!isset($this->config->departments[trim($key)])){
           $this->config->departments[trim($key)]="";
         }
-        $field1 = array("string" => image("images/lists/folder.png"),"attach"=>"style='width:16px;  text-align:center;'");
-        $field2 = array("string" => sprintf($linkopen,base64_encode($key),$val),"attach"=>" style='border:none'");
-        $divSel->AddEntry(array($field1,$field2));
+        $img = image('images/lists/folder.png');
+        $val = sprintf( $linkopen, postEncode($key), $val);
+        $data[] = array('TYPE' => 'DEP', 'ID' => $key);
+        $lData[] = array('data' => array($img,$val));
       }
+
 
       /* Append predefined Blocklists */
       foreach($list as $entry => $value){
-        $divSel->AddEntry(array(
-              array("string"=>"<input type='checkbox' value='".base64_encode($entry)."' name='ADDLIST_".base64_encode($entry)."'>"),
-              array("string"=>$value,"attach"=>"style='border:0px;'")
-              ));
+          $chk = "<input type='checkbox' value='".base64_encode($entry)."' 
+              name='ADDLIST_".base64_encode($entry)."'>";
+          $data[] = array('TYPE' => 'ENTRY', 'ID' => $key);
+          $lData[] = array('data' => array($chk,$value));
       }
+
+      $this->predefinedList->setAcl('rwcdm');
+      $this->predefinedList->setListData($data,$lData);
+      $this->predefinedList->update();
+
 
       /* Show dialog */
       $smarty->assign("cblocklist", $this->current_blocklist);
       $smarty->assign("departments", $this->config->idepartments);
-      $smarty->assign("divSelectPredefined", $divSel->DrawList());
+      $smarty->assign("predefinedList", $this->predefinedList->render());
       $display.= $smarty->fetch (get_template_path('lists.tpl', TRUE, dirname(__FILE__)));
       return ($display);
     }
@@ -450,8 +445,6 @@ class gofaxAccount extends plugin
     /* Manage outgoing blocklists */
 
     if ($this->out_blocklist_dialog){
-
-      /* This handles the divSelectBox */
 
       /* The base specifies the current position in the ldap tree
        * The current base was specified by $_GET['dep_id'] before. Or contains the default value.
@@ -471,10 +464,6 @@ class gofaxAccount extends plugin
           $list[$attrs['cn'][0]]= $attrs['cn'][0];
         }
       }
-
-      /*Create DivSel*/
-      $divSel = new divSelectBox("divSelectPredefined");
-      $divSel->setHeight(296);
 
       /* NEW LIST MANAGMENT
        * We also need to search for the departments
@@ -500,32 +489,36 @@ class gofaxAccount extends plugin
       /* END NEW LIST MANAGMENT
        */
 
-      // Defining Links
+      /* Insert departments in divsel */
       $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
-
-      /* Insert departments in divlist*/
+      $data = $lData = array();
       foreach($this->departments as $key=> $val){
         if(!isset($this->config->departments[trim($key)])){
           $this->config->departments[trim($key)]="";
         }
-
-        $field1 = array("string" => image("images/lists/folder.png"),"attach"=>"style='width:16px;  text-align:center;'");
-        $field2 = array("string" => sprintf($linkopen,base64_encode($key),$val),"attach"=>" style='border:none'");
-        $divSel->AddEntry(array($field1,$field2));
+        $img = image('images/lists/folder.png');
+        $val = sprintf( $linkopen, postEncode($key), $val);
+        $data[] = array('TYPE' => 'DEP', 'ID' => $key);
+        $lData[] = array('data' => array($img,$val));
       }
 
-      /* Append Blocklits */
+
+      /* Append predefined Blocklists */
       foreach($list as $entry => $value){
-        $divSel->AddEntry(array(
-              array("string"=>"<input type='checkbox' value='".base64_encode($entry)."' name='ADDLIST_".base64_encode($entry)."'>"),
-              array("string"=>$value,"attach"=>"style='border:0px;'")
-              ));
+          $chk = "<input type='checkbox' value='".base64_encode($entry)."' 
+              name='ADDLIST_".base64_encode($entry)."'>";
+          $data[] = array('TYPE' => 'ENTRY', 'ID' => $key);
+          $lData[] = array('data' => array($chk,$value));
       }
+
+      $this->predefinedList->setAcl('rwcdm');
+      $this->predefinedList->setListData($data,$lData);
+      $this->predefinedList->update();
 
       /* Show dialog */
       $smarty->assign("cblocklist", $this->current_blocklist);
       $smarty->assign("departments", $this->config->idepartments);
-      $smarty->assign("divSelectPredefined", $divSel->DrawList());
+      $smarty->assign("predefinedList", $this->predefinedList->render());
       $display.= $smarty->fetch (get_template_path('lists.tpl', TRUE, dirname(__FILE__)));
       return ($display);
     }

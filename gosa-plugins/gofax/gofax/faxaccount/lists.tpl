@@ -22,7 +22,7 @@
 	<table style="width:100%;height:300px;" summary="{t}List of blocked numbers{/t}">
 		<tr>
 			<td valign="top">
-					{$divSelectPredefined}
+					{$predefinedList}
 			</td>
 		</tr>
 	</table>
