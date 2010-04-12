@@ -185,11 +185,40 @@ class goMailServer extends goService{
       }
     }
 
+    // Prepare lists
+    $this->recipientRestrictionList = new sortableListing(array(),array(), TRUE);
+    $this->recipientRestrictionList->setDeleteable(true);
+    $this->recipientRestrictionList->setEditable(false);
+    $this->recipientRestrictionList->setWidth("100%");
+    $this->recipientRestrictionList->setHeight("100px");
+    $this->recipientRestrictionList->setDefaultSortColumn(0);
+    $this->recipientRestrictionList->setColspecs(array('*','*','*','20px'));
+    $this->recipientRestrictionList->setHeader(array(_("Source"),_("Destination"),_("Filter")));
+
+    $this->senderRestrictionList = new sortableListing(array(),array(), TRUE);
+    $this->senderRestrictionList->setDeleteable(true);
+    $this->senderRestrictionList->setEditable(false);
+    $this->senderRestrictionList->setWidth("100%");
+    $this->senderRestrictionList->setHeight("100px");
+    $this->senderRestrictionList->setDefaultSortColumn(0);
+    $this->senderRestrictionList->setColspecs(array('*','*','*','20px'));
+    $this->senderRestrictionList->setHeader(array(_("Source"),_("Destination"),_("Filter")));
+
+    $this->protocolsList = new sortableListing(array(),array(), TRUE);
+    $this->protocolsList->setDeleteable(true);
+    $this->protocolsList->setEditable(false);
+    $this->protocolsList->setWidth("100%");
+    $this->protocolsList->setHeight("100px");
+    $this->protocolsList->setColspecs(array('*','*','*','20px'));
+    $this->protocolsList->setHeader(array(_("Source"),_("Destination"),_("Protocol")));
+    $this->protocolsList->setDefaultSortColumn(0);
+
   }
 
   function execute()
   { 
     $smarty   = get_smarty();
+    $smarty->assign("usePrototype", "true");
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
@@ -200,76 +229,21 @@ class goMailServer extends goService{
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
-
-    $delAr    = array( 
-                    "TranslationDel_"=>"TranslationDel",
-                    "SenderRestrictDel_"=>"SenderRestrictDel",
-                    "RecipientRestrictDel_"=>"RecipientRestrictDel");
- 
-    $once     = true;
-    $s_action = "";
-    $s_entry  = "";
-  
-    /* Check posts for some intruductions */
-    foreach($_POST as $name => $value){
-      foreach($delAr as $preg => $type){
-        if((preg_match("/^".$preg."/",$name)) && ($once)){
-          $once = false;
-          $s_action = $type; 
-          $s_entry = preg_replace("/^".$preg."/","",$name);
-          $s_entry = preg_replace("/_[xy]$/","",$s_entry);
-        }
-      }
-
-      if(preg_match("/^TranslationUp_/",$name) && $once && ($this->acl_is_writeable("postfixTransportTableACL"))){
-        $once = false;
-        $key = preg_replace("/^TranslationUp_/","",$name);
-        $key = preg_replace("/_[xy]$/","",$key);
-        $this->postfixTransportTable = $this->ArrayUp($key,$this->postfixTransportTable) ;
-      }
-      if(preg_match("/^TranslationDown_/",$name) && $once && ($this->acl_is_writeable("postfixTransportTableACL"))){
-        $once = false;
-        $key = preg_replace("/^TranslationDown_/","",$name);
-        $key = preg_replace("/_[xy]$/","",$key);
-        $this->postfixTransportTable = $this->ArrayDown($key,$this->postfixTransportTable) ;
-      }
-      if(preg_match("/^SenderRestrictUp_/",$name) && $once && ($this->acl_is_writeable("postfixSenderRestrictionsACL"))){
-        $once = false;
-        $key = preg_replace("/^SenderRestrictUp_/","",$name);
-        $key = preg_replace("/_[xy]$/","",$key);
-        $this->postfixSenderRestrictions = $this->ArrayUp($key,$this->postfixSenderRestrictions) ;
-      }
-      if(preg_match("/^SenderRestrictDown_/",$name) && $once && ($this->acl_is_writeable("postfixSenderRestrictionsACL"))){
-        $once = false;
-        $key = preg_replace("/^SenderRestrictDown_/","",$name);
-        $key = preg_replace("/_[xy]$/","",$key);
-        $this->postfixSenderRestrictions = $this->ArrayDown($key,$this->postfixSenderRestrictions) ;
-      }
-      if(preg_match("/^RecipientRestrictUp_/",$name) && $once && ($this->acl_is_writeable("postfixRecipientRestrictionsACL"))){
-        $once = false;
-        $key = preg_replace("/^RecipientRestrictUp_/","",$name);
-        $key = preg_replace("/_[xy]$/","",$key);
-        $this->postfixRecipientRestrictions = $this->ArrayUp($key,$this->postfixRecipientRestrictions) ;
-      }
-      if(preg_match("/^RecipientRestrictDown_/",$name) && $once && ($this->acl_is_writeable("postfixRecipientRestrictionsACL"))){
-        $once = false;
-        $key = preg_replace("/^RecipientRestrictDown_/","",$name);
-        $key = preg_replace("/_[xy]$/","",$key);
-        $this->postfixRecipientRestrictions = $this->ArrayDown($key,$this->postfixRecipientRestrictions) ;
-      }
-    }
-
+     
 
     /* Add delete my network entry */
-    if((isset($_POST['AddpostfixMyNetworks'])) && (!empty($_POST['NewString_postfixMyNetworks']))){
-      $str = $_POST['NewString_postfixMyNetworks'];
-      $this->postfixMyNetworks[base64_encode($str)] = $str;
-    }
-
-    if((isset($_POST['DelpostfixMyNetworks'])) && isset($_POST['Select_postfixMyNetworks']) &&(count($_POST['Select_postfixMyNetworks']))){
-      foreach($_POST['Select_postfixMyNetworks'] as $str ){
-        unset($this->postfixMyNetworks[$str]);
-      }
+    if($this->acl_is_writeable("postfixMyNetworks")){
+        if((isset($_POST['AddpostfixMyNetworks'])) && (!empty($_POST['NewString_postfixMyNetworks']))){
+            $str = $_POST['NewString_postfixMyNetworks'];
+            $this->postfixMyNetworks[base64_encode($str)] = $str;
+        }
+        if((isset($_POST['DelpostfixMyNetworks'])) && 
+                isset($_POST['Select_postfixMyNetworks']) && 
+                (count($_POST['Select_postfixMyNetworks']))){
+            foreach($_POST['Select_postfixMyNetworks'] as $str ){
+                unset($this->postfixMyNetworks[$str]);
+            }
+        }
     }
 
 
@@ -288,16 +262,44 @@ class goMailServer extends goService{
     }
 
 
+    $this->senderRestrictionList->save_object();
+    $this->recipientRestrictionList->save_object();
+    $this->protocolsList->save_object();
+   
+    $action = $this->senderRestrictionList->getAction();
+    if($action['action'] == 'reorder'){
+        $this->postfixSenderRestrictions = $this->senderRestrictionList->getMaintainedData();
+    }
+    if($action['action'] == 'delete'){
+        $id = $this->senderRestrictionList->getKey($action['targets'][0]);
+        unset($this->postfixSenderRestrictions[$id]);
+    }
+
+    $action = $this->recipientRestrictionList->getAction();
+    if($action['action'] == 'reorder'){
+        $this->postfixRecipientRestrictions = $this->recipientRestrictionList->getMaintainedData();
+    }
+    if($action['action'] == 'delete'){
+        $id = $this->recipientRestrictionList->getKey($action['targets'][0]);
+        unset($this->postfixRecipientRestrictions[$id]);
+    }
+
+    $action = $this->protocolsList->getAction();
+    if($action['action'] == 'reorder'){
+        $this->postfixTransportTable = $this->protocolsList->getMaintainedData();
+    }
+    if($action['action'] == 'delete'){
+        $id = $this->protocolsList->getKey($action['targets'][0]);
+        unset($this->postfixTransportTable[$id]);
+    }
+
     /* Add sender restriction */
     if($this->acl_is_writeable("postfixSenderRestrictions")){
-      if(($s_action == "SenderRestrictDel") && (isset($this->postfixSenderRestrictions[$s_entry]))){
-        unset($this->postfixSenderRestrictions[$s_entry]);
-      }
-
       if(isset($_POST['AddpostfixSenderRestrictions'])){
         $src      = $_POST['Source_postfixSenderRestrictions'];
         $dst      = $_POST['Destination_postfixSenderRestrictions'];
         $Filter   = $_POST['SenderRestrictionFilter'];
+        $tmp = array();
         $tmp['src']     = $src;
         $tmp['dst']     = $dst;
         $tmp['filter']  = $Filter;
@@ -308,14 +310,11 @@ class goMailServer extends goService{
 
     /* Add sender restriction */
     if($this->acl_is_writeable("postfixRecipientRestrictions")){
-      if(($s_action == "RecipientRestrictDel") && (isset($this->postfixRecipientRestrictions[$s_entry]))){
-        unset($this->postfixRecipientRestrictions[$s_entry]);
-      }
-
       if(isset($_POST['AddpostfixRecipientRestrictions'])){
         $src      = $_POST['Source_postfixRecipientRestrictions'];
         $dst      = $_POST['Destination_postfixRecipientRestrictions'];
         $Filter   = $_POST['RecipientRestrictionFilter'];
+        $tmp = array();
         $tmp['src']     = $src;
         $tmp['dst']     = $dst;
         $tmp['filter']  = $Filter;
@@ -325,15 +324,12 @@ class goMailServer extends goService{
 
     /* Handle transports */
     if($this->acl_is_writeable("postfixTransportTable")){
-      if(($s_action == "TranslationDel") && (isset($this->postfixTransportTable[$s_entry]))){
-        unset($this->postfixTransportTable[$s_entry]);
-      }
-
       if(isset($_POST['AddpostfixTransportTable'])){
         $src = trim($_POST['Source_postfixTransportTable']);  
         $dst = trim($_POST['Destination_postfixTransportTable']);    
         $prt = trim($_POST['TransportProtocol']);
 
+        $tmp2 = array();
         if((!empty($src)) && (!empty($dst))){
           if(preg_match("/:/",$dst)){
             $tmp = explode(":",$dst);
@@ -362,66 +358,37 @@ class goMailServer extends goService{
     }
 
 
-    /* Create divList for translation tables */
-    $divTranslation = new divSelectBox("TransportProtocols");
-    $divTranslation->SetHeight(90);
+    /* Create list for translation tables */
+    $this->protocolsList->setAcl($this->getacl('postfixTransportTable'));
+    $lData = array();
     foreach($this->postfixTransportTable as $key => $entry){
-      $img = "";
-      $img.= image('images/lists/sort-up.png','TranslationUp_'.$key);
-      $img.= image('images/lists/sort-down.png','TranslationDown_'.$key);
-
-      if($this->acl_is_writeable("postfixTransportTable")){
-        $img.= image('images/lists/trash.png','TranslationDel_'.$key);
-      }
-      $field1 = array("string"=> $entry['src']);
-      $field2 = array("string"=> $entry['dst']);
-      $field3 = array("string"=> $entry['prt'],"attach"=>"style='width:120px;'");
-      $field4 = array("string"=> $img, "attach"=>"style='border-right:0px;width:40px;'");
-      $divTranslation->AddEntry(array($field1,$field2,$field3,$field4,));
+      $lData[$key]=array('data' => array($entry['src'],$entry['dst'],$entry['prt']));
     }
-    $smarty->assign("Div_postfixTransportTable" ,$divTranslation->DrawList());
+    $this->protocolsList->setListData($this->postfixTransportTable, $lData);
+    $this->protocolsList->update();
+    $smarty->assign("postfixTransportTable" ,$this->protocolsList->render());
 
 
-    /* Create divList for sender restrictions */
-    $DivSenderRestrict = new divSelectBox("postfixSenderRestrictions");
-    $DivSenderRestrict->SetHeight(90);
+    /* Create list for sender restrictions */
+    $this->senderRestrictionList->setAcl($this->getacl('postfixSenderRestrictions'));
+    $lData = array();
     foreach($this->postfixSenderRestrictions as $key => $entry){
-      $img ="";
-      $img.= image('images/lists/sort-up.png','SenderRestrictUp_'.$key);
-      $img.= image('images/lists/sort-down.png','SenderRestrictDown_'.$key);
-
-      if($this->acl_is_writeable("postfixSenderRestrictions")){
-        $img.= image('images/lists/trash.png','SenderRestrictDel_'.$key);
-      }
- 
-      $field1 = array("string"=> $entry['src']);
-      $field2 = array("string"=> $entry['dst']);
-      $field3 = array("string"=> $entry['filter'],"attach"=>"style='width:100px;'");
-      $field4 = array("string"=> $img, "attach"=>"style='border-right:0px;width:40px;'");
-      $DivSenderRestrict->AddEntry(array($field1,$field2,$field3,$field4,));
+      $lData[$key]=array('data' => array($entry['src'],$entry['dst'],$entry['filter']));
     }
-    $smarty->assign("Div_postfixSenderRestrictions" ,$DivSenderRestrict->DrawList());
+    $this->senderRestrictionList->setListData($this->postfixSenderRestrictions, $lData);
+    $this->senderRestrictionList->update();
+    $smarty->assign("postfixSenderRestrictions" ,$this->senderRestrictionList->render());
 
 
-    /* Create divList for translation tables */
-    $DivRecipientRestrict = new divSelectBox("postfixRecipientRestrictions");
-    $DivRecipientRestrict->SetHeight(90);
-
+    /* Create list for translation tables */
+    $this->recipientRestrictionList->setAcl($this->getacl('postfixRecipientRestrictions'));
+    $lData = array();
     foreach($this->postfixRecipientRestrictions as $key => $entry){
-      $img = "";
-      $img.= image('images/lists/sort-up.png','RecipientRestrictUp_'.$key);
-      $img.= image('images/lists/sort-down.png','RecipientRestrictDown_'.$key);
-
-      if($this->acl_is_writeable("postfixRecipientRestrictions")){
-        $img.= image('images/lists/trash.png','RecipientRestrictDel_'.$key);
-      }
-      $field1 = array("string"=> $entry['src']);
-      $field2 = array("string"=> $entry['dst']);
-      $field3 = array("string"=> $entry['filter'],"attach"=>"style='width:100px;'");
-      $field4 = array("string"=> $img, "attach"=>"style='border-right:0px;width:40px;'");
-      $DivRecipientRestrict->AddEntry(array($field1,$field2,$field3,$field4,));
+      $lData[$key]=array('data' => array($entry['src'],$entry['dst'],$entry['filter']));
     }
-    $smarty->assign("Div_postfixRecipientRestrictions" ,$DivRecipientRestrict->DrawList());
+    $this->recipientRestrictionList->setListData($this->postfixRecipientRestrictions, $lData);
+    $this->recipientRestrictionList->update();
+    $smarty->assign("postfixRecipientRestrictions" ,$this->recipientRestrictionList->render());
 
     
     /* set new status */
@@ -679,6 +646,10 @@ class goMailServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
+
+            "start"           => _("Start"),
+            "stop"            => _("Stop"),
+            "restart"         => _("Restart"),
             "postfixMyhostname"           => _("Visible full qualified hostname"),
             "description"                 => _("Description"), 
             "postfixHeaderSizeLimit"      => _("Header size limit"), 
