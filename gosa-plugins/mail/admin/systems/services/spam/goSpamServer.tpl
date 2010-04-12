@@ -109,7 +109,7 @@
    <table width='100%' summary="{t}Rules{/t}">
     <tr>
      <td>
-      {$divRules}
+      {$ruleList}
       <br>
       {render acl=$saTrustedNetworksACL}
        <button type='submit' name='AddRule'>{msgPool type=addButton}</button>

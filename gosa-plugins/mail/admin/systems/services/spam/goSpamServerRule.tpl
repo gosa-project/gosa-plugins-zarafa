@@ -6,7 +6,7 @@
 <hr>
 
 <h3>{t}Rule{/t}</h3>
-<textarea name='rule' style='width:100%;'>{$rule}</textarea>
+<textarea name='rule' style='height:400px;width:100%;'>{$rule}</textarea>
 
 <hr>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">

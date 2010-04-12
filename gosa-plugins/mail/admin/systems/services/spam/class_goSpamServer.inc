@@ -73,6 +73,17 @@ class gospamserver extends goService{
         $this->Rules[ $name ] = $value;
       }
     }
+
+    // Prepare lists
+    $this->ruleList = new sortableListing();
+    $this->ruleList->setDeleteable(true);
+    $this->ruleList->setInstantDelete(true);
+    $this->ruleList->setEditable(true);
+    $this->ruleList->setWidth("100%");
+    $this->ruleList->setHeight("170px");
+    $this->ruleList->setHeader(array(_("Rule")));
+    $this->ruleList->setDefaultSortColumn(0);
+    $this->ruleList->setColspecs(array('*','40px'));
   }
 
 
@@ -119,21 +130,17 @@ class gospamserver extends goService{
 
     /* Handle post to delete rules */
     $once = true;
-    foreach($_POST as $name => $value){
-      if(preg_match("/^editRule_/",$name) && $once && $this->acl_is_readable("saRule")){
-        $once = false;
-        $entry = preg_replace("/^editRule_/","",$name);
-        $rule = $this->Rules[$entry];
-        $name = $entry;
-        $this->dialog = new goSpamServerRule($this->config,$this->dn,$name,$rule);
+    $this->ruleList->save_object();
+    $action = $this->ruleList->getAction();
+    if($action['action'] == 'delete'){
+        $this->Rules = $this->ruleList->getMaintainedData();
+    }
+    if($action['action'] == 'edit'){
+        $id = $this->ruleList->getKey($action['targets'][0]);
+        $rule = $this->Rules[$id];
+        $this->dialog = new goSpamServerRule($this->config,$this->dn,$id,$rule);
         $this->dialog->acl_base = $this->acl_base;
         $this->dialog->acl_category = $this->acl_category;
-      }
-      if(preg_match("/^delRule_/",$name) && $once && $this->acl_is_writeable("saRule")){
-        $once = false;
-        $entry = preg_replace("/^delRule_/","",$name);
-        unset($this->Rules[$entry]);
-      }
     }
 
     /* Save rules */
@@ -176,25 +183,15 @@ class gospamserver extends goService{
       }
     }
 
-    /* Create divlist */
-    $DivRules = new divSelectBox("SpamRules");
-    $DivRules->SetHeight(130);
-
-    if(!$this->acl_is_writeable("saTrustedNetworks")){
-      $actions = "";
-    }else{
-      $actions = image('images/lists/edit.png', 'editRule_%s');
-      if($this->acl_is_writeable("saRule")){
-        $actions.= image('images/lists/trash.png','delRule_%s');
-      }
-    }
-
+    $this->ruleList->setAcl($this->getacl('saRule'));
+    $data =$lData= array();
     foreach($this->Rules as $key => $net){
-      $field1 = array("string" => $key );
-      $field2 = array("string" => preg_replace("/%s/",$key,$actions) , "attach" => "style='border-right:0px;width:36px;'");
-      $DivRules->AddEntry(array($field1,$field2));
+      $lData[$key]=array('data'=> array($key));
     }
-    $smarty->assign("divRules",$DivRules->DrawList()); 
+    $this->ruleList->setListData($this->Rules, $lData);
+    $this->ruleList->update();
+
+    $smarty->assign("ruleList",$this->ruleList->render());
     $smarty->assign("TrustedNetworks",$this->TrustedNetworks); 
 
     /* Create Spam score select box entries */
