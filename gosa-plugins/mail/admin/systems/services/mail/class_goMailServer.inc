@@ -366,7 +366,7 @@ class goMailServer extends goService{
     }
     $this->protocolsList->setListData($this->postfixTransportTable, $lData);
     $this->protocolsList->update();
-    $smarty->assign("postfixTransportTable" ,$this->protocolsList->render());
+    $smarty->assign("postfixTransportTableList" ,$this->protocolsList->render());
 
 
     /* Create list for sender restrictions */
@@ -377,7 +377,7 @@ class goMailServer extends goService{
     }
     $this->senderRestrictionList->setListData($this->postfixSenderRestrictions, $lData);
     $this->senderRestrictionList->update();
-    $smarty->assign("postfixSenderRestrictions" ,$this->senderRestrictionList->render());
+    $smarty->assign("postfixSenderRestrictionsList" ,$this->senderRestrictionList->render());
 
 
     /* Create list for translation tables */
@@ -388,7 +388,7 @@ class goMailServer extends goService{
     }
     $this->recipientRestrictionList->setListData($this->postfixRecipientRestrictions, $lData);
     $this->recipientRestrictionList->update();
-    $smarty->assign("postfixRecipientRestrictions" ,$this->recipientRestrictionList->render());
+    $smarty->assign("postfixRecipientRestrictionsList" ,$this->recipientRestrictionList->render());
 
     
     /* set new status */

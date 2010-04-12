@@ -120,7 +120,7 @@
                     <td>
                         {t}Transports{/t}<br>
 {render acl=$postfixTransportTableACL}
-						{$postfixTransportTable}
+						{$postfixTransportTableList}
 {/render}
 
 {render acl=$postfixTransportTableACL}
@@ -156,7 +156,7 @@
                     <td>
                         {t}Restrictions for sender{/t}<br>
 {render acl=$postfixSenderRestrictionsACL}
-						{$postfixSenderRestrictions}
+						{$postfixSenderRestrictionsList}
 {/render}
 {render acl=$postfixSenderRestrictionsACL}
                         <input type="text" name="Source_postfixSenderRestrictions" value="">
@@ -184,7 +184,7 @@
                     <td>
                         {t}Restrictions for recipient{/t}<br>
 {render acl=$postfixRecipientRestrictionsACL}
-						{$postfixRecipientRestrictions}
+						{$postfixRecipientRestrictionsList}
 {/render}
 {render acl=$postfixRecipientRestrictionsACL}
                         <input type="text" name="Source_postfixRecipientRestrictions" value="">
