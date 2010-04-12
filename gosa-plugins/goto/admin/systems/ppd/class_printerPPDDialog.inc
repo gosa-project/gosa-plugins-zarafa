@@ -371,6 +371,8 @@ class printerPPDDialog extends plugin
                
         if(preg_match("#".preg_quote($this->pathToModified,'#')."#",$file)) continue;
 
+        if(!isset($ppd['manufacturer'])) continue;
+
         if(!isset($this->ppdListHeader[$ppd['manufacturer']])){
           $this->ppdListHeader[$ppd['manufacturer']]=0;
         }
