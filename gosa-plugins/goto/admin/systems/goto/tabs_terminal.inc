@@ -12,6 +12,7 @@ class termtabs extends tabs
 
     $this->hide_refs = $hide_refs;
     $this->hide_acls = $hide_acls;
+    $this->acl_category = $category;
 
     $baseobject= NULL;
 
