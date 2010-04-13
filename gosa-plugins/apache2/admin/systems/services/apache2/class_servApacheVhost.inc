@@ -59,6 +59,18 @@ class servapache extends goService
 
     /* Set service name */
     $this->DisplayName = _("Apache service");
+
+    // Prepare lists
+    $this->vHostList = new sortableListing();
+    $this->vHostList->setDeleteable(true);
+    $this->vHostList->setInstantDelete(false);
+    $this->vHostList->setEditable(true);
+    $this->vHostList->setWidth("100%");
+    $this->vHostList->setHeight("100px");
+    $this->vHostList->setColspecs(array('*','40px'));
+    $this->vHostList->setHeader(array(_("Name")));
+    $this->vHostList->setDefaultSortColumn(0);
+
   }
 
 
@@ -109,31 +121,16 @@ class servapache extends goService
 
     /* Check for edit vhost request 
      */
-    $once = false;
-    foreach( $_POST as $name => $value){
-
-      /* check all post for edit request 
-       */
-      if(preg_match("/^editVhost_/",$name)&& !$once && $this->acl_is_writeable("VirtualHosts")){
-        $once =true;
-        $tmp = preg_replace("/^editVhost_/","",$name);
-        $tmp = base64_decode(preg_replace("/_.*$/","",$tmp));
-        $this->dialog= new servapacheVhostEdit($this->config,$this->dn,$this->Vhosts[$tmp]);
+    $this->vHostList->save_object();
+    $action = $this->vHostList->getAction();
+    if($action['action'] == 'delete'){
+        $id = $this->vHostList->getKey($action['targets'][0]);
+        $this->RemoveVhost($id);
+    }
+    if($action['action'] == 'edit'){
+        $id = $this->vHostList->getKey($action['targets'][0]);
+        $this->dialog= new servapacheVhostEdit($this->config,$this->dn,$this->Vhosts[$id]);
         $this->dialog->set_acl_category('server');
-      }
-
-      /* check posts for delete vhost 
-       */
-      if(preg_match("/^delVhost_/",$name)&&!$once && $this->acl_is_writeable("VirtualHosts")){
-
-        $once =true;
-        $tmp = preg_replace("/^delVhost_/","",$name);
-        $tmp = base64_decode(preg_replace("/_.*$/","",$tmp));
-     
-        /* Initiate deletion
-         */ 
-        $this->RemoveVhost($tmp);
-      }
     }
 
     /* Show dialog 
@@ -144,25 +141,6 @@ class servapache extends goService
       return($this->dialog->execute());
     }
 
-    /* Create Listbox with existing Vhosts 
-     */
-    $VhostList = new divSelectBox("apacheConfigs");
-    $VhostList -> SetHeight(140);
-
-    /* Add entries to divlist
-     */
-    $editImg = 
-      image('images/lists/edit.png','editVhost_%s').
-      image('images/lists/trash.png','delVhost_%s');
-            
-    foreach($this->Vhosts as $vhost => $values ){
-      $VhostList->AddEntry(array(
-            array("string" => $vhost),
-            array("string" => str_replace("%s",postEncode($vhost),$editImg),
-                   "attach" => "style='width:40px;'")
-            ));
-    }    
-
     /* Assign ACL to smarty 
      */    
     $info = $this->plInfo();
@@ -170,10 +148,20 @@ class servapache extends goService
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
+    /* Create Listbox with existing Vhosts 
+     */
+    $this->vHostList->setAcl($this->getacl('VirtualHosts'));
+    $data = $lData = array();
+    foreach($this->Vhosts as $vhost => $values){
+      $data[$vhost]=$values;
+      $lData[$vhost]=array('data'=>array($vhost));
+    }    
+    $this->vHostList->setListData($data,$lData);
+    $this->vHostList->update();
   
     /* Display template 
      */
-    $smarty->assign("VhostList",$VhostList->DrawList());
+    $smarty->assign("VhostList",$this->vHostList->render());
     $display.= $smarty->fetch(get_template_path('servApacheVhost.tpl', TRUE , dirname(__FILE__)));
     return($display);
   }

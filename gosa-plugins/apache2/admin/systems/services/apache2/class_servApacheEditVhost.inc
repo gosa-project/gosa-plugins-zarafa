@@ -73,72 +73,29 @@ class servapacheVhostEdit extends plugin
       if(!isset($attrs['apacheServerAlias'])) $this->apacheServerAlias  = array();
       if(!isset($attrs['apacheScriptAlias'])) $this->apacheScriptAlias  = array();
     }
-  }
 
-  /* Transports the given Arraykey one position up*/
-  function ArrayUp($atr,$attrs)
-  {
-    $ret = $attrs;
-    $pos = $atr ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == 1)||($pos >$cn))){
-      $before = array_slice($attrs,0,($pos-2));
-      $mitte  = array_reverse(array_slice($attrs,($pos-2),2));
-      $unten  = array_slice($attrs,$pos);
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
-    }
-    return($ret);
-  }
+    
+    // Prepare lists
+    $this->serverList = new sortableListing(array(),array(), TRUE);
+    $this->serverList->setDeleteable(true);
+    $this->serverList->setInstantDelete(false);
+    $this->serverList->setEditable(false);
+    $this->serverList->setWidth("100%");
+    $this->serverList->setHeight("100px");
+    $this->serverList->setHeader(array(_("Alias"),_("Directory")));
+    $this->serverList->setColspecs(array('*','*','20px'));
+    $this->serverList->setDefaultSortColumn(0);
 
-
-  /* Transports the given Arraykey one position down*/
-  function ArrayDown($atr,$attrs)
-  {
-    $ret = $attrs;
-    $pos = $atr ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == $cn))){
-      $before = array_slice($attrs,0,($pos-1));
-      $mitte  = array_reverse(array_slice($attrs,($pos-1),2));
-      $unten  = array_slice($attrs,($pos+1));
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
-    }
-    return($ret);
+    $this->scriptList = new sortableListing(array(),array(), TRUE);
+    $this->scriptList->setDeleteable(true);
+    $this->scriptList->setInstantDelete(false);
+    $this->scriptList->setEditable(false);
+    $this->scriptList->setWidth("100%");
+    $this->scriptList->setHeight("100px");
+    $this->scriptList->setColspecs(array('*','*','20px'));
+    $this->scriptList->setHeader(array(_("Alias"),_("Directory")));
+    $this->scriptList->setDefaultSortColumn(0);
   }
-
-  /* Combine new array */
-  function combineArrays($ar0,$ar1,$ar2)
-  {
-    $ret = array();
-    if(is_array($ar0))
-    foreach($ar0 as $ar => $a){
-        $ret[]=$a;
-    }
-    if(is_array($ar1))
-    foreach($ar1 as $ar => $a){
-        $ret[]=$a;
-    }
-    if(is_array($ar2))
-    foreach($ar2 as $ar => $a){
-        $ret[]=$a;
-    }
-    return($ret);
-  }
-  
-  function getpos($atr,$attrs)
-  {
-    $i = 0;
-    foreach($attrs as $attr => $name)    {
-      $i++;
-      if($attr == $atr){
-        return($i);
-      }
-    }
-    return(-1);
-  }
-
 
   function execute()
   {
@@ -148,123 +105,27 @@ class servapacheVhostEdit extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
+    $smarty->assign("usePrototype", "true");
     $display= "";
 
-// Outdated?
+    $this->serverList->save_object();
+    $action = $this->serverList->getAction();
+    if($action['action'] == 'delete'){
+      $key = $this->serverList->getKey($action['targets'][0]);
+      unset($this->apacheServerAlias[$key]);
+    }
+    if($action['action'] == 'reorder'){
+      $this->apacheServerAlias = $this->serverList->getMaintainedData(); 
+    }
 
-#   /* Open Vhost Entry Edit Dialog
-#    */
-#   if(!count($this->VhostObject)){
-#     $smarty->assign("AllowVhostEdit" , false);
-#   }else{
-#     $smarty->assign("AllowVhostEdit" , true);
-#     if(isset($_POST['EditVhostEntries'])){
-#       $this->dialog= new apacheVhostEditEntries($this->config,$this->dn,$this->VhostObject);
-#     }
-#   }
-#
-#   /* Save Vhost Entry Edit Dialog
-#    */
-#   if(isset($_POST['SaveVhostEntryChanges'])){
-#     $this->dialog->save_object();
-#     if(count($this->dialog->check())){
-#        msg_dialog::displayChecks($this->dialog->check());
-#     }else{
-#       $this->dialog->save();
-#       $this->dialog = false;
-#     }
-#   }
-#
-#   /* Cancel Vhost Entrie Edit Dialog
-#   */
-#   if(isset($_POST['CancelVhostEntryChanges'])){
-#     $this->dialog = false;
-#   }
-#
-#   /* Display any type of open dialogs 
-#    */
-#   if($this->dialog){
-#     $this->dialog->save_object();
-#     return($this->dialog->execute());
-#   }
-#
-
-    /* Check posts 
-     */
-    $once =true;
-    foreach($_POST as $name => $value){
-
-      /* Move Server Aliases one position up 
-       */
-      if((preg_match("/^SAup_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^SAup_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = postDecode($id);
-        $this->apacheServerAlias = $this->ArrayUp(($id+1),$this->apacheServerAlias);
-      }
-
-      /* Move Server Aliases one position down 
-       */
-      if((preg_match("/^SAdown_/",$name)) && ($once)){
-        $once = false;
-        
-        $id = preg_replace("/^SAdown_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = postDecode($id);
-  
-        $this->apacheServerAlias = $this->ArrayDown(($id+1),$this->apacheServerAlias);
-      }
-
-      /* Delete a "Server Alias"  
-       */
-      if((preg_match("/^SAdel_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^SAdel_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = postDecode($id);
-        unset($this->apacheServerAlias[$id]);
-        $tmp  =array();
-        foreach($this->apacheServerAlias as $entry){
-          $tmp[] = $entry;
-        }
-        $this->apacheServerAlias = $tmp; 
-      }
-
-      /* Move "Script Alias" one position up 
-       */
-      if((preg_match("/^SCup_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^SCup_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = postDecode($id);
-        $this->apacheScriptAlias = $this->ArrayUp(($id+1),$this->apacheScriptAlias);
-      }
-
-      /* Move "Script Alias" one position down
-       */
-      if((preg_match("/^SCdown_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^SCdown_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = postDecode($id);
-        $this->apacheScriptAlias = $this->ArrayDown(($id+1),$this->apacheScriptAlias);
-      }
-
-      /* Remove "Script Alias"
-       */
-      if((preg_match("/^SCdel_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^SCdel_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = postDecode($id);
-        unset($this->apacheScriptAlias[$id]);
-        $tmp  =array();
-        foreach($this->apacheScriptAlias as $entry){
-          $tmp[] = $entry;
-        }
-        $this->apacheScriptAlias = $tmp; 
-      }
+    $this->scriptList->save_object();
+    $action = $this->scriptList->getAction();
+    if($action['action'] == 'delete'){
+      $key = $this->scriptList->getKey($action['targets'][0]);
+      unset($this->apacheScriptAlias[$key]);
+    }
+    if($action['action'] == 'reorder'){
+      $this->apacheScriptAlias = $this->scriptList->getMaintainedData(); 
     }
 
     /* Add a new "Server Alias" 
@@ -289,44 +150,25 @@ class servapacheVhostEdit extends plugin
     $smarty->assign("NotNew", false);
 
 
-    /* Create Server Aliases divlist 
-     */
-    $div = new divSelectBox("apacheServerAlias");
-    $div->setHeight(120);
-    $recs = $this->apacheServerAlias;
-
-    $oneup    = image('images/lists/sort-up.png','SAup_%s',_("Up"), "top");
-    $onedown  = image('images/lists/sort-down.png','SAdown_%s',_("Down"), "bottom");
-    $onedel   = image('images/lists/trash.png','SAdel_%s',_("Delete"));
-
-    foreach($recs as $key => $rec){
-      $div ->AddEntry(array(
-            array("string"=>$rec),
-            array("string"=>str_replace("%s",postEncode($key),$oneup.$onedown.$onedel),
-                  "attach"=>"style='width:50px;border-right:0px;'")
-            ));
+    $this->serverList->setAcl($this->parent->getacl('apacheServerAlias'));
+    $data = $lData = array();
+    foreach($this->apacheServerAlias as $key => $rec){
+      $data[$key] = $rec;
+      $lData[$key]= array('data' => preg_split("/ /",$rec));
     }
-    $smarty->assign("apacheServerAlias",  $div->DrawList());
+    $this->serverList->setListData($data,$lData);
+    $this->serverList->update();
+    $smarty->assign("apacheServerAlias", $this->serverList->render());
 
-
-    /* Create Server Aliases divlist 
-     */
-    $div = new DivSelectBox("apacheScriptAlias");
-    $div->setHeight(120);
-    $recs = $this->apacheScriptAlias;
-
-    $oneup    = image('images/lists/sort-up.png','SCup_%s',_("Up"), "top");
-    $onedown  = image('images/lists/sort-down.png','SCdown_%s',_("Down"), "bottom");
-    $onedel   = image('images/lists/trash.png','SCdel_%s',_("Delete"));
-
-    foreach($recs as $key => $rec){
-      $div ->AddEntry(array(
-            array("string"=>$rec),
-            array("string"=>str_replace("%s",postEncode($key),$oneup.$onedown.$onedel),
-                  "attach"=>"style='width:50px;border-right:0px;'")
-            ));
+    $this->scriptList->setAcl($this->parent->getacl('apacheScriptAlias'));
+    $data = $lData = array();
+    foreach($this->apacheScriptAlias as $key => $rec){
+      $data[$key] = $rec;
+      $lData[$key]= array('data' => preg_split("/ /",$rec));
     }
-    $smarty->assign("apacheScriptAlias",  $div->DrawList());    
+    $this->scriptList->setListData($data,$lData);
+    $this->scriptList->update();
+    $smarty->assign("apacheScriptAlias", $this->scriptList->render());
     
     /* Display template */
     $display.= $smarty->fetch(get_template_path('servApacheVhostEdit.tpl', TRUE, dirname(__FILE__)));
@@ -445,12 +287,11 @@ class servapacheVhostEdit extends plugin
   }
 
   function acl_is_writeable($attribute,$skip_write = FALSE)
-  {
-    if($this->read_only) return(FALSE);
-    $ui= get_userinfo();
-    return preg_match('/w/', $ui->get_permissions($this->acl_base, 
-          $this->acl_category."servapache", $attribute,      $skip_write));
+  { 
+    return($this->parent->acl_is_writeable($attribute,$skip_write));
   }
+
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
