@@ -24,9 +24,6 @@
 <div class="clear">
 </div>
 <div class="plugin-actions">
- <button type=submit name="classSelect_save">
- {msgPool type=okButton}</button>
- <button type=submit name="classSelect_cancel">
- {msgPool type=cancelButton}</button>
+ <button type=submit name="classSelect_save">{msgPool type=okButton}</button>
+ <button type=submit name="classSelect_cancel">{msgPool type=cancelButton}</button>
 </div>
-<input type="hidden" name="ignore">
