@@ -79,6 +79,18 @@ class goKrbServer extends goService{
         }
       }
     }
+
+    // Prepare lists
+    $this->principleList = new sortableListing();
+    $this->principleList->setDeleteable(true);
+    $this->principleList->setInstantDelete(false);
+    $this->principleList->setEditable(true);
+    $this->principleList->setWidth("100%");
+    $this->principleList->setHeight("100px");
+    $this->principleList->setHeader(array(_("Name")));
+    $this->principleList->setColspecs(array('*','40px'));
+    $this->principleList->setDefaultSortColumn(0);
+
   }
 
 
@@ -138,21 +150,16 @@ class goKrbServer extends goService{
       $smarty->assign($attr,$this->$attr);
     }
 
-    $divlist = new divSelectBox("Kerberos Policies");
-    $action  = image('images/lists/edit.png','policy_edit_%id');
-    $action .= image('images/lists/trash.png','policy_del_%id');
+    $this->principleList->setAcl($this->getAcl('goKrbPolicy'));
+    $data = $lData = array();
     foreach($this->policies as $key => $policy){
       if($policy['STATUS'] == "REMOVED") continue;
-
-      $actions = preg_replace("/%id/",$key,$action);
-      $field1 = array("string" => $policy['NAME']);
-      $field3 = array("string" => $actions, 
-                      "attach"=>"style='width:40px; text-align:right; border:0px;'");
-
-      $divlist->AddEntry(array($field1,$field3));
+      $data[$key] = $policy;
+      $lData[$key]= array('data' => array($policy['NAME']));
     }
-
-    $smarty->assign("divlist",$divlist->DrawList());
+    $this->principleList->setListData($data,$lData);
+    $this->principleList->update();
+    $smarty->assign("list",$this->principleList->render());
     return($smarty->fetch(get_template_path("goKrbServer.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -257,7 +264,8 @@ class goKrbServer extends goService{
   public function RemovePolicy($id)
   {
     /* Load policy information, if not done before 
-     */ 
+     */
+    if(!isset($this->policies[$id]))  return;
     if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
       $o = new gosaSupportDaemon();
       $this->policies[$id]['DATA'] = $o->krb5_get_policy($this->macAddress,$this->policies[$id]['NAME']);
@@ -288,39 +296,28 @@ class goKrbServer extends goService{
         $this->id = -1;
       }
 
-      /* Walk through POSTs an check for image-button posts 
-       */
-      foreach($_POST as $name => $value){
 
-        /* Remove policy requested 
-         */
-        if(preg_match("/^policy_del/",$name)){
-          $id = preg_replace("/^policy_del_([0-9]*)/i","\\1",$name);
-          if(isset($this->policies[$id])){
-            $this->RemovePolicy($id);
-          }
-          break;
-        }
-
-        /* Edit Policy requested 
-         */
-        if(preg_match("/^policy_edit/",$name)){
-          $id = preg_replace("/^policy_edit_([0-9]*)/i","\\1",$name);
+      $this->principleList->save_object();
+      $action = $this->principleList->getAction();
+      if($action['action'] == 'delete'){
+          $id = $this->principleList->getKey($action['targets'][0]);
+          $this->RemovePolicy($id);
+      }
+      if($action['action'] == 'edit'){
+          $id = $this->principleList->getKey($action['targets'][0]);
           if(isset($this->policies[$id])){
 
-            /* Load policy information, if not done before 
-             */ 
-            if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
-              $o = new gosaSupportDaemon();
-              $this->policies[$id]['DATA'] = $o->krb5_get_policy($this->macAddress,$this->policies[$id]['NAME']);
-            }
+              /* Load policy information, if not done before 
+               */ 
+              if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
+                  $o = new gosaSupportDaemon();
+                  $this->policies[$id]['DATA'] = $o->krb5_get_policy($this->macAddress,$this->policies[$id]['NAME']);
+              }
 
-            /* Open dialog */
-            $this->id = $id;
-            $this->dialog = new krb5_policy($this->config,$this->policies[$id], $this);
+              /* Open dialog */
+              $this->id = $id;
+              $this->dialog = new krb5_policy($this->config,$this->policies[$id], $this);
           }
-          break;
-        }
       }
     }
   } 

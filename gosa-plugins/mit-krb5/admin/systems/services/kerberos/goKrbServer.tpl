@@ -8,7 +8,7 @@
 {if $MIT_KRB}
  <h3>{t}Policies{/t}</h3>
  {render acl=$goKrbPolicyACL}
-  {$divlist}
+  {$list}
  {/render}
  <button type='submit' name='policy_add'>{msgPool type=addButton}</button>
 {/if}
