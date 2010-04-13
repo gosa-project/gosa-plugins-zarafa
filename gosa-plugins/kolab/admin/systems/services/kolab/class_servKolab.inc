@@ -79,6 +79,17 @@ class servkolab extends goService {
         $this->postfix_mydestination[] = $this->attrs['postfix-mydestination'][$i];
       }
     }
+
+    // Prepare lists
+    $this->postfix_mydestinationList = new sortableListing();
+    $this->postfix_mydestinationList->setDeleteable(true);
+    $this->postfix_mydestinationList->setInstantDelete(true);
+    $this->postfix_mydestinationList->setEditable(false);
+    $this->postfix_mydestinationList->setWidth("100%");
+    $this->postfix_mydestinationList->setHeight("100px");
+    $this->postfix_mydestinationList->setColspecs(array('*','20px'));
+    $this->postfix_mydestinationList->setHeader(array(_("Name")));
+    $this->postfix_mydestinationList->setDefaultSortColumn(0);
   }
 
 
@@ -110,6 +121,27 @@ class servkolab extends goService {
     $edit       = sprintf('<input name="cyrus_quotawarn" value="%s" type="text" maxlength="3" size="4">',
                     $this->cyrus_quotawarn);
     $quotastr   = sprintf(_("Warn users when using more than %s%% of their mail quota"), $edit);
+
+    /* Domain name added/removed 
+     */
+    if($this->acl_is_writeable("postfixmydestination")){
+        $this->postfix_mydestinationList->save_object();
+        $action = $this->postfix_mydestinationList->getAction();
+        if($action['action'] == 'delete'){
+            $this->postfix_mydestination = $this->postfix_mydestinationList->getMaintainedData();
+        }
+        if(isset($_POST['add_domain_name']) && isset($_POST['new_domain_name'])){
+            $new_domain = trim(get_post('new_domain_name'));
+            if(!empty($new_domain)){
+                if(tests::is_domain($new_domain)){
+                    $this->postfix_mydestination[] = $new_domain;
+                    $this->postfix_mydestination = array_unique($this->postfix_mydestination);
+                }else{
+                    msg_dialog::display(_("Info"), msgPool::invalid(_("Mail domain")));
+                }
+            }
+        }
+    }
 
     /***************
       Assign informations to smarty 
@@ -143,17 +175,10 @@ class servkolab extends goService {
     $smarty->assign("fbfuture", $fbfuture);
     $smarty->assign("quotastr", $quotastr);
 
-    /* Create mail domain divlist  (postfix_mydestination)
-     */
-    $divlist = new divSelectBox("fuse");
-    $divlist->setHeight(100);
-    foreach($this->postfix_mydestination as $key => $domain){
-      $f1 = array("string" => $domain);
-      $f2 = array("string" => image('images/lists/trash.png', 'remove_domain_'.$key, _("Remove")),
-          "attach" => "style='border-right:0px; width: 20px;'");
-      $divlist->AddEntry(array($f1,$f2));
-    }
-    $smarty->assign("mdDiv",$divlist->DrawList());
+    $this->postfix_mydestinationList->setAcl($this->getacl("postfixmydestination"));
+    $this->postfix_mydestinationList->setListData($this->postfix_mydestination);
+    $this->postfix_mydestinationList->update();
+    $smarty->assign("mdDiv",$this->postfix_mydestinationList->render());
 
     /* Load Template */
     $display.=$smarty->fetch(get_template_path('servkolab.tpl', TRUE,dirname(__FILE__)));
@@ -242,35 +267,13 @@ class servkolab extends goService {
   function save_object()    
   {
     if (isset($_POST['kolabtab'])){
-      plugin::save_object();
+      @plugin::save_object();
 
-      /* Domain name added/removed 
-       */
-      foreach($_POST as $name => $value){
-        if(preg_match("/^remove_domain_/",$name)){
-          $id = preg_replace("/^remove_domain_([0-9]*)$/","\\1",$name);
-          if(isset($this->postfix_mydestination[$id])){
-            unset($this->postfix_mydestination[$id]);
-          }
-          break;
-        }
-      }
-      if(isset($_POST['add_domain_name']) && isset($_POST['new_domain_name'])){
-        $new_domain = trim(get_post('new_domain_name'));
-        if(!empty($new_domain)){
-          if(tests::is_domain($new_domain)){
-            $this->postfix_mydestination[] = $new_domain;
-            $this->postfix_mydestination = array_unique($this->postfix_mydestination);
-          }else{
-            msg_dialog::display(_("Info"), msgPool::invalid(_("Mail domain")));
-          }
-        }
-      }
 
       /* Map attrinutes 
        */
       foreach($this->attributes as $attr){
-        if(($this->acl_is_writeable(preg_replace("/_/","",$attr))) && (isset($_POST[$attr]))){
+        if(isset($_POST[$attr]) && ($this->acl_is_writeable(preg_replace("/_/","",$attr)))){
           $this->$attr = $_POST[$attr];
         }
       }
