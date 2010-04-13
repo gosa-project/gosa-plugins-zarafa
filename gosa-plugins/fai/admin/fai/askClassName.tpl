@@ -22,7 +22,7 @@
      <td>
       <input type=radio name="classSelector" id="classSelector1" value="1" checked>
      </td>
-     <td><h1><label for='classSelector1'>{t}Enter FAI class name manually{/t}</label></h1>
+     <td><h3><label for='classSelector1'>{t}Enter FAI class name manually{/t}</label></h3>
      </td>
     </tr>
     <tr>
