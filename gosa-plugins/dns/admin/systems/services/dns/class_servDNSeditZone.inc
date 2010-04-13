@@ -135,6 +135,18 @@ class servdnseditZone extends plugin
         $this->ReverseZone .= ".0"; 
       }
     }
+
+    // Prepare lists
+    $this->mxList = new sortableListing(array(),array(), TRUE);
+    $this->mxList->setDeleteable(true);
+    $this->mxList->setInstantDelete(true);
+    $this->mxList->setEditable(false);
+    $this->mxList->setWidth("100%");
+    $this->mxList->setHeight("100px");
+    $this->mxList->setHeader(array(_("Record")));
+    $this->mxList->setColspecs(array('*','20px'));
+    $this->mxList->setDefaultSortColumn(0);
+
   }
 
   /* TRansports the geiven Arraykey one position up*/
@@ -209,6 +221,7 @@ class servdnseditZone extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
+    $smarty->assign("usePrototype", "true");
     $smarty->assign("Zone_is_used",$this->Zone_is_used);
     $ui = get_userinfo();
 
@@ -273,32 +286,11 @@ class servdnseditZone extends plugin
       return($this->dialog->execute());
     }
 
-    $once =true;
-    foreach($_POST as $name => $value){
-      if((preg_match("/^MXup_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^MXup_/","",$name);
-        $id = postDecode($id);
-        $this->mXRecords = $this->ArrayUp(($id+1),$this->mXRecords);
-      }
-      if((preg_match("/^MXdown_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^MXdown_/","",$name);
-        $id = postDecode($id);
-        $this->mXRecords = $this->ArrayDown(($id+1),$this->mXRecords);
-      }
-      if((preg_match("/^MXdel_/",$name)) && ($once)){
-        $once = false;
-        $id = preg_replace("/^MXdel_/","",$name);
-        $id = postDecode($id);
-        unset($this->mXRecords[$id]);
-        $tmp  =array();
-        foreach($this->mXRecords as $entry){
-          $tmp[] = $entry;
-        }
- 
-        $this->mXRecords = $tmp; 
-      }
+
+    $this->mxList->save_object();
+    $action = $this->mxList->getAction();
+    if($action['action'] == 'delete' || $action['action'] == 'reorder'){
+        $this->mXRecords = $this->mxList->getMaintainedData();
     }
 
     if($this->parent->acl_is_writeable("mXRecord")){
@@ -330,25 +322,17 @@ class servdnseditZone extends plugin
     }
 
 
-    $div = new divSelectBox("MxRecords");
-    $div->setHeight(120);
-    $recs = $this->mXRecords;
-
-    $oneup   = image('images/lists/sort-up.png','MXup_%s',_("Up"),"top");
-    $onedown = image('images/lists/sort-down.png','MXdown_%s',_("Down"),"bottom");
-    $onedel  = image('images/lists/trash.png','MXdel_%s',_("Delete"));
-
-    foreach($recs as $key => $rec){
-      $div ->AddEntry(array(
-            array("string"=>$rec['value']),
-            array("string"=>str_replace("%s",postEncode($key),$oneup.$onedown.$onedel),
-                  "attach"=>"style='width:70px;border-right:0px;'")
-            ));
+    $this->mxList->setAcl($this->parent->getacl("mXRecord"));
+    $lData = array();
+    foreach($this->mXRecords as $key => $record){
+        $lData[$key] = array('data'=>array($record['value']));
     }
+    $this->mxList->setListData($this->mXRecords, $lData);
+    $this->mxList->update();
 
     /* Assign records list */
     $smarty->assign("NotNew", false);
-    $smarty->assign("Mxrecords",  $div->DrawList());
+    $smarty->assign("Mxrecords",  $this->mxList->render());
     $smarty->assign("records"  ,  $this->generateRecordsList());
     $smarty->assign("NetworkClass",  $this->NetworkClass);
     $smarty->assign("NetworkClasses",  array("A"=>"255.0.0.0 (Class A)","B"=>"255.255.0.0 (Class B)","C"=>"255.255.255.0 (Class C)"));

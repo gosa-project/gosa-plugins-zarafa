@@ -49,6 +49,16 @@ class servdns extends goService
       $this->is_account = true;
     }
     $this->initially_was_account = $this->is_account;
+
+    // Prepare lists
+    $this->zoneList = new sortableListing();
+    $this->zoneList->setDeleteable(true);
+    $this->zoneList->setEditable(true);
+    $this->zoneList->setWidth("100%");
+    $this->zoneList->setHeight("300px");
+    $this->zoneList->setHeader(array(_("Zone"),_("Reverse zone"),_("TTL"),_("Class")));
+    $this->zoneList->setColspecs(array('*','*','*','*','40px'));
+    $this->zoneList->setDefaultSortColumn(0);
   }
 
 
@@ -203,49 +213,19 @@ class servdns extends goService
 
     /* Check for edit zone request 
      */
-    $once = false;
-    foreach( $_POST as $name => $value){
-  
-      /* check all post for edit request 
-       */
-      if(preg_match("/^editZone_/",$name)&&!$once){
-        $once =true;
-        $tmp = postDecode(preg_replace("/^editZone_/","",$name));
-        $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$tmp]);
-        $this->dialog->acl_base = $this->acl_base;
-        $this->dialog->acl_category = $this->acl_category;
-      }
-
-      /* check posts for delete zone 
-       */
-      if(preg_match("/^delZone_/",$name)&&!$once){
-
-        $once =true;
-        $tmp = postDecode(preg_replace("/^delZone_/","",$name));
-     
-        /* Initiate deletion
-         */ 
-        $this->RemoveZone($tmp); 
-      }
+    $this->zoneList->save_object();
+    $action = $this->zoneList->getAction();
+    if($action['action'] == 'delete'){
+        $id = $this->zoneList->getKey($action['targets'][0]);
+        $this->RemoveZone($id);
     }
-
-    if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
-      $id = postDecode($_GET['id']);
-      if(isset($this->Zones[$id])){
+    if($action['action'] == 'edit'){
+        $id = $this->zoneList->getKey($action['targets'][0]);
         $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$id]);
         $this->dialog->acl_base = $this->acl_base;
         $this->dialog->acl_category = $this->acl_category;
-      }
     }
 
-    if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
-      $id = postDecode($_GET['id']);
-      if(isset($this->Zones[$id])){
-         $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$id]);
-         $this->dialog->acl_base = $this->acl_base;
-         $this->dialog->acl_category = $this->acl_category;
-      }
-    }
 
     /* Show dialog 
      */
@@ -257,30 +237,18 @@ class servdns extends goService
 
     /* Create Listbox with existing Zones 
      */
-    $ZoneList = new divSelectBox("dNSZones");
-    $ZoneList -> SetHeight(254);
+    $this->zoneList->setAcl($this->getacl(""));
 
-    /* Add entries to divlist
-     */
-    $editImg = image('images/lists/edit.png','editZone_%s');
-    if($this->acl_is_removeable()){
-      $editImg.= image('images/lists/trash.png','delZone_%s');
-    }
-
-    $link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=%s'>%s</a>";
+    $lData = array();
     foreach($this->Zones as $zone => $values ){
-      $ZoneList->AddEntry(array(
-            array("string" => sprintf($link,postEncode($zone),($zone))),
-            array("string" => sprintf($link,postEncode($zone),_("Reverse zone")." : ".($values['ReverseZone']))),
-            array("string" => _("TTL")." : ".$values['sOAttl']),
-            array("string" => _("Class")." : ".$values['dNSClass']),
-            array("string" =>str_replace("%s",postEncode($zone),$editImg))
-            ));
+      $lData[$zone] = array('data' => array($zone,$values['ReverseZone'],$values['sOAttl'],$values['dNSClass']));
     }    
+    $this->zoneList->setListData($this->Zones,$lData);
+    $this->zoneList->update();
 
     /* Display tempalte 
      */
-    $smarty->assign("ZoneList",$ZoneList->DrawList());
+    $smarty->assign("ZoneList",$this->zoneList->render());
     $display.= $smarty->fetch(get_template_path('servdns.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
