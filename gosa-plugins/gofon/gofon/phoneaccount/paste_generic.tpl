@@ -2,10 +2,7 @@
 <table summary="{t}Phone numbers{/t}" style="width:100%" cellspacing=0>
  <tr>
   <td class='right-border'>
-   <h3>
-    {image path="plugins/gofon/images/banana.png"}&nbsp;{t}Phone numbers{/t}
-
-   </h3>
+   <h3>{t}Phone numbers{/t}</h3>
   </td>
  </tr>
  <tr>
@@ -23,11 +20,7 @@
   </td>
   <td style='width:50%;'>   <table summary="" style="width:100%" border=0>
     <tr>
-     <td>      <h3> 
-       {image path="plugins/gofon/images/hardware.png"}
-
-       &nbsp;{t}Telephone hardware{/t}
-      </h3>
+     <td>      <h3>{t}Telephone hardware{/t}</h3>
       <table summary="{t}Telephone{/t}" border=0>
        <tr>
         <td>
