@@ -232,7 +232,7 @@ class sambaAccount extends plugin
     }
 
     /* Save selected logon hours */
-    if(isset($_POST['save_logonHours'])){
+    if(isset($_POST['save_logonHours']) && $this->dialog instanceOf sambaLogonHours){
       $this->dialog->save_object();
       if($this->acl_is_writeable("sambaLogonHours")){
         $this->sambaLogonHours = $this->dialog->save();
