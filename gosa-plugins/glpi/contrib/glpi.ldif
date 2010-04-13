@@ -1,5 +1,0 @@
-dn: cn=glpi,cn=schema,cn=config
-objectClass: olcSchemaConfig
-cn: glpi
-olcAttributeTypes: ( 1.3.6.1.4.1.22262.1.1.1.4.1 NAME 'glpiAccountLogin' DESC 'glpi Account Login' EQUALITY caseIgnoreIA5Match SUBSTR caseExactIA5SubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
-olcObjectClasses: ( 1.3.6.1.4.1.22262.1.1.2.4.1 NAME 'glpiAccount' SUP top AUXILIARY DESC 'glpi Account' MAY ( glpiAccountLogin ))
