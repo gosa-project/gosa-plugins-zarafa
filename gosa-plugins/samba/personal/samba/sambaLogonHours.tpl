@@ -19,11 +19,9 @@
 </script>
 {/if}
 
-<h1>{t}Specify the hours this user is allowed to log in{/t}</h1>
-<br>
-
+<h3>{t}Specify the hours this user is allowed to log in{/t}</h3>
+<hr>
 <table style='background-color: #EEEEEE; width :100%;' summary="{t}Samba logon hours{/t}">
-  summary="{t}Samba logon hours{/t}">
   <tr>
     <td>&nbsp;</td>
     <td style='text-align:center;height:24px;' colspan="24">
