@@ -58,6 +58,16 @@ class servdhcp extends goService
       $this->is_account= FALSE;
       $this->dhcp_server_list = $this->get_list_of_dhcp_servers();
     }
+
+    // Prepare lists
+    $this->entryList = new sortableListing();
+    $this->entryList->setDeleteable(false);
+    $this->entryList->setEditable(false);
+    $this->entryList->setWidth("100%");
+    $this->entryList->setHeight("400px");
+    $this->entryList->setHeader(array(_("Type"),_("Option"),_("Address")));
+    $this->entryList->setColspecs(array('*','*','*', '80px'));
+
   }
 
 
@@ -323,13 +333,6 @@ class servdhcp extends goService
       return($this->dialog->execute());
     }
 
-    /* Create Listbox with existing Zones
-     */
-    $DhcpList = new divSelectBox("dhcpSections");
-    $DhcpList->SetHeight(400);
-
-    /* Add entries to divlist
-     */
     $editImgIns = image('images/lists/element.png[new]', 'insertDhcp_%s', _("Insert new DHCP section"));
     $editImgIns.= image('images/lists/edit.png', 'editDhcp_%s', _("Edit DHCP section"));
     $editImgIns.= image('images/lists/trash.png', 'delDhcp_%s', _("Remove DHCP section"));
@@ -340,6 +343,8 @@ class servdhcp extends goService
     $editImg = image('images/lists/edit.png', 'editDhcp_%s', _("Edit DHCP section"));
     $editImg.= image('images/lists/trash.png', 'delDhcp_%s', _("Remove DHCP section"));
       	
+    $this->entryList->setAcl('rwcdm');
+    $lData = $data = array();
     $tmp = new dhcpNewSectionDialog(NULL);
     foreach($this->dhcpSections as $section => $values ){
 
@@ -350,39 +355,30 @@ class servdhcp extends goService
 
       // Get entry ID  
       $id = array_search($section,$this->dhcpDNtoID);
+      $data[$id] = $values;
    
       $values = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$id."'>".$values."</a>";
 	
       $objtype = $this->objectType($section);
       $dhcpObject = new $objtype($this,$this->dhcpObjectCache[$section]);
       if (count($tmp->sectionMap[$objtype])){
-        if ($objtype == "dhcpService"){
-          $DhcpList->AddEntry(array(
-              array("string" => $values),
-              array("string" => ''),
-              array("string" => ''),
-              array("string" => str_replace("%s",$id,$editImgInsNoDel), "attach" => "style='text-align:right;'")
-              ));
-        } else {
-          $DhcpList->AddEntry(array(
-              array("string" => $values),
-              array("string" => $dhcpObject->options->get('routers')),
-              array("string" => ''),
-              array("string" => str_replace("%s",$id,$editImgIns), "attach" => "style='text-align:right;'")
-              ));
-        }
+          if ($objtype == "dhcpService"){
+              $lData[$id] = array('data' => array($values,'','',str_replace("%s",$id,$editImgInsNoDel)));
+          } else {
+              $lData[$id] = array('data' => array($values,$dhcpObject->options->get('routers'),'',str_replace("%s",$id,$editImgIns)));
+          }
       } else {
-        $DhcpList->AddEntry(array(
-              array("string" => $values),
-              array("string" => $dhcpObject->statements->get('fixed-address')),
-              array("string" =>  preg_replace('/^[^ ]+ /', '', isset($dhcpObject->dhcpHWAddress)?$dhcpObject->dhcpHWAddress:"")),
-              array("string" => str_replace("%s",$id,$editImg), "attach" => "style='text-align:right;'")
-              ));
+          $lData[$id] = array('data' => array($values,
+                      $dhcpObject->statements->get('fixed-address'),
+                  preg_replace('/^[^ ]+ /', '', isset($dhcpObject->dhcpHWAddress)?$dhcpObject->dhcpHWAddress:""),
+                  str_replace("%s",$id,$editImg)));
       }
     }
-
+    $this->entryList->setListData($this->dhcpSections, $lData);
+    $this->entryList->update();
+    
     /* Display tempalte */
-    $smarty->assign("DhcpList",$DhcpList->DrawList());
+    $smarty->assign("DhcpList",$this->entryList->render());
     $display.= $smarty->fetch(get_template_path('servdhcp.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
