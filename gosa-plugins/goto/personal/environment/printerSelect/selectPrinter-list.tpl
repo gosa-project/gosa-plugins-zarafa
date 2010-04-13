@@ -22,7 +22,6 @@
 
 <div class="clear"></div>
 
-<input type="hidden" name="ignore">
 <div class="plugin-actions">
   <button type='submit' name='printerSelect_save'>{msgPool type=addButton}</button>
   <button type='submit' name='printerSelect_cancel'>{msgPool type=cancelButton}</button>
