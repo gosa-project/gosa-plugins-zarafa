@@ -15,7 +15,7 @@
 {t}Server path{/t}&nbsp;<input type='text' name="server_path" style="width:300px;" value="{$server_path}">
 
 {render acl=$ThisACL}
- {$divlist}
+ {$kioskList}
 {/render}
 
 {render acl=$ThisACL}

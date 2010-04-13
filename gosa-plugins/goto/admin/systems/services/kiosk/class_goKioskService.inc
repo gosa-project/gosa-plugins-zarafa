@@ -53,6 +53,17 @@ class goKioskService extends goService{
         }
       }
     }
+    
+    // Prepare lists
+    $this->kioskList = new sortableListing();
+    $this->kioskList->setDeleteable(true);
+    $this->kioskList->setInstantDelete(true);
+    $this->kioskList->setEditable(true);
+    $this->kioskList->setWidth("100%");
+    $this->kioskList->setHeight("200px");
+    $this->kioskList->setHeader(array(_("Profile")));
+    $this->kioskList->setColspecs(array('*','40px'));
+    $this->kioskList->setDefaultSortColumn(0);
   }
 
 
@@ -89,20 +100,20 @@ class goKioskService extends goService{
 
     /* Download kiosk profile 
      */
-    if(isset($_GET['getkiosk'])){
-      $id = $_GET['getkiosk'];
-
-      foreach($this->gotoKioskProfiles as $profile){
-        if($profile['name'] == $id){
-          $name = $this->baseDir."/".$id;
-          if(file_exists($name)){
-            $content = file_get_contents($name);    
-            send_binary_content($content,$id);
-          }else{
-            msg_dialog::display(_("Warning"), sprintf(_("The profile does not exists '%s'!"), $name), ERROR_DIALOG);
-          }
+    $this->kioskList->save_object();
+    $action = $this->kioskList->getAction();
+    if($action['action'] == 'edit'){
+        $id = $this->kioskList->getKey($action['targets'][0]);
+        foreach($this->gotoKioskProfiles as $profile){
+            $name = $this->baseDir."/".$this->gotoKioskProfiles[$id]['name'];
+            if(file_exists($name)){
+                $content = file_get_contents($name);    
+                send_binary_content($content,$this->gotoKioskProfiles[$id]['name']);
+            }else{
+                msg_dialog::display(_("Warning"), sprintf(_("The profile does not exists '%s'!"),
+                            $this->gotoKioskProfiles[$id]['name']), ERROR_DIALOG);
+            }
         }
-      }
     }
     
 
@@ -110,37 +121,31 @@ class goKioskService extends goService{
      * in profile directory ($this->baseDir);
      */
     if((isset($_POST['profileAdd']))&&(isset($_FILES['newProfile'])) && $this->acl_is_writeable("")){
-      $file = $_FILES['newProfile'];
-      if(!file_exists($this->baseDir.$file['name'])){
-        $tmp = array(
-            'url'     => "" ,
-            'name'    => $file['name'] ,
-            'initial' => FALSE,
-            'tmp_name'=> $file['tmp_name'],
-            'content' => file_get_contents($file['tmp_name']),
-            'exists'  => TRUE);
+        $file = $_FILES['newProfile'];
+        if(!file_exists($this->baseDir.$file['name'])){
+            $tmp = array(
+                    'url'     => "" ,
+                    'name'    => $file['name'] ,
+                    'initial' => FALSE,
+                    'tmp_name'=> $file['tmp_name'],
+                    'content' => file_get_contents($file['tmp_name']),
+                    'exists'  => TRUE);
 
 
-        $used = array();
-        foreach($this->gotoKioskProfiles as $k){
-          $used[] = $k['name'];
-        }  
-        if(in_array($file['name'], $used)){
-          msg_dialog::display(_("Warning"), msgPool::duplicated(_("Profile")), WARNING_DIALOG);
-        }else{
-          $this->gotoKioskProfiles[] = $tmp;
+            $used = array();
+            foreach($this->gotoKioskProfiles as $k){
+                $used[] = $k['name'];
+            }  
+            if(in_array($file['name'], $used)){
+                msg_dialog::display(_("Warning"), msgPool::duplicated(_("Profile")), WARNING_DIALOG);
+            }else{
+                $this->gotoKioskProfiles[] = $tmp;
+            }
         }
-      }
     }
 
-    $only_once = true;
-    foreach($_POST as $name => $value){
-
-      if((preg_match("/^delkiosk_/",$name))&&($only_once) && $this->acl_is_writeable("")){
-  
-        /* Get id, name and path */
-        $only_once = false;
-        $id = preg_replace("/^delkiosk_([0-9]*)$/","\\1",$name);
+    if($action['action'] == 'delete' && $this->acl_is_writeable("")){
+        $id = $this->kioskList->getKey($action['targets'][0]);
         $name = $this->gotoKioskProfiles[$id]['name'];
         $filename = $this->baseDir."/".$name;
 
@@ -151,55 +156,47 @@ class goKioskService extends goService{
 
         if ($ldap->count() != 0){
 
-          $obj= array();
-          $found= false;
-          while(($attrs = $ldap->fetch()) && ($cnt)){
-            $check = preg_replace("/^.*\//i","",$attrs['gotoKioskProfile'][0]);
-            if($check == $name){
-              $obj[$ldap->getDN()]= $attrs['cn'][0];
-              $found= true;
+            $obj= array();
+            $found= false;
+            while(($attrs = $ldap->fetch()) && ($cnt)){
+                $check = preg_replace("/^.*\//i","",$attrs['gotoKioskProfile'][0]);
+                if($check == $name){
+                    $obj[$ldap->getDN()]= $attrs['cn'][0];
+                    $found= true;
+                }
             }
-          }
- 
-          if ($found){
-            msg_dialog::display(_("Error"), msgPool::stillInUse(_("Kiosk profile"), msgPool::buildList($obj)), ERROR_DIALOG);
-          }
+
+            if ($found){
+                msg_dialog::display(_("Error"), msgPool::stillInUse(_("Kiosk profile"), 
+                            msgPool::buildList($obj)), ERROR_DIALOG);
+            }
         }else{
-          if($this->gotoKioskProfiles[$id]['initial']){
-            $res = @unlink($filename);
-            if(!$res){
-              if(!is_writeable($filename)){
-                msg_dialog::display(_("Error"), msgPool::cannotDeleteFile($filename), ERROR_DIALOG);
-              }
-              if(!file_exists($filename)){
-                msg_dialog::display(_("Error"), msgPool::fileDoesNotExist($filename), ERROR_DIALOG);
-              }
+            if($this->gotoKioskProfiles[$id]['initial']){
+                $res = @unlink($filename);
+                if(!$res){
+                    if(!is_writeable($filename)){
+                        msg_dialog::display(_("Error"), msgPool::cannotDeleteFile($filename), ERROR_DIALOG);
+                    }
+                    if(!file_exists($filename)){
+                        msg_dialog::display(_("Error"), msgPool::fileDoesNotExist($filename), ERROR_DIALOG);
+                    }
+                }
+                unset($this->gotoKioskProfiles[$id]);
             }
-            unset($this->gotoKioskProfiles[$id]);
-          }
         }
-      }
     }
 
     /* Display list of profiles */
-    $divlist = new divSelectBox("KioskProfiles");
-    $divlist -> SetHeight (300);
-
-
+    $this->kioskList->setAcl($this->getacl(""));
+    $lData = array();
     foreach($this->gotoKioskProfiles as $key => $val ){
-      $del = "&nbsp;";
-      if($this->acl_is_writeable("")){
-        $del = image("images/lists/trash.png", 'delkiosk_'.$key);
-      }
-      $divlist->AddEntry(array(
-            array("string"=>"<a href='?plug=".$_GET['plug']."&amp;getkiosk=".$val['name']."'>".$val['name']."</a>"),
-            array("string"=>$del,
-              "attach"=>" style='border-right: 0px;width:24px; text-align:center;' ")
-            ));
+      $lData[$key] = array('data' => array($val['name']));
     }
+    $this->kioskList->setListData($this->gotoKioskProfiles, $lData);
+    $this->kioskList->update();
 
     /* Assign all existing profiles to smarty */
-    $smarty->assign("divlist",$divlist->DrawList());
+    $smarty->assign("kioskList",$this->kioskList->render());
     $smarty = get_smarty(); 
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
