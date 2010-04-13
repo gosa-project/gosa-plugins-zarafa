@@ -4,7 +4,7 @@ class servRepositorySetup  extends plugin
 {
   /* attribute list for save action */
   var $ignore_account   = TRUE;
-  var $attributes       = array("Release","ParentServer","Url","cn");
+  var $attributes       = array("Release","ParentServer","Url");
   var $objectclasses    = array("whatever");
 
   /* Attributes */
@@ -20,6 +20,11 @@ class servRepositorySetup  extends plugin
   function servRepositorySetup (&$config, $dn= NULL,$data = false)
   {
     plugin::plugin ($config, $dn);
+
+    if(isset($this->attrs['cn'][0])){
+        $this->cn=$this->attrs['cn'][0];
+    }
+
     if($data != false){
       foreach(array("Sections","Release","Url","ParentServer","initialy_was") as $atr){
         if(isset($data[$atr])){
@@ -27,6 +32,18 @@ class servRepositorySetup  extends plugin
         }
       }
     }
+
+    // Prepare lists
+    $this->sectionList = new sortableListing();
+    $this->sectionList->setDeleteable(true);
+    $this->sectionList->setInstantDelete(true);
+    $this->sectionList->setEditable(false);
+    $this->sectionList->setWidth("100%");
+    $this->sectionList->setHeight("100px");
+    $this->sectionList->setHeader(array(_("Name")));
+    $this->sectionList->setColspecs(array('*','20px'));
+    $this->sectionList->setDefaultSortColumn(0);
+
   }
 
   function GetName()
@@ -80,36 +97,18 @@ class servRepositorySetup  extends plugin
         }
       }
 
-      foreach($_POST as $name => $value){
-        if(preg_match("/^delete_/",$name)){
-
-          $val = preg_replace("/^delete_/","",$name);
-          echo $val;
-          $val = postDecode($val);
-
-          if(isset($this->Sections[$val])){
-            unset($this->Sections[$val]);
-          }
-        }
+      $this->sectionList->save_object();
+      $action = $this->sectionList->getAction();
+      if($action['action'] == 'delete'){
+        $this->Sections = $this->sectionList->getMaintainedData();  
       }
     }
 
-    $divlist = new divSelectBox("servRepositorySetup");
-    $divlist->setHeight("220");
-    $dellink = "";
-    if(preg_match("/w/",$this->parent->getacl("Section"))){
-      $dellink = image('images/lists/trash.png','delete_%s');
-    }
+    $this->sectionList->setAcl($this->parent->getacl('Section'));
+    $this->sectionList->setListData($this->Sections) ;
+    $this->sectionList->update();
  
-    foreach($this->Sections as $sec){
-      $divlist->AddEntry(array(
-            array("string"=>$sec),
-            array("string"=>preg_replace("/%s/",postEncode($sec), $dellink),
-              "attach"=>"style='border-right:0px;width:20px;'")
-            ));
-    }
-  
-    $smarty->assign("Sections",$divlist->DrawList());
+    $smarty->assign("Sections",$this->sectionList->render());
 
     /* Get && assign acls */
     $tmp = $this->parent->plInfo();
