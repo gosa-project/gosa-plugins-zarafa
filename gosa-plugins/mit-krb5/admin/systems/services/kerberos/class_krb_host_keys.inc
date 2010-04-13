@@ -78,6 +78,17 @@ class krbHostKeys extends plugin
       $this->namingAttr= $this->getNamingAttr();
       $this->init();
     }
+
+    // Prepare lists
+    $this->keyList = new sortableListing();
+    $this->keyList->setDeleteable(false);
+    $this->keyList->setInstantDelete(false);
+    $this->keyList->setEditable(false);
+    $this->keyList->setWidth("100%");
+    $this->keyList->setHeight("100px");
+    $this->keyList->setColspecs(array('*','*','*','60px'));
+    $this->keyList->setHeader(array(_("Realm"),_("Principle"),_("Status")));
+    $this->keyList->setDefaultSortColumn(0);
   }
 
 
@@ -246,21 +257,15 @@ class krbHostKeys extends plugin
       }
     }
 
-    /* Create a divlist to list all key settings. 
-     */
-    $divlist = new divSelectBox("Kerberos_Host/Service_Keys");
-    $divlist->SetHeight(100);
+    $this->keyList->setAcl($this->getAcl(''));
     $princ_id = 0; // Used in posts
 
     $this->last_list[$prefix] = array();
 
     /* Create actions */
     $new = image('images/lists/element.png[new]', 'create_%ID%', _("Create key"));
-    $new.= image('images/empty.png');
-    $new.= image('images/empty.png');
 
-    $rec = image('images/empty.png');
-    $rec.= image('images/lists/reload.png', 'recreate_%ID%', _("Recreate key"));
+    $rec= image('images/lists/reload.png', 'recreate_%ID%', _("Recreate key"));
     $rec.= image('images/lists/trash.png',  'remove_%ID%', _("Remove key"));
 
     /* Check ACLs */
@@ -269,6 +274,7 @@ class krbHostKeys extends plugin
     }
     
 
+    $data = $lData = array();
     foreach($this->server_list as $mac => $server){
 
       /* Recreate/Remove actions */
@@ -297,19 +303,15 @@ class krbHostKeys extends plugin
       $this->last_list[$prefix][$princ_id]['MAC']    = $mac;
       $this->last_list[$prefix][$princ_id]['NAME']   = $master_princ;
 
-      $field1 = array('string' => $realm );
-      $field2 = array('string' => $master_princ);
       if($found){
-        $field3 = array('string' => _("installed"));
-        $field4 = array('string' => preg_replace("/%ID%/",$princ_id,$rec),"attach" => "style='border:0px;'");
+        $data[$princ_id] = $princ_id;
+        $lData[$princ_id] = array('data' => array($realm,$master_princ,_("installed"),preg_replace("/%ID%/",$princ_id,$rec)));
         $this->last_list[$prefix][$princ_id]['USED'] = TRUE;
       }else{
-        $field3 = array('string' => "-");
-        $field4 = array('string' => preg_replace("/%ID%/",$princ_id,$new),"attach" => "style='border:0px;'");
+        $data[$princ_id] = $princ_id;
+        $lData[$princ_id] = array('data' => array($realm,$master_princ,_("-"),preg_replace("/%ID%/",$princ_id,$new)));
         $this->last_list[$prefix][$princ_id]['USED'] = FALSE;
       }
-
-      $divlist->AddEntry(array($field1,$field2,$field3,$field4));
 
       /* Get all additionally configured service host keys, this are all keys that 
          do not match the master_princ.
@@ -328,18 +330,18 @@ class krbHostKeys extends plugin
             $this->last_list[$prefix][$princ_id]['MAC']   = $mac;
             $this->last_list[$prefix][$princ_id]['NAME']  = $princ;
 
-            $field1 = array('string' => $realm );
-            $field2 = array('string' => $princ);
-            $field3 = array('string' => _("installed"));
-            $field4 = array('string' => preg_replace("/%ID%/",$princ_id,$rec),"attach" => "style='border:0px;'");
-            $divlist->AddEntry(array($field1,$field2,$field3,$field4));
+            $data[$princ_id] = $princ_id;
+            $lData[$princ_id] = array('data' => array($realm,$princ,_("installed"),preg_replace("/%ID%/",$princ_id,$rec)));
+            $this->last_list[$prefix][$princ_id]['USED'] = FALSE;
           } 
         }
       }
     }
-    
+    $this->keyList->setListData($data,$lData);    
+    $this->keyList->update();
+
     $smarty = get_smarty(); 
-    $smarty->assign("list",$divlist->DrawList());
+    $smarty->assign("list",$this->keyList->render());
     $smarty->assign("server_list" ,$this->server_list);
     $smarty->assign("service_plugin" ,$service_plugin);
     $smarty->assign("is_service_key" , $this->is_service_key);
