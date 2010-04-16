@@ -24,7 +24,7 @@ class gotomasses extends management
 {
 
   var $plHeadline     = "System deployment status";
-  var $plDescription  = "System deployment status";
+  var $plDescription  = "Monitor and schedule system deployment and update processes";
   var $plIcon  = "plugins/goto/images/goto.png";
 
   var $current        = FALSE;
