@@ -22,8 +22,9 @@
 
 class goFonMacro extends management
 {
-  var $plHeadline     = "Macros";
-  var $plDescription  = "Phone macro management";
+  var $plHeadline     = "Phone Macros";
+  var $plDescription  = "Manage phone macros for setups using the Asterisk VoIP service";
+
   var $plIcon  = "plugins/gofon/images/macros.png";
 
   // Tab definition 

@@ -4,7 +4,7 @@ class fonreport extends plugin
 {
     /* Definitions */
     var $plHeadline= "Phone Reports";
-    var $plDescription= "This does something";
+    var $plDescription= "View the phone report for incoming and outgoing calls";
     var $plIcon       = "plugins/gofon/images/phonereport.png";
 
     var $ui             = NULL;

@@ -22,8 +22,8 @@
 
 class phoneConferenceManagment extends management
 {
-  var $plHeadline     = "conferences";
-  var $plDescription  = "Conference management";
+  var $plHeadline     = "Phone Conferences";
+  var $plDescription  = "Manage phone conference rooms in setups using the Asterisk VoIP service";
   var $plIcon  = "plugins/gofon/images/conference.png";
 
   // Tab definition 
