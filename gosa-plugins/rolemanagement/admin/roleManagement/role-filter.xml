@@ -14,7 +14,7 @@
 
   <search>
     <tag>default</tag>
-    <label>Defailt filter</label>
+    <label>Default filter</label>
     <query>
       <backend>LDAP</backend>
       <filter>(&amp;(objectClass=organizationalRole)(cn=$))</filter>
