@@ -4,7 +4,7 @@ class mailqueue extends plugin
 {
   /* Definitions */
   var $plHeadline     = "Mail queue";
-  var $plDescription  = "This does something";
+  var $plDescription  = "View and control the mailservers mail processing queue";
   var $plIcon         = "plugins/mail/images/mailqueue.png";
 
   /* attribute list for save action */
