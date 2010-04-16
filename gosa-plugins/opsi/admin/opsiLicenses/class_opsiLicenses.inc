@@ -23,7 +23,7 @@
 class opsiLicenses extends management
 {
   var $plHeadline     = "Software licenses";
-  var $plDescription  = "Software licenses";
+  var $plDescription  = "Manage software licenses for Windows system deployments";
   var $plIcon  = "plugins/opsi/images/plugin.png";
 
   // Tab definition 
