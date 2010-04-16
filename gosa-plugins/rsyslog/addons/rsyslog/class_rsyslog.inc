@@ -3,7 +3,7 @@
 class rsyslog extends plugin
 {
   var $plHeadline= "System logs";
-  var $plDescription= "View system logs";
+  var $plDescription= "View systemlogs that got recorded with rsyslog";
 
   var $servers = array();
   var $selected_server = "";
