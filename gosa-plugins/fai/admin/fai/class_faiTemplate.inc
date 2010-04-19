@@ -303,7 +303,7 @@ class faiTemplate extends plugin
 
     $this->templateList->setListData($data,$lData);
     $this->templateList->update();
-    $smarty->assign("Entry_divlist",$this->templateList->render());
+    $smarty->assign("Entry_listing",$this->templateList->render());
 
      /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
