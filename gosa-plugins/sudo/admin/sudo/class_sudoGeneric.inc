@@ -319,7 +319,7 @@ class sudo extends plugin
             $smarty->assign($attr."ACL",$this->getacl($attr));
         }
 
-        /* Fill divlists
+        /* Fill listings
          */
         $neg_img= image('plugins/sudo/images/negate.png','','!');
         $option = image('plugins/sudo/images/negate.png','neg_%ATTR%_%KEY%');
@@ -345,7 +345,7 @@ class sudo extends plugin
             }
             $this->$list->setListData($this->$attr, $tmp);
             $this->$list->update();
-            $smarty->assign("divlist_{$attr}", $this->$list->render());
+            $smarty->assign("listing_{$attr}", $this->$list->render());
         }
 
 
@@ -369,7 +369,7 @@ class sudo extends plugin
         }
         $this->sudoUserList->setListData($this->sudoUser,$sudoUserData);
         $this->sudoUserList->update();
-        $smarty->assign("divlist_sudoUser", $this->sudoUserList->render());
+        $smarty->assign("listing_sudoUser", $this->sudoUserList->render());
         return($smarty->fetch(get_template_path('generic.tpl', TRUE)));
     }
 
