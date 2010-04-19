@@ -485,7 +485,7 @@ class faiPackage extends plugin
     }
  
     $smarty->assign("freeze", preg_match("/freeze/",$this->FAIstate));
-    $smarty->assign("divlist",$this->packageList->render());
+    $smarty->assign("listing",$this->packageList->render());
     $smarty->assign("release" ,$this->FAIdebianRelease);
     $smarty->assign("sections",$this->sections);
     $smarty->assign("section" ,$strsec);
