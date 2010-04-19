@@ -278,7 +278,7 @@ class faiScript extends plugin
 
     $this->scriptListWidget->setListData($this->convertList(TRUE), $this->convertList());
     $this->scriptListWidget->update();
-    $smarty->assign("Entry_divlist",$this->scriptListWidget->render());
+    $smarty->assign("Entry_listing",$this->scriptListWidget->render());
 
     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
