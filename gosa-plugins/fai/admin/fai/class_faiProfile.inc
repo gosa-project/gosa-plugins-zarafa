@@ -288,7 +288,7 @@ class faiProfile extends plugin
         $smarty->assign("usePrototype", "true");
         $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));
         $smarty->assign("FAIclasses"  ,$this->FAIclasses);
-        $smarty->assign("divlist"     ,$this->classList->render());
+        $smarty->assign("listing"     ,$this->classList->render());
 
         /* Magic quotes GPC, escapes every ' " \, to solve some security risks
          * If we post the escaped strings they will be escaped again
