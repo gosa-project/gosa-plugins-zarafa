@@ -141,7 +141,7 @@ class gotoLogView extends plugin
     }
     $smarty->assign("ACL",preg_match("/r/",$this->getacl("")));
     $this->logSelector->setAcl($this->getacl(""));
-    $smarty->assign("divlist", $this->logSelector->render());
+    $smarty->assign("listing", $this->logSelector->render());
     return($smarty->fetch(get_template_path('log_view.tpl', TRUE,dirname(__FILE__))));
   }
 
