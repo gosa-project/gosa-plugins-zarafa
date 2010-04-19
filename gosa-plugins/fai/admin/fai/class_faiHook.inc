@@ -289,7 +289,7 @@ class faiHook extends plugin
 
     $this->hookListWidget->setListData($this->convertList(TRUE), $this->convertList());
     $this->hookListWidget->update();
-    $smarty->assign("Entry_divlist",$this->hookListWidget->render());
+    $smarty->assign("Entry_listing",$this->hookListWidget->render());
 
     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
