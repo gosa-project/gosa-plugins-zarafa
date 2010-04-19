@@ -35,7 +35,7 @@
       <!--						<select name="FAIclass" title="{t}Choose a priority{/t}" size="20" style="width:100%;" multiple>
        {html_options values=$FAIclasses output=$FAIclasses}
       </select>-->
-      {$divlist}
+      {$listing}
       <br>
       {render acl=$FAIclassACL}
        <button type='submit' name='AddClass'>
