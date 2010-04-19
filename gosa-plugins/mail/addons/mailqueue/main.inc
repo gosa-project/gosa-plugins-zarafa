@@ -52,9 +52,6 @@ if ( $cleanup ){
 	$display= $mailqueue->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
-	/* Page header*/
-	$display= print_header(get_template_path('plugins/mail/images/mailqueue.png'), _("Mail queue")).$display;
-
 	/* Store changes  in session */
 	session::set('mailqueue',$mailqueue);
 }
