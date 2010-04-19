@@ -34,7 +34,7 @@
   <td>
    <h3>{t}List of scripts{/t}
    </h3>
-   {$Entry_divlist}
+   {$Entry_listing}
    <hr>
    
    {if $sub_object_is_addable}
