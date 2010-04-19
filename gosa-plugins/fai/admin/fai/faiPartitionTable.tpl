@@ -37,7 +37,7 @@
   <td>
    <h3><LABEL for="SubObject">{t}Discs{/t}</LABEL>
    </h3>
-   {$Entry_divlist}
+   {$Entry_listing}
    
    {if $sub_object_is_addable}
     <button type='submit' name='AddDisk' title="{t}Add disk{/t}">{t}Add disk{/t}</button>
