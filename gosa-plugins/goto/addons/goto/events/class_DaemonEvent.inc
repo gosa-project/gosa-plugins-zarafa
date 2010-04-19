@@ -59,7 +59,7 @@ class DaemonEvent
   protected $mode         = SCHEDULED_EVENT; // Default action is sheduled.
 
   /* Sub dialog hanlding */
-  protected $target_divlist       = NULL;     // The divlist used by the target add dialog
+  protected $target_listing       = NULL;     // The listing used by the target add dialog
   protected $target_add_list_used = FALSE;    // Indicates that the target add list was used.
   protected $time_select_used     = FALSE;    // Indicates that we have used the timestamp select boxes.
   protected $target_list_used     = FALSE;    // Target list was diaplayed?
@@ -280,12 +280,12 @@ class DaemonEvent
   {
     $this->target_add_list_used = TRUE;
 
-    if($this->target_divlist == NULL){ 
-      $this->target_divlist = new EventAddSystemDialog($this->config,$this);
+    if($this->target_listing == NULL){ 
+      $this->target_listing = new EventAddSystemDialog($this->config,$this);
     }
 
     $smarty = get_smarty();
-    $smarty->assign("divlist",$this->target_divlist->execute());
+    $smarty->assign("listing",$this->target_listing->execute());
     return($smarty->fetch(get_template_path('target_list.tpl', TRUE, dirname(__FILE__))));
   }
 
@@ -297,18 +297,18 @@ class DaemonEvent
     if(isset($_POST['open_target_list'])){
       $this->target_add_list_used =TRUE;
     }
-    if($this->target_divlist != NULL){
-      $this->target_divlist->save_object();
+    if($this->target_listing != NULL){
+      $this->target_listing->save_object();
     }
     if($this->target_add_list_used){
       if(isset($_POST['abort_target_dialog'])){
         $this->target_add_list_used =FALSE;
-        $this->target_divlist = NULL;
+        $this->target_listing = NULL;
       }
       if(isset($_POST['save_target_dialog'])){
         $this->target_add_list_used =FALSE;
-        $this->add_targets($this->target_divlist->get_selected_targets());
-        $this->target_divlist = NULL;
+        $this->add_targets($this->target_listing->get_selected_targets());
+        $this->target_listing = NULL;
       }
     }
 

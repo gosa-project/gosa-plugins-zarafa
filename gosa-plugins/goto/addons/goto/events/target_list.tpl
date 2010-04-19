@@ -1,4 +1,4 @@
-{$divlist}
+{$listing}
 
 <hr>
 <div class="plugin-actions">

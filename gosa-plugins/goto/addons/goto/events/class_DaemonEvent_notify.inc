@@ -171,11 +171,11 @@ class DaemonEvent_notify extends DaemonEvent
   {
     $this->target_add_list_used = TRUE;
 
-    if($this->target_divlist == NULL){
-      $this->target_divlist = new EventAddUserDialog($this->config,$this);
+    if($this->target_listing == NULL){
+      $this->target_listing = new EventAddUserDialog($this->config,$this);
     }
     $smarty = get_smarty();
-    $smarty->assign("divlist",$this->target_divlist->execute());
+    $smarty->assign("listing",$this->target_listing->execute());
     return($smarty->fetch(get_template_path('target_list.tpl', TRUE, dirname(__FILE__))));
   }
 
