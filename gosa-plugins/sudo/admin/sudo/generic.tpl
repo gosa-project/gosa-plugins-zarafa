@@ -60,7 +60,7 @@
   <td style="width:50%;padding-right:5px;">
    <h3>{t}Users and groups{/t}</h3>
    {render acl=$sudoUserACL}
-   {$divlist_sudoUser}
+   {$listing_sudoUser}
    {/render}
    {render acl=$sudoUserACL}
    <input type='text' value='' name='new_sudoUser'>
@@ -77,7 +77,7 @@
   <td class='left-border'>
    <h3>{t}Systems{/t}</h3>
    {render acl=$sudoHostACL}
-   {$divlist_sudoHost}
+   {$listing_sudoHost}
    {/render}
    {render acl=$sudoHostACL}
    <input type='text' value='' name='new_sudoHost'>
@@ -97,7 +97,7 @@
   <td style="padding-right:5px;">
    <h3>{t}Commands{/t}</h3>
    {render acl=$sudoCommandACL}
-   {$divlist_sudoCommand}
+   {$listing_sudoCommand}
    {/render}
    {render acl=$sudoCommandACL}
    <input type='text' value='' name='new_sudoCommand'>
@@ -110,7 +110,7 @@
   <td class='left-border'>
    <h3>{t}Run as{/t}</h3>
    {render acl=$sudoRunAsACL}
-   {$divlist_sudoRunAs}
+   {$listing_sudoRunAs}
    {/render}
    {render acl=$sudoRunAsACL}
    <input type='text' value='' name='new_sudoRunAs'>
