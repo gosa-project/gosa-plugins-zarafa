@@ -8,7 +8,7 @@
 
 
     <table style='width:100%;height:40px;' summary="{t}View system logs{/t}"><tr><td>
-		{$divlist}
+		{$listing}
     </td></tr></table>
 	  <br>
 	  <hr>
