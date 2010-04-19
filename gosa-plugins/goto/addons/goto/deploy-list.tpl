@@ -1,27 +1,21 @@
-<table style='width:100%;height:100%; ' summary="{t}List of running and planed goto actions{/t}">
+<div id="mainlist">
+  <div class="mainlist-header">
+   <p>{$HEADLINE}&nbsp;{$SIZELIMIT}</p>
+   <div class="mainlist-nav">
+    <table summary="{$HEADLINE}">
+     <tr>
+      <td>{$RELOAD}</td>
+      <td class="left-border">{$ACTIONS}</td>
+     </tr>
+    </table>
+   </div>
+  </div>
 
-  <tr>
-    <td style='width:100%;'>
+  {$LIST}
+</div>
 
-      <div class="contentboxh">
-        <p class="contentboxh">&nbsp;{$HEADLINE}&nbsp;{$SIZELIMIT}</p>
-      </div>
-      
-      <div class="contentboxb">
-       <div style='background:white;padding:3px;'>
-        <table summary="{$HEADLINE}"><tr>
-          <td>{$ROOT}&nbsp;</td><td>{$BACK}&nbsp;</td><td>{$HOME}&nbsp;</td><td>{$RELOAD}&nbsp;</td><td>{$SEPARATOR}&nbsp;</td><td>{t}Base{/t} {$BASE}&nbsp;</td><td>{$SEPARATOR}&nbsp;</td><td>{image path="images/rocket.png"}
-</td><td> {$ACTIONS}</td>
-        </tr></table>
-       </div>
-      </div>
-      
-      <div style='height:4px;'>
-      </div>
-      {$LIST}
-    </td>
-  </tr>
-</table>
+<div class="clear"></div>
+
 
 <input type="hidden" name="ignore">
 
