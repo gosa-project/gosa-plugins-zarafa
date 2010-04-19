@@ -29,7 +29,7 @@
   <td style="width:50%">
    <h3>{t}List of template files{/t}
    </h3>
-   {$Entry_divlist}
+   {$Entry_listing}
    
    {if $sub_object_is_addable}
     <button type='submit' name='AddSubObject' title="{msgPool type=addButton}">
