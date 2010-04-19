@@ -64,7 +64,7 @@
   <td>
    <h3>{t}Used packages{/t}
    </h3>
-   {$divlist}
+   {$listing}
   </td>
  </tr>
  {render acl=$FAIpackageACL}
