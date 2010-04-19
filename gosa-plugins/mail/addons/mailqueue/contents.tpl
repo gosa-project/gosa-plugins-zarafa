@@ -100,7 +100,7 @@
        </td>
        <td class="list0">{$entries[$key].ServerName}</td>
        <td class="list0">{$entries[$key].Size}</td>
-       <td class="list0">$entries[$key].Arrival|date_format:"%d.%m.%Y %H:%M:%S"}</td>
+       <td class="list0">{$entries[$key].Arrival|date_format:"%d.%m.%Y %H:%M:%S"}</td>
        <td class="list0">{$entries[$key].Sender}</td>
        <td class="list0">{$entries[$key].Recipient}</td>
        <td class="list0">{$entries[$key].Status}</td>

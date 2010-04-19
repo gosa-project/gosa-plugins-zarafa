@@ -78,7 +78,7 @@ class mailqueue extends plugin
       foreach($types as $type){
         if(preg_match("/^".$type."__/",$name) && $this->acl_is_writeable($type)){
           $action = $type;
-          $server = preg_replace("/^".$type."__[^_]*__([^_]*)_.*/","\\1",$name); 
+          $server = preg_replace("/^".$type."__[^_]*__([^_]*)$/","\\1",$name); 
           $entry[$server][] = preg_replace("/^".$type."__([^_]*)__.*/","\\1",$name); 
           break;
         }
