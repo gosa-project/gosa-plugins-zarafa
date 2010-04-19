@@ -406,7 +406,7 @@ class faiPartitionTable extends plugin
     }
     $this->diskList->setListData($data,$lData);
     $this->diskList->update();
-    $smarty->assign("Entry_divlist",$this->diskList->render());
+    $smarty->assign("Entry_listing",$this->diskList->render());
 
     $display.= $smarty->fetch(get_template_path('faiPartitionTable.tpl', TRUE));
     return($display);
