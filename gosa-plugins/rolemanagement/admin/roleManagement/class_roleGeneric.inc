@@ -86,6 +86,17 @@ class roleGeneric extends plugin {
     $this->baseSelector->setSubmitButton(false);
     $this->baseSelector->setHeight(300);
     $this->baseSelector->update(true);
+
+    // Prepare lists
+    $this->memberList = new sortableListing();
+    $this->memberList->setDeleteable(true);
+    $this->memberList->setInstantDelete(true);
+    $this->memberList->setEditable(false);
+    $this->memberList->setWidth("100%");
+    $this->memberList->setHeight("300px");
+    $this->memberList->setHeader(array("~",_("Name")));
+    $this->memberList->setColspecs(array('20px','*','20px'));
+    $this->memberList->setDefaultSortColumn(1);
   }
 
 
@@ -152,6 +163,12 @@ class roleGeneric extends plugin {
     if(isset($_POST['edit_membership']) && !$this->dialog instanceOf userSelect){
       $this->dialog = new userSelect($this->config,get_userinfo());
     }
+    $this->memberList->save_object();
+    $action = $this->memberList->getAction();
+    if($action['action'] == 'delete'){
+        $this->roleOccupant = $this->memberList->getMaintainedData();
+    }
+
     if(isset($_POST['delete_membership']) && !$this->dialog instanceOf userSelect){
       if(isset($_POST['members'])){
         foreach($_POST['members'] as $id){
@@ -191,11 +208,32 @@ class roleGeneric extends plugin {
      * Template handling
      ***************/
 
+    $this->memberList->setAcl($this->getacl("roleOccupant"));
+
+    $data = $lData = array();
+    $icon = image('plugins/generic/images/head.png');
+    foreach ($this->roleOccupant as $key => $dn){
+      $data[$key] = $dn;
+      if(isset($this->roleOccCache[$dn])){
+        $entry = $this->roleOccCache[$dn];
+        $name = $entry['cn']['0'];
+        if(isset($entry['description'][0])){
+          $name .= " [".$entry['description'][0]."]";
+        }
+      }else{
+        $name = _("Unknown")."&nbsp;".$dn;
+      }
+      $lData[$key] = array('data' => array($icon,$name));
+    }
+
+    $this->memberList->setListData($data,$lData);
+    $this->memberList->update();
+
     // Get smarty instance and assign required variables.
     $smarty = get_smarty();
     $smarty->assign("usePrototype", "true");
     $smarty->assign("base", $this->baseSelector->render());
-    $smarty->assign("members",$this->convert_list());
+    $smarty->assign("memberList",$this->memberList->render());
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -252,28 +290,6 @@ class roleGeneric extends plugin {
   }
   
 
-  /* Returns list of occupants as <html><option> statements.
-   */
-  function convert_list()
-  {
-    $temp= "";
-    $icon = " style=\"background-image:url('plugins/generic/images/head.png');\" ";
-    foreach ($this->roleOccupant as $key => $dn){
-      if(isset($this->roleOccCache[$dn])){
-        $entry = $this->roleOccCache[$dn];
-        $name = $entry['cn']['0'];
-        if(isset($entry['description'][0])){
-          $name .= " [".$entry['description'][0]."]";
-        }
-      }else{
-        $name = _("Unknown")."&nbsp;".$dn;
-      }
-      $temp.= "<option {$icon} title='{$dn}' value='$key' class='select'>{$name}</option>\n";
-    }
-    return ($temp);
-  }
-
- 
   /* Removes the object from the ldap database
    */ 
   function remove_from_parent()

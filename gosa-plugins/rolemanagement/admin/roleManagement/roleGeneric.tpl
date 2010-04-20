@@ -65,18 +65,11 @@
       </h3>
 
 {render acl=$roleOccupantACL}
-      <select style="width:100%; height:450px;" id="members" name="members[]" size="15" multiple>
-        {$members}
-      </select>
+      {$memberList}
 {/render}
       <br>
 {render acl=$roleOccupantACL}
       <button type='submit' name='edit_membership'>{msgPool type=addButton}</button>&nbsp;
-
-{/render}
-{render acl=$roleOccupantACL}
-      <button type='submit' name='delete_membership'>{msgPool type=delButton}</button>
-
 {/render}
     </td>
   </tr>
