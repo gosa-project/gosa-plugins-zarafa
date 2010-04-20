@@ -274,7 +274,7 @@ class faiTemplate extends plugin
       return($display);
     }
 
-     /* Divlist Containing FAItemplates */
+     /* list Containing FAItemplates */
     $dn  = $this->acl_base_for_current_object($this->dn);
     $acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry")  ;
     $this->templateList->setAcl($acl,preg_match('/^freeze/', $this->FAIstate));
