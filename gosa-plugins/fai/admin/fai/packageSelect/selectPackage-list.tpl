@@ -23,7 +23,7 @@
 </div>
 <div class="clear">
 </div>
-<hr>
+
 <div class="plugin-actions">
  <button type='submit' name='packageSelect_save'>{msgPool type=addButton}</button>
  <button type='submit' name='packageSelect_cancel'>{msgPool type=cancelButton}</button>
