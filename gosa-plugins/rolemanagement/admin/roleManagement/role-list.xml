@@ -134,7 +134,7 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>roles/role[d]</acl>
+      <acl>roles/roleGeneric[d]</acl>
       <label>Remove role</label>
     </action>
 

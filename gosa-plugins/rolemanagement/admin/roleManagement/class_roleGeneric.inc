@@ -211,10 +211,10 @@ class roleGeneric extends plugin {
     $this->memberList->setAcl($this->getacl("roleOccupant"));
 
     $data = $lData = array();
-    $icon = image('plugins/generic/images/head.png');
     foreach ($this->roleOccupant as $key => $dn){
       $data[$key] = $dn;
       if(isset($this->roleOccCache[$dn])){
+        $icon = image('plugins/users/images/select_user.png');
         $entry = $this->roleOccCache[$dn];
         $name = $entry['cn']['0'];
         if(isset($entry['description'][0])){
@@ -222,6 +222,7 @@ class roleGeneric extends plugin {
         }
       }else{
         $name = _("Unknown")."&nbsp;".$dn;
+        $icon = image('images/false.png');
       }
       $lData[$key] = array('data' => array($icon,$name));
     }
