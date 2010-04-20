@@ -94,8 +94,8 @@ class roleGeneric extends plugin {
     $this->memberList->setEditable(false);
     $this->memberList->setWidth("100%");
     $this->memberList->setHeight("300px");
-    $this->memberList->setHeader(array("~",_("Name")));
-    $this->memberList->setColspecs(array('20px','*','20px'));
+    $this->memberList->setHeader(array("~",_("Name"),_("Uid")));
+    $this->memberList->setColspecs(array('20px','*','*','20px'));
     $this->memberList->setDefaultSortColumn(1);
   }
 
@@ -217,14 +217,16 @@ class roleGeneric extends plugin {
         $icon = image('plugins/users/images/select_user.png');
         $entry = $this->roleOccCache[$dn];
         $name = $entry['cn']['0'];
+        $uid = $entry['uid']['0'];
         if(isset($entry['description'][0])){
           $name .= " [".$entry['description'][0]."]";
         }
       }else{
         $name = _("Unknown")."&nbsp;".$dn;
+        $uid = "&nbsp;";
         $icon = image('images/false.png');
       }
-      $lData[$key] = array('data' => array($icon,$name));
+      $lData[$key] = array('data' => array($icon, $name, $uid));
     }
 
     $this->memberList->setListData($data,$lData);
