@@ -32,11 +32,6 @@ class mimetype extends plugin
 	var $use_gotoMimeApplication			    = array();
 	var $use_gotoMimeEmbeddedApplication	= array();
 
-  /* divLists */
-  var $DivPatterns						          = NULL;
-  var $DivApps							            = NULL;
-  var $DivEApps							            = NULL;
-
   var $FAIstate ="";
 
   /* These vars will be copied too, if you use copy&paste mode */
