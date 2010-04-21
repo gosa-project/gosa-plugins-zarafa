@@ -94,8 +94,8 @@ class roleGeneric extends plugin {
     $this->memberList->setEditable(false);
     $this->memberList->setWidth("100%");
     $this->memberList->setHeight("300px");
-    $this->memberList->setHeader(array("~",_("Name"),_("Uid")));
-    $this->memberList->setColspecs(array('20px','*','*','20px'));
+    $this->memberList->setHeader(array('~',_("Given name"),_("Surename"),_("Uid")));
+    $this->memberList->setColspecs(array('20px','*','*','*','20px'));
     $this->memberList->setDefaultSortColumn(1);
   }
 
@@ -106,7 +106,7 @@ class roleGeneric extends plugin {
   function reload()
   {
     // Entries can't be added twice. 
-    $attrs = array("description", "objectClass", "uid","cn");
+    $attrs = array("description", "objectClass", "uid","cn",'sn','givenName');
     $this->roleOccupant = array_unique($this->roleOccupant);
     $this->roleOccupant = array_values($this->roleOccupant);
   
@@ -215,18 +215,16 @@ class roleGeneric extends plugin {
       $data[$key] = $dn;
       if(isset($this->roleOccCache[$dn])){
         $icon = image('plugins/users/images/select_user.png');
-        $entry = $this->roleOccCache[$dn];
-        $name = $entry['cn']['0'];
-        $uid = $entry['uid']['0'];
-        if(isset($entry['description'][0])){
-          $name .= " [".$entry['description'][0]."]";
-        }
+        $entry     = $this->roleOccCache[$dn];
+        $sn        = $entry['sn']['0'];
+        $givenName = $entry['givenName']['0'];
+        $uid       = $entry['uid']['0'];
       }else{
-        $name = _("Unknown")."&nbsp;".$dn;
-        $uid = "&nbsp;";
+        $sn = $givenName = _("Unknown");
+        $uid = LDAP::fix($dn);
         $icon = image('images/false.png');
       }
-      $lData[$key] = array('data' => array($icon, $name, $uid));
+      $lData[$key] = array('data' => array($icon,$givenName,$sn, $uid));
     }
 
     $this->memberList->setListData($data,$lData);
