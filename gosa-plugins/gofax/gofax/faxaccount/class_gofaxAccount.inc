@@ -633,10 +633,9 @@ class gofaxAccount extends plugin
       $message[]= msgPool::invalid(_("Fax number"),$this->facsimileTelephoneNumber,"/[0-9]/");
     }
 
-    /* IF mail is specified (which is only the case if there's no mail account
-       present), check if it's valid..  */
-    if (@isset($this->parent->by_object['mailAccount']) &&
-        $this->goFaxDeliveryMode & 32){
+    // check for a valid Mail-Address in case of 'delivery to mailbox'
+    $mailAccount = (isset($this->parent->by_object['mailAccount']) && $this->parent->by_object['mailAccount']->is_account);
+    if(!$mailAccount && $this->goFaxDeliveryMode & 32){
       if ($this->mail == ""){
         $message[]= _("Mail delivery is requested without target address!");
       } elseif (!tests::is_email($this->mail)){

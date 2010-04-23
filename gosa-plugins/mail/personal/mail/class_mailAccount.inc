@@ -799,6 +799,16 @@ class mailAccount extends plugin
       } 
     }
 
+    // Do NOT remove the mail attribute while it is used in the Fax Account.
+    if(isset($this->parent->by_object['gofaxAccount'])){
+        $fax = $this->parent->by_object['gofaxAccount'];
+
+        // Fax delivery to the mail account is activated, keep the mail attribute.
+        if($fax->goFaxDeliveryMode & 32){
+           $this->attributes = array_remove_entries(array('mail'), $this->attributes)  ;
+        }
+    }
+
     /* Remove GOsa attributes */
     plugin::remove_from_parent();
 
