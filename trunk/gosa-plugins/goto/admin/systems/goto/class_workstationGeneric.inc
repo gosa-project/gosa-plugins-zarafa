@@ -756,15 +756,16 @@ class workgeneric extends plugin
   {
     /* Find out what is set in the object group as XDriver */
     $inherit_xdriver = 0;
+    $inherit_xy_sync = 0;
     if ($this->dn != 'new' || $this->ogroup) {
         $ldap = $this->config->get_ldap_link();
         $entry = NULL;
         /* If initialized with an object group we need to use this instead of
          * an object group we'll become a member in */
         if ($this->ogroup) {
-            $entry = $ldap->cat($this->ogroup, array("gotoXDriver"));
+            $entry = $ldap->cat($this->ogroup, array("gotoXDriver", "gotoXHsync", "gotoXVsync"));
         }else {
-          $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".LDAP::prepare4filter($this->dn)."))", array("gotoXDriver"));
+          $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".LDAP::prepare4filter($this->dn)."))", array("gotoXDriver", "gotoXHsync", "gotoXVsync"));
           if ($ldap->count() == 1) {
             $entry = $ldap->fetch();
           }
@@ -777,7 +778,10 @@ class workgeneric extends plugin
             if (in_array($entry['gotoXDriver'][0], $xdrivers)) {
               $inherit_xdriver = 1;
             }
-        }
+            if (isset($entry['gotoXHsync']) and isset($entry['gotoXVsync'])) {
+              $inherit_xy_sync = 1;
+            }
+        } 
     }
 
     $this->gotoSyslogServer  = "default";
@@ -792,6 +796,11 @@ class workgeneric extends plugin
                 $this->parent->by_object['workservice']->$name = "default"; 
               }
           }
+      }
+      
+      /* Inherit VSync/HSync if defined in the object group */
+      if ($inherit_xy_sync) {
+        $this->parent->by_object['workservice']->InheritXYSync = TRUE;
       }
     }
 
