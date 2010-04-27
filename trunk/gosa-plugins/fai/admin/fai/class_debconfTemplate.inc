@@ -280,7 +280,7 @@ class debconf
             if(in_array($value,$defs)){
                 $input .= sprintf($template, $post_name, $value, htmlentities($value), "checked", $post_name, _($value));
             }else{
-                $input .= sprintf($template, $post_name, $value, $htmlentities($value), "", $post_name, _($value));
+                $input .= sprintf($template, $post_name, $value, htmlentities($value), "", $post_name, _($value));
             }
         }
 
