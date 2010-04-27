@@ -1145,6 +1145,7 @@ class mailAccount extends plugin
       $smarty->assign("MailDomain" , $this->mailDomainPart);
       $smarty->assign("MailServers", $this->mailMethod->getMailServers());
       $smarty->assign("isModifyableMail"  , $this->mailMethod->isModifyableMail());
+      $smarty->assign("initially_was_account", $this->initially_was_account);
 
       $str = $smarty->fetch(get_template_path("copypaste.tpl",TRUE, dirname(__FILE__)));
 
