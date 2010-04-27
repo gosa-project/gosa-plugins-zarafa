@@ -848,12 +848,8 @@ class systems extends plugin
        */
       if(isset($_POST['save_event_dialog']) || $this->systab->get_type() == TRIGGERED_EVENT){
         $o_queue = new gosaSupportDaemon();
-        $o_queue->append($this->systab);
-        if($o_queue->is_error()){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-        }else{
-          $this->systab = FALSE;
-        }
+        $this->systab = DaemonEvent::save_event_dialog($this->systab, NULL, $o_queue, $this->config);
+
       }
       if(isset($_POST['abort_event_dialog'])){
         $this->systab = FALSE;
