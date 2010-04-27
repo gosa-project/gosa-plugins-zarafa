@@ -1189,11 +1189,6 @@ class mailAccount extends plugin
               $this->mailDomainParts[] = $this->mailDomainPart;
           }
       }
-
-      /* Convert start/stop dates */
-#TODO: use date format
-      $this->gosaVacationStart= date('d.m.Y', $this->gosaVacationStart);
-      $this->gosaVacationStop= date('d.m.Y', $this->gosaVacationStop);
   }
 
 
