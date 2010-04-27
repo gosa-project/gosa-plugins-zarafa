@@ -1,9 +1,24 @@
 <h3>{t}Mail settings{/t}</h3>
 
-    <label for="mail">{t}Primary address{/t}</label>{$must}
-    <input type='text' id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
 
 <table style='width:100%;' cellspacing=0  summary="{t}Address configuration{/t}">
+  <tr>
+     <td><label for="mail">{t}Primary address{/t}</label>{$must}
+      {if !$isModifyableMail && $initially_was_account}
+      <input type='text' disabled size=30 value="{$mail}">
+      {else}
+      {if $domainSelectionEnabled}
+      <input type='text' id="mail" name="mail" size=20 maxlength=65 value="{$mail}">
+      @<select name='MailDomain' size=1>
+       {html_options values=$MailDomains output=$MailDomains selected=$MailDomain}
+      </select>
+      {else}
+      <input type='text' id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
+      {/if}
+      {/if}
+     </td>
+    </tr>
+
 	<tr>
 		<td>
  		<h3>
