@@ -169,10 +169,10 @@ class DaemonEvent
     
     $opts_minutes = array();
     $opts_operations = array();
-    foreach(range(0,60) as $i) {
+    foreach(range(0,120) as $i) {
       $opts_minutes[$i] = $i;
     }
-    foreach(range(1,99) as $i) {
+    foreach(range(1,100) as $i) {
       $opts_operations[$i] = $i;
     }
 
