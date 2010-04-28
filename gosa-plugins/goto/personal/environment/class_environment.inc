@@ -6,7 +6,7 @@ class environment extends plugin
 
   /* attribute list for save action */
   var $ignore_account       = FALSE;
-  var $plHeadline           = "Environment";
+  var $plHeadline           = "Desktop";
   var $plDescription        = "This does something";
   var $dialog               = false;    // Indicates that we are currently editing in an seperate dialog
   
@@ -441,8 +441,8 @@ class environment extends plugin
       }
       /* Group Dialog with enabled environment options */
       if ($this->is_account){
-        $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Environment")),
-            msgPool::featuresEnabled(_("Environment")));
+        $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Desktop")),
+            msgPool::featuresEnabled(_("Desktop")));
       } else {
 
         /* Environment is disabled 
@@ -450,16 +450,16 @@ class environment extends plugin
            environment extensions
          */
         if((isset($this->parent->by_object['group']))||(isset($this->attrs['objectClass']))&&((in_array("posixAccount",$this->attrs['objectClass'])))){
-          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
-              msgPool::featuresDisabled(_("Environment")));
+          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Desktop")),
+              msgPool::featuresDisabled(_("Desktop")));
           return $display;
         }elseif((isset($this->parent->by_object['ogroup']))){
-          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
-              msgPool::featuresDisabled(_("Environment")));
+          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Desktop")),
+              msgPool::featuresDisabled(_("Desktop")));
           return $display;
         }else{
-          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
-              msgPool::featuresDisabled(_("Environment"), _("POSIX")), TRUE);
+          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Desktop")),
+              msgPool::featuresDisabled(_("Desktop"), _("POSIX")), TRUE);
           return $display;
         }
       }
@@ -481,17 +481,17 @@ class environment extends plugin
 
         // 3. Account enabled . Editing from adminmenu
         if ($this->is_account){
-          $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Environment")),
-              msgPool::featuresEnabled(_("Environment")));
+          $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Desktop")),
+              msgPool::featuresEnabled(_("Desktop")));
         } else {
 
           if($this->parent->by_object['posixAccount']->is_account==true){
-            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
-                msgPool::featuresDisabled(_("Environment")));
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Desktop")),
+                msgPool::featuresDisabled(_("Desktop")));
             return $display;
           }else{
-            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
-                msgPool::featuresDisabled(_("Environment"), _("POSIX")), TRUE);
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Desktop")),
+                msgPool::featuresDisabled(_("Desktop"), _("POSIX")), TRUE);
             return $display;
           }
         }
@@ -1762,8 +1762,8 @@ class environment extends plugin
 #FIXME these ACLs should work for groups too */ 
   static function plInfo()
   {
-    return (array("plShortName"     => _("Environment"),
-          "plDescription"   => _("Environment settings"),         // Description
+    return (array("plShortName"     => _("Desktop"),
+          "plDescription"   => _("Desktop settings"),         // Description
           "plSelfModify"    => TRUE,                              
           "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
           "plPriority"      => 3,                                 // Position in tabs 
