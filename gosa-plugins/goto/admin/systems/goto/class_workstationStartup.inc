@@ -8,8 +8,6 @@ class workstartup extends plugin
 
   /* Generic terminal attributes */
 	# This is disabled as long there is no possiblilty to set these parameters
-  #var $bootmode             = "G";
-  var $bootmode             = "";
   var $gotoBootKernel       = "default-inherited";
   var $gotoKernelParameters = "";
   var $gotoLdapServer       = "default-inherited";
@@ -607,23 +605,6 @@ class workstartup extends plugin
 
     $smarty->assign("FAIScriptlist", $this->faiList->render());
 
-    /* Radio button group */
-    if (preg_match("/G/", $this->bootmode)) {
-      $smarty->assign("graphicalbootup", "checked");
-    } else {
-      $smarty->assign("graphicalbootup", "");
-    }
-    if (preg_match("/T/", $this->bootmode)) {
-      $smarty->assign("textbootup", "checked");
-    } else {
-      $smarty->assign("textbootup", "");
-    }
-    if (preg_match("/D/", $this->bootmode)) {
-      $smarty->assign("debugbootup", "checked");
-    } else {
-      $smarty->assign("debugbootup", "");
-    }
-
     /* Show main page */
     $smarty->assign("gotoKernelParameters",$this->gotoKernelParameters);
     return($smarty->fetch (get_template_path('workstationStartup.tpl', TRUE,dirname(__FILE__))));
@@ -655,11 +636,6 @@ class workstartup extends plugin
         $this->gotoLdap_inherit = TRUE;
       }else{
         $this->gotoLdap_inherit = FALSE;
-      }
-
-      /* Save group radio buttons */
-      if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
-        $this->bootmode= $_POST["bootmode"];
       }
     }
   }
@@ -950,7 +926,6 @@ class workstartup extends plugin
           "plProvidedAcls"=> array(
             "gotoLdapServer"        => _("Ldap server"),
             "gotoBootKernel"        => _("Boot kernel"),
-            "bootmode"              => _("Boot mode"),
             "gotoKernelParameters"  => _("Kernel parameter"),
 
             "gotoModules"           => _("Kernel modules"),
