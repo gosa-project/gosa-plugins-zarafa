@@ -220,7 +220,7 @@ class sambaAccount extends plugin
 
     /* Open Samaba Logong hours dialog */
     if(isset($_POST['SetSambaLogonHours']) && $this->acl_is_readable("sambaLogonHours")){
-      $this->dialog = new sambaLogonHours($this->config,$this->dn,$this->sambaLogonHours);
+      $this->dialog = new sambaLogonHours($this->config,$this->dn,$this->sambaLogonHours, $this->getacl('sambaLogonHours'));
     }
 
     /* Cancel dialog */
