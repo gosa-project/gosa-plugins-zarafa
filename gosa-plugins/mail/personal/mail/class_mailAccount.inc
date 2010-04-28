@@ -1147,7 +1147,7 @@ class mailAccount extends plugin
       $smarty->assign("isModifyableMail"  , $this->mailMethod->isModifyableMail());
       $smarty->assign("initially_was_account", $this->initially_was_account);
 
-      $str = $smarty->fetch(get_template_path("copypaste.tpl",TRUE, dirname(__FILE__)));
+    $str = $smarty->fetch(get_template_path("copypaste.tpl",TRUE, dirname(__FILE__)));
 
       $ret = array();
       $ret['status'] = "";
@@ -1188,6 +1188,14 @@ class mailAccount extends plugin
           if(!in_array($this->mailDomainPart,$this->mailDomainParts)){
               $this->mailDomainParts[] = $this->mailDomainPart;
           }
+      }
+
+      // Initialize Vacation start/stop times 
+      // This value is set to 'dd.mm.YYYY' if no times are set in the source object. 
+      // But if they are set, then this values contain timestamps.
+      if(isset($source['gosaVacationStart'][0])){
+          $this->gosaVacationStart= date('d.m.Y', $source['gosaVacationStart'][0]);
+          $this->gosaVacationStop= date('d.m.Y', $source['gosaVacationStop'][0]);
       }
   }
 
