@@ -7,11 +7,13 @@ class sambaLogonHours extends plugin
   var $Matrix          = array();
   var $timezone        = 0; 
   var $config;
+  var $acl;
 
-  function sambaLogonHours (&$config, $dn, $slh)
+  function sambaLogonHours (&$config, $dn, $slh, $acl = 'rw')
   {
     plugin::plugin($config,$dn);
     $this->sambaLogonHours = $slh;
+    $this->acl = $acl;
 
     /* Get default timezone */
     $zone = timezone::get_default_timezone();
@@ -62,8 +64,7 @@ class sambaLogonHours extends plugin
 
     $ui =get_userinfo();
     $smarty = get_smarty();
-    $acl = $ui->get_permissions($this->dn,"users/sambaAccount","sambaLogonHours");
-    $smarty->assign("acl",preg_match("/w/i",$acl));
+    $smarty->assign("acl",preg_match("/w/i",$this->acl));
 
     $hours = array();
     for($i = 0 ; $i <24 ; $i++ ){

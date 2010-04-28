@@ -64,14 +64,15 @@ class environment extends plugin
   /* general settings */
   // Sets the attributes which will kept on page reload, which will be saved, ...
 
-  var $CopyPasteVars      = array("gotoHotplugDevices","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn","gotoKioskProfile_Server","gotoKioskProfile_Profile");
+  var $CopyPasteVars      = array("gotoHotplugDevices","gotoAvailableShares","gotoShareSelections","gotoPrinterSel",                "gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn",         "gotoKioskProfile_Server","gotoKioskProfile_Profile", "gotoLogonScripts","gotoLogonScript","gotoShare","gotoShares");
 
   var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDeviceDN",
       "gotoXResolution","gotoProfileQuota",
-      "gotoLogonScripts","gotoLogonScript",
+      "gotoLogonScript","gotoLogonScripts","gotoHotplugDevices",
       "gotoPrinter", "gosaDefaultPrinter",
-      "gotoShares","gotoShare",
+      "gotoShare",
       "gotoKioskProfile");
+
   var $objectclasses      = array("gotoEnvironment"); // Specifies the objectClass which contains the attributes edited here 
   var $cn;
   var $OrigCn;
@@ -911,6 +912,8 @@ class environment extends plugin
             if($this->multiple_support_active){
               $type = "AddUser";
             }elseif(isset($this->NewDeletedPrinters[$pname])){
+              $type = "AddUser";
+            }elseif($this->dn == "new"){  
               $type = "AddUser";
             }elseif($printerObj->by_object['printgeneric']->AddMember("AddUser",$this->dn)){
               $type = "AddUser";

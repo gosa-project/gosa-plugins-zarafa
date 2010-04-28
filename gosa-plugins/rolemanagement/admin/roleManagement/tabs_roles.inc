@@ -25,7 +25,7 @@ class roletabs extends tabs
 
 	function __construct($config, $data, $dn,$hide_refs = FALSE, $hide_acls = FALSE)
 	{
-		tabs::tabs($config, $data, $dn,"roles",$hide_refs, $hide_acls);
+		tabs::tabs($config, $data, $dn,$hide_refs, $hide_acls);
 		$this->base = $baseobject= $this->by_object['roleGeneric']->base;
 		$this->addSpecialTabs();
 

@@ -1130,49 +1130,73 @@ class mailAccount extends plugin
     }
   }
 
-
-  /*! \brief  Creates the mail part for the copy & paste dialog 
-   */ 
+  /*! \brief  Creates the mail part for the copy & paste dialog
+   */
   function getCopyDialog()
   {
-    if(!$this->is_account) return("");
-    $smarty = get_smarty();
-    $smarty->assign("mail",$this->mail);
-    $smarty->assign("gosaMailAlternateAddress",$this->gosaMailAlternateAddress);
-    $smarty->assign("gosaMailForwardingAddress",$this->gosaMailForwardingAddress);
+      if(!$this->is_account) return("");
+      $smarty = get_smarty();
+      $smarty->assign("mail",$this->mail);
+      $smarty->assign("gosaMailAlternateAddress",$this->gosaMailAlternateAddress);
+      $smarty->assign("gosaMailForwardingAddress",$this->gosaMailForwardingAddress);
+
+      $smarty->assign("domainSelectionEnabled", $this->mailMethod->domainSelectionEnabled());
+      $smarty->assign("MailDomains", $this->mailDomainParts);
+      $smarty->assign("MailDomain" , $this->mailDomainPart);
+      $smarty->assign("MailServers", $this->mailMethod->getMailServers());
+      $smarty->assign("isModifyableMail"  , $this->mailMethod->isModifyableMail());
+      $smarty->assign("initially_was_account", $this->initially_was_account);
+
     $str = $smarty->fetch(get_template_path("copypaste.tpl",TRUE, dirname(__FILE__)));
 
-    $ret = array();
-    $ret['status'] = "";
-    $ret['string'] = $str;
-    return($ret);
+      $ret = array();
+      $ret['status'] = "";
+      $ret['string'] = $str;
+      return($ret);
   }
 
-    
-  /*! \brief  save_object for copy&paste vars 
-   */  
+
+  /*! \brief  save_object for copy&paste vars
+   */
   function saveCopyDialog()
   {
-    if(!$this->is_account) return;
+      if(!$this->is_account) return;
 
-    /* Execute to save mailAlternateAddress && gosaMailForwardingAddress */
-    $this->execute();
-    if(isset($_POST['mail'])){
-      $this->mail = $_POST['mail'];
-    }
+      /* Execute to save mailAlternateAddress && gosaMailForwardingAddress */
+      $this->execute();
+      if(isset($_POST['mail'])){
+          $this->mail = $_POST['mail'];
+      }
   }
 
-  
-  /*! \brief  Prepare this account to be copied 
+ /*! \brief  Prepare this account to be copied
    */
   function PrepareForCopyPaste($source)
   {
-    plugin::PrepareForCopyPaste($source);
+      plugin::PrepareForCopyPaste($source);
 
-    /* Reset alternate mail addresses */
-    $this->gosaMailAlternateAddress = array();
+      /* Reset alternate mail addresses */
+      $this->gosaMailAlternateAddress = array();
+
+
+      /* If the doamin part is selectable, we have to split the mail address
+       */
+      if($this->mailMethod->domainSelectionEnabled()){
+          $this->mailDomainPart = preg_replace("/^[^@]*+@/","",$this->mail);
+          $this->mail = preg_replace("/@.*$/","\\1",$this->mail);
+          if(!in_array($this->mailDomainPart,$this->mailDomainParts)){
+              $this->mailDomainParts[] = $this->mailDomainPart;
+          }
+      }
+
+      // Initialize Vacation start/stop times
+      // This value is set to 'dd.mm.YYYY' if no times are set in the source object.
+      // But if they are set, then this values contain timestamps.
+      if(isset($source['gosaVacationStart'][0])){
+          $this->gosaVacationStart= date('d.m.Y', $source['gosaVacationStart'][0]);
+          $this->gosaVacationStop= date('d.m.Y', $source['gosaVacationStop'][0]);
+      }
   }
-
 
   /*! \brief  Prepare this class the be useable when editing multiple users at once 
    */

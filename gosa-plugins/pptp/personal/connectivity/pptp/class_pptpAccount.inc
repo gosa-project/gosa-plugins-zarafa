@@ -138,7 +138,6 @@ class pptpAccount extends plugin
   /* Save to LDAP */
   function save()
   {
-    if($this->acl_is_createable()){
       plugin::save();
 
       /* Write back to ldap */
@@ -149,24 +148,23 @@ class pptpAccount extends plugin
 
       /* Log last action */
       if($this->initially_was_account){
-        new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+          new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       }else{
-        new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+          new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       }
 
       if (!$ldap->success()){
-        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
       }
 
       /* Optionally execute a command after we're done */
       if ($this->initially_was_account == $this->is_account){
-        if ($this->is_modified){
-          $this->handle_post_events("modify",array("uid" => $this->uid));
-        }
+          if ($this->is_modified){
+              $this->handle_post_events("modify",array("uid" => $this->uid));
+          }
       } else {
-        $this->handle_post_events("add",array("uid" => $this->uid));
+          $this->handle_post_events("add",array("uid" => $this->uid));
       }
-    }
   }
 
 

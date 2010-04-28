@@ -217,12 +217,6 @@ class pureftpdAccount extends plugin
   {
     plugin::save();
 
-    $tmp = $this->plInfo();
-    foreach($tmp['plProvidedAcls'] as $key => $desc){
-      if(!$this->acl_is_writeable($key)){
-        unset($this->attrs[$key]);
-      }
-    }
 
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();

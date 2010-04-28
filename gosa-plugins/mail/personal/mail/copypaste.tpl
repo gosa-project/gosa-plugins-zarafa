@@ -5,7 +5,20 @@
 			<table style="width:100%;">
 				<tr>
 					<td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
-					<td><input type='text' id="mail" name="mail" size=35 maxlength=65 value="{$mail}"></td>
+                      {if !$isModifyableMail && $initially_was_account}
+                       <input type='text' disabled size=30 value="{$mail}">
+                      {else}
+                       {if $domainSelectionEnabled}
+                        <input type='text' id="mail" name="mail" size=20 maxlength=65 value="{$mail}">
+                        @
+                        <select name='MailDomain' size=1>
+                         {html_options values=$MailDomains output=$MailDomains selected=$MailDomain}
+                        </select>
+                       {else}
+                        <input type='text' id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
+                       {/if}
+                      {/if}
+                   </td>
 				</tr>
 				<tr>
 					<td colspan="2">
