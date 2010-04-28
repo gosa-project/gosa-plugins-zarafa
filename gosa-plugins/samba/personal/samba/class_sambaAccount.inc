@@ -65,8 +65,15 @@ class sambaAccount extends plugin
 
   /* attribute list for save action */
   var $ctxattributes= array();
-  var $attributes= array();
-  var $objectclasses= array();
+  var $attributes= array("sambaSID", "sambaPwdLastSet", "sambaLogonTime",
+        "sambaLogoffTime", "sambaKickoffTime", "sambaPwdCanChange",
+        "sambaPwdMustChange", "sambaAcctFlags", "uid", "sambaMungedDial",
+        "sambaHomePath", "sambaHomeDrive", "sambaLogonScript",
+        "sambaProfilePath", "sambaPrimaryGroupSID", "sambaDomainName",
+        "sambaUserWorkstations", "sambaPasswordHistory",
+        "sambaLogonHours", "sambaBadPasswordTime",
+        "sambaBadPasswordCount");
+  var $objectclasses= array('sambaSamAccount');
   
   var $uid= "";
   var $CopyPasteVars = array("kickoff_time_set","logoff_time_set","logon_time_set","mungedObject","orig_sambaDomainName");
@@ -81,16 +88,6 @@ class sambaAccount extends plugin
 
   function sambaAccount (&$config, $dn= NULL)
   {
-    /* Load attributes depending on the samba version */
-    $this->attributes= array ("sambaSID", "sambaPwdLastSet", "sambaLogonTime",
-        "sambaLogoffTime", "sambaKickoffTime", "sambaPwdCanChange",
-        "sambaPwdMustChange", "sambaAcctFlags", "uid", "sambaMungedDial",
-        "sambaHomePath", "sambaHomeDrive", "sambaLogonScript",
-        "sambaProfilePath", "sambaPrimaryGroupSID", "sambaDomainName",
-        "sambaUserWorkstations", "sambaPasswordHistory",
-        "sambaLogonHours", "sambaBadPasswordTime",
-        "sambaBadPasswordCount");
-    $this->objectclasses= array ("sambaSamAccount");
     $this->mungedObject= new sambaMungedDial;
     $this->ctxattributes= $this->mungedObject->ctxattributes;
 
@@ -1711,6 +1708,40 @@ class sambaAccount extends plugin
 
     /* Set a new SID */
     $this->sambaSID = "";
+
+    /* Fill mungedDial field */
+    if (isset($source['sambaMungedDial'])){
+        $this->mungedObject->load($source['sambaMungedDial'][0]);
+    }
+
+    /* Password expiery */
+    if(isset($source['sambaPwdMustChange']) &&
+            $source['sambaPwdMustChange'][0] != 0){
+        $this->password_expires= 1;
+    }
+
+    if(isset($source['sambaLogonTime']) && ! (
+                $source['sambaLogonTime'][0] == 0 ||
+                $source['sambaLogonTime'][0] == 2147483647
+                )){
+        $this->logon_time_set= 1;
+    }
+    if(isset($source['sambaLogoffTime']) && ! (
+                $source['sambaLogoffTime'][0] == 0 ||
+                $source['sambaLogoffTime'][0] == 2147483647
+                )){
+        $this->logoff_time_set= 1;
+    }
+
+    /* Account expiery */
+    if(isset($source['sambaKickoffTime']) && ! (
+                $source['sambaKickoffTime'][0] == 0 ||
+                $source['sambaKickoffTime'][0] == 2147483647
+                )){
+        $this->kickoff_time_set= 1;
+    }
+
+
     if(isset($source['sambaKickoffTime'][0])){
         $this->sambaKickoffTime = date('d.m.Y', $source['sambaKickoffTime'][0]); 
     }
