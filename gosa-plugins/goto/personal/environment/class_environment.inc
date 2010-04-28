@@ -68,7 +68,7 @@ class environment extends plugin
 
   var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDeviceDN",
       "gotoXResolution","gotoProfileQuota",
-      "gotoLogonScript",
+      "gotoLogonScript","gotoLogonScripts","gotoHotplugDevices",
       "gotoPrinter", "gosaDefaultPrinter",
       "gotoShare",
       "gotoKioskProfile");
