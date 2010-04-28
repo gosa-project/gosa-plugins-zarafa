@@ -923,6 +923,8 @@ class environment extends plugin
               $type = "AddUser";
             }elseif(isset($this->NewDeletedPrinters[$pname])){
               $type = "AddUser";
+            }elseif($this->dn == "new"){  
+              $type = "AddUser";
             }elseif($printerObj->by_object['printgeneric']->AddMember("AddUser",$this->dn)){
               $type = "AddUser";
             }
