@@ -1711,6 +1711,9 @@ class sambaAccount extends plugin
 
     /* Set a new SID */
     $this->sambaSID = "";
+    if(isset($source['sambaKickoffTime'][0])){
+        $this->sambaKickoffTime = date('d.m.Y', $source['sambaKickoffTime'][0]); 
+    }
   }
 
 }
