@@ -251,7 +251,7 @@ class workgeneric extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("usePrototype", "true");
+
 
     /* Set acls */
     $tmp = $this->plInfo();
