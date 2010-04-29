@@ -245,7 +245,7 @@ class sambaAccount extends plugin
 
     /* Prepare templating */
     $smarty= get_smarty();
-    $smarty->assign("usePrototype", "true");
+
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $var => $rest){
