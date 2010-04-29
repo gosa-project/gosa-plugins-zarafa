@@ -145,6 +145,10 @@ class servrepository extends goService
                 unset($this->repositories[$value]);
               }
             }
+          } else {
+            if(isset($this->repositories[$value])) {
+              unset($this->repositories[$value]);
+            }
           }
         }
 
