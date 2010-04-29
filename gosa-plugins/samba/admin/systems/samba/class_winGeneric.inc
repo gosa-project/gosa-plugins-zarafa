@@ -115,7 +115,7 @@ class wingeneric extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
