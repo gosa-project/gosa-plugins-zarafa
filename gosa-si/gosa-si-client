@@ -470,7 +470,7 @@ sub send_msg_to_target {
         if ($REGISTERED == 1) {
             &_setREGISTERED(0);        # if server is not available, cause reregistering
             daemon_log("INFO: cause reregistering at gosa-si-server", 5); 
-            $global_kernel->yield('register_at_gosa_si_server');
+            $global_kernel->post('client_session', 'register_at_gosa_si_server');
 
         }
         $error++;
