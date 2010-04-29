@@ -105,7 +105,7 @@ class servapacheVhostEdit extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     $display= "";
 
     $this->serverList->save_object();
