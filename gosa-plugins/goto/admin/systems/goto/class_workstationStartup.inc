@@ -473,7 +473,7 @@ class workstartup extends plugin
     }
     $this->ldapList->setListData($data,$lData);
     $this->ldapList->update();
-    $smarty->assign("usePrototype", "true");
+
 
     if($this->gotoLdap_inherit){
       $smarty->assign("gotoLdapServerACL_inherit", preg_replace("/w/","",$this->getacl("gotoLdapServer")));;
