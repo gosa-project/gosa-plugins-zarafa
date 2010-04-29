@@ -130,7 +130,7 @@ class blocklistGeneric extends plugin
      ***************/
 
     $smarty = get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     foreach($this->attributes as $name){
       $smarty->assign($name,$this->$name);
     }
