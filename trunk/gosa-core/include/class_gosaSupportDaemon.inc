@@ -986,6 +986,10 @@ class gosaSupportDaemon
       /* Append an entry for each target 
        */
       foreach($targets as $target){
+        if (is_array($target)) {
+            $target = $target['mac'];
+        }
+
         if(!$skip_add_mac){
           $data['macaddress'] = $target;
         }

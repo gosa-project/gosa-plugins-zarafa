@@ -199,17 +199,18 @@ class EventTargetAddList extends MultiSelectWindow
     $a_targets = array();
     foreach($this->list_get_selected_items() as $id){
       if(in_array("gosaGroupOfNames",$this->_target_list[$id]['objectClass'])){
+        $object_group = $this->_target_list[$id]['cn'][0];
         foreach($this->_target_list[$id]['member'] as $mem_dn){
           if(isset($this->workstation_list[$mem_dn])){
-            $a_targets[] = $this->workstation_list[$mem_dn]['macAddress'][0];
+            $a_targets[] = array( "mac" => $this->workstation_list[$mem_dn]['macAddress'][0], "cn" => $this->workstation_list[$mem_dn]['cn'][0], "ogroup" => $object_group);
           }
           if(isset($this->server_list[$mem_dn])){
-            $a_targets[] = $this->server_list[$mem_dn]['macAddress'][0];
+            $a_targets[] = array( "mac" => $this->server_list[$mem_dn]['macAddress'][0], "cn" => $this->server_list[$mem_dn]['cn'][0], "ogroup" => $object_group);
           }
         }
       }else{
         if(isset($this->_target_list[$id]['macAddress'][0])){
-          $a_targets[] = $this->_target_list[$id]['macAddress'][0];
+          $a_targets[] = array( "mac" => $this->_target_list[$id]['macAddress'][0], "cn" => $this->_target_list[$id]['cn'][0]);
         }
       }
     }

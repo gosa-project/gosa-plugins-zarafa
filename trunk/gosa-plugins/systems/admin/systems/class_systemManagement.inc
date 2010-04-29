@@ -784,7 +784,7 @@ class systems extends plugin
       }
 
       if(count($ids) && class_available("DaemonEvent")){
-        $mac= array();
+        $targets = array();
 
         /* Collect target mac addresses */
         $ldap = $this->config->get_ldap_link();
@@ -792,12 +792,12 @@ class systems extends plugin
           $type = $this->get_system_type($this->terminals[$id]);
           if(!in_array($type,array("terminal","server","workstation","opsi_client","winstation "))) continue;
           if(isset($this->terminals[$id]['macAddress'][0])){
-            $mac[] = $this->terminals[$id]['macAddress'][0];
+            $targets[] = array( "mac" => $this->terminals[$id]['macAddress'][0], "cn" => $this->terminals[$id]['cn'][0] );
           }else{
-            $ldap->cat ($this->terminals[$id]['dn'], array("macAddress"));
+            $ldap->cat ($this->terminals[$id]['dn'], array("macAddress", "cn"));
             $attrs= $ldap->fetch();
             if (isset($attrs['macAddress'][0])){
-              $mac[]= $attrs['macAddress'][0];
+              $targets[]= array( "mac" => $attrs['macAddress'][0], "cn" => $attrs['cn'][0] );
             }
           }
         }
@@ -809,14 +809,15 @@ class systems extends plugin
          *  if this entry is currently processing.
          */
         if(preg_match("/trigger_event/",$s_action) && in_array($type,array("DaemonEvent_reinstall","DaemonEvent_update"))){
-          foreach($mac as $key => $mac_address){
+          foreach($targets as $key => $mac_address){
+            $mac_address = $mac_address[0];
             foreach($o_queue->get_entries_by_mac(array($mac_address)) as $entry){
 
               $entry['STATUS'] = strtoupper($entry['STATUS']);
               if($entry['STATUS'] == "PROCESSING" && 
                   isset($events['QUEUED'][$entry['HEADERTAG']]) && 
                   in_array($events['QUEUED'][$entry['HEADERTAG']],array("DaemonEvent_reinstall","DaemonEvent_update"))){
-                unset($mac[$key]);
+                unset($targets[$key]);
 
                 new log("security","systems/".get_class($this),"",array(),"Skip adding 'DaemonEvent::".$type."' for mac '".$mac_address."', there is already a job in progress.");
                 break;
@@ -827,10 +828,10 @@ class systems extends plugin
 
         /* Prepare event to be added 
          */
-        if(count($mac) && isset($events['BY_CLASS'][$type])){
+        if(count($targets) && isset($events['BY_CLASS'][$type])){
           $event = $events['BY_CLASS'][$type];
           $this->systab = new $event['CLASS_NAME']($this->config);
-          $this->systab->add_targets($mac);
+          $this->systab->add_targets($targets);
           if(preg_match("/trigger_event/",$s_action)){
             $this->systab->set_type(TRIGGERED_EVENT);
           }else{

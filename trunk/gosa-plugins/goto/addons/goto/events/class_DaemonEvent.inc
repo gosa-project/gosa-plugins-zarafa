@@ -255,8 +255,22 @@ class DaemonEvent
     $this->target_list_used = TRUE;
     $divlist = new divSelectBox("EventTargets");
     foreach($this->a_targets as $key => $target){
+      $string = "";
+      if (is_array($target) && isset($target['cn'])) {
+          $string = $target['cn'];
+      }
+      if (is_array($target) && isset($target['ogroup'])) {
+        $title = sprintf(_("Added via object group '%s'"), $target['ogroup']);
+        $string .= sprintf("<img src='plugins/ogroups/images/select_ogroup.png' title=\"%s\">", $title);
+      }
+      if (is_array($target) && isset($target['mac'])) {
+        $string .= " - " . $target['mac'];
+      }else {
+        $string = $target;
+      }
+
       $divlist->AddEntry(array(
-            array("string"  => $target),
+            array("string"  => $string),
             array("string"  => "<input type='image' src='images/lists/trash.png' title='"._("Remove")."' name='del_target_".$key."'>",
               "attach"  => "style='width:20px; border-right:0px;'")
             ));

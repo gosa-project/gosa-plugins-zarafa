@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-26 16:58+0200\n"
+"POT-Creation-Date: 2010-04-27 11:46+0200\n"
 "PO-Revision-Date: 2008-12-04 11:18+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -120,7 +120,7 @@ msgstr "Name"
 #: admin/applications/class_applicationGeneric.inc:623
 #: personal/environment/class_logonManagementDialog.inc:125
 #: personal/environment/logonManagement.tpl:17
-#: addons/goto/class_gotomasses.inc:956
+#: addons/goto/class_gotomasses.inc:912
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -173,10 +173,10 @@ msgstr "Lieferanten-ID"
 #: personal/environment/class_environment.inc:865
 #: personal/environment/class_environment.inc:916
 #: personal/environment/class_environment.inc:1012
-#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:560
-#: addons/goto/class_gotomasses.inc:691 addons/goto/class_gotomasses.inc:727
-#: addons/goto/class_gotomasses.inc:771 addons/goto/class_gotomasses.inc:775
-#: addons/goto/class_gotomasses.inc:811 addons/goto/class_gotomasses.inc:855
+#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:516
+#: addons/goto/class_gotomasses.inc:647 addons/goto/class_gotomasses.inc:683
+#: addons/goto/class_gotomasses.inc:727 addons/goto/class_gotomasses.inc:731
+#: addons/goto/class_gotomasses.inc:767 addons/goto/class_gotomasses.inc:811
 #: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
 #: addons/goto/class_gotoLogView.inc:58 addons/goto/class_gotoLogView.inc:207
 msgid "Error"
@@ -357,7 +357,7 @@ msgstr "Abteilung"
 #: admin/mimetypes/class_divListMimeTypes.inc:109
 #: admin/applications/class_divListApplication.inc:52
 #: admin/applications/class_divListApplication.inc:107
-#: addons/goto/class_gotomasses.inc:401
+#: addons/goto/class_gotomasses.inc:357
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -387,7 +387,7 @@ msgstr "Übertragen"
 #: admin/mimetypes/class_divListMimeTypes.inc:114
 #: admin/systems/goto/chooser.tpl:16
 #: admin/applications/class_divListApplication.inc:111
-#: addons/goto/class_gotomasses.inc:402
+#: addons/goto/class_gotomasses.inc:358
 msgid "Create"
 msgstr "Anlegen"
 
@@ -402,9 +402,9 @@ msgstr "Anlegen"
 #: admin/applications/class_applicationParameters.inc:122
 #: admin/applications/class_divListApplication.inc:120
 #: personal/environment/environment.tpl:238
-#: addons/goto/events/class_DaemonEvent.inc:260
-#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:412
-#: addons/goto/class_gotomasses.inc:520 addons/goto/class_gotomasses.inc:524
+#: addons/goto/events/class_DaemonEvent.inc:274
+#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:368
+#: addons/goto/class_gotomasses.inc:476 addons/goto/class_gotomasses.inc:480
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -739,12 +739,12 @@ msgid "Folder"
 msgstr "Verzeichnis"
 
 #: admin/groups/apps/app_list.tpl:82 admin/groups/apps/app_list.tpl:103
-#: admin/groups/apps/app_list.tpl:128 addons/goto/class_gotomasses.inc:468
+#: admin/groups/apps/app_list.tpl:128 addons/goto/class_gotomasses.inc:424
 msgid "Move up"
 msgstr "Nach oben bewegen"
 
 #: admin/groups/apps/app_list.tpl:84 admin/groups/apps/app_list.tpl:105
-#: admin/groups/apps/app_list.tpl:130 addons/goto/class_gotomasses.inc:470
+#: admin/groups/apps/app_list.tpl:130 addons/goto/class_gotomasses.inc:426
 msgid "Move down"
 msgstr "Nach unten bewegen"
 
@@ -752,7 +752,7 @@ msgstr "Nach unten bewegen"
 #: admin/systems/goto/printer.tpl:79
 #: admin/systems/services/shares/goShareServer.tpl:17
 #: personal/environment/environment.tpl:274
-#: addons/goto/class_gotomasses.inc:505
+#: addons/goto/class_gotomasses.inc:461
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -1003,7 +1003,7 @@ msgstr ""
 "Wählen Sie den Server, der zur Zeit-Synchronisation genutzt werden soll"
 
 #: admin/systems/goto/terminal.tpl:156 admin/systems/goto/workstation.tpl:130
-#: admin/ogroups/goto/termgroup.tpl:112 addons/goto/class_gotomasses.inc:451
+#: admin/ogroups/goto/termgroup.tpl:112 addons/goto/class_gotomasses.inc:407
 msgid "Action"
 msgstr "Aktion"
 
@@ -1016,7 +1016,7 @@ msgstr "Wählen Sie die auszuführende Aktion für dieses Terminal"
 #: admin/systems/goto/workstation.tpl:150 admin/applications/generic.tpl:24
 #: admin/applications/class_applicationGeneric.inc:440
 #: admin/applications/class_applicationGeneric.inc:624
-#: admin/ogroups/goto/termgroup.tpl:125 addons/goto/class_gotomasses.inc:419
+#: admin/ogroups/goto/termgroup.tpl:125 addons/goto/class_gotomasses.inc:375
 msgid "Execute"
 msgstr "Ausführen"
 
@@ -1080,7 +1080,7 @@ msgstr "System-Informationen"
 
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: admin/systems/goto/class_workstationGeneric.inc:739
-#: addons/goto/events/class_EventTargetAddList.inc:343
+#: addons/goto/events/class_EventTargetAddList.inc:344
 #: addons/goto/class_target_list.inc:203
 msgid "Workstation"
 msgstr "Arbeitsstation"
@@ -1094,7 +1094,7 @@ msgstr "Terminal"
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: admin/systems/services/nfs/servnfs.tpl:39
 #: personal/environment/environment.tpl:135
-#: addons/goto/events/class_EventTargetAddList.inc:286
+#: addons/goto/events/class_EventTargetAddList.inc:287
 #: addons/goto/class_target_list.inc:201
 msgid "Server"
 msgstr "Server"
@@ -1153,14 +1153,14 @@ msgstr "Andere Netzwerk-Komponente"
 #: admin/systems/goto/class_terminalGeneric.inc:139
 #: admin/systems/goto/class_terminalGeneric.inc:289
 #: admin/systems/goto/class_terminalGeneric.inc:301
+#: admin/systems/goto/class_workstationService.inc:192
+#: admin/systems/goto/class_workstationService.inc:193
+#: admin/systems/goto/class_workstationService.inc:194
+#: admin/systems/goto/class_workstationService.inc:195
+#: admin/systems/goto/class_workstationService.inc:196
+#: admin/systems/goto/class_workstationService.inc:197
 #: admin/systems/goto/class_workstationService.inc:198
 #: admin/systems/goto/class_workstationService.inc:199
-#: admin/systems/goto/class_workstationService.inc:200
-#: admin/systems/goto/class_workstationService.inc:201
-#: admin/systems/goto/class_workstationService.inc:202
-#: admin/systems/goto/class_workstationService.inc:203
-#: admin/systems/goto/class_workstationService.inc:204
-#: admin/systems/goto/class_workstationService.inc:205
 #: admin/systems/goto/class_workstationService.inc:539
 #: admin/systems/goto/class_workstationService.inc:543
 #: admin/systems/goto/class_workstationService.inc:546
@@ -1436,7 +1436,7 @@ msgstr "von Gruppe übernehmen"
 #: admin/systems/goto/terminalStartup.tpl:14
 #: admin/systems/goto/terminalService.tpl:184
 #: admin/systems/goto/workstationStartup.tpl:36
-#: addons/goto/class_gotomasses.inc:436
+#: addons/goto/class_gotomasses.inc:392
 msgid "Reload"
 msgstr "Neu laden"
 
@@ -1645,7 +1645,7 @@ msgstr "Ihr Browser unterstützt keine iframes."
 #: admin/systems/goto/class_terminalGeneric.inc:123
 #: admin/systems/goto/class_workstationGeneric.inc:143
 #: admin/ogroups/goto/class_termgroup.inc:53
-#: addons/goto/class_gotomasses.inc:574
+#: addons/goto/class_gotomasses.inc:530
 msgid "Locked"
 msgstr "Gesperrt"
 
@@ -1665,7 +1665,8 @@ msgstr "Aktiv"
 #: admin/systems/goto/class_workstationGeneric.inc:222
 #: admin/systems/goto/class_workstationGeneric.inc:645
 #: admin/ogroups/goto/class_termgroup.inc:217
-#: addons/goto/class_gotomasses.inc:350 addons/goto/class_gotomasses.inc:363
+#: addons/goto/events/class_DaemonEvent.inc:454
+#: addons/goto/events/class_DaemonEvent.inc:465
 #: addons/goto/class_goto_import_file.inc:124
 msgid "Service infrastructure"
 msgstr "Dienst-Infrastruktur"
@@ -2094,7 +2095,7 @@ msgstr "Wählen Sie eine Objektgruppe als Vorlageobjekt"
 
 #: admin/systems/goto/SelectDeviceType.tpl:37
 #: addons/goto/events/class_EventTargetAddUsersList.inc:181
-#: addons/goto/events/class_EventTargetAddList.inc:441
+#: addons/goto/events/class_EventTargetAddList.inc:442
 #: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
 msgid "Object group"
 msgstr "Objektgruppe"
@@ -2917,7 +2918,7 @@ msgstr "Konfiguration bei jedem Start ersetzen"
 msgid "Script"
 msgstr "Skript"
 
-#: admin/applications/generic.tpl:139 addons/goto/class_gotomasses.inc:411
+#: admin/applications/generic.tpl:139 addons/goto/class_gotomasses.inc:367
 #: addons/goto/goto_import_file.tpl:84
 #: addons/goto/class_goto_import_file.inc:29
 #: addons/goto/class_goto_import_file.inc:89
@@ -3382,7 +3383,7 @@ msgstr "Es sind keine Protokolle für dieses System verfügbar!"
 #: addons/goto/events/DaemonEvent_reinstall.tpl:9
 #: addons/goto/events/DaemonEvent_wakeup.tpl:9
 #: addons/goto/events/DaemonEvent_rescan.tpl:9
-#: addons/goto/class_gotomasses.inc:447
+#: addons/goto/class_gotomasses.inc:403
 msgid "Schedule"
 msgstr "Plan"
 
@@ -3439,7 +3440,7 @@ msgstr "ID"
 #: addons/goto/events/DaemonEvent_wakeup.tpl:44
 #: addons/goto/events/DaemonEvent_activate.tpl:44
 #: addons/goto/events/DaemonEvent_rescan.tpl:44
-#: addons/goto/class_gotomasses.inc:449
+#: addons/goto/class_gotomasses.inc:405
 msgid "Status"
 msgstr "Status"
 
@@ -3481,7 +3482,7 @@ msgstr "Ergebnis"
 #: addons/goto/events/DaemonEvent_wakeup.tpl:52
 #: addons/goto/events/DaemonEvent_activate.tpl:52
 #: addons/goto/events/DaemonEvent_rescan.tpl:52
-#: addons/goto/class_gotomasses.inc:444
+#: addons/goto/class_gotomasses.inc:400
 msgid "Target"
 msgstr "Ziel"
 
@@ -3533,7 +3534,11 @@ msgstr "Dieser Auftrag hat keine Vorlage!"
 msgid "Create '%s' job"
 msgstr "Erstelle '%s'-Vorgang"
 
-#: addons/goto/events/class_DaemonEvent.inc:264
+#: addons/goto/events/class_DaemonEvent.inc:263
+msgid "Added via object group '%s'"
+msgstr "Via Objektgruppe '%s' hinzugefügt"
+
+#: addons/goto/events/class_DaemonEvent.inc:278
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -3752,99 +3757,99 @@ msgstr ""
 "Die folgenden Aufträge konnten nicht gelöscht werden, sie müssen abgebrochen "
 "werden: %s"
 
-#: addons/goto/class_gotomasses.inc:396
+#: addons/goto/class_gotomasses.inc:352
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
 msgstr ""
 "Dieses Menü erlaubt es Ihnen, GOsa-Aufgaben zu entfernen oder die "
 "Eigenschaften zu verändern."
 
-#: addons/goto/class_gotomasses.inc:397
+#: addons/goto/class_gotomasses.inc:353
 msgid "List of queued jobs"
 msgstr "Liste der geplanten Vorgänge"
 
-#: addons/goto/class_gotomasses.inc:416
+#: addons/goto/class_gotomasses.inc:372
 msgid "Resume"
 msgstr "Fortsetzen"
 
-#: addons/goto/class_gotomasses.inc:417
+#: addons/goto/class_gotomasses.inc:373
 msgid "Pause"
 msgstr "Pause"
 
-#: addons/goto/class_gotomasses.inc:418
+#: addons/goto/class_gotomasses.inc:374
 msgid "Abort"
 msgstr "Abbrechen"
 
-#: addons/goto/class_gotomasses.inc:445
+#: addons/goto/class_gotomasses.inc:401
 msgid "Task"
 msgstr "Vorgang"
 
-#: addons/goto/class_gotomasses.inc:477
+#: addons/goto/class_gotomasses.inc:433
 msgid "Pause job"
 msgstr "Vorgang pausieren"
 
-#: addons/goto/class_gotomasses.inc:484
+#: addons/goto/class_gotomasses.inc:440
 msgid "Resume job"
 msgstr "Vorgang fortsetzen"
 
-#: addons/goto/class_gotomasses.inc:491
+#: addons/goto/class_gotomasses.inc:447
 msgid "Execute now"
 msgstr "Sofort ausführen"
 
-#: addons/goto/class_gotomasses.inc:498
+#: addons/goto/class_gotomasses.inc:454
 msgid "View logs"
 msgstr "Protokolle einsehen"
 
-#: addons/goto/class_gotomasses.inc:513
+#: addons/goto/class_gotomasses.inc:469
 msgid "Abort job"
 msgstr "Vorgang abbrechen"
 
-#: addons/goto/class_gotomasses.inc:557
+#: addons/goto/class_gotomasses.inc:513
 msgid "Waiting"
 msgstr "Wartend"
 
-#: addons/goto/class_gotomasses.inc:563
+#: addons/goto/class_gotomasses.inc:519
 msgid "Processed"
 msgstr "Durchgeführt"
 
-#: addons/goto/class_gotomasses.inc:578
+#: addons/goto/class_gotomasses.inc:534
 msgid "Detection"
 msgstr "Erkennung"
 
-#: addons/goto/class_gotomasses.inc:586
+#: addons/goto/class_gotomasses.inc:542
 msgid "in progress"
 msgstr "in Bearbeitung"
 
-#: addons/goto/class_gotomasses.inc:599
+#: addons/goto/class_gotomasses.inc:555
 msgid "immediately"
 msgstr "sofort"
 
-#: addons/goto/class_gotomasses.inc:691 addons/goto/class_gotomasses.inc:771
-#: addons/goto/class_gotomasses.inc:811
+#: addons/goto/class_gotomasses.inc:647 addons/goto/class_gotomasses.inc:727
+#: addons/goto/class_gotomasses.inc:767
 #, php-format
 msgid "Cannot update queue entry: %s"
 msgstr "Kann Warteschlangeneintrag nicht aktualisieren: %s"
 
-#: addons/goto/class_gotomasses.inc:727
+#: addons/goto/class_gotomasses.inc:683
 #, php-format
 msgid "Cannot update queue entries."
 msgstr "Kann Warteschlangeneinträge nicht aktualisieren."
 
-#: addons/goto/class_gotomasses.inc:776
+#: addons/goto/class_gotomasses.inc:732
 #, php-format
 msgid "Required class '%s' cannot be found: job not aborted!"
 msgstr ""
 "Die erforderliche Klasse '%s' wurde nicht gefunden: Auftrag abgebrochen!"
 
-#: addons/goto/class_gotomasses.inc:855
+#: addons/goto/class_gotomasses.inc:811
 #, php-format
 msgid "Cannot load queue entries: %s"
 msgstr "Kann Warteschlangeneinträge nicht laden: %s"
 
-#: addons/goto/class_gotomasses.inc:949 addons/goto/class_gotomasses.inc:955
+#: addons/goto/class_gotomasses.inc:905 addons/goto/class_gotomasses.inc:911
 msgid "System deployment"
 msgstr "System-Verteilung"
 
-#: addons/goto/class_gotomasses.inc:950
+#: addons/goto/class_gotomasses.inc:906
 msgid "Provide a mechanism to automatically activate systems"
 msgstr "Stelle einen Mechanismus bereit um Systemen automatisch zu aktivieren"
 
