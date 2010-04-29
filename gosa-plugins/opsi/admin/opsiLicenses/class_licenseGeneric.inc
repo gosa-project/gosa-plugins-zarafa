@@ -129,7 +129,7 @@ class licenseGeneric extends plugin
           "OEM"=>_("OEM"),
           "VOLUME" => _("Volume")));
 
-    $smarty->assign("usePrototype", "true");
+
     $smarty->assign("init_successfull", $this->init_successfull);
     $smarty->assign("initially_was_account", $this->initially_was_account);
     $smarty->assign("hosts", $this->getHosts());
