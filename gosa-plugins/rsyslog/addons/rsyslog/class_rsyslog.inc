@@ -103,7 +103,7 @@ class rsyslog extends plugin
     plugin::execute();
 
     $smarty = get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     $ui = get_userinfo();
     
     if(!isset($this->servers[$this->selected_server]['Hosts']) || !count($this->servers[$this->selected_server]['Hosts'])){
