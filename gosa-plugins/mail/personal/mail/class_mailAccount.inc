@@ -393,7 +393,7 @@ class mailAccount extends plugin
       SMARTY- Assign smarty variables 
      ****************/
     $smarty = get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     $smarty->assign("initially_was_account", $this->initially_was_account);
     $smarty->assign("isModifyableMail"  , $this->mailMethod->isModifyableMail());
     $smarty->assign("isModifyableServer", $this->mailMethod->isModifyableServer());
