@@ -232,7 +232,7 @@ class roleGeneric extends plugin {
 
     // Get smarty instance and assign required variables.
     $smarty = get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     $smarty->assign("base", $this->baseSelector->render());
     $smarty->assign("memberList",$this->memberList->render());
     foreach($this->attributes as $attr){
