@@ -285,7 +285,7 @@ class faiProfile extends plugin
         $this->classList->setListData($data,$lData);
         $this->classList->update();
 
-        $smarty->assign("usePrototype", "true");
+
         $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));
         $smarty->assign("FAIclasses"  ,$this->FAIclasses);
         $smarty->assign("listing"     ,$this->classList->render());
