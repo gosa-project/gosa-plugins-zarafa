@@ -73,7 +73,7 @@ class deviceGeneric extends plugin
   {
     plugin::execute();
     $smarty = get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     $smarty->assign("base", $this->baseSelector->render());
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
