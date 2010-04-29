@@ -1292,23 +1292,7 @@ class appgroup extends plugin
           $attrs['gosaApplicationParameter'] = array(); 
 
           if (isset($entry['FLAGS'])) {
-            /* Check if the flags changed at all */
-            $diff = FALSE;
-            foreach($this->apps as $id => $app) {
-              if($app['cn'][0] == $entry['NAME']){
-                $orig_flags = $app['gosaApplicationFlags'][0];
-                foreach($this->app_flags as $name => $flag) {
-                  if((strstr($orig_flags, $flag) && !strstr($entry['FLAGS'],$flag)) || !strstr($orig_flags, $flag) && strstr($entry['FLAGS'], $flag)) {
-                    $diff = TRUE;
-                    break;
-                  }
-                }
-              }
-            }
-            /* Only store appflags into LDAP if its different from the original app */
-            if ($diff) {
-                $attrs['gosaApplicationParameter'][] = "gosaApplicationFlags:".$entry['FLAGS'];
-            }
+            $attrs['gosaApplicationParameter'][] = "gosaApplicationFlags:".$entry['FLAGS'];
           }
            
           foreach($entry['PARAMETER'] as $name => $value){
