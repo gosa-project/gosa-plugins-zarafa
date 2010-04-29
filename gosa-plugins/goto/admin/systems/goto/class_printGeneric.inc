@@ -321,7 +321,7 @@ class printgeneric extends plugin
     }
 
     $smarty= get_smarty();
-    $smarty->assign("usePrototype", "true");
+
 
     /* Assign acls */
     $tmp = $this->plInfo();
