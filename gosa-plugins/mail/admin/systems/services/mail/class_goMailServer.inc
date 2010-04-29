@@ -218,7 +218,7 @@ class goMailServer extends goService{
   function execute()
   { 
     $smarty   = get_smarty();
-    $smarty->assign("usePrototype", "true");
+
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
