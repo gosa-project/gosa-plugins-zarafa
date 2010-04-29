@@ -296,7 +296,7 @@ class termstartup extends plugin
     }
     $this->ldapList->setListData($data,$lData);
     $this->ldapList->update();
-    $smarty->assign("usePrototype", "true");
+
 
 
 
