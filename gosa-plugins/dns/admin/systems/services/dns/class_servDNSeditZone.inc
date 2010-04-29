@@ -221,7 +221,7 @@ class servdnseditZone extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("usePrototype", "true");
+
     $smarty->assign("Zone_is_used",$this->Zone_is_used);
     $ui = get_userinfo();
 
