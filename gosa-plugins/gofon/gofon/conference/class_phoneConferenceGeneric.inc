@@ -171,7 +171,7 @@ class conference extends plugin
     }
 
     $smarty= get_smarty();
-    $smarty->assign("usePrototype", "true");
+
 
     foreach ($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
