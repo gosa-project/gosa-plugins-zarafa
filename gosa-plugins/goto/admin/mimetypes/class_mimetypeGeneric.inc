@@ -294,7 +294,7 @@ class mimetype extends plugin
     $this->embeddedList->setListData($data, $lData);
     $this->embeddedList->update();
 
-    $smarty->assign("usePrototype", "true");
+
     $smarty->assign("bases", 						$this->get_allowed_bases());		
     $smarty->assign("base_select", 					$this->base);		
     $smarty->assign("isReleaseMimeType",			$this->is_release());
