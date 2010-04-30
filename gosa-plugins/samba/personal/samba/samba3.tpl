@@ -199,7 +199,7 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxConnectionTime" id="CtxMaxConnectionTime" size=5 maxlength=5 value="{$CtxMaxConnectionTime}" {$tsloginstate}
+      <input name="CtxMaxConnectionTime" type="text" id="CtxMaxConnectionTime" size=5 maxlength=5 value="{$CtxMaxConnectionTime}" {$tsloginstate}
 			{if !$CtxMaxConnectionTimeF} disabled  {/if}>
 {/render}
      </td>
@@ -213,7 +213,7 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxDisconnectionTime" id="CtxMaxDisconnectionTime" size=5 maxlength=5 value="{$CtxMaxDisconnectionTime}" {$tsloginstate}
+      <input name="CtxMaxDisconnectionTime" id="CtxMaxDisconnectionTime" type="text" size=5 maxlength=5 value="{$CtxMaxDisconnectionTime}" {$tsloginstate}
 			{if !$CtxMaxDisconnectionTimeF} disabled  {/if}>
 {/render}
      </td>
@@ -227,7 +227,7 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxIdleTime" id="CtxMaxIdleTime" size=5 maxlength=5 value="{$CtxMaxIdleTime}" {$tsloginstate}
+      <input name="CtxMaxIdleTime" id="CtxMaxIdleTime" size=5 maxlength=5 type="text" value="{$CtxMaxIdleTime}" {$tsloginstate}
 			{if !$CtxMaxIdleTimeF} disabled  {/if}>
 {/render}
      </td>
@@ -409,7 +409,7 @@
 
       <table summary="{t}Account expiration settings{/t}"><tr><td>
       <label for="kickoff_time_set">{t}Account expires after{/t}</label>
-      </td><td>
+      </td><td style='width:200px'>
       {render acl=$sambaKickoffTimeACL}
         <input type="text" id="sambaKickoffTime" name="sambaKickoffTime" class="date" style='width:100px' value="{$sambaKickoffTime}">
         {if $sambaKickoffTimeACL|regex_replace:"/[cdmr]/":"" == "w"}
