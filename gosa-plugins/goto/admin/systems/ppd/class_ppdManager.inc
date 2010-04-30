@@ -303,18 +303,26 @@ class ppdManager
 
 				/* Possible value? */
 				if (preg_match("@^\*$eoption\s+@", $line)){
-                                        #*PageSize Letter/US Letter: "<>setpagedevice"
-					$c= preg_replace("@^\*$eoption\s+([^/]+).*$@", "$1", $line);
-					$d= preg_replace("@^\*$eoption\s+[^/]+/([^:]+).*$@", "$1", $line);
+
+                    // Detect what comes first, the  '/' or the ':'. 
+                    // We may have entries like this: 
+                    //  *Resolution 300dpi: "<</HWResolution [300 300] >> setpagedevice"
+                    // and
+                    //  *Resolution 300dpi/300: "<</HWResolution [300 300] >> setpagedevice"
+                    $name = $value = preg_replace("@^\*$eoption\s+([^:]+).*$@", "$1", $line);
+                    if(preg_match("/\//", $name)){
+                        list($name, $value) = preg_split("/\//", $name);
+                    }
 					if(empty($group)){
-						$properties["NO_SECTION"][$option][trim($c)]= trim($d);
+						$properties["NO_SECTION"][$option][$name]= $value;
 					}else{
-						$properties[$group][$option][trim($c)]= trim($d);
+						$properties[$group][$option][$name]= $value;
 					}
 					continue;
 				}
 			}
 		}
+
   	gzclose ($fh);
 		return ($properties);
 	}
