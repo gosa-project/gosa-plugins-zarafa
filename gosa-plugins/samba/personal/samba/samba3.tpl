@@ -199,8 +199,8 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxConnectionTime" type="text" id="CtxMaxConnectionTime" size=5 maxlength=5 value="{$CtxMaxConnectionTime}" {$tsloginstate}
-			{if !$CtxMaxConnectionTimeF} disabled  {/if}>
+      <input name="CtxMaxConnectionTime" type="text" id="CtxMaxConnectionTime" size=5 maxlength=5 value="{$CtxMaxConnectionTime}" 
+			{if !$CtxMaxConnectionTimeF ||  $tsloginstate == "disabled"} disabled  {/if}>
 {/render}
      </td>
     </tr>
@@ -213,8 +213,8 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxDisconnectionTime" id="CtxMaxDisconnectionTime" type="text" size=5 maxlength=5 value="{$CtxMaxDisconnectionTime}" {$tsloginstate}
-			{if !$CtxMaxDisconnectionTimeF} disabled  {/if}>
+      <input name="CtxMaxDisconnectionTime" id="CtxMaxDisconnectionTime" type="text" size=5 maxlength=5 value="{$CtxMaxDisconnectionTime}" 
+			{if $tsloginstate == "disabled" || !$CtxMaxDisconnectionTimeF} disabled  {/if}>
 {/render}
      </td>
     </tr>
@@ -227,8 +227,8 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxIdleTime" id="CtxMaxIdleTime" size=5 maxlength=5 type="text" value="{$CtxMaxIdleTime}" {$tsloginstate}
-			{if !$CtxMaxIdleTimeF} disabled  {/if}>
+      <input name="CtxMaxIdleTime" id="CtxMaxIdleTime" size=5 maxlength=5 type="text" value="{$CtxMaxIdleTime}" 
+			{if !$CtxMaxIdleTimeF || $tsloginstate == "disabled"} disabled  {/if}>
 {/render}
      </td>
     </tr>
