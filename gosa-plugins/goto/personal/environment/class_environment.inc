@@ -441,7 +441,7 @@ class environment extends plugin
       }
       /* Group Dialog with enabled environment options */
       if ($this->is_account){
-        $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Desktop")),
+        $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Desktop")),
             msgPool::featuresEnabled(_("Desktop")));
       } else {
 
@@ -481,7 +481,7 @@ class environment extends plugin
 
         // 3. Account enabled . Editing from adminmenu
         if ($this->is_account){
-          $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Desktop")),
+          $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Desktop")),
               msgPool::featuresEnabled(_("Desktop")));
         } else {
 
