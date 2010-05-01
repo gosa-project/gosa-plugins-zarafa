@@ -153,7 +153,7 @@
  </td>
  <td>
   <select name="dummy1" disabled id="dummy1" size=1><option disabled>&nbsp;</option></select>
-  <input type="button" disabled name="dummy2" value="{t}Manage{/t}">
+  <button type="submit" disabled name="dummy2">{t}Manage{/t}</button>
  </td>
 </tr>
 {/if}
