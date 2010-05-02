@@ -140,7 +140,7 @@ class servrepository extends goService
               continue;
             }
             for ($i= 0; $i < $sattrs['FAIrepository']['count']; $i++){
-              $t= split('\|', $sattrs['FAIrepository'][$i]);
+              $t= preg_split('/\|/', $sattrs['FAIrepository'][$i]);
               if($release == $t[2]){
                 $usage++;
               }
