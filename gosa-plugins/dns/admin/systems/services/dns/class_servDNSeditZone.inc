@@ -87,7 +87,6 @@ class servdnseditZone extends plugin
         foreach($this->Records as $key => $rec){
           if($rec['type'] == "mXRecord"){
             $tmp = explode(" ",$rec['value']);
-            $rec['value'] = $tmp[1];
             $tmp2[$tmp[0]] = $rec;
             unset($this->Records[$key]);
           }
@@ -135,70 +134,6 @@ class servdnseditZone extends plugin
         $this->ReverseZone .= ".0"; 
       }
     }
-  }
-
-  /* TRansports the geiven Arraykey one position up*/
-  function ArrayUp($atr,$attrs)
-  {
-    $ret = $attrs;
-    $pos = $atr ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == 1)||($pos >$cn))){
-      $before = array_slice($attrs,0,($pos-2));
-      $mitte  = array_reverse(array_slice($attrs,($pos-2),2));
-      $unten  = array_slice($attrs,$pos);
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
-    }
-    return($ret);
-  }
-
-
-  /* TRansports the geiven Arraykey one position up*/
-  function ArrayDown($atr,$attrs)
-  {
-    $ret = $attrs;
-    $pos = $atr ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == $cn))){
-      $before = array_slice($attrs,0,($pos-1));
-      $mitte  = array_reverse(array_slice($attrs,($pos-1),2));
-      $unten  = array_slice($attrs,($pos+1));
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
-    }
-    return($ret);
-  }
-
-  /* Combine new array */
-  function combineArrays($ar0,$ar1,$ar2)
-  {
-    $ret = array();
-    if(is_array($ar0))
-    foreach($ar0 as $ar => $a){
-        $ret[]=$a;
-    }
-    if(is_array($ar1))
-    foreach($ar1 as $ar => $a){
-        $ret[]=$a;
-    }
-    if(is_array($ar2))
-    foreach($ar2 as $ar => $a){
-        $ret[]=$a;
-    }
-    return($ret);
-  }
-  
-  function getpos($atr,$attrs)
-  {
-    $i = 0;
-    foreach($attrs as $attr => $name)    {
-      $i++;
-      if($attr == $atr){
-        return($i);
-      }
-    }
-    return(-1);
   }
 
 
@@ -275,24 +210,6 @@ class servdnseditZone extends plugin
 
     $once =true;
     foreach($_POST as $name => $value){
-      if((preg_match("/^MXup_/",$name)) && ($once)){
-        $once = false;
-
-        $id = preg_replace("/^MXup_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
-    
-        $this->mXRecords = $this->ArrayUp(($id+1),$this->mXRecords);
-      }
-      if((preg_match("/^MXdown_/",$name)) && ($once)){
-        $once = false;
-        
-        $id = preg_replace("/^MXdown_/","",$name);
-        $id = preg_replace("/_.*$/","",$id);
-        $id = base64_decode($id);
-  
-        $this->mXRecords = $this->ArrayDown(($id+1),$this->mXRecords);
-      }
       if((preg_match("/^MXdel_/",$name)) && ($once)){
         $once = false;
         
@@ -313,7 +230,13 @@ class servdnseditZone extends plugin
 
     if($this->parent->acl_is_writeable("mXRecord")){
       if((isset($_POST['AddMXRecord'])) && (!empty($_POST['StrMXRecord']))){
-        $this->mXRecords[] = array("type"=>"mXRecord","value"=>trim($_POST['StrMXRecord']));      
+        $rec = get_post('StrMXRecord'); 
+        if(preg_match("/^[0-9]* /", $rec) && count(preg_split("/ /", $rec)) == 2){ 
+            list($prio,$value) = preg_split("/ /", $rec); 
+            $this->mXRecords[$prio] = array("type"=>"mXRecord","value"=>trim($rec)); 
+        }else{ 
+            msg_dialog::display(_("Warning"), msgPool::invalid(_("MxRecord"), "","", "20 mx.record.entry"), WARNING_DIALOG); 
+        } 
       }
 
       /* Handle Post events */
@@ -343,19 +266,15 @@ class servdnseditZone extends plugin
     $div = new divSelectBox("MxRecords");
     $div->setHeight(120);
     $recs = $this->mXRecords;
-
-    $oneup    = "<input name='MXup_%s'    type='image' src='images/lists/sort-up.png'    title='"._("Up")."'      class='center'>&nbsp;"; 
-    $onedown  = "<input name='MXdown_%s'  type='image' src='images/lists/sort-down.png'  title='"._("Down")."'    class='center'>&nbsp;"; 
-    $onedel   = "<img src='images/empty.png' width='20' class='center'>
-                 <input name='MXdel_%s'   type='image' src='images/lists/trash.png'  title='"._("Delete")."'  class='center'>"; 
-
+    ksort($recs);
+    $onedel   = "<input name='MXdel_%s'   type='image' src='images/lists/trash.png'  title='"._("Delete")."'  class='center'>"; 
     foreach($recs as $key => $rec){
+      list($prio,$value) = preg_split("/ /", $rec['value']);
       $div ->AddEntry(array(
-            array("string"=>$rec['value']),
-/*            array("string"=>$key,
-                  "attach"=>"style='width:20px;'"),*/
-            array("string"=>str_replace("%s",base64_encode($key),$oneup.$onedown.$onedel),
-                  "attach"=>"style='width:70px;border-right:0px;'")
+            array("string"=> $prio, "attach"=>"style='width:20px;'"),
+            array("string"=> $value),
+            array("string"=>str_replace("%s",base64_encode($key),$onedel),
+                  "attach"=>"style='width:20px;border-right:0px;'")
             ));
     }
 
@@ -528,10 +447,8 @@ class servdnseditZone extends plugin
     /* Create mx records 
      */
     foreach($this->mXRecords as $key => $rec){
-      $rec['value']= $key." ".$rec['value'];
-      $this->Records [] = $rec;
+      $this->Records[] = $rec;
     }
-
   
     $ret['RECORDS'] = $this->Records; 
  
