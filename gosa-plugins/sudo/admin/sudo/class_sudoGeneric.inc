@@ -516,6 +516,16 @@ class sudo extends plugin
                     "plSection"     => array("administration"),
                     "plCategory"    => array("sudo" => array("objectClass" => "sudoRole", "description" => _("Sudo role"))),
 
+                    "plProperties"  => array(
+                        array(
+                            "name"          => "sudoRDN",
+                            "type"          => "string",
+                            "default"       => "ou=sudoers,",
+                            "description"   => _("Storage point for sudo objects within the ldap tree."),
+                            "check"         => 'tests::isRDN',
+                            "migrate"       => 'sudoGeneric::migrate',
+                            "mandatory"     => FALSE)),
+
                     "plProvidedAcls"    => array(
                         "accessTo"          => _("System trust"),
                         "cn"                => _("Name"),
