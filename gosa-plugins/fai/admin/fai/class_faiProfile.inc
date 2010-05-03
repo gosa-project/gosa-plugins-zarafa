@@ -107,26 +107,6 @@ class faiProfile extends plugin
     }
 
 
-    /* Combine new array, used for up down buttons */
-    function combineArrays($ar0,$ar1,$ar2)
-    {
-        $ret = array();
-        if(is_array($ar0))
-            foreach($ar0 as $ar => $a){
-                $ret[$ar]=$a;
-            }
-        if(is_array($ar1))
-            foreach($ar1 as $ar => $a){
-                $ret[$ar]=$a;
-            }
-        if(is_array($ar2))
-            foreach($ar2 as $ar => $a){
-                $ret[$ar]=$a;
-            }
-        return($ret);
-    }
-
-
     function acl_base_for_current_object($dn)
     {
         if($dn == "new" || $dn == ""){
@@ -139,68 +119,6 @@ class faiProfile extends plugin
         return($dn);
     }
 
-
-    /* returns position in array */
-    function getpos($atr,$attrs)
-    {
-        $i = 0;
-        foreach($attrs as $attr => $name)    {
-            $i++;
-            if($attr == $atr){
-                return($i);
-            }
-        }
-        return(-1);
-    }
-
-    /* Transports the given Arraykey one position up*/
-    function ArrayUp($atr,$attrs)
-    {
-        $ret = $attrs;
-        $pos = $this->getpos($atr,$attrs) ;
-        $cn = count($attrs);
-        if(!(($pos == -1)||($pos == 1))){
-            $before = array_slice($attrs,0,($pos-2));
-            $mitte  = array_reverse(array_slice($attrs,($pos-2),2));
-            $unten  = array_slice($attrs,$pos);
-            $ret = array();
-            $ret = $this->combineArrays($before,$mitte,$unten);
-        }
-        return($ret);
-    }
-
-
-    /* Transports the given Arraykey one position down*/
-    function ArrayDown($atr,$attrs)
-    {
-        $ret = $attrs;
-        $pos = $this->getpos($atr,$attrs) ;
-        $cn = count($attrs);
-        if(!(($pos == -1)||($pos == $cn))){
-            $before = array_slice($attrs,0,($pos-1));
-            $mitte  = array_reverse(array_slice($attrs,($pos-1),2));
-            $unten  = array_slice($attrs,($pos+1));
-            $ret = array();
-            $ret = $this->combineArrays($before,$mitte,$unten);
-        }
-        return($ret);
-    }
-
-    /* class one position up */
-    function catUp($id)
-    {
-        /* Get all cats depinding on current dir */
-        $cats = $this->FAIclasses;
-        $this->FAIclasses =$this->ArrayUp($id,$cats);
-    }
-
-    /* Class one position down */
-    function catDown($id)
-    {
-        /* Get all cats depinding on current dir */
-        $cats = $this->FAIclasses;
-        $this->FAIclasses =$this->ArrayDown($id,$cats);
-    }
 
     function execute()
     {
