@@ -87,7 +87,7 @@ class servdnseditZone extends plugin
         foreach($this->Records as $key => $rec){
           if($rec['type'] == "mXRecord"){
             $tmp = explode(" ",$rec['value']);
-            $rec['value'] = $tmp[1];
+            $rec['value'] = $rec['value'];
             $tmp2[$tmp[0]] = $rec;
             unset($this->Records[$key]);
           }
@@ -137,80 +137,16 @@ class servdnseditZone extends plugin
     }
 
     // Prepare lists
-    $this->mxList = new sortableListing(array(),array(), TRUE);
+    $this->mxList = new sortableListing();
     $this->mxList->setDeleteable(true);
     $this->mxList->setInstantDelete(true);
     $this->mxList->setEditable(false);
     $this->mxList->setWidth("100%");
     $this->mxList->setHeight("100px");
-    $this->mxList->setHeader(array(_("Record")));
-    $this->mxList->setColspecs(array('*','20px'));
+    $this->mxList->setHeader(array(_("Priority"),_("Record")));
+    $this->mxList->setColspecs(array('40px','*','20px'));
     $this->mxList->setDefaultSortColumn(0);
 
-  }
-
-  /* TRansports the geiven Arraykey one position up*/
-  function ArrayUp($atr,$attrs)
-  {
-    $ret = $attrs;
-    $pos = $atr ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == 1)||($pos >$cn))){
-      $before = array_slice($attrs,0,($pos-2));
-      $mitte  = array_reverse(array_slice($attrs,($pos-2),2));
-      $unten  = array_slice($attrs,$pos);
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
-    }
-    return($ret);
-  }
-
-
-  /* TRansports the geiven Arraykey one position up*/
-  function ArrayDown($atr,$attrs)
-  {
-    $ret = $attrs;
-    $pos = $atr ;
-    $cn = count($attrs);
-    if(!(($pos == -1)||($pos == $cn))){
-      $before = array_slice($attrs,0,($pos-1));
-      $mitte  = array_reverse(array_slice($attrs,($pos-1),2));
-      $unten  = array_slice($attrs,($pos+1));
-      $ret = array();
-      $ret = $this->combineArrays($before,$mitte,$unten);
-    }
-    return($ret);
-  }
-
-  /* Combine new array */
-  function combineArrays($ar0,$ar1,$ar2)
-  {
-    $ret = array();
-    if(is_array($ar0))
-    foreach($ar0 as $ar => $a){
-        $ret[]=$a;
-    }
-    if(is_array($ar1))
-    foreach($ar1 as $ar => $a){
-        $ret[]=$a;
-    }
-    if(is_array($ar2))
-    foreach($ar2 as $ar => $a){
-        $ret[]=$a;
-    }
-    return($ret);
-  }
-  
-  function getpos($atr,$attrs)
-  {
-    $i = 0;
-    foreach($attrs as $attr => $name)    {
-      $i++;
-      if($attr == $atr){
-        return($i);
-      }
-    }
-    return(-1);
   }
 
 
@@ -295,7 +231,13 @@ class servdnseditZone extends plugin
 
     if($this->parent->acl_is_writeable("mXRecord")){
       if((isset($_POST['AddMXRecord'])) && (!empty($_POST['StrMXRecord']))){
-        $this->mXRecords[] = array("type"=>"mXRecord","value"=>trim($_POST['StrMXRecord']));      
+        $rec = get_post('StrMXRecord');
+        if(preg_match("/^[0-9]* /", $rec) && count(preg_split("/ /", $rec)) == 2){
+            list($prio,$value) = preg_split("/ /", $rec);
+            $this->mXRecords[$prio] = array("type"=>"mXRecord","value"=>trim($rec));
+        }else{
+            msg_dialog::display(_("Warning"), msgPool::invalid(_("MxRecord"), "","", "20 mx.record.entry"), WARNING_DIALOG);
+        }
       }
 
       /* Handle Post events */
@@ -325,7 +267,8 @@ class servdnseditZone extends plugin
     $this->mxList->setAcl($this->parent->getacl("mXRecord"));
     $lData = array();
     foreach($this->mXRecords as $key => $record){
-        $lData[$key] = array('data'=>array($record['value']));
+        list($prio, $value) = preg_split("/ /", $record['value']);
+        $lData[$prio] = array('data'=>array($prio, $value));
     }
     $this->mxList->setListData($this->mXRecords, $lData);
     $this->mxList->update();
@@ -499,11 +442,9 @@ class servdnseditZone extends plugin
     /* Create mx records 
      */
     foreach($this->mXRecords as $key => $rec){
-      $rec['value']= $key." ".$rec['value'];
-      $this->Records [] = $rec;
+      $this->Records[] = $rec;
     }
 
-  
     $ret['RECORDS'] = $this->Records; 
  
     switch($this->NetworkClass){
