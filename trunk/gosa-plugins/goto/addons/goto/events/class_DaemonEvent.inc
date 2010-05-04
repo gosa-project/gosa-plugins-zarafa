@@ -431,6 +431,17 @@ class DaemonEvent
       if($dialog->multiple_events) {
         $event_type = get_class($dialog);
         $targets = $dialog->get_targets();
+        $tmp_array[0] = $targets[0];
+        foreach ($targets as $current) {
+          $add_flag = 1;
+          foreach ($tmp_array as $tmp) {
+            if ($current["mac"]==$tmp["mac"]) {
+              $add_flag = 0; break;
+            }
+          }
+          if ($add_flag) $tmp_array[] = $current;
+        }
+        $targets = $tmp_array;
         $timestamp = $dialog->timestamp;
 
         $i = 1;
