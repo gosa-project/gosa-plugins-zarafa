@@ -810,7 +810,7 @@ class systems extends plugin
          */
         if(preg_match("/trigger_event/",$s_action) && in_array($type,array("DaemonEvent_reinstall","DaemonEvent_update"))){
           foreach($targets as $key => $mac_address){
-            $mac_address = $mac_address[0];
+            $mac_address = $mac_address['mac'];
             foreach($o_queue->get_entries_by_mac(array($mac_address)) as $entry){
 
               $entry['STATUS'] = strtoupper($entry['STATUS']);
