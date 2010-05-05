@@ -57,7 +57,7 @@ class sudoManagement extends management
     if ($this->config->boolValueIsTrue("main", "copyPaste")){
       $this->cpHandler = new CopyPasteHandler($this->config);
     }
-    if($this->config->get_cfg_value("enableSnapshots") == "true"){
+    if($this->config->get_cfg_value("core","enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
     }
     $this->registerAction("new_default", "newEntry");
