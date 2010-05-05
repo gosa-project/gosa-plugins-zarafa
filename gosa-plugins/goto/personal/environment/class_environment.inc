@@ -219,8 +219,8 @@ class environment extends plugin
                                     "1280x768"  =>  "1280x768",
                                     "1280x1024" =>  "1280x1024");
 
-    if($this->config->get_cfg_value("resolutions") != ""){
-      $file = $this->config->get_cfg_value("resolutions");
+    if($this->config->get_cfg_value("core","resolutions") != ""){
+      $file = $this->config->get_cfg_value("core","resolutions");
 
       if(is_readable($file)){
         $str = file_get_contents($file);
