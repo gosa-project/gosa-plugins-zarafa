@@ -1058,7 +1058,7 @@ class mailgroup extends plugin
       }
 
       /* Add special kolab attributes */
-      if(preg_match("/olab/i",$this->config->get_cfg_value("mailmethod"))){
+      if(preg_match("/olab/i",$this->config->get_cfg_value("core","mailmethod"))){
         if(isset($_POST['kolabFolderTypeType']) && $this->acl_is_writeable("kolabFolderType")){
           $this->kolabFolderTypeType = get_post("kolabFolderTypeType");
           $this->kolabFolderTypeSubType = get_post("kolabFolderTypeSubType");
