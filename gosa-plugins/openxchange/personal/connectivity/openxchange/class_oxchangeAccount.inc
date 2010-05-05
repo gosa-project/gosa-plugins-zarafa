@@ -61,7 +61,7 @@ class oxchangeAccount extends plugin
       $this->uid = $this->attrs['uid'][0];
     }
 
-    $this->dnmode= $this->config->get_cfg_value("accountPrimaryAttribute");
+    $this->dnmode= $this->config->get_cfg_value("core","accountPrimaryAttribute");
     if(isset($this->attrs[$this->dnmode][0])){
       $this->dnModeValue = $this->attrs[$this->dnmode][0];
     }
