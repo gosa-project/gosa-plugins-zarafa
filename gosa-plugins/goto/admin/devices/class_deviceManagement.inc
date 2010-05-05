@@ -61,7 +61,7 @@ class deviceManagement extends management
     if ($this->config->boolValueIsTrue("main", "copyPaste")){
       $this->cpHandler = new CopyPasteHandler($this->config);
     }
-    if($this->config->get_cfg_value("enableSnapshots") == "true"){
+    if($this->config->get_cfg_value("core","enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
     }
     parent::__construct($config, $ui, "devices", $headpage);
