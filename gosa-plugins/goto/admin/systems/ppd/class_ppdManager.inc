@@ -11,7 +11,7 @@ class ppdManager
 	function ppdManager($path)
 	{
     global $config;
-    $value =$config->get_cfg_value("ppdGzip","true");
+    $value =$config->get_cfg_value("core","ppdGzip","true");
     if(preg_match('/false/i',$value)){
       $this->useGzip  = false;
     }

@@ -38,8 +38,8 @@ class printerPPDDialog extends plugin
 
     /* Get PPD path and remove double //, and add trailing /  */
     $config = session::get('config');
-    if($config->get_cfg_value("ppdPath") != ""){
-      $this->pathToPPD = $config->get_cfg_value("ppdPath");
+    if($config->get_cfg_value("core","ppdPath") != ""){
+      $this->pathToPPD = $config->get_cfg_value("core","ppdPath");
       $this->pathToPPD= preg_replace("/\/\//", "/", $this->pathToPPD);
       if(!preg_match("/\/$/",$this->pathToPPD)){
         $this->pathToPPD = $this->pathToPPD."/";
@@ -532,7 +532,7 @@ class printerPPDDialog extends plugin
             }          
             $str  .=  "</select>\n";
 
-          }elseif($this->config->get_cfg_value("displayErrors") == "true"){
+          }elseif($this->config->get_cfg_value("core","displayErrors") == "true"){
             msg_dialog::display(_("PPD error"), sprintf(_("PPD type '%s' is not supported!"), $type), ERROR_DIALOG);
           }
           $str .= "</td></tr>\n";
