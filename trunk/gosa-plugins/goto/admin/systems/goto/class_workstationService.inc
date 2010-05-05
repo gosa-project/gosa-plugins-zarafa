@@ -49,7 +49,7 @@ class workservice extends plugin
   var $XKbLayouts       =array();
   var $XKbVariants      =array();
 
-  var $InheritXYSync = FALSE;
+  var $InheritXYSync = TRUE;
 
   function workservice (&$config, $dn= NULL, $parent= NULL)
   {
@@ -182,8 +182,16 @@ class workservice extends plugin
       }
     }
 
-    if(isset($this->attrs['gotoXHsync']) && isset($this->attrs['gotoXYsync'])) {
-      $this->InheritXYSync = FALSE;
+    if(preg_match("/\+/",$this->gotoXHsync)){
+      $this->AutoSync = true;
+      $this->gotoXHsync = preg_replace("/\+/","-",$this->gotoXHsync);
+      $this->gotoXVsync = preg_replace("/\+/","-",$this->gotoXVsync);
+    }
+
+    if (isset($this->attrs['gotoXHsync']) && isset($this->attrs['gotoXVsync'])) {
+        if(!empty($this->attrs['gotoXHsync'][0]) && !empty($this->attrs['gotoXVsync'][0])) {
+        $this->InheritXYSync = FALSE;
+       }
     }
 
     /* Workaround to fill in inherited values if we've specified an objectclass */
@@ -470,9 +478,7 @@ class workservice extends plugin
     if($this->InheritXYSync) {
       $this->attrs['gotoXHsync'] = array();
       $this->attrs['gotoXVsync'] = array();
-    }
-
-    if($this->AutoSync){
+    } elseif ($this->AutoSync) {
       $this->attrs['gotoXHsync'] = "30+55";
       $this->attrs['gotoXVsync'] = "50+70";
     }
