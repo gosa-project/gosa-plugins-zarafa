@@ -532,7 +532,7 @@ class printerPPDDialog extends plugin
             }          
             $str  .=  "</select>\n";
 
-          }elseif($this->config->get_cfg_value("displayerrors") == "true"){
+          }elseif($this->config->get_cfg_value("displayErrors") == "true"){
             msg_dialog::display(_("PPD error"), sprintf(_("PPD type '%s' is not supported!"), $type), ERROR_DIALOG);
           }
           $str .= "</td></tr>\n";
