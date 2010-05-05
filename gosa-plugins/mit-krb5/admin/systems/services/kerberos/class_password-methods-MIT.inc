@@ -369,7 +369,7 @@ class passwordMethodMIT extends passwordMethod
     /* No config object given, this may be the case 
        if there is only a is_available() request triggered.
      */
-    if (is_object($this->config) && $this->config->get_cfg_value("useSaslForKerberos") == "true"){
+    if (is_object($this->config) && $this->config->get_cfg_value("core","useSaslForKerberos") == "true"){
       $mode= "sasl";
     }
     return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
@@ -425,7 +425,7 @@ class passwordMethodMIT extends passwordMethod
     /* No config object given, this may be the case 
        if there is only a is_available() request triggered.
      */
-    if (is_object($this->config) && $this->config->get_cfg_value("useSaslForKerberos") == "true"){
+    if (is_object($this->config) && $this->config->get_cfg_value("core","useSaslForKerberos") == "true"){
       $mode= "sasl";
     }
     return "$mode";
