@@ -54,8 +54,8 @@ class goMailServer extends goService{
     $this->RestrictionFilters = array("FILTER"=>"FILTER"); 
     foreach(array("POSTFIXRESTRICTIONFILTERS"=>"RestrictionFilters",
           "POSTFIXPROTOCOLS"        =>"TransportProtocols") as $file => $var){
-      if($this->config->get_cfg_value($file) != ""){
-        $file = $this->config->get_cfg_value($file);
+      if($this->config->get_cfg_value("core",$file) != ""){
+        $file = $this->config->get_cfg_value("core",$file);
         if((isset($file)) && is_readable($file)){
           $tmp = file_get_contents($file);
           $tmp2= preg_split("/\n/",$tmp);
