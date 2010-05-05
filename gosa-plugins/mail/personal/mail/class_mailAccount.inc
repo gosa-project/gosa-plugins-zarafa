@@ -604,8 +604,8 @@ class mailAccount extends plugin
   function get_vacation_templates()
   {
     $vct = array();
-    if ($this->config->get_cfg_value("vacationTemplateDirectory") != ""){
-      $dir= $this->config->get_cfg_value("vacationTemplateDirectory");
+    if ($this->config->get_cfg_value("core","vacationTemplateDirectory") != ""){
+      $dir= $this->config->get_cfg_value("core","vacationTemplateDirectory");
       if (is_dir($dir) && is_readable($dir)){
         $dh = opendir($dir);
         while($file = readdir($dh)){

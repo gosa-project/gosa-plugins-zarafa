@@ -121,7 +121,7 @@ class mailMethod{
   {
     /* Get config value for cyrusUseSlashes
      */
-    if ($this->config->get_cfg_value("cyrusUseSlashes") == "true"){
+    if ($this->config->get_cfg_value("core","cyrusUseSlashes") == "true"){
       $this->cyrusUseSlashes = TRUE;
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "","<b>MAIL:</b> cyrusUseSlashes: <b>Enabled</b>");
     }else{
@@ -131,8 +131,8 @@ class mailMethod{
     /* Check if the mail account identification attribute
        is overridden in the configuration file
      */
-    if($this->config->get_cfg_value("mailAttribute","mail") != ""){
-      $new_uattrib= strtolower($this->config->get_cfg_value("mailAttribute"));
+    if($this->config->get_cfg_value("core","mailAttribute","mail") != ""){
+      $new_uattrib= strtolower($this->config->get_cfg_value("core","mailAttribute"));
       if(in_array($new_uattrib,array("mail","uid"))){
         $this->uattrib = $new_uattrib;
       }else{
@@ -150,19 +150,19 @@ class mailMethod{
 
     /* Check if we have an individual user/folder creation syntax 
      */
-    $tmp = $this->config->get_cfg_value("mailUserCreation");
+    $tmp = $this->config->get_cfg_value("core","mailUserCreation");
     if(!empty($tmp)){
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<i>".$tmp."</i>",
           "<b>MAIL:</b> User creation set to");
       $this->user_id  = $tmp;
     }
-    $tmp = $this->config->get_cfg_value("mailFolderCreation");
+    $tmp = $this->config->get_cfg_value("core","mailFolderCreation");
     if(!empty($tmp)){
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<i>".$tmp."</i>",
           "<b>MAIL:</b> Shared folder creation set to");
       $this->share_id = $tmp;
     }
-    $tmp = $this->config->get_cfg_value("gosaSharedPrefix");
+    $tmp = $this->config->get_cfg_value("core","gosaSharedPrefix");
     if(!empty($tmp)){
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<i>".$tmp."</i>",
           "<b>MAIL:</b> Shared folder prefix set to");
@@ -469,8 +469,8 @@ class mailMethod{
   public function get_method()
   {
     $methods = mailMethod::get_methods();
-    if ($this->config->get_cfg_value("mailmethod") != ""){
-      $method= $this->config->get_cfg_value("mailmethod");
+    if ($this->config->get_cfg_value("core","mailmethod") != ""){
+      $method= $this->config->get_cfg_value("core","mailmethod");
       $cls = get_correct_class_name("mailMethod$method");
       if(isset($methods[$cls])){
         @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"", "<b>MAIL:</b> Selected mailMethod: <b>".$cls."</b>");
@@ -786,7 +786,7 @@ class mailMethod{
   static public function get_current_method($config)
   {
     global $class_mapping;
-    $method= $config->get_cfg_value("mailmethod");
+    $method= $config->get_cfg_value("core","mailmethod");
     $cls = get_correct_class_name("mailMethod$method");
     foreach($class_mapping as $class => $path){
       if($class == $cls){
