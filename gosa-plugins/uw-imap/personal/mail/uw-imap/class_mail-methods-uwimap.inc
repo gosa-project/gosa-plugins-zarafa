@@ -57,7 +57,7 @@ class mailMethodUwimap extends mailMethod{
 
     /* Check for required PROCMAIL_PATH configuration 
      */
-    if($this->config->get_cfg_value("procMailPath","") == ""){
+    if($this->config->get_cfg_value("core","procMailPath","") == ""){
       msg_dialog::display(_("Configuration error"),msgPool::invalidConfigurationAttribute("procMailPath"), ERROR_DIALOG);
       $this->procmaildir = "";
     }else{
