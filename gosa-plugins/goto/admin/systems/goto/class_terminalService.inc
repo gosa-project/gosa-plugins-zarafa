@@ -106,8 +106,8 @@ class termservice extends plugin
           "1400x1050" =>  "1400x1050",
           "1600x1200" =>  "1600x1200");
 
-    if($this->config->get_cfg_value("resolutions") != ""){
-      $file = $this->config->get_cfg_value("resolutions");
+    if($this->config->get_cfg_value("core","resolutions") != ""){
+      $file = $this->config->get_cfg_value("core","resolutions");
       if(is_readable($file)){
         $str = file_get_contents($file);
         $lines = preg_split("/\n/",$str);

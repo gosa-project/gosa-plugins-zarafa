@@ -551,8 +551,8 @@ class printgeneric extends plugin
 
     /* Parse selected ppd file */
     $config = session::get('config');
-    if ($config->get_cfg_value("ppdPath") != ""){
-      $path = $config->get_cfg_value("ppdPath");
+    if ($config->get_cfg_value("core","ppdPath") != ""){
+      $path = $config->get_cfg_value("core","ppdPath");
       if(!preg_match("/\/$/",$path)){
         $path = $path."/";
       }
@@ -824,7 +824,7 @@ class printgeneric extends plugin
 
       /* Rename the generated ppd to match the gzip ending '.gz', if necessary.
       */
-      $path = $this->config->get_cfg_value("ppdPath");
+      $path = $this->config->get_cfg_value("core","ppdPath");
       if(!preg_match("/\/$/",$path)){
         $path = $path."/";
       }
