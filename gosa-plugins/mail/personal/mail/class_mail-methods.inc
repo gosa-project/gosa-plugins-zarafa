@@ -689,7 +689,7 @@ class mailMethod{
   /*! \brief  Returns the available mailMethods
       @return Array   A list of all avaialable mailMethods_
    */ 
-  static protected function get_methods()
+  static function get_methods()
   {
     global $class_mapping;
     $available = array();
