@@ -42,7 +42,7 @@ msgstr "Abteilung"
 
 #: admin/systems/class_divListSystem.inc:95
 msgid "Release"
-msgstr "Freigeben"
+msgstr "Release"
 
 #: admin/systems/class_divListSystem.inc:98
 #: admin/systems/class_divListSystem.inc:187
