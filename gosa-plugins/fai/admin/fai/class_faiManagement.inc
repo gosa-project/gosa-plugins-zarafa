@@ -102,7 +102,7 @@ class faiManagement extends management
     $headpage->registerElementFilter("filterProperties", "faiManagement::filterProperties");
 
     // Add copy&paste and snapshot handler.
-    if ($this->config->boolValueIsTrue("main", "copyPaste")){
+    if ($this->config->boolValueIsTrue("core", "copyPaste")){
       $this->cpHandler = new CopyPasteHandler($this->config);
     }
 
