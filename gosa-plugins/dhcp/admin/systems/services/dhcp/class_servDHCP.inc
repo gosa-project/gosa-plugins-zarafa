@@ -44,7 +44,9 @@ class servdhcp extends goService
             "dhcpPool" => _("Pool"),
             "dhcpSubnet" => _("Subnet"),
             "dhcpFailOverPeer" => _("Failover peer"),
-            "dhcpSharedNetwork" => _("Shared network"));
+            "dhcpSharedNetwork" => _("Shared network"),
+            "dhcpTSigKey" => _("DNS update key"),
+            "dhcpDnsZone" => _("DNS update zones"));
 
 
     /* Backport: PHP4 compatibility  */
@@ -122,6 +124,7 @@ class servdhcp extends goService
     /* Section Creation? */
     if (isset($_POST['create_section']) && isset($_POST['section'])){
       $section= $_POST['section'];
+
       $tmp = new dhcpNewSectionDialog(NULL);
       if (isset($tmp->sectionMap[$section])){
         $this->dialog= new $section($this,$this->current_object);
@@ -694,7 +697,7 @@ class servdhcp extends goService
   {
     $type= "";
     $types= array("dhcpService", "dhcpClass", "dhcpSubClass", "dhcpHost",
-                  "dhcpGroup", "dhcpPool", "dhcpSubnet", "dhcpSharedNetwork");
+                  "dhcpGroup", "dhcpPool", "dhcpSubnet", "dhcpSharedNetwork", "dhcpTSigKey", "dhcpDnsZone");
 
     foreach ($this->dhcpObjectCache[$dn]['objectClass'] as $oc){
       if (in_array($oc, $types)){
