@@ -10,14 +10,16 @@ class dhcpNewSectionDialog extends plugin
   /* Mapping array */
   var $types= array();
   var $classtype= "";
-  var $sectionMap= array(  "dhcpService" => array("dhcpSharedNetwork", "dhcpSubnet", "dhcpGroup", "dhcpHost", "dhcpClass"),
+  var $sectionMap= array(  "dhcpService" => array("dhcpSharedNetwork", "dhcpSubnet", "dhcpGroup", "dhcpHost", "dhcpClass", "dhcpTSigKey", "dhcpDnsZone"),
                               "dhcpClass" => array("dhcpSubClass"),
                               "dhcpSubClass" => array(),
                               "dhcpHost" => array(),
                               "dhcpGroup" => array("dhcpHost"),
                               "dhcpPool" => array(),
-                              "dhcpSubnet" => array("dhcpPool", "dhcpGroup", "dhcpHost", "dhcpClass"),
-                              "dhcpSharedNetwork" => array("dhcpSubnet", "dhcpPool"));
+                              "dhcpSubnet" => array("dhcpPool", "dhcpGroup", "dhcpHost", "dhcpClass", "dhcpTSigKey", "dhcpDnsZone"),
+                              "dhcpSharedNetwork" => array("dhcpSubnet", "dhcpPool", "dhcpTsigKey", "dhcpDnsZone"),
+                              "dhcpTSigKey"=> array(),
+                              "dhcpDnsZone" => array());
 
 
 
@@ -30,7 +32,9 @@ class dhcpNewSectionDialog extends plugin
                           "dhcpGroup" => _("Group"),
                           "dhcpPool" => _("Pool"),
                           "dhcpSubnet" => _("Subnet"),
-                          "dhcpSharedNetwork" => _("Shared network"));
+                          "dhcpSharedNetwork" => _("Shared network"),
+                          "dhcpTSigKey" => _("DNS update key"),
+                          "dhcpDnsZone" => _("DNS update zone") );
 
     $this->classtype= $type;
   }
