@@ -638,11 +638,7 @@ class mimetype extends plugin
     if(is_object($this->parent->parent)){
       return($this->parent->parent->IsReleaseManagementActivated());
     }else{
-      /* Check if we should enable the release selection */
-      $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-      if(!empty($tmp)){
-        return(true);
-      }
+      return($this->config->pluginEnabled("faiManagement"));
     }
     return(FALSE);
   }
