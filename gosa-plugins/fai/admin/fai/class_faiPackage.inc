@@ -671,6 +671,18 @@ class faiPackage extends plugin
           "plPriority"    => 28,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "faiPackageRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=packages,",
+                  "description"   => "The 'faiPackageRDN' statement defines the location where new fai-packages will be created. The default is 'ou=packages,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE)),
+
           "plProvidedAcls" => array(
             "cn"                => _("Name"),
             "description"       => _("Description"),
