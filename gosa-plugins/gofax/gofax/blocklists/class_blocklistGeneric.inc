@@ -369,16 +369,30 @@ class blocklistGeneric extends plugin
   /* Return plugin informations for acl handling */
   static function plInfo()
   {
-    return (array(
-          "plShortName"       => _("Fax"),
-          "plDescription"     => _("Fax blocklists"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array(),
+      return (array(
+                  "plShortName"       => _("Fax"),
+                  "plDescription"     => _("Fax blocklists"),
+                  "plSelfModify"      => FALSE,
+                  "plDepends"         => array(),
 
-          "plPriority"    => 0,
-          "plSection"     => array("administration" => _("Fax blocklists")),
-          "plCategory"    => array("gofaxlist"      => array("description" => _("Fax blocklists"),
-              "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
+                  "plPriority"    => 0,
+                  "plSection"     => array("administration" => _("Fax blocklists")),
+                  "plCategory"    => array("gofaxlist"      => array("description" => _("Fax blocklists"),
+                          "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
+                  "plProperties" =>
+                  array(
+                      array(
+                          "name"          => "faxBlocklistRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=gofax,ou=systems,",
+                          "description"   => "The 'faxBlocklistRDN' statement defines the location where new blocklists will be created. The default is 'ou=gofax,ou=systems,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE
+                          )
+                      ),
+
           "plProvidedAcls" => array(
             "cn"              => _("Name"),
             "description"     => _("Description"),
