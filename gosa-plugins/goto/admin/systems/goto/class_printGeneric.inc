@@ -999,6 +999,20 @@ class printgeneric extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("printer" => array("description"  => _("Printer"),
                                                     "objectClass"  => "gotoPrinter"),"workstation","terminal"),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "printerRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=printers,ou=systems,",
+                  "description"   => "The 'printerRDN' statement defines the location where new printers will be created. The default is 'ou=printers,ou=systems,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
             "base"                => _("Base") ,         
