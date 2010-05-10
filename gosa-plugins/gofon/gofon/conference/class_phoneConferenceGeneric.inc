@@ -818,7 +818,22 @@ class conference extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("gofonconference" => array("description" => _("GOfon conference"),
-              "objectClass" => "gofonConference")),
+                  "objectClass" => "gofonConference")),
+
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "phoneConferenceRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=conferences,ou=asterisk,ou=configs,ou=systems,",
+                  "description"   => "The 'phoneConferenceRDN' statement defines the location where new phone conferences will be created. The default is 'ou=conferences,ou=asterisk,ou=configs,ou=systems,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
 
           "plProvidedAcls" => array(
             "cn"                            => _("Name"),
