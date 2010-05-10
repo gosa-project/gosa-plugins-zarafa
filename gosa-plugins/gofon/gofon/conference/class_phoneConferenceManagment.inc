@@ -38,7 +38,7 @@ class phoneConferenceManagment extends management
     $this->config = $config;
     $this->ui = $ui;
    
-    $this->storagePoints = array(get_ou("conference", "phoneConferenceRDN") );
+    $this->storagePoints = array(get_ou("phoneConferenceRDN"));
  
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){

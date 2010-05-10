@@ -64,7 +64,7 @@ class macro extends plugin
       }
     } else {
       $this->orig_cn=$this->cn;
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("macro", "phoneMacroRDN") , '/')."/i", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("phoneMacroRDN"), '/')."/i", "", $this->dn);
     }
 
     /* Check server configurations

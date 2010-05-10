@@ -22,7 +22,7 @@ class tabsVariable extends tabs
   function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['faiVariable'];
-	$new_dn ='cn='.$baseobject->cn.",".get_ou("faiVariable", "faiVariableRDN") .$this->parent->fai_release;
+	$new_dn ='cn='.$baseobject->cn.",".get_ou('faiVariableRDN').$this->parent->fai_release;
 			
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

@@ -115,7 +115,7 @@ class servnfs extends plugin
         $smarty->assign("mount_checked", "checked");
       } else {
         $tmp = explode(",", $this->dn);
-        $clip = $tmp[0] . ",".get_ou("servgeneric", "serverRDN") ;
+        $clip = $tmp[0] . ",".get_ou('serverRDN');
         $mountsdn = "cn=mounts," . substr($this->dn, strlen($clip));
         switch ($this->type) {
           case "netatalk" : {

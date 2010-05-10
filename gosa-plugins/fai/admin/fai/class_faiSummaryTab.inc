@@ -41,13 +41,13 @@ class faiSummaryTab extends plugin{
 
     /* Base object configuration */
     $this->objs = array(	
-        "FAIscript" 		    => array(	"Image"	=>"plugins/fai/images/fai_script.png",        "Name"=>_("Scripts")      ,"Tree"	=>get_ou("faiTemplate", "faiTemplateRDN") ) ,
-        "FAIhook" 			    => array(	"Image"	=>"plugins/fai/images/fai_hook.png" ,         "Name"=>_("Hooks")        ,"Tree"	=>get_ou("faiTemplate", "faiTemplateRDN") ),
-        "FAIvariable" 		  => array(	"Image"	=>"plugins/fai/images/fai_variable.png",      "Name"=>_("Variables")    ,"Tree"	=>get_ou("faiTemplate", "faiTemplateRDN") ) ,
-        "FAItemplate" 		  => array(	"Image"	=>"plugins/fai/images/fai_template.png",      "Name"=>_("Templates")    ,"Tree"	=>get_ou("faiTemplate", "faiTemplateRDN") ) ,
-        "FAIpartitionTable" => array(	"Image"	=>"plugins/fai/images/fai_partitionTable.png","Name"=>_("Partition table")  ,"Tree"	=>get_ou("faiTemplate", "faiTemplateRDN") ) ,
-        "FAIpackageList" 	  => array(	"Image" =>"plugins/fai/images/fai_packages.png",      "Name"=>_("Package list") ,"Tree"	=>get_ou("faiTemplate", "faiTemplateRDN") ) ,
-        "FAIprofile" 		    => array(	"Image"	=>"plugins/fai/images/fai_profile.png",       "Name"=>_("Profiles")     ,"Tree"	=>get_ou("faiTemplate", "faiTemplateRDN") ));
+        "FAIscript" 		    => array(	"Image"	=>"plugins/fai/images/fai_script.png",        "Name"=>_("Scripts")      ,"Tree"	=>get_ou('faiScriptRDN')) ,
+        "FAIhook" 			    => array(	"Image"	=>"plugins/fai/images/fai_hook.png" ,         "Name"=>_("Hooks")        ,"Tree"	=>get_ou('faiHookRDN')),
+        "FAIvariable" 		  => array(	"Image"	=>"plugins/fai/images/fai_variable.png",      "Name"=>_("Variables")    ,"Tree"	=>get_ou('faiVariableRDN')) ,
+        "FAItemplate" 		  => array(	"Image"	=>"plugins/fai/images/fai_template.png",      "Name"=>_("Templates")    ,"Tree"	=>get_ou('faiTemplateRDN')) ,
+        "FAIpartitionTable" => array(	"Image"	=>"plugins/fai/images/fai_partitionTable.png","Name"=>_("Partition table")  ,"Tree"	=>get_ou('faiPartitionRDN')) ,
+        "FAIpackageList" 	  => array(	"Image" =>"plugins/fai/images/fai_packages.png",      "Name"=>_("Package list") ,"Tree"	=>get_ou('faiPackageRDN')) ,
+        "FAIprofile" 		    => array(	"Image"	=>"plugins/fai/images/fai_profile.png",       "Name"=>_("Profiles")     ,"Tree"	=>get_ou('faiProfileRDN')));
   }
 
 
@@ -69,7 +69,7 @@ class faiSummaryTab extends plugin{
       /* Get Classes and release */
       $this->Classes = $this->parent->by_object['faiProfile']->FAIclasses;
       $this->base    = $this->parent->by_object['faiProfile']->parent->parent->fai_release;
-      $str = preg_replace("/^.*".preg_quote(get_ou("faiTemplate", "faiTemplateRDN") , '/')."/i","",$this->dn);
+      $str = preg_replace("/^.*".preg_quote(get_ou('faiProfileRDN'), '/')."/i","",$this->dn);
       $tmp  = $this->parent->by_object['faiProfile']->parent->parent->getBranches();
       $this->Release = $tmp[$this->base];
   

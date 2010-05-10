@@ -81,7 +81,7 @@ class printtabs extends tabs
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
     $baseobject= $this->by_object['printgeneric'];
-    $this->dn= "cn=$baseobject->cn,".get_ou("printgeneric", "printerRDN") .$baseobject->base;
+    $this->dn= "cn=$baseobject->cn,".get_ou('printerRDN').$baseobject->base;
     $baseobject->dn= $this->dn;
 
     foreach ($this->by_object as $key => $obj){

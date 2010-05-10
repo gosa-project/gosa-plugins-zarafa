@@ -137,7 +137,7 @@ class workservice extends plugin
 
     /* Load phone hardware list
      */
-    $tmp = get_sub_list("(objectClass=goFonHardware)","",array(get_ou("group", "ogroupRDN") ),
+    $tmp = get_sub_list("(objectClass=goFonHardware)","",array(get_ou("phoneRDN")),
                   $this->config->current['BASE'],array("cn","description"), GL_NO_ACL_CHECK);
     foreach($tmp as $attrs){
       $cn= $attrs['cn'][0];
@@ -155,13 +155,13 @@ class workservice extends plugin
      */
     $deps_a = array(
         get_people_ou(),
-        get_ou("group", "ogroupRDN") ,
-        get_ou("group", "ogroupRDN") ,
-        get_ou("group", "ogroupRDN") ,
-        get_ou("group", "ogroupRDN") ,
-        get_ou("group", "ogroupRDN") ,
-        get_ou("group", "ogroupRDN") ,
-        get_ou("group", "ogroupRDN") );
+        get_ou("ogroupRDN"),
+        get_ou("serverRDN"),
+        get_ou("terminalRDN"),
+        get_ou("workstationRDN"),
+        get_ou("printerRDN"),
+        get_ou("componentRDN"),
+        get_ou("phoneRDN"));
 
     $tmp = get_sub_list("(goFonHardware=*)","",$deps_a,$this->config->current['BASE'],
         array('cn','dn','goFonHardware'),GL_NO_ACL_CHECK);
@@ -544,7 +544,7 @@ class workservice extends plugin
            */
           $p = $this->parent->by_object['ogroup'];
           foreach($p->memberList as $dn => $obj){
-            if(preg_match("/".preg_quote(get_ou("group", "ogroupRDN") , '/')."/",$dn)) continue;
+            if(preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$dn)) continue;
             if(isset($p->objcache[$dn]['macAddress']) && !empty($p->objcache[$dn]['macAddress'])){
               $macs[] = $p->objcache[$dn]['macAddress'];
             }
@@ -554,7 +554,7 @@ class workservice extends plugin
           /* We are a workstation. Add current mac.
            */
           $mac = $this->parent->by_object['workgeneric']->netConfigDNS->macAddress;
-          if(!empty($mac) && !preg_match("/".preg_quote(get_ou("group", "ogroupRDN") , '/')."/",$this->orig_dn)){
+          if(!empty($mac) && !preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$this->orig_dn)){
             $macs[] = $mac;
           }          
         }

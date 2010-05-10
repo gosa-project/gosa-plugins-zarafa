@@ -71,11 +71,11 @@ class printgeneric extends plugin
 
     /* Update dn, to ensure storing as printer instead of WS / terminal */
     if(preg_match("/Terminal/i",$this->BelongsTo) || preg_match("/TerminalTemplate/i",$this->BelongsTo)){
-      $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+      $this->dn= preg_replace("/".preg_quote(get_ou('terminalRDN'), '/')."/i",get_ou('printerRDN'),$this->dn);
     }
 
     if(preg_match("/Workstation/i",$this->BelongsTo) || preg_match("/WorkstationTemplate/i",$this->BelongsTo)){
-      $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+      $this->dn= preg_replace("/".preg_quote(get_ou('workstationRDN'), '/')."/i",get_ou('printerRDN'),$this->dn);
     }
 
     $this->orig_dn = $this->dn;
@@ -104,10 +104,10 @@ class printgeneric extends plugin
     } else {
     
       /* Set base and check if the extracted base exists */
-      if(preg_match("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",$this->dn)){
-        $this->base= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i","",dn2base($this->dn));
+      if(preg_match("/".preg_quote(get_ou('systemIncomingRDN'), '/')."/i",$this->dn)){
+        $this->base= preg_replace("/".preg_quote(get_ou('systemIncomingRDN'), '/')."/i","",dn2base($this->dn));
       }else{
-        $this->base= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i","",dn2base($this->dn));
+        $this->base= preg_replace("/".preg_quote(get_ou('printerRDN'), '/')."/i","",dn2base($this->dn));
       }
 
       if(!isset($this->config->idepartments[$this->base])){
@@ -256,11 +256,11 @@ class printgeneric extends plugin
       /* Update dn, to ensure storing as printer instead of WS / terminal
        */
       if(preg_match("/terminal/i",$this->BelongsTo)){
-        $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+        $this->dn= preg_replace("/".preg_quote(get_ou('terminalRDN'), '/')."/i",get_ou('printerRDN'),$this->dn);
       }
 
       if(preg_match("/workstation/i",$this->BelongsTo)){
-        $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+        $this->dn= preg_replace("/".preg_quote(get_ou('workstationRDN'), '/')."/i",get_ou('printerRDN'),$this->dn);
       }
 
       /* Detect if this is a valid printer account;
@@ -625,11 +625,11 @@ class printgeneric extends plugin
       /* Update dn, to ensure storing as printer instead of WS / terminal
        */
       if(preg_match("/terminal/i",$this->BelongsTo)){
-        $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/').",/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+        $this->dn= preg_replace("/".preg_quote(get_ou('terminalRDN'), '/').",/i",get_ou('printerRDN'),$this->dn);
       }
 
       if(preg_match("/workstation/i",$this->BelongsTo)){
-        $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+        $this->dn= preg_replace("/".preg_quote(get_ou('workstationRDN'), '/')."/i",get_ou('printerRDN'),$this->dn);
       }
 
       /* Check if this dn points to a printer, to avoid deleting something else */
@@ -727,7 +727,7 @@ class printgeneric extends plugin
       }
     }
 
-    $dn= "cn=".$this->cn.get_ou("workgeneric", "workstationRDN") .",".$this->base;
+    $dn= "cn=".$this->cn.get_ou('printerRDN').",".$this->base;
 
     /* must: cn */
     if(($this->BelongsTo == "Printer") && $this->cn == ""){
@@ -753,7 +753,7 @@ class printgeneric extends plugin
     if (($this->orig_dn != $dn)&&( preg_match("/printer/i",$this->BelongsTo))){
       $ldap= $this->config->get_ldap_link();
       $ldap->cd ($this->base);
-      $ldap->ls("(cn=".$this->cn.")",get_ou("workgeneric", "workstationRDN") .$this->base, array("cn"));
+      $ldap->ls("(cn=".$this->cn.")",get_ou('printerRDN').$this->base, array("cn"));
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
           if(preg_match("/cn=dhcp,/",$attrs['dn'])){
@@ -785,11 +785,11 @@ class printgeneric extends plugin
     /* Update dn, to ensure storing as printer instead of WS / terminal
      */
     if(preg_match("/terminal/i",$this->BelongsTo)){
-      $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+      $this->dn= preg_replace("/".preg_quote(get_ou('terminalRDN'), '/')."/i",get_ou('printerRDN'),$this->dn);
     }
 
     if(preg_match("/workstation/i",$this->BelongsTo)){
-      $this->dn= preg_replace("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",get_ou("workgeneric", "workstationRDN") ,$this->dn);
+      $this->dn= preg_replace("/".preg_quote(get_ou('workstationRDN'), '/')."/i",get_ou('printerRDN'),$this->dn);
     }
     
     if(!$this->is_account) return;
@@ -921,7 +921,7 @@ class printgeneric extends plugin
     }
 
     /* Ensure to create a new object */
-    if(preg_match("/".preg_quote(get_ou("workgeneric", "workstationRDN") , '/')."/i",$this->orig_dn)){
+    if(preg_match("/".preg_quote(get_ou('systemIncomingRDN'), '/')."/i",$this->orig_dn)){
       $this->orig_dn = "new";
     }
 

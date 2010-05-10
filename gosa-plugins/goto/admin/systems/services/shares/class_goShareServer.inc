@@ -264,7 +264,7 @@ class goShareServer extends goService{
 
    function process_mounts() {
 
-    $clip = "cn=" . $this->cn . ",".get_ou("servgeneric", "serverRDN") ;
+    $clip = "cn=" . $this->cn . ",".get_ou('serverRDN');
     $mountsdn = "cn=mounts," . substr($this->dn, strlen($clip));
 
     $mounts = array(

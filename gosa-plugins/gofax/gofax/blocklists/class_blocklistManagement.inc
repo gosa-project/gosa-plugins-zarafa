@@ -38,7 +38,7 @@ class blocklist extends management
     $this->config = $config;
     $this->ui = $ui;
 
-    $this->storagePoints = array(get_ou("blocklistGeneric", "faxBlocklistRDN") );
+    $this->storagePoints = array(get_ou("faxBlocklistRDN"));
 
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){

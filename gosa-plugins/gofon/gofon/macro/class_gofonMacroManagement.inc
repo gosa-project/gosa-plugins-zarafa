@@ -39,7 +39,7 @@ class goFonMacro extends management
     $this->config = $config;
     $this->ui = $ui;
 
-    $this->storagePoints = array(get_ou("macro", "phoneMacroRDN") );
+    $this->storagePoints = array(get_ou("phoneMacroRDN"));
 
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){

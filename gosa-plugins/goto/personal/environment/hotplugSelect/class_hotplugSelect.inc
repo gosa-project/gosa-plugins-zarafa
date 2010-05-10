@@ -33,7 +33,7 @@ class hotplugSelect extends management
     $this->config = $config;
     $this->ui = $ui;
 
-    $this->storagePoints = array(get_ou("deviceGeneric", "deviceRDN") );
+    $this->storagePoints = array(get_ou("deviceRDN"));
 
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){

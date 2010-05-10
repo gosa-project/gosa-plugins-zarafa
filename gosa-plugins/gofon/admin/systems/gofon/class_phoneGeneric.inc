@@ -64,7 +64,7 @@ class phoneGeneric extends plugin
       $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("phoneGeneric", "phoneRDN") , '/')."/i", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("phoneRDN"), '/')."/i", "", $this->dn);
     }
   
     if($this->goFonMSN != ""){
@@ -301,7 +301,7 @@ class phoneGeneric extends plugin
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
 
-    $this->dn= "cn=".$this->cn.",".get_ou("phoneGeneric", "phoneRDN") .$this->base;
+    $this->dn= "cn=".$this->cn.",".get_ou('phoneRDN').$this->base;
 
     /* To check for valid ip*/
     if($this->netConfigDNS->ipHostNumber == ""){
