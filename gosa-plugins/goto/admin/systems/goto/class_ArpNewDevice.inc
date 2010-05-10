@@ -135,21 +135,34 @@ class ArpNewDevice extends plugin
    */
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Unknown incoming objects"),
-          "plDescription" => _("Unknown incoming objects"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 99,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
-              "objectClass"  => "")),
-          "plProvidedAcls"=> array(
-            "cn"  => _("Name"),
-            "description"  => _("Description")
-            
-          )
-          ));
+      return (array(
+                  "plShortName"   => _("Unknown incoming objects"),
+                  "plDescription" => _("Unknown incoming objects"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 99,
+                  "plSection"     => array("administration"),
+
+                  "plProperties" =>
+                  array(
+                      array(
+                          "name"          => "systemIncomingRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=incoming,",
+                          "description"   => "The 'systemIncomingRDN' statement defines the location where incoming systems are stored. The default is 'ou=incoming,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE)),
+
+                  "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
+                          "objectClass"  => "")),
+                  "plProvidedAcls"=> array(
+                          "cn"  => _("Name"),
+                          "description"  => _("Description")
+
+                          )
+              ));
   }
 
 }
