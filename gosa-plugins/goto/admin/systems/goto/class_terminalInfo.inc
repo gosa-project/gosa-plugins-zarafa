@@ -109,7 +109,7 @@ class terminfo extends plugin
 
           /* Use 'goto' as snmp community or the configured value from the config */
           $community= 'goto';
-	  $str= $this->config->search("terminfo", "SNMPCOMMUNITY", array('tabs'));
+	  $str= $this->config->get_cfg_value("terminfo", "snmpCommunity");
           if(!empty($str)){
             $community = $str;
           }
