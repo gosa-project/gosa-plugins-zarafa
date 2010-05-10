@@ -23,7 +23,7 @@ class tabsPartition extends tabs
   {
   	$baseobject= $this->by_object['faiPartitionTable'];
 
-	$new_dn ='cn='.$baseobject->cn.",".get_ou('faiPartitionRDN').$this->parent->fai_release;
+	$new_dn ='cn='.$baseobject->cn.",".get_ou("faiPartitionTable", "faiPartitionRDN") .$this->parent->fai_release;
 
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

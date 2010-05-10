@@ -185,7 +185,7 @@ class faiPackage extends plugin
 
       /* Assemble release name */
       $release = $this->parent->parent->fai_release;
-      $tmp= preg_replace('/[,]*'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/i', '', $release);
+      $tmp= preg_replace('/[,]*'.preg_quote(get_ou("faiPackage", "faiPackageRDN") , '/').'.*$/i', '', $release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(explode(',', $tmp));
       $this->FAIdebianRelease= "/";
@@ -544,7 +544,7 @@ class faiPackage extends plugin
      */
     if($this->is_new){
       $release = $this->parent->parent->fai_release;
-      $new_dn= 'cn='.$this->cn.",".get_ou('faiPackageRDN').get_ou('faiBaseRDN').$release;
+      $new_dn= 'cn='.$this->cn.",".get_ou("faiPackage", "faiPackageRDN") .get_ou("faiPackage", "faiPackageRDN") .$release;
       $res = faiManagement::check_class_name("FAIpackageList",$this->cn,$new_dn);
       if(isset($res[$this->cn])){
         $message[] = msgPool::duplicated(_("Name"));
@@ -589,7 +589,7 @@ class faiPackage extends plugin
     if($this->FAIdebianRelease == "ClearFromCopyPaste"){
 
       $current_release  = $this->parent->parent->fai_release;
-      $tmp= preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'.*$/i', '', $current_release);
+      $tmp= preg_replace('/,'.preg_quote(get_ou("faiPackage", "faiPackageRDN") , '/').'.*$/i', '', $current_release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(explode(',', $tmp));
       $this->FAIdebianRelease= "";

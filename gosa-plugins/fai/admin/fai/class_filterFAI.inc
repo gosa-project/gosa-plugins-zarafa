@@ -8,19 +8,19 @@ class filterFAI extends filterLDAP{
      * Generate List of Partitions,Hooks,Scripts,Templates,Profiles ...
      */
     $ObjectTypes = array(
-        "FAIpartitionTable"  => array("OU"=> get_ou('faiPartitionRDN') , "CHKBOX"=>"ShowPartitions"  ,
+        "FAIpartitionTable"  => array("OU"=> get_ou("faiTemplate", "faiTemplateRDN")  , "CHKBOX"=>"ShowPartitions"  ,
           "ACL" => "faiPartitionTable"),
-        "FAIpackageList"     => array("OU"=> get_ou('faiPackageRDN')   , "CHKBOX"=>"ShowPackages"    ,
+        "FAIpackageList"     => array("OU"=> get_ou("faiTemplate", "faiTemplateRDN")    , "CHKBOX"=>"ShowPackages"    ,
           "ACL" => "faiPackage"),
-        "FAIscript"          => array("OU"=> get_ou('faiScriptRDN')    , "CHKBOX"=>"ShowScripts"     ,
+        "FAIscript"          => array("OU"=> get_ou("faiTemplate", "faiTemplateRDN")     , "CHKBOX"=>"ShowScripts"     ,
           "ACL" => "faiScript"),
-        "FAIvariable"        => array("OU"=> get_ou('faiVariableRDN')  , "CHKBOX"=>"ShowVariables"   ,
+        "FAIvariable"        => array("OU"=> get_ou("faiTemplate", "faiTemplateRDN")   , "CHKBOX"=>"ShowVariables"   ,
           "ACL" => "faiVariable"),
-        "FAIhook"            => array("OU"=> get_ou('faiHookRDN')      , "CHKBOX"=>"ShowHooks"       ,
+        "FAIhook"            => array("OU"=> get_ou("faiTemplate", "faiTemplateRDN")       , "CHKBOX"=>"ShowHooks"       ,
           "ACL" => "faiHook"),
-        "FAIprofile"         => array("OU"=> get_ou('faiProfileRDN')   , "CHKBOX"=>"ShowProfiles"    ,
+        "FAIprofile"         => array("OU"=> get_ou("faiTemplate", "faiTemplateRDN")    , "CHKBOX"=>"ShowProfiles"    ,
           "ACL" => "faiProfile"),
-        "FAItemplate"        => array("OU"=> get_ou('faiTemplateRDN')  , "CHKBOX"=>"ShowTemplates"   ,
+        "FAItemplate"        => array("OU"=> get_ou("faiTemplate", "faiTemplateRDN")   , "CHKBOX"=>"ShowTemplates"   ,
           "ACL" => "faiTemplate"));
 
 
@@ -55,7 +55,7 @@ class filterFAI extends filterLDAP{
           /* Clean up object informations */
           $obj                  = array();
           $obj['cn']            = $object['cn'][0];
-          $obj['dn']            = $object['cn'][0].",".get_ou("faiBaseRDN").$config->current['BASE'];
+          $obj['dn']            = $object['cn'][0].",".get_ou("faiTemplate", "faiTemplateRDN") .$config->current['BASE'];
           $obj['acl']           = $acl;
           $obj['class']         = $rest ['ACL'];
           $obj['FAIstate']      = $entry['FAIstate'];
@@ -98,7 +98,7 @@ class filterFAI extends filterLDAP{
 
 
     // Append opsi stuff ... 
-    if(class_available('opsi') && $base == get_ou("faiBaseRDN").$config->current['BASE']){
+    if(class_available('opsi') && $base == get_ou("faiTemplate", "faiTemplateRDN") .$config->current['BASE']){
       $opsi = new opsi($config);
       $objects = array();
       if($opsi instanceof opsi && $opsi->enabled()){
