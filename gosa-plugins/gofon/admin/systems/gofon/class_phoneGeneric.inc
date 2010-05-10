@@ -493,7 +493,21 @@ class phoneGeneric extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("phone" => array("description"  => _("Phone hardware"),
-                                                    "objectClass"  => "goFonHardware")),
+                  "objectClass"  => "goFonHardware")),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "phoneRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=phones,ou=systems,",
+                  "description"   => "The 'phoneRDN' statement defines the location where new phones will be created. The default is 'ou=phones,ou=systems,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
             "base"                => _("Base"),
