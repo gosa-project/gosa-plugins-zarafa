@@ -577,30 +577,42 @@ class application extends plugin
       #FIXME FAIscript seams to ununsed within this class... */
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Generic"),
-          "plDescription" => _("Application generic"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 0,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("application" => array("description"  => _("Application"),
-                                                          "objectClass"  => "gosaApplication")),
-          "plProvidedAcls"=> array(
-            "cn"                => _("Name"),
-            "base"              => _("Base"),
-            "description"       => _("Description"),
-            "gosaApplicationExecute"  => _("Execute"),
-            "gosaApplicationName"     => _("Name"),
-            "gosaApplicationIcon"     => _("Icon"),
-            "gotoLogonScript"         => _("Script content"),
+      return (array(
+                  "plShortName"   => _("Generic"),
+                  "plDescription" => _("Application generic"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 0,
+                  "plSection"     => array("administration"),
+                  "plCategory"    => array("application" => array("description"  => _("Application"),
+                          "objectClass"  => "gosaApplication")),
+                  "plProperties" =>
+                  array(
+                      array(
+                          "name"          => "applicationRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=apps,",
+                          "description"   => "The 'applicationRDN' statement defines the location where new applications will be created. The default is 'ou=apps,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE)),
 
-            "execForGroupmembers" => _("Only executable for members"),              // G
-            "placeOnDesktop"      => _("Place icon on members desktop"),            // D
-            "placeOnKicker"       => _("Place entry in members launch bar"),        // L
-            "placeInStartmenu"    => _("Place entry in members startmenu"),         // M
-            "overwriteConfig"      => _("Replace user configuration on startup"))  // O
-            ));
+          "plProvidedAcls"=> array(
+                  "cn"                => _("Name"),
+                  "base"              => _("Base"),
+                  "description"       => _("Description"),
+                  "gosaApplicationExecute"  => _("Execute"),
+                  "gosaApplicationName"     => _("Name"),
+                  "gosaApplicationIcon"     => _("Icon"),
+                  "gotoLogonScript"         => _("Script content"),
+
+                  "execForGroupmembers" => _("Only executable for members"),              // G
+                  "placeOnDesktop"      => _("Place icon on members desktop"),            // D
+                  "placeOnKicker"       => _("Place entry in members launch bar"),        // L
+                  "placeInStartmenu"    => _("Place entry in members startmenu"),         // M
+                  "overwriteConfig"      => _("Replace user configuration on startup"))  // O
+              ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
