@@ -125,10 +125,10 @@ class termgeneric extends plugin
     if ($this->dn == "new"){
       $ui= get_userinfo();
       $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
-    } elseif(preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", $this->dn)){
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", "", $this->dn);
+    } elseif(preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN") , '/')."/i", $this->dn)){
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN") , '/')."/i", "", $this->dn);
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("terminalRDN"), '/')."/i", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN") , '/')."/i", "", $this->dn);
     }
 
     /* Create an array of all Syslog servers */
@@ -420,7 +420,7 @@ class termgeneric extends plugin
     }
 
     /* Permissions for that base? */
-    $this->dn= "cn=".$this->cn.",".get_ou('terminalRDN').$this->base;
+    $this->dn= "cn=".$this->cn.",".get_ou("ArpNewDevice", "systemIncomingRDN") .$this->base;
 
     if ($this->cn == ""){
       $message[]= msgPool::required(_("Name"));
@@ -448,7 +448,7 @@ class termgeneric extends plugin
       }
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
-          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".preg_quote(get_ou('systemIncomingRDN'), '/')."/i", $ldap->getDN())){
+          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN") , '/')."/i", $ldap->getDN())){
             continue;
           } else {
             if ($attrs['dn'] != $this->orig_dn){
@@ -493,7 +493,7 @@ class termgeneric extends plugin
       $ldap= $this->config->get_ldap_link();
 
       /* Strip relevant part from dn, keep trailing ',' */
-      $tmp= preg_replace("/^cn=[^,]+,".preg_quote(get_ou('terminalRDN'), '/')."/i", "", $this->dn);
+      $tmp= preg_replace("/^cn=[^,]+,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN") , '/')."/i", "", $this->dn);
       $tmp= preg_replace("/".$this->config->current['BASE']."$/i", "", $tmp);
 
       /* Walk from top to base and try to load default values for
@@ -501,7 +501,7 @@ class termgeneric extends plugin
       while (TRUE){
         $tmp= preg_replace ("/^[^,]+,/", "", $tmp);
 
-        $ldap->cat("cn=default,".get_ou('terminalRDN').$tmp.
+        $ldap->cat("cn=default,".get_ou("ArpNewDevice", "systemIncomingRDN") .$tmp.
             $this->config->current['BASE'], array('gotoTerminalPath'));
         $attrs= $ldap->fetch();
         if (isset($attrs['gotoTerminalPath'])){

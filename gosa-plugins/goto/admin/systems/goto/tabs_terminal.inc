@@ -87,7 +87,7 @@ class termtabs extends tabs
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
     $baseobject= $this->by_object['termgeneric'];
-    $this->dn= "cn=".$baseobject->cn.",".get_ou('terminalRDN').$baseobject->base;
+    $this->dn= "cn=".$baseobject->cn.",".get_ou("termgeneric", "terminalRDN") .$baseobject->base;
     $baseobject->dn= $this->dn;
 
     if($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new"){
