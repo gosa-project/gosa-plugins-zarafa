@@ -550,6 +550,21 @@ class faiScript extends plugin
           "plPriority"    => 18,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "faiScriptRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=scripts,",
+                  "description"   => "The 'faiScriptRDN' statement defines the location where new fai-scripts will be created. The default is 'ou=scripts,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
+
           "plProvidedAcls" => array(
             "cn"                => _("Name")." ("._("Readonly").")",
             "description"       => _("Description"))
