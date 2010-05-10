@@ -50,7 +50,7 @@ print "We backup the whole tree before every operation\n";
 $comm=$ARGV[0];
 
 if($comm eq "del" && @ARGV >1 )
-{	
+{
 	print "You asked to delete attributes : ";
 	$i=1;
 	while($ARGV[$i] ne "")
@@ -92,6 +92,23 @@ if($comm eq "del" && @ARGV >1 )
 	}
 	$ldap->unbind;
 	exit(0);
+}
+elsif($comm eq "add" && @ARGV >1)
+{
+  print "Add ObjectClass for the following users\n";
+  print "---------------------------------------------\n";
+  $ldap = Net::LDAP->new($server);
+  $ldap->bind($admin,password=>$password);
+  $mesg = $ldap->search(filter=>"&(!(objectClass~=gosaAccount))", base=>$peopleou,scope=>$scope);
+  @entries = $mesg->entries;
+
+  foreach $entry (@entries) {
+    $mesg = $ldap->modify($entry->dn(), add => { "ObjectClass" => "$ARGV[$i]"});
+    print $entry->dn();
+    print "\n";
+}
+  $ldap->unbind;
+  exit(0);
 }
 elsif($comm eq "gosa" && @ARGV ==1)
 {
@@ -143,6 +160,7 @@ sub help()
     print "Usage: $0 [-?] command\n";
     print "\t-?	show this help message\n";
     print "\tgosa -> add GOsa attributes to the people branch !\n";
+    print "\tadd <attribute> -> add an attribute to the people branch !\n"; 
     print "\tdel <attribute>  -> Remove an attribute from the people branch !\n";
     print "\tmodif <attribute> <attribute value> -> to modify the attribute\n";
     print "\tdump -> dump the whole ldap tree\n";
