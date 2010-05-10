@@ -504,6 +504,20 @@ class faiHook extends plugin
           "plPriority"    => 20,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
+
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "faiHookRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=hooks,",
+                  "description"   => "The 'faiHookRDN' statement defines the location where new fai-hooks will be created. The default is 'ou=hooks,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE)),
+
+
           "plProvidedAcls" => array(
             "cn"                => _("Name")." ("._("Read only").")",
             "description"       => _("Description"))
