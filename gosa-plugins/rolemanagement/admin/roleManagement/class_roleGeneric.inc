@@ -435,23 +435,37 @@ class roleGeneric extends plugin {
  
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Generic"),
-          "plDescription" => _("Role generic"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 1,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("roles" => array("description"  => _("Roles"),
-              "objectClass"  => "organizationalRole")),
+      return (array(
+                  "plShortName"   => _("Generic"),
+                  "plDescription" => _("Role generic"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 1,
+                  "plSection"     => array("administration"),
+                  "plCategory"    => array("roles" => array("description"  => _("Roles"),
+                          "objectClass"  => "organizationalRole")),
+
+                  "plProperties" => 
+                  array(                        
+                      array(
+                          "name"          => "roleRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=roles,",
+                          "description"   => "The 'roleRDN' statement defines the location where new roles will be created. The default is 'ou=roles,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE)
+                      ),
+
           "plProvidedAcls"=> array(
-            "cn"                => _("Name"),
-            "description" => _("Description"),
-            "base" => _("Base"),
-            "telephoneNumber" => _("Telefon number"),
-            "facsimileTelephoneNumber" => _("Fax number"),
-            "roleOccupant" => _("Occupants"))
-          ));
+                  "cn"                => _("Name"),
+                  "description" => _("Description"),
+                  "base" => _("Base"),
+                  "telephoneNumber" => _("Telefon number"),
+                  "facsimileTelephoneNumber" => _("Fax number"),
+                  "roleOccupant" => _("Occupants"))
+              ));
   }
 }
 
