@@ -301,7 +301,8 @@ class environment extends plugin
       }
     }
 
-    if($cnt && $this->config->search("environment","kioskpath",array('menu','tabs'))){
+    $tmp = $this->config->get_cfg_value("environment","kioskPath");
+    if($cnt && !empty($tmp)){
       $this->kiosk_enabled = TRUE;
     }
 
