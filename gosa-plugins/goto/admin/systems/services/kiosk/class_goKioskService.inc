@@ -32,7 +32,7 @@ class goKioskService extends goService{
     $this->orig_cn = $this->cn;
 
     $this->DisplayName = _("Kiosk profile service");
-    $this->baseDir = $this->config->search('environment', 'kioskpath',array('menu','tabs'));
+    $this->baseDir = $this->config->get_cfg_value('environment', 'kioskiPath');
     $this->server_path = preg_replace("/%cn/", $this->cn, $this->server_path);
 
     /* Load list of profiles and check if they still exists */
