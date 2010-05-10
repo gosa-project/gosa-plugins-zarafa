@@ -62,8 +62,7 @@ class opsi extends gosaSupportDaemon
 
     /* Detect the target opsi host 
      */
-    $tmp= $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp) && class_available("faiManagement")){
+    if($this->config->pluginEnabled("faiManagement")){
       $opsi_hosts = $this->get_hosts_with_module("opsi_com");
 
       /* Just use the first result of the opsi hosts 
