@@ -359,6 +359,20 @@ class faiProfile extends plugin
                     "plPriority"    => 30,
                     "plSection"     => array("administration"),
                     "plCategory"    => array("fai"),
+
+                    "plProperties" =>
+                    array(
+                        array(
+                            "name"          => "faiProfileRDN",
+                            "type"          => "rdn",
+                            "default"       => "ou=profiles,",
+                            "description"   => "The 'faiProfileRDN' statement defines the location where new fai-profiles will be created. The default is 'ou=profiles,'.",
+                            "check"         => "gosaProperty::isRdn",
+                            "migrate"       => "",
+                            "group"         => "plugin",
+                            "mandatory"     => FALSE)),
+
+
                     "plProvidedAcls" => array(
                         "cn"                => _("Name"),
                         "description"       => _("Description"),
