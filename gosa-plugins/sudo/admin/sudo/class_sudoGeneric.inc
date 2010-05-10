@@ -522,7 +522,7 @@ class sudo extends plugin
                             "type"          => "string",
                             "default"       => "ou=sudoers,",
                             "description"   => _("Storage point for sudo objects within the ldap tree."),
-                            "check"         => 'tests::isRdn',
+                            "check"         => 'gosaProperty::isRdn',
                             "migrate"       => 'sudoGeneric::migrate',
                             "mandatory"     => FALSE)),
 
