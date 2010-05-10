@@ -393,6 +393,19 @@ class faiVariable extends plugin
           "plPriority"    => 22,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
+
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "faiVariableRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=variables,",
+                  "description"   => "The 'faiVariableRDN' statement defines the location where new fai-variables will be created. The default is 'ou=variables,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE)),
+
           "plProvidedAcls" => array(
             "cn"                => _("Name")." ("._("Read only").")",
             "description"       => _("Description"))
