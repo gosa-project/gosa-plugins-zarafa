@@ -274,6 +274,18 @@ class deviceGeneric extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("devices" => array("description"  => _("Devices"),
                                                         "objectClass"  => "gotoHotplugDevice")),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "deviceRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=devices,",
+                  "description"   => "The 'deviceRDN' statement defines the location where new devices will be created. The default is 'ou=devices,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE)),
+
           "plProvidedAcls"=> array(
             "cn"            => _("Name"),
             "base"          => _("Base"),
