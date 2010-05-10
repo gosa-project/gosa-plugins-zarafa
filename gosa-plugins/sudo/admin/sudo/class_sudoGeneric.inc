@@ -516,15 +516,17 @@ class sudo extends plugin
                     "plSection"     => array("administration"),
                     "plCategory"    => array("sudo" => array("objectClass" => "sudoRole", "description" => _("Sudo role"))),
 
-                    "plProperties"  => array(
+                    array(
                         array(
                             "name"          => "sudoRDN",
-                            "type"          => "string",
+                            "type"          => "rdn",
                             "default"       => "ou=sudoers,",
-                            "description"   => _("Storage point for sudo objects within the ldap tree."),
-                            "check"         => 'gosaProperty::isRdn',
-                            "migrate"       => 'sudoGeneric::migrate',
+                            "description"   => "The 'sudoRDN' statement defines the location where new sudo-roles will be created. The default is 'ou=sudoers,'.",
+                            "check"         => "gosaProperty::isRdn",
+                            "migrate"       => "",
+                            "group"         => "plugin",
                             "mandatory"     => FALSE)),
+
 
                     "plProvidedAcls"    => array(
                         "accessTo"          => _("System trust"),
