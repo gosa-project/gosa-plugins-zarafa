@@ -1199,7 +1199,7 @@ class workstartup extends plugin
   function GetHookElements()
   {
     $ret = array();
-    $cmd= $this->config->search("servrepository", "repositoryBranchHook",array('tabs'));
+    $cmd= $this->config->get_cfg_value("servrepository", "repositoryBranchHook");
     if(!empty($cmd)){
       $res = shell_exec($cmd);
       $res2 = trim($res);
