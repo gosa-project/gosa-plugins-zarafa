@@ -1213,6 +1213,22 @@ class faiManagement extends management
                   "plPriority"    => 0,
                   "plSection"     => array("administration"),
 
+                  "plProperties" =>
+                  array(
+                      array(
+                          "name"          => "faiBaseRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=fai,ou=configs,ou=systems,",
+                          "description"   => "The 'faiBaseRDN' statement defines the location where new fai objects will be created. The default is 'ou=fai,ou=configs,ou=systems,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE
+                          )
+                      ),
+
+
+
                   "plProperties"  => 
                   array(
                       array(
