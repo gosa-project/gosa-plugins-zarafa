@@ -184,8 +184,7 @@ class faiSummaryTab extends plugin{
     plugin::execute();
 
     /* Skip this if fai is deactivated */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(empty($tmp)){
+    if(!$this->config->pluginEnabled("faiManagement")){
       $str = "<h3>"._("You can't use this plugin until FAI is activated.")."</h3>";
       return $str;
     }    
