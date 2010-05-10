@@ -285,15 +285,29 @@ class wingeneric extends plugin
   #FIXME FAIscript seams to ununsed within this class... */
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Win generic"),
-          "plDescription" => _("Windows workstation generic"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 0,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("winworkstation" => array("description"  => _("Win workstation"),
-                                                          "objectClass"  => "gotoWorkstation")),
+      return (array(
+                  "plShortName"   => _("Win generic"),
+                  "plDescription" => _("Windows workstation generic"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 0,
+                  "plSection"     => array("administration"),
+                  "plCategory"    => array("winworkstation" => array("description"  => _("Win workstation"),
+                          "objectClass"  => "gotoWorkstation")),
+                  "plProperties" =>
+                  array(
+                      array(
+                          "name"          => "sambaMachineAccountRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=winstation,",
+                          "description"   => "The 'sambaMachineAccountRDN' statement defines the location where new windows workstations will be created. The default is 'ou=winstation,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE
+                          )
+                      ),
+
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
             "base"                => _("Base"),
