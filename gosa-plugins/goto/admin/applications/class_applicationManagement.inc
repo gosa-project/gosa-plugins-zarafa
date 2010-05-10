@@ -167,11 +167,7 @@ class applicationManagement extends management
   function IsReleaseManagementActivated()
   {
     /* Check if we should enable the release selection */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)){
-      return(true);
-    }
-    return(false);
+    return($this->config->pluginEnabled("faiManagement"));
   }
 
 } 
