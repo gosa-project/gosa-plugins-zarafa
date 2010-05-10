@@ -208,8 +208,6 @@ class application extends plugin
 
   function remove_from_parent()
   {
-    restore_error_handler();
-
     /* Parse release out of object dn */
     $release = preg_replace("/".preg_quote(get_ou("applicationRDN").$this->base, '/')."$/i","",$this->dn);
     $release = preg_replace("/^cn=[^,]+,/","",$release);
