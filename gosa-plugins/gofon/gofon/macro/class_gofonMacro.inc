@@ -581,6 +581,22 @@ class macro extends plugin
           "plCategory"    => array("gofonmacro" => array("description" => _("GOfon macro"),
               "objectClass" => "gofonMacro")),
 
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "phoneMacroRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=macros,ou=asterisk,ou=configs,ou=systems,",
+                  "description"   => "The 'phoneMacroRDN' statement defines the location where new phone macros will be created. The default is 'ou=macros,ou=asterisk,ou=configs,ou=systems,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
+
+
           "plProvidedAcls" => array(
             "cn"                            => _("Macro name"),
             "base"                          => _("Base"),
