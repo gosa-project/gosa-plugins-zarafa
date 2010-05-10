@@ -129,7 +129,7 @@ class termstartup extends plugin
 
     /* Get list of boot kernels */
     if (isset($this->config->data['TABS'])){
-      $command= $this->config->search(get_class($this), "systemKernelsHook",array('tabs'));
+      $command= $this->config->get_cfg_value(get_class($this), "systemKernelsHook");
 
       if (!check_command($command)){
         $message[]= sprintf(_("Command '%s', specified as systemKernelsHook for plugin '%s' doesn't seem to exist."), $command,
