@@ -529,8 +529,20 @@ class faiTemplate extends plugin
           "plPriority"    => 24,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "faiTemplateRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=templates,",
+                  "description"   => "The 'faiTemplateRDN' statement defines the location where new fai-templates will be created. The default is 'ou=templates,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE)),
+
           "plProvidedAcls" => array(
-            "cn"                => _("Name")." ("._("Readonly").")",
+              "cn"                => _("Name")." ("._("Readonly").")",
             "description"       => _("Description"))
           ));
   }
