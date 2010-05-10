@@ -61,10 +61,7 @@ class termgeneric extends plugin
   function termgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
-    $tmp= $config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)){
-      $this->fai_activated = TRUE;
-    }
+    $this->fai_activated = $config->pluginEnabled("faiManagement");
 
     plugin::plugin ($config, $dn, $parent);
 
