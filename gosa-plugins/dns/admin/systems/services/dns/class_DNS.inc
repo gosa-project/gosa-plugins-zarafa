@@ -667,7 +667,7 @@ class DNS
     
       $ret = array();
       $ldap = $config->get_ldap_link();
-      $tmp = get_sub_list("(&(objectClass=dNSZone)(sOARecord=*))","",get_ou("serverRDN"),
+      $tmp = get_sub_list("(&(objectClass=dNSZone)(sOARecord=*))","",get_ou("servgeneric", "serverRDN") ,
           $config->current['BASE'],array("zoneName"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
 
       foreach($tmp as $at){
