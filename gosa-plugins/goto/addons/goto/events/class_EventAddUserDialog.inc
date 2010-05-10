@@ -31,8 +31,8 @@ class EventAddUserDialog extends management
     $this->config = $config;
     $this->ui = $ui;
     $this->storagePoints = array(
-        get_ou("userRDN"), 
-        get_ou("groupRDN")); 
+        get_ou("core", "userRDN") , 
+        get_ou("core", "userRDN") ); 
 
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){
