@@ -60,8 +60,8 @@ class wingeneric extends plugin
       $ui = get_userinfo();
       $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
       $this->cn= "";
-    } elseif(preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", $this->dn)){
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("systemIncomingRDN"), '/')."/i", "", $this->dn);
+    } elseif(preg_match("/".preg_quote(get_ou("wingeneric", "sambaMachineAccountRDN") , '/')."/i", $this->dn)){
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("wingeneric", "sambaMachineAccountRDN") , '/')."/i", "", $this->dn);
     } else {
       $this->base= preg_replace ("/^[^,]+,".preg_quote(get_winstations_ou(), '/')."/i", "", $this->dn);
     }
@@ -192,7 +192,7 @@ class wingeneric extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
-    $this->dn= "cn=".$this->uid.",".get_ou('sambaMachineAccountRDN').$this->base;
+    $this->dn= "cn=".$this->uid.",".get_ou("wingeneric", "sambaMachineAccountRDN") .$this->base;
 
     if(!$this->acl_is_createable()){
       $message[]= msgPool::permCreate();
