@@ -785,6 +785,18 @@ class faiPartitionTable extends plugin
           "plPriority"    => 26,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "faiPartitionRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=disk,",
+                  "description"   => "The 'faiPartitionRDN' statement defines the location where new fai-partitions will be created. The default is 'ou=disk,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE)),
+
           "plProvidedAcls" => array(
             "cn"                => _("Name")."&nbsp;("._("Read only").")",
             "description"       => _("Description"))
