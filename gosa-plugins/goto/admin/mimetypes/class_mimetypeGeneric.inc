@@ -618,6 +618,19 @@ class mimetype extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("mimetypes" => array("description"  => _("Mime types"),
                                                         "objectClass"  => "gotoMimeType")),
+
+        "plProperties" =>
+          array(
+              array(
+            "name"          => "mimetypeRDN",
+            "type"          => "rdn",
+            "default"       => "ou=mime,",
+            "description"   => "The 'mimetypeRDN' statement defines the location where new mimetypes will be created. The default is 'ou=mime,'.",
+            "check"         => "gosaProperty::isRdn",
+            "migrate"       => "",
+            "group"         => "plugin",
+            "mandatory"     => FALSE)),
+
           "plProvidedAcls"=> array(
             "cn"                          => _("Name"),
             "gotoMimeGroup"               => _("Mime group"),
