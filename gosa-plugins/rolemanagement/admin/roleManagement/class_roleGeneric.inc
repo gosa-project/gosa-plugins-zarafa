@@ -73,7 +73,7 @@ class roleGeneric extends plugin {
       $ui = get_userinfo();
       $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
     } else {
-      $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleRDN"), '/i')."/","",$this->dn);
+      $this->base= preg_replace("/^[^,]+,".preg_quote(get_ou("roleGeneric", "roleRDN") , '/i')."/","",$this->dn);
     }
 
     // Keep track of naming attribute modifications
