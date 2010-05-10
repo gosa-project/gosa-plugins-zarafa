@@ -564,7 +564,7 @@ class faiManagement extends management
     /* Check if we have a post remove method configured
      *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
      */
-    if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
+    if("" != $this->config->get_cfg_value("faiManagement","postremove")){
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
       if(preg_match("/d/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
@@ -586,7 +586,7 @@ class faiManagement extends management
     /* Check if we have a post remove method configured
      *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
      */
-    if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
+    if("" != $this->config->get_cfg_value("faiManagement","postremove")){
 
       if(!isset($_POST['release_hidden']) || base64_decode($_POST['release_hidden']) != $this->fai_release){
         msg_dialog::display(_("Warning"),_("Release remove aborted because the release name check failed!"));
@@ -675,7 +675,7 @@ class faiManagement extends management
    */
   function createBranch()
   { 
-    if($this->config->search("faiManagement", "POSTCREATE",array('menu','tabs')) == ""){ 
+    if($this->config->get_cfg_value("faiManagement", "postcreate") == ""){ 
       msg_dialog::display(_("Configuration"), msgPool::cmdnotfound("POSTCREATE", get_class()), ERROR_DIALOG);
     }elseif(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
       msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
@@ -698,7 +698,7 @@ class faiManagement extends management
    */
   function createFreeze()
   {
-    if($this->config->search("faiManagement", "POSTCREATE",array('menu','tabs')) == ""){ 
+    if($this->config->get_cfg_value("faiManagement", "postcreate") == ""){ 
       msg_dialog::display(_("Configuration"), msgPool::cmdnotfound("POSTCREATE", get_class()), ERROR_DIALOG);
     }elseif(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
       msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
@@ -1136,8 +1136,8 @@ class faiManagement extends management
     $headpage->setBase($this->fai_release);
     $headpage->update();
     $smarty = get_smarty();
-    $r = $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'));
-    $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));
+    $r = $this->config->get_cfg_value("faiManagement", "postremove");
+    $c = $this->config->get_cfg_value("faiManagement", "postcreate");
     $smarty->assign("allow_create", $c);
     $smarty->assign("allow_remove", $r);
     $smarty->assign("RELEASE", $this->releaseSelector->render());
