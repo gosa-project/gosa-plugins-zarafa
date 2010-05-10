@@ -28,11 +28,7 @@ class appgroup extends plugin
     $this->a_Structure_on_load = $this->a_Structure;
 
     /* Check if we have relase mangement enabled and prepare group application for release management */
-    $tmp = $config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)){
-      $this->enableReleaseManagement = true;
-    }
-
+    $this->enableReleaseManagement  = $this->config->pluginEnabled("faiManagement");
     $this->Releases   = $this->getReleases();
 
     /* Set intial release */
