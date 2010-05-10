@@ -687,6 +687,20 @@ class workgeneric extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("workstation" => array("description"  => _("Workstation"),
                                                           "objectClass"  => "gotoWorkstation")),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "workstationRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=workstations,ou=systems,",
+                  "description"   => "The 'workstationRDN' statement defines the location where new workstations will be created. The default is 'ou=workstations,ou=systems,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
           "plProvidedAcls"=> array(
             "cn"                  => _("Workstation name"),
             "description"         => _("Description") ,
