@@ -79,11 +79,7 @@ class opsi extends gosaSupportDaemon
   
   public function enabled()
   {
-    $tmp= $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp) && class_available("faiManagement") && !empty($this->target)){
-      return(TRUE);
-    }   
-    return(FALSE);
+    return($this->config->pluginEnabled('faiManagement') && !empty($this->target));
   }
 
 
