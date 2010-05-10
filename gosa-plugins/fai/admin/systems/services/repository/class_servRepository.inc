@@ -30,8 +30,7 @@ class servrepository extends goService
     $this->repositoryMangement = new repositoryManagement($this->config,$this);
 
     /* Skip this if fai is deactivated */
-    $tmp= $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)){
+    if($this->config->pluginEnabled("faiManagement")){
       $this->fai_activated = TRUE;    
     }else{
       return;
