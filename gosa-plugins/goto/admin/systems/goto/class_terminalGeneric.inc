@@ -676,7 +676,21 @@ class termgeneric extends plugin
           "plPriority"    => 1,
           "plSection"     => array("administration"),
           "plCategory"    => array("terminal" => array( "description"  => _("Terminal"),
-              "objectClass"  => "gotoTerminal")),
+                  "objectClass"  => "gotoTerminal")),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "terminalRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=terminals,ou=systems,",
+                  "description"   => "The 'terminalRDN' statement defines the location where new terminals will be created. The default is 'ou=terminals,ou=systems,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
             "description"         => _("Description"),
