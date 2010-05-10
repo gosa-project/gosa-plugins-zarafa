@@ -62,7 +62,8 @@ class faiManagement extends management
     }
 
     $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
-    $cfg_rel = $this->config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
+    $cfg_rel = $this->config->get_cfg_value("faiManagement","defaultFaiRelease");
+
     if(!empty($cfg_rel)){
       $this->fai_release = $cfg_rel;
     }else{
@@ -125,7 +126,7 @@ class faiManagement extends management
     $this->registerAction("PerformBranch","PerformBranch");
 
     $releases = $this->getReleaseStates($this->config,$this->fai_base);
-    $this->releaseSelector = new releaseSelector($releases, $this->fai_release, $this->fai_release);
+    $this->releaseSelector = new releaseSelector($releases, $this->fai_release, $this->fai_base);
     parent::__construct($config, $ui, "FAI object", $headpage);
   }
 
@@ -1204,15 +1205,27 @@ class faiManagement extends management
 
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("FAI releases"),
-          "plDescription" => _("FAI release management"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 0,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("fai"=> array("description" => _("FAI"),
-              "objectClass" => "FAIclass")),
+      return (array(
+                  "plShortName"   => _("FAI releases"),
+                  "plDescription" => _("FAI release management"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 0,
+                  "plSection"     => array("administration"),
+
+                  "plProperties"  => 
+                  array(
+                      array(
+                          "name"          => "defaultFaiRelease",
+                          "type"          => "dn",
+                          "default"       => "",
+                          "description"   => _("The property sets the default release which gets selected in the fai management."),
+                          "check"         => "gosaProperty::isDn",
+                          "migrate"       => "",
+                          "group"         => "fai",
+                          "mandatory"     => FALSE)),
+
+                  "plCategory"    => array("fai"=> array("description" => _("FAI"),"objectClass" => "FAIclass")),
           "plProvidedAcls"=> array()));
   }
 } 
