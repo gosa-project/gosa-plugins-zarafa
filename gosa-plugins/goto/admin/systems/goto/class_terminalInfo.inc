@@ -245,15 +245,29 @@ class terminfo extends plugin
   /* Return plugin informations for acl handling */
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("System info"),
-          "plDescription" => _("System informations"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 33,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("workstation","server","terminal"),
-          "plProvidedAcls"=> array()
+      return (array(
+                  "plShortName"   => _("System info"),
+                  "plDescription" => _("System informations"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 33,
+                  "plSection"     => array("administration"),
+                  "plCategory"    => array("workstation","server","terminal"),
+
+                  "plProperties" => array(
+                      array(
+                          "name"          => "snmpCommunity",
+                          "type"          => "string",
+                          "default"       => "",
+                          "description"   => _("In order to make use of SNMP information, you can set the 'snmpCommunity'."),
+                          "check"         => "gosaProperty::isString",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE
+                          )
+                      ),
+
+                      "plProvidedAcls"=> array()
             ));
   }
 }
