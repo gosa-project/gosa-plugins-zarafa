@@ -52,12 +52,15 @@ class goMailServer extends goService{
     $str = $this->config->data['TABS']['SERVERSERVICE'];
     $this->TransportProtocols =array("smtp"=>"SMTP");
     $this->RestrictionFilters = array("FILTER"=>"FILTER"); 
-    foreach(array("POSTFIXRESTRICTIONFILTERS"=>"RestrictionFilters",
-          "POSTFIXPROTOCOLS"        =>"TransportProtocols") as $file => $var){
-      if($this->config->get_cfg_value("core",$file) != ""){
-        $file = $this->config->get_cfg_value("core",$file);
-        if((isset($file)) && is_readable($file)){
-          $tmp = file_get_contents($file);
+    foreach(
+            array(
+                "postfixRestrictionFilters"=>"RestrictionFilters",
+                "postfixProtocols"        =>"TransportProtocols")
+            as $file => $var){
+        if($this->config->get_cfg_value("goMailServer",$file) != ""){
+            $file = $this->config->get_cfg_value("goMailServer",$file);
+            if((isset($file)) && is_readable($file)){
+                $tmp = file_get_contents($file);
           $tmp2= preg_split("/\n/",$tmp);
           foreach($tmp2 as $entry){
             if(empty($entry)) continue;
@@ -577,6 +580,36 @@ class goMailServer extends goService{
           "plPriority"    => 98,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
+
+          "plProperties"  => array(
+              array(
+                  "name"          => "postfixProtocols",
+                  "type"          => "file",
+                  "default"       => "",
+                  "description"   => _("The 'postfixProtocols' statement defines a file to include for the postfix module in order to display user defined protocols.")."
+
+File syntax:
+    name1:Description1
+    name2:Description2",
+
+                  "check"         => "gosaProperty::isReadableFile",
+                  "migrate"       => "",
+                  "group"         => "mail",
+                  "mandatory"     => FALSE),
+              array(
+                  "name"          => "postfixRestrictionFilters",
+                  "type"          => "file",
+                  "default"       => "",
+                  "description"   => _("The 'postfixRestrictionFilters' statement defines a file to include for the postfix module in order to display user defined restriction filters.")."
+
+File syntax:
+    name1:Description1
+    name2:Description2",
+                  "check"         => "gosaProperty::isReadableFile",
+                  "migrate"       => "",
+                  "group"         => "mail",
+                  "mandatory"     => FALSE),
+              ),
 
           "plProvidedAcls"=> array(
 
