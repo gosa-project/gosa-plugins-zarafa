@@ -51,7 +51,7 @@ class sudo extends plugin
      */
     public static function get_sudoers_ou($config)
     {
-        return(get_ou("sudoRDN").$config->current['BASE']);
+        return(get_ou("sudo", "sudoRDN").$config->current['BASE']);
     }
 
     /*! \brief  Initializes this sudo class, with all required attributes.
