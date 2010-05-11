@@ -693,8 +693,18 @@ class workgeneric extends plugin
                   "name"          => "workstationRDN",
                   "type"          => "rdn",
                   "default"       => "ou=workstations,ou=systems,",
-                  "description"   => "The 'workstationRDN' statement defines the location where new workstations will be created. The default is 'ou=workstations,ou=systems,'.",
+                  "description"   => _("The 'workstationRDN' statement defines the location where new workstations will be created. The default is 'ou=workstations,ou=systems,'."),
                   "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  ),
+              array(
+                  "name"          => "systemIsoHook",
+                  "type"          => "cmd",
+                  "default"       => "",
+                  "description"   => _("To enable the burn CD image function, you can specify the 'systemIsoHook'. You will get a CD symbol in the systems list - which calls the hook if pressed."),
+                  "check"         => "gosaProperty::isCommand",
                   "migrate"       => "",
                   "group"         => "plugin",
                   "mandatory"     => FALSE
