@@ -409,7 +409,7 @@ class servrepository extends goService
           "plProperties" => array(
               array(
                   "name"          => "repositoryBranchHook",
-                  "type"          => "cmd",
+                  "type"          => "command",
                   "default"       => "",
                   "description"   => _("The FAI plugin can be used in a way that it generates branched or freezed releases inside your repository. Specifying the 'postcreate' and 'postmodify' keywords in the 'Repository service', calls the provided script as a hook when adding or removing branches. This script should do the rest inside of your repository.")
                   ."
