@@ -469,8 +469,8 @@ class mailMethod{
   public function get_method()
   {
     $methods = mailMethod::get_methods();
-    if ($this->config->get_cfg_value("core","mailmethod") != ""){
-      $method= $this->config->get_cfg_value("core","mailmethod");
+    if ($this->config->get_cfg_value("core","mailMethod") != ""){
+      $method= $this->config->get_cfg_value("core","mailMethod");
       $cls = get_correct_class_name("mailMethod$method");
       if(isset($methods[$cls])){
         @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"", "<b>MAIL:</b> Selected mailMethod: <b>".$cls."</b>");
@@ -786,7 +786,7 @@ class mailMethod{
   static public function get_current_method($config)
   {
     global $class_mapping;
-    $method= $config->get_cfg_value("core","mailmethod");
+    $method= $config->get_cfg_value("core","mailMethod");
     $cls = get_correct_class_name("mailMethod$method");
     foreach($class_mapping as $class => $path){
       if($class == $cls){
