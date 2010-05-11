@@ -1411,41 +1411,66 @@ class mailAccount extends plugin
    */
   static function plInfo()
   {
-    return (array(
-          "plShortName"     => _("Mail"),
-          "plDescription"   => _("Mail settings"),
-          "plSelfModify"    => TRUE,
-          "plDepends"       => array("user"),                     // This plugin depends on
-          "plPriority"      => 4,                                 // Position in tabs
-          "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users"),
-          "plOptions"       => array(),
+      return (array(
+                  "plShortName"     => _("Mail"),
+                  "plDescription"   => _("Mail settings"),
+                  "plSelfModify"    => TRUE,
+                  "plDepends"       => array("user"),                     // This plugin depends on
+                  "plPriority"      => 4,                                 // Position in tabs
+                  "plSection"     => array("personal" => _("My account")),
+                  "plCategory"    => array("users"),
+                  "plOptions"       => array(),
 
-          "plProvidedAcls"  => array(
-            "mail"                      =>  _("Mail address"),
-            "gosaMailServer"            =>  _("Mail server"),
-            "gosaMailQuota"             =>  _("Quota size"),
+                  "plProperties"  =>
+                  array(
+                      array(
+                          "name"          => "cyrusDeleteMailbox",
+                          "type"          => "bool",
+                          "default"       => 'true',
+                          "description"   => "The 'cyrusDeleteMailbox' statement determines if GOsa should remove the mailbox from your IMAP server  or keep it after the account is deleted in LDAP.",
+                          "check"         => "gosaProperty::isBool",
+                          "migrate"       => "",
+                          "group"         => "mail",
+                          "mandatory"     => FALSE
+                          ),
+                      array(
+                          "name"          => "cyrusAutocreateFolders",
+                          "type"          => "string",
+                          "default"       => "",
+                          "description"   => _("The 'cyrusAutocreateFolders' statement contains a comma seperated list of personal IMAP folders that should be created along initial account creation."),
+                          "check"         => "gosaProperty::isString",
+                          "migrate"       => "",
+                          "group"         => "mail",
+                          "mandatory"     => FALSE
+                          )
+                          ),
 
-            "gosaMailDeliveryModeV"     =>  _("Add vacation information"),  // This is flag of gosaMailDeliveryMode
-            "gosaVacationMessage"       =>  _("Vacation message"),
 
-            "gosaMailDeliveryModeS"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
-            "gosaSpamSortLevel"         =>  _("Spam level"),
-            "gosaSpamMailbox"           =>  _("Spam mail box"),
+                      "plProvidedAcls"  => array(
+                              "mail"                      =>  _("Mail address"),
+                              "gosaMailServer"            =>  _("Mail server"),
+                              "gosaMailQuota"             =>  _("Quota size"),
 
-            "sieveManagement"           =>  _("Sieve management"),
+                              "gosaMailDeliveryModeV"     =>  _("Add vacation information"),  // This is flag of gosaMailDeliveryMode
+                              "gosaVacationMessage"       =>  _("Vacation message"),
 
-            "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
-            "gosaMailMaxSize"           =>  _("Mail max size"),
+                              "gosaMailDeliveryModeS"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
+                              "gosaSpamSortLevel"         =>  _("Spam level"),
+                              "gosaSpamMailbox"           =>  _("Spam mail box"),
 
-            "gosaMailForwardingAddress" =>  _("Forwarding address"),
-            "gosaMailDeliveryModeL"     =>  _("Local delivery"),            // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryModeI"     =>  _("No delivery to own mailbox "),     // This is flag of gosaMailDeliveryMode
-            "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
+                              "sieveManagement"           =>  _("Sieve management"),
 
-            "gosaMailForwardingAddress" =>  _("Forwarding address"),
-            "gosaMailDeliveryModeC"     =>  _("Use custom sieve script"))   // This is flag of gosaMailDeliveryMode
-              ));
+                              "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
+                              "gosaMailMaxSize"           =>  _("Mail max size"),
+
+                              "gosaMailForwardingAddress" =>  _("Forwarding address"),
+                              "gosaMailDeliveryModeL"     =>  _("Local delivery"),            // This is flag of gosaMailDeliveryMode
+                              "gosaMailDeliveryModeI"     =>  _("No delivery to own mailbox "),     // This is flag of gosaMailDeliveryMode
+                              "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
+
+                              "gosaMailForwardingAddress" =>  _("Forwarding address"),
+                              "gosaMailDeliveryModeC"     =>  _("Use custom sieve script"))   // This is flag of gosaMailDeliveryMode
+                                  ));
   }
 
 

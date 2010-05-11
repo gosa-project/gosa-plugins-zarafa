@@ -253,7 +253,7 @@ class mailMethodCyrus extends mailMethod{
         }
 
         /* Autocreate configured default folders */ 
-        $folders= $this->config->get_cfg_value("mailMethodCyrus","cyrusAutocreateFolders");
+        $folders= $this->config->get_cfg_value("mailAccount","cyrusAutocreateFolders");
         if ($folders) {
           $foldersToCreate= explode(",", $folders);
           $cyrus_delim= $this->cyrusUseSlashes?"/":".";
@@ -289,7 +289,7 @@ class mailMethodCyrus extends mailMethod{
     $cfg= $this->ServerList[$this->MailServer];
     @imap_setacl ($this->imap_handle, $this->account_id, $cfg["admin"], "lrswipcda");
 
-    if ($this->config->boolValueIsTrue("mailMethodCyrus","cyrusDeleteMailbox")){
+    if ($this->config->boolValueIsTrue("mailAccount","cyrusDeleteMailbox")){
       if (!imap_deletemailbox($this->imap_handle, $cfg["connect"].$this->account_id)){
         $this->error = imap_last_error();
         return (FALSE);
@@ -611,38 +611,6 @@ class mailMethodCyrus extends mailMethod{
 
     $sieve->sieve_logout();
   }
-
-  static function plInfo()
-  {
-      return (
-              array(
-                  "plProperties"  => 
-                  array(
-                      array(
-                          "name"          => "cyrusAutocreateFolders",
-                          "type"          => "bool",
-                          "default"       => TRUE,
-                          "description"   => "The 'cyrusDeleteMailbox' statement determines if GOsa should remove the mailbox from your IMAP server or keep it after the account is deleted in LDAP.",
-                          "check"         => "gosaProperty::isBool",
-                          "migrate"       => "",
-                          "group"         => "mail",
-                          "mandatory"     => FALSE
-                          ),
-                      array(
-                          "name"          => "cyrusAutocreateFolders",
-                          "type"          => "string",
-                          "default"       => "",
-                          "description"   => _("The 'cyrusAutocreateFolders' statement contains a comma seperated list of personal IMAP folders that should be created along initial account creation."), 
-                          "check"         => "gosaProperty::isString",
-                          "migrate"       => "",
-                          "group"         => "mail",
-                          "mandatory"     => FALSE
-                          )
-                          )
-                          )
-                          );
-  }
-    
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
