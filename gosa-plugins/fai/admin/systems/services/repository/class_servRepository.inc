@@ -406,6 +406,24 @@ class servrepository extends goService
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 
+          "plProperties" => array(
+              array(
+                  "name"          => "repositoryBranchHook",
+                  "type"          => "cmd",
+                  "default"       => "",
+                  "description"   => _("The FAI plugin can be used in a way that it generates branched or freezed releases inside your repository. Specifying the 'postcreate' and 'postmodify' keywords in the 'Repository service', calls the provided script as a hook when adding or removing branches. This script should do the rest inside of your repository.")
+                  ."
+                  Example:
+                  repositoryBranchHook=\"/opt/dak/bin/get_extra_repos\"
+                  postcreate=\"/opt/dak/bin/handle_repository '%lock_dn' '%lock_name' '%lock_type' \"",
+                  "check"         => "gosaProperty::isCommand",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+
+              ),
+
           "plProvidedAcls"=> array(
 #            "start"         => _("Service start"),  // Remove this to hide the start button at all.
 #            "stop"          => _("Service stop"),   // Remove this to hide the stop button at all.
