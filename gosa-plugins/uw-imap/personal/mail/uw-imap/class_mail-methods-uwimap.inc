@@ -57,7 +57,7 @@ class mailMethodUwimap extends mailMethod{
 
     /* Check for required PROCMAIL_PATH configuration 
      */
-    if($this->config->get_cfg_value("core","procMailPath","") == ""){
+    if($this->config->get_cfg_value("mailMethodUwimap","procMailPath") == ""){
       msg_dialog::display(_("Configuration error"),msgPool::invalidConfigurationAttribute("procMailPath"), ERROR_DIALOG);
       $this->procmaildir = "";
     }else{
@@ -140,6 +140,26 @@ class mailMethodUwimap extends mailMethod{
     }
   }
 
+  static function plInfo()
+  {
+      return (
+              array(
+                  "plProperties"  => 
+                  array(
+                      array(
+                          "name"          => "procMailPath",
+                          "type"          => "path",
+                          "default"       => "",
+                          "description"   => "", 
+                          "check"         => "gosaProperty::isWriteablePath",
+                          "migrate"       => "",
+                          "group"         => "mail",
+                          "mandatory"     => FALSE
+                          )
+                      )
+                  )
+             );
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
