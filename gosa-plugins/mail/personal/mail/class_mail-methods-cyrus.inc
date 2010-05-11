@@ -57,7 +57,7 @@ class mailMethodCyrus extends mailMethod{
     /* Setting connect timeout to 10 seconds,
         else the GOsa UI may freeze for 60 seconds.
        (PHP default is 'default_socket_timeout = 60') */
-    $timeout = $this->config->get_cfg_value("core","imapTimeout",10);
+    $timeout = $this->config->get_cfg_value("core","imapTimeout");
     @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$timeout,
           "<b>IMAP: Setting imap connect timeout to</b> (seconds)");
     imap_timeout(1, $timeout);
@@ -253,7 +253,7 @@ class mailMethodCyrus extends mailMethod{
         }
 
         /* Autocreate configured default folders */ 
-        $folders= $this->config->get_cfg_value("core","cyrusAutocreateFolders", null);
+        $folders= $this->config->get_cfg_value("mailAccount","cyrusAutocreateFolders");
         if ($folders) {
           $foldersToCreate= explode(",", $folders);
           $cyrus_delim= $this->cyrusUseSlashes?"/":".";
@@ -289,7 +289,7 @@ class mailMethodCyrus extends mailMethod{
     $cfg= $this->ServerList[$this->MailServer];
     @imap_setacl ($this->imap_handle, $this->account_id, $cfg["admin"], "lrswipcda");
 
-    if ($this->config->get_cfg_value("core","cyrusDeleteMailbox", "true") == "true"){
+    if ($this->config->boolValueIsTrue("mailAccount","cyrusDeleteMailbox")){
       if (!imap_deletemailbox($this->imap_handle, $cfg["connect"].$this->account_id)){
         $this->error = imap_last_error();
         return (FALSE);
