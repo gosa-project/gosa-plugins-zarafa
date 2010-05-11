@@ -701,7 +701,7 @@ class workgeneric extends plugin
                   ),
               array(
                   "name"          => "systemIsoHook",
-                  "type"          => "cmd",
+                  "type"          => "command",
                   "default"       => "",
                   "description"   => _("To enable the burn CD image function, you can specify the 'systemIsoHook'. You will get a CD symbol in the systems list - which calls the hook if pressed."),
                   "check"         => "gosaProperty::isCommand",
