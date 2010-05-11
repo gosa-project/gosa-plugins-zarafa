@@ -1780,7 +1780,6 @@ class environment extends plugin
                           "name"          => "kioskPath",
                           "type"          => "path",
                           "default"       => "/var/spool/kiosk",
-                          "defaults"      => "core::getPropertyValues",
                           "description"   => _("In order to make full use of the environment plugin, you may want to define the location where kiosk profiles will be stored on the servers harddisk. This is done by the 'kioskPath' keyword"),
                           "check"         => "gosaProperty::isWriteablePath",
                           "migrate"       => "",
