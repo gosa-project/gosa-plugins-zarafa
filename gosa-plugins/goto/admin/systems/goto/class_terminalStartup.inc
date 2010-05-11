@@ -129,7 +129,7 @@ class termstartup extends plugin
 
     /* Get list of boot kernels */
     if (isset($this->config->data['TABS'])){
-      $command= $this->config->get_cfg_value(get_class($this), "systemKernelsHook");
+      $command= $this->config->get_cfg_value('termstartup', "systemKernelsHook");
 
       if (!check_command($command)){
         $message[]= sprintf(_("Command '%s', specified as systemKernelsHook for plugin '%s' doesn't seem to exist."), $command,
@@ -503,22 +503,35 @@ class termstartup extends plugin
   /* Return plugin informations for acl handling */
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Startup"),
-          "plDescription" => _("Terminal startup"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 5,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("terminal"),
+      return (array(
+                  "plShortName"   => _("Startup"),
+                  "plDescription" => _("Terminal startup"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 5,
+                  "plSection"     => array("administration"),
+                  "plCategory"    => array("terminal"),
 
-          "plProvidedAcls"=> array(
-            "gotoLdapServer"      => _("Ldap server"),
-            "gotoShare"           => _("Shares"),
-            "gotoModules"         => _("Kernel modules"),
-            "gotoBootKernel"      => _("Boot kernel"), 
-            "gotoKernelParameters"=> _("Kernel parameter"))
-          ));
+                  "plProperties" => array(
+
+                      array(
+                          "name"          => "systemKernelsHook",
+                          "type"          => "command",
+                          "default"       => "",
+                          "description"   => _("For the workstations and terminals, you can define the 'systemKernelsHook' keyword. It can load additional kernels that are not retrieveable by standard GOsa/FAI mechanisms."),
+                          "check"         => "gosaProperty::isCommand",
+                          "migrate"       => "",
+                          "group"         => "system",
+                          "mandatory"     => FALSE)
+                      ),
+
+                  "plProvidedAcls"=> array(
+                          "gotoLdapServer"      => _("Ldap server"),
+                          "gotoShare"           => _("Shares"),
+                          "gotoModules"         => _("Kernel modules"),
+                          "gotoBootKernel"      => _("Boot kernel"), 
+                          "gotoKernelParameters"=> _("Kernel parameter"))
+                      ));
   }
 
 
