@@ -1224,7 +1224,7 @@ class workstartup extends plugin
    */
   function dn_to_release_name($dn)
   {
-    $relevant = preg_replace("/,".preg_quote(get_ou("faiBaseRDN"), '/').".*$/i","",$dn);
+    $relevant = preg_replace("/,".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/').".*$/i","",$dn);
     $parts    = array_reverse(explode(",",$relevant));
     $str ="";
     foreach($parts as $part){
