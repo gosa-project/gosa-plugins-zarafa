@@ -55,7 +55,7 @@ class filterFAI extends filterLDAP{
           /* Clean up object informations */
           $obj                  = array();
           $obj['cn']            = $object['cn'][0];
-          $obj['dn']            = $object['cn'][0].",".get_ou("faiBaseRDN").$config->current['BASE'];
+          $obj['dn']            = $object['cn'][0].",".get_ou("faiManagement", "faiBaseRDN").$config->current['BASE'];
           $obj['acl']           = $acl;
           $obj['class']         = $rest ['ACL'];
           $obj['FAIstate']      = $entry['FAIstate'];
@@ -98,7 +98,7 @@ class filterFAI extends filterLDAP{
 
 
     // Append opsi stuff ... 
-    if(class_available('opsi') && $base == get_ou("faiBaseRDN").$config->current['BASE']){
+    if(class_available('opsi') && $base == get_ou("faiManagement", "faiBaseRDN").$config->current['BASE']){
       $opsi = new opsi($config);
       $objects = array();
       if($opsi instanceof opsi && $opsi->enabled()){

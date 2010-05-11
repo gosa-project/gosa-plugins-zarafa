@@ -284,7 +284,7 @@ class faiProfile extends plugin
          */
         if($this->dn == "new" || $this->cn != $this->old_cn){
             $release = $this->parent->parent->fai_release;
-            $new_dn= 'cn='.$this->cn.",".get_ou("faiProfile", "faiProfileRDN").get_ou('faiBaseRDN').$release;
+            $new_dn= 'cn='.$this->cn.",".get_ou("faiProfile", "faiProfileRDN").get_ou("faiManagement", "faiBaseRDN").$release;
             $res = faiManagement::check_class_name("FAIprofile",$this->cn,$new_dn);
             if(isset($res[$this->cn])){
                 $message[] = msgPool::duplicated(_("Name"));

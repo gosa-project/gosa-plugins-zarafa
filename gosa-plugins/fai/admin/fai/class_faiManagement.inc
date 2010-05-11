@@ -61,7 +61,7 @@ class faiManagement extends management
       $this->opsi = new opsi($this->config);;
     }
 
-    $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
+    $this->fai_base = get_ou("faiManagement", "faiBaseRDN").$this->config->current['BASE'];
     $cfg_rel = $this->config->get_cfg_value("faiManagement","defaultFaiRelease");
 
     if(!empty($cfg_rel)){
@@ -602,9 +602,9 @@ class faiManagement extends management
 
           $ldap->cd($bb);
           $ldap->recursive_remove();
-          $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'/i', ','.get_ou("application", "applicationRDN"), $bb));
+          $ldap->cd(preg_replace('/,'.preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/').'/i', ','.get_ou("application", "applicationRDN"), $bb));
           $ldap->recursive_remove();
-          $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'/i', ','.get_ou("mimetype", "mimetypeRDN"), $bb));
+          $ldap->cd(preg_replace('/,'.preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/').'/i', ','.get_ou("mimetype", "mimetypeRDN"), $bb));
           $ldap->recursive_remove();
 
           /* Search for all groups with configured application menus.
@@ -612,7 +612,7 @@ class faiManagement extends management
              - The search für menu configuration for the specified release and collect all those dns.
              - Remove entries
            */
-          $release_ou = preg_replace("/".preg_quote(get_ou("faiBaseRDN"), '/').".*$/i","",$bb);
+          $release_ou = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/').".*$/i","",$bb);
           $ldap->cd($this->config->current['BASE']);
           $ldap->search("(objectClass=posixGroup)",array("dn"));
 
@@ -761,11 +761,11 @@ class faiManagement extends management
 
       $targetReleaseDN = "ou=".$name.",".$baseToUse;
 
-      $appsrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou("application", "applicationRDN"),$baseToUse);
-      $appdst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou("application", "applicationRDN"),"ou=".$name.",".$baseToUse) ;
+      $appsrc = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("application", "applicationRDN"),$baseToUse);
+      $appdst = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("application", "applicationRDN"),"ou=".$name.",".$baseToUse) ;
 
-      $mimesrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou("mimetype", "mimetypeRDN"),$baseToUse);
-      $mimedst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",get_ou("mimetype", "mimetypeRDN"),"ou=".$name.",".$baseToUse) ;
+      $mimesrc = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("mimetype", "mimetypeRDN"),$baseToUse);
+      $mimedst = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("mimetype", "mimetypeRDN"),"ou=".$name.",".$baseToUse) ;
 
       /* Check if source depeartments exist */
       foreach(array($baseToUse,$appsrc,$mimesrc) as $dep){

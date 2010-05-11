@@ -166,8 +166,8 @@ class FAI
   {
     global $config;
 
-    if(!preg_match("/".preg_quote(get_ou('faiBaseRDN'), '/')."/i",$dn)){
-      $base = get_ou('faiBaseRDN').$dn;
+    if(!preg_match("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",$dn)){
+      $base = get_ou("faiManagement", "faiBaseRDN").$dn;
     }else{
       $base = $dn;
     }
@@ -178,7 +178,7 @@ class FAI
     $ldap->search("(objectClass=FAIbranch)",array("ou","dn"));
     while($attrs = $ldap->fetch()){
       if($appendedName){
-        $res[$attrs['dn']] = convert_department_dn(preg_replace("/,".preg_quote(get_ou('faiBaseRDN'), '/').".*$/i","",$attrs['dn']));
+        $res[$attrs['dn']] = convert_department_dn(preg_replace("/,".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/').".*$/i","",$attrs['dn']));
       }else{
         $res[$attrs['dn']] = $attrs['ou'][0];
       }
@@ -222,7 +222,7 @@ class FAI
 
       /* Dont't try to modify non FAIclasses  
        */
-      if(!preg_match("/[^,]+,".preg_quote(get_ou("faiBaseRDN"), '/')."/i",$obj_dn)){
+      if(!preg_match("/[^,]+,".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",$obj_dn)){
         trigger_error("PLEASE check fai class handling in ".__LINE__." -> ".__FILE__);        
         echo "<br>-->".$Current_DN."<br>";
         echo "<br>-->".$obj_dn."<br>";
@@ -923,8 +923,8 @@ class FAI
     $ldap->search("(objectClass=FAIbranch)",array("ou","FAIstate"));
     while($attrs = $ldap->fetch()){
       foreach($sub_releases as $sub_rel){
-        if(preg_match("/^".preg_quote($sub_rel.get_ou('faiBaseRDN'), '/')."/i",$attrs['dn'])){
-          $f_releases[$sub_rel.get_ou('faiBaseRDN')] = $attrs;
+        if(preg_match("/^".preg_quote($sub_rel.get_ou("faiManagement", "faiBaseRDN"), '/')."/i",$attrs['dn'])){
+          $f_releases[$sub_rel.get_ou("faiManagement", "faiBaseRDN")] = $attrs;
         }
       }
     }
@@ -945,8 +945,8 @@ class FAI
     foreach($sub_releases as $name => $sub_rel){
 
       $FAIstate = "";
-      if(isset($f_releases[$sub_rel.get_ou('faiBaseRDN')]) && isset($f_releases[$sub_rel.get_ou('faiBaseRDN')]['FAIstate'])){
-        $FAIstate = $f_releases[$sub_rel.get_ou('faiBaseRDN')]['FAIstate'][0];
+      if(isset($f_releases[$sub_rel.get_ou("faiManagement", "faiBaseRDN")]) && isset($f_releases[$sub_rel.get_ou("faiManagement", "faiBaseRDN")]['FAIstate'])){
+        $FAIstate = $f_releases[$sub_rel.get_ou("faiManagement", "faiBaseRDN")]['FAIstate'][0];
       }
 
       foreach($groups as $dn => $data){

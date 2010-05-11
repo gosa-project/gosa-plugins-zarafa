@@ -11,7 +11,7 @@ class filterOPSIPackages extends filterLDAP{
     $entries = array();
 
     // Append opsi stuff ...
-    if(class_available('opsi') && $base == get_ou("faiBaseRDN").$config->current['BASE']){
+    if(class_available('opsi') && $base == get_ou("faiManagement", "faiBaseRDN").$config->current['BASE']){
       $opsi = new opsi($config);
       $objects = array();
       if($opsi instanceof opsi && $opsi->enabled()){

@@ -404,7 +404,7 @@ class faiTemplate extends plugin
      */
     if($this->is_new){
       $release = $this->parent->parent->fai_release;
-      $new_dn= 'cn='.$this->cn.",".get_ou("faiTemplate", "faiTemplateRDN").get_ou('faiBaseRDN').$release;
+      $new_dn= 'cn='.$this->cn.",".get_ou("faiTemplate", "faiTemplateRDN").get_ou("faiManagement", "faiBaseRDN").$release;
       $res = faiManagement::check_class_name("FAItemplate",$this->cn,$new_dn);
       if(isset($res[$this->cn])){
         $message[] = msgPool::duplicated(_("Name"));
