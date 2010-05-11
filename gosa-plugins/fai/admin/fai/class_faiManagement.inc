@@ -1224,13 +1224,7 @@ class faiManagement extends management
                           "migrate"       => "",
                           "group"         => "plugin",
                           "mandatory"     => FALSE
-                          )
-                      ),
-
-
-
-                  "plProperties"  => 
-                  array(
+                          ),
                       array(
                           "name"          => "defaultFaiRelease",
                           "type"          => "dn",
@@ -1239,10 +1233,12 @@ class faiManagement extends management
                           "check"         => "gosaProperty::isDn",
                           "migrate"       => "",
                           "group"         => "fai",
-                          "mandatory"     => FALSE)),
+                          "mandatory"     => FALSE
+                          )
+                          ),
 
-                  "plCategory"    => array("fai"=> array("description" => _("FAI"),"objectClass" => "FAIclass")),
-          "plProvidedAcls"=> array()));
+                          "plCategory"    => array("fai"=> array("description" => _("FAI"),"objectClass" => "FAIclass")),
+                          "plProvidedAcls"=> array()));
   }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
