@@ -1763,31 +1763,47 @@ class environment extends plugin
 #FIXME these ACLs should work for groups too */ 
   static function plInfo()
   {
-    return (array("plShortName"     => _("Desktop"),
-          "plDescription"   => _("Desktop settings"),         // Description
-          "plSelfModify"    => TRUE,                              
-          "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
-          "plPriority"      => 3,                                 // Position in tabs 
-          "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users",
-                                   "groups"),
-          "plOptions"       => array("resolution_hook" => array("type" => "string",
-              "description" => _("Command to extend the list of possible screen resolutions"))),
+      return (array("plShortName"     => _("Desktop"),
+                  "plDescription"   => _("Desktop settings"),         // Description
+                  "plSelfModify"    => TRUE,                              
+                  "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
+                  "plPriority"      => 3,                                 // Position in tabs 
+                  "plSection"     => array("personal" => _("My account")),
+                  "plCategory"    => array("users",
+                      "groups"),
+                  "plOptions"       => array("resolution_hook" => array("type" => "string",
+                          "description" => _("Command to extend the list of possible screen resolutions"))),
 
-          "plProvidedAcls"  => array(
+                  "plProperties" => array(
 
-            "gotoPrinter"         => _("Printer") ,
-            "gotoProfileServer"   => _("Profile server") ,
-            "gosaDefaultPrinter"  => _("Default printer"),
-            "gotoProfileQuota"    => _("Profile quota") ,
-            "gotoProfileFlagC"    => _("Cache profile localy") ,
-            "gotoShare"          => _("Shares"),
-            "gotoHotplugDeviceDN" => _("Hotplug devices"),
-            "gotoKioskProfile"    => _("Kiosk profile") ,
-            "gotoProfileFlagL"    => _("Resolution changeable during session") ,
-            "gotoXResolution"     => _("Resolution") ,
-            "gotoLogonScript"     => _("Logon script"))
-            ));
+                      array(
+                          "name"          => "kioskPath",
+                          "type"          => "path",
+                          "default"       => "/var/spool/kiosk",
+                          "defaults"      => "core::getPropertyValues",
+                          "description"   => _("In order to make full use of the environment plugin, you may want to define the location where kiosk profiles will be stored on the servers harddisk. This is done by the 'kioskPath' keyword"),
+                          "check"         => "gosaProperty::isWriteablePath",
+                          "migrate"       => "",
+                          "group"         => "environment",
+                          "mandatory"     => FALSE
+                          )
+                      ),
+
+
+                  "plProvidedAcls"  => array(
+
+                          "gotoPrinter"         => _("Printer") ,
+                          "gotoProfileServer"   => _("Profile server") ,
+                          "gosaDefaultPrinter"  => _("Default printer"),
+                          "gotoProfileQuota"    => _("Profile quota") ,
+                          "gotoProfileFlagC"    => _("Cache profile localy") ,
+                          "gotoShare"          => _("Shares"),
+                          "gotoHotplugDeviceDN" => _("Hotplug devices"),
+                          "gotoKioskProfile"    => _("Kiosk profile") ,
+                          "gotoProfileFlagL"    => _("Resolution changeable during session") ,
+                          "gotoXResolution"     => _("Resolution") ,
+                          "gotoLogonScript"     => _("Logon script"))
+                      ));
   }
 }
 
