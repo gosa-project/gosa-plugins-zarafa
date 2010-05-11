@@ -219,8 +219,8 @@ class environment extends plugin
                                     "1280x768"  =>  "1280x768",
                                     "1280x1024" =>  "1280x1024");
 
-    if($this->config->get_cfg_value("core","resolutions") != ""){
-      $file = $this->config->get_cfg_value("core","resolutions");
+    if($this->config->get_cfg_value("environment","resolutions") != ""){
+      $file = $this->config->get_cfg_value("environment","resolutions");
 
       if(is_readable($file)){
         $str = file_get_contents($file);
@@ -1776,6 +1776,16 @@ class environment extends plugin
 
                   "plProperties" => array(
 
+                      array(
+                          "name"          => "resolutions",
+                          "type"          => "file",
+                          "default"       => "",
+                          "description"   => _("The 'resolutions' variable defines a plain text file which contains additional resolutions to be shown in the environment and system plugins."),
+                          "check"         => "gosaProperty::isReadableFile",
+                          "migrate"       => "",
+                          "group"         => "environment",
+                          "mandatory"     => FALSE
+                          ),
                       array(
                           "name"          => "kioskPath",
                           "type"          => "path",
