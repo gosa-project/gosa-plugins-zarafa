@@ -347,12 +347,52 @@ class opengwAccount extends plugin
                     "plCategory"    => array("users"),
                     "plOptions"       => array(),
 
+                    "plProperties" => array(
+                        array(
+                            "name"          => "datahost",
+                            "type"          => "string",
+                            "default"       => "",
+                            "description"   => _("The server/hostname to use for OpenGroupware connections."),
+                            "check"         => "",
+                            "migrate"       => "",
+                            "group"         => "OpenGroupware",
+                            "mandatory"     => FALSE),
+                        array(
+                            "name"          => "password",
+                            "type"          => "string",
+                            "default"       => "",
+                            "description"   => _("The password to use for OpenGroupware connections."),
+                            "check"         => "",
+                            "migrate"       => "",
+                            "group"         => "OpenGroupware",
+                            "mandatory"     => FALSE),
+                        array(
+                            "name"          => "username",
+                            "type"          => "string",
+                            "default"       => "",
+                            "description"   => _("The username to use for OpenGroupware connections."),
+                            "check"         => "",
+                            "migrate"       => "",
+                            "group"         => "OpenGroupware",
+                            "mandatory"     => FALSE),
+                        array(
+                            "name"          => "database",
+                            "type"          => "string",
+                            "default"       => "",
+                            "description"   => _("The database name to use for OpenGroupware connections."),
+                            "check"         => "",
+                            "migrate"       => "",
+                            "group"         => "OpenGroupware",
+                            "mandatory"     => FALSE),
+                        ),
+
+
                     "plProvidedAcls"  => array(
-                        "LocationTeam"  => _("Location team"),
-                        "TemplateUser"  => _("Template user"),
-                        "Locked"        => _("Locked"),
-                        "Teams"         => _("Teams"))
-                    ));
+                            "LocationTeam"  => _("Location team"),
+                            "TemplateUser"  => _("Template user"),
+                            "Locked"        => _("Locked"),
+                            "Teams"         => _("Teams"))
+                        ));
     }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
