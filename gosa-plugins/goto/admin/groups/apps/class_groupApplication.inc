@@ -156,7 +156,7 @@ class appgroup extends plugin
       $dn     = get_ou("application", "applicationRDN").$this->config->current['BASE'];
       $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
       $res    = get_sub_list($filter,array("application","fai"), 
-          array(get_ou("application", "applicationRDN"),get_ou("faiBaseRDN")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
+          array(get_ou("application", "applicationRDN"),get_ou("faiManagement", "faiBaseRDN")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
 
       /* Go through all departments and check which department is a valid 
           department release.
