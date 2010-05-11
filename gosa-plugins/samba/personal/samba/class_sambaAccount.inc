@@ -119,7 +119,7 @@ class sambaAccount extends plugin
           $this->sambaDomainName= "DEFAULT";
         }
         $this->ridBase= $this->config->get_cfg_value("core","sambaRidBase");
-        $this->SID= $this->config->get_cfg_value("core","sambaSid");
+        $this->SID= $this->config->get_cfg_value("core","sambaSID");
       }
 
       /* Save in order to compare later on */
@@ -1172,7 +1172,7 @@ class sambaAccount extends plugin
     /* User wants me to fake the idMappings? This is useful for
        making winbind resolve the user names in a reasonable amount
        of time in combination with larger databases. */
-    if ($this->config->get_cfg_value("core","sambaidmapping") == "true"){
+    if ($this->config->boolValueIsTrue("core","sambaIdMapping")){
       $this->attrs['objectClass'][]= "sambaIdmapEntry";
     }
 
