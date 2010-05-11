@@ -61,8 +61,8 @@ class workservice extends plugin
         "1400x1050" =>  "1400x1050", 
         "1600x1200" =>  "1600x1200");
 
-    if($this->config->get_cfg_value("core","resolutions") != ""){
-      $file = $this->config->get_cfg_value("core","resolutions");
+    if($this->config->get_cfg_value("environment","resolutions") != ""){
+      $file = $this->config->get_cfg_value("environment","resolutions");
 
       if(is_readable($file)){
         $str = file_get_contents($file);
