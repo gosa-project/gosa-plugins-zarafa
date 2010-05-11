@@ -59,7 +59,7 @@ class application extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou('applicationRDN'), '/')."/i", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("application", "applicationRDN"), '/')."/i", "", $this->dn);
     }
 
     $this->orig_cn = $this->cn;
@@ -209,7 +209,7 @@ class application extends plugin
   function remove_from_parent()
   {
     /* Parse release out of object dn */
-    $release = preg_replace("/".preg_quote(get_ou("applicationRDN").$this->base, '/')."$/i","",$this->dn);
+    $release = preg_replace("/".preg_quote(get_ou("application", "applicationRDN").$this->base, '/')."$/i","",$this->dn);
     $release = preg_replace("/^cn=[^,]+,/","",$release);
 
     /* Get a list of all groups 
@@ -404,7 +404,7 @@ class application extends plugin
 
     /* Permissions for that base? */
     if ($this->base != ""){
-      $new_dn= "cn=".$this->cn.",".get_ou('applicationRDN').$this->base;
+      $new_dn= "cn=".$this->cn.",".get_ou("application", "applicationRDN").$this->base;
     } else {
       $new_dn= $this->dn;
     }
@@ -433,7 +433,7 @@ class application extends plugin
     if($this->is_release()){
       $base = $this->parent->parent->app_release;
     }else{
-      $base = get_ou('applicationRDN').$this->base;
+      $base = get_ou("application", "applicationRDN").$this->base;
     }
 
     $ldap->ls("(&(objectClass=gosaApplication)(cn=".$this->cn."))",$base,array("cn"));

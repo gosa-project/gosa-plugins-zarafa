@@ -21,7 +21,7 @@ class tabsHook extends tabs
   function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['faiHook'];
-	$new_dn ='cn='.$baseobject->cn.",".get_ou('faiHookRDN').$this->parent->fai_release;
+	$new_dn ='cn='.$baseobject->cn.",".get_ou("faiHook", "faiHookRDN").$this->parent->fai_release;
 
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

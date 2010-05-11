@@ -31,10 +31,10 @@ class EventAddSystemDialog extends management
     $this->config = $config;
     $this->ui = $ui;
     $this->storagePoints = array(
-        get_ou("serverRDN"), 
-        get_ou("workstationRDN"), 
-        get_ou("ogroupRDN"), 
-        get_ou('terminalRDN'));
+        get_ou("servgeneric", "serverRDN"), 
+        get_ou("workgeneric", "workstationRDN"), 
+        get_ou("group", "ogroupRDN"), 
+        get_ou("termgeneric", "terminalRDN"));
 
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){

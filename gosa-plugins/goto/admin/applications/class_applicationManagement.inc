@@ -42,8 +42,8 @@ class applicationManagement extends management
   {
     $this->config = $config;
     $this->ui = $ui;
-    $this->app_base    = get_ou('applicationRDN').$this->config->current['BASE'];
-    $this->app_release = get_ou('applicationRDN').$this->config->current['BASE'];
+    $this->app_base    = get_ou("application", "applicationRDN").$this->config->current['BASE'];
+    $this->app_release = get_ou("application", "applicationRDN").$this->config->current['BASE'];
 
     if($this->IsReleaseManagementActivated()){
       $filter_xml = "application-filter-release.xml";
@@ -54,7 +54,7 @@ class applicationManagement extends management
     }else{
       $filter_xml = "application-filter.xml";
       $list_xml = "application-list.xml";
-      $this->storagePoints= array(get_ou("applicationRDN"));
+      $this->storagePoints= array(get_ou("application", "applicationRDN"));
     }
 
     // Build filter

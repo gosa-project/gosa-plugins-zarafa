@@ -22,7 +22,7 @@ class tabsProfile extends tabs
   function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['faiProfile'];
-	$new_dn ='cn='.$baseobject->cn.",".get_ou('faiProfileRDN').$this->parent->fai_release;
+	$new_dn ='cn='.$baseobject->cn.",".get_ou("faiProfile", "faiProfileRDN").$this->parent->fai_release;
 			
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

@@ -95,7 +95,7 @@ class opsi extends gosaSupportDaemon
     foreach($res as $entry){
       if(!isset($entry['MAC'][0]['VALUE'])) $entry['MAC'][0]['VALUE'] = "";
       $obj = array(
-        "dn"          => "opsi:=".$entry['NAME'][0]['VALUE'].",".get_ou("sambaMachineAccountRDN").$this->config->current['BASE'],
+        "dn"          => "opsi:=".$entry['NAME'][0]['VALUE'].",".get_ou("wingeneric", "sambaMachineAccountRDN").$this->config->current['BASE'],
         "objectClass" => array("gosa_opsi_client"),
         "cn"          => array(0 => $entry['NAME'][0]['VALUE']),
         "macAddress"  => array(0 => $entry['MAC'][0]['VALUE']),

@@ -42,7 +42,7 @@ class deviceManagement extends management
 
     $filter_xml = "device-filter.xml";
     $list_xml = "device-list.xml";
-    $this->storagePoints= array(get_ou("deviceRDN"));
+    $this->storagePoints= array(get_ou("deviceGeneric", "deviceRDN"));
 
     // Build filter
     if (session::global_is_set(get_class($this)."_filter")){

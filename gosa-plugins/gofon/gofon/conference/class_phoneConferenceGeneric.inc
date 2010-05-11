@@ -118,7 +118,7 @@ class conference extends plugin
     } else {
 
       /* Get base */ 
-      $this->base = preg_replace ("/^[^,]+,".preg_quote(get_ou('phoneConferenceRDN'), '/')."/i","",$this->dn);;
+      $this->base = preg_replace ("/^[^,]+,".preg_quote(get_ou("conference", "phoneConferenceRDN"), '/')."/i","",$this->dn);;
     }
 
     $this->goFonConferenceOwner=$this->ui->dn;
@@ -383,7 +383,7 @@ class conference extends plugin
 
     if($this->old_cn != $this->cn || $this->base != $this->old_base){
       $ldap = $this->config->get_ldap_link();
-      $ldap->cd(get_ou('phoneConferenceRDN').$this->base);
+      $ldap->cd(get_ou("conference", "phoneConferenceRDN").$this->base);
       $ldap->search("(&(objectClass=goFonConference)(cn=".$this->cn."))",array("cn"));
       if($ldap->count()){
         $message[] = msgPool::duplicated(_("Name"));

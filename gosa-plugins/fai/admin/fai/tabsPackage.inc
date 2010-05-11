@@ -22,7 +22,7 @@ class tabsPackage extends tabs
   function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['faiPackage'];
-	$new_dn ='cn='.$baseobject->cn.",".get_ou('faiPackageRDN').$this->parent->fai_release;
+	$new_dn ='cn='.$baseobject->cn.",".get_ou("faiPackage", "faiPackageRDN").$this->parent->fai_release;
 			
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

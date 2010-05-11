@@ -17,7 +17,7 @@ class macrotabs extends tabs
 
 	/* Check for new 'dn', in order to propagate the
 	   'dn' to all plugins */
-	$new_dn= "cn=".$baseobject->cn.",".get_ou('phoneMacroRDN').$baseobject->base;
+	$new_dn= "cn=".$baseobject->cn.",".get_ou("macro", "phoneMacroRDN").$baseobject->base;
 
         /* Move group? */
         if ($this->dn != $new_dn){

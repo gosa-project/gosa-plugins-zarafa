@@ -30,7 +30,7 @@ class apptabs extends tabs
     if($baseobject->parent->parent->IsReleaseManagementActivated()){
       $new_dn= "cn=".$baseobject->cn.",".$baseobject->parent->parent->app_release;
     }else{
-      $new_dn= "cn=".$baseobject->cn.",".get_ou('applicationRDN').$baseobject->base;
+      $new_dn= "cn=".$baseobject->cn.",".get_ou("application", "applicationRDN").$baseobject->base;
     }
     
     // Do we have to move the object?

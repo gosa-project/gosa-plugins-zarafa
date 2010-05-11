@@ -674,7 +674,7 @@ class workstartup extends plugin
       $ldap= $this->config->get_ldap_link();
 
       /* Strip relevant part from dn, keep trailing ',' */
-      $tmp= preg_replace("/^cn=[^,]+,".preg_quote(get_ou('terminalRDN'), '/')."/i", "", $this->dn);
+      $tmp= preg_replace("/^cn=[^,]+,".preg_quote(get_ou("termgeneric", "terminalRDN"), '/')."/i", "", $this->dn);
       $tmp= preg_replace("/".$this->config->current['BASE']."$/i", "", $tmp);
 
       /* Walk from top to base and try to load default values for
@@ -682,7 +682,7 @@ class workstartup extends plugin
       while (TRUE){
         $tmp= preg_replace ("/^[^,]+,/", "", $tmp);
 
-        $ldap->cat("cn=default,".get_ou('terminalRDN').$tmp.
+        $ldap->cat("cn=default,".get_ou("termgeneric", "terminalRDN").$tmp.
             $this->config->current['BASE'], array('gotoTerminalPath'));
         $attrs= $ldap->fetch();
         if (isset($attrs['gotoTerminalPath'])){

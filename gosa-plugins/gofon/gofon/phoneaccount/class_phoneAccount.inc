@@ -165,7 +165,7 @@ class phoneAccount extends plugin
     /* Get available phone hardware  
      * Search for all available phone hardware  
      */
-    $tmp = get_sub_list("(objectClass=goFonHardware)","phone",array(get_ou("phoneRDN")),
+    $tmp = get_sub_list("(objectClass=goFonHardware)","phone",array(get_ou("phoneGeneric", "phoneRDN")),
                   $this->config->current['BASE'],array("cn","description"), GL_SUBSEARCH);
     foreach($tmp as $attrs){
       $cn= $attrs['cn'][0];
@@ -184,13 +184,13 @@ class phoneAccount extends plugin
      */
     $deps_a = array(
         get_people_ou(),
-        get_ou("ogroupRDN"),
-        get_ou("serverRDN"),
-        get_ou("terminalRDN"),
-        get_ou("workstationRDN"),
-        get_ou("printerRDN"),
-        get_ou("componentRDN"),
-        get_ou("phoneRDN"));
+        get_ou("group", "ogroupRDN"),
+        get_ou("servgeneric", "serverRDN"),
+        get_ou("termgeneric", "terminalRDN"),
+        get_ou("workgeneric", "workstationRDN"),
+        get_ou("printgeneric", "printerRDN"),
+        get_ou("componentGeneric", "componentRDN"),
+        get_ou("phoneGeneric", "phoneRDN"));
 
     $tmp = get_sub_list("(goFonHardware=*)","phone",$deps_a,$this->config->current['BASE'],
         array('cn','dn','goFonHardware'),GL_SUBSEARCH);
@@ -206,7 +206,7 @@ class phoneAccount extends plugin
      * Search for all Macros that are visible and create 
      *  an array with name and parameters 
      */
-    $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","gofonmacro",array(get_ou("phoneMacroRDN")),
+    $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","gofonmacro",array(get_ou("macro", "phoneMacroRDN")),
                   $this->config->current['BASE'],array("displayName","goFonMacroParameter","dn","cn"), GL_NO_ACL_CHECK | GL_SUBSEARCH );
     
 

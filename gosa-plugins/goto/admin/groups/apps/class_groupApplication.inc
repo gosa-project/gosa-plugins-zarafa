@@ -148,26 +148,26 @@ class appgroup extends plugin
     */
   function getReleases()
   {
-    $ret =array("/" => array("name" => "/", "found" => TRUE , "parts" => array(),"suffix" => get_ou('applicationRDN')));
+    $ret =array("/" => array("name" => "/", "found" => TRUE , "parts" => array(),"suffix" => get_ou("application", "applicationRDN")));
     if($this->enableReleaseManagement){
 
       /* Only display those releases that we are able to read 
        */
-      $dn     = get_ou("applicationRDN").$this->config->current['BASE'];
+      $dn     = get_ou("application", "applicationRDN").$this->config->current['BASE'];
       $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
       $res    = get_sub_list($filter,array("application","fai"), 
-          array(get_ou("applicationRDN"),get_ou("faiBaseRDN")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
+          array(get_ou("application", "applicationRDN"),get_ou("faiBaseRDN")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
 
       /* Go through all departments and check which department is a valid 
           department release.
        */
       foreach($res as $attrs){
-        if(preg_match("/".get_ou('applicationRDN')."/i",$attrs['dn'])){
+        if(preg_match("/".get_ou("application", "applicationRDN")."/i",$attrs['dn'])){
 
           /* Parse all returned departments dns into a useable type.
              (ou=1.0.0,ou=halut,ou=apps  ==> halue/1.0.0)
            */
-          $bb     = preg_replace("/".preg_quote(get_ou('applicationRDN'), '/').".*/i","",$attrs['dn']);
+          $bb     = preg_replace("/".preg_quote(get_ou("application", "applicationRDN"), '/').".*/i","",$attrs['dn']);
           $parts  = array_reverse(explode("ou=",$bb));
 
           $str ="";
@@ -205,7 +205,7 @@ class appgroup extends plugin
               "found"    => $found,
               "FAIstate" => $FAIstate,
               "dn"       => $attrs['dn'], 
-              "parts"    => $parts,"suffix" => $bb.get_ou('applicationRDN'));
+              "parts"    => $parts,"suffix" => $bb.get_ou("application", "applicationRDN"));
         }
       }
     }
@@ -466,7 +466,7 @@ class appgroup extends plugin
     $used_apps = $this->_get_used_entry_name();
     foreach($this->apps as $key => $app){
         if(in_array($app['cn'][0],$used_apps)) continue;
-        if(!preg_match("/".get_ou('applicationRDN').preg_quote($this->curbase, '/')."$/",$app['dn'])){
+        if(!preg_match("/".get_ou("application", "applicationRDN").preg_quote($this->curbase, '/')."$/",$app['dn'])){
             continue;
         }
 

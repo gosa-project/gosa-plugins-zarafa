@@ -69,7 +69,7 @@ class blocklistGeneric extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("faxBlocklistRDN"), '/')."/i", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("blocklistGeneric", "faxBlocklistRDN"), '/')."/i", "", $this->dn);
     }
     
     $this->orig_base = $this->base;
@@ -216,7 +216,7 @@ class blocklistGeneric extends plugin
       }
       if ($this->dn == 'new'){
         $ldap= $this->config->get_ldap_link();
-        $ldap->cd (get_ou('faxBlocklistRDN').$this->config->current["BASE"]);
+        $ldap->cd (get_ou("blocklistGeneric", "faxBlocklistRDN").$this->config->current["BASE"]);
         $ldap->search ("(&(|(objectClass=goFaxSBlock)(objectClass=goFaxRBlock))(cn=".$this->cn."))", array("cn"));
         if ($ldap->count() != 0){
           $message[]= msgPool::duplicated(_("Name"));

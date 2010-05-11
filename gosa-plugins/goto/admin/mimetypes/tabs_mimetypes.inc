@@ -30,7 +30,7 @@ class mimetabs extends tabs
     if($this->parent->IsReleaseManagementActivated()){
       $new_dn= "cn=".$baseobject->cn.",".$this->parent->mime_release;
     }else{
-      $new_dn= "cn=".$baseobject->cn.",".get_ou('mimetypeRDN').$baseobject->base;
+      $new_dn= "cn=".$baseobject->cn.",".get_ou("mimetype", "mimetypeRDN").$baseobject->base;
     }
 
     /* Move group? */
