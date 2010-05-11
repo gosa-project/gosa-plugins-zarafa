@@ -8,25 +8,22 @@ class ppdManager
 
   var $useGzip  = true;
 
-	function ppdManager($path)
-	{
-    global $config;
-    $value =$config->get_cfg_value("core","ppdGzip","true");
-    if(preg_match('/false/i',$value)){
-      $this->useGzip  = false;
-    }
-  
-		if(is_dir($path)){
-			$this->path= $path;
-		}elseif(is_link($path) && (is_dir(readlink($path)))) {
-		    $this->path= $path;
-		} else {
-			msg_dialog::display(_("PPD manager error"), sprintf(_("The specified path '%s' does not exist."),$path), ERROR_DIALOG);
-			return (false);
-		}
+  function ppdManager($path)
+  {
+      global $config;
+      if($config->boolValueIsTrue("core","ppdGzip")){
+          $this->useGzip  = false;
+      }
 
-
-	}
+      if(is_dir($path)){
+          $this->path= $path;
+      }elseif(is_link($path) && (is_dir(readlink($path)))) {
+          $this->path= $path;
+      } else {
+          msg_dialog::display(_("PPD manager error"), sprintf(_("The specified path '%s' does not exist."),$path), ERROR_DIALOG);
+          return (false);
+      }
+  }
 
 
 	function findPPD($path)
