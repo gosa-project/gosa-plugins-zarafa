@@ -500,7 +500,7 @@ class conference extends plugin
       $EXT[$i]['context'] = $context;
       $EXT[$i]['priority']= $i;
       $EXT[$i]['app']     ="Set";
-      $EXT[$i]['appdata'] ="LANGUAGE()=".$this->language;
+      $EXT[$i]['appdata'] ="CHANNEL(language)=".$this->language;
       $i++;      
 
       // Recordingformat for conference
@@ -508,7 +508,7 @@ class conference extends plugin
         $EXT[$i]['exten']   =$this->telephoneNumber;
         $EXT[$i]['context'] =$context;
         $EXT[$i]['priority']= $i;
-        $EXT[$i]['app']     ="Setvar";
+        $EXT[$i]['app']     ="Set";
         $EXT[$i]['appdata'] ="MEETME_RECORDINGFORMAT=".$this->goFonConferenceOptionFormat;
         $i++;      
       }
@@ -549,7 +549,7 @@ class conference extends plugin
       }
       $i++; 
 
-      // Hanup command
+      // Hangup command
       $EXT[$i]['exten']   =$this->telephoneNumber;
       $EXT[$i]['context'] =$context;
       $EXT[$i]['priority']=$i;
@@ -558,12 +558,13 @@ class conference extends plugin
       $i++;      
 
       // Map name to number 
-      $EXT[$i]['exten']   =$this->cn;
-      $EXT[$i]['context'] =$context;
-      $EXT[$i]['priority']=1;
-      $EXT[$i]['app']     ="Goto";
-      $EXT[$i]['appdata'] =$this->telephoneNumber."|1";
-
+      if($this->cn != $this->telephoneNumber){
+          $EXT[$i]['exten']   =$this->cn;
+          $EXT[$i]['context'] =$context;
+          $EXT[$i]['priority']=1;
+          $EXT[$i]['app']     ="Goto";
+          $EXT[$i]['appdata'] =$this->telephoneNumber."|1";
+      }        
 
       foreach($EXT as $keytop => $valtop){
         $s_keys = "";
@@ -576,8 +577,6 @@ class conference extends plugin
         $s_values =preg_replace("/\,$/","",$s_values); 
         $SQL[]="INSERT INTO ".$cfg_Current['EXT_TABLE']." (".$s_keys.") VALUES (".$s_values.");"; 
       }
-
-
 
       /* Start transaction, to be able to rollback
        */
