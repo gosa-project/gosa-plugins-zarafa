@@ -558,7 +558,7 @@ class conference extends plugin
       $i++;      
 
       // Map name to number 
-      if($this->cn != $this->telephoneNumber){
+      if(!is_numeric($this->cn)){
           $EXT[$i]['exten']   =$this->cn;
           $EXT[$i]['context'] =$context;
           $EXT[$i]['priority']=1;
