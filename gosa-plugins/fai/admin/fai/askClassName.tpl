@@ -3,7 +3,7 @@
  {$headline}
 </div>
 <br>
-<p class="seperator">{t}Adding a new class to the FAI management, requires a class name. You have to specify a unique class name for unique types of FAI classes, while you can use the same class name for different types of FAI classes. In the laste case, FAI will automatically enclose all these different class types to one unique class name.{/t}
+<p class="seperator">{t}Adding a new class to the FAI management, requires a class name. You have to specify a unique class name for unique types of FAI classes, while you can use the same class name for different types of FAI classes. In the last case, FAI will automatically enclose all these different class types to one unique class name.{/t}
  <br>
  <br>
 </p>
