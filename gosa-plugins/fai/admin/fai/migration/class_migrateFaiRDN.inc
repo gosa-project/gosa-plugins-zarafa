@@ -35,14 +35,25 @@ class migrateFaiRDN extends migrateRDN implements propertyMigration
         $initialValue = $this->prefix.$this->property->getValue().$this->suffix;
         $targetValue = $this->prefix.$this->property->getValue(TRUE).$this->suffix;
 
+        $prefix = $this->config->get_cfg_value('faiManagement','faiBaseRDN');
+
         $dnMatch = "";
-        if(!empty($initialValue)){
-            foreach(preg_split("/,/", $initialValue) as $rdnPart){
+        if(!empty($initialValue) || !empty($prefix)){
+            foreach(preg_split("/,/", $initialValue.$prefix) as $rdnPart){
                 if(empty($rdnPart)) continue;
                 list($namingAttrs, $container) = preg_split("/=/",$rdnPart,2);
                 $container = trim($container,', ');
                 $dnMatch.= "({$namingAttrs}:dn:={$container})";
             }
+        }
+
+        // Collect all FAI releases - this is nescessary to detect the release part
+        //  of the dn
+        $ldap->cd($this->config->current['BASE']);
+        $releases = array();
+        $ldap->search("(objectClass=FAIbranch)",array('dn'));
+        while($attrs = $ldap->fetch()){
+            $releases[$attrs['dn']] = $attrs['dn'];
         }
 
         // Search for users
@@ -53,53 +64,46 @@ class migrateFaiRDN extends migrateRDN implements propertyMigration
             $dn = $attrs['dn'];
             $dnTo = $dn;
 
-            // If there intially was no userDN given then just add the new userRDN to the user dns
-            //  and create the new container objects.
-            if(empty($initialValue)){
-                list($namingAttrs, $container) = preg_split("/=/",$targetValue,2);
-                list($name, $container) = preg_split("/,/",$dn,2);
-
-                // Ensure that we handle a valid gosaDepartment container.
-                while(!isset($this->config->idepartments[$container])){
-                    $container = preg_replace("/^[^,]*+,/","",$container);
-                }
-
-                // Queue new containuer to be created.
-                if(!preg_match("/^".preg_quote($targetValue,'/i')."/", $container)){
-                    $dnTo = $name.",".$targetValue.$container;
-                    if(!$ldap->dn_exists($targetValue.$container)){
-                        $this->found['add'][$targetValue.$container] = array(); 
-                    }
-                    if($dn != $dnTo){
-                        $this->found['move'][] = array('from' => $dn, 'to' => $dnTo);
-                        $found = TRUE;
-                    }
-                }
+            // Detect the releaes part of the dn.
+            $releasePart = $dn; 
+            while(!isset($releases[$releasePart]) && preg_match("/,/", $releasePart)){
+                $releasePart = preg_replace("/^[^,]*+,/","",$releasePart);
+            }
+            if(!isset($releases[$releasePart])){
+                // Release not found;
+                continue;
             }
 
-            // If there intially was a userDN given then replace it with the new one.
-            if(!empty($initialValue)){
+            // Detect the base part of the releasePart
+            $basePart = $releasePart; 
+            while(!isset($this->config->idepartments[$basePart]) && preg_match("/,/", $basePart)){
+                $basePart = preg_replace("/^[^,]*+,/","",$basePart);
+            }
+            if(!isset($this->config->idepartments[$basePart])){
+                // Base not found;
+                continue;
+            }
 
-                list($name, $container) = preg_split("/,/",$dn,2);
-                if(preg_match("/^".preg_quote($initialValue,'/i')."/", $container)){
-                    $container = preg_replace("/^".preg_quote($initialValue,'/')."/",$targetValue,$container);
+            $releaseRDN = substr($releasePart,0,strlen($releasePart) - strlen($basePart));
 
-                    // Ensure that we handle a valid gosaDepartment container.
-                    while(!isset($this->config->idepartments[$container])){
-                        $container = preg_replace("/^[^,]*+,/","",$container);
-                    }
+            // Now remove the faiBaseRDN from the release DN.
+            $releaseRDN = preg_replace("/".preg_quote($prefix,'/')."/","", $releaseRDN);
 
+            // Remove all parts from the dn to geht the objects name. 
+            $name = substr($dn,0, (strlen($dn)  - strlen($initialValue.$releaseRDN.$prefix.$basePart)));
 
-                    $dnTo = $name.",".$targetValue.$container;
-                    if(!empty($targetValue) && !$ldap->dn_exists($targetValue.$container)){
-                        $this->found['add'][$targetValue.$container] = array(); 
-                    }
-                    if($dn != $dnTo){
-                        $this->found['move'][] = array('from' => $dn, 'to' => $dnTo);
-                        $found = TRUE;
-                    }
-                }
-            }    
+            // Build new container name and check if it exists.
+            $newContainer = $targetValue.$releaseRDN.$prefix.$basePart;
+            if(!$ldap->dn_exists($newContainer)){
+                $this->found['add'][$newContainer] = array(); 
+            }
+
+            // Check if the target name has changed.
+            $dnTo = $name.$newContainer;
+            if($dn != $dnTo){
+                $this->found['move'][] = array('from' => $dn, 'to' => $dnTo);
+                $found = TRUE;
+            }
         }
         return($found);
     }

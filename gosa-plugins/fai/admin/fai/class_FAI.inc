@@ -145,16 +145,26 @@ class FAI
   /* Return all relevant FAI departments */
   static function get_FAI_departments($suffix = "")
   {
-    $arr = array("hooks","scripts","disk","packages","profiles","templates","variables");
+    global $config;
+    $arr = array(
+        $config->get_cfg_value('faiScript', 'faiScriptRDN'),
+        $config->get_cfg_value('faiHook', 'faiHookRDN'),
+        $config->get_cfg_value('faiTemplate', 'faiTemplateRDN'),
+        $config->get_cfg_value('faiVariable', 'faiVariableRDN'),
+        $config->get_cfg_value('faiProfile', 'faiProfileRDN'),
+        $config->get_cfg_value('faiPartitionTable', 'faiPartitionRDN'),
+        $config->get_cfg_value('faiPackage', 'faiPackageRDN')
+        );
+
     $tmp = array();
     if(preg_match("/^,/",$suffix)){
       $suffix = preg_replace("/^,/","",$suffix);
     }
     foreach($arr as $name){
       if(empty($suffix)){
-        $tmp[$name] = "ou=".$name;
+        $tmp[$name] = $name;
       }else{
-        $tmp[$name] = "ou=".$name.",".$suffix;
+        $tmp[$name] = $name.$suffix;
       }
     }
     return($tmp);
