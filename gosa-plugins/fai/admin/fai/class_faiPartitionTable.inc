@@ -793,7 +793,7 @@ class faiPartitionTable extends plugin
                   "default"       => "ou=disk,",
                   "description"   => "The 'faiPartitionRDN' statement defines the location where new fai-partitions will be created. The default is 'ou=disk,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_faiPartitionRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE)),
 
