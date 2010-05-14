@@ -558,7 +558,7 @@ class faiScript extends plugin
                   "default"       => "ou=scripts,",
                   "description"   => "The 'faiScriptRDN' statement defines the location where new fai-scripts will be created. The default is 'ou=scripts,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_faiScriptRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE
                   )
