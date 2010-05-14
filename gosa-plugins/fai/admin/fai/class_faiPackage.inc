@@ -679,7 +679,7 @@ class faiPackage extends plugin
                   "default"       => "ou=packages,",
                   "description"   => "The 'faiPackageRDN' statement defines the location where new fai-packages will be created. The default is 'ou=packages,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_faiPackageRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE)),
 
