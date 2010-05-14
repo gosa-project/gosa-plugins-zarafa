@@ -537,7 +537,7 @@ class faiTemplate extends plugin
                   "default"       => "ou=templates,",
                   "description"   => "The 'faiTemplateRDN' statement defines the location where new fai-templates will be created. The default is 'ou=templates,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_faiTemplateRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE)),
 
