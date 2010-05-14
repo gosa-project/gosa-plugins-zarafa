@@ -27,6 +27,10 @@ class migrateFaiRDN extends migrateRDN implements propertyMigration
 
     function checkForIssues()
     {
+        return(FALSE);
+
+        // This is very tricky ... have to think about it. Its deactivated currently.
+
         $this->found = array();
         $ldap= $this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
