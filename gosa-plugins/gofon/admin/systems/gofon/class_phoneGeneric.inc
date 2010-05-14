@@ -502,7 +502,7 @@ class phoneGeneric extends plugin
                   "default"       => "ou=phones,ou=systems,",
                   "description"   => "The 'phoneRDN' statement defines the location where new phones will be created. The default is 'ou=phones,ou=systems,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_phoneRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE
                   )
