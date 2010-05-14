@@ -282,7 +282,7 @@ class deviceGeneric extends plugin
                   "default"       => "ou=devices,",
                   "description"   => "The 'deviceRDN' statement defines the location where new devices will be created. The default is 'ou=devices,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_deviceRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE)),
 
