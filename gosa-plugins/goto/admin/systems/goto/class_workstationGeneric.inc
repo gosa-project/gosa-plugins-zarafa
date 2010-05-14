@@ -695,7 +695,7 @@ class workgeneric extends plugin
                   "default"       => "ou=workstations,ou=systems,",
                   "description"   => _("The 'workstationRDN' statement defines the location where new workstations will be created. The default is 'ou=workstations,ou=systems,'."),
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_workstationRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE
                   ),
