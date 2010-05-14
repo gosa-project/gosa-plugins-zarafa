@@ -627,7 +627,7 @@ class mimetype extends plugin
             "default"       => "ou=mime,",
             "description"   => "The 'mimetypeRDN' statement defines the location where new mimetypes will be created. The default is 'ou=mime,'.",
             "check"         => "gosaProperty::isRdn",
-            "migrate"       => "",
+            "migrate"       => "migrate_mimetypeRDN",
             "group"         => "plugin",
             "mandatory"     => FALSE)),
 
