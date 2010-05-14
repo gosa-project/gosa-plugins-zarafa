@@ -151,7 +151,7 @@ class ArpNewDevice extends plugin
                           "default"       => "ou=incoming,",
                           "description"   => "The 'systemIncomingRDN' statement defines the location where incoming systems are stored. The default is 'ou=incoming,'.",
                           "check"         => "gosaProperty::isRdn",
-                          "migrate"       => "",
+                          "migrate"       => "migrate_systemIncomingRDN",
                           "group"         => "plugin",
                           "mandatory"     => FALSE)),
 
