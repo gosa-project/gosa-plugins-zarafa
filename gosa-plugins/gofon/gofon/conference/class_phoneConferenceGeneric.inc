@@ -827,7 +827,7 @@ class conference extends plugin
                   "default"       => "ou=conferences,ou=asterisk,ou=configs,ou=systems,",
                   "description"   => "The 'phoneConferenceRDN' statement defines the location where new phone conferences will be created. The default is 'ou=conferences,ou=asterisk,ou=configs,ou=systems,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_phoneConferenceRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE
                   )
