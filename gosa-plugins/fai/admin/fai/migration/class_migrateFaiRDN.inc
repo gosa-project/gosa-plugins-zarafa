@@ -17,6 +17,8 @@ class migrateFaiRDN extends migrateRDN implements propertyMigration
     protected $suffix = ""; 
     protected $prefix = ""; 
 
+    public $faiBaseRDN;
+
     function __construct($config,$property)
     {
         $this->property = &$property;
@@ -35,7 +37,9 @@ class migrateFaiRDN extends migrateRDN implements propertyMigration
         $initialValue = $this->prefix.$this->property->getValue().$this->suffix;
         $targetValue = $this->prefix.$this->property->getValue(TRUE).$this->suffix;
 
-        $prefix = $this->config->get_cfg_value('faiManagement','faiBaseRDN');
+        $prefixProp  = $this->config->configRegistry->getProperty('faiManagement','faiBaseRDN');
+        $prefix      = $prefixProp->getValue();
+        $prefixNew   = $prefixProp->getValue(TRUE);
 
         $dnMatch = "";
         if(!empty($initialValue) || !empty($prefix)){
@@ -93,7 +97,7 @@ class migrateFaiRDN extends migrateRDN implements propertyMigration
             $name = substr($dn,0, (strlen($dn)  - strlen($initialValue.$releaseRDN.$prefix.$basePart)));
 
             // Build new container name and check if it exists.
-            $newContainer = $targetValue.$releaseRDN.$prefix.$basePart;
+            $newContainer = $targetValue.$releaseRDN.$prefixNew.$basePart;
             if(!$ldap->dn_exists($newContainer)){
                 $this->found['add'][$newContainer] = array(); 
             }
