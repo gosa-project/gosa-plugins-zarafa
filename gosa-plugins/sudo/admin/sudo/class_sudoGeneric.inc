@@ -515,7 +515,8 @@ class sudo extends plugin
                     "plPriority"    => 0,
                     "plSection"     => array("administration"),
                     "plCategory"    => array("sudo" => array("objectClass" => "sudoRole", "description" => _("Sudo role"))),
-
+                
+                    "plProperties" => 
                     array(
                         array(
                             "name"          => "sudoRDN",
