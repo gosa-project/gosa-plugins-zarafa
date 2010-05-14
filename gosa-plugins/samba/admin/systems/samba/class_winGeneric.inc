@@ -302,7 +302,7 @@ class wingeneric extends plugin
                           "default"       => "ou=winstation,",
                           "description"   => "The 'sambaMachineAccountRDN' statement defines the location where new windows workstations will be created. The default is 'ou=winstation,'.",
                           "check"         => "gosaProperty::isRdn",
-                          "migrate"       => "",
+                          "migrate"       => "migrate_sambaMachineAccountRDN",
                           "group"         => "plugin",
                           "mandatory"     => FALSE
                           )
