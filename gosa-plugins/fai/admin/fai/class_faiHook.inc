@@ -513,7 +513,7 @@ class faiHook extends plugin
                   "default"       => "ou=hooks,",
                   "description"   => "The 'faiHookRDN' statement defines the location where new fai-hooks will be created. The default is 'ou=hooks,'.",
                   "check"         => "gosaProperty::isRdn",
-                  "migrate"       => "",
+                  "migrate"       => "migrate_faiHookRDN",
                   "group"         => "plugin",
                   "mandatory"     => FALSE)),
 
