@@ -594,7 +594,7 @@ class application extends plugin
                           "default"       => "ou=apps,",
                           "description"   => "The 'applicationRDN' statement defines the location where new applications will be created. The default is 'ou=apps,'.",
                           "check"         => "gosaProperty::isRdn",
-                          "migrate"       => "",
+                          "migrate"       => "migrate_applicationRDN",
                           "group"         => "plugin",
                           "mandatory"     => FALSE)),
 
