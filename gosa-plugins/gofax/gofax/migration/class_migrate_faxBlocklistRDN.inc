@@ -1,6 +1,6 @@
 <?php 
 class migrate_faxBlocklistRDN extends migrateRDN implements propertyMigration
 {
-	protected $filter = "(migrate_faxBlocklistRDN(objectClass=gosaAccount)((objectClass=sambaSamAccount))%s)";
+	protected $filter = "(&(|(objectClass=goFaxSBlocklist)(objectClass=goFaxRBlocklist))%s)";
 }
 ?>
