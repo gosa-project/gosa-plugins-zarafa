@@ -230,11 +230,11 @@ our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minu
 
 
 %cfg_defaults = (
-"general" => {
+"General" => {
     "log-file" => [\$log_file, "/var/run/".$prg.".log"],
     "pid-file" => [\$pid_file, "/var/run/".$prg.".pid"],
     },
-"server" => {
+"Server" => {
     "ip"                    => [\$server_ip, "0.0.0.0"],
     "port"                  => [\$server_port, "20081"],
     "known-clients"         => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],

@@ -11,7 +11,7 @@ The gosa-si-server.conf file defines all parameter GOsa-SI-server needs for runn
 =head1 DIRECTIVES
 
 
-=head2 [general]
+=head2 [General]
 
 =over 4
 
@@ -25,7 +25,7 @@ Defines the location for the pid file.
 =back
 
 
-=head2 [server]
+=head2 [Server]
 
 =over 4
 

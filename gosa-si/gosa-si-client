@@ -100,12 +100,12 @@ my $trigger_seen_messages_delay = 30;
 my $fai_log_dir = "/var/log/fai"; 
 
 %cfg_defaults = (
-"general" =>
+"General" =>
     {"log-file"           => [\$log_file, "/var/run/".$prg.".log"],
     "pid-file"            => [\$pid_file, "/var/run/".$prg.".pid"],
     "opts-file"            => [\$opts_file, "/var/run/".$prg.".opts"],
     },
-"client" => 
+"Client" => 
     {"port"        => [\$client_port, "20083"],
      "ip"          => [\$client_ip, "0.0.0.0"],
      "mac-address" => [\$client_mac_address, "00:00:00:00:00:00"],
@@ -118,7 +118,7 @@ my $fai_log_dir = "/var/log/fai";
      "force-hostname"	  => [\$client_force_hostname, "false"],
      "system-com"	  => [\$system_com, "disabled"],
     },
-"server" => {
+"Server" => {
     "ip"          => [\$servers_string, "127.0.0.1"],
     "port"         => [\$server_port, "20081"],
     "key"          => [\$server_key, ""],
@@ -197,9 +197,9 @@ sub check_pid {
 
     # create a syslog msg if it is not to possible to open PID file
     if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
-        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open(my $LOCK_FILE, '<', $pid_file)
-                && ($pid = <$LOCK_FILE>))
+       my($msg) = "Couldn't obtain lockfile '$pid_file' ";
+        if (open(my $LOCK_FILE2, '<', $pid_file)
+                && ($pid = <$LOCK_FILE2>))
         {
             chomp($pid);
             $msg .= "(PID $pid)\n";
@@ -338,12 +338,12 @@ sub get_local_mac_for_remote_ip {
 	if($server_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
 		my $PROC_NET_ROUTE= ('/proc/net/route');
 
-		open(my $PROC_NET_ROUTE, "<","$PROC_NET_ROUTE")
+		open(my $PROC_NET, "<","$PROC_NET_ROUTE")
 			or die "Could not open $PROC_NET_ROUTE";
 
-		my @ifs = <$PROC_NET_ROUTE>;
+		my @ifs = <$PROC_NET>;
 
-		close($PROC_NET_ROUTE);
+		close($PROC_NET);
 
 		# Eat header line
 		shift @ifs;

@@ -3,12 +3,14 @@ package GOSA::DBsqlite;
 use strict;
 use warnings;
 
-use Carp;
-use DBI;
-use GOSA::GosaSupportDaemon;
+
 use Time::HiRes qw(usleep);
 use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
 use Fcntl qw/:DEFAULT :flock/; # import LOCK_* constants
+use Carp;
+use DBI;
 
 our $col_names = {};
 
@@ -118,7 +120,7 @@ sub unlock {
 
 sub create_table {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
 		&main::daemon_log("0 ERROR: GOSA::DBsqlite::create_table was called static! Statement was '$self'!", 1);
 		return;
 	}
