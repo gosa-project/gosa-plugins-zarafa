@@ -2,10 +2,13 @@ package corefunctions;
 
 use strict;
 use warnings;
+
+use File::Basename;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
 use Fcntl;
-use GOSA::GosaSupportDaemon;
-use File::Basename;
+
 
 our @ISA = qw(Exporter);
 
@@ -30,6 +33,7 @@ my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fa
 my $chrony_file = "/etc/chrony/chrony.conf";
 my $syslog_file = "/etc/syslog.conf";
 
+# why is it re read here, the config is read at the start of the program no !!
 my %cfg_defaults = (
 	"client" => {
 		"ldap" => [\$ldap_enabled, 1],
@@ -48,6 +52,7 @@ END {}
 
 ### Start ######################################################################
 
+# why not using  the config read in the main ?? !!
 &main::read_configfile($main::cfg_file, %cfg_defaults);
 
 
@@ -81,10 +86,10 @@ sub write_to_file {
 		close($FD_FILE);
 	}
 
-	return;    
+	return;
 }
 
-
+# should be the first function of each module of gosa-si !!
 sub get_events {
 	return \@events;
 }
@@ -155,7 +160,7 @@ sub server_leaving {
 	# registrated at new daemon
 	&main::register_at_server();
 	   
-	return;   
+	return;
 }
 
 
@@ -477,7 +482,7 @@ sub new_key {
 		$main::server_key = $new_server_key;
 	}
 
-    return; 
+  return;
 }
 
 
@@ -602,11 +607,11 @@ sub detect_hardware {
 	&main::daemon_log("Hardware detection done!", 4);
 
     &write_to_file('goto-hardware-detection-stop', $fai_logpath);
-   
-    &main::send_msg_hash_to_target(
-		&main::create_xml_hash("detected_hardware", $main::client_address, $main::server_address, $result),
-		$main::server_address, 
-		$main::server_key,
+
+	&main::send_msg_hash_to_target(
+	&main::create_xml_hash("detected_hardware", $main::client_address, $main::server_address, $result),
+	$main::server_address,
+	$main::server_key,
 	);
 
 	return;

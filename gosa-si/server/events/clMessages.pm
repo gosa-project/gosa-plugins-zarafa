@@ -8,10 +8,11 @@ package clMessages;
 use strict;
 use warnings;
 
-use Exporter;
 use Data::Dumper;
-use GOSA::GosaSupportDaemon;
 use MIME::Base64;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = qw(Exporter);
 

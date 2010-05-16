@@ -4,8 +4,9 @@ package TestModule;
 use strict;
 use warnings;
 
+use GOsaSI::GOsaSupportDaemon;
+
 use Exporter;
-use GosaSupportDaemon;
 
 our @ISA = ("Exporter");
 

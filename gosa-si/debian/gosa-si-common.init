@@ -18,8 +18,8 @@ SERVER="gosa-si-server"
 CLIENT="gosa-si-client"
 DAEMON_SERVER="/usr/sbin/${SERVER}"
 DAEMON_CLIENT="/usr/sbin/${CLIENT}"
-PIDFILE_SERVER="/var/run/${SERVER}.pid"
-PIDFILE_CLIENT="/var/run/${CLIENT}.pid"
+PIDFILE_SERVER="/var/run/gosa-si/${SERVER}.pid"
+PIDFILE_CLIENT="/var/run/gosa-si/${CLIENT}.pid"
 
 PATH="/sbin:/usr/sbin:/bin:/usr/bin"
 

@@ -3,9 +3,10 @@ package databases;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
 use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = qw(Exporter);
 
@@ -31,8 +32,6 @@ BEGIN {}
 END {}
 
 ### Start ######################################################################
-
-#&main::read_configfile($main::cfg_file, %cfg_defaults);
 
 sub get_events {
     return \@events;

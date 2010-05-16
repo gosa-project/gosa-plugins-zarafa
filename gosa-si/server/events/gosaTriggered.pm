@@ -7,15 +7,16 @@ package gosaTriggered;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
 use Crypt::SmbHash;
 use Net::ARP;
 use Net::Ping;
-use Socket;
 use Time::HiRes qw( usleep);
 use MIME::Base64;
 use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
+use Socket;
 
 our @ISA = qw(Exporter);
 

@@ -3,16 +3,17 @@ package ArpHandler;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
-use POSIX;
-use Fcntl;
 use Net::LDAP;
 use Net::LDAP::LDIF;
 use Net::LDAP::Entry;
 use Net::DNS;
 use Switch;
 use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
+use POSIX;
+use Fcntl;
 use Socket;
 
 our @ISA = ("Exporter");
@@ -54,6 +55,7 @@ my %cfg_defaults =
     },
 );
 
+# to be removed use only main::read_configfile
 #===  FUNCTION  ================================================================
 #         NAME:  read_configfile
 #   PARAMETERS:  cfg_file - string -
@@ -86,6 +88,7 @@ sub get_module_info {
 	# Don't start if some of the modules are missing
 	if(($arp_enabled eq 'true') && $start_service) {
 		if($lookup_vendor) {
+			# put the file in /etc/gosa/oui.txt or use the native oui.txt from snmp 
 			eval("Net::MAC::Vendor::load_cache('file:///usr/lib/gosa-si/modules/oui.txt')");
 			if($@) {
 				&main::daemon_log("Loading OUI cache file failed! MAC Vendor lookup disabled", 1);
@@ -235,7 +238,7 @@ sub get_host_from_ldap {
 	my $mac=shift;
 	my $result={};
 		
-    my $ldap_handle = &main::get_ldap_handle();     
+    my $ldap_handle = &main::get_ldap_handle();
 	if(defined($ldap_handle)) {
 		my $ldap_result= &search_ldap_entry(
 			$ldap_handle,

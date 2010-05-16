@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Exporter;
-use GOSA::GosaSupportDaemon;
+use GOsaSI::GosaSupportDaemon;
 use IO::Socket::INET;
 use Socket;
 use XML::Simple;

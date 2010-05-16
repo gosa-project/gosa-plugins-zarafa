@@ -3,9 +3,10 @@ package siTriggered;
 use strict;
 use warnings;
 
-use Exporter;
 use Data::Dumper;
-use GOSA::GosaSupportDaemon;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 use Socket;
 
 our @ISA = qw(Exporter);
@@ -33,13 +34,14 @@ my $ldap_admin_password;
 my $mesg;
 
 my %cfg_defaults = (
-    "server" => {
+    "Server" => {
         "ldap-uri" => [\$ldap_uri, ""],
         "ldap-base" => [\$ldap_base, ""],
         "ldap-admin-dn" => [\$ldap_admin_dn, ""],
         "ldap-admin-password" => [\$ldap_admin_password, ""],
     },
 );
+# why not using it from main::read_configfile
 &GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 

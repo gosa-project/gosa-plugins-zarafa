@@ -1,36 +1,22 @@
 #!/usr/bin/perl
-#===============================================================================
+#*********************************************************************
 #
-#         FILE:  gosa-si-server
+# gosa-si-client -- client for the gosa-si-server
 #
-#        USAGE:  ./gosa-si-server
+# (c) 2007-2009 by Andreas Rettenberger <rettenberger@gonicus.de>
+# (c) 2008-2010 by Cajus Pollmeier <pollmeier@gonicus.de>
+# (c) 2008-2009 by Jan Wenzel <wenzel@gonicus.de>
+# (c) 2010 by Benoit Mortier <benoit.mortier@opensides.be>
 #
-#  DESCRIPTION:
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  libconfig-inifiles-perl libcrypt-rijndael-perl libxml-simple-perl 
-#                libdata-dumper-simple-perl libdbd-sqlite3-perl libnet-ldap-perl
-#                libpoe-perl
-#         BUGS:  ---
-#        NOTES:
-#       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
-#      COMPANY:
-#      VERSION:  1.0
-#      CREATED:  12.09.2007 08:54:41 CEST
-#     REVISION:  ---
-#===============================================================================
-
+#*********************************************************************
 use strict;
 use warnings;
+
 use Getopt::Long;
 use Config::IniFiles;
-use POSIX;
-
-use Fcntl qw/:flock/;
 use IO::Socket::INET;
 use IO::Handle;
 use IO::Select;
-use Symbol qw(qualify_to_ref);
 use Crypt::Rijndael;
 use MIME::Base64;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
@@ -38,16 +24,19 @@ use XML::Simple;
 use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
 use Time::HiRes qw( usleep clock_gettime );
-use Cwd;
 use File::Spec;
 use File::Basename;
 use File::Find;
 use File::Copy;
 use File::Path;
-use GOSA::GosaSupportDaemon;
-use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
+use GOsaSI::GosaSupportDaemon;
+
+use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
+use Symbol qw(qualify_to_ref);
+use Fcntl qw/:flock/;
+use POSIX;
 
 my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev$';
 
@@ -61,8 +50,8 @@ our $verbose= 0;
 my $db_module = "DBsqlite";
 {
 no strict "refs";
-require ("GOSA/".$db_module.".pm");
-("GOSA/".$db_module)->import;
+require ("GOsaSI/".$db_module.".pm");
+("GOsaSI/".$db_module)->import;
 }
 
 my $modules_path = "/usr/lib/gosa-si/modules";
@@ -231,8 +220,8 @@ our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minu
 
 %cfg_defaults = (
 "General" => {
-    "log-file" => [\$log_file, "/var/run/".$prg.".log"],
-    "pid-file" => [\$pid_file, "/var/run/".$prg.".pid"],
+    "log-file" => [\$log_file, "/var/log/gosa-si/gosa-si-server.log"],
+    "pid-file" => [\$pid_file, "/var/run/gosa-si/gosa-si-server.pid"],
     },
 "Server" => {
     "ip"                    => [\$server_ip, "0.0.0.0"],
@@ -585,9 +574,13 @@ sub sig_int_handler {
 #	}
     # TODO alle verbliebenden ldap verbindungen aus allen heaps beenden
     
-
     daemon_log("shutting down gosa-si-server", 1);
+
+		#$global_kernel->yield('shutdown');
+
     system("kill `ps -C gosa-si-server -o pid=`");
+
+		exit(0);
 }
 $SIG{INT} = \&sig_int_handler;
 

@@ -7,9 +7,10 @@ package ServerPackages;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
 use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = ("Exporter");
 

@@ -1,42 +1,35 @@
 #!/usr/bin/perl
-#===============================================================================
+#*********************************************************************
 #
-#         FILE:  gosa-si-client
+# gosa-si-client -- client for the gosa-si-server
 #
-#        USAGE:  gosa-si-client
+# (c) 2007-2009 by Andreas Rettenberger <rettenberger@gonicus.de>
+# (c) 2008-2010 by Cajus Pollmeier <pollmeier@gonicus.de>
+# (c) 2008-2009 by Jan Wenzel <wenzel@gonicus.de>
+# (c) 2010 by Benoit Mortier <benoit.mortier@opensides.be>
 #
-#  DESCRIPTION:
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  libnetaddr-ip-perl
-#         BUGS:  ---
-#        NOTES:
-#       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
-#      COMPANY:
-#      VERSION:  1.0
-#      CREATED:  12.09.2007 08:54:41 CEST
-#     REVISION:  ---
-#===============================================================================
+#*********************************************************************
 
 use strict;
 use warnings;
+
 use Getopt::Long;
 use Config::IniFiles;
-use POSIX;
 use Time::HiRes qw( gettimeofday );
-
-use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
 use IO::Socket::INET;
 use NetAddr::IP;
 use Crypt::Rijndael;
-use GOSA::GosaSupportDaemon;
+use GOsaSI::GosaSupportDaemon;
 use Digest::MD5  qw(md5_hex md5 md5_base64);
 use MIME::Base64;
 use XML::Simple;
 use File::Basename;
 use File::Spec;
 use Net::ARP;
+
+use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
 use Fcntl;
+use POSIX;
 
 # Workaround: need pure perl to make it work with UTF-8 :-(
 $XML::Simple::PREFERRED_PARSER= "XML::SAX::PurePerl";
@@ -76,6 +69,12 @@ our $server_key;
 our $terminal_server_hash;
 our $opts_dnslookup;
 
+# where is the config stored by default and his name
+our $config = '/etc/fts/fts.conf';
+
+# by default dumping of config is undefined
+our $dump_config = undef;
+
 
 # default variables
 my $REGISTERED = 0;
@@ -85,10 +84,9 @@ my $fai_com_fifo = "/var/run/gosa-si-client.socket";
 my $system_com_fifo = "/var/run/gosa-si-client-system-com.socket";
 my %files_to_watch = (fai_fifo => $fai_com_fifo, system_fifo => $system_com_fifo); 
 
-# in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
-# not successful until now
+# in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was not successful until now
 my $delay_set_time = 10;
-our $prg= basename($0);
+#our $prg= basename($0);
 
 # all n seconds the client reports logged_in users to gosa-si-server
 my $trigger_logged_in_users_report_delay = 600;
@@ -101,9 +99,9 @@ my $fai_log_dir = "/var/log/fai";
 
 %cfg_defaults = (
 "General" =>
-    {"log-file"           => [\$log_file, "/var/run/".$prg.".log"],
-    "pid-file"            => [\$pid_file, "/var/run/".$prg.".pid"],
-    "opts-file"            => [\$opts_file, "/var/run/".$prg.".opts"],
+    {"log-file"           => [\$log_file, "/var/log/gosa-si/gosa-si.log"],
+    "pid-file"            => [\$pid_file, "/var/run/gosa-si/gosa-si-client.pid"],
+    "opts-file"            => [\$opts_file, "/var/run/gosa-si/gosa-si-client.opts"],
     },
 "Client" => 
     {"port"        => [\$client_port, "20083"],
@@ -132,18 +130,114 @@ my $fai_log_dir = "/var/log/fai";
 
 #=== FUNCTIONS = functions =====================================================
 
-sub usage {
-    print STDERR << "EOF" ;
-usage: $prg [-hvf] [-c config]
+#############################
+#
+# @brief Display error message and/or help text.
+#
+# In correspondence to previous GetOptions
+#
+# @param $text - string to print as error message
+# @param $help - set true, if you want to show usage help
+#
+sub usage
+{
+  my( $text, $help ) = @_;
 
-           -h        : this (help) message
-           -c <file> : config file
-           -f        : foreground, process will not be forked to background
-           -v        : be verbose (multiple to increase verbosity)
- 
+  $text = undef if( 'h' eq $text );
+  (defined $text) && print STDERR "\n$text\n";
+
+  if( (defined $help && $help)
+      || (!defined $help && !defined $text) )
+{
+    print STDERR << "EOF";
+
+  usage: $0 [-hvf] [-c config]
+
+   -h        : this (help) message
+   -c <file> : config file (default: ${config})
+   -x <cfg>  : dump configuration to stdout
+             ( 1 = current, 2 = default )
+   -f        : foreground (don't fork)
+   -v        : be verbose (multiple to increase verbosity)
 EOF
-    print "\n" ;
 }
+  print( "\n" );
+
+  exit( -1 );
+}
+
+#############################
+#
+# @brief Manage gosa-si-client configuration.
+#
+# Will exit after successfull dump to stdout (type = 1 | 2)
+#
+# Dump type can be:
+#   1: Current gosa-si-client configuration in config file (exit)
+#   2: Default gosa-si-client configuration (exit)
+#   3: Dump to logfile (no exit)
+#
+# @param int config type
+#
+sub dump_configuration {
+
+  my( $cfg_type ) = @_;
+
+  return if( ! defined $cfg_type );
+
+  if(1==$cfg_type ) {
+    print( "# Current gosa-si-client configuration\n" );
+	} elsif (2==$cfg_type) {
+    print( "# Default gosa-si-client configuration\n" );
+	} elsif (3==$cfg_type) {
+    daemon_log( "Dumping gosa-si-client configuration\n", 2 );
+	} else {
+    return;
+	}
+
+  foreach my $section (keys %cfg_defaults) {
+    if( 3 != $cfg_type ) { 
+      print( "\n[${section}]\n" ); 
+	} else {
+      daemon_log( "\n  [${section}]\n", 3 ); 
+	}
+
+    foreach my $param (sort( keys %{$cfg_defaults{ $section }})) {
+      my $pinfo = $cfg_defaults{ $section }{ $param };
+      my $value;
+      if (1==$cfg_type) {
+        if( defined( ${@$pinfo[ 0 ]} ) ) {
+          $value = ${@$pinfo[ 0 ]};
+          print( "$param=$value\n" );
+				} else {
+          print( "#${param}=\n" ); 
+				}
+			} elsif (2==$cfg_type) {
+        $value = @{$pinfo}[ 1 ];
+        if( defined( @$pinfo[ 1 ] ) ) {
+          $value = @{$pinfo}[ 1 ];
+          print( "$param=$value\n" );
+				} else {
+          print( "#${param}=\n" ); 
+				}
+			} elsif (3==$cfg_type) {
+        if( defined(  ${@$pinfo[ 0 ]} ) ) {
+          $value = ${@$pinfo[ 0 ]};
+          daemon_log( "  $param=$value\n", 3 )
+				}
+			}
+		}
+	}
+
+
+# We just exit at stdout dump
+  if( 3 == $cfg_type ) { 
+    daemon_log( "\n", 3 );
+	} else {
+    exit( 0 );
+	}
+}
+
 
 #===  FUNCTION  ================================================================
 #         NAME: check_cmdline_param
@@ -218,15 +312,24 @@ sub check_pid {
     }
 }
 
-
+#############################
+#
+# @brief When caching an interrupt remove file pid and stopping gosa-si
+#
 sub sig_int_handler {
-    my ($signal) = @_;
+	my ($signal) = @_;
+
+	daemon_log("shutting down gosa-si-client", 1);
+
+# to be changed crude !!
+#	system("kill `ps -C gosa-si-server -o pid=`");
+	$global_kernel->yield('shutdown');
 	
-    daemon_log("shutting down gosa-si-client", 1);
-    system("kill `ps -C gosa-si-client -o pid=`");
+#	$pid->remove or warn "Could not remove $pidfile\n";
+
+  exit(0);
 }
 $SIG{INT} = \&sig_int_handler;
-
 
 #===  FUNCTION  ================================================================
 #         NAME:  logging
@@ -270,7 +373,7 @@ sub daemon_log {
 			$microSeconds =~ s/^\d*(.\d\d)$/$1/;
 
 
-            my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds $prg $msg\n";
+            my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds gosa-si-client $msg\n";
             print LOG_HANDLE $log_msg;
             if( $foreground ) { 
                 print STDERR $log_msg;
@@ -497,11 +600,11 @@ sub write_to_file {
     my $error = 0;
 
     if( not defined $file || not -f $file ) {
-        &main::daemon_log("ERROR: $prg: check '-f file' failed: $file", 1);
+        &main::daemon_log("ERROR: gosa-si-client : check '-f file' failed: $file", 1);
         $error++;
     }
     if( not defined $string || 0 == length($string)) {
-        &main::daemon_log("ERROR: $prg: empty string to write to file '$file'", 1);
+        &main::daemon_log("ERROR: gosa-si-client : empty string to write to file '$file'", 1);
         $error++;
     }
     
@@ -1216,17 +1319,30 @@ sub find_servers {
     }
 }
 
+#
 #==== MAIN = main ==============================================================
-#  parse commandline options
-Getopt::Long::Configure( "bundling" );
-GetOptions("h|help" => \&usage,
-           "c|config=s" => \$cfg_file,
-           "f|foreground" => \$foreground,
-           "v|verbose+" => \$verbose,
-           );
+#
+# Parse options and allow '-vvv'
+Getopt::Long::Configure( 'bundling' );
+GetOptions( 'v|verbose+' => \$verbose,
+            'h|help' => \&usage,
+            'c|config=s' => \$config,
+            'x|dump-config=i' => \$dump_config,
+            'f|foreground' => \$foreground)
+  or usage( '', 1 );
+
+# We may want to dump the default configuration
+if( defined $dump_config ) {
+  if($dump_config==1) {
+	} elsif ($dump_config==2) {
+    dump_configuration( $dump_config ); 
+	} else {
+    usage( "Dump configuration value has to be 1 or 2" );
+	}
+}
 
 #  read and set config parameters
-&check_cmdline_param ;
+#&check_cmdline_param ;
 &read_configfile($cfg_file, %cfg_defaults);
 &check_pid;
 
@@ -1278,7 +1394,7 @@ if(not defined $adm_gid){
 }
 
 daemon_log(" ", 1);
-daemon_log("$prg started!", 1);
+daemon_log("gosa-si-client started!", 1);
 daemon_log("INFO: status: $client_status", 1);
 daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 1); 
 

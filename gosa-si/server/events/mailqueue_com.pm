@@ -25,11 +25,12 @@ package mailqueue_com;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use Time::HiRes qw( usleep);
 use MIME::Base64;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = qw(Exporter);
 

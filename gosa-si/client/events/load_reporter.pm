@@ -3,9 +3,10 @@ package load_reporter;
 
 use strict;
 use warnings;
-use Exporter;
 
-use GOSA::GosaSupportDaemon;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 BEGIN {}
 END {}
@@ -25,11 +26,13 @@ our @EXPORT = @events;
 my $ts_load_file;
 my $waiting_for_ts_info;
 my %cfg_defaults = (
-		"client" => {
-		"ts-load-file" => [\$ts_load_file, "/var/run/gosa-si-client-ts-load.txt"],
-		"waiting-for-ts-info" => [\$waiting_for_ts_info, 5],
-		},
+			"client" => {
+			"ts-load-file" => [\$ts_load_file, "/var/run/gosa-si/gosa-si-client-ts-load.txt"],
+			"waiting-for-ts-info" => [\$waiting_for_ts_info, 5],
+			},
 		);
+
+# to be removed ugly !! why not using main::_read_configfile
 &GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 

@@ -6,10 +6,11 @@ package dak;
 
 use strict;
 use warnings;
-use Exporter;
 
-use GOSA::GosaSupportDaemon;
+use GOsaSI::GosaSupportDaemon;
 use MIME::Base64;
+
+use Exporter;
 
 our @ISA = qw(Exporter);
 

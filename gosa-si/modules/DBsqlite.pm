@@ -1,4 +1,4 @@
-package GOSA::DBsqlite;
+package GOsaSI::DBsqlite;
 
 use strict;
 use warnings;

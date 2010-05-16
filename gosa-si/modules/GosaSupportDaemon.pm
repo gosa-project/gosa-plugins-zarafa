@@ -1,9 +1,8 @@
-package GOSA::GosaSupportDaemon;
+package GOsaSI::GosaSupportDaemon;
 
 use strict;
 use warnings;
 
-use Exporter;
 use IO::Socket::INET;
 use Crypt::Rijndael;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
@@ -13,7 +12,9 @@ use XML::Simple;
 use Data::Dumper;
 use Net::DNS;
 use Net::ARP;
+
 use DateTime;
+use Exporter;
 
 our @ISA = qw(Exporter);
 

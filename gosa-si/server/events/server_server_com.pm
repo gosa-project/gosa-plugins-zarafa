@@ -3,10 +3,11 @@ package server_server_com;
 use strict;
 use warnings;
 
-use Exporter;
 use Data::Dumper;
-use GOSA::GosaSupportDaemon;
 use Time::HiRes qw( usleep);
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 use Socket;
 
 our @ISA = qw(Exporter);

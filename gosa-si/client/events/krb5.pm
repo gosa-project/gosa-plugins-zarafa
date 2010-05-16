@@ -4,10 +4,11 @@ package krb5;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
 use Authen::Krb5;
 use Authen::Krb5::Admin qw(:constants);
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = qw(Exporter);
 
@@ -46,6 +47,7 @@ my %cfg_defaults = (
    "password" => [\$krb_password, ""],
    },
 );
+# why not using the main::read_configfile, the code seems exactly the same
 &krb5_read_configfile($main::cfg_file, %cfg_defaults);
 
 

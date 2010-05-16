@@ -26,6 +26,10 @@ B<-f>, B<--foreground>
 B<-c> I<file>, B<--config=>I<file>
     configuration file, default F</etc/gosa-si/client.conf>
 
+B<-x>, B<--dump>
+    Dump configuration
+    -1 Current configuration
+    -2 Default Configuration
 
 =head1 DESCRIPTION
 
@@ -43,7 +47,7 @@ Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-
 
 This code is part of GOsa (L<http://www.gosa-project.org>)
 
-Copyright (C) 2003-2009 GONICUS GmbH
+Copyright (C) 2003-2010 GONICUS GmbH
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

@@ -30,9 +30,10 @@ package mailqueue;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
 use MIME::Base64;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = qw(Exporter);
 

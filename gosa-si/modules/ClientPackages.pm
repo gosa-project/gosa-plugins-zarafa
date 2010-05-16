@@ -5,8 +5,6 @@ package ClientPackages;
 use strict;
 use warnings;
 
-use Exporter;
-use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
 use Data::Dumper;
@@ -15,6 +13,9 @@ use Net::LDAP;
 use Net::LDAP::Util;
 use Socket;
 use Net::hostent;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = ("Exporter");
 
@@ -31,7 +32,7 @@ my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 my $mesg;
 
 my %cfg_defaults = (
-"server" => {
+"Server" => {
     "ip" => [\$server_ip, "0.0.0.0"],
     "mac-address" => [\$main::server_mac_address, "00:00:00:00:00"],
     "port" => [\$server_port, "20081"],
@@ -49,6 +50,7 @@ my %cfg_defaults = (
 ### START #####################################################################
 
 # read configfile and import variables
+#why not using the main::read_configfile !!
 &local_read_configfile();
 
 

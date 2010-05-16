@@ -25,16 +25,16 @@ Andreas Rettenberger <rettenberger at gonicus dot de>
 
 =cut
 
-
 package gosaTriggered;
 
 use strict;
 use warnings;
-use Exporter;
 
-use GOSA::GosaSupportDaemon;
 use MIME::Base64;
 use File::Temp qw/ tempfile/;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 our @ISA = qw(Exporter);
 
