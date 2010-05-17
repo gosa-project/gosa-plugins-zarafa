@@ -15,11 +15,11 @@ The gosa-si-server.conf file defines all parameter GOsa-SI-server needs for runn
 
 =over 4
 
-=item logfile = /var/log/gosa-si-server.log
+=item logfile = /var/log/gosa-si/gosa-si-server.log
 
 Defines the location for the log file.
 
-=item pid-file = /var/run/gosa-si-server.pid
+=item pid-file = /var/run/gosa-si/gosa-si-server.pid
 Defines the location for the pid file.
 
 =back
@@ -77,7 +77,7 @@ Defines the location for the local DB 'foreign_clients'.
 
 Defines the location for the sources file. 
 
-=item repo-path = /srv/www/repository
+=item repo-path = /srv/www/
 
 Defines the location of the dak Archive or local Debian Mirror and is scanned for Debian Packages.
 

@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "SERVER.CONF 1"
-.TH SERVER.CONF 1 "2010-05-15" "perl v5.10.0" "User Contributed Perl Documentation"
+.TH SERVER.CONF 1 "2010-05-17" "perl v5.10.0" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -138,11 +138,11 @@ The gosa\-si\-server.conf file defines all parameter GOsa-SI-server needs for ru
 .IX Header "DIRECTIVES"
 .SS "[General]"
 .IX Subsection "[General]"
-.IP "logfile = /var/log/gosa\-si\-server.log" 4
-.IX Item "logfile = /var/log/gosa-si-server.log"
+.IP "logfile = /var/log/gosa\-si/gosa\-si\-server.log" 4
+.IX Item "logfile = /var/log/gosa-si/gosa-si-server.log"
 Defines the location for the log file.
-.IP "pid-file = /var/run/gosa\-si\-server.pid Defines the location for the pid file." 4
-.IX Item "pid-file = /var/run/gosa-si-server.pid Defines the location for the pid file."
+.IP "pid-file = /var/run/gosa\-si/gosa\-si\-server.pid Defines the location for the pid file." 4
+.IX Item "pid-file = /var/run/gosa-si/gosa-si-server.pid Defines the location for the pid file."
 .SS "[Server]"
 .IX Subsection "[Server]"
 .PD 0
@@ -183,8 +183,8 @@ Defines the location for the local \s-1DB\s0 'foreign_clients'.
 .IP "source-list = /etc/apt/sources.list" 4
 .IX Item "source-list = /etc/apt/sources.list"
 Defines the location for the sources file.
-.IP "repo-path = /srv/www/repository" 4
-.IX Item "repo-path = /srv/www/repository"
+.IP "repo-path = /srv/www/" 4
+.IX Item "repo-path = /srv/www/"
 Defines the location of the dak Archive or local Debian Mirror and is scanned for Debian Packages.
 .IP "debian-arch = i386" 4
 .IX Item "debian-arch = i386"
@@ -306,7 +306,7 @@ Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa\
 .IX Header "LICENCE AND COPYRIGHT"
 This code is part of GOsa (<http://www.gosa\-project.org>)
 .PP
-Copyright (C) 2003\-2009 \s-1GONICUS\s0 GmbH
+Copyright (C) 2003\-2010 \s-1GONICUS\s0 GmbH
 .PP
 This program is distributed in the hope that it will be useful,
 but \s-1WITHOUT\s0 \s-1ANY\s0 \s-1WARRANTY\s0; without even the implied warranty of
