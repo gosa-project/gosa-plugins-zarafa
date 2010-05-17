@@ -42,7 +42,7 @@ my %cfg_defaults = (
     },
 );
 # why not using it from main::read_configfile
-&GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
+&GOsaSI::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 
 sub get_terminal_server

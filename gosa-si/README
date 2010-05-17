@@ -1,5 +1,5 @@
 
-/usr/share/perl5/GOSA
+/usr/share/perl5/GOsaSI
 common:
 - GosaSupportDaemon.pm
 - DBsqlite.pm
