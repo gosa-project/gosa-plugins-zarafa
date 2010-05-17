@@ -18,8 +18,9 @@ SERVER="gosa-si-server"
 CLIENT="gosa-si-client"
 DAEMON_SERVER="/usr/sbin/${SERVER}"
 DAEMON_CLIENT="/usr/sbin/${CLIENT}"
-PIDFILE_SERVER="/var/run/gosa-si/${SERVER}.pid"
-PIDFILE_CLIENT="/var/run/gosa-si/${CLIENT}.pid"
+RUN_DIRECTORY="/var/run/gosa-si"
+PIDFILE_SERVER="$RUN_DIRECTORY/${SERVER}.pid"
+PIDFILE_CLIENT="$RUN_DIRECTORY/${CLIENT}.pid"
 
 PATH="/sbin:/usr/sbin:/bin:/usr/bin"
 
@@ -29,6 +30,9 @@ PATH="/sbin:/usr/sbin:/bin:/usr/bin"
 # Load LSB support functions
 . /lib/lsb/init-functions
 
+if [ ! -d "/var/run/gosa-si" ]; then
+	mkdir $RUN_DIRECTORY
+fi
 
 start_client() {
 	start-stop-daemon --start --quiet --pidfile ${PIDFILE_CLIENT} --name ${CLIENT} --startas ${DAEMON_CLIENT} -- $DEBUG

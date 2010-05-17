@@ -1,4 +1,3 @@
 /etc/default
 /usr/share/perl5/GOsaSI
-/var/run/gosa-si
 /var/log/gosa-si
