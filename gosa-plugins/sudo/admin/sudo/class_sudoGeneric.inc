@@ -125,6 +125,12 @@ class sudo extends plugin
         /* Call parent execute */
         plugin::execute();
 
+        // Set list ACLs
+        foreach(array('sudoUser','sudoCommand','sudoHost','sudoRunAs') as $l){
+            $ll = $l."List";
+            $this->$ll->setAcl($this->getacl($l));
+        }
+
         // Handle trust mode dialog
         $trustModeDialog = $this->trustModeDialog->execute();
         if($this->trustModeDialog->trustSelect){
