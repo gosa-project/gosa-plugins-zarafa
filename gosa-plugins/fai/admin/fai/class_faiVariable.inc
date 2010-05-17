@@ -404,7 +404,7 @@ class faiVariable extends plugin
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_faiVariableRDN",
                   "group"         => "plugin",
-                  "mandatory"     => FALSE)),
+                  "mandatory"     => TRUE)),
 
           "plProvidedAcls" => array(
             "cn"                => _("Name")." ("._("Read only").")",

@@ -539,7 +539,7 @@ class faiTemplate extends plugin
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_faiTemplateRDN",
                   "group"         => "plugin",
-                  "mandatory"     => FALSE)),
+                  "mandatory"     => TRUE)),
 
           "plProvidedAcls" => array(
               "cn"                => _("Name")." ("._("Readonly").")",

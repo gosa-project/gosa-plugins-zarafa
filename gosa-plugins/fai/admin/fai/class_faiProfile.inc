@@ -370,7 +370,7 @@ class faiProfile extends plugin
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_faiProfileRDN",
                             "group"         => "plugin",
-                            "mandatory"     => FALSE)),
+                  "mandatory"     => TRUE)),
 
 
                     "plProvidedAcls" => array(

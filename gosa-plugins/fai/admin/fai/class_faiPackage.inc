@@ -681,7 +681,7 @@ class faiPackage extends plugin
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_faiPackageRDN",
                   "group"         => "plugin",
-                  "mandatory"     => FALSE)),
+                  "mandatory"     => TRUE)),
 
           "plProvidedAcls" => array(
             "cn"                => _("Name"),

@@ -795,7 +795,7 @@ class faiPartitionTable extends plugin
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_faiPartitionRDN",
                   "group"         => "plugin",
-                  "mandatory"     => FALSE)),
+                  "mandatory"     => TRUE)),
 
           "plProvidedAcls" => array(
             "cn"                => _("Name")."&nbsp;("._("Read only").")",

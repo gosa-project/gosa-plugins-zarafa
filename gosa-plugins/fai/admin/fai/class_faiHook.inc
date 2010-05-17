@@ -515,7 +515,7 @@ class faiHook extends plugin
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_faiHookRDN",
                   "group"         => "plugin",
-                  "mandatory"     => FALSE)),
+                  "mandatory"     => TRUE)),
 
 
           "plProvidedAcls" => array(

@@ -560,7 +560,7 @@ class faiScript extends plugin
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_faiScriptRDN",
                   "group"         => "plugin",
-                  "mandatory"     => FALSE
+                  "mandatory"     => TRUE
                   )
               ),
 
