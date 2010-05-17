@@ -25,6 +25,7 @@ use MIME::Base64;
 use XML::Simple;
 use File::Basename;
 use File::Spec;
+use File::Pid;
 use Net::ARP;
 
 use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
@@ -70,18 +71,17 @@ our $terminal_server_hash;
 our $opts_dnslookup;
 
 # where is the config stored by default and his name
-our $config = '/etc/fts/fts.conf';
+our $config = '/etc/gosa-si/client.conf';
 
 # by default dumping of config is undefined
 our $dump_config = undef;
-
 
 # default variables
 my $REGISTERED = 0;
 
 # path to fifo for non-gosa-si-client messages to gosa-si-server
-my $fai_com_fifo = "/var/run/gosa-si-client.socket";
-my $system_com_fifo = "/var/run/gosa-si-client-system-com.socket";
+my $fai_com_fifo = "/var/run/gosa-si/gosa-si-client.socket";
+my $system_com_fifo = "/var/run/gosa-si/gosa-si-client-system-com.socket";
 my %files_to_watch = (fai_fifo => $fai_com_fifo, system_fifo => $system_com_fifo); 
 
 # in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was not successful until now
@@ -325,7 +325,7 @@ sub sig_int_handler {
 #	system("kill `ps -C gosa-si-server -o pid=`");
 	$global_kernel->yield('shutdown');
 	
-#	$pid->remove or warn "Could not remove $pidfile\n";
+	$pid->remove or warn "Could not remove $pidfile\n";
 
   exit(0);
 }
@@ -1235,7 +1235,8 @@ sub post_processing_and_sending
 
 sub find_servers {
     # add gosa-si-server address from config file at first position of server list
-    my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
+		#my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
+    my $server_check_cfg = Config::IniFiles->new( -file => $config );
 
     # Parse servers string
     my @conf_servers = split(',', $servers_string);
@@ -1343,9 +1344,18 @@ if( defined $dump_config ) {
 
 #  read and set config parameters
 #&check_cmdline_param ;
-&read_configfile($cfg_file, %cfg_defaults);
-&check_pid;
+&read_configfile($config, %cfg_defaults);
+#&check_pid;
 
+# Create the PID object
+# Ensure you put a name that won't clobber
+#   another program's PID file
+my $pid = File::Pid->new({
+   file  => $pidfile,
+});
+
+# Write the PID file
+$pid->write;
 
 # forward error messages to logfile
 if ( ! $foreground ) {
@@ -1360,19 +1370,19 @@ if( ! $foreground ) {
     $pid = fork;
     setsid                    or die "Can't start a new session: $!";
     umask 0;
-} else { 
-    $pid = $$; 
+#} else {
+#    $pid = $$;
 }
 
 # Do something useful - put our PID into the pid_file
-if( 0 != $pid ) {
-    open( my $LOCK_FILE, ">", "$pid_file" );
-    print $LOCK_FILE "$pid\n";
-    close( $LOCK_FILE );
-    if( !$foreground ) { 
-        exit( 0 ) 
-    };
-}
+#if( 0 != $pid ) {
+#    open( my $LOCK_FILE, ">", "$pid_file" );
+#    print $LOCK_FILE "$pid\n";
+#    close( $LOCK_FILE );
+#    if( !$foreground ) {
+#        exit( 0 )
+#    };
+#}
 
 # parse head url and revision from svn
 my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};

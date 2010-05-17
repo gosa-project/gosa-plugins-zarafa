@@ -31,6 +31,7 @@ use File::Copy;
 use File::Path;
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
+use File::Pid;
 use GOsaSI::GosaSupportDaemon;
 
 use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
@@ -44,8 +45,6 @@ my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/g
 my $server_headURL;
 my $server_revision;
 my $server_status;
-our $prg= basename($0);
-our $verbose= 0;
 
 my $db_module = "DBsqlite";
 {
@@ -57,12 +56,11 @@ require ("GOsaSI/".$db_module.".pm");
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
 
-our $global_kernel;
 my ($foreground, $ping_timeout);
 my ($server);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
 my ($messaging_db_loop_delay);
-my ($procid, $pid);
+my $procid;
 my $arp_fifo;
 my $debug_parts = 0;
 my $debug_parts_bitstring;
@@ -74,7 +72,7 @@ my $repo_path;
 my %repo_dirs=();
 
 # Variables declared in config file are always set to 'our'
-our (%cfg_defaults, $log_file, $pid_file, 
+our (%cfg_defaults, $log_file, $pid_file, $pid
     $server_ip, $server_port, $ClientPackages_key, $dns_lookup,
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_timeout,
@@ -99,6 +97,14 @@ our $known_modules;
 our $known_functions;
 our $root_uid;
 our $adm_gid;
+our $verbose= 0;
+our $global_kernel;
+
+# where is the config stored by default and his name
+our $config = '/etc/gosa-si/server.conf';
+
+# by default dumping of config is undefined
+our $dump_config = undef;
 
 # if foreground is not null, script will be not forked to background
 $foreground = 0 ;
@@ -286,20 +292,34 @@ our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minu
 
 );
 
+#############################
+#
+# @brief Display error message and/or help text.
+#
+# In correspondence to previous GetOptions
+#
+# @param $text - string to print as error message
+# @param $help - set true, if you want to show usage help
+#
+sub usage
+{
+  my( $text, $help ) = @_;
 
-#===  FUNCTION  ================================================================
-#         NAME:  usage
-#   PARAMETERS:  nothing
-#      RETURNS:  nothing
-#  DESCRIPTION:  print out usage text to STDERR
-#===============================================================================
-sub usage {
-    print STDERR << "EOF" ;
-usage: $prg [-hvf] [-c config] [-d number]
+  $text = undef if( 'h' eq $text );
+  (defined $text) && print STDERR "\n$text\n";
 
-           -h        : this (help) message
-           -c <file> : config file
-           -f        : foreground, process will not be forked to background
+  if( (defined $help && $help)
+      || (!defined $help && !defined $text) )
+{
+    print STDERR << "EOF";
+
+  usage: $0 [-hvf] [-c config] [-d number]
+
+   -h        : this (help) message
+   -c <file> : config file (default: ${config})
+   -x <cfg>  : dump configuration to stdout
+             ( 1 = current, 2 = default )
+   -f        : foreground (don't fork)
            -v        : be verbose (multiple to increase verbosity)
                               'v': error logs
                             'vvv': warning plus error logs						
@@ -318,7 +338,82 @@ usage: $prg [-hvf] [-c config] [-d number]
                          256 : creation of packages_list_db
                          512 : ARP debug information
 EOF
-	exit(0);
+}
+  print( "\n" );
+
+  exit( -1 );
+}
+
+#############################
+#
+# @brief Manage gosa-si-client configuration.
+#
+# Will exit after successfull dump to stdout (type = 1 | 2)
+#
+# Dump type can be:
+#   1: Current gosa-si-client configuration in config file (exit)
+#   2: Default gosa-si-client configuration (exit)
+#   3: Dump to logfile (no exit)
+#
+# @param int config type
+#
+sub dump_configuration {
+
+  my( $cfg_type ) = @_;
+
+  return if( ! defined $cfg_type );
+
+  if(1==$cfg_type ) {
+    print( "# Current gosa-si-server configuration\n" );
+	} elsif (2==$cfg_type) {
+    print( "# Default gosa-si-server configuration\n" );
+	} elsif (3==$cfg_type) {
+    daemon_log( "Dumping gosa-si-server configuration\n", 2 );
+	} else {
+    return;
+	}
+
+  foreach my $section (keys %cfg_defaults) {
+    if( 3 != $cfg_type ) { 
+      print( "\n[${section}]\n" ); 
+	} else {
+      daemon_log( "\n  [${section}]\n", 3 ); 
+	}
+
+		foreach my $param (sort( keys %{$cfg_defaults{ $section }})) {
+      my $pinfo = $cfg_defaults{ $section }{ $param };
+      my $value;
+      if (1==$cfg_type) {
+        if( defined( ${@$pinfo[ 0 ]} ) ) {
+          $value = ${@$pinfo[ 0 ]};
+          print( "$param=$value\n" );
+				} else {
+          print( "#${param}=\n" ); 
+				}
+			} elsif (2==$cfg_type) {
+        $value = @{$pinfo}[ 1 ];
+        if( defined( @$pinfo[ 1 ] ) ) {
+          $value = @{$pinfo}[ 1 ];
+          print( "$param=$value\n" );
+				} else {
+          print( "#${param}=\n" ); 
+				}
+			} elsif (3==$cfg_type) {
+        if( defined(  ${@$pinfo[ 0 ]} ) ) {
+          $value = ${@$pinfo[ 0 ]};
+          daemon_log( "  $param=$value\n", 3 )
+				}
+			}
+		}
+	}
+
+
+# We just exit at stdout dump
+  if( 3 == $cfg_type ) { 
+    daemon_log( "\n", 3 );
+	} else {
+    exit( 0 );
+	}
 }
 
 
@@ -562,9 +657,9 @@ sub password_check {
 
 #===  FUNCTION  ================================================================
 #         NAME:  sig_int_handler
-#   PARAMETERS:  signal - string - signal arose from system
+#   PARAMETERS:  signal - string - signal came from system
 #      RETURNS:  nothing
-#  DESCRIPTION:  handels tasks to be done befor signal becomes active
+#  DESCRIPTION:  handle tasks to be done before signal becomes active
 #===============================================================================
 sub sig_int_handler {
     my ($signal) = @_;
@@ -576,9 +671,12 @@ sub sig_int_handler {
     
     daemon_log("shutting down gosa-si-server", 1);
 
-		#$global_kernel->yield('shutdown');
+		$global_kernel->yield('shutdown');
 
-    system("kill `ps -C gosa-si-server -o pid=`");
+		# to be removed rather crude !!
+		#system("kill `ps -C gosa-si-server -o pid=`");
+
+		$pid->remove or warn "Could not remove $pidfile\n";
 
 		exit(0);
 }
@@ -3449,24 +3547,47 @@ sub control_server_registration {
 	return;
 }
 
-
+#
 #==== MAIN = main ==============================================================
-#  parse commandline options
-Getopt::Long::Configure( "bundling" );
-GetOptions("h|help" => \&usage,
-        "c|config=s" => \$cfg_file,
-        "f|foreground" => \$foreground,
-        "v|verbose+" => \$verbose,
-        "no-arp+" => \$no_arp,
-		"d=s" => \$debug_parts,
-           ) or &usage("", 1); 
+#
+# Parse options and allow '-vvv'
+Getopt::Long::Configure( 'bundling' );
+GetOptions( 'v|verbose+' => \$verbose,
+            'h|help' => \&usage,
+            'c|config=s' => \$config,
+            'x|dump-config=i' => \$dump_config,
+            'f|foreground' => \$foreground)
+						'd=s' => \$debug_parts,
+  or usage( '', 1 );
+
+# We may want to dump the default configuration
+if( defined $dump_config ) {
+  if($dump_config==1) {
+	} elsif ($dump_config==2) {
+    dump_configuration( $dump_config ); 
+	} else {
+    usage( "Dump configuration value has to be 1 or 2" );
+	}
+}
 
 #  read and set config parameters
-&check_cmdline_param ;
-&read_configfile($cfg_file, %cfg_defaults);
-&check_pid;
+#&check_cmdline_param ;
+#&read_configfile($cfg_file, %cfg_defaults);
+&read_configfile($config, %cfg_defaults);
+#&check_pid;
 
+# not sure but seems to be for igonring phantom
 $SIG{CHLD} = 'IGNORE';
+
+# Create the PID object
+# Ensure you put a name that won't clobber
+#   another program's PID file
+my $pid = File::Pid->new({
+   file  => $pidfile,
+});
+
+# Write the PID file
+$pid->write;
 
 # forward error messages to logfile
 if( ! $foreground ) {
@@ -3481,19 +3602,19 @@ if( ! $foreground ) {
     $pid = fork;
     setsid                    or die "Can't start a new session: $!";
     umask 0;
-} else { 
-    $pid = $$; 
-}
+#} else {
+#    $pid = $$;
+#}
 
 # Do something useful - put our PID into the pid_file
-if( 0 != $pid ) {
-    open( my $LOCK_FILE, ">", "$pid_file" );
-    print $LOCK_FILE "$pid\n";
-    close( $LOCK_FILE );
-    if( !$foreground ) { 
-        exit( 0 ) 
-    };
-}
+#if( 0 != $pid ) {
+#    open( my $LOCK_FILE, ">", "$pid_file" );
+#    print $LOCK_FILE "$pid\n";
+#    close( $LOCK_FILE );
+#    if( !$foreground ) {
+#        exit( 0 )
+#    };
+#}
 
 # parse head url and revision from svn
 my $server_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
@@ -3529,34 +3650,34 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
         daemon_log("0 INFO: importing database module '$db_module'", 1);
 
         # connect to incoming_db
-        $incoming_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $incoming_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to gosa-si job queue
-        $job_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $job_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to known_clients_db
-        $known_clients_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $known_clients_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to foreign_clients_db
-        $foreign_clients_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $foreign_clients_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to known_server_db
-        $known_server_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $known_server_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to login_usr_db
-        $login_users_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $login_users_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to fai_server_db 
-        $fai_server_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $fai_server_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to fai_release_db
-        $fai_release_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $fai_release_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to packages_list_db
-        $packages_list_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $packages_list_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
         # connect to messaging_db
-        $messaging_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+        $messaging_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
     } elsif ($db_module eq "DBsqlite") {
 
@@ -3564,60 +3685,60 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
 
         # connect to incoming_db
         unlink($incoming_file_name);
-        $incoming_db = GOSA::DBsqlite->new($incoming_file_name);
+        $incoming_db = ("GOsaSI::".$db_module)->new($incoming_file_name);
         chmod(0640, $incoming_file_name);
         chown($root_uid, $adm_gid, $incoming_file_name);
         
         # connect to gosa-si job queue
-        $job_db = GOSA::DBsqlite->new($job_queue_file_name);
+        $job_db = ("GOsaSI::".$db_module)->new($job_queue_file_name);
         chmod(0640, $job_queue_file_name);
         chown($root_uid, $adm_gid, $job_queue_file_name);
         
         # connect to known_clients_db
         #unlink($known_clients_file_name);
-        $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
+        $known_clients_db = ("GOsaSI::".$db_module)->new($known_clients_file_name);
         chmod(0640, $known_clients_file_name);
         chown($root_uid, $adm_gid, $known_clients_file_name);
         
         # connect to foreign_clients_db
         #unlink($foreign_clients_file_name);
-        $foreign_clients_db = GOSA::DBsqlite->new($foreign_clients_file_name);
+        $foreign_clients_db = ("GOsaSI::".$db_module)->new($foreign_clients_file_name);
         chmod(0640, $foreign_clients_file_name);
         chown($root_uid, $adm_gid, $foreign_clients_file_name);
         
         # connect to known_server_db
         unlink($known_server_file_name);   # do not delete, gosa-si-server should be forced to check config file and dns at each start
-        $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
+        $known_server_db = ("GOsaSI::".$db_module)->new($known_server_file_name);
         chmod(0640, $known_server_file_name);
         chown($root_uid, $adm_gid, $known_server_file_name);
         
         # connect to login_usr_db
         #unlink($login_users_file_name);
-        $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
+        $login_users_db = ("GOsaSI::".$db_module)->new($login_users_file_name);
         chmod(0640, $login_users_file_name);
         chown($root_uid, $adm_gid, $login_users_file_name);
         
         # connect to fai_server_db
         unlink($fai_server_file_name);
-        $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
+        $fai_server_db = ("GOsaSI::".$db_module)->new($fai_server_file_name);
         chmod(0640, $fai_server_file_name);
         chown($root_uid, $adm_gid, $fai_server_file_name);
         
         # connect to fai_release_db
         unlink($fai_release_file_name);
-        $fai_release_db = GOSA::DBsqlite->new($fai_release_file_name);
+        $fai_release_db = ("GOsaSI::".$db_module)->new($fai_release_file_name);
         chmod(0640, $fai_release_file_name);
         chown($root_uid, $adm_gid, $fai_release_file_name);
         
         # connect to packages_list_db
         unlink($packages_list_under_construction);
-        $packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
+        $packages_list_db = ("GOsaSI::".$db_module)->new($packages_list_file_name);
         chmod(0640, $packages_list_file_name);
         chown($root_uid, $adm_gid, $packages_list_file_name);
         
         # connect to messaging_db
         #unlink($messaging_file_name);
-        $messaging_db = GOSA::DBsqlite->new($messaging_file_name);
+        $messaging_db = ("GOsaSI::".$db_module)->new($messaging_file_name);
         chmod(0640, $messaging_file_name);
         chown($root_uid, $adm_gid, $messaging_file_name);
     }
