@@ -25,7 +25,7 @@ class migrate_faiBaseRDN extends migrateFaiRDN implements propertyMigration
         return(FALSE);
     }
 
-    function execute()
+    function _execute()
     {
         $str = "<h3>"._("The storage position for FAI object has changed!")."</h3>";
        # $str.= _("Unfortunately, GOsa can not perform the necessary steps automatically to migrate the FAI objects. You have to do this manually, to keep the System deployment in a usable state!");

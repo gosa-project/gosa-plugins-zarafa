@@ -21,8 +21,7 @@ class migrateFaiRDN extends migrateRDN implements propertyMigration
 
     function __construct($config,$property)
     {
-        $this->property = &$property;
-        $this->config = &$config;
+        parent::__construct($config,$property);
     }   
 
     function checkForIssues()
