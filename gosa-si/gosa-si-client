@@ -381,6 +381,10 @@ sub sig_int_handler {
 # to be changed crude !!
 #	system("kill `ps -C gosa-si-server -o pid=`");
 	$global_kernel->yield('shutdown');
+
+	unlink ('/var/run/gosa-si/gosa-si-client.opts');
+
+	unlink ($fai_com_fifo);
 	
 	$pid->remove or warn "Could not remove $pid_file\n";
 
