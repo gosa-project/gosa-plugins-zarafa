@@ -22,7 +22,7 @@ Description: GOsa support infrastructure
 
 Package: gosa-si-server
 Architecture: any
-Depends: ${misc:Depends}, gosa-si-common, libcrypt-smbhash-perl
+Depends: ${misc:Depends}, gosa-si-common, libcrypt-smbhash-perl, wget
 Suggests: gosa, gosa-si-server-postfix, gosa-si-server-dak
 Description: GOsa support infrastructure server
  GOsa is a combination of system-administrator and end-user web
