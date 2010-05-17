@@ -283,12 +283,14 @@ class sudo extends plugin
                     isset($_POST["add_".$attr]) && 
                     isset($_POST['new_'.$attr]) && 
                     !empty($_POST['new_'.$attr])){
-                if(preg_match("/^[a-z\.0-9]*$/i",$_POST['new_'.$attr])){
+
+                $c = preg_quote('’ *+-?_|!\'"()','/');
+                if(preg_match("/^[a-z0-9{$c}]*$/i",$_POST['new_'.$attr])){
                     $attrs = $this->$attr;
                     $attrs[] =  trim($_POST['new_'.$attr]); 
                     $this->$attr = $attrs;
                 }else{
-                    msg_dialog::display(_("Error"),msgPool::invalid($attr,$_POST['new_'.$attr],"/[a-z0-9]/"));
+                    msg_dialog::display(_("Error"),msgPool::invalid($attr,$_POST['new_'.$attr],"/[a-z0-9{$c}]/i"));
                 }
             }
         }
