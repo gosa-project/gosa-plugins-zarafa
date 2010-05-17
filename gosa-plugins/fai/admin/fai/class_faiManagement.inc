@@ -1223,7 +1223,7 @@ class faiManagement extends management
                           "check"         => "gosaProperty::isRdn",
                           "migrate"       => "migrate_faiBaseRDN",
                           "group"         => "plugin",
-                          "mandatory"     => FALSE
+                          "mandatory"     => TRUE
                           ),
                       array(
                           "name"          => "defaultFaiRelease",

@@ -3,40 +3,35 @@ class migrate_faiBaseRDN extends migrateFaiRDN implements propertyMigration
 {
     protected $filter = "(&(objectClass=nothing)%s)";
 
-
-
     function checkForIssues()
     {
-    
-        // Check every single property which is connected to this property.
-        $ret = array('add' => array(), 'move' => array());
-        foreach(array(
-                    'faiScript'=> 'faiScriptRDN',
-                    'faiHook'=> 'faiHookRDN',
-                    'faiTemplate'=> 'faiTemplateRDN',
-                    'faiVariable'=> 'faiVariableRDN',
-                    'faiProfile'=> 'faiProfileRDN',
-                    'faiPartitionTable'=> 'faiPartitionRDN',
-                    'faiPackage'=> 'faiPackageRDN') as $class => $name){
+        $this->found = array();
+        $ldap= $this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
 
-            if($this->config->configRegistry->propertyExists($class,$name)){
-                $prop = $this->config->configRegistry->getProperty($class,$name);
-                if($prop->migrationRequired()){
-                    $migrator = $prop->getMigrationClass();
-                    if($migrator){
-                        $tmp = $migrator->getChanges();
-                        if(isset($tmp['add'])){
-                            $ret['add'] = array_merge($tmp['add'],$ret['add']);
-                        }
-                        if(isset($tmp['move'])){
-                            $ret['move'] = array_merge($tmp['move'],$ret['move']);
-                        }
-                    }
-                }
+        $initialValue = $this->prefix.$this->property->getValue().$this->suffix;
+        $targetValue = $this->prefix.$this->property->getValue(TRUE).$this->suffix;
+        $from = $initialValue.$this->config->current['BASE'];
+        $to = $targetValue.$this->config->current['BASE'];
+
+        if($initialValue != $targetValue && $ldap->dn_exists($from)){
+            $toParent = preg_replace("/^[^,]*+,/","",$to);
+            if(!$ldap->dn_exists($toParent)){
+                $this->found['add'][$toParent] = array();
             }
+            $this->found['move'][] = array('from'=>$from, 'to'=>$to);
+            return(TRUE);
         }
-        $this->found = $ret;
-        return(count($ret['add']) || count($ret['move']));
+        return(FALSE);
     }
+
+    function execute()
+    {
+        $str = "<h3>"._("The storage position for FAI object has changed!")."</h3>";
+       # $str.= _("Unfortunately, GOsa can not perform the necessary steps automatically to migrate the FAI objects. You have to do this manually, to keep the System deployment in a usable state!");
+        $str .= migrateFaiRDN::execute();
+        return($str);
+    }
+
 }
 ?>
