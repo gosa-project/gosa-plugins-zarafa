@@ -958,7 +958,7 @@ sub trigger_logged_in_users_report {
 			@logged_in_user_list = split(/\s/, $result);
 		}
 		
-        system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si-client.socket"); 
+        system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si/gosa-si-client.socket"); 
         $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
     } else {
         # try it in 10 sec again

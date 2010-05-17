@@ -3765,7 +3765,7 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
 
         daemon_log("0 INFO: Removing SQLlite lock files", 1);
 
-				# delete old DBsqlite lock files
+				# delete old DBsqlite lock files to be replace by rmtree !!
 				system('rm -f /var/lib/gosa-si/*.si_lock*');
 				
         # connect to incoming_db
