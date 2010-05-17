@@ -17,7 +17,7 @@ gosa-si-server -Support infrastructure for GOsa
 
 =head1 SYNOPSIS
 
-gosa-si-server [-hvf] [-c config]
+gosa-si-server [-hvf] [-c config] [-x dump ]
 
 =head1 OPTIONS
 
@@ -55,6 +55,9 @@ B<-d> <int>
     256 : creation of packages_list_db
     512 : ARP debug information
 
+B<-x> <dump>
+     dump configuration to stdout
+     ( 1 = current, 2 = default )
 
 =head1 DESCRIPTION
 
