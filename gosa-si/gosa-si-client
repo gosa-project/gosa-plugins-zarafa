@@ -10,6 +10,63 @@
 #
 #*********************************************************************
 
+=head1 NAME
+
+gosa-si-client - Client for GOsa support infrastructure
+
+=head1 SYNOPSIS
+
+gosa-si-client [-hvf] [-c config]
+
+=head1 OPTIONS
+
+B<-h>, B<--help>
+    print out this help message
+
+B<-v>, B<--verbose>
+    be verbose (multiple v's will increase verbosity) 
+    -v          ERROR level
+    -vvv        WARNING  + ERROR level
+    -vvvvv      INFO + WARNING level
+    -vvvvvvv    DEBUG + INFO level
+    -vvvvvvvvv  in and out going xml messages will be displayed
+
+B<-f>, B<--foreground> 
+    foregroud, process will not be forked to background
+
+B<-c> I<file>, B<--config=>I<file>
+    configuration file, default F</etc/gosa-si/client.conf>
+
+B<-x>, B<--dump>
+    Dump configuration
+    -1 Current configuration
+    -2 Default Configuration
+
+=head1 DESCRIPTION
+
+B<gosa-si-client> belongs to the support infrastructure of GOsa. 
+The client registrates at a GOsa-SI-server and accepts messages from it. 
+Each message is related to a working instruction which will be executed on the client. 
+Depending on the message an answer can be send back to the server.
+
+=head1 BUGS 
+
+Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-devel@oss.gonicus.de> or to <https://oss.gonicus.de/labs/gosa>
+
+
+=head1 LICENCE AND COPYRIGHT
+
+This code is part of GOsa (L<http://www.gosa-project.org>)
+
+Copyright (C) 2003-2010 GONICUS GmbH
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+=cut
+
 use strict;
 use warnings;
 
@@ -1351,7 +1408,7 @@ if( defined $dump_config ) {
 # Ensure you put a name that won't clobber
 #   another program's PID file
 my $pid = File::Pid->new({
-   file  => $pidfile,
+   file  => $pid_file,
 });
 
 # Write the PID file

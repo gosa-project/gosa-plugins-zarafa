@@ -9,6 +9,76 @@
 # (c) 2010 by Benoit Mortier <benoit.mortier@opensides.be>
 #
 #*********************************************************************
+
+
+=head1 NAME
+
+gosa-si-server -Support infrastructure for GOsa
+
+=head1 SYNOPSIS
+
+gosa-si-server [-hvf] [-c config]
+
+=head1 OPTIONS
+
+B<-h>, B<--help>
+    print out this help message
+
+B<-v>, B<--verbose>
+    be verbose (multiple v's will increase verbosity) 
+    -v          ERROR level
+    -vvv        WARNING  + ERROR level
+    -vvvvv      INFO + WARNING level
+    -vvvvvvv    DEBUG + INFO level
+    -vvvvvvvvv  in and out going xml messages will be displayed
+
+B<-f>, B<--foreground> 
+    foregroud, process will not be forked to background
+
+B<-c> I<file>, B<--config=>I<file>
+    configuration file, default F</etc/gosa-si/server.conf>
+
+B<--no-arp>
+    starts script without connection to arp module
+
+B<-d> <int> 
+    if verbose level is higher than 7 'v' specified parts can be debugged
+
+      1 : receiving messages
+      2 : sending messages
+      4 : encrypting/decrypting messages
+      8 : verification if a message complies gosa-si requirements
+     16 : message processing
+     32 : ldap connectivity
+     64 : database status and connectivity
+    128 : main process
+    256 : creation of packages_list_db
+    512 : ARP debug information
+
+
+=head1 DESCRIPTION
+
+gosa-si-server  belongs  to  the  support infrastructure of GOsa.  Several gosa-si-clients can connect to one gosa-si-server.  The server take care of the message forwarding from GOsa to si-clients.  At the client site each message is related to a working instruction which will be executed there.  Depending of the message an answer from the client to GOsa via the server is possible.  Additional to answers clients reporting events  or  information  to the server.  The server registers himself at other servers in network and shares his knowledge with them.  So messages to clients which are no registrated locally will be forward to the client corresponding server. The communication within the complete SI nework is realised by XML messages.
+
+
+=head1 BUGS 
+
+Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-devel@oss.gonicus.de> or to <https://oss.gonicus.de/labs/gosa>
+
+
+=head1 LICENCE AND COPYRIGHT
+
+This code is part of GOsa (L<http://www.gosa-project.org>)
+
+Copyright (C) 2003-2010 GONICUS GmbH
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+=cut
+
 use strict;
 use warnings;
 
