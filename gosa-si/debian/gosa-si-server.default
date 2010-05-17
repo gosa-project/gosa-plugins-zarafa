@@ -1,0 +1,4 @@
+# Configure Debuging Level
+DEBUG=-vvvvvvv
+# Debug parts of GOsa-si server see man gosa-si-server
+#DEBUGPARTS=

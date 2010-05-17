@@ -315,7 +315,7 @@ our $check_periodic = {"months"=>'', "weeks"=>'', "days"=>'', "hours"=>'', "minu
     "messaging"             => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
     "foreign-clients"       => [\$foreign_clients_file_name, '/var/lib/gosa-si/foreign_clients.db'],
     "source-list"           => [\$sources_list, '/etc/apt/sources.list'],
-    "repo-path"             => [\$repo_path, '/srv/www'],
+    "repo-path"             => [\$repo_path, '/srv/www/debian'],
     "debian-arch"           => [\$arch, 'i386'],     
     "ldap-uri"              => [\$ldap_uri, ""],
     "ldap-base"             => [\$ldap_base, ""],
@@ -3644,8 +3644,6 @@ if( defined $dump_config ) {
 }
 
 #  read and set config parameters
-#&check_cmdline_param ;
-#&read_configfile($cfg_file, %cfg_defaults);
 &read_configfile($config, %cfg_defaults);
 #&check_pid;
 
@@ -3653,8 +3651,7 @@ if( defined $dump_config ) {
 $SIG{CHLD} = 'IGNORE';
 
 # Create the PID object
-# Ensure you put a name that won't clobber
-#   another program's PID file
+# 
 $pid = File::Pid->new({
    file  => $pid_file,
 });
@@ -3707,7 +3704,19 @@ open(my $FH, ">>", "$log_file");
 close($FH);
 chmod(0440, $log_file);
 chown($root_uid, $adm_gid, $log_file);
-chown($root_uid, $adm_gid, "/var/lib/gosa-si");
+
+# prepare directory for databases
+mkpath('/var/lib/gosa-si', 0, {owner=>'root', group=>'root'});
+
+# remove leftover files in tmp for packaged.db populate
+rmtree( '/tmp/packages_list_db',0,1);
+
+# remove list of sources from apt.sources.list
+unlink '/tmp/gosa_si_tmp_sources_list';
+
+# remove marker that the list creation is in progress
+unlink '/tmp/packages_list_creation_in_progress';
+
 
 daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
@@ -3718,10 +3727,10 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
 {
     no strict "refs";
 
+		daemon_log("0 INFO: importing database module '$db_module'", 1);
+
     if ($db_module eq "DBmysql") {
-
-        daemon_log("0 INFO: importing database module '$db_module'", 1);
-
+    
         # connect to incoming_db
         $incoming_db = ("GOsaSI::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 
@@ -3754,66 +3763,69 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
 
     } elsif ($db_module eq "DBsqlite") {
 
-        daemon_log("0 INFO: importing database module '$db_module'", 1);
+        daemon_log("0 INFO: Removing SQLlite lock files", 1);
 
+				# delete old DBsqlite lock files
+				system('rm -f /var/lib/gosa-si/*.si_lock*');
+				
         # connect to incoming_db
         unlink($incoming_file_name);
         $incoming_db = ("GOsaSI::".$db_module)->new($incoming_file_name);
-        chmod(0640, $incoming_file_name);
-        chown($root_uid, $adm_gid, $incoming_file_name);
+				#chmod(0640, $incoming_file_name);
+				#chown($root_uid, $adm_gid, $incoming_file_name);
         
         # connect to gosa-si job queue
         $job_db = ("GOsaSI::".$db_module)->new($job_queue_file_name);
-        chmod(0640, $job_queue_file_name);
-        chown($root_uid, $adm_gid, $job_queue_file_name);
+				#chmod(0640, $job_queue_file_name);
+				#chown($root_uid, $adm_gid, $job_queue_file_name);
         
         # connect to known_clients_db
         #unlink($known_clients_file_name);
         $known_clients_db = ("GOsaSI::".$db_module)->new($known_clients_file_name);
-        chmod(0640, $known_clients_file_name);
-        chown($root_uid, $adm_gid, $known_clients_file_name);
+				#chmod(0640, $known_clients_file_name);
+				#chown($root_uid, $adm_gid, $known_clients_file_name);
         
         # connect to foreign_clients_db
         #unlink($foreign_clients_file_name);
         $foreign_clients_db = ("GOsaSI::".$db_module)->new($foreign_clients_file_name);
-        chmod(0640, $foreign_clients_file_name);
-        chown($root_uid, $adm_gid, $foreign_clients_file_name);
+				#chmod(0640, $foreign_clients_file_name);
+				#chown($root_uid, $adm_gid, $foreign_clients_file_name);
         
         # connect to known_server_db
-        unlink($known_server_file_name);   # do not delete, gosa-si-server should be forced to check config file and dns at each start
+				#unlink($known_server_file_name);   # do not delete, gosa-si-server should be forced to check config file and dns at each start
         $known_server_db = ("GOsaSI::".$db_module)->new($known_server_file_name);
-        chmod(0640, $known_server_file_name);
-        chown($root_uid, $adm_gid, $known_server_file_name);
+				#chmod(0640, $known_server_file_name);
+				#chown($root_uid, $adm_gid, $known_server_file_name);
         
         # connect to login_usr_db
         #unlink($login_users_file_name);
         $login_users_db = ("GOsaSI::".$db_module)->new($login_users_file_name);
-        chmod(0640, $login_users_file_name);
-        chown($root_uid, $adm_gid, $login_users_file_name);
+				#chmod(0640, $login_users_file_name);
+				#chown($root_uid, $adm_gid, $login_users_file_name);
         
         # connect to fai_server_db
-        unlink($fai_server_file_name);
+				#unlink($fai_server_file_name);
         $fai_server_db = ("GOsaSI::".$db_module)->new($fai_server_file_name);
-        chmod(0640, $fai_server_file_name);
-        chown($root_uid, $adm_gid, $fai_server_file_name);
+				#chmod(0640, $fai_server_file_name);
+				#chown($root_uid, $adm_gid, $fai_server_file_name);
         
         # connect to fai_release_db
-        unlink($fai_release_file_name);
+				#unlink($fai_release_file_name);
         $fai_release_db = ("GOsaSI::".$db_module)->new($fai_release_file_name);
-        chmod(0640, $fai_release_file_name);
-        chown($root_uid, $adm_gid, $fai_release_file_name);
+				#chmod(0640, $fai_release_file_name);
+				#chown($root_uid, $adm_gid, $fai_release_file_name);
         
         # connect to packages_list_db
-        unlink($packages_list_under_construction);
+				#unlink($packages_list_under_construction);
         $packages_list_db = ("GOsaSI::".$db_module)->new($packages_list_file_name);
-        chmod(0640, $packages_list_file_name);
-        chown($root_uid, $adm_gid, $packages_list_file_name);
+				#chmod(0640, $packages_list_file_name);
+				#chown($root_uid, $adm_gid, $packages_list_file_name);
         
         # connect to messaging_db
         #unlink($messaging_file_name);
         $messaging_db = ("GOsaSI::".$db_module)->new($messaging_file_name);
-        chmod(0640, $messaging_file_name);
-        chown($root_uid, $adm_gid, $messaging_file_name);
+				#chmod(0640, $messaging_file_name);
+				#chown($root_uid, $adm_gid, $messaging_file_name);
     }
 }
 
@@ -3904,9 +3916,9 @@ daemon_log("0 INFO: start socket for incoming xml messages at port '$server_port
 # create session for repeatedly checking the job queue for jobs
 POE::Session->create(
 	inline_states => {
-		_start => \&session_start,
+				_start => \&session_start,
         register_at_foreign_servers => \&register_at_foreign_servers,
-		control_server_registration => \&control_server_registration,
+				control_server_registration => \&control_server_registration,
         sig_handler => \&sig_handler,
         next_task => \&next_task,
         task_result => \&handle_task_result,
@@ -3915,7 +3927,7 @@ POE::Session->create(
         watch_for_new_messages => \&watch_for_new_messages,
         watch_for_delivery_messages => \&watch_for_delivery_messages,
         watch_for_done_messages => \&watch_for_done_messages,
-		watch_for_new_jobs => \&watch_for_new_jobs,
+				watch_for_new_jobs => \&watch_for_new_jobs,
         watch_for_modified_jobs => \&watch_for_modified_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
         watch_for_opsi_jobs => \&watch_for_opsi_jobs,
@@ -3923,7 +3935,7 @@ POE::Session->create(
         create_packages_list_db => \&run_create_packages_list_db,
         create_fai_server_db => \&run_create_fai_server_db,
         create_fai_release_db => \&run_create_fai_release_db,
-		recreate_packages_db => \&run_recreate_packages_db,
+				recreate_packages_db => \&run_recreate_packages_db,
         session_run_result => \&session_run_result,
         session_run_debug => \&session_run_debug,
         session_run_done => \&session_run_done,

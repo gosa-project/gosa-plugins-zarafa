@@ -4,7 +4,6 @@
     compress
     missingok
     postrotate
-        pkill -SIGUSR1 gosa-si-client > /dev/null || true
     endscript
 }
 

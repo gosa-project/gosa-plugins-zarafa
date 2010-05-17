@@ -345,10 +345,11 @@ sub check_pid {
         unlink( $pid_file );
     }
 
+		my $LOCK_FILE2;
     # create a syslog msg if it is not to possible to open PID file
     if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open(my $LOCK_FILE2, '<', $pid_file)
+        if (open($LOCK_FILE2, '<', "$pid_file")
                 && ($pid = <$LOCK_FILE2>))
         {
             chomp($pid);
@@ -381,7 +382,7 @@ sub sig_int_handler {
 #	system("kill `ps -C gosa-si-server -o pid=`");
 	$global_kernel->yield('shutdown');
 	
-	$pid->remove or warn "Could not remove $pidfile\n";
+	$pid->remove or warn "Could not remove $pid_file\n";
 
   exit(0);
 }
@@ -1399,14 +1400,13 @@ if( defined $dump_config ) {
 }
 
 #  read and set config parameters
-#&check_cmdline_param ;
 &read_configfile($config, %cfg_defaults);
 #&check_pid;
 
 # Create the PID object
 # Ensure you put a name that won't clobber
 #   another program's PID file
-my $pid = File::Pid->new({
+$pid = File::Pid->new({
    file  => $pid_file,
 });
 
@@ -1464,7 +1464,7 @@ daemon_log("gosa-si-client started!", 1);
 daemon_log("INFO: status: $client_status", 1);
 daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 1); 
 
-# delete old DBsqlite lock files
+# to be changed maybe not trace of it when running 
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 
 # detect ip and mac address and complete host address
@@ -1523,26 +1523,26 @@ if ($system_com eq "enabled")
 
 POE::Session->create(
 	inline_states => {
-		_start => \&_start, 
-        _default => \&_default,
-        sig_handler => \&sig_handler,
-        register_at_gosa_si_server => \&register_at_gosa_si_server,
+		_start => \&_start,
+		_default => \&_default,
+		sig_handler => \&sig_handler,
+		register_at_gosa_si_server => \&register_at_gosa_si_server,
 
-        # trigger periodical tasks
-        trigger_new_key => \&trigger_new_key,
-        trigger_logged_in_users_report => \&trigger_logged_in_users_report,
-        trigger_seen_messages => \&trigger_seen_messages,
+		# trigger periodical tasks
+		trigger_new_key => \&trigger_new_key,
+		trigger_logged_in_users_report => \&trigger_logged_in_users_report,
+		trigger_seen_messages => \&trigger_seen_messages,
 
 		# trigger non periodical tasks
 		trigger_set_terminal_server => \&trigger_set_terminal_server,
-        
-        # handle records from each defined file differently
-        fai_fifo_record => \&fai_fifo_got_record,
+
+		# handle records from each defined file differently
+		fai_fifo_record => \&fai_fifo_got_record,
 		system_fifo_record => \&system_fifo_got_record,
 
-        # handle file resets and errors the same way for each file
-        file_reset => \&generic_file_reset,
-        file_error => \&generic_file_error,
+		# handle file resets and errors the same way for each file
+		file_reset => \&generic_file_reset,
+		file_error => \&generic_file_error,
 	}
 );
 

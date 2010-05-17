@@ -12,9 +12,9 @@ case "$1" in
 esac
 
 # Fix permission
-[ -f /etc/gosa-si/server.conf ] && chmod go-rwx /etc/gosa-si/server.conf
+#[ -f /etc/gosa-si/server.conf ] && chmod go-rwx /etc/gosa-si/server.conf
 
-# Restart daemon
-invoke-rc.d gosa-si restart
+# start daemon
+#invoke-rc.d gosa-si-server start
 
 exit 0
