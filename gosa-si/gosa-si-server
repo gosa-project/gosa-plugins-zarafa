@@ -145,7 +145,7 @@ my $repo_path;
 my %repo_dirs=();
 
 # Variables declared in config file are always set to 'our'
-our (%cfg_defaults, $log_file, $pid_file, $pid
+our (%cfg_defaults, $log_file, $pid_file, $pid,
     $server_ip, $server_port, $ClientPackages_key, $dns_lookup,
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_timeout,
@@ -398,7 +398,7 @@ sub usage
                             'vvv': warning plus error logs						
                           'vvvvv': info plus warning logs
                         'vvvvvvv': debug plus info logs
-           -no-arp   : starts $prg without connection to arp module
+           -no-arp   : starts gosa-si-server without connection to arp module
            -d <int>  : if verbose level is higher than 7x 'v' specified parts can be debugged
                            1 : report incoming messages
                            2 : report unencrypted outgoing messages 
@@ -550,7 +550,7 @@ sub daemon_log {
 
 			# Build log message and write it to log file and commandline
 			chomp($msg);
-			my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds $prg $msg\n";
+			my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds $0 $msg\n";
 			flock(LOG_HANDLE, LOCK_EX);
 			seek(LOG_HANDLE, 0, 2);
 			print LOG_HANDLE $log_msg;
@@ -749,7 +749,7 @@ sub sig_int_handler {
 		# to be removed rather crude !!
 		#system("kill `ps -C gosa-si-server -o pid=`");
 
-		$pid->remove or warn "Could not remove $pidfile\n";
+		$pid->remove or warn "Could not remove $pid_file\n";
 
 		exit(0);
 }
@@ -3629,8 +3629,8 @@ GetOptions( 'v|verbose+' => \$verbose,
             'h|help' => \&usage,
             'c|config=s' => \$config,
             'x|dump-config=i' => \$dump_config,
-            'f|foreground' => \$foreground)
-						'd=s' => \$debug_parts,
+            'f|foreground' => \$foreground,
+						'd=s' => \$debug_parts)
   or usage( '', 1 );
 
 # We may want to dump the default configuration
@@ -3655,8 +3655,8 @@ $SIG{CHLD} = 'IGNORE';
 # Create the PID object
 # Ensure you put a name that won't clobber
 #   another program's PID file
-my $pid = File::Pid->new({
-   file  => $pidfile,
+$pid = File::Pid->new({
+   file  => $pid_file,
 });
 
 # Write the PID file
@@ -3677,7 +3677,7 @@ if( ! $foreground ) {
     umask 0;
 #} else {
 #    $pid = $$;
-#}
+}
 
 # Do something useful - put our PID into the pid_file
 #if( 0 != $pid ) {
