@@ -110,7 +110,8 @@ my @servers;
 my $gotoHardwareChecksum;
 my $system_com;
 my $servers_string;
-$verbose= 1;
+
+my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
 
 # globalise variables which are used in imported events
 our $global_kernel;
@@ -125,6 +126,7 @@ our $client_force_hostname;
 our $server_key;
 our $terminal_server_hash;
 our $opts_dnslookup;
+our $verbose= 0;
 
 # where is the config stored by default and his name
 our $config = '/etc/gosa-si/client.conf';
@@ -292,81 +294,6 @@ sub dump_configuration {
 	} else {
     exit( 0 );
 	}
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME: check_cmdline_param
-#   PARAMETERS: 
-#      RETURNS:  
-#  DESCRIPTION: 
-#===============================================================================
-sub check_cmdline_param () {
-    my $err_config;
-    my $err_counter = 0;
-	if(not defined($cfg_file)) {
-		$cfg_file = "/etc/gosa-si/client.conf";
-		if(! -r $cfg_file) {
-			$err_config = "please specify a config file";
-			$err_counter += 1;
-		}
-    }
-    if( $err_counter > 0 ) {
-        &usage( "", 1 );
-        if( defined( $err_config)) { print STDERR "$err_config\n"}
-        print STDERR "\n";
-        exit( -1 );
-    }
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME: check_pid
-#   PARAMETERS:
-#      RETURNS:
-#  DESCRIPTION:
-#===============================================================================
-sub check_pid {
-    $pid = -1;
-    # Check, if we are already running
-    if( open(my $LOCK_FILE, "<","$pid_file") ) {
-        $pid = <$LOCK_FILE>;
-        if( defined $pid ) {
-            chomp( $pid );
-            if( -f "/proc/$pid/stat" ) {
-                my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
-                if( $0 eq $stat ) {
-                    close($LOCK_FILE);
-                    exit -1;
-                }
-            }
-        }
-        close( $LOCK_FILE );
-        unlink( $pid_file );
-    }
-
-		my $LOCK_FILE2;
-    # create a syslog msg if it is not to possible to open PID file
-    if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
-       my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open($LOCK_FILE2, '<', "$pid_file")
-                && ($pid = <$LOCK_FILE2>))
-        {
-            chomp($pid);
-            $msg .= "(PID $pid)\n";
-        } else {
-            $msg .= "(unable to read PID)\n";
-        }
-        if( ! ($foreground) ) {
-            openlog( $0, "cons,pid", "daemon" );
-            syslog( "warning", $msg );
-            closelog();
-        }
-        else {
-            print( STDERR " $msg " );
-        }
-        exit( -1 );
-    }
 }
 
 #############################
@@ -1381,6 +1308,56 @@ sub find_servers {
     }
 }
 
+sub start_daemon {
+
+	if( ! $foreground ) {
+		chdir '/'                 or die "Can't chdir to /: $!";
+		umask 0;
+		open STDIN, '+>/dev/null'   or die "Can't read /dev/null: $!";
+		open STDOUT, '+>&STDIN' or die "Can't write to /dev/null: $!";
+		open STDERR, '+>&STDIN' or die "Can't write to /dev/null: $!";
+		defined(my $child_pid = fork)   or die "Can't fork: $!";
+		exit if $child_pid;
+		setsid                    or die "Can't start a new session: $!";
+	}
+	return;
+}
+
+sub put_version {
+
+	# parse head url and revision from svn
+	$client_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
+	$client_headURL = defined $1 ? $1 : 'unknown' ;
+	$client_revision = defined $2 ? $2 : 'unknown' ;
+	if ($client_headURL =~ /\/tag\// || 
+        $client_headURL =~ /\/branches\// ) {
+    $client_status = "stable"; 
+	} else {
+    $client_status = "developmental" ;
+	}
+	return;
+}
+
+sub get_perms_admin {
+	# Determine root uid and adm gid, used for creating log files
+	$root_uid = getpwnam('root');
+	$adm_gid = getgrnam('adm');
+	if(not defined $adm_gid){
+		$adm_gid = getgrnam('root');
+	}
+	return;
+}
+
+sub create_pid {
+	# Create the PID object
+	$pid = File::Pid->new({ file  => $pid_file });
+
+	# Write the PID file
+	$pid->write;
+
+	return;
+}
+
 #
 #==== MAIN = main ==============================================================
 #
@@ -1405,78 +1382,34 @@ if( defined $dump_config ) {
 
 #  read and set config parameters
 &read_configfile($config, %cfg_defaults);
-#&check_pid;
 
-# Create the PID object
-# Ensure you put a name that won't clobber
-#   another program's PID file
-$pid = File::Pid->new({
-   file  => $pid_file,
-});
+# create pid file
+&create_pid($pid, $pid_file);
 
-# Write the PID file
-$pid->write;
-
-# forward error messages to logfile
-if ( ! $foreground ) {
-  open( STDIN,  '+>/dev/null' );
-  open( STDOUT, '+>&STDIN'    );
-  open( STDERR, '+>&STDIN'    );
-}
-
-# Just fork, if we are not in foreground mode
-if( ! $foreground ) { 
-    chdir '/'                 or die "Can't chdir to /: $!";
-    $pid = fork;
-    setsid                    or die "Can't start a new session: $!";
-    umask 0;
-#} else {
-#    $pid = $$;
-}
-
-# Do something useful - put our PID into the pid_file
-#if( 0 != $pid ) {
-#    open( my $LOCK_FILE, ">", "$pid_file" );
-#    print $LOCK_FILE "$pid\n";
-#    close( $LOCK_FILE );
-#    if( !$foreground ) {
-#        exit( 0 )
-#    };
-#}
-
-# parse head url and revision from svn
-my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
-$client_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
-$client_headURL = defined $1 ? $1 : 'unknown' ;
-$client_revision = defined $2 ? $2 : 'unknown' ;
-if ($client_headURL =~ /\/tag\// || 
-        $client_headURL =~ /\/branches\// ) {
-    $client_status = "stable"; 
-} else {
-    $client_status = "developmental" ;
-}
+# daemonize the program
+&start_daemon($foreground);
 
 # Determine root uid and adm gid, used for creating log files
-$root_uid = getpwnam('root');
-$adm_gid = getgrnam('adm');
-if(not defined $adm_gid){
-	$adm_gid = getgrnam('root');
-}
+&get_perms_admin($root_uid, $adm_gid);
+
+# put version
+&put_version($client_status_hash, $client_version, $client_version, $client_headURL, $client_status);
 
 daemon_log(" ", 1);
-daemon_log("gosa-si-client started!", 1);
+daemon_log("$0 started!", 1);
 daemon_log("INFO: status: $client_status", 1);
 daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 1); 
 
 # to be changed maybe not trace of it when running 
-system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
+#system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 
 # detect ip and mac address and complete host address
 $client_address = $client_ip.":".$client_port;
 my $network_interface= &get_interface_for_ip($client_ip);
 $client_mac_address= &get_mac($network_interface);
+
 daemon_log("INFO: ip address detected: $client_ip", 1);
-daemon_log("INFO: gosa-si-client mac address detected: $client_mac_address", 1);
+daemon_log("INFO: $0 mac address detected: $client_mac_address", 1);
 
 
 # import events

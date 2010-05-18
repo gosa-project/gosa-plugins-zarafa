@@ -144,6 +144,8 @@ my %repo_files=();
 my $repo_path;
 my %repo_dirs=();
 
+my $server_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
+
 # Variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, $pid,
     $server_ip, $server_port, $ClientPackages_key, $dns_lookup,
@@ -744,8 +746,7 @@ sub sig_int_handler {
     
     daemon_log("shutting down gosa-si-server", 1);
 
-# should be done with the alias TCP_SERVER
-		$global_kernel->yield('shutdown');
+		$global_kernel->yield(TCP_SERVER => 'shutdown');
 
 		# to be removed rather crude !!
 		#system("kill `ps -C gosa-si-server -o pid=`");
@@ -3621,6 +3622,66 @@ sub control_server_registration {
 	return;
 }
 
+sub start_daemon {
+
+	if( ! $foreground ) { 
+		chdir '/'                 or die "Can't chdir to /: $!";
+		umask 0;
+		open STDIN, '+>/dev/null'   or die "Can't read /dev/null: $!";
+		open STDOUT, '+>&STDIN' or die "Can't write to /dev/null: $!";
+		open STDERR, '+>&STDIN' or die "Can't write to /dev/null: $!";
+		defined(my $child_pid = fork)   or die "Can't fork: $!";
+		exit if $child_pid;
+		setsid                    or die "Can't start a new session: $!";
+	}
+	return;
+}
+
+sub put_version {
+
+	# parse head url and revision from svn
+	$server_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
+	$server_headURL = defined $1 ? $1 : 'unknown' ;
+	$server_revision = defined $2 ? $2 : 'unknown' ;
+	if ($server_headURL =~ /\/tag\// ||
+        $server_headURL =~ /\/branches\// ) {
+    $server_status = "stable";
+	} else {
+    $server_status = "developmental" ;
+	}
+	return;
+}
+
+sub get_perms_admin {
+# Determine root uid and adm gid, used for creating log files
+	$root_uid = getpwnam('root');
+	$adm_gid = getgrnam('adm');
+	if(not defined $adm_gid){
+		$adm_gid = getgrnam('root');
+	}
+	return;
+}
+
+sub open_log {
+	# Prepare log file and set permissions
+	open(my $log, ">>", "$log_file");
+	close($log);
+	chmod(0440, $log_file);
+	chown($root_uid, $adm_gid, $log_file);
+
+	return;
+}
+
+sub create_pid {
+	# Create the PID object
+	$pid = File::Pid->new({ file  => $pid_file });
+
+	# Write the PID file
+	$pid->write;
+
+	return;
+}
+
 #
 #==== MAIN = main ==============================================================
 #
@@ -3646,65 +3707,21 @@ if( defined $dump_config ) {
 
 #  read and set config parameters
 &read_configfile($config, %cfg_defaults);
-#&check_pid;
 
-# not sure but seems to be for igonring phantom
-$SIG{CHLD} = 'IGNORE';
+# create pid file
+&create_pid($pid, $pid_file);
 
-# Create the PID object
-# 
-$pid = File::Pid->new({
-   file  => $pid_file,
-});
+# daemonize the program
+&start_daemon($foreground);
 
-# Write the PID file
-$pid->write;
+# Determine root uid and adm gid, used for creating log files
+&get_perms_admin($root_uid, $adm_gid);
 
-# forward error messages to logfile
-if( ! $foreground ) {
-  open( STDIN,  '+>/dev/null' );
-  open( STDOUT, '+>&STDIN'    );
-  open( STDERR, '+>&STDIN'    );
-}
+# put version
+&put_version($server_status_hash, $server_version, $server_headURL, $server_revision, $server_status);
 
-# Just fork, if we are not in foreground mode
-if( ! $foreground ) { 
-    chdir '/'                 or die "Can't chdir to /: $!";
-    $pid = fork;
-    setsid                    or die "Can't start a new session: $!";
-    umask 0;
-#} else {
-#    $pid = $$;
-}
-
-# Do something useful - put our PID into the pid_file
-#if( 0 != $pid ) {
-#    open( my $LOCK_FILE, ">", "$pid_file" );
-#    print $LOCK_FILE "$pid\n";
-#    close( $LOCK_FILE );
-#    if( !$foreground ) {
-#        exit( 0 )
-#    };
-#}
-
-# parse head url and revision from svn
-my $server_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
-$server_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
-$server_headURL = defined $1 ? $1 : 'unknown' ;
-$server_revision = defined $2 ? $2 : 'unknown' ;
-if ($server_headURL =~ /\/tag\// || 
-        $server_headURL =~ /\/branches\// ) {
-    $server_status = "stable"; 
-} else {
-    $server_status = "developmental" ;
-}
-# Prepare log file and set permissions
-$root_uid = getpwnam('root');
-$adm_gid = getgrnam('adm');
-open(my $FH, ">>", "$log_file");
-close($FH);
-chmod(0440, $log_file);
-chown($root_uid, $adm_gid, $log_file);
+#open log file
+&open_log($root_uid, $adm_gid, $log_file);
 
 # prepare directory for databases
 mkpath('/var/lib/gosa-si', 0, {owner=>'root', group=>'root'});
@@ -3717,7 +3734,6 @@ unlink '/tmp/gosa_si_tmp_sources_list';
 
 # remove marker that the list creation is in progress
 unlink '/tmp/packages_list_creation_in_progress';
-
 
 daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
@@ -3878,6 +3894,7 @@ if ($opsi_enabled eq "true") {
     $opsi_client = new JSON::RPC::Client;
 }
 
+daemon_log("0 INFO: start socket for incoming xml messages at port '$server_port' ", 1);
 
 POE::Component::Server::TCP->new(
 	Alias => "TCP_SERVER",
@@ -3912,8 +3929,6 @@ POE::Component::Server::TCP->new(
 		child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
 	}
 );
-
-daemon_log("0 INFO: start socket for incoming xml messages at port '$server_port' ", 1);
 
 # create session for repeatedly checking the job queue for jobs
 POE::Session->create(
