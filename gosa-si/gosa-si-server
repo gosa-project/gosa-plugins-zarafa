@@ -566,93 +566,6 @@ sub daemon_log {
 	}
 }
 
-
-#===  FUNCTION  ================================================================
-#         NAME:  check_cmdline_param
-#   PARAMETERS:  nothing
-#      RETURNS:  nothing
-#  DESCRIPTION:  validates commandline parameter
-#===============================================================================
-sub check_cmdline_param () {
-    my $err_counter = 0;
-
-	# Check configuration file
-	if(not defined($cfg_file)) {
-		$cfg_file = "/etc/gosa-si/server.conf";
-		if(! -r $cfg_file) {
-			print STDERR "Please specify a config file.\n";
-			$err_counter++;
-		}
-    }
-
-	# Prepare identification which gosa-si parts should be debugged and which not
-	if (defined $debug_parts) 
-	{
-		if ($debug_parts =~ /^\d+$/)
-		{
-			$debug_parts_bitstring = unpack("B32", pack("N", $debug_parts));
-		}
-		else
-		{
-			print STDERR "Value '$debug_parts' invalid for option d (number expected)\n";
-			$err_counter++;
-		}
-	}
-
-	# Exit if an error occour
-    if( $err_counter > 0 ) { &usage( "", 1 ); }
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  check_pid
-#   PARAMETERS:  nothing
-#      RETURNS:  nothing
-#  DESCRIPTION:  handels pid processing
-#===============================================================================
-sub check_pid {
-    $pid = -1;
-    # Check, if we are already running
-    if( open( my $LOCK_FILE, "<", "$pid_file" ) ) {
-        $pid = <$LOCK_FILE>;
-        if( defined $pid ) {
-            chomp( $pid );
-            if( -f "/proc/$pid/stat" ) {
-                my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
-                if( $stat ) {
-					print STDERR "\nERROR: Already running!\n";
-                    close( $LOCK_FILE );
-                    exit -1;
-                }
-            }
-        }
-        close( $LOCK_FILE );
-        unlink( $pid_file );
-    }
-
-    # create a syslog msg if it is not to possible to open PID file
-    if (not sysopen(my $LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
-        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open(my $LOCK_FILE, '<', $pid_file)
-                && ($pid = <$LOCK_FILE>))
-        {
-            chomp($pid);
-            $msg .= "(PID $pid)\n";
-        } else {
-            $msg .= "(unable to read PID)\n";
-        }
-        if( ! ($foreground) ) {
-            openlog( $0, "cons,pid", "daemon" );
-            syslog( "warning", $msg );
-            closelog();
-        }
-        else {
-            print( STDERR " $msg " );
-        }
-        exit( -1 );
-    }
-}
-
 #===  FUNCTION  ================================================================
 #         NAME:  import_modules
 #   PARAMETERS:  module_path - string - abs. path to the directory the modules 
@@ -3624,14 +3537,17 @@ sub control_server_registration {
 
 sub start_daemon {
 
+	#to prevent zombie child
+  $SIG{CHLD} = 'IGNORE';
+
 	if( ! $foreground ) { 
 		chdir '/'                 or die "Can't chdir to /: $!";
 		umask 0;
 		open STDIN, '+>/dev/null'   or die "Can't read /dev/null: $!";
 		open STDOUT, '+>&STDIN' or die "Can't write to /dev/null: $!";
 		open STDERR, '+>&STDIN' or die "Can't write to /dev/null: $!";
-		defined(my $child_pid = fork)   or die "Can't fork: $!";
-		exit if $child_pid;
+		defined($pid = fork)   or die "Can't fork: $!";
+		exit if $pid;
 		setsid                    or die "Can't start a new session: $!";
 	}
 	return;
@@ -3708,11 +3624,11 @@ if( defined $dump_config ) {
 #  read and set config parameters
 &read_configfile($config, %cfg_defaults);
 
+# daemonize the program
+&start_daemon($pid, $foreground);
+
 # create pid file
 &create_pid($pid, $pid_file);
-
-# daemonize the program
-&start_daemon($foreground);
 
 # Determine root uid and adm gid, used for creating log files
 &get_perms_admin($root_uid, $adm_gid);
