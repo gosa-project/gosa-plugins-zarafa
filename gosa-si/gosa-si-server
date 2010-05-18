@@ -744,6 +744,7 @@ sub sig_int_handler {
     
     daemon_log("shutting down gosa-si-server", 1);
 
+# should be done with the alias TCP_SERVER
 		$global_kernel->yield('shutdown');
 
 		# to be removed rather crude !!
@@ -3709,10 +3710,10 @@ chown($root_uid, $adm_gid, $log_file);
 mkpath('/var/lib/gosa-si', 0, {owner=>'root', group=>'root'});
 
 # remove leftover files in tmp for packaged.db populate
-#rmtree( '/tmp/packages_list_db',0,1);
+rmtree( '/tmp/packages_list_db',0,1);
 
 # remove list of sources from apt.sources.list
-#unlink '/tmp/gosa_si_tmp_sources_list';
+unlink '/tmp/gosa_si_tmp_sources_list';
 
 # remove marker that the list creation is in progress
 unlink '/tmp/packages_list_creation_in_progress';
