@@ -337,7 +337,7 @@ sub set_last_system {
 						);
 		# Sanity check of user search
 		if ($ldap_mesg->count == 0) {
-			&main::daemon_log("$session_id ERROR: no user with uid='$user' was found in base '".
+			&main::daemon_log("$session_id WARNING: no user with uid='$user' was found in base '".
 							$main::ldap_base."', setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 
 		# Set gotoLastSystem and gotoLastSystemLogin

@@ -566,7 +566,7 @@ sub here_i_am {
     if($ldap_res->code) {
             &main::daemon_log("$session_id ERROR: LDAP Entry for client with mac address $mac_address not found: ".$ldap_res->error, 1);
     } elsif ($ldap_res->count != 1) {
-            &main::daemon_log("$session_id ERROR: client with mac address $mac_address not found/unique/active - not updating ldap entry".
+            &main::daemon_log("$session_id WARNING: client with mac address $mac_address not found/unique/active - not updating ldap entry".
                             "\n\tbase: $ldap_base".
                             "\n\tscope: sub".
                             "\n\tattrs: ipHostNumber".
@@ -666,7 +666,7 @@ sub new_syslog_config {
 
 	# Sanity check
 	if ($ldap_res->count != 1) {
-		&main::daemon_log("$session_id ERROR: client with mac address $mac_address not found/unique/active - not sending syslog config".
+		&main::daemon_log("$session_id WARNING: client with mac address $mac_address not found/unique/active - not sending syslog config".
                 "\n\tbase: $ldap_base".
                 "\n\tscope: sub".
                 "\n\tattrs: gotoSyslogServer".
@@ -882,7 +882,7 @@ sub new_ldap_config {
 
 		# Sanity check
         if ($mesg->count != 1) {
-            &main::daemon_log("$session_id ERROR: new_ldap_config: client with mac address $macaddress not found/unique/active - not sending ldap config".
+            &main::daemon_log("$session_id WARNING: new_ldap_config: client with mac address $macaddress not found/unique/active - not sending ldap config".
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: dn, gotoLdapServer, FAIclass".
