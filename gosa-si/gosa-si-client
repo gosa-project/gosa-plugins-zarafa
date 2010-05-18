@@ -99,7 +99,7 @@ my $client_status;
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
-my (%cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
+my (%cfg_defaults, $foreground, $pid_file, $procid, $pid, $log_file, $fai_logpath);
 my ($server_ip, $server_port, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_port, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my ($root_uid, $adm_gid);

@@ -38,8 +38,8 @@ start_client() {
 # to be rewritten ugly !!
 stop_client() {
 	start-stop-daemon --stop --retry 5 --quiet --pidfile ${PIDFILE_CLIENT} --name ${CLIENT}
-	kill `ps -C gosa-si-client -o pid=` > /dev/null 2>&1
-	! ps -C gosa-si-client -o pid= > /dev/null 2>&1
+#	kill `ps -C gosa-si-client -o pid=` > /dev/null 2>&1
+#	! ps -C gosa-si-client -o pid= > /dev/null 2>&1
 }
 
 case "$1" in
@@ -80,7 +80,7 @@ status)
 	fi
 	;;
 
-*)	log_action_msg "Usage: /etc/init.d/gosa-si-client {start|stop|restart||reload|force-reload|status}"
+*)	log_action_msg "Usage: /etc/init.d/gosa-si-client {start|stop|restart|reload|force-reload|status}"
         exit 2
         ;;
 esac
