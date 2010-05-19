@@ -11,7 +11,7 @@ Vcs-Svn: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si
 
 Package: gosa-si-common
 Architecture: any
-Depends: ${misc:Depends}, libconfig-inifiles-perl, libcrypt-rijndael-perl, libio-socket-ssl-perl, libxml-simple-perl, libdata-dumper-simple-perl, libmime-tools-perl, libdbd-sqlite3-perl, libnet-ldap-perl, libnetaddr-ip-perl, libpoe-perl, libnet-dns-perl, libnet-pcap-perl, libconvert-asn1-perl, libdigest-hmac-perl, libnet-ip-perl, libdigest-sha1-perl, libnet-mac-vendor-perl, libpoe-component-pcap-perl, libnet-arp-perl, libdatetime-perl, libjson-rpc-perl, libxml-quote-perl, libcrypt-ssleay-perl, libnet-arp-perl
+Depends: ${misc:Depends}, libconfig-inifiles-perl, libcrypt-rijndael-perl, libio-socket-ssl-perl, libxml-simple-perl, libdata-dumper-simple-perl, libmime-tools-perl, libdbd-sqlite3-perl, libnet-ldap-perl, libnetaddr-ip-perl, libpoe-perl, libnet-dns-perl, libnet-pcap-perl, libconvert-asn1-perl, libdigest-hmac-perl, libnet-ip-perl, libdigest-sha1-perl, libnet-mac-vendor-perl, libpoe-component-pcap-perl, libnet-arp-perl, libdatetime-perl, libjson-rpc-perl, libxml-quote-perl, libcrypt-ssleay-perl, libnet-arp-perl, libfile-pid-perl
 Suggests: gosa-si-server, gosa-si-client
 Description: GOsa support infrastructure
  GOsa is a combination of system-administrator and end-user web
