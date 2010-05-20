@@ -683,7 +683,7 @@ class termgeneric extends plugin
                   "name"          => "terminalRDN",
                   "type"          => "rdn",
                   "default"       => "ou=terminals,ou=systems,",
-                  "description"   => "The 'terminalRDN' statement defines the location where new terminals will be created. The default is 'ou=terminals,ou=systems,'.",
+                  "description"   => _("The 'terminalRDN' statement defines the location where new terminals will be created. The default is 'ou=terminals,ou=systems,'."),
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_terminalRDN",
                   "group"         => "plugin",
