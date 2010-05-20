@@ -192,6 +192,10 @@ class workservice extends plugin
         if(!empty($this->attrs['gotoXHsync'][0]) && !empty($this->attrs['gotoXVsync'][0])) {
         $this->InheritXYSync = FALSE;
        }
+    } else {
+        if($this->dn == "new") {
+          $this->InheritXYSync = FALSE;
+        }
     }
 
     /* Workaround to fill in inherited values if we've specified an objectclass */
@@ -325,7 +329,7 @@ class workservice extends plugin
       $smarty->assign("AutoSyncCHK"," ");
       $smarty->assign("hiddenState","");
     }
-    if($this->InheritXYSync) {
+    if($this->InheritXYSync && !isset($this->parent->by_object['ogroup'])) {
       $smarty->assign("InheritXYSync", " checked ");
       $smarty->assign("hiddenState", " disabled ");
       $smarty->assign("AutoSynchiddenState", " disabled ");
