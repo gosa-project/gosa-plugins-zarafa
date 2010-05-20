@@ -147,13 +147,13 @@ class FAI
   {
     global $config;
     $arr = array(
-        $config->get_cfg_value('faiScript', 'faiScriptRDN'),
-        $config->get_cfg_value('faiHook', 'faiHookRDN'),
-        $config->get_cfg_value('faiTemplate', 'faiTemplateRDN'),
-        $config->get_cfg_value('faiVariable', 'faiVariableRDN'),
-        $config->get_cfg_value('faiProfile', 'faiProfileRDN'),
-        $config->get_cfg_value('faiPartitionTable', 'faiPartitionRDN'),
-        $config->get_cfg_value('faiPackage', 'faiPackageRDN')
+        get_ou('faiScript', 'faiScriptRDN'),
+        get_ou('faiHook', 'faiHookRDN'),
+        get_ou('faiTemplate', 'faiTemplateRDN'),
+        get_ou('faiVariable', 'faiVariableRDN'),
+        get_ou('faiProfile', 'faiProfileRDN'),
+        get_ou('faiPartitionTable', 'faiPartitionRDN'),
+        get_ou('faiPackage', 'faiPackageRDN')
         );
 
     $tmp = array();
