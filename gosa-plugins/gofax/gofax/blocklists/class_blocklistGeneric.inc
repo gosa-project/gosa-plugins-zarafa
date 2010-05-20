@@ -385,7 +385,7 @@ class blocklistGeneric extends plugin
                           "name"          => "faxBlocklistRDN",
                           "type"          => "rdn",
                           "default"       => "ou=gofax,ou=systems,",
-                          "description"   => "The 'faxBlocklistRDN' statement defines the location where new blocklists will be created. The default is 'ou=gofax,ou=systems,'.",
+                          "description"   => _("The 'faxBlocklistRDN' statement defines the location where new blocklists will be created. The default is 'ou=gofax,ou=systems,'."),
                           "check"         => "gosaProperty::isRdn",
                           "migrate"       => "migrate_faxBlocklistRDN",
                           "group"         => "plugin",
