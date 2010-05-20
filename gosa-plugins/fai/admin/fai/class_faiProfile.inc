@@ -366,7 +366,7 @@ class faiProfile extends plugin
                             "name"          => "faiProfileRDN",
                             "type"          => "rdn",
                             "default"       => "ou=profiles,",
-                            "description"   => "The 'faiProfileRDN' statement defines the location where new fai-profiles will be created. The default is 'ou=profiles,'.",
+                            "description"   => _("The 'faiProfileRDN' statement defines the location where new fai-profiles will be created. The default is 'ou=profiles,'."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_faiProfileRDN",
                             "group"         => "plugin",
