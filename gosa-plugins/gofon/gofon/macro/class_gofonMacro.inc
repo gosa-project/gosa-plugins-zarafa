@@ -587,7 +587,7 @@ class macro extends plugin
                   "name"          => "phoneMacroRDN",
                   "type"          => "rdn",
                   "default"       => "ou=macros,ou=asterisk,ou=configs,ou=systems,",
-                  "description"   => "The 'phoneMacroRDN' statement defines the location where new phone macros will be created. The default is 'ou=macros,ou=asterisk,ou=configs,ou=systems,'.",
+                  "description"   => _("The 'phoneMacroRDN' statement defines the location where new phone macros will be created. The default is 'ou=macros,ou=asterisk,ou=configs,ou=systems,'."),
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_phoneMacroRDN",
                   "group"         => "plugin",
