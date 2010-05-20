@@ -1005,7 +1005,7 @@ class printgeneric extends plugin
                   "name"          => "printerRDN",
                   "type"          => "rdn",
                   "default"       => "ou=printers,ou=systems,",
-                  "description"   => "The 'printerRDN' statement defines the location where new printers will be created. The default is 'ou=printers,ou=systems,'.",
+                  "description"   => _("The 'printerRDN' statement defines the location where new printers will be created. The default is 'ou=printers,ou=systems,'."),
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_printerRDN",
                   "group"         => "plugin",
