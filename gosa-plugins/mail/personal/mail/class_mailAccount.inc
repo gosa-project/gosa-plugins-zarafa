@@ -1427,7 +1427,7 @@ class mailAccount extends plugin
                           "name"          => "cyrusDeleteMailbox",
                           "type"          => "bool",
                           "default"       => 'true',
-                          "description"   => "The 'cyrusDeleteMailbox' statement determines if GOsa should remove the mailbox from your IMAP server  or keep it after the account is deleted in LDAP.",
+                          "description"   => _("The 'cyrusDeleteMailbox' statement determines if GOsa should remove the mailbox from your IMAP server  or keep it after the account is deleted in LDAP."),
                           "check"         => "gosaProperty::isBool",
                           "migrate"       => "",
                           "group"         => "mail",
