@@ -11,6 +11,10 @@ class migrate_faiBaseRDN extends migrateFaiRDN implements propertyMigration
 
         $initialValue = $this->prefix.$this->property->getValue().$this->suffix;
         $targetValue = $this->prefix.$this->property->getValue(TRUE).$this->suffix;
+
+        if(!empty($initialValue) && !preg_match("/,$/", $initialValue)) $initialValue.=",";
+        if(!empty($targetValue) && !preg_match("/,$/", $targetValue)) $targetValue.=",";
+
         $from = $initialValue.$this->config->current['BASE'];
         $to = $targetValue.$this->config->current['BASE'];
 
