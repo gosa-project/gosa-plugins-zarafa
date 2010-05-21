@@ -817,7 +817,7 @@ class conference extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("gofonconference" => array("description" => _("GOfon conference"),
-                  "objectClass" => "gofonConference")),
+                  "objectClass" => "goFonConference")),
 
           "plProperties" =>
           array(
