@@ -579,7 +579,7 @@ class macro extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("gofonmacro" => array("description" => _("GOfon macro"),
-              "objectClass" => "gofonMacro")),
+              "objectClass" => "goFonMacro")),
 
           "plProperties" =>
           array(
