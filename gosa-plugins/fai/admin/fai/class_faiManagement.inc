@@ -1212,7 +1212,7 @@ class faiManagement extends management
                   "plDepends"     => array(),
                   "plPriority"    => 0,
                   "plSection"     => array("administration"),
-
+                  "plUsesSchemata"=> array('FAIclass' => '>=2.6'),
                   "plProperties" =>
                   array(
                       array(
