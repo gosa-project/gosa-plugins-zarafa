@@ -744,8 +744,7 @@ class opsiGeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),
-          "plCategory"    => array("opsi" => array("description"  => _("Opsi"),
-              "objectClass"  => "dummy_class_opsi")),
+          "plCategory"    => array("opsi" => array("description"  => _("Opsi"))),
 
           "plProvidedAcls"=> array(
             "hostId"          => _("Name"),
