@@ -433,6 +433,7 @@ class viewFaxEntries extends plugin {
         return (array(
             "plShortName"     => _("View fax reports"),
             "plDescription"   => _("View fax reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
+            "plRequirements"  => array('ldapSchema' => array('goFaxAccount' => '>=2.7')),
             "plSelfModify"    => TRUE,
             "plDepends"       => array(),
             "plPriority"      => 89,                                 // Position in tabs
