@@ -696,8 +696,7 @@ class faiPackage extends plugin
         $ldap = $this->config->get_ldap_link();
         $ldap->cat($dn);
         if ($ldap->count()) {
-          $ldap->cd($dn);
-          $ldap->rmdir($dn);
+          FAI::prepare_to_save_FAI_object($dn,array(),true);
         }
       }
     }
@@ -723,8 +722,7 @@ class faiPackage extends plugin
           $ldap = $this->config->get_ldap_link();
           $ldap->cat($pkgdn);
           if ($ldap->count()) {
-            $ldap->cd($pkgdn);
-            $ldap->rmdir($pkgdn);
+            FAI::prepare_to_save_FAI_object($pkgdn,array(),true);
           }
           else {
             unset($this->ConfiguredPackages[$pkgname][$name]);
