@@ -155,8 +155,7 @@ class ArpNewDevice extends plugin
                           "group"         => "plugin",
                           "mandatory"     => FALSE)),
 
-                  "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
-                          "objectClass"  => "")),
+                  "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"))),
                   "plProvidedAcls"=> array(
                           "cn"  => _("Name"),
                           "description"  => _("Description")
