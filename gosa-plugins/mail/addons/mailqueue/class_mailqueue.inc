@@ -334,7 +334,7 @@ class mailqueue extends plugin
         "plDepends"     => array(),
         "plPriority"    => 1,
         "plSection"     => array("addon"),
-        "plCategory"    => array("mailqueue" => array("objectClass" => "none", "description" => _("Mail queue addon"))),
+        "plCategory"    => array("mailqueue" => array("description" => _("Mail queue addon"))),
 
         "plProvidedAcls" => array(
             "unholdAll"       => _("Unhold all messages"),
