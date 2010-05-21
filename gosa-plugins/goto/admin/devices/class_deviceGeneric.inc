@@ -273,7 +273,7 @@ class deviceGeneric extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("devices" => array("description"  => _("Devices"),
-                                                        "objectClass"  => "gotoHotplugDevice")),
+                                                        "objectClass"  => "gotoDevice")),
           "plProperties" =>
           array(
               array(
