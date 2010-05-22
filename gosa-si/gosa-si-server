@@ -277,7 +277,6 @@ my $messaging_file_name;
 our $client_fai_log_dir = "/var/log/fai"; 
 
 # queue which stores taskes until one of the $max_children children are ready to process the task
-#my @tasks = qw();
 my @msgs_to_decrypt = qw();
 my $max_children = 2;
 
@@ -650,23 +649,22 @@ sub password_check {
 #  DESCRIPTION:  handle tasks to be done before signal becomes active
 #===============================================================================
 sub sig_int_handler {
-    my ($signal) = @_;
+	my ($signal) = @_;
 
 #	if (defined($ldap_handle)) {
 #		$ldap_handle->disconnect;
 #	}
-    # TODO alle verbliebenden ldap verbindungen aus allen heaps beenden
+# TODO all ldap connections shoudl be closed
     
-    daemon_log("shutting down gosa-si-server", 1);
+	daemon_log("shutting down gosa-si-server", 1);
 
-		$global_kernel->yield(TCP_SERVER => 'shutdown');
+	# asking the poe kernel to shutdown the server
+	$global_kernel->yield(TCP_SERVER => 'shutdown');
 
-		# to be removed rather crude !!
-		#system("kill `ps -C gosa-si-server -o pid=`");
+	# removing the pidfile
+	$pid->remove or warn "Could not remove $pid_file\n";
 
-		$pid->remove or warn "Could not remove $pid_file\n";
-
-		exit(0);
+	exit(0);
 }
 $SIG{INT} = \&sig_int_handler;
 
@@ -1785,25 +1783,25 @@ sub process_task {
 }
 
 sub session_start {
-    my ($kernel) = $_[KERNEL];
-    $global_kernel = $kernel;
-    $kernel->yield('register_at_foreign_servers');
+	my ($kernel) = $_[KERNEL];
+	$global_kernel = $kernel;
+	$kernel->yield('register_at_foreign_servers');
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
 	$kernel->sig(USR1 => "sig_handler");
 	$kernel->sig(USR2 => "recreate_packages_db");
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
-    $kernel->delay_set('watch_for_modified_jobs', $modified_jobs_loop_delay); 
+	$kernel->delay_set('watch_for_modified_jobs', $modified_jobs_loop_delay);
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
-    $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
+	$kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
-    $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
+	$kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
 
-    # Start opsi check
-    if ($opsi_enabled eq "true") {
-        $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay); 
-    }
+	# Start opsi check
+	if ($opsi_enabled eq "true") {
+		$kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay);
+	}
 
 }
 
@@ -3705,61 +3703,33 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
         # connect to incoming_db
         unlink($incoming_file_name);
         $incoming_db = ("GOsaSI::".$db_module)->new($incoming_file_name);
-				#chmod(0640, $incoming_file_name);
-				#chown($root_uid, $adm_gid, $incoming_file_name);
-        
+
         # connect to gosa-si job queue
         $job_db = ("GOsaSI::".$db_module)->new($job_queue_file_name);
-				#chmod(0640, $job_queue_file_name);
-				#chown($root_uid, $adm_gid, $job_queue_file_name);
         
         # connect to known_clients_db
-        #unlink($known_clients_file_name);
         $known_clients_db = ("GOsaSI::".$db_module)->new($known_clients_file_name);
-				#chmod(0640, $known_clients_file_name);
-				#chown($root_uid, $adm_gid, $known_clients_file_name);
         
         # connect to foreign_clients_db
-        #unlink($foreign_clients_file_name);
         $foreign_clients_db = ("GOsaSI::".$db_module)->new($foreign_clients_file_name);
-				#chmod(0640, $foreign_clients_file_name);
-				#chown($root_uid, $adm_gid, $foreign_clients_file_name);
         
         # connect to known_server_db
-				#unlink($known_server_file_name);   # do not delete, gosa-si-server should be forced to check config file and dns at each start
         $known_server_db = ("GOsaSI::".$db_module)->new($known_server_file_name);
-				#chmod(0640, $known_server_file_name);
-				#chown($root_uid, $adm_gid, $known_server_file_name);
         
         # connect to login_usr_db
-        #unlink($login_users_file_name);
         $login_users_db = ("GOsaSI::".$db_module)->new($login_users_file_name);
-				#chmod(0640, $login_users_file_name);
-				#chown($root_uid, $adm_gid, $login_users_file_name);
         
         # connect to fai_server_db
-				#unlink($fai_server_file_name);
         $fai_server_db = ("GOsaSI::".$db_module)->new($fai_server_file_name);
-				#chmod(0640, $fai_server_file_name);
-				#chown($root_uid, $adm_gid, $fai_server_file_name);
         
         # connect to fai_release_db
-				#unlink($fai_release_file_name);
         $fai_release_db = ("GOsaSI::".$db_module)->new($fai_release_file_name);
-				#chmod(0640, $fai_release_file_name);
-				#chown($root_uid, $adm_gid, $fai_release_file_name);
         
         # connect to packages_list_db
-				#unlink($packages_list_under_construction);
         $packages_list_db = ("GOsaSI::".$db_module)->new($packages_list_file_name);
-				#chmod(0640, $packages_list_file_name);
-				#chown($root_uid, $adm_gid, $packages_list_file_name);
         
         # connect to messaging_db
-        #unlink($messaging_file_name);
         $messaging_db = ("GOsaSI::".$db_module)->new($messaging_file_name);
-				#chmod(0640, $messaging_file_name);
-				#chown($root_uid, $adm_gid, $messaging_file_name);
     }
 }
 

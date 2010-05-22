@@ -35,11 +35,8 @@ start_server() {
 	start-stop-daemon --start --quiet --pidfile ${PIDFILE_SERVER} --name ${SERVER} --startas ${DAEMON_SERVER} -- $1 $DEBUG
 }
 
-# to be changed ugly
 stop_server() {
 	start-stop-daemon --stop --retry 5 --quiet --pidfile ${PIDFILE_SERVER} --name ${SERVER}
-#kill `ps -C gosa-si-server -o pid=` > /dev/null 2>&1
-#	! ps -C gosa-si-server -o pid= > /dev/null 2>&1
 }
 
 

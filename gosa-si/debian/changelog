@@ -1,5 +1,5 @@
-gosa-si (2.6.9-1) unstable; urgency=low
+gosa-si (2.6.10-1) unstable; urgency=low
 
   * Initial upload (Closes: #534303)
 
- -- Cajus Pollmeier <cajus@debian.org>  Tue, 31 Mar 2010 22:09:00 +0200
+ -- Benoit Mortier <benoit.mortier@opensides.be>  Sat, 22 May 2010 18:30:00 +0100

@@ -35,11 +35,8 @@ start_client() {
 	start-stop-daemon --start --quiet --pidfile ${PIDFILE_CLIENT} --name ${CLIENT} --startas ${DAEMON_CLIENT} -- $DEBUG
 }
 
-# to be rewritten ugly !!
 stop_client() {
 	start-stop-daemon --stop --retry 5 --quiet --pidfile ${PIDFILE_CLIENT} --name ${CLIENT}
-#	kill `ps -C gosa-si-client -o pid=` > /dev/null 2>&1
-#	! ps -C gosa-si-client -o pid= > /dev/null 2>&1
 }
 
 case "$1" in
