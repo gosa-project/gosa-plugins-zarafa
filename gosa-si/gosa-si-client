@@ -75,7 +75,6 @@ use Time::HiRes qw( gettimeofday );
 use IO::Socket::INET;
 use NetAddr::IP;
 use Crypt::Rijndael;
-use GOsaSI::GosaSupportDaemon;
 use Digest::MD5  qw(md5_hex md5 md5_base64);
 use MIME::Base64;
 use XML::Simple;
@@ -83,6 +82,7 @@ use File::Basename;
 use File::Spec;
 use File::Pid;
 use Net::ARP;
+use GOsaSI::GosaSupportDaemon;
 
 use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
 use Fcntl;
@@ -305,14 +305,16 @@ sub sig_int_handler {
 
 	daemon_log("shutting down gosa-si-client", 1);
 
-# to be changed crude !!
-#	system("kill `ps -C gosa-si-server -o pid=`");
+	# shtudown the client by telling the poe kernel
 	$global_kernel->yield('shutdown');
 
+	#removing the opts file
 	unlink ('/var/run/gosa-si/gosa-si-client.opts');
 
+	#removing the fifo for communication 
 	unlink ($fai_com_fifo);
-	
+
+	#removing the pid
 	$pid->remove or warn "Could not remove $pid_file\n";
 
   exit(0);
@@ -1223,7 +1225,6 @@ sub post_processing_and_sending
 
 sub find_servers {
     # add gosa-si-server address from config file at first position of server list
-		#my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
     my $server_check_cfg = Config::IniFiles->new( -file => $config );
 
     # Parse servers string
@@ -1308,6 +1309,7 @@ sub find_servers {
     }
 }
 
+
 sub start_daemon {
 
 	if( ! $foreground ) {
@@ -1316,8 +1318,8 @@ sub start_daemon {
 		open STDIN, '+>/dev/null'   or die "Can't read /dev/null: $!";
 		open STDOUT, '+>&STDIN' or die "Can't write to /dev/null: $!";
 		open STDERR, '+>&STDIN' or die "Can't write to /dev/null: $!";
-		defined(my $child_pid = fork)   or die "Can't fork: $!";
-		exit if $child_pid;
+		defined($pid = fork)   or die "Can't fork: $!";
+		exit if $pid;
 		setsid                    or die "Can't start a new session: $!";
 	}
 	return;
@@ -1383,11 +1385,11 @@ if( defined $dump_config ) {
 #  read and set config parameters
 &read_configfile($config, %cfg_defaults);
 
-# create pid file
-&create_pid($pid, $pid_file);
-
 # daemonize the program
 &start_daemon($foreground);
+
+# create pid file
+&create_pid($pid, $pid_file);
 
 # Determine root uid and adm gid, used for creating log files
 &get_perms_admin($root_uid, $adm_gid);
