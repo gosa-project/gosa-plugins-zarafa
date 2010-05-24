@@ -3638,7 +3638,7 @@ if( defined $dump_config ) {
 &open_log($root_uid, $adm_gid, $log_file);
 
 # prepare directory for databases
-mkpath('/var/lib/gosa-si', 0, {owner=>'root', group=>'root'});
+mkpath('/var/lib/gosa-si', 0, {owner=>'root', group=>'root', mode=> '0755'});
 
 # remove leftover files in tmp for packaged.db populate
 rmtree( '/tmp/packages_list_db',0,1);
