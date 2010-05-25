@@ -997,6 +997,7 @@ class printgeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 4,
           "plSection"     => array("administration"),
+          "plRequirements"=> array('ldapSchema' => array('gotoPrinter' => '>=2.7')),
           "plCategory"    => array("printer" => array("description"  => _("Printer"),
                                                     "objectClass"  => "gotoPrinter"),"workstation","terminal"),
           "plProperties" =>
