@@ -1212,7 +1212,28 @@ class faiManagement extends management
                   "plDepends"     => array(),
                   "plPriority"    => 0,
                   "plSection"     => array("administration"),
-                  "plUsesSchemata"=> array('FAIclass' => '>=2.6'),
+                  "plRequirements"=> array(
+                        'ldapSchema' => array(
+                                'FAIclass' => '>=2.7',
+                                'FAIbranch' => '>=2.7',
+                                'FAIdebconfInfo' => '>=2.7',
+                                'FAIobject' => '>=2.7',
+                                'FAIpackageList' => '>=2.7',
+                                'FAItemplate' => '>=2.7',
+                                'FAIscript' => '>=2.7',
+                                'FAIvariable' => '>=2.7',
+                                'FAIhook' => '>=2.7',
+                                'FAItemplateEntry' => '>=2.7',
+                                'FAIscriptEntry' => '>=2.7',
+                                'FAIvariableEntry' => '>=2.7',
+                                'FAIhookEntry' => '>=2.7',
+                                'FAIpartitionTable' => '>=2.7',
+                                'FAIpartitionDisk' => '>=2.7',
+                                'FAIpartitionEntry' => '>=2.7',
+                                'FAIprofile' => '>=2.7',
+                                'FAIpartitionEntry' => '>=2.7'
+                        )
+                    ),
                   "plProperties" =>
                   array(
                       array(
