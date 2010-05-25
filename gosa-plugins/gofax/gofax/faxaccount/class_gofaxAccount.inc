@@ -816,7 +816,7 @@ class gofaxAccount extends plugin
           "plPriority"      => 6,             
           "plSection"       => "personal",  
           "plCategory"      => array("users"),
-          "plRequirements"=> array('ldapSchema' => array('goFaxAccount' => '>=2.7')),
+          "plRequirements"=> array('ldapSchema' => array('goFaxAccount' => '>=1.0.4')),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

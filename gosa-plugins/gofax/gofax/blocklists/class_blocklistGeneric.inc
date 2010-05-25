@@ -374,7 +374,7 @@ class blocklistGeneric extends plugin
                   "plDescription"     => _("Fax blocklists"),
                   "plSelfModify"      => FALSE,
                   "plDepends"         => array(),
-                  "plRequirements"=> array('ldapSchema' => array('goFaxRBlock' => '>=2.7','goFaxSBlock' => '>=2.7')),
+                  "plRequirements"=> array('ldapSchema' => array('goFaxRBlock' => '>=1.0.4','goFaxSBlock' => '>=1.0.4')),
                   "plPriority"    => 0,
                   "plSection"     => array("administration" => _("Fax blocklists")),
                   "plCategory"    => array("gofaxlist"      => array("description" => _("Fax blocklists"),
