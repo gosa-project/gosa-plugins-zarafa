@@ -816,6 +816,7 @@ class conference extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
+          "plRequirements"=> array('ldapSchema' => array('goFonConference' => '>=2.7')),
           "plCategory"    => array("gofonconference" => array("description" => _("GOfon conference"),
                   "objectClass" => "goFonConference")),
 
