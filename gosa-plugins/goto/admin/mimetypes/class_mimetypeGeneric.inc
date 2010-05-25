@@ -616,6 +616,7 @@ class mimetype extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
+          "plRequirements"=> array('ldapSchema' => array('gotoMimeType' => '>=2.7')),
           "plCategory"    => array("mimetypes" => array("description"  => _("Mime types"),
                                                         "objectClass"  => "gotoMimeType")),
 
