@@ -132,6 +132,7 @@ class goLdapServer extends goService{
           "plPriority"    => 96,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
+          "plRequirements"=> array('ldapSchema' => array('goLdapServer' => '>=2.7')),
 
           "plProvidedAcls"=> array(
             "start"         => _("Start"),
