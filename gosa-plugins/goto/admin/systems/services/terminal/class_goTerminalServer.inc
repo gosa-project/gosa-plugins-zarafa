@@ -167,7 +167,9 @@ class goTerminalServer extends goService{
           "plDepends"     => array(),
           "plPriority"    => 87,
           "plSection"     => array("administration"),
+          "plRequirements"=> array('ldapSchema' => array('goTerminalServer' => '>=2.7')),
           "plCategory"    => array("server"),
+
 
           "plProvidedAcls"=> array(
             "start"           => _("Start"),
