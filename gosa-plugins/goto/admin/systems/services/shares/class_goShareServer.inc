@@ -416,6 +416,7 @@ class goShareServer extends goService{
           "plDepends"     => array(),
           "plPriority"    => 90,
           "plSection"     => array("administration"),
+          "plRequirements"=> array('ldapSchema' => array('goShareServer' => '>=2.7')),
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
