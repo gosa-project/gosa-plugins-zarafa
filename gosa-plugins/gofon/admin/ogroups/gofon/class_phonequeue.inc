@@ -922,6 +922,7 @@ class phonequeue extends plugin
           "plPriority"    => 3,
           "plSection"     => array("administration"),
           "plCategory"    => array("ogroups"),
+          "plRequirements"=> array('ldapSchema' => array('goFonQueue' => '>=2.7')), 
           "plProvidedAcls"=> array(
 
             "goFonTimeOut"              => _("Timeout"),
