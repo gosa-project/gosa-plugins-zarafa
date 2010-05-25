@@ -72,6 +72,7 @@ class goCupsServer extends goService{
           "plPriority"    => 100,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
+          "plRequirements"=> array('ldapSchema' => array('goCupsServer' => '>=2.7')),
 
           "plProvidedAcls"=> array(
             "start"         => _("Start"),
