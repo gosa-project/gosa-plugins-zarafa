@@ -580,6 +580,7 @@ class goMailServer extends goService{
           "plPriority"    => 98,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
+          "plRequirements"=> array('ldapSchema' => array('goMailServer' => '>=2.7')),
 
           "plProperties"  => array(
               array(
