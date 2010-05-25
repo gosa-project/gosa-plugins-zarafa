@@ -1382,6 +1382,7 @@ class appgroup extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("groups"),
           "plProvidedAcls"=> array(
+          "plRequirements"=> array('ldapSchema' => array('gotoSubmenuEntry'=>'>=2.7','gotoMenuEntry' => '>=2.7')),
             "gosaMemberApplication"     => _("Application"),
             "FAIrelease"                => _("Release"),
             "gosaApplicationParameter"  => _("Application parameter"))
