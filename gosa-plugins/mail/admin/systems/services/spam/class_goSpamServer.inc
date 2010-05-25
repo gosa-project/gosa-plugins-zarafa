@@ -323,6 +323,7 @@ class gospamserver extends goService{
           "plPriority"    => 89,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
+          "plRequirements"=> array('ldapSchema' => array('goSpamServer' => '>=2.7')),
           "plProvidedAcls"=> array(
 
             "saRewriteHeader"   => _("Rewrite header"),
