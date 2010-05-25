@@ -40,7 +40,7 @@
 	{/if}">
 {/if}
 
-{t}Kolab account{/t}</h3>
+</h3>{t}Kolab account{/t}</h3>
 <table style="width:100%" summary="{t}Kolab delegation configuration{/t}">
  <tr>
   <td style='width:50%; '>
@@ -102,7 +102,7 @@
 
 
  <h3>{t}Free Busy information{/t}</h3>
- <table summary="{t}Free Busy information{/}">
+ <table summary="{t}Free Busy information{/t}">
   <tr>
    <td><LABEL for="calFBURL">{t}URL{/t}</LABEL></td>
    <td>
