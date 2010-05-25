@@ -117,6 +117,7 @@ class goNtpServer extends goService{
           "plDepends"     => array(),
           "plPriority"    => 91,
           "plSection"     => array("administration"),
+          "plRequirements"=> array('ldapSchema' => array('goNtpServer' => '>=2.7')),
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
