@@ -170,6 +170,8 @@ class goFonServer extends goService{
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 
+          "plRequirements"=> array('ldapSchema' => array('goFonServer' => '>=2.7')),
+
           "plProvidedAcls"=> array(
             "start"         => _("Start"),
             "stop"          => _("Stop"),
