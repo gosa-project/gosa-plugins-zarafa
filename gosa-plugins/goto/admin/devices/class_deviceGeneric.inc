@@ -272,6 +272,7 @@ class deviceGeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
+          "plRequirements"=> array('ldapSchema' => array('gotoDevice' => '>=2.7')),
           "plCategory"    => array("devices" => array("description"  => _("Devices"),
                                                         "objectClass"  => "gotoDevice")),
           "plProperties" =>
