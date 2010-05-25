@@ -177,6 +177,7 @@ class rSyslogServer extends goService{
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 99,
+          "plRequirements"=> array('ldapSchema' => array('goSyslogServer' => '>=2.7','goLogDBServer' => '>=2.7')),
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 
