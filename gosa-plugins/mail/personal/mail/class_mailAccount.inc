@@ -1421,6 +1421,8 @@ class mailAccount extends plugin
                   "plCategory"    => array("users"),
                   "plOptions"       => array(),
 
+                  "plRequirements"=> array('ldapSchema' => array('gosaMailAccount' => '>=2.7')),    
+    
                   "plProperties"  =>
                   array(
                       array(
