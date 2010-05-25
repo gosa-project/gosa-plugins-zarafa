@@ -1844,6 +1844,7 @@ class phoneAccount extends plugin
 
 
           "plOptions"       => array(),
+          "plRequirements"=> array('ldapSchema' => array('goFonAccount' => '>=2.7')),
 
           "plProvidedAcls"  => array(
             "telephoneNumber"     => _("Telephone number"),
