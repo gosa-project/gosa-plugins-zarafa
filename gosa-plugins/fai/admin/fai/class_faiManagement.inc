@@ -1231,7 +1231,9 @@ class faiManagement extends management
                                 'FAIpartitionDisk' => '>=2.7',
                                 'FAIpartitionEntry' => '>=2.7',
                                 'FAIprofile' => '>=2.7',
-                                'FAIpartitionEntry' => '>=2.7'
+                                'FAIpartitionEntry' => '>=2.7',
+                                'FAIrepository' => '>=2.7',
+                                'FAIrepositoryServer' => '>=2.7'
                         )
                     ),
                   "plProperties" =>
