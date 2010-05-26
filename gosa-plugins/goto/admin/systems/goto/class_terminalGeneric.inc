@@ -675,7 +675,10 @@ class termgeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),
-          "plRequirements"=> array('ldapSchema' => array('gotoTerminal' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('gotoTerminal' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
           "plCategory"    => array("terminal" => array( "description"  => _("Terminal"),
                   "objectClass"  => "gotoTerminal")),
           "plProperties" =>
