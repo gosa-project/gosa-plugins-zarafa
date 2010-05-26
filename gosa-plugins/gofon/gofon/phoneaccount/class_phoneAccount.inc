@@ -1852,7 +1852,10 @@ class phoneAccount extends plugin
 
 
                     "plOptions"       => array(),
-                    "plRequirements"=> array('ldapSchema' => array('goFonAccount' => '>=2.7')),
+                    "plRequirements"=> array(
+                        'ldapSchema' => array('goFonAccount' => '>=2.7'),
+                        'onFailureDisablePlugin' => array(get_class(),'phoneAccount','phoneConferenceManagment','goFonMacro')
+                        ),
 
                     "plProvidedAcls"  => array(
                         "telephoneNumber"     => _("Telephone number"),
