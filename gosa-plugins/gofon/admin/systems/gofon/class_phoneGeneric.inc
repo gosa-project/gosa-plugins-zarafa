@@ -492,7 +492,10 @@ class phoneGeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
-          "plRequirements"=> array('ldapSchema' => array('goFonHardware' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('goFonHardware' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
           "plCategory"    => array("phone" => array("description"  => _("Phone hardware"),
                   "objectClass"  => "goFonHardware")),
           "plProperties" =>
