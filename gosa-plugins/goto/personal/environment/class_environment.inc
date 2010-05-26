@@ -1773,8 +1773,11 @@ class environment extends plugin
                       "groups"),
                   "plOptions"       => array("resolution_hook" => array("type" => "string",
                           "description" => _("Command to extend the list of possible screen resolutions"))),
-        "plRequirements"=> array('gotoEnvironment' => array('FAIclass' => '>=2.7')),
-        "plProperties" => array(
+                  "plRequirements"=> array(
+                      'ldapSchema' => array('gotoEnvironment' => '>=2.7'),
+                      'onFailureDisablePlugin' => array(get_class())
+                      ),
+                  "plProperties" => array(
 
                       array(
                           "name"          => "resolutions",
