@@ -203,7 +203,10 @@ class goImapServer extends goService {
           "plPriority"    => 94,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
-          "plRequirements"=> array('ldapSchema' => array('goImapServer' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('goImapServer' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class(),'mailAccount','mailogroup','mailgroup')
+              ),
 
           "plProvidedAcls"=> array(
 
