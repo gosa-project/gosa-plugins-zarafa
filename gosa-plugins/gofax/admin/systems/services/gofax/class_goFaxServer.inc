@@ -92,7 +92,10 @@ class goFaxServer extends goService {
           "plPriority"    => 99,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
-          "plRequirements"=> array('ldapSchema' => array('goFaxServer' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('goFaxServer' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class(),'faxreport','gofaxAccount')
+              ),
 
           "plProvidedAcls"=> array(
             "goFaxAdmin"     => _("Login name"),
