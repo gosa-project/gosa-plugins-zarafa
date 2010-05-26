@@ -1373,20 +1373,23 @@ class appgroup extends plugin
    */ 
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Applications"),
-          "plDescription" => _("Group applications"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 7,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("groups"),
-          "plProvidedAcls"=> array(
-          "plRequirements"=> array('ldapSchema' => array('gotoSubmenuEntry'=>'>=2.7','gotoMenuEntry' => '>=2.7')),
-            "gosaMemberApplication"     => _("Application"),
-            "FAIrelease"                => _("Release"),
-            "gosaApplicationParameter"  => _("Application parameter"))
-          ));
+      return (array(
+                  "plShortName"   => _("Applications"),
+                  "plDescription" => _("Group applications"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 7,
+                  "plSection"     => array("administration"),
+                  "plCategory"    => array("groups"),
+                  "plRequirements"=> array(
+                      'ldapSchema' => array('gotoSubmenuEntry'=>'>=2.7','gotoMenuEntry' => '>=2.7'),
+                      'onFailureDisablePlugin' => array(get_class())
+                      ),
+                  "plProvidedAcls"=> array(
+                      "gosaMemberApplication"     => _("Application"),
+                      "FAIrelease"                => _("Release"),
+                      "gosaApplicationParameter"  => _("Application parameter"))
+                  ));
   }
 
 
