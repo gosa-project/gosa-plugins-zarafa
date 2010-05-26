@@ -209,7 +209,10 @@ class intranetAccount extends plugin
           "plCategory"    => array("users"),
           "plOptions"       => array(),
 
-          "plRequirements"=> array('ldapSchema' => array('gosaIntranetAccount' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('gosaIntranetAccount' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plDescription"       => _("Intranet account settings")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"        => TRUE,
