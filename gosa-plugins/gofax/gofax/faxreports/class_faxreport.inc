@@ -434,8 +434,8 @@ class viewFaxEntries extends plugin {
             "plShortName"     => _("View fax reports"),
             "plDescription"   => _("View fax reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
             "plRequirements"=> array(
-                'ldapSchema' => array('goFaxAccount' => '>=2.7'),
-                'onFailureDisablePlugin' => array(get_class(),'gofaxAccount','goFaxServer')
+                'ldapSchema' => array('goFaxAccount' => '>=1.0.4'),
+                'onFailureDisablePlugin' => array('faxreport','gofaxAccount','goFaxServer')
                 ),
             "plSelfModify"    => TRUE,
             "plDepends"       => array(),
