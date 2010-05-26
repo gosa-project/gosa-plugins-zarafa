@@ -1231,7 +1231,8 @@ class faiManagement extends management
                           'faiTemplateEntry',
                           'faiTemplate',
                           'faiVariableEntry',
-                          'faiVariable'
+                          'faiVariable',
+                          'servrepository'
                           ),
                       'ldapSchema' => array(
                           'FAIclass' => '>=2.7',
