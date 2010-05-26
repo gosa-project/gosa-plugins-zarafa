@@ -586,7 +586,10 @@ class application extends plugin
                   "plSection"     => array("administration"),
                   "plCategory"    => array("application" => array("description"  => _("Application"),
                           "objectClass"  => "gosaApplication")),
-                    "plRequirements"=> array('ldapSchema' => array('gosaApplication' => '>=2.7')),
+                  "plRequirements"=> array(
+                      'ldapSchema' => array('gosaApplication' => '>=2.7'),
+                      'onFailureDisablePlugin' => array(get_class(),'applicationManagement','appgroup')
+                      ),
                   "plProperties" =>
                   array(
                       array(
