@@ -386,7 +386,10 @@ class goKrbServer extends goService{
           "plPriority"    => 95,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
-          "plRequirements"=> array('ldapSchema' => array('goKrbServer' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('goKrbServer' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plProvidedAcls"=> array(
             "goKrbPolicy"   => _("Policies"),
