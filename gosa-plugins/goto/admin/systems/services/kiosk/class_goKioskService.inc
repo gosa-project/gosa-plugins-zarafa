@@ -280,7 +280,10 @@ class goKioskService extends goService{
           "plPriority"    => 100,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
-          "plRequirements"=> array('ldapSchema' => array('goEnvironmentServer' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('goEnvironmentServer' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plProvidedAcls"=> array()
           ));
