@@ -685,7 +685,10 @@ class workgeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
-          "plRequirements"=> array('ldapSchema' => array('gotoWorkstation' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('gotoWorkstation' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
           "plCategory"    => array("workstation" => array("description"  => _("Workstation"),
                                                           "objectClass"  => "gotoWorkstation")),
           "plProperties" =>
