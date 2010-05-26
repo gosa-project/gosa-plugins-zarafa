@@ -816,7 +816,10 @@ class conference extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
-          "plRequirements"=> array('ldapSchema' => array('goFonConference' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('goFonConference' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class(),'phoneAccount','phoneConferenceManagment','goFonMacro')
+              ),
           "plCategory"    => array("gofonconference" => array("description" => _("GOfon conference"),
                   "objectClass" => "goFonConference")),
 
