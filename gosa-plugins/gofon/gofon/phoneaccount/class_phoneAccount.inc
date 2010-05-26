@@ -1613,114 +1613,122 @@ class phoneAccount extends plugin
     {
         if(!$this->initially_was_account) return;
 
-        if(count($this->goFonHomeServers) && !empty($this->init_HomeServer) && is_callable("mysql_pconnect")){
-
-            // Get Configuration for initial Mysql database Server
-            $a_SETUP = $this->goFonHomeServers[$this->init_HomeServer];
-            $s_parameter  ="";
-
-            /* Check table definitions
-             */
-            if(!phoneAccount::checkRealtimeTables($a_SETUP)){
-                msg_dialog::display(_("Warning"),
-                        sprintf(_("GOsa identified problems with your MySQL table definition!")),
-                        WARNING_DIALOG);
-            }
-
-            // Connect to DB server
-            $r_con =  @mysql_pconnect($a_SETUP['SERVER'],$a_SETUP['LOGIN'],$a_SETUP['PASSWORD']);
-
-            // Check if we are  connected correctly
-            if(!$r_con){
-                msg_dialog::display(_("Error"), msgPool::dbconnect("GOfon",@mysql_error()), ERROR_DIALOG);
-                new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
-                return false;
-            }
-
-            // Select database for Extensions
-            $db  =  @mysql_select_db($a_SETUP['DB'],$r_con);
-
-            // Test if we have the database selected correctly
-            if(!$db){
-                msg_dialog::display(_("Error"), msgPool::dbselect("GOfon", @mysql_error()), ERROR_DIALOG);
-                new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
-                return false;
-            }
-
-            $SQL="";
-            $SQL[]= "SET @@sql_mode = STRICT_ALL_TABLES;";
-
-            $first_num = false;
-            // Delete old entries
-            foreach($this->a_old_telenums as $s_telenums){
-                if(!$first_num){
-                    $first_num = $s_telenums;
-                }
-                $SQL[] = "DELETE FROM ".$a_SETUP['EXT_TABLE']." WHERE exten='".$s_telenums."';\n";
-            }
-
-
-            $query  = "SELECT id,name,callerid FROM ".$a_SETUP['SIP_TABLE']." WHERE name='".$this->uid."';";
-            $rid    = mysql_query($query,$r_con);
-            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-            $result = mysql_fetch_assoc($rid);
-            $callerid = $first_num;
-            if($result){
-                $callerid = $result['callerid'];
-            }
-
-            /* Set mode to strict
-               Strict disallows the addition of entries that do not match the targets field length.
-             */
-            $SQL[] = "DELETE FROM ".$a_SETUP['VOICE_TABLE']." WHERE customer_id='".$callerid."';";
-            $SQL[] = "DELETE FROM ".$a_SETUP['EXT_TABLE']." WHERE exten='".$this->uid."';\n";
-            $SQL[] = "DELETE FROM ".$a_SETUP['SIP_TABLE']." WHERE name='".$this->uid."';\n";
-
-            /* Start transaction, to be able to rollback
-             */
-            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Removing entry from server---</b>","");
-
-            mysql_query("begin;",$r_con);
-            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>begin;</b>","<i>Starting transaction!</i>");
-
-            foreach($SQL as $query){
-                @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "");
-
-                if(!mysql_query($query,$r_con)){
-                    $err = mysql_error($r_con);
-                    @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"\n".$err, "<b>FAILED</b>");
-                    msg_dialog::display(_("Error"),
-                            msgPool::mysqlerror($err,__CLASS__)."&nbsp;".
-                            "\n<p>"._("Please activate debugging for details!")."</p>",
-                            ERROR_DIALOG);
-
-                    mysql_query("rollback;",$r_con);
-                    @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>rollback;</b>", "<b>ERROR</b> Rollback transaction!");
-                    @mysql_close($r_con);
-                    return(false);
-                }
-            }
-
-            /* Let changes get active, everything was fine;
-             */
-            mysql_query("commit;",$r_con);
-            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>commit;</b>", "");
-            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Transaction sucessful!---</b>", "");
-
-        }else{
+        // Check for MySQL extension
+        if(!is_callable("mysql_pconnect")){
             msg_dialog::display(_("Configuration error"), msgPool::missingext("php-mysql"), WARNING_DIALOG);
+            return(FALSE);
+        }
+
+        // Check if we've at least one Home-Server
+        if(!count($this->goFonHomeServers)){
+            msg_dialog::display(_("Configuration error"), msgPool::noserver(_("GOfon")), WARNING_DIALOG);
             return false;
         }
+
+        if(empty($this->init_HomeServer)) return;
+
+
+        // -------- REMOVE from MySQL
+
+        // Get Configuration for initial Mysql database Server
+        $a_SETUP = $this->goFonHomeServers[$this->init_HomeServer];
+        $s_parameter  ="";
+
+        /* Check table definitions
+         */
+        if(!phoneAccount::checkRealtimeTables($a_SETUP)){
+            msg_dialog::display(_("Warning"),
+                    sprintf(_("GOsa identified problems with your MySQL table definition!")),
+                    WARNING_DIALOG);
+        }
+
+        // Connect to DB server
+        $r_con =  @mysql_pconnect($a_SETUP['SERVER'],$a_SETUP['LOGIN'],$a_SETUP['PASSWORD']);
+
+        // Check if we are  connected correctly
+        if(!$r_con){
+            msg_dialog::display(_("Error"), msgPool::dbconnect("GOfon",@mysql_error()), ERROR_DIALOG);
+            new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
+            return false;
+        }
+
+        // Select database for Extensions
+        $db  =  @mysql_select_db($a_SETUP['DB'],$r_con);
+
+        // Test if we have the database selected correctly
+        if(!$db){
+            msg_dialog::display(_("Error"), msgPool::dbselect("GOfon", @mysql_error()), ERROR_DIALOG);
+            new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
+            return false;
+        }
+
+        $SQL="";
+        $SQL[]= "SET @@sql_mode = STRICT_ALL_TABLES;";
+
+        $first_num = false;
+        // Delete old entries
+        foreach($this->a_old_telenums as $s_telenums){
+            if(!$first_num){
+                $first_num = $s_telenums;
+            }
+            $SQL[] = "DELETE FROM ".$a_SETUP['EXT_TABLE']." WHERE exten='".$s_telenums."';\n";
+        }
+
+
+        $query  = "SELECT id,name,callerid FROM ".$a_SETUP['SIP_TABLE']." WHERE name='".$this->uid."';";
+        $rid    = mysql_query($query,$r_con);
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+        $result = mysql_fetch_assoc($rid);
+        $callerid = $first_num;
+        if($result){
+            $callerid = $result['callerid'];
+        }
+
+        /* Set mode to strict
+           Strict disallows the addition of entries that do not match the targets field length.
+         */
+        $SQL[] = "DELETE FROM ".$a_SETUP['VOICE_TABLE']." WHERE customer_id='".$callerid."';";
+        $SQL[] = "DELETE FROM ".$a_SETUP['EXT_TABLE']." WHERE exten='".$this->uid."';\n";
+        $SQL[] = "DELETE FROM ".$a_SETUP['SIP_TABLE']." WHERE name='".$this->uid."';\n";
+
+        /* Start transaction, to be able to rollback
+         */
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Removing entry from server---</b>","");
+
+        mysql_query("begin;",$r_con);
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>begin;</b>","<i>Starting transaction!</i>");
+
+        foreach($SQL as $query){
+            @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>".$query."</b>", "");
+
+            if(!mysql_query($query,$r_con)){
+                $err = mysql_error($r_con);
+                @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"\n".$err, "<b>FAILED</b>");
+                msg_dialog::display(_("Error"),
+                        msgPool::mysqlerror($err,__CLASS__)."&nbsp;".
+                        "\n<p>"._("Please activate debugging for details!")."</p>",
+                        ERROR_DIALOG);
+
+                mysql_query("rollback;",$r_con);
+                @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>rollback;</b>", "<b>ERROR</b> Rollback transaction!");
+                @mysql_close($r_con);
+                return(false);
+            }
+        }
+
+        /* Let changes get active, everything was fine;
+         */
+        mysql_query("commit;",$r_con);
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>commit;</b>", "");
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,"<b>---Transaction sucessful!---</b>", "");
+
+
+        // -------- REMOVE from LDAP
 
         /* unset macro attr, it will cause an error */
         $tmp = array_flip($this->attributes);
         unset($tmp['macro']);
         $this->attributes=array_flip($tmp);
-
-        /* Cancel if there's nothing to do here */
-        if (!$this->initially_was_account){
-            return;
-        }
 
         plugin::remove_from_parent();
 
