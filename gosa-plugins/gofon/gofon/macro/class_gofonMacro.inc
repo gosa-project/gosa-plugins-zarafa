@@ -578,7 +578,10 @@ class macro extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
-          "plRequirements"=> array('ldapSchema' => array('goFonMacro' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('goFonMacro' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class(),'phoneAccount','phoneConferenceManagment','goFonMacro')
+              ),
           "plCategory"    => array("gofonmacro" => array("description" => _("GOfon macro"),
               "objectClass" => "goFonMacro")),
 
