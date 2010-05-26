@@ -166,7 +166,10 @@ class webdavAccount extends plugin
           "plDescription"   => _("WebDAV account")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plRequirements"=> array('ldapSchema' => array('gosaWebdavAccount' => '>=2.7')),
+          "plRequirements"=> array(
+              'ldapSchema' => array('gosaWebdavAccount' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
           "plPriority"      => 23,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
