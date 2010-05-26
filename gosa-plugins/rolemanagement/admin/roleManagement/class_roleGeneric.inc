@@ -442,7 +442,10 @@ class roleGeneric extends plugin {
                   "plDepends"     => array(),
                   "plPriority"    => 1,
                   "plSection"     => array("administration"),
-                  "plRequirements"=> array('ldapSchema' => array('gosaRole' => '>=2.7')),
+                  "plRequirements"=> array(
+                      'ldapSchema' => array('gosaRole' => '>=2.7'),
+                      'onFailureDisablePlugin' => array(get_class(), 'roleManagement')
+                      ),
                   "plCategory"    => array("roles" => array("description"  => _("Roles"),
                           "objectClass"  => "organizationalRole")),
 
