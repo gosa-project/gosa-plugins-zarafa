@@ -524,6 +524,10 @@ class kolabAccount extends plugin
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
           "plOptions"       => array(),
+          "plRequirements"=> array(
+              'ldapSchema' => array('kolabInetOrgPerson' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plProvidedAcls"  => array(
             "kolabFreeBusyFuture"   => _("Free busy future"),
