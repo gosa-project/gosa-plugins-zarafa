@@ -375,7 +375,9 @@ class netatalk extends plugin {
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
           "plOptions"         => array(),
-
+          "plRequirements"=> array(
+              'ldapSchema' => array('apple-user' => ''),
+              'onFailureDisablePlugin' => array(get_class())),
           "plProvidedAcls"  => array(
             "netatalkUserHomepath"   =>  _("User home path"),
             "netatalkShare"          =>  _("Share"))
