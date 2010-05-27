@@ -335,6 +335,10 @@ class proxyAccount extends plugin
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
           "plOptions"       => array(),
+          "plRequirements"=> array(
+              'ldapSchema' => array('gosaProxyAccount' => '>=2.7'),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plProvidedAcls"  => array(
             "gosaProxyFlagF"       => _("Filter unwanted content"), 
