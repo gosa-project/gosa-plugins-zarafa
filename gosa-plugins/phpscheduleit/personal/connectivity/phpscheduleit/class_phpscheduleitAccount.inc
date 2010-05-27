@@ -169,6 +169,10 @@ class phpscheduleitAccount extends plugin
           "plPriority"      => 29,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
+          "plRequirements"=> array(
+              'ldapSchema' => array('phpscheduleitAccount' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plOptions"       => array(),
 
