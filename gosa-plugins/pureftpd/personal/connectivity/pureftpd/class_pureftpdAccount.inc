@@ -260,6 +260,10 @@ class pureftpdAccount extends plugin
           "plPriority"      => 22,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
+          "plRequirements"=> array(
+              'ldapSchema' => array('PureFTPdUser' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
