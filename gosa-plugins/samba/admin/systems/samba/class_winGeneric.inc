@@ -294,6 +294,21 @@ class wingeneric extends plugin
                   "plSection"     => array("administration"),
                   "plCategory"    => array("winworkstation" => array("description"  => _("Win workstation"),
                           "objectClass"  => "gotoWorkstation")),
+
+                  "plRequirements"=> array(
+                      'ldapSchema' => array(
+                          'posixAccount' => '',
+                          'organizationalPerson' => '',
+                          'person' => '',
+                          'inetOrgPerson' => '',
+                          'gosaAccount' => '>=2.7',
+                          'shadowAccount' => '',
+                          'sambaSamAccount' => ''
+                          ),
+                      'onFailureDisablePlugin' => array(get_class())
+                      ),
+
+
                   "plProperties" =>
                   array(
                       array(
