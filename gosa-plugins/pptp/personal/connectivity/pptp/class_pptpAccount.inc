@@ -179,6 +179,10 @@ class pptpAccount extends plugin
           "plPriority"      => 28,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
+          "plRequirements"=> array(
+              'ldapSchema' => array('pptpServerAccount' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array()
