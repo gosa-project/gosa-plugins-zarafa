@@ -277,6 +277,10 @@ class nagiosAccount extends plugin
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
           "plOptions"       => array(),
+          "plRequirements"=> array(
+              'ldapSchema' => array('nagiosContact'=>'','nagiosAuth' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plProvidedAcls"  => array(
 
