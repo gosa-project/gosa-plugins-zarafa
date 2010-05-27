@@ -37,9 +37,10 @@ class connectivity extends plugin
   
     /* Load accounts */
     foreach ($config->data['TABS']['CONNECTIVITY'] as $plug){
-      if (!plugin_available($plug['CLASS'])) {
+      if (!class_available($plug['CLASS']) || !plugin_available($plug['CLASS'])) {
       	continue;
       }
+
       $name= $plug['CLASS'];
       $this->plugin_name[]= $name;
       $this->plugin[$name]= new $name($config, $dn,$parent);
