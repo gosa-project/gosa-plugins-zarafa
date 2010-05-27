@@ -463,6 +463,11 @@ class scalixAccount extends plugin
           "plCategory"        => array("users"),
           "plOptions"         => array(),
 
+          "plRequirements"=> array(
+              'ldapSchema' => array('scalixUserClass' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
+
           "plProvidedAcls"  => array(
 
             "scalixMailnode"            => _("Scalix Mail node"),
