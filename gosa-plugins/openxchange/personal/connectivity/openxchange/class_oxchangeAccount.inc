@@ -443,6 +443,10 @@ class oxchangeAccount extends plugin
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
           "plOptions"       => array(),
+          "plRequirements"=> array(
+              'ldapSchema' => array('OXUserObject' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plProvidedAcls"  => array(
             "OXAppointmentDays" => _("OXAppointmentDays"),
