@@ -165,6 +165,10 @@ class phpgwAccount extends plugin
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
           "plOptions"       => array(),
+          "plRequirements"=> array(
+              'ldapSchema' => array('phpgwAccount' => ''),
+              'onFailureDisablePlugin' => array(get_class())
+              ),
 
           "plProvidedAcls"  => array()
           ));
