@@ -253,6 +253,26 @@ class wingeneric extends plugin
       $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
     }
 
+    $curOcs = $this->attrs['objectClass'];                                                  
+    $this->cleanup();                                                                       
+                                                                                            
+    // Prepare list of object classes                                                       
+    $ocs = array();                                                                         
+    if(!empty($this->netConfigDNS->macAddress)){                                            
+        $ocs [] = 'ieee802Device';                                                          
+    }else{                                                                                  
+        $curOcs = array_remove_entries(array('ieee802Device'), $curOcs);                    
+        $this->attrs['macAddress'] = array();                                               
+    }                                                                                       
+    if(!empty($this->netConfigDNS->ipHostNumber)){                                          
+        $ocs [] = 'ipHost';                                                                 
+    }else{                                                                                  
+        $curOcs = array_remove_entries(array('ipHost'), $curOcs);
+        $this->attrs['ipHostNumber'] = array();
+    }
+
+    $this->attrs['objectClass']=$curOcs;
+
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     if ($this->orig_dn == 'new'){
@@ -268,17 +288,17 @@ class wingeneric extends plugin
       }
 
       $ldap->cd($this->dn);
-      $this->cleanup();
       $ldap->modify ($this->attrs); 
       new log("modify","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify");
     }
-
-    $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->uid);
-    $this->netConfigDNS->save();
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }
+
+    $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->uid);
+    $this->netConfigDNS->objectclasses=$ocs;
+    $this->netConfigDNS->save();
 
     /* Optionally execute a command after we're done */
     $this->postcreate();
