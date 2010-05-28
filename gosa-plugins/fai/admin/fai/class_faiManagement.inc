@@ -23,7 +23,7 @@
 class faiManagement extends management
 {
   var $plHeadline     = "Software deployment";
-  var $plDescription  = "Manage software packages and deployment reciepes";
+  var $plDescription  = "Manage software packages and deployment recipes";
   var $plIcon  = "plugins/fai/images/plugin.png";
 
   // Tab definition 
