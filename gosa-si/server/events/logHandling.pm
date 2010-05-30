@@ -307,7 +307,7 @@ sub get_log_file_by_date_and_mac {
     
     # read log file
     my $log_content;
-    open(my $FILE, "<", "$act_log_file");
+    open(my $FILE, "<$act_log_file");
     my @log_lines = <$FILE>;
     close($FILE);
 
