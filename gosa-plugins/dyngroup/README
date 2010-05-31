@@ -33,7 +33,7 @@
   the definition of your database:
 
     overlay dynlist
-    dynlist-attrset gosaGroupOfURLs labeledURI
+    dynlist-attrset labeledUriObject labeledURI
 
   See http://www.openldap.org/doc/admin24/overlays.html#Dynamic%20Lists to have
   more informations on dynamic list overlay.
