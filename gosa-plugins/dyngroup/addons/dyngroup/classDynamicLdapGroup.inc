@@ -124,6 +124,16 @@ class DynamicLdapGroup extends plugin
             // A filter is required
             if(empty($entry['filter'])){
                 $messages[] = msgPool::required(_("Filter")." {$nr}");
+            }else{
+
+                // Check if filter is valid
+                $ldap = $this->config->get_ldap_link();
+                $ldap->cd($this->config->current['BASE']);
+                $ldap->search($entry['filter']);
+                if(!$ldap->success()){
+                    $messages[] = sprintf(_("The given filter '%s' for entry %s seems to be invalid!"),
+                            bold($entry['filter']), $nr);
+                }
             }
         }
  
@@ -198,7 +208,7 @@ class DynamicLdapGroup extends plugin
                         'base' => 'ldap:///'.$this->dn,
                         'attr' => 'memberUid', 
                         'scope' => 2,
-                        'filter' => 'objectClass=posixGroup');
+                        'filter' => '(objectClass=posixGroup)');
         }
 
         // Remove a labeled Uri and get posts
