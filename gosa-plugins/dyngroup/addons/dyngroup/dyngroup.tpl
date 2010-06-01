@@ -1,10 +1,9 @@
-<h3>{t}Generic{/t}</h3>
-
+<h3>{t}List of dynamic rules{/t}</h3>
 
 <table summary="{t}Labeled uri definitions{/t}" style='width:100%'>
  <tr>
   <td style='width:40%;'>{t}Base{/t}</td>
-  <td></td>
+  <td>{t}Scope{/t}</td>
   <td>{t}Attribute{/t}</td>
   <td style='width:40%;'>{t}Filter{/t}</td>
   <td></td>
@@ -25,7 +24,7 @@
  </tr>
 {/foreach}
  <tr>
-  <td colspan="4"></td>
   <td><button name='addUri'>{msgPool type='addButton'}</button></td>
+  <td colspan="4"></td>
  </tr>
 </table>
