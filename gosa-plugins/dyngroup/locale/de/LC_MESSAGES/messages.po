@@ -1,0 +1,52 @@
+# translation of messages.po to deutsch
+# translation of messages.po to
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+#
+#
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008, 2009.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-28 18:32+0200\n"
+"PO-Revision-Date: 2009-10-05 15:19+0200\n"
+"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"Language-Team: de <kde-i18n-de@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: addons/addons/dyngroup/classDynamicLdapGroup.inc:119
+#: addons/addons/dyngroup/classDynamicLdapGroup.inc:121
+msgid "Dynamic Group"
+msgstr ""
+
+#: addons/addons/dyngroup/classDynamicLdapGroup.inc:204
+#, fuzzy
+msgid "dyngroup"
+msgstr "Gemeinsame Gruppe"
+
+#: addons/addons/dyngroup/classDynamicLdapGroup.inc:205
+#, fuzzy
+msgid "Dynamic group setting"
+msgstr "Allgemeine Gruppeneinstellungen"
+
+#: addons/addons/dyngroup/classDynamicLdapGroup.inc:212
+#, fuzzy
+msgid "Dynamic Groups"
+msgstr "Gruppen"
+
+#: addons/addons/dyngroup/classDynamicLdapGroup.inc:217
+msgid "labeledURI"
+msgstr ""
+
+#: addons/addons/dyngroup/dyngroup.tpl:4
+msgid "Generic"
+msgstr "Allgemein"
