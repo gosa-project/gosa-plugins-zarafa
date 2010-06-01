@@ -150,9 +150,9 @@ class DynamicLdapGroup extends plugin
         //
         if (!$this->is_account)
         {
-            return $this->show_disable_header(msgPool::addFeaturesButton(_("Dynamic Group")), msgPool::featuresDisabled(_("Dynamic Group")));
+            return $this->show_disable_header(msgPool::addFeaturesButton(_("Dynamic object")), msgPool::featuresDisabled(_("Dynamic object")));
         }
-        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("Dynamic Group")), msgPool::featuresEnabled(_("Dynamic Group")));
+        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("Dynamic object")), msgPool::featuresEnabled(_("Dynamic object")));
 
         // Display values.
         //
@@ -335,8 +335,8 @@ class DynamicLdapGroup extends plugin
     public static function plInfo()
     {
         return Array(
-                "plShortName"   => _("dyngroup"),
-                "plDescription" => _("Dynamic group setting"),
+                "plShortName"   => _("Dynamic object"),
+                "plDescription" => _("Dynamic object"),
                 "plSelfModify"  => TRUE,
                 "plDepends"     => Array(),
                 "plPriority"    => 1,
