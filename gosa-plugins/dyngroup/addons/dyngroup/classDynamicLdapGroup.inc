@@ -240,7 +240,9 @@ class DynamicLdapGroup extends plugin
         $this->labeledURI = array();
         foreach($this->labeledURIparsed as $entry){
             $scope = $this->scopes[$entry['scope']];
-            $this->labeledURI[] = "{$entry['base']}?{$entry['attr']}?{$scope}?{$entry['filter']}";
+            $filter = $entry['filter'];
+            $filter = '('.trim($filter, '() ').')';
+            $this->labeledURI[] = "{$entry['base']}?{$entry['attr']}?{$scope}?{$filter}";
         }
         $this->labeledURI = array_unique($this->labeledURI);
 
