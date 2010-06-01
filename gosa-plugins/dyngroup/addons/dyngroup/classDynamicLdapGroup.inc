@@ -231,6 +231,7 @@ class DynamicLdapGroup extends plugin
             $scope = $this->scopes[$entry['scope']];
             $this->labeledURI[] = "{$entry['base']}?{$entry['attr']}?{$scope}?{$entry['filter']}";
         }
+        $this->labeledURI = array_unique($this->labeledURI);
 
         parent::save();
         $this->cleanup();
