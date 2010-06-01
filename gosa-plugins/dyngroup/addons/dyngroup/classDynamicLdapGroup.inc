@@ -95,7 +95,36 @@ class DynamicLdapGroup extends plugin
 
     public function check ()
     {
-        return Array();
+        $messages = plugin::check();
+        
+        // At least one entry is required. 
+        if(!count($this->labeledURIparsed)){
+            $messages[] = msgPool::required(_("Labeled Uri"));
+        }  
+
+        // Check entries
+        foreach($this->labeledURIparsed as $key => $entry){
+            $nr = $key +1;
+
+            // A base is required
+            if(empty($entry['base'])){
+                $messages[] = msgPool::required(_("Base")." {$nr}");
+            }
+
+            // Check for invalid attributes
+            if(empty($entry['attr'])){
+                $messages[] = msgPool::required(_("Attribute")." {$nr}");
+            }elseif(in_array(strtolower($entry['attr']), array('objectclass'))){
+                $messages[] = msgPool::reserved(_("Attribute")." {$nr}");
+            }
+
+            // A filter is required
+            if(empty($entry['filter'])){
+                $messages[] = msgPool::required(_("Filter")." {$nr}");
+            }
+        }
+ 
+        return($messages);
     }
 
 

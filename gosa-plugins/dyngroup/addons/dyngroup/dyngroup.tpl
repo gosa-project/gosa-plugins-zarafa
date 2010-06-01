@@ -12,10 +12,10 @@
 {foreach item=item key=key from=$labeledURIparsed}
  <tr>
   <td>
-    <input type='text' value='{$item.base}'>
+    <input type='text' value='{$item.base}' name='base_{$key}'>
   </td>
   <td>
-    <select name='scope' size='1'>
+    <select name='scope_{$key}' size='1'>
      {html_options options=$scopes selected=$item.scope}
     </select>
   </td>
