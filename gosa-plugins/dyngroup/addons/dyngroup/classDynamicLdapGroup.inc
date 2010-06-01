@@ -48,6 +48,8 @@ class DynamicLdapGroup extends plugin
     public $labeledURI = array();
     public $labeledURIparsed = array();
     public $labeledURIdefault = 'ldap:///dc=example,dc=com?memberUid?sub?(objectClass=posixGroup)';
+    
+    public $scopes = array('base','one','sub');
 
     /**
      * Store values of memberUrl.
@@ -156,7 +158,7 @@ class DynamicLdapGroup extends plugin
         //
         $smarty = get_smarty();
         $smarty->assign('labeledURIparsed', $this->labeledURIparsed);
-        $smarty->assign('scopes', array('base','one','sub'));
+        $smarty->assign('scopes', $this->scopes);
         $display .= $smarty->fetch(get_template_path('dyngroup.tpl', TRUE, dirname(__FILE__)));
         return $display;
     }
@@ -226,7 +228,8 @@ class DynamicLdapGroup extends plugin
         // Build up labeledUri entries
         $this->labeledURI = array();
         foreach($this->labeledURIparsed as $entry){
-            $this->labeledURI[] = "{$entry['base']}?{$entry['attr']}?{$entry['scope']}?{$entry['filter']}";
+            $scope = $this->scopes[$entry['scope']];
+            $this->labeledURI[] = "{$entry['base']}?{$entry['attr']}?{$scope}?{$entry['filter']}";
         }
 
         parent::save();
@@ -234,7 +237,6 @@ class DynamicLdapGroup extends plugin
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->dn);
         $ldap->modify($this->attrs);
-
         if(!$ldap->success()){
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
         }
