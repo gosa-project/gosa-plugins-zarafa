@@ -45,7 +45,9 @@ class DynamicLdapGroup extends plugin
      * array of this plugin.
      * @var string
      */
-    public $labeledURI = 'ldap:///dc=example,dc=com?memberUid?sub?(objectClass=posixGroup)';
+    public $labeledURI = array();
+    public $labeledURIparsed = array();
+    public $labeledURIdefault = 'ldap:///dc=example,dc=com?memberUid?sub?(objectClass=posixGroup)';
 
     /**
      * Store values of memberUrl.
@@ -64,14 +66,32 @@ class DynamicLdapGroup extends plugin
     {
         parent::__construct($config, $dn);
 
-        // Preset the labeled URI with a valid value.
+        // Load labeledURI values.
+        $this->labeledURI = array();
         if(!$this->is_account){
-            $attr_label = $this->attributes[0];
-            $this->$attr_label = str_replace('dc=example,dc=com', LDAP::fix($this->dn), $this->$attr_label);
+            $this->labeledURI[] = str_replace('dc=example,dc=com', LDAP::fix($this->dn), $this->labeledURIdefault);
+        }elseif(isset($this->attrs['labeledURI'])){
+            for($i =0; $i < $this->attrs['labeledURI']['count']; $i++) {
+                $this->labeledURI[] = $this->attrs['labeledURI'][$i];
+            }
         }
 
+        // Parse labeledURI entries
+        $this->labeledURIparsed = array();
+        foreach($this->labeledURI as $entry){
+            list($base,$attr,$scope,$filter) = preg_split("/\?/",$entry); 
+            
+            // Ignore entries that do not have a valid scope value (one,base,sub)
+            if(!in_array($scope,array('base','one','sub'))) continue;
+
+            // Append parsed uri
+            $this->labeledURIparsed[] = array('base' => $base, 'attr' => $attr, 'scope' => $scope,'filter' => $filter);
+        }
+   
+        // Save dn, to be able the check for object movements - put this in plugin::move 
         $this->orig_dn = $this->dn;
     }
+
 
     public function check ()
     {
@@ -103,17 +123,11 @@ class DynamicLdapGroup extends plugin
         }
         $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("Dynamic Group")), msgPool::featuresEnabled(_("Dynamic Group")));
 
-        //
-        // Now, we search for current attributes, and display them.
-        //
-        $attr_label = $this->attributes[0];
-        $attr_value = $this->$attr_label;
-
         // Display values.
         //
         $smarty = get_smarty();
-        $smarty->assign('memberURLAttributeLabel', $attr_label);
-        $smarty->assign('memberURLAttributeValue', $attr_value);
+        $smarty->assign('labeledURIparsed', $this->labeledURIparsed);
+        $smarty->assign('scopes', array('base','one','sub'));
         $display .= $smarty->fetch(get_template_path('dyngroup.tpl', TRUE, dirname(__FILE__)));
         return $display;
     }
@@ -144,6 +158,31 @@ class DynamicLdapGroup extends plugin
     public function save_object ()
     {
         parent::save_object();
+
+        // Add a new labeled Uri
+        if(isset($_POST['addUri'])){
+            $this->labeledURIparsed[] = 
+                array(
+                        'base' => 'ldap:///'.$this->dn,
+                        'attr' => 'memberUid', 
+                        'scope' => 'sub',
+                        'filter' => 'objectClass=posixGroup');
+        }
+
+        // Remove a labeled Uri and get posts
+        foreach($this->labeledURIparsed as $key => $data){
+            foreach(array('scope','attr','filter','base') as $attr){
+                if(isset($_POST[$attr.'_'.$key])){
+                    $this->labeledURIparsed[$key][$attr] = get_post($attr.'_'.$key);
+                }
+            }
+        
+            // Remove labeled uri if requested
+            if(isset($_POST['delUri_'.$key])){
+                unset($this->labeledURIparsed[$key]);
+            }
+        }
+        $this->labeledURIparsed = array_values($this->labeledURIparsed);
     }
 
 
@@ -155,11 +194,18 @@ class DynamicLdapGroup extends plugin
      */
     public function save ()
     {
+        // Build up labeledUri entries
+        $this->labeledURI = array();
+        foreach($this->labeledURIparsed as $entry){
+            $this->labeledURI[] = "{$entry['base']}?{$entry['attr']}?{$entry['scope']}?{$entry['filter']}";
+        }
+
         parent::save();
         $this->cleanup();
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->dn);
         $ldap->modify($this->attrs);
+
         if(!$ldap->success()){
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
         }
