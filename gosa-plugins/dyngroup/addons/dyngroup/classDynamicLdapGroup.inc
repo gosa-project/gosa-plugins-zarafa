@@ -74,7 +74,7 @@ class DynamicLdapGroup extends group
   {
     parent::__construct($config, $dn);
     $attr_label = $this->attributes[0];
-    $this->$attr_label = str_replace('dc=example,dc=com', $this->dn, $this->$attr_label);
+    $this->$attr_label = str_replace('dc=example,dc=com', LDAP::fix($this->dn), $this->$attr_label);
   }
 
   /**
@@ -207,12 +207,7 @@ class DynamicLdapGroup extends group
         "plDepends"     => Array(),
         "plPriority"    => 1,
         "plSection"     => Array("addon"),
-        "plCategory"    => Array(
-            "groups"  => Array(
-                "description" => _("Dynamic Groups"),
-                "objectClass" => "labeledURIObject"
-              )
-          ),
+        "plCategory"    => Array("groups", "department", "ogroups"),
         "plProvidedAcls" => array(
             'labeledURI' =>  _('labeledURI'),
           )
