@@ -87,6 +87,7 @@ class DynamicLdapGroup extends plugin
             if(!in_array($scope,array('base','one','sub'))) continue;
 
             // Append parsed uri
+            $scope = array_search($scope,$this->scopes);
             $this->labeledURIparsed[] = array('base' => $base, 'attr' => $attr, 'scope' => $scope,'filter' => $filter);
         }
    
@@ -196,7 +197,7 @@ class DynamicLdapGroup extends plugin
                 array(
                         'base' => 'ldap:///'.$this->dn,
                         'attr' => 'memberUid', 
-                        'scope' => 'sub',
+                        'scope' => 2,
                         'filter' => 'objectClass=posixGroup');
         }
 
