@@ -923,6 +923,7 @@ class phonequeue extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("ogroups"),
           "plRequirements"=> array(
+              'activePlugin' => 'phoneAccount',
               'ldapSchema' => array('goFonQueue' => '>=2.7'),
               'onFailureDisablePlugin' => array(get_class())
               ),
