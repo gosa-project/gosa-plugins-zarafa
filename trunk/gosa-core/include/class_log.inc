@@ -163,7 +163,8 @@ class log {
       $ui = get_userinfo();
       if (isset($config->current['HONOURUNITTAGS']) &&
                 preg_match('/true/i', $config->current['HONOURUNITTAGS']) &&
-                $ui->gosaUnitTag != '') { 
+                $ui->gosaUnitTag != '' &&
+                !isset($config->data['SERVERS']['LOGGING'][$server_name]['UNITTAG'])) { 
         $ldap = $this->config->get_ldap_link() ;
         $ldap->cd($this->config->current['BASE']);
         $ldap->search("(&(&(objectClass=gosaLogServer)(gosaUnitTag=$ui->gosaUnitTag)(cn=$server_name)))");
@@ -174,6 +175,11 @@ class log {
           unset($config->data['SERVERS']['LOGGING'][$server_name]);  
           $this->config = $config;
           continue;
+        } else {
+          /* Add gosaUnitTag to config for future reference
+           */
+          $config->data['SERVERS']['LOGGING'][$server_name]['UNITTAG'] = $ui->gosaUnitTag;
+          $this->config = $config;
         }
       }
 
