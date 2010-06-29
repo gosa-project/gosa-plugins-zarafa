@@ -157,6 +157,26 @@ class log {
 
       $error = "";
    
+      /* Check GosaUnitTag
+       */
+      global $config;
+      $ui = get_userinfo();
+      if (isset($config->current['HONOURUNITTAGS']) &&
+                preg_match('/true/i', $config->current['HONOURUNITTAGS']) &&
+                $ui->gosaUnitTag != '') { 
+        $ldap = $this->config->get_ldap_link() ;
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->search("(&(&(objectClass=gosaLogServer)(gosaUnitTag=$ui->gosaUnitTag)(cn=$server_name)))");
+
+        if (!$ldap->count()){      
+          /* Remove server from config
+           */
+          unset($config->data['SERVERS']['LOGGING'][$server_name]);  
+          $this->config = $config;
+          continue;
+        }
+      }
+
       /* Connect to the database 
        */
       $con = @mysql_pconnect($server_name,$server['USER'],$server['PWD']);
