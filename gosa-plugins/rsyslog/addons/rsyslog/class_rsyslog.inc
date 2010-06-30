@@ -171,11 +171,11 @@ class rsyslog extends plugin
             }
 
             if($link){
-                $query = "SELECT * FROM SystemEvents WHERE Message like '%GOsa%' ORDER BY ID LIMIT 50";
+                $query = "SELECT * FROM SystemEvents WHERE Message like '%GOsa%' ORDER BY ID DESC LIMIT 50";
                 $res = mysql_query($query, $link);
                 if($res){
                     while($attrs = mysql_fetch_assoc($res)){
-                      $result[] = $attrs; 
+                        $result[] = $attrs; 
                     }
                 }
             }
@@ -194,7 +194,8 @@ class rsyslog extends plugin
             ' </channel>';
 
         foreach($result as $entry){
-            $message = $entry['FromHost'].": ".$entry['Message'];
+
+            $message = $entry['ReceivedAt']." - ".htmlentities($entry['FromHost'].": ".$entry['Message']);
             $source .= "
                 <item>
                 <title>{$message}</title>
