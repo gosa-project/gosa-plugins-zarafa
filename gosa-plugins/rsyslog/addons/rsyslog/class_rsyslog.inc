@@ -151,6 +151,63 @@ class rsyslog extends plugin
     return($smarty->fetch(get_template_path("rSyslog.tpl", TRUE)));
   }
 
+
+    function logToRss()
+    {
+        $result = array();
+        foreach($this->servers as $name => $server){
+            $link = @mysql_pconnect($server['cn'], $server['User'], $server['Password']);
+            if ($link === FALSE){
+                new log("debug","gosa_logging","dbconnect",array(),@mysql_error());
+                $this->servers[$name]['status'] = "connectfailed";
+                $this->servers[$name]['error']  = @mysql_error();
+            }elseif (! @mysql_select_db($server['Database'])){
+                new log("debug","gosa_logging","selectdb",array(),@mysql_error());
+                $this->servers[$name]['status'] = "dbmissing";
+                $this->servers[$name]['error']  = @mysql_error();
+            }else{
+                $this->servers[$name]['status'] = "ok";
+                $this->servers[$name]['error']  = "";
+            }
+
+            if($link){
+                $query = "SELECT * FROM SystemEvents WHERE Message like '%GOsa%' ORDER BY ID LIMIT 50";
+                $res = mysql_query($query, $link);
+                if($res){
+                    while($attrs = mysql_fetch_assoc($res)){
+                      $result[] = $attrs; 
+                    }
+                }
+            }
+        }
+        $source =
+            '<?xml version="1.0" encoding="utf-8"?>'.
+            ' <rdf:RDF'.
+            '  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"'.
+            '  xmlns="http://purl.org/rss/1.0/"'.
+            '  xmlns:dc="http://purl.org/dc/elements/1.1/">'.
+            ' <channel rdf:about="Gosa">'.
+            '  <description>GOsa</description>'.
+            '  <link>gosa-project.org</link>'.
+            '  <title>GOsa</title>'.
+            '  <dc:date>'.date('d.m.Y H:i:s').'</dc:date>'.
+            ' </channel>';
+
+        foreach($result as $entry){
+            $message = $entry['FromHost'].": ".$entry['Message'];
+            $source .= "
+                <item>
+                <title>{$message}</title>
+                <description>{$message}</description>
+                <pubDate>2010-10-25T14:27:39Z</pubDate>
+                </item>";
+        }
+        $source .= "\n</rdf:RDF>";
+        return($source);
+    }
+
+
+
   function get_result()
   {
     $result = array();
