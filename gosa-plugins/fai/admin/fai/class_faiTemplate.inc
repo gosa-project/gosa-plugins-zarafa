@@ -72,10 +72,10 @@ class faiTemplate extends plugin
     $this->templateList->setDeleteable(true);
     $this->templateList->setEditable(true);
     $this->templateList->setWidth("100%");
-    $this->templateList->setHeight("120px");
-    $this->templateList->setColspecs(array('200px','*'));
-    $this->templateList->setHeader(array(_("Name"),_("Download")));
-    $this->templateList->setDefaultSortColumn(1);
+    $this->templateList->setHeight("220px");
+    $this->templateList->setColspecs(array('*','18px'));
+    $this->templateList->setHeader(array(_("Name"),""));
+    $this->templateList->setDefaultSortColumn(0);
 
   }
 
@@ -280,6 +280,7 @@ class faiTemplate extends plugin
     $this->templateList->setAcl($acl,preg_match('/^freeze/', $this->FAIstate));
 
     $tmp = $this->getList(true);
+    $data = $lData = array();
     foreach($this->SubObjects as $key => $name){
 
       /* Skip removed entries */ 
