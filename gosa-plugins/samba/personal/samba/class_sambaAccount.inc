@@ -86,6 +86,8 @@ class sambaAccount extends plugin
   var $no_expiry = FALSE;
   var $multiple_sambaUserWorkstations = array();
 
+  var $enforce_passwordChange = FALSE;
+
   function sambaAccount (&$config, $dn= NULL)
   {
     $this->mungedObject= new sambaMungedDial;
@@ -165,6 +167,13 @@ class sambaAccount extends plugin
     #TODO: use date format
     $this->sambaKickoffTime= $this->sambaKickoffTime == 0?"":date('d.m.Y', $this->sambaKickoffTime);
     $this->sambaPwdMustChange= $this->sambaPwdMustChange == 2147483647?"":date('d.m.Y', $this->sambaPwdMustChange);
+
+   
+    // Enforce password change?
+    // ------------------------ 
+    // Check if we've the attribute 'sambaPwdLastSet' set and if its value is 0, 
+    //  in this case a password change is forced for this account. 
+    $this->enforce_passwordChange = (isset($this->attrs['sambaPwdLastSet']) && $this->attrs['sambaPwdLastSet'][0] == '0');
   }
 
   function execute()
@@ -561,8 +570,8 @@ class sambaAccount extends plugin
 
     /* Show main page */
     $smarty->assign("multiple_support",$this->multiple_support_active);
+    $smarty->assign('enforce_passwordChange', $this->enforce_passwordChange);
     $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
-
     return ($display);
   }
 
@@ -951,6 +960,9 @@ class sambaAccount extends plugin
     if (isset($_POST['sambaTab'])){
       plugin::save_object();
 
+
+      $this->enforce_passwordChange = (isset($_POST['enforce_passwordChange']));
+
       if(isset($_POST['display_information'])){
         msg_dialog::display(_("Information"), 
           $this->get_samba_information(),
@@ -1123,6 +1135,17 @@ class sambaAccount extends plugin
     }
     $this->attrs['objectClass']= $tmp;
 
+    // Enforce password change
+    if($this->enforce_passwordChange){
+        $this->attrs['sambaPwdLastSet'] = 0;
+    }else{
+        if ($this->sambaPwdLastSet != "0"){
+            $this->attrs['sambaPwdLastSet']= $this->sambaPwdLastSet;
+        } else {
+            $this->attrs['sambaPwdLastSet']= array();
+        }
+    }
+
     /* Generate rid / primaryGroupId */
     if (!isset($this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['SID'])){
       msg_dialog::display(_("Warning"), _("Undefined Samba SID detected. Please fix this problem manually!"), WARNING_DIALOG);
@@ -1188,12 +1211,6 @@ class sambaAccount extends plugin
       }
     } else {
       $this->attrs['sambaPwdMustChange']= array();
-    }
-    /* Make sure not to save zero in sambaPwdLastset */
-    if ($this->sambaPwdLastSet != "0"){
-      $this->attrs['sambaPwdLastSet']= $this->sambaPwdLastSet;
-    } else {
-      $this->attrs['sambaPwdLastSet']= array();
     }
     /* Account expiery */
     if ($this->logon_time_set == "1"){

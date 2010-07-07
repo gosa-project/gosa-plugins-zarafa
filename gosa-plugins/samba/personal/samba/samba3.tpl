@@ -327,6 +327,14 @@
   <td style='width:50%; ' colspan="2">
 
 
+    <table>
+        <tr>
+            <td><input type='checkbox' value='1' name='enforce_passwordChange' 
+                 {if $enforce_passwordChange} checked {/if} id='enforce_passwordChange'>
+            <td><label for='enforce_passwordChange'>{t}Enforce password change{/t}</label></td>
+        </tr>
+    </table>
+
 
    <div>
     <div style='float:left;'>
