@@ -76,7 +76,7 @@ class sambaAccount extends plugin
   var $objectclasses= array('sambaSamAccount');
   
   var $uid= "";
-  var $CopyPasteVars = array("kickoff_time_set","logoff_time_set","logon_time_set","mungedObject","orig_sambaDomainName");
+  var $CopyPasteVars = array("kickoff_time_set","logoff_time_set","logon_time_set","mungedObject","orig_sambaDomainName","enforcePasswordChange");
 
   var $multiple_support = TRUE;
 
@@ -85,6 +85,8 @@ class sambaAccount extends plugin
   var $no_password_required = FALSE;
   var $no_expiry = FALSE;
   var $multiple_sambaUserWorkstations = array();
+
+  var $enforcePasswordChange = FALSE;
 
   function sambaAccount (&$config, $dn= NULL)
   {
@@ -173,6 +175,18 @@ class sambaAccount extends plugin
     #TODO: use date format
     $this->sambaKickoffTime= $this->sambaKickoffTime == 0?"":date('d.m.Y', $this->sambaKickoffTime);
     $this->sambaPwdMustChange= $this->sambaPwdMustChange == 2147483647?"":date('d.m.Y', $this->sambaPwdMustChange);
+
+    // Enforce password change?
+    // ------------------------
+    // Check if we've the attribute 'sambaPwdLastSet' set and if its value is 0,
+    //  in this case a password change is forced for this account.
+    $this->enforcePasswordChange = (isset($this->attrs['sambaPwdLastSet']) && $this->attrs['sambaPwdLastSet'][0] == '0');
+
+    // User cannot change his password?  (sambaPwdLastSet int max(Int))
+    // --------------------------------
+    // The user is not able to change his password while sambaPwdCanChange is 4294967295 (Integer 32 Bit max)
+    $this->cannotChangePassword = (isset($this->attrs['sambaPwdCanChange']) && $this->attrs['sambaPwdCanChange'][0] == '4294967295');
+
   }
 
   function execute()
@@ -523,7 +537,7 @@ class sambaAccount extends plugin
           "onnectclientprinters","defaultprinter","shadow","brokenconn",
           "reconn","allow_pwchange","connectclientprinters","no_expiry","no_password_required","temporary_disable", 
           "password_expires","logon_time_set","logoff_time_set","kickoff_time_set","SetSambaLogonHours",
-          "workstation_list") as $attr){
+          "workstation_list","enforcePasswordChange","cannotChangePassword") as $attr){
       if(in_array($attr,$this->multi_boxes)){
         $smarty->assign("use_".$attr,TRUE);
       }else{
@@ -571,8 +585,10 @@ class sambaAccount extends plugin
 
     /* Show main page */
     $smarty->assign("multiple_support",$this->multiple_support_active);
-    $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
 
+    $smarty->assign('enforcePasswordChange', $this->enforcePasswordChange);
+    $smarty->assign("cannotChangePassword", $this->cannotChangePassword);
+    $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
     return ($display);
   }
 
@@ -956,6 +972,9 @@ class sambaAccount extends plugin
     if (isset($_POST['sambaTab'])){
       plugin::save_object();
 
+      $this->enforcePasswordChange = (isset($_POST['enforcePasswordChange']));
+      $this->cannotChangePassword = (isset($_POST['cannotChangePassword']));
+
       if(isset($_POST['display_information'])){
         msg_dialog::display(_("Information"), 
           $this->get_samba_information(),
@@ -1128,6 +1147,21 @@ class sambaAccount extends plugin
     }
     $this->attrs['objectClass']= $tmp;
 
+    // Enforce password change
+    if($this->enforcePasswordChange){
+        $this->attrs['sambaPwdLastSet'] = 0;
+    }else{
+        if ($this->sambaPwdLastSet != "0"){
+            $this->attrs['sambaPwdLastSet']= $this->sambaPwdLastSet;
+        } else {
+            $this->attrs['sambaPwdLastSet']= array();
+        }
+    }
+
+    if($this->cannotChangePassword){
+        $this->attrs['sambaPwdCanChange'] = 4294967295;
+    }
+
     /* Generate rid / primaryGroupId */
     if (!isset($this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName]['SID'])){
       msg_dialog::display(_("Warning"), _("Undefined Samba SID detected. Please fix this problem manually!"), WARNING_DIALOG);
@@ -1193,12 +1227,6 @@ class sambaAccount extends plugin
       }
     } else {
       $this->attrs['sambaPwdMustChange']= array();
-    }
-    /* Make sure not to save zero in sambaPwdLastset */
-    if ($this->sambaPwdLastSet != "0"){
-      $this->attrs['sambaPwdLastSet']= $this->sambaPwdLastSet;
-    } else {
-      $this->attrs['sambaPwdLastSet']= array();
     }
     /* Account expiery */
     if ($this->logon_time_set == "1"){
@@ -1353,10 +1381,9 @@ class sambaAccount extends plugin
             "sambaAcctFlagsN"             => _("Login from windows client requires no password"),
             "sambaAcctFlagsX"             => _("Password never expires"),
             "sambaAcctFlagsL"             => _("Lock samba account"),
-            "sambaKickoffTime"            => _("Account expires") ,
             "sambaPwdMustChange"          => _("Password expires") ,
-            "sambaLogonTime"              => _("Limit Logon Time") ,
-            "sambaLogoffTime"             => _("Limit Logoff Time") ,
+            "enforcePasswordChange"       => _("Enforce password change"),
+            "cannotChangePassword"        => _("Cannot change password"),
             "sambaLogonHours"             => _("Logon hours") ,
             "sambaUserWorkstations"       => _("Allow connection from"))
           ));
@@ -1379,7 +1406,7 @@ class sambaAccount extends plugin
             "onnectclientprinters","defaultprinter","shadow","brokenconn",
             "reconn","allow_pwchange","connectclientprinters","no_expiry","no_password_required","temporary_disable",
             "password_expires","logon_time_set","logoff_time_set","kickoff_time_set","SetSambaLogonHours",
-            "workstation_list") as $attr){
+            "workstation_list","enforcePasswordChange","cannotChangePassword") as $attr){
         if(isset($_POST["use_".$attr])){
           $this->multi_boxes[] = $attr;
         }
@@ -1569,7 +1596,15 @@ class sambaAccount extends plugin
     if(in_array("temporary_disable",$this->multi_boxes)){
       $ret['temporary_disable'] = $this->temporary_disable;
     }
-    
+   
+    if(in_array("enforcePasswordChange",$this->multi_boxes)){
+        $ret['enforcePasswordChange'] = $this->enforcePasswordChange;
+    }
+    if(in_array("cannotChangePassword",$this->multi_boxes)){
+        $ret['cannotChangePassword'] = $this->cannotChangePassword;
+    }
+
+ 
     if(in_array("SetSambaLogonHours",$this->multi_boxes)){
       $ret['sambaLogonHours'] = $this->sambaLogonHours;
     }
