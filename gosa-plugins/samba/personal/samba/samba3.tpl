@@ -329,10 +329,19 @@
 
     <table>
         <tr>
-            <td><input type='checkbox' value='1' name='enforce_passwordChange' 
-                 {if $enforce_passwordChange} checked {/if} id='enforce_passwordChange'>
-            <td><label for='enforce_passwordChange'>{t}Enforce password change{/t}</label></td>
+            <td>
+                {render acl=$enforcePasswordChangeACL checkbox=$multiple_support checked=$use_enforcePasswordChange}
+                 <input type='checkbox' value='1' name='enforcePasswordChange' 
+                  {if $enforcePasswordChange} checked {/if} id='enforcePasswordChange'>
+                {/render}
+            </td>
+            <td>
+                <label for='enforcePasswordChange'>{t}Enforce password change{/t}</label>
+            </td>
         </tr>
+        <tr>
+            <td>
+                
     </table>
 
 
