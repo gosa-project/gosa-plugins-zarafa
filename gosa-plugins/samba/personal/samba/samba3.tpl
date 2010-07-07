@@ -341,112 +341,51 @@
         </tr>
         <tr>
             <td>
-                
+                {render acl=$sambaAcctFlagsXACL  checkbox=$multiple_support checked=$use_no_expiry}
+                 <input id="no_expiry" type=checkbox name="no_expiry" value="1" {$flagsX} class="center">
+                {/render}
+            </td>
+            <td>
+                <label for="no_expiry">{t}The password never expires{/t}</label>
+            </td>
+        </tr>            
+        <tr>
+            <td>
+                {render acl=$sambaAcctFlagsNACL  checkbox=$multiple_support checked=$use_no_password_required}
+                 <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN} class="center">
+                {/render}
+            </td>
+            <td>
+                <label for="no_password_required">{t}Login from windows client requires no password{/t}</label>
+            </td>
+        </tr>            
+        <tr>
+            <td>
+                {render acl=$sambaAcctFlagsLACL  checkbox=$multiple_support checked=$use_temporary_disable}
+                 <input id="temporary_disable" type=checkbox name="temporary_disable" value="1" {$flagsD} class="center">
+                {/render}
+            </td>
+            <td>
+                <label for="temporary_disable">{t}Lock samba account{/t}</label>
+            </td>
+        </tr>            
+        <tr>
+            <td>
+            </td>
+            <td>
+                {if $additional_info_PwdMustChange}
+                    <i>({$additional_info_PwdMustChange})</i>
+                {/if}
+            </td>
+        </tr>            
     </table>
 
+    <hr>
 
-   <div>
-    <div style='float:left;'>
-      {render acl=$sambaAcctFlagsXACL  checkbox=$multiple_support checked=$use_no_expiry}
-       <input id="no_expiry" type=checkbox name="no_expiry" value="1" {$flagsX} class="center">
-      {/render}
-    </div>
-    <div style='margin-left:25px;'>
-      <label for="no_expiry">{t}The password never expires{/t}</label>
-    </div>
-   </div>
-   <div class='clear'></div> 
-
-   <div>
-    <div style='float:left;'>
-      {render acl=$sambaAcctFlagsNACL  checkbox=$multiple_support checked=$use_no_password_required}
-       <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN} class="center">
-      {/render}
-    </div>
-    <div style='margin-left:25px;'>
-      <label for="no_password_required">{t}Login from windows client requires no password{/t}</label>
-    </div>
-   </div>
-   <div class='clear'></div> 
-
-   <div>
-    <div style='float:left;'>
-      {render acl=$sambaAcctFlagsLACL  checkbox=$multiple_support checked=$use_temporary_disable}
-       <input id="temporary_disable" type=checkbox name="temporary_disable" value="1" {$flagsD} class="center">
-      {/render}
-    </div>
-    <div style='margin-left:25px;'>
-      <label for="temporary_disable">{t}Lock samba account{/t}</label>
-    </div>
-   </div>
-   <div class='clear'></div> 
-
-<!--
-    <tr>
-     <td>
-      {render acl=$sambaPwdMustChangeACL  checkbox=$multiple_support checked=$use_password_expires}
-      <input id="password_expires" type=checkbox name="password_expires" value="1" {$flagsC} class="center"
-	 	onClick="document.mainform.submit();">
-      {/render}
-      <label for="password_expires">{t}Password expires on{/t}</label>
-     </td>
-     <td style='width:55%'>
-      {render acl=$sambaPwdMustChangeACL}
-        <input type="text" id="sambaPwdMustChange" name="sambaPwdMustChange" class="date" style='width:100px' value="{$sambaPwdMustChange}">
-        {if $sambaPwdMustChangeACL|regex_replace:"/[cdmr]/":"" == "w"}
-        <script type="text/javascript">
-          {literal}
-          var datepicker  = new DatePicker({ relative : 'sambaPwdMustChange', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
-          {/literal}
-        </script>
-        {/if}
-      {/render}
-     </td>
-    </tr>
-  -->
-
-   <div>
-    <div style='float:left;'>
-    </div>
-    <div style='margin-left:25px;'>
-      {if $additional_info_PwdMustChange}
-        <i>({$additional_info_PwdMustChange})</i>
-      {/if}
-    </div>
-   </div>
-   <div class='clear'></div> 
-
-   <div>
-    <div style='float:left;'>
-      {render acl=$sambaKickoffTimeACL  checkbox=$multiple_support checked=$use_kickoff_time_set}
-       <input id="kickoff_time_set" type=checkbox name="kickoff_time_set" value="1" {$flagsK} class="center">
-      {/render}
-    </div>
-    <div style='margin-left:25px;'>
-
-      <table summary="{t}Account expiration settings{/t}"><tr><td>
-      <label for="kickoff_time_set">{t}Account expires after{/t}</label>
-      </td><td style='width:200px'>
-      {render acl=$sambaKickoffTimeACL}
-        <input type="text" id="sambaKickoffTime" name="sambaKickoffTime" class="date" style='width:100px' value="{$sambaKickoffTime}">
-        {if $sambaKickoffTimeACL|regex_replace:"/[cdmr]/":"" == "w"}
-        <script type="text/javascript">
-          {literal}
-          var datepicker2 = new DatePicker({ relative : 'sambaKickoffTime', language : '{/literal}{$lang}{literal}', keepFieldEmpty : true, enableCloseEffect : false, enableShowEffect : false });
-          {/literal}
-        </script>
-        {/if}
-      {/render}
-      </td></tr></table>  
-    </div>
-   </div>
-   <div class='clear'></div> 
-
-      {render acl=$sambaLogonHoursACL mode=read_active  checkbox=$multiple_support checked=$use_SetSambaLogonHours}
-       {t}Samba logon times{/t}&nbsp;<button type='submit' name='SetSambaLogonHours'>{t}Edit settings...{/t}</button>
-
-      {/render}
-   <!-- /Samba policies -->
+    {render acl=$sambaLogonHoursACL mode=read_active  checkbox=$multiple_support checked=$use_SetSambaLogonHours}
+        {t}Samba logon times{/t}&nbsp;<button type='submit' name='SetSambaLogonHours'>{t}Edit settings...{/t}</button>
+    {/render}
+    <!-- /Samba policies -->
 
   </td>
   <td class='left-border'>

@@ -35,9 +35,6 @@ class sambaAccount extends plugin
   var $ridBase= 0;
   var $sambaSID= "";
   var $sambaPwdLastSet= "0";
-  var $sambaLogonTime= "0";
-  var $sambaLogoffTime= "2147483647";
-  var $sambaKickoffTime= "2147483647";
   var $sambaPwdCanChange= "";
   var $sambaPwdMustChange= "0";
   var $sambaAcctFlags= "[UX        ]";
@@ -59,14 +56,10 @@ class sambaAccount extends plugin
   /* Helper */
   var $cache = array();
   var $trustSelect= FALSE;
-  var $logon_time_set= 0;
-  var $logoff_time_set= 0;
-  var $kickoff_time_set= 0;
 
   /* attribute list for save action */
   var $ctxattributes= array();
-  var $attributes= array("sambaSID", "sambaPwdLastSet", "sambaLogonTime",
-        "sambaLogoffTime", "sambaKickoffTime", "sambaPwdCanChange",
+  var $attributes= array("sambaSID", "sambaPwdLastSet", "sambaPwdCanChange",
         "sambaPwdMustChange", "sambaAcctFlags", "uid", "sambaMungedDial",
         "sambaHomePath", "sambaHomeDrive", "sambaLogonScript",
         "sambaProfilePath", "sambaPrimaryGroupSID", "sambaDomainName",
@@ -76,7 +69,7 @@ class sambaAccount extends plugin
   var $objectclasses= array('sambaSamAccount');
   
   var $uid= "";
-  var $CopyPasteVars = array("kickoff_time_set","logoff_time_set","logon_time_set","mungedObject","orig_sambaDomainName");
+  var $CopyPasteVars = array("mungedObject","orig_sambaDomainName",'enforcePasswordChange');
 
   var $multiple_support = TRUE;
 
@@ -139,35 +132,10 @@ class sambaAccount extends plugin
       $this->password_expires= 1;
     }
 
-    if(isset($this->attrs['sambaLogonTime']) && ! (
-        $this->attrs['sambaLogonTime'][0] == 0 ||
-        $this->attrs['sambaLogonTime'][0] == 2147483647
-      )){
-      $this->logon_time_set= 1;
-    }
-    if(isset($this->attrs['sambaLogoffTime']) && ! (
-        $this->attrs['sambaLogoffTime'][0] == 0 ||
-        $this->attrs['sambaLogoffTime'][0] == 2147483647
-      )){
-      $this->logoff_time_set= 1;
-    }
-    
-    /* Account expiery */
-    if(isset($this->attrs['sambaKickoffTime']) && ! (
-        $this->attrs['sambaKickoffTime'][0] == 0 ||
-        $this->attrs['sambaKickoffTime'][0] == 2147483647
-      )){
-      $this->kickoff_time_set= 1;
-    }
-
     /* Save initial account state */
     $this->initially_was_account= $this->is_account;
 
-    /* Convert kickoff */
-    #TODO: use date format
-    $this->sambaKickoffTime= $this->sambaKickoffTime == 0?"":date('d.m.Y', $this->sambaKickoffTime);
     $this->sambaPwdMustChange= $this->sambaPwdMustChange == 2147483647?"":date('d.m.Y', $this->sambaPwdMustChange);
-
    
     // Enforce password change?
     // ------------------------ 
@@ -265,18 +233,6 @@ class sambaAccount extends plugin
       $smarty->assign("sambaLogonHoursACL","");
     }
 
-    if ($this->sambaLogonTime=="2147483647" || $this->sambaLogonTime=="0"){
-      $sambaLogonTime_date= getdate();
-    } else {
-      $sambaLogonTime_date= getdate($this->sambaLogonTime);
-    }
-    
-    if ($this->sambaLogoffTime=="2147483647" || $this->sambaLogoffTime=="0"){
-      $sambaLogoffTime_date= getdate();
-    } else {
-      $sambaLogoffTime_date= getdate($this->sambaLogoffTime);
-    }
-    
     /* Remove user workstations? */
     if (isset($_POST["delete_ws"]) && isset($_POST['workstation_list'])){
 
@@ -486,21 +442,6 @@ class sambaAccount extends plugin
     } else {
       $smarty->assign("flagsC", "");
     }
-    if ($this->logon_time_set=="1"){
-      $smarty->assign("flagsT", "checked");
-    } else {
-      $smarty->assign("flagsT", "");
-    }
-    if ($this->logoff_time_set=="1"){
-      $smarty->assign("flagsO", "checked");
-    } else {
-      $smarty->assign("flagsO", "");
-    }
-    if ($this->kickoff_time_set=="1"){
-      $smarty->assign("flagsK", "checked");
-    } else {
-      $smarty->assign("flagsK", "");
-    }
    
 
     /* In case of javascript, disable some fields on demand */
@@ -521,7 +462,7 @@ class sambaAccount extends plugin
           "CtxMaxDisconnectionTime","CtxMaxIdleTimeF","CtxMaxIdleTime","connectclientdrives",
           "onnectclientprinters","defaultprinter","shadow","brokenconn",
           "reconn","allow_pwchange","connectclientprinters","no_expiry","no_password_required","temporary_disable", 
-          "password_expires","logon_time_set","logoff_time_set","kickoff_time_set","SetSambaLogonHours",
+          "password_expires","SetSambaLogonHours",
           "workstation_list", "enforcePasswordChange") as $attr){
       if(in_array($attr,$this->multi_boxes)){
         $smarty->assign("use_".$attr,TRUE);
@@ -663,12 +604,8 @@ class sambaAccount extends plugin
         $sambaPwdMustChange= date('d.m.Y', $sambaPwdMustChange);
       }
     }
-    if($this->kickoff_time_set){
-      $sambaKickoffTime = $this->sambaKickoffTime;
-    } else {
-      if (is_numeric($sambaKickoffTime)) {
-        $sambaKickoffTime= date('d.m.Y', $sambaKickoffTime);
-      }
+    if($this->attrs['sambaKickoffTime']){
+      $sambaKickoffTime = date('d.m.Y', $this->attrs['sambaKickoffTime'][0]);
     }
     $sambaPwdCanChange = $this->sambaPwdCanChange;
 
@@ -936,10 +873,6 @@ class sambaAccount extends plugin
       }
     }
 
-    /* Check dates */
-    if (!tests::is_date($this->sambaKickoffTime)){
-      $message[]= msgPool::invalid(_("Account expires after"), $this->sambaKickoffTime,"" ,"23.02.2009");
-    }
     if (!tests::is_date($this->sambaPwdMustChange)){
       $message[]= msgPool::invalid(_("Password expires on"), $this->sambaPwdMustChange,"" ,"23.02.2009");
     }
@@ -1016,27 +949,6 @@ class sambaAccount extends plugin
             $tmp.= "D";
           }
         }
-      }
-      if (isset($_POST["logon_time_set"])){
-        if ($_POST["logon_time_set"] == 1){
-          $this->logon_time_set= 1;
-        }
-      } else {
-        $this->logon_time_set= 0;
-      }
-      if (isset($_POST["logoff_time_set"])){
-        if ($_POST["logoff_time_set"] == 1){
-          $this->logoff_time_set= 1;
-        }
-      } else {
-        $this->logoff_time_set= 0;
-      }
-      if (isset($_POST["kickoff_time_set"])){
-        if ($_POST["kickoff_time_set"] == 1){
-          $this->kickoff_time_set= 1;
-        }
-      } else {
-        $this->kickoff_time_set= 0;
       }
       
       $fill= "";
@@ -1212,29 +1124,6 @@ class sambaAccount extends plugin
     } else {
       $this->attrs['sambaPwdMustChange']= array();
     }
-    /* Account expiery */
-    if ($this->logon_time_set == "1"){
-      $this->attrs['sambaLogonTime']= $this->sambaLogonTime;
-    } else {
-      $this->attrs['sambaLogonTime']= array();
-    }
-    if ($this->logoff_time_set == "1"){
-      $this->attrs['sambaLogoffTime']= $this->sambaLogoffTime;
-    } else {
-      $this->attrs['sambaLogoffTime']= array();
-    }
-    if ($this->kickoff_time_set == "1"){
-      /* Adapt values to be timestamps */
-      #TODO: check for date format
-      if ($this->attrs['sambaKickoffTime'] == ""){
-        $this->attrs['sambaKickoffTime']= 2147483647;
-      } else {
-        list($day, $month, $year)= explode('.', $this->sambaKickoffTime);
-        $this->attrs['sambaKickoffTime']= mktime(0,0,0,$month, $day, $year);
-      }
-    } else {
-      $this->attrs['sambaKickoffTime']= array();
-    }
 
     /* Write back to ldap */
     $ldap->cd($this->dn);
@@ -1308,35 +1197,6 @@ class sambaAccount extends plugin
         $this->attrs['sambaPwdMustChange'][0] != 0 && !in_array('sambaPwdMustChange', $skip)){
       $this->password_expires= 1;
     }
-
-    if(isset($this->attrs['sambaLogonTime']) && ! (
-        $this->attrs['sambaLogonTime'][0] == 0 ||
-        $this->attrs['sambaLogonTime'][0] == 2147483647
-      ) && !in_array('sambaLogonTime', $skip)){
-      $this->logon_time_set= 1;
-    }
-    if(isset($this->attrs['sambaLogoffTime']) && ! (
-        $this->attrs['sambaLogoffTime'][0] == 0 ||
-        $this->attrs['sambaLogoffTime'][0] == 2147483647
-      ) && !in_array('sambaLogonTime', $skip)){
-      $this->logoff_time_set= 1;
-    }
-
-    /* Account expiery */
-    if(isset($this->attrs['sambaKickoffTime']) && ! (
-        $this->attrs['sambaKickoffTime'][0] == 0 ||
-        $this->attrs['sambaKickoffTime'][0] == 2147483647
-      ) && !in_array('sambaKickoffTime', $skip)){
-      $this->kickoff_time_set= 1;
-    }
-
-    /* Get global filter config */
-    if (!session::is_set("sambafilter")){
-      $ui= get_userinfo();
-      $base= get_base_from_people($ui->dn);
-      $sambafilter= array( "depselect" => $base, "regex" => "*");
-      session::set("sambafilter", $sambafilter);
-    }
   }
 
   
@@ -1371,10 +1231,6 @@ class sambaAccount extends plugin
             "sambaAcctFlagsX"             => _("Password never expires"),
             "enforcePasswordChange"       => _("Enforce password change"),
             "sambaAcctFlagsL"             => _("Lock samba account"),
-            "sambaKickoffTime"            => _("Account expires") ,
-            "sambaPwdMustChange"          => _("Password expires") ,
-            "sambaLogonTime"              => _("Limit Logon Time") ,
-            "sambaLogoffTime"             => _("Limit Logoff Time") ,
             "sambaLogonHours"             => _("Logon hours") ,
             "sambaUserWorkstations"       => _("Allow connection from"))
           ));
@@ -1396,7 +1252,7 @@ class sambaAccount extends plugin
             "CtxMaxDisconnectionTime","CtxMaxIdleTimeF","CtxMaxIdleTime","connectclientdrives",
             "onnectclientprinters","defaultprinter","shadow","brokenconn",
             "reconn","allow_pwchange","connectclientprinters","no_expiry","no_password_required","temporary_disable",
-            "password_expires","logon_time_set","logoff_time_set","kickoff_time_set","SetSambaLogonHours",
+            "password_expires", "SetSambaLogonHours",
             "workstation_list", "enforcePasswordChange") as $attr){
         if(isset($_POST["use_".$attr])){
           $this->multi_boxes[] = $attr;
@@ -1567,18 +1423,6 @@ class sambaAccount extends plugin
       $ret['password_expires']  = $this->password_expires;
       $ret['sambaPwdMustChange']= $this->sambaPwdMustChange;
     }
-    if(in_array("logon_time_set",$this->multi_boxes)){
-      $ret['logon_time_set'] = $this->logon_time_set;
-      $ret['sambaLogonTime'] = $this->sambaLogonTime;
-    }
-    if(in_array("logoff_time_set",$this->multi_boxes)){
-      $ret['logoff_time_set'] = $this->logoff_time_set;
-      $ret['sambaLogoffTime'] = $this->sambaLogoffTime;
-    }
-    if(in_array("kickoff_time_set",$this->multi_boxes)){
-      $ret['kickoff_time_set'] = $this->kickoff_time_set;
-      $ret['sambaKickoffTime'] = $this->sambaKickoffTime;
-    }
 
     if(in_array("no_password_required",$this->multi_boxes)){
       $ret['no_password_required'] = $this->no_password_required;
@@ -1682,18 +1526,6 @@ class sambaAccount extends plugin
       $this->password_expires = $values['password_expires'];
       $this->sambaPwdMustChange = $values['sambaPwdMustChange'];
     }
-    if(isset($values['logon_time_set'])){
-      $this->logon_time_set = $values['logon_time_set'];
-      $this->sambaLogonTime = $values['sambaLogonTime'];
-    }
-    if(isset($values['logoff_time_set'])){
-      $this->logoff_time_set = $values['logoff_time_set'];
-      $this->sambaLogoffTime = $values['sambaLogoffTime'];
-    }
-    if(isset($values['kickoff_time_set'])){
-      $this->kickoff_time_set = $values['kickoff_time_set'];
-      $this->sambaKickoffTime = $values['sambaKickoffTime'];
-    }
 
     if(isset($values['no_password_required'])){
       if($values['no_password_required']){
@@ -1746,34 +1578,7 @@ class sambaAccount extends plugin
             $source['sambaPwdMustChange'][0] != 0){
         $this->password_expires= 1;
     }
-
-    if(isset($source['sambaLogonTime']) && ! (
-                $source['sambaLogonTime'][0] == 0 ||
-                $source['sambaLogonTime'][0] == 2147483647
-                )){
-        $this->logon_time_set= 1;
-    }
-    if(isset($source['sambaLogoffTime']) && ! (
-                $source['sambaLogoffTime'][0] == 0 ||
-                $source['sambaLogoffTime'][0] == 2147483647
-                )){
-        $this->logoff_time_set= 1;
-    }
-
-    /* Account expiery */
-    if(isset($source['sambaKickoffTime']) && ! (
-                $source['sambaKickoffTime'][0] == 0 ||
-                $source['sambaKickoffTime'][0] == 2147483647
-                )){
-        $this->kickoff_time_set= 1;
-    }
-
-
-    if(isset($source['sambaKickoffTime'][0])){
-        $this->sambaKickoffTime = date('d.m.Y', $source['sambaKickoffTime'][0]); 
-    }
   }
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
