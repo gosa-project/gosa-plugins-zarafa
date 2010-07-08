@@ -500,7 +500,7 @@ class faiManagement extends management
       $this->closeDialogs();
       $data = array_pop($entry);
       $type = $this->get_type($data);
-      $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],$type[1]);
+      $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],'fai');
       if($str) return($str);
       $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
       $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
