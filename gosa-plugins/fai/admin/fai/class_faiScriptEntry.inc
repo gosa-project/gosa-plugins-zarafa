@@ -66,9 +66,8 @@ class faiScriptEntry extends plugin
     }
  
     foreach($this->attributes as $attrs){
-      $smarty->assign($attrs, htmlentities($this->$attrs, ENT_QUOTES, 'utf-8'));
+      $smarty->assign($attrs, set_post($this->$attrs));
     }
-    $smarty->assign('FAIscript', htmlentities($this->FAIscript, ENT_QUOTES, 'utf-8'));
 
     /* File download requested */
     if(isset($_POST['download'])){

@@ -282,7 +282,7 @@ class faiScript extends plugin
      * If we post the escaped strings they will be escaped again
      */
     foreach($this->attributes as $attrs){
-      $smarty->assign($attrs,htmlentities($this->$attrs, ENT_QUOTES, 'utf-8'));
+      $smarty->assign($attrs,set_post($this->$attrs));
     }
 
     $dn = $this->acl_base_for_current_object($this->dn);
@@ -482,7 +482,7 @@ class faiScript extends plugin
   {
     $vars = array("cn");
     $smarty = get_smarty();
-    $smarty->assign("cn", htmlentities($this->cn));
+    $smarty->assign("cn", set_post($this->cn));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
     $ret = array();
     $ret['string'] = $str;
