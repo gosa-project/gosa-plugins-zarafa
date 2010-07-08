@@ -17,7 +17,7 @@ class faiScriptEntry extends plugin
   var $status        = "new";
   var $parent        = NULL;
   var $FAIstate      = "";
-  
+
   function faiScriptEntry (&$config, $dn= NULL,$object=false)
   {
     plugin::plugin ($config, NULL);
@@ -25,8 +25,7 @@ class faiScriptEntry extends plugin
       $this->orig_cn= $object['cn'];
       $this->dn=$object['dn'];
       foreach($object as $name=>$value){
-        $oname = $name;
-        $this->$oname=$value;
+        $this->$name=$value;
       }
     }else{
       if(is_array($object)&&count($object)){
@@ -39,7 +38,7 @@ class faiScriptEntry extends plugin
       }else{
 
         $this->status = "new";
-        $this->orig_cn       = false;
+        $this->orig_cn = false;
       }
     }
   }
@@ -61,25 +60,19 @@ class faiScriptEntry extends plugin
       if(($_FILES['ImportFile']['size']==0)){
         msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       }else{
-        $str = utf8_encode(addslashes(file_get_contents($_FILES['ImportFile']['tmp_name'])));
+        $str = file_get_contents($_FILES['ImportFile']['tmp_name']);
         $this->FAIscript = $str;
       }
     }
-  
-     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
-     * If we post the escaped strings they will be escaped again
-     */
+ 
     foreach($this->attributes as $attrs){
-      if(get_magic_quotes_gpc()){
-        $smarty->assign($attrs,(stripslashes($this->$attrs)));
-      }else{
-        $smarty->assign($attrs,($this->$attrs));
-      }
+      $smarty->assign($attrs, htmlentities($this->$attrs, ENT_QUOTES, 'utf-8'));
     }
+    $smarty->assign('FAIscript', htmlentities($this->FAIscript));
 
     /* File download requested */
     if(isset($_POST['download'])){
-      send_binary_content(stripslashes($this->FAIscript),$this->cn.".FAIscript");
+      send_binary_content($this->FAIscript,$this->cn.".FAIscript");
     }
 
     /* Create download button*/
@@ -98,12 +91,6 @@ class faiScriptEntry extends plugin
       $acl = $this->getacl($name,preg_match("/freeze/i",$this->FAIstate));
       $smarty->assign($name."ACL",$acl);
     }
-
-    if(get_magic_quotes_gpc()){
-      $smarty->assign("FAIscript" , htmlentities(stripslashes($this->FAIscript)));
-    }else{
-      $smarty->assign("FAIscript" , htmlentities($this->FAIscript));
-    }
     $smarty->assign("FAIprioritys",$FAIprioritys);
     $display.= $smarty->fetch(get_template_path('faiScriptEntry.tpl', TRUE));
     return($display);
@@ -112,15 +99,17 @@ class faiScriptEntry extends plugin
   /* Save data to object */
   function save_object()
   {
+    return;
     if((isset($_POST['SubObjectFormSubmitted'])) && !preg_match("/freeze/", $this->FAIstate)){
       foreach($this->attributes as $attrs){
-        if($this->acl_is_writeable($attrs)){
-          if(isset($_POST[$attrs])){
-            $this->$attrs = $_POST[$attrs];
-          }else{
-            $this->$attrs = "";
+          if($this->acl_is_writeable($attrs)){
+
+              if(isset($_POST[$attrs])){
+                  $this->$attrs = get_binary_post($attrs);
+              }else{
+                  $this->$attrs = "";
+              }
           }
-        }
       }
     }
   }
@@ -157,9 +146,6 @@ class faiScriptEntry extends plugin
     foreach($this->attributes as $attrs){ 
       $tmp[$attrs] = $this->$attrs;
     }
-
-    /* Strip out dos newlines */
-    $tmp['FAIscript']= strtr($this->FAIscript, array("\x0D" => ""));
 
     if(($this->orig_cn)&&($tmp['cn']!=$this->orig_cn)){
       $tmp['remove']['from']  = $this->orig_cn;
