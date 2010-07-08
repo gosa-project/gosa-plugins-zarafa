@@ -68,7 +68,7 @@ class faiScriptEntry extends plugin
     foreach($this->attributes as $attrs){
       $smarty->assign($attrs, htmlentities($this->$attrs, ENT_QUOTES, 'utf-8'));
     }
-    $smarty->assign('FAIscript', htmlentities($this->FAIscript));
+    $smarty->assign('FAIscript', htmlentities($this->FAIscript, ENT_QUOTES, 'utf-8'));
 
     /* File download requested */
     if(isset($_POST['download'])){
@@ -99,11 +99,9 @@ class faiScriptEntry extends plugin
   /* Save data to object */
   function save_object()
   {
-    return;
     if((isset($_POST['SubObjectFormSubmitted'])) && !preg_match("/freeze/", $this->FAIstate)){
       foreach($this->attributes as $attrs){
           if($this->acl_is_writeable($attrs)){
-
               if(isset($_POST[$attrs])){
                   $this->$attrs = get_binary_post($attrs);
               }else{
