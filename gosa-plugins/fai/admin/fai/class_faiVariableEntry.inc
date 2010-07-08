@@ -24,7 +24,7 @@ class faiVariableEntry extends plugin
       $this->dn=$object['dn'];
       foreach($object as $name=>$value){
         $oname = $name;
-        $this->$oname=addslashes($value);
+        $this->$oname=($value);
       }
     }else{
       $this->status = "new";
@@ -45,11 +45,7 @@ class faiVariableEntry extends plugin
      * If we post the escaped strings they will be escaped again
      */
     foreach($this->attributes as $attrs){
-      if(get_magic_quotes_gpc()){
-        $smarty->assign($attrs,htmlentities (stripslashes(utf8_decode($this->$attrs))));
-      }else{
-        $smarty->assign($attrs,htmlentities (utf8_decode($this->$attrs)));
-      }
+      $smarty->assign($attrs,set_post($this->$attrs));
     }
 
     $tmp = $this->plInfo();
@@ -71,7 +67,7 @@ class faiVariableEntry extends plugin
       foreach($this->attributes as $attrs){
         if($this->acl_is_writeable($attrs)){
           if(isset($_POST[$attrs])){
-            $this->$attrs = $_POST[$attrs];
+            $this->$attrs = get_post($attrs);
           }else{
             $this->$attrs = "";
           }
@@ -109,7 +105,7 @@ class faiVariableEntry extends plugin
   {
     $tmp=array();
     foreach($this->attributes as $attrs){ 
-      $tmp[$attrs] = stripslashes( $this->$attrs);
+      $tmp[$attrs] = $this->$attrs;
     }
 
     if(($this->orig_cn)&&($tmp['cn']!=$this->orig_cn)){

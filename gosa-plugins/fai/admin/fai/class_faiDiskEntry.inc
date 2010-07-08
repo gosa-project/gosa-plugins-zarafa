@@ -177,7 +177,7 @@ class faiDiskEntry extends plugin
 
     // Remove partition from lvm compilation.
     if(isset($_POST['delLvmPartition']) && isset($_POST['physicalPartition'])){
-      $names = $_POST['physicalPartition'];
+      $names = get_post('physicalPartition');
       foreach($names as $name){
         if(isset($this->lvmDevices[$name])){
           unset($this->lvmDevices[$name]);
@@ -234,7 +234,7 @@ class faiDiskEntry extends plugin
 
     // Assign checkbox related values.
     foreach($this->attributes as $attrs){
-      $smarty->assign($attrs,$this->$attrs);
+      $smarty->assign($attrs,set_post($this->$attrs));
       if($this->$attrs){
         $smarty->assign($attrs."CHK"," ");
       }else{
@@ -249,14 +249,10 @@ class faiDiskEntry extends plugin
     $smarty->assign("fstabkeys", array("device" => _("Device"), "label" => _("Label"), "uuid" => _("UUID")));
     $smarty->assign("disklabels", array("msdos" => "MSDOS", "gpt" => "GPT"));
     $smarty->assign("fstabkey", $this->fstabkey);
-    $smarty->assign("disklabel", $this->disklabel);
+    $smarty->assign("disklabel", set_post($this->disklabel));
     $smarty->assign("FAIdiskType", $this->FAIdiskType);
     $smarty->assign("plist", $this->getPartitionList());
     $smarty->assign("physicalPartitionList", $this->getAvailablePartitions());
-
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr,$this->$attr);
-    }
 
     // Assign partitions
     $tmp = $this->plInfo();
@@ -628,10 +624,10 @@ class faiDiskEntry extends plugin
 
       // Save posted disk label and fstab key
       if (isset($_POST['disklabel']) && preg_match("/^(msdos|gpt)$/", $_POST['disklabel'])){
-        $this->disklabel= $_POST['disklabel'];
+        $this->disklabel= get_post('disklabel');
       }
       if (isset($_POST['fstabkey']) && preg_match("/^(device|label|uuid)$/", $_POST['fstabkey'])){
-        $this->fstabkey= $_POST['fstabkey'];
+        $this->fstabkey= get_post('fstabkey');
       }
     }
   }

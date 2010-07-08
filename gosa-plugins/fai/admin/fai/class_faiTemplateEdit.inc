@@ -34,7 +34,7 @@ class faiTemplateEdit extends plugin
 
     /* We now split cn/FAItemplatePath to make things more clear... */
     $smarty     = get_smarty();
-    $smarty->assign("templateValue",htmlspecialchars(($this->value)));
+    $smarty->assign("templateValue",set_post(($this->value)));
     $smarty->assign("write_protect",$this->write_protect);
     $smarty->assign("mb_extension",$this->mb_extension);
     return($smarty->fetch(get_template_path('faiTemplateEdit.tpl', TRUE)));

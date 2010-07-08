@@ -64,14 +64,14 @@ class faiHookEntry extends plugin
       if(($_FILES['ImportFile']['size']==0)){
         msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       }else{
-        $str = utf8_encode(file_get_contents($_FILES['ImportFile']['tmp_name']));
-        $this->FAIscript = addslashes ($str);
+        $str = file_get_contents($_FILES['ImportFile']['tmp_name']);
+        $this->FAIscript = $str;
       }
     }
 
     /* File download requested */
     if(isset($_POST['download'])){
-      send_binary_content(stripslashes($this->FAIscript),$this->cn.".FAIhook");
+      send_binary_content($this->FAIscript,$this->cn.".FAIhook");
     }
 
     /* Create download button*/
@@ -94,11 +94,7 @@ class faiHookEntry extends plugin
      * If we post the escaped strings they will be escaped again
      */
     foreach($this->attributes as $attrs){
-      if(get_magic_quotes_gpc()){
-        $smarty->assign($attrs,(stripslashes($this->$attrs)));
-      }else{
-        $smarty->assign($attrs,($this->$attrs));
-      }
+        $smarty->assign($attrs,set_post($this->$attrs));
     }
 
     $tmp = $this->plInfo();
@@ -107,11 +103,7 @@ class faiHookEntry extends plugin
       $smarty->assign($name."ACL",$acl);
     }
    
-    if(get_magic_quotes_gpc()){
-      $smarty->assign("FAIscript" , htmlentities(stripslashes($this->FAIscript)));
-    }else{
-      $smarty->assign("FAIscript" , htmlentities($this->FAIscript));
-    }
+    $smarty->assign("FAIscript" , set_post($this->FAIscript));
     $smarty->assign("freeze" , preg_match("/freeze/",$this->FAIstate));
     $display.= $smarty->fetch(get_template_path('faiHookEntry.tpl', TRUE));
     return($display);
@@ -124,7 +116,7 @@ class faiHookEntry extends plugin
       foreach($this->attributes as $attrs){
         if($this->acl_is_writeable($attrs)){
           if(isset($_POST[$attrs])){
-            $this->$attrs = $_POST[$attrs];
+            $this->$attrs = get_post($attrs);
           }else{
             $this->$attrs = "";
           }

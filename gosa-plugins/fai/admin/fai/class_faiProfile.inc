@@ -212,11 +212,7 @@ class faiProfile extends plugin
          * If we post the escaped strings they will be escaped again
          */
         foreach($this->attributes as $attrs){
-            if(get_magic_quotes_gpc()){
-                $smarty->assign($attrs,stripslashes($this->$attrs));
-            }else{
-                $smarty->assign($attrs,($this->$attrs));
-            }
+           $smarty->assign($attrs,set_post($this->$attrs));
         }
 
 
@@ -389,7 +385,7 @@ class faiProfile extends plugin
     {
         $vars = array("cn");
         $smarty = get_smarty();
-        $smarty->assign("cn", htmlentities($this->cn));
+        $smarty->assign("cn", set_post($this->cn));
         $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
         $ret = array();
         $ret['string'] = $str;

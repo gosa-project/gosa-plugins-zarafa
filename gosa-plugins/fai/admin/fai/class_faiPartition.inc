@@ -144,7 +144,7 @@ class faiPartition extends plugin
 
     // Remove partition
     if(isset($_POST['addPhysicalPartition']) && isset($_POST['physicalPartitionAdd'])){
-      $name = $_POST['physicalPartitionAdd'];
+      $name =get_post('physicalPartitionAdd');
       $this->raidDevices[$name] = array("name" => $name,"spare"=>false,"missing"=>false);     
     }
 
@@ -210,11 +210,11 @@ class faiPartition extends plugin
 
     $smarty->assign("sizeStart_Type", $this->sizeStart_Type);
     $smarty->assign("sizeStop_Type", $this->sizeStop_Type);
-    $smarty->assign("sizeStart", $this->sizeStart);
-    $smarty->assign("sizeStop", $this->sizeStop);
+    $smarty->assign("sizeStart", set_post($this->sizeStart));
+    $smarty->assign("sizeStop", set_post($this->sizeStop));
 
     $smarty->assign("preserveTypes", $preserveTypes);
-    $smarty->assign("preserveType", $this->preserveType);
+    $smarty->assign("preserveType", set_post($this->preserveType));
 
     $smarty->assign("FAIfsTypes", $FAIfsTypes);
     $smarty->assign("cn", $this->cn);
@@ -225,7 +225,7 @@ class faiPartition extends plugin
     $smarty->assign("disablePrimary", $this->disablePrimary);
 
     foreach($this->attributes as $attr){
-      $smarty->assign($attr,$this->$attr);
+      $smarty->assign($attr,set_post($this->$attr));
     }
     return($smarty->fetch(get_template_path("faiPartition.tpl", TRUE, dirname(__FILE__))));
   }

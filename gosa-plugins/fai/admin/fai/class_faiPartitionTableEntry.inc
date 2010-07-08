@@ -69,7 +69,7 @@ class faiPartitionTableEntry extends plugin
      * And Checkbox selection
      */
     foreach($this->attributes as $attrs){
-      $smarty->assign($attrs,$this->$attrs);
+      $smarty->assign($attrs,set_post($this->$attrs));
       if($this->$attrs){
         $smarty->assign($attrs."CHK"," ");
       }else{
@@ -117,7 +117,7 @@ class faiPartitionTableEntry extends plugin
      */
     $smarty->assign("setup", $this->generateParts());
     foreach($this->attributes as $attr){
-      $smarty->assign($attr,$this->$attr);
+      $smarty->assign($attr,set_post($this->$attr));
     }
 
     $tmp = $this->plInfo();
@@ -300,7 +300,7 @@ class faiPartitionTableEntry extends plugin
           if($this->acl_is_writeable($attrs)){
 
             if(isset($_POST[$attrs."_".$key])){
-              $this->partitions[$key][$attrs] = $_POST[$attrs."_".$key];
+              $this->partitions[$key][$attrs] = get_post($attrs."_".$key);
             }else{
               $this->partitions[$key][$attrs] = false;
             }

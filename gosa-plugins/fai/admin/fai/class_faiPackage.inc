@@ -460,7 +460,7 @@ class faiPackage extends plugin
             $lData[$usedName] = array('data'=>
                     array(
                         $configured."&nbsp;".$removal,
-                        $usedName ,$version,htmlentities($description), $actions));
+                        $usedName ,$version,set_post($description), $actions));
         }
     }
     $this->packageList->setAcl($this->getacl("FAIpackage",preg_match('/^freeze/', $this->FAIstate)));
@@ -469,7 +469,7 @@ class faiPackage extends plugin
 
     /* Assign variables */
     foreach($this->attributes as $attrs){
-      $smarty->assign($attrs,$this->$attrs);
+      $smarty->assign($attrs,set_post($this->$attrs));
     }
     $smarty->assign( "FAIinstallMethods", $this->FAIinstallMethods );
 
@@ -805,7 +805,7 @@ class faiPackage extends plugin
   {
     $vars = array("cn");
     $smarty = get_smarty();
-    $smarty->assign("cn", htmlentities($this->cn));
+    $smarty->assign("cn", set_post($this->cn));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
     $ret = array();
     $ret['string'] = $str;

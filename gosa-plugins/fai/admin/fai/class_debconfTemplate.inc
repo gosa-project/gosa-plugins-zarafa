@@ -143,7 +143,7 @@ class debconf
           $str = preg_replace("/\,\ $/","",$str);
           $this->template[$post_name]['Default'] = $str;
         }else{
-          $this->template[$post_name]['Default'] = $_POST[$entry['post_name']];
+          $this->template[$post_name]['Default'] = get_post($entry['post_name']);
         }
       }
     }
@@ -263,9 +263,9 @@ class debconf
       $defs = explode(", ",$data['Default']);
       foreach($choices as $value){
         if(in_array($value,$defs)){
-          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".htmlentities($value)."' checked>".$value."<br>";
+          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".set_post($value)."' checked>".$value."<br>";
         }else{
-          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".htmlentities($value)."'>".$value."<br>";
+          $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".set_post($value)."'>".$value."<br>";
         }
       }
 
@@ -321,9 +321,9 @@ class debconf
 
       foreach($choices as $value){
         if($data['Default'] == $value){
-          $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."' checked >".htmlentities($value)."<br>";
+          $result.="\n<input type='radio' name='".$post_name."' value='".set_post($value)."' checked >".set_post($value)."<br>";
         }else{
-          $result.="\n<input type='radio' name='".$post_name."' value='".htmlentities($value)."'>".htmlentities($value)."<br>";
+          $result.="\n<input type='radio' name='".$post_name."' value='".set_post($value)."'>".set_post($value)."<br>";
         }
       }
 

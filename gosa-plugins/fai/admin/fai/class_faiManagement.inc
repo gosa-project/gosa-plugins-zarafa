@@ -685,7 +685,7 @@ class faiManagement extends management
       $this->dispNewFreeze=false;
       $smarty->assign("iframe",false);
       if(isset($_POST['BranchName'])){
-        $smarty->assign("BranchName", $_POST['BranchName']);
+        $smarty->assign("BranchName", get_post('BranchName'));
       }else{
         $smarty->assign("BranchName","");
       }
@@ -708,7 +708,7 @@ class faiManagement extends management
       $this->dispNewBranch=false;
       $smarty->assign("iframe",false);
       if(isset($_POST['BranchName'])){
-        $smarty->assign("BranchName", $_POST['BranchName']);
+        $smarty->assign("BranchName", get_post('BranchName'));
       }else{
         $smarty->assign("BranchName","");
       }

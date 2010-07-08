@@ -114,8 +114,6 @@ class faiHook extends plugin
           $var = $ldap->get_attribute($object['dn'], $attrs,$r_array=0);
         }
 
-        /* Fix slashes */
-        $var = addslashes($var);
         $object[$attrs] = $var;
       }
     }
@@ -295,11 +293,7 @@ class faiHook extends plugin
      * If we post the escaped strings they will be escaped again
      */
     foreach($this->attributes as $attrs){
-      if(get_magic_quotes_gpc()){
-        $smarty->assign($attrs,stripslashes($this->$attrs));
-      }else{
-        $smarty->assign($attrs,($this->$attrs));
-      }
+        $smarty->assign($attrs,set_post($this->$attrs));
     }
 
     $tmp = $this->plInfo();
@@ -312,31 +306,6 @@ class faiHook extends plugin
 
     $display.= $smarty->fetch(get_template_path('faiHook.tpl', TRUE));
     return($display);
-  }
-
-  /* Generate listbox friendly SubObject list
-   */
-  function getList($use_dns=false){
-    $a_return=array();
-    foreach($this->SubObjects as $obj){
-      if($obj['status'] != "delete"){
-
-        $cn   = stripslashes($obj['cn']);
-        $desc = "";
-
-        if((isset($obj['description']))&&(!empty($obj['description']))){
-          $desc = " [".stripslashes($obj['description'])."]"; 
-        }
-
-        if($use_dns){
-          $a_return[$obj['cn']]['name']= $cn.$desc;
-          $a_return[$obj['cn']]['dn']= $obj['dn'];
-        }else{
-          $a_return[$obj['cn']] =  $cn.$desc;
-        }
-      }
-    }
-    return($a_return);
   }
 
 
@@ -426,7 +395,7 @@ class faiHook extends plugin
     foreach($Objects as $name => $obj){
 
       foreach($this->sub64coded as $codeIt){
-        $obj[$codeIt]=base64_encode(stripslashes($obj[$codeIt]));
+        $obj[$codeIt]=base64_encode($obj[$codeIt]);
       }
 
       $tmp = array();
@@ -436,11 +405,7 @@ class faiHook extends plugin
         if($obj[$attrs] == ""){
           $obj[$attrs] = array();
         }
-        if(!is_array($obj[$attrs])){
-          $tmp[$attrs] = stripslashes($obj[$attrs]);
-        }else{
-          $tmp[$attrs] = $obj[$attrs];
-        }
+        $tmp[$attrs] = $obj[$attrs];
       }    
 
       $tmp['objectClass'] = $this->subClasses;
@@ -533,7 +498,7 @@ class faiHook extends plugin
   {
     $vars = array("cn");
     $smarty = get_smarty();
-    $smarty->assign("cn", htmlentities($this->cn));
+    $smarty->assign("cn", set_post($this->cn));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
     $ret = array();
     $ret['string'] = $str;

@@ -96,7 +96,6 @@ class faiTemplate extends plugin
         if(in_array_ics($attrs,$this->sub64coded)){
           $var = base64_decode($var);
         }
-        $var = stripslashes($var);
 
         /*  check if this is a binary entry */
         if(in_array_ics($attrs,$this->subBinary)){

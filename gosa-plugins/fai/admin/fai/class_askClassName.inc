@@ -120,14 +120,14 @@ class askClassName extends plugin
   {
     if(isset($_POST['classSelector']) && $_POST['classSelector'] == 1 
        && isset($_POST['edit_continue'])){
-      $this->ClassName          = $_POST['UseTextInputName'];
+      $this->ClassName          = get_post('UseTextInputName');
       $this->ClassAlreadyExists = true;
     }
   
     if(isset($_POST['classSelector']) && $_POST['classSelector'] == 2 
        && isset($_POST['edit_continue'])){
       $this->ClassAlreadyExists = false;
-      $this->ClassName          = $_POST['SelectedClass'];
+      $this->ClassName          = get_post('SelectedClass');
     }
   }
 

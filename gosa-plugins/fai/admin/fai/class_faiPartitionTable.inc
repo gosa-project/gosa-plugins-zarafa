@@ -340,7 +340,7 @@ class faiPartitionTable extends plugin
     /* Assign all attributes to smarty engine
      */
     foreach($this->attributes as $attrs){
-      $smarty->assign($attrs,$this->$attrs);
+      $smarty->assign($attrs,set_post($this->$attrs));
       if($this->$attrs){
         $smarty->assign($attrs."CHK"," ");
       }else{
@@ -455,11 +455,6 @@ class faiPartitionTable extends plugin
     if(isset($_POST['FAIpartitionTablePosted'])){
       if (preg_match("/freeze/", $this->FAIstate)) return;
       plugin::save_object();
-#     foreach($this->attributes as $attrs){
-#       if(isset($_POST[$attrs])){
-#         $this->$attrs = $_POST[$attrs];
-#       }
-#     }
       if(!count($this->disks)){
         if(isset($_POST['mode'])){
           $this->FAIpartitionMethod = "setup-storage";
@@ -812,7 +807,7 @@ class faiPartitionTable extends plugin
   {
     $vars = array("cn");
     $smarty = get_smarty();
-    $smarty->assign("cn", htmlentities($this->cn));
+    $smarty->assign("cn", set_post($this->cn));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
     $ret = array();
     $ret['string'] = $str;
@@ -853,8 +848,6 @@ class faiPartitionTable extends plugin
           $var = $ldap->get_attribute($object['dn'], $attrs,$r_array=0);
         }
 
-        /* Fix slashes */
-        $var = addslashes($var);
         $object[$attrs] = $var;
       }
     }
