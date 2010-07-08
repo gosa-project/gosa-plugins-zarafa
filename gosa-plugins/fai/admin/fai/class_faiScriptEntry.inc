@@ -76,6 +76,14 @@ class faiScriptEntry extends plugin
                 }else{
                     $str = file_get_contents($_FILES['ImportFile']['tmp_name']);
                     $this->FAIscript = $str;
+
+                    // Check encoding again 
+                    if($this->mb_extension){
+                        $this->enc_before_edit = mb_detect_encoding($this->FAIscript);
+                        if($this->enc_before_edit != "ASCII"){
+                            $this->write_protect = TRUE;
+                        }
+                    }
                 }
         }
 
