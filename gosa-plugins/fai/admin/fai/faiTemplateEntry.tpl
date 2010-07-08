@@ -7,9 +7,7 @@
   <td style='width:50%;padding-right:10px;' class='right-border'>
    <table style='width:100%;' summary="{t}Generic settings{/t}">
     <tr>
-     <td>{t}File name{/t}
-      {$must}&nbsp;
-     </td>
+     <td>{t}File name{/t}{$must}&nbsp;</td>
      <td style='width:100%;'>
       {render acl=$cnACL}
        <input value="{$templateFile}" type='text' name="templateFile">
@@ -17,9 +15,8 @@
      </td>
     </tr>
     <tr>
-     <td><LABEL for="templatePath">{t}Destination path{/t}
-      {$must}&nbsp;</LABEL>
-     </td>
+     <td>
+        <LABEL for="templatePath">{t}Destination path{/t}{$must}&nbsp;</LABEL></td>
      <td>
       {render acl=$FAItemplatePathACL}
        <input type="text" name="templatePath" value="{$templatePath}" id="templatePath" >
@@ -46,8 +43,7 @@
   <td style='width:50%;' class='right-border'>
    <table summary="{t}Template file status{/t}">
     <tr>
-     <td>{t}File{/t}
-      {$must}:&nbsp;
+     <td>{t}File{/t}{$must}:&nbsp;
       {$status}
       
       {if $bStatus}
@@ -80,8 +76,7 @@
   <td>
    <table summary="{t}File attributes{/t}">
     <tr>
-     <td><LABEL for="user">{t}Owner{/t}
-      {$must}&nbsp;</LABEL>
+     <td><LABEL for="user">{t}Owner{/t}{$must}&nbsp;</LABEL>
      </td>
      <td>
       {render acl=$FAIownerACL}
@@ -90,8 +85,7 @@
      </td>
     </tr>
     <tr>
-     <td><LABEL for="group">{t}Group{/t}
-      {$must}&nbsp;</LABEL>
+     <td><LABEL for="group">{t}Group{/t}{$must}&nbsp;</LABEL>
      </td>
      <td>
       {render acl=$FAIownerACL}
@@ -102,8 +96,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Access{/t}
-      {$must}&nbsp;
+     <td>{t}Access{/t}{$must}&nbsp;
      </td>
      <td>
       <table summary="{t}File permissions{/t}"><colgroup width="55" span="3"></colgroup>

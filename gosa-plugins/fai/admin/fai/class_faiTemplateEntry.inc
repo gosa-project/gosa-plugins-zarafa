@@ -129,11 +129,7 @@ class faiTemplateEntry extends plugin
      * If we post the escaped strings they will be escaped again
      */
     foreach($this->attributes as $attrs){
-      if(get_magic_quotes_gpc()){
-        $smarty->assign($attrs,stripslashes($this->$attrs));
-      }else{
-        $smarty->assign($attrs,($this->$attrs));
-      }
+        $smarty->assign($attrs,set_post($this->$attrs));
     }
 
     /* Assign file modes */
@@ -158,8 +154,8 @@ class faiTemplateEntry extends plugin
     }
 
     /* We now split cn/FAItemplatePath to make things more clear... */
-    $smarty->assign("templateFile", preg_replace("/^.*\//","",$this->FAItemplatePath));
-    $smarty->assign("templatePath", preg_replace("/[^\/]*$/","",$this->FAItemplatePath));
+    $smarty->assign("templateFile", set_post(preg_replace("/^.*\//","",$this->FAItemplatePath)));
+    $smarty->assign("templatePath", set_post(preg_replace("/[^\/]*$/","",$this->FAItemplatePath)));
     $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));;
 
     $display.=  $smarty->fetch(get_template_path('faiTemplateEntry.tpl', TRUE));
@@ -180,9 +176,9 @@ class faiTemplateEntry extends plugin
 
       /* Set user.group (FAIowner) attribute */  
       if(isset($_POST['group']) && isset($_POST["user"]) && $this->acl_is_writeable("FAIowner")){
-        $this->FAIowner = $_POST["user"].'.'.$_POST["group"];
-        $this->user = $_POST['user'];
-        $this->group= $_POST['group'];
+        $this->FAIowner = get_post("user").'.'.get_post("group");
+        $this->user = get_post('user');
+        $this->group= get_post('group');
       }
 
       /* Check if permissions have changed */
@@ -230,7 +226,9 @@ class faiTemplateEntry extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn){
+    if(isset($this->parent->SubObjects[$this->cn]) && 
+            $this->parent->SubObjects[$this->cn]['status'] != 'delete' &&
+            $this->cn != $this->orig_cn){
       $message[] = msgPool::duplicated(_("Name"));
     }
 
