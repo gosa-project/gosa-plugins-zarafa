@@ -102,7 +102,7 @@ class faiScriptEntry extends plugin
       foreach($this->attributes as $attrs){
           if($this->acl_is_writeable($attrs)){
               if(isset($_POST[$attrs])){
-                  $this->$attrs = get_binary_post($attrs);
+                  $this->$attrs = get_post($attrs);
               }else{
                   $this->$attrs = "";
               }
