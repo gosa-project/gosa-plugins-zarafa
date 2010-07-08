@@ -900,7 +900,6 @@ class sambaAccount extends plugin
     if (isset($_POST['sambaTab'])){
       plugin::save_object();
 
-
       $this->enforcePasswordChange = (isset($_POST['enforcePasswordChange']));
       $this->cannotChangePassword = (isset($_POST['cannotChangePassword']));
 

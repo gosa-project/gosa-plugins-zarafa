@@ -368,6 +368,7 @@
             <td>
                 <label for="temporary_disable">{t}Lock samba account{/t}</label>
             </td>
+        <tr>
         </tr>            
             <td>                                                    
                 {render acl=$cannotChangePasswordACL  checkbox=$multiple_support checked=$use_cannotChangePassword}
