@@ -164,6 +164,8 @@ class faiHookEntry extends plugin
           $this->enc_after_edit = mb_detect_encoding($this->FAIscript);
       }
     }
+    if(isset($_POST['editAnyway'])) $this->write_protect = FALSE;
+
   }
 
   /* Check supplied data */
