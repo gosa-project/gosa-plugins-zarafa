@@ -461,7 +461,7 @@ class faiPackage extends plugin
             $lData[$usedName] = array('data'=>
                     array(
                         $configured."&nbsp;".$removal,
-                        $usedName ,$version,set_post($description), $actions));
+                        $usedName ,set_post($description), $version, $actions));
         }
     }
     $this->packageList->setAcl($this->getacl("FAIpackage",preg_match('/^freeze/', $this->FAIstate)));
