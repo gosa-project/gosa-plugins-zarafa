@@ -82,7 +82,8 @@ class faiVariableEntry extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn){
+    if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn && 
+            $this->parent->SubObjects[$this->cn]['status'] != 'delete'){
       $message[] = msgPool::duplicated(_("Name"));
     }
     
