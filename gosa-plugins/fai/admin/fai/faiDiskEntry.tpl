@@ -36,7 +36,7 @@
      </td>
      <td>
       {render acl=$DISKdescriptionACL}
-       <input value="{$DISKdescription}" size="45" maxlength="80"               name="DISKdescription" id="DISKdescription">
+       <input value="{$DISKdescription}" type="text" name="DISKdescription" id="DISKdescription">
       {/render}
      </td>
     </tr>

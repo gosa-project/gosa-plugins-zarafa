@@ -237,10 +237,9 @@ class faiManagement extends management
       $acl = $this->ui->get_permissions($this->acl_base,"fai/faiProfile");
       if(preg_match("/c/",$acl)){
         $type= $this->get_type(array("objectClass"=>array("FAIprofile")));
-        $str= management::newEntry('newEntry',array(),array(),$type[0],$type[2],$type[1]);
+        $str= management::newEntry('newEntry',array(),array(),$type[0],$type[2],'fai');
         if($str) return($str);
         $this->tabObject->set_acl_base($this->acl_base);
-        $this->tabObject->by_object[$type[1]]->cn = $name;
       }else{
         msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), _("profile")), ERROR_DIALOG);
       }

@@ -37,13 +37,13 @@
    <td>{t}Size{/t}
    </td>
    <td colspan=3>
-    <select name="FAIpartitionSizeType" onChange='document.mainform.submit();'>
+    <select name="FAIpartitionSizeType" onChange='document.mainform.submit();' size=1>
      {html_options options=$partitionSizeTypes selected=$FAIpartitionSizeType}
     </select>
     
     {if $FAIpartitionSizeType != "remaining"}
      <input type='text' name='sizeStart' value='{$sizeStart}' size='5'>
-     <select name='sizeStart_Type'>
+     <select name='sizeStart_Type' size=1>
       {html_options options=$sizeTypes selected=$sizeStart_Type}
      </select>
      {else}
@@ -56,7 +56,7 @@
     
     {if $FAIpartitionSizeType != "fixed" && $FAIpartitionSizeType != "remaining"}
      <input type='text' name='sizeStop' value='{$sizeStop}' size='5'>
-     <select name='sizeStop_Type'>
+     <select name='sizeStop_Type' size=1>
       {html_options options=$sizeTypes selected=$sizeStop_Type}
      </select>
      {else}
