@@ -43,8 +43,8 @@
 <hr>
 <h3><LABEL for="FAIscript">{t}Script{/t}</LABEL>
 </h3>
-{render acl=$FAIscriptACL}<textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript" 				rows=20 cols=120>
- {$FAIscript}</textarea>
+{render acl=$FAIscriptACL}
+    <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript" rows=20 cols=120>{$FAIscript}</textarea>
 {/render}
 <br>
 <div>

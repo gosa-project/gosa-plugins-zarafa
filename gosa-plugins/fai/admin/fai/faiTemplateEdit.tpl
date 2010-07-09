@@ -19,8 +19,8 @@
  {/if}
  
  
- <textarea {if $write_protect} disabled {/if}  style='width:100%; height: 350px;'  {if !$write_protect}name="templateValue"{/if}>
- {$templateValue}</textarea>
+ <textarea {if $write_protect} disabled {/if}  style='width:100%; height: 350px;' 
+     {if !$write_protect}name="templateValue"{/if}>{$templateValue}</textarea>
 
  <div class="plugin-actions">
   <button type='submit' name='templateEditSave'>{msgPool type=okButton}</button>&nbsp;
