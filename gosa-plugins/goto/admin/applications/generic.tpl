@@ -7,7 +7,7 @@
       <td><LABEL for="cn">{t}Application name{/t}{$must}</LABEL></td>
       <td>
 {render acl=$cnACL}
-	<input type='text' id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Application name{/t}">
+	<input type='text' id="cn" name="cn" value="{$cn}" title="{t}Application name{/t}">
 {/render}
       </td>
     </tr>
@@ -15,7 +15,7 @@
      <td><LABEL for="gosaApplicationName">{t}Display name{/t}</LABEL></td>
      <td>
 {render acl=$gosaApplicationNameACL}
-        <input id="gosaApplicationName" name="gosaApplicationName" size=35 maxlength=60 
+        <input id="gosaApplicationName" name="gosaApplicationName" type="text"
 	  value="{$gosaApplicationName}" title="{t}Application name to be displayed (i.e. below icons){/t}">
 {/render}
      </td>
@@ -24,7 +24,7 @@
      <td><LABEL for="gosaApplicationExecute">{t}Execute{/t}{$must}</LABEL></td>
      <td>
 {render acl=$gosaApplicationExecuteACL}
-        <input id="gosaApplicationExecute" name="gosaApplicationExecute" size=35 maxlength=120 
+        <input id="gosaApplicationExecute" name="gosaApplicationExecute" type="text"
 	  value="{$gosaApplicationExecute}" title="{t}Path and/or binary name of application{/t}">
 {/render}
      </td>
@@ -33,7 +33,7 @@
      <td><LABEL for="description">{t}Description{/t}</LABEL></td>
      <td>
 {render acl=$descriptionACL}
-      <input type='text' id="description" name="description" size=35 maxlength=80 value="{$description}">
+      <input type='text' id="description" name="description" value="{$description}">
 {/render}
      </td>
     </tr>

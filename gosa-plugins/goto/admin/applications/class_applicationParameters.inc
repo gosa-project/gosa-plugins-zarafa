@@ -112,20 +112,20 @@ class applicationParameters extends plugin
 
         $table.="<tr>".
           " <td>".
-          "  <input name=\"option$i\" size=25 maxlength=50 value=\"".$name."\" ".$tag.">".
+          "  <input type='text' name=\"option$i\" size=25 maxlength=50 value=\"".set_post($name)."\" ".$tag.">".
           " </td>".
           " <td>".
-          "  <input name=\"value$i\" size=60 maxlength=250 value=\"".$value."\" ".$tag.">".
+          "  <input type='text' name=\"value$i\" size=60 maxlength=250 value=\"".set_post($value)."\" ".$tag.">".
           "  <br>".
           " </td>".
           " <td>".
-          "  <input type=\"submit\" name=\"remove$i\" value=\""._("Remove")."\" ".$tag.">".
+          "  <button type=\"submit\" name=\"remove$i\" ".$tag.">".msgPool::delButton()."</button>".
           " </td>".
           "</tr>";
       }
     }
     $table.= "</table>";
-    $table.="<input type=\"submit\" name=\"add_option\" $tag value=\""._("Add option")."\">";
+    $table.="<button type=\"submit\" name=\"add_option\" $tag >"._("Add option")."</button>";
 
     /* Show main page */
     $smarty= get_smarty();
@@ -168,10 +168,10 @@ class applicationParameters extends plugin
   {
     if (isset($_POST['option0']) && $this->acl_is_writeable("gosaApplicationParameter")){
       for ($i= 0; $i<count($this->option_name); $i++){
-        $this->option_name[$i]= $_POST["option$i"];
+        $this->option_name[$i]= get_post("option$i");
         $this->option_value[$i]= "";
         if ($_POST["value$i"] != ""){
-          $this->option_value[$i]= $_POST["value$i"];
+          $this->option_value[$i]= get_post("value$i");
         }
       }
     }

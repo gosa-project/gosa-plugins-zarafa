@@ -164,7 +164,7 @@ class application extends plugin
     }
 
     /* Fill templating stuff */
-    $smarty->assign("cn", $this->cn);
+    $smarty->assign("cn", set_post($this->cn));
     if(!$this->is_release()){
       $smarty->assign("bases", $this->get_allowed_bases());
     }else{
@@ -184,7 +184,7 @@ class application extends plugin
 
     /* Variables */
     foreach(array("description", "gosaApplicationExecute", "gosaApplicationName","cn") as $val){
-      $smarty->assign($val, $this->$val);
+      $smarty->assign($val, set_post($this->$val));
     }
 
     /* Checkboxes */
@@ -199,7 +199,7 @@ class application extends plugin
     }
 
     $smarty->assign("isReleaseApplikation" ,$this->is_release());
-    $smarty->assign("gotoLogonScript",htmlentities($this->gotoLogonScript, ENT_COMPAT, 'UTF-8'));
+    $smarty->assign("gotoLogonScript",set_post($this->gotoLogonScript));
     $smarty->assign("base_select", $this->base);
     /* Show main page */
     return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
@@ -560,7 +560,7 @@ class application extends plugin
   function saveCopyDialog()
   {
     if(isset($_POST['cn'])){
-      $this->cn = $_POST['cn'];
+      $this->cn = set_post($_POST['cn']);
     }
   }
 
