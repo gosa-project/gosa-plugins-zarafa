@@ -219,6 +219,7 @@ class faiPackage extends plugin
       // Check all splitted packages for valid package names
       $add_packages = preg_split( "/[\s,]+/", get_post('addPpkgsText'), -1, PREG_SPLIT_NO_EMPTY );
       if( is_array($add_packages) ) {
+        $valid_packages = array();
         $invalid_packages = array();
         foreach ($add_packages as $value) {
           if(!preg_match( "/^[a-z0-9][-0-9a-z+\.]+$/",$value)){
