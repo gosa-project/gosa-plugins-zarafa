@@ -43,8 +43,17 @@
 <hr>
 <h3><LABEL for="FAIscript">{t}Script{/t}</LABEL>
 </h3>
+
+{if $write_protect}
+  {t}This FAI script is write protected, due to its encoding. Editing may break it!{/t}
+  <br>
+  <button type='submit' name='editAnyway'>{t}Edit anyway{/t}</button>
+{/if}
+
+
 {render acl=$FAIscriptACL}
-    <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript" rows=20 cols=120>{$FAIscript}</textarea>
+    <textarea {if $write_protect} disabled {/if} {if !$write_protect} name="FAIscript" {/if} 
+        style="width:100%;height:300px;" id="FAIscript" rows=20 cols=120>{$FAIscript}</textarea>
 {/render}
 <br>
 <div>

@@ -20,6 +20,12 @@ class faiHookEntry extends plugin
   var $status        = "new";
   var $parent        = NULL;
   var $FAIstate      = "";
+
+  // Encoding validation
+  var $enc_before_edit = "";
+  var $enc_after_edit = "";
+  var $write_protect = FALSE;
+
   
   function faiHookEntry (&$config, $dn= NULL,$object=false)
   {
@@ -45,6 +51,15 @@ class faiHookEntry extends plugin
         $this->orig_cn       = false;
       }
     }
+
+    // Keep an eye on dangerous encodings, we may break scripts while editing.
+    $this->mb_extension = function_exists("mb_detect_encoding");
+    if($this->mb_extension){
+        $this->enc_before_edit = mb_detect_encoding($this->FAIscript);
+        if($this->enc_before_edit != "ASCII"){
+            $this->write_protect = TRUE;
+        }
+    }
   }
 
 
@@ -66,8 +81,20 @@ class faiHookEntry extends plugin
       }else{
         $str = file_get_contents($_FILES['ImportFile']['tmp_name']);
         $this->FAIscript = $str;
+
+        // Check encoding again
+        if($this->mb_extension){
+            $this->enc_before_edit = mb_detect_encoding($this->FAIscript);
+            if($this->enc_before_edit != "ASCII"){
+                $this->write_protect = TRUE;
+            }
+        }
       }
     }
+
+    // Assign encoding related variables.
+    $smarty->assign("write_protect",$this->write_protect);
+
 
     /* File download requested */
     if(isset($_POST['download'])){
@@ -114,6 +141,10 @@ class faiHookEntry extends plugin
   {
     if((isset($_POST['SubObjectFormSubmitted'])) && !preg_match("/^freeze/", $this->FAIstate)){
       foreach($this->attributes as $attrs){
+
+        // Do not update the hook content, here, we'll do this a few lines below.
+        if($attrs == 'FAIscript') continue;
+
         if($this->acl_is_writeable($attrs)){
           if(isset($_POST[$attrs])){
             $this->$attrs = get_post($attrs);
@@ -121,6 +152,16 @@ class faiHookEntry extends plugin
             $this->$attrs = "";
           }
         }
+      }
+
+      // Get FAIscript changes
+      if(isset($_POST['FAIscript']) &&
+              $this->acl_is_writeable('FAIscript') &&
+              !$this->write_protect){
+
+          // Check encoding again.
+          $this->FAIscript = get_post('FAIscript');
+          $this->enc_after_edit = mb_detect_encoding($this->FAIscript);
       }
     }
   }
@@ -130,6 +171,13 @@ class faiHookEntry extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
+
+    if($this->mb_extension && !$this->write_protect && $this->enc_after_edit !== $this->enc_before_edit ){
+        $msg = sprintf(_("The script encodig has changed from '%s' to '%s'. Do you really want to save?"),
+                "<i>".$this->enc_before_edit."</i>","<i>".$this->enc_after_edit."</i>");
+        $message[] = $msg;
+        $this->enc_before_edit = $this->enc_after_edit;
+    }
 
     if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn && 
         $this->parent->SubObjects[$this->cn]['status'] != 'delete'){
