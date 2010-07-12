@@ -203,7 +203,7 @@ class proxyAccount extends plugin
         if ($_POST["quota_size"] == "gosaProxyQuota"){
           $message[]= msgPool::invalid(_("Quota Setting"));
         }elseif ($_POST["quota_size"] <= 0){
-          $message[]= msgPool::invalid(_("Quota Setting"),$_POST["quota_size"],"/^[0-9]/");
+          $message[]= msgPool::invalid(_("Quota Setting"),get_post("quota_size"),"/^[0-9]/");
         }
       }
     }
@@ -258,13 +258,13 @@ class proxyAccount extends plugin
       if ($this->acl_is_writeable("gosaProxyFlagT")){
         if(isset($_POST['startMinute'])){
           $old= $this->gosaProxyWorkingStart;
-          $this->gosaProxyWorkingStart= $_POST["startHour"] * 60 + $_POST["startMinute"];
+          $this->gosaProxyWorkingStart= get_post('startHour') * 60 + get_post('startMinute');
           $this->is_modified= ($old != $this->gosaProxyWorkingStart)?TRUE:$this->is_modified;
         }
 
         if (isset($_POST['stopMinute'])){
           $old= $this->gosaProxyWorkingStop;
-          $this->gosaProxyWorkingStop = $_POST["stopHour"]  * 60 + $_POST["stopMinute"];
+          $this->gosaProxyWorkingStop = get_post('stopHour')  * 60 + get_post('stopMinute');
           $this->is_modified= ($old != $this->gosaProxyWorkingStop)?TRUE:$this->is_modified;
         }
       }
@@ -272,14 +272,14 @@ class proxyAccount extends plugin
       /* Save quota values */
       if ($this->acl_is_writeable("gosaProxyFlagB")){
         if(isset($_POST["quota_size"]) && isset($_POST["quota_unit"])){
-          $this->gosaProxyQuota= $_POST["quota_size"].$_POST["quota_unit"];
+          $this->gosaProxyQuota= get_post("quota_size").get_post("quota_unit");
         }
       }
   
       /*Save quota period */
       if($this->acl_is_writeable("gosaProxyFlagB")){
         if(isset($_POST["gosaProxyQuotaPeriod"])){
-          $this->gosaProxyQuotaPeriod = $_POST["gosaProxyQuotaPeriod"];
+          $this->gosaProxyQuotaPeriod = get_post("gosaProxyQuotaPeriod");
         }
       }
     }
@@ -341,6 +341,7 @@ class proxyAccount extends plugin
               ),
 
           "plProvidedAcls"  => array(
+            "gosaProxyQuota"       => _("Quota"), 
             "gosaProxyFlagF"       => _("Filter unwanted content"), 
             "gosaProxyFlagT"       => _("Limit proxy access"),
             "gosaProxyFlagB"       => _("Restrict proxy usage by quota"))
