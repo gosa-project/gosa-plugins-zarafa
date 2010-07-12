@@ -113,7 +113,7 @@ class kolabAccount extends plugin
 
     /* Load attributes */
     foreach($this->attributes as $val){
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post($this->$val));
     }
 
     $tmp = $this->plInfo();
@@ -171,7 +171,7 @@ class kolabAccount extends plugin
       if ($_POST['delegate_address'] != ""){
 
         /* Valid email address specified? */
-        $address= $_POST['delegate_address'];
+        $address= get_post('delegate_address');
         $valid= FALSE;
         if (!tests::is_email($address)){
           if (!tests::is_email($address, TRUE)){
@@ -203,7 +203,7 @@ class kolabAccount extends plugin
     /* Delete forward email addresses */
     if ((isset($_POST['delete_delegation'])) && (isset($_POST['delegate_list']))){
       if (count($_POST['delegate_list']) && $this->acl_is_writeable("kolabDelegate")){
-        $this->delDelegate ($_POST['delegate_list']);
+        $this->delDelegate (get_post('delegate_list'));
       }
     }
 
@@ -213,7 +213,7 @@ class kolabAccount extends plugin
                       'ACT_REJECT_IF_CONFLICTS' => _("Reject if conflicts"),
                       'ACT_MANUAL_IF_CONFLICTS' => _("Manual if conflicts"),
                       'ACT_MANUAL'              => _("Manual"));
-    $smarty->assign('policies', $policies);
+    $smarty->assign('policies', set_post($policies));
 
     /* Adjust checkbox */
     if ($this->unrestrictedMailSize){
@@ -227,7 +227,7 @@ class kolabAccount extends plugin
       /* Smarty will produce <option value=""></option> and tidy don't like that, so tell smarty to create no option (array();)*/
       $smarty->assign("kolabDelegate", array());
     } else {
-      $smarty->assign("kolabDelegate", $this->kolabDelegate);
+      $smarty->assign("kolabDelegate", set_post($this->kolabDelegate));
     }
 
     $smarty->assign("mail_account",$this->mail_Account);
@@ -270,7 +270,7 @@ class kolabAccount extends plugin
         if(!$this->acl_is_readable("kolabInvitationPolicy")){
           $name='';
         }
-        $invitation.= "<input name=\"address$nr\" size=16 maxlength=60  value=\"$name\" id='address".$nr."' ".$dis.">";
+        $invitation.= "<input type='text'name=\"address$nr\" size=16 maxlength=60  value=\"".set_post($name)."\" id='address".$nr."' ".$dis.">";
       }
       $invitation.= "</td>";
 
@@ -287,10 +287,10 @@ class kolabAccount extends plugin
       /* Assign buttons */
       $button= "";
       if ($nr == count($this->kolabInvitationPolicy)-1){
-        $button= "<input type='image' name=\"add_inv_".$nr."\" src='images/lists/new.png' id='add".$nr."' ".$dis.">";
+        $button= "<button type='submit' name=\"add_inv_".$nr."\" id='add".$nr."' ".$dis.">".msgPool::addButton()."</button>";
       }
       if ($nr != 0) {
-        $button.= "<input type='image' name=\"del_inv_".$nr."\" src='images/lists/trash.png' id='remove".$nr."' ".$dis.">";
+        $button.= "<button type='submit' name=\"del_inv_".$nr."\" id='remove".$nr."' ".$dis.">".msgPool::delButton()."</button>";
       }
       
       $invitation.= "</select>&nbsp;</td>
@@ -303,7 +303,6 @@ class kolabAccount extends plugin
     $smarty->assign("changeState", $changeState);
     $smarty->assign("kolabState",$this->is_account);
 
-  
     $smarty->assign("multiple_support",$this->multiple_support_active);
     foreach($this->attributes as $attr){
       $smarty->assign("use_".$attr,in_array($attr,$this->multi_boxes));
@@ -433,9 +432,9 @@ class kolabAccount extends plugin
 
         /* Anonymous? */
         if (!isset($_POST["address$nr"])){
-          $this->kolabInvitationPolicy[]= $_POST["policy$nr"];
+          $this->kolabInvitationPolicy[]= get_post("policy$nr");
         } else {
-          $this->kolabInvitationPolicy[]= $_POST["address$nr"].": ".$_POST["policy$nr"];
+          $this->kolabInvitationPolicy[]= get_post("address$nr").": ".get_post("policy$nr");
         }
 
         $nr++;
