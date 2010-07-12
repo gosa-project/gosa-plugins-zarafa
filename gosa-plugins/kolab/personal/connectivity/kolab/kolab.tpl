@@ -107,7 +107,7 @@
    <td><LABEL for="calFBURL">{t}URL{/t}</LABEL></td>
    <td>
 {render acl=$calFBURLACL checkbox=$multiple_support checked=$use_calFBURL}
-   <input id="calFBURL" name="calFBURL" size=30 maxlength=60 value="{$calFBURL}" 
+   <input type='text' id="calFBURL" name="calFBURL" size=30 maxlength=60 value="{$calFBURL}" 
 	{if !$kolabState && !$multiple_support} disabled {/if}>
 {/render}
    </td>
@@ -116,7 +116,7 @@
   <td><LABEL for="kolabFreeBusyFuture">{t}Future{/t}</LABEL></td>
   <td>
 {render acl=$kolabFreeBusyFutureACL checkbox=$multiple_support checked=$use_kolabFreeBusyFuture}
-   <input id="kolabFreeBusyFuture" name="kolabFreeBusyFuture" size=5 maxlength=6 
+   <input type='text' id="kolabFreeBusyFuture" name="kolabFreeBusyFuture" size=5 maxlength=6 
 	{if !$kolabState && !$multiple_support} disabled {/if} value="{$kolabFreeBusyFuture}" > 
 	{t}days{/t}
 {/render}
