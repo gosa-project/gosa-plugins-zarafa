@@ -21,7 +21,7 @@
         {/foreach}
        </select>
       {else}
-       <input type='input' name='value_{$key}' value="{$item.CURRENT}" style='width:280px;'>
+       <input type='text' name='value_{$key}' value="{$item.CURRENT}" style='width:280px;'>
       {/if}
      {/render}
     </td>

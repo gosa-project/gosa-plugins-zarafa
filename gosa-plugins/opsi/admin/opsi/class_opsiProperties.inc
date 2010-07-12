@@ -36,7 +36,7 @@ class opsiProperties extends plugin
     $acl =  $ui->get_permissions($this->config->current['BASE'],"opsi/opsiProperties","");
     $smarty = get_smarty();
     $smarty->assign("ACL",$acl);
-    $smarty->assign("cfg",$this->cfg);
+    $smarty->assign("cfg",set_post($this->cfg));
     $smarty->assign("cfg_count",count($this->cfg));
     return($smarty->fetch(get_template_path("properties.tpl",TRUE,dirname(__FILE__))));
   }
