@@ -319,7 +319,7 @@ class sambaAccount extends plugin
     foreach($this->config->data['SERVERS']['SAMBA'] as $name => $content){
       $domains[]= $name;
     }
-    $smarty->assign("domains", $domains);
+    $smarty->assign("domains", set_post($domains));
     $letters= array("&nbsp;");
     for ($i= 68; $i<91; $i++){
       $letters[]= chr($i).":";
@@ -330,7 +330,7 @@ class sambaAccount extends plugin
     foreach ($this->ctxattributes as $attr){
       /* Fill common attributes */
       if (isset($this->mungedObject->ctx[$attr])){
-        $smarty->assign("$attr", $this->mungedObject->ctx[$attr]);
+        $smarty->assign("$attr", set_post($this->mungedObject->ctx[$attr]));
         // Set field  to blank if value is 0
         if(in_array($attr, array("CtxMaxConnectionTime", "CtxMaxDisconnectionTime", "CtxMaxIdleTime"))) {
           if($this->mungedObject->ctx[$attr] == 0) {
@@ -356,18 +356,18 @@ class sambaAccount extends plugin
         "1" => _("from previous client only"));
 
     /* Fill preset items */
-    $smarty->assign("shadow", $shadowModeVals);
-    $smarty->assign("brokenconn", $brokenConnModeVals);
-    $smarty->assign("reconn", $reConnModeVals);
+    $smarty->assign("shadow", set_post($shadowModeVals));
+    $smarty->assign("brokenconn", set_post($brokenConnModeVals));
+    $smarty->assign("reconn", set_post($reConnModeVals));
 
     /* Fill preset items with values */
-    $smarty->assign("shadowmode", $this->mungedObject->getShadow());
-    $smarty->assign("brokenconnmode", $this->mungedObject->getBrokenConn());
-    $smarty->assign("reconnmode", $this->mungedObject->getReConn());
+    $smarty->assign("shadowmode",      set_post($this->mungedObject->getShadow()));
+    $smarty->assign("brokenconnmode",  set_post($this->mungedObject->getBrokenConn()));
+    $smarty->assign("reconnmode",      set_post($this->mungedObject->getReConn()));
 
     if(session::get('js')){
       /* Set form elements to disabled/enable state */
-      $smarty->assign("tsloginstate", $this->mungedObject->getTsLogin()?"":"disabled");
+      $smarty->assign("tsloginstate", set_post($this->mungedObject->getTsLogin()?"":"disabled"));
 
       $smarty->assign("inheritstate", "");
       if($this->acl_is_writeable("AllowLoginOnTerminalServer")){
@@ -406,12 +406,12 @@ class sambaAccount extends plugin
       $smarty->assign("multiple_workstations",$this->multiple_sambaUserWorkstations);
     }  
 
-    $smarty->assign("workstations", $ws);
+    $smarty->assign("workstations", set_post($ws));
     
 
     /* Variables */
     foreach($this->attributes as $val){
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post($this->$val));
     }
 
     /* 'sambaAcctFlags' checkboxes */
@@ -452,7 +452,7 @@ class sambaAccount extends plugin
 
     /* In case of javascript, disable some fields on demand */
     foreach($this->mungedObject->getOnDemandFlags() as $key => $value) {
-      $smarty->assign("$key", "$value");
+      $smarty->assign("$key", set_post($value));
     }
 
 
@@ -512,13 +512,13 @@ class sambaAccount extends plugin
         }
       }
     }
-    $smarty->assign("additional_info_PwdMustChange",$additional_info_PwdMustChange);
-    $smarty->assign("no_expiry",$this->no_expiry);
+    $smarty->assign("additional_info_PwdMustChange",set_post($additional_info_PwdMustChange));
+    $smarty->assign("no_expiry",set_post($this->no_expiry));
 
     /* Show main page */
-    $smarty->assign("multiple_support",$this->multiple_support_active);
-    $smarty->assign('enforcePasswordChange', $this->enforcePasswordChange);
-    $smarty->assign("cannotChangePassword", $this->cannotChangePassword);
+    $smarty->assign("multiple_support",     set_post($this->multiple_support_active));
+    $smarty->assign('enforcePasswordChange',set_post($this->enforcePasswordChange));
+    $smarty->assign("cannotChangePassword", set_post($this->cannotChangePassword));
     $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
     return ($display);
   }
@@ -976,18 +976,14 @@ class sambaAccount extends plugin
 
       /* Save sambaDomain attribute */
       if ($this->acl_is_writeable("sambaDomainName") && isset ($_POST['sambaDomainName'])){
-        $this->sambaDomainName= validate($_POST['sambaDomainName']);
+        $this->sambaDomainName= get_post('sambaDomainName');
       }
 
       /* Save CTX values */
       /* Save obvious values */
       foreach($this->ctxattributes as $val){
         if (isset($_POST[$val]) && $this->acl_is_writeable("AllowLoginOnTerminalServer")){
-          if (get_magic_quotes_gpc()) {
-            $this->mungedObject->ctx[$val]= stripcslashes(validate($_POST[$val]));
-          } else {
-            $this->mungedObject->ctx[$val]= validate($_POST[$val]);
-          }
+          $this->mungedObject->ctx[$val]= get_post($val);
         }
       }
 
@@ -1021,7 +1017,7 @@ class sambaAccount extends plugin
 
       /* Save combo boxes. Takes two values */
       if(isset($_POST['reconn'])) {
-        $this->mungedObject->setShadow(isset($_POST['shadow']) && $this->acl_is_writeable("AllowLoginOnTerminalServer"),$_POST['shadow']);
+        $this->mungedObject->setShadow(isset($_POST['shadow']) && $this->acl_is_writeable("AllowLoginOnTerminalServer"),get_post('shadow'));
       }
 
       /* Check for changes */
