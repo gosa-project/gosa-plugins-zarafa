@@ -320,7 +320,7 @@ class mailAccount extends plugin
 
     if (isset($_POST['add_forwarder'])){
       if ($_POST['forward_address'] != ""){
-        $address= $_POST['forward_address'];
+        $address= get_post('forward_address');
         $valid= FALSE;
         if (!tests::is_email($address)){
           if (!tests::is_email($address, TRUE)){
@@ -373,7 +373,7 @@ class mailAccount extends plugin
       } else {
         $valid= TRUE;
       }
-      if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
+      if ($valid && ($user= $this->addAlternate (get_post('alternate_address'))) != ""){
         $ui= get_userinfo();
         $addon= "";
         if ($user[0] == "!") {
@@ -404,17 +404,17 @@ class mailAccount extends plugin
       $smarty->assign("$name"."ACL", $this->getacl($name));
     }
     foreach($this->attributes as $attr){
-      $smarty->assign($attr,$this->$attr);
+      $smarty->assign($attr,set_post($this->$attr));
     }
     $smarty->assign("quotaEnabled", $this->mailMethod->quotaEnabled());
     if($this->mailMethod->quotaEnabled()){
       $smarty->assign("quotaUsage",   mailMethod::quota_to_image($this->quotaUsage,$this->gosaMailQuota));
-      $smarty->assign("gosaMailQuota",$this->gosaMailQuota);
+      $smarty->assign("gosaMailQuota",set_post($this->gosaMailQuota));
     }
     $smarty->assign("domainSelectionEnabled", $this->mailMethod->domainSelectionEnabled());
-    $smarty->assign("MailDomains", $this->mailDomainParts);
-    $smarty->assign("MailDomain" , $this->mailDomainPart);
-    $smarty->assign("MailServers", $this->mailMethod->getMailServers());
+    $smarty->assign("MailDomains", set_post($this->mailDomainParts));
+    $smarty->assign("MailDomain" , set_post($this->mailDomainPart));
+    $smarty->assign("MailServers", set_post($this->mailMethod->getMailServers()));
     $smarty->assign("allowSieveManagement", $this->mailMethod->allowSieveManagement());
     $smarty->assign("own_script",  $this->sieveManagementUsed);
 
@@ -460,9 +460,9 @@ class mailAccount extends plugin
     $smarty->assign("template", "");
     if (count($this->vacationTemplates)){
       $smarty->assign("show_templates", "true");
-      $smarty->assign("vacationtemplates", $this->vacationTemplates);
+      $smarty->assign("vacationtemplates", set_post($this->vacationTemplates));
       if (isset($_POST['vacation_template'])){
-        $smarty->assign("template", $_POST['vacation_template']);
+        $smarty->assign("template", set_post(get_post('vacation_template')));
       }
     } else {
       $smarty->assign("show_templates", "false");
@@ -516,9 +516,9 @@ class mailAccount extends plugin
        */
       if (isset($_POST["import_vacation"]) && isset($this->vacationTemplates[$_POST["vacation_template"]])){
         if($this->multiple_support_active){
-          $contents = ltrim(preg_replace("/^DESC:.*$/m","",file_get_contents($_POST["vacation_template"])));
+          $contents = ltrim(preg_replace("/^DESC:.*$/m","",file_get_contents(get_post("vacation_template"))));
         }else{
-          $contents = $this->prepare_vacation_template(file_get_contents($_POST["vacation_template"]));
+          $contents = $this->prepare_vacation_template(file_get_contents(get_post("vacation_template")));
         }
         $this->gosaVacationMessage= htmlspecialchars($contents);
       }
@@ -584,10 +584,10 @@ class mailAccount extends plugin
         if($this->mailMethod->vacationRangeEnabled()){
           if($this->acl_is_writeable("gosaVacationMessage") && preg_match("/V/",$this->gosaMailDeliveryMode)){
             if(isset($_POST['gosaVacationStart'])){
-              $this->gosaVacationStart = $_POST['gosaVacationStart'];
+              $this->gosaVacationStart = get_post('gosaVacationStart');
             }
             if(isset($_POST['gosaVacationStop'])){
-              $this->gosaVacationStop = $_POST['gosaVacationStop'];
+              $this->gosaVacationStop = get_post('gosaVacationStop');
             }
           }
         }
@@ -1165,7 +1165,7 @@ class mailAccount extends plugin
       /* Execute to save mailAlternateAddress && gosaMailForwardingAddress */
       $this->execute();
       if(isset($_POST['mail'])){
-          $this->mail = $_POST['mail'];
+          $this->mail = get_post('mail');
       }
   }
 
@@ -1231,8 +1231,8 @@ class mailAccount extends plugin
 
     if($this->mailMethod->vacationRangeEnabled()){
       if(in_array("V",$flag_add)){
-        $ret['gosaVacationStart'] =  $this->gosaVacationStart = $_POST['gosaVacationStart'];
-        $ret['gosaVacationStop'] =  $this->gosaVacationStop = $_POST['gosaVacationStop'];
+        $ret['gosaVacationStart'] =  $this->gosaVacationStart = get_post('gosaVacationStart');
+        $ret['gosaVacationStop'] =  $this->gosaVacationStop = get_post('gosaVacationStop');
       }
     }
     return($ret);

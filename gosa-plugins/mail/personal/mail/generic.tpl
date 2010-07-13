@@ -58,7 +58,7 @@
      <td><label for="gosaMailQuota">{t}Quota size{/t}</label></td>
      <td>
       {render acl=$gosaMailQuotaACL checkbox=$multiple_support checked=$use_gosaMailQuota}
-      <input id="gosaMailQuota" name="gosaMailQuota" size="6" align="middle" maxlength="60"
+      <input type='text' id="gosaMailQuota" name="gosaMailQuota" size="6" align="middle" maxlength="60"
       value="{$gosaMailQuota}"> MB
       {/render}
      </td>
@@ -253,7 +253,7 @@
   <label for="gosaMailMaxSize">{t}Reject mails bigger than{/t}</label>
   {render acl=$gosaMailMaxSizeACL checkbox=$multiple_support checked=$use_gosaMailMaxSize}
   <input {if $own_script != ""} disabled {/if} id="gosaMailMaxSize" name="gosaMailMaxSize" 
-  size="6" align="middle" maxlength="30" value="{$gosaMailMaxSize}"  class="center"> {t}MB{/t}
+  size="6" align="middle" type='text' maxlength="30" value="{$gosaMailMaxSize}"  class="center"> {t}MB{/t}
   {/render}
  </div>
 </div>
