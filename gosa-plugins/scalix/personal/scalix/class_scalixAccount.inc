@@ -108,7 +108,7 @@ class scalixAccount extends plugin
 
     /* Load templating engine */
     $smarty= get_smarty();
-    $smarty->assign("scalixGroup",$this->scalixGroup);
+    $smarty->assign("scalixGroup", set_post($this->scalixGroup));
     $display= "";
 
     /* Do we need to flip is_account state? */
@@ -159,7 +159,7 @@ class scalixAccount extends plugin
       "scalixServerLanguage", "scalixLimitMailboxSize", "scalixLimitOutboundMail", "scalixEmailAddress",
       "scalixLimitInboundMail", "scalixLimitNotifyUser", "scalixHideUserEntry", "scalixMailboxClass") as $val){
 
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post($this->$val));
     }
 
     $tmp = $this->plInfo();
@@ -250,12 +250,12 @@ class scalixAccount extends plugin
       plugin::save_object();
 
       /* Check if given value is not empty */
-      if (isset($_POST['email_address']) && !empty($_POST['email_address'])){
+      if (isset($_POST['email_address']) && !empty($_POST['email_address']) && isset($_POST['add_email'])){
         $valid= FALSE;
 
         /* Valid mail address */
         if( ($this->is_template && !tests::is_email($_POST['email_address'], TRUE)) ||
-            (!$this->is_template && !tests::is_email($_POST['email_address'])) ){
+            (!$this->is_template && !tests::is_email($_POST['email_address']))){
           msg_dialog::display(_("Error"), _("Cannot add invalid mail address!"), ERROR_DIALOG);
         }else{
           $valid = TRUE;
@@ -267,7 +267,7 @@ class scalixAccount extends plugin
         }else{
 
           /* Mail address already in use ? */
-          if ($valid && ($user= $this->addEmail ($_POST['email_address'])) != ""){
+          if ($valid && ($user= $this->addEmail (get_post('email_address'))) != ""){
             $ui= get_userinfo();
             if ($user != $ui->username){
               msg_dialog::display(_("Error"), sprintf(_("Cannot add mail address: it is already used by user '%s'."), $user),
@@ -506,7 +506,7 @@ class scalixAccount extends plugin
           }
 
           /* Mail address already in use ? */
-          if ($valid && ($user= $this->addEmail ($_POST['email_address'])) != ""){
+          if ($valid && ($user= $this->addEmail (get_post('email_address'))) != ""){
             $ui= get_userinfo();
             if ($user != $ui->username){
               msg_dialog::display(_("Error"), sprintf(_("Cannot add mail address: it is already used by user '%s'."), $user), ERROR_DIALOG);
@@ -551,7 +551,7 @@ class scalixAccount extends plugin
   function getCopyDialog()
   {
     $smarty = get_smarty(); 
-    $smarty->assign("scalixEmailAddress",$this->scalixEmailAddress);
+    $smarty->assign("scalixEmailAddress",set_post($this->scalixEmailAddress));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));    
     $ret = array();
     $ret['string'] = $str;
