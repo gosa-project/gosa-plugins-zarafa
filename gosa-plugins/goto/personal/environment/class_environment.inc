@@ -389,7 +389,7 @@ class environment extends plugin
     /* Prepare all variables for smarty */
     foreach($this->attributes as $s_attr){
       /* Set value*/
-      $smarty->assign($s_attr,$this->$s_attr);
+      $smarty->assign($s_attr,set_post($this->$s_attr));
 
       /* Set checkbox state*/
       if(empty($this->$s_attr)){
@@ -511,7 +511,7 @@ class environment extends plugin
     /* Prepare all variables for smarty */
     foreach($this->attributes as $s_attr){
       /* Set value*/
-      $smarty->assign($s_attr,$this->$s_attr);
+      $smarty->assign($s_attr,set_post($this->$s_attr));
 
       /* Set checkbox state*/
       if(empty($this->$s_attr)){
@@ -570,19 +570,19 @@ class environment extends plugin
     }
 
 
-    $smarty->assign("gotoXResolutions"    , $this->gotoXResolutions);
-    $smarty->assign("gotoXResolutionKeys" , array_flip($this->gotoXResolutions));
+    $smarty->assign("gotoXResolutions"    , set_post($this->gotoXResolutions));
+    $smarty->assign("gotoXResolutionKeys" , set_post(array_flip($this->gotoXResolutions)));
 
-    $smarty->assign("gotoProfileServers",$this->gotoProfileServers);
+    $smarty->assign("gotoProfileServers", set_post($this->gotoProfileServers));
     if(!is_array($this->gotoProfileServers)){
       $this->gotoProfileServers =array();
     }
 
     /* Handle kiosk profiles*/
-    $smarty->assign("kiosk_servers" , $this->gotoKioskProfiles['SERVERS']);
-    $smarty->assign("kiosk_server" ,  $this->gotoKioskProfile_Server);
-    $smarty->assign("kiosk_profiles" , $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server]);
-    $smarty->assign("kiosk_profile" ,  $this->gotoKioskProfile_Profile);
+    $smarty->assign("kiosk_servers" , set_post($this->gotoKioskProfiles['SERVERS']));
+    $smarty->assign("kiosk_server" ,  set_post($this->gotoKioskProfile_Server));
+    $smarty->assign("kiosk_profiles", set_post($this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server]));
+    $smarty->assign("kiosk_profile" , set_post($this->gotoKioskProfile_Profile));
   
 
     /* Logonscript Management
@@ -649,7 +649,7 @@ class environment extends plugin
        * There must be an entry selected to perform edit request.
        */
       if((isset($_POST['gotoLogonScriptEdit']))&&(isset($_POST['gotoLogonScript']))){
-        $is_entry = $this->gotoLogonScripts[$_POST['gotoLogonScript']];
+        $is_entry = $this->gotoLogonScripts[get_post('gotoLogonScript')];
         $this->is_dialog = true;
         $this->dialog = new logonManagementDialog($this->config,$this->dn,$is_entry);
       }
@@ -657,12 +657,12 @@ class environment extends plugin
 
     /* Append List to smarty*/
     if($this->multiple_support_active){
-      $smarty->assign("gotoLogonScripts",  $this->gotoLogonScripts);
-      $smarty->assign("gotoLogonScriptKeysCnt",count($this->gotoLogonScripts));
+      $smarty->assign("gotoLogonScripts",       set_post($this->gotoLogonScripts));
+      $smarty->assign("gotoLogonScriptKeysCnt", count($this->gotoLogonScripts));
     }else{
       $ls = $this->printOutLogonScripts();
-      $smarty->assign("gotoLogonScripts",  $ls);
-      $smarty->assign("gotoLogonScriptKeys",array_flip($ls));
+      $smarty->assign("gotoLogonScripts",  set_post($ls));
+      $smarty->assign("gotoLogonScriptKeys",set_post(array_flip($ls)));
       $smarty->assign("gotoLogonScriptKeysCnt",count($ls));
     }
 
@@ -671,11 +671,11 @@ class environment extends plugin
      *  and attach this combination to his setup.
      */
 
-    $smarty->assign("gotoShareSelections",    $this->gotoShareSelections);
+    $smarty->assign("gotoShareSelections",    set_post($this->gotoShareSelections));
     if(!is_array($this->gotoShareSelections)){
       $this->gotoShareSelections = array();
     }
-    $smarty->assign("gotoShareSelectionKeys", array_flip($this->gotoShareSelections));
+    $smarty->assign("gotoShareSelectionKeys", set_post(array_flip($this->gotoShareSelections)));
 
     /* if $_POST['gotoShareAdd'] is set, we will try to add a new entry 
      * This entry will be, a combination of mountPoint and sharedefinitions 
@@ -701,9 +701,9 @@ class environment extends plugin
           ){
         msg_dialog::display(_("Error"), msgPool::invalid(_("Mount point")), ERROR_DIALOG);
       }else{
-        $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
-        $s_mount = $_POST['gotoShareMountPoint'];
-        $s_user  = $_POST['ShareUser'];
+        $a_share = $this->gotoAvailableShares[get_post('gotoShareSelection')];
+        $s_mount = get_post('gotoShareMountPoint');
+        $s_user  = get_post('ShareUser');
         /* Preparing the new assignment */ 
         $this->gotoShares[$a_share['name']."|".$a_share['server']]=$a_share;
         $this->gotoShares[$a_share['name']."|".$a_share['server']]['Username']=$s_user;
@@ -875,10 +875,10 @@ class environment extends plugin
     }
 
     if($this->multiple_support_active){
-      $smarty->assign("gotoHotplugDevices",$this->gotoHotplugDevices);
+      $smarty->assign("gotoHotplugDevices", set_post($this->gotoHotplugDevices));
     }else{
-      $smarty->assign("gotoHotplugDevices",$this->printOutHotPlugDevices());
-      $smarty->assign("gotoHotplugDeviceKeys",array_flip($this->printOutHotPlugDevices()));
+      $smarty->assign("gotoHotplugDevices", set_post($this->printOutHotPlugDevices()));
+      $smarty->assign("gotoHotplugDeviceKeys",set_post(array_flip($this->printOutHotPlugDevices())));
     }
 
     /* Printer Assignment will managed below 
@@ -958,7 +958,7 @@ class environment extends plugin
 
 
     if((isset($_POST['gotoPrinterDel']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
-      $printer = $_POST['gotoPrinterSel'];
+      $printer = get_post('gotoPrinterSel');
       foreach($printer as $pname){
 
         $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$this->gotoPrinter[$pname]['dn'],"printer");
@@ -991,7 +991,7 @@ class environment extends plugin
     }
 
     if((isset($_POST['gotoPrinterEdit']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
-      $printers = $_POST['gotoPrinterSel'];
+      $printers = get_post('gotoPrinterSel');
       $this->add_del_printer_member_was_called = true;
       foreach($printers as $printer){
         if($this->gotoPrinter[$printer]['mode']=="user"){
@@ -1014,7 +1014,7 @@ class environment extends plugin
       }
     }
 
-    $smarty->assign("gotoPrinter",$this->printOutPrinterDevices());
+    $smarty->assign("gotoPrinter", set_post($this->printOutPrinterDevices()));
 
     /* General behavior */
     if(is_object($this->dialog)){
@@ -1093,15 +1093,15 @@ class environment extends plugin
       $PACL =  $this->getacl("gotoProfileServer").$this->getacl("gotoProfileQuota");
 
       if(isset($_POST['kiosk_server'])){
-        $tmp = $_POST['kiosk_server'];
+        $tmp = get_post('kiosk_server');
         if(isset($this->gotoKioskProfiles['SERVERS'][$tmp])){
-          $this->gotoKioskProfile_Server = $_POST['kiosk_server'];
+          $this->gotoKioskProfile_Server = get_post('kiosk_server');
         }
       }
       if(isset($_POST['kiosk_profile'])){
-        $tmp = $_POST['kiosk_profile'];
+        $tmp = get_post('kiosk_profile');
         if(in_array($tmp,$this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
-          $this->gotoKioskProfile_Profile = $_POST['kiosk_profile'];
+          $this->gotoKioskProfile_Profile = get_post('kiosk_profile');
         }
       }
 
@@ -1115,7 +1115,7 @@ class environment extends plugin
 
       if($this->acl_is_writeable("gotoProfileFlagC")){
         if(isset($_POST['gotoProfileFlagC'])){
-          $this->gotoProfileFlagC = $_POST['gotoProfileFlagC'];
+          $this->gotoProfileFlagC = get_post('gotoProfileFlagC');
         }else{
           $this->gotoProfileFlagC = false;
         }
@@ -1123,7 +1123,7 @@ class environment extends plugin
 
       if($this->acl_is_writeable("gotoProfileFlagL")){
         if(isset($_POST['gotoProfileFlagL'])){
-          $this->gotoProfileFlagL = $_POST['gotoProfileFlagL'];
+          $this->gotoProfileFlagL = get_post('gotoProfileFlagL');
         }else{
           $this->gotoProfileFlagL = false;
         }
@@ -1137,7 +1137,7 @@ class environment extends plugin
           continue;
         }else{ 
           if(isset($_POST[$s_attr])){
-            $this->$s_attr = $_POST[$s_attr];
+            $this->$s_attr = get_post($s_attr);
           }else{
             $this->$s_attr = false;
           }
@@ -1389,8 +1389,8 @@ class environment extends plugin
   function saveCopyDialog()
   {
     if(isset($_POST['cn'])){
-      $this->cn = $_POST['cn'];
-      $this->uid = $_POST['cn'];
+      $this->cn = get_post('cn');
+      $this->uid = get_post('cn');
     }
   }
 
@@ -1725,13 +1725,13 @@ class environment extends plugin
         $this->useProfile = false;
       }
       if(isset($_POST['gotoProfileFlagC'])){
-        $this->gotoProfileFlagC = $_POST['gotoProfileFlagC'];
+        $this->gotoProfileFlagC = get_post('gotoProfileFlagC');
       }else{
         $this->gotoProfileFlagC = false;
       }
 
       if(isset($_POST['gotoProfileFlagL'])){
-        $this->gotoProfileFlagL = $_POST['gotoProfileFlagL'];
+        $this->gotoProfileFlagL = get_post('gotoProfileFlagL');
       }else{
         $this->gotoProfileFlagL = false;
       }
@@ -1744,15 +1744,15 @@ class environment extends plugin
         }
       }
       if(isset($_POST['kiosk_server'])){
-        $tmp = $_POST['kiosk_server'];
+        $tmp = get_post('kiosk_server');
         if(isset($this->gotoKioskProfiles['SERVERS'][$tmp])){
-          $this->gotoKioskProfile_Server = $_POST['kiosk_server'];
+          $this->gotoKioskProfile_Server = get_post('kiosk_server');
         }
       }
       if(isset($_POST['kiosk_profile'])){
-        $tmp = $_POST['kiosk_profile'];
+        $tmp = get_post('kiosk_profile');
         if(in_array($tmp,$this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
-          $this->gotoKioskProfile_Profile = $_POST['kiosk_profile'];
+          $this->gotoKioskProfile_Profile = get_post('kiosk_profile');
         }
       }
 
