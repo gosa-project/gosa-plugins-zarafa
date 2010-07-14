@@ -49,7 +49,7 @@ class phpgwAccount extends plugin
 
     /* Load attributes */
     foreach($this->attributes as $val){
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post( $this->$val));
     }
     if ($this->is_account){
       $smarty->assign("phpgwState", "checked");
