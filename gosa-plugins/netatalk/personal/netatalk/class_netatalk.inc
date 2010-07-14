@@ -203,7 +203,7 @@ class netatalk extends plugin {
     /* Assign attributes 
      */
     foreach ($this->smarty_attributes as $val) {
-      $smarty->assign("$val", $this-> $val);
+      $smarty->assign("$val", set_post($this-> $val));
     }
 
     /* Assign ACLs 
@@ -313,7 +313,7 @@ class netatalk extends plugin {
       foreach($this->post_attributes as $acl => $val) {
         if(!preg_match("/w/",$this->getacl($acl))) continue;
         if (isset ($_POST[$val])) {
-          $this->$val = $_POST[$val];
+          $this->$val = get_post($val);
         } else {
           $this->$val = "";
         }
