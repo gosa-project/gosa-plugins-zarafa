@@ -74,7 +74,7 @@ class fonreport extends plugin
     {
         $fonfilter= session::get("fonfilter");
         if(isset($_POST['EntryPerPage'])){
-            $this->range = $_POST['EntryPerPage'];
+            $this->range = get_post('EntryPerPage');
         }
         if (isset($_GET['start'])){
             $this->start= (int)$_GET['start'];
@@ -151,7 +151,7 @@ class fonreport extends plugin
          *****************/
 
         $smarty->assign("plug",           "?plug=".validate($_GET['plug']));
-        $smarty->assign("search_for",     htmlentities($this->search_for));
+        $smarty->assign("search_for",     set_post($this->search_for));
         $smarty->assign("months",         $months);
         $smarty->assign("month_select",   $this->month);
         $smarty->assign("years",          $years);
@@ -168,8 +168,8 @@ class fonreport extends plugin
         foreach($this->config->data['SERVERS']['FON'] as $key => $server){
             $servers[$server['SERVER']] = $server['SERVER'];
         }
-        $smarty->assign("servers",  $servers);
-        $smarty->assign("selected_server",  $this->selected_server);
+        $smarty->assign("servers",  set_post($servers));
+        $smarty->assign("selected_server",  set_post($this->selected_server));
 
         /* Connecting, selecting database */
         if (!isset($this->config->data['SERVERS']['FON'][0])){
