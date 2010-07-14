@@ -280,18 +280,18 @@ class opengwAccount extends plugin
 
             /* Get location Team*/
             if(isset($_POST['LocationTeam']) && $this->acl_is_writeable("LocationTeam")){
-                $this->info['LocationTeamID'] = $_POST['LocationTeam'];
+                $this->info['LocationTeamID'] = get_post('LocationTeam');
             }
 
             /* Get template user */
             if(isset($_POST['TemplateUser']) && $this->acl_is_writeable("TemplateUser") ){
-                $this->info['template_user_id'] = $_POST['TemplateUser'];
+                $this->info['template_user_id'] = get_post('TemplateUser');
             }
 
             /* get lock status */
             if($this->acl_is_writeable("Locked")){
                 if(isset($_POST['is_locked'])){
-                    $this->info['is_locked'] = $_POST['is_locked'];
+                    $this->info['is_locked'] = get_post('is_locked');
                 }else{
                     $this->info['is_locked'] = 0;
                 }
@@ -301,7 +301,7 @@ class opengwAccount extends plugin
         /* change account status */
         if(isset($_POST['is_account'])){
             if($this->acl_is_createable()){
-                $this->is_account = $_POST['is_account'];
+                $this->is_account = get_post('is_account');
             }
         }else{
             if($this->acl_is_removeable()){
