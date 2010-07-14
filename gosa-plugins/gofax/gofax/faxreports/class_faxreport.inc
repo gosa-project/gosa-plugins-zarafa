@@ -106,7 +106,7 @@ class faxreport extends plugin
 
         // Set smarty defaults  
         $smarty= get_smarty();
-        $smarty->assign("search_for"		, $this->search_for);
+        $smarty->assign("search_for"		, set_post($this->search_for));
         $smarty->assign("months"			  , $months);
         $smarty->assign("month_select"	, $this->month);
         $smarty->assign("years"				  , $years);
@@ -194,15 +194,15 @@ class faxreport extends plugin
                 $final="fax_$vname";
                 $v_acl = $this->ui->get_permissions($dn,"users/viewFaxEntries",preg_replace("/_/","",$vname));
                 if($line[$vname] != "" && preg_match("/r/i", $v_acl)){
-                    $smarty->assign("$final", $line[$vname]);
+                    $smarty->assign("$final", set_post($line[$vname]));
                 } else {
                     $smarty->assign("$final", "-");
                 }
             }
             $format= _("Y-M-D");
             $queuing_time= $line['queuing_time'];
-            $smarty->assign("plug", "?plug=".validate($_GET['plug']));
-            $smarty->assign("detail", validate($detail));
+            $smarty->assign("plug", "?plug=".get_post('plug'));
+            $smarty->assign("detail", set_post(get_post($detail)));
             $date= preg_replace("/Y/", substr($queuing_time,0,4), $format);
             $date= preg_replace("/M/", substr($queuing_time,4,2), $date);
             $date= preg_replace("/D/", substr($queuing_time,6,2), $date);
@@ -384,7 +384,7 @@ class faxreport extends plugin
     {
         $faxreportfilter = session::get("faxreportfilter");
         if(isset($_POST['EntriesPerPage'])){
-            $this->range = $_POST['EntriesPerPage'];
+            $this->range = get_post('EntriesPerPage');
         }
 
         if (isset($_GET['start'])){
@@ -407,7 +407,7 @@ class faxreport extends plugin
         }
         foreach( array("year", "month", "search_for") as $type){
             if (isset($_POST[$type])){
-                $faxreportfilter[$type]= $_POST[$type];
+                $faxreportfilter[$type]= get_post($type);
 
                 /* reset start page, if filter has changed */ 
                 if(!isset($_GET['start'])){

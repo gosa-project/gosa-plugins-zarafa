@@ -435,8 +435,7 @@ class gofaxAccount extends plugin
 
 
       /* Show dialog */
-      $smarty->assign("cblocklist", $this->current_blocklist);
-      $smarty->assign("departments", $this->config->idepartments);
+      $smarty->assign("cblocklist", set_post($this->current_blocklist));
       $smarty->assign("predefinedList", $this->predefinedList->render());
       $display.= $smarty->fetch (get_template_path('lists.tpl', TRUE, dirname(__FILE__)));
       return ($display);
@@ -516,8 +515,7 @@ class gofaxAccount extends plugin
       $this->predefinedList->update();
 
       /* Show dialog */
-      $smarty->assign("cblocklist", $this->current_blocklist);
-      $smarty->assign("departments", $this->config->idepartments);
+      $smarty->assign("cblocklist", set_post($this->current_blocklist));
       $smarty->assign("predefinedList", $this->predefinedList->render());
       $display.= $smarty->fetch (get_template_path('lists.tpl', TRUE, dirname(__FILE__)));
       return ($display);
@@ -526,16 +524,15 @@ class gofaxAccount extends plugin
 
     /* Show main page */
     $smarty->assign("languages", get_languages(TRUE));
-
-    $smarty->assign("formats",  $this->fax_formats);
-    $smarty->assign("printers", $this->printerList);
+    $smarty->assign("formats",  set_post($this->fax_formats));
+    $smarty->assign("printers", set_post($this->printerList));
 
     /* Load attributes */
     foreach(array("goFaxIsEnabled", "goFaxDeliveryMode", "facsimileTelephoneNumber",
           "goFaxPrinter", "goFaxLanguage", "goFaxFormat", 
           "facsimileAlternateTelephoneNumber", "mail") as $val){
 
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post($this->$val));
     }
 
     $tmp = $this->plInfo();
@@ -683,7 +680,7 @@ class gofaxAccount extends plugin
 
     
       if (isset($_POST['mail']) && $this->acl_is_writeable("faxtomail",$edit_mode)){
-        $this->mail= $_POST['mail'];
+        $this->mail= get_post('mail');
       }
 
       /* Check if mail account is active and correct the internal
@@ -790,7 +787,7 @@ class gofaxAccount extends plugin
   {
     $str    = "";
     $smarty = get_smarty();
-    $smarty->assign("facsimileTelephoneNumber", $this->facsimileTelephoneNumber);
+    $smarty->assign("facsimileTelephoneNumber", set_post($this->facsimileTelephoneNumber));
     $str['string']   = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));
     $str['status'] ="";
     return($str);
@@ -799,7 +796,7 @@ class gofaxAccount extends plugin
   function SaveCopyDialog()
   {
     if(isset($_POST['facsimileTelephoneNumber'])){
-      $this->facsimileTelephoneNumber = $_POST['facsimileTelephoneNumber'];
+      $this->facsimileTelephoneNumber = get_post('facsimileTelephoneNumber');
     }
   }
 
@@ -877,7 +874,7 @@ class gofaxAccount extends plugin
           $this->goFaxIsEnabled= "1";
         }
       if (isset($_POST['mail']) && in_array("mail",$this->multi_boxes)){
-        $this->mail= $_POST['mail'];
+        $this->mail= get_post('mail');
       }
     }
   }

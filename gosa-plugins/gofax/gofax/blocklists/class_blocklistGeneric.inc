@@ -132,7 +132,7 @@ class blocklistGeneric extends plugin
     $smarty = get_smarty();
 
     foreach($this->attributes as $name){
-      $smarty->assign($name,$this->$name);
+      $smarty->assign($name,set_post($this->$name));
     }
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
@@ -145,12 +145,12 @@ class blocklistGeneric extends plugin
       $smarty->assign("goFaxBlocklistACL", $this->getacl('goFaxRBlocklist'));
     }
 
-    $smarty->assign("goFaxBlocklist",$this->goFaxBlocklist);
+    $smarty->assign("goFaxBlocklist", set_post($this->goFaxBlocklist));
     $smarty->assign("cnACL",$this->getacl("cn",$this->readonly));
     $smarty->assign("typeACL",$this->getacl("type",$this->readonly));
     $smarty->assign("base", $this->baseSelector->render());
     $smarty->assign("types", array(BLOCK_LIST_SEND => _("send"), BLOCK_LIST_RECEIVE => _("receive")));
-    $smarty->assign("type", $this->type);
+    $smarty->assign("type", set_post($this->type));
     $smarty->assign("dn", $this->dn);
     $smarty->assign("read_only",$this->read_only);
     return($smarty->fetch(get_template_path('generic.tpl', TRUE)));
@@ -182,7 +182,7 @@ class blocklistGeneric extends plugin
         if(in_array($attr,array("cn","type")) && $this->readonly){
           continue;
         }elseif(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
-          $this->$attr = $_POST[$attr];
+          $this->$attr = get_post($attr);
         }
       }
     }
@@ -312,7 +312,7 @@ class blocklistGeneric extends plugin
   function getCopyDialog()
   { 
     $smarty = get_smarty();
-    $smarty->assign("cn",$this->cn);
+    $smarty->assign("cn",set_post($this->cn));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));
     $ret = array();
     $ret['string'] = $str;
