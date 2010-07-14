@@ -63,7 +63,7 @@
 {t}Macro text{/t}
 <br>
 {render acl=$goFonMacroContentACL}
-<textarea name="goFonMacroContent" style="width:99%;height:300px;font-size:14px;font-family:Arial;">{$goFonMacroContent}</textarea>
+<textarea id='goFonMacroContent' name="goFonMacroContent" style="width:99%;height:300px;font-size:14px;font-family:Arial;">{$goFonMacroContent}</textarea>
 {/render}
 
 <input type='hidden' name='gofonMacroGenericPosted' value='1'>
