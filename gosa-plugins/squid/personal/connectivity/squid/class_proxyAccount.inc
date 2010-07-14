@@ -91,9 +91,9 @@ class proxyAccount extends plugin
     /* Assign quota values */
     $smarty->assign("quota_unit", array("k" => _("KB"), "m" => _("MB"), "g" => _("GB")));
     $smarty->assign("quota_time", array("h" => _("hour"), "d" => _("day"), "w" => _("week"), "m" => _("month")));
-    $smarty->assign("gosaProxyQuotaPeriod", $this->gosaProxyQuotaPeriod);
-    $smarty->assign("quota_size", preg_replace("/[a-z]$/i", "", $this->gosaProxyQuota));
-    $smarty->assign("quota_u", preg_replace("/^[0-9]+/", "", $this->gosaProxyQuota));
+    $smarty->assign("gosaProxyQuotaPeriod", set_post($this->gosaProxyQuotaPeriod));
+    $smarty->assign("quota_size", set_post(preg_replace("/[a-z]$/i", "", $this->gosaProxyQuota)));
+    $smarty->assign("quota_u", set_post(preg_replace("/^[0-9]+/", "", $this->gosaProxyQuota)));
     if ($this->is_account){
       $smarty->assign("proxyState", "checked");
     } else {
