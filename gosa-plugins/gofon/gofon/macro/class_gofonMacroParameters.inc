@@ -247,9 +247,9 @@ class macroParameter extends plugin
         $vars .="<tr>
           <td>
             <input name=\"number".$key."\" value='".$key."' type='hidden' ".$disabled.">
-            <input name='var".$key."' type='hidden'   value='".$para['var']."' ".$disabled.">ARG".$key."
+            <input name='var".$key."' type='hidden'   value='".set_post($para['var'])."' ".$disabled.">ARG".$key."
           </td>
-          <td><input type='text' name='varname".$key."'  value='".$para['name']."' ".$disabled."></td>
+          <td><input type='text' name='varname".$key."'  value='".set_post($para['name'])."' ".$disabled."></td>
           <td>
             <select size=1 name='vartype".$key."'  ".$disabled.">
               <option  value='string' ".$sel1.">"._("String")."&nbsp;</option>
@@ -257,7 +257,7 @@ class macroParameter extends plugin
               <option  value='bool'   ".$sel3.">"._("Bool")."&nbsp;</option>
             </select>
           </td>
-          <td><input type='text' name='default".$key."'   value='".$para['default']."'  ".$disabled."></td>
+          <td><input type='text' name='default".$key."'   value='".set_post($para['default'])."'  ".$disabled."></td>
           <td>&nbsp;";
         if($para['check']==false) {
           $vars.="<button type='submit' name='del".$key."'>"._("Delete unused")."</button>";
@@ -311,12 +311,12 @@ class macroParameter extends plugin
       }elseif(preg_match("/^number/",$name)){
 
         /* Set Post vars */
-        $key = $_POST[$name];
+        $key = get_post($name);
     
-        $this->goFonMacroParameter[$key]['var']   = $_POST["var".$key];
-        $this->goFonMacroParameter[$key]['name']   = $_POST["varname".$key];
-        $this->goFonMacroParameter[$key]['type']   = $_POST["vartype".$key];
-        $this->goFonMacroParameter[$key]['default']= $_POST["default".$key];
+        $this->goFonMacroParameter[$key]['var']    = get_post("var".$key);
+        $this->goFonMacroParameter[$key]['name']   = get_post("varname".$key);
+        $this->goFonMacroParameter[$key]['type']   = get_post("vartype".$key);
+        $this->goFonMacroParameter[$key]['default']= get_post("default".$key);
       }
     }
 

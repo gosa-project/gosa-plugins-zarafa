@@ -106,7 +106,6 @@ class macro extends plugin
     }
 
     /* Variables */
-    $vars 	= "";
     $tmp  	= array();
     $number = 0; 
 
@@ -128,13 +127,10 @@ class macro extends plugin
 
     /* Assign all vars to Smarty */
     foreach($this->attributes as $ar){
-      $smarty->assign($ar, $this->$ar);
+      $smarty->assign($ar, set_post($this->$ar));
     }
 
     $smarty->assign("base", $this->baseSelector->render());
-
-    /* Checkboxes */
-    $smarty->assign("vars", $vars);
 
     if($this->goFonMacroVisible){
       $smarty->assign("goFonMacroVisibleChecked"," checked ");
@@ -143,10 +139,10 @@ class macro extends plugin
     }
 
     $smarty->assign("cnACL",$this->getacl("cn",$this->initially_was_account));
-    $smarty->assign("cn",$this->cn);
+    $smarty->assign("cn",set_post($this->cn));
 
     /* Ensure that macro content is displayed correctly encoded */
-    $smarty->assign("goFonMacroContent",htmlentities(utf8_decode ($this->goFonMacroContent)));
+    $smarty->assign("goFonMacroContent",set_post($this->goFonMacroContent));
 
     /* Show main page */
     return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
@@ -552,7 +548,7 @@ class macro extends plugin
   function getCopyDialog()
   {
     $smarty = get_smarty();
-    $smarty->assign("cn" ,$this->cn);
+    $smarty->assign("cn" ,set_post($this->cn));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
     $ret = array();
     $ret['string'] = $str;
@@ -564,7 +560,7 @@ class macro extends plugin
   function saveCopyDialog()
   {
     if(isset($_POST['cn'])){
-      $this->cn = $_POST['cn'];
+      $this->cn = get_post('cn');
     }
   }
 
