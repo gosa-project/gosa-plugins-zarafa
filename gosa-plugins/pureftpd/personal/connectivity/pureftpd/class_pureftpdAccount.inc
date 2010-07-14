@@ -55,7 +55,7 @@ class pureftpdAccount extends plugin
 
     /* Load attributes */
     foreach($this->attributes as $val){
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post($this->$val));
     }
 
 
