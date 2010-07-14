@@ -91,7 +91,7 @@ class oxchangeAccount extends plugin
 
     /* Load attributes */
     foreach($this->attributes as $val){
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post($this->$val));
     }
     if ($this->is_account){
       $smarty->assign("oxchangeState", "checked");
@@ -114,7 +114,6 @@ class oxchangeAccount extends plugin
     }
 
     $smarty->assign("timezones", $this->timezones);
-
 
     if ($this->parent !== NULL){
       $smarty->assign("tabbed", 1);
@@ -251,7 +250,7 @@ class oxchangeAccount extends plugin
     /* Get objects */
     foreach(array("OXTimeZone","OXTaskDays","OXAppointmentDays") as $name) {
       if($this->acl_is_writeable($name) && isset($_POST[$name])){
-        $this->$name = $_POST[$name];
+        $this->$name = get_post($name);
       } 
     }
   
