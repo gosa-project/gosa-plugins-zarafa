@@ -423,6 +423,9 @@ class goShareServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
+              "start"         => _("Start"),
+              "stop"          => _("Stop"),
+              "restart"       => _("Restart"),
               "name"          => _("Name"),
               "goExportEntry" => _("Share entries"),
               "appleMounts"   => _("Apple mounts"),
