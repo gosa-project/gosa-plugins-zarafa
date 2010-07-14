@@ -174,7 +174,7 @@ class conference extends plugin
 
 
     foreach ($this->attributes as $val){
-      $smarty->assign("$val", $this->$val);
+      $smarty->assign("$val", set_post($this->$val));
       if(!$this->$val){
         $smarty->assign($val."CHK", "");
       }else{
@@ -189,9 +189,9 @@ class conference extends plugin
         $tmp[$dn]  = $val['SERVER'];
       }
     }
-    $smarty->assign("language",$this->language);
+    $smarty->assign("language", $this->language);
     $smarty->assign("languages",$this->languages);
-    $smarty->assign("goFonHomeServers",$tmp);
+    $smarty->assign("goFonHomeServers",set_post($tmp));
     $smarty->assign("goFonConferenceOptions",		    array("D"=>"Conference ","d"=>"Conference without PIN"));
     $smarty->assign("goFonConferenceOptionFormats",	array("WAV"=>"Wave","GSM"=>"GSM","WAV49"=>"Wave49"));
     $smarty->assign("goFonConferenceOption",        $this->goFonConferenceOption_D);
@@ -284,7 +284,7 @@ class conference extends plugin
         if($this->acl_is_writeable($acl_name)){
 
           if(isset($_POST[$attrs])){
-            $this->$attrs = $_POST[$attrs];
+            $this->$attrs = get_post($attrs);
           }else{
             $this->$attrs = false;
           }
@@ -774,8 +774,8 @@ class conference extends plugin
   function getCopyDialog()
   {
     $smarty = get_smarty();
-    $smarty->assign("cn" ,$this->cn);
-    $smarty->assign("telephoneNumber" ,$this->telephoneNumber);
+    $smarty->assign("cn" ,set_post($this->cn));
+    $smarty->assign("telephoneNumber" ,set_post($this->telephoneNumber));
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
     $ret = array();
     $ret['string'] = $str;
@@ -787,10 +787,10 @@ class conference extends plugin
   function saveCopyDialog()
   {
     if(isset($_POST['cn'])){
-      $this->cn = $_POST['cn'];
+      $this->cn = get_post('cn');
     }
     if(isset($_POST['telephoneNumber'])){
-      $this->telephoneNumber = $_POST['telephoneNumber'];
+      $this->telephoneNumber = get_post('telephoneNumber');
     }
   }
 
