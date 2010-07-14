@@ -812,7 +812,7 @@ class phoneAccount extends plugin
                  */
                 foreach($sip_data_array as $s_sip_key=>$s_sip_val){
                     if($s_sip_val === NULL) continue;
-                    $s_sip_values.="'".$s_sip_val."',";
+                    $s_sip_values.="'".mysql_real_escape_string($s_sip_val)."',";
                     $s_sip_keys  .="`".$s_sip_key."`,";
                 }
                 $s_sip_values =  preg_replace("/,$/","",$s_sip_values);
@@ -893,7 +893,7 @@ class phoneAccount extends plugin
                 $s_voi_values = $s_voi_keys = "";
                 foreach($voice_data_array as $s_voi_key=>$s_voi_val){
                     if($s_voi_val === NULL) continue;
-                    $s_voi_values.="'".$s_voi_val."',";
+                    $s_voi_values.="'".mysql_real_escape_string($s_voi_val)."',";
                     $s_voi_keys  .="`".$s_voi_key."`,";
                 }
                 $s_voi_values =  preg_replace("/,$/","",$s_voi_values);
@@ -987,7 +987,7 @@ class phoneAccount extends plugin
                 $SQL_syn = preg_replace("/,$/","",$SQL_syn);
                 $SQL_syn .= ") VALUES ("; 
                 foreach($entr as $key2 => $val2){
-                    $SQL_syn .= "'".$val2."',";
+                    $SQL_syn .= "'".mysql_real_escape_string($val2)."',";
                 }
                 $SQL_syn = preg_replace("/,$/","",$SQL_syn);
                 $SQL_syn .=");\n";
@@ -1135,14 +1135,14 @@ class phoneAccount extends plugin
         }
 
         /* Assing macroselectbox values  */
-        $smarty->assign("macros",$this->macros);   
-        $smarty->assign("macro", $this->macro);   
+        $smarty->assign("macros",set_post($this->macros));   
+        $smarty->assign("macro", set_post($this->macro));   
 
         /* Assign contexts */
-        $smarty->assign("voicemail_contexts",$this->voicemail_contexts);
-        $smarty->assign("sip_contexts",$this->sip_contexts);
-        $smarty->assign("context" ,$this->context);
-        $smarty->assign("voice_context" ,$this->voice_context);
+        $smarty->assign("voicemail_contexts",  set_post($this->voicemail_contexts));
+        $smarty->assign("sip_contexts",        set_post($this->sip_contexts));
+        $smarty->assign("context" ,            set_post($this->context));
+        $smarty->assign("voice_context" ,      set_post($this->voice_context));
 
         /* check if there is a FON server created */
         if(!count($this->goFonHomeServer)){
@@ -1209,32 +1209,35 @@ class phoneAccount extends plugin
                 $macrotab.= "<tr>";
                 switch ($type){
 
-                    case "combo":
+                    case "combo":{
                         $str= "<select name='".$var."' ".$dis." >";
-                    foreach(explode(":",$default) as $choice){
-                        if($choosen==$choice){
-                            $str.= "\n<option value='".$choice."' selected>".$choice."&nbsp;</option>";
-                        }else{
-                            $str.= "\n<option value='".$choice."'>".$choice."&nbsp;</option>";
+                        foreach(explode(":",$default) as $choice){
+                            if($choosen==$choice){
+                                $str.= "\n<option value='".$choice."' selected>".$choice."&nbsp;</option>";
+                            }else{
+                                $str.= "\n<option value='".$choice."'>".$choice."&nbsp;</option>";
+                            }
                         }
+                        $str.="</select>";
+                        $macrotab.= "<td style='vertical-align: middle;'>".base64_decode($name)."&nbsp;</td><td>$str";
+                        break;
                     }
-                    $str.="</select>";
-                    $macrotab.= "<td>".base64_decode($name)."</td><td>$str";
-                    break;
 
-                    case "bool":
+                    case "bool":{
                         if(!$choosen){
                             $str="\n<input type='checkbox' name='".$var."' value='1' ".$dis." >";
                         }else{
                             $str="\n<input type='checkbox' name='".$var."' value='1' checked  ".$dis.">";
                         }
-                    $macrotab.= "<td colspan='2'>$str&nbsp;".base64_decode($name)."";
-                    break;
+                        $macrotab.= "<td style='vertical-align: middle;'colspan='2'>$str&nbsp;".base64_decode($name)."";
+                        break;
+                    }
 
-                    case "string":
-                        $str="<input name='".$var."' value='".$choosen."' ".$dis." style='width:340px;'>";
-                    $macrotab.= "<td>".base64_decode($name)."</td><td>$str";
-                    break;
+                    case "string": {
+                        $str="<input type='text' name='".$var."' value='".set_post($choosen)."' ".$dis." style='width:340px;'>";
+                        $macrotab.= "<td style='vertical-align: middle;'>".base64_decode($name)."&nbsp;</td><td>$str";
+                        break;  
+                    }
 
                 }
                 $macrotab.= "</td></tr>";
@@ -1253,7 +1256,7 @@ class phoneAccount extends plugin
             if(strlen(trim($_POST["phonenumber"])) > 20 ){
                 msg_dialog::display(_("Error"), msgPool::toobig("Phone number"), ERROR_DIALOG);
             }elseif (tests::is_phone_nr($_POST['phonenumber'])){
-                $number= trim($_POST["phonenumber"]);
+                $number= trim(get_post("phonenumber"));
                 $this->phoneNumbers[$number]= $number;
                 $this->is_modified= TRUE;
             } else {
@@ -1278,7 +1281,7 @@ class phoneAccount extends plugin
         /* Transfer ACL's */
         foreach($this->attributes as $val){
             if(isset($this->$val)){
-                $smarty->assign($val,$this->$val);
+                $smarty->assign($val,set_post($this->$val));
             }else{
                 $smarty->assign($val,"");
             }
@@ -1291,14 +1294,14 @@ class phoneAccount extends plugin
                 $tmp[$dn] = $attrs['SERVER'];
             }
         }
-        $smarty->assign("goFonHomeServers",$tmp);
+        $smarty->assign("goFonHomeServers", set_post($tmp));
 
         /* Fill arrays */
-        $smarty->assign ("goFonHardware", $this->goFonHardware);
+        $smarty->assign ("goFonHardware", set_post($this->goFonHardware));
         if (!count($this->phoneNumbers)){
             $smarty->assign ("phoneNumbers", array());
         } else {
-            $smarty->assign ("phoneNumbers", $this->phoneNumbers);
+            $smarty->assign ("phoneNumbers", set_post($this->phoneNumbers));
         }
 
         $dis = "";
@@ -1380,18 +1383,18 @@ class phoneAccount extends plugin
 
             /* Save context */
             if(isset($_POST['context'])){
-                if($this->context != $_POST['context']){
+                if($this->context != get_post('context')){
                     $this->is_modified= TRUE;
                 }
-                $this->context= $_POST['context'];
+                $this->context= get_post('context');
             }
 
             /* Save voice context */
             if(isset($_POST['voice_context'])){
-                if($this->voice_context != $_POST['voice_context']){
+                if($this->voice_context != get_post('voice_context')){
                     $this->is_modified= TRUE;
                 }
-                $this->voice_context= $_POST['voice_context'];
+                $this->voice_context= get_post('voice_context');
             }
 
             if(is_array($this->phoneNumbers)){
@@ -1414,7 +1417,7 @@ class phoneAccount extends plugin
                         $backup = $this->macroarray[$this->macro][$key];
 
                         if(isset($_POST[$paras['var']])){
-                            $this->macroarray[$this->macro][$key]['choosen'] = $_POST[$paras['var']];
+                            $this->macroarray[$this->macro][$key]['choosen'] = get_post($paras['var']);
                         }
 
                         /* Checkboxes are special, they are not Posted if they are not selected, so the won't be changed with the above code
@@ -1803,11 +1806,11 @@ class phoneAccount extends plugin
         if (!count($this->phoneNumbers)){
             $smarty->assign ("phoneNumbers", array(""));
         } else {
-            $smarty->assign ("phoneNumbers", $this->phoneNumbers);
+            $smarty->assign ("phoneNumbers", set_post($this->phoneNumbers));
         }
 
-        $smarty->assign("goFonVoicemailPIN",$this->goFonVoicemailPIN);
-        $smarty->assign("goFonPIN",$this->goFonPIN);
+        $smarty->assign("goFonVoicemailPIN",set_post($this->goFonVoicemailPIN));
+        $smarty->assign("goFonPIN",set_post($this->goFonPIN));
 
         $display= $smarty->fetch(get_template_path('paste_generic.tpl', TRUE, dirname(__FILE__)));
         $ret =array();
@@ -1822,10 +1825,10 @@ class phoneAccount extends plugin
         if(!$this->is_account) return;
         $this->execute();
         if(isset($_POST['goFonVoicemailPIN'])) {
-            $this->goFonVoicemailPIN = $_POST['goFonVoicemailPIN'];
+            $this->goFonVoicemailPIN = get_post('goFonVoicemailPIN');
         }
         if(isset($_POST['goFonPIN'])){
-            $this->goFonPIN = $_POST['goFonPIN'];
+            $this->goFonPIN = get_post('goFonPIN');
         }
     }
 
@@ -1914,7 +1917,7 @@ class phoneAccount extends plugin
             }
 
             if(isset($_POST['macro']) && $_POST['macro'] != $this->macro){
-                $this->macro = $_POST['macro'];
+                $this->macro = get_post('macro');
                 $this->is_modified =true;
             }
 
@@ -1923,12 +1926,12 @@ class phoneAccount extends plugin
                 foreach($this->macroarray[$this->macro] as $key => $paras){
                     $backup = $this->macroarray[$this->macro][$key];
                     if(isset($_POST[$paras['var']])){
-                        $this->macroarray[$this->macro][$key]['choosen'] = $_POST[$paras['var']];
+                        $this->macroarray[$this->macro][$key]['choosen'] = get_post($paras['var']);
                     }
                     if(isset($_POST['post_success'])){
                         if($this->macroarray[$this->macro][$key]['type']=="bool"){
                             if(isset($_POST[$this->macroarray[$this->macro][$key]['var']])) {
-                                $this->macroarray[$this->macro][$key]['choosen']=$_POST[$paras['var']];
+                                $this->macroarray[$this->macro][$key]['choosen']=get_post($paras['var']);
                             }else{
                                 $this->macroarray[$this->macro][$key]['choosen']=false;
                             }
