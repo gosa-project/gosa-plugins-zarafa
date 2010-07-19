@@ -123,23 +123,23 @@ class rsyslog extends plugin
 
     $result =$this->get_result();
 
-    $smarty->assign("servers",$this->servers);
-    $smarty->assign("hosts",$hosts);
-    $smarty->assign("priorities",$priorities);
-    $smarty->assign("selected_server",$this->selected_server);
-    $smarty->assign("selected_host",$this->selected_host);
-    $smarty->assign("selected_priority",$this->selected_priority);
-    $smarty->assign("search_for",$this->search_for);
-    $smarty->assign("startTime",  $this->startTime);
-    $smarty->assign("stopTime",    $this->stopTime);
-    $smarty->assign("sort_type",    $this->sort_type);
-    $smarty->assign("sort_value",   $this->sort_value);
-    $smarty->assign("limits",   $this->limits);
-    $smarty->assign("limit",    $this->limit);
-    $smarty->assign("page",    $this->page);
-    $smarty->assign("plug_id", $_GET['plug']);
-    $smarty->assign("downimg", image('images/lists/sort-down.png'));
-    $smarty->assign("upimg", image('images/lists/sort-up.png'));
+    $smarty->assign("servers",          set_post($this->servers));
+    $smarty->assign("hosts",            set_post($hosts));
+    $smarty->assign("priorities",       set_post($priorities));
+    $smarty->assign("selected_server",  set_post($this->selected_server));
+    $smarty->assign("selected_host",    set_post($this->selected_host));
+    $smarty->assign("selected_priority",set_post($this->selected_priority));
+    $smarty->assign("search_for",       set_post($this->search_for));
+    $smarty->assign("startTime",        set_post($this->startTime));
+    $smarty->assign("stopTime",         set_post($this->stopTime));
+    $smarty->assign("sort_type",        set_post($this->sort_type));
+    $smarty->assign("sort_value",       set_post($this->sort_value));
+    $smarty->assign("limits",           set_post($this->limits));
+    $smarty->assign("limit",            set_post($this->limit));
+    $smarty->assign("page",             set_post($this->page));
+    $smarty->assign("plug_id",          set_post($_GET['plug']));
+    $smarty->assign("downimg",  image('images/lists/sort-down.png'));
+    $smarty->assign("upimg",    image('images/lists/sort-up.png'));
     $smarty->assign("result", $result);
     $smarty->assign("matches", sprintf(_("%s entries match the filter"), $result["count"]));
     if($this->limits[$this->limit] != '-'){
@@ -254,16 +254,17 @@ class rsyslog extends plugin
 
       $filter = "FROM SystemEvents WHERE 1=1 ";
       if($host != "%%"){
-        $filter.= " AND FromHost like '{$host}' ";
+        $filter.= " AND FromHost like '".mysql_real_escape_string($host)."' ";
       }
       if($prio != "%%"){
-        $filter.= "AND Priority like '{$prio}' ";
+        $filter.= "AND Priority like '".mysql_real_escape_string($prio)."' ";
       }
       $filter.= "AND DeviceReportedTime >= '".(date("Y.m.d 00:00:00", strtotime($this->startTime)))."' ";     
       $filter.= "AND DeviceReportedTime <= '".(date("Y.m.d 23:59:59", strtotime($this->stopTime)))."' ";     
 
       if(!empty($this->search_for)){
-        $filter.= "AND ( ( SysLogTag like '%".$this->search_for."%' ) OR  ( Message like '%".$this->search_for."%' ) ) ";
+          $filter.= "AND ( ( SysLogTag like '%".mysql_real_escape_string($this->search_for).
+              "%' ) OR  ( Message like '%".mysql_real_escape_string($this->search_for)."%' ) ) ";
       }
 
       // Detect amount of matching entries 
@@ -325,21 +326,21 @@ class rsyslog extends plugin
     
     // Get server from post
     if( isset($_POST['selected_server']) && isset($this->servers[$_POST['selected_server']])){ 
-      $this->selected_server = $_POST['selected_server'];
+      $this->selected_server = get_post('selected_server');
     }
 
     // Get Host
     if( isset($this->servers[$this->selected_server]['Hosts']) &&  isset($_POST['selected_host']) && 
         ($_POST['selected_host'] == "all" || 
          in_array($_POST['selected_host'],$this->servers[$this->selected_server]['Hosts']))){
-      $this->selected_host = $_POST['selected_host'];
+      $this->selected_host = get_post('selected_host');
     }
 
     // Get priority from post
     if( isset($this->servers[$this->selected_server]['Priorities']) &&  isset($_POST['selected_priority']) && 
         ($_POST['selected_priority'] == "all" || 
          in_array($_POST['selected_priority'],$this->servers[$this->selected_server]['Priorities']))){
-      $this->selected_priority = $_POST['selected_priority'];
+      $this->selected_priority = get_post('selected_priority');
     }
       
     // Get serach string
@@ -350,7 +351,7 @@ class rsyslog extends plugin
     // Get page navigation attributes  
     if(isset($_GET['start'])) $this->page = $_GET['start'];
     if(isset($_POST['limit']) && isset($this->limits[$_POST['limit']])){
-      $this->limit = $_POST['limit'];
+      $this->limit = get_post('limit');
     }
 
     // Get sorting attributes 
