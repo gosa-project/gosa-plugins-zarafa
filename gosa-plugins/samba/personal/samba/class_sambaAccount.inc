@@ -515,13 +515,8 @@ class sambaAccount extends plugin
                     $additional_info_PwdMustChange = sprintf(_("The password is outdated since %s, by domain policy."),
                             date("d.m.Y H:i:s",$last + $sid['sambaMaxPwdAge'][0]));
                 }else{
-                    if($this->password_expires && ($last + $sid['sambaMaxPwdAge'][0]) > $this->sambaPwdMustChange){
-                        $additional_info_PwdMustChange = sprintf(_("The password is valid till %s, by user policy."),
-                                date("d.m.Y H:i:s",  $this->sambaPwdMustChange));
-                    }else{
-                        $additional_info_PwdMustChange = sprintf(_("The password is valid till %s, by domain policy."),
-                                date("d.m.Y H:i:s",  ($last + $sid['sambaMaxPwdAge'][0])));
-                    }
+                    $additional_info_PwdMustChange = sprintf(_("The password is valid till %s."),
+                            date("d.m.Y H:i:s",  ($last + $sid['sambaMaxPwdAge'][0])));
                 }
             }
         }
@@ -618,19 +613,11 @@ class sambaAccount extends plugin
                 $$attr = $this->attrs[$attr][0];
             }
         }
-        if($this->password_expires){
-            $sambaPwdMustChange = $this->sambaPwdMustChange;
-        } else {
-            if (is_numeric($sambaPwdMustChange)) {
-                $sambaPwdMustChange= date('d.m.Y', $sambaPwdMustChange);
-            }
+        if (is_numeric($sambaPwdMustChange)) {
+            $sambaPwdMustChange= date('d.m.Y', $sambaPwdMustChange);
         }
-        if($this->kickoff_time_set){
-            $sambaKickoffTime = $this->sambaKickoffTime;
-        } else {
-            if (is_numeric($sambaKickoffTime)) {
-                $sambaKickoffTime= date('d.m.Y', $sambaKickoffTime);
-            }
+        if (is_numeric($sambaKickoffTime)) {
+            $sambaKickoffTime= date('d.m.Y', $sambaKickoffTime);
         }
         $sambaPwdCanChange = $this->sambaPwdCanChange;
 
@@ -800,7 +787,7 @@ class sambaAccount extends plugin
             "\n<tr><td>"._("Last logoff").":                   </td><td>".$sambaLogoffTime."</td></tr>".
             "\n<tr><td>"._("Automatic logoff").":              </td><td>".$sambaKickoffTime."</td></tr>";
 
-        if($this->no_expiry){
+        if($this->flag_passwordNeverExpires){
             $str .= "\n<tr><td>"._("Password expires").":              </td><td>"._("No")."</td></tr>";
             $str .= "\n<tr><td colspan='2'><font color='gray'>".
                 sprintf(_("The password would expire on %s, but the password expiry is disabled."),$sambaPwdMustChange).
