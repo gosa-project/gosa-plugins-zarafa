@@ -328,7 +328,7 @@
         <tr>
             <td>
                 {render acl=$passwordNeverExpiresACL  checkbox=$multiple_support checked=$use_passwordNeverExpires}
-                <input type='checkbox' value='1 'name="flag_passwordNeverExpires" 
+                <input type='checkbox' value='1' name="flag_passwordNeverExpires" 
                     {if $flag_passwordNeverExpires} checked {/if} id='flag_passwordNeverExpires'>
                 {/render}
             </td>

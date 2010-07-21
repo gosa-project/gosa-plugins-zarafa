@@ -1217,13 +1217,15 @@ class sambaAccount extends plugin
             $this->save_object();
             plugin::multiple_save_object();
             foreach(array("allow_pwchange","tslogin","CtxWFHomeDir","CtxWFHomeDirDrive","CtxWFProfilePath",
-                        "inherit","CtxWorkDirectory","CtxInitialProgram","CtxMaxConnectionTimeF","CtxMaxConnectionTime","CtxMaxDisconnectionTimeF",
+                        "inherit","CtxWorkDirectory","CtxInitialProgram","CtxMaxConnectionTimeF",
+                        "CtxMaxConnectionTime","CtxMaxDisconnectionTimeF",
                         "CtxMaxDisconnectionTime","CtxMaxIdleTimeF","CtxMaxIdleTime","connectclientdrives",
                         "onnectclientprinters","defaultprinter","shadow","brokenconn",
-                        "reconn","allow_pwchange","connectclientprinters","no_expiry","no_password_required","temporary_disable",
-                        "password_expires","logon_time_set","logoff_time_set","kickoff_time_set","SetSambaLogonHours",
-                        "workstation_list","enforcePasswordChange","cannotChangePassword") as $attr){
-                if(isset($_POST["use_".$attr])){
+                        "reconn","connectclientprinters","SetSambaLogonHours","workstation_list",
+                        "enforcePasswordChange", "passwordNeverExpires", "noPasswordRequired",
+                        "temporaryDisabled","cannotChangePassword"
+                        ) as $attr){
+                if(isset($_POST["use_".$attr]) || isset($_POST["use_flag_".$attr]) ){
                     $this->multi_boxes[] = $attr;
                 }
             }
