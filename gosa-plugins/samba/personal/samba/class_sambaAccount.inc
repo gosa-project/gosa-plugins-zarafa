@@ -46,7 +46,7 @@ class sambaAccount extends plugin
     var $sambaLogonTime= "0";
     var $sambaLogoffTime= "2147483647";
     var $sambaKickoffTime= "2147483647";
-    var $sambaPwdCanChange= "";
+    var $sambaPwdCanChange= "0";
     var $sambaPwdMustChange= "0";
 
     // Flags (checkboxes) to restrict account settings.
@@ -998,7 +998,7 @@ class sambaAccount extends plugin
         }else{
 
             // Keep old values if given.
-            if ($this->sambaPwdCanChange != 4294967295){
+            if ($this->sambaPwdCanChange != 4294967295 && !empty($this->sambaPwdCanChange)){
                 $this->attrs['sambaPwdCanChange']= $this->sambaPwdCanChange;
             } else {
                 $this->attrs['sambaPwdCanChange']= array();
