@@ -139,6 +139,13 @@ class sambaAccount extends plugin
             $this->mungedObject->load($this->sambaMungedDial);
         }
 
+        // Load flags
+        $this->loadFlagsFromSource($this->attrs);
+    }
+
+
+    function loadFlagsFromSource($attrs)
+    {
 
         // Samba flag description 
         // ----------------------
@@ -178,27 +185,33 @@ class sambaAccount extends plugin
         //  We simple set it to '0' to enforce a change.
         // --------------------------------
         // Normally it contains a timestamp, which specifies and expiration date. 
-        $this->flag_enforcePasswordChange =  (isset($this->attrs['sambaPwdMustChange']) && $this->attrs['sambaPwdMustChange'][0] == '0');
+        $this->flag_enforcePasswordChange =  (isset($attrs['sambaPwdMustChange']) && $attrs['sambaPwdMustChange'][0] == '0');
 
         // A user cannot change his password until the given timestamp has reached.
         //  We simply set it to max int to disallow a password change till the timestamp reaches 4294967295, 
         //  this is definitly far in the future and thus disallows a password change at all.
         // --------------------------------
         // The user is not able to change his password while sambaPwdCanChange is 4294967295 (Integer 32 Bit max)
-        $this->flag_cannotChangePassword = (isset($this->attrs['sambaPwdCanChange']) && $this->attrs['sambaPwdCanChange'][0] == '4294967295');
+        $this->flag_cannotChangePassword = (isset($attrs['sambaPwdCanChange']) && $attrs['sambaPwdCanChange'][0] == '4294967295');
 
-        // A password never expires if 'sambaAcctFlags' contains 'X'. 
-        // (See flags above for details)
-        $this->flag_passwordNeverExpires  = preg_match("/X/i", $this->sambaAcctFlags);
+        // Load samba account flags
+        if(isset($attrs['sambaAcctFlags'][0])){
+            $this->sambaAcctFlags = $attrs['sambaAcctFlags'][0];
 
-        // A password is NOT required if 'sambaAcctFlags' contains 'N'. 
-        // (See flags above for details)
-        $this->flag_noPasswordRequired    = preg_match("/N/i", $this->sambaAcctFlags);
+            // A password never expires if 'sambaAcctFlags' contains 'X'. 
+            // (See flags above for details)
+            $this->flag_passwordNeverExpires  = preg_match("/X/i", $this->sambaAcctFlags);
 
-        // A account is locked if if 'sambaAcctFlags' contains 'L' or 'D'.
-        // (See flags above for details)
-        $this->flag_temporaryDisabled = preg_match("/L/i", $this->sambaAcctFlags) ||
-            preg_match("/D/i", $this->sambaAcctFlags);
+            // A password is NOT required if 'sambaAcctFlags' contains 'N'. 
+            // (See flags above for details)
+            $this->flag_noPasswordRequired    = preg_match("/N/i", $this->sambaAcctFlags);
+
+            // A account is locked if if 'sambaAcctFlags' contains 'L' or 'D'.
+            // (See flags above for details)
+            $this->flag_temporaryDisabled = preg_match("/L/i", $this->sambaAcctFlags) ||
+                preg_match("/D/i", $this->sambaAcctFlags);
+
+        }
     }
 
     function execute()
@@ -1142,33 +1155,8 @@ class sambaAccount extends plugin
             $this->mungedObject->ctx[$attr] = $val;
         }
 
-        // If you make changes here, please make the same changes in the constructor!
-
-        // A password change is enforced by using a timestamp in sambaPwdMustChange.
-        //  We simple set it to '0' to enforce a change.
-        // --------------------------------
-        // Normally it contains a timestamp, which specifies and expiration date.
-        $this->flag_enforcePasswordChange =  (isset($this->attrs['sambaPwdMustChange']) && $this->attrs['sambaPwdMustChange'][0] == '0');
-
-        // A user cannot change his password until the given timestamp has reached.
-        //  We simply set it to max int to disallow a password change till the timestamp reaches 4294967295,
-        //  this is definitly far in the future and thus disallows a password change at all.
-        // --------------------------------
-        // The user is not able to change his password while sambaPwdCanChange is 4294967295 (Integer 32 Bit max)
-        $this->flag_cannotChangePassword = (isset($this->attrs['sambaPwdCanChange']) && $this->attrs['sambaPwdCanChange'][0] == '4294967295');
-
-        // A password never expires if 'sambaAcctFlags' contains 'X'.
-        // (See flags above for details)
-        $this->flag_passwordNeverExpires  = preg_match("/X/i", $this->sambaAcctFlags);
-
-        // A password is NOT required if 'sambaAcctFlags' contains 'N'.
-        // (See flags above for details)
-        $this->flag_noPasswordRequired    = preg_match("/N/i", $this->sambaAcctFlags);
-
-        // A account is locked if if 'sambaAcctFlags' contains 'L' or 'D'.
-        // (See flags above for details)
-        $this->flag_temporaryDisabled = preg_match("/L/i", $this->sambaAcctFlags) ||
-            preg_match("/D/i", $this->sambaAcctFlags);
+        // Load flags from source.
+        $this->loadFlagsFromSource($this->attrs);
     }
 
 
@@ -1480,6 +1468,9 @@ class sambaAccount extends plugin
         if (isset($source['sambaMungedDial'])){
             $this->mungedObject->load($source['sambaMungedDial'][0]);
         }
+
+        // Load flags from source.
+        $this->loadFlagsFromSource($source);
     }
 
 }
