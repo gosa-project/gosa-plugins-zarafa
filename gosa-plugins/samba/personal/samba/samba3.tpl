@@ -327,59 +327,64 @@
   <td style='width:50%; ' colspan="2">
 
 
-    <table>
-        <tr>
+      <table>
+       <tr>
             <td>
                 {render acl=$enforcePasswordChangeACL checkbox=$multiple_support checked=$use_enforcePasswordChange}
-                 <input type='checkbox' value='1' name='enforcePasswordChange' 
-                  {if $enforcePasswordChange} checked {/if} id='enforcePasswordChange'>
+                 <input type='checkbox' value='1' name='flag_enforcePasswordChange'
+                  {if $flag_enforcePasswordChange} checked {/if} id='flag_enforcePasswordChange'>
                 {/render}
             </td>
             <td>
-                <label for='enforcePasswordChange'>{t}Enforce password change{/t}</label>
+                <label for='flag_enforcePasswordChange'>{t}Enforce password change{/t}</label>
             </td>
         </tr>
         <tr>
             <td>
-                {render acl=$sambaAcctFlagsXACL  checkbox=$multiple_support checked=$use_no_expiry}
-                 <input id="no_expiry" type=checkbox name="no_expiry" value="1" {$flagsX} class="center">
+                {render acl=$passwordNeverExpiresACL  checkbox=$multiple_support checked=$use_passwordNeverExpires}
+                <input type='checkbox' value='1' name="flag_passwordNeverExpires"
+                    {if $flag_passwordNeverExpires} checked {/if} id='flag_passwordNeverExpires'>
                 {/render}
             </td>
             <td>
-                <label for="no_expiry">{t}The password never expires{/t}</label>
+                <label for="flag_passwordNeverExpires">{t}The password never expires{/t}</label>
             </td>
-        </tr>            
+        </tr>
         <tr>
             <td>
-                {render acl=$sambaAcctFlagsNACL  checkbox=$multiple_support checked=$use_no_password_required}
-                 <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN} class="center">
+                {render acl=$noPasswordRequiredACL  checkbox=$multiple_support checked=$use_noPasswordRequired}
+                <input type='checkbox' value='1' name="flag_noPasswordRequired"
+                    {if $flag_noPasswordRequired} checked {/if} id='flag_noPasswordRequired'>
                 {/render}
             </td>
             <td>
-                <label for="no_password_required">{t}Login from windows client requires no password{/t}</label>
+                <label for="flag_noPasswordRequired">{t}Login from windows client requires no password{/t}</label>
             </td>
-        </tr>            
+        </tr>
         <tr>
             <td>
-                {render acl=$sambaAcctFlagsLACL  checkbox=$multiple_support checked=$use_temporary_disable}
-                 <input id="temporary_disable" type=checkbox name="temporary_disable" value="1" {$flagsD} class="center">
+                {render acl=$temporaryDisabledACL  checkbox=$multiple_support checked=$use_temporaryDisabled}
+                <input type='checkbox' value='1' name="flag_temporaryDisabled"
+                    {if $flag_temporaryDisabled} checked {/if} id='flag_temporaryDisabled'>
                 {/render}
             </td>
             <td>
-                <label for="temporary_disable">{t}Lock samba account{/t}</label>
+                <label for="flag_temporaryDisabled">{t}Lock samba account{/t}</label>
             </td>
+        </tr>
         <tr>
-        </tr>            
-            <td>                                                    
+            <td>
                 {render acl=$cannotChangePasswordACL  checkbox=$multiple_support checked=$use_cannotChangePassword}
-                 <input id="cannotChangePassword" type=checkbox name="cannotChangePassword" value="1" class="center"
-                    {if $cannotChangePassword} checked {/if}>                                                    
-                {/render}                                                                                     
-            </td>                                                                                             
-            <td>                                                                                              
-                <label for="cannotChangePassword">{t}Cannot change password{/t}</label>                          
-            </td>                                                                                             
-        </tr>                                                                                                 
+                 <input type='checkbox' value='1' name='flag_cannotChangePassword'
+                    {if $flag_cannotChangePassword} checked {/if} id='flag_cannotChangePassword'>
+                {/render}
+            </td>
+            <td>
+                <label for="flag_cannotChangePassword">{t}Cannot change password{/t}</label>
+            </td>
+        </tr>
+
+
         <tr>
             <td>
             </td>
