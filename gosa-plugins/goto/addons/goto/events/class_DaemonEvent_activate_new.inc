@@ -22,58 +22,58 @@
 
 class DaemonEvent_activate_new extends DaemonEvent
 {
-  var $visible_for = HIDDEN_EVENT;
+    var $visible_for = HIDDEN_EVENT;
 
-  var $attributes = array("dhcp","ip","fqdn","ogroup","base","mac");
+    var $attributes = array("dhcp","ip","fqdn","ogroup","base","mac");
 
-  var $dhcp = "";
-  var $ip = "";
-  var $fqdn = "";
-  var $ogroup ="";
-  var $base = "";
-  var $mac ="";
+    var $dhcp = "";
+    var $ip = "";
+    var $fqdn = "";
+    var $ogroup ="";
+    var $base = "";
+    var $mac ="";
 
 
-  public function __construct($config,$data = array())
-  {
-    DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name        = _("Activate new"); 
-    $this->s_Event_Name       = _("Activate new"); 
-    $this->s_Schedule_Action  = "job_trigger_activate_new";
-    $this->s_Trigger_Action   = "gosa_trigger_activate_new";
-    $this->s_Queued_Action    = "trigger_activate_new";
-    $this->s_Menu_Image       = "images/lists/unlocked.png";
-    $this->s_List_Image       = "images/lists/unlocked.png";
-  }
-
-  public function execute()
-  {
-    DaemonEvent::execute();
-    return("");
-
-    $display = $this->get_header();
-
-    $tmp = $this->data;
-
-    /* Check if target add dialog is open */
-    if($this->is_target_list_open() && $this->is_new){
-      return($this->get_target_add_list());
+    public function __construct($config,$data = array())
+    {
+        DaemonEvent::__construct($config,$data);
+        $this->s_Menu_Name        = _("Activate new"); 
+        $this->s_Event_Name       = _("Activate new"); 
+        $this->s_Schedule_Action  = "job_trigger_activate_new";
+        $this->s_Trigger_Action   = "gosa_trigger_activate_new";
+        $this->s_Queued_Action    = "trigger_activate_new";
+        $this->s_Menu_Image       = "images/lists/unlocked.png";
+        $this->s_List_Image       = "images/lists/unlocked.png";
     }
 
-    $smarty = get_smarty();
-    $smarty->assign("data"        , $this->data);
-    $smarty->assign("target_list" , $this->get_target_list());
-    $smarty->assign("is_new"      , $this->is_new);
-    $smarty->assign("timestamp"   , $this->get_time_select());
-    $display.= $smarty->fetch(get_template_path('DaemonEvent_activate_new.tpl', TRUE, dirname(__FILE__)));
-    $display.= $this->get_footer();
-    return($display);
-  }
+    public function execute()
+    {
+        DaemonEvent::execute();
+        return("");
 
-  public function save_object()
-  {
-    DaemonEvent::save_object();
-  }
+        $display = $this->get_header();
+
+        $tmp = $this->data;
+
+        /* Check if target add dialog is open */
+        if($this->is_target_list_open() && $this->is_new){
+            return($this->get_target_add_list());
+        }
+
+        $smarty = get_smarty();
+        $smarty->assign("data"        , $this->data);
+        $smarty->assign("target_list" , $this->get_target_list());
+        $smarty->assign("is_new"      , $this->is_new);
+        $smarty->assign("timestamp"   , $this->get_time_select());
+        $display.= $smarty->fetch(get_template_path('DaemonEvent_activate_new.tpl', TRUE, dirname(__FILE__)));
+        $display.= $this->get_footer();
+        return($display);
+    }
+
+    public function save_object()
+    {
+        DaemonEvent::save_object();
+    }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
