@@ -3,10 +3,10 @@
 <table summary="{t}Advanced phone settings{/t}" style="width:100%" border=0>
 	<tr>
 		<td colspan="2">
-		<LABEL for="selected_categorie">{t}Phone type{/t}</LABEL>{$must}
-{render acl=$categorieACL}
-		<select id="selected_categorie" size="1" name="selected_categorie" title="{t}Choose a phone type{/t}" onchange="mainform.submit();">
-			{html_options options=$categories selected=$selected_categorie}
+		<LABEL for="selected_category">{t}Phone type{/t}</LABEL>{$must}
+{render acl=$categoryACL}
+		<select id="selected_category" size="1" name="selected_category" title="{t}Choose a phone type{/t}" onchange="mainform.submit();">
+			{html_options options=$categorys selected=$selected_category}
 		</select>
 {/render}
 		{if $javascript eq 'false'}
@@ -17,7 +17,7 @@
 		<br>
 	</td>
 	</tr>
-{if $selected_categorie eq '0'}
+{if $selected_category eq '0'}
 	<tr>
 		<td style='width:50%; ' class='right-border'>
 
@@ -79,7 +79,7 @@
 </table>
 {/if}
 
-{if $selected_categorie eq '1'}
+{if $selected_category eq '1'}
 		
 	<tr>
 		<td style='width:50%; ' class='right-border'>
@@ -248,7 +248,7 @@
 </table>
 {/if}
 
-{if $selected_categorie eq '2'}
+{if $selected_category eq '2'}
 	<tr>
 		<td style="width:50%">
 			<table summary="{t}Advanced phone settings{/t}" width="100%">
