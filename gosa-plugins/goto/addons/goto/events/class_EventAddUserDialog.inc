@@ -22,61 +22,61 @@
 
 class EventAddUserDialog extends management
 {
-  // Tab definition 
-  protected $skipFooter = TRUE;
-  protected $skipHeader = TRUE;
+    // Tab definition 
+    protected $skipFooter = TRUE;
+    protected $skipHeader = TRUE;
 
-  function __construct($config,$ui)
-  {
-    $this->config = $config;
-    $this->ui = $ui;
-    $this->storagePoints = array(
-        get_ou("core", "userRDN"), 
-        get_ou("core", "groupRDN")); 
+    function __construct($config,$ui)
+    {
+        $this->config = $config;
+        $this->ui = $ui;
+        $this->storagePoints = array(
+                get_ou("core", "userRDN"), 
+                get_ou("core", "groupRDN")); 
 
-    // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
-      $filter= session::global_get(get_class($this)."_filter");
-    } else {
-      $filter = new filter(get_template_path("../../addons/goto/events/eventTargetUser-filter.xml", TRUE));
-      $filter->setObjectStorage($this->storagePoints);
+        // Build filter
+        if (session::global_is_set(get_class($this)."_filter")){
+            $filter= session::global_get(get_class($this)."_filter");
+        } else {
+            $filter = new filter(get_template_path("../../addons/goto/events/eventTargetUser-filter.xml", TRUE));
+            $filter->setObjectStorage($this->storagePoints);
+        }
+        $this->setFilter($filter);
+
+        // Build headpage
+        $headpage = new listing(get_template_path("../../addons/goto/events/eventTargetUser-list.xml", TRUE));
+        $headpage->setFilter($filter);
+        parent::__construct($config, $ui, "object", $headpage);
     }
-    $this->setFilter($filter);
 
-    // Build headpage
-    $headpage = new listing(get_template_path("../../addons/goto/events/eventTargetUser-list.xml", TRUE));
-    $headpage->setFilter($filter);
-    parent::__construct($config, $ui, "object", $headpage);
-  }
+    function save_object() {}
 
-  function save_object() {}
-
-  function save()
-  {
-    $act = $this->detectPostActions();
-    $headpage = $this->getHeadpage();
-    if(!isset($act['targets'])) return(array());
-    $ret = array();
-    foreach($act['targets'] as $dn){
-      $ret[] = $headpage->getEntry($dn);
+    function save()
+    {
+        $act = $this->detectPostActions();
+        $headpage = $this->getHeadpage();
+        if(!isset($act['targets'])) return(array());
+        $ret = array();
+        foreach($act['targets'] as $dn){
+            $ret[] = $headpage->getEntry($dn);
+        }
+        return($ret);
     }
-    return($ret);
-  }
 
-  function get_selected_targets()
-  {
-    $entries = $this->save();
-    $a_targets = array("USERS" => array(),"GROUPS" => array());
-    foreach($entries as $entry){
-      if(in_array("posixGroup",$entry['objectClass'])){
-        $a_targets['GROUPS'][] = $entry['cn'][0];
-      }
-      if(in_array("gosaAccount",$entry['objectClass'])){
-        $a_targets['USERS'][] = $entry['uid'][0];
-      }
+    function get_selected_targets()
+    {
+        $entries = $this->save();
+        $a_targets = array("USERS" => array(),"GROUPS" => array());
+        foreach($entries as $entry){
+            if(in_array("posixGroup",$entry['objectClass'])){
+                $a_targets['GROUPS'][] = $entry['cn'][0];
+            }
+            if(in_array("gosaAccount",$entry['objectClass'])){
+                $a_targets['USERS'][] = $entry['uid'][0];
+            }
+        }
+        return($a_targets);
     }
-    return($a_targets);
-  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
