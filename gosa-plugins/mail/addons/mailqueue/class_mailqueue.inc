@@ -190,15 +190,15 @@ class mailqueue extends plugin
     $smarty->assign("stats"         , array_flip($this->getStats()));
 
     $smarty->assign("stat"          , $this->Stat);
-    $smarty->assign("p_server"      , $this->Server);
-    $smarty->assign("p_servers"     , $this->ServerList);
-    $smarty->assign("p_serverKeys"  , array_flip($this->ServerList));
+    $smarty->assign("p_server"      , set_post($this->Server));
+    $smarty->assign("p_servers"     , set_post($this->ServerList));
+    $smarty->assign("p_serverKeys"  , set_post(array_flip($this->ServerList)));
     $smarty->assign("p_time"        , $this->Time);
     $smarty->assign("p_times"       , $this->getTimes());
     $smarty->assign("p_timeKeys"    , array_flip($this->getTimes()));
-    $smarty->assign("search_for"    , $this->Search);
+    $smarty->assign("search_for"    , set_post($this->Search));
     $smarty->assign("range_selector", range_selector($count, $this->Page, $this->range,"EntriesPerPage")); 
-    $smarty->assign("OrderBy"       , $this->OrderBy);
+    $smarty->assign("OrderBy"       , set_post($this->OrderBy));
 
     /* Display sort arrow */
     if($this->SortType == "up"){
@@ -276,21 +276,21 @@ class mailqueue extends plugin
   {
     /* Update amount of entries displayed */
     if(isset($_POST['EntriesPerPage'])){
-      $this->range = $_POST['EntriesPerPage'];
+      $this->range = get_post('EntriesPerPage');
     }
 
     if(isset($_POST['p_server']) && isset($this->ServerList[$_POST['p_server']])){
-      $this->Server = $_POST['p_server'];
+      $this->Server = get_post('p_server');
     }
 
     if(isset($_POST['p_time'])){
-      $this->Time = $_POST['p_time'];
+      $this->Time = get_post('p_time');
     }
     if(isset($_POST['search_for'])){
-      $this->Search = $_POST['search_for'];
+      $this->Search = get_post('search_for');
     }
     if(isset($_POST['Stat'])){
-      $this->Stat = $_POST['Stat'];
+      $this->Stat = get_post('Stat');
     }
     if((isset($_GET['start']))&&(is_numeric($_GET['start']))&&($_GET['start']>=0)){
       $this->Page = $_GET['start'];
