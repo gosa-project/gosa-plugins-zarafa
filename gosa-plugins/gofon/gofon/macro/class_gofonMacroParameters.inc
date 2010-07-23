@@ -335,8 +335,13 @@ class macroParameter extends plugin
         $message= plugin::check();
 
         foreach($this->goFonMacroParameter as $key=>$val){
-            if((strstr($val['default'],"!"))||(strstr($val['default'],"#"))) {
-                $message[] = sprintf(_("Parameter %s contains invalid character. '!,#' is used as delimiter!"),$val['name']);
+    
+            $v1 = utf8_encode($val['default']);
+            $v2 = utf8_decode($val['default']);
+            if($v1 != $v2){
+                $allowed = preg_quote('[]()-+_,.;:/?*\ ','/');
+                $message[] = msgPool::invalid(sprintf(_("Parameter %s contains invalid character!"), $val['name']),
+                    $val['default'],"/[a-z0-9{$allowed}]/i");
             }
             switch($val['type']){
                 case 'bool'   :   $possible = array("","0","1");
