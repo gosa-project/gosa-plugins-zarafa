@@ -22,30 +22,30 @@
 
 class DaemonEvent_recreate_fai_release_db extends DaemonEvent
 {
-  var $visible_for = HIDDEN_EVENT;
+    var $visible_for = HIDDEN_EVENT;
 
-  public function __construct($config,$data = array())
-  {
-    DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name  = _("Reload fai release db"); 
-    $this->s_Event_Name = _("Reload fai release db"); 
-    $this->s_Schedule_Action= "gosa_recreate_fai_release_db";
-    $this->s_Trigger_Action = "gosa_recreate_fai_release_db";
-    $this->s_Queued_Action  = "recreate_fai_release_db";
-    $this->s_Menu_Image = "images/edit.png";
-    $this->s_List_Image = "images/edit.png";
-  }
+    public function __construct($config,$data = array())
+    {
+        DaemonEvent::__construct($config,$data);
+        $this->s_Menu_Name  = _("Reload fai release db"); 
+        $this->s_Event_Name = _("Reload fai release db"); 
+        $this->s_Schedule_Action= "gosa_recreate_fai_release_db";
+        $this->s_Trigger_Action = "gosa_recreate_fai_release_db";
+        $this->s_Queued_Action  = "recreate_fai_release_db";
+        $this->s_Menu_Image = "images/edit.png";
+        $this->s_List_Image = "images/edit.png";
+    }
 
-  public function execute()
-  {
-    DaemonEvent::execute();
-    return("Cannot be displayed");
-  }
+    public function execute()
+    {
+        DaemonEvent::execute();
+        return("Cannot be displayed");
+    }
 
-  public function save_object()
-  {
-    DaemonEvent::save_object();
-  }
+    public function save_object()
+    {
+        DaemonEvent::save_object();
+    }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
