@@ -33,7 +33,7 @@ my %cfg_defaults = (
 		);
 
 # to be removed ugly !! why not using main::_read_configfile
-&GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
+&GOsaSI::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 
 ### FUNCTIONS #################################################################

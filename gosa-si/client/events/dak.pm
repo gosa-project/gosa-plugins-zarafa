@@ -37,7 +37,7 @@ my %cfg_defaults = (
      "dak-user" => [\$dak_user, "deb-dak"],
     },
 );
-&GOSA::GosaSupportDaemon::read_configfile($main::config_file, %cfg_defaults);
+&GOsaSI::GosaSupportDaemon::read_configfile($main::config_file, %cfg_defaults);
 
 
 ## @method get_events()
