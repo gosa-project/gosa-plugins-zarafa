@@ -3473,6 +3473,7 @@ GetOptions("h|help" => \&usage,
 &read_configfile($cfg_file, %cfg_defaults);
 &check_pid;
 
+#to prevent sombie child
 $SIG{CHLD} = 'IGNORE';
 
 # forward error messages to logfile
@@ -3488,8 +3489,8 @@ if( ! $foreground ) {
     $pid = fork;
     setsid                    or die "Can't start a new session: $!";
     umask 0;
-} else { 
-    $pid = $$; 
+#} else {
+#    $pid = $$;
 }
 
 # Do something useful - put our PID into the pid_file

@@ -1,11 +1,13 @@
-package GOSA::DBmysql;
+package GOsaSI::DBmysql;
 
 use strict;
 use warnings;
-use DBI;
+
 use Data::Dumper;
-use GOSA::GosaSupportDaemon;
 use Time::HiRes qw(usleep);
+use GOsaSI::GosaSupportDaemon;
+
+use DBI;
 
 my $col_names = {};
 
