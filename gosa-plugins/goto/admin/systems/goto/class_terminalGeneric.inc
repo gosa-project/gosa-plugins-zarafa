@@ -180,7 +180,7 @@ class termgeneric extends plugin
         }
 
         if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate") && isset($this->validActions[$_POST['saction']])){
-            $action = $_POST['saction'];
+            $action = get_post('saction');
 
             /* Check if we have an DaemonEvent for this action */
             if(class_available("DaemonEvent_".$action)){
@@ -211,12 +211,12 @@ class termgeneric extends plugin
 
         /* Add new ntp Server to our list */
         if((isset($_POST['addNtpServer'])) && (isset($_POST['gotoNtpServers'])) && $this->acl_is_writeable("gotoNtpServer")){
-            $this->gotoNtpServer[$_POST['gotoNtpServers']] = $_POST['gotoNtpServers'];
+            $this->gotoNtpServer[get_post('gotoNtpServers')] = get_post('gotoNtpServers');
         }
 
         /* Delete selected NtpServer for list of used servers  */
         if((isset($_POST['delNtpServer'])) && (isset($_POST['gotoNtpServerSelected'])) && $this->acl_is_writeable("gotoNtpServer")){
-            foreach($_POST['gotoNtpServerSelected'] as $name){
+            foreach(get_post('gotoNtpServerSelected') as $name){
                 unset($this->gotoNtpServer[$name]);
             } 
         }
@@ -230,28 +230,21 @@ class termgeneric extends plugin
             $smarty->assign($name."ACL",$this->getacl($name));
         }
 
-        $smarty->assign("cn", $this->cn);
-        $smarty->assign("description", $this->description);
+        $smarty->assign("cn",set_post($this->cn));
+        $smarty->assign("description", set_post($this->description));
 
         /* tell smarty the inherit checkbox state */
         $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
 
         /* Check if terminal is online */
         if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
-            $smarty->assign("actions", array( "halt" => _("Switch off"), 
-                        "reboot" => _("Reboot"),
-#"memcheck" => _("Memory test"),
-#"sysinfo"  => _("System analysis")
-                        ));
+            $smarty->assign("actions", set_post(array("halt" => _("Switch off"),"reboot" => _("Reboot"))));
         } else {
-            $smarty->assign("actions", array("wake" => _("Wake up"),
-#"memcheck" => _("Memory test"),
-#"sysinfo"  => _("System analysis")
-                        ));
+            $smarty->assign("actions", set_post(array("wake" => _("Wake up"))));
         }
 
         /* Arrays */
-        $smarty->assign("modes", $this->modes);
+        $smarty->assign("modes", set_post($this->modes));
 
         $tmp2 = array(); 
         $tmp2['!']= _("Local swap");
@@ -265,7 +258,7 @@ class termgeneric extends plugin
             }
         }
 
-        $smarty->assign("swapservers",     $tmp2);
+        $smarty->assign("swapservers", set_post($tmp2));
         $tmp2 = array(); 
         foreach($this->config->data['SERVERS']['NFS'] as $server){
             if($server != "default"){
@@ -277,8 +270,8 @@ class termgeneric extends plugin
             }
         }
 
-        $smarty->assign("nfsservers",     $tmp2);
-        $smarty->assign("syslogservers",  $this->gotoSyslogServers);
+        $smarty->assign("nfsservers",    set_post($tmp2));
+        $smarty->assign("syslogservers", set_post($this->gotoSyslogServers));
 
         $tmp = array();
         foreach($this->gotoNtpServers as $server){
@@ -287,12 +280,12 @@ class termgeneric extends plugin
             }
         }
 
-        $smarty->assign("ntpservers",     $tmp);
+        $smarty->assign("ntpservers",     set_post($tmp));
         $smarty->assign("fai_activated",$this->fai_activated);
 
         /* Variables */
         foreach(array("gotoMode", "gotoTerminalPath", "gotoSwapServer","gotoSyslogServer", "gotoNtpServer") as $val){
-            $smarty->assign($val."_select", $this->$val);
+            $smarty->assign($val."_select", set_post($this->$val));
         }
         $smarty->assign("base", $this->baseSelector->render());
 
@@ -619,7 +612,7 @@ another location! */
     {
         $vars = array("cn");
         $smarty = get_smarty();
-        $smarty->assign("cn" ,$this->cn);
+        $smarty->assign("cn" , set_post($this->cn));
         $smarty->assign("object","terminal");
         $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
         $ret = array();
@@ -632,7 +625,7 @@ another location! */
     function saveCopyDialog()
     {
         if(isset($_POST['cn'])){
-            $this->cn = $_POST['cn'];
+            $this->cn = get_post('cn');
         }
     }
 
