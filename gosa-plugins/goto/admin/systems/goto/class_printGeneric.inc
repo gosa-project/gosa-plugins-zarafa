@@ -385,7 +385,7 @@ class printgeneric extends plugin
 
         /* Assign attributes */
         foreach ($this->attributes as $attr){
-            $smarty->assign("$attr", $this->$attr);
+            $smarty->assign("$attr", set_post($this->$attr));
         }
 
         $smarty->assign("base", $this->baseSelector->render());
@@ -564,7 +564,7 @@ class printgeneric extends plugin
                     $smarty->assign("driverInfo", "<b>".sprintf(_("Your currently selected PPD file '%s' doesn't exist."),$path.$this->gotoPrinterPPD)."</b>");
                 }else{
                     $ppdDesc = $ppdManager->loadDescription($path.$this->gotoPrinterPPD);
-                    $smarty->assign("driverInfo", $ppdDesc['name']);
+                    $smarty->assign("driverInfo", set_post($ppdDesc['name']));
                 }
             }else{
                 $smarty->assign("driverInfo", _("Not defined"));
@@ -1134,7 +1134,7 @@ class printgeneric extends plugin
     function saveCopyDialog()
     {
         if(isset($_POST['cn'])){
-            $this->cn = $_POST['cn'];
+            $this->cn = get_post('cn');
         }
     }
 
