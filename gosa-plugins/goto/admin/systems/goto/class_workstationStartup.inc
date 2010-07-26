@@ -305,14 +305,14 @@ class workstartup extends plugin
         /* Add module */
         if (isset ($_POST['add_module'])){
             if ($_POST['module'] != "" && $this->acl_is_writeable("gotoModules")){
-                $this->add_list ($this->gotoModules, $_POST['module']);
+                $this->add_list ($this->gotoModules, get_post('module'));
             }
         }
 
         /* Delete module */
         if (isset ($_POST['delete_module'])){
             if (count($_POST['modules_list']) && $this->acl_is_writeable("gotoModules")){
-                $this->del_list ($this->gotoModules, $_POST['modules_list']);
+                $this->del_list ($this->gotoModules, get_post('modules_list'));
             }
         }
 
@@ -336,10 +336,10 @@ class workstartup extends plugin
                     }
                 }
 
-                if((isset($this->FAIclassInfo[$_POST['FAIclassesSel']]['FAIpartitionTable']))&&($found>0)){
+                if((isset($this->FAIclassInfo[get_post('FAIclassesSel')]['FAIpartitionTable']))&&($found>0)){
                     msg_dialog::display(_("Error"), _("There is already a profile containing a partition table in your configuration!") , ERROR_DIALOG);
                 }else{
-                    $this->FAIclass[$_POST['FAIclassesSel']]=get_post('FAIclassesSel');
+                    $this->FAIclass[get_post('FAIclassesSel')]=get_post('FAIclassesSel');
                 }
             }
 
@@ -369,8 +369,8 @@ class workstartup extends plugin
             /* Delete selected class from our list */
             if($this->acl_is_writeable("FAIclass")){
                 if((isset($_POST['DelClass']))&&(isset($_POST['FAIclassSel']))){
-                    if(isset($this->FAIclass[$_POST['FAIclassSel']])){
-                        unset($this->FAIclass[$_POST['FAIclassSel']]);
+                    if(isset($this->FAIclass[get_post('FAIclassSel')])){
+                        unset($this->FAIclass[get_post('FAIclassSel')]);
                     }
                 }
             }
@@ -403,7 +403,7 @@ class workstartup extends plugin
                 msg_dialog::display(_("Error"), msgPool::required(_("Mount point")), ERROR_DIALOG);
             }else{
 
-                if(isset($this->gotoAvailableShares[$_POST['gotoShareSelection']])){
+                if(isset($this->gotoAvailableShares[get_post('gotoShareSelection')])){
                     $a_share = $this->gotoAvailableShares[get_post('gotoShareSelection')];
                     $s_mount = get_post('gotoShareMountPoint');
                     /* Preparing the new assignment */
@@ -417,7 +417,7 @@ class workstartup extends plugin
          * If there is no defined share selected, we will abort the deletion without any message
          */
         if(($this->acl_is_writeable("gotoShare"))&& (isset($_POST['gotoShareDel']))&&(isset($_POST['gotoShare']))){
-            unset($this->gotoShares[$_POST['gotoShare']]);
+            unset($this->gotoShares[get_post('gotoShare')]);
         }
 
         $smarty->assign("gotoShares",       set_post($this->printOutAssignedShares()));
@@ -432,7 +432,7 @@ class workstartup extends plugin
                 !$this->gotoLdap_inherit && 
                 isset($_POST['add_ldap_server']) && 
                 isset($_POST['ldap_server_to_add'])){
-            if(isset($this->gotoLdapServerList[$_POST['ldap_server_to_add']])){
+            if(isset($this->gotoLdapServerList[get_post('ldap_server_to_add')])){
                 $to_add = $this->gotoLdapServerList[get_post('ldap_server_to_add')];
                 if(!in_array($to_add,$this->gotoLdapServers)){
                     $this->gotoLdapServers[] = $to_add;
@@ -604,7 +604,7 @@ class workstartup extends plugin
         $smarty->assign("FAIScriptlist", $this->faiList->render());
 
         /* Show main page */
-        $smarty->assign("gotoKernelParameters",$this->gotoKernelParameters);
+        $smarty->assign("gotoKernelParameters",set_post($this->gotoKernelParameters));
         return($smarty->fetch (get_template_path('workstationStartup.tpl', TRUE,dirname(__FILE__))));
     }
 
