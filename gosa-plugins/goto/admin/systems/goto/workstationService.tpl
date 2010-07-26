@@ -178,7 +178,7 @@
      <td>
 
 {render acl=$gotoXHsyncACL}
-	<input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 {$hiddenState}
+	<input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 {$hiddenState} type='text'
                 value="{$gotoXHsync}" title="{t}Horizontal refresh frequency for installed monitor{/t}"> kHz
 {/render}
 
@@ -189,7 +189,7 @@
      <td>
 
 {render acl=$gotoXVsyncACL}
-	<input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 {$hiddenState}
+	<input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 {$hiddenState} type='text'
                 value="{$gotoXVsync}" title="{t}Vertical refresh frequency for installed monitor{/t}"> Hz
 {/render}
 
