@@ -2,106 +2,106 @@
 
 class SelectDeviceType extends plugin
 {
-  /* attribute list for save action */
-  var $ignore_account= TRUE;
-  var $attributes= array("ObjectGroup","SystemType");
-  var $objectclasses= array("whatever");
+    /* attribute list for save action */
+    var $ignore_account= TRUE;
+    var $attributes= array("ObjectGroup","SystemType");
+    var $objectclasses= array("whatever");
 
-  var $ObjectGroups   = array();
-  var $SystemTypes       = array();
+    var $ObjectGroups   = array();
+    var $SystemTypes       = array();
 
-  var $ObjectGroup    = "none";
-  var $SystemType        = "gotoWorkstation";
+    var $ObjectGroup    = "none";
+    var $SystemType        = "gotoWorkstation";
 
-  var $dn;
+    var $dn;
 
-  function SelectDeviceType  (&$config, $dn= NULL)
-  {
-    if(!is_array($dn)){
-      $this->dns = array($dn);
-    }else{
-      $this->dns = $dn;
-    }
-    plugin::plugin ($config, NULL);
+    function SelectDeviceType  (&$config, $dn= NULL)
+    {
+        if(!is_array($dn)){
+            $this->dns = array($dn);
+        }else{
+            $this->dns = $dn;
+        }
+        plugin::plugin ($config, NULL);
 
-    /* Get object groups */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("cn"));
-    $tmp= array();
-    while($attrs = $ldap->fetch()){
-      $tmp[$attrs['dn']]= $attrs['cn'][0];
-    }
-    asort($tmp, SORT_LOCALE_STRING);
-    $this->ObjectGroups= $tmp;
+        /* Get object groups */
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd ($this->config->current['BASE']);
+        $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("cn"));
+        $tmp= array();
+        while($attrs = $ldap->fetch()){
+            $tmp[$attrs['dn']]= $attrs['cn'][0];
+        }
+        asort($tmp, SORT_LOCALE_STRING);
+        $this->ObjectGroups= $tmp;
 
-    $this->SystemTypes =array("gotoWorkstation"=>_("Workstation"), "gotoTerminal"=>_("Terminal"), "goServer"=>_("Server"));
-    if(class_available("opsi")){
-      $this->SystemTypes["FAKE_OC_OpsiHost"]= _("Windows workstation");
-    }
-  }
-
-  function execute()
-  {
-    /* Call parent execute */
-    plugin::execute();
-
-
-    /* Get object groups */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("gosaGroupObjects","cn"));
-    $tmp= array("W" => array(),"T" => array(), "S" => array(),"O" => array());
-    while($attrs = $ldap->fetch()){
-      $tmp[preg_replace("/[\[\] ]/","",$attrs['gosaGroupObjects'][0])][$attrs['dn']] = $attrs['cn'][0];
+        $this->SystemTypes =array("gotoWorkstation"=>_("Workstation"), "gotoTerminal"=>_("Terminal"), "goServer"=>_("Server"));
+        if(class_available("opsi")){
+            $this->SystemTypes["FAKE_OC_OpsiHost"]= _("Windows workstation");
+        }
     }
 
-    /* Fill templating stuff */
-    $smarty= get_smarty();
-    $display= "";
+    function execute()
+    {
+        /* Call parent execute */
+        plugin::execute();
 
-    $map = array("gotoWorkstation" => "W","gotoTerminal" => "T","goServer" => "S", "FAKE_OC_OpsiHost" => "O");
-    $smarty->assign("dns_cnt" , count($this->dns));
-    $smarty->assign("ogroups", $tmp[$map[$this->SystemType]]);
-    $smarty->assign("SystemTypes"     ,$this->SystemTypes);
-    $smarty->assign("SystemTypeKeys"  ,array_flip($this->SystemTypes)); 
-    $smarty->assign("ObjectGroup",$this->ObjectGroup);
-    $smarty->assign("SystemType",$this->SystemType);
-    $display.= $smarty->fetch(get_template_path('SelectDeviceType.tpl', TRUE,dirname(__FILE__)));
-    return($display);
-  }
 
-  /* Save data to object */
-  function save_object()
-  {
-    plugin::save_object();
-    foreach($this->attributes as $attr){
-      if(isset($_POST[$attr])){
-        $this->$attr = $_POST[$attr];
-      }
+        /* Get object groups */
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd ($this->config->current['BASE']);
+        $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("gosaGroupObjects","cn"));
+        $tmp= array("W" => array(),"T" => array(), "S" => array(),"O" => array());
+        while($attrs = $ldap->fetch()){
+            $tmp[preg_replace("/[\[\] ]/","",$attrs['gosaGroupObjects'][0])][$attrs['dn']] = $attrs['cn'][0];
+        }
+
+        /* Fill templating stuff */
+        $smarty= get_smarty();
+        $display= "";
+
+        $map = array("gotoWorkstation" => "W","gotoTerminal" => "T","goServer" => "S", "FAKE_OC_OpsiHost" => "O");
+        $smarty->assign("dns_cnt" ,        set_post(count($this->dns)));
+        $smarty->assign("ogroups",         set_post($tmp[$map[$this->SystemType]]));
+        $smarty->assign("SystemTypes"     ,set_post($this->SystemTypes));
+        $smarty->assign("SystemTypeKeys"  ,set_post(array_flip($this->SystemTypes))); 
+        $smarty->assign("ObjectGroup",     set_post($this->ObjectGroup));
+        $smarty->assign("SystemType",      set_post($this->SystemType));
+        $display.= $smarty->fetch(get_template_path('SelectDeviceType.tpl', TRUE,dirname(__FILE__)));
+        return($display);
     }
-  }
 
-  /* Check supplied data */
-  function check()
-  {
-    /* Call common method to give check the hook */
-    $message= plugin::check();
+    /* Save data to object */
+    function save_object()
+    {
+        plugin::save_object();
+        foreach($this->attributes as $attr){
+            if(isset($_POST[$attr])){
+                $this->$attr = get_post($attr);
+            }
+        }
+    }
 
-    return ($message);
-  }
+    /* Check supplied data */
+    function check()
+    {
+        /* Call common method to give check the hook */
+        $message= plugin::check();
 
-  /* Save to LDAP */
-  function save()
-  {
-  }
+        return ($message);
+    }
 
-  function acl_is_writeable($attribute,$skip_write = FALSE)
-  {
-    if($this->read_only) return(FALSE);
-    $ui= get_userinfo();
-    return preg_match('/w/', $ui->get_permissions($this->acl_base, $this->acl_category."systemManagement", $attribute,      $skip_write));
-  }
+    /* Save to LDAP */
+    function save()
+    {
+    }
+
+    function acl_is_writeable($attribute,$skip_write = FALSE)
+    {
+        if($this->read_only) return(FALSE);
+        $ui= get_userinfo();
+        return preg_match('/w/', $ui->get_permissions($this->acl_base, $this->acl_category."systemManagement", "", $skip_write));
+    }
 
 }
 
