@@ -214,12 +214,14 @@
       </select>
 {/render}
 {render acl=$gotoXdmcpServerACL}
-	<button type='submit' name='XdmcpAddServer' title="{t}Add selected server{/t}">{msgPool type=addButton}</button>
-		{if $gotoXMethod_select == "default"} disabled {/if}>
+	<button type='submit' name='XdmcpAddServer' title="{t}Add selected server{/t}"
+		{if $gotoXMethod_select == "default"} disabled {/if}
+        >{msgPool type=addButton}</button>
 {/render}
 {render acl=$gotoXdmcpServerACL}
-	<button type='submit' name='XdmcpDelServer' title="{t}Remove selected server{/t}">{t}Remove{/t}</button>
-		{if $gotoXMethod_select == "default"} disabled {/if}>
+	<button type='submit' name='XdmcpDelServer' title="{t}Remove selected server{/t}"
+		{if $gotoXMethod_select == "default"} disabled {/if}
+        >{t}Remove{/t}</button>
 {/render}
 
      </td>
