@@ -158,7 +158,7 @@
      <td><LABEL for="gotoXHsync">{t}HSync{/t}</LABEL></td>
      <td>
 {render acl=$gotoXHsyncACL}
-	<input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 
+	<input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 type='text' 
                 value="{$gotoXHsync}" title="{t}Horizontal refresh frequency for installed monitor{/t}"> kHz</td>
 {/render}
     </tr>
@@ -166,7 +166,7 @@
      <td><LABEL for="gotoXVsync">{t}VSync{/t}</LABEL></td>
      <td>
 {render acl=$gotoXVsyncACL}
-      <input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 
+      <input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 type='text'
                 value="{$gotoXVsync}" title="{t}Vertical refresh frequency for installed monitor{/t}"> Hz</td>
 {/render}
     </tr>
@@ -191,8 +191,6 @@
 			onChange="document.mainform.submit();">
        {html_options options=$XMethods selected=$gotoXMethod_select}
       </select>
-	  {image path="images/lists/reload.png" title="{t}Reload{/t}"}
-
 {/render}
      </td>
     </tr>
@@ -249,10 +247,7 @@
 	<td >&nbsp;
 	</td>
 	<td>
-   		<h3>
-			{image path="plugins/systems/images/select_printer.png"} {t}Printer{/t}
-
-		</h3>
+   		<h3>{t}Printer{/t}</h3>
 		{$gotoLpdEnable_dialog}
 	</td>
  </tr>
