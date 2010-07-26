@@ -432,7 +432,7 @@ class termservice extends plugin
             $hl.= "  <option $color label=\"$cn\" value=\"$cn\" $selected>$description</option>\n";
         }
         $hl.= "</select>\n";
-        $smarty->assign ("hardware_list", set_post($hl));
+        $smarty->assign ("hardware_list", $hl);
         $smarty->assign ("gotoXMonitor", set_post($this->gotoXMonitor));
 
         $smarty->assign("AutoSyncACL",$this->getacl("AutoSync"));
