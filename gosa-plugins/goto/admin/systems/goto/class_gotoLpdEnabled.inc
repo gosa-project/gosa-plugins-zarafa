@@ -125,10 +125,10 @@ class gotoLpdEnable extends plugin
         $smarty = get_smarty();
         $smarty->assign("acl",$this->parent->getacl("gotoLpdEnable"));
         foreach($this->attributes as $attr){
-            $smarty->assign($attr,$this->$attr);
+            $smarty->assign($attr, set_post($this->$attr));
         }
         foreach(array("DevID","a_Types","a_FlowControl","a_Parities","a_Speeds","a_Bits") as $attr){
-            $smarty->assign($attr,$this->$attr);
+            $smarty->assign($attr,set_post($this->$attr));
         }
         ksort($this->data);
         $smarty->assign("data_cnt",count($this->data));
@@ -190,7 +190,7 @@ class gotoLpdEnable extends plugin
         $propose_device = "";
         if(isset($_POST['s_Device']) && empty($_POST['s_Device']) && 
                 isset($_POST['s_Type']) && $_POST['s_Type'] != $this->s_Type){
-            $propose_device = $this->a_Devices[$_POST['s_Type']].$this->DevID;
+            $propose_device = $this->a_Devices[get_post('s_Type')].$this->DevID;
         }
 
         plugin::save_object();
@@ -212,38 +212,6 @@ class gotoLpdEnable extends plugin
         foreach($this->attributes as $attr){
             $this->data[$this->DevID][$attr] = $this->$attr;
         } 
-
-        /* Device ID has changed another printer was selected * /
-           if(isset($_POST['DevID']) && $_POST['DevID'] != $this->DevID){
-           $this->DevID = $_POST['DevID'];
-           foreach($this->attributes as $attr){
-           $this->$attr = $this->data[$this->DevID][$attr];
-           }
-           } 
-         */
-
-        /* Add and remove additional printer settings 
-           if(isset($_POST['del_printer'])){
-           unset($this->data[$this->DevID]);
-           $this->data = array_values($this->data);
-           if(count($this->data) == 0){
-           $this->is_account = FALSE;
-           }
-           $this->DevID = key($this->data);
-           }
-           if(isset($_POST['add_printer'])){
-           if(count($this->data) < 3){
-           $entry = $this->default_entry;
-           $entry['i_Port'] = $entry['i_Port'] + count($this->data);
-           $entry['s_Device'] = $entry['s_Device'].count($this->data);
-           $this->DevID = count($this->data);
-           $this->data[] = $entry; 
-           foreach($this->attributes as $attr){
-           $this->$attr = $this->data[$this->DevID][$attr];
-           }
-           }
-           }
-         */
     }
 
 
