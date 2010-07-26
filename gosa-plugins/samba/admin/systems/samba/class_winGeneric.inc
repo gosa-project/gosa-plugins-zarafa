@@ -123,7 +123,7 @@ class wingeneric extends plugin
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
-      $smarty->assign("$attr", $this->$attr);
+      $smarty->assign("$attr", set_post($this->$attr));
     }
     
     $smarty->assign("base", $this->baseSelector->render());
