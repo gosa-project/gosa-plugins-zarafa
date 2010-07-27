@@ -9,7 +9,7 @@ class rSyslogServer extends goService{
     var $StatusFlag       = "";
 
     /* This class can't be assigned twice so it conflicts with itsself */
-    var $conflicts        = array("goSyslogServer");
+    var $conflicts        = array("rSyslogServer");
 
     var $DisplayName      = "";
     var $dn               = NULL;
