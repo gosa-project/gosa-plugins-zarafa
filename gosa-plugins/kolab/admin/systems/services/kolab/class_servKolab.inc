@@ -173,7 +173,7 @@ class servkolab extends goService
             }
         }
 
-        $smarty->assign("fbfuture",set_post($fbfuture));
+        $smarty->assign("fbfuture",($fbfuture));
         $smarty->assign("quotastr",($quotastr));
 
         $this->postfix_mydestinationList->setAcl($this->getacl("postfixmydestination"));
