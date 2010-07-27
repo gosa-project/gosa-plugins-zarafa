@@ -64,10 +64,10 @@ class dhcpService extends dhcpPlugin
 
         $smarty->assign('ddns_styles', $this->ddns_styles);
         foreach (array('max_lease_time', 'default_lease_time', 'ddns_update_style') as $value){
-            $smarty->assign("$value", $this->statements->get(preg_replace('/_/', '-', $value)));
+            $smarty->assign("$value", set_post($this->statements->get(preg_replace('/_/', '-', $value))));
         }
 
-        $smarty->assign("authoritative", $this->statements->exists('authoritative'));
+        $smarty->assign("authoritative",set_post( $this->statements->exists('authoritative')));
 
         /* Show main page */
         $display= $smarty->fetch(get_template_path('dhcp_service.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
@@ -101,7 +101,7 @@ class dhcpService extends dhcpPlugin
             foreach (array('max_lease_time', 'default_lease_time', 'ddns_update_style') as $val){
                 $tval= preg_replace('/_/', '-', $val);
                 if ($_POST[$val] != ""){
-                    $this->statements->set($tval,validate(get_post($val)));
+                    $this->statements->set($tval,get_post($val));
                 } else {
                     $this->statements->removeAll($tval);
                 }
