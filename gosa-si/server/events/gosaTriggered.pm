@@ -3,8 +3,23 @@
 # @brief Implementation of a GOsa-SI event module. 
 
 package gosaTriggered;
+
+use strict;
+use warnings;
+
+use Crypt::SmbHash;
+use Net::ARP;
+use Net::Ping;
+use Time::HiRes qw( usleep);
+use MIME::Base64;
+use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+use Socket;
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events", 
     "get_login_usr_for_client",
@@ -34,21 +49,11 @@ my @events = (
     "recreate_packages_list_db",
     "send_user_msg", 
     "get_available_kernel",
-	"trigger_activate_new",
+  "trigger_activate_new",
     "get_hosts_with_module",    
     );
-@EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Crypt::SmbHash;
-use Net::ARP;
-use Net::Ping;
-use Socket;
-use Time::HiRes qw( usleep);
-use MIME::Base64;
-use Data::Dumper;
+    
+our @EXPORT = @events;
 
 BEGIN {}
 

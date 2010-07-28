@@ -25,10 +25,19 @@ Andreas Rettenberger <rettenberger at gonicus dot de>
 
 =cut
 
-
 package gosaTriggered;
+
+use strict;
+use warnings;
+
+use MIME::Base64;
+use File::Temp qw/ tempfile/;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "usr_msg",
@@ -41,13 +50,8 @@ my @events = (
     "trigger_action_instant_update",
     "trigger_goto_settings_reload",
     );
-@EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use MIME::Base64;
-use File::Temp qw/ tempfile/;
+    
+our @EXPORT = @events;
 
 BEGIN {}
 
@@ -191,9 +195,9 @@ sub trigger_action_localboot {
 		# Check logged in user
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
-			open(FILE, "> /etc/gosa-si/event");
-			print FILE "trigger_action_localboot\n";
-			close(FILE);
+			open(my $FILE, ">", "/etc/gosa-si/event");
+			print $FILE "trigger_action_localboot\n";
+			close($FILE);
 		}
 	}
     else {
@@ -291,9 +295,9 @@ sub trigger_action_reboot {
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
 			system( "/usr/bin/goto-notify reboot" );
-			open(FILE, "> /etc/gosa-si/event");
-			print FILE "reboot\n";
-			close(FILE);
+			open(my $FILE, ">", "/etc/gosa-si/event");
+			print $FILE "reboot\n";
+			close($FILE);
 		}
 	}
     else {
@@ -353,9 +357,9 @@ sub trigger_action_halt {
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
 			system( "/usr/bin/goto-notify halt" );
-			open(FILE, "> /etc/gosa-si/event");
-			print FILE "halt\n";
-			close(FILE);
+			open(my $FILE, ">", "/etc/gosa-si/event");
+			print $FILE "halt\n";
+			close($FILE);
 		}
     } else {
     	system( "/sbin/shutdown -h +$timeout &" );
@@ -405,9 +409,9 @@ sub trigger_action_reinstall {
 		my @user_list = &get_logged_in_users;
 		if( @user_list >= 1 ) {
 			system( "/usr/bin/goto-notify install" );
-			open(FILE, "> /etc/gosa-si/event");
-			print FILE "install\n";
-			close(FILE);
+			open(my $FILE, ">", "/etc/gosa-si/event");
+			print $FILE "install\n";
+			close($FILE);
 		}
 	} else {
 		system( "/sbin/shutdown -r now &" );

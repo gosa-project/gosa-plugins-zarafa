@@ -1,13 +1,10 @@
 package ClientPackages;
 
-use Exporter;
-@ISA = ("Exporter");
-
 # Each module has to have a function 'process_incoming_msg'. This function works as a interface to gosa-sd and receives the msg hash from gosa-sd. 'process_incoming_function checks, wether it has a function to process the incoming msg and forward the msg to it. 
 
 use strict;
 use warnings;
-use GOSA::GosaSupportDaemon;
+
 use IO::Socket::INET;
 use XML::Simple;
 use Data::Dumper;
@@ -16,6 +13,11 @@ use Net::LDAP;
 use Net::LDAP::Util;
 use Socket;
 use Net::hostent;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
+
+our @ISA = ("Exporter");
 
 my $event_dir = "/usr/lib/gosa-si/server/ClientPackages";
 use lib "/usr/lib/gosa-si/server/ClientPackages";
@@ -30,7 +32,7 @@ my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 my $mesg;
 
 my %cfg_defaults = (
-"server" => {
+"Server" => {
     "ip" => [\$server_ip, "0.0.0.0"],
     "mac-address" => [\$main::server_mac_address, "00:00:00:00:00"],
     "port" => [\$server_port, "20081"],
@@ -48,6 +50,7 @@ my %cfg_defaults = (
 ### START #####################################################################
 
 # read configfile and import variables
+#why not using the main::read_configfile !!
 &local_read_configfile();
 
 
@@ -451,9 +454,9 @@ sub here_i_am {
     if ( defined($msg_hash->{'force-hostname'}[0]) &&
        length($msg_hash->{'force-hostname'}[0]) > 0){
     #      $heap->{force-hostname}->{$mac_address}= $msg_hash->{'force-hostname'}[0];
-	    open (TFILE, ">/var/tmp/$mac_address");
-	    print TFILE $msg_hash->{'force-hostname'}[0];
-	    close (TFILE); 
+	    open (my $TFILE, ">", "/var/tmp/$mac_address");
+	    print $TFILE $msg_hash->{'force-hostname'}[0];
+	    close ($TFILE); 
     } else {
     #      $heap->{force-hostname}->{$mac_address}= undef;
 	if ( -e "/var/tmp/$mac_address") {
@@ -563,7 +566,7 @@ sub here_i_am {
     if($ldap_res->code) {
             &main::daemon_log("$session_id ERROR: LDAP Entry for client with mac address $mac_address not found: ".$ldap_res->error, 1);
     } elsif ($ldap_res->count != 1) {
-            &main::daemon_log("$session_id ERROR: client with mac address $mac_address not found/unique/active - not updating ldap entry".
+            &main::daemon_log("$session_id WARNING: client with mac address $mac_address not found/unique/active - not updating ldap entry".
                             "\n\tbase: $ldap_base".
                             "\n\tscope: sub".
                             "\n\tattrs: ipHostNumber".
@@ -663,7 +666,7 @@ sub new_syslog_config {
 
 	# Sanity check
 	if ($ldap_res->count != 1) {
-		&main::daemon_log("$session_id ERROR: client with mac address $mac_address not found/unique/active - not sending syslog config".
+		&main::daemon_log("$session_id WARNING: client with mac address $mac_address not found/unique/active - not sending syslog config".
                 "\n\tbase: $ldap_base".
                 "\n\tscope: sub".
                 "\n\tattrs: gotoSyslogServer".
@@ -879,7 +882,7 @@ sub new_ldap_config {
 
 		# Sanity check
         if ($mesg->count != 1) {
-            &main::daemon_log("$session_id ERROR: new_ldap_config: client with mac address $macaddress not found/unique/active - not sending ldap config".
+            &main::daemon_log("$session_id WARNING: new_ldap_config: client with mac address $macaddress not found/unique/active - not sending ldap config".
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: dn, gotoLdapServer, FAIclass".
@@ -1081,12 +1084,12 @@ sub server_matches {
 		} else {
 			my $PROC_NET_ROUTE= ('/proc/net/route');
 
-			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+			open(my $FD_PROC_NET_ROUTE, "<", "$PROC_NET_ROUTE")
 				or die "Could not open $PROC_NET_ROUTE";
 
-			my @ifs = <PROC_NET_ROUTE>;
+			my @ifs = <$FD_PROC_NET_ROUTE>;
 
-			close(PROC_NET_ROUTE);
+			close($FD_PROC_NET_ROUTE);
 
 			# Eat header line
 			shift @ifs;

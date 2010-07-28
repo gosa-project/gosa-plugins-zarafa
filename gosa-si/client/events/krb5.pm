@@ -1,6 +1,17 @@
 package krb5;
+
+
+use strict;
+use warnings;
+
+use Authen::Krb5;
+use Authen::Krb5::Admin qw(:constants);
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "krb5_list_principals",  
@@ -15,13 +26,8 @@ my @events = (
     "krb5_del_policy",
     "krb5_set_password",
     );
-@EXPORT = @events;
-
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Authen::Krb5;
-use Authen::Krb5::Admin qw(:constants);
+    
+our @EXPORT = @events;
 
 BEGIN {}
 
@@ -41,6 +47,7 @@ my %cfg_defaults = (
    "password" => [\$krb_password, ""],
    },
 );
+# why not using the main::read_configfile, the code seems exactly the same
 &krb5_read_configfile($main::cfg_file, %cfg_defaults);
 
 

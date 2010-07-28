@@ -1,6 +1,17 @@
 package server_server_com;
+
+use strict;
+use warnings;
+
+use Data::Dumper;
+use Time::HiRes qw( usleep);
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+use Socket;
+
+our @ISA = qw(Exporter);
+
 my @events = (
     'information_sharing',
     'new_server',
@@ -10,15 +21,8 @@ my @events = (
     'foreign_job_updates',
     'confirm_usr_msg',
     );
-@EXPORT = @events;
-
-use strict;
-use warnings;
-use Data::Dumper;
-use GOSA::GosaSupportDaemon;
-use Time::HiRes qw( usleep);
-use Socket;
-
+    
+our @EXPORT = @events;
 
 BEGIN {}
 

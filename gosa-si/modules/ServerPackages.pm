@@ -1,14 +1,18 @@
 package ServerPackages;
 
-use Exporter;
-@ISA = ("Exporter");
+
 
 # Each module has to have a function 'process_incoming_msg'. This function works as a interface to gosa-sd and receives the msg hash from gosa-sd. 'process_incoming_function checks, wether it has a function to process the incoming msg and forward the msg to it. 
 
 use strict;
 use warnings;
-use GOSA::GosaSupportDaemon;
+
 use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
+
+our @ISA = ("Exporter");
 
 my $event_dir = "/usr/lib/gosa-si/server/ServerPackages";
 use lib "/usr/lib/gosa-si/server/ServerPackages";

@@ -1,13 +1,16 @@
-package GOSA::DBsqlite;
+package GOsaSI::DBsqlite;
 
 use strict;
 use warnings;
-use Carp;
-use DBI;
-use GOSA::GosaSupportDaemon;
+
+
 use Time::HiRes qw(usleep);
 use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
 use Fcntl qw/:DEFAULT :flock/; # import LOCK_* constants
+use Carp;
+use DBI;
 
 our $col_names = {};
 
@@ -42,8 +45,8 @@ sub new {
 
 sub connect {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::connect was called static! Argument was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::connect was called static! Argument was '$self'!", 1);
 		return;
 	}
 		
@@ -56,8 +59,8 @@ sub connect {
 
 sub disconnect {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::disconnect was called static! Argument was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::disconnect was called static! Argument was '$self'!", 1);
 		return;
 	}
 
@@ -76,8 +79,8 @@ sub disconnect {
 
 sub lock {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::lock was called static! Argument was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::lock was called static! Argument was '$self'!", 1);
 		return;
 	}
 
@@ -101,8 +104,8 @@ get_lock:
 
 sub unlock {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::unlock was called static! Argument was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::unlock was called static! Argument was '$self'!", 1);
 		return;
 	}
 	if(not ref $self->{db_lock_handle}) {
@@ -117,8 +120,8 @@ sub unlock {
 
 sub create_table {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::create_table was called static! Statement was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::create_table was called static! Statement was '$self'!", 1);
 		return;
 	}
 	my $table_name = shift;
@@ -325,8 +328,8 @@ sub add_dbentry {
 
 sub update_dbentry {
 	my ($self, $sql)= @_;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::update_dbentry was called static! Statement was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::update_dbentry was called static! Statement was '$self'!", 1);
 		return;
 	}
 	my $db_answer= $self->exec_statement($sql); 
@@ -336,8 +339,8 @@ sub update_dbentry {
 
 sub del_dbentry {
 	my ($self, $sql)= @_;;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::del_dbentry was called static! Statement was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::del_dbentry was called static! Statement was '$self'!", 1);
 		return;
 	}
 	my $db_res= $self->exec_statement($sql);
@@ -347,8 +350,8 @@ sub del_dbentry {
 
 sub get_table_columns {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::get_table_columns was called static! Statement was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::get_table_columns was called static! Statement was '$self'!", 1);
 		return;
 	}
 	my $table = shift;
@@ -371,8 +374,8 @@ sub get_table_columns {
 
 sub select_dbentry {
 	my ($self, $sql)= @_;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::select_dbentry was called static! Statement was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::select_dbentry was called static! Statement was '$self'!", 1);
 		return;
 	}
 	my $error= 0;
@@ -412,8 +415,8 @@ sub select_dbentry {
 
 sub show_table {
 	my $self = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::show_table was called static! Statement was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::show_table was called static! Statement was '$self'!", 1);
 		return;
 	}
 	my $table_name = shift;
@@ -432,13 +435,13 @@ sub show_table {
 sub exec_statement {
 	my $self = shift;
 	my $sql_statement = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called static! Statement was '$self'!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::exec_statement was called static! Statement was '$self'!", 1);
 		return;
 	}
 
 	if(not defined($sql_statement) or length($sql_statement) == 0) {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statement was called with empty statement!", 1);
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::exec_statement was called with empty statement!", 1);
 		return;
 	}
 
@@ -518,8 +521,8 @@ sub exec_statement {
 sub exec_statementlist {
 	my $self = shift;
 	my $sql_list = shift;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::exec_statementlist was called static!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::exec_statementlist was called static!", 1);
 		return;
 	}
 	my @db_answer;
@@ -538,8 +541,8 @@ sub exec_statementlist {
 
 sub count_dbentries {
 	my ($self, $table)= @_;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::count_dbentries was called static!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::count_dbentries was called static!", 1);
 		return;
 	}
 	my $error= 0;
@@ -557,8 +560,8 @@ sub count_dbentries {
 
 sub move_table {
 	my ($self, $from, $to) = @_;
-	if(not defined($self) or ref($self) ne 'GOSA::DBsqlite') {
-		&main::daemon_log("0 ERROR: GOSA::DBsqlite::move_table was called static!", 1);
+	if(not defined($self) or ref($self) ne 'GOsaSI::DBsqlite') {
+		&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::move_table was called static!", 1);
 		return;
 	}
 
@@ -625,11 +628,11 @@ sub move_table {
 		};
 		if($@) {
 			$self->{dbh}->rollback();
-			&main::daemon_log("0 ERROR: GOSA::DBsqlite::move_table crashed! Operation failed with $@", 1);
+			&main::daemon_log("0 ERROR: GOsaSI::DBsqlite::move_table crashed! Operation failed with $@", 1);
 		}
 	}
 
-	&main::daemon_log("0 INFO: GOSA::DBsqlite::move_table: Operation successful!", 7);
+	&main::daemon_log("0 INFO: GOsaSI::DBsqlite::move_table: Operation successful!", 7);
 	$self->unlock();
 
 	return;

@@ -11,5 +11,10 @@ case "$1" in
         *)                     exit 0;
 esac
 
-[ -d /var/lib/gosa-si ] || install -d -o root -g root -m 750 /var/lib/gosa-si
+# create missing /var/lib/gosa-si
+[ ! -d /var/lib/gosa-si/ ] && mkdir /var/lib/gosa-si
 
+# start daemon
+#invoke-rc.d gosa-si-server start
+
+exit 0

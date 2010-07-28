@@ -11,13 +11,13 @@ case "$1" in
         *)                     exit 0;
 esac
 
-[ ! -d /usr/lib/gosa-si/client/events ] && install -d -o root -g root -m 750 /usr/lib/gosa-si/client/events
+#[ ! -d /usr/lib/gosa-si/client/events ] && install -d -o root -g root -m 750 /usr/lib/gosa-si/client/events
 
 # Fix permission
-[ -f /etc/gosa-si/client.conf ] && chmod go-rwx /etc/gosa-si/client.conf
+#[ -f /etc/gosa-si/client.conf ] && chmod go-rwx /etc/gosa-si/client.conf
 
 # Restart daemon
-invoke-rc.d gosa-si restart
+#invoke-rc.d gosa-si-client start
 
 
 exit 0

@@ -10,26 +10,26 @@ The gosa-si-client.conf file defines all parameter GOsa-SI-client needs for runn
 
 =head1 DIRECTIVES
 
-=head2 [general]
+=head2 [General]
 
 =over 4
 
-=item log-file = /var/run/gosa-si-client.log
+=item log-file = /var/log/gosa-si/gosa-si-client.log
 
 Defines the location for the log file.
 
-=item pid-file = /var/run/gosa-si-client.pid
+=item pid-file = /var/run/gosa-si/gosa-si-client.pid
 
 Defines the location for the pid file.
 
-=item opts-file = var/run/gosa-si-client.opts
+=item opts-file = var/run/gosa-si/gosa-si-client.opts
 
 Defines the location for the opts file.
 
 =back
 
 
-=head2 [client]
+=head2 [Client]
 
 =over 4
 
@@ -80,7 +80,7 @@ Open a different fifo for system communication
 =back
 
 
-=head2 [server]
+=head2 [Server]
 
 =over 4
 
@@ -131,7 +131,7 @@ Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-
 
 This code is part of GOsa (L<http://www.gosa-project.org>)
 
-Copyright (C) 2003-2009 GONICUS GmbH
+Copyright (C) 2003-2010 GONICUS GmbH
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

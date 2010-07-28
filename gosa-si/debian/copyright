@@ -5,7 +5,10 @@ It was downloaded from http://www.gosa-project.org
 
 Copyright: 
 
-    Copyright (C) 2001-2009 Cajus Pollmeier <pollmeier@gonicus.de>
+			(c) 2007-2009 by Andreas Rettenberger <rettenberger@gonicus.de>
+			(c) 2008-2010 by Cajus Pollmeier <pollmeier@gonicus.de>
+			(c) 2008-2009 by Jan Wenzel <wenzel@gonicus.de>
+			(c) 2010 by Benoit Mortier <benoit.mortier@opensides.be>
 
 License:
 
@@ -24,8 +27,8 @@ License:
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 On Debian systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL'.
+Public License can be found in `/usr/share/common-licenses/GPL-2'.
 
-The Debian packaging is (C) 2008, Cajus Pollmeier <cajus@debian.org> and
+The Debian packaging is (C) Copyright 2001-2010, Cajus Pollmeier <cajus@debian.org> and
 is licensed under the GPL, see above.
 

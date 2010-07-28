@@ -1,31 +1,39 @@
 package load_reporter;
-use Exporter;
-@ISA = qw(Exporter);
-my @events = (
-    "get_events",
-    "get_terminal_server",
-	"get_load",
-	"report_load",
-	"set_terminal_server",
-    );
-@EXPORT = @events;
+
 
 use strict;
 use warnings;
-use GOSA::GosaSupportDaemon;
+
+use GOsaSI::GosaSupportDaemon;
+
+use Exporter;
 
 BEGIN {}
 END {}
 
+our @ISA = qw(Exporter);
+
+my @events = (
+    "get_events",
+    "get_terminal_server",
+    "get_load",
+    "report_load",
+    "set_terminal_server",
+    );
+
+our @EXPORT = @events;
+
 my $ts_load_file;
 my $waiting_for_ts_info;
 my %cfg_defaults = (
-		"client" => {
-		"ts-load-file" => [\$ts_load_file, "/var/run/gosa-si-client-ts-load.txt"],
-		"waiting-for-ts-info" => [\$waiting_for_ts_info, 5],
-		},
+			"client" => {
+			"ts-load-file" => [\$ts_load_file, "/var/run/gosa-si/gosa-si-client-ts-load.txt"],
+			"waiting-for-ts-info" => [\$waiting_for_ts_info, 5],
+			},
 		);
-&GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
+
+# to be removed ugly !! why not using main::_read_configfile
+&GOsaSI::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 
 ### FUNCTIONS #################################################################
@@ -55,9 +63,9 @@ sub get_load
 
 	my $file = "/proc/loadavg";
 	if ((not -f $file) || (not -r $file)) { return }
-	open(FHD, "<$file");
-	my $line = <FHD>;
-	close(FHD);
+	open(my $FHD, "<", "$file");
+	my $line = <$FHD>;
+	close($FHD);
 	chomp($line);
 
 	$out_msg = &create_xml_string(&create_xml_hash("report_load", $target, $source, $line));
@@ -83,9 +91,9 @@ sub set_terminal_server
 	{
 		$file_content .= "$ts $load\n";
 	}
-	open(FHD, ">$ts_load_file.part");
-	printf FHD $file_content;
-	close FHD;
+	open(my $FHD, ">", "$ts_load_file.part");
+	printf $FHD $file_content;
+	close($FHD);
 
 	system("mv $ts_load_file.part $ts_load_file");
 	&main::daemon_log("INFO: Wrote terminal server load information to $ts_load_file", 5);

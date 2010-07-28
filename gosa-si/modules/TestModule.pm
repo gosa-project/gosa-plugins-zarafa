@@ -1,11 +1,14 @@
 package TestModule;
 
-use Exporter;
-@ISA = ("Exporter");
 
 use strict;
 use warnings;
-use GosaSupportDaemon;
+
+use GOsaSI::GOsaSupportDaemon;
+
+use Exporter;
+
+our @ISA = ("Exporter");
 
 BEGIN{
 }

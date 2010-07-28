@@ -25,8 +25,18 @@ Andreas Rettenberger <rettenberger at gonicus dot de>
 
 
 package mailqueue;
+
+
+use strict;
+use warnings;
+
+use MIME::Base64;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "mailqueue_query",
@@ -36,12 +46,8 @@ my @events = (
     "mailqueue_del",
     "mailqueue_header",
     );
-@EXPORT = @events;
 
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use MIME::Base64;
+our @EXPORT = @events;
 
 BEGIN {}
 
@@ -120,16 +126,16 @@ sub mailqueue_query {
     my $error = 0;
     my $error_string;
     my $msg_id;
-    my $msg_hold;
-    my $msg_size;
-    my $arrival_time;
+#my $msg_hold;
+#my $msg_size;
+#my $arrival_time;
     my $sender;
     my $recipient;
-    my $status_message;
+#my $status_message;
     my $out_hash;
     my $out_msg;
 
-	&main::daemon_log("DEBUG: run /usr/bin/mailq\n", 7); 
+    &main::daemon_log("DEBUG: run /usr/bin/mailq\n", 7); 
     my $result = qx("/usr/bin/mailq");
     my @result_l = split(/([0-9A-Z]{10,12})/, $result);
 
@@ -230,9 +236,13 @@ sub mailqueue_query {
                 &main::daemon_log("$session_id WARNING: $error_string", 3);
             }           
 
-            # If query was successful, add resutls to answer
+            # If query was successful, add results to answer
             if ($query_positiv) {
-                $j++;   
+                $j++;
+		foreach my $key (keys %{ $act_result }) {
+			$act_result->{$key} =~ s/\</\&lt\;/g;
+			$act_result->{$key} =~ s/\>/\&gt\;/g;
+		}
                 $result_collection->{$j} = $act_result;    
             }
         }

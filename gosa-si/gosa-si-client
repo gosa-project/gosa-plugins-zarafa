@@ -1,46 +1,97 @@
 #!/usr/bin/perl
-#===============================================================================
+#*********************************************************************
 #
-#         FILE:  gosa-si-client
+# gosa-si-client -- client for the gosa-si-server
 #
-#        USAGE:  gosa-si-client
+# (c) 2007-2009 by Andreas Rettenberger <rettenberger@gonicus.de>
+# (c) 2008-2010 by Cajus Pollmeier <pollmeier@gonicus.de>
+# (c) 2008-2009 by Jan Wenzel <wenzel@gonicus.de>
+# (c) 2010 by Benoit Mortier <benoit.mortier@opensides.be>
 #
-#  DESCRIPTION:
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  libnetaddr-ip-perl
-#         BUGS:  ---
-#        NOTES:
-#       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
-#      COMPANY:
-#      VERSION:  1.0
-#      CREATED:  12.09.2007 08:54:41 CEST
-#     REVISION:  ---
-#===============================================================================
+#*********************************************************************
 
-my $client_version = '$HeadURL$:$Rev$';
+=head1 NAME
+
+gosa-si-client - Client for GOsa support infrastructure
+
+=head1 SYNOPSIS
+
+gosa-si-client [-hvf] [-c config]
+
+=head1 OPTIONS
+
+B<-h>, B<--help>
+    print out this help message
+
+B<-v>, B<--verbose>
+    be verbose (multiple v's will increase verbosity) 
+    -v          ERROR level
+    -vvv        WARNING  + ERROR level
+    -vvvvv      INFO + WARNING level
+    -vvvvvvv    DEBUG + INFO level
+    -vvvvvvvvv  in and out going xml messages will be displayed
+
+B<-f>, B<--foreground> 
+    foregroud, process will not be forked to background
+
+B<-c> I<file>, B<--config=>I<file>
+    configuration file, default F</etc/gosa-si/client.conf>
+
+B<-x> <dump>
+     dump configuration to stdout
+     ( 1 = current, 2 = default )
+
+=head1 DESCRIPTION
+
+B<gosa-si-client> belongs to the support infrastructure of GOsa. 
+The client registrates at a GOsa-SI-server and accepts messages from it. 
+Each message is related to a working instruction which will be executed on the client. 
+Depending on the message an answer can be send back to the server.
+
+=head1 BUGS 
+
+Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-devel@oss.gonicus.de> or to <https://oss.gonicus.de/labs/gosa>
+
+
+=head1 LICENCE AND COPYRIGHT
+
+This code is part of GOsa (L<http://www.gosa-project.org>)
+
+Copyright (C) 2003-2010 GONICUS GmbH
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+=cut
 
 use strict;
 use warnings;
+
 use Getopt::Long;
 use Config::IniFiles;
-use POSIX;
 use Time::HiRes qw( gettimeofday );
-
-use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
 use IO::Socket::INET;
 use NetAddr::IP;
 use Crypt::Rijndael;
-use GOSA::GosaSupportDaemon;
 use Digest::MD5  qw(md5_hex md5 md5_base64);
 use MIME::Base64;
 use XML::Simple;
 use File::Basename;
 use File::Spec;
+use File::Pid;
+use Net::ARP;
+use GOsaSI::GosaSupportDaemon;
+
+use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
 use Fcntl;
+use POSIX;
 
 # Workaround: need pure perl to make it work with UTF-8 :-(
 $XML::Simple::PREFERRED_PARSER= "XML::SAX::PurePerl";
+
+my $client_version = '$HeadURL$:$Rev$';
 
 my $client_headURL;
 my $client_revision;
@@ -48,7 +99,7 @@ my $client_status;
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
-my (%cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
+my (%cfg_defaults, $foreground, $pid_file, $procid, $pid, $log_file, $fai_logpath);
 my ($server_ip, $server_port, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_port, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my ($root_uid, $adm_gid);
@@ -58,7 +109,9 @@ my $default_server_key;
 my @servers;
 my $gotoHardwareChecksum;
 my $system_com;
-$verbose= 1;
+my $servers_string;
+
+my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
 
 # globalise variables which are used in imported events
 our $global_kernel;
@@ -72,19 +125,26 @@ our $client_dnsname;
 our $client_force_hostname;
 our $server_key;
 our $terminal_server_hash;
+our $opts_dnslookup;
+our $verbose= 0;
+
+# where is the config stored by default and his name
+our $config = '/etc/gosa-si/client.conf';
+
+# by default dumping of config is undefined
+our $dump_config = undef;
 
 # default variables
 my $REGISTERED = 0;
 
 # path to fifo for non-gosa-si-client messages to gosa-si-server
-my $fai_com_fifo = "/var/run/gosa-si-client.socket";
-my $system_com_fifo = "/var/run/gosa-si-client-system-com.socket";
+my $fai_com_fifo = "/var/run/gosa-si/gosa-si-client.socket";
+my $system_com_fifo = "/var/run/gosa-si/gosa-si-client-system-com.socket";
 my %files_to_watch = (fai_fifo => $fai_com_fifo, system_fifo => $system_com_fifo); 
 
-# in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
-# not successful until now
+# in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was not successful until now
 my $delay_set_time = 10;
-our $prg= basename($0);
+#our $prg= basename($0);
 
 # all n seconds the client reports logged_in users to gosa-si-server
 my $trigger_logged_in_users_report_delay = 600;
@@ -96,12 +156,12 @@ my $trigger_seen_messages_delay = 30;
 my $fai_log_dir = "/var/log/fai"; 
 
 %cfg_defaults = (
-"general" =>
-    {"log-file"           => [\$log_file, "/var/run/".$prg.".log"],
-    "pid-file"            => [\$pid_file, "/var/run/".$prg.".pid"],
-    "opts-file"            => [\$opts_file, "/var/run/".$prg.".opts"],
+"General" =>
+    {"log-file"           => [\$log_file, "/var/log/gosa-si/gosa-si.log"],
+    "pid-file"            => [\$pid_file, "/var/run/gosa-si/gosa-si-client.pid"],
+    "opts-file"            => [\$opts_file, "/var/run/gosa-si/gosa-si-client.opts"],
     },
-"client" => 
+"Client" => 
     {"port"        => [\$client_port, "20083"],
      "ip"          => [\$client_ip, "0.0.0.0"],
      "mac-address" => [\$client_mac_address, "00:00:00:00:00:00"],
@@ -114,12 +174,13 @@ my $fai_log_dir = "/var/log/fai";
      "force-hostname"	  => [\$client_force_hostname, "false"],
      "system-com"	  => [\$system_com, "disabled"],
     },
-"server" => {
-    "ip"          => [\$server_ip, "127.0.0.1"],
+"Server" => {
+    "ip"          => [\$servers_string, "127.0.0.1"],
     "port"         => [\$server_port, "20081"],
     "key"          => [\$server_key, ""],
     "timeout"      => [\$server_timeout, 10],
-    "key-lifetime" => [\$server_key_lifetime, 600], 
+    "key-lifetime" => [\$server_key_lifetime, 600],
+    "dns-lookup"   => [\$opts_dnslookup, "true"],
     },
 
 );
@@ -127,101 +188,138 @@ my $fai_log_dir = "/var/log/fai";
 
 #=== FUNCTIONS = functions =====================================================
 
-sub usage {
-    print STDERR << "EOF" ;
-usage: $prg [-hvf] [-c config]
+#############################
+#
+# @brief Display error message and/or help text.
+#
+# In correspondence to previous GetOptions
+#
+# @param $text - string to print as error message
+# @param $help - set true, if you want to show usage help
+#
+sub usage
+{
+  my( $text, $help ) = @_;
 
-           -h        : this (help) message
-           -c <file> : config file
-           -f        : foreground, process will not be forked to background
-           -v        : be verbose (multiple to increase verbosity)
- 
+  $text = undef if( 'h' eq $text );
+  (defined $text) && print STDERR "\n$text\n";
+
+  if( (defined $help && $help)
+      || (!defined $help && !defined $text) )
+{
+    print STDERR << "EOF";
+
+  usage: $0 [-hvf] [-c config]
+
+   -h        : this (help) message
+   -c <file> : config file (default: ${config})
+   -x <cfg>  : dump configuration to stdout
+             ( 1 = current, 2 = default )
+   -f        : foreground (don't fork)
+   -v        : be verbose (multiple to increase verbosity)
 EOF
-    print "\n" ;
+}
+  print( "\n" );
+
+  exit( -1 );
 }
 
-#===  FUNCTION  ================================================================
-#         NAME: check_cmdline_param
-#   PARAMETERS: 
-#      RETURNS:  
-#  DESCRIPTION: 
-#===============================================================================
-sub check_cmdline_param () {
-    my $err_config;
-    my $err_counter = 0;
-	if(not defined($cfg_file)) {
-		$cfg_file = "/etc/gosa-si/client.conf";
-		if(! -r $cfg_file) {
-			$err_config = "please specify a config file";
-			$err_counter += 1;
+#############################
+#
+# @brief Manage gosa-si-client configuration.
+#
+# Will exit after successfull dump to stdout (type = 1 | 2)
+#
+# Dump type can be:
+#   1: Current gosa-si-client configuration in config file (exit)
+#   2: Default gosa-si-client configuration (exit)
+#   3: Dump to logfile (no exit)
+#
+# @param int config type
+#
+sub dump_configuration {
+
+  my( $cfg_type ) = @_;
+
+  return if( ! defined $cfg_type );
+
+  if(1==$cfg_type ) {
+    print( "# Current gosa-si-client configuration\n" );
+	} elsif (2==$cfg_type) {
+    print( "# Default gosa-si-client configuration\n" );
+	} elsif (3==$cfg_type) {
+    daemon_log( "Dumping gosa-si-client configuration\n", 2 );
+	} else {
+    return;
+	}
+
+  foreach my $section (keys %cfg_defaults) {
+    if( 3 != $cfg_type ) { 
+      print( "\n[${section}]\n" ); 
+	} else {
+      daemon_log( "\n  [${section}]\n", 3 ); 
+	}
+
+    foreach my $param (sort( keys %{$cfg_defaults{ $section }})) {
+      my $pinfo = $cfg_defaults{ $section }{ $param };
+      my $value;
+      if (1==$cfg_type) {
+        if( defined( ${@$pinfo[ 0 ]} ) ) {
+          $value = ${@$pinfo[ 0 ]};
+          print( "$param=$value\n" );
+				} else {
+          print( "#${param}=\n" ); 
+				}
+			} elsif (2==$cfg_type) {
+        $value = @{$pinfo}[ 1 ];
+        if( defined( @$pinfo[ 1 ] ) ) {
+          $value = @{$pinfo}[ 1 ];
+          print( "$param=$value\n" );
+				} else {
+          print( "#${param}=\n" ); 
+				}
+			} elsif (3==$cfg_type) {
+        if( defined(  ${@$pinfo[ 0 ]} ) ) {
+          $value = ${@$pinfo[ 0 ]};
+          daemon_log( "  $param=$value\n", 3 )
+				}
+			}
 		}
-    }
-    if( $err_counter > 0 ) {
-        &usage( "", 1 );
-        if( defined( $err_config)) { print STDERR "$err_config\n"}
-        print STDERR "\n";
-        exit( -1 );
-    }
+	}
+
+
+# We just exit at stdout dump
+  if( 3 == $cfg_type ) { 
+    daemon_log( "\n", 3 );
+	} else {
+    exit( 0 );
+	}
 }
 
-
-#===  FUNCTION  ================================================================
-#         NAME: check_pid
-#   PARAMETERS:
-#      RETURNS:
-#  DESCRIPTION:
-#===============================================================================
-sub check_pid {
-    $pid = -1;
-    # Check, if we are already running
-    if( open(LOCK_FILE, "<$pid_file") ) {
-        $pid = <LOCK_FILE>;
-        if( defined $pid ) {
-            chomp( $pid );
-            if( -f "/proc/$pid/stat" ) {
-                my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
-                if( $0 eq $stat ) {
-                    close( LOCK_FILE );
-                    exit -1;
-                }
-            }
-        }
-        close( LOCK_FILE );
-        unlink( $pid_file );
-    }
-
-    # create a syslog msg if it is not to possible to open PID file
-    if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
-        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
-        if (open(LOCK_FILE, '<', $pid_file)
-                && ($pid = <LOCK_FILE>))
-        {
-            chomp($pid);
-            $msg .= "(PID $pid)\n";
-        } else {
-            $msg .= "(unable to read PID)\n";
-        }
-        if( ! ($foreground) ) {
-            openlog( $0, "cons,pid", "daemon" );
-            syslog( "warning", $msg );
-            closelog();
-        }
-        else {
-            print( STDERR " $msg " );
-        }
-        exit( -1 );
-    }
-}
-
-
+#############################
+#
+# @brief When caching an interrupt remove file pid and stopping gosa-si
+#
 sub sig_int_handler {
-    my ($signal) = @_;
-	
-    daemon_log("shutting down gosa-si-client", 1);
-    system("kill `ps -C gosa-si-client -o pid=`");
+	my ($signal) = @_;
+
+	daemon_log("shutting down gosa-si-client", 1);
+
+	# shtudown the client by telling the poe kernel
+	$global_kernel->yield('shutdown');
+
+	#removing the opts file
+	unlink ('/var/run/gosa-si/gosa-si-client.opts');
+
+	#removing the fifo for communication 
+	unlink ($fai_com_fifo);
+
+	#removing the pid
+	$pid->remove or warn "Could not remove $pid_file\n";
+
+  exit(0);
 }
 $SIG{INT} = \&sig_int_handler;
-
 
 #===  FUNCTION  ================================================================
 #         NAME:  logging
@@ -265,7 +363,7 @@ sub daemon_log {
 			$microSeconds =~ s/^\d*(.\d\d)$/$1/;
 
 
-            my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds $prg $msg\n";
+            my $log_msg = "$month $monthday $hours:$minutes:$seconds$microSeconds gosa-si-client $msg\n";
             print LOG_HANDLE $log_msg;
             if( $foreground ) { 
                 print STDERR $log_msg;
@@ -297,25 +395,12 @@ sub get_mac {
 				$result = "00:00:00:00:00:00";
 			}
 		} else {
-			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
-
 			# A configured MAC Address should always override a guessed value
 			if ($client_mac_address and length($client_mac_address) > 0 and not($client_mac_address eq "00:00:00:00:00:00")) {
 				$result= $client_mac_address;
 			}
 			else {
-				socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
-					or die "socket: $!";
-
-				if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
-					my ($if, $mac)= unpack 'h36 H12', $ifreq;
-
-					if (length($mac) > 0) {
-						$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
-						$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
-						$result = $mac;
-					}
-				}
+        $result = Net::ARP::get_mac($ifreq);
 			}
 		}
 	}
@@ -346,12 +431,12 @@ sub get_local_mac_for_remote_ip {
 	if($server_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
 		my $PROC_NET_ROUTE= ('/proc/net/route');
 
-		open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+		open(my $PROC_NET, "<","$PROC_NET_ROUTE")
 			or die "Could not open $PROC_NET_ROUTE";
 
-		my @ifs = <PROC_NET_ROUTE>;
+		my @ifs = <$PROC_NET>;
 
-		close(PROC_NET_ROUTE);
+		close($PROC_NET);
 
 		# Eat header line
 		shift @ifs;
@@ -478,7 +563,7 @@ sub send_msg_to_target {
         if ($REGISTERED == 1) {
             &_setREGISTERED(0);        # if server is not available, cause reregistering
             daemon_log("INFO: cause reregistering at gosa-si-server", 5); 
-            $global_kernel->yield('register_at_gosa_si_server');
+            $global_kernel->post('client_session', 'register_at_gosa_si_server');
 
         }
         $error++;
@@ -505,11 +590,11 @@ sub write_to_file {
     my $error = 0;
 
     if( not defined $file || not -f $file ) {
-        &main::daemon_log("ERROR: $prg: check '-f file' failed: $file", 1);
+        &main::daemon_log("ERROR: gosa-si-client : check '-f file' failed: $file", 1);
         $error++;
     }
     if( not defined $string || 0 == length($string)) {
-        &main::daemon_log("ERROR: $prg: empty string to write to file '$file'", 1);
+        &main::daemon_log("ERROR: gosa-si-client : empty string to write to file '$file'", 1);
         $error++;
     }
     
@@ -517,13 +602,13 @@ sub write_to_file {
 
         chomp($string);
     
-        if (open(FILE, ">> $file")){
-          print FILE $string."\n";
-          close(FILE);
+        if (open(my $FILE, ">>", "$file")){
+          print $FILE $string."\n";
+          close($FILE);
         }
     }
 
-    return;    
+    return;
 }
 
 
@@ -806,7 +891,7 @@ sub trigger_logged_in_users_report {
 			@logged_in_user_list = split(/\s/, $result);
 		}
 		
-        system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si-client.socket"); 
+        system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si/gosa-si-client.socket"); 
         $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
     } else {
         # try it in 10 sec again
@@ -840,9 +925,9 @@ sub trigger_seen_messages {
 
     # Check if file has 'seen' tag
     foreach my $goto_file (@goto_files) {
-        open(FILE, "$goto_dir/$goto_file");
-        my @lines = <FILE>;
-        close FILE;
+        open(my $FILE, "$goto_dir/$goto_file");
+        my @lines = <$FILE>;
+        close($FILE);
 
         my $source;
         my $target;
@@ -1006,9 +1091,9 @@ sub save_fai_log {
             next;
         }
 
-        open(FILE, "<$log_file");
-        my @lines = <FILE> ;
-        close (FILE);
+        open(my $FILE, "<","$log_file");
+        my @lines = <$FILE> ;
+        close ($FILE);
         my $log_string = join("", @lines); 
         $log .= &encode_base64($log_string);
         push(@log_list, $log); 
@@ -1138,82 +1223,195 @@ sub post_processing_and_sending
 	return;
 }
 
+sub find_servers {
+    # add gosa-si-server address from config file at first position of server list
+    my $server_check_cfg = Config::IniFiles->new( -file => $config );
 
-#==== MAIN = main ==============================================================
-#  parse commandline options
-Getopt::Long::Configure( "bundling" );
-GetOptions("h|help" => \&usage,
-           "c|config=s" => \$cfg_file,
-           "f|foreground" => \$foreground,
-           "v|verbose+" => \$verbose,
-           );
+    # Parse servers string
+    my @conf_servers = split(',', $servers_string);
 
-#  read and set config parameters
-&check_cmdline_param ;
-&read_configfile($cfg_file, %cfg_defaults);
-&check_pid;
+    # Now search for fallback servers in the configuration
+    foreach my $cur_server (@conf_servers) {
+        # Remove spaces from the IP
+        $cur_server =~ s/\s//g;
 
+        my $ip = $cur_server;
+        if(not $cur_server =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/) {
+            my $ip_address = inet_ntoa(scalar gethostbyname($ip));
+            if(defined($ip_address) && $ip_address =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/) {
+                # Write ip address to $server_ip variable
+                $ip = $ip_address;
+            }
+        }
 
-# forward error messages to logfile
-if ( ! $foreground ) {
-  open( STDIN,  '+>/dev/null' );
-  open( STDOUT, '+>&STDIN'    );
-  open( STDERR, '+>&STDIN'    );
+        my $server_addr = sprintf("%s:%s", $ip, $server_port);
+        if (not grep { $_ eq $server_addr } @servers) {
+           push(@servers, $server_addr);
+        }
+    }
+
+    my $servers_string = join(", ", @servers);
+    daemon_log("INFO: found servers in configuration file: $servers_string", 1);
+
+    # Last but not least search for fallback servers in the DNS
+    if (defined($opts_dnslookup) and $opts_dnslookup eq "true") {
+        my @tmp_servers;
+        if ( !$server_domain) {
+            # Try our DNS Searchlist
+            my @domain_list = &get_dns_domains();
+            my $tmp_domains;
+            my $error_string;
+            for my $domain (@domain_list) {
+                chomp($domain);
+                ($tmp_domains, $error_string) = &get_server_addresses($domain);
+                if(@$tmp_domains) {
+                    for my $tmp_server(@$tmp_domains) {
+                        push @tmp_servers, $tmp_server;
+                    }
+                }
+            }
+
+            if (0 == @tmp_servers) {
+                daemon_log("INFO: No servers found in DNS.", 1);
+            }
+            else {
+                my $servers_string = join(", ", @tmp_servers);
+                daemon_log("INFO: found servers in DNS: $servers_string", 1);
+            }
+        } else {
+            @tmp_servers = &get_server_addresses($server_domain);
+            if( 0 == @tmp_servers ) {
+            daemon_log("INFO: No servers found in DNS for domain '$server_domain'",1);
+            }
+        }
+
+        if ( 0 != @tmp_servers ) {
+            foreach my $server_addr (@tmp_servers) {
+                if (not grep { $_ eq $server_addr } @servers) {
+                   push(@servers, $server_addr);
+                }
+            }
+        }
+    }
+
+    if (0 == scalar(@servers)) {
+        daemon_log("ERROR: No servers found in the configuration or DNS.", 1);
+        exit(1);
+    }
+
+    # Define first server as server_ip
+    $server_ip = $servers[0];
+
+    # prepare variables
+    if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
+    if (defined $server_ip && defined $server_port) {
+        $server_address = $server_ip.":".$server_port;
+    }
 }
 
-# Just fork, if we are not in foreground mode
-if( ! $foreground ) { 
-    chdir '/'                 or die "Can't chdir to /: $!";
-    $pid = fork;
-    setsid                    or die "Can't start a new session: $!";
-    umask 0;
-} else { 
-    $pid = $$; 
+
+sub start_daemon {
+
+	if( ! $foreground ) {
+		chdir '/'                 or die "Can't chdir to /: $!";
+		umask 0;
+		open STDIN, '+>/dev/null'   or die "Can't read /dev/null: $!";
+		open STDOUT, '+>&STDIN' or die "Can't write to /dev/null: $!";
+		open STDERR, '+>&STDIN' or die "Can't write to /dev/null: $!";
+		defined($pid = fork)   or die "Can't fork: $!";
+		exit if $pid;
+		setsid                    or die "Can't start a new session: $!";
+	}
+	return;
 }
 
-# Do something useful - put our PID into the pid_file
-if( 0 != $pid ) {
-    open( LOCK_FILE, ">$pid_file" );
-    print LOCK_FILE "$pid\n";
-    close( LOCK_FILE );
-    if( !$foreground ) { 
-        exit( 0 ) 
-    };
-}
+sub put_version {
 
-# parse head url and revision from svn
-my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
-$client_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
-$client_headURL = defined $1 ? $1 : 'unknown' ;
-$client_revision = defined $2 ? $2 : 'unknown' ;
-if ($client_headURL =~ /\/tag\// || 
+	# parse head url and revision from svn
+	$client_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
+	$client_headURL = defined $1 ? $1 : 'unknown' ;
+	$client_revision = defined $2 ? $2 : 'unknown' ;
+	if ($client_headURL =~ /\/tag\// || 
         $client_headURL =~ /\/branches\// ) {
     $client_status = "stable"; 
-} else {
+	} else {
     $client_status = "developmental" ;
+	}
+	return;
 }
+
+sub get_perms_admin {
+	# Determine root uid and adm gid, used for creating log files
+	$root_uid = getpwnam('root');
+	$adm_gid = getgrnam('adm');
+	if(not defined $adm_gid){
+		$adm_gid = getgrnam('root');
+	}
+	return;
+}
+
+sub create_pid {
+	# Create the PID object
+	$pid = File::Pid->new({ file  => $pid_file });
+
+	# Write the PID file
+	$pid->write;
+
+	return;
+}
+
+#
+#==== MAIN = main ==============================================================
+#
+# Parse options and allow '-vvv'
+Getopt::Long::Configure( 'bundling' );
+GetOptions( 'v|verbose+' => \$verbose,
+            'h|help' => \&usage,
+            'c|config=s' => \$config,
+            'x|dump-config=i' => \$dump_config,
+            'f|foreground' => \$foreground)
+  or usage( '', 1 );
+
+# We may want to dump the default configuration
+if( defined $dump_config ) {
+  if($dump_config==1) {
+	} elsif ($dump_config==2) {
+    dump_configuration( $dump_config ); 
+	} else {
+    usage( "Dump configuration value has to be 1 or 2" );
+	}
+}
+
+#  read and set config parameters
+&read_configfile($config, %cfg_defaults);
+
+# daemonize the program
+&start_daemon($foreground);
+
+# create pid file
+&create_pid($pid, $pid_file);
 
 # Determine root uid and adm gid, used for creating log files
-$root_uid = getpwnam('root');
-$adm_gid = getgrnam('adm');
-if(not defined $adm_gid){
-	$adm_gid = getgrnam('root');
-}
+&get_perms_admin($root_uid, $adm_gid);
+
+# put version
+&put_version($client_status_hash, $client_version, $client_version, $client_headURL, $client_status);
 
 daemon_log(" ", 1);
-daemon_log("$prg started!", 1);
+daemon_log("$0 started!", 1);
 daemon_log("INFO: status: $client_status", 1);
 daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 1); 
 
-# delete old DBsqlite lock files
-system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
+# to be changed maybe not trace of it when running 
+#system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 
 # detect ip and mac address and complete host address
 $client_address = $client_ip.":".$client_port;
 my $network_interface= &get_interface_for_ip($client_ip);
 $client_mac_address= &get_mac($network_interface);
+
 daemon_log("INFO: ip address detected: $client_ip", 1);
-daemon_log("INFO: gosa-si-client mac address detected: $client_mac_address", 1);
+daemon_log("INFO: $0 mac address detected: $client_mac_address", 1);
 
 
 # import events
@@ -1237,7 +1435,6 @@ foreach my $log_line (@$result) {
 $gotoHardwareChecksum= &generate_hw_digest();
 daemon_log("INFO: gotoHardwareChecksum detected: $gotoHardwareChecksum", 1);
 
-
 # create socket for incoming xml messages
 POE::Component::Server::TCP->new(
     Alias => 'gosa-si-client',
@@ -1246,67 +1443,15 @@ POE::Component::Server::TCP->new(
 );
 daemon_log("INFO: start socket for incoming xml messages at port '$client_port' ", 1);
 
-
-# prepare variables
-if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
-if (defined $server_ip && defined $server_port) {
-    $server_address = $server_ip.":".$server_port;
-}
 $xml = new XML::Simple();
 $default_server_key = $server_key;
-
-# add gosa-si-server address from config file at first position of server list
-my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
-my $server_check = (defined($server_check_cfg))?$server_check_cfg->val( "server", "ip"):undef;
-if( defined $server_check ) {
-	unshift(@servers, $server_address);
-	my $servers_string = join(", ", @servers);
-	daemon_log("INFO: found servers in configuration file: $servers_string", 1);
-} else {
-	my @tmp_servers;
-	if ( !$server_domain) {
-		# Try our DNS Searchlist
-		my @domain_list = &get_dns_domains();
-		my $tmp_domains;
-		my $error_string;
-		for my $domain (@domain_list) {
-			chomp($domain);
-			($tmp_domains, $error_string) = &get_server_addresses($domain);
-			if(@$tmp_domains) {
-				for my $tmp_server(@$tmp_domains) {
-					push @tmp_servers, $tmp_server;
-				}
-			}
-		}
-		if (0 == @tmp_servers) {
-                        my $log_string = "no gosa-si-server found in DNS for domain: ".join(", ", @domain_list) if (@domain_list);
-                        my $log_string2 = "server addresses in domain: ".join(", ",@$tmp_domains) if (defined($tmp_domains));
-                        daemon_log("ERROR: $log_string", 1) if (defined($log_string));
-                        daemon_log("ERROR: $log_string2", 1) if (defined($log_string2));
-			daemon_log("ERROR: $error_string", 1) if (defined($error_string));
-			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
-			kill 2, $$;
-		}
-	} else {
-		@tmp_servers = &get_server_addresses($server_domain);
-		if( 0 == @tmp_servers ) {
-			daemon_log("ERROR: no gosa-si-server found in DNS for domain '$server_domain'",1);
-			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
-			kill 2, $$;
-		} 
-	}
-
-	foreach my $server (@tmp_servers) { 
-		unshift(@servers, $server); 
-	}
-	my $servers_string = join(", ", @servers);
-	daemon_log("INFO: found servers in DNS: $servers_string", 1);
-}
-
 
 # Open a new fifo for FAI messages to gosa-si-server
 if (-p $fai_com_fifo) { unlink $fai_com_fifo }
 POSIX::mkfifo("$fai_com_fifo", 0600);
+
+# Find servers from config and DNS
+&find_servers;
 
 # Open a new fifo for system communication, 
 if (-p $system_com_fifo) { unlink $system_com_fifo }
@@ -1317,26 +1462,26 @@ if ($system_com eq "enabled")
 
 POE::Session->create(
 	inline_states => {
-		_start => \&_start, 
-        _default => \&_default,
-        sig_handler => \&sig_handler,
-        register_at_gosa_si_server => \&register_at_gosa_si_server,
+		_start => \&_start,
+		_default => \&_default,
+		sig_handler => \&sig_handler,
+		register_at_gosa_si_server => \&register_at_gosa_si_server,
 
-        # trigger periodical tasks
-        trigger_new_key => \&trigger_new_key,
-        trigger_logged_in_users_report => \&trigger_logged_in_users_report,
-        trigger_seen_messages => \&trigger_seen_messages,
+		# trigger periodical tasks
+		trigger_new_key => \&trigger_new_key,
+		trigger_logged_in_users_report => \&trigger_logged_in_users_report,
+		trigger_seen_messages => \&trigger_seen_messages,
 
 		# trigger non periodical tasks
 		trigger_set_terminal_server => \&trigger_set_terminal_server,
-        
-        # handle records from each defined file differently
-        fai_fifo_record => \&fai_fifo_got_record,
+
+		# handle records from each defined file differently
+		fai_fifo_record => \&fai_fifo_got_record,
 		system_fifo_record => \&system_fifo_got_record,
 
-        # handle file resets and errors the same way for each file
-        file_reset => \&generic_file_reset,
-        file_error => \&generic_file_error,
+		# handle file resets and errors the same way for each file
+		file_reset => \&generic_file_reset,
+		file_error => \&generic_file_error,
 	}
 );
 

@@ -1,6 +1,15 @@
 package databases;
+
+use strict;
+use warnings;
+
+use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events", 
     "query_jobdb",
@@ -15,20 +24,14 @@ my @events = (
     "query_fai_release",
     "count_fai_release",
     );
-@EXPORT = @events;
 
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Data::Dumper;
+our @EXPORT = @events;
 
 BEGIN {}
 
 END {}
 
 ### Start ######################################################################
-
-#&main::read_configfile($main::cfg_file, %cfg_defaults);
 
 sub get_events {
     return \@events;

@@ -35,13 +35,6 @@ install-stamp:
 	-for i in *; do \
 		cp -R $$i debian/tmp ; \
 	done
-	-find debian/tmp -name '*.svn' -type d -exec rm -rf {} \; 2> /dev/null
-
-	-for i in gosa-si-client gosa-si-server modules/GosaPackages.pm modules/ClientPackages.pm modules/ServerPackages.pm server/events/*; do sed -i 's/use GosaSupportDaemon;/use GOSA::GosaSupportDaemon;/g;s/use DBsqlite;/use GOSA::DBsqlite;/g' debian/tmp/$$i; done
-
-	-sed -i 's!"/etc/gosa-si/modules";!use lib "/usr/lib/gosa-si/modules";!g' debian/tmp/gosa-si-server
-
-	-sed -i 's!"/etc/gosa-si/server/events";!"/usr/lib/gosa-si/server/events";!g' debian/tmp/modules/GosaPackages.pm
 
 	touch install-stamp
 
@@ -56,18 +49,13 @@ binary-indep: install
 	
 	dh_install --sourcedir=debian/tmp
 	
-	install -D -m 644 debian/gosa-si-server.lintian-overrides debian/gosa-si-server/usr/share/lintian/overrides/gosa-si-server
-	install -D -m 644 debian/gosa-si-client.lintian-overrides debian/gosa-si-client/usr/share/lintian/overrides/gosa-si-client
-
 	dh_installdocs 
 	dh_installcron
 	dh_installexamples
 	dh_installchangelogs
 	dh_installman
 	dh_installlogrotate
-	#dh_installdebconf
-	dh_installinit --init-script=gosa-si -- start 00 2 3 4 5 . stop 29 1 .
-
+	dh_installinit
 	chmod 640 debian/gosa-si-server/etc/gosa-si/server.conf debian/gosa-si-client/etc/gosa-si/client.conf
 
 	dh_link

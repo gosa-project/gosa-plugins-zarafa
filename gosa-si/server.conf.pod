@@ -11,21 +11,21 @@ The gosa-si-server.conf file defines all parameter GOsa-SI-server needs for runn
 =head1 DIRECTIVES
 
 
-=head2 [general]
+=head2 [General]
 
 =over 4
 
-=item logfile = /var/log/gosa-si-server.log
+=item logfile = /var/log/gosa-si/gosa-si-server.log
 
 Defines the location for the log file.
 
-=item pid-file = /var/run/gosa-si-server.pid
+=item pid-file = /var/run/gosa-si/gosa-si-server.pid
 Defines the location for the pid file.
 
 =back
 
 
-=head2 [server]
+=head2 [Server]
 
 =over 4
 
@@ -77,7 +77,7 @@ Defines the location for the local DB 'foreign_clients'.
 
 Defines the location for the sources file. 
 
-=item repo-path = /srv/www/repository
+=item repo-path = /srv/www/
 
 Defines the location of the dak Archive or local Debian Mirror and is scanned for Debian Packages.
 
@@ -188,7 +188,7 @@ the user is marked to be no longer logged in or the host is no longer running.
 
 =item address = 
 
-Comma seperated list of GOsa-si-servers (1.2.3.4:20081,9.8.7.6:123) in network where this SI-server should register. These given SI-servers extend the list of SI-servers found in DNS. 
+Comma separated list of GOsa-si-servers (1.2.3.4:20081,9.8.7.6:123) in network where this SI-server should register. These given SI-servers extend the list of SI-servers found in DNS. 
 
 =item dns-lookup = true
 
@@ -208,7 +208,7 @@ Defines the lifetime in seconds of a GOsa-SI-server key. After expiring the key 
 
 =item job-synchronization-enabled = true
 
-Defines whether job queue informations are be shared with other GOsa-SI-server in network.
+Defines whether job queue information are be shared with other GOsa-SI-server in network.
 
 =item synchronization-loog = 5
 
@@ -237,7 +237,7 @@ Space- or comma-separated list of interfaces on which to start an ARP-Daemon. En
 
 =item enabled = false
 
-Defines wheter Opsi integration is being enabled or not.
+Defines whether Opsi integration is being enabled or not.
 
 =item server = localhost
 
@@ -262,7 +262,7 @@ Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-
 
 This code is part of GOsa (L<http://www.gosa-project.org>)
 
-Copyright (C) 2003-2009 GONICUS GmbH
+Copyright (C) 2003-2010 GONICUS GmbH
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

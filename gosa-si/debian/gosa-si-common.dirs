@@ -1,2 +1,2 @@
-/etc/default
-/usr/share/perl5/GOSA
+/usr/share/perl5/GOsaSI
+/var/log/gosa-si

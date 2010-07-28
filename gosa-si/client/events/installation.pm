@@ -1,12 +1,16 @@
 package installation;
-use Exporter;
-@ISA = qw(Exporter);
-my @events = qw(get_events set_activated_for_installation);
-@EXPORT = @events;
 
 use strict;
 use warnings;
+
+use Exporter;
 use Fcntl;
+
+our @ISA = qw(Exporter);
+
+my @events = qw(get_events set_activated_for_installation);
+
+our @EXPORT = @events;
 
 BEGIN {}
 
@@ -25,10 +29,10 @@ sub set_activated_for_installation {
     my $target = @{$msg_hash->{'target'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
 
-    my $Datei = "/var/run/gosa-si-client.activated";
-    open(DATEI, ">$Datei");
-    print DATEI "$msg\n";
-    close DATEI;
+    my $Datei = "/var/run/gosa-si/gosa-si-client.activated";
+    open(my $FILE, ">", "$Datei");
+    print $FILE "$msg\n";
+    close($FILE);
 
     return;
 }

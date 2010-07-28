@@ -1,3 +1,0 @@
-# /etc/default/gosa-si - configure the init script
-START_CLIENT=1
-DEBUG=-vvv

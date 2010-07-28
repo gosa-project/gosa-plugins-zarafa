@@ -3,15 +3,15 @@ Section: utils
 Priority: optional
 Maintainer: GOsa packages mainteners group <gosa-pkg@oss.gonicus.de>
 Uploaders: Cajus Pollmeier <cajus@debian.org>, Benoit Mortier <benoit.mortier@opensides.be>
-Standards-Version: 3.8.0
-Build-Depends: debhelper(>= 4.2.32), dpatch
+Standards-Version: 3.8.4
+Build-Depends: debhelper(>= 5), dpatch
 Homepage: https://oss.gonicus.de/labs/gosa/
 Vcs-Browser: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si
 Vcs-Svn: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si
 
 Package: gosa-si-common
 Architecture: any
-Depends: libconfig-inifiles-perl, libcrypt-rijndael-perl, libio-socket-ssl-perl, libxml-simple-perl, libdata-dumper-simple-perl, libmime-perl | libmime-tools-perl, libdbd-sqlite3-perl, libnet-ldap-perl, libnetaddr-ip-perl, libpoe-perl, libnet-dns-perl, libnet-pcap-perl, libconvert-asn1-perl, libdigest-hmac-perl, libnet-ip-perl, libdigest-sha1-perl, libnet-mac-vendor-perl, libpoe-component-pcap-perl, libnet-arp-perl, libdatetime-perl, libjson-rpc-perl, libxml-quote-perl, libcrypt-ssleay-perl
+Depends: ${misc:Depends}, libconfig-inifiles-perl, libcrypt-rijndael-perl, libio-socket-ssl-perl, libxml-simple-perl, libdata-dumper-simple-perl, libmime-tools-perl, libdbd-sqlite3-perl, libnet-ldap-perl, libnetaddr-ip-perl, libpoe-perl, libnet-dns-perl, libnet-pcap-perl, libconvert-asn1-perl, libdigest-hmac-perl, libnet-ip-perl, libdigest-sha1-perl, libnet-mac-vendor-perl, libpoe-component-pcap-perl, libnet-arp-perl, libdatetime-perl, libjson-rpc-perl, libxml-quote-perl, libcrypt-ssleay-perl, libnet-arp-perl, libfile-pid-perl
 Suggests: gosa-si-server, gosa-si-client
 Description: GOsa support infrastructure
  GOsa is a combination of system-administrator and end-user web
@@ -22,7 +22,7 @@ Description: GOsa support infrastructure
 
 Package: gosa-si-server
 Architecture: any
-Depends: gosa-si-common, libcrypt-smbhash-perl
+Depends: ${misc:Depends}, gosa-si-common, libcrypt-smbhash-perl, wget
 Suggests: gosa, gosa-si-server-postfix, gosa-si-server-dak
 Description: GOsa support infrastructure server
  GOsa is a combination of system-administrator and end-user web
@@ -34,7 +34,7 @@ Description: GOsa support infrastructure server
 
 Package: gosa-si-client
 Architecture: any
-Depends: gosa-si-common, hwinfo, libdatetime-perl
+Depends: ${misc:Depends}, gosa-si-common, hwinfo, libdatetime-perl
 Suggests: goto-fai-progress, gosa-si-client-krb5
 Description: GOsa support infrastructure client
  GOsa is a combination of system-administrator and end-user web
@@ -45,7 +45,7 @@ Description: GOsa support infrastructure client
 
 Package: gosa-si-server-postfix
 Architecture: any
-Depends: gosa-si-server, postfix
+Depends: ${misc:Depends}, gosa-si-server, postfix
 Description: GOsa support infrastructure postfix module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
@@ -54,7 +54,7 @@ Description: GOsa support infrastructure postfix module
 
 Package: gosa-si-client-krb5
 Architecture: any
-Depends: gosa-si-client, libauthen-krb5-perl, libauthen-krb5-admin-perl
+Depends: ${misc:Depends}, gosa-si-client, libauthen-krb5-perl, libauthen-krb5-admin-perl
 Description: GOsa support infrastructure kerberos module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
@@ -64,7 +64,7 @@ Description: GOsa support infrastructure kerberos module
 
 Package: gosa-si-server-dak
 Architecture: any
-Depends: gosa-si-server, dak
+Depends: ${misc:Depends}, gosa-si-server, dak
 Description: GOsa support infrastructure dak module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
@@ -74,7 +74,7 @@ Description: GOsa support infrastructure dak module
 
 Package: gosa-si-server-opsi
 Architecture: any
-Depends: gosa-si-server
+Depends: ${misc:Depends}, gosa-si-server
 Description: GOsa support infrastructure opsi module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
@@ -83,7 +83,7 @@ Description: GOsa support infrastructure opsi module
 
 Package: gosa-si-client-loadreporter
 Architecture: any
-Depends: gosa-si-client
+Depends: ${misc:Depends}, gosa-si-client
 Description: GOsa support infrastructure system load reporter module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.

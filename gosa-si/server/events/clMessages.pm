@@ -3,8 +3,19 @@
 # @details A GOsa-SI event module containing all functions to handle incoming messages from clients.
 
 package clMessages;
+
+
+use strict;
+use warnings;
+
+use Data::Dumper;
+use MIME::Base64;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "confirm_usr_msg",
     "PROGRESS",
@@ -20,14 +31,7 @@ my @events = (
     "CURRENTLY_LOGGED_IN",
     "save_fai_log",
     );
-@EXPORT = @events;
-
-use strict;
-use warnings;
-use Data::Dumper;
-use GOSA::GosaSupportDaemon;
-use MIME::Base64;
-
+our @EXPORT = @events;
 
 BEGIN {}
 
@@ -101,7 +105,7 @@ sub save_fai_log {
         my ($log_file, $log_string) = split(":", $log);
         my $client_fai_log_file = File::Spec->catfile( $client_fai_log_dir, $log_file);
 
-		open(my $LOG_FILE, ">$client_fai_log_file"); 
+		open(my $LOG_FILE, ">", "$client_fai_log_file"); 
 		print $LOG_FILE &decode_base64($log_string);
 		close($LOG_FILE);
 		chown($main::root_uid, $main::adm_gid, $client_fai_log_file);
@@ -333,7 +337,7 @@ sub set_last_system {
 						);
 		# Sanity check of user search
 		if ($ldap_mesg->count == 0) {
-			&main::daemon_log("$session_id ERROR: no user with uid='$user' was found in base '".
+			&main::daemon_log("$session_id WARNING: no user with uid='$user' was found in base '".
 							$main::ldap_base."', setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 
 		# Set gotoLastSystem and gotoLastSystemLogin

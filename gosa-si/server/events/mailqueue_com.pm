@@ -21,22 +21,26 @@ be automatically imported by GOsa-SI if it is under F</usr/lib/gosa-si/server/E<
 =cut
 
 package mailqueue_com;
+
+use strict;
+use warnings;
+
+use Data::Dumper;
+use Time::HiRes qw( usleep);
+use MIME::Base64;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "mailqueue_query",
     "mailqueue_header",
 );
-@EXPORT = @events;
 
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Data::Dumper;
-use Time::HiRes qw( usleep);
-use MIME::Base64;
-
+our @EXPORT = @events;
 
 BEGIN {}
 
@@ -87,7 +91,7 @@ sub mailqueue_query {
     my ($sql, $res);
 
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -170,7 +174,7 @@ sub mailqueue_header {
     my ($sql, $res);
 
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }

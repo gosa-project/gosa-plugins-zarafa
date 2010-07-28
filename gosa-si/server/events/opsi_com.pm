@@ -4,10 +4,19 @@
 
 
 package opsi_com;
+
+use strict;
+use warnings;
+
+use Data::Dumper;
+use XML::Quote qw(:all);
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
 use UNIVERSAL 'isa';
 
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
+
 my @events = (
     "get_events",
     "opsi_install_client",
@@ -44,13 +53,9 @@ my @events = (
     "opsi_unboundHostFromLicense",
     "opsi_test",
    );
-@EXPORT = @events;
 
-use strict;
-use warnings;
-use GOSA::GosaSupportDaemon;
-use Data::Dumper;
-use XML::Quote qw(:all);
+our @EXPORT = @events;
+
 
 BEGIN {}
 
@@ -70,7 +75,9 @@ my %cfg_defaults = (
 		"password" => [\$opsi_password, "secret"],
 		},
 );
+
 &read_configfile($main::cfg_file, %cfg_defaults);
+
 if ($opsi_enabled eq "true") {
 	use JSON::RPC::Client;
 	use XML::Quote qw(:all);

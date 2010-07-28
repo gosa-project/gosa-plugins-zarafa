@@ -1,22 +1,25 @@
 package siTriggered;
+
+use strict;
+use warnings;
+
+use Data::Dumper;
+use GOsaSI::GosaSupportDaemon;
+
 use Exporter;
-@ISA = qw(Exporter);
+use Socket;
+
+our @ISA = qw(Exporter);
+
 my @events = (
     "got_ping",
     "detected_hardware",
     "trigger_wake",
     "reload_ldap_config",
-	"get_terminal_server",
+    "get_terminal_server",
     );
-@EXPORT = @events;
-
-use strict;
-use warnings;
-use Data::Dumper;
-use GOSA::GosaSupportDaemon;
-use Socket;
-
-
+    
+our @EXPORT = @events;
 
 BEGIN {}
 
@@ -31,14 +34,15 @@ my $ldap_admin_password;
 my $mesg;
 
 my %cfg_defaults = (
-    "server" => {
+    "Server" => {
         "ldap-uri" => [\$ldap_uri, ""],
         "ldap-base" => [\$ldap_base, ""],
         "ldap-admin-dn" => [\$ldap_admin_dn, ""],
         "ldap-admin-password" => [\$ldap_admin_password, ""],
     },
 );
-&GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
+# why not using it from main::read_configfile
+&GOsaSI::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 
 sub get_terminal_server
@@ -225,9 +229,9 @@ sub detected_hardware {
 		#	$dnsname= $heap->{force-hostname}->{$macaddress};
 		#	&main::daemon_log("INFO: Using forced hostname $dnsname for client $address", 4);
 		if (-e "/var/tmp/$macaddress" ){
-			open(TFILE, "< /var/tmp/$macaddress");
-			$dnsname= <TFILE>;
-			close(TFILE);
+			open(my $TFILE, "<", "/var/tmp/$macaddress");
+			$dnsname= <$TFILE>;
+			close($TFILE);
 		} else {
 			$dnsname= gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
 		}
