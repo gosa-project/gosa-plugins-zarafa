@@ -301,7 +301,7 @@ class wingeneric extends plugin
     $this->netConfigDNS->save();
 
     /* Optionally execute a command after we're done */
-    $this->postcreate();
+    $this->handle_post_events("add");
   }
 
   /* Return plugin informations for acl handling
