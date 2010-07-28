@@ -221,7 +221,7 @@ class oxchangeAccount extends plugin
     }
 
     /* Optionally execute a command after we're done */
-    $this->postremove(array("uid" => $this->uid));
+    $this->handle_post_events("remove",array("uid" => $this->uid));
 
     /* Finally remove data from postgresql server */
     foreach ($sqldeluser as $sqls){
@@ -331,7 +331,7 @@ class oxchangeAccount extends plugin
     }
 
     /* Optionally execute a command after we're done */
-    $this->postcreate(array("uid" => $this->uid));
+    $this->handle_post_events("add",array("uid" => $this->uid));
 
     if($needupdate){
       $ldap->create_missing_trees("ou=addr,".$this->dn);
