@@ -127,7 +127,7 @@ class intranetAccount extends plugin
       }
 
       /* Optionally execute a command after we're done */
-      $this->postremove(array("uid"=>$this->uid));
+      $this->handle_post_events("remove",array("uid" => $this->uid));
     }
   }
 
@@ -194,7 +194,7 @@ class intranetAccount extends plugin
       }
 
       /* Optionally execute a command after we're done */
-      $this->postcreate(array("uid" => $this->uid));
+      $this->handle_post_events("add",array("uid" => $this->uid));
   }
 
 
