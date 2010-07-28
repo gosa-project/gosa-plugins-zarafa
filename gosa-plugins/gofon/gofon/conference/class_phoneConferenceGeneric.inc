@@ -765,7 +765,7 @@ class conference extends plugin
     }
 
     /* Optionally execute a command after we're done */
-    $this->postcreate();
+    $this->handle_post_events("add");
   }
 
 
