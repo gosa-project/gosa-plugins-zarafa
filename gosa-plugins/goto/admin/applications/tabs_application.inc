@@ -24,13 +24,15 @@ class apptabs extends tabs
   function save($ignore_account= FALSE)
   {
     $baseobject= $this->by_object['application'];
+    $cn      = preg_replace('/,/', '\,', $baseobject->cn); 
+    $cn      = preg_replace('/"/', '\"', $cn); 
 
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
     if($baseobject->parent->parent->IsReleaseManagementActivated()){
-      $new_dn= "cn=".$baseobject->cn.",".$baseobject->parent->parent->app_release;
+      $new_dn= "cn=".$cn.",".$baseobject->parent->parent->app_release;
     }else{
-      $new_dn= "cn=".$baseobject->cn.",".get_ou("application", "applicationRDN").$baseobject->base;
+      $new_dn= "cn=".$cn.",".get_ou("application", "applicationRDN").$baseobject->base;
     }
     
     // Do we have to move the object?
