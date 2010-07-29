@@ -15,7 +15,9 @@ class faxblocktabs extends tabs
     $baseobject= $this->by_object['blocklistGeneric'];
 
     /* Check for new 'dn', in order to propagate the 'dn' to all plugins */
-    $new_dn= "cn=".$baseobject->cn.",".get_ou("blocklistGeneric", "faxBlocklistRDN").$baseobject->base;
+    $cn      = preg_replace('/,/', '\,', $baseobject->cn);
+    $cn      = preg_replace('/"/', '\"', $cn);
+    $new_dn= "cn=".$cn.",".get_ou("blocklistGeneric", "faxBlocklistRDN").$baseobject->base;
 
     /* Move group? */
     if ($this->dn != $new_dn){
