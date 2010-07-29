@@ -278,7 +278,7 @@ class roleGeneric extends plugin {
             $message[]= msgPool::required(_("Name"));
         }
 
-        if (preg_match ('/[#+:=>\\\\\/]/', $this->ou)){
+        if (preg_match ('/[#+:=>\\\\\/]/', $this->cn)){
             $message[]= msgPool::invalid(_("Name"), $this->cn, "/[^#+:=>\\\\\/]/");
         }
 
