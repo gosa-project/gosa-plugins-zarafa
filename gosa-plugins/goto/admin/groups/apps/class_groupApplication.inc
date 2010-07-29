@@ -1381,7 +1381,7 @@ class appgroup extends plugin
                     "plDepends"     => array(),
                     "plPriority"    => 7,
                     "plSection"     => array("administration"),
-                    "plCategory"    => array("groups"),
+                    "plCategory"    => array("groups","ogroups"),
                     "plRequirements"=> array(
                         'ldapSchema' => array('gotoSubmenuEntry'=>'>=2.7','gotoMenuEntry' => '>=2.7'),
                         'onFailureDisablePlugin' => array(get_class())
