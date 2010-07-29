@@ -24,14 +24,19 @@ class mimetabs extends tabs
   function save($ignore_account= FALSE)
   {
     $baseobject= $this->by_object['mimetype'];
+    $cn      = preg_replace('/,/', '\,', $baseobject->cn);
+    $cn      = preg_replace('/"/', '\"', $cn);
 
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
+
     if($this->parent->IsReleaseManagementActivated()){
-      $new_dn= "cn=".$baseobject->cn.",".$this->parent->mime_release;
+      $new_dn= "cn=".$cn.",".$this->parent->mime_release;
     }else{
-      $new_dn= "cn=".$baseobject->cn.",".get_ou("mimetype", "mimetypeRDN").$baseobject->base;
+      $new_dn= "cn=".$cn.",".get_ou("mimetype", "mimetypeRDN").$baseobject->base;
     }
+
+    $new_dn =  @LDAP::convert($new_dn);
 
     /* Move group? */
     if ($this->dn != $new_dn){
