@@ -63,7 +63,7 @@
      <td>
 {render acl=$gosaMailQuotaACL}
       <input id="gosaMailQuota" name="gosaMailQuota" size="6" align="middle" maxlength="60"
-        value="{$gosaMailQuota}"> MB
+        value="{$gosaMailQuota}" type='text'> MB
             {/render}
      </td>
     </tr>
