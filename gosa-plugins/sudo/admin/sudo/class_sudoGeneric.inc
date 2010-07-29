@@ -240,6 +240,7 @@ class sudo extends plugin
           NEGATE values 
          *********************/ 
         foreach($_POST as $name => $value){
+            $value =get_post($name);
             if(preg_match("/^neg_/",$name)){
                 $attr = preg_replace("/^neg_([^_]*)_.*$/","\\1",$name);
                 $value= preg_replace("/^neg_[^_]*_([0-9]*)$/","\\1",$name);
@@ -264,6 +265,7 @@ class sudo extends plugin
           Delete values 
          *********************/ 
         foreach($_POST as $name => $value){
+            $value =get_post($name);
             if(preg_match("/^delS_/",$name)){
                 $attr = preg_replace("/^delS_([^_]*).*$/","\\1",$name);
                 $value= preg_replace("/^delS_[^_]*_([0-9]*)$/","\\1",$name);
@@ -291,12 +293,12 @@ class sudo extends plugin
                     !empty($_POST['new_'.$attr])){
 
                 $c = preg_quote(' *+-?_|!\'"()','/');
-                if(preg_match("/^[a-z0-9{$c}]*$/i",$_POST['new_'.$attr])){
+                if(preg_match("/^[a-z0-9{$c}]*$/i",get_post('new_'.$attr))){
                     $attrs = $this->$attr;
-                    $attrs[] =  trim($_POST['new_'.$attr]); 
+                    $attrs[] =  trim(get_post('new_'.$attr)); 
                     $this->$attr = $attrs;
                 }else{
-                    msg_dialog::display(_("Error"),msgPool::invalid($attr,$_POST['new_'.$attr],"/[a-z0-9{$c}]/i"));
+                    msg_dialog::display(_("Error"),msgPool::invalid($attr,get_post('new_'.$attr),"/[a-z0-9{$c}]/i"));
                 }
             }
         }
@@ -305,7 +307,7 @@ class sudo extends plugin
         foreach(array("sudoCommand") as $attr){
             if($this->acl_is_writeable($attr) && isset($_POST["add_".$attr]) && isset($_POST['new_'.$attr])){
                 $attrs = $this->$attr;
-                $attrs[] =  trim($_POST['new_'.$attr]); 
+                $attrs[] =  trim(get_post('new_'.$attr)); 
                 $this->$attr = $attrs;
             }
         }
@@ -319,11 +321,7 @@ class sudo extends plugin
         $smarty->assign("trustModeDialog" , $trustModeDialog);
         $smarty->assign("is_default",$this->is_default);
         foreach($this->attributes as $attr){
-            if(is_string($this->$attr)){
-                $smarty->assign($attr,htmlentities($this->$attr));
-            }else{
-                $smarty->assign($attr,$this->$attr);
-            }
+            $smarty->assign($attr, set_post($this->$attr));
             $smarty->assign($attr."ACL",$this->getacl($attr));
         }
 
@@ -523,7 +521,7 @@ class sudo extends plugin
                     "plPriority"    => 0,
                     "plSection"     => array("administration"),
                     "plCategory"    => array("sudo" => array("objectClass" => "sudoRole", "description" => _("Sudo role"))),
-                
+
                     "plProperties" => 
                     array(
                         array(
@@ -537,16 +535,16 @@ class sudo extends plugin
                             "mandatory"     => FALSE)),
 
 
-                    "plProvidedAcls"    => array(
-                        "accessTo"          => _("System trust"),
-                        "cn"                => _("Name"),
-                        "description"       => _("Description"),
-                        "sudoUser"          => _("Users"),
-                        "sudoHost"          => _("Host"),
-                        "sudoCommand"       => _("Command"),
-                        "sudoRunAs"         => _("Run as user"),
-                        "trustModel"        => _("Access control list"))
-                    ));
+            "plProvidedAcls"    => array(
+                    "accessTo"          => _("System trust"),
+                    "cn"                => _("Name"),
+                    "description"       => _("Description"),
+                    "sudoUser"          => _("Users"),
+                    "sudoHost"          => _("Host"),
+                    "sudoCommand"       => _("Command"),
+                    "sudoRunAs"         => _("Run as user"),
+                    "trustModel"        => _("Access control list"))
+                ));
     }
 
 
@@ -557,7 +555,7 @@ class sudo extends plugin
     function PrepareForCopyPaste($source)
     {
         plugin::PrepareForCopyPaste($source);
-        
+
         $this->trustModeDialog->PrepareForCopyPaste($source);
 
         foreach(array("sudoUser","sudoCommand","sudoHost","sudoRunAs") as $attr){
@@ -581,7 +579,7 @@ class sudo extends plugin
     {
         $vars = array("cn");
         $smarty = get_smarty();
-        $smarty->assign("cn", htmlentities($this->cn));
+        $smarty->assign("cn", set_post($this->cn));
         $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
         $ret = array();
         $ret['string'] = $str;
