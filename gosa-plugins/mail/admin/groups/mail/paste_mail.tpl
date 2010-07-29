@@ -9,7 +9,7 @@
 						<LABEL for="mail">{t}Primary address{/t}</LABEL>{$must}
 					</td>
      				<td>
-						<input id="mail" name="mail" size="25" maxlength="65" 
+						<input id="mail" name="mail" size="25" maxlength="65" type='text' 
 							value="{$mail}" title="{t}Primary mail address for this shared folder{/t}">
 					</td>
     			</tr>
