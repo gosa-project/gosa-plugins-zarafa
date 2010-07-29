@@ -22,7 +22,9 @@ class conferencetabs extends tabs
   function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['conference'];
-	$new_dn= 'cn='.$baseobject->cn.','.get_ou("conference", "phoneConferenceRDN").$baseobject->base;
+    $cn      = preg_replace('/,/', '\,', $baseobject->cn);
+    $cn      = preg_replace('/"/', '\"', $cn);
+	$new_dn= @LDAP::convert('cn='.$cn.','.get_ou("conference", "phoneConferenceRDN").$baseobject->base);
 
 	if(strtolower($this->dn)==strtolower($new_dn)){
 		$this->dn=$new_dn;
