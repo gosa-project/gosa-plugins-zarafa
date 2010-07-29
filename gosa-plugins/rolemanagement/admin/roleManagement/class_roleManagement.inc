@@ -22,46 +22,46 @@
 
 class roleManagement extends management
 {
-  var $plHeadline     = "Roles";
-  var $plDescription  = "Assign and manage organizational roles";
-  var $plIcon  = "plugins/rolemanagement/images/plugin.png";
+    var $plHeadline     = "Roles";
+    var $plDescription  = "Assign and manage organizational roles";
+    var $plIcon  = "plugins/rolemanagement/images/plugin.png";
 
-  // Tab definition 
-  protected $tabClass = "roletabs";
-  protected $tabType = "ROLETABS";
-  protected $aclCategory = "roles";
-  protected $aclPlugin   = "role";
-  protected $objectName   = "role";
+    // Tab definition 
+    protected $tabClass = "roletabs";
+    protected $tabType = "ROLETABS";
+    protected $aclCategory = "roles";
+    protected $aclPlugin   = "role";
+    protected $objectName   = "role";
 
-  function __construct($config,$ui)
-  {
-    $this->config = $config;
-    $this->ui = $ui;
-   
-    $this->storagePoints = array(get_ou("roleGeneric", "roleRDN"));
- 
-    // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
-      $filter= session::global_get(get_class($this)."_filter");
-    } else {
-      $filter = new filter(get_template_path("role-filter.xml", true));
-      $filter->setObjectStorage($this->storagePoints);
+    function __construct($config,$ui)
+    {
+        $this->config = $config;
+        $this->ui = $ui;
+
+        $this->storagePoints = array(get_ou("roleGeneric", "roleRDN"));
+
+        // Build filter
+        if (session::global_is_set(get_class($this)."_filter")){
+            $filter= session::global_get(get_class($this)."_filter");
+        } else {
+            $filter = new filter(get_template_path("role-filter.xml", true));
+            $filter->setObjectStorage($this->storagePoints);
+        }
+        $this->setFilter($filter);
+
+        // Build headpage
+        $headpage = new listing(get_template_path("role-list.xml", true));
+        $headpage->setFilter($filter);
+
+        // Add copy&paste and snapshot handler.
+        if ($this->config->boolValueIsTrue("core", "copyPaste")){
+            $this->cpHandler = new CopyPasteHandler($this->config);
+        }
+        if($this->config->get_cfg_value("core","enableSnapshots") == "true"){
+            $this->snapHandler = new SnapshotHandler($this->config);
+        }
+        parent::__construct($config, $ui, "roles", $headpage);
     }
-    $this->setFilter($filter);
-
-    // Build headpage
-    $headpage = new listing(get_template_path("role-list.xml", true));
-    $headpage->setFilter($filter);
-
-    // Add copy&paste and snapshot handler.
-    if ($this->config->boolValueIsTrue("core", "copyPaste")){
-      $this->cpHandler = new CopyPasteHandler($this->config);
-    }
-    if($this->config->get_cfg_value("core","enableSnapshots") == "true"){
-      $this->snapHandler = new SnapshotHandler($this->config);
-    }
-    parent::__construct($config, $ui, "roles", $headpage);
-  }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
