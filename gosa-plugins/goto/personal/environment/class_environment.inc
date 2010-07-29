@@ -1770,7 +1770,7 @@ class environment extends plugin
                   "plPriority"      => 3,                                 // Position in tabs 
                   "plSection"     => array("personal" => _("My account")),
                   "plCategory"    => array("users",
-                      "groups"),
+                      "groups","ogroups"),
                   "plOptions"       => array("resolution_hook" => array("type" => "string",
                           "description" => _("Command to extend the list of possible screen resolutions"))),
                   "plRequirements"=> array(
