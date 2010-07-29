@@ -58,7 +58,7 @@ class fonreport extends plugin
         $filter= "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".      
             "(objectClass=goFonAccount)(telephoneNumber=*))";
         $tmp= get_list($filter, "users/viewFonEntries", $this->search_base,
-            array("telephoneNumber"), GL_SUBSEARCH | GL_NO_ACL_CHECK);
+                array("telephoneNumber"), GL_SUBSEARCH | GL_NO_ACL_CHECK);
         $this->telephoneNumberToDN = array();
         foreach($tmp as $attrs){
             for($i=0;$i<$attrs['telephoneNumber']['count']; $i++){
@@ -174,7 +174,7 @@ class fonreport extends plugin
         /* Connecting, selecting database */
         if (!isset($this->config->data['SERVERS']['FON'][0])){
             msg_dialog::display(_("Configuration error"), msgPool::noserver(
-                    _("GOfon")), WARNING_DIALOG);
+                        _("GOfon")), WARNING_DIALOG);
             return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
         }elseif(!is_callable("mysql_connect")){
             msg_dialog::display(_("Configuration error"), msgPool::missingext("php-mysql"), WARNING_DIALOG);
@@ -195,12 +195,12 @@ class fonreport extends plugin
             $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
             if ($link === FALSE){
                 msg_dialog::display(_("Error"), msgPool::dbconnect(
-                    _("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
+                            _("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
                 return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
             }
             if (! @mysql_select_db("gophone")){
                 msg_dialog::display(_("Error"), msgPool::dbselect(
-                    _("GOfon"),@mysql_error(),$cfg['DB']),ERROR_DIALOG);
+                            _("GOfon"),@mysql_error(),$cfg['DB']),ERROR_DIALOG);
                 return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
             }
         }
@@ -217,7 +217,7 @@ class fonreport extends plugin
         $result = @mysql_query($query);
         if ($result === false){
             msg_dialog::display(_("Error"), msgPool::dbquery(
-                    _("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
+                        _("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
             return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
         }
 
@@ -406,9 +406,9 @@ class fonreport extends plugin
 
         $query = "SELECT {$fieldset} FROM cdr ".
             "WHERE   
-            calldate <= $end 
+            calldate <= ".mysql_real_escape_string($end)." 
             AND 
-            calldate >= $start 
+            calldate >= ".mysql_real_escape_string($start)." 
             ". $uidstring." 
             ORDER BY ".$this->fields[$this->sort]." $desc";
 
@@ -438,7 +438,7 @@ class viewFonEntries{
                         "lastapp"       =>_("Application called"),
                         "disposition"   =>_("Disposition"), 
                         "duration"      =>_("Duration"))
-                        ));
+                    ));
     }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
