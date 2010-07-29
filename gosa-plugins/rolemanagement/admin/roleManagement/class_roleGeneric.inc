@@ -278,9 +278,8 @@ class roleGeneric extends plugin {
             $message[]= msgPool::required(_("Name"));
         }
 
-       
-        if (preg_match("/[^a-z0-9]/i", $this->cn)){
-            $message[]= msgPool::invalid(_("Name"), $this->cn, '/[a-z0-9]/i');
+        if (preg_match ('/[#+:=>\\\\\/]/', $this->ou)){
+            $message[]= msgPool::invalid(_("Name"), $this->cn, "/[^#+:=>\\\\\/]/");
         }
 
         // Check if this name is uniq for roles.

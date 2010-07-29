@@ -55,7 +55,9 @@ class roletabs extends tabs
 
 		/* Check for new 'dn', in order to propagate the
 		   'dn' to all plugins */
-		$new_dn= 'cn='.$baseobject->cn.','.get_ou("roleGeneric", "roleRDN").$baseobject->base;
+        $nAV      = preg_replace('/,/', '\,', $baseobject->cn); 
+        $nAV      = preg_replace('/"/', '\"', $nAV); 
+		$new_dn= 'cn='.$nAV.','.get_ou("roleGeneric", "roleRDN").$baseobject->base;
 
 		/* Move role? */
 		if ($this->dn != $new_dn){
