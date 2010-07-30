@@ -19,7 +19,7 @@
 				<option value=''>&lt;{t}choose element{/t}&gt;</option>
 				<option value='sieve_keep'>{t}Keep{/t}</option>
 				<option value='sieve_comment'>{t}Comment{/t}</option>
-				<option value='sieve_fileinto'>{t}Fileinto{/t}</option>
+				<option value='sieve_fileinto'>{t}File into{/t}</option>
 				<option value='sieve_keep'>{t}Keep{/t}</option>
 				<option value='sieve_discard'>{t}Discard{/t}</option>
 				<option value='sieve_redirect'>{t}Redirect{/t}</option>

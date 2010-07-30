@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2010-01-22 21:07+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -76,8 +76,9 @@ msgid "Restart"
 msgstr "Redémarrer"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
-msgid "Admin"
-msgstr "Administrateur"
+#, fuzzy
+msgid "Administrator"
+msgstr "DN de l'administrateur"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 msgid "Logging database information"
@@ -86,3 +87,6 @@ msgstr "Information sur la base de données des journaux systèmes"
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
 msgid "Logging DB user"
 msgstr "Utilisateur de la base de données des journaux systèmesa"
+
+#~ msgid "Admin"
+#~ msgstr "Administrateur"

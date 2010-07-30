@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-07-30 20:11+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,104 +19,105 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/sudo/sudo-filter.tpl:3
+#: admin/sudo/class_sudoGeneric.inc:108
+msgid "Type"
+msgstr "Type"
+
+#: admin/sudo/class_sudoGeneric.inc:108
 #, fuzzy
-msgid "Filter"
-msgstr "Filters"
+msgid "Member"
+msgstr "Groepsleden"
 
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:580
-#: admin/sudo/class_sudoGeneric.inc:585 admin/sudo/class_sudoGeneric.inc:590
-#: admin/sudo/class_sudoGeneric.inc:599 admin/sudo/class_sudoGeneric.inc:638
-#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
-msgid "Name"
-msgstr "Naam"
-
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:421
-msgid "User"
-msgstr "Gebruiker"
-
-#: admin/sudo/remove.tpl:2
-msgid "Warning"
-msgstr "Waarschuwing"
-
-#: admin/sudo/remove.tpl:6
-msgid ""
-"Please double check if you really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Controleer a.u.b. of u dit daadwerkelijk wil doen, aangezien er geen "
-"mogelijkheid voor GOsa is om uw data terug te krijgen."
-
-#: admin/sudo/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
-"om te annuleren."
-
-#: admin/sudo/class_sudoGeneric.inc:332
-msgid "Error"
-msgstr "Fout"
-
-#: admin/sudo/class_sudoGeneric.inc:374
-msgid "disabled"
-msgstr "gedeactiveerd"
-
-#: admin/sudo/class_sudoGeneric.inc:375
-msgid "full access"
-msgstr "volledige toegang"
-
-#: admin/sudo/class_sudoGeneric.inc:376
-msgid "allow access to these hosts"
-msgstr "sta toegang op deze computers toe"
-
-#: admin/sudo/class_sudoGeneric.inc:422
-msgid "Group"
-msgstr "Groep"
-
-#: admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:108 admin/sudo/class_sudoGeneric.inc:111
+#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:115
 #, fuzzy
-msgid "LDAP error"
-msgstr "LDAP fout:"
+msgid "Option"
+msgstr "Opties"
 
-#: admin/sudo/class_sudoGeneric.inc:629 admin/sudo/class_sudoManagement.inc:25
+#: admin/sudo/class_sudoGeneric.inc:111
 #, fuzzy
-msgid "Sudo"
-msgstr "Achternaam"
+msgid "System"
+msgstr "Systeem"
 
-#: admin/sudo/class_sudoGeneric.inc:630 admin/sudo/class_sudoGeneric.inc:635
-#, fuzzy
-msgid "Sudo role"
-msgstr "! onbekend id"
-
-#: admin/sudo/class_sudoGeneric.inc:639 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
-msgid "Description"
-msgstr "Omschrijving"
-
-#: admin/sudo/class_sudoGeneric.inc:640
-msgid "Users"
-msgstr "Gebruikers"
-
-#: admin/sudo/class_sudoGeneric.inc:641
-#, fuzzy
-msgid "Host"
-msgstr "Inhakers"
-
-#: admin/sudo/class_sudoGeneric.inc:642
+#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:544
 #, fuzzy
 msgid "Command"
 msgstr "en"
 
-#: admin/sudo/class_sudoGeneric.inc:643
+#: admin/sudo/class_sudoGeneric.inc:115 admin/sudo/class_sudoGeneric.inc:358
+msgid "User"
+msgstr "Gebruiker"
+
+#: admin/sudo/class_sudoGeneric.inc:301
+msgid "Error"
+msgstr "Fout"
+
+#: admin/sudo/class_sudoGeneric.inc:359
+msgid "Group"
+msgstr "Groep"
+
+#: admin/sudo/class_sudoGeneric.inc:454
+#, fuzzy
+msgid "LDAP error"
+msgstr "LDAP fout:"
+
+#: admin/sudo/class_sudoGeneric.inc:468 admin/sudo/class_sudoGeneric.inc:473
+#: admin/sudo/class_sudoGeneric.inc:478 admin/sudo/class_sudoGeneric.inc:487
+#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34 admin/sudo/sudo-list.xml:32
+#: admin/sudo/paste_generic.tpl:5
+msgid "Name"
+msgstr "Naam"
+
+#: admin/sudo/class_sudoGeneric.inc:517
+#, fuzzy
+msgid "Sudo"
+msgstr "Achternaam"
+
+#: admin/sudo/class_sudoGeneric.inc:518 admin/sudo/class_sudoGeneric.inc:523
+#, fuzzy
+msgid "Sudo role"
+msgstr "! onbekend id"
+
+#: admin/sudo/class_sudoGeneric.inc:531
+msgid ""
+"The 'sudoRDN' statement defines the location where new sudo-roles will be "
+"created. The default is 'ou=sudoers,'."
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:539
+msgid "System trust"
+msgstr "Systeem vertrouwen"
+
+#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
+msgid "Description"
+msgstr "Omschrijving"
+
+#: admin/sudo/class_sudoGeneric.inc:542
+msgid "Users"
+msgstr "Gebruikers"
+
+#: admin/sudo/class_sudoGeneric.inc:543
+#, fuzzy
+msgid "Host"
+msgstr "Inhakers"
+
+#: admin/sudo/class_sudoGeneric.inc:545
 #, fuzzy
 msgid "Run as user"
 msgstr "Windows gebruikers"
 
-#: admin/sudo/class_sudoGeneric.inc:644
+#: admin/sudo/class_sudoGeneric.inc:546
 #, fuzzy
 msgid "Access control list"
 msgstr "Toegangsopties"
+
+#: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
+#: admin/sudo/class_sudoOption.inc:546
+#, fuzzy
+msgid "Sudo options"
+msgstr "Onbekend"
 
 #: admin/sudo/options.tpl:5
 #, fuzzy
@@ -128,59 +129,53 @@ msgstr "Naam van de locatie"
 msgid "Value"
 msgstr "man"
 
-#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
+#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:538
 msgid "Options"
 msgstr "Opties"
 
-#: admin/sudo/options.tpl:86
+#: admin/sudo/options.tpl:89
 #, fuzzy
 msgid "Available options"
 msgstr "Beschikbare programma's"
 
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
+#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
 #: admin/sudo/paste_generic.tpl:1
 msgid "Generic"
 msgstr "Algemeen"
 
-#: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4
+#: admin/sudo/paste_generic.tpl:1
 msgid "global defaults"
 msgstr ""
 
-#: admin/sudo/generic.tpl:55
-msgid "System trust"
-msgstr "Systeem vertrouwen"
-
-#: admin/sudo/generic.tpl:56
-msgid "Trust mode"
-msgstr "Vertrouwensmodus"
-
-#: admin/sudo/generic.tpl:87
+#: admin/sudo/generic.tpl:61
 #, fuzzy
 msgid "Users and groups"
 msgstr "groepen"
 
-#: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
+#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
 msgid "Add from list"
 msgstr ""
 
-#: admin/sudo/generic.tpl:102
+#: admin/sudo/generic.tpl:78
 #, fuzzy
 msgid "Systems"
 msgstr "Systeem"
 
-#: admin/sudo/generic.tpl:120
+#: admin/sudo/generic.tpl:98
 #, fuzzy
 msgid "Commands"
 msgstr "en"
 
-#: admin/sudo/generic.tpl:132
+#: admin/sudo/generic.tpl:111
 #, fuzzy
 msgid "Run as"
 msgstr "Windows gebruikers"
 
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
-msgid "List of sudo roles"
+msgid "List of Sudo roles"
 msgstr "Lijst met gebruikers"
 
 #: admin/sudo/sudo-list.xml:15 admin/sudo/sudo-list.xml:65
@@ -206,13 +201,18 @@ msgstr "Verwijderen"
 
 #: admin/sudo/sudo-list.xml:117
 #, fuzzy
-msgid "Edit sudo role"
+msgid "Edit Sudo role"
 msgstr "! onbekend id"
 
 #: admin/sudo/sudo-list.xml:130
 #, fuzzy
-msgid "Remove sudo role"
+msgid "Remove Sudo role"
 msgstr "! onbekend id"
+
+#: admin/sudo/paste_generic.tpl:2
+#, fuzzy
+msgid "Paste sudo entry"
+msgstr "Plakken"
 
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
@@ -221,38 +221,83 @@ msgstr "Onbekend"
 
 #: admin/sudo/class_sudoOption.inc:155
 #, fuzzy, php-format
-msgid "The sudo option '%s' is invalid!"
+msgid "The Sudo option '%s' is invalid!"
 msgstr "De opgegeven naam is ongeldig."
 
-#: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
+#: admin/sudo/class_sudoOption.inc:284 admin/sudo/class_sudoOption.inc:286
 #, fuzzy
 msgid "string"
 msgstr "Waarschuwing"
 
-#: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:283
-#: admin/sudo/class_sudoOption.inc:284
-msgid "bool"
+#: admin/sudo/class_sudoOption.inc:284 admin/sudo/class_sudoOption.inc:285
+#: admin/sudo/class_sudoOption.inc:286
+msgid "boolean"
 msgstr ""
 
-#: admin/sudo/class_sudoOption.inc:283
+#: admin/sudo/class_sudoOption.inc:285
 #, fuzzy
 msgid "integer"
 msgstr "printers"
 
-#: admin/sudo/class_sudoOption.inc:284
+#: admin/sudo/class_sudoOption.inc:286
 #, fuzzy
 msgid "list"
 msgstr "klasse"
 
-#: admin/sudo/class_sudoOption.inc:537
+#: admin/sudo/sudo-filter.xml:22
 #, fuzzy
-msgid "Sudo options"
-msgstr "Onbekend"
+msgid "Default filter"
+msgstr "Parameters"
+
+#: admin/sudo/sudo-filter.xml:36
+#, fuzzy
+msgid "By member"
+msgstr "Groepsleden"
+
+#: admin/sudo/class_sudoManagement.inc:25
+#, fuzzy
+msgid "Sudo rules"
+msgstr "! onbekend id"
 
 #: admin/sudo/class_sudoManagement.inc:26
+msgid "Manage all aspects of system wide sudoers definitions"
+msgstr ""
+
 #, fuzzy
-msgid "Sudo management"
-msgstr "Systeembeheer"
+#~ msgid "Filter"
+#~ msgstr "Filters"
+
+#~ msgid "Warning"
+#~ msgstr "Waarschuwing"
+
+#~ msgid ""
+#~ "Please double check if you really want to do this since there is no way "
+#~ "for GOsa to get your data back."
+#~ msgstr ""
+#~ "Controleer a.u.b. of u dit daadwerkelijk wil doen, aangezien er geen "
+#~ "mogelijkheid voor GOsa is om uw data terug te krijgen."
+
+#~ msgid ""
+#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of "
+#~ "'Annuleren' om te annuleren."
+
+#~ msgid "disabled"
+#~ msgstr "gedeactiveerd"
+
+#~ msgid "full access"
+#~ msgstr "volledige toegang"
+
+#~ msgid "allow access to these hosts"
+#~ msgstr "sta toegang op deze computers toe"
+
+#~ msgid "Trust mode"
+#~ msgstr "Vertrouwensmodus"
+
+#, fuzzy
+#~ msgid "Sudo management"
+#~ msgstr "Systeembeheer"
 
 #, fuzzy
 #~ msgid "List of users and groups"
@@ -384,10 +429,6 @@ msgstr "Systeembeheer"
 #, fuzzy
 #~ msgid "Number of listed roles"
 #~ msgstr "Naam van de groep"
-
-#, fuzzy
-#~ msgid "Sudo roles"
-#~ msgstr "! onbekend id"
 
 #, fuzzy
 #~ msgid "Manage sudo roles"

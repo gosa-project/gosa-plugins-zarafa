@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 20:01+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -15,9 +15,9 @@ msgstr ""
 "X-Generator: poEdit 1.3.1\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:301
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:437
 msgid "Open-Xchange"
 msgstr ""
 
@@ -25,112 +25,116 @@ msgstr ""
 msgid "This does something"
 msgstr "Что-то будет"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:192
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:289
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:301
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:305
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:427
 msgid "Error"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:192
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:305
 #, fuzzy
 msgid "Open-Xchange database"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:197
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:310
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:196
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:309
 #, fuzzy
 msgid "Configuration error"
 msgstr "Настроить"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:207
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:220
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:330
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:339
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:206
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:219
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:329
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:338
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:289
 #, fuzzy
 msgid "Open-Xchange account name"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:427
 #, fuzzy
 msgid "Cannot save Open-Xchange account!"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
 #, fuzzy
 msgid "Open-Xchange account settings"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
 #, fuzzy
-msgid "Connectivity addon"
+msgid "Connectivity add-on"
 msgstr "Подключение"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:442
 msgid "My account"
 msgstr "Моя учетная запись"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:448
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:451
 msgid "OXAppointmentDays"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:449
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:452
 msgid "OXTaskDays"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:453
 #, fuzzy
 msgid "OXTimeZone"
 msgstr "Мобильный"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
-msgid "Open-Xchange Account"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid ""
-"disabled, no Postgresql support detected. Or the specified database can't be "
-"reached"
-msgstr ""
-
 #: personal/connectivity/openxchange/oxchange.tpl:18
 #, fuzzy
 msgid "Open-Xchange account"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/oxchange.tpl:29
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid ""
+"disabled, no PostgreSQL support detected or the specified database can't be "
+"reached."
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:21
+#: personal/connectivity/openxchange/oxchange.tpl:28
+#: personal/connectivity/openxchange/oxchange.tpl:63
+#, fuzzy
+msgid "Open-Xchange configuration"
+msgstr "Удалить телефонный аккаунт"
+
+#: personal/connectivity/openxchange/oxchange.tpl:32
 #, fuzzy
 msgid "Remember"
 msgstr "Декабрь"
 
-#: personal/connectivity/openxchange/oxchange.tpl:33
+#: personal/connectivity/openxchange/oxchange.tpl:36
 msgid "Appointment Days"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:39
-#: personal/connectivity/openxchange/oxchange.tpl:49
+#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:52
 #, fuzzy
 msgid "days"
 msgstr "день"
 
-#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:45
 msgid "Task Days"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:61
+#: personal/connectivity/openxchange/oxchange.tpl:67
 #, fuzzy
 msgid "User Information"
 msgstr "Информация"
 
-#: personal/connectivity/openxchange/oxchange.tpl:65
+#: personal/connectivity/openxchange/oxchange.tpl:71
 #, fuzzy
 msgid "User Timezone"
 msgstr "Мобильный"

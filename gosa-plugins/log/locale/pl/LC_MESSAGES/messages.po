@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2010-04-30 21:29+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -76,8 +76,9 @@ msgid "Restart"
 msgstr "Restart"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
-msgid "Admin"
-msgstr "Admin"
+#, fuzzy
+msgid "Administrator"
+msgstr "Administracja"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 msgid "Logging database information"
@@ -86,6 +87,9 @@ msgstr "Informacje bazy logowania"
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
 msgid "Logging DB user"
 msgstr "Użytkownik bazy logowania"
+
+#~ msgid "Admin"
+#~ msgstr "Admin"
 
 #, fuzzy
 #~ msgid "GOsa MySQL logging service"

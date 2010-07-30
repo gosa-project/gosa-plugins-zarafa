@@ -14,7 +14,7 @@
 			<b>{t}Reject mail{/t}</b>
 			&nbsp;
 			{if $Multiline}
-<!--				{t}This is a multiline text element{/t}-->
+<!--				{t}This is a multi-line text element{/t}-->
 			{else}
 <!--				{t}This is stored as single string{/t}-->
 			{/if}

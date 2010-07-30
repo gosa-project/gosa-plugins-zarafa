@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:59+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,31 +14,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: personal/connectivity/opengroupware/opengw.tpl:1
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
-#, fuzzy
-msgid "Opengroupware"
-msgstr "Учетная запись Groupware"
-
 #: personal/connectivity/opengroupware/opengw.tpl:8
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:391
 #, fuzzy
 msgid "Location team"
 msgstr "Местоположение"
 
 #: personal/connectivity/opengroupware/opengw.tpl:21
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:392
 #, fuzzy
 msgid "Template user"
 msgstr "Шаблон"
 
 #: personal/connectivity/opengroupware/opengw.tpl:33
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:393
+#, fuzzy
 msgid "Locked"
-msgstr ""
+msgstr "Список пользователей"
 
-#: personal/connectivity/opengroupware/opengw.tpl:48
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
+#: personal/connectivity/opengroupware/opengw.tpl:49
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:394
 #, fuzzy
 msgid "Teams"
 msgstr "Мобильный"
@@ -52,36 +47,56 @@ msgstr "Учетная запись Groupware"
 msgid "This does something"
 msgstr "Что-то будет"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:167
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:172
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:180
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:169
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:175
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:183
 #, fuzzy
 msgid "Configuration error"
 msgstr "Настроить"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:172
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:175
 #, fuzzy
 msgid "Open Groupware database"
 msgstr "Учетная запись Groupware"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:180
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:183
 #, fuzzy
 msgid "Open Groupware"
 msgstr "Учетная запись Groupware"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:339
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:342
 #, fuzzy
-msgid "Open groupware account settings"
+msgid "OpenGroupware.org account settings"
 msgstr "Учетная запись Groupware"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:339
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:342
 #, fuzzy
-msgid "Connectivity addon"
+msgid "Connectivity add-on"
 msgstr "Подключение"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:343
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:346
 msgid "My account"
 msgstr "Моя учетная запись"
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:355
+msgid "The server/hostname to use for OpenGroupware.org connections."
+msgstr ""
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:364
+msgid "The password to use for OpenGroupware.org connections."
+msgstr ""
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:373
+msgid "The username to use for OpenGroupware.org connections."
+msgstr ""
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:382
+msgid "The database name to use for OpenGroupware.org connections."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Opengroupware"
+#~ msgstr "Учетная запись Groupware"
 
 #, fuzzy
 #~ msgid "%s database configuration is missing!"

@@ -1,5 +1,5 @@
 {if !$pg}
-  <h3>{t}Open-Xchange Account{/t} - {t}disabled, no Postgresql support detected. Or the specified database can't be reached{/t}</h3>
+  <h3>{t}Open-Xchange account{/t} - {t}disabled, no PostgreSQL support detected or the specified database can't be reached.{/t}</h3>
 {else}
   <h3>
 <input type="checkbox" name="oxchange" value="B" 

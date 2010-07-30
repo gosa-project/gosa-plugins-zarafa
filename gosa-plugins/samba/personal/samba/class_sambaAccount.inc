@@ -407,7 +407,7 @@ class sambaAccount extends plugin
                 "1" => _("input on, notify on"),
                 "2" => _("input on, notify off"),
                 "3" => _("input off, notify on"),
-                "4" => _("input off, nofify off"));
+                "4" => _("input off, notify off"));
         $brokenConnModeVals= array( 	
                 "0" => _("disconnect"),
                 "1" => _("reset"));
@@ -781,11 +781,11 @@ class sambaAccount extends plugin
             "\n<tr><td><b>"._("User attributes")."</b></td></tr>". 
             "\n<tr><td>"._("SID").":                           </td><td>".$sambaSID."</td></tr>".
             "\n<tr><td>"._("Last failed login").":             </td><td>".$sambaBadPasswordTime."</td></tr>".
-            "\n<tr><td>"._("Logon attempts").":                </td><td>".$sambaBadPasswordCount."</td></tr>".
+            "\n<tr><td>"._("Log on attempts").":                </td><td>".$sambaBadPasswordCount."</td></tr>".
             "\n<tr><td>"._("Last password update").":          </td><td>".$sambaPwdLastSet."</td></tr>".
-            "\n<tr><td>"._("Last logon").":                    </td><td>".$sambaLogonTime."</td></tr>".
-            "\n<tr><td>"._("Last logoff").":                   </td><td>".$sambaLogoffTime."</td></tr>".
-            "\n<tr><td>"._("Automatic logoff").":              </td><td>".$sambaKickoffTime."</td></tr>";
+            "\n<tr><td>"._("Last log on").":                    </td><td>".$sambaLogonTime."</td></tr>".
+            "\n<tr><td>"._("Last log off").":                   </td><td>".$sambaLogoffTime."</td></tr>".
+            "\n<tr><td>"._("Automatic log off").":              </td><td>".$sambaKickoffTime."</td></tr>";
 
         if($this->flag_passwordNeverExpires){
             $str .= "\n<tr><td>"._("Password expires").":              </td><td>"._("No")."</td></tr>";
@@ -880,7 +880,7 @@ class sambaAccount extends plugin
 
         /* Too many workstations? Windows usrmgr only supports eight */
         if (substr_count($this->sambaUserWorkstations, ",") >= 8){
-            $message[]= _("The windows usermanager allows eight clients at maximum!");
+            $message[]= _("The windows user manager allows eight clients at maximum!");
         }
 
         return ($message);
@@ -1168,7 +1168,7 @@ class sambaAccount extends plugin
                         "sambaLogonScript"            => _("Generic script path") ,
                         "sambaProfilePath"            => _("Generic profile path") ,
                         "AllowLoginOnTerminalServer"  => _("Allow login on terminal server"),
-                        "InheritClientConfig"         => _("Inherit client config"),
+                        "InheritClientConfig"         => _("Inherit client configuration"),
 
                         "enforcePasswordChange"       => _("Enforce password change"),
                         "cannotChangePassword"        => _("Disallow password change") ,
@@ -1176,7 +1176,7 @@ class sambaAccount extends plugin
                         "passwordNeverExpires"        => _("Password never expires"),
                         "temporaryDisabled"           => _("Lock samba account"),
 
-                        "sambaLogonHours"             => _("Logon hours") ,
+                        "sambaLogonHours"             => _("Log on hours") ,
                         "sambaUserWorkstations"       => _("Allow connection from"))
                         ));
     }    

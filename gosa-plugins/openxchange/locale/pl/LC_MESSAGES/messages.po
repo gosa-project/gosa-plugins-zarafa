@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 20:01+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,9 +15,9 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:301
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:437
 msgid "Open-Xchange"
 msgstr "Open-Xchange"
 
@@ -25,114 +25,122 @@ msgstr "Open-Xchange"
 msgid "This does something"
 msgstr "To robi coś"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:192
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:289
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:301
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:305
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:427
 msgid "Error"
 msgstr "Błąd"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:192
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:305
 #, fuzzy
 msgid "Open-Xchange database"
 msgstr "konto Open-Xchange"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:197
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:310
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:196
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:309
 #, fuzzy
 msgid "Configuration error"
 msgstr "Plik konfiguracyjny"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:207
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:220
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:330
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:339
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:206
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:219
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:329
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:338
 #, fuzzy
 msgid "LDAP error"
 msgstr "błąd LDAP:"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:289
 #, fuzzy
 msgid "Open-Xchange account name"
 msgstr "konto Open-Xchange"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:427
 #, fuzzy
 msgid "Cannot save Open-Xchange account!"
 msgstr "konto Open-Xchange"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
 #, fuzzy
 msgid "Open-Xchange account settings"
 msgstr "Ustawienia konta Open xchange"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
 #, fuzzy
-msgid "Connectivity addon"
+msgid "Connectivity add-on"
 msgstr "Konto połączeń"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:442
 msgid "My account"
 msgstr "Moje konto "
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:448
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:451
 #, fuzzy
 msgid "OXAppointmentDays"
 msgstr "Dni spotkania"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:449
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:452
 #, fuzzy
 msgid "OXTaskDays"
 msgstr "Dni robocze"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:453
 #, fuzzy
 msgid "OXTimeZone"
 msgstr "Strefa czasowa użytkownika"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
-msgid "Open-Xchange Account"
-msgstr "Konto Open-Xchange"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid ""
-"disabled, no Postgresql support detected. Or the specified database can't be "
-"reached"
-msgstr ""
-"wyłączone, nie wykryto wsparcia dia PostgreSQL, lub podana baza nie jest "
-"osiągalna"
-
 #: personal/connectivity/openxchange/oxchange.tpl:18
 msgid "Open-Xchange account"
 msgstr "konto Open-Xchange"
 
-#: personal/connectivity/openxchange/oxchange.tpl:29
+#: personal/connectivity/openxchange/oxchange.tpl:2
+#, fuzzy
+msgid ""
+"disabled, no PostgreSQL support detected or the specified database can't be "
+"reached."
+msgstr ""
+"wyłączone, nie wykryto wsparcia dia PostgreSQL, lub podana baza nie jest "
+"osiągalna"
+
+#: personal/connectivity/openxchange/oxchange.tpl:21
+#: personal/connectivity/openxchange/oxchange.tpl:28
+#: personal/connectivity/openxchange/oxchange.tpl:63
+#, fuzzy
+msgid "Open-Xchange configuration"
+msgstr "Konto Open-Xchange"
+
+#: personal/connectivity/openxchange/oxchange.tpl:32
 msgid "Remember"
 msgstr "Pamiętaj"
 
-#: personal/connectivity/openxchange/oxchange.tpl:33
+#: personal/connectivity/openxchange/oxchange.tpl:36
 msgid "Appointment Days"
 msgstr "Dni spotkania"
 
-#: personal/connectivity/openxchange/oxchange.tpl:39
-#: personal/connectivity/openxchange/oxchange.tpl:49
+#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:52
 msgid "days"
 msgstr "dni"
 
-#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:45
 msgid "Task Days"
 msgstr "Dni robocze"
 
-#: personal/connectivity/openxchange/oxchange.tpl:61
+#: personal/connectivity/openxchange/oxchange.tpl:67
 msgid "User Information"
 msgstr "Informacja o użytkowniku"
 
-#: personal/connectivity/openxchange/oxchange.tpl:65
+#: personal/connectivity/openxchange/oxchange.tpl:71
 msgid "User Timezone"
 msgstr "Strefa czasowa użytkownika"
+
+#~ msgid "Open-Xchange Account"
+#~ msgstr "Konto Open-Xchange"
 
 #, fuzzy
 #~ msgid "Cannot connect to %s database!"

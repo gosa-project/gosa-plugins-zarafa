@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GOsa plugins - rolemanagement\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-07-30 20:09+0200\n"
 "PO-Revision-Date: 2010-03-11 21:01-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
-"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
+"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira "
+"<clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,89 +19,97 @@ msgstr ""
 "X-Poedit-Country: BRAZIL\n"
 
 #: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/class_roleGeneric.inc:453
 #, fuzzy
 msgid "Roles"
 msgstr "Papéis"
 
 #: admin/roleManagement/class_roleManagement.inc:26
-#, fuzzy
-msgid "Role management"
-msgstr "Gerenciamento Samba"
+msgid "Assign and manage organizational roles"
+msgstr ""
 
-#: admin/roleManagement/remove.tpl:2
+#: admin/roleManagement/class_roleGeneric.inc:97
 #, fuzzy
-msgid "Warning"
-msgstr "Aviso"
+msgid "Given name"
+msgstr "Primeiro Nome"
 
-#: admin/roleManagement/remove.tpl:6
+#: admin/roleManagement/class_roleGeneric.inc:97
 #, fuzzy
-msgid "Please double check if you really want to do this since there is no way for GOsa to get your data back."
-msgstr "Por favor, verifique se você realmente quer fazer isso já que não há caminho para GOsa para obter seus dados de volta."
+msgid "Surename"
+msgstr "Sobrenome"
 
-#: admin/roleManagement/remove.tpl:10
-#, fuzzy
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr "Portanto - se você está certo - pressione 'Excluir' para continuar ou \"Cancelar\" para abortar."
+#: admin/roleManagement/class_roleGeneric.inc:97
+msgid "UID"
+msgstr "UID"
 
-#: admin/roleManagement/class_roleGeneric.inc:225
-#: admin/roleManagement/class_roleGeneric.inc:234
-#: admin/roleManagement/class_roleGeneric.inc:409
-#: admin/roleManagement/role-list.xml:41
-#: admin/roleManagement/roleGeneric.tpl:11
-#, fuzzy
-msgid "Name"
-msgstr "Nome"
-
-#: admin/roleManagement/class_roleGeneric.inc:255
+#: admin/roleManagement/class_roleGeneric.inc:223
 #, fuzzy
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: admin/roleManagement/class_roleGeneric.inc:273
-#: admin/roleManagement/class_roleGeneric.inc:315
+#: admin/roleManagement/class_roleGeneric.inc:278
+#: admin/roleManagement/class_roleGeneric.inc:282
+#: admin/roleManagement/class_roleGeneric.inc:291
+#: admin/roleManagement/class_roleGeneric.inc:470
+#: admin/roleManagement/role-list.xml:41
+#: admin/roleManagement/roleGeneric.tpl:12
+#, fuzzy
+msgid "Name"
+msgstr "Nome"
+
+#: admin/roleManagement/class_roleGeneric.inc:308
+#: admin/roleManagement/class_roleGeneric.inc:350
 #, fuzzy
 msgid "LDAP error"
 msgstr "Erro LDAP"
 
-#: admin/roleManagement/class_roleGeneric.inc:400
-#: admin/roleManagement/roleGeneric.tpl:6
+#: admin/roleManagement/class_roleGeneric.inc:393
+msgid "Error"
+msgstr "Erro"
+
+#: admin/roleManagement/class_roleGeneric.inc:443
+#: admin/roleManagement/roleGeneric.tpl:7
 #, fuzzy
 msgid "Generic"
 msgstr "Geral"
 
-#: admin/roleManagement/class_roleGeneric.inc:401
+#: admin/roleManagement/class_roleGeneric.inc:444
 #, fuzzy
 msgid "Role generic"
 msgstr "Papel desconhecido"
 
-#: admin/roleManagement/class_roleGeneric.inc:410
+#: admin/roleManagement/class_roleGeneric.inc:462
+msgid ""
+"The 'roleRDN' statement defines the location where new roles will be "
+"created. The default is 'ou=roles,'."
+msgstr ""
+
+#: admin/roleManagement/class_roleGeneric.inc:471
 #: admin/roleManagement/role-list.xml:49
-#: admin/roleManagement/roleGeneric.tpl:19
+#: admin/roleManagement/roleGeneric.tpl:20
 #, fuzzy
 msgid "Description"
 msgstr "Descrição"
 
-#: admin/roleManagement/class_roleGeneric.inc:411
-#: admin/roleManagement/role-list.tpl:13
-#: admin/roleManagement/roleGeneric.tpl:29
+#: admin/roleManagement/class_roleGeneric.inc:472
+#: admin/roleManagement/role-list.tpl:12
+#: admin/roleManagement/roleGeneric.tpl:30
 #, fuzzy
 msgid "Base"
 msgstr "Base"
 
-#: admin/roleManagement/class_roleGeneric.inc:412
+#: admin/roleManagement/class_roleGeneric.inc:473
 #, fuzzy
-msgid "Telefon number"
+msgid "Telephone number"
 msgstr "Número de Telefone"
 
-#: admin/roleManagement/class_roleGeneric.inc:413
-#: admin/roleManagement/roleGeneric.tpl:56
+#: admin/roleManagement/class_roleGeneric.inc:474
 #, fuzzy
-msgid "Fax number"
+msgid "FAX number"
 msgstr "Número do Fax"
 
-#: admin/roleManagement/class_roleGeneric.inc:414
-#: admin/roleManagement/roleGeneric.tpl:68
+#: admin/roleManagement/class_roleGeneric.inc:475
+#: admin/roleManagement/roleGeneric.tpl:64
 #, fuzzy
 msgid "Occupants"
 msgstr "Ocupantes"
@@ -110,8 +119,7 @@ msgstr "Ocupantes"
 msgid "List of roles"
 msgstr "Papéis disponíveis"
 
-#: admin/roleManagement/role-list.xml:15
-#: admin/roleManagement/role-list.xml:74
+#: admin/roleManagement/role-list.xml:15 admin/roleManagement/role-list.xml:74
 #, fuzzy
 msgid "Role"
 msgstr "Papéis"
@@ -137,6 +145,7 @@ msgid "Remove"
 msgstr "Remover"
 
 #: admin/roleManagement/role-list.xml:125
+#: admin/roleManagement/roleGeneric.tpl:1
 #, fuzzy
 msgid "Edit role"
 msgstr "Papel desconhecido"
@@ -145,6 +154,11 @@ msgstr "Papel desconhecido"
 #, fuzzy
 msgid "Remove role"
 msgstr "Papel desconhecido"
+
+#: admin/roleManagement/paste_generic.tpl:1
+#, fuzzy
+msgid "Paste role"
+msgstr "Papel de ACL"
 
 #: admin/roleManagement/paste_generic.tpl:4
 #, fuzzy
@@ -156,23 +170,64 @@ msgstr "Nome do Objeto"
 msgid "Please enter the new object role name"
 msgstr "Por favor entre com o nome do novo grupo de objeto"
 
-#: admin/roleManagement/role-filter.tpl:3
+#: admin/roleManagement/role-filter.xml:17
 #, fuzzy
-msgid "Filter"
-msgstr "Filtro"
+msgid "Default filter"
+msgstr "Aplicar filtro"
 
-#: admin/roleManagement/roleGeneric.tpl:34
+#: admin/roleManagement/roleGeneric.tpl:10
 #, fuzzy
-msgid "Choose subtree to place user in"
-msgstr "Escolha a sub-árvore para adicionar o usuário"
+msgid "Generic settings"
+msgstr "Configurações gerais do usuário"
 
-#: admin/roleManagement/roleGeneric.tpl:40
-#, fuzzy
-msgid "Select a base"
-msgstr "Selecione a base"
-
-#: admin/roleManagement/roleGeneric.tpl:48
+#: admin/roleManagement/roleGeneric.tpl:43
 #, fuzzy
 msgid "Phone number"
 msgstr "Número de telefone"
 
+#: admin/roleManagement/roleGeneric.tpl:51
+#, fuzzy
+msgid "Fax number"
+msgstr "Número do Fax"
+
+#~ msgid "Uid"
+#~ msgstr "Uid"
+
+#, fuzzy
+#~ msgid "Telefon number"
+#~ msgstr "Número de Telefone"
+
+#, fuzzy
+#~ msgid "Role management"
+#~ msgstr "Gerenciamento Samba"
+
+#, fuzzy
+#~ msgid "Warning"
+#~ msgstr "Aviso"
+
+#, fuzzy
+#~ msgid ""
+#~ "Please double check if you really want to do this since there is no way "
+#~ "for GOsa to get your data back."
+#~ msgstr ""
+#~ "Por favor, verifique se você realmente quer fazer isso já que não há "
+#~ "caminho para GOsa para obter seus dados de volta."
+
+#, fuzzy
+#~ msgid ""
+#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Portanto - se você está certo - pressione 'Excluir' para continuar ou "
+#~ "\"Cancelar\" para abortar."
+
+#, fuzzy
+#~ msgid "Filter"
+#~ msgstr "Filtro"
+
+#, fuzzy
+#~ msgid "Choose subtree to place user in"
+#~ msgstr "Escolha a sub-árvore para adicionar o usuário"
+
+#, fuzzy
+#~ msgid "Select a base"
+#~ msgstr "Selecione a base"

@@ -117,8 +117,8 @@
   <td style='width:100%; '>
 
 
-   <h3>&nbsp;{t}Nagios authentification{/t}</h3>
-   <table summary="{t}Nagios Account{/t}">
+   <h3>&nbsp;{t}Nagios authentication{/t}</h3>
+   <table summary="{t}Nagios account{/t}">
     <tr>
      <td>
 {render acl=$AuthorizedSystemInformationACL}

@@ -1,8 +1,8 @@
-<h3><input type="checkbox" value="1" name="is_account" {$is_account} {$opengwAccountACL} onClick="document.mainform.submit();">&nbsp;{t}Opengroupware{/t}</h3>
-<table width="100%" summary="{t}Opengroupware{/t}">
+<h3><input type="checkbox" value="1" name="is_account" {$is_account} {$opengwAccountACL} onClick="document.mainform.submit();">&nbsp;OpenGroupware.org</h3>
+<table width="100%" summary="OpenGroupware.org">
 	<tr>
 		<td width="50%">
-			<table summary="{t}Opengroupware{/t}">
+			<table summary="OpenGroupware.org">
 				<tr>
 					<td>
 						{t}Location team{/t} &nbsp;
@@ -43,7 +43,7 @@
 		</td>
 		<td class='left-border'>
 
-			<table summary="{t}Opengroupware{/t}">
+			<table summary="OpenGroupware.org">
 				<tr>
 					<td valign="top">
 						{t}Teams{/t} &nbsp; 

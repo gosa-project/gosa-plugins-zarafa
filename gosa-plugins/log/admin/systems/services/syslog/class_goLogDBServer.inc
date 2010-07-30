@@ -101,7 +101,7 @@ class goLogDBServer extends goService{
             "start"         => _("Start"),
             "stop"          => _("Stop"),
             "restart"       => _("Restart"),
-            "goLogAdmin"    => _("Admin"),
+            "goLogAdmin"    => _("Administrator"),
             "goLogPassword" => _("Password"),
             "gosaLogDB"       => _("Database"))
           ));

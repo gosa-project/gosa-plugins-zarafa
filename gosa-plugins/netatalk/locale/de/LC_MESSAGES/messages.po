@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:56+0200\n"
 "PO-Revision-Date: 2008-04-03 14:23+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -22,14 +22,6 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:372
-msgid "Netatalk"
-msgstr "Netatalk"
-
-#: personal/netatalk/class_netatalk.inc:37
-msgid "Manage netatalk account"
-msgstr "Netatalk-Konto verwalten"
-
 #: personal/netatalk/class_netatalk.inc:176
 #: personal/netatalk/class_netatalk.inc:184
 #: personal/netatalk/class_netatalk.inc:185
@@ -39,39 +31,53 @@ msgstr "Netatalk-Konto verwalten"
 #: personal/netatalk/class_netatalk.inc:194
 #: personal/netatalk/class_netatalk.inc:196
 #: personal/netatalk/class_netatalk.inc:197
-msgid "netatalk"
+#: personal/netatalk/class_netatalk.inc:371
+msgid "Netatalk"
 msgstr "Netatalk"
+
+#: personal/netatalk/class_netatalk.inc:37
+#, fuzzy
+msgid "Manage Netatalk account"
+msgstr "Netatalk-Konto verwalten"
 
 #: personal/netatalk/class_netatalk.inc:191
 msgid "POSIX"
 msgstr "POSIX"
 
 #: personal/netatalk/class_netatalk.inc:194
-msgid "netatalk or NFS share"
+#, fuzzy
+msgid "Netatalk or NFS share"
 msgstr "Netatalk- oder NFS-Freigabe"
 
-#: personal/netatalk/class_netatalk.inc:228
-#: personal/netatalk/class_netatalk.inc:382 personal/netatalk/netatalk.tpl:4
+#: personal/netatalk/class_netatalk.inc:227
+#: personal/netatalk/class_netatalk.inc:383 personal/netatalk/netatalk.tpl:4
 msgid "Share"
 msgstr "Freigabe"
 
-#: personal/netatalk/class_netatalk.inc:292
-#: personal/netatalk/class_netatalk.inc:357
+#: personal/netatalk/class_netatalk.inc:291
+#: personal/netatalk/class_netatalk.inc:356
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: personal/netatalk/class_netatalk.inc:376
+#: personal/netatalk/class_netatalk.inc:375
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/netatalk/class_netatalk.inc:381
+#: personal/netatalk/class_netatalk.inc:382
 msgid "User home path"
 msgstr "Benutzer Basisverzeichnis"
 
-#: personal/netatalk/main.inc:131
-msgid "Netatalk settings"
-msgstr "Netatalk-Einstellungen"
+#: personal/netatalk/netatalk.tpl:1
+#, fuzzy
+msgid "Netatalk configuration"
+msgstr "PHP-Konfiguration"
 
 #: personal/netatalk/netatalk.tpl:16
 msgid "Path"
 msgstr "Pfad"
+
+#~ msgid "netatalk"
+#~ msgstr "Netatalk"
+
+#~ msgid "Netatalk settings"
+#~ msgstr "Netatalk-Einstellungen"

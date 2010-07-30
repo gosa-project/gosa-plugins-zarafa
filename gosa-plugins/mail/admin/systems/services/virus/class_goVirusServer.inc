@@ -173,7 +173,7 @@ class govirusserver extends goService{
             }
         }
 
-        foreach(array("avUser"=>_("Database user"),"avHttpProxyURL"=>_("Http proxy URL"),"avDatabaseMirror"=>_("Database mirror")) as $attr => $name){
+        foreach(array("avUser"=>_("Database user"),"avHttpProxyURL"=>_("HTTP proxy URL"),"avDatabaseMirror"=>_("Database mirror")) as $attr => $name){
             if(!preg_match("/^[a-z0-9:_\-\.\/]*$/",$this->$attr)){
                 $message[] = msgPool::invalid($name,$this->$attr,"/[a-z0-9:_\-\.\/]/");
             }
@@ -246,7 +246,7 @@ class govirusserver extends goService{
                         "avArchiveMaxCompressionRatio" =>_("Maximum compression ratio"),
                         "avDatabaseMirror"             =>_("Database mirror"),
                         "avChecksPerDay"               =>_("Checks per day"),
-                        "avHttpProxyURL"               =>_("Http proxy URL"))
+                        "avHttpProxyURL"               =>_("HTTP proxy URL"))
                         ));
     }
 }

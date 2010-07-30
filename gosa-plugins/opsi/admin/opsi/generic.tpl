@@ -36,7 +36,7 @@
       
      {/if}
      <tr>
-      <td>{t}Netboot product{/t}</td>
+      <td>{t}Net boot product{/t}</td>
       <td>
 
        {render acl=$netbootProductACL}

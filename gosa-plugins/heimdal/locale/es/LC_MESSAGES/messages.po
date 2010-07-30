@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:20+0200\n"
 "PO-Revision-Date: 2010-01-28 23:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -139,14 +139,13 @@ msgid "Heimdal"
 msgstr "Heimdal"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#, php-format
+#, fuzzy, php-format
 msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
+"Error loading Heimdal configuration, more than one configuration entry was "
 "found for '%s'."
 msgstr ""
 "Hay un error cargando la configuración de heimdal, se ha encontrado mas de "
-"una "
-"entrada en la configuración para '%s'."
+"una entrada en la configuración para '%s'."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:157
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:413

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-07-30 20:11+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,104 +14,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: admin/sudo/sudo-filter.tpl:3
+#: admin/sudo/class_sudoGeneric.inc:108
+msgid "Type"
+msgstr "Тип"
+
+#: admin/sudo/class_sudoGeneric.inc:108
 #, fuzzy
-msgid "Filter"
-msgstr "Фильтры"
+msgid "Member"
+msgstr "Включаемые объекты"
 
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:580
-#: admin/sudo/class_sudoGeneric.inc:585 admin/sudo/class_sudoGeneric.inc:590
-#: admin/sudo/class_sudoGeneric.inc:599 admin/sudo/class_sudoGeneric.inc:638
-#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
-msgid "Name"
-msgstr "Фамилия"
-
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:421
-msgid "User"
-msgstr "Пользователь"
-
-#: admin/sudo/remove.tpl:2
-msgid "Warning"
-msgstr "Предупреждение"
-
-#: admin/sudo/remove.tpl:6
-msgid ""
-"Please double check if you really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Подумайте еще раз, действительно ли вам нужно удаление, так как GOsa не "
-"сможет восстановить эти данные."
-
-#: admin/sudo/remove.tpl:10
+#: admin/sudo/class_sudoGeneric.inc:108 admin/sudo/class_sudoGeneric.inc:111
+#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:115
 #, fuzzy
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
-"нажмите <i>Отмена</i>."
+msgid "Option"
+msgstr "Параметры"
 
-#: admin/sudo/class_sudoGeneric.inc:332
-msgid "Error"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:374
-msgid "disabled"
-msgstr "отключен"
-
-#: admin/sudo/class_sudoGeneric.inc:375
-msgid "full access"
-msgstr "полный доступ"
-
-#: admin/sudo/class_sudoGeneric.inc:376
-msgid "allow access to these hosts"
-msgstr "разрешить доступ только на эти хосты"
-
-#: admin/sudo/class_sudoGeneric.inc:422
-msgid "Group"
-msgstr "Группа"
-
-#: admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:111
 #, fuzzy
-msgid "LDAP error"
-msgstr "Ошибка LDAP:"
+msgid "System"
+msgstr "Системы"
 
-#: admin/sudo/class_sudoGeneric.inc:629 admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
-msgid "Sudo"
-msgstr "Имя сервера"
-
-#: admin/sudo/class_sudoGeneric.inc:630 admin/sudo/class_sudoGeneric.inc:635
-#, fuzzy
-msgid "Sudo role"
-msgstr "состояние неизвестно"
-
-#: admin/sudo/class_sudoGeneric.inc:639 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
-msgid "Description"
-msgstr "Описание"
-
-#: admin/sudo/class_sudoGeneric.inc:640
-msgid "Users"
-msgstr "Пользователи"
-
-#: admin/sudo/class_sudoGeneric.inc:641
-msgid "Host"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:642
+#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:544
 #, fuzzy
 msgid "Command"
 msgstr "и"
 
-#: admin/sudo/class_sudoGeneric.inc:643
+#: admin/sudo/class_sudoGeneric.inc:115 admin/sudo/class_sudoGeneric.inc:358
+msgid "User"
+msgstr "Пользователь"
+
+#: admin/sudo/class_sudoGeneric.inc:301
+msgid "Error"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:359
+msgid "Group"
+msgstr "Группа"
+
+#: admin/sudo/class_sudoGeneric.inc:454
+#, fuzzy
+msgid "LDAP error"
+msgstr "Ошибка LDAP:"
+
+#: admin/sudo/class_sudoGeneric.inc:468 admin/sudo/class_sudoGeneric.inc:473
+#: admin/sudo/class_sudoGeneric.inc:478 admin/sudo/class_sudoGeneric.inc:487
+#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34 admin/sudo/sudo-list.xml:32
+#: admin/sudo/paste_generic.tpl:5
+msgid "Name"
+msgstr "Фамилия"
+
+#: admin/sudo/class_sudoGeneric.inc:517
+#, fuzzy
+msgid "Sudo"
+msgstr "Имя сервера"
+
+#: admin/sudo/class_sudoGeneric.inc:518 admin/sudo/class_sudoGeneric.inc:523
+#, fuzzy
+msgid "Sudo role"
+msgstr "состояние неизвестно"
+
+#: admin/sudo/class_sudoGeneric.inc:531
+msgid ""
+"The 'sudoRDN' statement defines the location where new sudo-roles will be "
+"created. The default is 'ou=sudoers,'."
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:539
+msgid "System trust"
+msgstr "Системные доверия"
+
+#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
+msgid "Description"
+msgstr "Описание"
+
+#: admin/sudo/class_sudoGeneric.inc:542
+msgid "Users"
+msgstr "Пользователи"
+
+#: admin/sudo/class_sudoGeneric.inc:543
+msgid "Host"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:545
 #, fuzzy
 msgid "Run as user"
 msgstr "Пользователи домена"
 
-#: admin/sudo/class_sudoGeneric.inc:644
+#: admin/sudo/class_sudoGeneric.inc:546
 #, fuzzy
 msgid "Access control list"
 msgstr "Параметры доступа"
+
+#: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
+#: admin/sudo/class_sudoOption.inc:546
+#, fuzzy
+msgid "Sudo options"
+msgstr "состояние неизвестно"
 
 #: admin/sudo/options.tpl:5
 #, fuzzy
@@ -123,60 +123,53 @@ msgstr "Местоположение"
 msgid "Value"
 msgstr "мужской"
 
-#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
+#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:538
 msgid "Options"
 msgstr "Параметры"
 
-#: admin/sudo/options.tpl:86
+#: admin/sudo/options.tpl:89
 #, fuzzy
 msgid "Available options"
 msgstr "Доступные приложения"
 
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
+#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
 #: admin/sudo/paste_generic.tpl:1
 msgid "Generic"
 msgstr "Общее"
 
-#: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4
+#: admin/sudo/paste_generic.tpl:1
 msgid "global defaults"
 msgstr ""
 
-#: admin/sudo/generic.tpl:55
-msgid "System trust"
-msgstr "Системные доверия"
-
-#: admin/sudo/generic.tpl:56
-#, fuzzy
-msgid "Trust mode"
-msgstr "Режим"
-
-#: admin/sudo/generic.tpl:87
+#: admin/sudo/generic.tpl:61
 #, fuzzy
 msgid "Users and groups"
 msgstr "группы"
 
-#: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
+#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
 msgid "Add from list"
 msgstr ""
 
-#: admin/sudo/generic.tpl:102
+#: admin/sudo/generic.tpl:78
 #, fuzzy
 msgid "Systems"
 msgstr "Системы"
 
-#: admin/sudo/generic.tpl:120
+#: admin/sudo/generic.tpl:98
 #, fuzzy
 msgid "Commands"
 msgstr "и"
 
-#: admin/sudo/generic.tpl:132
+#: admin/sudo/generic.tpl:111
 #, fuzzy
 msgid "Run as"
 msgstr "Пользователи домена"
 
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
-msgid "List of sudo roles"
+msgid "List of Sudo roles"
 msgstr "Список пользователей"
 
 #: admin/sudo/sudo-list.xml:15 admin/sudo/sudo-list.xml:65
@@ -202,13 +195,18 @@ msgstr "Удалить"
 
 #: admin/sudo/sudo-list.xml:117
 #, fuzzy
-msgid "Edit sudo role"
+msgid "Edit Sudo role"
 msgstr "состояние неизвестно"
 
 #: admin/sudo/sudo-list.xml:130
 #, fuzzy
-msgid "Remove sudo role"
+msgid "Remove Sudo role"
 msgstr "состояние неизвестно"
+
+#: admin/sudo/paste_generic.tpl:2
+#, fuzzy
+msgid "Paste sudo entry"
+msgstr "Дата"
 
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
@@ -217,38 +215,85 @@ msgstr "состояние неизвестно"
 
 #: admin/sudo/class_sudoOption.inc:155
 #, fuzzy, php-format
-msgid "The sudo option '%s' is invalid!"
+msgid "The Sudo option '%s' is invalid!"
 msgstr "Указанное имя уже используется."
 
-#: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
+#: admin/sudo/class_sudoOption.inc:284 admin/sudo/class_sudoOption.inc:286
 #, fuzzy
 msgid "string"
 msgstr "Предупреждение"
 
-#: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:283
-#: admin/sudo/class_sudoOption.inc:284
-msgid "bool"
+#: admin/sudo/class_sudoOption.inc:284 admin/sudo/class_sudoOption.inc:285
+#: admin/sudo/class_sudoOption.inc:286
+msgid "boolean"
 msgstr ""
 
-#: admin/sudo/class_sudoOption.inc:283
+#: admin/sudo/class_sudoOption.inc:285
 #, fuzzy
 msgid "integer"
 msgstr "принтеры"
 
-#: admin/sudo/class_sudoOption.inc:284
+#: admin/sudo/class_sudoOption.inc:286
 #, fuzzy
 msgid "list"
 msgstr "Английский"
 
-#: admin/sudo/class_sudoOption.inc:537
+#: admin/sudo/sudo-filter.xml:22
 #, fuzzy
-msgid "Sudo options"
+msgid "Default filter"
+msgstr "Параметры загрузки"
+
+#: admin/sudo/sudo-filter.xml:36
+#, fuzzy
+msgid "By member"
+msgstr "Члены группы"
+
+#: admin/sudo/class_sudoManagement.inc:25
+#, fuzzy
+msgid "Sudo rules"
 msgstr "состояние неизвестно"
 
 #: admin/sudo/class_sudoManagement.inc:26
+msgid "Manage all aspects of system wide sudoers definitions"
+msgstr ""
+
 #, fuzzy
-msgid "Sudo management"
-msgstr "Управление системами"
+#~ msgid "Filter"
+#~ msgstr "Фильтры"
+
+#~ msgid "Warning"
+#~ msgstr "Предупреждение"
+
+#~ msgid ""
+#~ "Please double check if you really want to do this since there is no way "
+#~ "for GOsa to get your data back."
+#~ msgstr ""
+#~ "Подумайте еще раз, действительно ли вам нужно удаление, так как GOsa не "
+#~ "сможет восстановить эти данные."
+
+#, fuzzy
+#~ msgid ""
+#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, "
+#~ "иначе нажмите <i>Отмена</i>."
+
+#~ msgid "disabled"
+#~ msgstr "отключен"
+
+#~ msgid "full access"
+#~ msgstr "полный доступ"
+
+#~ msgid "allow access to these hosts"
+#~ msgstr "разрешить доступ только на эти хосты"
+
+#, fuzzy
+#~ msgid "Trust mode"
+#~ msgstr "Режим"
+
+#, fuzzy
+#~ msgid "Sudo management"
+#~ msgstr "Управление системами"
 
 #, fuzzy
 #~ msgid "List of users and groups"
@@ -384,10 +429,6 @@ msgstr "Управление системами"
 #, fuzzy
 #~ msgid "Number of listed roles"
 #~ msgstr "Название группы"
-
-#, fuzzy
-#~ msgid "Sudo roles"
-#~ msgstr "состояние неизвестно"
 
 #, fuzzy
 #~ msgid "Manage sudo roles"

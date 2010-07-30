@@ -339,8 +339,8 @@ class gospamserver extends goService{
                         "stop"            => _("Stop"),
                         "restart"         => _("Restart"),
 
-                        "saFlagsB"           => _("Enable use of bayes filtering"),
-                        "saFlagsb"           => _("Enabled bayes auto learning"),
+                        "saFlagsB"           => _("Enable use of Bayes filtering"),
+                        "saFlagsb"           => _("Enabled Bayes auto learning"),
                         "saFlagsC"           => _("Enable RBL checks"),
                         "saFlagsR"           => _("Enable use of Razor"),
                         "saFlagsD"           => _("Enable use of DDC"),

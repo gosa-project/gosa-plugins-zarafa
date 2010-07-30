@@ -751,8 +751,8 @@ class opsiGeneric extends plugin
                         "mac"             => _("MAC address"),
                         "description"     => _("Description"),
                         "note"            => _("Note"),
-                        "netbootProduct"  => _("Netboot product"),
-                        "localProduct"    => _("Local product"),
+                        "netbootProduct"  => _("Net boot product"),
+                        "localProduct"    => _("Local boot product"),
                         "triggerAction"   => _("Action"))
                     ));
     }

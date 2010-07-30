@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -86,8 +86,8 @@ msgstr "Повторить"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
 #, fuzzy
-msgid "Admin"
-msgstr "DN администратора"
+msgid "Administrator"
+msgstr "Администрирование"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 #, fuzzy
@@ -98,6 +98,10 @@ msgstr "Личная информация"
 #, fuzzy
 msgid "Logging DB user"
 msgstr "Служба печати"
+
+#, fuzzy
+#~ msgid "Admin"
+#~ msgstr "DN администратора"
 
 #, fuzzy
 #~ msgid "GOsa MySQL logging service"

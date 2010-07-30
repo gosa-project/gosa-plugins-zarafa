@@ -197,10 +197,10 @@
          name="DISALLOW_SVR" value="1" type="checkbox">{t}Prohibit issuance of service tickets{/t}
         <br>
         <input {if $DISALLOW_FORWARDABLE} checked {/if}class="center" 		
-         name="DISALLOW_FORWARDABLE" value="1" type="checkbox">{t}Prohibit forwardable tickets{/t}
+         name="DISALLOW_FORWARDABLE" value="1" type="checkbox">{t}Prohibit forward able tickets{/t}
         <br>
         <input {if $DISALLOW_PROXIABLE} checked {/if}class="center" 		
-         name="DISALLOW_PROXIABLE" value="1" type="checkbox">{t}Disallow proxiable tickets{/t}
+         name="DISALLOW_PROXIABLE" value="1" type="checkbox">{t}Disallow proxable tickets{/t}
         <br>
         <input {if $DISALLOW_RENEWABLE} checked {/if}class="center" 		
          name="DISALLOW_RENEWABLE" value="1" type="checkbox">{t}Prohibit renewable tickets{/t}
@@ -215,16 +215,16 @@
          name="PWCHANGE_SERVICE" value="1" type="checkbox">{t}Password change service{/t}
         <br>
         <input {if $REQUIRES_PRE_AUTH} checked {/if}class="center" 		
-         name="REQUIRES_PRE_AUTH" value="1" type="checkbox">{t}Preauthentication required{/t}
+         name="REQUIRES_PRE_AUTH" value="1" type="checkbox">{t}Pre-authentication required{/t}
         <br>
         <input {if $REQUIRES_PWCHANGE} checked {/if}class="center" 		
          name="REQUIRES_PWCHANGE" value="1" type="checkbox">{t}Force a password change{/t}
         <br>
         <input {if $REQUIRES_HW_AUTH} checked {/if}class="center" 		
-         name="REQUIRES_HW_AUTH" value="1" type="checkbox">{t}Hardware preauthentication{/t}
+         name="REQUIRES_HW_AUTH" value="1" type="checkbox">{t}Hardware pre-authentication{/t}
         <br>
         <input {if $DISALLOW_DUP_SKEY} checked {/if}class="center" 		
-         name="DISALLOW_DUP_SKEY" value="1" type="checkbox">{t}Disallow user to user authentification{/t}
+         name="DISALLOW_DUP_SKEY" value="1" type="checkbox">{t}Disallow user to user authentication{/t}
         <br>
         <input {if $DISALLOW_ALL_TIX} checked {/if}class="center" 		
          name="DISALLOW_ALL_TIX" value="1" type="checkbox">{t}Forbid ticket issuance{/t}

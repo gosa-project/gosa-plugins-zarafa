@@ -101,7 +101,7 @@ class passwordMethodheimdal extends passwordMethod
           }
         }
       }elseif($ldap->count() >= 2){
-        new msg_dialog(_("Heimdal"),sprintf(_("Error loading heimdal configuration, more than one configuration entry was found for '%s'."),$this->parent_dn));
+        new msg_dialog(_("Heimdal"),sprintf(_("Error loading Heimdal configuration, more than one configuration entry was found for '%s'."),$this->parent_dn));
       }
     }
 	}

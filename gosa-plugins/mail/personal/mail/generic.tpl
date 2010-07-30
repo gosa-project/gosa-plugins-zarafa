@@ -219,14 +219,14 @@
      <div style='float:left'>
       {render acl=$gosaMailDeliveryModeSACL checkbox=$multiple_support checked=$use_use_spam_filter}
       <input {if $own_script != ""} disabled {/if} id='use_spam_filter' type=checkbox name="use_spam_filter" 
-      value="1" {$use_spam_filter} title="{t}Select if you want to filter this mails through spamassassin{/t}" class="center">
+      value="1" {$use_spam_filter} title="{t}Select if you want to filter this mails through Spamassassin{/t}" class="center">
       {/render}
      </div>
      <div style='padding-left: 25px;'>
-      <label for="gosaSpamSortLevel">{t}Move mails tagged with spam level greater than{/t}</label>
+      <label for="gosaSpamSortLevel">{t}Move mails tagged with SPAM level greater than{/t}</label>
       {render acl=$gosaSpamSortLevelACL checkbox=$multiple_support checked=$use_gosaSpamSortLevel}
       <select {if $own_script != ""} disabled {/if} id="gosaSpamSortLevel" size="1" name="gosaSpamSortLevel" 
-      title="{t}Choose spam level - smaller values are more sensitive{/t}">
+      title="{t}Choose SPAM level - smaller values are more sensitive{/t}">
       {html_options values=$spamlevel output=$spamlevel selected=$gosaSpamSortLevel}
 </select>
 {/render}

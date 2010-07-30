@@ -42,8 +42,8 @@
       {/if}
       {if $requeueAll_W}
        <input name="all_requeue" src="images/lists/reload.png"							
-        value="{t}Requeue all messages{/t}" type="image"					
-        title="{t}Requeue all messages in selected servers queue{/t}">
+        value="{t}Re-queue all messages{/t}" type="image"					
+        title="{t}Re-queue all messages in selected servers queue{/t}">
       {/if}
      </td>
     </tr>
@@ -130,7 +130,7 @@
         
          {if $requeue_W}
           {image action="requeue__{$entries[$key].MailID}__{$entries[$key].Server}" 
-            path="images/lists/reload.png" title="{t}Requeue this message{/t}"}
+            path="images/lists/reload.png" title="{t}Re-queue this message{/t}"}
          {else}
           {image path="images/empty.png"}
          {/if}

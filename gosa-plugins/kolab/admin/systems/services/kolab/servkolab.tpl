@@ -17,7 +17,7 @@
     </tr>
     <tr>
      <td>
-      {t}Cyrus admins{/t}
+      {t}Cyrus administrators{/t}
      </td>
      <td>
       {render acl=$cyrusadminsACL}
@@ -132,7 +132,7 @@
      </td>
      <td>
       <label for="postfix_enable_virus_scan">
-      {t}Amavis email scanning (virus/spam){/t}</label>
+      {t}Amavis email scanning (virus/SPAM){/t}</label>
      </td>
     </tr>
    </table>
@@ -183,22 +183,22 @@
       {render acl=$postfixmynetworksACL}
       <input id="postfix_mynetworks" name="postfix_mynetworks" size="60" maxlength="220" value="{$postfix_mynetworks}" type="text">
       {/render}
-      ( {t}Enter multiple values, seperated with{/t} , )
+      ( {t}Enter multiple values, separated with{/t} <b>,</b> )
      </td>
     </tr>
    </table>
 
    <hr>
 
-   <h3>{t}SMTP smarthost/relayhost{/t}</h3>
-   <table summary="{t}SMTP smarthost/relayhost{/t}">
+   <h3>{t}SMTP smart host/relay host{/t}</h3>
+   <table summary="{t}SMTP smart host/relay host{/t}">
     <tr>
      <td>
       {render acl=$postfixrelayhostACL}
       <input id="RelayMxSupport" name="RelayMxSupport" value="1" type="checkbox" {$RelayMxSupportCheck}>
       {/render}
       <label for="RelayMxSupport">
-      {t}Enable MX lookup for relayhost{/t}</label>
+      {t}Enable MX lookup for relay host{/t}</label>
      </td>
     </tr>
     <tr>

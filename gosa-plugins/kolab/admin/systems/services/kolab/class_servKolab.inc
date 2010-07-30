@@ -228,7 +228,7 @@ class servkolab extends goService
             return;
         }
         if(!isset($this->hostname) || (empty($this->hostname))){
-            msg_dialog::display(_("Error"), msgPool::required(_("hostname")), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::required(_("host name")), ERROR_DIALOG);
         }
 
         /* Our hostname is in kolabHosts and there is a only one entry 
@@ -444,7 +444,7 @@ class servkolab extends goService
                     "plProvidedAcls"=> array(
                         "postfixmydomain"                => _("Postfix mydomain") ,
                         "postfixmydestination"           => _("My destination") ,
-                        "cyrusadmins"                    => _("Cyrus admins") ,
+                        "cyrusadmins"                    => _("Cyrus administrators") ,
 
                         "cyruspop3"                      => _("POP3 service") ,
                         "cyruspop3s"                     => _("POP3/SSL service") ,
@@ -463,8 +463,8 @@ class servkolab extends goService
                         "kolabFreeBusyFuture"            => _("kolabFreeBusyFuture") ,
 
                         "postfixmynetworks"              => _("SMTP privileged networks") ,
-                        "postfixmxrelayenabled"          => _("Enable MX lookup for relayhost"),
-                        "postfixrelayhost"               => _("Relayhost") ,
+                        "postfixmxrelayenabled"          => _("Enable MX lookup for relay host"),
+                        "postfixrelayhost"               => _("Relay host") ,
                         "postfixallowunauthenticated"    => _("Accept Internet Mail"))
                             ));
     }

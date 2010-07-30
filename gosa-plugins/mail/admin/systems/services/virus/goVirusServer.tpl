@@ -26,7 +26,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Http proxy URL{/t}</td>
+     <td>{t}HTTP proxy URL{/t}</td>
      <td>
       {render acl=$avHttpProxyURLACL}
        <input type='text' name='avHttpProxyURL' value='{$avHttpProxyURL}' style='width:220px;'>

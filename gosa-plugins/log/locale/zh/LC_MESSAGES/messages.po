@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -87,8 +87,8 @@ msgstr "仓库"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
 #, fuzzy
-msgid "Admin"
-msgstr "管理员 DN"
+msgid "Administrator"
+msgstr "系统管理"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 #, fuzzy
@@ -99,6 +99,10 @@ msgstr "切换信息"
 #, fuzzy
 msgid "Logging DB user"
 msgstr "Logging DB 用户"
+
+#, fuzzy
+#~ msgid "Admin"
+#~ msgstr "管理员 DN"
 
 #, fuzzy
 #~ msgid "GOsa MySQL logging service"

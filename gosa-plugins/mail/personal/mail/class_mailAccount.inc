@@ -1459,13 +1459,13 @@ class mailAccount extends plugin
                               "gosaMailDeliveryModeV"     =>  _("Add vacation information"),  // This is flag of gosaMailDeliveryMode
                               "gosaVacationMessage"       =>  _("Vacation message"),
 
-                              "gosaMailDeliveryModeS"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
-                              "gosaSpamSortLevel"         =>  _("Spam level"),
-                              "gosaSpamMailbox"           =>  _("Spam mail box"),
+                              "gosaMailDeliveryModeS"     =>  _("Use SPAM filter"),           // This is flag of gosaMailDeliveryMode
+                              "gosaSpamSortLevel"         =>  _("SPAM level"),
+                              "gosaSpamMailbox"           =>  _("SPAM mail box"),
 
                               "sieveManagement"           =>  _("Sieve management"),
 
-                              "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
+                              "gosaMailDeliveryModeR"     =>  _("Reject due to mail size"),    // This is flag of gosaMailDeliveryMode
                               "gosaMailMaxSize"           =>  _("Mail max size"),
 
                               "gosaMailForwardingAddress" =>  _("Forwarding address"),

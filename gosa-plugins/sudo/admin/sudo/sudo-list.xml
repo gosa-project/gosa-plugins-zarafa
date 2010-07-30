@@ -8,7 +8,7 @@
     <multiSelect>true</multiSelect>
     <template>sudo-list.tpl</template>
     <module>sudo</module>
-    <label>List of sudo roles</label>
+    <label>List of Sudo roles</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
@@ -114,7 +114,7 @@
       <name>edit</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
-      <label>Edit sudo role</label>
+      <label>Edit Sudo role</label>
     </action>
 
     <action>
@@ -127,7 +127,7 @@
       <type>entry</type>
       <image>images/lists/trash.png</image>
       <acl>sudo/sudo[d]</acl>
-      <label>Remove sudo role</label>
+      <label>Remove Sudo role</label>
     </action>
 
   </actiontriggers>

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:54+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: personal/nagios/class_nagiosAccount.inc:105
 #: personal/nagios/class_nagiosAccount.inc:114
 #: personal/nagios/class_nagiosAccount.inc:116
-#: personal/nagios/class_nagiosAccount.inc:273
+#: personal/nagios/class_nagiosAccount.inc:272
 msgid "Nagios"
 msgstr "Nagios"
 
@@ -31,143 +31,149 @@ msgstr "Nagios"
 msgid "This does something"
 msgstr "Dit doet iets"
 
-#: personal/nagios/class_nagiosAccount.inc:173
-#: personal/nagios/class_nagiosAccount.inc:258
+#: personal/nagios/class_nagiosAccount.inc:172
+#: personal/nagios/class_nagiosAccount.inc:257
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP fout:"
 
-#: personal/nagios/class_nagiosAccount.inc:194
-#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
+#: personal/nagios/class_nagiosAccount.inc:193
+#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:10
 msgid "Alias"
 msgstr "Alias"
 
-#: personal/nagios/class_nagiosAccount.inc:197
-#: personal/nagios/class_nagiosAccount.inc:201
-#: personal/nagios/class_nagiosAccount.inc:205
+#: personal/nagios/class_nagiosAccount.inc:196
+#: personal/nagios/class_nagiosAccount.inc:200
+#: personal/nagios/class_nagiosAccount.inc:204
 msgid "Mail"
 msgstr "E-mail"
 
-#: personal/nagios/class_nagiosAccount.inc:274
+#: personal/nagios/class_nagiosAccount.inc:273
 #, fuzzy
 msgid "Nagios account settings"
 msgstr "Nagios instellingen"
 
-#: personal/nagios/class_nagiosAccount.inc:278
+#: personal/nagios/class_nagiosAccount.inc:277
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:19
 msgid "Mail address"
 msgstr "E-mail adres"
 
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:27
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:29
 msgid "Host notification period"
 msgstr "Host notificatie periode"
 
-#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:40
+#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:42
 msgid "Service notification period"
 msgstr "Service notificatie periode"
 
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:68
 msgid "Host notification options"
 msgstr "Host notificatie opties"
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:53
+#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:55
 msgid "Service notification options"
 msgstr "Service notificatie opties"
 
-#: personal/nagios/class_nagiosAccount.inc:290
+#: personal/nagios/class_nagiosAccount.inc:293
 #, fuzzy
 msgid "Pager number"
 msgstr "Telefoonnummer"
 
-#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
+#: personal/nagios/class_nagiosAccount.inc:295 personal/nagios/nagios.tpl:92
 msgid "Service notification commands"
 msgstr "Service notificatie commando's"
 
-#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:100
+#: personal/nagios/class_nagiosAccount.inc:296 personal/nagios/nagios.tpl:102
 msgid "Host notification commands"
 msgstr "Host notificatie commando's"
 
-#: personal/nagios/class_nagiosAccount.inc:294
+#: personal/nagios/class_nagiosAccount.inc:297
 #, fuzzy
 msgid "View system informations"
 msgstr "systeem informatie bekijken"
 
-#: personal/nagios/class_nagiosAccount.inc:295
+#: personal/nagios/class_nagiosAccount.inc:298
 #, fuzzy
 msgid "View configuration information"
 msgstr "configuratie informatie bekijken"
 
-#: personal/nagios/class_nagiosAccount.inc:296
+#: personal/nagios/class_nagiosAccount.inc:299
 #, fuzzy
 msgid "Trigger system commands"
 msgstr "systeem commando's activeren"
 
-#: personal/nagios/class_nagiosAccount.inc:297
+#: personal/nagios/class_nagiosAccount.inc:300
 #, fuzzy
 msgid "View all services"
 msgstr "alle services bekijken"
 
-#: personal/nagios/class_nagiosAccount.inc:298
+#: personal/nagios/class_nagiosAccount.inc:301
 #, fuzzy
 msgid "View all hosts"
 msgstr "alle hosts bekijken"
 
-#: personal/nagios/class_nagiosAccount.inc:299
+#: personal/nagios/class_nagiosAccount.inc:302
 #, fuzzy
 msgid "Trigger all service commands"
 msgstr "alle service commando's activeren"
 
-#: personal/nagios/class_nagiosAccount.inc:300
+#: personal/nagios/class_nagiosAccount.inc:303
 #, fuzzy
 msgid "Trigger all host commands"
 msgstr "alle host commando's activeren"
 
-#: personal/nagios/nagios.tpl:5
+#: personal/nagios/nagios.tpl:1 personal/nagios/nagios.tpl:7
+#: personal/nagios/nagios.tpl:8
 msgid "Nagios Account"
 msgstr "Nagios account"
 
-#: personal/nagios/nagios.tpl:79
+#: personal/nagios/nagios.tpl:81
 msgid "Pager"
 msgstr "Pieper"
 
-#: personal/nagios/nagios.tpl:115
-msgid "Nagios authentification"
+#: personal/nagios/nagios.tpl:120
+#, fuzzy
+msgid "Nagios authentication"
 msgstr "Nagios authenticatie"
 
 #: personal/nagios/nagios.tpl:121
+#, fuzzy
+msgid "Nagios account"
+msgstr "Nagios account"
+
+#: personal/nagios/nagios.tpl:125
 msgid "view system informations"
 msgstr "systeem informatie bekijken"
 
-#: personal/nagios/nagios.tpl:130
+#: personal/nagios/nagios.tpl:134
 msgid "view configuration information"
 msgstr "configuratie informatie bekijken"
 
-#: personal/nagios/nagios.tpl:139
+#: personal/nagios/nagios.tpl:143
 msgid "trigger system commands"
 msgstr "systeem commando's activeren"
 
-#: personal/nagios/nagios.tpl:148
+#: personal/nagios/nagios.tpl:152
 msgid "view all services"
 msgstr "alle services bekijken"
 
-#: personal/nagios/nagios.tpl:157
+#: personal/nagios/nagios.tpl:161
 msgid "view all hosts"
 msgstr "alle hosts bekijken"
 
-#: personal/nagios/nagios.tpl:166
+#: personal/nagios/nagios.tpl:170
 msgid "trigger all service commands"
 msgstr "alle service commando's activeren"
 
-#: personal/nagios/nagios.tpl:175
+#: personal/nagios/nagios.tpl:179
 msgid "trigger all host commands"
 msgstr "alle host commando's activeren"
 
-#: personal/nagios/main.inc:136
-msgid "Nagios settings"
-msgstr "Nagios instellingen"
+#~ msgid "Nagios settings"
+#~ msgstr "Nagios instellingen"
 
 #~ msgid "This account has no nagios extensions."
 #~ msgstr "Dit account heeft nagios mogelijkheden uitgeschakeld."

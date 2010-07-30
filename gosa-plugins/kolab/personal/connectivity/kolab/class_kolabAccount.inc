@@ -362,10 +362,10 @@ class kolabAccount extends plugin
 
     /* Check for URL scheme... */
     if(empty($this->calFBURL)){
-      $message[]= msgPool::required(_("Free Busy url"));
+      $message[]= msgPool::required(_("Free Busy URL"));
     }
     if(!preg_match("/^http+(s)*:\/\//",$this->calFBURL)){
-      $message[]= msgPool::invalid(_("Free Busy url"), $this->calFBURL, "/^http+(s)*:\/\//");
+      $message[]= msgPool::invalid(_("Free Busy URL"), $this->calFBURL, "/^http+(s)*:\/\//");
     }
 
     /* Check invitation policy for existing mail addresses */
@@ -516,7 +516,7 @@ class kolabAccount extends plugin
   {
     return (array(	
           "plShortName"     => _("Kolab"),
-          "plDescription"   => _("Kolab account settings")."&nbsp;("._("Connectivity addon").")",
+          "plDescription"   => _("Kolab account settings")."&nbsp;("._("Connectivity add-on").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 20,                                 // Position in tabs

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:59+0200\n"
 "PO-Revision-Date: 2008-04-04 09:30+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -21,28 +21,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/connectivity/opengroupware/opengw.tpl:1
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
-msgid "Opengroupware"
-msgstr "Opengroupware"
-
 #: personal/connectivity/opengroupware/opengw.tpl:8
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:391
 msgid "Location team"
 msgstr "Örtliches Team"
 
 #: personal/connectivity/opengroupware/opengw.tpl:21
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:392
 msgid "Template user"
 msgstr "Benutzer-Vorlage"
 
 #: personal/connectivity/opengroupware/opengw.tpl:33
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:393
 msgid "Locked"
 msgstr "Gesperrt"
 
-#: personal/connectivity/opengroupware/opengw.tpl:48
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
+#: personal/connectivity/opengroupware/opengw.tpl:49
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:394
 msgid "Teams"
 msgstr "Teams"
 
@@ -54,28 +49,49 @@ msgstr "Opengroupware-Konto"
 msgid "This does something"
 msgstr "Dies tut etwas"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:167
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:172
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:180
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:169
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:175
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:183
 msgid "Configuration error"
 msgstr "Konfigurations-Fehler"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:172
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:175
 msgid "Open Groupware database"
 msgstr "Opengroupware-Datenbank"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:180
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:183
 msgid "Open Groupware"
 msgstr "Open Groupware"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:339
-msgid "Open groupware account settings"
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:342
+#, fuzzy
+msgid "OpenGroupware.org account settings"
 msgstr "Opengroupware Konto-Einstellungen"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:339
-msgid "Connectivity addon"
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:342
+#, fuzzy
+msgid "Connectivity add-on"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:343
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:346
 msgid "My account"
 msgstr "Mein Konto"
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:355
+msgid "The server/hostname to use for OpenGroupware.org connections."
+msgstr ""
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:364
+msgid "The password to use for OpenGroupware.org connections."
+msgstr ""
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:373
+msgid "The username to use for OpenGroupware.org connections."
+msgstr ""
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:382
+msgid "The database name to use for OpenGroupware.org connections."
+msgstr ""
+
+#~ msgid "Opengroupware"
+#~ msgstr "Opengroupware"

@@ -186,7 +186,7 @@ class goKrbServer extends goService{
             $message[]= msgPool::required(_("Realm"));
         }
         if(count($this->policies) && (empty($this->macAddress) || !tests::is_mac($this->macAddress))){
-            $message[] = _("Cannot apply policy changes! The defined kerberos server has no mac address.");
+            $message[] = _("Cannot apply policy changes! The defined Kerberos server has no MAC address.");
         }
         return($message);
     }

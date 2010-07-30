@@ -152,7 +152,7 @@ class sudoOption extends plugin
                 if(!isset($this->options[$opt])){
                     $this->options[$opt]=array('NAME'=>$opt,'TYPE'=>'STRING','DEFAULT' => '');
                     msg_dialog::display(_("Unknown option"),
-                            sprintf(_("The sudo option '%s' is invalid!"),
+                            sprintf(_("The Sudo option '%s' is invalid!"),
                                 $opt),WARNING_DIALOG);
                 }
 
@@ -281,9 +281,9 @@ class sudoOption extends plugin
         $smarty->assign("ACL",$this->getacl(""));
         $smarty->assign("map",  
                     set_post(    array(
-                    "STRING" => _("string"), "BOOLEAN" => _("bool"),
-                    "INTEGER" => _("integer") , "BOOL_INTEGER" => _("integer")."-"._("bool") ,
-                    "STRING_BOOL" => _("string")."-"._("bool"),"LISTS" => _("list"))));
+                    "STRING" => _("string"), "BOOLEAN" => _("boolean"),
+                    "INTEGER" => _("integer") , "BOOL_INTEGER" => _("integer")."-"._("boolean") ,
+                    "STRING_BOOL" => _("string")."-"._("boolean"),"LISTS" => _("list"))));
         $smarty->assign("sudoOption",$this->prepare_for_html($this->sudoOption));
         $smarty->assign("options",$this->options);
         return($smarty->fetch(get_template_path('options.tpl', TRUE)));

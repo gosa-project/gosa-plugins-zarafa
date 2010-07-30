@@ -37,7 +37,7 @@ class sieve_if
     /* Match types */
     $this->match_types  = array(  
         ":is"         => _("is"),
-        ":regex"      => _("regex"),
+        ":regex"      => _("reg-ex"),
         ":contains"   => _("contains"),
         ":matches"    => _("matches"),
         ":count"      => _("count"),
@@ -443,7 +443,7 @@ class sieve_if
                                 "LastError"       => "",
                                 "Match_type"      => ":contains",
                                 "Match_type_value"=> "",
-                                "Key_List"        => array(_("emtpy")),
+                                "Key_List"        => array(_("empty")),
                                 "Value_List"      => array(_("empty"))) ;
         if($type == "address"){
           $values["Address_Part"]    = ":all";
@@ -1173,7 +1173,7 @@ class sieve_if
         } 
         default : 
         {
-          trigger_error(_("Unhandled switch type"));
+          trigger_error(_("Unknown switch type"));
         }
       }
     }

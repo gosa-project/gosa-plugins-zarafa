@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 20:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:301
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:437
 msgid "Open-Xchange"
 msgstr ""
 
@@ -27,99 +27,102 @@ msgstr ""
 msgid "This does something"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:192
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:289
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:301
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:305
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:427
 msgid "Error"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:192
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:305
 msgid "Open-Xchange database"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:197
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:310
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:196
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:309
 msgid "Configuration error"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:207
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:220
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:330
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:339
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:206
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:219
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:329
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:338
 msgid "LDAP error"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:289
 msgid "Open-Xchange account name"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:427
 msgid "Cannot save Open-Xchange account!"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
 msgid "Open-Xchange account settings"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
-msgid "Connectivity addon"
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
+msgid "Connectivity add-on"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:442
 msgid "My account"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:448
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:451
 msgid "OXAppointmentDays"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:449
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:452
 msgid "OXTaskDays"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:453
 msgid "OXTimeZone"
 msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
-msgid "Open-Xchange Account"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid ""
-"disabled, no Postgresql support detected. Or the specified database can't be "
-"reached"
-msgstr ""
-
 #: personal/connectivity/openxchange/oxchange.tpl:18
 msgid "Open-Xchange account"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:29
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid ""
+"disabled, no PostgreSQL support detected or the specified database can't be "
+"reached."
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:21
+#: personal/connectivity/openxchange/oxchange.tpl:28
+#: personal/connectivity/openxchange/oxchange.tpl:63
+msgid "Open-Xchange configuration"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:32
 msgid "Remember"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:33
+#: personal/connectivity/openxchange/oxchange.tpl:36
 msgid "Appointment Days"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:39
-#: personal/connectivity/openxchange/oxchange.tpl:49
+#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:52
 msgid "days"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:45
 msgid "Task Days"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:61
+#: personal/connectivity/openxchange/oxchange.tpl:67
 msgid "User Information"
 msgstr ""
 
-#: personal/connectivity/openxchange/oxchange.tpl:65
+#: personal/connectivity/openxchange/oxchange.tpl:71
 msgid "User Timezone"
 msgstr ""

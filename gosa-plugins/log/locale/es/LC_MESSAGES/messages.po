@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2010-01-28 23:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -80,8 +80,9 @@ msgid "Restart"
 msgstr "Reiniciar"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
-msgid "Admin"
-msgstr "Administrador"
+#, fuzzy
+msgid "Administrator"
+msgstr "DN del administrador"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 msgid "Logging database information"
@@ -90,6 +91,9 @@ msgstr "Información de base de datos de Registro"
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
 msgid "Logging DB user"
 msgstr "Usuario de Base de datos de registro"
+
+#~ msgid "Admin"
+#~ msgstr "Administrador"
 
 #~ msgid "GOsa MySQL logging service"
 #~ msgstr "Servicio de registro de GOsa en MySQL"

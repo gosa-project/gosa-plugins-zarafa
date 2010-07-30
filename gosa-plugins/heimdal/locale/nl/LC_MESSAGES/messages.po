@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:20+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -155,7 +155,7 @@ msgstr "Serieel"
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #, php-format
 msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
+"Error loading Heimdal configuration, more than one configuration entry was "
 "found for '%s'."
 msgstr ""
 

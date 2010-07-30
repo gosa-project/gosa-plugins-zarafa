@@ -338,8 +338,8 @@ class opengwAccount extends plugin
     static function plInfo()
     {
         return (array(
-                    "plShortName"     => _("Opengroupware"),
-                    "plDescription"   => _("Open groupware account settings")."&nbsp;("._("Connectivity addon").")",
+                    "plShortName"     => "OpenGroupware.org",
+                    "plDescription"   => _("OpenGroupware.org account settings")."&nbsp;("._("Connectivity add-on").")",
                     "plSelfModify"    => TRUE,
                     "plDepends"       => array("user"),
                     "plPriority"      => 26,                                 // Position in tabs
@@ -352,7 +352,7 @@ class opengwAccount extends plugin
                             "name"          => "datahost",
                             "type"          => "string",
                             "default"       => "",
-                            "description"   => _("The server/hostname to use for OpenGroupware connections."),
+                            "description"   => _("The server/hostname to use for OpenGroupware.org connections."),
                             "check"         => "",
                             "migrate"       => "",
                             "group"         => "OpenGroupware",
@@ -361,7 +361,7 @@ class opengwAccount extends plugin
                             "name"          => "password",
                             "type"          => "string",
                             "default"       => "",
-                            "description"   => _("The password to use for OpenGroupware connections."),
+                            "description"   => _("The password to use for OpenGroupware.org connections."),
                             "check"         => "",
                             "migrate"       => "",
                             "group"         => "OpenGroupware",
@@ -370,7 +370,7 @@ class opengwAccount extends plugin
                             "name"          => "username",
                             "type"          => "string",
                             "default"       => "",
-                            "description"   => _("The username to use for OpenGroupware connections."),
+                            "description"   => _("The username to use for OpenGroupware.org connections."),
                             "check"         => "",
                             "migrate"       => "",
                             "group"         => "OpenGroupware",
@@ -379,7 +379,7 @@ class opengwAccount extends plugin
                             "name"          => "database",
                             "type"          => "string",
                             "default"       => "",
-                            "description"   => _("The database name to use for OpenGroupware connections."),
+                            "description"   => _("The database name to use for OpenGroupware.org connections."),
                             "check"         => "",
                             "migrate"       => "",
                             "group"         => "OpenGroupware",

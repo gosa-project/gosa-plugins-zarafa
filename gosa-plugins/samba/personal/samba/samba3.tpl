@@ -149,7 +149,7 @@
 	
 	> 
 {/render}
-   <i>{t}Inherit client config{/t}</i>
+   <i>{t}Inherit client configuration{/t}</i>
    <table summary="{t}Client configuration{/t}">
     <tr>
      <td><label for="CtxInitialProgram">{t}Initial program{/t}</label></td>
@@ -248,7 +248,7 @@
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_connectclientdrives}
       <input id="connectclientdrives" type=checkbox name="connectclientdrives" value="1" {$connectclientdrives} {$tsloginstate} class="center">
 {/render}
-      <label for="connectclientdrives">{t}Connect client drives at logon{/t}</label>
+      <label for="connectclientdrives">{t}Connect client drives at log on{/t}</label>
      </td>
     </tr>
     <tr>
@@ -256,7 +256,7 @@
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_connectclientprinters}
       <input id="connectclientprinters" type=checkbox name="connectclientprinters" value="1" {$connectclientprinters}{$tsloginstate} class="center">
 {/render}
-      <label for="connectclientprinters">{t}Connect client printers at logon{/t}</label>
+      <label for="connectclientprinters">{t}Connect client printers at log on{/t}</label>
      </td>
     </tr>
     <tr>
@@ -399,7 +399,7 @@
     <hr>
 
     {render acl=$sambaLogonHoursACL mode=read_active  checkbox=$multiple_support checked=$use_SetSambaLogonHours}
-        {t}Samba logon times{/t}&nbsp;<button type='submit' name='SetSambaLogonHours'>{t}Edit settings...{/t}</button>
+        {t}Samba log on times{/t}&nbsp;<button type='submit' name='SetSambaLogonHours'>{t}Edit settings...{/t}</button>
     {/render}
     <!-- /Samba policies -->
 

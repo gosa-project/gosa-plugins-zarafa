@@ -34,7 +34,7 @@ class netatalk extends plugin {
 
   /* Definitions */
   var $plHeadline     = "Netatalk";
-  var $plDescription  = "Manage netatalk account";
+  var $plDescription  = "Manage Netatalk account";
 
   var $view_logged = FALSE;
 
@@ -173,7 +173,7 @@ class netatalk extends plugin {
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL) {
       $display = "<img alt=\"\"src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
-        msgPool::noValidExtension(_("netatalk"))."</b>";
+        msgPool::noValidExtension(_("Netatalk"))."</b>";
       $display .= back_to_main();
       return ($display);
     }
@@ -181,20 +181,20 @@ class netatalk extends plugin {
     /* Show tab dialog headers */
     if ($this->parent !== NULL) {
       if ($this->is_account) {
-        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("netatalk")), 
-            msgPool::featuresEnabled(_("netatalk")));
+        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("Netatalk")), 
+            msgPool::featuresEnabled(_("Netatalk")));
       } else {
         $errmsg="";
         $obj = $this->parent->by_object['posixAccount'];
         if  (!($obj->is_account) ) {
-          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), 
-              msgPool::featuresDisabled(_("netatalk"), _("POSIX")), TRUE);
+          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("Netatalk")), 
+              msgPool::featuresDisabled(_("Netatalk"), _("POSIX")), TRUE);
         } elseif (count($this->shares)== 0) {
-          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), 
-              msgPool::featuresDisabled(_("netatalk"), _("netatalk or NFS share")), TRUE);
+          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("Netatalk")), 
+              msgPool::featuresDisabled(_("Netatalk"), _("Netatalk or NFS share")), TRUE);
         } else {
-          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), 
-              msgPool::featuresDisabled(_("netatalk")));
+          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("Netatalk")), 
+              msgPool::featuresDisabled(_("Netatalk")));
         } 
         return ($display);
       }

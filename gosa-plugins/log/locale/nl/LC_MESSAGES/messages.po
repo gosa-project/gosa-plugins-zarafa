@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -90,8 +90,8 @@ msgstr "Opnieuw proberen"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
 #, fuzzy
-msgid "Admin"
-msgstr "Beheerders DN"
+msgid "Administrator"
+msgstr "Beheer"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 #, fuzzy
@@ -102,6 +102,10 @@ msgstr "Informatie weergeven/verbergen"
 #, fuzzy
 msgid "Logging DB user"
 msgstr "Log DB gebruiker"
+
+#, fuzzy
+#~ msgid "Admin"
+#~ msgstr "Beheerders DN"
 
 #, fuzzy
 #~ msgid "GOsa MySQL logging service"

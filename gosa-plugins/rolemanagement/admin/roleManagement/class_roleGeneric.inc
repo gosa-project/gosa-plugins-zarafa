@@ -94,7 +94,7 @@ class roleGeneric extends plugin {
         $this->memberList->setEditable(false);
         $this->memberList->setWidth("100%");
         $this->memberList->setHeight("300px");
-        $this->memberList->setHeader(array('~',_("Given name"),_("Surename"),_("Uid")));
+        $this->memberList->setHeader(array('~',_("Given name"),_("Surename"),_("UID")));
         $this->memberList->setColspecs(array('20px','*','*','*','20px'));
         $this->memberList->setDefaultSortColumn(1);
     }
@@ -470,8 +470,8 @@ class roleGeneric extends plugin {
                     "cn"                => _("Name"),
                     "description" => _("Description"),
                     "base" => _("Base"),
-                    "telephoneNumber" => _("Telefon number"),
-                    "facsimileTelephoneNumber" => _("Fax number"),
+                    "telephoneNumber" => _("Telephone number"),
+                    "facsimileTelephoneNumber" => _("FAX number"),
                     "roleOccupant" => _("Occupants"))
                 ));
     }

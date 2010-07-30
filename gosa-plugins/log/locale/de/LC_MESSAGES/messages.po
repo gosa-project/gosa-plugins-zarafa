@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2008-04-03 14:22+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -83,8 +83,9 @@ msgid "Restart"
 msgstr "Neustart"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
-msgid "Admin"
-msgstr "Administrator"
+#, fuzzy
+msgid "Administrator"
+msgstr "Administrator-DN"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 msgid "Logging database information"
@@ -93,3 +94,6 @@ msgstr "Informationen zur Protokollierungsdatenbank"
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
 msgid "Logging DB user"
 msgstr "Protokollierungsdatenbank-Benutzer"
+
+#~ msgid "Admin"
+#~ msgstr "Administrator"

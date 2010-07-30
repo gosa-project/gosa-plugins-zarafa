@@ -1,7 +1,7 @@
 
 {if !$mail_account}
 	<h3>{t}Kolab account{/t}</h3>
-	{t}The kolab account is currently disabled. It's features can be adjusted if you add a mail account.{/t}
+	{t}The Kolab account is currently disabled. It's features can be adjusted if you add a mail account.{/t}
 {else}
 
 <h3>

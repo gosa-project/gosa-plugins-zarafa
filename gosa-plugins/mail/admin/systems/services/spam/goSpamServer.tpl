@@ -16,7 +16,7 @@
      <td>{t}Required score{/t}</td>
      <td>
       {render acl=$saRequiredScoreACL}
-       <select name='saRequiredScore' title='{t}Select required score to tag mail as spam{/t}' size=1>
+       <select name='saRequiredScore' title='{t}Select required score to tag mail as SPAM{/t}' size=1>
         {html_options options=$SpamScore selected=$saRequiredScore}
        </select>
       {/render}
@@ -63,11 +63,11 @@
     <tr>
      <td>
       {render acl=$saFlagsBACL}
-       <input type='checkbox' name='saFlagsB' value='1' {$saFlagsBCHK}> &nbsp;{t}Enable use of bayes filtering{/t}
+       <input type='checkbox' name='saFlagsB' value='1' {$saFlagsBCHK}> &nbsp;{t}Enable use of Bayes filtering{/t}
       {/render}
       <br>
       {render acl=$saFlagsbACL}
-       <input type='checkbox' name='saFlagsb' value='1' {$saFlagsbCHK}> &nbsp;{t}Enable bayes auto learning{/t}
+       <input type='checkbox' name='saFlagsb' value='1' {$saFlagsbCHK}> &nbsp;{t}Enable Bayes auto learning{/t}
       {/render}
       <br>
       {render acl=$saFlagsCACL}

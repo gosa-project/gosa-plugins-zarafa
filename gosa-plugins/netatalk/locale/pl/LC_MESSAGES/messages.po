@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:56+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,14 +15,6 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:372
-msgid "Netatalk"
-msgstr "Netatalk"
-
-#: personal/netatalk/class_netatalk.inc:37
-msgid "Manage netatalk account"
-msgstr "Zarządzaj kontem Netatalk"
-
 #: personal/netatalk/class_netatalk.inc:176
 #: personal/netatalk/class_netatalk.inc:184
 #: personal/netatalk/class_netatalk.inc:185
@@ -32,45 +24,58 @@ msgstr "Zarządzaj kontem Netatalk"
 #: personal/netatalk/class_netatalk.inc:194
 #: personal/netatalk/class_netatalk.inc:196
 #: personal/netatalk/class_netatalk.inc:197
-#, fuzzy
-msgid "netatalk"
+#: personal/netatalk/class_netatalk.inc:371
+msgid "Netatalk"
 msgstr "Netatalk"
+
+#: personal/netatalk/class_netatalk.inc:37
+#, fuzzy
+msgid "Manage Netatalk account"
+msgstr "Zarządzaj kontem Netatalk"
 
 #: personal/netatalk/class_netatalk.inc:191
 msgid "POSIX"
 msgstr "POSIX"
 
 #: personal/netatalk/class_netatalk.inc:194
-msgid "netatalk or NFS share"
+msgid "Netatalk or NFS share"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:228
-#: personal/netatalk/class_netatalk.inc:382 personal/netatalk/netatalk.tpl:4
+#: personal/netatalk/class_netatalk.inc:227
+#: personal/netatalk/class_netatalk.inc:383 personal/netatalk/netatalk.tpl:4
 msgid "Share"
 msgstr "Udział"
 
-#: personal/netatalk/class_netatalk.inc:292
-#: personal/netatalk/class_netatalk.inc:357
+#: personal/netatalk/class_netatalk.inc:291
+#: personal/netatalk/class_netatalk.inc:356
 #, fuzzy
 msgid "LDAP error"
 msgstr "błąd LDAP:"
 
-#: personal/netatalk/class_netatalk.inc:376
+#: personal/netatalk/class_netatalk.inc:375
 msgid "My account"
 msgstr "Moje konto "
 
-#: personal/netatalk/class_netatalk.inc:381
+#: personal/netatalk/class_netatalk.inc:382
 #, fuzzy
 msgid "User home path"
 msgstr "Ścieżka do profilu"
 
-#: personal/netatalk/main.inc:131
-msgid "Netatalk settings"
-msgstr "Ustawienia Netatalk"
+#: personal/netatalk/netatalk.tpl:1
+#, fuzzy
+msgid "Netatalk configuration"
+msgstr "Konfiguracja PHP"
 
 #: personal/netatalk/netatalk.tpl:16
 msgid "Path"
 msgstr "Ścieżka"
+
+#, fuzzy
+#~ msgid "netatalk"
+#~ msgstr "Netatalk"
+
+#~ msgid "Netatalk settings"
+#~ msgstr "Ustawienia Netatalk"
 
 #~ msgid "This account has no netatalk extensions."
 #~ msgstr "To konto nie posiada rozszerzeń Netatalk"

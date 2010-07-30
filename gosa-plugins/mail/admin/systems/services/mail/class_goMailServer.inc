@@ -42,7 +42,7 @@ class goMailServer extends goService{
     function goMailServer(&$config,$dn)
     {
         goService::goService($config,$dn);
-        $this->DisplayName = _("Mail smtp service (Postfix)");
+        $this->DisplayName = _("Mail SMTP service (Postfix)");
 
         $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
                 SERVICE_STARTED => SERVICE_STARTED,
@@ -452,7 +452,7 @@ class goMailServer extends goService{
     function getListEntry()
     {
         $fields               = goService::getListEntry();
-        $fields['Message']    = _("Mail smtp service (Postfix)");
+        $fields['Message']    = _("Mail SMTP service (Postfix)");
 #$fields['AllowEdit']  = true;
         return($fields);
     }
@@ -573,8 +573,8 @@ class goMailServer extends goService{
     static function plInfo()
     {
         return (array(
-                    "plShortName"   => _("Mail smtp (Postfix)"),
-                    "plDescription" => _("Mail smtp - Postfix")." ("._("Services").")",
+                    "plShortName"   => _("Mail SMTP (Postfix)"),
+                    "plDescription" => _("Mail SMTP - Postfix")." ("._("Services").")",
                     "plSelfModify"  => FALSE,
                     "plDepends"     => array(),
                     "plPriority"    => 98,
@@ -620,7 +620,7 @@ class goMailServer extends goService{
                                 "start"           => _("Start"),
                                 "stop"            => _("Stop"),
                                 "restart"         => _("Restart"),
-                                "postfixMyhostname"           => _("Visible full qualified hostname"),
+                                "postfixMyhostname"           => _("Visible fully qualified host name"),
                                 "description"                 => _("Description"), 
                                 "postfixHeaderSizeLimit"      => _("Header size limit"), 
                                 "postfixMailboxSizeLimit"     => _("Max mailbox size"), 

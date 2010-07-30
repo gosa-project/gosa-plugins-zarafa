@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:20+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -150,7 +150,7 @@ msgstr "Email"
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #, php-format
 msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
+"Error loading Heimdal configuration, more than one configuration entry was "
 "found for '%s'."
 msgstr ""
 

@@ -6,10 +6,10 @@
 
 			<table summary="{t}Generic settings{/t}">
 				<tr>
-					<td>{t}Visible full qualified hostname{/t}</td>
+					<td>{t}Visible fully qualified host name{/t}</td>
 					<td>
 {render acl=$postfixMyhostnameACL}
-						<input type="text" name='postfixMyhostname' value='{$postfixMyhostname}' title='{t}The full qualified host name.{/t}'>
+						<input type="text" name='postfixMyhostname' value='{$postfixMyhostname}' title='{t}The fully qualified host name.{/t}'>
 {/render}
 					</td>
 				</tr>

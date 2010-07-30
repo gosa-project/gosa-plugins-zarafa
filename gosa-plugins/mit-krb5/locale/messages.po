@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,60 +21,77 @@ msgid "Kerberos service"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:74
-#: admin/systems/services/kerberos/class_goKrbServer.inc:359
-#: admin/systems/services/kerberos/class_goKrbServer.inc:368
-#: admin/systems/services/kerberos/class_goKrbServer.inc:372
+#: admin/systems/services/kerberos/class_goKrbServer.inc:356
+#: admin/systems/services/kerberos/class_goKrbServer.inc:365
+#: admin/systems/services/kerberos/class_goKrbServer.inc:369
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:236
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:292
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:320
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:395
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:410
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:690
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:363
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:396
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:361
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:394
 msgid "Service infrastructure"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:166
+#: admin/systems/services/kerberos/class_goKrbServer.inc:90
+msgid "Name"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:173
 msgid "Kerberos service (kadmin access informations)"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:179
-#: admin/systems/services/kerberos/class_goKrbServer.inc:395
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:25
+#: admin/systems/services/kerberos/class_goKrbServer.inc:186
+#: admin/systems/services/kerberos/class_goKrbServer.inc:399
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:90
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:24
 msgid "Realm"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:182
+#: admin/systems/services/kerberos/class_goKrbServer.inc:189
 msgid ""
-"Cannot apply policy changes! The defined kerberos server has no mac address."
+"Cannot apply policy changes! The defined Kerberos server has no MAC address."
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:266
+#: admin/systems/services/kerberos/class_goKrbServer.inc:274
 msgid "Remove"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:266
+#: admin/systems/services/kerberos/class_goKrbServer.inc:274
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:41
 msgid "Policy"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+#: admin/systems/services/kerberos/class_goKrbServer.inc:382
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:494
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:242
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:253
 msgid "Kerberos"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:386
+#: admin/systems/services/kerberos/class_goKrbServer.inc:383
 msgid "Kerberos access information"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:386
+#: admin/systems/services/kerberos/class_goKrbServer.inc:383
 msgid "Services"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:394
-#: admin/systems/services/kerberos/goKrbServer.tpl:19
+#: admin/systems/services/kerberos/class_goKrbServer.inc:395
+msgid "Start"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:396
+msgid "Stop"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:397
+msgid "Restart"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:398
+#: admin/systems/services/kerberos/goKrbServer.tpl:9
 msgid "Policies"
 msgstr ""
 
@@ -94,11 +111,11 @@ msgid "Cannot load policies from server '%s'!"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:324
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:165
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:173
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:177
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:181
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:185
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:189
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:193
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:197
 msgid "none"
 msgstr ""
 
@@ -107,59 +124,68 @@ msgid "Daemon based"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:608
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:57
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:58
 msgid "Ticket max life"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:611
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:65
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:64
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:71
 msgid "Ticket max renew"
 msgstr ""
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:1
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:17
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:22
 msgid "Policy settings"
 msgstr ""
 
+#: admin/systems/services/kerberos/krb5_policy.tpl:3
 #: admin/systems/services/kerberos/krb5_policy.tpl:7
+#: admin/systems/services/kerberos/krb5_policy.tpl:29
+msgid "Kerberos policy"
+msgstr ""
+
+#: admin/systems/services/kerberos/krb5_policy.tpl:9
 #: admin/systems/services/kerberos/class_krb5_policy.inc:103
 #: admin/systems/services/kerberos/class_krb5_policy.inc:106
 #: admin/systems/services/kerberos/class_krb5_policy.inc:110
 msgid "Policy name"
 msgstr ""
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:11
+#: admin/systems/services/kerberos/krb5_policy.tpl:13
 #: admin/systems/services/kerberos/class_krb5_policy.inc:122
 #: admin/systems/services/kerberos/class_krb5_policy.inc:124
 #: admin/systems/services/kerberos/class_krb5_policy.inc:134
 msgid "Minimum password length"
 msgstr ""
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:15
+#: admin/systems/services/kerberos/krb5_policy.tpl:17
 #: admin/systems/services/kerberos/class_krb5_policy.inc:129
 #: admin/systems/services/kerberos/class_krb5_policy.inc:131
 #: admin/systems/services/kerberos/class_krb5_policy.inc:134
 msgid "Required different characters"
 msgstr ""
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:19
+#: admin/systems/services/kerberos/krb5_policy.tpl:21
 #: admin/systems/services/kerberos/class_krb5_policy.inc:115
 #: admin/systems/services/kerberos/class_krb5_policy.inc:117
 msgid "Password history size"
 msgstr ""
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:28
+#: admin/systems/services/kerberos/krb5_policy.tpl:32
 #: admin/systems/services/kerberos/class_krb5_policy.inc:139
 #: admin/systems/services/kerberos/class_krb5_policy.inc:141
 #: admin/systems/services/kerberos/class_krb5_policy.inc:151
 msgid "Minimum password lifetime"
 msgstr ""
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:29
 #: admin/systems/services/kerberos/krb5_policy.tpl:33
+#: admin/systems/services/kerberos/krb5_policy.tpl:37
 msgid "seconds"
 msgstr ""
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:32
+#: admin/systems/services/kerberos/krb5_policy.tpl:36
 #: admin/systems/services/kerberos/class_krb5_policy.inc:146
 #: admin/systems/services/kerberos/class_krb5_policy.inc:148
 #: admin/systems/services/kerberos/class_krb5_policy.inc:151
@@ -179,44 +205,56 @@ msgid ""
 "s'!"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:233
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:90
+msgid "Principle"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:90
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:160
+msgid "Status"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:244
 msgid "updated to"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:242
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:253
 #, php-format
 msgid ""
 "The principal name of this system has changed. Do you want to update your "
 "principals? The affected principals are listed below: %s"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:259
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:260
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:266
 msgid "Create key"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:266
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:268
 msgid "Recreate key"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:268
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:269
 msgid "Remove key"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:307
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:337
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:308
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:334
 msgid "installed"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:477
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:312
+msgid "-"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:475
 msgid "Kerberos key"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:478
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:476
 msgid "Kerberos host key"
 msgstr ""
 
-#: admin/systems/services/kerberos/krb_host_keys.tpl:4
+#: admin/systems/services/kerberos/krb_host_keys.tpl:3
 msgid "Kerberos keys"
 msgstr ""
 
@@ -224,132 +262,137 @@ msgstr ""
 msgid "Kerberos kadmin access"
 msgstr ""
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:8
+#: admin/systems/services/kerberos/goKrbServer.tpl:3
 msgid "Kerberos Realm"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:4
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:21
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:20
 msgid "Kerberos options"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:8
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:9
 msgid "Retry"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:14
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:243
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:12
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:245
 msgid "Cancel"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:77
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:74
 msgid "infinite"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:79
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:75
 msgid "Hour"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:81
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:76
 msgid "Minute"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:83
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:77
 msgid "Day"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:85
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:78
 msgid "Month"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:87
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:79
 msgid "Year"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:92
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:82
 msgid "Valid ticket end time"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:132
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:120
 msgid "Password expires"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:173
-msgid "Status"
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:162
+msgid "Generic"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:176
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:164
 msgid "Failed logins"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:180
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:168
 msgid "Key version number"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:184
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:172
 msgid "Last failed login"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:188
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:176
 msgid "Last password change"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:192
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:180
 msgid "Last successful login"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:196
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:184
 msgid "Last modification date"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:209
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:191
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:193
+msgid "Flags"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:197
 msgid "Prohibit issuance of service tickets"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:211
-msgid "Prohibit forwardable tickets"
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:200
+msgid "Prohibit forward able tickets"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:213
-msgid "Disallow proxiable tickets"
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:203
+msgid "Disallow proxable tickets"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:215
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:206
 msgid "Prohibit renewable tickets"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:217
-msgid "Prohibit postdated tickets"
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:209
+msgid "Pohibit postdated tickets"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:219
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:212
 msgid "Disallow Ticket-Granting Service"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:221
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:215
 msgid "Password change service"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:223
-msgid "Preauthentication required"
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:218
+msgid "Pre-authentication required"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:225
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:221
 msgid "Force a password change"
 msgstr ""
 
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:224
+msgid "Hardware pre-authentication"
+msgstr ""
+
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:227
-msgid "Hardware preauthentication"
+msgid "Disallow user to user authentication"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:229
-msgid "Disallow user to user authentification"
-msgstr ""
-
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:231
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:230
 msgid "Forbid ticket issuance"
 msgstr ""
 
-#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:241
+#: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:244
 msgid "Save"
 msgstr ""

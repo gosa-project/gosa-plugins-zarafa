@@ -124,7 +124,7 @@ class goImapServer extends goService {
         } 
 
         if(empty($this->goImapAdmin)){
-            $message[] = msgPool::required(_("Admin user"));
+            $message[] = msgPool::required(_("Administrator"));
         }  
         if(empty($this->goImapPassword)){
             $message[] = msgPool::required(_("Password"));
@@ -217,8 +217,8 @@ class goImapServer extends goService {
 
                         "goImapName"        =>_("Server identifier"),
                         "goImapConnect"     =>_("Connect URL"),
-                        "goImapAdmin"       =>_("Admin user"),
-                        "goImapPassword"    =>_("Admin password"),
+                        "goImapAdmin"       =>_("Administrator"),
+                        "goImapPassword"    =>_("Administrator password"),
                         //            "goImapSievePort"   =>_("Sieve port"),
                         "goImapSieveServer"=>_("Sieve connect URL"),
                         "cyrusImap"         =>_("Start IMAP service"),

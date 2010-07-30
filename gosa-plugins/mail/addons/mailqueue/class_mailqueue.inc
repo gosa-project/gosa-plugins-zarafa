@@ -317,7 +317,7 @@ class mailqueue extends plugin
     return(array(
           "all"     =>_("All"),
           "hold"    =>_("Hold"),
-          "unhold"  =>_("Un hold"),
+          "unhold"  =>_("Release"),
           "active"  =>_("Active"),
           "nonactive"  =>_("Not active")
           ));
@@ -329,22 +329,22 @@ class mailqueue extends plugin
   {
     return (array(
         "plShortName"   => _("Mail queue"),
-        "plDescription" => _("Mail queue addon"),
+        "plDescription" => _("Mail queue add-on"),
         "plSelfModify"  => FALSE,
         "plDepends"     => array(),
         "plPriority"    => 1,
         "plSection"     => array("addon"),
-        "plCategory"    => array("mailqueue" => array("description" => _("Mail queue addon"))),
+        "plCategory"    => array("mailqueue" => array("description" => _("Mail queue add-on"))),
 
         "plProvidedAcls" => array(
-            "unholdAll"       => _("Unhold all messages"),
+            "unholdAll"       => _("Release all messages"),
             "holdAll"         => _("Hold all messages"),
             "delAll"          => _("Delete all messages"),
-            "requeueAll"      => _("Requeue all messages"),
-            "unhold"          => _("Unhold message"),
+            "requeueAll"      => _("Re-queue all messages"),
+            "unhold"          => _("Release message"),
             "hold"            => _("Hold message"),
             "del"             => _("Delete message"),
-            "requeue"         => _("Requeue message"),
+            "requeue"         => _("Re-queue message"),
             "query"           => _("Gathering queue data"),
             "header"          => _("Get header information")
           )

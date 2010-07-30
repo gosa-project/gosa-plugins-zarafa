@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GOsa plugins - heimdal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:20+0200\n"
 "PO-Revision-Date: 2010-03-25 10:27-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
-"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira <clever@dri.cefetmg.br>\n"
+"Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira "
+"<clever@dri.cefetmg.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -98,8 +99,11 @@ msgid "Realm"
 msgstr "Nome real"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid "In order to save policy changes, the server requires a valid mac address."
-msgstr "A fim de salvar as alterações de política, o servidor requer um válido endereço MAC."
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
+msgstr ""
+"A fim de salvar as alterações de política, o servidor requer um válido "
+"endereço MAC."
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 msgid "Remove"
@@ -135,9 +139,13 @@ msgid "Heimdal"
 msgstr "Heimdal"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#, php-format
-msgid "Error loading heimdal configuration, more than one configuration entry was found for '%s'."
-msgstr "Erro ao carregar configuração Heimdal, mais de uma entrada de configuração foi encontrado para '%s'."
+#, fuzzy, php-format
+msgid ""
+"Error loading Heimdal configuration, more than one configuration entry was "
+"found for '%s'."
+msgstr ""
+"Erro ao carregar configuração Heimdal, mais de uma entrada de configuração "
+"foi encontrado para '%s'."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:157
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:413
@@ -171,4 +179,3 @@ msgstr "Acesso kadmin kerberos"
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
 msgid "Kerberos Realms"
 msgstr "Nomes reais kerberos"
-

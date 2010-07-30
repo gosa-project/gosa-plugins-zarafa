@@ -2,8 +2,8 @@
 <!--
 {if $uattrib_empty}
 		
-	<font color='red'><b>{t}Connection to the sieve server could not be established, the authentification attribute is empty.{/t}</b></font><br>
-	{t}Please verify that the attributes uid and mail are not empty and try again.{/t}
+	<font color='red'><b>{t}Connection to the sieve server could not be established, the authentication attribute is empty.{/t}</b></font><br>
+	{t}Please verify that the attributes UID and mail are not empty and try again.{/t}
 	<br>
 	<br>
 

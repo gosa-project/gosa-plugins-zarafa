@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:35+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -87,8 +87,8 @@ msgstr "Riprova"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:104
 #, fuzzy
-msgid "Admin"
-msgstr "DN dell'amministratore"
+msgid "Administrator"
+msgstr "Amministrazione"
 
 #: admin/systems/services/syslog/goLogDBServer.tpl:1
 #, fuzzy
@@ -99,6 +99,10 @@ msgstr "Informazioni organizzazione"
 #, fuzzy
 msgid "Logging DB user"
 msgstr "Utenti di Dominio"
+
+#, fuzzy
+#~ msgid "Admin"
+#~ msgstr "DN dell'amministratore"
 
 #, fuzzy
 #~ msgid "GOsa MySQL logging service"

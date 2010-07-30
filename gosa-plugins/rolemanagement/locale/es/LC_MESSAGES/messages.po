@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-16 15:42+0200\n"
+"POT-Creation-Date: 2010-07-30 20:09+0200\n"
 "PO-Revision-Date: 2010-01-28 23:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -18,6 +18,92 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: admin/roleManagement/class_roleManagement.inc:25
+#: admin/roleManagement/class_roleGeneric.inc:453
+msgid "Roles"
+msgstr "Roles"
+
+#: admin/roleManagement/class_roleManagement.inc:26
+msgid "Assign and manage organizational roles"
+msgstr ""
+
+#: admin/roleManagement/class_roleGeneric.inc:97
+msgid "Given name"
+msgstr "Nombre de pila"
+
+#: admin/roleManagement/class_roleGeneric.inc:97
+#, fuzzy
+msgid "Surename"
+msgstr "Apellido"
+
+#: admin/roleManagement/class_roleGeneric.inc:97
+msgid "UID"
+msgstr "UID"
+
+#: admin/roleManagement/class_roleGeneric.inc:223
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: admin/roleManagement/class_roleGeneric.inc:278
+#: admin/roleManagement/class_roleGeneric.inc:282
+#: admin/roleManagement/class_roleGeneric.inc:291
+#: admin/roleManagement/class_roleGeneric.inc:470
+#: admin/roleManagement/role-list.xml:41
+#: admin/roleManagement/roleGeneric.tpl:12
+msgid "Name"
+msgstr "Nombre"
+
+#: admin/roleManagement/class_roleGeneric.inc:308
+#: admin/roleManagement/class_roleGeneric.inc:350
+msgid "LDAP error"
+msgstr "Error LDAP"
+
+#: admin/roleManagement/class_roleGeneric.inc:393
+msgid "Error"
+msgstr "Error"
+
+#: admin/roleManagement/class_roleGeneric.inc:443
+#: admin/roleManagement/roleGeneric.tpl:7
+msgid "Generic"
+msgstr "Genérico"
+
+#: admin/roleManagement/class_roleGeneric.inc:444
+msgid "Role generic"
+msgstr "Rol genérico"
+
+#: admin/roleManagement/class_roleGeneric.inc:462
+msgid ""
+"The 'roleRDN' statement defines the location where new roles will be "
+"created. The default is 'ou=roles,'."
+msgstr ""
+
+#: admin/roleManagement/class_roleGeneric.inc:471
+#: admin/roleManagement/role-list.xml:49
+#: admin/roleManagement/roleGeneric.tpl:20
+msgid "Description"
+msgstr "Descripción"
+
+#: admin/roleManagement/class_roleGeneric.inc:472
+#: admin/roleManagement/role-list.tpl:12
+#: admin/roleManagement/roleGeneric.tpl:30
+msgid "Base"
+msgstr "Base"
+
+#: admin/roleManagement/class_roleGeneric.inc:473
+#, fuzzy
+msgid "Telephone number"
+msgstr "Número de teléfono"
+
+#: admin/roleManagement/class_roleGeneric.inc:474
+#, fuzzy
+msgid "FAX number"
+msgstr "Número de Fax"
+
+#: admin/roleManagement/class_roleGeneric.inc:475
+#: admin/roleManagement/roleGeneric.tpl:64
+msgid "Occupants"
+msgstr "Ocupantes"
+
 #: admin/roleManagement/role-list.xml:11
 msgid "List of roles"
 msgstr "Lista de roles"
@@ -25,20 +111,6 @@ msgstr "Lista de roles"
 #: admin/roleManagement/role-list.xml:15 admin/roleManagement/role-list.xml:74
 msgid "Role"
 msgstr "Rol"
-
-#: admin/roleManagement/role-list.xml:41
-#: admin/roleManagement/class_roleGeneric.inc:239
-#: admin/roleManagement/class_roleGeneric.inc:248
-#: admin/roleManagement/class_roleGeneric.inc:431
-#: admin/roleManagement/roleGeneric.tpl:12
-msgid "Name"
-msgstr "Nombre"
-
-#: admin/roleManagement/role-list.xml:49
-#: admin/roleManagement/class_roleGeneric.inc:432
-#: admin/roleManagement/roleGeneric.tpl:20
-msgid "Description"
-msgstr "Descripción"
 
 #: admin/roleManagement/role-list.xml:57
 msgid "Actions"
@@ -65,71 +137,6 @@ msgstr "Editar rol"
 msgid "Remove role"
 msgstr "Eliminar rol"
 
-#: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:428
-msgid "Roles"
-msgstr "Roles"
-
-#: admin/roleManagement/class_roleManagement.inc:26
-msgid "Assign and manage organizational roles"
-msgstr ""
-
-#: admin/roleManagement/class_roleGeneric.inc:269
-msgid "Unknown"
-msgstr "Desconocido"
-
-#: admin/roleManagement/class_roleGeneric.inc:287
-#: admin/roleManagement/class_roleGeneric.inc:329
-msgid "LDAP error"
-msgstr "Error LDAP"
-
-#: admin/roleManagement/class_roleGeneric.inc:372
-msgid "Error"
-msgstr "Error"
-
-#: admin/roleManagement/class_roleGeneric.inc:422
-#: admin/roleManagement/roleGeneric.tpl:7
-msgid "Generic"
-msgstr "Genérico"
-
-#: admin/roleManagement/class_roleGeneric.inc:423
-msgid "Role generic"
-msgstr "Rol genérico"
-
-#: admin/roleManagement/class_roleGeneric.inc:433
-#: admin/roleManagement/roleGeneric.tpl:30
-#: admin/roleManagement/role-list.tpl:12
-msgid "Base"
-msgstr "Base"
-
-#: admin/roleManagement/class_roleGeneric.inc:434
-msgid "Telefon number"
-msgstr "Número de teléfono"
-
-#: admin/roleManagement/class_roleGeneric.inc:435
-#: admin/roleManagement/roleGeneric.tpl:51
-msgid "Fax number"
-msgstr "Número de Fax"
-
-#: admin/roleManagement/class_roleGeneric.inc:436
-#: admin/roleManagement/roleGeneric.tpl:64
-msgid "Occupants"
-msgstr "Ocupantes"
-
-#: admin/roleManagement/roleGeneric.tpl:10
-#, fuzzy
-msgid "Generic settings"
-msgstr "Parámetros genéricos del usuario"
-
-#: admin/roleManagement/roleGeneric.tpl:43
-msgid "Phone number"
-msgstr "Número de teléfono"
-
-#: admin/roleManagement/role-filter.xml:17
-#, fuzzy
-msgid "Default filter"
-msgstr "Parámetro"
-
 #: admin/roleManagement/paste_generic.tpl:1
 #, fuzzy
 msgid "Paste role"
@@ -142,6 +149,30 @@ msgstr "Nombre del Rol"
 #: admin/roleManagement/paste_generic.tpl:7
 msgid "Please enter the new object role name"
 msgstr "Por favor introduzca un nuevo objeto nombre de rol"
+
+#: admin/roleManagement/role-filter.xml:17
+#, fuzzy
+msgid "Default filter"
+msgstr "Parámetro"
+
+#: admin/roleManagement/roleGeneric.tpl:10
+#, fuzzy
+msgid "Generic settings"
+msgstr "Parámetros genéricos del usuario"
+
+#: admin/roleManagement/roleGeneric.tpl:43
+msgid "Phone number"
+msgstr "Número de teléfono"
+
+#: admin/roleManagement/roleGeneric.tpl:51
+msgid "Fax number"
+msgstr "Número de Fax"
+
+#~ msgid "Uid"
+#~ msgstr "Uid"
+
+#~ msgid "Telefon number"
+#~ msgstr "Número de teléfono"
 
 #, fuzzy
 #~ msgid "Defailt filter"

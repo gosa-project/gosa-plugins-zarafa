@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-07-30 19:20+0200\n"
 "PO-Revision-Date: 2009-09-05 15:38+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -133,9 +133,9 @@ msgid "Heimdal"
 msgstr "Heimdal"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#, php-format
+#, fuzzy, php-format
 msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
+"Error loading Heimdal configuration, more than one configuration entry was "
 "found for '%s'."
 msgstr ""
 "Błąd ładowania konfiguracji heimdal, znaleziono więcej niż jeden wpis "

@@ -22,7 +22,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Admin user{/t}{$must}
+					<td>{t}Administrator{/t}{$must}
 					</td>
 					<td>
 {render acl=$goImapAdminACL}
