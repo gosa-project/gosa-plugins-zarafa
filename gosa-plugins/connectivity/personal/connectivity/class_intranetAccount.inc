@@ -13,7 +13,7 @@
 class intranetAccount extends plugin
 {
   /*! Definitions */
-  var $plHeadline= "Intranet";
+  var $plHeadline= "Intra net";
   /*! Definitions */
   var $plDescription= "This does something";
 
@@ -202,7 +202,7 @@ class intranetAccount extends plugin
   static function plInfo()
   {
     return (array(	
-          "plShortName"     => _("Intranet"),
+          "plShortName"     => _("Intra-net"),
           "plDepends"       => array("user"),
           "plPriority"      => 25,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
@@ -214,7 +214,7 @@ class intranetAccount extends plugin
               'onFailureDisablePlugin' => array(get_class())
               ),
 
-          "plDescription"       => _("Intranet account settings")."&nbsp;("._("Connectivity addon").")",
+          "plDescription"       => _("Intra-net account settings")."&nbsp;("._("Connectivity add-on").")",
           "plSelfModify"        => TRUE,
 
           "plProvidedAcls"  => array()

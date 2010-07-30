@@ -8,7 +8,7 @@
     <multiSelect>true</multiSelect>
     <template>mimetype-list.tpl</template>
     <module>mimetypes</module>
-    <label>List of mimetypes</label>
+    <label>List of mime-types</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
@@ -71,7 +71,7 @@
       <name>new</name>
       <type>entry</type>
       <image>plugins/goto/images/select_mimetype.png[new]</image>
-      <label>Mime type</label>
+      <label>Mime-type</label>
      </action>
     </action>
 
@@ -116,7 +116,7 @@
       <name>edit</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
-      <label>Edit mimetype</label>
+      <label>Edit mime-type</label>
     </action>
 
     <action>
@@ -129,7 +129,7 @@
       <type>entry</type>
       <image>images/lists/trash.png</image>
       <acl>mimetypes/mimetype[d]</acl>
-      <label>Remove mimetype</label>
+      <label>Remove mime-type</label>
     </action>
 
   </actiontriggers>

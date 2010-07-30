@@ -253,8 +253,8 @@ class macroParameter extends plugin
                     <td>
                     <select size=1 name='vartype".$key."'  ".$disabled.">
                     <option  value='string' ".$sel1.">"._("String")."&nbsp;</option>
-                    <option  value='combo'   ".$sel2.">"._("Combobox")."&nbsp;</option>
-                    <option  value='bool'   ".$sel3.">"._("Bool")."&nbsp;</option>
+                    <option  value='combo'   ".$sel2.">"._("Select box")."&nbsp;</option>
+                    <option  value='bool'   ".$sel3.">"._("Boolean")."&nbsp;</option>
                     </select>
                     </td>
                     <td><input type='text' name='default".$key."'   value='".set_post($para['default'])."'  ".$disabled."></td>

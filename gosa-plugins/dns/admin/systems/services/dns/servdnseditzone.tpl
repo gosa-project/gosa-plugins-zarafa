@@ -26,7 +26,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Netmask{/t}
+     <td>{t}Net mask{/t}
      </td>
      <td>
       {render acl=$NetworkClassACL}
@@ -73,7 +73,7 @@
    <table summary="{t}SOA record{/t}">
     <tr>
      <td>
-      {t}Primary dns server for this zone{/t}
+      {t}Primary DNS server for this zone{/t}
       {$must}
      </td>
      <td>
@@ -154,8 +154,8 @@
 <table summary="{t}Mx record{/t}" width="100%">
  <tr>
   <td style='width:50%;' class='right-border'>
-   <h3>{t}MxRecords{/t}</h3>
-   <table width="100%" summary="{t}MxRecords{/t}">
+   <h3>{t}MX records{/t}</h3>
+   <table width="100%" summary="{t}MX records{/t}">
     <tr>
      <td>
       {render acl=$mXRecordACL}

@@ -4,7 +4,7 @@
 
 {if $disableDialog}
  <br>
- <b>{t}This dialog can't be used until the currently edited zone was saved or the zone entry exists in the ldap database.{/t}</b>
+ <b>{t}This dialog can't be used until the currently edited zone was saved or the zone entry exists in the LDAP directory.{/t}</b>
  {else}
  <br>
  {$table}

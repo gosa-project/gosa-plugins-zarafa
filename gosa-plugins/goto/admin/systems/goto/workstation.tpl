@@ -3,7 +3,7 @@
  <tr>
   <td style='width:50%; '>
 
-   <table summary="{t}Gneric settings{/t}">
+   <table summary="{t}Generic settings{/t}">
     <tr>
 {if $cn eq 'wdefault'}
      <td colspan=2>{t}Workstation template{/t}</td>

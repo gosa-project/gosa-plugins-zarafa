@@ -1,4 +1,4 @@
-<h3>{t}Apache VHosts{/t}</h3>
+<h3>{t}Apache virtual hosts{/t}</h3>
 <table summary="" width="100%">
 <tr>
 	<td style='width:100%;'>

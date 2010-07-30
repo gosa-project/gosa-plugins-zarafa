@@ -17,7 +17,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Netmask{/t}</td>
+     <td>{t}Net mask{/t}</td>
      <td>
       {render acl=$acl}
        <input type='text' name='subnet_mask' value='{$subnet_mask}'>
@@ -25,7 +25,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Broadcast{/t}
+     <td>{t}Broadcast address{/t}
      </td>
      <td>
       {render acl=$acl}
@@ -37,7 +37,7 @@
 
    <hr>
 
-   <h3>{t}Bootup{/t}</h3>
+   <h3>{t}Boot up{/t}</h3>
 
    <table summary="{t}Network configuration{/t}">
     <tr>
@@ -45,7 +45,7 @@
      <td>
       {render acl=$acl}
        <input type='text' name='filename' value='{$filename}'
-         title='{t}Enter name of file that will be loaded via tftp after client has started{/t}'>
+         title='{t}Enter name of file that will be loaded via TFTP after client has started{/t}'>
       {/render}
      </td>
     </tr>
@@ -54,7 +54,7 @@
      <td>
       {render acl=$acl}
        <input type='text' name='nextserver' value='{$nextserver}' 
-         title='{t}Enter name of server to retrieve bootimages from{/t}'>
+         title='{t}Enter name of server to retrieve boot images from{/t}'>
       {/render}
      </td>
     </tr>
@@ -101,11 +101,11 @@
 
       <h3>{t}Domain Name Service options{/t}</h3>
       {render acl=$acl}
-       <input type=checkbox name="autohost" value="1" {$autohost}>{t}Assign hostnames found via reverse mapping{/t}
+       <input type=checkbox name="autohost" value="1" {$autohost}>{t}Assign host names found via reverse mapping{/t}
       {/render}
       <br>
       {render acl=$acl}
-       <input type=checkbox name="autohostdecl" value="1" {$autohostdecl}>{t}Assign hostnames from host declarations{/t}
+       <input type=checkbox name="autohostdecl" value="1" {$autohostdecl}>{t}Assign host names from host declarations{/t}
       {/render}
      </td>
     </tr>

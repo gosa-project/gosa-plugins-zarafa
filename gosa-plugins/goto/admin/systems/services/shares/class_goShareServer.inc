@@ -431,7 +431,7 @@ class goShareServer extends goService{
                         "netatalkmount" => _("Apple mounts"),
                         "description"   => _("Description"),
                         "type"          => _("Type"),
-                        "charset"       => _("Charset"),
+                        "charset"       => _("Character set"),
                         "path"          => _("Path"),
                         "option"        => _("Option"),
                         "volume"        => _("Volume"))

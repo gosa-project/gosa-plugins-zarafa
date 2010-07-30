@@ -57,7 +57,7 @@ class faiTemplateEdit extends plugin
   {
     $message = array();
     if($this->mb_extension && !$this->write_protect && $this->enc_after_edit !== $this->enc_before_edit ){
-      $msg = sprintf(_("The file encodig has changed from '%s' to '%s'. Do you really want to save?"),
+      $msg = sprintf(_("The file encoding has changed from '%s' to '%s'. Do you really want to save?"),
         "<i>".$this->enc_before_edit."</i>","<i>".$this->enc_after_edit."</i>");
       $message[] = $msg;
       $this->enc_before_edit = $this->enc_after_edit;

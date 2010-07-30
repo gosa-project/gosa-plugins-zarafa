@@ -127,7 +127,7 @@ class goNtpServer extends goService{
                         "start"           => _("Start"),
                         "stop"            => _("Stop"),
                         "restart"         => _("Restart"),
-                        "goTimeSource"        =>_("Ntp source"))
+                        "goTimeSource"        =>_("NTP source"))
                     ));
     }
 

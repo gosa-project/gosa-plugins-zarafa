@@ -124,7 +124,7 @@
 			</tr>
 			<tr>
 				<td>
-					<LABEL for="goFonAuth">{t}Authtype{/t}</LABEL>
+					<LABEL for="goFonAuth">{t}Authentication type{/t}</LABEL>
 				</td>
 				<td>
 {render acl=$goFonAuthACL}
@@ -146,7 +146,7 @@
 			</tr>
 <!--			<tr>
 				<td>
-					 {t}GoFonInkeys{/t}
+					 GoFonInkeys
 				</td>
 				<td>
 					<input type='text' style="width:200px" name="goFonInkeys" value="{$goFonInkeys}" {$goFonInkeysUSED}>
@@ -154,7 +154,7 @@
 			</tr>
 			<tr>
 				<td>
-					 {t}GoFonOutKeys{/t}
+					 GoFonOutKeys
 				</td>
 				<td>
 					<input type='text' style="width:200px" name="goFonOutkey" value="{$goFonOutkey}" {$goFonOutkeyUSED}>

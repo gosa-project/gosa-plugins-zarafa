@@ -132,7 +132,7 @@ class termstartup extends plugin
             $command= $this->config->get_cfg_value('termstartup', "systemKernelsHook");
 
             if (!check_command($command)){
-                $message[]= sprintf(_("Command '%s', specified as systemKernelsHook for plugin '%s' doesn't seem to exist."), $command,
+                $message[]= sprintf(_("Command '%s', specified as systemKernelsHook for plug-in '%s' doesn't seem to exist."), $command,
                         get_class($this));
             } else {
                 $fh= popen($command, "r");
@@ -526,7 +526,7 @@ class termstartup extends plugin
                         ),
 
                     "plProvidedAcls"=> array(
-                            "gotoLdapServer"      => _("Ldap server"),
+                            "gotoLdapServer"      => _("LDAP server"),
                             "gotoShare"           => _("Shares"),
                             "gotoModules"         => _("Kernel modules"),
                             "gotoBootKernel"      => _("Boot kernel"), 

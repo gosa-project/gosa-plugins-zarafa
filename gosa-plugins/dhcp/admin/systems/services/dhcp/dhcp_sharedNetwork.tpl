@@ -95,7 +95,7 @@
      <td>
       {render acl=$acl}
        <input type=checkbox name="bootp" 
-        value="1" {$allow_bootp_state} title="{t}Select if bootp clients should get dynamic IP addresses{/t}">{t}Allow bootp clients{/t}
+        value="1" {$allow_bootp_state} title="{t}Select if BOOTP clients should get dynamic IP addresses{/t}">{t}Allow BOOTP clients{/t}
       {/render}
      </td>
     </tr>

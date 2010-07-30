@@ -195,12 +195,12 @@ class faiPartition extends plugin
     // File system types.  
     $FAIfsTypes = array(
         "swap" => _("swap space"),
-        "ext2" => _("ext2"),
-        "ext3" => _("ext3"),
-        "ext4" => _("ext4"),
-        "reiserfs" => _("reiser fs"),
-        "xfs" => _("xfs"),
-        "btrfs" => _("btrfs"),
+        "ext2" => "ext2",
+        "ext3" => "ext3",
+        "ext4" => "ext4",
+        "reiserfs" => "reiser fs",
+        "xfs" => "xfs",
+        "btrfs" => "btrfs",
         "-" => "-");
 
     $smarty->assign("partitionTypes", $types);

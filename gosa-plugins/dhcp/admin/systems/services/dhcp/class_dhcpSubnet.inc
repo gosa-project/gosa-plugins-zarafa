@@ -136,7 +136,7 @@ class dhcpSubnet extends dhcpPlugin
             $message[]= msgPool::required(_("Network address"));
         }
         if ($this->dhcpNetMask == ""){
-            $message[]= msgPool::required(_("Netmask"));
+            $message[]= msgPool::required(_("Net mask"));
         }
 
         /* cn already used? */
@@ -152,7 +152,7 @@ class dhcpSubnet extends dhcpPlugin
 
         /* IP's? */
         foreach(array(
-                    'dhcpNetMask' => _("Netmask"), 
+                    'dhcpNetMask' => _("Net mask"), 
                     'cn'          => _("Network address"),
                     'range_start' => _("Range"),
                     'range_stop'  => _("Range")) as $attr => $str){

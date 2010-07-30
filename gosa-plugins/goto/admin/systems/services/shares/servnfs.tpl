@@ -109,7 +109,7 @@
 				</tr>
 				<tr>
 					<td>
-						{t}Codepage{/t}
+						{t}Code page{/t}
 					</td>
 					<td>
 {render acl=$charsetACL}

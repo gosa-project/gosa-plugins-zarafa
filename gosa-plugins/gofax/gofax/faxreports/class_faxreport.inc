@@ -116,7 +116,7 @@ class faxreport extends plugin
 
         // Check database accessibility 
         if(!isset($this->config->data['SERVERS']['FAX'])){
-            msg_dialog::display(_("Error"), _("No fax server found!"), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), _("No FAX server found!"), ERROR_DIALOG);
             return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
         }elseif(!is_callable("mysql_connect")){
             msg_dialog::display(_("Configuration error"), sprintf(
@@ -183,7 +183,7 @@ class faxreport extends plugin
             $acls = $this->ui->get_permissions($dn,"users/viewFaxEntries","");
             if(!preg_match("/r/",$acls)){
                 msg_dialog::display(_("Permission error"), 
-                _("You have no permission to view this fax id!"), ERROR_DIALOG);
+                _("You have no permission to view this FAX id!"), ERROR_DIALOG);
                 return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
             }
 
@@ -431,8 +431,8 @@ class viewFaxEntries extends plugin {
     {
 
         return (array(
-            "plShortName"     => _("View fax reports"),
-            "plDescription"   => _("View fax reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
+            "plShortName"     => _("View FAX reports"),
+            "plDescription"   => _("View FAX reports")."&nbsp;<i>"._("All entries are read-only")."</i>",
             "plRequirements"=> array(
                 'activePlugin' => 'faxreport', 
                 'ldapSchema' => array('goFaxAccount' => '>=1.0.4'),

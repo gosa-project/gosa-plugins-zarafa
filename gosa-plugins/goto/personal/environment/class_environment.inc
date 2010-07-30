@@ -594,7 +594,7 @@ class environment extends plugin
     if(isset($_POST['LogonSave'])){
 
       if(!$this->acl_is_writeable("gotoLogonScript")){
-        msg_dialog::display(_("Permission error"), msgPool::permModify(_("Logon scripts")), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permModify(_("Log on scripts")), ERROR_DIALOG);
         unset($this->dialog);
         $this->dialog=FALSE;
         $this->is_dialog=false;
@@ -1808,13 +1808,13 @@ class environment extends plugin
                           "gotoProfileServer"   => _("Profile server") ,
                           "gosaDefaultPrinter"  => _("Default printer"),
                           "gotoProfileQuota"    => _("Profile quota") ,
-                          "gotoProfileFlagC"    => _("Cache profile localy") ,
+                          "gotoProfileFlagC"    => _("Cache profile locally") ,
                           "gotoShare"          => _("Shares"),
-                          "gotoHotplugDeviceDN" => _("Hotplug devices"),
+                          "gotoHotplugDeviceDN" => _("Hot-plug devices"),
                           "gotoKioskProfile"    => _("Kiosk profile") ,
                           "gotoProfileFlagL"    => _("Resolution changeable during session") ,
                           "gotoXResolution"     => _("Resolution") ,
-                          "gotoLogonScript"     => _("Logon script"))
+                          "gotoLogonScript"     => _("Log on script"))
                       ));
   }
 }

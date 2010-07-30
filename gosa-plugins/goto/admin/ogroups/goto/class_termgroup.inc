@@ -390,7 +390,7 @@ class termgroup extends plugin
                         "gotoMode"          => _("Mode"),     
                         "gotoSyslogServer"  => _("Syslog server"), 
                         "FAIstate"          => _("Action flag"), 
-                        "gotoNtpServer"     => _("Ntp server"),
+                        "gotoNtpServer"     => _("NTP server"),
                         "gotoTerminalPath"    => _("Root server"),
                         "gotoSwapServer"      => _("Swap server"))
                     ));

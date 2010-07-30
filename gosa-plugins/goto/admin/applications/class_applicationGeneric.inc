@@ -614,7 +614,7 @@ class application extends plugin
                   "execForGroupmembers" => _("Only executable for members"),              // G
                   "placeOnDesktop"      => _("Place icon on members desktop"),            // D
                   "placeOnKicker"       => _("Place entry in members launch bar"),        // L
-                  "placeInStartmenu"    => _("Place entry in members startmenu"),         // M
+                  "placeInStartmenu"    => _("Place entry in members start menu"),         // M
                   "overwriteConfig"      => _("Replace user configuration on startup"))  // O
               ));
   }

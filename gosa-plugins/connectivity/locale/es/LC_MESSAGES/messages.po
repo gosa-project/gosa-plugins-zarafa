@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-07-30 10:40+0200\n"
 "PO-Revision-Date: 2010-01-20 00:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
+#, fuzzy
+msgid "Intra net account"
 msgstr "Cuenta Intranet"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:132
+#: personal/connectivity/class_connectivity.inc:268
 msgid "Connectivity"
 msgstr "Conectividad"
 
@@ -33,28 +33,35 @@ msgstr "Conectividad"
 msgid "This does something"
 msgstr "Esto hace algo"
 
-#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_connectivity.inc:271
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/connectivity/class_connectivity.inc:276
-#: personal/connectivity/class_intranetAccount.inc:212
-msgid "Connectivity addon"
+#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_intranetAccount.inc:217
+#, fuzzy
+msgid "Connectivity add-on"
 msgstr "Conectividad adicional"
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Intranet"
+#, fuzzy
+msgid "Intra net"
 msgstr "intranet"
 
 #: personal/connectivity/class_intranetAccount.inc:126
-#: personal/connectivity/class_intranetAccount.inc:193
+#: personal/connectivity/class_intranetAccount.inc:195
 msgid "LDAP error"
 msgstr "Error LDAP"
 
-#: personal/connectivity/class_intranetAccount.inc:212
-msgid "Intranet account settings"
+#: personal/connectivity/class_intranetAccount.inc:205
+#, fuzzy
+msgid "Intra-net"
+msgstr "intranet"
+
+#: personal/connectivity/class_intranetAccount.inc:217
+#, fuzzy
+msgid "Intra-net account settings"
 msgstr "Configuración de la cuenta de intranet"
 
 #~ msgid "This account has no connectivity extensions."

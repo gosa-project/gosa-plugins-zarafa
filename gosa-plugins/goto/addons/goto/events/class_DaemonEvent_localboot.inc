@@ -25,8 +25,8 @@ class DaemonEvent_localboot extends DaemonEvent
     public function __construct($config,$data = array())
     {
         DaemonEvent::__construct($config,$data);
-        $this->s_Menu_Name  = _("Force localboot"); 
-        $this->s_Event_Name = _("Force localboot"); 
+        $this->s_Menu_Name  = _("Force local boot"); 
+        $this->s_Event_Name = _("Force local boot"); 
         $this->s_Schedule_Action = "job_trigger_action_localboot";
         $this->s_Trigger_Action= "gosa_trigger_action_localboot";
         $this->s_Queued_Action= "trigger_action_localboot";

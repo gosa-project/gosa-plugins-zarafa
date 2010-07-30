@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-07-30 11:13+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,119 +14,119 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: html/getfax.php:56
+#: html/getfax.php:51
 msgid "Could not connect to database server!"
 msgstr "Невозможно подключиться к серверу базы данных!"
 
-#: html/getfax.php:58
+#: html/getfax.php:53
 msgid "Could not select database!"
 msgstr "Невозможно выбрать базу данных!"
 
-#: html/getfax.php:63 html/getfax.php:71
+#: html/getfax.php:58 html/getfax.php:62
 msgid "Database query failed!"
 msgstr "Невозможно выполнить запрос к базе данных!"
 
-#: gofax/faxreports/detail.tpl:5
-msgid "FAX preview - please wait"
-msgstr "Предварительный просмотр - пожалуйста, подождите"
+#: gofax/faxreports/detail.tpl:1 gofax/faxreports/contents.tpl:3
+#, fuzzy
+msgid "Fax reports"
+msgstr "Отчеты о факсах"
 
-#: gofax/faxreports/detail.tpl:8
+#: gofax/faxreports/detail.tpl:5 gofax/faxreports/detail.tpl:6
 msgid "Click on fax to download"
 msgstr "Щелкните по факсу, чтобы загрузить его"
 
-#: gofax/faxreports/detail.tpl:17
+#: gofax/faxreports/detail.tpl:14
+#, fuzzy
+msgid "Entry list"
+msgstr "Экспорт"
+
+#: gofax/faxreports/detail.tpl:16
 msgid "FAX ID"
 msgstr "Идентификатор факса"
 
-#: gofax/faxreports/detail.tpl:21 gofax/faxreports/contents.tpl:30
+#: gofax/faxreports/detail.tpl:20 gofax/faxreports/contents.tpl:37
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:14
 #: admin/systems/services/gofax/class_goFaxServer.inc:68
 msgid "User"
 msgstr "Пользователь"
 
-#: gofax/faxreports/detail.tpl:25
+#: gofax/faxreports/detail.tpl:24
 msgid "Date / Time"
 msgstr "Дата / время"
 
-#: gofax/faxreports/detail.tpl:29 gofax/faxreports/class_faxreport.inc:503
+#: gofax/faxreports/detail.tpl:28 gofax/faxreports/class_faxreport.inc:454
 msgid "Sender MSN"
 msgstr "MSN отправителя"
 
-#: gofax/faxreports/detail.tpl:33 gofax/faxreports/class_faxreport.inc:502
+#: gofax/faxreports/detail.tpl:32 gofax/faxreports/class_faxreport.inc:453
 msgid "Sender ID"
 msgstr "Идентификатор отправителя"
 
-#: gofax/faxreports/detail.tpl:37 gofax/faxreports/class_faxreport.inc:505
+#: gofax/faxreports/detail.tpl:36 gofax/faxreports/class_faxreport.inc:456
 msgid "Receiver MSN"
 msgstr "MSN получателя"
 
-#: gofax/faxreports/detail.tpl:41 gofax/faxreports/class_faxreport.inc:504
+#: gofax/faxreports/detail.tpl:40 gofax/faxreports/class_faxreport.inc:455
 msgid "Receiver ID"
 msgstr "Идентификатор получателя"
 
-#: gofax/faxreports/detail.tpl:45 gofax/faxreports/contents.tpl:32
-#: gofax/faxreports/class_faxreport.inc:501
+#: gofax/faxreports/detail.tpl:44 gofax/faxreports/contents.tpl:39
+#: gofax/faxreports/class_faxreport.inc:452
 msgid "Status"
 msgstr "Состояние"
 
-#: gofax/faxreports/detail.tpl:49
+#: gofax/faxreports/detail.tpl:48
 msgid "Status message"
 msgstr "Сообщение о состоянии"
 
-#: gofax/faxreports/detail.tpl:53 gofax/faxreports/class_faxreport.inc:508
+#: gofax/faxreports/detail.tpl:52 gofax/faxreports/class_faxreport.inc:459
 msgid "Transfer time"
 msgstr "Время передачи"
 
-#: gofax/faxreports/detail.tpl:57 gofax/faxreports/contents.tpl:35
+#: gofax/faxreports/detail.tpl:56 gofax/faxreports/contents.tpl:42
 msgid "# pages"
 msgstr "Число страниц"
 
-#: gofax/faxreports/main.inc:19
-msgid "FAX reports"
-msgstr "Отчеты о факсах"
-
-#: gofax/faxreports/contents.tpl:2 gofax/blocklists/blocklist-filter.tpl:3
-#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-filter.tpl:3
+#: gofax/faxreports/contents.tpl:6
 msgid "Filter"
 msgstr "Фильтр"
 
-#: gofax/faxreports/contents.tpl:6
-msgid "Search for"
-msgstr "Поиск"
-
-#: gofax/faxreports/contents.tpl:7
-msgid "Enter user name to search for"
-msgstr "Введите искомое имя пользователя"
-
-#: gofax/faxreports/contents.tpl:8 gofax/faxreports/contents.tpl:16
-msgid "in"
-msgstr "в"
-
-#: gofax/faxreports/contents.tpl:9
-msgid "Select subtree to base search on"
-msgstr "Выберите ветку для поиска"
-
-#: gofax/faxreports/contents.tpl:12
-msgid "during"
-msgstr "в течение"
-
-#: gofax/faxreports/contents.tpl:21
-msgid "Search"
-msgstr "Поиск"
-
-#: gofax/faxreports/contents.tpl:31 gofax/faxreports/class_faxreport.inc:500
+#: gofax/faxreports/contents.tpl:9 gofax/faxreports/contents.tpl:38
+#: gofax/faxreports/class_faxreport.inc:451
 msgid "Date"
 msgstr "Дата"
 
-#: gofax/faxreports/contents.tpl:33
+#: gofax/faxreports/contents.tpl:17
+msgid "Search for"
+msgstr "Поиск"
+
+#: gofax/faxreports/contents.tpl:19
+msgid "Enter user name to search for"
+msgstr "Введите искомое имя пользователя"
+
+#: gofax/faxreports/contents.tpl:23
+msgid "Search"
+msgstr "Поиск"
+
+#: gofax/faxreports/contents.tpl:34
+#, fuzzy
+msgid "Phone reports"
+msgstr "Отчеты о факсах"
+
+#: gofax/faxreports/contents.tpl:40
 msgid "Sender"
 msgstr "Отправитель"
 
-#: gofax/faxreports/contents.tpl:34
+#: gofax/faxreports/contents.tpl:41
 msgid "Receiver"
 msgstr "Получатель"
 
-#: gofax/faxreports/contents.tpl:50
+#: gofax/faxreports/contents.tpl:60
+#, fuzzy
+msgid "Page selector"
+msgstr "Настройки Samba"
+
+#: gofax/faxreports/contents.tpl:69
 msgid "Search returned no results..."
 msgstr "Не найдено..."
 
@@ -135,221 +135,199 @@ msgid "FAX Reports"
 msgstr "Отчеты о факсах"
 
 #: gofax/faxreports/class_faxreport.inc:7
-#: gofax/blocklists/class_blocklistGeneric.inc:10
-#: gofax/faxaccount/class_gofaxAccount.inc:7
-msgid "This does something"
-msgstr "Что-то будет"
-
-#: gofax/faxreports/class_faxreport.inc:116
-#: gofax/faxreports/class_faxreport.inc:126
-#: gofax/faxreports/class_faxreport.inc:130
-#: gofax/faxreports/class_faxreport.inc:135
-#: gofax/faxreports/class_faxreport.inc:158
-#: gofax/faxreports/class_faxreport.inc:304
-#: gofax/blocklists/class_blocklistGeneric.inc:132
-#: gofax/faxaccount/class_gofaxAccount.inc:258
-msgid "Error"
-msgstr ""
-
-#: gofax/faxreports/class_faxreport.inc:116
-msgid "No fax server found!"
+msgid "View the FAX report or single documents that have been recieved"
 msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:119
-#: gofax/faxreports/class_faxreport.inc:288
+#: gofax/faxreports/class_faxreport.inc:130
+#: gofax/faxreports/class_faxreport.inc:135
+#: gofax/faxreports/class_faxreport.inc:141
+#: gofax/faxreports/class_faxreport.inc:166
+#: gofax/faxreports/class_faxreport.inc:272
+#: gofax/blocklists/class_blocklistGeneric.inc:109
+#: gofax/blocklists/class_blocklistGeneric.inc:170
+#: gofax/faxaccount/class_gofaxAccount.inc:254
+msgid "Error"
+msgstr ""
+
+#: gofax/faxreports/class_faxreport.inc:119
+msgid "No FAX server found!"
+msgstr ""
+
+#: gofax/faxreports/class_faxreport.inc:122
 #, fuzzy
 msgid "Configuration error"
 msgstr "Настроить"
 
-#: gofax/faxreports/class_faxreport.inc:119
-#: gofax/faxreports/class_faxreport.inc:288
+#: gofax/faxreports/class_faxreport.inc:123
 #, fuzzy, php-format
 msgid "Missing %s PHP extension!"
 msgstr "Удалить параметры"
 
-#: gofax/faxreports/class_faxreport.inc:126
+#: gofax/faxreports/class_faxreport.inc:131
 #, fuzzy, php-format
 msgid "Cannot connect to %s database!"
 msgstr ""
 "Не удается подключиться к базе данных факсов, отчеты показаны не будут!"
 
-#: gofax/faxreports/class_faxreport.inc:130
+#: gofax/faxreports/class_faxreport.inc:136
 #, fuzzy, php-format
 msgid "Cannot select %s database!"
 msgstr "Невозможно выбрать базу данных!"
 
-#: gofax/faxreports/class_faxreport.inc:135
-#: gofax/faxreports/class_faxreport.inc:158
-#: gofax/faxreports/class_faxreport.inc:304
+#: gofax/faxreports/class_faxreport.inc:142
+#: gofax/faxreports/class_faxreport.inc:167
+#: gofax/faxreports/class_faxreport.inc:272
 #, fuzzy, php-format
 msgid "Cannot query %s database!"
 msgstr "Невозможно выбрать базу данных!"
 
-#: gofax/faxreports/class_faxreport.inc:167
-#: gofax/faxreports/class_faxreport.inc:177
+#: gofax/faxreports/class_faxreport.inc:185
 #, fuzzy
 msgid "Permission error"
 msgstr "Права для членов группы"
 
-#: gofax/faxreports/class_faxreport.inc:167
-#: gofax/faxreports/class_faxreport.inc:177
+#: gofax/faxreports/class_faxreport.inc:186
 #, fuzzy
-msgid "You have no permission to view this fax id!"
+msgid "You have no permission to view this FAX id!"
 msgstr "У вас недостаточно прав для удаления этого стоп-листа."
 
-#: gofax/faxreports/class_faxreport.inc:208
-#: gofax/faxreports/class_faxreport.inc:329
+#: gofax/faxreports/class_faxreport.inc:202
+#: gofax/faxreports/class_faxreport.inc:307
 msgid "Y-M-D"
 msgstr "Г-М-Д"
 
-#: gofax/faxreports/class_faxreport.inc:323
+#: gofax/faxreports/class_faxreport.inc:278
 #, fuzzy
 msgid "Insufficient permissions to view this attribute"
 msgstr "У вас недостаточно прав для удаления этого подразделения."
 
-#: gofax/faxreports/class_faxreport.inc:323
+#: gofax/faxreports/class_faxreport.inc:434
+#: gofax/faxreports/class_faxreport.inc:435
 #, fuzzy
-msgid "Insufficient permissions"
-msgstr "Права для членов группы"
-
-#: gofax/faxreports/class_faxreport.inc:487
-#: gofax/faxreports/class_faxreport.inc:488
-#, fuzzy
-msgid "Fax report"
+msgid "View FAX reports"
 msgstr "Отчеты о факсах"
 
-#: gofax/faxreports/class_faxreport.inc:488
+#: gofax/faxreports/class_faxreport.inc:435
 #, fuzzy
-msgid "All entries are readonly"
+msgid "All entries are read-only"
 msgstr "Все поля доступны для записи"
 
-#: gofax/faxreports/class_faxreport.inc:493
+#: gofax/faxreports/class_faxreport.inc:449
 #, fuzzy
-msgid "Fax reports"
-msgstr "Отчеты о факсах"
-
-#: gofax/faxreports/class_faxreport.inc:498
-#, fuzzy
-msgid "Detailed view"
+msgid "Detailed view and download"
 msgstr "Клиентские устройства"
 
-#: gofax/faxreports/class_faxreport.inc:499
+#: gofax/faxreports/class_faxreport.inc:450
 #, fuzzy
 msgid "Fax ID"
 msgstr "Идентификатор факса"
 
-#: gofax/faxreports/class_faxreport.inc:500
+#: gofax/faxreports/class_faxreport.inc:451
 #, fuzzy
 msgid "Time"
 msgstr "Мобильный"
 
-#: gofax/faxreports/class_faxreport.inc:506
+#: gofax/faxreports/class_faxreport.inc:457
 #, fuzzy
 msgid "Number of pages"
 msgstr "Подразделение"
 
-#: gofax/faxreports/class_faxreport.inc:507
+#: gofax/faxreports/class_faxreport.inc:458
 #, fuzzy
 msgid "Status Message"
 msgstr "Сообщение о состоянии"
 
-#: gofax/blocklists/remove.tpl:2
-msgid "Warning"
-msgstr "Предупреждение"
-
-#: gofax/blocklists/remove.tpl:6
-msgid ""
-"Please double check if you really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Подумайте еще раз, действительно ли вам нужно удаление, так как GOsa не "
-"сможет восстановить эти данные."
-
-#: gofax/blocklists/remove.tpl:10
-#, fuzzy
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
-"нажмите <i>Отмена</i>."
-
-#: gofax/blocklists/blocklist-list.tpl:13 gofax/blocklists/generic.tpl:17
-#: gofax/blocklists/class_blocklistGeneric.inc:387
-#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.tpl:13
+#: gofax/blocklists/blocklist-list.tpl:12 gofax/blocklists/generic.tpl:17
+#: gofax/blocklists/class_blocklistGeneric.inc:402
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.tpl:12
 msgid "Base"
 msgstr "Ветка"
 
-#: gofax/blocklists/generic.tpl:1 gofax/faxaccount/generic.tpl:6
-#: gofax/faxaccount/paste_generic.tpl:4
+#: gofax/blocklists/generic.tpl:1 gofax/faxaccount/generic.tpl:8
+#: gofax/faxaccount/paste_generic.tpl:6
 msgid "Generic"
 msgstr "Общее"
+
+#: gofax/blocklists/generic.tpl:2 gofax/blocklists/blocklist-list.xml:82
+#, fuzzy
+msgid "Blacklist"
+msgstr "\"Черные списки\""
+
+#: gofax/blocklists/generic.tpl:6
+#, fuzzy
+msgid "Blacklist generic"
+msgstr "Управление \"черными списками\""
 
 #: gofax/blocklists/generic.tpl:8 gofax/blocklists/paste_generic.tpl:3
 msgid "List name"
 msgstr "Список"
 
 #: gofax/blocklists/generic.tpl:12 gofax/blocklists/paste_generic.tpl:5
-msgid "Name of blocklist"
+#, fuzzy
+msgid "Name of blacklist"
 msgstr "Имя стоп-листа"
 
-#: gofax/blocklists/generic.tpl:20
-msgid "Choose subtree to place group in"
-msgstr "Выберите ветку для группы"
-
-#: gofax/blocklists/generic.tpl:26
+#: gofax/blocklists/generic.tpl:32
+#: gofax/blocklists/class_blocklistGeneric.inc:405
 #, fuzzy
-msgid "Select a base"
-msgstr "Выберите, чтобы просмотреть серверы"
+msgid "Blacklist type"
+msgstr "Управление \"черными списками\""
 
-#: gofax/blocklists/generic.tpl:40
+#: gofax/blocklists/generic.tpl:34
 msgid "Type"
 msgstr "Тип"
 
-#: gofax/blocklists/generic.tpl:43
-msgid "Select wether to filter incoming or outgoing calls"
+#: gofax/blocklists/generic.tpl:37
+#, fuzzy
+msgid "Select whether to filter incoming or outgoing calls"
 msgstr "Выберите, нужно ли фильтровать входящие или исходящие звонки"
 
-#: gofax/blocklists/generic.tpl:51 gofax/blocklists/blocklist-list.xml:57
-#: gofax/blocklists/class_blocklistGeneric.inc:386
+#: gofax/blocklists/generic.tpl:45 gofax/blocklists/blocklist-list.xml:57
+#: gofax/blocklists/class_blocklistGeneric.inc:401
 msgid "Description"
 msgstr "Описание"
 
-#: gofax/blocklists/generic.tpl:54
-msgid "Descriptive text for this blocklist"
+#: gofax/blocklists/generic.tpl:48
+#, fuzzy
+msgid "Descriptive text for this blacklist"
 msgstr "Описание стоп-листа"
 
-#: gofax/blocklists/generic.tpl:68
+#: gofax/blocklists/generic.tpl:59 gofax/blocklists/generic.tpl:63
 msgid "Blocked numbers"
 msgstr "Блокируемые номера"
 
-#: gofax/blocklists/generic.tpl:90
+#: gofax/blocklists/generic.tpl:87
 msgid "Information"
 msgstr "Информация"
 
-#: gofax/blocklists/generic.tpl:92
+#: gofax/blocklists/generic.tpl:89
 msgid "Numbers can also contain wild cards."
 msgstr "Вместо точных номеров можно использовать шаблоны."
 
 #: gofax/blocklists/blocklist-list.xml:11
-msgid "List of blocklists"
+#, fuzzy
+msgid "List of blacklists"
 msgstr "Стоп-листы"
 
 #: gofax/blocklists/blocklist-list.xml:15
-#: gofax/faxaccount/class_gofaxAccount.inc:835
+#: gofax/faxaccount/class_gofaxAccount.inc:831
 #, fuzzy
-msgid "Send blocklist"
+msgid "Send blacklist"
 msgstr "Показать стоп-листы отправки"
 
 #: gofax/blocklists/blocklist-list.xml:23
-#: gofax/faxaccount/class_gofaxAccount.inc:834
+#: gofax/faxaccount/class_gofaxAccount.inc:830
 #, fuzzy
-msgid "Receive blocklist"
+msgid "Receive blacklist"
 msgstr "Показать стоп-листы получения"
 
 #: gofax/blocklists/blocklist-list.xml:49
-#: gofax/blocklists/class_blocklistGeneric.inc:219
+#: gofax/blocklists/class_blocklistGeneric.inc:212
+#: gofax/blocklists/class_blocklistGeneric.inc:215
 #: gofax/blocklists/class_blocklistGeneric.inc:222
-#: gofax/blocklists/class_blocklistGeneric.inc:229
-#: gofax/blocklists/class_blocklistGeneric.inc:385
+#: gofax/blocklists/class_blocklistGeneric.inc:400
+#: gofax/faxaccount/class_gofaxAccount.inc:103
 msgid "Name"
 msgstr "Фамилия"
 
@@ -361,15 +339,9 @@ msgstr "Действия"
 msgid "Create"
 msgstr "Создать"
 
-#: gofax/blocklists/blocklist-list.xml:82
-#: gofax/blocklists/class_blocklistGeneric.inc:388
-#, fuzzy
-msgid "Blocklist"
-msgstr "\"Черные списки\""
-
 #: gofax/blocklists/blocklist-list.xml:94
-#: gofax/blocklists/blocklist-list.xml:133 gofax/faxaccount/generic.tpl:128
-#: gofax/faxaccount/generic.tpl:136
+#: gofax/blocklists/blocklist-list.xml:133 gofax/faxaccount/generic.tpl:138
+#: gofax/faxaccount/generic.tpl:147
 msgid "Edit"
 msgstr "Изменить"
 
@@ -378,161 +350,203 @@ msgstr "Изменить"
 msgid "Remove"
 msgstr "Удалить"
 
-#: gofax/blocklists/class_blocklistManagement.inc:25
-#: gofax/faxaccount/generic.tpl:122
-msgid "Blocklists"
-msgstr "\"Черные списки\""
-
-#: gofax/blocklists/class_blocklistManagement.inc:26
-msgid "Blocklist management"
-msgstr "Управление \"черными списками\""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:9
-#: gofax/blocklists/class_blocklistGeneric.inc:376
-#: gofax/blocklists/class_blocklistGeneric.inc:381
-#: gofax/blocklists/class_blocklistGeneric.inc:382
+#: gofax/blocklists/paste_generic.tpl:1
 #, fuzzy
-msgid "Fax blocklists"
+msgid "Paste blacklist"
+msgstr "Показать стоп-листы отправки"
+
+#: gofax/blocklists/class_blocklistManagement.inc:25
+#, fuzzy
+msgid "FAX Blocklists"
 msgstr "Стоп-лист номеров (факсы)"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:132
-#: gofax/faxaccount/class_gofaxAccount.inc:258
+#: gofax/blocklists/class_blocklistManagement.inc:26
+msgid "Manage FAX number blocklists for incoming and outgoing FAX calls"
+msgstr ""
+
+#: gofax/blocklists/class_blocklistGeneric.inc:9
+#, fuzzy
+msgid "FAX blacklists"
+msgstr "Стоп-лист номеров (факсы)"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:10
+#: gofax/faxaccount/class_gofaxAccount.inc:7
+msgid "This does something"
+msgstr "Что-то будет"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:109
+#: gofax/faxaccount/class_gofaxAccount.inc:254
 #, fuzzy
 msgid "Phone number"
 msgstr "Блокируемые номера"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:164
+#: gofax/blocklists/class_blocklistGeneric.inc:152
 msgid "send"
 msgstr "отправка"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:164
+#: gofax/blocklists/class_blocklistGeneric.inc:152
 msgid "receive"
 msgstr "получение"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:205
-#: gofax/blocklists/class_blocklistGeneric.inc:286
-#: gofax/faxaccount/class_gofaxAccount.inc:613
-#: gofax/faxaccount/class_gofaxAccount.inc:742
+#: gofax/blocklists/class_blocklistGeneric.inc:198
+#: gofax/blocklists/class_blocklistGeneric.inc:284
+#: gofax/faxaccount/class_gofaxAccount.inc:603
+#: gofax/faxaccount/class_gofaxAccount.inc:734
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:375
-#: gofax/faxaccount/generic.tpl:10 gofax/faxaccount/paste_generic.tpl:8
-#: gofax/faxaccount/class_gofaxAccount.inc:817
+#: gofax/blocklists/class_blocklistGeneric.inc:373
+#: gofax/faxaccount/generic.tpl:12 gofax/faxaccount/paste_generic.tpl:10
+#: gofax/faxaccount/class_gofaxAccount.inc:809
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:56
 msgid "Fax"
 msgstr "Факс"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:389
+#: gofax/blocklists/class_blocklistGeneric.inc:374
+#: gofax/blocklists/class_blocklistGeneric.inc:382
+#: gofax/blocklists/class_blocklistGeneric.inc:383
 #, fuzzy
-msgid "Blocklist type"
-msgstr "Управление \"черными списками\""
+msgid "Fax blacklists"
+msgstr "Стоп-лист номеров (факсы)"
 
-#: gofax/faxaccount/locals.tpl:6
-msgid "Select numbers to add"
-msgstr "Выбрать номера для добавления"
+#: gofax/blocklists/class_blocklistGeneric.inc:391
+msgid ""
+"The 'faxBlocklistRDN' statement defines the location where new blocklists "
+"will be created. The default is 'ou=gofax,ou=systems,'."
+msgstr ""
 
-#: gofax/faxaccount/locals.tpl:19
-msgid "Filters"
-msgstr "Фильтры"
+#: gofax/blocklists/class_blocklistGeneric.inc:403
+#, fuzzy
+msgid "Send blacklist entries"
+msgstr "Показать стоп-листы отправки"
 
-#: gofax/faxaccount/locals.tpl:28
-msgid "Display numbers of department"
-msgstr "Показать номера из подразделения"
+#: gofax/blocklists/class_blocklistGeneric.inc:404
+#, fuzzy
+msgid "Receive blacklist entries"
+msgstr "Показать стоп-листы получения"
 
-#: gofax/faxaccount/locals.tpl:29
-msgid "Choose the department the search will be based on"
-msgstr "Выбрать раздел, для которого будет осуществлен поиск"
+#: gofax/blocklists/blocklist-filter.xml:19
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-filter.xml:21
+#, fuzzy
+msgid "Default filter"
+msgstr "Параметры загрузки"
 
-#: gofax/faxaccount/locals.tpl:38
-msgid "Display numbers matching"
-msgstr "Показать совпадения номеров"
+#: gofax/blocklists/blocklist-filter.xml:33
+#, fuzzy
+msgid "Receive"
+msgstr "Получатель"
 
-#: gofax/faxaccount/locals.tpl:41
-msgid "Regular expression for matching numbers"
-msgstr "Регулярное выражение, соответствующее номерам"
+#: gofax/blocklists/blocklist-filter.xml:47
+#, fuzzy
+msgid "Send"
+msgstr "Отправитель"
 
-#: gofax/faxaccount/locals.tpl:47
-msgid "Display numbers of user"
-msgstr "Показать номера пользователя"
+#: gofax/faxaccount/generic.tpl:1
+#, fuzzy
+msgid "Fax account"
+msgstr "Моя учетная запись"
 
-#: gofax/faxaccount/locals.tpl:50
-msgid "User name of which numbers are shown"
-msgstr "Имя пользователя, для которого перечисляются номера"
+#: gofax/faxaccount/generic.tpl:10 gofax/faxaccount/paste_generic.tpl:7
+#, fuzzy
+msgid "Generic settings"
+msgstr "Общая информация о пользователе"
 
-#: gofax/faxaccount/generic.tpl:13
+#: gofax/faxaccount/generic.tpl:15
 msgid "Multiple edit"
 msgstr ""
 
-#: gofax/faxaccount/generic.tpl:17 gofax/faxaccount/paste_generic.tpl:13
+#: gofax/faxaccount/generic.tpl:19 gofax/faxaccount/paste_generic.tpl:15
 msgid "Fax number for GOfax to trigger on"
 msgstr "Номер факса, для которого сработает GOfax"
 
-#: gofax/faxaccount/generic.tpl:24 gofax/faxaccount/class_gofaxAccount.inc:828
+#: gofax/faxaccount/generic.tpl:26 gofax/faxaccount/class_gofaxAccount.inc:824
 msgid "Language"
 msgstr "Язык"
 
-#: gofax/faxaccount/generic.tpl:29
-msgid "Specify the GOfax communication language for fax to mail gateway"
+#: gofax/faxaccount/generic.tpl:31
+#, fuzzy
+msgid "Specify the GOfax communication language for FAX to mail gateway"
 msgstr ""
 "Укаэите предпочтительный язык для получения сообщений о факсах по эл. почте"
 
-#: gofax/faxaccount/generic.tpl:37 gofax/faxaccount/class_gofaxAccount.inc:829
+#: gofax/faxaccount/generic.tpl:39 gofax/faxaccount/class_gofaxAccount.inc:825
 msgid "Delivery format"
 msgstr "Формат доставки"
 
-#: gofax/faxaccount/generic.tpl:41
-msgid "Specify delivery format for fax to mail gateway"
+#: gofax/faxaccount/generic.tpl:43
+#, fuzzy
+msgid "Specify delivery format for FAX to mail gateway"
 msgstr "Укажите в каком формате должны перенаправляться факсы"
 
-#: gofax/faxaccount/generic.tpl:54
+#: gofax/faxaccount/generic.tpl:58
 msgid "Delivery methods"
 msgstr "Способ доставки"
 
-#: gofax/faxaccount/generic.tpl:59
-msgid "Temporary disable fax usage"
+#: gofax/faxaccount/generic.tpl:63
+#, fuzzy
+msgid "Temporary disable FAX usage"
 msgstr "Временно отключить использование факса"
 
-#: gofax/faxaccount/generic.tpl:65
+#: gofax/faxaccount/generic.tpl:69
 #, fuzzy
-msgid "Deliver fax as mail to"
+msgid "Deliver FAX as mail to"
 msgstr "Отправлять факсы по эл. почте"
 
-#: gofax/faxaccount/generic.tpl:73 gofax/faxaccount/class_gofaxAccount.inc:832
-msgid "Deliver fax as mail"
+#: gofax/faxaccount/generic.tpl:77 gofax/faxaccount/class_gofaxAccount.inc:828
+#, fuzzy
+msgid "Deliver FAX as mail"
 msgstr "Отправлять факсы по эл. почте"
 
-#: gofax/faxaccount/generic.tpl:80 gofax/faxaccount/class_gofaxAccount.inc:833
-msgid "Deliver fax to printer"
+#: gofax/faxaccount/generic.tpl:84 gofax/faxaccount/class_gofaxAccount.inc:829
+#, fuzzy
+msgid "Deliver FAX to printer"
 msgstr "Отправлять факсы на принтер"
 
-#: gofax/faxaccount/generic.tpl:99
-msgid "Alternate fax numbers"
+#: gofax/faxaccount/generic.tpl:97
+#, fuzzy
+msgid "Alternative numbers"
 msgstr "Альтернативные номера факсов"
 
-#: gofax/faxaccount/generic.tpl:114
+#: gofax/faxaccount/generic.tpl:105
+#, fuzzy
+msgid "Alternate FAX numbers"
+msgstr "Альтернативные номера факсов"
+
+#: gofax/faxaccount/generic.tpl:121
 msgid "Add local"
 msgstr "Добавить локально"
 
-#: gofax/faxaccount/generic.tpl:125
-msgid "Blocklists for incoming fax"
+#: gofax/faxaccount/generic.tpl:132 gofax/faxaccount/generic.tpl:133
+#, fuzzy
+msgid "Blacklists"
+msgstr "\"Черные списки\""
+
+#: gofax/faxaccount/generic.tpl:135
+#, fuzzy
+msgid "Blacklists for incoming FAX"
 msgstr "\"Черные списки\" для входящих факсов"
 
-#: gofax/faxaccount/generic.tpl:133
-msgid "Blocklists for outgoing fax"
+#: gofax/faxaccount/generic.tpl:144
+#, fuzzy
+msgid "Blacklists for outgoing FAX"
 msgstr "\"Черные списки\" для исходящих факсов"
 
-#: gofax/faxaccount/paste_generic.tpl:18
+#: gofax/faxaccount/paste_generic.tpl:1
+#, fuzzy
+msgid "Paste fax account settings"
+msgstr "Настройки Samba"
+
+#: gofax/faxaccount/paste_generic.tpl:20
 #, fuzzy
 msgid "Alternate fax numbers will not be copied"
 msgstr "Альтернативные номера факсов"
 
-#: gofax/faxaccount/main.inc:106
+#: gofax/faxaccount/main.inc:105
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr "Нажмите 'Изменить' чтобы отредактировать данные в этой форме."
 
-#: gofax/faxaccount/main.inc:115
+#: gofax/faxaccount/main.inc:114
 msgid "FAX settings"
 msgstr "Настройки факса"
 
@@ -540,62 +554,64 @@ msgstr "Настройки факса"
 msgid "FAX"
 msgstr "Факс"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:165
-#: gofax/faxaccount/class_gofaxAccount.inc:175
-#: gofax/faxaccount/class_gofaxAccount.inc:178
+#: gofax/faxaccount/class_gofaxAccount.inc:161
+#: gofax/faxaccount/class_gofaxAccount.inc:171
+#: gofax/faxaccount/class_gofaxAccount.inc:174
 msgid "GOfax"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:174
-msgid "Remove fax account"
+#: gofax/faxaccount/class_gofaxAccount.inc:170
+#, fuzzy
+msgid "Remove FAX account"
 msgstr "Удалить настройки факса"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:177
-msgid "Create fax account"
+#: gofax/faxaccount/class_gofaxAccount.inc:173
+#, fuzzy
+msgid "Create FAX account"
 msgstr "Создать настройки факса"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:407
-#: gofax/faxaccount/class_gofaxAccount.inc:489
+#: gofax/faxaccount/class_gofaxAccount.inc:394
+#: gofax/faxaccount/class_gofaxAccount.inc:477
 #, fuzzy
 msgid "back"
 msgstr "Назад"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:629
-#: gofax/faxaccount/class_gofaxAccount.inc:633
-#: gofax/faxaccount/class_gofaxAccount.inc:827
+#: gofax/faxaccount/class_gofaxAccount.inc:619
+#: gofax/faxaccount/class_gofaxAccount.inc:623
+#: gofax/faxaccount/class_gofaxAccount.inc:823
 #, fuzzy
 msgid "Fax number"
 msgstr "Терминал"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:641
+#: gofax/faxaccount/class_gofaxAccount.inc:630
 msgid "Mail delivery is requested without target address!"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:643
+#: gofax/faxaccount/class_gofaxAccount.inc:632
 #, fuzzy
 msgid "Mail address"
 msgstr "Введенный вами адрес уже используется."
 
-#: gofax/faxaccount/class_gofaxAccount.inc:643
+#: gofax/faxaccount/class_gofaxAccount.inc:632
 msgid "your-name@your-domain.com"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:649
+#: gofax/faxaccount/class_gofaxAccount.inc:638
 msgid "Printing is requested without a target printer!"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:818
+#: gofax/faxaccount/class_gofaxAccount.inc:810
 #, fuzzy
 msgid "Fax account settings"
 msgstr "Настройки Samba"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:830
+#: gofax/faxaccount/class_gofaxAccount.inc:826
 #, fuzzy
-msgid "Alternate fax number"
+msgid "Alternate FAX number"
 msgstr "Альтернативные номера факсов"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:831
-msgid "Enable/Disable fax"
+#: gofax/faxaccount/class_gofaxAccount.inc:827
+msgid "Enable/Disable FAX"
 msgstr ""
 
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:10
@@ -612,17 +628,33 @@ msgstr "Имя"
 msgid "Surname"
 msgstr "Имя сервера"
 
-#: gofax/faxaccount/lists.tpl:5
+#: gofax/faxaccount/faxNumberSelect/class_faxNumberSelect.inc:28
+#, fuzzy
+msgid "Fax number selection"
+msgstr "Настройки Samba"
+
+#: gofax/faxaccount/lists.tpl:2
+#, fuzzy
+msgid "Blocklist settings"
+msgstr "\"Черные списки\""
+
+#: gofax/faxaccount/lists.tpl:7
 msgid "Blocked numbers/lists"
 msgstr "Блокируемые номера/списки"
 
-#: gofax/faxaccount/lists.tpl:17
-msgid "List of predefined blocklists"
+#: gofax/faxaccount/lists.tpl:21
+#, fuzzy
+msgid "List of predefined blacklists"
 msgstr "Готовые \"черные списки\""
 
-#: gofax/faxaccount/lists.tpl:25
+#: gofax/faxaccount/lists.tpl:22
 #, fuzzy
-msgid "Add the list to the blocklists"
+msgid "List of blocked numbers"
+msgstr "Блокируемые номера"
+
+#: gofax/faxaccount/lists.tpl:29
+#, fuzzy
+msgid "Add the list to the blacklists"
 msgstr "Стоп-листы"
 
 #: admin/systems/services/gofax/class_goFaxServer.inc:30
@@ -636,13 +668,14 @@ msgid "FAX database configuration"
 msgstr "Базы данных"
 
 #: admin/systems/services/gofax/class_goFaxServer.inc:71
-#: admin/systems/services/gofax/class_goFaxServer.inc:98
+#: admin/systems/services/gofax/class_goFaxServer.inc:102
 #: admin/systems/services/gofax/goFaxServer.tpl:12
 msgid "Password"
 msgstr "Пароль"
 
 #: admin/systems/services/gofax/class_goFaxServer.inc:88
 #: admin/systems/services/gofax/class_goFaxServer.inc:89
+#: admin/systems/services/gofax/goFaxServer.tpl:2
 #, fuzzy
 msgid "Fax database"
 msgstr "Базы данных"
@@ -651,10 +684,24 @@ msgstr "Базы данных"
 msgid "Services"
 msgstr "Сервисы"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:97
+#: admin/systems/services/gofax/class_goFaxServer.inc:101
 #, fuzzy
 msgid "Login name"
 msgstr "Местоположение"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:104
+#, fuzzy
+msgid "Start"
+msgstr "Запуск"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:105
+msgid "Stop"
+msgstr ""
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:106
+#, fuzzy
+msgid "Restart"
+msgstr "Повторить"
 
 #: admin/systems/services/gofax/goFaxServer.tpl:1
 #, fuzzy
@@ -665,6 +712,87 @@ msgstr "Базы данных"
 #, fuzzy
 msgid "FAX DB user"
 msgstr "Показать пользователей факсов"
+
+#, fuzzy
+#~ msgid "Alternate fax number"
+#~ msgstr "Альтернативные номера факсов"
+
+#~ msgid "Deliver fax as mail"
+#~ msgstr "Отправлять факсы по эл. почте"
+
+#~ msgid "Deliver fax to printer"
+#~ msgstr "Отправлять факсы на принтер"
+
+#~ msgid "FAX preview - please wait"
+#~ msgstr "Предварительный просмотр - пожалуйста, подождите"
+
+#~ msgid "in"
+#~ msgstr "в"
+
+#~ msgid "Select subtree to base search on"
+#~ msgstr "Выберите ветку для поиска"
+
+#~ msgid "during"
+#~ msgstr "в течение"
+
+#, fuzzy
+#~ msgid "Insufficient permissions"
+#~ msgstr "Права для членов группы"
+
+#, fuzzy
+#~ msgid "Fax report"
+#~ msgstr "Отчеты о факсах"
+
+#~ msgid "Warning"
+#~ msgstr "Предупреждение"
+
+#~ msgid ""
+#~ "Please double check if you really want to do this since there is no way "
+#~ "for GOsa to get your data back."
+#~ msgstr ""
+#~ "Подумайте еще раз, действительно ли вам нужно удаление, так как GOsa не "
+#~ "сможет восстановить эти данные."
+
+#, fuzzy
+#~ msgid ""
+#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, "
+#~ "иначе нажмите <i>Отмена</i>."
+
+#~ msgid "Choose subtree to place group in"
+#~ msgstr "Выберите ветку для группы"
+
+#, fuzzy
+#~ msgid "Select a base"
+#~ msgstr "Выберите, чтобы просмотреть серверы"
+
+#~ msgid "Blocklist management"
+#~ msgstr "Управление \"черными списками\""
+
+#~ msgid "Select numbers to add"
+#~ msgstr "Выбрать номера для добавления"
+
+#~ msgid "Filters"
+#~ msgstr "Фильтры"
+
+#~ msgid "Display numbers of department"
+#~ msgstr "Показать номера из подразделения"
+
+#~ msgid "Choose the department the search will be based on"
+#~ msgstr "Выбрать раздел, для которого будет осуществлен поиск"
+
+#~ msgid "Display numbers matching"
+#~ msgstr "Показать совпадения номеров"
+
+#~ msgid "Regular expression for matching numbers"
+#~ msgstr "Регулярное выражение, соответствующее номерам"
+
+#~ msgid "Display numbers of user"
+#~ msgstr "Показать номера пользователя"
+
+#~ msgid "User name of which numbers are shown"
+#~ msgstr "Имя пользователя, для которого перечисляются номера"
 
 #~ msgid ""
 #~ "Please double check if your really want to do this since there is no way "
@@ -722,10 +850,6 @@ msgstr "Показать пользователей факсов"
 #~ msgstr "Подразделение"
 
 #, fuzzy
-#~ msgid "FAX blocklists"
-#~ msgstr "Стоп-лист номеров (факсы)"
-
-#, fuzzy
 #~ msgid "Permission"
 #~ msgstr "Права для членов группы"
 
@@ -781,10 +905,6 @@ msgstr "Показать пользователей факсов"
 #, fuzzy
 #~ msgid "Fax is empty!"
 #~ msgstr "Отчеты о факсах"
-
-#, fuzzy
-#~ msgid "Blocklist name"
-#~ msgstr "Управление \"черными списками\""
 
 #~ msgid "Select to see send blocklists"
 #~ msgstr "Выберите, чтобы просмотреть стоп-листы (отправка)"

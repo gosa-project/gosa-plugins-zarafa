@@ -36,7 +36,7 @@
       {render acl=$gotoKernelParametersACL}
        <input name="gotoKernelParameters" id="gotoKernelParameters" 
           size=25 maxlength=500 value="{$gotoKernelParameters}"  type='text'
-          title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}">
+          title="{t}Enter any parameters that should be passed to the kernel as append line during boot up{/t}">
       {/render}
      </td>
     </tr>
@@ -267,7 +267,7 @@
    {/render}
 
    {render acl=$gotoShareACL}
-    <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
+    <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mount point{/t}">
    {/render}
 
    {render acl=$gotoShareACL} 

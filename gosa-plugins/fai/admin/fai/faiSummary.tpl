@@ -21,7 +21,7 @@
   {else}
   <tr>
    <td>
-    <h3>{t}You are not allowed to view the fai summary.{/t}
+    <h3>{t}You are not allowed to view the FAI summary.{/t}
     </h3>
    </td>
   </tr>

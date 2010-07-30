@@ -140,7 +140,7 @@
      <td>
 
 {render acl=$gotoXColordepthACL}
-      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose colordepth used in graphic mode{/t}" size=1>
+      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose color depth used in graphic mode{/t}" size=1>
        {html_options options=$XColordepths selected=$gotoXColordepth_select}
       </select>
 {/render}
@@ -174,7 +174,7 @@
 	<td>{t}Use DDC for automatic detection{/t}</td>
     </tr>
     <tr>
-     <td><LABEL for="gotoXHsync">{t}HSync{/t}</LABEL></td>
+     <td><LABEL for="gotoXHsync">{t}Horizontal synchronization{/t}</LABEL></td>
      <td>
 
 {render acl=$gotoXHsyncACL}
@@ -185,7 +185,7 @@
      </td>
     </tr>
     <tr>
-     <td><LABEL for="gotoXVsync">{t}VSync{/t}</LABEL></td>
+     <td><LABEL for="gotoXVsync">{t}Vertical synchronization{/t}</LABEL></td>
      <td>
 
 {render acl=$gotoXVsyncACL}

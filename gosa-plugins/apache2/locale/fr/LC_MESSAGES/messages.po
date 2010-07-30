@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-07-30 10:38+0200\n"
 "PO-Revision-Date: 2009-06-30 10:43+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -18,131 +18,167 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/systems/services/apache2/servApacheVhost.tpl:1
-msgid "Apache VHosts"
-msgstr "Hôtes virtuels Apache"
+#, fuzzy
+msgid "Apache virtual hosts"
+msgstr "Service de nom d'hôte virtuel apache"
 
-#: admin/systems/services/apache2/servApacheVhost.tpl:8
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:54
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:98
+#: admin/systems/services/apache2/servApacheVhost.tpl:7
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:50
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:78
 msgid "Add"
 msgstr "Ajouter"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:298
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:317
-msgid "Up"
-msgstr "En haut"
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
+#, fuzzy
+msgid "Alias"
+msgstr "Alias URL"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:299
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:318
-msgid "Down"
-msgstr "En Bas"
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
+msgid "Directory"
+msgstr "Répertoire"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:300
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:319
-msgid "Delete"
-msgstr "Supprimer"
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:358
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:203
+#: admin/systems/services/apache2/class_servApacheVhost.inc:71
 msgid "Name"
 msgstr "Nom"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:365
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:7
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:210
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:5
 msgid "Virtual host name"
 msgstr "Nom de l'hôte de virtuel"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
 msgid "Only lowercase strings are allowed as Virtual Host Name."
 msgstr ""
 "Seul les chaînes en miniscule sont permises dans les noms d'hôtes virtuels."
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
 msgid "e.g. example.com"
 msgstr "ex: exemple.com"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:372
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:13
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:217
+#: admin/systems/services/apache2/class_servApacheVhost.inc:301
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:11
 msgid "Document root"
 msgstr "Document racine"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:378
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:19
-msgid "Admin mail address"
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:223
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:17
+#, fuzzy
+msgid "Administrator mail address"
 msgstr "Adresse de messagerie de l'administrateur"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:387
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:232
+#: admin/systems/services/apache2/class_servApacheVhost.inc:302
 msgid "Server alias"
 msgstr "Alias serveur"
 
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:397
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:242
+#: admin/systems/services/apache2/class_servApacheVhost.inc:304
 msgid "Script alias"
 msgstr "Alias script"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:61
-#: admin/systems/services/apache2/class_servApacheVhost.inc:284
-#: admin/systems/services/apache2/class_servApacheVhost.inc:297
+#: admin/systems/services/apache2/class_servApacheVhost.inc:277
+#: admin/systems/services/apache2/class_servApacheVhost.inc:290
 msgid "Apache service"
 msgstr "Service Apache"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:237
-#: admin/systems/services/apache2/class_servApacheVhost.inc:248
-#: admin/systems/services/apache2/class_servApacheVhost.inc:271
+#: admin/systems/services/apache2/class_servApacheVhost.inc:230
+#: admin/systems/services/apache2/class_servApacheVhost.inc:241
+#: admin/systems/services/apache2/class_servApacheVhost.inc:264
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+#: admin/systems/services/apache2/class_servApacheVhost.inc:291
 msgid "Apache virtual host service"
 msgstr "Service de nom d'hôte virtuel apache"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+#: admin/systems/services/apache2/class_servApacheVhost.inc:291
 msgid "Services"
 msgstr "Services"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:306
+#: admin/systems/services/apache2/class_servApacheVhost.inc:299
 msgid "Virtual hosts"
 msgstr "Hôtes virtuels"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:300
+#, fuzzy
+msgid "Server name"
+msgstr "Serveur"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:303
+#, fuzzy
+msgid "Server admin"
+msgstr "Alias serveur"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:1
 msgid "Generic"
 msgstr "Informations"
 
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:3
+#, fuzzy
+msgid "Apache Virutal Host"
+msgstr "Hôtes virtuels Apache"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:26
+#, fuzzy
+msgid "Server settings"
+msgstr "Préférences utilisateur"
+
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:30
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:33
 msgid "Server Alias"
 msgstr "Alias serveur"
 
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:42
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:37
 msgid "URL Alias"
 msgstr "Alias URL"
 
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:45
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:40
 msgid "Directory Path"
 msgstr "Chemin du répertoire"
 
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:74
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:59
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:62
 msgid "Script Alias"
 msgstr "Alias script"
 
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:86
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:65
 msgid "Alias Directory"
 msgstr "Alias répertoire"
 
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:89
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:68
 msgid "Script Directory"
 msgstr "Répertoire des scripts"
 
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:112
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:89
 msgid "Save"
 msgstr "Sauver"
 
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:113
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:91
 msgid "Cancel"
 msgstr "Annuler"
 
 #: admin/systems/services/apache2/class_apacheUtils.inc:194
-#, php-format
+#, fuzzy, php-format
 msgid ""
-"Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
-"or example.com'."
+"Undefined virtual host name '%s'. Virtual host name must be a valid, fully "
+"qualified domain name like 'www.example.com' or 'example.com'."
 msgstr ""
 "Nom d'hôte virtuel inconnu '%s'. Le nom d'hôte virtuel doit être comme ceci "
 "'www.exemple.com ou exemple.com'"
+
+#~ msgid "Apache VHosts"
+#~ msgstr "Hôtes virtuels Apache"
+
+#~ msgid "Up"
+#~ msgstr "En haut"
+
+#~ msgid "Down"
+#~ msgstr "En Bas"
+
+#~ msgid "Delete"
+#~ msgstr "Supprimer"

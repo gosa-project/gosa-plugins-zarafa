@@ -1,21 +1,21 @@
 
 <h3>{t}Generic{/t}</h3>
 
-<table style="width:100%" summary="{t}Mimetype generic{/t}">
+<table style="width:100%" summary="{t}Mime-type generic{/t}">
  <tr>
   <td style='width:50%; '>
  
-   <table summary="{t}Mimetype settings{/t}">
+   <table summary="{t}Mime-type settings{/t}">
     <tr>
      <td>{t}Mime type{/t}{$must}</td>
      <td>
       {render acl=$cnACL}
-       <input type="text" name='cn' value="{$cn}" title='{t}Please enter a name for the mime type here{/t}'>
+       <input type="text" name='cn' value="{$cn}" title='{t}Please enter a name for the mime-type here{/t}'>
       {/render}
      </td>
     </tr>
     <tr>
-     <td>{t}Mime group{/t}</td>
+     <td>{t}Mime-group{/t}</td>
      <td>
       {render acl=$gotoMimeGroupACL}
        <select name='gotoMimeGroup' title='{t}Categorize this mime type{/t}' size=1>
@@ -55,7 +55,7 @@
       <LABEL for="picture_file">{t}Icon{/t}</LABEL>
       <br>
       {if $IconReadable}
-       <img src="{$gotoMimeIcon}" border=1 alt='{t}Mime icon{/t}' 
+       <img src="{$gotoMimeIcon}" border=1 alt='{t}Mime-icon{/t}' 
          style="width:48px; height:48; background-color:white; vertical-align:bottom;">
        {else}
        {image path="images/empty.png"}

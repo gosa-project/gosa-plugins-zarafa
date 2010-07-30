@@ -20,7 +20,7 @@
      <td>
       {render acl=$acl}
        <input {if $realGosaHost} disabled {/if} type='text' name='fixedaddr'
-         value='{$fixedaddr}' title='{t}Use hostname or IP-address to assign fixed address{/t}'>
+         value='{$fixedaddr}' title='{t}Use host name or IP-address to assign fixed address{/t}'>
       {/render}
      </td>
     </tr>

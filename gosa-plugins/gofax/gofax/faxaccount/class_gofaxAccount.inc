@@ -167,10 +167,10 @@ class gofaxAccount extends plugin
       $display= "";
       if ($this->parent !== NULL){
         if ($this->is_account){
-          $display= $this->show_disable_header(_("Remove fax account"),
+          $display= $this->show_disable_header(_("Remove FAX account"),
               msgPool::featuresEnabled(_("GOfax")));
         } else {
-          $display= $this->show_enable_header(_("Create fax account"),
+          $display= $this->show_enable_header(_("Create FAX account"),
               msgPool::featuresDisabled(_("GOfax")));
           return ($display);
         }
@@ -823,12 +823,12 @@ class gofaxAccount extends plugin
             "facsimileTelephoneNumber"          => _("Fax number"), // goFaxDeliveryMode
             "goFaxLanguage"                     => _("Language"),
             "goFaxFormat"                       => _("Delivery format"),
-            "facsimileAlternateTelephoneNumber" => _("Alternate fax number"), // goFaxDeliveryMode
-            "goFaxIsEnabled"                    => _("Enable/Disable fax"),
-            "faxtomail"                         => _("Deliver fax as mail"),
-            "faxtoprinter"                      => _("Deliver fax to printer"),
-            "goFaxRBlocklist"                   => _("Receive blocklist"),
-            "goFaxSBlocklist"                   => _("Send blocklist"))
+            "facsimileAlternateTelephoneNumber" => _("Alternate FAX number"), // goFaxDeliveryMode
+            "goFaxIsEnabled"                    => _("Enable/Disable FAX"),
+            "faxtomail"                         => _("Deliver FAX as mail"),
+            "faxtoprinter"                      => _("Deliver FAX to printer"),
+            "goFaxRBlocklist"                   => _("Receive blacklist"),
+            "goFaxSBlocklist"                   => _("Send blacklist"))
           ));
   }
 

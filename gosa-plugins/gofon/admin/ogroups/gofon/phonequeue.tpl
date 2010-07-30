@@ -285,7 +285,7 @@
 {render acl=$goFonQueueAnnounceHoldtimeACL}
             <input type="checkbox" name='goFonQueueAnnounceHoldtime' value='yes'  {$goFonQueueAnnounceHoldtimeCHK}>
 {/render}
-            {t}Announce holdtime{/t}
+            {t}Announce hold time{/t}
         </td>
         </tr>
         <tr>

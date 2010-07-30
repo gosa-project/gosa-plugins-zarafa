@@ -24,7 +24,7 @@
       <table summary="{t}Telephone{/t}" border=0>
        <tr>
         <td>
-         <label for="goFonVoicemailPIN">{t}Voicemail PIN{/t}{$must}</label>
+         <label for="goFonVoicemailPIN">{t}Voice mail PIN{/t}{$must}</label>
         </td>
         <td>
          <input type="password" id="goFonVoicemailPIN" name="goFonVoicemailPI" value="{$goFonVoicemailPIN}">

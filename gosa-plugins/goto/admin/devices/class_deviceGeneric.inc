@@ -267,7 +267,7 @@ class deviceGeneric extends plugin
     {
         return (array(
                     "plShortName"   => _("Generic"),
-                    "plDescription" => _("Device generic")." ("._("Hotplug").")",
+                    "plDescription" => _("Device generic")." ("._("Hot-plug").")",
                     "plSelfModify"  => FALSE,
                     "plDepends"     => array(),
                     "plPriority"    => 0,

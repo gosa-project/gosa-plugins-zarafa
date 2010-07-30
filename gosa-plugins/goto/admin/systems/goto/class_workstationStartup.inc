@@ -922,7 +922,7 @@ another location! */
                     "plCategory"    => array("workstation","server","ogroups"),
 
                     "plProvidedAcls"=> array(
-                        "gotoLdapServer"        => _("Ldap server"),
+                        "gotoLdapServer"        => _("LDAP server"),
                         "gotoBootKernel"        => _("Boot kernel"),
                         "gotoKernelParameters"  => _("Kernel parameter"),
 

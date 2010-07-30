@@ -52,7 +52,7 @@
     </td>
 	</tr>
   <tr>
-    <td>{t}Job intervall{/t}</td>
+    <td>{t}Job interval{/t}</td>
     <td>
       <input {if !$activate_periodical_job} disabled {/if}
           size="4" type='text' id='periodValue' value='{$periodValue}' name='periodValue'>

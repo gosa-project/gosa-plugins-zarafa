@@ -37,7 +37,7 @@
             <td style='width:80px;'>
                 {if $item.freezed}
                     <LABEL for='{$mode}_selected_{$key}'>
-                        <i>({t}Freezed{/t})</i>
+                        <i>({t}Frozen{/t})</i>
                     </LABEL>    
                 {/if}
             </td>

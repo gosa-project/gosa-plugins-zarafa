@@ -699,7 +699,7 @@ another location! */
                     "gotoTerminalPath"    => _("Root server"),
                     "gotoSwapServer"      => _("Swap server"),
 
-                    "gotoNtpServer"       => _("Ntp server settings"),
+                    "gotoNtpServer"       => _("NTP server settings"),
                     "userPassword"      => _("Root password"),
 
                     "FAIstate"            => _("Action flag"))

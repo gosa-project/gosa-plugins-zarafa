@@ -272,7 +272,7 @@ class connectivity extends plugin
           "plCategory"    => array("users"),
           "plOptions"       => array(),
 
-          "plDescription"       => _("Connectivity addon"),
+          "plDescription"       => _("Connectivity add-on"),
           "plSelfModify"        => TRUE,
 
           "plProvidedAcls"  => array()

@@ -1113,7 +1113,7 @@ class phoneAccount extends plugin
             } else {
                 if(empty($this->uid)){
                     $display= $this->show_enable_header(_("Create phone account"),
-                            msgPool::featuresDisabled(_("Phone"),_("User uid")));
+                            msgPool::featuresDisabled(_("Phone"),_("User UID")));
                 }else{
                     $display= $this->show_enable_header(_("Create phone account"),
                             msgPool::featuresDisabled(_("Phone")));
@@ -1460,10 +1460,10 @@ class phoneAccount extends plugin
         }
 
         if((strlen($this->goFonVoicemailPIN)==0)||(strlen($this->goFonVoicemailPIN)>4)){
-            $message[]= msgPool::invalid(_("Voicemail PIN"),"","",_("Between 1-4 charactes"));
+            $message[]= msgPool::invalid(_("Voice mail PIN"),"","",_("Between 1-4 characters"));
         }else{
             if(preg_match("/[^0-9]/",$this->goFonVoicemailPIN)){
-                $message[]= msgPool::invalid(_("Voicemail PIN"),preg_replace("/[0-9]/","X",$this->goFonVoicemailPIN),"/X/");
+                $message[]= msgPool::invalid(_("Voice mail PIN"),preg_replace("/[0-9]/","X",$this->goFonVoicemailPIN),"/X/");
             }
         }
 
@@ -1556,7 +1556,7 @@ class phoneAccount extends plugin
          */
         $str = $this->generate_mysql_entension_entries(true);
         if(!$str){
-            msg_dialog::display(_("Error"),_("An error occured while updating the database entries!") , ERROR_DIALOG);
+            msg_dialog::display(_("Error"),_("An error occurred while updating the database entries!") , ERROR_DIALOG);
         }
 
         if($this->attrs['goFonMacro']==""){
@@ -1789,9 +1789,9 @@ class phoneAccount extends plugin
         foreach($this->phoneNumbers as $num){
             if((isset($numbers[$num]))&&(($numbers[$num]['uid'][0]!=$this->uid))){
                 if(isset($numbers[$num]['uid'][0])){
-                    return sprintf(_("The specified telephonenumber '%s' is already assigned to '%s'."),$num,$numbers[$num]['uid'][0]);
+                    return sprintf(_("The specified telephone number '%s' is already assigned to '%s'."),$num,$numbers[$num]['uid'][0]);
                 }else{
-                    return sprintf(_("The specified telephonenumber '%s' is already assigned to '%s'."),$num,$numbers[$num]['cn'][0]);
+                    return sprintf(_("The specified telephone number '%s' is already assigned to '%s'."),$num,$numbers[$num]['cn'][0]);
                 }
             }
         }
@@ -1867,8 +1867,8 @@ class phoneAccount extends plugin
                         "goFonHomeServer"     => _("Home server"),
                         "goFonContext"          => _("Phone context"),
                         "goFonVoiceMailContext" => _("Voice mail context"),
-                        "goFonPIN"            => _("Telephone pin"),
-                        "goFonVoicemailPIN"   => _("Voicemail pin"))
+                        "goFonPIN"            => _("Telephone PIN"),
+                        "goFonVoicemailPIN"   => _("Voice mail PIN"))
                         ));
     }
 
@@ -1960,15 +1960,15 @@ class phoneAccount extends plugin
         if(in_array("goFonVoicemailPIN",$this->multi_boxes) && 
                 ( (strlen($this->goFonVoicemailPIN)==0)||
                   (strlen($this->goFonVoicemailPIN)>4))){
-            $message[]=(_("Voicemail PIN must be 4 characters long!"));
+            $message[]=(_("Voice mail PIN must be 4 characters long!"));
         }else{
             if(preg_match("/[^0-9]/",$this->goFonVoicemailPIN) && in_array("goFonVoicemailPIN",$this->multi_boxes) ){
-                $message[]=(_("Voicemail PIN contains invalid characters!"));
+                $message[]=(_("Voice mail PIN contains invalid characters!"));
             }
         }
 
         if(preg_match("/[^0-9a-z]/i",$this->goFonPIN) && in_array("goFonPIN",$this->multi_boxes)){
-            $message[]=(_("Phone pin contains invalid characters!"));
+            $message[]=(_("Phone PIN contains invalid characters!"));
         }
 
         /* check for ! in any parameter setting*/

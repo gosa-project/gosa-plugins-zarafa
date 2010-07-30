@@ -82,7 +82,7 @@
    <td colspan="2">
     
     
-    <input id="bootable" type='checkbox' value='1' name='bootable' {if $bootable} checked {/if}>      &nbsp;<label for='bootable'>{t}Bootable{/t}</label>
+    <input id="bootable" type='checkbox' value='1' name='bootable' {if $bootable} checked {/if}>      &nbsp;<label for='bootable'>{t}Boot able{/t}</label>
    </td>
   </tr>
   <tr>
@@ -131,14 +131,14 @@
   
  {/if}
  <tr>
-  <td>{t}Filesystem{/t}
+  <td>{t}File system{/t}
   </td>
   <td>
    <select name='FAIfsType' onChange="document.mainform.submit();" size=1>
     {html_options options=$FAIfsTypes selected=$FAIfsType}
    </select>
   </td>
-  <td>{t}Filesystem create options{/t}
+  <td>{t}File system create options{/t}
   </td>
   <td>
    <input type='text' name="FAIfsCreateOptions" value="{$FAIfsCreateOptions}">

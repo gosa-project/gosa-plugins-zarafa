@@ -222,7 +222,7 @@ class phoneGeneric extends plugin
 
         /* Assign attributes */
         $smarty->assign("base", $this->baseSelector->render());
-        $smarty->assign("goFonDefaultIPs",set_post(array("dynamic"=>_("dynamic"),"network"=>_("Networksettings"))));
+        $smarty->assign("goFonDefaultIPs",set_post(array("dynamic"=>_("dynamic"),"network"=>_("Network settings"))));
 
         /* Show main page */
         $str = $this->netConfigDNS->execute();
@@ -522,7 +522,7 @@ class phoneGeneric extends plugin
                     "description"         => _("Description"),
                     "goFonType"           => _("SIP Mode"),
                     "goFonDmtfMode"       => _("SIP DTMF mode"),
-                    "goFonDefaultIP"      => _("SIP Default ip"),
+                    "goFonDefaultIP"      => _("SIP Default IP"),
                     "goFonQualify"        => _("SIP Qualify"),
                     "goFonAuth"           => _("IAX authentication type"),
                     "goFonSecret"         => _("IAX secret"),

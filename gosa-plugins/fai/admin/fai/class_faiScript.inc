@@ -529,7 +529,7 @@ class faiScript extends plugin
 
 
           "plProvidedAcls" => array(
-            "cn"                => _("Name")." ("._("Readonly").")",
+            "cn"                => _("Name")." ("._("Read-only").")",
             "description"       => _("Description"))
           ));
   }

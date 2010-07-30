@@ -14,7 +14,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Admin mail address{/t}{$must}
+					<td>{t}Administrator mail address{/t}{$must}
 					</td>
 					<td><input type="text" name="apacheServerAdmin" value="{$apacheServerAdmin}">
 					</td>

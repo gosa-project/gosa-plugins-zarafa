@@ -101,7 +101,7 @@ class terminfo extends plugin
 
                 /* Check if terminal is online */
                 if (gosaSupportDaemon::ping($this->macAddress)){
-                    $smarty->assign("status", _("online"));
+                    $smarty->assign("status", _("on-line"));
                     $smarty->assign("active", "true");
 
                     /* Fill data if we have snmp */
@@ -191,7 +191,7 @@ class terminfo extends plugin
                     }
                     $smarty->assign("partitions", $partitions);
                 } else {
-                    $smarty->assign("status", _("offline"));
+                    $smarty->assign("status", _("off-line"));
                     $smarty->assign("active", "false");
                 }
 

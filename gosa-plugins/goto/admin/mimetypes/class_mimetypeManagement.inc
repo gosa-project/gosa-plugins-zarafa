@@ -23,7 +23,7 @@
 class mimetypeManagement extends management
 {
     var $plHeadline     = "Mime types";
-    var $plDescription  = "Manage file associations that are useable in managed software releases";
+    var $plDescription  = "Manage file associations that are usable in managed software releases";
     var $plIcon  = "plugins/goto/images/mimetypes.png";
 
     var $mime_release = ""; // The currently selected release while in release management mode!

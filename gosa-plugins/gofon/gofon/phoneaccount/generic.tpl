@@ -74,7 +74,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Voicemail context{/t}
+     <td>{t}Voice mail context{/t}
      </td>
      <td>
 {render acl=$goFonVoiceMailContextACL checkbox=$multiple_support checked=$use_goFonVoiceMailContext}
@@ -87,7 +87,7 @@
 
       <tr>
        <td>
-        <label for="goFonVoicemailPIN">{t}Voicemail PIN{/t}{$must}</label>
+        <label for="goFonVoicemailPIN">{t}Voice mail PIN{/t}{$must}</label>
        </td>
        <td>
 {render acl=$goFonVoicemailPINACL checkbox=$multiple_support checked=$use_goFonVoicemailPIN}

@@ -1,8 +1,8 @@
 <h3>{t}Import jobs{/t}</h3>
 <p>
-{t}You can import a list of jobs into the GOsa job queue. This should be a semicolon seperated list of items in the following format:{/t}
+{t}You can import a list of jobs into the GOsa job queue. This should be a semicolon separated list of items in the following format:{/t}
 </p>
-<i>{t}timestamp{/t} ; {t}MAC-address{/t} ; {t}job type{/t} ; {t}object group{/t} [ ; {t}import base{/t} ; {t}full hostname{/t} ; {t}IP-address{/t} ; {t}DHCP group{/t} ]</i>
+<i>{t}time stamp{/t} ; {t}MAC-address{/t} ; {t}job type{/t} ; {t}object group{/t} [ ; {t}import base{/t} ; {t}full host name{/t} ; {t}IP address{/t} ; {t}DHCP group{/t} ]</i>
 <br>
 <br>
 {if !$count}
@@ -36,7 +36,7 @@
 		<table style='width:100%; background-color: #CCCCCC; ' summary="{t}Import summary{/t}">
 
 			<tr>
-				<td><b>{t}Timestamp{/t}</b></td>
+				<td><b>{t}Time stamp{/t}</b></td>
 				<td><b>{t}MAC{/t}</b></td>
 				<td><b>{t}Event{/t}</b></td>
 				<td><b>{t}Object group{/t}</b></td>

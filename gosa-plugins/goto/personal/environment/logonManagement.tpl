@@ -1,12 +1,12 @@
-<h3>{t}Logon script management{/t}</h3>
+<h3>{t}Log on script management{/t}</h3>
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
-    <table summary="{t}Logon script management{/t}" width="100%">
+    <table summary="{t}Log on script management{/t}" width="100%">
     	<tr>
 			<td class='right-border'>
 
-					<table summary="{t}Logon script settings{/t}">
+					<table summary="{t}Log on script settings{/t}">
 						<tr>
 							<td><LABEL for="LogonName">{t}Script name{/t}</LABEL>
 							</td>
@@ -33,7 +33,7 @@
 			</td>
 			<td>
 
-					<table summary="{t}Logon script flags{/t}">
+					<table summary="{t}Log on script flags{/t}">
 						<tr>
 							<td>
 								<input type="checkbox" value="L" name="LogonLast" {$LogonLastCHK} id="LogonLast">
@@ -54,7 +54,7 @@
   <hr>
 
 	<h3>{t}Script{/t}</h3>
-	<table width="100%" summary="{t}Logon script{/t}">
+	<table width="100%" summary="{t}Log on script{/t}">
 		<tr>
 			<td>
 				<textarea style="width:100%;height:400px;" name="LogonData">{$LogonData}</textarea>

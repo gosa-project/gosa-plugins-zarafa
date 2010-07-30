@@ -1106,9 +1106,9 @@ class faiManagement extends management
         "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",
           "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"),
         "opsi_netboot"       => array("IMG"=> "plugins/opsi/images/netboot_package.png",
-          "NAME"=>_("OPSI netboot product") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
+          "NAME"=>_("OPSI net boot product") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
         "opsi_local"         => array("IMG"=> "plugins/opsi/images/local_package.png",
-          "NAME"=>_("OPSI localboot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
+          "NAME"=>_("OPSI local boot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
 
     $icon_list = "";
     foreach($objects as $type => $type_data){

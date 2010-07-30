@@ -952,7 +952,7 @@ class phonequeue extends plugin
                         "telephoneNumber"           => _("Queue phone number"),
                         "goFonQueueLanguage"        => _("Language"),
                         "goFonQueueStrategy"        => _("Method"),
-                        "goFonQueueAnnounceHoldtime"=> _("Announce holdtime"),
+                        "goFonQueueAnnounceHoldtime"=> _("Announce hold time"),
                         "goFonQueueAnnounce"        => _("Announce"),
                         "goFonQueueRetry"           => _("Retry"))
                             ));

@@ -688,10 +688,10 @@ class faiPackage extends plugin
             "cn"                => _("Name"),
             "description"       => _("Description"),
             "FAIpackage"        => _("Packages"),
-            "FAIdebianSection"  => _("Section")."&nbsp;("._("Readonly").")",
+            "FAIdebianSection"  => _("Section")."&nbsp;("._("Read-only").")",
             "FAIinstallMethod"  => _("Install Method"),
             "FAIdebconfInfo"    => _("Package configuration"),
-            "FAIdebianRelease"  => _("Release")."&nbsp;("._("Readonly").")")
+            "FAIdebianRelease"  => _("Release")."&nbsp;("._("Read-only").")")
           ));
   }
 

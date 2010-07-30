@@ -32,7 +32,7 @@ class goLdapServer extends goService{
         /* Suggest a default value */
         if ($this->goLdapBase == ""){
             if ($this->dn == ""){
-                $srv= _("fill-in-your-servers-dns-name");
+                $srv= _("enter your servers DNS name");
             } else {
                 $srv= preg_replace("/^cn=([^,]+),.*$/", "$1", $this->dn);
             }
@@ -124,8 +124,8 @@ class goLdapServer extends goService{
     static function plInfo()
     {
         return (array(
-                    "plShortName"   => _("Ldap"),
-                    "plDescription" => _("Ldap")." ("._("Services").")",
+                    "plShortName"   => _("LDAP"),
+                    "plDescription" => _("LDAP service").")",
                     "plSelfModify"  => FALSE,
                     "plDepends"     => array(),
                     "plPriority"    => 96,
@@ -140,7 +140,7 @@ class goLdapServer extends goService{
                         "start"         => _("Start"),
                         "stop"          => _("Stop"),
                         "restart"       => _("Restart"),
-                        "goLdapBase" => _("Ldap base"))
+                        "goLdapBase" => _("LDAP base"))
                     ));
     }
 }

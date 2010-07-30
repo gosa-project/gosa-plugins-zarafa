@@ -10,7 +10,7 @@
   {if $dhcp_server_list_cnt}
    <tr>
     <td style='width:100%;'>
-     <b>{t}Take over dhcp configuration from following server{/t}</b>&nbsp;
+     <b>{t}Take over DHCP configuration from following server{/t}</b>&nbsp;
      <select name='take_over_src' size=1>
       {html_options options=$dhcp_server_list}
      </select>

@@ -318,7 +318,7 @@ class termservice extends plugin
         /* Do we represent a valid terminal? */
         if (!$this->is_account && $this->parent === NULL){
             $display= "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
-                _("This 'dn' has no terminal features.")."</b>";
+                _("This DN has no terminal features.")."</b>";
             return ($display);
         }
 
@@ -498,12 +498,12 @@ class termservice extends plugin
                 /* Check vsync for correct usage */
                 $val= preg_replace ("/\s/", "", $this->gotoXVsync);
                 if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val) && $this->acl_is_writeable("gotoXVsync")){
-                    $message[]= msgPool::invalid(_("VSync range"));
+                    $message[]= msgPool::invalid(_("Vertical synchronisation range"));
                 } elseif ($this->acl_is_writeable("gotoXVsync")){
                     list($v1,$v2)= preg_split ("/[-+]/", $val);
                     if ($v2 != ""){
                         if ($v1 > $v2){
-                            $message[]= msgPool::invalid(_("VSync range"));
+                            $message[]= msgPool::invalid(_("Vertical synchronization range"));
                         }
                     }
                 }
@@ -511,12 +511,12 @@ class termservice extends plugin
                 /* Check hsync for correct usage */
                 $val= preg_replace ("/\s/", "", $this->gotoXHsync);
                 if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val) && $this->acl_is_writeable("gotoXHsync")){
-                    $message[]= msgPool::invalid(_("HSync range"));
+                    $message[]= msgPool::invalid(_("Horizontal synchronization range"));
                 } elseif ($this->acl_is_writeable("gotoXHsync")){
                     list($v1,$v2)= preg_split ("/[-+]/", $val);
                     if ($v2 != ""){
                         if ($v1 > $v2){
-                            $message[]= msgPool::invalid(_("HSync range"));
+                            $message[]= msgPool::invalid(_("Horizontal synchronization range"));
                         }
                     }
                 }
@@ -712,11 +712,11 @@ class termservice extends plugin
                         "gotoXMonitor"            => _("Monitor"),
                         "gotoXMethod"             => _("Method"),
                         "gotoXdmcpServer"         => _("Remote desktop"),
-                        "gotoXDriver"             => _("Gfx driver"),
-                        "gotoXResolution"         => _("Gfx resolution"),
-                        "gotoXColordepth"         => _("Gfx color depth"),
-                        "gotoXHsync"              => _("HSync"),
-                        "gotoXVsync"              => _("VSync"),
+                        "gotoXDriver"             => _("Graphic driver"),
+                        "gotoXResolution"         => _("Graphic resolution"),
+                        "gotoXColordepth"         => _("Graphic color depth"),
+                        "gotoXHsync"              => _("Horizontal Synchronization"),
+                        "gotoXVsync"              => _("Vertical Synchronization"),
                         "AutoSync"                => _("Auto-Sync"),
                         "gotoScannerEnable"       => _("Scanner enabled"),
                         "gotoLpdEnable"           => _("Printer enabled"),

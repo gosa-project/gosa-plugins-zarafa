@@ -56,7 +56,7 @@
 					<td>{$data.MACADDRESS}</td>
 				</tr>
 				<tr>
-					<td>{t}Timestamp{/t}
+					<td>{t}Time stamp{/t}
 </td>
 					<td>{$timestamp}</td>
 				</tr>

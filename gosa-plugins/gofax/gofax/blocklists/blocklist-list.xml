@@ -8,11 +8,11 @@
     <multiSelect>true</multiSelect>
     <template>blocklist-list.tpl</template>
     <module>gofaxlist</module>
-    <label>List of blocklists</label>
+    <label>List of blacklists</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
-      <label>Send blocklist</label>
+      <label>Send blacklist</label>
       <objectClass>goFaxSBlock</objectClass>
       <category>gofaxlist</category>
       <class>blocklistGeneric</class>
@@ -20,7 +20,7 @@
     </objectType>
 
     <objectType>
-      <label>Receive blocklist</label>
+      <label>Receive blacklist</label>
       <objectClass>goFaxRBlock</objectClass>
       <category>gofaxlist</category>
       <class>blocklistGeneric</class>
@@ -79,7 +79,7 @@
       <name>new</name>
       <type>entry</type>
       <image>plugins/gofax/images/select_blocklist.png[new]</image>
-      <label>Blocklist</label>
+      <label>Blacklist</label>
      </action>
     </action>
 

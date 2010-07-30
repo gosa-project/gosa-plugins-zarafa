@@ -278,7 +278,7 @@ class workgeneric extends plugin
                             "update" => _("Software update"),
                             "reinstall" => _("Reinstall"),
                             "rescan" => _("Rescan hardware"),
-                            "localboot" => _("Force localboot"),
+                            "localboot" => _("Force local boot"),
                             )
                         )
                     );
@@ -289,7 +289,7 @@ class workgeneric extends plugin
                             "wakeup" => _("Wake up"),
                             "reinstall" => _("Reinstall"),
                             "update" => _("Software update"),
-                            "localboot" => _("Force localboot"),
+                            "localboot" => _("Force local boot"),
                             )
                         )
                     );
@@ -488,7 +488,7 @@ class workgeneric extends plugin
                     !count($this->parent->by_object['workstartup']->gotoLdapServers) && 
                     !$this->parent->by_object['workstartup']->gotoLdap_inherit){
 
-                $message[] = _("A valid LDAP server assignement is missing!");
+                $message[] = _("A valid LDAP server assignment is missing!");
             }
         }else{
             /* Warn the user, that this host is currently installing */
@@ -729,7 +729,7 @@ class workgeneric extends plugin
                                 "base"                => _("Base") ,
                                 "gotoMode"            => _("Goto mode"), 
                                 "gotoSyslogServer"    => _("Syslog server"), 
-                                "gotoNtpServer"       => _("Ntp server"), 
+                                "gotoNtpServer"       => _("NTP server"), 
                                 "userPassword"      => _("Root password"),
                                 "createFAICD"         => _("Create FAI CD"),
                                 "FAIstate"            => _("Action flag"))

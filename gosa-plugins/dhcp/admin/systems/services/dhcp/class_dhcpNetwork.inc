@@ -192,7 +192,7 @@ class dhcpNetwork extends plugin
         $message= array();
 
         /* Check netmask and broadcast */
-        foreach(array("subnet-mask" => _("Netmask"), "broadcast-address" => _("Broadcast")) as $key => $typ){
+        foreach(array("subnet-mask" => _("Net mask"), "broadcast-address" => _("Broadcast address")) as $key => $typ){
             if (!$this->options->exists("$key")){
                 continue;
             }

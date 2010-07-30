@@ -15,7 +15,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Netmask{/t}{$must}</td>
+     <td>{t}Net mask{/t}{$must}</td>
      <td>
       {render acl=$acl}
        <input type='text' name='dhcp_netmask' value='{$dhcp_netmask}'>

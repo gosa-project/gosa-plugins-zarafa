@@ -147,11 +147,11 @@ class faiPartitionTableEntry extends plugin
     if (count($this->partitions)){
       $str .= "<tr>";
       $str .= "<td><b>"._("Type")."</b></td>";
-      $str .= "<td><b>"._("FS type")."</b></td>";
+      $str .= "<td><b>"._("Filesystem type")."</b></td>";
       $str .= "<td><b>"._("Mount point")."</b></td>";
       $str .= "<td><b>"._("Size in MB")."</b></td>";
       $str .= "<td><b>"._("Mount options")."</b></td>";
-      $str .= "<td><b>"._("FS option")."</b></td>";
+      $str .= "<td><b>"._("Filesystem option")."</b></td>";
       $str .= "<td><b>"._("Preserve")."</b></td>";
       $str .= "<td>&nbsp;</td>";
       $str .= "</tr>";
@@ -371,7 +371,7 @@ class faiPartitionTableEntry extends plugin
         }
       }
       if(($part['FAIfsType'] == "swap")&&(!empty($part['FAImountPoint']))&&($part['FAImountPoint']!="swap")){
-        $message[]=_("Please use 'swap' as mount point, if 'swap' is used as fs-type.");
+        $message[]=_("Please use 'swap' as mount point, if 'swap' is used as file system type.");
       }
 
       $tmp = explode("-",$part['FAIpartitionSize']);

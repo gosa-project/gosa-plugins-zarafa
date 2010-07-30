@@ -5,7 +5,7 @@
 <p>
  {$warning}
 </p>
-<p>{t}The ppd file will be removed from the server and can not be restored.{/t}
+<p>{t}The PPD file will be removed from the server and can not be restored.{/t}
 </p>
 <hr>
 <div class="plugin-actions">

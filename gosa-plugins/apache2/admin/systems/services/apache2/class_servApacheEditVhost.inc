@@ -220,7 +220,7 @@ class servapacheVhostEdit extends plugin
         /* Check given mail address 
          */ 
         if(!tests::is_email($this->apacheServerAdmin) || empty($this->apacheServerAdmin)){
-            $message[] = msgPool::invalid(_("Admin mail address"),$this->apacheServerAdmin);
+            $message[] = msgPool::invalid(_("Administrator mail address"),$this->apacheServerAdmin);
         }
 
         /* Check server aliases 

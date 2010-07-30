@@ -191,7 +191,7 @@ class apacheUtils extends plugin
     {
         $ret = "";
         if(!strstr($apacheServerNameMix, '/')) {
-            print_red(sprintf(_("Undefined vhost name '%s'. Vhost name must look like this 'www.example.com or example.com'."),$apacheServerNameMix));
+            print_red(sprintf(_("Undefined virtual host name '%s'. Virtual host name must be a valid, fully qualified domain name like 'www.example.com' or 'example.com'."),$apacheServerNameMix));
             return($ret);
         }
 

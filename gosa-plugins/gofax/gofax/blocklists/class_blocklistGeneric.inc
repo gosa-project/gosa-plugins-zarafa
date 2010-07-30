@@ -6,7 +6,7 @@ define("BLOCK_LIST_SEND" , 1);
 class blocklistGeneric extends plugin
 {
   /* Definitions */
-  var $plHeadline= "Fax blocklists";
+  var $plHeadline= "FAX blacklists";
   var $plDescription= "This does something";
 
   var $cn ="";
@@ -371,7 +371,7 @@ class blocklistGeneric extends plugin
   {
       return (array(
                   "plShortName"       => _("Fax"),
-                  "plDescription"     => _("Fax blocklists"),
+                  "plDescription"     => _("Fax blacklists"),
                   "plSelfModify"      => FALSE,
                   "plDepends"         => array(),
                   "plRequirements"=> array(
@@ -379,8 +379,8 @@ class blocklistGeneric extends plugin
                       'onFailureDisablePlugin' => array(get_class(),'blocklist')
                       ),
                   "plPriority"    => 0,
-                  "plSection"     => array("administration" => _("Fax blocklists")),
-                  "plCategory"    => array("gofaxlist"      => array("description" => _("Fax blocklists"),
+                  "plSection"     => array("administration" => _("Fax blacklists")),
+                  "plCategory"    => array("gofaxlist"      => array("description" => _("Fax blacklists"),
                           "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
                   "plProperties" =>
                   array(
@@ -400,9 +400,9 @@ class blocklistGeneric extends plugin
             "cn"              => _("Name"),
             "description"     => _("Description"),
             "base"            => _("Base"),
-            "goFaxSBlocklist"  => _("Send blocklist entries"),
-            "goFaxRBlocklist"  => _("Receive blocklist entries"),
-            "type"            => _("Blocklist type"))
+            "goFaxSBlocklist"  => _("Send blacklist entries"),
+            "goFaxRBlocklist"  => _("Receive blacklist entries"),
+            "type"            => _("Blacklist type"))
           ));
   }
 

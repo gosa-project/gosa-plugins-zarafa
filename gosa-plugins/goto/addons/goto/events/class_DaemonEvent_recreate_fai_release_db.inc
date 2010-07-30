@@ -27,8 +27,8 @@ class DaemonEvent_recreate_fai_release_db extends DaemonEvent
     public function __construct($config,$data = array())
     {
         DaemonEvent::__construct($config,$data);
-        $this->s_Menu_Name  = _("Reload fai release db"); 
-        $this->s_Event_Name = _("Reload fai release db"); 
+        $this->s_Menu_Name  = _("Reload FAI release db"); 
+        $this->s_Event_Name = _("Reload FAI release db"); 
         $this->s_Schedule_Action= "gosa_recreate_fai_release_db";
         $this->s_Trigger_Action = "gosa_recreate_fai_release_db";
         $this->s_Queued_Action  = "recreate_fai_release_db";

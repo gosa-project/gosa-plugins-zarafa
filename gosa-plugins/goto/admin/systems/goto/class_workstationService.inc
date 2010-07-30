@@ -380,15 +380,15 @@ class workservice extends plugin
 
                 if($this->acl_is_writeable("gotoXVsync")){
                     if(empty($val)){
-                        $message[]= msgPool::required(_("VSync"));
+                        $message[]= msgPool::required(_("Vertical synchronization"));
                     }elseif (!preg_match ("/^\d+(\.\d+)?([+-]\d+(\.\d+)?)?$/", $val)){
-                        $message[]= msgPool::invalid(_("VSync"));
+                        $message[]= msgPool::invalid(_("Vertical synchronization"));
                     } else{
                         if (!preg_match('/^\d+$/', $val)){
                             list($v1,$v2)= preg_split ("/[-+]/", $val);
                             if ($v2 != ""){
                                 if ($v1 > $v2){
-                                    $message[]= msgPool::invalid(_("VSync"));
+                                    $message[]= msgPool::invalid(_("Vertical synchronization"));
                                 }
                             }
                         }
@@ -399,15 +399,15 @@ class workservice extends plugin
                 $val= preg_replace ("/\s/", "", $this->gotoXHsync);
                 if($this->acl_is_writeable("gotoXHsync")){
                     if(empty($val)){
-                        $message[]= msgPool::required(_("HSync"));
+                        $message[]= msgPool::required(_("Horizontal synchronization"));
                     }elseif (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
-                        $message[]= msgPool::invalid(_("HSync"));
+                        $message[]= msgPool::invalid(_("Horizontal synchronization"));
                     } else{
                         if (!preg_match('/^\d+$/', $val)){
                             list($v1,$v2)= preg_split ("/[-+]/", $val);
                             if ($v2 != ""){
                                 if ($v1 > $v2){
-                                    $message[]= msgPool::invalid(_("HSync"));
+                                    $message[]= msgPool::invalid(_("Horizontal synchronization"));
                                 }
                             }
                         }
@@ -507,11 +507,11 @@ class workservice extends plugin
 
                     "plProvidedAcls"=> array(
                         "gotoXMonitor"          => _("Monitor"),
-                        "gotoXDriver"           => _("Gfx driver"),
-                        "gotoXResolution"       => _("Gfx resolution"),
-                        "gotoXColordepth"       => _("Gfx color depth"),
-                        "gotoXHsync"            => _("HSync"),
-                        "gotoXVsync"            => _("VSync"),
+                        "gotoXDriver"           => _("Graphic driver"),
+                        "gotoXResolution"       => _("Graphic resolution"),
+                        "gotoXColordepth"       => _("Graphic color depth"),
+                        "gotoXHsync"            => _("Horizontal synchronization"),
+                        "gotoXVsync"            => _("Vertical synchronization"),
                         "AutoSync"              => _("Use DDC"),
                         "gotoScannerEnable"     => _("Scanner enabled"),
                         "gotoXKbModel"          => _("Keyboard model"),

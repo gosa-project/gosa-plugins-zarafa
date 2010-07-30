@@ -1,7 +1,7 @@
 
 {if $is_new}
 
-<table style='width:100%;' summary="{t}Goto daemon event: Localboot{/t}">
+<table style='width:100%;' summary="{t}Goto daemon event: local boot{/t}">
   <tr>
     <td style='width:50%; ' class='right-border'>
 
@@ -52,7 +52,7 @@
 					<td>{$data.MACADDRESS}</td>
 				</tr>
 				<tr>
-					<td>{t}Timestamp{/t}
+					<td>{t}Time stamp{/t}
 </td>
 					<td>{$timestamp}</td>
 				</tr>

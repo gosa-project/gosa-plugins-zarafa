@@ -117,7 +117,7 @@
 {render acl=$placeInStartmenuACL}
       <input type=checkbox name="placeInStartmenu" value="1" {$placeInStartmenu}>
 {/render}
-      {t}Place entry in members startmenu{/t}
+      {t}Place entry in members start menu{/t}
       <br>
 {render acl=$placeOnKickerACL}
       <input type=checkbox name="placeOnKicker" value="1" {$placeOnKicker}>
@@ -129,7 +129,7 @@
 
 <hr>
 
-<table width="99%" summary="{t}Logon script{/t}">
+<table width="99%" summary="{t}Log on script{/t}">
 	<tr>
 		<td>
 			<h3>{t}Script{/t}</h3>

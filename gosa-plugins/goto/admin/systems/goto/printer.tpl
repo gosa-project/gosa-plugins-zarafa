@@ -129,7 +129,7 @@
      <td>
       {t}Users which are allowed to administrate this printer{/t}<br>
 {render acl=$gotoUserPrinterACL}
-           <select size="1" name="AdminMember[]" title="{t}Admins{/t}" style="width:100%;height:120px;"  multiple>
+           <select size="1" name="AdminMember[]" title="{t}Administrators{/t}" style="width:100%;height:120px;"  multiple>
                     {html_options options=$AdminMembers values=$AdminMemberKeys}
                    </select><br>
 {/render}

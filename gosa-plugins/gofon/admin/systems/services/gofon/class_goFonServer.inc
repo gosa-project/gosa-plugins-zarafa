@@ -180,7 +180,7 @@ class goFonServer extends goService{
                         "stop"          => _("Stop"),
                         "restart"       => _("Restart"),
 
-                        "goFonAdmin"      => _("Admin"), 
+                        "goFonAdmin"      => _("Administrator"), 
                         "goFonPassword"   => _("Password"),
                         "goFonAreaCode"   => _("Area code"), 
                         "goFonCountryCode"=> _("Country code"))

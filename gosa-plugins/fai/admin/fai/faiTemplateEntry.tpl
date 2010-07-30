@@ -127,7 +127,7 @@
           <input type="checkbox" name="s4" value="4" {$s4}>
          </td>
         {/render}
-        <td>({t}SUID{/t})
+        <td>(SUID)
         </td>
        </tr>
        <tr>
@@ -155,7 +155,7 @@
           <input type="checkbox" name="s2" value="2" {$s2}>
          </td>
         {/render}
-        <td>({t}SGID{/t})
+        <td>(SGID)
         </td>
        </tr>
        <tr>

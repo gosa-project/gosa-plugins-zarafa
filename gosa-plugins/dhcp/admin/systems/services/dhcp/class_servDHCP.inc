@@ -43,7 +43,7 @@ class servdhcp extends goService
                 "dhcpGroup" => _("Group"),
                 "dhcpPool" => _("Pool"),
                 "dhcpSubnet" => _("Subnet"),
-                "dhcpFailOverPeer" => _("Failover peer"),
+                "dhcpFailOverPeer" => _("Fail-over peer"),
                 "dhcpSharedNetwork" => _("Shared network"),
                 "dhcpTSigKey" => _("DNS update key"),
                 "dhcpDnsZone" => _("DNS update zone") );
@@ -706,7 +706,7 @@ class servdhcp extends goService
 
         /* That should not happen... */
         if ($type == ""){
-            msg_dialog::display(_("Error"), _("The DHCP configuration set is unkown. Please contact your system administrator."), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), _("The DHCP configuration set is unknown. Please contact your system administrator."), ERROR_DIALOG);
         }
 
         return ($type);

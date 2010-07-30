@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-07-30 10:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
+msgid "Intra net account"
 msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:132
+#: personal/connectivity/class_connectivity.inc:268
 msgid "Connectivity"
 msgstr ""
 
@@ -31,26 +30,29 @@ msgstr ""
 msgid "This does something"
 msgstr ""
 
-#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_connectivity.inc:271
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr ""
 
-#: personal/connectivity/class_connectivity.inc:276
-#: personal/connectivity/class_intranetAccount.inc:212
-msgid "Connectivity addon"
+#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_intranetAccount.inc:217
+msgid "Connectivity add-on"
 msgstr ""
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Intranet"
+msgid "Intra net"
 msgstr ""
 
 #: personal/connectivity/class_intranetAccount.inc:126
-#: personal/connectivity/class_intranetAccount.inc:193
+#: personal/connectivity/class_intranetAccount.inc:195
 msgid "LDAP error"
 msgstr ""
 
-#: personal/connectivity/class_intranetAccount.inc:212
-msgid "Intranet account settings"
+#: personal/connectivity/class_intranetAccount.inc:205
+msgid "Intra-net"
+msgstr ""
+
+#: personal/connectivity/class_intranetAccount.inc:217
+msgid "Intra-net account settings"
 msgstr ""

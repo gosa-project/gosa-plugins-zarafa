@@ -501,7 +501,7 @@ class faiDiskEntry extends plugin
         $opt.= "&nbsp;"._("encrypted").", ";
       }      
       if(isset($part['bootable']) && $part['bootable']){
-        $opt.= "&nbsp;"._("bootable").", ";
+        $opt.= "&nbsp;"._("boot able").", ";
       }      
       if(isset($part['preserve']) && $part['preserve']){
         $opt.= "&nbsp;"._("preserve").":&nbsp;".$part['preserveType'].", ";

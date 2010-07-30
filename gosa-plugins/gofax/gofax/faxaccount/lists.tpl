@@ -18,7 +18,7 @@
 
   </td>
   <td>
-	<b>{t}List of predefined blocklists{/t}</b><br>
+	<b>{t}List of predefined blacklists{/t}</b><br>
 	<table style="width:100%;height:300px;" summary="{t}List of blocked numbers{/t}">
 		<tr>
 			<td valign="top">
@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 	</table>
-   <button type='submit' name='add_blocklist'>{t}Add the list to the blocklists{/t}</button>
+   <button type='submit' name='add_blocklist'>{t}Add the list to the blacklists{/t}</button>
 <br>
   </td>
  </tr>

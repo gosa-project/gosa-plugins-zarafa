@@ -93,7 +93,7 @@ class printerPPDDialog extends plugin
         /* Fill templating stuff */
         $display= "";
         $smarty= get_smarty();
-        $smarty->assign("ppdString", _("Can't get ppd informations."));
+        $smarty->assign("ppdString", _("Can't get PPD information."));
         $smarty->assign("showOptions", "");
         $smarty->assign("path_valid", TRUE);
         $smarty->assign("acl",$this->ui->get_permissions($this->acl_base,"printer/printgeneric","gotoPrinterPPD"));
@@ -314,7 +314,7 @@ class printerPPDDialog extends plugin
                     }else{
                         $this->add_ppd_later = $_PathOnHdd."_back";
                         $this->add_later_msg_dialog = new msg_dialog(_("Overwrite existing PPD"),
-                                _("There is already a ppd file for this kind of printer. Do you want to overwrite it?"),CONFIRM_DIALOG);
+                                _("There is already a PPD file for this kind of printer. Do you want to overwrite it?"),CONFIRM_DIALOG);
                     }
                     return;
                 }
@@ -570,7 +570,7 @@ class printerPPDDialog extends plugin
     {  
         $message = plugin::check();
         if(empty($this->selectedPPD['link'])){
-            $message[] = _("Please select a valid ppd file or use 'Cancel' to go back to printer configuration.");
+            $message[] = _("Please select a valid PPD file or use 'Cancel' to go back to printer configuration.");
         }
         return($message); 
     }

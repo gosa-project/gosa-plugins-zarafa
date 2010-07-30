@@ -3,17 +3,17 @@
 
 <h3>{t}Profiles{/t}</h3>
 
-<table summary="{t}Environment managment settings{/t}" width="100%">
+<table summary="{t}Environment management settings{/t}" width="100%">
  <tr>
   <td>   
    {if $multiple_support}
    {render acl=$gotoProfileACL checkbox=$multiple_support checked=$use_useProfile}
    <input class="center" type="checkbox" value="1" {if $useProfile} checked {/if} 
-   name="useProfile" id="useProfile">{t}Use profile managment{/t}
+   name="useProfile" id="useProfile">{t}Use profile management{/t}
    {/render}
    <br>
    {render acl=$gotoProfileServerACL checkbox=$multiple_support checked=$use_gotoProfileServer}
-   {t}Profil path{/t}
+   {t}Profile path{/t}
    <select id="gotoProfileServer" name="gotoProfileServer" size=1>
     {foreach from=$gotoProfileServers key=key item=item}
     <option {if $gotoProfileServer == $key} selected {/if}value='{$key}'>{$item.DISPLAY}</option>
@@ -28,13 +28,13 @@
    <br>
    {render acl=$gotoProfileFlagCACL checkbox=$multiple_support checked=$use_gotoProfileFlagC}
    <input class="center" type="checkbox" name="gotoProfileFlagC" value="C" {$gotoProfileFlagCCHK} id="gotoProfileFlagC">&nbsp;
-   {t}Cache profile localy{/t}
+   {t}Cache profile locally{/t}
    {/render}
    
    {else}
    
    
-   <table summary="{t}Profile managment{/t}">
+   <table summary="{t}Profile management{/t}">
     <tr>
      <td>
 
@@ -44,17 +44,17 @@
      </td>
      <td>
 
-      <label for="useProfile">{t}Use profile managment{/t}</label>
+      <label for="useProfile">{t}Use profile management{/t}</label>
      </td>
     </tr>
     <tr>
      <td>&nbsp;
      </td>
      <td>
-      <table summary="{t}Profile server managment{/t}">
+      <table summary="{t}Profile server management{/t}">
        <tr>
         <td> 
-         <label for="gotoProfileServer">{t}Profil path{/t}</label>
+         <label for="gotoProfileServer">{t}Profile path{/t}</label>
         </td>
         <td>
          {render acl=$gotoProfileServerACL}
@@ -78,7 +78,7 @@
        </tr>
        <tr>
         <td>
-         <label for="gotoProfileQuota">{t}Profil quota{/t}</label> 
+         <label for="gotoProfileQuota">{t}Profile quota{/t}</label> 
          <br>
          <br>
         </td>
@@ -95,7 +95,7 @@
          {render acl=$gotoProfileFlagCACL}
          <input class="center" type="checkbox" name="gotoProfileFlagC" value="C" {$gotoProfileFlagCCHK} id="gotoProfileFlagC">&nbsp;
          {/render}
-         <label for="gotoProfileFlagC">{t}Cache profile localy{/t}</label>
+         <label for="gotoProfileFlagC">{t}Cache profile locally{/t}</label>
         </td>
        </tr>
       </table>
@@ -195,7 +195,7 @@
 
 <hr>
 
-<table summary="{t}Environment managment settings{/t}" width="100%">
+<table summary="{t}Environment management settings{/t}" width="100%">
  <tr>
   <td style='width:50%;' class='right-border'>
 
@@ -232,8 +232,8 @@
   </td>
   <td>
 
-   <h3><label for="gotoLogonScript">{t}Logon scripts{/t}</label></h3>
-   <table summary="{t}Logon script management{/t}" style="width:100%">
+   <h3><label for="gotoLogonScript">{t}Log on scripts{/t}</label></h3>
+   <table summary="{t}Log on script management{/t}" style="width:100%">
     <tr>
      <td>
       {render acl=$gotoLogonScriptACL}
@@ -278,12 +278,12 @@
 
 <hr>
 
-<table summary="{t}Environment managment settings{/t}" width="100%">
+<table summary="{t}Environment management settings{/t}" width="100%">
  <tr>
   <td style='width:50%; ' class='right-border'>
 
-   <h3><label for="gotoHotplugDevice_post">{t}Hotplug devices{/t}</label></h3> 
-   <table style="width:100%" summary="{t}Hotplug device settings{/t}">
+   <h3><label for="gotoHotplugDevice_post">{t}Hot-plug devices{/t}</label></h3> 
+   <table style="width:100%" summary="{t}Hot-plug device settings{/t}">
     <tr>
      <td>
       {render acl=$gotoHotplugDeviceDNACL}
@@ -347,7 +347,7 @@
         {/render}
         {render acl=$gotoPrinterACL}
         <button type='submit' name='gotoPrinterEdit' {if !$gotoPrinter} disabled {/if}
-        >{t}Toggle admin{/t}</button>
+        >{t}Toggle administrator{/t}</button>
         
         {/render}
         {render acl=$gosaDefaultPrinterACL}
@@ -384,7 +384,7 @@
        {/render}
        {render acl=$gotoPrinterACL}
        <button type='submit' name='gotoPrinterEdit' {if !$gotoPrinter} disabled {/if}
-       >{t}Toggle admin{/t}</button>
+       >{t}Toggle administrator{/t}</button>
        
        {/render}
        {render acl=$gosaDefaultPrinterACL}

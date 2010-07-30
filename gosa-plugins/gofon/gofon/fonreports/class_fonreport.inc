@@ -423,7 +423,7 @@ class viewFonEntries{
     {
         return (array(
                     "plShortName"   => _("View phone reports"),
-                    "plDescription" => _("View phone reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
+                    "plDescription" => _("View phone reports")."&nbsp;<i>"._("All entries are read-only")."</i>",
                     "plSelfModify"  => TRUE,
                     "plDepends"     => array(),
                     "plPriority"    => 88,

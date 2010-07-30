@@ -185,7 +185,7 @@ class faiSummaryTab extends plugin{
 
     /* Skip this if fai is deactivated */
     if(!$this->config->pluginEnabled("faiManagement")){
-      $str = "<h3>"._("You can't use this plugin until FAI is activated.")."</h3>";
+      $str = "<h3>"._("You can't use this plug-in until FAI is activated.")."</h3>";
       return $str;
     }    
 
@@ -347,7 +347,7 @@ class faiSummaryTab extends plugin{
                       <tr style='background-color:#DBDBDB;'>
                        <td class='tbhead'>"._("No.")."</td>
                        <td class='tbhead'>"._("Name")."</td>
-                       <td class='tbhead'>"._("FS options")."</td>
+                       <td class='tbhead'>"._("File system options")."</td>
                        <td class='tbhead'>"._("Mount options")."</td>
                        <td class='tbhead'>"._("Size in MB")."</td>
                        <td class='tbhead'>"._("Mount point")."</td>

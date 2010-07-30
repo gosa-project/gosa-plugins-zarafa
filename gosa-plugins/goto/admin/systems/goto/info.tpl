@@ -77,7 +77,7 @@
      <td>{$FloppyDevice}</td>
     </tr>
     <tr>
-     <td><b>{t}CDROM device{/t}</b></td>
+     <td><b>{t}CD-ROM device{/t}</b></td>
      <td>{$CdromDevice}</td>
     </tr>
     <tr><td colspan=2><div style="height:10px;"></div></td></tr>

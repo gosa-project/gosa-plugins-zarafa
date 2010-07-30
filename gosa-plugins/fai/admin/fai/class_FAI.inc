@@ -1091,7 +1091,7 @@ class FAI
      */
     $ldap->cat($destinationdn);
     if($ldap->count()){
-      echo _("Could not create new release, the destination dn is already in use.");
+      echo _("Could not create new release, the destination DN is already in use.");
       return;
     }else{
 
@@ -1104,7 +1104,7 @@ class FAI
       $ldap->cat($sourcedn);
       $attr = $ldap->fetch();
       if((!$attr) || (count($attr)) ==0) {
-        echo _("Error while fetching source dn - aborted!");
+        echo _("Error while fetching source DN - aborted!");
         return;
       }
 
@@ -1186,7 +1186,7 @@ class FAI
 
           /* Some error occurred */
           msg_dialog::display(_("Fatal error"),
-              sprintf(_("Release creation failed due to ldap errors. Additional informations '%s'."),
+              sprintf(_("Release creation failed due to LDAP errors: %s"),
                 $ldap->get_error()."<br>".$sourcedn."<br>".$destinationdn."<br>"),FATAL_ERROR_DIALOG);
           exit();
         }

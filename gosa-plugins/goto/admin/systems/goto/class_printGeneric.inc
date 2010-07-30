@@ -571,7 +571,7 @@ class printgeneric extends plugin
                 $smarty->assign("displayServerPath",false);
             }
         }else{
-            $smarty->assign("driverInfo",_("Can't get ppd informations."));
+            $smarty->assign("driverInfo",_("Can't get PPD informations."));
             $smarty->assign("displayServerPath",true);
         }
         $smarty->assign("ppdServerPart",$this->ppdServerPart);
@@ -1022,7 +1022,7 @@ class printgeneric extends plugin
                     "base"                => _("Base") ,         
                     "description"       => _("Description"), 
                     "l"                 => _("Location"), 
-                    "labeledURI"        => _("LabeledURL"), 
+                    "labeledURI"        => _("Labeled URI"), 
                     "macAddress"        => _("Mac address"), 
                     "gotoPrinterPPD"    => _("Printer PPD"),
                     "gotoUserPrinter"   => _("Permissions")) 

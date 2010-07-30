@@ -5,7 +5,7 @@
   <tr>
     <td style='width:50%; ' class='right-border'>
 
-      <table  summary="{t}Shedule options{/t}">
+      <table  summary="{t}Schedule options{/t}">
         <tr>
           <td>
 <b>{t}Schedule{/t}</b><br><br>
@@ -52,7 +52,7 @@
 					<td>{$data.MACADDRESS}</td>
 				</tr>
 				<tr>
-					<td>{t}Timestamp{/t}
+					<td>{t}Time stamp{/t}
 </td>
 					<td>{$timestamp}</td>
 				</tr>

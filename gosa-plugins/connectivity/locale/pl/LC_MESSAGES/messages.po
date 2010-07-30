@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-07-30 10:40+0200\n"
 "PO-Revision-Date: 2009-09-05 15:16+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,12 +15,12 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
+#, fuzzy
+msgid "Intra net account"
 msgstr "Konto Intranet"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:132
+#: personal/connectivity/class_connectivity.inc:268
 msgid "Connectivity"
 msgstr "Połączenia"
 
@@ -29,28 +29,35 @@ msgstr "Połączenia"
 msgid "This does something"
 msgstr "To robi coś"
 
-#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_connectivity.inc:271
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Moje konto "
 
-#: personal/connectivity/class_connectivity.inc:276
-#: personal/connectivity/class_intranetAccount.inc:212
-msgid "Connectivity addon"
+#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_intranetAccount.inc:217
+#, fuzzy
+msgid "Connectivity add-on"
 msgstr "dodatek Połączeń"
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Intranet"
+#, fuzzy
+msgid "Intra net"
 msgstr "Inranet"
 
 #: personal/connectivity/class_intranetAccount.inc:126
-#: personal/connectivity/class_intranetAccount.inc:193
+#: personal/connectivity/class_intranetAccount.inc:195
 msgid "LDAP error"
 msgstr "błąd LDAP"
 
-#: personal/connectivity/class_intranetAccount.inc:212
-msgid "Intranet account settings"
+#: personal/connectivity/class_intranetAccount.inc:205
+#, fuzzy
+msgid "Intra-net"
+msgstr "Inranet"
+
+#: personal/connectivity/class_intranetAccount.inc:217
+#, fuzzy
+msgid "Intra-net account settings"
 msgstr "Ustawienia konta Intranet"
 
 #~ msgid "This account has no connectivity extensions."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-07-30 10:40+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -17,12 +17,11 @@ msgstr ""
 
 #: personal/connectivity/intranet.tpl:4
 #, fuzzy
-msgid "Intranet account"
+msgid "Intra net account"
 msgstr "Crea estensioni telefoniche"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:132
+#: personal/connectivity/class_connectivity.inc:268
 msgid "Connectivity"
 msgstr "Connettività"
 
@@ -31,31 +30,36 @@ msgstr "Connettività"
 msgid "This does something"
 msgstr "Questo fa qualcosa"
 
-#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_connectivity.inc:271
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Identità"
 
-#: personal/connectivity/class_connectivity.inc:276
-#: personal/connectivity/class_intranetAccount.inc:212
+#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_intranetAccount.inc:217
 #, fuzzy
-msgid "Connectivity addon"
+msgid "Connectivity add-on"
 msgstr "Connettività"
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Intranet"
-msgstr ""
+#, fuzzy
+msgid "Intra net"
+msgstr "Crea estensioni telefoniche"
 
 #: personal/connectivity/class_intranetAccount.inc:126
-#: personal/connectivity/class_intranetAccount.inc:193
+#: personal/connectivity/class_intranetAccount.inc:195
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
 
-#: personal/connectivity/class_intranetAccount.inc:212
+#: personal/connectivity/class_intranetAccount.inc:205
 #, fuzzy
-msgid "Intranet account settings"
+msgid "Intra-net"
+msgstr "Crea estensioni telefoniche"
+
+#: personal/connectivity/class_intranetAccount.inc:217
+#, fuzzy
+msgid "Intra-net account settings"
 msgstr "Crea estensioni telefoniche"
 
 #~ msgid "This account has no connectivity extensions."
