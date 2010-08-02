@@ -23,6 +23,13 @@ class rsyslog extends plugin
 
   function rsyslog (&$config, $dn= NULL)
   {
+      $this->initTime = microtime(TRUE);
+
+      // Create statistic table entry
+      stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+              $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
+
     $this->config= &$config;
     $this->ui = get_userinfo();
 
