@@ -18,10 +18,15 @@ class opsiProperties extends plugin
      */
     public function __construct($config,$product,$cfg = array() ,$hostId = "")
     {
+        $this->initTime = microtime(TRUE);
         $this->config  = $config;
         $this->product = $product;
         $this->cfg     = $cfg;
         $this->hostId  = $hostId;
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
     }
 
 
