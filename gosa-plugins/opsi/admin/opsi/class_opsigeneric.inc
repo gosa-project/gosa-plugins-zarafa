@@ -56,6 +56,7 @@ class opsiGeneric extends plugin
     {
         /* Create opsi handle
          */
+        $this->initTime = microtime(TRUE);
         $this->opsi = new opsi($config); 
         $this->config = $config;
 
@@ -100,6 +101,11 @@ class opsiGeneric extends plugin
         $this->availableList->setColspecs(array('20px','*','*'));
         $this->availableList->setHeader(array("",_("Name"),_("Description")));
         $this->availableList->setDefaultSortColumn(1);
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
     }
 
 
