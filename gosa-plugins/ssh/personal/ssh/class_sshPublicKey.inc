@@ -34,6 +34,7 @@ class sshPublicKey extends plugin
   function sshPublicKey(&$config, $dn, $acl)
   {
     /* Configuration is fine, allways */
+    $this->initTime = microtime(TRUE);
     $this->config= &$config;
     $this->dn= $dn;
     $this->acl= $acl;
@@ -63,6 +64,10 @@ class sshPublicKey extends plugin
 
     // Save copy for later usage
     $this->storedPublicKeys= $this->publicKeys;
+
+    // Create statistic table entry
+    stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+            $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
   }
 
 
