@@ -37,6 +37,7 @@ class krb5_policy extends plugin
      */
     public function __construct($config,$entry,$parent)
     {
+      $this->initTime = microtime(TRUE);
         $this->config = $config;
         $this->parent = $parent;
         if(count($entry)){
@@ -53,6 +54,11 @@ class krb5_policy extends plugin
             $this->data['PW_MIN_LIFE']    = 36000;
         }
         $this->init_name = $this->name;
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
     }
 
 
