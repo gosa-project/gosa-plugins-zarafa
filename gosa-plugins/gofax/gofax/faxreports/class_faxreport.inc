@@ -43,6 +43,8 @@ class faxreport extends plugin
     /* Create class */
     function faxreport (&$config, &$ui)
     {
+        $this->initTime = microtime(TRUE);
+
         /* Include config object */
         $this->config       = $config;
         $this->ui           = &$ui;
@@ -73,6 +75,11 @@ class faxreport extends plugin
         foreach($tmp as $attrs){
             $this->uidToDN[$attrs['uid'][0]] = $attrs['dn'];
         }
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
     }
 
 
