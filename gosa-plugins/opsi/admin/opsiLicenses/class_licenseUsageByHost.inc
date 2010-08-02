@@ -33,6 +33,7 @@ class licenseUsageByHost extends plugin
 
     function __construct(&$config,$dn)
     {
+        $this->initTime = microtime(TRUE);
         $this->config = $config;
         $this->dn = $this->orig_dn = $dn;
         $this->si = new opsiLicenceHandler($this->config);
@@ -68,6 +69,10 @@ class licenseUsageByHost extends plugin
         $this->usedList->setHeader(array(_("Key"),_("Pool"),_("License ID")));
         $this->usedList->setDefaultSortColumn(1);
         $this->usedList->setAcl('rwcdm'); // All ACLs, we filter on our own here.
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
     }
 
 
