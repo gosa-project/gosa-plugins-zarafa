@@ -25,6 +25,10 @@ class dhcpNewSectionDialog extends plugin
 
     function dhcpNewSectionDialog($type)
     {
+        $this->initTime = microtime(TRUE);
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
         $this->types= array(  "dhcpService" => _("Global options"),
                 "dhcpClass" => _("Class"),
                 "dhcpSubClass" => _("Subclass"),
