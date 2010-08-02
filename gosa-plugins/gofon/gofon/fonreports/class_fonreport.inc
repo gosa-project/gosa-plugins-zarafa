@@ -32,6 +32,10 @@ class fonreport extends plugin
     function fonreport (&$config, $ui)
     {
         /* Include config object */
+        $this->initTime = microtime(TRUE);
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
         $this->config   = $config;
         $this->ui      = $ui;
         $this->search_base= $this->config->current['BASE'];
