@@ -31,7 +31,12 @@ class dhcpNetwork extends plugin
     function dhcpNetwork()
     {
         /* This is always an account */
+        $this->initTime = microtime(TRUE);
         $this->is_account= TRUE;
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
     }
 
     function execute()
