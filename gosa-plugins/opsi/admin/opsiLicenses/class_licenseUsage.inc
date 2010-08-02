@@ -31,6 +31,7 @@ class licenseUsage extends plugin
 
     function __construct(&$config,$dn)
     {
+        $this->initTime = microtime(TRUE);
         $this->config = $config;
         $this->dn = $this->orig_dn = $dn;
         $this->si = new opsiLicenceHandler($this->config);
@@ -54,6 +55,11 @@ class licenseUsage extends plugin
         $this->usageList->setHeight("300px");
         $this->usageList->setHeader(array(_("Host"),_("Key"),_("Pool"), _("License")));
         $this->usageList->setDefaultSortColumn(1);
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
     }
 
 
