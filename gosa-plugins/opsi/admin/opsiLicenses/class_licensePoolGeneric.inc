@@ -62,6 +62,7 @@ class licensePoolGeneric extends plugin
 
     function __construct(&$config,$dn)
     {
+        $this->initTime = microtime(TRUE);
         $this->config = $config;
         $this->dn = $this->orig_dn = $dn;
 
@@ -91,6 +92,9 @@ class licensePoolGeneric extends plugin
         $this->licenseList->setHeader(array(_("Section"),_("Description")));
         $this->licenseList->setDefaultSortColumn(1);
 
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
     }
 
 
