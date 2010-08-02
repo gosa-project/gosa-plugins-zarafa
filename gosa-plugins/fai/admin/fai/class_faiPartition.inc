@@ -46,7 +46,8 @@ class faiPartition extends plugin
   function __construct($config, $object, $parent,$type)
   {
 
-    $this->parent = $parent;
+      $this->initTime = microtime(TRUE);
+      $this->parent = $parent;
     $this->FAIdiskType = $type;
 
     // Check if we should be able to add primary partitions.
@@ -135,6 +136,11 @@ class faiPartition extends plugin
         }
       }
     }
+
+    // Create statistic table entry
+    stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+            $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
   }
 
   function execute()
