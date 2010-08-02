@@ -30,6 +30,7 @@ class connectivity extends plugin
   function connectivity (&$config, $dn= NULL,$parent =NULL)
   {
     /* Preseed permissions */
+    $this->initTime = microtime(TRUE);
     $this->dn= $dn;
     $ui= get_userinfo();
 
@@ -51,6 +52,11 @@ class connectivity extends plugin
       $this->plugin[$name]-> set_acl_category("users");
       $this->plugin[$name]-> set_acl_base($this->dn);
     }
+
+    // Create statistic table entry
+    stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+            $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
   }
 
   function execute()
