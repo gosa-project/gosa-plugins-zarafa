@@ -30,6 +30,12 @@ class mailqueue extends plugin
     $this->config   = &$config;
     $this->si_queue = new si_mailqueue($this->config);
     $this->getServer();
+
+    // Create statistic table entry
+    $this->initTime = microtime(TRUE);
+    stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+            $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
   }
 
 
