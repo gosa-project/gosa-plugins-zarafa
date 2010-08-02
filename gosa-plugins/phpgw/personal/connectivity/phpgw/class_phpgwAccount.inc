@@ -157,8 +157,8 @@ class phpgwAccount extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"     => _("PHP GW"),
-          "plDescription"   => _("PHP GW account settings")."&nbsp;("._("Connectivity addon").")",
+          "plShortName"     => _("PHPGroupware"),
+          "plDescription"   => _("PHPGroupware account settings")."&nbsp;("._("Connectivity add-on").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 24,                                 // Position in tabs

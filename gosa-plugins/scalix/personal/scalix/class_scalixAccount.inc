@@ -13,7 +13,7 @@
 class scalixAccount extends plugin
 {
   /* Definitions */
-  var $plHeadline   = "Scalix";
+  var $plHeadline   = "SCALIX";
   var $plDescription= "This does something";
 
   /* plugin specific values - scalixUserClass */
@@ -123,7 +123,7 @@ class scalixAccount extends plugin
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
-        _("This account has no scalix extensions.")."</b>";
+        _("This account has no SCALIX extensions.")."</b>";
 
       $display.= back_to_main();
       return ($display);
@@ -132,10 +132,10 @@ class scalixAccount extends plugin
     /* Show tab dialog headers */
     if ($this->parent !== NULL){
       if ($this->is_account){
-        $display= $this->show_disable_header(_("Remove scalix account"),
-            _("This account has scalix synchronization enabled. You can disable it by clicking below."));
+        $display= $this->show_disable_header(_("Remove SCALIX account"),
+            _("This account has SCALIX synchronization enabled. You can disable it by clicking below."));
       } else {
-        $display= $this->show_enable_header(_("Create scalix account"), _("This account has scalix synchronization disabled. You can enable it by clicking below."));
+        $display= $this->show_enable_header(_("Create SCALIX account"), _("This account has SCALIX synchronization disabled. You can enable it by clicking below."));
         return ($display);
       }
     }
@@ -361,10 +361,10 @@ class scalixAccount extends plugin
     $message= array();
 
     if(empty($this->scalixMailnode)){
-      $message[]= msgPool::required(_("Mailnode"));
+      $message[]= msgPool::required(_("Mail node"));
     }
     if(empty($this->scalixScalixObject)){
-      $message[]= msgPool::required(_("Scalix object"));
+      $message[]= msgPool::required(_("SCALIX object"));
     }
 
     $ldap->cd($this->config->current['BASE']);
@@ -455,7 +455,7 @@ class scalixAccount extends plugin
   static function plInfo()
   {
     return (array(
-          "plDescription"     => _("Scalix account"),
+          "plDescription"     => _("SCALIX account"),
           "plSelfModify"      => TRUE,
           "plDepends"         => array("user"),
           "plPriority"        => 2,
@@ -470,17 +470,17 @@ class scalixAccount extends plugin
 
           "plProvidedAcls"  => array(
 
-            "scalixMailnode"            => _("Scalix Mail node"),
+            "scalixMailnode"            => _("SCALIX Mail node"),
             "scalixMailboxClass"        => _("Mailbox class"),
             "scalixServerLanguage"      => _("Server language"),
             "scalixAdministrator"       => _("Administrator"),
             "scalixMailboxAdministrator"=> _("Mailbox administrator"),
-            "scalixHideUserEntry"       => _("Hide user entry in Scalix"),
+            "scalixHideUserEntry"       => _("Hide user entry in SCALIX"),
             "scalixLimitMailboxSize"    => _("Mailbox size limitations"),
             "scalixLimitOutboundMail"   => _("Limit outbound"),
             "scalixLimitInboundMail"    => _("Limit inbound"),
             "scalixLimitNotifyUser"     => _("Notify user"),
-            "scalixEmailAddress"        => _("Scalix email addresses"))
+            "scalixEmailAddress"        => _("SCALIX email addresses"))
 
             ));
   }

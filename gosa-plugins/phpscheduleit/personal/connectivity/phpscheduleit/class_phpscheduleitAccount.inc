@@ -24,7 +24,7 @@
 class phpscheduleitAccount extends plugin
 {
   /* Definitions */
-  var $plHeadline= "PHPscheduleit";
+  var $plHeadline= "phpScheduleIt";
   var $plDescription= "This does something";
 
   /* attribute list for save action */
@@ -162,8 +162,8 @@ class phpscheduleitAccount extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"     => _("PHP Schedule it"),
-          "plDescription"   => _("PHP Schedule it settings")."&nbsp;("._("Connectivity addon").")",
+          "plShortName"     => _("phpScheduleIt"),
+          "plDescription"   => _("phpScheduleIt settings")."&nbsp;("._("Connectivity add-on").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 29,                                 // Position in tabs

@@ -253,8 +253,8 @@ class pureftpdAccount extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"     => _("Ftp"),
-          "plDescription"   => _("Pure ftp account")."&nbsp;("._("Connectivity addon").")",
+          "plShortName"     => _("FTP"),
+          "plDescription"   => _("Pure-FTPd account")."&nbsp;("._("Connectivity add-on").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 22,                                 // Position in tabs
@@ -269,10 +269,10 @@ class pureftpdAccount extends plugin
           "plProvidedAcls"  => array(
             "FTPQuotaFiles"         => _("Quota files"),
             "FTPUploadRatio"        => _("Upload ratio"),
-            "FTPQuotaMBytes"        => _("Quota MBytes"),
+            "FTPQuotaMBytes"        => _("Quota megabytes"),
             "FTPDownloadRatio"      => _("Download ratio"),
-            "FTPUploadBandwidth"    => _("Upload bandwith"),
-            "FTPDownloadBandwidth"  => _("Download bandwith"),
+            "FTPUploadBandwidth"    => _("Upload bandwidth"),
+            "FTPDownloadBandwidth"  => _("Download bandwidth"),
             "FTPStatus"             => _("Status"))
           ));
   }

@@ -8,15 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-08-02 20:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHPGroupware"
 msgstr ""
 
@@ -29,16 +31,12 @@ msgstr ""
 msgid "LDAP error"
 msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
-msgid "PHP GW"
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+msgid "PHPGroupware account settings"
 msgstr ""
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:161
-msgid "PHP GW account settings"
-msgstr ""
-
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
-msgid "Connectivity addon"
+msgid "Connectivity add-on"
 msgstr ""
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:165

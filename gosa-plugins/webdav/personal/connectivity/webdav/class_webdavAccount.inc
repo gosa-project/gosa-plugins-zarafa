@@ -163,7 +163,7 @@ class webdavAccount extends plugin
   {
     return (array(  
           "plShortName"     => _("WebDAV"),
-          "plDescription"   => _("WebDAV account")."&nbsp;("._("Connectivity addon").")",
+          "plDescription"   => _("WebDAV account")."&nbsp;("._("Connectivity add-on").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plRequirements"=> array(

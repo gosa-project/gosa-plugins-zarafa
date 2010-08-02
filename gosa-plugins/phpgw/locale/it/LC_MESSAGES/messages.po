@@ -6,16 +6,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-08-02 20:09+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 #, fuzzy
 msgid "PHPGroupware"
 msgstr "Nome gruppo"
@@ -30,18 +32,14 @@ msgstr "Questo fa qualcosa"
 msgid "LDAP error"
 msgstr "Errore LDAP"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
-msgid "PHP GW"
-msgstr ""
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+#, fuzzy
+msgid "PHPGroupware account settings"
+msgstr "Estenzioni PHPGroupware"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 #, fuzzy
-msgid "PHP GW account settings"
-msgstr "Impostazioni FAX"
-
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
-#, fuzzy
-msgid "Connectivity addon"
+msgid "Connectivity add-on"
 msgstr "Connettività"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:165
@@ -51,6 +49,10 @@ msgstr "Identità"
 #: personal/connectivity/phpgw/phpgw.tpl:5
 msgid "PHPGroupware account"
 msgstr "Estenzioni PHPGroupware"
+
+#, fuzzy
+#~ msgid "PHP GW account settings"
+#~ msgstr "Impostazioni FAX"
 
 #, fuzzy
 #~ msgid "Removing of user/PHPgw account with dn '%s' failed."

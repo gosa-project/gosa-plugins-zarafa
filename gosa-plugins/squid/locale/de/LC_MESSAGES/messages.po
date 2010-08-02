@@ -12,10 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-08-02 20:27+0200\n"
 "PO-Revision-Date: 2008-04-03 15:59+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -74,36 +75,56 @@ msgid "Proxy account"
 msgstr "Proxy Konto"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:331
-msgid "Connectivity addon"
+#, fuzzy
+msgid "Connectivity add-on"
 msgstr "Konnektivitäts-Erweiterung"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:335
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:340
+#: personal/connectivity/squid/class_proxyAccount.inc:344
+msgid "Quota"
+msgstr ""
+
+#: personal/connectivity/squid/class_proxyAccount.inc:345
 msgid "Filter unwanted content"
 msgstr "Filtere ungewünschten Inhalt"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:341
+#: personal/connectivity/squid/class_proxyAccount.inc:346
 msgid "Limit proxy access"
 msgstr "Beschränke Proxy-Zugriff"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:342
-#: personal/connectivity/squid/proxy.tpl:100
+#: personal/connectivity/squid/class_proxyAccount.inc:347
+#: personal/connectivity/squid/proxy.tpl:97
 msgid "Restrict proxy usage by quota"
 msgstr "Proxynutzung durch Kontingent einschränken"
 
-#: personal/connectivity/squid/proxy.tpl:48
+#: personal/connectivity/squid/proxy.tpl:39
+#, fuzzy
+msgid "Proxy configuration"
+msgstr "PHP-Konfiguration"
+
+#: personal/connectivity/squid/proxy.tpl:45
 msgid "Filter unwanted content (i.e. pornographic or violence related)"
 msgstr ""
 "Filtern von unerwünschten Inhalten (z.B. pornografische oder gewalttätige "
 "Inhalte)"
 
-#: personal/connectivity/squid/proxy.tpl:58
+#: personal/connectivity/squid/proxy.tpl:56
 msgid "Limit proxy access to working time"
 msgstr "Inhaltsfilterung nur während der Arbeitszeit"
 
-#: personal/connectivity/squid/proxy.tpl:115
+#: personal/connectivity/squid/proxy.tpl:58
+#, fuzzy
+msgid "Worktime restrictions"
+msgstr "Anmeldungs-Einschränkungen"
+
+#: personal/connectivity/squid/proxy.tpl:99
+#, fuzzy
+msgid "Quota configuration"
+msgstr "Konfiguration herunterladen"
+
+#: personal/connectivity/squid/proxy.tpl:112
 msgid "per"
 msgstr "pro"

@@ -12,16 +12,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-08-02 20:09+0200\n"
 "PO-Revision-Date: 2008-04-03 14:24+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHPGroupware"
 msgstr "phpGroupware"
 
@@ -34,16 +36,14 @@ msgstr "Dies tut etwas"
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
-msgid "PHP GW"
-msgstr "PHP GW"
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+#, fuzzy
+msgid "PHPGroupware account settings"
+msgstr "phpGroupware-Konto"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:161
-msgid "PHP GW account settings"
-msgstr "PHP GW Konto-Einstellungen"
-
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
-msgid "Connectivity addon"
+#, fuzzy
+msgid "Connectivity add-on"
 msgstr "Konnektivitäts-Erweiterung"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:165
@@ -53,3 +53,9 @@ msgstr "Mein Konto"
 #: personal/connectivity/phpgw/phpgw.tpl:5
 msgid "PHPGroupware account"
 msgstr "phpGroupware-Konto"
+
+#~ msgid "PHP GW"
+#~ msgstr "PHP GW"
+
+#~ msgid "PHP GW account settings"
+#~ msgstr "PHP GW Konto-Einstellungen"

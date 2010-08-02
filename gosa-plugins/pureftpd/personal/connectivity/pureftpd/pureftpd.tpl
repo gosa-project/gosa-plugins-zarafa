@@ -27,7 +27,7 @@
             <input type='text' name="FTPUploadBandwidth" id="FTPUploadBandwidth" size=7 
               maxlength=7 value="{$FTPUploadBandwidth}" {$fstate} >
           {/render}
-          {t}kb/s{/t}
+          {t}KB/s{/t}
         </td>
        </tr>
        <tr>
@@ -37,7 +37,7 @@
               <input type='text' name="FTPDownloadBandwidth" id="FTPDownloadBandwidth" size=7 
                 maxlength=7 value="{$FTPDownloadBandwidth}" {$fstate} >
             {/render}
-            {t}kb/s{/t}
+            {t}KB/s{/t}
          </td>
        </tr>
      </table>

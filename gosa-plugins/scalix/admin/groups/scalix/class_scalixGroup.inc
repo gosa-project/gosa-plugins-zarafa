@@ -12,7 +12,7 @@ class scalixGroup extends scalixAccount
     static function plInfo()
     {
         return (array(
-                    "plDescription"     => _("Scalix account"),
+                    "plDescription"     => _("SCALIX account"),
                     "plSelfModify"      => TRUE,
                     "plDepends"         => array("group"),
                     "plPriority"        => 2,
@@ -22,17 +22,17 @@ class scalixGroup extends scalixAccount
 
                     "plProvidedAcls"  => array(
 
-                        "scalixMailnode"            => _("Scalix Mail node"),
+                        "scalixMailnode"            => _("SCALIX Mail node"),
                         "scalixMailboxClass"        => _("Mailbox class"),
                         "scalixServerLanguage"      => _("Server language"),
                         "scalixAdministrator"       => _("Administrator"),
                         "scalixMailboxAdministrator"=> _("Mailbox administrator"),
-                        "scalixHideUserEntry"       => _("Hide user entry in Scalix"),
+                        "scalixHideUserEntry"       => _("Hide user entry in SCALIX"),
                         "scalixLimitMailboxSize"    => _("Mailbox size limitations"),
                         "scalixLimitOutboundMail"   => _("Limit outbound"),
                         "scalixLimitInboundMail"    => _("Limit inbound"),
                         "scalixLimitNotifyUser"     => _("Notify user"),
-                        "scalixEmailAddress"        => _("Scalix email addresses"))
+                        "scalixEmailAddress"        => _("SCALIX email addresses"))
 
                         ));
     }

@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-08-02 20:13+0200\n"
 "PO-Revision-Date: 2010-01-20 00:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
-#: personal/connectivity/pptp/class_pptpAccount.inc:177
+#: personal/connectivity/pptp/class_pptpAccount.inc:175
 msgid "PPTP"
 msgstr "PPTP"
 
@@ -28,20 +29,21 @@ msgid "This does something"
 msgstr "Esto hace algo"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:102
-#: personal/connectivity/pptp/class_pptpAccount.inc:158
+#: personal/connectivity/pptp/class_pptpAccount.inc:157
 msgid "LDAP error"
 msgstr "Error LDAP"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/class_pptpAccount.inc:176
 #: personal/connectivity/pptp/pptp.tpl:3
 msgid "PPTP account"
 msgstr "Cuenta PPTP"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
-msgid "Connectivity addon"
+#: personal/connectivity/pptp/class_pptpAccount.inc:176
+#, fuzzy
+msgid "Connectivity add-on"
 msgstr "Conectividad adicional"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:182
+#: personal/connectivity/pptp/class_pptpAccount.inc:180
 msgid "My account"
 msgstr "Mi cuenta"
 
