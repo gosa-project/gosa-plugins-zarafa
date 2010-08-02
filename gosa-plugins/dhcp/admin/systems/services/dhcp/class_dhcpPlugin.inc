@@ -36,6 +36,7 @@ class dhcpPlugin extends plugin
 
     function dhcpPlugin(&$parent,$attrs)
     {
+        $this->initTime = microtime(TRUE);
         $this->parent = $parent;
 
         $this->options = new dhcpOption();
@@ -79,6 +80,11 @@ class dhcpPlugin extends plugin
 
         /* Save CN for later reference */
         $this->orig_cn= $this->cn;
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
+
     }
 
     function execute()
