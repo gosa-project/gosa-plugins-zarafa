@@ -55,7 +55,7 @@ class licenseGeneric extends plugin
 
     function __construct(&$config, $dn, $license, $hosts = array())
     {
-
+        $this->initTime = microtime(TRUE);
         $this->config = $config;
         $this->data = $license;
         $this->dn = $dn;
@@ -72,6 +72,10 @@ class licenseGeneric extends plugin
 
         // Extract pool name out of the fake dn.
         $this->init();
+
+        // Create statistic table entry
+        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
+                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
     }
 
 
