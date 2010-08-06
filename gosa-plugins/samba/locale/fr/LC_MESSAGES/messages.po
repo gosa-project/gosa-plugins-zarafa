@@ -1,11 +1,11 @@
 # translation of messages.po to
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-09 20:41+0200\n"
-"PO-Revision-Date: 2009-10-02 18:11+0200\n"
+"PO-Revision-Date: 2010-08-06 11:40+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -164,7 +164,6 @@ msgid "Access options"
 msgstr "Options d'accès"
 
 #: personal/samba/samba3.tpl:324 personal/samba/class_sambaAccount.inc:1385
-#, fuzzy
 msgid "Enforce password change"
 msgstr "Forcer le changement de mot de passe"
 
@@ -174,17 +173,15 @@ msgstr "Le mot de passe n'expire jamais"
 
 #: personal/samba/samba3.tpl:344 personal/samba/class_sambaAccount.inc:1381
 msgid "Login from windows client requires no password"
-msgstr ""
-"L'identification sur une station windows ne nécessite pas de mot de passe"
+msgstr "L'identification sur une station windows ne nécessite pas de mot de passe"
 
 #: personal/samba/samba3.tpl:354 personal/samba/class_sambaAccount.inc:1383
 msgid "Lock samba account"
 msgstr "Verrouiller le compte Samba"
 
 #: personal/samba/samba3.tpl:365 personal/samba/class_sambaAccount.inc:1386
-#, fuzzy
 msgid "Cannot change password"
-msgstr "Modifier le mot de passe"
+msgstr "Interdire le changement de mot de passe"
 
 #: personal/samba/samba3.tpl:382
 msgid "Samba logon times"
@@ -276,14 +273,12 @@ msgstr "du client précédent seulement"
 #: personal/samba/class_sambaAccount.inc:570
 #, php-format
 msgid "The password is outdated since %s, by domain policy."
-msgstr ""
-"Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
+msgstr "Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
 
 #: personal/samba/class_sambaAccount.inc:574
 #, php-format
 msgid "The password is valid till %s, by user policy."
-msgstr ""
-"Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
+msgstr "Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
 
 #: personal/samba/class_sambaAccount.inc:577
 #, php-format
@@ -445,8 +440,7 @@ msgstr "Non"
 #: personal/samba/class_sambaAccount.inc:860
 #, php-format
 msgid "The password would expire on %s, but the password expiry is disabled."
-msgstr ""
-"Le mot de passe devrait expirer le %s, mais l'expiration est désactivée."
+msgstr "Le mot de passe devrait expirer le %s, mais l'expiration est désactivée."
 
 #: personal/samba/class_sambaAccount.inc:866
 msgid "Password change available"
@@ -485,12 +479,10 @@ msgstr "Avertissement"
 
 #: personal/samba/class_sambaAccount.inc:1167
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr ""
-"Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
+msgstr "Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
 
 #: personal/samba/class_sambaAccount.inc:1191
-msgid ""
-"Cannot convert primary group to samba group: group cannot be identified!"
+msgid "Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 "Impossible de convertir le groupe primaire en un groupe primaire samba : le "
 "groupe ne peut être identifié !"
@@ -563,31 +555,3 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 msgid "Regular expression for matching addresses"
 msgstr "Expression régulière pour sélectionner les adresses correspondantes"
 
-#~ msgid "Choose subtree to place group in"
-#~ msgstr "Sélectionnez la branche où sera placée le groupe"
-
-#~ msgid "Select a base"
-#~ msgstr "Sélectionnez une base"
-
-#~ msgid "Allow user to change password from client"
-#~ msgstr ""
-#~ "Autoriser les utilisateurs à changer de mot de passe à partir d'une "
-#~ "station cliente"
-
-#~ msgid "Account expires"
-#~ msgstr "Le compte expire"
-
-#~ msgid "Limit Logon Time"
-#~ msgstr "Limiter les temps d'accès"
-
-#~ msgid "Limit Logoff Time"
-#~ msgstr "Limiter les heures de déconnections"
-
-#~ msgid "Please select an entry!"
-#~ msgstr "Veuillez sélectionner une entrée !"
-
-#~ msgid "Samba home"
-#~ msgstr "Répertoire de l'utilisateur samba"
-
-#~ msgid "Temporary disable samba account"
-#~ msgstr "Désactiver temporairement le compte Samba"

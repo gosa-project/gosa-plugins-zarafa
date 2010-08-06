@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-01 15:16+0100\n"
-"PO-Revision-Date: 2010-01-30 11:38+0100\n"
+"PO-Revision-Date: 2010-08-06 11:34+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1516,8 +1516,7 @@ msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:114
 #, php-format
-msgid ""
-"Cannot determine a valid department for this object. Setting base to '%s'!"
+msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
@@ -1541,8 +1540,7 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:306
 msgid "This is a workstation template, printer tab is disabled."
-msgstr ""
-"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:311
 msgid "This is a terminal template, printer tab is disabled."
@@ -2320,13 +2318,11 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:234
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr ""
-"Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
+msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:247
 #, php-format
-msgid ""
-"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
 "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version "
 "sera '%s' !"
@@ -2473,8 +2469,7 @@ msgstr "Continuer"
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
@@ -2726,8 +2721,7 @@ msgstr "Impossible de lire le PPD '%s' !"
 #: admin/systems/ppd/class_printerPPDDialog.inc:121
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr ""
-"Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
+msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:140
 #: admin/systems/ppd/class_printerPPDDialog.inc:339
@@ -2748,8 +2742,7 @@ msgstr "Ecrasement du PPD existant"
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr ""
-"Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
+msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:463
 msgid "Section"
@@ -2949,8 +2942,7 @@ msgstr "Permissions"
 #: addons/goto/class_gotomasses.inc:260
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
-"Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
+msgstr "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:325 addons/goto/class_gotomasses.inc:479
 #: addons/goto/class_gotomasses.inc:550
@@ -2974,8 +2966,7 @@ msgstr "Déploiement de système"
 
 #: addons/goto/class_gotomasses.inc:565
 msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
-"Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
+msgstr "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
 
 #: addons/goto/deploy-list.xml:10
 msgid "List of queued jobs"
@@ -3081,9 +3072,8 @@ msgid "Down"
 msgstr "En bas"
 
 #: addons/goto/deploy-list.xml:225
-#, fuzzy
 msgid "Process now"
-msgstr "Terminé"
+msgstr "En cours"
 
 #: addons/goto/deploy-list.xml:233
 msgid "View logs"
@@ -3327,9 +3317,8 @@ msgid "Show users"
 msgstr "Utilisateurs"
 
 #: addons/goto/events/eventTargetSystems-list.xml:11
-#, fuzzy
 msgid "List of target systems"
-msgstr "Systèmes"
+msgstr "Listes des systèmes Cibles"
 
 #: addons/goto/events/eventTargetSystems-list.xml:89
 msgid "Mac"
@@ -3358,8 +3347,7 @@ msgid "List of users"
 msgstr "Liste des utilisateurs"
 
 #: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
 msgstr ""
 "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle "
 "contiennent. Voulez vous continuer ?"
@@ -3367,8 +3355,7 @@ msgstr ""
 #: addons/goto/class_goto_import_file.inc:131
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
-"L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
+msgstr "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
 
 #: personal/environment/class_environment.inc:9
 #: personal/environment/class_environment.inc:433
@@ -3430,8 +3417,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:364
 #, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -3666,31 +3652,3 @@ msgstr "Dernier script"
 msgid "Script can be replaced by user"
 msgstr "Le script peut être remplacé par l'utilisateur"
 
-#~ msgid "Choose subtree to place group in"
-#~ msgstr "Sélectionnez la branche où sera placée le groupe"
-
-#~ msgid "Choose subtree to place user in"
-#~ msgstr "Sélectionnez la branche où sera enregistrée l'utilisateur"
-
-#~ msgid "Choose subtree to place terminal in"
-#~ msgstr "Sélectionnez la branche où sera enregistrée le terminal"
-
-#~ msgid "Deployment status"
-#~ msgstr "Etat du déploiement"
-
-#~ msgid ""
-#~ "This menu allows you to remove and change the properties of GOsa tasks."
-#~ msgstr ""
-#~ "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
-
-#~ msgid "Pause job"
-#~ msgstr "Suspendre le job"
-
-#~ msgid "Resume job"
-#~ msgstr "Redémarrer le job"
-
-#~ msgid "Execute now"
-#~ msgstr "Exécuter maintenant"
-
-#~ msgid "Abort job"
-#~ msgstr "Annuler le job"
