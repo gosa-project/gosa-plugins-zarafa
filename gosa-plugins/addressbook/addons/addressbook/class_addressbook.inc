@@ -206,7 +206,8 @@ class addressbook extends plugin
 
     /* Finally dial */
     if (isset($_POST['dial']) && session::is_set('source') && session::is_set('target')){
-      exec ($this->config->get_cfg_value("ctiHook")." '".session::get('source')."' '".session::get('target')."'", $dummy, $retval);
+      exec ($this->config->get_cfg_value("ctiHook")." ".
+            escapeshellarg(session::get('source'))." ".escapeshellarg(session::get('target')), $dummy, $retval);
       session::un_set('source');
       session::un_set('target');
     }
