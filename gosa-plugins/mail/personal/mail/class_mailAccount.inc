@@ -1114,11 +1114,17 @@ class mailAccount extends plugin
               $value= preg_replace ("/%$repl/i", $this->parent->$repl, $value);
             }
           }
+          $value = iconv('UTF-8', 'US-ASCII//TRANSLIT', $value);
+          $value = preg_replace('/[^(\x20-\x7F)]*/','',$value);
+          $value = preg_replace("/[ ]/","", $value);
           array_push($this->$val, strtolower(rewrite($value)));
         }
       }
     }
     $this->mail= strtolower(rewrite($this->mail));
+    $this->mail= iconv('UTF-8', 'US-ASCII//TRANSLIT', $this->mail);
+    $this->mail= preg_replace('/[^(\x20-\x7F)]*/','',$this->mail);
+    $this->mail= preg_replace("/[ ]/","", $this->mail);
 
     // Fix mail address when using templates
     if($this->is_account && $this->mailMethod->domainSelectionEnabled()){
