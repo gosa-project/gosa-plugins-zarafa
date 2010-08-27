@@ -1114,10 +1114,11 @@ class mailAccount extends plugin
             }
           }
             
-            // Remove non ASCII charcters
+          // Remove non ASCII charcters
           $value = iconv('UTF-8', 'US-ASCII//TRANSLIT', $value);
+          $value = preg_replace('/[^(\x20-\x7F)]*/','',$value);
 
-            // No spaces are allowed here
+          // No spaces are allowed here
           $value = preg_replace("/[ ]/","", $value);
           array_push($this->$val, strtolower(rewrite($value)));
         }
@@ -1127,6 +1128,7 @@ class mailAccount extends plugin
 
     // Remove non ASCII charcters
     $this->mail= iconv('UTF-8', 'US-ASCII//TRANSLIT', $this->mail);
+    $this->mail= preg_replace('/[^(\x20-\x7F)]*/','',$this->mail);
 
     // No spaces are allowed here
     $this->mail = preg_replace("/[ ]/","", $this->mail);
