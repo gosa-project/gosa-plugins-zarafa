@@ -279,8 +279,16 @@ class ppdManager
 				/* Possible value? */
 				if (preg_match("@^\*$eoption\s+@", $line)){
 #*PageSize Letter/US Letter: "<>setpagedevice"
-					$c= preg_replace("@^\*$eoption\s+([^/]+).*$@", "$1", $line);
+					/* Options can have one of 2 forms:
+					   *OptionName OptionValue/TranslationOfValue: ...
+					   *OptionName OptionValue: ...
+					   i.e. there may be a translation or not.
+					*/
+					$c= preg_replace("@^\*$eoption\s+([^/:]+).*$@", "$1", $line);
 					$d= preg_replace("@^\*$eoption\s+[^/]+/([^:]+).*$@", "$1", $line);
+					if ($d == $line) { /* if there is no translation, use untranslated value*/
+						$d = "$c";
+					}
 					if(empty($group)){
 						$properties["NO_SECTION"][$option][trim($c)]= trim($d);
 					}else{
