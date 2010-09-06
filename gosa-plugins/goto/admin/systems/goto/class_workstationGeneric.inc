@@ -210,7 +210,7 @@ class workgeneric extends plugin
       $action= $_POST['saction'];
 
       /* Check if we have an DaemonEvent for this action */ 
-      if(class_available("DaemonEvent")){
+      if(class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
         $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
         if(isset($events['TRIGGERED']["DaemonEvent_".$action])){
           $evt = $events['TRIGGERED']["DaemonEvent_".$action];
