@@ -530,7 +530,7 @@ class workservice extends plugin
    */
   function send_goto_reload()
   {
-    if(count($this->attrs) && class_available("DaemonEvent")){
+    if(count($this->attrs) && class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
       $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['TRIGGERED']['DaemonEvent_goto_reload'])){
