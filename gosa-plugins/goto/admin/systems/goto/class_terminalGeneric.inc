@@ -186,7 +186,7 @@ class termgeneric extends plugin
       $action = $_POST['saction'];
 
       /* Check if we have an DaemonEvent for this action */
-      if(class_available("DaemonEvent_".$action)){
+      if(class_available("gosaSupportDaemon") && class_available("DaemonEvent_".$action)){
         $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
         if(isset($events['TRIGGERED']["DaemonEvent_".$action])){
           $evt = $events['TRIGGERED']["DaemonEvent_".$action];
@@ -241,7 +241,7 @@ class termgeneric extends plugin
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
 
     /* Check if terminal is online */
-    if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
+    if (class_available("gosaSupportDaemon") && gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
       $smarty->assign("actions", array( "halt" => _("Switch off"), 
                                         "reboot" => _("Reboot"),
                                         #"memcheck" => _("Memory test"),
