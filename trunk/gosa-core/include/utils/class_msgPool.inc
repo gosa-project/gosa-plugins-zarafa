@@ -284,20 +284,20 @@ class msgPool
     if ($regex) {
       $result= "";
       $mismatch= "";
-      foreach (str_split($data) as $currentChar){
+      foreach (preg_split("//u", $data) as $currentChar){
         if (preg_match("$regex", $currentChar)){
           $result.= $currentChar;
         } else {
-          $result.= "<font style='color:red;text-decoration:underline;'>".htmlentities($currentChar)."</font>";
+          $result.= "<font style='color:red;text-decoration:underline;'>".htmlentities($currentChar, ENT_COMPAT, "UTF-8")."</font>";
           $mismatch.= $currentChar;
         }
       }
 
       return sprintf(_("The Field '%s' contains invalid characters"), $name).". ".
-        (strlen($mismatch)==1?sprintf(_("'%s' is not allowed:"), htmlentities($mismatch)):sprintf(_("'%s' are not allowed!"), htmlentities($mismatch))).
+        (strlen($mismatch)==1?sprintf(_("'%s' is not allowed:"), htmlentities($mismatch, ENT_COMPAT, "UTF-8")):sprintf(_("'%s' are not allowed!"), htmlentities($mismatch, ENT_COMPAT, "UTF-8"))).
         "<br><br> \"$result\"$example";
     } else {
-      return sprintf(_("The Field '%s' contains invalid characters!"), $name)."!$example";
+      return sprintf(_("The Field '%s' contains invalid characters!"), $name)."$example";
     }
   }
 

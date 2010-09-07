@@ -100,10 +100,10 @@ class deviceGeneric extends plugin
       $message[]= msgPool::required(_("iSerial"));
     }
     if(empty($this->serial) || !$this->is_2byteHex($this->serial)){
-      $message[]= msgPool::invalid(_("Product ID"),"","","0x1234");
+      $message[]= msgPool::invalid(_("Product-ID"),"","","0x1234");
     }
     if(empty($this->vendor) || !$this->is_2byteHex($this->vendor)){
-      $message[]= msgPool::invalid(_("Vendor ID"),"","","0x1234");
+      $message[]= msgPool::invalid(_("Vendor-ID"),"","","0x1234");
     }
     /* Convert vendorId and productId to lower case */
     $this->serial = strtolower($this->serial);
