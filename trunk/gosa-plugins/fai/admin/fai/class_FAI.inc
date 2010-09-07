@@ -249,17 +249,22 @@ class FAI
 
               /* Check if this Profile uses the source class ($cn)
                */
-              if(preg_match("/".preg_quote($cn, '/')."/",$attrs['FAIclass'])){
-                $attrs['FAIclass'] = preg_replace("/[ ]*".preg_quote($cn, '/')."[ ]*/i"," ",$attrs['FAIclass']);
-                if(empty($attrs['FAIclass'])){
-                  $attrs['FAIclass'] = array();
-                }
-                $ldap->cd($dn['dn']);
-                $ldap->modify($attrs);
-
-                if (!$ldap->success()){
-                  msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
-                }
+              $classlist = split(" ", $attrs['FAIclass']);
+              $new_classlist = "";
+              foreach($classlist as $class){
+                if($class != $cn){
+                  $new_classlist = $new_classlist." ".$class;
+		}
+              } 
+              $attrs['FAIclass'] = $new_classlist;
+              if(empty($attrs['FAIclass'])){
+                $attrs['FAIclass'] = array();
+              }
+              $ldap->cd($dn['dn']);
+              $ldap->modify($attrs);
+              
+              if (!$ldap->success()){
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
               }
             }
           }
