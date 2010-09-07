@@ -383,7 +383,7 @@ class CopyPasteHandler {
       $smarty->assign("Complete",false);
       $smarty->assign("AttributesToFix","&nbsp;");
       $smarty->assign("SubDialog","");
-      $smarty->assign("message"  , sprintf(_("These objects will be pasted: %s"), "<br>".msgPool::buildList($dns)));
+      $smarty->assign("message"  , sprintf(_("These objects will be pasted: %s"), "<br>".msgPool::buildList(LDAP::fix($dns))));
       return($smarty->fetch(get_template_path("copyPasteDialog.tpl",FALSE)));
     }
 
@@ -407,7 +407,7 @@ class CopyPasteHandler {
         $smarty->assign("AttributesToFix",$this->generateAttributesToFix());
         $smarty->assign("SubDialog",$this->current['object']->SubDialog);
         $smarty->assign("objectDN",$this->current['source_data']['dn']);
-        $smarty->assign("message", sprintf(_("This object will be pasted: %s"), "<br><br>".$this->current['source_data']['dn']));
+        $smarty->assign("message", sprintf(_("This object will be pasted: %s"), "<br><br>".LDAP::fix($this->current['source_data']['dn'])));
         return($smarty->fetch(get_template_path("copyPasteDialog.tpl",FALSE)));
       }
     }
