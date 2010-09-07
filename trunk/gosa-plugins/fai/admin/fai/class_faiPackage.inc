@@ -55,6 +55,7 @@ class faiPackage extends plugin
 
   var $direct_packages_add = FALSE;
   var $configure_dialog_shown = FALSE;
+  var $debconf_configurations = FALSE;
 
   function faiPackage (&$config, $dn= NULL)
   {
@@ -288,7 +289,7 @@ class faiPackage extends plugin
     }
 
     if(isset($_POST['EditConfigurations']) &&
-      $this->acl_is_writeable("FAIpackage")) {
+      $this->acl_is_writeable("FAIdebconfInfo")) {
         $this->dialog = new faiDebconfConfigurations($this->config, $this->dn, $this);
         $this->dialog->set_acl_base($this->acl_base);
         $this->is_dialog = true;
@@ -535,6 +536,10 @@ class faiPackage extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translated){
       $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/",$this->FAIstate)));
     }
+
+    if ($this->acl_is_writeable("FAIdebconfInfo")) {
+      $this->debconf_configurations = TRUE;
+    }
  
     $smarty->assign("freeze", preg_match("/freeze/",$this->FAIstate));
     $smarty->assign("divlist",$divlist->DrawList());
@@ -542,6 +547,7 @@ class faiPackage extends plugin
     $smarty->assign("sections",$this->sections);
     $smarty->assign("section" ,$strsec);
     $smarty->assign("direct_packages_add", $this->direct_packages_add);
+    $smarty->assign("debconf_configurations", $this->debconf_configurations);
     $display.= $smarty->fetch(get_template_path('faiPackage.tpl', TRUE));
     return($display);
   }

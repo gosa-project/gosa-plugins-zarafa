@@ -205,8 +205,7 @@ class faiDebconfConfigurations extends plugin
 
         /* Define actions for this entry */ 
         $actions = "";
-        if(!preg_match('/^freeze/', $this->FAIstate) && 
-          $this->acl_is_writeable("FAIdebconfInfo")) {
+        if(!preg_match('/^freeze/', $this->FAIstate)) {
             /* Don't enable actions if no gosa-si defaults available */
             $show_reset = FALSE;
             $show_edit = FALSE;

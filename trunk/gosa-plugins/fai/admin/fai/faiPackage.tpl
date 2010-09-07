@@ -87,8 +87,9 @@
 {/if}
 		</td>
         <td style="text-align: right;">
-        <!-- ToDo: ACL? --!>
+{if $debconf_configurations}
         <input type="submit" name="EditConfigurations" value="{t}Edit package configurations{/t}">
+{/if}
         </td>
 	</tr>
 {/render}
