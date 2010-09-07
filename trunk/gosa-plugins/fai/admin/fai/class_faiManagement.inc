@@ -1415,7 +1415,7 @@ class faiManagement extends plugin
       } 
       $res  = FAI::get_all_objects_for_given_base($base,"(|".$f.")",TRUE);    
     }else{
-      $res  = FAI::get_all_objects_for_given_base($base,"(objectClass=".$oc.")",TRUE);
+      $res  = FAI::get_all_objects_for_given_base($base,"(|(objectClass=FAIprofile)(objectClass=".$oc."))",TRUE);
     }
     $delete = array();
     $used   = array();
