@@ -181,7 +181,7 @@ class faiPartitionTable extends plugin
 
     /* New Listhandling */
     foreach($_POST as $name => $value){
-      if(preg_match("/^edit_[^_]*_/",$name)){
+      if(preg_match("/^edit_[^_]*_[xy]$/",$name)){
         $s_entry = preg_replace("/^edit_/","",$name);
         $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
         $s_action = "edit"; 
