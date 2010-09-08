@@ -13,7 +13,7 @@ class phoneGeneric extends plugin
     var $orig_dn          = "";
     var $orig_cn          = "";
     var $orig_base        = "";
-    var $goFonType        = "";
+    var $goFonType        = "friend";
     var $goFonDmtfMode    = "";
     var $goFonHost        = "";
     var $goFonDefaultIP   = "dynamic";
