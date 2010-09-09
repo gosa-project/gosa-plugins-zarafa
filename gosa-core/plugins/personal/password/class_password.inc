@@ -74,8 +74,6 @@ class password extends plugin
                 $message[] = _("The password used as new and current are too similar.");
             }elseif($check_length && (strlen($_POST['new_password']) < $length)){
                 $message[] = _("The password used as new is to short.");
-            }elseif($check_hook && $check_hook_output != ""){
-                $message[] = sprintf(_("External password changer reported a problem: %s."),$check_hook_output);
             }
             
             // No errors yet, so call the external password hook.
@@ -89,6 +87,7 @@ class password extends plugin
                     if(count($resarr) > 0) {
                         $check_hook_output= join('\n', $resarr);
                     }
+                    $check_hook_output= sprintf(_("External password changer reported a problem: %s."),$check_hook_output);
                     if(!empty($check_hook_output))  $message[] = $check_hook_output;
                 }
             }
