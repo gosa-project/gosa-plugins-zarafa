@@ -357,7 +357,9 @@ class faiManagement extends plugin
      ****************/
 
     if ($s_action=="del_multiple" || 
-        $this->dialog instanceOf faiGroupHandle && $this->dialog->get_mode() == "remove"){
+        $this->dialog instanceOf faiGroupHandle && 
+        $this->dialog->get_mode() == "remove" &&
+        !isset($_POST['delete_multiple_fai_object_cancel'])){
  
       /* Collect objects to delete and check if objects are freezed
        */ 
@@ -421,6 +423,7 @@ class faiManagement extends plugin
     if(isset($_POST['delete_multiple_fai_object_cancel'])){
       $this->remove_lock();
       $this->dns = array();
+      $this->dialog = FALSE;
     }
 
     /****************
