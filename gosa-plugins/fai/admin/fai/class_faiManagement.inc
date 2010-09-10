@@ -435,8 +435,9 @@ class faiManagement extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_multiple_fai_object_cancel'])){
-      $this->dns = array();
-      $this->remove_lock();
+        del_lock ($this->dns);
+        $this->dns = array();
+        $this->remove_lock();
     }
 
 
