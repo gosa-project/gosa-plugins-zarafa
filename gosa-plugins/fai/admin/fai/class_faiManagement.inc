@@ -344,6 +344,9 @@ class faiManagement extends plugin
 
         $errors = "";
         foreach($ids as $id){
+
+            // Do not allow to remove opsi objects!
+            if(!isset($this->objects[$id]['FAIstate'])) continue;
           $dn = $this->objects[$id]['dn'];
           $cn = $this->objects[$id]['cn'];
           if(!preg_match('/^freeze/', $this->objects[$id]['FAIstate'])){
