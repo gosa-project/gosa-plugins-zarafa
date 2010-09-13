@@ -21,35 +21,36 @@
  */
 
 /* Remove locks created by this plugin
-*/
+ */
 if ($remove_lock){
-  if(session::is_set('applicationManagement')){
-      $macl = session::get('applicationManagement');
-      $macl->remove_lock();
-  }
+    if(session::is_set('applicationManagement')){
+        $macl = session::get('applicationManagement');
+        $macl->remove_lock();
+        session::un_set('applicationManagement');
+    }
 }
 
 /* Remove this plugin from session
-*/
+ */
 if ( $cleanup ){
-  session::un_set('applicationManagement');
+    session::un_set('applicationManagement');
 }else{
 
-  /* Create applicationmanagement object on demand */
-  if (!session::is_set('applicationManagement')){
-    $applicationManagement= new applicationManagement ($config, $ui);
+    /* Create applicationmanagement object on demand */
+    if (!session::is_set('applicationManagement')){
+        $applicationManagement= new applicationManagement ($config, $ui);
+        session::set('applicationManagement',$applicationManagement);
+    }
+    $applicationManagement = session::get('applicationManagement');
+    $display= $applicationManagement->execute();
+
+    /* Reset requested? */
+    if (isset($_GET['reset']) && $_GET['reset'] == 1){
+        session::un_set ('applicationManagement');
+    }
+
+    /* Show and save dialog */
     session::set('applicationManagement',$applicationManagement);
-  }
-  $applicationManagement = session::get('applicationManagement');
-  $display= $applicationManagement->execute();
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('applicationManagement');
-  }
-
-  /* Show and save dialog */
-  session::set('applicationManagement',$applicationManagement);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
