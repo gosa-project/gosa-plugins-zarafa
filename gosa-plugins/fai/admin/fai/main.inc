@@ -21,35 +21,36 @@
  */
 
 /* Remove locks created by this plugin
-*/
+ */
 if ($remove_lock){
-  if(session::is_set('faiManagement')){
-      $macl = session::get('faiManagement');
-      $macl->remove_lock();
-  }
+    if(session::is_set('faiManagement')){
+        $macl = session::get('faiManagement');
+        $macl->remove_lock();
+        session::un_set('faiManagement');
+    }
 }
 
 /* Remove this plugin from session
-*/
+ */
 if ( $cleanup ){
-  session::un_set('faiManagement');
+    session::un_set('faiManagement');
 }else{
 
-  /* Create faiManagement object on demand */
-  if (!session::is_set('faiManagement')){
-    $faiManagement= new faiManagement ($config, $ui);
+    /* Create faiManagement object on demand */
+    if (!session::is_set('faiManagement')){
+        $faiManagement= new faiManagement ($config, $ui);
+        session::set('faiManagement',$faiManagement);
+    }
+    $faiManagement = session::get('faiManagement');
+    $display= $faiManagement->execute();
+
+    /* Reset requested? */
+    if (isset($_GET['reset']) && $_GET['reset'] == 1){
+        session::un_set ('faiManagement');
+    }
+
+    /* Show and save dialog */
     session::set('faiManagement',$faiManagement);
-  }
-  $faiManagement = session::get('faiManagement');
-  $display= $faiManagement->execute();
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('faiManagement');
-  }
-
-  /* Show and save dialog */
-  session::set('faiManagement',$faiManagement);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
