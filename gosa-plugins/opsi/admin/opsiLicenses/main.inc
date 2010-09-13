@@ -21,35 +21,36 @@
  */
 
 /* Remove locks created by this plugin
-*/
+ */
 if ($remove_lock){
-  if(session::is_set('opsiLicenses')){
-      $macl = session::get('opsiLicenses');
-      $macl->remove_lock();
-  }
+    if(session::is_set('opsiLicenses')){
+        $macl = session::get('opsiLicenses');
+        $macl->remove_lock();
+        session::un_set('opsiLicenses');
+    }
 }
 
 /* Remove this plugin from session
-*/
+ */
 if ( $cleanup ){
-  session::un_set('opsiLicenses');
+    session::un_set('opsiLicenses');
 }else{
 
-  /* Create opsiLicenses object on demand */
-  if (!session::is_set('opsiLicenses')){
-    $opsiLicenses= new opsiLicenses ($config, $ui);
+    /* Create opsiLicenses object on demand */
+    if (!session::is_set('opsiLicenses')){
+        $opsiLicenses= new opsiLicenses ($config, $ui);
+        session::set('opsiLicenses',$opsiLicenses);
+    }
+    $opsiLicenses = session::get('opsiLicenses');
+    $display= $opsiLicenses->execute();
+
+    /* Reset requested? */
+    if (isset($_GET['reset']) && $_GET['reset'] == 1){
+        session::un_set ('opsiLicenses');
+    }
+
+    /* Show and save dialog */
     session::set('opsiLicenses',$opsiLicenses);
-  }
-  $opsiLicenses = session::get('opsiLicenses');
-  $display= $opsiLicenses->execute();
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('opsiLicenses');
-  }
-
-  /* Show and save dialog */
-  session::set('opsiLicenses',$opsiLicenses);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
