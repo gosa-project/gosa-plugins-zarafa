@@ -21,35 +21,36 @@
  */
 
 /* Remove locks created by this plugin
-*/
+ */
 if ($remove_lock){
-  if(session::is_set('deviceManagement')){
-      $macl = session::get('deviceManagement');
-      $macl->remove_lock();
-  }
+    if(session::is_set('deviceManagement')){
+        $macl = session::get('deviceManagement');
+        $macl->remove_lock();
+        session::un_set('deviceManagement');
+    }
 }
 
 /* Remove this plugin from session
-*/
+ */
 if ( $cleanup ){
-  session::un_set('deviceManagement');
+    session::un_set('deviceManagement');
 }else{
 
-  /* Create devicemanagement object on demand */
-  if (!session::is_set('deviceManagement')){
-    $deviceManagement= new deviceManagement ($config, $ui);
+    /* Create devicemanagement object on demand */
+    if (!session::is_set('deviceManagement')){
+        $deviceManagement= new deviceManagement ($config, $ui);
+        session::set('deviceManagement',$deviceManagement);
+    }
+    $deviceManagement = session::get('deviceManagement');
+    $display= $deviceManagement->execute();
+
+    /* Reset requested? */
+    if (isset($_GET['reset']) && $_GET['reset'] == 1){
+        session::un_set ('deviceManagement');
+    }
+
+    /* Show and save dialog */
     session::set('deviceManagement',$deviceManagement);
-  }
-  $deviceManagement = session::get('deviceManagement');
-  $display= $deviceManagement->execute();
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('deviceManagement');
-  }
-
-  /* Show and save dialog */
-  session::set('deviceManagement',$deviceManagement);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
