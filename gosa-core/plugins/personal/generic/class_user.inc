@@ -960,34 +960,15 @@ class user extends plugin
 
     } else {
 
-        /* Fallback if there's no image magick inside PHP */
-        if (function_exists("imagick_blob2image")){
+       if(class_exists('Imagick')){
 
-            /* Load the new uploaded Photo */
-            if(!$handle  =  imagick_blob2image($this->photoData))  {
-                new log("debug","users/".get_class($this),$this->dn,array(),"Could not access uploaded image");
-            }
-
-            /* Resizing image to 147x200 and blur */
-            if(!imagick_resize($handle,147,200,IMAGICK_FILTER_GAUSSIAN,0)){
-                new log("debug","users/".get_class($this),$this->dn,array(),"Could not resize uploaded image");
-            }
-
-            /* Converting image to JPEG */
-            if(!imagick_convert($handle,"JPEG")) {
-                new log("debug","users/".get_class($this),$this->dn,array(),"Could not convert uploaded image to jepg");
-            }
-
-            /* Creating binary Code for the Image */
-            if(!$dump = imagick_image2blob($handle)){
-                new log("debug","users/".get_class($this),$this->dn,array(),"Could not create new user image");
-            }
-
-            /* Sending Image */
-            $output=  $dump;
-
-            /* Save attribute */
-            $this->attrs["jpegPhoto"] = $output;
+            $im = new Imagick();
+            $im->readImageBlob($this->photoData);
+            $im->setImageOpacity(1.0);
+            $im->resizeImage(147,200,Imagick::FILTER_UNDEFINED,0.5,TRUE);
+            $im->setCompressionQuality(90);
+            $im->setImageFormat('jpeg');
+            $this->attrs["jpegPhoto"] = $im->getImageBlob();
 
         }elseif(exec('convert')){
 
