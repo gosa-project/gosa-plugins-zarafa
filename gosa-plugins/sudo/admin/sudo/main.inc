@@ -21,35 +21,36 @@
  */
 
 /* Remove locks created by this plugin
-*/
+ */
 if ($remove_lock){
-  if(session::is_set('sudoManagement')){
-      $macl = session::get('sudoManagement');
-      $macl->remove_lock();
-  }
+    if(session::is_set('sudoManagement')){
+        $macl = session::get('sudoManagement');
+        $macl->remove_lock();
+        session::un_set('sudoManagement');
+    }
 }
 
 /* Remove this plugin from session
-*/
+ */
 if ( $cleanup ){
-  session::un_set('sudoManagement');
+    session::un_set('sudoManagement');
 }else{
 
-  /* Create rolemanagement object on demand */
-  if (!session::is_set('sudoManagement')){
-    $sudoManagement= new sudoManagement ($config, $ui);
+    /* Create rolemanagement object on demand */
+    if (!session::is_set('sudoManagement')){
+        $sudoManagement= new sudoManagement ($config, $ui);
+        session::set('sudoManagement',$sudoManagement);
+    }
+    $sudoManagement = session::get('sudoManagement');
+    $display= $sudoManagement->execute();
+
+    /* Reset requested? */
+    if (isset($_GET['reset']) && $_GET['reset'] == 1){
+        session::un_set ('sudoManagement');
+    }
+
+    /* Show and save dialog */
     session::set('sudoManagement',$sudoManagement);
-  }
-  $sudoManagement = session::get('sudoManagement');
-  $display= $sudoManagement->execute();
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('sudoManagement');
-  }
-
-  /* Show and save dialog */
-  session::set('sudoManagement',$sudoManagement);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
