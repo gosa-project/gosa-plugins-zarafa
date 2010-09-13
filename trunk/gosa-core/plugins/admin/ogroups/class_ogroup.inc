@@ -67,6 +67,8 @@ class ogroup extends plugin
   var $attributes= array("cn", "description", "gosaGroupObjects","member","accessTo","trustModel");
   var $objectclasses= array("top", "gosaGroupOfNames");
 
+  var $copyMembers = TRUE;
+
   function ogroup (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
@@ -1061,6 +1063,12 @@ class ogroup extends plugin
       $this->gosaGroupObjects =  $source['gosaGroupObjects'][0];
     }
 
+    if (preg_match("/[STW]/", $this->gosaGroupObjects) || !isset($source['member'])) {
+      $this->copyMembers = false;
+    } else {
+      $this->copyMembers = true;
+    }
+
     /* Reload tabs */
     $this->parent->reload($this->gosaGroupObjects );
    
@@ -1088,6 +1096,7 @@ class ogroup extends plugin
   {
     $smarty = get_smarty();
     $smarty->assign("cn",     $this->cn);
+    $smarty->assign("copyMembers",     $this->copyMembers);
     $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));
     $ret = array();
     $ret['string'] = $str;
@@ -1099,6 +1108,9 @@ class ogroup extends plugin
   {
     if(isset($_POST['cn'])){
       $this->cn = $_POST['cn'];
+    }
+    if(!isset($_POST['copyMembers'])){
+      $this->member = array();
     }
   }
 

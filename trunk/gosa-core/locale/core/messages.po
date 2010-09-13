@@ -3588,6 +3588,24 @@ msgstr ""
 msgid "Please enter the new object group name"
 msgstr ""
 
+#: plugins/admin/ogroups/paste_generic.tpl:13
+msgid "Inherit Members"
+msgstr ""
+
+#: plugins/admin/ogroups/paste_generic.tpl:15
+msgid ""
+"Note that settings are copied even if you choose to not inherit members.  "
+"Those settings will be lost in case different type members get added to the "
+"group."
+msgstr ""
+
+#: plugins/admin/ogroups/paste_generic.tpl:17
+msgid ""
+"Note that only settings are copied and the new object group will have no "
+"members initially.  Those settings will be lost in case different type "
+"members get added to the group."
+msgstr ""
+
 #: plugins/admin/ogroups/class_ogroupManagement.inc:27
 msgid "Manage object groups"
 msgstr ""

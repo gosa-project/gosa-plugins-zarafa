@@ -3860,6 +3860,34 @@ msgstr "Mitglied"
 msgid "Please enter the new object group name"
 msgstr "Bitte geben Sie einen Namen für die neue Objektgruppe ein"
 
+#: plugins/admin/ogroups/paste_generic.tpl:13
+msgid "Inherit Members"
+msgstr "Mitglieder übernehmen"
+
+#: plugins/admin/ogroups/paste_generic.tpl:15
+msgid ""
+"Note that settings are copied even if you choose to not inherit members. "
+"Those settings will be lost in case different type members get added to the "
+"group and will only appear once a new member of the current type is added."
+msgstr ""
+"Beachten Sie, dass die Einstellungen auch dann kopiert werden, "
+"wenn keine Mitglieder übernommen werden. Diese Einstellungen gehen verloren, "
+"wenn ein Mitglied von einem anderen Typ zu der Gruppe hinzugefügt wird und "
+"werden erst angezeigt, wenn ein entsprechendes Mitglied hinzugefügt wurde."
+
+#: plugins/admin/ogroups/paste_generic.tpl:17
+msgid ""
+"Note that only settings are copied and the new object group will have no "
+"members initially. Those settings will be lost in case different type "
+"members get added to the group and will only appear once a new member of "
+"the current type is added."
+msgstr ""
+"Beachten Sie, dass lediglich die Einstellungen kopiert werden und "
+"die neue Objektgruppe Anfangs keine Mitglieder hat.  Diese Einstellungen "
+"gehen verloren, wenn ein Mitglied von einem anderen Typ zu der Gruppe "
+"hinzugefügt wird und werden erst angezeigt, wenn ein entsprechendes "
+"Mitglied hinzugefügt wurde."
+
 #: plugins/admin/ogroups/class_ogroupManagement.inc:27
 msgid "Manage object groups"
 msgstr "Objektgruppen verwalten"
