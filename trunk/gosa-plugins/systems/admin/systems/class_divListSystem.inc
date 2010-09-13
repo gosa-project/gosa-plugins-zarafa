@@ -398,7 +398,12 @@ class divListSystem extends MultiSelectWindow
       $cnts[$type] ++;
 
       /* Create each field */
-      $filtered_dn = str_replace('\\,', '\\2C', LDAP::fix($val['dn']));
+      if ($this->config->comma_escape_style == "comma" ||
+          $this->config->comma_escape_style == "unknown") {
+        $filtered_dn = LDAP::fix($val['dn']);
+      } else {
+        $filtered_dn = str_replace('\\,', '\\2C', LDAP::fix($val['dn']));
+      }
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
       $field1 = array("string" => sprintf($img['img'],$val['dn']),

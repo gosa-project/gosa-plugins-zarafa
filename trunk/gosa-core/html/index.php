@@ -286,6 +286,24 @@ if (($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) || $htacces
     }
   }
 
+  /* Determine LDAP server comma escaping style */
+  if (!isset($config->comma_escape_style)) {
+    $comma_escape_style = "unknown";
+    $ldap = $config->get_ldap_link();
+    $ldap->cd("");
+    $ldap->cat("");
+    $attrs = $ldap->fetch();
+    if (isset($attrs["vendorName"]) && $attrs["vendorName"][0] == "Sun Microsystems, Inc.") {
+      $comma_escape_style = "comma";
+    }
+    for($i = 0 ; $i < $attrs['objectClass']['count']; $i++){
+      if ($attrs['objectClass'][$i] == "OpenLDAProotDSE") {
+        $comma_escape_style = "2C";
+      }
+    }
+    $config->comma_escape_style = $comma_escape_style;
+  }
+
   /* Check for locking area */
   $ldap->cat($config->get_cfg_value("config"), array("dn"));
   $attrs= $ldap->fetch();

@@ -957,7 +957,12 @@ class plugin
     /* Walk through all objectGroups and check if there are 
         members matching the source dn 
      */
-    $src_dn=str_replace('\\,', '\\2C', LDAP::fix($src_dn));
+    if ($this->config->comma_escape_style == "comma" ||
+        $this->config->comma_escape_style == "unknown") {
+      $src_dn=LDAP::fix($src_dn);
+    } else {
+      $src_dn=str_replace('\\,', '\\2C', LDAP::fix($src_dn));
+    }
     foreach($ogroups as $ogroup){
       if(isset($ogroup['member'])){
 
