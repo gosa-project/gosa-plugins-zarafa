@@ -21,35 +21,36 @@
  */
 
 /* Remove locks created by this plugin
-*/
+ */
 if ($remove_lock){
-  if(session::is_set('roleManagement')){
-      $macl = session::get('roleManagement');
-      $macl->remove_lock();
-  }
+    if(session::is_set('roleManagement')){
+        $macl = session::get('roleManagement');
+        $macl->remove_lock();
+        session::un_set('roleManagement');
+    }
 }
 
 /* Remove this plugin from session
-*/
+ */
 if ( $cleanup ){
-  session::un_set('roleManagement');
+    session::un_set('roleManagement');
 }else{
 
-  /* Create rolemanagement object on demand */
-  if (!session::is_set('roleManagement')){
-    $roleManagement= new roleManagement ($config, $ui);
+    /* Create rolemanagement object on demand */
+    if (!session::is_set('roleManagement')){
+        $roleManagement= new roleManagement ($config, $ui);
+        session::set('roleManagement',$roleManagement);
+    }
+    $roleManagement = session::get('roleManagement');
+    $display= $roleManagement->execute();
+
+    /* Reset requested? */
+    if (isset($_GET['reset']) && $_GET['reset'] == 1){
+        session::un_set ('roleManagement');
+    }
+
+    /* Show and save dialog */
     session::set('roleManagement',$roleManagement);
-  }
-  $roleManagement = session::get('roleManagement');
-  $display= $roleManagement->execute();
-
-  /* Reset requested? */
-  if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    session::un_set ('roleManagement');
-  }
-
-  /* Show and save dialog */
-  session::set('roleManagement',$roleManagement);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
