@@ -8,26 +8,23 @@
 # Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
 # Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
 # Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+# Fabian Hickert <fabian.hickert@gonicus.de>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 10:40+0200\n"
-"PO-Revision-Date: 2008-04-02 14:20+0200\n"
-"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
-"Language-Team: Deutsch <de@li.org>\n"
+"POT-Creation-Date: 2010-09-14 09:08-0400\n"
+"PO-Revision-Date: 2010-09-14 15:19+0200\n"
+"Last-Translator: Fabian Hickert <fabian.hickert@gonicus.de>\n"
+"Language-Team: Deutsch <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-
-#: personal/connectivity/intranet.tpl:4
-#, fuzzy
-msgid "Intra net account"
-msgstr "Intranet-Konto"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:268
+#: personal/connectivity/class_connectivity.inc:274
 msgid "Connectivity"
 msgstr "Konnektivität"
 
@@ -36,19 +33,21 @@ msgstr "Konnektivität"
 msgid "This does something"
 msgstr "Dies tut etwas"
 
-#: personal/connectivity/class_connectivity.inc:271
+#: personal/connectivity/class_connectivity.inc:277
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_connectivity.inc:281
 #: personal/connectivity/class_intranetAccount.inc:217
-#, fuzzy
 msgid "Connectivity add-on"
 msgstr "Konnektivitäts-Erweiterung"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intra net account"
+msgstr "Intranet-Konto"
+
 #: personal/connectivity/class_intranetAccount.inc:16
-#, fuzzy
 msgid "Intra net"
 msgstr "Intranet"
 
@@ -58,11 +57,10 @@ msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
 #: personal/connectivity/class_intranetAccount.inc:205
-#, fuzzy
 msgid "Intra-net"
 msgstr "Intranet"
 
 #: personal/connectivity/class_intranetAccount.inc:217
-#, fuzzy
 msgid "Intra-net account settings"
-msgstr "Einstellungen für Intranet-Konto"
+msgstr "Intranet-Konto Einstellungen"
+
