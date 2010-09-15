@@ -1272,7 +1272,7 @@ class faiManagement extends management
                           "name"          => "defaultFaiRelease",
                           "type"          => "dn",
                           "default"       => "",
-                          "description"   => _("The property sets the default release which gets selected in the fai management."),
+                          "description"   => _("The 'defaultFaiRelease' property sets the default release, which gets selected in the fai management."),
                           "check"         => "gosaProperty::isDn",
                           "migrate"       => "",
                           "group"         => "fai",
