@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 19:20+0200\n"
+"POT-Creation-Date: 2010-09-15 07:48-0400\n"
 "PO-Revision-Date: 2009-09-05 15:38+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,6 +13,48 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:177
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:189
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:226
+msgid "Heimdal"
+msgstr "Heimdal"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
+#, fuzzy, php-format
+msgid ""
+"Error loading Heimdal configuration, more than one configuration entry was "
+"found for '%s'."
+msgstr ""
+"Błąd ładowania konfiguracji heimdal, znaleziono więcej niż jeden wpis "
+"konfiguracyjny dla '%s'."
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:157
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:413
+msgid "LDAP error"
+msgstr "błąd LDAP"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:333
+msgid "Max life"
+msgstr "Maksymalny czas życia"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:336
+msgid "Max renew"
+msgstr "Maksymalne czas odnowienia"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:339
+msgid "Valid start"
+msgstr "Ważne od"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:342
+msgid "Valid end"
+msgstr "Ważne do"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
+msgid "Valid password"
+msgstr "Prawidłowe hasło"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
 msgid "Heimdal options"
@@ -123,48 +165,6 @@ msgstr "Usługi"
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
 msgid "Policies"
 msgstr "Polisy"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:177
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:189
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:226
-msgid "Heimdal"
-msgstr "Heimdal"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#, fuzzy, php-format
-msgid ""
-"Error loading Heimdal configuration, more than one configuration entry was "
-"found for '%s'."
-msgstr ""
-"Błąd ładowania konfiguracji heimdal, znaleziono więcej niż jeden wpis "
-"konfiguracyjny dla '%s'."
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:157
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:413
-msgid "LDAP error"
-msgstr "błąd LDAP"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:333
-msgid "Max life"
-msgstr "Maksymalny czas życia"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:336
-msgid "Max renew"
-msgstr "Maksymalne czas odnowienia"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:339
-msgid "Valid start"
-msgstr "Ważne od"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:342
-msgid "Valid end"
-msgstr "Ważne do"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
-msgid "Valid password"
-msgstr "Prawidłowe hasło"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:1
 msgid "Kerberos kadmin access"
