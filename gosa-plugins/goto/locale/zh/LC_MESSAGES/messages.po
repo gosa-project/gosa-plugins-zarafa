@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-15 03:47-0400\n"
+"POT-Creation-Date: 2010-09-15 07:46-0400\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -2411,9 +2411,6 @@ msgid "Choose the phone located at the current terminal"
 msgstr "在当前终端中选择电话"
 
 #: admin/systems/goto/class_terminalService.inc:501
-msgid "Vertical synchronisation range"
-msgstr ""
-
 #: admin/systems/goto/class_terminalService.inc:506
 msgid "Vertical synchronization range"
 msgstr ""
@@ -2477,11 +2474,23 @@ msgid "Graphic color depth"
 msgstr "颜色深度"
 
 #: admin/systems/goto/class_terminalService.inc:718
-msgid "Horizontal Synchronization"
+#: admin/systems/goto/terminalService.tpl:158
+#: admin/systems/goto/class_workstationService.inc:402
+#: admin/systems/goto/class_workstationService.inc:404
+#: admin/systems/goto/class_workstationService.inc:410
+#: admin/systems/goto/class_workstationService.inc:513
+#: admin/systems/goto/workstationService.tpl:177
+msgid "Horizontal synchronization"
 msgstr ""
 
 #: admin/systems/goto/class_terminalService.inc:719
-msgid "Vertical Synchronization"
+#: admin/systems/goto/terminalService.tpl:166
+#: admin/systems/goto/class_workstationService.inc:383
+#: admin/systems/goto/class_workstationService.inc:385
+#: admin/systems/goto/class_workstationService.inc:391
+#: admin/systems/goto/class_workstationService.inc:514
+#: admin/systems/goto/workstationService.tpl:188
+msgid "Vertical synchronization"
 msgstr ""
 
 #: admin/systems/goto/class_terminalService.inc:720
@@ -2645,28 +2654,10 @@ msgstr "显示设备"
 msgid "Use DDC for automatic detection"
 msgstr "使用 DDC 用于自动检测"
 
-#: admin/systems/goto/terminalService.tpl:158
-#: admin/systems/goto/class_workstationService.inc:402
-#: admin/systems/goto/class_workstationService.inc:404
-#: admin/systems/goto/class_workstationService.inc:410
-#: admin/systems/goto/class_workstationService.inc:513
-#: admin/systems/goto/workstationService.tpl:177
-msgid "Horizontal synchronization"
-msgstr ""
-
 #: admin/systems/goto/terminalService.tpl:162
 #: admin/systems/goto/workstationService.tpl:182
 msgid "Horizontal refresh frequency for installed monitor"
 msgstr "安装的显示器的水平刷新率"
-
-#: admin/systems/goto/terminalService.tpl:166
-#: admin/systems/goto/class_workstationService.inc:383
-#: admin/systems/goto/class_workstationService.inc:385
-#: admin/systems/goto/class_workstationService.inc:391
-#: admin/systems/goto/class_workstationService.inc:514
-#: admin/systems/goto/workstationService.tpl:188
-msgid "Vertical synchronization"
-msgstr ""
 
 #: admin/systems/goto/terminalService.tpl:170
 #: admin/systems/goto/workstationService.tpl:193
