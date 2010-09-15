@@ -11,13 +11,22 @@ class registeredDevice extends plugin
     function execute()
     {
         plugin::execute();    
-
         $smarty = get_smarty();
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
         return($smarty->fetch(get_template_path('goto/devices/registeredDevice.tpl', TRUE)));
-    
+    }
+
+
+    function save()
+    {
+        plugin::save();
+        $this->cleanup();
+        $ldap=$this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->cd($this->dn);
+        $ldap->modify($this->attrs);
     }
 
 
@@ -45,8 +54,9 @@ class registeredDevice extends plugin
                         "manager" => _("Manager"),
                         "deviceUUID" => _("Uuid"),
                         "deviceStatus" => _("Stauts")
-                    )
-                    ));
+                        )
+                        )
+                        );
     }
 }
 
