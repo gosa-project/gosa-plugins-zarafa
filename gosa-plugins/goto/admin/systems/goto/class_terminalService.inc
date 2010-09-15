@@ -498,7 +498,7 @@ class termservice extends plugin
                 /* Check vsync for correct usage */
                 $val= preg_replace ("/\s/", "", $this->gotoXVsync);
                 if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val) && $this->acl_is_writeable("gotoXVsync")){
-                    $message[]= msgPool::invalid(_("Vertical synchronisation range"));
+                    $message[]= msgPool::invalid(_("Vertical synchronization range"));
                 } elseif ($this->acl_is_writeable("gotoXVsync")){
                     list($v1,$v2)= preg_split ("/[-+]/", $val);
                     if ($v2 != ""){
@@ -715,8 +715,8 @@ class termservice extends plugin
                         "gotoXDriver"             => _("Graphic driver"),
                         "gotoXResolution"         => _("Graphic resolution"),
                         "gotoXColordepth"         => _("Graphic color depth"),
-                        "gotoXHsync"              => _("Horizontal Synchronization"),
-                        "gotoXVsync"              => _("Vertical Synchronization"),
+                        "gotoXHsync"              => _("Horizontal synchronization"),
+                        "gotoXVsync"              => _("Vertical synchronization"),
                         "AutoSync"                => _("Auto-Sync"),
                         "gotoScannerEnable"       => _("Scanner enabled"),
                         "gotoLpdEnable"           => _("Printer enabled"),
