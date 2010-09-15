@@ -8,6 +8,28 @@ class registeredDevice extends plugin
     public $attributes = array("cn","serialNumber","seeAlso","owner","ou","o",
             "l","description","manager","deviceUUID","deviceStatus");
 
+    public $cn = "";
+    public $serialNumber = "";
+    public $seeAlso = "";
+    public $owner = "";
+    public $ou = "";
+    public $o = "";
+    public $l = "";
+    public $description = "";
+    public $manager = "";
+    public $deviceUUID = "";
+    public $deviceStatus = "";
+
+    public $base = "";
+    public $orig_dn ="";
+
+    function __construct(&$config, $dn)
+    {
+        plugin::plugin($config, $dn);
+        $this->base = $this->config->current['BASE'];
+        $this->orig_dn = $this->dn;
+    }
+
     function execute()
     {
         plugin::execute();    
@@ -26,7 +48,13 @@ class registeredDevice extends plugin
         $ldap=$this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
         $ldap->cd($this->dn);
-        $ldap->modify($this->attrs);
+        
+        if($this->initially_was_account){
+            $ldap->modify($this->attrs);
+        }else{
+            $ldap->add($this->attrs);
+        }
+        echo $ldap->get_error();
     }
 
 
