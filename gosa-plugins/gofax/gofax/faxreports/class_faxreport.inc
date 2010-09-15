@@ -4,7 +4,7 @@ class faxreport extends plugin
 {
     /* Definitions */
     var $plHeadline     = "FAX Reports";
-    var $plDescription  = "View the FAX report or single documents that have been recieved";
+    var $plDescription  = "View the FAX report or single documents that have been received";
     var $plIcon         = "plugins/gofax/images/reports.png";
 
     /* For internal use */
