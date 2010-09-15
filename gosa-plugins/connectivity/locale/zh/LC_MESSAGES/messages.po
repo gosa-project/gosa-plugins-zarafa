@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 10:40+0200\n"
+"POT-Creation-Date: 2010-09-14 09:08-0400\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,13 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/connectivity/intranet.tpl:4
-#, fuzzy
-msgid "Intra net account"
-msgstr "内联网账号"
-
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:268
+#: personal/connectivity/class_connectivity.inc:274
 msgid "Connectivity"
 msgstr "互联"
 
@@ -32,16 +27,21 @@ msgstr "互联"
 msgid "This does something"
 msgstr "******"
 
-#: personal/connectivity/class_connectivity.inc:271
+#: personal/connectivity/class_connectivity.inc:277
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_connectivity.inc:281
 #: personal/connectivity/class_intranetAccount.inc:217
 #, fuzzy
 msgid "Connectivity add-on"
 msgstr "互联"
+
+#: personal/connectivity/intranet.tpl:4
+#, fuzzy
+msgid "Intra net account"
+msgstr "内联网账号"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #, fuzzy

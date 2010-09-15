@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 10:40+0200\n"
+"POT-Creation-Date: 2010-09-14 09:08-0400\n"
 "PO-Revision-Date: 2008-06-04 09:19+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,13 +14,8 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: personal/connectivity/intranet.tpl:4
-#, fuzzy
-msgid "Intra net account"
-msgstr "Compte Intranet"
-
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:268
+#: personal/connectivity/class_connectivity.inc:274
 msgid "Connectivity"
 msgstr "Connectivité"
 
@@ -29,16 +24,21 @@ msgstr "Connectivité"
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
-#: personal/connectivity/class_connectivity.inc:271
+#: personal/connectivity/class_connectivity.inc:277
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_connectivity.inc:281
 #: personal/connectivity/class_intranetAccount.inc:217
 #, fuzzy
 msgid "Connectivity add-on"
 msgstr "Extension Connectivité"
+
+#: personal/connectivity/intranet.tpl:4
+#, fuzzy
+msgid "Intra net account"
+msgstr "Compte Intranet"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #, fuzzy

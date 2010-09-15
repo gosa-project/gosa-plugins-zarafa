@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 10:38+0200\n"
+"POT-Creation-Date: 2010-09-14 08:51-0400\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,76 +16,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/services/apache2/servApacheVhost.tpl:1
-#, fuzzy
-msgid "Apache virtual hosts"
-msgstr "缓存"
-
-#: admin/systems/services/apache2/servApacheVhost.tpl:7
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:50
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:78
-msgid "Add"
-msgstr "添加"
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
-msgid "Alias"
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
-msgid "Directory"
-msgstr "目录"
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:203
-#: admin/systems/services/apache2/class_servApacheVhost.inc:71
-msgid "Name"
-msgstr "名称"
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:210
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:5
-#, fuzzy
-msgid "Virtual host name"
-msgstr "名"
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
-msgid "Only lowercase strings are allowed as Virtual Host Name."
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
-msgid "e.g. example.com"
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:217
-#: admin/systems/services/apache2/class_servApacheVhost.inc:301
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:11
-msgid "Document root"
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:223
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:17
-#, fuzzy
-msgid "Administrator mail address"
-msgstr "邮件地址"
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:232
-#: admin/systems/services/apache2/class_servApacheVhost.inc:302
-#, fuzzy
-msgid "Server alias"
-msgstr "服务器"
-
-#: admin/systems/services/apache2/class_servApacheEditVhost.inc:242
-#: admin/systems/services/apache2/class_servApacheVhost.inc:304
-#, fuzzy
-msgid "Script alias"
-msgstr "脚本"
-
 #: admin/systems/services/apache2/class_servApacheVhost.inc:61
 #: admin/systems/services/apache2/class_servApacheVhost.inc:277
 #: admin/systems/services/apache2/class_servApacheVhost.inc:290
 #, fuzzy
 msgid "Apache service"
 msgstr "缓存"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:71
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:203
+msgid "Name"
+msgstr "名称"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:230
 #: admin/systems/services/apache2/class_servApacheVhost.inc:241
@@ -111,10 +52,28 @@ msgstr ""
 msgid "Server name"
 msgstr "服务器"
 
+#: admin/systems/services/apache2/class_servApacheVhost.inc:301
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:11
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:217
+msgid "Document root"
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:302
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:232
+#, fuzzy
+msgid "Server alias"
+msgstr "服务器"
+
 #: admin/systems/services/apache2/class_servApacheVhost.inc:303
 #, fuzzy
 msgid "Server admin"
 msgstr "服务器"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:304
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:242
+#, fuzzy
+msgid "Script alias"
+msgstr "脚本"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:1
 msgid "Generic"
@@ -124,6 +83,18 @@ msgstr "通用配置"
 #, fuzzy
 msgid "Apache Virutal Host"
 msgstr "缓存"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:5
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:210
+#, fuzzy
+msgid "Virtual host name"
+msgstr "名"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:17
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:223
+#, fuzzy
+msgid "Administrator mail address"
+msgstr "邮件地址"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:26
 #, fuzzy
@@ -144,6 +115,12 @@ msgstr ""
 #, fuzzy
 msgid "Directory Path"
 msgstr "目录"
+
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:50
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:78
+#: admin/systems/services/apache2/servApacheVhost.tpl:7
+msgid "Add"
+msgstr "添加"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:59
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:62
@@ -175,6 +152,29 @@ msgid ""
 "Undefined virtual host name '%s'. Virtual host name must be a valid, fully "
 "qualified domain name like 'www.example.com' or 'example.com'."
 msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
+msgid "Alias"
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
+msgid "Directory"
+msgstr "目录"
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
+msgid "Only lowercase strings are allowed as Virtual Host Name."
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
+msgid "e.g. example.com"
+msgstr ""
+
+#: admin/systems/services/apache2/servApacheVhost.tpl:1
+#, fuzzy
+msgid "Apache virtual hosts"
+msgstr "缓存"
 
 #, fuzzy
 #~ msgid "Apache VHosts"

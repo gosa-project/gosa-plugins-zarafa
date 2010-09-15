@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GOsa plugins - connectivity\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 10:40+0200\n"
+"POT-Creation-Date: 2010-09-14 09:08-0400\n"
 "PO-Revision-Date: 2010-03-11 20:49-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira "
@@ -18,13 +18,8 @@ msgstr ""
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: BRAZIL\n"
 
-#: personal/connectivity/intranet.tpl:4
-#, fuzzy
-msgid "Intra net account"
-msgstr "Conta intranet"
-
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/class_connectivity.inc:268
+#: personal/connectivity/class_connectivity.inc:274
 msgid "Connectivity"
 msgstr "Conectividade"
 
@@ -33,16 +28,21 @@ msgstr "Conectividade"
 msgid "This does something"
 msgstr "Isto faz algo"
 
-#: personal/connectivity/class_connectivity.inc:271
+#: personal/connectivity/class_connectivity.inc:277
 #: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Minha conta"
 
-#: personal/connectivity/class_connectivity.inc:275
+#: personal/connectivity/class_connectivity.inc:281
 #: personal/connectivity/class_intranetAccount.inc:217
 #, fuzzy
 msgid "Connectivity add-on"
 msgstr "Addon conectividade"
+
+#: personal/connectivity/intranet.tpl:4
+#, fuzzy
+msgid "Intra net account"
+msgstr "Conta intranet"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #, fuzzy
