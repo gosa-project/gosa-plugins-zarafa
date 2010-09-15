@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 10:45+0200\n"
+"POT-Creation-Date: 2010-09-15 01:24-0400\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: admin/systems/services/dhcp/class_dhcpService.inc:126
+#, fuzzy
+msgid "Lease time"
+msgstr "信息"
+
+#: admin/systems/services/dhcp/class_dhcpService.inc:129
+#, fuzzy
+msgid "Max lease time"
+msgstr "信息"
+
+#: admin/systems/services/dhcp/class_dhcpService.inc:132
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:154
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:52
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:57
+#, fuzzy
+msgid "Default lease time"
+msgstr "选择发行名称"
+
+#: admin/systems/services/dhcp/class_dhcpService.inc:132
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:66
+#, fuzzy
+msgid "Maximum lease time"
+msgstr "最大文件大小"
 
 #: admin/systems/services/dhcp/class_dhcpHost.inc:64
 #, fuzzy
@@ -31,26 +55,26 @@ msgstr ""
 
 #: admin/systems/services/dhcp/class_dhcpHost.inc:130
 #: admin/systems/services/dhcp/class_dhcpHost.inc:138
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:147
-#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:162
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:46
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:150
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:168
-#: admin/systems/services/dhcp/dhcp_host.tpl:10
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:11
-#: admin/systems/services/dhcp/class_dhcpPool.inc:101
-#: admin/systems/services/dhcp/class_dhcpPool.inc:109
-#: admin/systems/services/dhcp/dhcp_pool.tpl:7
 #: admin/systems/services/dhcp/class_dhcpSubClass.inc:84
 #: admin/systems/services/dhcp/class_dhcpSubClass.inc:87
 #: admin/systems/services/dhcp/class_dhcpSubClass.inc:95
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:84
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:87
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:95
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:51
+#: admin/systems/services/dhcp/class_dhcpPool.inc:101
+#: admin/systems/services/dhcp/class_dhcpPool.inc:109
 #: admin/systems/services/dhcp/class_dhcpClass.inc:84
 #: admin/systems/services/dhcp/class_dhcpClass.inc:87
 #: admin/systems/services/dhcp/class_dhcpClass.inc:95
+#: admin/systems/services/dhcp/dhcp_host.tpl:10
 #: admin/systems/services/dhcp/dhcp_group.tpl:7
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:147
+#: admin/systems/services/dhcp/dhcp_pool.tpl:7
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:150
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:168
+#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:162
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:11
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:84
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:87
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:95
 msgid "Name"
 msgstr "名称"
 
@@ -59,41 +83,6 @@ msgstr "名称"
 #, fuzzy
 msgid "Hardware address"
 msgstr "主要地址"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:136
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:156
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:10
-msgid "Network address"
-msgstr "网络地址"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:139
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:155
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:195
-#: admin/systems/services/dhcp/dhcp_network.tpl:20
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:18
-#, fuzzy
-msgid "Net mask"
-msgstr "Netatalk"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:157
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:158
-#: admin/systems/services/dhcp/class_dhcpPool.inc:116
-#: admin/systems/services/dhcp/class_dhcpPool.inc:120
-#: admin/systems/services/dhcp/class_dhcpPool.inc:124
-#: admin/systems/services/dhcp/dhcp_pool.tpl:13
-#, fuzzy
-msgid "Range"
-msgstr "管理"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:167
-#, fuzzy
-msgid "Network range"
-msgstr "网络地址"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:173
-#: admin/systems/services/dhcp/class_dhcpPool.inc:138
-msgid "'Range' is not inside the configured network."
-msgstr ""
 
 #: admin/systems/services/dhcp/class_dhcpTSigKey.inc:51
 msgid "HMAC-MD5"
@@ -127,75 +116,58 @@ msgstr "重命名"
 msgid "Key"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:145
-#: admin/systems/services/dhcp/dhcp_dnszone.tpl:6
-msgid "DNS zone"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:149
-#: admin/systems/services/dhcp/dhcp_network.tpl:79
-#: admin/systems/services/dhcp/dhcp_dnszone.tpl:13
-#, fuzzy
-msgid "DNS server"
-msgstr "添加 DNS 服务"
-
-#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:153
-#: admin/systems/services/dhcp/dhcp_dnszone.tpl:21
-msgid "Key DN"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:126
-#, fuzzy
-msgid "Lease time"
-msgstr "信息"
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:129
-#, fuzzy
-msgid "Max lease time"
-msgstr "信息"
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:132
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:154
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:52
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:57
-#, fuzzy
-msgid "Default lease time"
-msgstr "选择发行名称"
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:132
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:66
-#, fuzzy
-msgid "Maximum lease time"
-msgstr "最大文件大小"
-
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:46
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:51
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:65
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:79
 #: admin/systems/services/dhcp/class_servDHCP.inc:709
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:59
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:73
 msgid "Error"
 msgstr "错误"
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:195
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:200
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:18
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:139
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:155
+#: admin/systems/services/dhcp/dhcp_network.tpl:20
+#, fuzzy
+msgid "Net mask"
+msgstr "Netatalk"
+
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:200
 #: admin/systems/services/dhcp/dhcp_network.tpl:28
 #, fuzzy
 msgid "Broadcast address"
 msgstr "地址"
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:200
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:205
 #, php-format
 msgid "Error in definition of '%s'!"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:155
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:62
+#: admin/systems/services/dhcp/class_dhcpPool.inc:116
+#: admin/systems/services/dhcp/class_dhcpPool.inc:120
+#: admin/systems/services/dhcp/class_dhcpPool.inc:124
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:157
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:158
+#: admin/systems/services/dhcp/dhcp_pool.tpl:13
 #, fuzzy
-msgid "Max. lease time"
-msgstr "信息"
+msgid "Range"
+msgstr "管理"
 
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:156
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:71
-msgid "Min. lease time"
+#: admin/systems/services/dhcp/class_dhcpPool.inc:138
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:173
+msgid "'Range' is not inside the configured network."
 msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:65
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:79
+#, fuzzy
+msgid "Cannot delete automatic statements!"
+msgstr "无法打开文件 '%s'。"
+
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:95
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:110
+msgid "automatic"
+msgstr "自动"
 
 #: admin/systems/services/dhcp/remove_dhcp.tpl:3
 #: admin/systems/services/dhcp/class_servDHCP.inc:123
@@ -221,30 +193,31 @@ msgstr ""
 "最好在执行这个操作之前，保存当前 LDAP 树中的内容到一个文件。所以，如果您已经"
 "这么做了，按“删除”继续或者按“取消”退出。"
 
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:6
-#, fuzzy
-msgid "Hide advanced settings"
-msgstr "高级电话设置"
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:3
+#: admin/systems/services/dhcp/dhcp_host.tpl:7
+#: admin/systems/services/dhcp/dhcp_group.tpl:3
+#: admin/systems/services/dhcp/dhcp_pool.tpl:3
+#: admin/systems/services/dhcp/dhcp_service.tpl:2
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:3
+msgid "Generic"
+msgstr "通用配置"
 
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:8
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:4
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:8
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:29
 #, fuzzy
-msgid "DHCP advanced settings"
-msgstr "高级电话设置"
+msgid "DHCP subnet settings"
+msgstr "PHP 安装检查"
 
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:11
-#, fuzzy
-msgid "DHCP statements"
-msgstr "部门"
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:10
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:136
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:156
+msgid "Network address"
+msgstr "网络地址"
 
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:30
-#, fuzzy
-msgid "DHCP options"
-msgstr "文件系统选项"
-
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:50
-#, fuzzy
-msgid "Show advanced settings"
-msgstr "高级电话设置"
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:37
+msgid "Range for dynamic address assignment"
+msgstr ""
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:3
 #: admin/systems/services/dhcp/dhcp_host.tpl:8
@@ -252,15 +225,6 @@ msgstr "高级电话设置"
 #, fuzzy
 msgid "DHCP host configuration"
 msgstr "PHP 安装检查"
-
-#: admin/systems/services/dhcp/dhcp_host.tpl:7
-#: admin/systems/services/dhcp/dhcp_service.tpl:2
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:3
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:3
-#: admin/systems/services/dhcp/dhcp_pool.tpl:3
-#: admin/systems/services/dhcp/dhcp_group.tpl:3
-msgid "Generic"
-msgstr "通用配置"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:14
 #, fuzzy
@@ -285,150 +249,35 @@ msgstr "主要地址"
 msgid "Hardware type"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_service.tpl:4
-#: admin/systems/services/dhcp/servdhcp.tpl:8
-#: admin/systems/services/dhcp/class_servDHCP.inc:36
-#: admin/systems/services/dhcp/class_servDHCP.inc:720
-#: admin/systems/services/dhcp/class_servDHCP.inc:721
-#: admin/systems/services/dhcp/class_servDHCP.inc:768
+#: admin/systems/services/dhcp/dhcp_group.tpl:5
 #, fuzzy
-msgid "DHCP service"
-msgstr "添加 DHCP 服务"
+msgid "DHCP group settings"
+msgstr "组设置"
 
-#: admin/systems/services/dhcp/dhcp_service.tpl:9
+#: admin/systems/services/dhcp/dhcp_group.tpl:10
 #, fuzzy
-msgid "Authoritative service"
-msgstr "工作站名称"
+msgid "Name of group"
+msgstr "组名称"
 
-#: admin/systems/services/dhcp/dhcp_service.tpl:13
-msgid "Dynamic DNS update"
+#: admin/systems/services/dhcp/dhcp_tsigkey.tpl:2
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:40
+#: admin/systems/services/dhcp/class_servDHCP.inc:48
+msgid "DNS update key"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_service.tpl:15
-msgid "Dynamic DNS update style"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_service.tpl:22
+#: admin/systems/services/dhcp/dhcp_tsigkey.tpl:9
 #, fuzzy
-msgid "DHCP settings"
-msgstr "PHP 安装检查"
+msgid "Name of Key"
+msgstr "黑名单名称"
 
-#: admin/systems/services/dhcp/dhcp_service.tpl:24
-msgid "Default lease time (s)"
+#: admin/systems/services/dhcp/dhcp_tsigkey.tpl:13
+msgid "Encryption method"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_service.tpl:28
-msgid "Enter default lease time in seconds."
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_service.tpl:33
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:167
 #, fuzzy
-msgid "Maximum lease time (s)"
-msgstr "最大文件大小"
-
-#: admin/systems/services/dhcp/dhcp_service.tpl:37
-msgid "Enter maximum lease time in seconds."
-msgstr ""
-
-#: admin/systems/services/dhcp/servdhcp.tpl:4
-msgid ""
-"DHCP take over will take place when saving this entry. Choose 'Cancel' to "
-"abort."
-msgstr ""
-
-#: admin/systems/services/dhcp/servdhcp.tpl:13
-msgid "Take over DHCP configuration from following server"
-msgstr ""
-
-#: admin/systems/services/dhcp/servdhcp.tpl:24
-#, fuzzy
-msgid "DHCP sections"
-msgstr "PHP 安装检查"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:3
-#: admin/systems/services/dhcp/dhcp_network.tpl:7
-#: admin/systems/services/dhcp/dhcp_network.tpl:9
-#: admin/systems/services/dhcp/dhcp_network.tpl:42
-#: admin/systems/services/dhcp/dhcp_network.tpl:68
-#, fuzzy
-msgid "Network configuration"
-msgstr "下载配置"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:11
-#, fuzzy
-msgid "Router"
-msgstr "计算机"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:15
-msgid "Enter name or IP address of router to be used in this section"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:40
-#, fuzzy
-msgid "Boot up"
-msgstr "根"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:44
-msgid "Filename"
-msgstr "文件名"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:48
-msgid ""
-"Enter name of file that will be loaded via TFTP after client has started"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:53
-#, fuzzy
-msgid "Next server"
-msgstr "NTP 服务器"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:57
-msgid "Enter name of server to retrieve boot images from"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:66
-#, fuzzy
-msgid "Domain Name Service"
-msgstr "时间服务"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:70
-msgid "Domain"
-msgstr "域"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:73
-#, fuzzy
-msgid "Name of domain"
-msgstr "部门名称"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:82
-msgid "List of DNS servers to be propagated"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:89
-#, fuzzy
-msgid "DNS server do be added"
-msgstr "选择要添加的打印机"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:92
-msgid "Click here add the selected server to the list"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:97
-msgid "Click here remove the selected servers from the list"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:102
-#, fuzzy
-msgid "Domain Name Service options"
-msgstr "域管理员"
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:104
-msgid "Assign host names found via reverse mapping"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_network.tpl:108
-msgid "Assign host names from host declarations"
-msgstr ""
+msgid "Network range"
+msgstr "网络地址"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 #, fuzzy
@@ -453,166 +302,79 @@ msgstr "选择鼠标类型"
 msgid "Create"
 msgstr "创建"
 
-#: admin/systems/services/dhcp/dhcp_dnszone.tpl:2
-#: admin/systems/services/dhcp/class_servDHCP.inc:49
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
+#: admin/systems/services/dhcp/class_servDHCP.inc:39
+#: admin/systems/services/dhcp/class_servDHCP.inc:321
+#: admin/systems/services/dhcp/class_servDHCP.inc:628
+#, fuzzy
+msgid "Global options"
+msgstr "邮件选项"
+
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
+#: admin/systems/services/dhcp/class_servDHCP.inc:40
+msgid "Class"
+msgstr "类"
+
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:34
+#: admin/systems/services/dhcp/class_servDHCP.inc:41
+#, fuzzy
+msgid "Subclass"
+msgstr "类"
+
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:35
+#: admin/systems/services/dhcp/class_servDHCP.inc:42
+#, fuzzy
+msgid "Host"
+msgstr "贴"
+
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:36
+#: admin/systems/services/dhcp/class_servDHCP.inc:43
+msgid "Group"
+msgstr "组"
+
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:37
+#: admin/systems/services/dhcp/class_servDHCP.inc:44
+#, fuzzy
+msgid "Pool"
+msgstr "布尔值"
+
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:38
+#: admin/systems/services/dhcp/class_servDHCP.inc:45
+#, fuzzy
+msgid "Subnet"
+msgstr "提交"
+
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:39
+#: admin/systems/services/dhcp/class_servDHCP.inc:47
+#, fuzzy
+msgid "Shared network"
+msgstr "SMTP 授权网络"
+
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:41
+#: admin/systems/services/dhcp/class_servDHCP.inc:49
+#: admin/systems/services/dhcp/dhcp_dnszone.tpl:2
 msgid "DNS update zone"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:4
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:8
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:29
+#: admin/systems/services/dhcp/class_servDHCP.inc:36
+#: admin/systems/services/dhcp/class_servDHCP.inc:720
+#: admin/systems/services/dhcp/class_servDHCP.inc:721
+#: admin/systems/services/dhcp/class_servDHCP.inc:768
+#: admin/systems/services/dhcp/dhcp_service.tpl:4
+#: admin/systems/services/dhcp/servdhcp.tpl:8
 #, fuzzy
-msgid "DHCP subnet settings"
-msgstr "PHP 安装检查"
-
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:37
-msgid "Range for dynamic address assignment"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:5
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:9
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:45
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:50
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:85
-#, fuzzy
-msgid "DHCP shared network"
-msgstr "SMTP 授权网络"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:15
-#, fuzzy
-msgid "Name for shared network"
-msgstr "SMTP 授权网络"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:20
-msgid "Server identifier"
-msgstr "服务器标识"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:25
-msgid "Propagated server identifier for this shared network"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:37
-msgid "Select if this server is authoritative for this shared network"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:37
-#, fuzzy
-msgid "Authoritative server"
-msgstr "工作站名称"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:48
-#, fuzzy
-msgid "Leases"
-msgstr "发行"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:57
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:66
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:75
-#, fuzzy
-msgid "seconds"
-msgstr "(秒)"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:75
-#, fuzzy
-msgid "Minimum lease time"
-msgstr "最大文件大小"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:84
-#, fuzzy
-msgid "Access control"
-msgstr "访问选项"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:90
-msgid "Select if unknown clients should get dynamic IP addresses"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:90
-#, fuzzy
-msgid "Allow unknown clients"
-msgstr "! 未知 id"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:98
-msgid "Select if BOOTP clients should get dynamic IP addresses"
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:98
-#, fuzzy
-msgid "Allow BOOTP clients"
-msgstr "! 未知 id"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:106
-#, fuzzy
-msgid "Select if clients are allowed to boot using this DHCP server"
-msgstr "允许使用该打印机的用户"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:106
-msgid "Allow booting"
-msgstr ""
+msgid "DHCP service"
+msgstr "添加 DHCP 服务"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:38
 #, fuzzy
 msgid "Logging"
 msgstr "登录名"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:39
-#: admin/systems/services/dhcp/class_servDHCP.inc:321
-#: admin/systems/services/dhcp/class_servDHCP.inc:628
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:28
-#, fuzzy
-msgid "Global options"
-msgstr "邮件选项"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:40
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:29
-msgid "Class"
-msgstr "类"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:41
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:30
-#, fuzzy
-msgid "Subclass"
-msgstr "类"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:42
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:31
-#, fuzzy
-msgid "Host"
-msgstr "贴"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:43
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
-msgid "Group"
-msgstr "组"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:44
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
-#, fuzzy
-msgid "Pool"
-msgstr "布尔值"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:45
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:34
-#, fuzzy
-msgid "Subnet"
-msgstr "提交"
-
 #: admin/systems/services/dhcp/class_servDHCP.inc:46
 #, fuzzy
 msgid "Fail-over peer"
 msgstr "过滤器"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:47
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:35
-#, fuzzy
-msgid "Shared network"
-msgstr "SMTP 授权网络"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:48
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:36
-#: admin/systems/services/dhcp/dhcp_tsigkey.tpl:2
-msgid "DNS update key"
-msgstr ""
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:70
 msgid "Type"
@@ -707,26 +469,6 @@ msgstr "服务"
 msgid "Restart service"
 msgstr "NTP 服务器"
 
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:59
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:73
-#, fuzzy
-msgid "Cannot delete automatic statements!"
-msgstr "无法打开文件 '%s'。"
-
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:89
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:104
-msgid "automatic"
-msgstr "自动"
-
-#: admin/systems/services/dhcp/dhcp_tsigkey.tpl:9
-#, fuzzy
-msgid "Name of Key"
-msgstr "黑名单名称"
-
-#: admin/systems/services/dhcp/dhcp_tsigkey.tpl:13
-msgid "Encryption method"
-msgstr ""
-
 #: admin/systems/services/dhcp/dhcp_pool.tpl:4
 #, fuzzy
 msgid "DHCP pool settings"
@@ -737,15 +479,273 @@ msgstr "PHP 安装检查"
 msgid "Name of pool"
 msgstr "黑名单名称"
 
-#: admin/systems/services/dhcp/dhcp_group.tpl:5
+#: admin/systems/services/dhcp/dhcp_network.tpl:3
+#: admin/systems/services/dhcp/dhcp_network.tpl:7
+#: admin/systems/services/dhcp/dhcp_network.tpl:9
+#: admin/systems/services/dhcp/dhcp_network.tpl:42
+#: admin/systems/services/dhcp/dhcp_network.tpl:68
 #, fuzzy
-msgid "DHCP group settings"
-msgstr "组设置"
+msgid "Network configuration"
+msgstr "下载配置"
 
-#: admin/systems/services/dhcp/dhcp_group.tpl:10
+#: admin/systems/services/dhcp/dhcp_network.tpl:11
 #, fuzzy
-msgid "Name of group"
-msgstr "组名称"
+msgid "Router"
+msgstr "计算机"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:15
+msgid "Enter name or IP address of router to be used in this section"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:40
+#, fuzzy
+msgid "Boot up"
+msgstr "根"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:44
+msgid "Filename"
+msgstr "文件名"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:48
+msgid ""
+"Enter name of file that will be loaded via TFTP after client has started"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:53
+#, fuzzy
+msgid "Next server"
+msgstr "NTP 服务器"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:57
+msgid "Enter name of server to retrieve boot images from"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:66
+#, fuzzy
+msgid "Domain Name Service"
+msgstr "时间服务"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:70
+msgid "Domain"
+msgstr "域"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:73
+#, fuzzy
+msgid "Name of domain"
+msgstr "部门名称"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:79
+#: admin/systems/services/dhcp/dhcp_dnszone.tpl:13
+#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:149
+#, fuzzy
+msgid "DNS server"
+msgstr "添加 DNS 服务"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:82
+msgid "List of DNS servers to be propagated"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:89
+#, fuzzy
+msgid "DNS server do be added"
+msgstr "选择要添加的打印机"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:92
+msgid "Click here add the selected server to the list"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:97
+msgid "Click here remove the selected servers from the list"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:102
+#, fuzzy
+msgid "Domain Name Service options"
+msgstr "域管理员"
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:104
+msgid "Assign host names found via reverse mapping"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_network.tpl:108
+msgid "Assign host names from host declarations"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:155
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:62
+#, fuzzy
+msgid "Max. lease time"
+msgstr "信息"
+
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:156
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:71
+msgid "Min. lease time"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:9
+#, fuzzy
+msgid "Authoritative service"
+msgstr "工作站名称"
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:13
+msgid "Dynamic DNS update"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:15
+msgid "Dynamic DNS update style"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:22
+#, fuzzy
+msgid "DHCP settings"
+msgstr "PHP 安装检查"
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:24
+msgid "Default lease time (s)"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:28
+msgid "Enter default lease time in seconds."
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:33
+#, fuzzy
+msgid "Maximum lease time (s)"
+msgstr "最大文件大小"
+
+#: admin/systems/services/dhcp/dhcp_service.tpl:37
+msgid "Enter maximum lease time in seconds."
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_dnszone.tpl:6
+#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:145
+msgid "DNS zone"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_dnszone.tpl:21
+#: admin/systems/services/dhcp/class_dhcpDnsZone.inc:153
+msgid "Key DN"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:6
+#, fuzzy
+msgid "Hide advanced settings"
+msgstr "高级电话设置"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:8
+#, fuzzy
+msgid "DHCP advanced settings"
+msgstr "高级电话设置"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:11
+#, fuzzy
+msgid "DHCP statements"
+msgstr "部门"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:30
+#, fuzzy
+msgid "DHCP options"
+msgstr "文件系统选项"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:50
+#, fuzzy
+msgid "Show advanced settings"
+msgstr "高级电话设置"
+
+#: admin/systems/services/dhcp/servdhcp.tpl:4
+msgid ""
+"DHCP take over will take place when saving this entry. Choose 'Cancel' to "
+"abort."
+msgstr ""
+
+#: admin/systems/services/dhcp/servdhcp.tpl:13
+msgid "Take over DHCP configuration from following server"
+msgstr ""
+
+#: admin/systems/services/dhcp/servdhcp.tpl:24
+#, fuzzy
+msgid "DHCP sections"
+msgstr "PHP 安装检查"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:5
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:9
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:45
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:50
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:85
+#, fuzzy
+msgid "DHCP shared network"
+msgstr "SMTP 授权网络"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:15
+#, fuzzy
+msgid "Name for shared network"
+msgstr "SMTP 授权网络"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:20
+msgid "Server identifier"
+msgstr "服务器标识"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:25
+msgid "Propagated server identifier for this shared network"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:37
+msgid "Select if this server is authoritative for this shared network"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:37
+#, fuzzy
+msgid "Authoritative server"
+msgstr "工作站名称"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:48
+#, fuzzy
+msgid "Leases"
+msgstr "发行"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:57
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:66
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:75
+#, fuzzy
+msgid "seconds"
+msgstr "(秒)"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:75
+#, fuzzy
+msgid "Minimum lease time"
+msgstr "最大文件大小"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:84
+#, fuzzy
+msgid "Access control"
+msgstr "访问选项"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:90
+msgid "Select if unknown clients should get dynamic IP addresses"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:90
+#, fuzzy
+msgid "Allow unknown clients"
+msgstr "! 未知 id"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:98
+msgid "Select if BOOTP clients should get dynamic IP addresses"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:98
+#, fuzzy
+msgid "Allow BOOTP clients"
+msgstr "! 未知 id"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:106
+#, fuzzy
+msgid "Select if clients are allowed to boot using this DHCP server"
+msgstr "允许使用该打印机的用户"
+
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:106
+msgid "Allow booting"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Service start"
