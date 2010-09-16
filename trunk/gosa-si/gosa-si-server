@@ -953,6 +953,10 @@ sub send_msg_to_target {
             $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
             $res = $known_server_db->del_dbentry($sql_statement);
             daemon_log("$session_id WARNING: failed 2x to send a message to host '$address', delete host from known_server", 3);
+
+            # Remove the registered clients of the server as well
+	    $sql_statement = "DELETE FROM foreign_clients WHERE regserver='$address'";
+	    $res = $foreign_clients_db->del_dbentry($sql_statement);
         } 
         else { 
             $sql_statement = "UPDATE known_server SET status='$new_status', timestamp='$timestamp' WHERE hostname='$address'";
