@@ -1,14 +1,11 @@
 <?php
 
-class registeredDeviceTab extends tabs
+class DeviceTab extends tabs
 {
-
-    
-    
     function save($ignore_account= FALSE)
     {
         // Prepare object DN
-        $baseobject= $this->by_object['registeredDevice'];
+        $baseobject= $this->by_object['Device'];
         $cn      = preg_replace('/,/', '\,', $baseobject->cn);
         $cn      = preg_replace('/"/', '\"', $cn);
         $this->dn= "cn=".$cn.",ou=systems,".$baseobject->base;
