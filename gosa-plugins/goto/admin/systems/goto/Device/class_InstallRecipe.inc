@@ -1,6 +1,6 @@
 <?php
 
-class installRecipe extends plugin
+class InstallRecipe extends plugin
 {
     public $member = array();
     public $ksTemplate = "";
@@ -33,7 +33,7 @@ class installRecipe extends plugin
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
-        return($smarty->fetch(get_template_path('goto/Device/installRecipe.tpl', TRUE)));
+        return($smarty->fetch(get_template_path('goto/Device/InstallRecipe.tpl', TRUE)));
     }
 
 
