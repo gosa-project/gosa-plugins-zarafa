@@ -38,8 +38,19 @@
                     <td> <input type="text" name="seeAlso" value="{$seeAlso}"></td>
                 </tr>
                 <tr>
+                </tr>
+                <tr>
                     <td><LABEL for='owner'>{t}Owner{/t}</LABEL></td>
-                    <td> <input type="text" name="owner" value="{$owner}"></td>
+                    <td>
+                        <input type="text" name="owner" value="{$owner_name}" 
+                            title="{$owner}" disabled style="width:120%;">
+
+                        {image path="images/lists/edit.png" action="editOwner" acl=$ownerACL}
+                        {if $owner!=""}
+                            {image path="images/info_small.png" title="{$owner}" acl=$ownerACL}
+                            {image path="images/lists/trash.png" action="removeOwner" acl=$ownerACL}
+                        {/if}
+                 </td>
                 </tr>
             </table>
         </td>
@@ -48,7 +59,16 @@
             <table>
                 <tr>
                     <td><LABEL for='manager'>{t}Manager{/t}</LABEL></td>
-                    <td> <input type="text" name="manager" value="{$manager}"></td>
+                    <td>
+                        <input type="text" name="manager" value="{$manager_name}" 
+                            title="{$manager}" disabled style="width:120%;">
+
+                        {image path="images/lists/edit.png" action="editManager" acl=$managerACL}
+                        {if $manager!=""}
+                            {image path="images/info_small.png" title="{$manager}" acl=$managerACL}
+                            {image path="images/lists/trash.png" action="removeManager" acl=$managerACL}
+                        {/if}
+                 </td>
                 </tr>
                 <tr>
                     <td><LABEL for='deviceUUID'>{t}Device UUID{/t}</LABEL></td>
