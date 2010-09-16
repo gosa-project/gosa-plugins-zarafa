@@ -50,12 +50,25 @@ class registeredDevice extends plugin
 
     function save()
     {
+
         plugin::save();
+
+        // Append and remove dynmic object classes
+        foreach($this->dynClasses as $oc => $attrs){
+            $this->attrs['objectClass'] = array_remove_entries(array($oc), $this->attrs['objectClass']);
+            foreach($attrs as $attr){
+                if(isset($this->attrs[$attr]) && !empty($this->attrs[$attr])){
+                    $this->attrs['objectClass'][] = $oc;
+                    break;
+                }
+            }
+        }
+
         $this->cleanup();
         $ldap=$this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
         $ldap->cd($this->dn);
-        
+
         if($this->initially_was_account){
             $ldap->modify($this->attrs);
         }else{
