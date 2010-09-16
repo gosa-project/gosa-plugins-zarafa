@@ -224,6 +224,12 @@ class LDAP{
       $this->clearResult($srp);
       $this->sr[$srp] = @ldap_search($this->cid, LDAP::fix($this->basedn), $filter, $attrs);
       $this->error = @ldap_error($this->cid);
+      if ($this->error == "Size limit exceeded") {
+        global $config;
+        if (preg_match('/true/i', $config->get_cfg_value('sizelimitWarning'))) {
+          msg_dialog::display(_("Size Limit Exceeded"), sprintf(_("More than %d objects were found in a query, the rest is being ignored!"), session::global_get('size_limit')), WARNING_DIALOG);
+        }
+      }
       $this->resetResult($srp);
       $this->hasres[$srp]=true;
    

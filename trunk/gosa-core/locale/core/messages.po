@@ -4882,6 +4882,15 @@ msgstr ""
 msgid "Inconsistent DN encoding detected: '%s'"
 msgstr ""
 
+#: include/class_ldap.inc:230
+msgid "Size Limit Exceeded"
+msgstr ""
+
+#: include/class_ldap.inc:230
+#, php-format
+msgid "More than %d objects were found in a query, the rest is being ignored!"
+msgstr ""
+
 #: include/class_ldap.inc:234 include/class_ldap.inc:267
 msgid "Performance warning"
 msgstr ""
