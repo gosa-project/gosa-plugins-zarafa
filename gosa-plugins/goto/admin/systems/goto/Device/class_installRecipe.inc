@@ -33,7 +33,7 @@ class installRecipe extends plugin
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
-        return($smarty->fetch(get_template_path('goto/devices/installRecipe.tpl', TRUE)));
+        return($smarty->fetch(get_template_path('goto/Device/installRecipe.tpl', TRUE)));
     }
 
 

@@ -45,7 +45,7 @@ class Device extends plugin
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
-        return($smarty->fetch(get_template_path('goto/devices/Device.tpl', TRUE)));
+        return($smarty->fetch(get_template_path('goto/Device/Device.tpl', TRUE)));
     }
 
 
