@@ -199,12 +199,24 @@ class Device extends plugin
         $ldap->cd($this->config->current['BASE']);
         $ldap->cd($this->dn);
 
+        // Perform action modify/create
         if($this->initially_was_account){
             $ldap->modify($this->attrs);
+            new log("modify","Device/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+            if (!$ldap->success()){
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            }else{
+                $this->handle_post_events("modify");
+            }
         }else{
             $ldap->add($this->attrs);
+            new log("create","Device/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+            if (!$ldap->success()){
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_ADD, get_class()));
+            }else{
+                $this->handle_post_events("add");
+            }
         }
-        echo $ldap->get_error();
     }
 
 
