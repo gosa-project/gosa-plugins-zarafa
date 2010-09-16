@@ -5,8 +5,12 @@ class registeredDevice extends plugin
 {
 
     public $objectclasses = array('top','device','registeredDevice');
-    public $attributes = array("cn","serialNumber","seeAlso","owner","ou","o",
-            "l","description","manager","deviceUUID","deviceStatus");
+    public $attributes = array("cn","serialNumber","seeAlso","owner","ou","o","ipHostNumber",
+            "l","description","manager","deviceUUID","deviceStatus","macAddress",);
+
+    public $dynClasses = array(
+            'ieee802Device' => array('macAddress'),
+            'ipHost' => array('ipHostNumber'));
 
     public $cn = "";
     public $serialNumber = "";
@@ -19,6 +23,9 @@ class registeredDevice extends plugin
     public $manager = "";
     public $deviceUUID = "";
     public $deviceStatus = "";
+
+    public $ipHostNumber = "";
+    public $macAddress = "";
 
     public $base = "";
     public $orig_dn ="";
@@ -81,7 +88,9 @@ class registeredDevice extends plugin
                         "description" => _("Description"),
                         "manager" => _("Manager"),
                         "deviceUUID" => _("Uuid"),
-                        "deviceStatus" => _("Stauts")
+                        "deviceStatus" => _("Stauts"),
+                        "macAddress" => _("MAC address"),
+                        "ipHostNumber" => _("IP address")
                         )
                         )
                         );
