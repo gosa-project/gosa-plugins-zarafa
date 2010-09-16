@@ -57,7 +57,7 @@ class InstallRecipe extends plugin
                     "plDepends"     => array(),
                     "plPriority"    => 1,
                     "plSection"     => array("administration"),
-                    "plCategory"    => array("registeredDevice"),
+                    "plCategory"    => array("Device"),
                     "plProvidedAcls" => array(
                         "member" => _("Member"),
                         "ksTemplate" => _("Template"),
