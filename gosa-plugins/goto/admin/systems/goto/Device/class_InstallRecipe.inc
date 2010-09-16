@@ -45,7 +45,12 @@ class InstallRecipe extends plugin
         $ldap->cd($this->config->current['BASE']);
         $ldap->cd($this->dn);
         $ldap->modify($this->attrs);
-        echo $ldap->get_error();
+        new log("modify","Device/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+        }else{
+            $this->handle_post_events("modify");
+        }
     }
 
     static function plInfo()
