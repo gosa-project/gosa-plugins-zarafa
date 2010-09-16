@@ -6,11 +6,11 @@ class Device extends plugin
 
     public $objectclasses = array('top','device');
     public $attributes = array("cn","serialNumber","seeAlso","owner","ou","o","ipHostNumber",
-            "l","description","manager","deviceUUID","deviceStatus","macAddress",);
+            "l","description","manager","deviceUUID","deviceStatus","macAddress","deviceType");
 
     public $dynClasses = array(
             'ieee802Device' => array('macAddress'),
-            'registeredDevice' => array('deviceStatus','deviceUUID'),
+            'registeredDevice' => array('deviceStatus','deviceUUID','manager','deviceType'),
             'ipHost' => array('ipHostNumber'));
 
     public $cn = "";
@@ -24,7 +24,7 @@ class Device extends plugin
     public $manager = "";
     public $deviceUUID = "";
     public $deviceStatus = "";
-
+    public $deviceType = "";
     public $ipHostNumber = "";
     public $macAddress = "";
 
