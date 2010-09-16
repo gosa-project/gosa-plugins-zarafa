@@ -1,15 +1,16 @@
 <?php
 
 
-class registeredDevice extends plugin
+class Device extends plugin
 {
 
-    public $objectclasses = array('top','device','registeredDevice');
+    public $objectclasses = array('top','device');
     public $attributes = array("cn","serialNumber","seeAlso","owner","ou","o","ipHostNumber",
             "l","description","manager","deviceUUID","deviceStatus","macAddress",);
 
     public $dynClasses = array(
             'ieee802Device' => array('macAddress'),
+            'registeredDevice' => array('deviceStatus','deviceUUID'),
             'ipHost' => array('ipHostNumber'));
 
     public $cn = "";
@@ -44,7 +45,7 @@ class registeredDevice extends plugin
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
-        return($smarty->fetch(get_template_path('goto/devices/registeredDevice.tpl', TRUE)));
+        return($smarty->fetch(get_template_path('goto/devices/Device.tpl', TRUE)));
     }
 
 
@@ -82,14 +83,15 @@ class registeredDevice extends plugin
     {
         return (array(
                     "plShortName"   => _("Device"),
-                    "plDescription" => _("Registered device"),
+                    "plDescription" => _("Device"),
                     "plSelfModify"  => FALSE,
                     "plDepends"     => array(),
                     "plPriority"    => 1,
                     "plSection"     => array("administration"),
                     "plCategory"    => array(
-                        "registeredDevice" => array( "description"  => _("Registered device"),
-                            "objectClass"  => "registeredDevice")),
+                        "Device" => array( 
+                            "description"  => _("Device"),
+                            "objectClass"  => "Device")),
                     "plProvidedAcls" => array(
                         "cn" => _("Name"),
                         "serialNumber" => _("Serial number"),
