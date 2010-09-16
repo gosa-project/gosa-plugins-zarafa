@@ -239,14 +239,9 @@ class divListGroup extends MultiSelectWindow
       /* Set ldap base to dn of this group */
       $ldap->cd ($val['dn']);
 
-      /* Set ldap size limit to 1, because we only need one entry */
-      $ldap->set_size_limit(1);
-
       /* Search for applications. */
       $ldap->search("(objectClass=gotoMenuEntry)",array("dn"));
-      $entry = $ldap->fetch();
-
-      if (isset($entry['dn'])) {
+      if ($ldap->count()) {
         $appl  = $applimg;
       }
 
