@@ -137,14 +137,13 @@ class faiScriptEntry extends plugin
       $message[] = msgPool::duplicated(_("Name"));
     }
 
-    $c = trim($this->cn);
-    if($c == ""){
-      $message[] = msgPool::required(_("Name"));
-    }
-    if(preg_match("/[^a-z0-9_\-]/i",$c)){
-      $message[] = msgPool::invalid(_("Name"),$c,"/[a-z0-9_\-]/i");
+    if(preg_match("/[^a-z0-9_\-]/i",$this->cn)){
+      $message[] = msgPool::invalid(_("Name"),$this->cn,"/[a-z0-9_\-]/i");
     }
 
+    if(trim($this->cn)  == ""){
+      $message[] = msgPool::required(_("Name"));
+    }
     $s = trim($this->FAIscript);
     if($s == ""){
       $message[]= msgPool::required(_("Script"));
