@@ -40,13 +40,21 @@ class Device extends plugin
         $this->orig_dn = $this->dn;
     }
 
+    
+    function genFakeUuid()
+    {
+        $strfmt = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+        for($i=0;$i<strlen($strfmt);$i++)
+            if($strfmt[$i] == 'x') $strfmt[$i] = dechex(rand(0,15));
+        return($strfmt);
+    }
+
 
     function execute()
     {
         plugin::execute();    
 
         if($this->dialog instanceOf singleUserSelect) return($this->dialog->execute());
-
 
         $smarty = get_smarty();
 
@@ -120,7 +128,8 @@ class Device extends plugin
         if(isset($_POST['add_users_cancel'])){
             $this->dialog = NULL;
         }
-        
+       
+        if(isset($_POST['reloadUUID']))  $this->deviceUUID = $this->genFakeUuid();
     }
 
 

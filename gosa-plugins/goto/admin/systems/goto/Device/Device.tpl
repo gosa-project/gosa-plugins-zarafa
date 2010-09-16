@@ -43,7 +43,7 @@
                     <td><LABEL for='owner'>{t}Owner{/t}</LABEL></td>
                     <td>
                         <input type="text" name="owner" value="{$owner_name}" 
-                            title="{$owner}" disabled style="width:120%;">
+                            title="{$owner}" disabled style="width:120px;">
 
                         {image path="images/lists/edit.png" action="editOwner" acl=$ownerACL}
                         {if $owner!=""}
@@ -61,7 +61,7 @@
                     <td><LABEL for='manager'>{t}Manager{/t}</LABEL></td>
                     <td>
                         <input type="text" name="manager" value="{$manager_name}" 
-                            title="{$manager}" disabled style="width:120%;">
+                            title="{$manager}" disabled style="width:120px;">
 
                         {image path="images/lists/edit.png" action="editManager" acl=$managerACL}
                         {if $manager!=""}
@@ -72,7 +72,10 @@
                 </tr>
                 <tr>
                     <td><LABEL for='deviceUUID'>{t}Device UUID{/t}</LABEL></td>
-                    <td> <input type="text" name="deviceUUID" value="{$deviceUUID}"></td>
+                    <td> 
+                        <input type="text" name="deviceUUID" value="{$deviceUUID}">
+                        {image path="images/lists/reload.png" action="reloadUUID"}
+                    </td>
                 </tr>
                 <tr>
                     <td><LABEL for='deviceStatus'>{t}Status{/t}</LABEL></td>
