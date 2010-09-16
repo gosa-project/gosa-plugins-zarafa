@@ -123,6 +123,15 @@
                         {/render}
                     </td>
                 </tr>
+                <tr>
+                    <td><LABEL for='deviceType'>{t}Type{/t}</LABEL>
+                    </td>
+                    <td>
+                        {render acl=$deviceTypeACL}
+                            <input type="text" name="deviceType" value="{$deviceType}" id="deviceType" value="{$deviceType}">
+                        {/render}
+                    </td>
+                </tr>
             </table>
 
             <hr>

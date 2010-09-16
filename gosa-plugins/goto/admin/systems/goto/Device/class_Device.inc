@@ -84,6 +84,28 @@ class Device extends plugin
         return($smarty->fetch(get_template_path('goto/Device/Device.tpl', TRUE)));
     }
 
+
+    /*! \brief  Validate the user input.
+     */ 
+    function check()
+    {   
+        $message = plugin::check();
+       
+        // If one of the registered user attributes is set, 
+        //  the others have to be set too.
+        $str = $this->manager.$this->deviceUUID.$this->deviceStatus;
+        if(!empty($str)){        
+            foreach($this->dynClasses['registeredDevice'] as $attr){
+                if(empty($this->$attr)){
+                    $message[] = "Please set all values for 'registered device' or leave all blank! {$attr}";
+                    break;
+                }
+            }
+        }
+ 
+        return($message);
+    }
+
    
     /*! \brief  Detect an object's name by querying the ldap
      *           for the object's cn.
@@ -210,7 +232,8 @@ class Device extends plugin
                         "description" => _("Description"),
                         "manager" => _("Manager"),
                         "deviceUUID" => _("Uuid"),
-                        "deviceStatus" => _("Stauts"),
+                        "deviceStatus" => _("Status"),
+                        "deviceType" => _("Type"),
                         "macAddress" => _("MAC address"),
                         "ipHostNumber" => _("IP address")
                         )
