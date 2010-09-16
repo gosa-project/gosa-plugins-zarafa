@@ -33,6 +33,10 @@ class Device extends plugin
     
     private $resolvedNamesCache = array();
 
+
+    /*! \brief  Constructs the device object and keep some 
+     *           initial values.
+     */
     function __construct(&$config, $dn)
     {
         plugin::plugin($config, $dn);
@@ -41,15 +45,21 @@ class Device extends plugin
     }
 
     
+    /*! \brief  Generate a fake uuid, it is not a real uuid.
+     *  @return String  A fake uuid.
+     */
     function genFakeUuid()
     {
-        $strfmt = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+        $strfmt = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
         for($i=0;$i<strlen($strfmt);$i++)
             if($strfmt[$i] == 'x') $strfmt[$i] = dechex(rand(0,15));
         return($strfmt);
     }
 
 
+    /*! \brief  Generate the plugins HTML content.
+     *  @return String  HTML content
+     */
     function execute()
     {
         plugin::execute();    
@@ -103,18 +113,27 @@ class Device extends plugin
     }   
     
  
+    /*! \brief  Detects and stores relevant values which where
+     *           currently transmitted via $_GET/$_POST.
+     */ 
     function save_object()
     {
         plugin::save_object();
 
+        // Change owner requested, initiate a user selection dialog.
         if(isset($_POST['editOwner'])){
             $this->currentUserSelect = "owner";
             $this->dialog = new singleUserSelect($this->config, get_userinfo());
         }
+
+        // Change manager requested, initiate a user selection dialog.
         if(isset($_POST['editManager'])){
             $this->currentUserSelect = "manager";
             $this->dialog = new singleUserSelect($this->config, get_userinfo());
         }
+
+        // The user selection dialog has send that it has finished its job.
+        // Store the posted user-dn as manager or owner. 
         if($this->dialog && $this->dialog instanceOf singleUserSelect && count($this->dialog->detectPostActions())){
             $users = $this->dialog->detectPostActions();
             if(isset($users['action']) && $users['action'] == 'userSelected' && isset($users['targets']) && count($users['targets'])){
@@ -125,14 +144,19 @@ class Device extends plugin
                 $this->dialog = NULL;
             }
         }
+        
+        // User selection canceled
         if(isset($_POST['add_users_cancel'])){
             $this->dialog = NULL;
         }
-       
+      
+        // Regenerate a new uuid 
         if(isset($_POST['reloadUUID']))  $this->deviceUUID = $this->genFakeUuid();
     }
 
 
+    /*! \brief  Save the modified object back to the ldap.
+     */ 
     function save()
     {
         plugin::save();
