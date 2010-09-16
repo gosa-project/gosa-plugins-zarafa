@@ -64,7 +64,7 @@ class FAI
 
         /* Ldap search for fai classes specified in this release */
         $attributes  = array("dn","objectClass","FAIstate","cn");
-        $res_tmp = get_list($filter,"fai",$fai_base,$attributes,GL_SUBSEARCH | GL_SIZELIMIT);
+        $res_tmp = get_list($filter,"fai",$fai_base,$attributes,GL_SUBSEARCH);
 
         /* check the returned objects, and add/replace them in our return variable */
         foreach($res_tmp as $attr){
