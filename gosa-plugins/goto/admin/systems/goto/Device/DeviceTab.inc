@@ -6,9 +6,15 @@ class DeviceTab extends tabs
     {
         // Prepare object DN
         $baseobject= $this->by_object['Device'];
-        $cn      = preg_replace('/,/', '\,', $baseobject->cn);
-        $cn      = preg_replace('/"/', '\"', $cn);
-        $this->dn= "cn=".$cn.",ou=systems,".$baseobject->base;
+        $uuid    = preg_replace('/,/', '\,', $baseobject->deviceUUID);
+
+        if(empty($uuid)){
+            $cn      = preg_replace('/,/', '\,', $baseobject->cn);
+            $cn      = preg_replace('/"/', '\"', $cn);
+            $this->dn= "cn=".$cn.",ou=systems,".$baseobject->base;
+        }else{
+            $this->dn= "deviceUUID=".$uuid.",ou=systems,".$baseobject->base;
+        }
         $baseobject->dn= $this->dn;
 
         // Object moved?
