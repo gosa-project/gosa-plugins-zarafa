@@ -27,7 +27,9 @@
     <tr>
         <td><LABEL for="ksTimezone">{t}Timezone{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksTimezone" id="ksTimezone" value="{$ksTimezone}">
+            <select size='1' name="ksTimezone" id="ksTimezone">
+                {html_options values=$timezones options=$timezones selected=$ksTimezone}
+            </select>
         </td>
     </tr>
 

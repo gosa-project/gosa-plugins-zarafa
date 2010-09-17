@@ -53,8 +53,12 @@ class InstallRecipe extends plugin
 
     function save()
     {
+        $this->member = array();
         plugin::save();
-        $this->cleanup();
+        #$this->cleanup();
+
+        print_a($this->attrs);
+
         $ldap=$this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
         $ldap->cd($this->dn);
