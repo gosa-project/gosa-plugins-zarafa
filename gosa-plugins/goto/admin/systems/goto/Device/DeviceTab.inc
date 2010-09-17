@@ -8,12 +8,13 @@ class DeviceTab extends tabs
         $baseobject= $this->by_object['Device'];
         $uuid    = preg_replace('/,/', '\,', $baseobject->deviceUUID);
 
+        $rdn = get_ou('Device','DeviceRDN');
         if(empty($uuid)){
             $cn      = preg_replace('/,/', '\,', $baseobject->cn);
             $cn      = preg_replace('/"/', '\"', $cn);
-            $this->dn= "cn=".$cn.",ou=systems,".$baseobject->base;
+            $this->dn= "cn=".$cn.",".$rdn.$baseobject->base;
         }else{
-            $this->dn= "deviceUUID=".$uuid.",ou=systems,".$baseobject->base;
+            $this->dn= "deviceUUID=".$uuid.",".$rdn.$baseobject->base;
         }
         $baseobject->dn= $this->dn;
 

@@ -40,8 +40,15 @@ class Device extends plugin
     function __construct(&$config, $dn)
     {
         plugin::plugin($config, $dn);
-        $this->base = $this->config->current['BASE'];
         $this->orig_dn = $this->dn;
+
+        // Initialize the object base 
+        if ($this->dn == "new"){
+            $ui= get_userinfo();
+            $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
+        } else {
+            $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("Device", "DeviceRDN"), '/')."/i", "", $this->dn);
+        }
 
         // Prepare the base selector
         $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
@@ -268,11 +275,14 @@ class Device extends plugin
                     "plDepends"     => array(),
                     "plPriority"    => 1,
                     "plSection"     => array("administration"),
-                    "plCategory"    => array(
+                    "plCategory"    => 
+                    array(
                         "Device" => array( 
                             "description"  => _("Device"),
-                            "objectClass"  => "Device")),
-                    "plProvidedAcls" => array(
+                            "objectClass"  => "Device")
+                        ),
+                    "plProvidedAcls" => 
+                    array(
                         "base" => _("Base"),
                         "cn" => _("Name"),
                         "serialNumber" => _("Serial number"),
@@ -288,9 +298,23 @@ class Device extends plugin
                         "deviceType" => _("Type"),
                         "macAddress" => _("MAC address"),
                         "ipHostNumber" => _("IP address")
-                        )
-                        )
-                        );
+                        ),
+            "plProperties" =>
+                array(
+                        array(
+                            "name"          => "DeviceRDN",
+                            "type"          => "rdn",
+                            "default"       => "ou=devices,ou=systems,",
+                            "description"   => _("The 'deviceRDN' statement defines the location where new devices will be created. The   default is 'ou=device,ou=systems,'."),
+                            "check"         => "gosaProperty::isRdn",
+                            "migrate"       => "migrate_deviceRDN",
+                            "group"         => "plugin",
+                            "mandatory"     => FALSE
+                            ),
+
+                     )
+                )
+                );
     }
 }
 
