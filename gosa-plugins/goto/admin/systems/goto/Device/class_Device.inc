@@ -42,6 +42,12 @@ class Device extends plugin
         plugin::plugin($config, $dn);
         $this->base = $this->config->current['BASE'];
         $this->orig_dn = $this->dn;
+
+        // Prepare the base selector
+        $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+        $this->baseSelector->setSubmitButton(false);
+        $this->baseSelector->setHeight(300);
+        $this->baseSelector->update(true);
     }
 
     
@@ -77,7 +83,9 @@ class Device extends plugin
         // Assign just user names instead of the complete dn.
         $smarty->assign("owner_name", $this->getUserName($this->owner));
         $smarty->assign("manager_name", $this->getUserName($this->manager));
+        $smarty->assign("base", $this->baseSelector->render());
 
+        // Assign attribute values 
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
@@ -193,6 +201,18 @@ class Device extends plugin
       
         // Regenerate a new uuid 
         if(isset($_POST['reloadUUID']))  $this->deviceUUID = $this->genFakeUuid();
+
+        // Update the base 
+        if ($this->acl_is_moveable($this->base)){
+            if (!$this->baseSelector->update()) {
+                msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+            }
+            if ($this->base != $this->baseSelector->getBase()) {
+                $this->base= $this->baseSelector->getBase();
+                $this->is_modified= TRUE;
+            }
+        }
+
     }
 
 
@@ -253,6 +273,7 @@ class Device extends plugin
                             "description"  => _("Device"),
                             "objectClass"  => "Device")),
                     "plProvidedAcls" => array(
+                        "base" => _("Base"),
                         "cn" => _("Name"),
                         "serialNumber" => _("Serial number"),
                         "seeAlso" => _("See also"),

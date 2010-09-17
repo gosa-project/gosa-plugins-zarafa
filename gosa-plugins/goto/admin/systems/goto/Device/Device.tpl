@@ -22,6 +22,18 @@
                         {/render}
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <div style="height:10px;"> </div>
+                        {t}Base{/t}
+                    </td>
+                    <td>
+                        <div style="height:10px;"> </div>
+                        {render acl=$baseACL}
+                            {$base}
+                        {/render}
+                    </td>
+                </tr>
             </table>
             <hr>
             <table>
