@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:11+0200\n"
+"POT-Creation-Date: 2010-09-17 05:01-0400\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,6 +13,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
+
+#: admin/sudo/sudo-filter.xml:22
+#, fuzzy
+msgid "Default filter"
+msgstr "Параметры загрузки"
+
+#: admin/sudo/sudo-filter.xml:36
+#, fuzzy
+msgid "By member"
+msgstr "Члены группы"
 
 #: admin/sudo/class_sudoGeneric.inc:108
 msgid "Type"
@@ -58,9 +68,9 @@ msgstr "Ошибка LDAP:"
 
 #: admin/sudo/class_sudoGeneric.inc:468 admin/sudo/class_sudoGeneric.inc:473
 #: admin/sudo/class_sudoGeneric.inc:478 admin/sudo/class_sudoGeneric.inc:487
-#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34 admin/sudo/sudo-list.xml:32
-#: admin/sudo/paste_generic.tpl:5
+#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/paste_generic.tpl:5
+#: admin/sudo/sudo-list.xml:32 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34
 msgid "Name"
 msgstr "Фамилия"
 
@@ -84,8 +94,8 @@ msgstr ""
 msgid "System trust"
 msgstr "Системные доверия"
 
-#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
+#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/sudo-list.xml:40
+#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
 msgid "Description"
 msgstr "Описание"
 
@@ -106,6 +116,31 @@ msgstr "Пользователи домена"
 #, fuzzy
 msgid "Access control list"
 msgstr "Параметры доступа"
+
+#: admin/sudo/class_sudoManagement.inc:25
+#, fuzzy
+msgid "Sudo rules"
+msgstr "состояние неизвестно"
+
+#: admin/sudo/class_sudoManagement.inc:26
+msgid "Manage all aspects of system wide sudoers definitions"
+msgstr ""
+
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
+#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
+msgid "Generic"
+msgstr "Общее"
+
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4
+msgid "global defaults"
+msgstr ""
+
+#: admin/sudo/paste_generic.tpl:2
+#, fuzzy
+msgid "Paste sudo entry"
+msgstr "Дата"
 
 #: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
 #: admin/sudo/class_sudoOption.inc:546
@@ -131,41 +166,6 @@ msgstr "Параметры"
 #, fuzzy
 msgid "Available options"
 msgstr "Доступные приложения"
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
-#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
-#: admin/sudo/paste_generic.tpl:1
-msgid "Generic"
-msgstr "Общее"
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4
-#: admin/sudo/paste_generic.tpl:1
-msgid "global defaults"
-msgstr ""
-
-#: admin/sudo/generic.tpl:61
-#, fuzzy
-msgid "Users and groups"
-msgstr "группы"
-
-#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
-msgid "Add from list"
-msgstr ""
-
-#: admin/sudo/generic.tpl:78
-#, fuzzy
-msgid "Systems"
-msgstr "Системы"
-
-#: admin/sudo/generic.tpl:98
-#, fuzzy
-msgid "Commands"
-msgstr "и"
-
-#: admin/sudo/generic.tpl:111
-#, fuzzy
-msgid "Run as"
-msgstr "Пользователи домена"
 
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
@@ -203,11 +203,6 @@ msgstr "состояние неизвестно"
 msgid "Remove Sudo role"
 msgstr "состояние неизвестно"
 
-#: admin/sudo/paste_generic.tpl:2
-#, fuzzy
-msgid "Paste sudo entry"
-msgstr "Дата"
-
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
 msgid "Unknown option"
@@ -238,24 +233,29 @@ msgstr "принтеры"
 msgid "list"
 msgstr "Английский"
 
-#: admin/sudo/sudo-filter.xml:22
+#: admin/sudo/generic.tpl:61
 #, fuzzy
-msgid "Default filter"
-msgstr "Параметры загрузки"
+msgid "Users and groups"
+msgstr "группы"
 
-#: admin/sudo/sudo-filter.xml:36
-#, fuzzy
-msgid "By member"
-msgstr "Члены группы"
-
-#: admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
-msgid "Sudo rules"
-msgstr "состояние неизвестно"
-
-#: admin/sudo/class_sudoManagement.inc:26
-msgid "Manage all aspects of system wide sudoers definitions"
+#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
+msgid "Add from list"
 msgstr ""
+
+#: admin/sudo/generic.tpl:78
+#, fuzzy
+msgid "Systems"
+msgstr "Системы"
+
+#: admin/sudo/generic.tpl:98
+#, fuzzy
+msgid "Commands"
+msgstr "и"
+
+#: admin/sudo/generic.tpl:111
+#, fuzzy
+msgid "Run as"
+msgstr "Пользователи домена"
 
 #, fuzzy
 #~ msgid "Filter"

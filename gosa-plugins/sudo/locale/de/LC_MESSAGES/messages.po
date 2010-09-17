@@ -7,14 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:11+0200\n"
-"PO-Revision-Date: 2008-12-03 15:08+0100\n"
-"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"POT-Creation-Date: 2010-09-17 05:01-0400\n"
+"PO-Revision-Date: 2010-09-17 11:05+0100\n"
+"Last-Translator: Fabian Hickert <Fabian.Hickert@GONICUS.DE>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: admin/sudo/sudo-filter.xml:22
+msgid "Default filter"
+msgstr "Standard-Filter"
+
+#: admin/sudo/sudo-filter.xml:36
+msgid "By member"
+msgstr "Pro Mitglieder"
 
 #: admin/sudo/class_sudoGeneric.inc:108
 msgid "Type"
@@ -24,22 +32,24 @@ msgstr "Typ"
 msgid "Member"
 msgstr "Mitglied"
 
-#: admin/sudo/class_sudoGeneric.inc:108 admin/sudo/class_sudoGeneric.inc:111
-#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:115
-#, fuzzy
+#: admin/sudo/class_sudoGeneric.inc:108
+#: admin/sudo/class_sudoGeneric.inc:111
+#: admin/sudo/class_sudoGeneric.inc:113
+#: admin/sudo/class_sudoGeneric.inc:115
 msgid "Option"
 msgstr "Optionen"
 
 #: admin/sudo/class_sudoGeneric.inc:111
-#, fuzzy
 msgid "System"
-msgstr "Systeme"
+msgstr "System"
 
-#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:544
+#: admin/sudo/class_sudoGeneric.inc:113
+#: admin/sudo/class_sudoGeneric.inc:544
 msgid "Command"
 msgstr "Kommando"
 
-#: admin/sudo/class_sudoGeneric.inc:115 admin/sudo/class_sudoGeneric.inc:358
+#: admin/sudo/class_sudoGeneric.inc:115
+#: admin/sudo/class_sudoGeneric.inc:358
 msgid "User"
 msgstr "Benutzer"
 
@@ -55,11 +65,15 @@ msgstr "Gruppe"
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: admin/sudo/class_sudoGeneric.inc:468 admin/sudo/class_sudoGeneric.inc:473
-#: admin/sudo/class_sudoGeneric.inc:478 admin/sudo/class_sudoGeneric.inc:487
-#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34 admin/sudo/sudo-list.xml:32
+#: admin/sudo/class_sudoGeneric.inc:468
+#: admin/sudo/class_sudoGeneric.inc:473
+#: admin/sudo/class_sudoGeneric.inc:478
+#: admin/sudo/class_sudoGeneric.inc:487
+#: admin/sudo/class_sudoGeneric.inc:540
 #: admin/sudo/paste_generic.tpl:5
+#: admin/sudo/sudo-list.xml:32
+#: admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34
 msgid "Name"
 msgstr "Name"
 
@@ -67,25 +81,23 @@ msgstr "Name"
 msgid "Sudo"
 msgstr "Sudo"
 
-#: admin/sudo/class_sudoGeneric.inc:518 admin/sudo/class_sudoGeneric.inc:523
+#: admin/sudo/class_sudoGeneric.inc:518
+#: admin/sudo/class_sudoGeneric.inc:523
 msgid "Sudo role"
 msgstr "Sudo-Rolle"
 
 #: admin/sudo/class_sudoGeneric.inc:531
-#, fuzzy
-msgid ""
-"The 'sudoRDN' statement defines the location where new sudo-roles will be "
-"created. The default is 'ou=sudoers,'."
-msgstr ""
-"Die Option 'aclRoleRDN' definiert den Ablageort für neue ACL-Rollen. Der "
-"Standard ist 'ou=aclroles,'."
+msgid "The 'sudoRDN' statement defines the location where new sudo-roles will be created. The default is 'ou=sudoers,'."
+msgstr "Die Option 'sudoRDN' definiert den Ablageort für neue Sudo-Definitionen. Der Standard ist 'ou=sudoers,'."
 
 #: admin/sudo/class_sudoGeneric.inc:539
 msgid "System trust"
 msgstr "System-Vertrauen"
 
-#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
+#: admin/sudo/class_sudoGeneric.inc:541
+#: admin/sudo/sudo-list.xml:40
+#: admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -105,7 +117,35 @@ msgstr "Als Benutzer ausführen"
 msgid "Access control list"
 msgstr "Zugriffsberechtigungen"
 
-#: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
+#: admin/sudo/class_sudoManagement.inc:25
+msgid "Sudo rules"
+msgstr "Sudo-Rolle"
+
+#: admin/sudo/class_sudoManagement.inc:26
+msgid "Manage all aspects of system wide sudoers definitions"
+msgstr "Verwalte alle Aspekte der systemweiten Sudoers Definitionen"
+
+#: admin/sudo/paste_generic.tpl:1
+#: admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4
+#: admin/sudo/generic.tpl:27
+#: admin/sudo/generic.tpl:29
+#: admin/sudo/generic.tpl:31
+msgid "Generic"
+msgstr "Allgemein"
+
+#: admin/sudo/paste_generic.tpl:1
+#: admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4
+msgid "global defaults"
+msgstr "globale Vorgaben"
+
+#: admin/sudo/paste_generic.tpl:2
+msgid "Paste sudo entry"
+msgstr "Sudo Eintrag einfügen"
+
+#: admin/sudo/options.tpl:3
+#: admin/sudo/class_sudoOption.inc:539
 #: admin/sudo/class_sudoOption.inc:546
 msgid "Sudo options"
 msgstr "Sudo-Optionen"
@@ -118,7 +158,8 @@ msgstr "Options-Name"
 msgid "Value"
 msgstr "Wert"
 
-#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:538
+#: admin/sudo/options.tpl:8
+#: admin/sudo/class_sudoOption.inc:538
 msgid "Options"
 msgstr "Optionen"
 
@@ -126,43 +167,12 @@ msgstr "Optionen"
 msgid "Available options"
 msgstr "Verfügbare Optionen"
 
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
-#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
-#: admin/sudo/paste_generic.tpl:1
-msgid "Generic"
-msgstr "Allgemein"
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4
-#: admin/sudo/paste_generic.tpl:1
-msgid "global defaults"
-msgstr "globale Vorgaben"
-
-#: admin/sudo/generic.tpl:61
-msgid "Users and groups"
-msgstr "Benutzer und Gruppen"
-
-#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
-msgid "Add from list"
-msgstr "Aus Liste hinzufügen"
-
-#: admin/sudo/generic.tpl:78
-msgid "Systems"
-msgstr "Systeme"
-
-#: admin/sudo/generic.tpl:98
-msgid "Commands"
-msgstr "Kommandos"
-
-#: admin/sudo/generic.tpl:111
-msgid "Run as"
-msgstr "Ausführen als"
-
 #: admin/sudo/sudo-list.xml:11
-#, fuzzy
 msgid "List of Sudo roles"
 msgstr "Liste der sudo-Rollen"
 
-#: admin/sudo/sudo-list.xml:15 admin/sudo/sudo-list.xml:65
+#: admin/sudo/sudo-list.xml:15
+#: admin/sudo/sudo-list.xml:65
 msgid "Role"
 msgstr "Rolle"
 
@@ -183,36 +193,30 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: admin/sudo/sudo-list.xml:117
-#, fuzzy
 msgid "Edit Sudo role"
 msgstr "sudo-Rolle bearbeiten"
 
 #: admin/sudo/sudo-list.xml:130
-#, fuzzy
 msgid "Remove Sudo role"
 msgstr "Sudo-Rollen löschen"
-
-#: admin/sudo/paste_generic.tpl:2
-#, fuzzy
-msgid "Paste sudo entry"
-msgstr "Benutzer einfügen"
 
 #: admin/sudo/class_sudoOption.inc:154
 msgid "Unknown option"
 msgstr "Unbekannte Option"
 
 #: admin/sudo/class_sudoOption.inc:155
-#, fuzzy, php-format
+#, php-format
 msgid "The Sudo option '%s' is invalid!"
 msgstr "Die sudo-Option '%s' ist ungültig!"
 
-#: admin/sudo/class_sudoOption.inc:284 admin/sudo/class_sudoOption.inc:286
+#: admin/sudo/class_sudoOption.inc:284
+#: admin/sudo/class_sudoOption.inc:286
 msgid "string"
 msgstr "Zeichenkette"
 
-#: admin/sudo/class_sudoOption.inc:284 admin/sudo/class_sudoOption.inc:285
+#: admin/sudo/class_sudoOption.inc:284
+#: admin/sudo/class_sudoOption.inc:285
 #: admin/sudo/class_sudoOption.inc:286
-#, fuzzy
 msgid "boolean"
 msgstr "Bool'sch"
 
@@ -224,54 +228,50 @@ msgstr "Ganzzahl"
 msgid "list"
 msgstr "Liste"
 
-#: admin/sudo/sudo-filter.xml:22
-msgid "Default filter"
-msgstr "Standard-Filter"
+#: admin/sudo/generic.tpl:61
+msgid "Users and groups"
+msgstr "Benutzer und Gruppen"
 
-#: admin/sudo/sudo-filter.xml:36
-#, fuzzy
-msgid "By member"
-msgstr "Keine Mitglieder"
+#: admin/sudo/generic.tpl:73
+#: admin/sudo/generic.tpl:90
+msgid "Add from list"
+msgstr "Aus Liste hinzufügen"
 
-#: admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
-msgid "Sudo rules"
-msgstr "Sudo-Rolle"
+#: admin/sudo/generic.tpl:78
+msgid "Systems"
+msgstr "Systeme"
 
-#: admin/sudo/class_sudoManagement.inc:26
-msgid "Manage all aspects of system wide sudoers definitions"
-msgstr ""
+#: admin/sudo/generic.tpl:98
+msgid "Commands"
+msgstr "Kommandos"
+
+#: admin/sudo/generic.tpl:111
+msgid "Run as"
+msgstr "Ausführen als"
 
 #~ msgid "Filter"
 #~ msgstr "Filter"
-
 #~ msgid "Warning"
 #~ msgstr "Warnung"
-
 #~ msgid ""
 #~ "Please double check if you really want to do this since there is no way "
 #~ "for GOsa to get your data back."
 #~ msgstr ""
 #~ "Bitte überprüfen Sie genau was Sie tun, weil GOsa keine Möglichkeit hat, "
 #~ "die Daten wiederherzustellen."
-
 #~ msgid ""
 #~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 #~ msgstr ""
 #~ "Wenn Sie sicher sind, drücken Sie 'Entfernen' um fortzufahren oder "
 #~ "'Abbrechen' zum Abbruch."
-
 #~ msgid "disabled"
 #~ msgstr "deaktiviert"
-
 #~ msgid "full access"
 #~ msgstr "Vollzugriff"
-
 #~ msgid "allow access to these hosts"
 #~ msgstr "erlaube Zugriff auf diese Hosts"
-
 #~ msgid "Trust mode"
 #~ msgstr "Vertrauens-Modus"
-
 #~ msgid "Sudo management"
 #~ msgstr "SUDO-Verwaltung"
+

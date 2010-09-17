@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GOsa plugins - sudo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:11+0200\n"
+"POT-Creation-Date: 2010-09-17 05:01-0400\n"
 "PO-Revision-Date: 2010-03-13 15:51-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira "
@@ -17,6 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: BRAZIL\n"
+
+#: admin/sudo/sudo-filter.xml:22
+#, fuzzy
+msgid "Default filter"
+msgstr "Aplicar filtro"
+
+#: admin/sudo/sudo-filter.xml:36
+#, fuzzy
+msgid "By member"
+msgstr "Sem membros"
 
 #: admin/sudo/class_sudoGeneric.inc:108
 #, fuzzy
@@ -60,9 +70,9 @@ msgstr "Erro LDAP"
 
 #: admin/sudo/class_sudoGeneric.inc:468 admin/sudo/class_sudoGeneric.inc:473
 #: admin/sudo/class_sudoGeneric.inc:478 admin/sudo/class_sudoGeneric.inc:487
-#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34 admin/sudo/sudo-list.xml:32
-#: admin/sudo/paste_generic.tpl:5
+#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/paste_generic.tpl:5
+#: admin/sudo/sudo-list.xml:32 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34
 msgid "Name"
 msgstr "Nome"
 
@@ -84,8 +94,8 @@ msgstr ""
 msgid "System trust"
 msgstr "Sistema de confiança"
 
-#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
+#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/sudo-list.xml:40
+#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
 msgid "Description"
 msgstr "Descrição"
 
@@ -104,6 +114,31 @@ msgstr "Executar como o usuário"
 #: admin/sudo/class_sudoGeneric.inc:546
 msgid "Access control list"
 msgstr "Lista de controle de acesso"
+
+#: admin/sudo/class_sudoManagement.inc:25
+#, fuzzy
+msgid "Sudo rules"
+msgstr "Regra SUDO"
+
+#: admin/sudo/class_sudoManagement.inc:26
+msgid "Manage all aspects of system wide sudoers definitions"
+msgstr ""
+
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
+#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
+msgid "Generic"
+msgstr "Geral"
+
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4
+msgid "global defaults"
+msgstr "padrões globais"
+
+#: admin/sudo/paste_generic.tpl:2
+#, fuzzy
+msgid "Paste sudo entry"
+msgstr "Colar"
 
 #: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
 #: admin/sudo/class_sudoOption.inc:546
@@ -125,37 +160,6 @@ msgstr "Opções"
 #: admin/sudo/options.tpl:89
 msgid "Available options"
 msgstr "Opções disponíveis"
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
-#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
-#: admin/sudo/paste_generic.tpl:1
-msgid "Generic"
-msgstr "Geral"
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4
-#: admin/sudo/paste_generic.tpl:1
-msgid "global defaults"
-msgstr "padrões globais"
-
-#: admin/sudo/generic.tpl:61
-msgid "Users and groups"
-msgstr "Usuários e grupos"
-
-#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
-msgid "Add from list"
-msgstr "Adicionar da lista"
-
-#: admin/sudo/generic.tpl:78
-msgid "Systems"
-msgstr "Sistemas"
-
-#: admin/sudo/generic.tpl:98
-msgid "Commands"
-msgstr "Comandos"
-
-#: admin/sudo/generic.tpl:111
-msgid "Run as"
-msgstr "Executar como"
 
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
@@ -192,11 +196,6 @@ msgstr "Editar papel sudo"
 msgid "Remove Sudo role"
 msgstr "Remover papel sudo"
 
-#: admin/sudo/paste_generic.tpl:2
-#, fuzzy
-msgid "Paste sudo entry"
-msgstr "Colar"
-
 #: admin/sudo/class_sudoOption.inc:154
 msgid "Unknown option"
 msgstr "Opção desconhecida"
@@ -224,24 +223,25 @@ msgstr "inteiro"
 msgid "list"
 msgstr "lista"
 
-#: admin/sudo/sudo-filter.xml:22
-#, fuzzy
-msgid "Default filter"
-msgstr "Aplicar filtro"
+#: admin/sudo/generic.tpl:61
+msgid "Users and groups"
+msgstr "Usuários e grupos"
 
-#: admin/sudo/sudo-filter.xml:36
-#, fuzzy
-msgid "By member"
-msgstr "Sem membros"
+#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
+msgid "Add from list"
+msgstr "Adicionar da lista"
 
-#: admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
-msgid "Sudo rules"
-msgstr "Regra SUDO"
+#: admin/sudo/generic.tpl:78
+msgid "Systems"
+msgstr "Sistemas"
 
-#: admin/sudo/class_sudoManagement.inc:26
-msgid "Manage all aspects of system wide sudoers definitions"
-msgstr ""
+#: admin/sudo/generic.tpl:98
+msgid "Commands"
+msgstr "Comandos"
+
+#: admin/sudo/generic.tpl:111
+msgid "Run as"
+msgstr "Executar como"
 
 #~ msgid "Filter"
 #~ msgstr "Filtro"

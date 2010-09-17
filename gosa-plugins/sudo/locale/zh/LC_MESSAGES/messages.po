@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:11+0200\n"
+"POT-Creation-Date: 2010-09-17 05:01-0400\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: admin/sudo/sudo-filter.xml:22
+#, fuzzy
+msgid "Default filter"
+msgstr "参数"
+
+#: admin/sudo/sudo-filter.xml:36
+#, fuzzy
+msgid "By member"
+msgstr "组成员"
 
 #: admin/sudo/class_sudoGeneric.inc:108
 msgid "Type"
@@ -60,9 +70,9 @@ msgstr "LDAP 错误:"
 
 #: admin/sudo/class_sudoGeneric.inc:468 admin/sudo/class_sudoGeneric.inc:473
 #: admin/sudo/class_sudoGeneric.inc:478 admin/sudo/class_sudoGeneric.inc:487
-#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34 admin/sudo/sudo-list.xml:32
-#: admin/sudo/paste_generic.tpl:5
+#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/paste_generic.tpl:5
+#: admin/sudo/sudo-list.xml:32 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34
 msgid "Name"
 msgstr "名称"
 
@@ -86,8 +96,8 @@ msgstr ""
 msgid "System trust"
 msgstr "信赖的系统"
 
-#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
+#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/sudo-list.xml:40
+#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
 msgid "Description"
 msgstr "描述"
 
@@ -109,6 +119,31 @@ msgstr "域用户"
 #, fuzzy
 msgid "Access control list"
 msgstr "访问选项"
+
+#: admin/sudo/class_sudoManagement.inc:25
+#, fuzzy
+msgid "Sudo rules"
+msgstr "! 未知 id"
+
+#: admin/sudo/class_sudoManagement.inc:26
+msgid "Manage all aspects of system wide sudoers definitions"
+msgstr ""
+
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
+#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
+msgid "Generic"
+msgstr "通用配置"
+
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:4
+msgid "global defaults"
+msgstr ""
+
+#: admin/sudo/paste_generic.tpl:2
+#, fuzzy
+msgid "Paste sudo entry"
+msgstr "粘贴"
 
 #: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
 #: admin/sudo/class_sudoOption.inc:546
@@ -134,41 +169,6 @@ msgstr "选项"
 #, fuzzy
 msgid "Available options"
 msgstr "可用的应用程序"
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
-#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
-#: admin/sudo/paste_generic.tpl:1
-msgid "Generic"
-msgstr "通用配置"
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4
-#: admin/sudo/paste_generic.tpl:1
-msgid "global defaults"
-msgstr ""
-
-#: admin/sudo/generic.tpl:61
-#, fuzzy
-msgid "Users and groups"
-msgstr "组"
-
-#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
-msgid "Add from list"
-msgstr ""
-
-#: admin/sudo/generic.tpl:78
-#, fuzzy
-msgid "Systems"
-msgstr "系统"
-
-#: admin/sudo/generic.tpl:98
-#, fuzzy
-msgid "Commands"
-msgstr "和"
-
-#: admin/sudo/generic.tpl:111
-#, fuzzy
-msgid "Run as"
-msgstr "域用户"
 
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
@@ -206,11 +206,6 @@ msgstr "! 未知 id"
 msgid "Remove Sudo role"
 msgstr "! 未知 id"
 
-#: admin/sudo/paste_generic.tpl:2
-#, fuzzy
-msgid "Paste sudo entry"
-msgstr "粘贴"
-
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
 msgid "Unknown option"
@@ -241,24 +236,29 @@ msgstr "打印机"
 msgid "list"
 msgstr "类"
 
-#: admin/sudo/sudo-filter.xml:22
+#: admin/sudo/generic.tpl:61
 #, fuzzy
-msgid "Default filter"
-msgstr "参数"
+msgid "Users and groups"
+msgstr "组"
 
-#: admin/sudo/sudo-filter.xml:36
-#, fuzzy
-msgid "By member"
-msgstr "组成员"
-
-#: admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
-msgid "Sudo rules"
-msgstr "! 未知 id"
-
-#: admin/sudo/class_sudoManagement.inc:26
-msgid "Manage all aspects of system wide sudoers definitions"
+#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
+msgid "Add from list"
 msgstr ""
+
+#: admin/sudo/generic.tpl:78
+#, fuzzy
+msgid "Systems"
+msgstr "系统"
+
+#: admin/sudo/generic.tpl:98
+#, fuzzy
+msgid "Commands"
+msgstr "和"
+
+#: admin/sudo/generic.tpl:111
+#, fuzzy
+msgid "Run as"
+msgstr "域用户"
 
 #, fuzzy
 #~ msgid "Filter"
