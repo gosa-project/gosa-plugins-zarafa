@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 19:35+0200\n"
+"POT-Creation-Date: 2010-09-17 02:13-0400\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,33 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
-msgid "Syslog Service"
-msgstr "Dipartimento"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
-msgid "enabled"
-msgstr "disabilitato"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:27
-#: admin/systems/services/syslog/class_goSyslogServer.inc:47
-#, fuzzy
-msgid "Syslog server"
-msgstr "Mostra server"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:68
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#, fuzzy
-msgid "Logging service"
-msgstr "Utenti di Dominio"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#: admin/systems/services/syslog/class_goLogDBServer.inc:93
-msgid "Services"
-msgstr "Servizi"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:31
 #: admin/systems/services/syslog/class_goLogDBServer.inc:59
@@ -71,6 +44,11 @@ msgstr "Database"
 msgid "Logging database"
 msgstr "Database"
 
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+msgid "Services"
+msgstr "Servizi"
+
 #: admin/systems/services/syslog/class_goLogDBServer.inc:101
 #, fuzzy
 msgid "Start"
@@ -99,6 +77,28 @@ msgstr "Informazioni organizzazione"
 #, fuzzy
 msgid "Logging DB user"
 msgstr "Utenti di Dominio"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+#, fuzzy
+msgid "Syslog server"
+msgstr "Mostra server"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#, fuzzy
+msgid "Logging service"
+msgstr "Utenti di Dominio"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "Syslog Service"
+msgstr "Dipartimento"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "enabled"
+msgstr "disabilitato"
 
 #, fuzzy
 #~ msgid "Admin"

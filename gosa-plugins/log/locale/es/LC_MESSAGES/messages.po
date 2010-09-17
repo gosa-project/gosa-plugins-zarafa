@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 19:35+0200\n"
+"POT-Creation-Date: 2010-09-17 02:13-0400\n"
 "PO-Revision-Date: 2010-01-28 23:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -17,29 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-msgid "Syslog Service"
-msgstr "Servicio de Registro de Sistema"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-msgid "enabled"
-msgstr "activado"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:27
-#: admin/systems/services/syslog/class_goSyslogServer.inc:47
-msgid "Syslog server"
-msgstr "Servidor de registro de sistema"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:68
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-msgid "Logging service"
-msgstr "Servicio de Registro de sistema"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#: admin/systems/services/syslog/class_goLogDBServer.inc:93
-msgid "Services"
-msgstr "Servicios"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:31
 #: admin/systems/services/syslog/class_goLogDBServer.inc:59
@@ -67,6 +44,11 @@ msgstr "Bases de datos"
 msgid "Logging database"
 msgstr "Base de datos de Registro"
 
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+msgid "Services"
+msgstr "Servicios"
+
 #: admin/systems/services/syslog/class_goLogDBServer.inc:101
 msgid "Start"
 msgstr "Inicio"
@@ -91,6 +73,24 @@ msgstr "Información de base de datos de Registro"
 #: admin/systems/services/syslog/goLogDBServer.tpl:12
 msgid "Logging DB user"
 msgstr "Usuario de Base de datos de registro"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+msgid "Syslog server"
+msgstr "Servidor de registro de sistema"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+msgid "Logging service"
+msgstr "Servicio de Registro de sistema"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+msgid "Syslog Service"
+msgstr "Servicio de Registro de Sistema"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+msgid "enabled"
+msgstr "activado"
 
 #~ msgid "Admin"
 #~ msgstr "Administrador"

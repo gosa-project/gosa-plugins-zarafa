@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 19:35+0200\n"
+"POT-Creation-Date: 2010-09-17 02:13-0400\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,33 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
-msgid "Syslog Service"
-msgstr "Просмотр системного журнала"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-#, fuzzy
-msgid "enabled"
-msgstr "отключен"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:27
-#: admin/systems/services/syslog/class_goSyslogServer.inc:47
-#, fuzzy
-msgid "Syslog server"
-msgstr "Показать серверы"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:68
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#, fuzzy
-msgid "Logging service"
-msgstr "Служба печати"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#: admin/systems/services/syslog/class_goLogDBServer.inc:93
-msgid "Services"
-msgstr "Сервисы"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:31
 #: admin/systems/services/syslog/class_goLogDBServer.inc:59
@@ -70,6 +43,11 @@ msgstr "Базы данных"
 msgid "Logging database"
 msgstr "база пользователя"
 
+#: admin/systems/services/syslog/class_goLogDBServer.inc:93
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+msgid "Services"
+msgstr "Сервисы"
+
 #: admin/systems/services/syslog/class_goLogDBServer.inc:101
 #, fuzzy
 msgid "Start"
@@ -98,6 +76,28 @@ msgstr "Личная информация"
 #, fuzzy
 msgid "Logging DB user"
 msgstr "Служба печати"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+#, fuzzy
+msgid "Syslog server"
+msgstr "Показать серверы"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#, fuzzy
+msgid "Logging service"
+msgstr "Служба печати"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "Syslog Service"
+msgstr "Просмотр системного журнала"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "enabled"
+msgstr "отключен"
 
 #, fuzzy
 #~ msgid "Admin"
