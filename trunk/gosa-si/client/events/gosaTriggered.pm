@@ -386,10 +386,11 @@ sub trigger_action_reinstall {
     my @user_list = &get_logged_in_users;
     if( @user_list >= 1 ) {
     	system( "/usr/bin/goto-notify install" );
-        open(FILE, "> /etc/gosa-si/event");
-        print FILE "install\n";
-        close(FILE);
     }
+
+    open(FILE, "> /etc/gosa-si/event");
+    print FILE "install\n";
+    close(FILE);
 
     system( "/usr/sbin/goto-action &" );
 
@@ -435,10 +436,11 @@ sub trigger_action_update {
     my @user_list = &get_logged_in_users;
     if( @user_list >= 1 ) {
     	system( "/usr/bin/goto-notify softupdate" );
-        open(FILE, "> /etc/gosa-si/event");
-        print FILE "softupdate\n";
-        close(FILE);
     }
+
+    open(FILE, "> /etc/gosa-si/event");
+    print FILE "softupdate\n";
+    close(FILE);
 
     system( "/usr/sbin/goto-action &" );
 
@@ -484,10 +486,11 @@ sub trigger_action_instant_update {
     my @user_list = &get_logged_in_users;
     if( @user_list >= 1 ) {
     	system( "/usr/bin/goto-notify softupdate" );
-        open(FILE, "> /etc/gosa-si/event");
-        print FILE "softupdate\n";
-        close(FILE);
     }
+
+    open(FILE, "> /etc/gosa-si/event");
+    print FILE "softupdate\n";
+    close(FILE);
 
     system( "/usr/sbin/goto-action &" );
 
