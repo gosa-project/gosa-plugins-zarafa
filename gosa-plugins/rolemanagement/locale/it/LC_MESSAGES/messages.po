@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:09+0200\n"
+"POT-Creation-Date: 2010-09-17 04:36-0400\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,16 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:453
-#, fuzzy
-msgid "Roles"
-msgstr "Ruolo"
-
-#: admin/roleManagement/class_roleManagement.inc:26
-msgid "Assign and manage organizational roles"
-msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:97
 msgid "Given name"
@@ -46,8 +36,8 @@ msgstr ""
 #: admin/roleManagement/class_roleGeneric.inc:282
 #: admin/roleManagement/class_roleGeneric.inc:291
 #: admin/roleManagement/class_roleGeneric.inc:470
-#: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:12
+#: admin/roleManagement/role-list.xml:41
 msgid "Name"
 msgstr "Cognome"
 
@@ -71,6 +61,12 @@ msgstr "Generale"
 msgid "Role generic"
 msgstr "Cognome"
 
+#: admin/roleManagement/class_roleGeneric.inc:453
+#: admin/roleManagement/class_roleManagement.inc:25
+#, fuzzy
+msgid "Roles"
+msgstr "Ruolo"
+
 #: admin/roleManagement/class_roleGeneric.inc:462
 msgid ""
 "The 'roleRDN' statement defines the location where new roles will be "
@@ -78,14 +74,14 @@ msgid ""
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:471
-#: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:20
+#: admin/roleManagement/role-list.xml:49
 msgid "Description"
 msgstr "Descrizione"
 
 #: admin/roleManagement/class_roleGeneric.inc:472
-#: admin/roleManagement/role-list.tpl:12
 #: admin/roleManagement/roleGeneric.tpl:30
+#: admin/roleManagement/role-list.tpl:12
 msgid "Base"
 msgstr "Base"
 
@@ -103,6 +99,26 @@ msgstr "Numero di telefono"
 #: admin/roleManagement/roleGeneric.tpl:64
 msgid "Occupants"
 msgstr ""
+
+#: admin/roleManagement/roleGeneric.tpl:1
+#: admin/roleManagement/role-list.xml:125
+#, fuzzy
+msgid "Edit role"
+msgstr "Modifica contatto"
+
+#: admin/roleManagement/roleGeneric.tpl:10
+#, fuzzy
+msgid "Generic settings"
+msgstr "Impostazioni generali delle code"
+
+#: admin/roleManagement/roleGeneric.tpl:43
+msgid "Phone number"
+msgstr "Numero di telefono"
+
+#: admin/roleManagement/roleGeneric.tpl:51
+#, fuzzy
+msgid "Fax number"
+msgstr "Numero di telefono"
 
 #: admin/roleManagement/role-list.xml:11
 #, fuzzy
@@ -129,16 +145,15 @@ msgstr "Modifica"
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: admin/roleManagement/role-list.xml:125
-#: admin/roleManagement/roleGeneric.tpl:1
-#, fuzzy
-msgid "Edit role"
-msgstr "Modifica contatto"
-
 #: admin/roleManagement/role-list.xml:138
 #, fuzzy
 msgid "Remove role"
 msgstr "Oggetti membri"
+
+#: admin/roleManagement/role-filter.xml:17
+#, fuzzy
+msgid "Default filter"
+msgstr "Parametro"
 
 #: admin/roleManagement/paste_generic.tpl:1
 #, fuzzy
@@ -155,24 +170,9 @@ msgstr "Cognome"
 msgid "Please enter the new object role name"
 msgstr "Inserisci la URI del server LDAP"
 
-#: admin/roleManagement/role-filter.xml:17
-#, fuzzy
-msgid "Default filter"
-msgstr "Parametro"
-
-#: admin/roleManagement/roleGeneric.tpl:10
-#, fuzzy
-msgid "Generic settings"
-msgstr "Impostazioni generali delle code"
-
-#: admin/roleManagement/roleGeneric.tpl:43
-msgid "Phone number"
-msgstr "Numero di telefono"
-
-#: admin/roleManagement/roleGeneric.tpl:51
-#, fuzzy
-msgid "Fax number"
-msgstr "Numero di telefono"
+#: admin/roleManagement/class_roleManagement.inc:26
+msgid "Assign and manage organizational roles"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Telefon number"

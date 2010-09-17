@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GOsa plugins - rolemanagement\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:09+0200\n"
+"POT-Creation-Date: 2010-09-17 04:36-0400\n"
 "PO-Revision-Date: 2010-03-11 21:01-0300\n"
 "Last-Translator: Marcos Amorim <marcosmamorim@gmail.com>\n"
 "Language-Team: Marcos Amorim <marcosmamorim@gmail.com> Clever de Oliveira "
@@ -17,16 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: BRAZIL\n"
-
-#: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:453
-#, fuzzy
-msgid "Roles"
-msgstr "Papéis"
-
-#: admin/roleManagement/class_roleManagement.inc:26
-msgid "Assign and manage organizational roles"
-msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:97
 #, fuzzy
@@ -51,8 +41,8 @@ msgstr "Desconhecido"
 #: admin/roleManagement/class_roleGeneric.inc:282
 #: admin/roleManagement/class_roleGeneric.inc:291
 #: admin/roleManagement/class_roleGeneric.inc:470
-#: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:12
+#: admin/roleManagement/role-list.xml:41
 #, fuzzy
 msgid "Name"
 msgstr "Nome"
@@ -78,6 +68,12 @@ msgstr "Geral"
 msgid "Role generic"
 msgstr "Papel desconhecido"
 
+#: admin/roleManagement/class_roleGeneric.inc:453
+#: admin/roleManagement/class_roleManagement.inc:25
+#, fuzzy
+msgid "Roles"
+msgstr "Papéis"
+
 #: admin/roleManagement/class_roleGeneric.inc:462
 msgid ""
 "The 'roleRDN' statement defines the location where new roles will be "
@@ -85,15 +81,15 @@ msgid ""
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:471
-#: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:20
+#: admin/roleManagement/role-list.xml:49
 #, fuzzy
 msgid "Description"
 msgstr "Descrição"
 
 #: admin/roleManagement/class_roleGeneric.inc:472
-#: admin/roleManagement/role-list.tpl:12
 #: admin/roleManagement/roleGeneric.tpl:30
+#: admin/roleManagement/role-list.tpl:12
 #, fuzzy
 msgid "Base"
 msgstr "Base"
@@ -113,6 +109,27 @@ msgstr "Número do Fax"
 #, fuzzy
 msgid "Occupants"
 msgstr "Ocupantes"
+
+#: admin/roleManagement/roleGeneric.tpl:1
+#: admin/roleManagement/role-list.xml:125
+#, fuzzy
+msgid "Edit role"
+msgstr "Papel desconhecido"
+
+#: admin/roleManagement/roleGeneric.tpl:10
+#, fuzzy
+msgid "Generic settings"
+msgstr "Configurações gerais do usuário"
+
+#: admin/roleManagement/roleGeneric.tpl:43
+#, fuzzy
+msgid "Phone number"
+msgstr "Número de telefone"
+
+#: admin/roleManagement/roleGeneric.tpl:51
+#, fuzzy
+msgid "Fax number"
+msgstr "Número do Fax"
 
 #: admin/roleManagement/role-list.xml:11
 #, fuzzy
@@ -144,16 +161,15 @@ msgstr "Editar"
 msgid "Remove"
 msgstr "Remover"
 
-#: admin/roleManagement/role-list.xml:125
-#: admin/roleManagement/roleGeneric.tpl:1
-#, fuzzy
-msgid "Edit role"
-msgstr "Papel desconhecido"
-
 #: admin/roleManagement/role-list.xml:138
 #, fuzzy
 msgid "Remove role"
 msgstr "Papel desconhecido"
+
+#: admin/roleManagement/role-filter.xml:17
+#, fuzzy
+msgid "Default filter"
+msgstr "Aplicar filtro"
 
 #: admin/roleManagement/paste_generic.tpl:1
 #, fuzzy
@@ -170,25 +186,9 @@ msgstr "Nome do Objeto"
 msgid "Please enter the new object role name"
 msgstr "Por favor entre com o nome do novo grupo de objeto"
 
-#: admin/roleManagement/role-filter.xml:17
-#, fuzzy
-msgid "Default filter"
-msgstr "Aplicar filtro"
-
-#: admin/roleManagement/roleGeneric.tpl:10
-#, fuzzy
-msgid "Generic settings"
-msgstr "Configurações gerais do usuário"
-
-#: admin/roleManagement/roleGeneric.tpl:43
-#, fuzzy
-msgid "Phone number"
-msgstr "Número de telefone"
-
-#: admin/roleManagement/roleGeneric.tpl:51
-#, fuzzy
-msgid "Fax number"
-msgstr "Número do Fax"
+#: admin/roleManagement/class_roleManagement.inc:26
+msgid "Assign and manage organizational roles"
+msgstr ""
 
 #~ msgid "Uid"
 #~ msgstr "Uid"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:09+0200\n"
+"POT-Creation-Date: 2010-09-17 04:36-0400\n"
 "PO-Revision-Date: 2010-01-22 21:13+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -13,15 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-
-#: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:453
-msgid "Roles"
-msgstr "Rôles"
-
-#: admin/roleManagement/class_roleManagement.inc:26
-msgid "Assign and manage organizational roles"
-msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:97
 msgid "Given name"
@@ -44,8 +35,8 @@ msgstr "Inconnu"
 #: admin/roleManagement/class_roleGeneric.inc:282
 #: admin/roleManagement/class_roleGeneric.inc:291
 #: admin/roleManagement/class_roleGeneric.inc:470
-#: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:12
+#: admin/roleManagement/role-list.xml:41
 msgid "Name"
 msgstr "Nom"
 
@@ -67,6 +58,11 @@ msgstr "Informations"
 msgid "Role generic"
 msgstr "Rôle par défaut"
 
+#: admin/roleManagement/class_roleGeneric.inc:453
+#: admin/roleManagement/class_roleManagement.inc:25
+msgid "Roles"
+msgstr "Rôles"
+
 #: admin/roleManagement/class_roleGeneric.inc:462
 msgid ""
 "The 'roleRDN' statement defines the location where new roles will be "
@@ -74,14 +70,14 @@ msgid ""
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:471
-#: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:20
+#: admin/roleManagement/role-list.xml:49
 msgid "Description"
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:472
-#: admin/roleManagement/role-list.tpl:12
 #: admin/roleManagement/roleGeneric.tpl:30
+#: admin/roleManagement/role-list.tpl:12
 msgid "Base"
 msgstr ""
 
@@ -99,6 +95,24 @@ msgstr "Numéro de fax"
 #: admin/roleManagement/roleGeneric.tpl:64
 msgid "Occupants"
 msgstr "Membres"
+
+#: admin/roleManagement/roleGeneric.tpl:1
+#: admin/roleManagement/role-list.xml:125
+msgid "Edit role"
+msgstr "Editer le rôle"
+
+#: admin/roleManagement/roleGeneric.tpl:10
+#, fuzzy
+msgid "Generic settings"
+msgstr "Paramètres par défaut des utilisateurs"
+
+#: admin/roleManagement/roleGeneric.tpl:43
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+#: admin/roleManagement/roleGeneric.tpl:51
+msgid "Fax number"
+msgstr "Numéro de fax"
 
 #: admin/roleManagement/role-list.xml:11
 msgid "List of roles"
@@ -124,14 +138,14 @@ msgstr "Editer"
 msgid "Remove"
 msgstr "Supprimer"
 
-#: admin/roleManagement/role-list.xml:125
-#: admin/roleManagement/roleGeneric.tpl:1
-msgid "Edit role"
-msgstr "Editer le rôle"
-
 #: admin/roleManagement/role-list.xml:138
 msgid "Remove role"
 msgstr "Suppression du rôle"
+
+#: admin/roleManagement/role-filter.xml:17
+#, fuzzy
+msgid "Default filter"
+msgstr "Imprimante"
 
 #: admin/roleManagement/paste_generic.tpl:1
 #, fuzzy
@@ -146,23 +160,9 @@ msgstr "Nom du rôle"
 msgid "Please enter the new object role name"
 msgstr "Veuillez entrer un nouveau nom pour le rôle"
 
-#: admin/roleManagement/role-filter.xml:17
-#, fuzzy
-msgid "Default filter"
-msgstr "Imprimante"
-
-#: admin/roleManagement/roleGeneric.tpl:10
-#, fuzzy
-msgid "Generic settings"
-msgstr "Paramètres par défaut des utilisateurs"
-
-#: admin/roleManagement/roleGeneric.tpl:43
-msgid "Phone number"
-msgstr "Numéro de téléphone"
-
-#: admin/roleManagement/roleGeneric.tpl:51
-msgid "Fax number"
-msgstr "Numéro de fax"
+#: admin/roleManagement/class_roleManagement.inc:26
+msgid "Assign and manage organizational roles"
+msgstr ""
 
 #~ msgid "Telefon number"
 #~ msgstr "Numéro de téléphone"

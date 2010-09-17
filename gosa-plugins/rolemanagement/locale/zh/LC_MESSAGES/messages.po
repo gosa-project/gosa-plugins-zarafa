@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:09+0200\n"
+"POT-Creation-Date: 2010-09-17 04:36-0400\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,16 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:453
-#, fuzzy
-msgid "Roles"
-msgstr "角色"
-
-#: admin/roleManagement/class_roleManagement.inc:26
-msgid "Assign and manage organizational roles"
-msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:97
 msgid "Given name"
@@ -47,8 +37,8 @@ msgstr "未知"
 #: admin/roleManagement/class_roleGeneric.inc:282
 #: admin/roleManagement/class_roleGeneric.inc:291
 #: admin/roleManagement/class_roleGeneric.inc:470
-#: admin/roleManagement/role-list.xml:41
 #: admin/roleManagement/roleGeneric.tpl:12
+#: admin/roleManagement/role-list.xml:41
 msgid "Name"
 msgstr "名称"
 
@@ -72,6 +62,12 @@ msgstr "通用配置"
 msgid "Role generic"
 msgstr "重命名"
 
+#: admin/roleManagement/class_roleGeneric.inc:453
+#: admin/roleManagement/class_roleManagement.inc:25
+#, fuzzy
+msgid "Roles"
+msgstr "角色"
+
 #: admin/roleManagement/class_roleGeneric.inc:462
 msgid ""
 "The 'roleRDN' statement defines the location where new roles will be "
@@ -79,14 +75,14 @@ msgid ""
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:471
-#: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:20
+#: admin/roleManagement/role-list.xml:49
 msgid "Description"
 msgstr "描述"
 
 #: admin/roleManagement/class_roleGeneric.inc:472
-#: admin/roleManagement/role-list.tpl:12
 #: admin/roleManagement/roleGeneric.tpl:30
+#: admin/roleManagement/role-list.tpl:12
 msgid "Base"
 msgstr "位置"
 
@@ -104,6 +100,26 @@ msgstr "系列号"
 #: admin/roleManagement/roleGeneric.tpl:64
 msgid "Occupants"
 msgstr ""
+
+#: admin/roleManagement/roleGeneric.tpl:1
+#: admin/roleManagement/role-list.xml:125
+#, fuzzy
+msgid "Edit role"
+msgstr "编辑宏"
+
+#: admin/roleManagement/roleGeneric.tpl:10
+#, fuzzy
+msgid "Generic settings"
+msgstr "通用队列设置"
+
+#: admin/roleManagement/roleGeneric.tpl:43
+msgid "Phone number"
+msgstr "电话号码"
+
+#: admin/roleManagement/roleGeneric.tpl:51
+#, fuzzy
+msgid "Fax number"
+msgstr "系列号"
 
 #: admin/roleManagement/role-list.xml:11
 #, fuzzy
@@ -130,16 +146,15 @@ msgstr "编辑"
 msgid "Remove"
 msgstr "删除"
 
-#: admin/roleManagement/role-list.xml:125
-#: admin/roleManagement/roleGeneric.tpl:1
-#, fuzzy
-msgid "Edit role"
-msgstr "编辑宏"
-
 #: admin/roleManagement/role-list.xml:138
 #, fuzzy
 msgid "Remove role"
 msgstr "成员对象"
+
+#: admin/roleManagement/role-filter.xml:17
+#, fuzzy
+msgid "Default filter"
+msgstr "参数"
 
 #: admin/roleManagement/paste_generic.tpl:1
 #, fuzzy
@@ -156,24 +171,9 @@ msgstr "重命名"
 msgid "Please enter the new object role name"
 msgstr "请输入新对象组名称"
 
-#: admin/roleManagement/role-filter.xml:17
-#, fuzzy
-msgid "Default filter"
-msgstr "参数"
-
-#: admin/roleManagement/roleGeneric.tpl:10
-#, fuzzy
-msgid "Generic settings"
-msgstr "通用队列设置"
-
-#: admin/roleManagement/roleGeneric.tpl:43
-msgid "Phone number"
-msgstr "电话号码"
-
-#: admin/roleManagement/roleGeneric.tpl:51
-#, fuzzy
-msgid "Fax number"
-msgstr "系列号"
+#: admin/roleManagement/class_roleManagement.inc:26
+msgid "Assign and manage organizational roles"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Telefon number"
