@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:01+0200\n"
+"POT-Creation-Date: 2010-09-17 03:35-0400\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+#: personal/connectivity/openxchange/oxchange.tpl:18
+msgid "Open-Xchange account"
+msgstr "Open-Xchange 账号"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+#, fuzzy
+msgid ""
+"disabled, no PostgreSQL support detected or the specified database can't be "
+"reached."
+msgstr "已禁用，没有检测到 Postgresql 支持。或者指定的数据库无法访问"
+
+#: personal/connectivity/openxchange/oxchange.tpl:21
+#: personal/connectivity/openxchange/oxchange.tpl:28
+#: personal/connectivity/openxchange/oxchange.tpl:63
+#, fuzzy
+msgid "Open-Xchange configuration"
+msgstr "Open-Xchange 账号"
+
+#: personal/connectivity/openxchange/oxchange.tpl:32
+msgid "Remember"
+msgstr "记住"
+
+#: personal/connectivity/openxchange/oxchange.tpl:36
+msgid "Appointment Days"
+msgstr "约会日期"
+
+#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:52
+msgid "days"
+msgstr "天"
+
+#: personal/connectivity/openxchange/oxchange.tpl:45
+msgid "Task Days"
+msgstr "任务日期"
+
+#: personal/connectivity/openxchange/oxchange.tpl:67
+msgid "User Information"
+msgstr "用户信息"
+
+#: personal/connectivity/openxchange/oxchange.tpl:71
+msgid "User Timezone"
+msgstr "用户时区"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
@@ -94,50 +138,6 @@ msgstr "任务日期"
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:453
 #, fuzzy
 msgid "OXTimeZone"
-msgstr "用户时区"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-#: personal/connectivity/openxchange/oxchange.tpl:18
-msgid "Open-Xchange account"
-msgstr "Open-Xchange 账号"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-#, fuzzy
-msgid ""
-"disabled, no PostgreSQL support detected or the specified database can't be "
-"reached."
-msgstr "已禁用，没有检测到 Postgresql 支持。或者指定的数据库无法访问"
-
-#: personal/connectivity/openxchange/oxchange.tpl:21
-#: personal/connectivity/openxchange/oxchange.tpl:28
-#: personal/connectivity/openxchange/oxchange.tpl:63
-#, fuzzy
-msgid "Open-Xchange configuration"
-msgstr "Open-Xchange 账号"
-
-#: personal/connectivity/openxchange/oxchange.tpl:32
-msgid "Remember"
-msgstr "记住"
-
-#: personal/connectivity/openxchange/oxchange.tpl:36
-msgid "Appointment Days"
-msgstr "约会日期"
-
-#: personal/connectivity/openxchange/oxchange.tpl:42
-#: personal/connectivity/openxchange/oxchange.tpl:52
-msgid "days"
-msgstr "天"
-
-#: personal/connectivity/openxchange/oxchange.tpl:45
-msgid "Task Days"
-msgstr "任务日期"
-
-#: personal/connectivity/openxchange/oxchange.tpl:67
-msgid "User Information"
-msgstr "用户信息"
-
-#: personal/connectivity/openxchange/oxchange.tpl:71
-msgid "User Timezone"
 msgstr "用户时区"
 
 #~ msgid "Open-Xchange Account"

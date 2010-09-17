@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:01+0200\n"
+"POT-Creation-Date: 2010-09-17 03:35-0400\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,6 +13,52 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+#: personal/connectivity/openxchange/oxchange.tpl:18
+msgid "Open-Xchange account"
+msgstr "konto Open-Xchange"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+#, fuzzy
+msgid ""
+"disabled, no PostgreSQL support detected or the specified database can't be "
+"reached."
+msgstr ""
+"wyłączone, nie wykryto wsparcia dia PostgreSQL, lub podana baza nie jest "
+"osiągalna"
+
+#: personal/connectivity/openxchange/oxchange.tpl:21
+#: personal/connectivity/openxchange/oxchange.tpl:28
+#: personal/connectivity/openxchange/oxchange.tpl:63
+#, fuzzy
+msgid "Open-Xchange configuration"
+msgstr "Konto Open-Xchange"
+
+#: personal/connectivity/openxchange/oxchange.tpl:32
+msgid "Remember"
+msgstr "Pamiętaj"
+
+#: personal/connectivity/openxchange/oxchange.tpl:36
+msgid "Appointment Days"
+msgstr "Dni spotkania"
+
+#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:52
+msgid "days"
+msgstr "dni"
+
+#: personal/connectivity/openxchange/oxchange.tpl:45
+msgid "Task Days"
+msgstr "Dni robocze"
+
+#: personal/connectivity/openxchange/oxchange.tpl:67
+msgid "User Information"
+msgstr "Informacja o użytkowniku"
+
+#: personal/connectivity/openxchange/oxchange.tpl:71
+msgid "User Timezone"
+msgstr "Strefa czasowa użytkownika"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
@@ -91,52 +137,6 @@ msgstr "Dni robocze"
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:453
 #, fuzzy
 msgid "OXTimeZone"
-msgstr "Strefa czasowa użytkownika"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-#: personal/connectivity/openxchange/oxchange.tpl:18
-msgid "Open-Xchange account"
-msgstr "konto Open-Xchange"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-#, fuzzy
-msgid ""
-"disabled, no PostgreSQL support detected or the specified database can't be "
-"reached."
-msgstr ""
-"wyłączone, nie wykryto wsparcia dia PostgreSQL, lub podana baza nie jest "
-"osiągalna"
-
-#: personal/connectivity/openxchange/oxchange.tpl:21
-#: personal/connectivity/openxchange/oxchange.tpl:28
-#: personal/connectivity/openxchange/oxchange.tpl:63
-#, fuzzy
-msgid "Open-Xchange configuration"
-msgstr "Konto Open-Xchange"
-
-#: personal/connectivity/openxchange/oxchange.tpl:32
-msgid "Remember"
-msgstr "Pamiętaj"
-
-#: personal/connectivity/openxchange/oxchange.tpl:36
-msgid "Appointment Days"
-msgstr "Dni spotkania"
-
-#: personal/connectivity/openxchange/oxchange.tpl:42
-#: personal/connectivity/openxchange/oxchange.tpl:52
-msgid "days"
-msgstr "dni"
-
-#: personal/connectivity/openxchange/oxchange.tpl:45
-msgid "Task Days"
-msgstr "Dni robocze"
-
-#: personal/connectivity/openxchange/oxchange.tpl:67
-msgid "User Information"
-msgstr "Informacja o użytkowniku"
-
-#: personal/connectivity/openxchange/oxchange.tpl:71
-msgid "User Timezone"
 msgstr "Strefa czasowa użytkownika"
 
 #~ msgid "Open-Xchange Account"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:01+0200\n"
+"POT-Creation-Date: 2010-09-17 03:35-0400\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,6 +14,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+#: personal/connectivity/openxchange/oxchange.tpl:18
+#, fuzzy
+msgid "Open-Xchange account"
+msgstr "Estenzioni FTP"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid ""
+"disabled, no PostgreSQL support detected or the specified database can't be "
+"reached."
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:21
+#: personal/connectivity/openxchange/oxchange.tpl:28
+#: personal/connectivity/openxchange/oxchange.tpl:63
+#, fuzzy
+msgid "Open-Xchange configuration"
+msgstr "Estenzioni FTP"
+
+#: personal/connectivity/openxchange/oxchange.tpl:32
+#, fuzzy
+msgid "Remember"
+msgstr "Dicembre"
+
+#: personal/connectivity/openxchange/oxchange.tpl:36
+msgid "Appointment Days"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:42
+#: personal/connectivity/openxchange/oxchange.tpl:52
+msgid "days"
+msgstr "giorni"
+
+#: personal/connectivity/openxchange/oxchange.tpl:45
+msgid "Task Days"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:67
+#, fuzzy
+msgid "User Information"
+msgstr "Informazioni"
+
+#: personal/connectivity/openxchange/oxchange.tpl:71
+#, fuzzy
+msgid "User Timezone"
+msgstr "Cellulare"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
@@ -90,53 +137,6 @@ msgstr ""
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:453
 #, fuzzy
 msgid "OXTimeZone"
-msgstr "Cellulare"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-#: personal/connectivity/openxchange/oxchange.tpl:18
-#, fuzzy
-msgid "Open-Xchange account"
-msgstr "Estenzioni FTP"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid ""
-"disabled, no PostgreSQL support detected or the specified database can't be "
-"reached."
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:21
-#: personal/connectivity/openxchange/oxchange.tpl:28
-#: personal/connectivity/openxchange/oxchange.tpl:63
-#, fuzzy
-msgid "Open-Xchange configuration"
-msgstr "Estenzioni FTP"
-
-#: personal/connectivity/openxchange/oxchange.tpl:32
-#, fuzzy
-msgid "Remember"
-msgstr "Dicembre"
-
-#: personal/connectivity/openxchange/oxchange.tpl:36
-msgid "Appointment Days"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:42
-#: personal/connectivity/openxchange/oxchange.tpl:52
-msgid "days"
-msgstr "giorni"
-
-#: personal/connectivity/openxchange/oxchange.tpl:45
-msgid "Task Days"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:67
-#, fuzzy
-msgid "User Information"
-msgstr "Informazioni"
-
-#: personal/connectivity/openxchange/oxchange.tpl:71
-#, fuzzy
-msgid "User Timezone"
 msgstr "Cellulare"
 
 #, fuzzy
