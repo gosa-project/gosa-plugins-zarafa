@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 19:54+0200\n"
+"POT-Creation-Date: 2010-09-17 03:31-0400\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,129 +14,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:105
-#: personal/nagios/class_nagiosAccount.inc:114
-#: personal/nagios/class_nagiosAccount.inc:116
-#: personal/nagios/class_nagiosAccount.inc:272
-#, fuzzy
-msgid "Nagios"
-msgstr "Контакт"
-
-#: personal/nagios/class_nagiosAccount.inc:19
-msgid "This does something"
-msgstr "Что-то будет"
-
-#: personal/nagios/class_nagiosAccount.inc:172
-#: personal/nagios/class_nagiosAccount.inc:257
-#, fuzzy
-msgid "LDAP error"
-msgstr "Ошибка LDAP:"
-
-#: personal/nagios/class_nagiosAccount.inc:193
-#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:10
-#, fuzzy
-msgid "Alias"
-msgstr "женский"
-
-#: personal/nagios/class_nagiosAccount.inc:196
-#: personal/nagios/class_nagiosAccount.inc:200
-#: personal/nagios/class_nagiosAccount.inc:204
-msgid "Mail"
-msgstr "Почта"
-
-#: personal/nagios/class_nagiosAccount.inc:273
-#, fuzzy
-msgid "Nagios account settings"
-msgstr "Почтовые настройки пользователя"
-
-#: personal/nagios/class_nagiosAccount.inc:277
-msgid "My account"
-msgstr "Моя учетная запись"
-
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:19
-#, fuzzy
-msgid "Mail address"
-msgstr "MAC-адрес"
-
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:29
-#, fuzzy
-msgid "Host notification period"
-msgstr "Параметры приложения"
-
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:42
-#, fuzzy
-msgid "Service notification period"
-msgstr "Параметры приложения"
-
-#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:68
-#, fuzzy
-msgid "Host notification options"
-msgstr "Параметры приложения"
-
-#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:55
-#, fuzzy
-msgid "Service notification options"
-msgstr "Параметры приложения"
-
-#: personal/nagios/class_nagiosAccount.inc:293
-#, fuzzy
-msgid "Pager number"
-msgstr "Телефонные номера"
-
-#: personal/nagios/class_nagiosAccount.inc:295 personal/nagios/nagios.tpl:92
-#, fuzzy
-msgid "Service notification commands"
-msgstr "Параметры приложения"
-
-#: personal/nagios/class_nagiosAccount.inc:296 personal/nagios/nagios.tpl:102
-#, fuzzy
-msgid "Host notification commands"
-msgstr "Параметры приложения"
-
-#: personal/nagios/class_nagiosAccount.inc:297
-#, fuzzy
-msgid "View system informations"
-msgstr "Системная информация"
-
-#: personal/nagios/class_nagiosAccount.inc:298
-#, fuzzy
-msgid "View configuration information"
-msgstr "Информация об организации"
-
-#: personal/nagios/class_nagiosAccount.inc:299
-#, fuzzy
-msgid "Trigger system commands"
-msgstr "Системная информация"
-
-#: personal/nagios/class_nagiosAccount.inc:300
-#, fuzzy
-msgid "View all services"
-msgstr "Предоставлять службу сканирования"
-
-#: personal/nagios/class_nagiosAccount.inc:301
-#, fuzzy
-msgid "View all hosts"
-msgstr "Предоставлять службу сканирования"
-
-#: personal/nagios/class_nagiosAccount.inc:302
-#, fuzzy
-msgid "Trigger all service commands"
-msgstr "Предоставлять службу сканирования"
-
-#: personal/nagios/class_nagiosAccount.inc:303
-msgid "Trigger all host commands"
-msgstr ""
-
 #: personal/nagios/nagios.tpl:1 personal/nagios/nagios.tpl:7
 #: personal/nagios/nagios.tpl:8
 #, fuzzy
 msgid "Nagios Account"
 msgstr "Контакт"
 
+#: personal/nagios/nagios.tpl:10 personal/nagios/class_nagiosAccount.inc:193
+#: personal/nagios/class_nagiosAccount.inc:287
+#, fuzzy
+msgid "Alias"
+msgstr "женский"
+
+#: personal/nagios/nagios.tpl:19 personal/nagios/class_nagiosAccount.inc:288
+#, fuzzy
+msgid "Mail address"
+msgstr "MAC-адрес"
+
+#: personal/nagios/nagios.tpl:29 personal/nagios/class_nagiosAccount.inc:289
+#, fuzzy
+msgid "Host notification period"
+msgstr "Параметры приложения"
+
+#: personal/nagios/nagios.tpl:42 personal/nagios/class_nagiosAccount.inc:290
+#, fuzzy
+msgid "Service notification period"
+msgstr "Параметры приложения"
+
+#: personal/nagios/nagios.tpl:55 personal/nagios/class_nagiosAccount.inc:292
+#, fuzzy
+msgid "Service notification options"
+msgstr "Параметры приложения"
+
+#: personal/nagios/nagios.tpl:68 personal/nagios/class_nagiosAccount.inc:291
+#, fuzzy
+msgid "Host notification options"
+msgstr "Параметры приложения"
+
 #: personal/nagios/nagios.tpl:81
 msgid "Pager"
 msgstr "Пейджер"
+
+#: personal/nagios/nagios.tpl:92 personal/nagios/class_nagiosAccount.inc:295
+#, fuzzy
+msgid "Service notification commands"
+msgstr "Параметры приложения"
+
+#: personal/nagios/nagios.tpl:102 personal/nagios/class_nagiosAccount.inc:296
+#, fuzzy
+msgid "Host notification commands"
+msgstr "Параметры приложения"
 
 #: personal/nagios/nagios.tpl:120
 #, fuzzy
@@ -177,6 +104,79 @@ msgstr ""
 
 #: personal/nagios/nagios.tpl:179
 msgid "trigger all host commands"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:18
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:272
+#, fuzzy
+msgid "Nagios"
+msgstr "Контакт"
+
+#: personal/nagios/class_nagiosAccount.inc:19
+msgid "This does something"
+msgstr "Что-то будет"
+
+#: personal/nagios/class_nagiosAccount.inc:172
+#: personal/nagios/class_nagiosAccount.inc:257
+#, fuzzy
+msgid "LDAP error"
+msgstr "Ошибка LDAP:"
+
+#: personal/nagios/class_nagiosAccount.inc:196
+#: personal/nagios/class_nagiosAccount.inc:200
+#: personal/nagios/class_nagiosAccount.inc:204
+msgid "Mail"
+msgstr "Почта"
+
+#: personal/nagios/class_nagiosAccount.inc:273
+#, fuzzy
+msgid "Nagios account settings"
+msgstr "Почтовые настройки пользователя"
+
+#: personal/nagios/class_nagiosAccount.inc:277
+msgid "My account"
+msgstr "Моя учетная запись"
+
+#: personal/nagios/class_nagiosAccount.inc:293
+#, fuzzy
+msgid "Pager number"
+msgstr "Телефонные номера"
+
+#: personal/nagios/class_nagiosAccount.inc:297
+#, fuzzy
+msgid "View system informations"
+msgstr "Системная информация"
+
+#: personal/nagios/class_nagiosAccount.inc:298
+#, fuzzy
+msgid "View configuration information"
+msgstr "Информация об организации"
+
+#: personal/nagios/class_nagiosAccount.inc:299
+#, fuzzy
+msgid "Trigger system commands"
+msgstr "Системная информация"
+
+#: personal/nagios/class_nagiosAccount.inc:300
+#, fuzzy
+msgid "View all services"
+msgstr "Предоставлять службу сканирования"
+
+#: personal/nagios/class_nagiosAccount.inc:301
+#, fuzzy
+msgid "View all hosts"
+msgstr "Предоставлять службу сканирования"
+
+#: personal/nagios/class_nagiosAccount.inc:302
+#, fuzzy
+msgid "Trigger all service commands"
+msgstr "Предоставлять службу сканирования"
+
+#: personal/nagios/class_nagiosAccount.inc:303
+msgid "Trigger all host commands"
 msgstr ""
 
 #, fuzzy
