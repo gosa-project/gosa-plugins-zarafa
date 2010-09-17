@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-02 20:18+0200\n"
+"POT-Creation-Date: 2010-09-17 04:46-0400\n"
 "PO-Revision-Date: 2010-01-22 21:15+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
@@ -81,9 +81,67 @@ msgstr "Préférences utilisateur"
 msgid "Database user"
 msgstr "Utilisateur de la base de données"
 
-#: addons/rsyslog/class_rsyslog.inc:5 addons/rsyslog/rSyslog.tpl:4
+#: addons/rsyslog/rSyslog.tpl:4 addons/rsyslog/class_rsyslog.inc:5
 msgid "System logs"
 msgstr "Journaux systèmes"
+
+#: addons/rsyslog/rSyslog.tpl:7
+msgid "Filter"
+msgstr "Filtre"
+
+#: addons/rsyslog/rSyslog.tpl:10
+msgid "Server"
+msgstr "Serveur"
+
+#: addons/rsyslog/rSyslog.tpl:17
+msgid "Host"
+msgstr "Hôte"
+
+#: addons/rsyslog/rSyslog.tpl:24 addons/rsyslog/rSyslog.tpl:128
+msgid "Severity"
+msgstr "Sévérité"
+
+#: addons/rsyslog/rSyslog.tpl:31
+msgid "From"
+msgstr "Depuis"
+
+#: addons/rsyslog/rSyslog.tpl:47
+msgid "till"
+msgstr "jusqu'au"
+
+#: addons/rsyslog/rSyslog.tpl:63 addons/rsyslog/rSyslog.tpl:67
+msgid "Search"
+msgstr "Chercher"
+
+#: addons/rsyslog/rSyslog.tpl:75 addons/rsyslog/class_rsyslog.inc:385
+msgid "Error"
+msgstr "Erreur"
+
+#: addons/rsyslog/rSyslog.tpl:84
+#, fuzzy
+msgid "Entry list"
+msgstr "Exporter la liste"
+
+#: addons/rsyslog/rSyslog.tpl:88
+#, fuzzy
+msgid "Date"
+msgstr "Coller"
+
+#: addons/rsyslog/rSyslog.tpl:98
+msgid "Source"
+msgstr ""
+
+#: addons/rsyslog/rSyslog.tpl:108
+msgid "Header"
+msgstr "Entête"
+
+#: addons/rsyslog/rSyslog.tpl:118
+msgid "Facility"
+msgstr "Facilité"
+
+#: addons/rsyslog/rSyslog.tpl:138
+msgid "Message"
+msgstr ""
 
 #: addons/rsyslog/class_rsyslog.inc:6
 msgid "View systemlogs that got recorded with rsyslog"
@@ -118,10 +176,6 @@ msgstr "Alerte"
 #: addons/rsyslog/class_rsyslog.inc:384
 msgid "Critical"
 msgstr "Critique"
-
-#: addons/rsyslog/class_rsyslog.inc:385 addons/rsyslog/rSyslog.tpl:75
-msgid "Error"
-msgstr "Erreur"
 
 #: addons/rsyslog/class_rsyslog.inc:386
 msgid "Warning"
@@ -203,60 +257,6 @@ msgstr ""
 #: addons/rsyslog/class_rsyslog.inc:416
 msgid "Clock"
 msgstr "Heure"
-
-#: addons/rsyslog/rSyslog.tpl:7
-msgid "Filter"
-msgstr "Filtre"
-
-#: addons/rsyslog/rSyslog.tpl:10
-msgid "Server"
-msgstr "Serveur"
-
-#: addons/rsyslog/rSyslog.tpl:17
-msgid "Host"
-msgstr "Hôte"
-
-#: addons/rsyslog/rSyslog.tpl:24 addons/rsyslog/rSyslog.tpl:128
-msgid "Severity"
-msgstr "Sévérité"
-
-#: addons/rsyslog/rSyslog.tpl:31
-msgid "From"
-msgstr "Depuis"
-
-#: addons/rsyslog/rSyslog.tpl:47
-msgid "till"
-msgstr "jusqu'au"
-
-#: addons/rsyslog/rSyslog.tpl:63 addons/rsyslog/rSyslog.tpl:67
-msgid "Search"
-msgstr "Chercher"
-
-#: addons/rsyslog/rSyslog.tpl:84
-#, fuzzy
-msgid "Entry list"
-msgstr "Exporter la liste"
-
-#: addons/rsyslog/rSyslog.tpl:88
-#, fuzzy
-msgid "Date"
-msgstr "Coller"
-
-#: addons/rsyslog/rSyslog.tpl:98
-msgid "Source"
-msgstr ""
-
-#: addons/rsyslog/rSyslog.tpl:108
-msgid "Header"
-msgstr "Entête"
-
-#: addons/rsyslog/rSyslog.tpl:118
-msgid "Facility"
-msgstr "Facilité"
-
-#: addons/rsyslog/rSyslog.tpl:138
-msgid "Message"
-msgstr ""
 
 #~ msgid "View system logs"
 #~ msgstr "Voir les journaux systèmes"
