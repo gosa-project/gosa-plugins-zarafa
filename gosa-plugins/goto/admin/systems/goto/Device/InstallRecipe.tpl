@@ -6,80 +6,74 @@
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksTemplate">{t}Kickstart template{/t}</LABEL></td>
+        <td><LABEL for="kickstartTemplateDN">{t}Kickstart template{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksTemplate" id="ksTemplate" value="{$ksTemplate}">
+            <input type='text' name="kickstartTemplateDN" id="kickstartTemplateDN" value="{$kickstartTemplateDN}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksKeyboardlayout">{t}Keyboard layout{/t}</LABEL></td>
+        <td><LABEL for="kickstartKeyboardlayout">{t}Keyboard layout{/t}</LABEL></td>
 
         <td>
-            <input type='text' name="ksKeyboardlayout" id="ksKeyboardlayout" value="{$ksKeyboardlayout}">
+            <input type='text' name="kickstartKeyboardlayout" id="kickstartKeyboardlayout" value="{$kickstartKeyboardlayout}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksSystemLocale">{t}System locale{/t}</LABEL></td>
+        <td><LABEL for="kickstartSystemLocale">{t}System locale{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksSystemLocale" id="ksSystemLocale" value="{$ksSystemLocale}">
+            <input type='text' name="kickstartSystemLocale" id="kickstartSystemLocale" value="{$kickstartSystemLocale}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksTimezone">{t}Timezone{/t}</LABEL></td>
+        <td><LABEL for="kickstartTimezone">{t}Timezone{/t}</LABEL></td>
         <td>
-            <select size='1' name="ksTimezone" id="ksTimezone">
-                {html_options values=$timezones options=$timezones selected=$ksTimezone}
+            <select size='1' name="kickstartTimezone" id="kickstartTimezone">
+                {html_options values=$timezones options=$timezones selected=$kickstartTimezone}
             </select>
         </td>
     </tr>
 
     <tr>
-        <td><LABEL for="ksTimeUTC">{t}UTC Time{/t}</LABEL></td>
+        <td><LABEL for="kickstartTimeUTC">{t}UTC Time{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksTimeUTC" id="ksTimeUTC" value="{$ksTimeUTC}">
+            <input type='text' name="kickstartTimeUTC" id="kickstartTimeUTC" value="{$kickstartTimeUTC}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksNTPServer">{t}NTP server{/t}</LABEL></td>
+        <td><LABEL for="kickstartNTPServer">{t}NTP server{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksNTPServer" id="ksNTPServer" value="{$ksNTPServer}">
+            <input type='text' name="kickstartNTPServer" id="kickstartNTPServer" value="{$kickstartNTPServer}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksMirror">{t}Mirror{/t}</LABEL></td>
+        <td><LABEL for="kickstartMirrorDN">{t}Mirror{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksMirror" id="ksMirror" value="{$ksMirror}">
+            <input type='text' name="kickstartMirrorDN" id="kickstartMirrorDN" value="{$kickstartMirrorDN}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksMirrorTorrent">{t}Torrent mirror{/t}</LABEL></td>
+        <td><LABEL for="kickstartRootEnabled">{t}Root enabled{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksMirrorTorrent" id="ksMirrorTorrent" value="{$ksMirrorTorrent}">
-        </td>
-    </tr>
-    <tr>
-        <td><LABEL for="ksRootEnabled">{t}Root enabled{/t}</LABEL></td>
-        <td>
-            <input type='text' name="ksRootEnabled" id="ksRootEnabled" value="{$ksRootEnabled}">
+            <input type='text' name="kickstartRootEnabled" id="kickstartRootEnabled" value="{$kickstartRootEnabled}">
         </td>
     </tr>
 
     <tr>
-        <td><LABEL for="ksRootPasswordHash">{t}Root password hash{/t}</LABEL></td>
+        <td><LABEL for="kickstartRootPasswordHash">{t}Root password hash{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksRootPasswordHash" id="ksRootPasswordHash" value="{$ksRootPasswordHash}">
+            <input type='text' name="kickstartRootPasswordHash" id="kickstartRootPasswordHash" value="{$kickstartRootPasswordHash}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksKernelPackage">{t}Kernel package{/t}</LABEL></td>
+        <td><LABEL for="kickstartKernelPackage">{t}Kernel package{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksKernelPackage" id="ksKernelPackage" value="{$ksKernelPackage}">
+            <input type='text' name="kickstartKernelPackage" id="kickstartKernelPackage" value="{$kickstartKernelPackage}">
         </td>
     </tr>
     <tr>
-        <td><LABEL for="ksPartitionTable">{t}Partition table{/t}</LABEL></td>
+        <td><LABEL for="kickstartPartitionTable">{t}Partition table{/t}</LABEL></td>
         <td>
-            <input type='text' name="ksPartitionTable" id="ksPartitionTable" value="{$ksPartitionTable}">
+            <input type='text' name="kickstartPartitionTable" id="kickstartPartitionTable" value="{$kickstartPartitionTable}">
         </td>
     </tr>
 </table>

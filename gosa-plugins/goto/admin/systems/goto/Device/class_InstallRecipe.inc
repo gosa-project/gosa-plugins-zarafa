@@ -3,27 +3,34 @@
 class InstallRecipe extends plugin
 {
     public $member = array();
-    public $ksTemplate = "";
-    public $ksKeyboardlayout = "";
-    public $ksSystemLocale = "";
-    public $ksTimezone = "";
-    public $ksTimeUTC = "";
-    public $ksNTPServer = "";
-    public $ksMirror = "";
-    public $ksMirrorTorrent = "";
-    public $ksRootEnabled = "";
-    public $ksRootPasswordHash = "";
-    public $ksKernelPackage = "";
-    public $ksPartitionTable = "";
+    public $kickstartTemplateDN = "";
+    public $kickstartKeyboardlayout = "";
+    public $kickstartSystemLocale = "";
+    public $kickstartTimezone = "";
+    public $kickstartTimeUTC = "";
+    public $kickstartNTPServer = "";
+    public $kickstartMirrorDN = "";
+    public $kickstartRootEnabled = "";
+    public $kickstartRootPasswordHash = "";
+    public $kickstartKernelPackage = "";
+    public $kickstartPartitionTable = "";
 
     public $objectclasses = array('installRecipe');
-    public $attributes = array("member","ksTemplate","ksKeyboardlayout","ksSystemLocale",
-            "ksTimezone","ksTimeUTC","ksNTPServer","ksMirror","ksMirrorTorrent",
-            "ksRootEnabled","ksRootPasswordHash","ksKernelPackage","ksPartitionTable");
+    public $attributes = array("member","kickstartTemplateDN","kickstartKeyboardlayout","kickstartSystemLocale",
+            "kickstartTimezone","kickstartTimeUTC","kickstartNTPServer","kickstartMirrorDN",
+            "kickstartRootEnabled","kickstartRootPasswordHash","kickstartKernelPackage","kickstartPartitionTable");
 
     function __construct(&$config, $dn)
     {
         plugin::plugin($config, $dn);
+
+        // Preset some values for new accounts
+        if(!$this->is_account){
+
+            // Preset the device timezone
+            $tz = timezone::get_default_timezone();
+            $this->kickstartTimezone = $tz['name'];
+        }
 
         // Prepare list of timezones
         $tmp = timezone::_get_tz_zones();
@@ -35,7 +42,8 @@ class InstallRecipe extends plugin
                 $offset = $offset * -1;
                 $list[$name] = $name." ( - ".sprintf("%0.2f",($offset/(60*60)))." "._("hours").")";
             }
-        }   
+        }  
+        uksort($list, 'strnatcasecmp'); 
         $this->timezones = $list;
     }
 
@@ -83,18 +91,17 @@ class InstallRecipe extends plugin
                     "plCategory"    => array("Device"),
                     "plProvidedAcls" => array(
                         "member" => _("Member"),
-                        "ksTemplate" => _("Template"),
-                        "ksKeyboardlayout" => _("Keyboard layout"),
-                        "ksSystemLocale" => _("System locale"),
-                        "ksTimezone" => _("Timezone"),
-                        "ksTimeUTC" => _("Time"),
-                        "ksNTPServer" => _("NTP-Server"),
-                        "ksMirror" => _("Kickstart mirror"),
-                        "ksMirrorTorrent" => _("Kickstart torrent mirror"),
-                        "ksRootEnabled" => _("Root login enabled"),
-                        "ksRootPasswordHash" => _("Root password hash"),
-                        "ksKernelPackage" => _("Kernal package"),
-                        "ksPartitionTable" => _("Partition table")
+                        "kickstartTemplateDN" => _("Template"),
+                        "kickstartKeyboardlayout" => _("Keyboard layout"),
+                        "kickstartSystemLocale" => _("System locale"),
+                        "kickstartTimezone" => _("Timezone"),
+                        "kickstartTimeUTC" => _("Time"),
+                        "kickstartNTPServer" => _("NTP-Server"),
+                        "kickstartMirrorDN" => _("Kickstart mirror"),
+                        "kickstartRootEnabled" => _("Root login enabled"),
+                        "kickstartRootPasswordHash" => _("Root password hash"),
+                        "kickstartKernelPackage" => _("Kernal package"),
+                        "kickstartPartitionTable" => _("Partition table")
                         )
                         )
                         );
