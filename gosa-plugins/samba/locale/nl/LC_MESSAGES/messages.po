@@ -11,75 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:08+0200\n"
+"POT-Creation-Date: 2010-09-17 04:47-0400\n"
 "PO-Revision-Date: 2008-06-09 17:22+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: admin/systems/samba/wingeneric.tpl:1
-#, fuzzy
-msgid "Windows workstation"
-msgstr "Toon werkstations"
-
-#: admin/systems/samba/wingeneric.tpl:5
-#, fuzzy
-msgid "Generic settings"
-msgstr "Algemene wachtrij instellingen"
-
-#: admin/systems/samba/wingeneric.tpl:7
-msgid "Machine name"
-msgstr "Machinenaam"
-
-#: admin/systems/samba/wingeneric.tpl:18
-#: admin/systems/samba/class_winGeneric.inc:357
-msgid "Base"
-msgstr "Basis"
-
-#: admin/systems/samba/wingeneric.tpl:29
-#: admin/systems/samba/class_winGeneric.inc:358
-msgid "Description"
-msgstr "Omschrijving"
-
-#: admin/systems/samba/class_winGeneric.inc:111
-msgid "network"
-msgstr "netwerk"
-
-#: admin/systems/samba/class_winGeneric.inc:147
-#: admin/systems/samba/class_winGeneric.inc:296
-#: personal/samba/class_sambaAccount.inc:841
-#: personal/samba/class_sambaAccount.inc:1089
-msgid "LDAP error"
-msgstr "LDAP fout"
-
-#: admin/systems/samba/class_winGeneric.inc:177
-msgid "Error"
-msgstr "FOUT"
-
-#: admin/systems/samba/class_winGeneric.inc:210
-#: admin/systems/samba/class_winGeneric.inc:356
-msgid "Name"
-msgstr "Naam"
-
-#: admin/systems/samba/class_winGeneric.inc:318
-msgid "Win generic"
-msgstr "Windows algemeen"
-
-#: admin/systems/samba/class_winGeneric.inc:319
-msgid "Windows workstation generic"
-msgstr "Windows werkstation algemeen"
-
-#: admin/systems/samba/class_winGeneric.inc:324
-msgid "Win workstation"
-msgstr "Windows werkstation"
-
-#: admin/systems/samba/class_winGeneric.inc:347
-msgid ""
-"The 'sambaMachineAccountRDN' statement defines the location where new "
-"windows workstations will be created. The default is 'ou=winstation,'."
-msgstr ""
 
 #: personal/samba/samba3.tpl:1
 #, fuzzy
@@ -264,19 +202,6 @@ msgstr "Gebruikt door alle gebruikers"
 #: personal/samba/samba3.tpl:427
 msgid "Used by some users"
 msgstr "Gebruikt door sommige gebruikers"
-
-#: personal/samba/sambaLogonHours.tpl:22
-msgid "Specify the hours this user is allowed to log in"
-msgstr "Specificeer de uren waarop de gebruiker in mag loggen"
-
-#: personal/samba/sambaLogonHours.tpl:24
-#, fuzzy
-msgid "Samba logon hours"
-msgstr "Samba inlog tijdstippen"
-
-#: personal/samba/sambaLogonHours.tpl:28
-msgid "Hour"
-msgstr "Uur"
 
 #: personal/samba/class_sambaAccount.inc:24
 #: personal/samba/class_sambaAccount.inc:235
@@ -536,6 +461,13 @@ msgstr "Het nieuw ingevoerde wachtwoord is leeg."
 msgid "Password change available"
 msgstr "Het veranderen van het wachtwoord is niet toegestaan"
 
+#: personal/samba/class_sambaAccount.inc:841
+#: personal/samba/class_sambaAccount.inc:1089
+#: admin/systems/samba/class_winGeneric.inc:147
+#: admin/systems/samba/class_winGeneric.inc:296
+msgid "LDAP error"
+msgstr "LDAP fout"
+
 #: personal/samba/class_sambaAccount.inc:857
 #, fuzzy
 msgid "Home drive"
@@ -623,6 +555,74 @@ msgid ""
 msgstr ""
 "Het Windows gebruikersbeheer programma staat slechts acht clients toe. U "
 "heeft er meer dan acht opgegeven."
+
+#: personal/samba/sambaLogonHours.tpl:22
+msgid "Specify the hours this user is allowed to log in"
+msgstr "Specificeer de uren waarop de gebruiker in mag loggen"
+
+#: personal/samba/sambaLogonHours.tpl:24
+#, fuzzy
+msgid "Samba logon hours"
+msgstr "Samba inlog tijdstippen"
+
+#: personal/samba/sambaLogonHours.tpl:28
+msgid "Hour"
+msgstr "Uur"
+
+#: admin/systems/samba/wingeneric.tpl:1
+#, fuzzy
+msgid "Windows workstation"
+msgstr "Toon werkstations"
+
+#: admin/systems/samba/wingeneric.tpl:5
+#, fuzzy
+msgid "Generic settings"
+msgstr "Algemene wachtrij instellingen"
+
+#: admin/systems/samba/wingeneric.tpl:7
+msgid "Machine name"
+msgstr "Machinenaam"
+
+#: admin/systems/samba/wingeneric.tpl:18
+#: admin/systems/samba/class_winGeneric.inc:357
+msgid "Base"
+msgstr "Basis"
+
+#: admin/systems/samba/wingeneric.tpl:29
+#: admin/systems/samba/class_winGeneric.inc:358
+msgid "Description"
+msgstr "Omschrijving"
+
+#: admin/systems/samba/class_winGeneric.inc:111
+msgid "network"
+msgstr "netwerk"
+
+#: admin/systems/samba/class_winGeneric.inc:177
+msgid "Error"
+msgstr "FOUT"
+
+#: admin/systems/samba/class_winGeneric.inc:210
+#: admin/systems/samba/class_winGeneric.inc:356
+msgid "Name"
+msgstr "Naam"
+
+#: admin/systems/samba/class_winGeneric.inc:318
+msgid "Win generic"
+msgstr "Windows algemeen"
+
+#: admin/systems/samba/class_winGeneric.inc:319
+msgid "Windows workstation generic"
+msgstr "Windows werkstation algemeen"
+
+#: admin/systems/samba/class_winGeneric.inc:324
+msgid "Win workstation"
+msgstr "Windows werkstation"
+
+#: admin/systems/samba/class_winGeneric.inc:347
+msgid ""
+"The 'sambaMachineAccountRDN' statement defines the location where new "
+"windows workstations will be created. The default is 'ou=winstation,'."
+msgstr ""
 
 #~ msgid "Choose subtree to place group in"
 #~ msgstr "Selecteer de subtree waaronder deze groep geplaatst wordt"

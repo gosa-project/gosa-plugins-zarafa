@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:08+0200\n"
+"POT-Creation-Date: 2010-09-17 04:47-0400\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,74 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
-
-#: admin/systems/samba/wingeneric.tpl:1
-#, fuzzy
-msgid "Windows workstation"
-msgstr "Показать рабочие станции"
-
-#: admin/systems/samba/wingeneric.tpl:5
-#, fuzzy
-msgid "Generic settings"
-msgstr "Общая информация о пользователе"
-
-#: admin/systems/samba/wingeneric.tpl:7
-#, fuzzy
-msgid "Machine name"
-msgstr "Название"
-
-#: admin/systems/samba/wingeneric.tpl:18
-#: admin/systems/samba/class_winGeneric.inc:357
-msgid "Base"
-msgstr "Ветка"
-
-#: admin/systems/samba/wingeneric.tpl:29
-#: admin/systems/samba/class_winGeneric.inc:358
-msgid "Description"
-msgstr "Описание"
-
-#: admin/systems/samba/class_winGeneric.inc:111
-#, fuzzy
-msgid "network"
-msgstr "Добавить объект"
-
-#: admin/systems/samba/class_winGeneric.inc:147
-#: admin/systems/samba/class_winGeneric.inc:296
-#: personal/samba/class_sambaAccount.inc:841
-#: personal/samba/class_sambaAccount.inc:1089
-#, fuzzy
-msgid "LDAP error"
-msgstr "Ошибка LDAP:"
-
-#: admin/systems/samba/class_winGeneric.inc:177
-msgid "Error"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:210
-#: admin/systems/samba/class_winGeneric.inc:356
-msgid "Name"
-msgstr "Фамилия"
-
-#: admin/systems/samba/class_winGeneric.inc:318
-#, fuzzy
-msgid "Win generic"
-msgstr "Служба печати"
-
-#: admin/systems/samba/class_winGeneric.inc:319
-#, fuzzy
-msgid "Windows workstation generic"
-msgstr "Имя рабочий станции"
-
-#: admin/systems/samba/class_winGeneric.inc:324
-#, fuzzy
-msgid "Win workstation"
-msgstr "Рабочая станция Windows"
-
-#: admin/systems/samba/class_winGeneric.inc:347
-msgid ""
-"The 'sambaMachineAccountRDN' statement defines the location where new "
-"windows workstations will be created. The default is 'ou=winstation,'."
-msgstr ""
 
 #: personal/samba/samba3.tpl:1
 #, fuzzy
@@ -268,21 +200,6 @@ msgstr "Пользователи домена"
 #: personal/samba/samba3.tpl:427
 msgid "Used by some users"
 msgstr ""
-
-#: personal/samba/sambaLogonHours.tpl:22
-#, fuzzy
-msgid "Specify the hours this user is allowed to log in"
-msgstr "Выберите почтовый сервер для учетной записи пользователя"
-
-#: personal/samba/sambaLogonHours.tpl:24
-#, fuzzy
-msgid "Samba logon hours"
-msgstr "Группа Samba"
-
-#: personal/samba/sambaLogonHours.tpl:28
-#, fuzzy
-msgid "Hour"
-msgstr "час"
 
 #: personal/samba/class_sambaAccount.inc:24
 #: personal/samba/class_sambaAccount.inc:235
@@ -544,6 +461,14 @@ msgstr "Вы не указали новый пароль."
 msgid "Password change available"
 msgstr "Сменить пароль"
 
+#: personal/samba/class_sambaAccount.inc:841
+#: personal/samba/class_sambaAccount.inc:1089
+#: admin/systems/samba/class_winGeneric.inc:147
+#: admin/systems/samba/class_winGeneric.inc:296
+#, fuzzy
+msgid "LDAP error"
+msgstr "Ошибка LDAP:"
+
 #: personal/samba/class_sambaAccount.inc:857
 #, fuzzy
 msgid "Home drive"
@@ -633,6 +558,81 @@ msgid ""
 msgstr ""
 "Менеджер пользователей Windows допускает подключение только восми клиентов. "
 "Вы указали больше чем восем."
+
+#: personal/samba/sambaLogonHours.tpl:22
+#, fuzzy
+msgid "Specify the hours this user is allowed to log in"
+msgstr "Выберите почтовый сервер для учетной записи пользователя"
+
+#: personal/samba/sambaLogonHours.tpl:24
+#, fuzzy
+msgid "Samba logon hours"
+msgstr "Группа Samba"
+
+#: personal/samba/sambaLogonHours.tpl:28
+#, fuzzy
+msgid "Hour"
+msgstr "час"
+
+#: admin/systems/samba/wingeneric.tpl:1
+#, fuzzy
+msgid "Windows workstation"
+msgstr "Показать рабочие станции"
+
+#: admin/systems/samba/wingeneric.tpl:5
+#, fuzzy
+msgid "Generic settings"
+msgstr "Общая информация о пользователе"
+
+#: admin/systems/samba/wingeneric.tpl:7
+#, fuzzy
+msgid "Machine name"
+msgstr "Название"
+
+#: admin/systems/samba/wingeneric.tpl:18
+#: admin/systems/samba/class_winGeneric.inc:357
+msgid "Base"
+msgstr "Ветка"
+
+#: admin/systems/samba/wingeneric.tpl:29
+#: admin/systems/samba/class_winGeneric.inc:358
+msgid "Description"
+msgstr "Описание"
+
+#: admin/systems/samba/class_winGeneric.inc:111
+#, fuzzy
+msgid "network"
+msgstr "Добавить объект"
+
+#: admin/systems/samba/class_winGeneric.inc:177
+msgid "Error"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:210
+#: admin/systems/samba/class_winGeneric.inc:356
+msgid "Name"
+msgstr "Фамилия"
+
+#: admin/systems/samba/class_winGeneric.inc:318
+#, fuzzy
+msgid "Win generic"
+msgstr "Служба печати"
+
+#: admin/systems/samba/class_winGeneric.inc:319
+#, fuzzy
+msgid "Windows workstation generic"
+msgstr "Имя рабочий станции"
+
+#: admin/systems/samba/class_winGeneric.inc:324
+#, fuzzy
+msgid "Win workstation"
+msgstr "Рабочая станция Windows"
+
+#: admin/systems/samba/class_winGeneric.inc:347
+msgid ""
+"The 'sambaMachineAccountRDN' statement defines the location where new "
+"windows workstations will be created. The default is 'ou=winstation,'."
+msgstr ""
 
 #~ msgid "Choose subtree to place group in"
 #~ msgstr "Выберите ветку для группы"

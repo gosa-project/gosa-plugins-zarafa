@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 20:08+0200\n"
+"POT-Creation-Date: 2010-09-17 04:47-0400\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,74 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: admin/systems/samba/wingeneric.tpl:1
-#, fuzzy
-msgid "Windows workstation"
-msgstr "Mostra workstation"
-
-#: admin/systems/samba/wingeneric.tpl:5
-#, fuzzy
-msgid "Generic settings"
-msgstr "Impostazioni generali delle code"
-
-#: admin/systems/samba/wingeneric.tpl:7
-#, fuzzy
-msgid "Machine name"
-msgstr "Nome locazione"
-
-#: admin/systems/samba/wingeneric.tpl:18
-#: admin/systems/samba/class_winGeneric.inc:357
-msgid "Base"
-msgstr "Base"
-
-#: admin/systems/samba/wingeneric.tpl:29
-#: admin/systems/samba/class_winGeneric.inc:358
-msgid "Description"
-msgstr "Descrizione"
-
-#: admin/systems/samba/class_winGeneric.inc:111
-#, fuzzy
-msgid "network"
-msgstr "Aggiungi contatto"
-
-#: admin/systems/samba/class_winGeneric.inc:147
-#: admin/systems/samba/class_winGeneric.inc:296
-#: personal/samba/class_sambaAccount.inc:841
-#: personal/samba/class_sambaAccount.inc:1089
-#, fuzzy
-msgid "LDAP error"
-msgstr "Errore LDAP"
-
-#: admin/systems/samba/class_winGeneric.inc:177
-msgid "Error"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:210
-#: admin/systems/samba/class_winGeneric.inc:356
-msgid "Name"
-msgstr "Cognome"
-
-#: admin/systems/samba/class_winGeneric.inc:318
-#, fuzzy
-msgid "Win generic"
-msgstr "Stampante"
-
-#: admin/systems/samba/class_winGeneric.inc:319
-#, fuzzy
-msgid "Windows workstation generic"
-msgstr "Mostra workstation"
-
-#: admin/systems/samba/class_winGeneric.inc:324
-#, fuzzy
-msgid "Win workstation"
-msgstr "Amministrazione"
-
-#: admin/systems/samba/class_winGeneric.inc:347
-msgid ""
-"The 'sambaMachineAccountRDN' statement defines the location where new "
-"windows workstations will be created. The default is 'ou=winstation,'."
-msgstr ""
 
 #: personal/samba/samba3.tpl:1
 #, fuzzy
@@ -269,21 +201,6 @@ msgstr "Utenti di Dominio"
 #: personal/samba/samba3.tpl:427
 msgid "Used by some users"
 msgstr ""
-
-#: personal/samba/sambaLogonHours.tpl:22
-#, fuzzy
-msgid "Specify the hours this user is allowed to log in"
-msgstr "Specifica il server di posta per l'utente"
-
-#: personal/samba/sambaLogonHours.tpl:24
-#, fuzzy
-msgid "Samba logon hours"
-msgstr "Gruppo Samba"
-
-#: personal/samba/sambaLogonHours.tpl:28
-#, fuzzy
-msgid "Hour"
-msgstr "ora"
 
 #: personal/samba/class_sambaAccount.inc:24
 #: personal/samba/class_sambaAccount.inc:235
@@ -543,6 +460,14 @@ msgstr "La password immessa come 'Nuova password' è vuota"
 msgid "Password change available"
 msgstr "Cambia la password"
 
+#: personal/samba/class_sambaAccount.inc:841
+#: personal/samba/class_sambaAccount.inc:1089
+#: admin/systems/samba/class_winGeneric.inc:147
+#: admin/systems/samba/class_winGeneric.inc:296
+#, fuzzy
+msgid "LDAP error"
+msgstr "Errore LDAP"
+
 #: personal/samba/class_sambaAccount.inc:857
 #, fuzzy
 msgid "Home drive"
@@ -626,6 +551,81 @@ msgstr "Permetti la connessione solo da queste workstation"
 msgid ""
 "The windows user manager only allows eight clients. You've specified more "
 "than eight."
+msgstr ""
+
+#: personal/samba/sambaLogonHours.tpl:22
+#, fuzzy
+msgid "Specify the hours this user is allowed to log in"
+msgstr "Specifica il server di posta per l'utente"
+
+#: personal/samba/sambaLogonHours.tpl:24
+#, fuzzy
+msgid "Samba logon hours"
+msgstr "Gruppo Samba"
+
+#: personal/samba/sambaLogonHours.tpl:28
+#, fuzzy
+msgid "Hour"
+msgstr "ora"
+
+#: admin/systems/samba/wingeneric.tpl:1
+#, fuzzy
+msgid "Windows workstation"
+msgstr "Mostra workstation"
+
+#: admin/systems/samba/wingeneric.tpl:5
+#, fuzzy
+msgid "Generic settings"
+msgstr "Impostazioni generali delle code"
+
+#: admin/systems/samba/wingeneric.tpl:7
+#, fuzzy
+msgid "Machine name"
+msgstr "Nome locazione"
+
+#: admin/systems/samba/wingeneric.tpl:18
+#: admin/systems/samba/class_winGeneric.inc:357
+msgid "Base"
+msgstr "Base"
+
+#: admin/systems/samba/wingeneric.tpl:29
+#: admin/systems/samba/class_winGeneric.inc:358
+msgid "Description"
+msgstr "Descrizione"
+
+#: admin/systems/samba/class_winGeneric.inc:111
+#, fuzzy
+msgid "network"
+msgstr "Aggiungi contatto"
+
+#: admin/systems/samba/class_winGeneric.inc:177
+msgid "Error"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:210
+#: admin/systems/samba/class_winGeneric.inc:356
+msgid "Name"
+msgstr "Cognome"
+
+#: admin/systems/samba/class_winGeneric.inc:318
+#, fuzzy
+msgid "Win generic"
+msgstr "Stampante"
+
+#: admin/systems/samba/class_winGeneric.inc:319
+#, fuzzy
+msgid "Windows workstation generic"
+msgstr "Mostra workstation"
+
+#: admin/systems/samba/class_winGeneric.inc:324
+#, fuzzy
+msgid "Win workstation"
+msgstr "Amministrazione"
+
+#: admin/systems/samba/class_winGeneric.inc:347
+msgid ""
+"The 'sambaMachineAccountRDN' statement defines the location where new "
+"windows workstations will be created. The default is 'ou=winstation,'."
 msgstr ""
 
 #~ msgid "Choose subtree to place group in"
