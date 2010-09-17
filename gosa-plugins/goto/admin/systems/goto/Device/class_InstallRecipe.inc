@@ -24,12 +24,26 @@ class InstallRecipe extends plugin
     function __construct(&$config, $dn)
     {
         plugin::plugin($config, $dn);
+
+        // Prepare list of timezones
+        $tmp = timezone::_get_tz_zones();
+        $list = array();
+        foreach($tmp['TIMEZONES'] as $name => $offset){
+            if($offset >= 0){
+                $list[$name] = $name." ( + ".sprintf("%0.2f",$offset/(60*60))." "._("hours").")";
+            }else{
+                $offset = $offset * -1;
+                $list[$name] = $name." ( - ".sprintf("%0.2f",($offset/(60*60)))." "._("hours").")";
+            }
+        }   
+        $this->timezones = $list;
     }
 
     function execute()
     {
         plugin::execute();    
         $smarty = get_smarty();
+        $smarty->assign('timezones', $this->timezones);
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }

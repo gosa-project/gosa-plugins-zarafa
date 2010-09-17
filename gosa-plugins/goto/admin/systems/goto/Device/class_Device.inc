@@ -108,6 +108,11 @@ class Device extends plugin
             $message[]= msgPool::invalid(_("IP address"), "", "", "192.168.1.10");
         }
 
+        // Check if there a cn given
+        if (empty($this->cn)){
+            $message[]= msgPool::required(_("Name"));
+        }
+
         // Check mac-address
         if (!empty($this->ipHostNumber) && !tests::is_ip($this->macAddress)){
             $message[]= msgPool::invalid(_("MAC address"), "", "", "00:0C:7F:31:33:F1");
@@ -163,6 +168,10 @@ class Device extends plugin
             $this->currentUserSelect = "manager";
             $this->dialog = new singleUserSelect($this->config, get_userinfo());
         }
+
+        // Remove owner initiated 
+        if(isset($_POST['removeManager']))  $this->manager = "";
+        if(isset($_POST['removeOwner']))  $this->owner = "";
 
         // The user selection dialog has send that it has finished its job.
         // Store the posted user-dn as manager or owner. 
