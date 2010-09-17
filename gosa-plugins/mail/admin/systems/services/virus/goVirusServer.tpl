@@ -34,8 +34,7 @@
      </td>
     </tr>
     <tr>
-     <td>{t}
-      Maximum threads{/t}
+     <td>{t}Maximum threads{/t}
      </td>
      <td>
       {render acl=$avMaxThreadsACL}
