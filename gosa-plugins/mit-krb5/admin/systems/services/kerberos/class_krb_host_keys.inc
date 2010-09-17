@@ -309,7 +309,7 @@ class krbHostKeys extends plugin
                 $this->last_list[$prefix][$princ_id]['USED'] = TRUE;
             }else{
                 $data[$princ_id] = $princ_id;
-                $lData[$princ_id] = array('data' => array($realm,$master_princ,_("-"),preg_replace("/%ID%/",$princ_id,$new)));
+                $lData[$princ_id] = array('data' => array($realm,$master_princ,"-",preg_replace("/%ID%/",$princ_id,$new)));
                 $this->last_list[$prefix][$princ_id]['USED'] = FALSE;
             }
 
