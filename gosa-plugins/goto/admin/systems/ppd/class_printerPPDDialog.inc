@@ -369,6 +369,12 @@ class printerPPDDialog extends plugin
             /* Sort all available files, and create header (Vendor index) */
             foreach($tmp as $file=>$ppd){
 
+                // Append the nickname to the ppds name, to be able to have multiple 
+                //  ppd files for a printer type
+                if(isset($ppd['nickname']) && !empty($ppd['nickname'])){
+                    $ppd['name'] .= " (".$ppd['nickname'].")";
+                }
+
                 if(preg_match("#".preg_quote($this->pathToModified,'#')."#",$file)) continue;
 
                 if(!isset($ppd['manufacturer'])) continue;
