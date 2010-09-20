@@ -2,7 +2,6 @@
 
 class InstallRecipe extends plugin
 {
-    public $member = array();
     public $kickstartTemplateDN = "";
     public $kickstartKeyboardlayout = "";
     public $kickstartSystemLocale = "";
@@ -16,7 +15,7 @@ class InstallRecipe extends plugin
     public $kickstartPartitionTable = "";
 
     public $objectclasses = array('installRecipe');
-    public $attributes = array("member","kickstartTemplateDN","kickstartKeyboardlayout","kickstartSystemLocale",
+    public $attributes = array("kickstartTemplateDN","kickstartKeyboardlayout","kickstartSystemLocale",
             "kickstartTimezone","kickstartTimeUTC","kickstartNTPServer","kickstartMirrorDN",
             "kickstartRootEnabled","kickstartRootPasswordHash","kickstartKernelPackage","kickstartPartitionTable");
 
@@ -45,15 +44,6 @@ class InstallRecipe extends plugin
         }  
         uksort($list, 'strnatcasecmp'); 
         $this->timezones = $list;
-
-        // Prepare member list 
-        $this->memberList= new sortableListing($this->member);
-        $this->memberList->setDeleteable(true);
-        $this->memberList->setColspecs(array('*'));
-        $this->memberList->setWidth("100%");
-        $this->memberList->setHeight("70px");
- 
-    
     }
 
     function execute()
@@ -64,12 +54,6 @@ class InstallRecipe extends plugin
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
-
-        // Fill and render the member list widget
-        $this->memberList->setListData($this->member);
-        $this->memberList->update();
-        $this->memberList->setAcl($this->getacl('member'));
-        $smarty->assign('memberList', $this->memberList->render());
         return($smarty->fetch(get_template_path('goto/Device/InstallRecipe.tpl', TRUE)));
     }
 
@@ -78,14 +62,6 @@ class InstallRecipe extends plugin
     {
         plugin::save_object();
         $this->kickstartRootEnabled = isset($_POST['kickstartRootEnabled']);
-
-        // Update the member list widget. 
-        $this->memberList->save_object();
-        $this->member = $this->memberList->getMaintainedData();
-        if(isset($_POST['member']) && isset($_POST['addMember'])){
-            $member= get_post('member');
-            $this->member[] = $member;
-        }
     }
 
 

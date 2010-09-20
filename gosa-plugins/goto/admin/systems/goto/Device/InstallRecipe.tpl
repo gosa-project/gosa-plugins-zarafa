@@ -16,14 +16,6 @@
         </td>
     </tr>
     <tr>
-        <td><LABEL for="member">{t}Member{/t}</LABEL></td>
-        <td>
-            {$memberList}
-            <input type='text' name="member" id="member" value="">
-            <button name='addMember' type='submit'>{msgPool type='addButton'}</button>
-        </td>
-    </tr>
-    <tr>
         <td><LABEL for="kickstartTemplateDN">{t}Kickstart template{/t}</LABEL></td>
         <td>
             <input type='text' name="kickstartTemplateDN" id="kickstartTemplateDN" value="{$kickstartTemplateDN}">
