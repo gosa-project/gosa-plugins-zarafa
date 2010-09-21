@@ -15,7 +15,7 @@
       <label>Device</label>
       <objectClass>gotoDevice</objectClass>
       <category>devices</category>
-      <class>device</class>
+      <class>deviceGeneric</class>
       <image>plugins/goto/images/select_device.png</image>
     </objectType>
 
@@ -127,7 +127,7 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>device/device[d]</acl>
+      <acl>devices/deviceGeneric[d]</acl>
       <label>Remove device</label>
     </action>
 
