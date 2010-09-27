@@ -19,22 +19,20 @@ class TemplateWidget
         $this->required = $required;
         $this->type = $type;
         $this->display = $display;
+        $class = get_class();
+        $this->postName = "{$class}_{$this->name}";
     }
 
 
     function render()
     {
-
-        $class = get_class();
-        return("{$this->display}&nbsp;<input type='text' name=\"{$class}_{$this->name}\" value=\"".set_post($this->value)."\">");
+        return("{$this->display}&nbsp;<input type='text' name=\"{$this->postName}\" value=\"".set_post($this->value)."\">");
     }
 
     function save_object()
     {
-        $class = get_class();
-        $name = "{$class}_{$this->name}";
-        if(isset($_POST[$name])){
-            $this->value = get_post($name);
+        if(isset($_POST[$this->postName])){
+            $this->value = get_post($this->postName);
         }
     }
 
