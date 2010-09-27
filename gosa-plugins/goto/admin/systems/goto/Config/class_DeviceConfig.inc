@@ -69,6 +69,7 @@ class DeviceConfig extends plugin
         }';        
 
         $this->itemConfig = json_decode($str, TRUE);
+        $this->TemplateEngine->load($this->itemConfig);
         
         // Check for the root object
         if(!isset($this->itemConfig['root'])){
@@ -142,6 +143,7 @@ class DeviceConfig extends plugin
     {
         $this->currentItemName = $item;
         $this->currentItem = &$this->currentItemValues[$item];
+        $this->currentItemType = $this->currentItem['type'];
         $this->currentItemDescriptor =&$this->itemConfig[$this->currentItem['type']];
     }
 
@@ -159,7 +161,8 @@ class DeviceConfig extends plugin
         
 
 
-        $this->TemplateEngine->load($this->currentItemDescriptor);
+        $this->TemplateEngine->setType($this->currentItemType);
+        $this->TemplateEngine->setValues($this->currentItem);
         $this->TemplateEngine->setTemplate('puppet.tpl');
         $smarty->assign('template',$this->TemplateEngine->render());
         return($smarty->fetch(get_template_path('goto/Config/DeviceConfig.tpl', TRUE)));
