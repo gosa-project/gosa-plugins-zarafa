@@ -192,8 +192,7 @@ class DeviceConfig extends plugin
 
         // Update the template engine to use another type of item and 
         //  some other values.
-        $this->TemplateEngine->setType($this->currentItemType);
-        $this->TemplateEngine->setValues($this->currentItem['values']);
+        $this->TemplateEngine->setValues($this->currentItemType,$this->currentItem['values']);
     }
 
 
