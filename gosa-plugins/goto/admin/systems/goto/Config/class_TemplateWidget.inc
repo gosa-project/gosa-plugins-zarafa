@@ -2,13 +2,13 @@
 
 class TemplateWidget
 {
-    private $name = "unnamed";
-    private $value = "";
+    protected $name = "unnamed";
+    protected $value = "";
 
-    private $description = "";
-    private $required = "";
-    private $type = "";
-    private $display = "";
+    protected $description = "";
+    protected $required = "";
+    protected $type = "";
+    protected $display = "";
 
     function __construct(&$config, $name, $value, $description,$required,$type,$display)
     {

@@ -7,6 +7,7 @@ class TemplateEngine
     private $template = "";
 
     private $itemType = '';
+    private $widgets = array();
 
     function __construct($config)
     {
@@ -16,6 +17,11 @@ class TemplateEngine
     function setValues($values)
     {
         foreach($values as $name => $value){
+            if(!isset($this->widgets[$name])){
+                $class = get_class();
+                echo "Unknown option '{$name}' for {$class}!)}<br>";
+                 continue;
+            }
             $this->widgets[$name]->setValue($value);
         }
     }
@@ -26,7 +32,7 @@ class TemplateEngine
         $this->widgets = array();
 
         if(!isset($this->data[$this->itemType])){
-            trigger_error("Undefined item type '{$name}'!");
+            echo "Undefined item type '{$name}'!<br>";
             return;
         }
         $data = $this->data[$this->itemType];

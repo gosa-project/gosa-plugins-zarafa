@@ -87,7 +87,7 @@ class DeviceConfig extends plugin
         $this->setCurrentItem('root');
         $this->addItem('PuppetModule','test1',
                 array(
-                    'dependency' => 'mozilla-2',
+                    'dependency' => array('mozilla-2','toaster-2.0'),
                     'version' => '2.4-f',
                     'name'  => 'Thundebird',
                     'description' => 'Mozilla mail client')
