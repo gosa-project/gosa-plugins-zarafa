@@ -22,11 +22,16 @@ class TemplateWidget
         $class = get_class();
         $this->postName = "{$class}_{$this->name}";
     }
+    
+    function getDisplayName()
+    {
+        return($this->display);
+    }
 
 
     function render()
     {
-        return("{$this->display}&nbsp;<input type='text' name=\"{$this->postName}\" value=\"".set_post($this->value)."\">");
+        return("");
     }
 
     function save_object()

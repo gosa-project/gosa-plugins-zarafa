@@ -31,7 +31,7 @@ class DeviceConfig extends plugin
                             "required": true,
                             "value": "",
                             "syntax": "^[a-zA-Z0-9_+.-]+$",
-                            "type": "string",
+                            "type": "textarea",
                             "display": "Module  version"
                         },
                         "name": {

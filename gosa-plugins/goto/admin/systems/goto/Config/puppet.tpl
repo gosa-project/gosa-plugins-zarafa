@@ -1,6 +1,27 @@
 {if $type == 'PuppetModule'}
-   <br>{$dependency}
-   <br>{$version}
-   <br>{$name}
-   <br>{$description}
+    <table width="100%">
+        <tr>
+            <td style="width:50%; vertical-align: top;">
+                <table>
+                    <tr>
+                        <td>{$nameName}</td>
+                        <td>{$name}</td>
+                    </tr>
+                    <tr>
+                        <td>{$descriptionName}</td>
+                        <td>{$description}</td>
+                    </tr>
+                    <tr>
+                        <td>{$versionName}</td>
+                        <td>{$version}</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width:50%; vertical-align: top;">
+                {$dependencyName}
+                {$dependency}
+            </td>
+        </tr>
+    </table>
+
 {/if}

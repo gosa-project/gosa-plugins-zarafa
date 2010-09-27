@@ -18,7 +18,7 @@ class TemplateWidget_list extends TemplateWidget
 
     function render()
     {
-        $str = $this->display."&nbsp;";
+        $str = "";
         $this->listWidget->setListData($this->value);
         $this->listWidget->update();
         $str .= $this->listWidget->render();

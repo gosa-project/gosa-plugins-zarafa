@@ -76,6 +76,7 @@ class TemplateEngine
         $smarty->assign("type", $this->itemType);
         foreach($this->widgets as $widget){
             $smarty->assign($widget->getName(), $widget->render());
+            $smarty->assign($widget->getName()."Name", $widget->getDisplayName());
         }
         return($smarty->fetch(get_template_path("goto/Config/{$this->template}", TRUE)));
     }
