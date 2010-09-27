@@ -4,6 +4,8 @@ class DeviceConfig extends plugin
 {
     private $TemplateEngine = NULL;
 
+    private $idToName = array();
+
     function __construct(&$config, $dn)
     {
         $this->TemplateEngine = new TemplateEngine($config);
@@ -104,7 +106,9 @@ class DeviceConfig extends plugin
         $array = ($array == NULL)? $this->currentItemValues['root']: $array;
         $str = "<ul>";
         $plug = $_GET['plug'];
-        $str .= "<a href='?plug={$plug}&amp;item={$array['name']}'>";
+
+        $id = array_search($array['name'],$this->idToName);
+        $str .= "<a href='?plug={$plug}&amp;item={$id}'>";
         if($this->currentItemName == $array['name']){
             $str .= "<b>".$array['name']."</b>";
         }else{
@@ -124,6 +128,7 @@ class DeviceConfig extends plugin
     function addItem($type,$name, $values)
     {
         $current = &$this->currentItem; 
+        $this->idToName[] = $name;
         $new = array(
                 'children' => array(),
                 'type' => $type, 
@@ -170,7 +175,8 @@ class DeviceConfig extends plugin
         }
     
         if(isset($_GET['item'])){
-            $this->setCurrentItem($_GET['item']);
+            $name = $this->idToName[$_GET['item']];
+            $this->setCurrentItem($name);
         }
     }
 }
