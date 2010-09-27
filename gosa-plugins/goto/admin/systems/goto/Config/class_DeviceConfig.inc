@@ -1,17 +1,28 @@
 <?php
 
+/*! \brief  A GOsa plugin which generates a device configuration dialog  
+ */
 class DeviceConfig extends plugin
 {
     private $TemplateEngine = NULL;
-
     private $idToName = array();
     private $currentItemName = "";
+    private $currentItemValues = array();
+    private $currentItem = array();
 
+
+    /*! \brief  Constructs the device configuration plugin 
+     *  @param  Config  The GOsa configuration object.
+     */
     function __construct(&$config, $dn)
     {
+        // Load the template engine and tell her what template
+        //  to use for the HTML it produces.
         $this->TemplateEngine = new TemplateEngine($config);
         $this->TemplateEngine->setTemplate('puppet.tpl');
         $this->config = $config;
+
+        // CREATE Dummy entry 
 
         $str = '{
             "PuppetModule": {
@@ -68,19 +79,16 @@ class DeviceConfig extends plugin
                 }
         }';        
 
+        // Load the item-configuration description to populate the 
+        //  the available modules.
         $this->itemConfig = json_decode($str, TRUE);
         $this->TemplateEngine->load($this->itemConfig);
-        
-        // Check for the root object
-        if(!isset($this->itemConfig['root'])){
-            echo 'No root!';
-        }
+
+
+
+        // CREATE Dummy entry 
 
         // Set current item to 'root'.
-        $this->currentItemDescriptor = &$this->itemConfig['root'];
-        $this->currentItemValues = array();
-        $this->currentItem = array();
-
         $this->addItem('root','root',array());
         $this->setCurrentItem('root');
         $this->addItem('PuppetModule','test1',
@@ -97,12 +105,21 @@ class DeviceConfig extends plugin
                     'description' => 'Test Module')
                 );
         $this->setCurrentItem('test1');
-        $this->addItem('PuppetTemplate','temp1',array('name' => 'temp1', 'file' => 'kekse.tpl'));
+        $this->addItem('PuppetTemplate','temp1',
+                array(
+                    'name' => 'temp1', 
+                    'file' => 'kekse.tpl')
+                );
 
         $this->setCurrentItem('root');
     }
 
 
+    /*! \brief      Renders a navigation to allow to switch between the
+     *               active mopdules. 
+     *              This method recursivly collects all module entries.
+     *  @return HTML content which represents the navigation
+     */
     function renderNavigator($array = NULL)
     {
         $array = ($array == NULL)? $this->currentItemValues['root']: $array;
@@ -128,6 +145,14 @@ class DeviceConfig extends plugin
         return($str);
     }
 
+
+    /*! \brief      Add a new child-item to the currently selected one. 
+     *               
+     *  @param  String  type    The 'type' of the new object, eg. 'KickstartTemplate'
+     *  @param  String  name    The 'name' of the new object.
+     *  @param  Array   values  The initial values for this object.
+     *  @return 
+     */
     function addItem($type,$name, $values)
     {
         $current = &$this->currentItem; 
@@ -141,8 +166,15 @@ class DeviceConfig extends plugin
         $current['children'][$name] = &$this->currentItemValues[$name];
     }
 
+
+    /*! \brief      Selects an item as active and takes care 
+     *               of required post/get handling. 
+     *  @param  String  The name of the item we want to select.
+     *  @return 
+     */
     function setCurrentItem($item)
     {
+        // Do nothing if we're already where we wanted to switch to.
         if($this->currentItemName == $item) return;
 
         // Save eventually changed values
@@ -152,44 +184,60 @@ class DeviceConfig extends plugin
             }
         }
 
-
+        // Set the new item info.
         $this->currentItemName = $item;
         $this->currentItem = &$this->currentItemValues[$item];
         $this->currentItemType = $this->currentItem['type'];
         $this->currentItemDescriptor =&$this->itemConfig[$this->currentItem['type']];
+
+        // Update the template engine to use another type of item and 
+        //  some other values.
         $this->TemplateEngine->setType($this->currentItemType);
         $this->TemplateEngine->setValues($this->currentItem['values']);
     }
 
 
+    /*! \brief  Renders the HTML content for the device-config plugin. 
+     *  @return String  The generated HTML code. 
+     */
     function execute()
     {
         $smarty = get_smarty();
-        
+
+        // Assign the navigation bar.
+        $smarty->assign('navigator', $this->renderNavigator());
+
         // Assign possible sub-container objects.
         $smarty->assign('subModule', $this->currentItemDescriptor['container']);
+
+        // Assign current item info
         $smarty->assign('containerName', $this->currentItemDescriptor['name']);
         $smarty->assign('containerDescription', $this->currentItemDescriptor['description']);
 
-        $smarty->assign('navigator', $this->renderNavigator());
-        
-
-
+        // Assign the generated HTML of Widgets.
         $smarty->assign('template',$this->TemplateEngine->render());
         return($smarty->fetch(get_template_path('goto/Config/DeviceConfig.tpl', TRUE)));
     }
 
+
+    /*! \brief  Keep track of posted values, some may be interesting for us. 
+     *          Tell the template engine to take care of posted values too.
+     *  @param  String
+     *  @return 
+     */
     function save_object()
     {
         $this->TemplateEngine->save_object();
 
+        // Add sub-module requested.
         if(isset($_POST['addSubModule']) && isset($_POST['subModule'])){
             $sub = get_post('subModule');
             if(in_array($sub, $this->currentItemDescriptor['container'])){
-                
+
             }
         }
-    
+
+        // Module switched
         if(isset($_GET['item'])){
             $name = $this->idToName[$_GET['item']];
             $this->setCurrentItem($name);
