@@ -5,25 +5,44 @@ class TemplateWidget
     private $name = "unnamed";
     private $value = "";
 
-    function __construct(&$config, $name, $value)
+    private $description = "";
+    private $required = "";
+    private $type = "";
+    private $display = "";
+
+    function __construct(&$config, $name, $value, $description,$required,$type,$display)
     {
+        $this->config = &$config;
+
+        echo '*';
         $this->name = $name;
         $this->value = $value;
-        $this->config = &$config;
+        $this->description = $description;
+        $this->required = $required;
+        $this->type = $type;
+        $this->display = $display;
     }
 
 
     function render()
     {
-        return("<input type='text' name=\"{$this->name}\" value=\"".set_post($this->value)."\">");
+
+        $class = get_class();
+        return("{$this->display}&nbsp;<input type='text' name=\"{$class}_{$this->name}\" value=\"".set_post($this->value)."\">");
     }
 
     function save_object()
     {
+        $class = get_class();
+        $name = "{$class}_{$this->name}";
+        if(isset($_POST[$name])){
+            $this->value = get_post($name);
+        }
     }
 
     function getValue()
     {
+        return($this->value);
     }
 
     function getName()
@@ -31,8 +50,9 @@ class TemplateWidget
         return($this->name);
     }
 
-    function setValue()
+    function setValue($value)
     {
+        $this->value = $value;
     }
 
 }

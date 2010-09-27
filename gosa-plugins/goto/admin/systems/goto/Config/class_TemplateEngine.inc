@@ -13,9 +13,11 @@ class TemplateEngine
         $this->config = &$config;
     }
 
-    function setValues($array)
+    function setValues($values)
     {
-#        print_a($array);
+        foreach($values as $name => $value){
+            $this->widgets[$name]->setValue($value);
+        }
     }
 
     function setType($name)
@@ -23,10 +25,20 @@ class TemplateEngine
         $this->itemType = $name;
         $this->widgets = array();
 
+        if(!isset($this->data[$this->itemType])){
+            trigger_error("Undefined item type '{$name}'!");
+            return;
+        }
         $data = $this->data[$this->itemType];
         if(isset($data['options']) && count($data['options'])){
             foreach($data['options'] as $name => $item){
-                $this->widgets[] = new TemplateWidget($this->config, $name, $item['value']);
+
+                $this->widgets[$name] = new TemplateWidget($this->config, $name, 
+                    $item['value'],
+                    $item['description'],
+                    $item['required'],
+                    $item['type'],
+                    $item['display']);
             }
         }
     }
@@ -50,10 +62,17 @@ class TemplateEngine
     {
         $smarty = get_smarty();
         $smarty->assign("type", $this->itemType);
-        foreach($this->getWidgets() as $widget){
+        foreach($this->widgets as $widget){
             $smarty->assign($widget->getName(), $widget->render());
         }
         return($smarty->fetch(get_template_path("goto/Config/{$this->template}", TRUE)));
+    }
+
+    function save_object()
+    {
+        foreach($this->widgets as $widget){
+            $widget->save_object();
+        }
     }
 }
 

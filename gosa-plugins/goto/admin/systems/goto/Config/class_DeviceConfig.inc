@@ -5,10 +5,12 @@ class DeviceConfig extends plugin
     private $TemplateEngine = NULL;
 
     private $idToName = array();
+    private $currentItemName = "";
 
     function __construct(&$config, $dn)
     {
         $this->TemplateEngine = new TemplateEngine($config);
+        $this->TemplateEngine->setTemplate('puppet.tpl');
         $this->config = $config;
 
         $str = '{
@@ -85,14 +87,15 @@ class DeviceConfig extends plugin
         $this->setCurrentItem('root');
         $this->addItem('PuppetModule','test1',
                 array(
-                    'version' => 1,
-                    'name'  => 'test1',
-                    'description' => 'Test Module')
+                    'dependency' => 'mozilla-2',
+                    'version' => '2.4-f',
+                    'name'  => 'Thundebird',
+                    'description' => 'Mozilla mail client')
                 );
         $this->addItem('PuppetModule','test2',
                 array(
                     'version' => 1,
-                    'name'  => 'test2',
+                    'name'  => 'Firefox',
                     'description' => 'Test Module')
                 );
         $this->setCurrentItem('test1');
@@ -115,6 +118,7 @@ class DeviceConfig extends plugin
         }else{
             $str .= $array['name'];
         }
+        $str .= "&nbsp;<i>(".$array['type'].")</i>";
         $str .= "</a>";
 
         if(count($array['children'])){
@@ -141,10 +145,13 @@ class DeviceConfig extends plugin
 
     function setCurrentItem($item)
     {
+        if($this->currentItemName == $item) return;
         $this->currentItemName = $item;
         $this->currentItem = &$this->currentItemValues[$item];
         $this->currentItemType = $this->currentItem['type'];
         $this->currentItemDescriptor =&$this->itemConfig[$this->currentItem['type']];
+        $this->TemplateEngine->setType($this->currentItemType);
+        $this->TemplateEngine->setValues($this->currentItem['values']);
     }
 
 
@@ -161,15 +168,14 @@ class DeviceConfig extends plugin
         
 
 
-        $this->TemplateEngine->setType($this->currentItemType);
-        $this->TemplateEngine->setValues($this->currentItem);
-        $this->TemplateEngine->setTemplate('puppet.tpl');
         $smarty->assign('template',$this->TemplateEngine->render());
         return($smarty->fetch(get_template_path('goto/Config/DeviceConfig.tpl', TRUE)));
     }
 
     function save_object()
     {
+        $this->TemplateEngine->save_object();
+
         if(isset($_POST['addSubModule']) && isset($_POST['subModule'])){
             $sub = get_post('subModule');
             if(in_array($sub, $this->currentItemDescriptor['container'])){
