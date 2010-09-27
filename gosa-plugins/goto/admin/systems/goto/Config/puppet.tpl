@@ -18,7 +18,7 @@
                 </table>
             </td>
             <td style="width:50%; vertical-align: top;">
-                {$dependencyName}
+                {$dependencyName}:<br>
                 {$dependency}
             </td>
         </tr>

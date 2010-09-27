@@ -19,11 +19,9 @@ class DeviceConfig extends plugin
                     "dependency": {
                         "description": "Modules that are needed to be installed for this module",
                             "required": false,
-                            "value": [
-
-                                ],
+                            "value": "0x002",
                             "syntax": "^[a-zA-Z0-9_+\\\\./-]+(\\\\[[<=>]+[a-zA-Z0-9_+\\\\.-]+\\\\])?$",
-                            "type": "list",
+                            "type": "file",
                             "display": "Module dependencies"
                     },
                         "version": {
@@ -31,7 +29,7 @@ class DeviceConfig extends plugin
                             "required": true,
                             "value": "",
                             "syntax": "^[a-zA-Z0-9_+.-]+$",
-                            "type": "textarea",
+                            "type": "string",
                             "display": "Module  version"
                         },
                         "name": {
@@ -87,7 +85,7 @@ class DeviceConfig extends plugin
         $this->setCurrentItem('root');
         $this->addItem('PuppetModule','test1',
                 array(
-                    'dependency' => array('mozilla-2','toaster-2.0'),
+                    'dependency' => '',
                     'version' => '2.4-f',
                     'name'  => 'Thundebird',
                     'description' => 'Mozilla mail client')
