@@ -14,6 +14,7 @@ class TemplateEngine
     function load($array)
     {
         $this->data = $array;
+
     }
   
     function setTemplate($tmpl)
@@ -24,7 +25,7 @@ class TemplateEngine
     function getWidgets()
     {
         $res = array();
-        $res[] = new TemplateWidget($this->config, 'name', 'herbert');
+#        $res[] = new TemplateWidget($this->config, 'name', 'herbert');
         return($res);
     }     
 
