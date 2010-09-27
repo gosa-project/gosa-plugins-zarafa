@@ -13,8 +13,6 @@ class TemplateWidget
     function __construct(&$config, $name, $value, $description,$required,$type,$display)
     {
         $this->config = &$config;
-
-        echo '*';
         $this->name = $name;
         $this->value = $value;
         $this->description = $description;

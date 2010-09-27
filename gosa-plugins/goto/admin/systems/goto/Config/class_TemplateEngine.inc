@@ -33,7 +33,13 @@ class TemplateEngine
         if(isset($data['options']) && count($data['options'])){
             foreach($data['options'] as $name => $item){
 
-                $this->widgets[$name] = new TemplateWidget($this->config, $name, 
+                $widgetClassName = "TemplateWidget_{$item['type']}";
+                if(!class_available($widgetClassName)){
+                    echo "Unknown widget class {$widgetClassName}! Falling back to default widget.<br>";
+                    $widgetClassName = "TemplateWidget";
+                }
+
+                $this->widgets[$name] = new $widgetClassName($this->config, $name, 
                     $item['value'],
                     $item['description'],
                     $item['required'],
