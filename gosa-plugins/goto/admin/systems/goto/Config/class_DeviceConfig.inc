@@ -233,6 +233,16 @@ class DeviceConfig extends plugin
             $sub = get_post('subModule');
             if(in_array($sub, $this->currentItemDescriptor['container'])){
 
+                // Check if this is a valid item
+                if(!isset($this->itemConfig[$sub])) {
+                    echo "Invalid item type '{$sub}'!";
+                    $values = array();
+                }else{
+                    $values = $this->itemConfig[$sub]['options'];
+                }
+                $name = 'test'.rand(0,99999);
+                $this->addItem($sub,$name,$values);
+                $this->setCurrentItem($name);
             }
         }
 
