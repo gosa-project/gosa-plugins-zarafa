@@ -42,7 +42,7 @@ class TemplateEngine
                 $widgetClassName = "TemplateWidget_{$item['type']}";
                 if(!class_available($widgetClassName)){
                     echo "Unknown widget class {$widgetClassName}! Falling back to default widget.<br>";
-                    $widgetClassName = "TemplateWidget";
+                    $widgetClassName = "TemplateWidget_string";
                 }
 
                 $this->widgets[$name] = new $widgetClassName($this->config, $name, 
