@@ -146,6 +146,15 @@ class DeviceConfig extends plugin
     function setCurrentItem($item)
     {
         if($this->currentItemName == $item) return;
+
+        // Save eventually changed values
+        if($this->currentItem){
+            foreach($this->TemplateEngine->getWidgets() as $widget){
+                $this->currentItem['values'][$widget->getName()] = $widget->getValue();
+            }
+        }
+
+
         $this->currentItemName = $item;
         $this->currentItem = &$this->currentItemValues[$item];
         $this->currentItemType = $this->currentItem['type'];
