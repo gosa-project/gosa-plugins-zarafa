@@ -16,6 +16,8 @@ class DeviceConfig extends management
 
     private $itemContainerSelector = NULL;
 
+    private $base ;
+
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
      */
@@ -30,6 +32,7 @@ class DeviceConfig extends management
         // Set storage points - We do not have any - We just create a fake list which lists all items
         $this->storagePoints = array("");
         $this->itemContainerSelector = new releaseSelector(array('cn=root'=>''), 'cn=root', 'cn=root');
+        $this->base = "cn=root";
 
         $this->navigationList= new sortableListing();
         $this->navigationList->setDeleteable(true);
@@ -149,7 +152,6 @@ class DeviceConfig extends management
         $filter = $this->getFilter();
         $headpage = $this->getHeadpage();
         $this->itemContainerSelector->update();
-        $headpage->setBase('test');
         $headpage->update();
         $smarty = get_smarty();
         $smarty->assign("RELEASE", $this->itemContainerSelector->render());
@@ -179,8 +181,7 @@ class DeviceConfig extends management
         // Collect item container list to be able to render the fake-base selector
         $this->itemContainerSelector->setBases($this->getContainerList());
         $this->itemContainerSelector->update(true);
-
-#        print_a($this->getContainerList());
+        $this->itemContainerSelector->setBase($this->base);
 
         // Build filter
         if (session::global_is_set(get_class($this)."_filter")){
@@ -190,7 +191,6 @@ class DeviceConfig extends management
             $filter->setObjectStorage($this->storagePoints);
         }
         $this->setFilter($filter);
-
 
         // Load service xml file and fill in placeholders
         $contents =file_get_contents(get_template_path("goto/Config/DeviceConfig-list.xml", true));
@@ -230,6 +230,7 @@ class DeviceConfig extends management
 #
 #       $contents = preg_replace("/%SERVICES%/",$serviceList, $contents);
         $headpage = new listing($contents,TRUE);
+        $headpage->setBase($this->base);
         $headpage->setFilter($filter);
 
         parent::__construct($this->config, $this->ui, "services", $headpage);
@@ -382,6 +383,9 @@ class DeviceConfig extends management
             $item = $this->navigationList->getData($action['targets'][0]);
             $this->setCurrentItem($item['name']);
         }
+
+        $this->itemContainerSelector->update();
+        $this->base = $this->itemContainerSelector->getBase();
     }
 
        /*! \brief    Forward plugin acls

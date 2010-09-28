@@ -4,6 +4,7 @@ class filterDeviceItems {
 
     static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
     {
+        print_a(array($base, $scope, $filter, $attributes, $category, $objectStorage));
         $ret = array();
 
         $entry = array();
