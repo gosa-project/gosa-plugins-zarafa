@@ -32,7 +32,6 @@ class DeviceConfig extends management
 
         // Set storage points - We do not have any - We just create a fake list which lists all items
         $this->storagePoints = array("");
-        $this->itemContainerSelector = new releaseSelector(array('cn=root'=>''), 'cn=root', 'cn=root');
         $this->base = "cn=root";
 
         // CREATE Dummy entry 
@@ -108,7 +107,7 @@ class DeviceConfig extends management
         $this->rebuildListing();
         $filter = $this->getFilter();
         $headpage = $this->getHeadpage();
-        $this->itemContainerSelector->update();
+
         $headpage->update();
         $smarty = get_smarty();
         $smarty->assign("RELEASE", $this->itemContainerSelector->render());
@@ -119,16 +118,13 @@ class DeviceConfig extends management
 
     /*! \brief   Build up a list of items useable for the itemSelector.
      */
-    function getContainerList($array = NULL, $base = "")
+    function getContainerList($array = NULL)
     {
         $array = ($array == NULL)?$this->currentItemValues['root']: $array;
-        $ret = array('cn=root' => '');
-        $name = $array['name'];
-        $ret["cn={$name}{$base}"] = $array['type'];
+        $ret[$array['base']] = $array['type'];
         if(count($array['children'])){
-            $base = ",cn={$name}{$base}";
             foreach($array['children'] as $subItem){
-                $ret = array_merge($ret, $this->getContainerList($subItem, $base));
+                $ret = array_merge($ret, $this->getContainerList($subItem));
             }
         }
         return($ret);    
@@ -141,7 +137,11 @@ class DeviceConfig extends management
     function rebuildListing()
     {
         // Collect item container list to be able to render the fake-base selector
-        $this->itemContainerSelector->setBases($this->getContainerList());
+        if(!$this->itemContainerSelector){
+            $this->itemContainerSelector = new releaseSelector($this->getContainerList(), $this->base, 'cn=root');
+        }else{
+            $this->itemContainerSelector->setBases($this->getContainerList());
+        }
         $this->itemContainerSelector->update(true);
         $this->itemContainerSelector->setBase($this->base);
 
@@ -161,43 +161,6 @@ class DeviceConfig extends management
         $headpage->setFilter($filter);
 
         parent::__construct($this->config, $this->ui, "services", $headpage);
-    }
-
-
-
-    /*! \brief      Prepares an item list which can then be used in 
-     *               sortableListings to display the items of this configuration.
-     *  @return     Array   Containing 'data' and 'lData' for a sortableListing.
-     */
-    function getItemList($array=NULL,&$res = NULL, $depth = 0)
-    {
-        // Prepare values.
-        $array = ($array == NULL)? $this->currentItemValues['root']: $array;
-        if(!$res){
-            $res = array('data' => array(), 'lData' => array());
-        }
-
-        // Prepare the entry name
-        $str = $array['name'];
-        if($this->currentItemName == $array['name']){
-            $str = "<b>".$array['name']."</b>";
-        }
-        $add = '&nbsp;&nbsp;';
-        $str = str_pad('', ($depth*strlen($add)), $add, STR_PAD_LEFT).$str;
-
-        // Add the current entry
-        $res['data'][] = $array;
-        $res['lData'][] = array('data' => array($str, "<i>".$array['type']."</i>"));
-
-        // Add sub-entries
-        if(count($array['children'])){
-            $depth ++;
-            foreach($array['children'] as $subItem){
-                $this->getItemList($subItem, $res, $depth);
-            } 
-        }
-
-        return($res);
     }
 
 
@@ -225,7 +188,11 @@ class DeviceConfig extends management
 
         $current = &$this->currentItem; 
         $this->idToName[] = $name;
+
+        $base = (isset($current['base']))? ",".$current['base'] : '';
+
         $new = array(
+                'base' => "cn={$name}{$base}",
                 'children' => array(),
                 'type' => $type, 
                 'name' => $name, 
@@ -256,19 +223,19 @@ class DeviceConfig extends management
                 $this->currentItem['values'][$widget->getName()] = $widget->getValue();
             }
         }
-
+        
         // Set the new item info.
         $this->currentItemName = $item;
         $this->currentItem = &$this->currentItemValues[$item];
         $this->currentItemType = $this->currentItem['type'];
         $this->currentItemDescriptor =&$this->itemConfig[$this->currentItem['type']];
 
+        $this->base = $this->currentItem['base'];
+
         // Update the template engine to use another type of item and 
         //  some other values.
         $this->TemplateEngine->setValues($this->currentItemType,$this->currentItem['values']);
     }
-
-
 
 
     /*! \brief  Renders the HTML content for the device-config plugin. 
@@ -321,8 +288,14 @@ class DeviceConfig extends management
         // Get selected Items
         $this->itemContainerSelector->update();
         $this->base = $this->itemContainerSelector->getBase();
-        $list = preg_split("/[,]*cn=/", $this->base,0,PREG_SPLIT_NO_EMPTY);
-        $this->setCurrentItem($list[0]); 
+        $itemName = ""; 
+        foreach($this->currentItemValues as $item){
+            if($item['base'] == $this->base){
+                $this->setCurrentItem($item['name']);
+                break;
+            }
+        }
+
     }
 
     /*! \brief    Forward plugin acls
