@@ -26,7 +26,6 @@ if ($remove_lock){
     if(session::is_set('faiManagement')){
         $macl = session::get('faiManagement');
         $macl->remove_lock();
-        session::un_set('faiManagement');
     }
 }
 
