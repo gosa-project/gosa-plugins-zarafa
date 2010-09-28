@@ -44,76 +44,29 @@ class DeviceConfig extends management
         $this->navigationList->sortingEnabled(FALSE);
 
         // CREATE Dummy entry 
-
         $str = file_get_contents('/home/hickert/json.txt');
-        print_a(json_decode($str, TRUE));
-
-        $str = '{
-            "PuppetModule": {
-                "options": {
-                    "dependency": {
-                        "description": "Modules that are needed to be installed for this module",
-                            "required": false,
-                            "value": "0x002",
-                            "syntax": "^[a-zA-Z0-9_+\\\\./-]+(\\\\[[<=>]+[a-zA-Z0-9_+\\\\.-]+\\\\])?$",
-                            "type": "file",
-                            "display": "Module dependencies"
-                    },
-                        "version": {
-                            "description": "The version of the puppet module",
-                            "required": true,
-                            "value": "",
-                            "syntax": "^[a-zA-Z0-9_+.-]+$",
-                            "type": "string",
-                            "display": "Module  version"
-                        },
-                        "name": {
-                            "description": "The name of the puppet module",
-                            "required": true,
-                            "value": "",
-                            "syntax": "^[a-zA-Z0-9_+.-]+$",
-                            "type": "string",
-                            "display": "Module name"
-                        },
-                        "description": {
-                            "required": false,
-                            "type": "string",
-                            "display": "Module description",
-                            "value": "",
-                            "description": "Text       briefly describing the module contents"
-                        }
-                },
-                    "container": [
-                        "PuppetManifest",
-                    "PuppetFile",
-                    "PuppetTemplate"
-                        ],
-                    "name": "Module",
-                    "description": "Puppet     module"
-            },
-                "root": {
-                    "options": {
-
-                    },
-                    "container": [
-                        "PuppetModule"
-                        ],
-                    "name": "Root",
-                    "description": "The root item"
-                }
-        }';        
+        $items = json_decode($str, TRUE);
 
         // Load the item-configuration description to populate the 
         //  the available modules.
-        $this->itemConfig = json_decode($str, TRUE);
+        $this->itemConfig = $items['items'];
         $this->TemplateEngine->load($this->itemConfig);
 
+        // Detect root item, its name is / 
+        $root = NULL;
+        foreach($this->itemConfig as $key => $item){
+            if($item['name'] == '/') {
+                $root = $key;
+                break;
+            }
+        }
+        if(!$root){
+            echo 'No root found!';
+            return;
+        }
 
-
-        // CREATE Dummy entry 
-
-        // Set current item to 'root'.
-        $this->addItem('root','root',array());
+        // Set current item to 'root' and append some dummy entries.
+        $this->addItem($root,'root',array());
         $this->setCurrentItem('root');
         $this->addItem('PuppetModule','test1',
                 array(
