@@ -368,6 +368,11 @@ class DeviceConfig extends management
         $action = management::detectPostActions();
         if(isset($_POST['saveItemEdit'])) $action['action'] = "saveItemChanges";
         if(isset($_POST['cancelItemEdit'])) $action['action'] = "cancelItemEdit";
+
+        if($action['action'] == 'remove'){
+             echo "Löschen geht nicht!";
+             $action['action'] = "";
+        }
         return($action);
     }
    
