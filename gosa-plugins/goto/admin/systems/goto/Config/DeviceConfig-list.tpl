@@ -19,5 +19,3 @@
 
 <div class="clear"></div>
 
-<input type="hidden" name="ignore">
-

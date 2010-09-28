@@ -21,16 +21,7 @@
   </definition>
 
   <table>
-    <layout>|20px;c|||80px|170px;r|</layout>
-
-    <department>
-      <value>%{filter:objectType(dn,objectClass)}</value>
-    </department>
-
-    <department>
-      <value>%{filter:departmentLink(row,dn,description)}</value>
-      <span>2</span>
-    </department>
+    <layout>|20px;c||80px|170px;r|</layout>
 
     <column>
       <value>%{filter:objectType(dn,objectClass)}</value>
