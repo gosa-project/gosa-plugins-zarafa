@@ -26,7 +26,6 @@ if ($remove_lock){
     if(session::is_set('deviceManagement')){
         $macl = session::get('deviceManagement');
         $macl->remove_lock();
-        session::un_set('deviceManagement');
     }
 }
 
