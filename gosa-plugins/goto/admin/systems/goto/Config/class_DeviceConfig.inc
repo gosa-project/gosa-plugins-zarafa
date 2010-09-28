@@ -32,7 +32,6 @@ class DeviceConfig extends management
 
         // Set storage points - We do not have any - We just create a fake list which lists all items
         $this->storagePoints = array("");
-        $this->base = "cn=root";
 
         // CREATE Dummy entry 
         $str = file_get_contents('/home/hickert/json.txt');
@@ -56,9 +55,10 @@ class DeviceConfig extends management
             return;
         }
 
-        // Set current item to 'root' and append some dummy entries.
+        // Set current item to 'root', this is the minimum to get things running.
         $this->addItem($root,'root',array());
         $this->setCurrentItem('root');
+
         $this->addItem('PuppetModule','test1',
                 array(
                     'dependency' => array('stulle','Wurst'),
@@ -90,7 +90,7 @@ class DeviceConfig extends management
         $this->rebuildListing();
     }
 
-    
+
     function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
         $this->setCurrentItem($target[0]);
@@ -138,7 +138,10 @@ class DeviceConfig extends management
     {
         // Collect item container list to be able to render the fake-base selector
         if(!$this->itemContainerSelector){
-            $this->itemContainerSelector = new releaseSelector($this->getContainerList(), $this->base, 'cn=root');
+            $this->itemContainerSelector = new releaseSelector(
+                    $this->getContainerList(), 
+                    $this->base, 
+                    $this->currentItemValues['root']['base']);
         }else{
             $this->itemContainerSelector->setBases($this->getContainerList());
         }
@@ -211,7 +214,7 @@ class DeviceConfig extends management
     {
         // Do nothing if we're already where we wanted to switch to.
         if($this->currentItemName == $item) return;
-        
+
         if(!isset($this->currentItemValues[$item])){
             echo "Invalid item name {$name}! Skipping selection!";
             return;
@@ -223,7 +226,7 @@ class DeviceConfig extends management
                 $this->currentItem['values'][$widget->getName()] = $widget->getValue();
             }
         }
-        
+
         // Set the new item info.
         $this->currentItemName = $item;
         $this->currentItem = &$this->currentItemValues[$item];
