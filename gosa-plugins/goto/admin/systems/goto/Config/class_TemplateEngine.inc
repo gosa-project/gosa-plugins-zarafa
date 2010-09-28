@@ -97,6 +97,11 @@ class TemplateEngine
         }
     }
 
+    
+    function execute(){
+        return($this->render());
+    }
+    
 
     /*! \brief  Creates the HTML content for the given list of widgets
      *  @return String  The HTML content.

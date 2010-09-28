@@ -18,6 +18,7 @@ class DeviceConfig extends management
 
     private $base ;
 
+
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
      */
@@ -33,15 +34,6 @@ class DeviceConfig extends management
         $this->storagePoints = array("");
         $this->itemContainerSelector = new releaseSelector(array('cn=root'=>''), 'cn=root', 'cn=root');
         $this->base = "cn=root";
-
-        $this->navigationList= new sortableListing();
-        $this->navigationList->setDeleteable(true);
-        $this->navigationList->setEditable(true);
-        $this->navigationList->setColspecs(array('*'));
-        $this->navigationList->setWidth("100%");
-        $this->navigationList->setHeight("140px");
-        $this->navigationList->setAcl("rwcdm");
-        $this->navigationList->sortingEnabled(FALSE);
 
         // CREATE Dummy entry 
         $str = file_get_contents('/home/hickert/json.txt');
@@ -70,14 +62,14 @@ class DeviceConfig extends management
         $this->setCurrentItem('root');
         $this->addItem('PuppetModule','test1',
                 array(
-                    'dependency' => '',
+                    'dependency' => array('stulle','Wurst'),
                     'version' => '2.4-f',
                     'name'  => 'Thundebird',
                     'description' => 'Mozilla mail client')
                 );
         $this->addItem('PuppetModule','test2',
                 array(
-                    'dependency' => '',
+                    'dependency' => array('Leipnitz','Dose'),
                     'version' => 1,
                     'name'  => 'Firefox',
                     'description' => 'Test Module')
@@ -99,12 +91,19 @@ class DeviceConfig extends management
         $this->rebuildListing();
     }
 
+    
+    function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+    {
+        $this->setCurrentItem($target[0]);
+    }
+
 
     /*! \brief   Overridden render method of class mangement.
      *            this allows us to add a release selection box.
      */
     function renderList()
     {
+        $tpl = $this->TemplateEngine->render();
         session::set('DEVICE_ITEMS', $this->currentItemValues);
         $this->rebuildListing();
         $filter = $this->getFilter();
@@ -114,7 +113,7 @@ class DeviceConfig extends management
         $smarty = get_smarty();
         $smarty->assign("RELEASE", $this->itemContainerSelector->render());
         $display = $headpage->render();
-        return($this->getHeader().$display);
+        return($tpl.$this->getHeader().$display);
     }
 
 
@@ -281,9 +280,6 @@ class DeviceConfig extends management
 
         // Generate item list
         $list = $this->getItemList();
-        $this->navigationList->setListData($list['data'],$list['lData']);
-        $this->navigationList->update();
-        $smarty->assign('navigationList',$this->navigationList->render());
 
         // Assign current item info
         $smarty->assign('containerName', $this->currentItemDescriptor['name']);
@@ -322,16 +318,11 @@ class DeviceConfig extends management
             }
         }
 
-        // Another item selected?
-        $this->navigationList->save_object();
-        $action = $this->navigationList->getAction();
-        if($action['action'] == 'edit'){
-            $item = $this->navigationList->getData($action['targets'][0]);
-            $this->setCurrentItem($item['name']);
-        }
-
+        // Get selected Items
         $this->itemContainerSelector->update();
         $this->base = $this->itemContainerSelector->getBase();
+        $list = preg_split("/[,]*cn=/", $this->base,0,PREG_SPLIT_NO_EMPTY);
+        $this->setCurrentItem($list[0]); 
     }
 
     /*! \brief    Forward plugin acls

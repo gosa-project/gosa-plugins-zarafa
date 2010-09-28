@@ -36,7 +36,7 @@ class filterDeviceItems {
             $entry[] = 'description';
             $entry['objectClass'] = array('FAKE_OC_DeviceItem','count' => 1);
             $entry[] = 'objectClass';
-            $entry['count'] = 4;
+            $entry['count'] = 3;
             $ret[] = $entry;
         }
 
