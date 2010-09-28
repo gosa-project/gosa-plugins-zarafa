@@ -26,7 +26,6 @@ if ($remove_lock){
     if(session::is_set('goFonMacro')){
         $macl = session::get('goFonMacro');
         $macl->remove_lock();
-        session::un_set('goFonMacro');
     }
 }
 
