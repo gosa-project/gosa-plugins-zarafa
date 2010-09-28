@@ -122,41 +122,21 @@ class DeviceConfig extends plugin
                     'name' => 'temp1', 
                     'file' => 'kekse.tpl')
                 );
+        $this->setCurrentItem('temp1');
+        $this->addItem('PuppetTemplate','tep1',
+                array(
+                    'name' => 'tep1', 
+                    'file' => 'kekse.tpl')
+                );
 
         $this->setCurrentItem('root');
     }
 
 
-    /*! \brief      Renders a navigation to allow to switch between the
-     *               active mopdules. 
-     *              This method recursivly collects all module entries.
-     *  @return HTML content which represents the navigation
+    /*! \brief      Prepares an item list which can then be used in 
+     *               sortableListings to display the items of this configuration.
+     *  @return     Array   Containing 'data' and 'lData' for a sortableListing.
      */
-    function renderNavigator($array = NULL)
-    {
-        $array = ($array == NULL)? $this->currentItemValues['root']: $array;
-        $str = "<ul>";
-        $plug = $_GET['plug'];
-
-        $id = array_search($array['name'],$this->idToName);
-        $str .= "<a href='?plug={$plug}&amp;item={$id}'>";
-        if($this->currentItemName == $array['name']){
-            $str .= "<b>".$array['name']."</b>";
-        }else{
-            $str .= $array['name'];
-        }
-        $str .= "&nbsp;<i>(".$array['type'].")</i>";
-        $str .= "</a>";
-
-        if(count($array['children'])){
-            foreach($array['children'] as $subItem){
-                $str .= $this->renderNavigator($subItem);
-            } 
-        }
-        $str  .= "</ul>";
-        return($str);
-    }
-
     function getItemList($array=NULL,&$res = NULL, $depth = 0)
     {
         // Prepare values.
@@ -251,12 +231,6 @@ class DeviceConfig extends plugin
         $this->navigationList->setListData($list['data'],$list['lData']);
         $this->navigationList->update();
         $smarty->assign('navigationList',$this->navigationList->render());
-
-        // Assign the navigation bar.
-        $smarty->assign('navigator', $this->renderNavigator());
-
-        // Assign possible sub-container objects.
-        $smarty->assign('subModule', $this->currentItemDescriptor['container']);
 
         // Assign current item info
         $smarty->assign('containerName', $this->currentItemDescriptor['name']);
