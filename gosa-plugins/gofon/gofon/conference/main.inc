@@ -26,7 +26,6 @@ if ($remove_lock){
     if(session::is_set('phoneConferenceManagment')){
         $macl = session::get('phoneConferenceManagment');
         $macl->remove_lock();
-        session::un_set('phoneConferenceManagment');
     }
 }
 
