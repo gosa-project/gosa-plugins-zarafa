@@ -45,6 +45,9 @@ class DeviceConfig extends management
 
         // CREATE Dummy entry 
 
+        $str = file_get_contents('/home/hickert/json.txt');
+        print_a(json_decode($str, TRUE));
+
         $str = '{
             "PuppetModule": {
                 "options": {
@@ -161,6 +164,8 @@ class DeviceConfig extends management
     }
 
 
+    /*! \brief   Build up a list of items useable for the itemSelector.
+     */
     function getContainerList($array = NULL, $base = "")
     {
         $array = ($array == NULL)?$this->currentItemValues['root']: $array;
@@ -175,8 +180,11 @@ class DeviceConfig extends management
         }
         return($ret);    
     }
-    
 
+
+    /*! \brief   Update the management class and tell her which 
+     *            items are available for the itemSelector (baseSelector).
+     */
     function rebuildListing()
     {
         // Collect item container list to be able to render the fake-base selector
@@ -195,41 +203,6 @@ class DeviceConfig extends management
 
         // Load service xml file and fill in placeholders
         $contents =file_get_contents(get_template_path("goto/Config/DeviceConfig-list.xml", true));
-#       $template = "
-#           <action>
-#           <name>instantNew_%s</name>
-#           <type>entry</type>
-#           <label>%s</label>
-#           </action>";
-#       $serviceList = "";
-#
-#       // Sort entries by alphabet
-#       $list = array();
-#       $services = $this->getAllUnusedServices();
-#       foreach($services as $name => $desc){
-#           $list[_($desc).$name] = $name;
-#       }
-#       ksort($list);
-#
-#       // Create menu entries -> create -> services[]
-#       foreach($list as $name){
-#           $desc = $services[$name];
-#           $serviceList.= sprintf($template, $name,_($desc));
-#       }
-#
-#       if(!empty($serviceList)){
-#           $serviceList = "
-#               <action>
-#               <type>sub</type>
-#               <image>images/lists/element.png[new]</image>
-#               <label>Create</label>
-#               {$serviceList}
-#           </action>
-#               ";
-#
-#       }
-#
-#       $contents = preg_replace("/%SERVICES%/",$serviceList, $contents);
         $headpage = new listing($contents,TRUE);
         $headpage->setBase($this->base);
         $headpage->setFilter($filter);
@@ -389,7 +362,7 @@ class DeviceConfig extends management
         $this->base = $this->itemContainerSelector->getBase();
     }
 
-       /*! \brief    Forward plugin acls
+    /*! \brief    Forward plugin acls
      */
     function set_acl_base($base)
     {
