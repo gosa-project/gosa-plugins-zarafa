@@ -26,7 +26,6 @@ if ($remove_lock){
     if(session::is_set('sudoManagement')){
         $macl = session::get('sudoManagement');
         $macl->remove_lock();
-        session::un_set('sudoManagement');
     }
 }
 
