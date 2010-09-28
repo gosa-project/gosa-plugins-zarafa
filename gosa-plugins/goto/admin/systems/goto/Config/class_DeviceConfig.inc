@@ -100,7 +100,9 @@ class DeviceConfig extends management
 
     function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        echo "Jajajaaa";
+        $this->dialogObject = $this->TemplateEngine;
+        $this->skipFooter = TRUE;
+        $this->dialog = TRUE;
     }
 
 
@@ -134,7 +136,6 @@ class DeviceConfig extends management
         $this->itemContainerSelector->update(true);
         $this->itemContainerSelector->setBase($this->base);
 
-        $tpl = $this->TemplateEngine->render();
         session::set('DEVICE_ITEMS', $this->currentItemValues);
         $this->rebuildListing();
         $filter = $this->getFilter();
@@ -144,7 +145,7 @@ class DeviceConfig extends management
         $smarty = get_smarty();
         $smarty->assign("RELEASE", $this->itemContainerSelector->render());
         $display = $headpage->render();
-        return($tpl.$this->getHeader().$display);
+        return($this->getHeader().$display);
     }
 
 
@@ -189,14 +190,18 @@ class DeviceConfig extends management
         $this->registerAction("new",        "newEntry");
         $this->registerAction("edit",       "openEntry"); // !! We forward 'edit' to 'open' to have a department like navigation.
         $this->registerAction("editEntry",  "editEntry");
-        $this->registerAction("apply",  "applyChanges");
-        $this->registerAction("save",   "saveChanges");
-        $this->registerAction("cancel", "cancelEdit");
-        $this->registerAction("cancelDelete", "cancelEdit");
-        $this->registerAction("remove", "removeEntryRequested");
-        $this->registerAction("removeConfirmed", "removeEntryConfirmed");
+
+        $this->registerAction("saveItemChanges", "saveItemChanges");
+        $this->registerAction("cancelItemEdit", "cancelItemEdit");
     }
 
+
+    function cancelItemEdit()
+    {
+        $this->closeDialogs();
+        $this->dialog = FALSE;
+    }
+    
 
     /*! \brief      Add a new child-item to the currently selected one. 
      *               
@@ -355,7 +360,18 @@ class DeviceConfig extends management
             }
         }
     }
-    
+
+
+      // Inject user actions
+    function detectPostActions()
+    {
+        $action = management::detectPostActions();
+        if(isset($_POST['saveItemEdit'])) $action['action'] = "saveItemChanges";
+        if(isset($_POST['cancelItemEdit'])) $action['action'] = "cancelItemEdit";
+        return($action);
+    }
+   
+ 
     function check()
     {
         return(array());

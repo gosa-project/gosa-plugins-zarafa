@@ -117,7 +117,10 @@ class TemplateEngine
             $smarty->assign($widget->getName(), $widget->render());
             $smarty->assign($widget->getName()."Name", $widget->getDisplayName());
         }
-        return($smarty->fetch(get_template_path("goto/Config/{$this->template}", TRUE)));
+        $template = $smarty->fetch(get_template_path("goto/Config/{$this->template}", TRUE));
+
+        $smarty->assign('template', $template);
+        return($smarty->fetch(get_template_path("goto/Config/TemplateEngine.tpl", TRUE)));
     }
 
 
