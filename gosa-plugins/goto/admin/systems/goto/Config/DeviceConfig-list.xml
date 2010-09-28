@@ -73,6 +73,7 @@
       <label>Device</label>
       <depends>Device</depends>
      </action>
+    </action>
 
     <action>
       <name>remove</name>
@@ -86,7 +87,7 @@
   <actiontriggers snapshot="false" copypaste="false">
 
     <action>
-      <name>edit</name>
+      <name>editEntry</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
       <label>Edit role</label>

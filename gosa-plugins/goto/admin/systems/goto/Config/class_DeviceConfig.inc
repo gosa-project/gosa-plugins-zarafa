@@ -100,6 +100,12 @@ class DeviceConfig extends management
 
     function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
+        echo "Jajajaaa";
+    }
+
+
+    function openEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+    {
         $this->setCurrentItem($target[0]);
     }
 
@@ -178,6 +184,17 @@ class DeviceConfig extends management
         $headpage->setFilter($filter);
 
         parent::__construct($this->config, $this->ui, "services", $headpage);
+
+        // Register default actions
+        $this->registerAction("new",        "newEntry");
+        $this->registerAction("edit",       "openEntry"); // !! We forward 'edit' to 'open' to have a department like navigation.
+        $this->registerAction("editEntry",  "editEntry");
+        $this->registerAction("apply",  "applyChanges");
+        $this->registerAction("save",   "saveChanges");
+        $this->registerAction("cancel", "cancelEdit");
+        $this->registerAction("cancelDelete", "cancelEdit");
+        $this->registerAction("remove", "removeEntryRequested");
+        $this->registerAction("removeConfirmed", "removeEntryConfirmed");
     }
 
 
