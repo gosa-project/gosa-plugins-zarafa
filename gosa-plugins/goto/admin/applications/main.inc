@@ -26,7 +26,6 @@ if ($remove_lock){
     if(session::is_set('applicationManagement')){
         $macl = session::get('applicationManagement');
         $macl->remove_lock();
-        session::un_set('applicationManagement');
     }
 }
 
