@@ -55,7 +55,9 @@ class DeviceConfig extends management
         }
         if(!$root){
             echo 'No root found!';
+        $this->rebuildListing();
             return;
+            $this->is_account = FALSE;
         }
 
         $this->is_account = TRUE;
@@ -107,6 +109,25 @@ class DeviceConfig extends management
      */
     function renderList()
     {
+        // Do we represent a valid account
+        if (!$this->is_account){
+            $str = "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
+                msgPool::noValidExtension("GOsa")."</b>";
+            return($str);
+        }
+
+        // Collect item container list to be able to render the fake-base selector
+        if(!$this->itemContainerSelector){
+            $this->itemContainerSelector = new releaseSelector(
+                    $this->getContainerList(), 
+                    $this->base, 
+                    $this->currentItemValues['root']['base']);
+        }else{
+            $this->itemContainerSelector->setBases($this->getContainerList());
+        }
+        $this->itemContainerSelector->update(true);
+        $this->itemContainerSelector->setBase($this->base);
+
         $tpl = $this->TemplateEngine->render();
         session::set('DEVICE_ITEMS', $this->currentItemValues);
         $this->rebuildListing();
@@ -141,18 +162,6 @@ class DeviceConfig extends management
      */
     function rebuildListing()
     {
-        // Collect item container list to be able to render the fake-base selector
-        if(!$this->itemContainerSelector){
-            $this->itemContainerSelector = new releaseSelector(
-                    $this->getContainerList(), 
-                    $this->base, 
-                    $this->currentItemValues['root']['base']);
-        }else{
-            $this->itemContainerSelector->setBases($this->getContainerList());
-        }
-        $this->itemContainerSelector->update(true);
-        $this->itemContainerSelector->setBase($this->base);
-
         // Build filter
         if (session::global_is_set(get_class($this)."_filter")){
             $filter= session::global_get(get_class($this)."_filter");
