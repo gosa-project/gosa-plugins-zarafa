@@ -26,7 +26,6 @@ if ($remove_lock){
     if(session::is_set('mimetypeManagement')){
         $macl = session::get('mimetypeManagement');
         $macl->remove_lock();
-        session::un_set('mimetypeManagement');
     }
 }
 
