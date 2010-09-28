@@ -11,9 +11,13 @@ class filterDeviceItems {
             $data = $data[$name]['children'];            
         }
 
+        // Prepare filter, strip out regex regex related chars, except for *
+        $filter = preg_replace('/\*/','____STAR____', $filter);
+        $filter = preg_quote($filter,'/');
+        $filter = preg_replace('/____STAR____/','.*', $filter);
+
         // Add entries 
         $ret = array();
-        $filter = preg_replace("/\*/",'.*', $filter);
         foreach($data as $item){
             filterDeviceItems::addEntry($ret, $item, $scope == 'sub', $filter);
         }

@@ -5,9 +5,6 @@
    <div class="mainlist-nav">
     <table summary="{$HEADLINE}">
      <tr>
-      <td>{$ROOT}</td>
-      <td>{$BACK}</td>
-      <td>{$HOME}</td>
       <td>{$RELOAD}</td>
       <td class="left-border">{t}Base{/t} {$RELEASE}</td>
       <td class="left-border">{$ACTIONS}</td>
