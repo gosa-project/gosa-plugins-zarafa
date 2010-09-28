@@ -18,6 +18,9 @@ class DeviceConfig extends management
 
     private $base ;
 
+    public $is_account = FALSE;
+    public $ignore_account = FALSE;
+
 
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
@@ -54,6 +57,8 @@ class DeviceConfig extends management
             echo 'No root found!';
             return;
         }
+
+        $this->is_account = TRUE;
 
         // Set current item to 'root', this is the minimum to get things running.
         $this->addItem($root,'root',array());
@@ -316,6 +321,18 @@ class DeviceConfig extends management
         $this->acl_category = $category;
     }
 
-    function save(){}
+    function save()
+    {
+        foreach($this->currentItemValues as $name => $item){
+            foreach($item['values'] as $oName => $oValue){
+                echo "<br>{$name} -- <i>{$item['type']}</i>: <b>{$oName}</b>: {$oValue}";
+            }
+        }
+    }
+    
+    function check()
+    {
+        return(array());
+    }
 }
 ?>
