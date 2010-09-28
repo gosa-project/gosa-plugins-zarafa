@@ -77,6 +77,7 @@ class DeviceConfig extends management
                 );
         $this->addItem('PuppetModule','test2',
                 array(
+                    'dependency' => '',
                     'version' => 1,
                     'name'  => 'Firefox',
                     'description' => 'Test Module')
@@ -85,13 +86,13 @@ class DeviceConfig extends management
         $this->addItem('PuppetTemplate','temp1',
                 array(
                     'name' => 'temp1', 
-                    'file' => 'kekse.tpl')
+                    'data' => 'kekse.tpl')
                 );
         $this->setCurrentItem('temp1');
         $this->addItem('PuppetTemplate','tep1',
                 array(
                     'name' => 'tep1', 
-                    'file' => 'kekse.tpl')
+                    'data' => 'kekse.tpl')
                 );
 
         $this->setCurrentItem('root');
@@ -210,6 +211,19 @@ class DeviceConfig extends management
      */
     function addItem($type,$name, $values)
     {
+        if(!isset($this->itemConfig[$type])){
+            echo "Invalid type {$type}, skipping item!";
+            return;
+        }
+
+        $allValuesSet = TRUE;
+        foreach($this->itemConfig[$type]['options'] as $oName => $option){
+            if(!isset($values[$oName])){
+                echo "Missing value for option {$oName}! Skipping addItem({$type},{$name},array())!<br>";
+                return;
+            }
+        }
+
         $current = &$this->currentItem; 
         $this->idToName[] = $name;
         $new = array(
@@ -231,6 +245,11 @@ class DeviceConfig extends management
     {
         // Do nothing if we're already where we wanted to switch to.
         if($this->currentItemName == $item) return;
+        
+        if(!isset($this->currentItemValues[$item])){
+            echo "Invalid item name {$name}! Skipping selection!";
+            return;
+        }
 
         // Save eventually changed values
         if($this->currentItem){

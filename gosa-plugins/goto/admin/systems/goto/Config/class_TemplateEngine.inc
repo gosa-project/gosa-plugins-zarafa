@@ -84,10 +84,7 @@ class TemplateEngine
                 }
 
                 // Prepare the value for the widget 
-                $value = $item['value'];
-                if(isset($values[$name])){
-                    $value = $values[$name];
-                }
+                $value = $values[$name];
 
                 // Create the new widget.
                 $this->widgets[$name] = new $widgetClassName($this->config, $name, 
