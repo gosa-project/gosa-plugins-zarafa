@@ -10,6 +10,8 @@ class DeviceConfig extends plugin
     private $currentItemValues = array();
     private $currentItem = array();
 
+    private $navigationList = NULL;
+    
 
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
@@ -21,6 +23,16 @@ class DeviceConfig extends plugin
         $this->TemplateEngine = new TemplateEngine($config);
         $this->TemplateEngine->setTemplate('puppet.tpl');
         $this->config = $config;
+
+        $this->navigationList= new sortableListing();
+        $this->navigationList->setDeleteable(true);
+        $this->navigationList->setEditable(true);
+        $this->navigationList->setColspecs(array('*'));
+        $this->navigationList->setWidth("100%");
+        $this->navigationList->setHeight("140px");
+        $this->navigationList->setAcl("rwcdm");
+        $this->navigationList->sortingEnabled(FALSE);
+
 
         // CREATE Dummy entry 
 
@@ -145,6 +157,37 @@ class DeviceConfig extends plugin
         return($str);
     }
 
+    function getItemList($array=NULL,&$res = NULL, $depth = 0)
+    {
+        // Prepare values.
+        $array = ($array == NULL)? $this->currentItemValues['root']: $array;
+        if(!$res){
+            $res = array('data' => array(), 'lData' => array());
+        }
+
+        // Prepare the entry name
+        $str = $array['name'];
+        if($this->currentItemName == $array['name']){
+            $str = "<b>".$array['name']."</b>";
+        }
+        $add = '&nbsp;&nbsp;';
+        $str = str_pad('', ($depth*strlen($add)), $add, STR_PAD_LEFT).$str;
+
+        // Add the current entry
+        $res['data'][] = $array;
+        $res['lData'][] = array('data' => array($str, "<i>".$array['type']."</i>"));
+
+        // Add sub-entries
+        if(count($array['children'])){
+            $depth ++;
+            foreach($array['children'] as $subItem){
+                $this->getItemList($subItem, $res, $depth);
+            } 
+        }
+
+        return($res);
+    }
+
 
     /*! \brief      Add a new child-item to the currently selected one. 
      *               
@@ -203,6 +246,12 @@ class DeviceConfig extends plugin
     {
         $smarty = get_smarty();
 
+        // Generate item list
+        $list = $this->getItemList();
+        $this->navigationList->setListData($list['data'],$list['lData']);
+        $this->navigationList->update();
+        $smarty->assign('navigationList',$this->navigationList->render());
+
         // Assign the navigation bar.
         $smarty->assign('navigator', $this->renderNavigator());
 
@@ -246,10 +295,12 @@ class DeviceConfig extends plugin
             }
         }
 
-        // Module switched
-        if(isset($_GET['item'])){
-            $name = $this->idToName[$_GET['item']];
-            $this->setCurrentItem($name);
+        // Another item selected?
+        $this->navigationList->save_object();
+        $action = $this->navigationList->getAction();
+        if($action['action'] == 'edit'){
+            $item = $this->navigationList->getData($action['targets'][0]);
+            $this->setCurrentItem($item['name']);
         }
     }
 }
