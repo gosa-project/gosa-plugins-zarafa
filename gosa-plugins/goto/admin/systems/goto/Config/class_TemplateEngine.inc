@@ -59,7 +59,7 @@ class TemplateEngine
      *  @param  String  The name of the item we want to render now.
      *  @param  Array   The initial value.
      */
-    function setValues($name)
+    function setValues($name, $values)
     {
         // Set the current item type and reset the widget list.
         $this->itemType = $name;
@@ -91,7 +91,7 @@ class TemplateEngine
 
                 // Create the new widget.
                 $this->widgets[$name] = new $widgetClassName($this->config, $name, 
-                        $item['value'],
+                        $value,
                         $item['description'],
                         $item['required'],
                         $item['type'],
