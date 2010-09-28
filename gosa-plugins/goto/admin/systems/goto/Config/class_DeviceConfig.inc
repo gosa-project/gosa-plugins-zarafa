@@ -2,7 +2,7 @@
 
 /*! \brief  A GOsa plugin which generates a device configuration dialog  
  */
-class DeviceConfig extends plugin
+class DeviceConfig extends management
 {
     private $TemplateEngine = NULL;
     private $idToName = array();
@@ -11,7 +11,10 @@ class DeviceConfig extends plugin
     private $currentItem = array();
 
     private $navigationList = NULL;
-    
+    public $pl_notify;
+    public $read_only;
+
+    private $itemContainerSelector = NULL;
 
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
@@ -24,6 +27,10 @@ class DeviceConfig extends plugin
         $this->TemplateEngine->setTemplate('puppet.tpl');
         $this->config = $config;
 
+        // Set storage points - We do not have any - We just create a fake list which lists all items
+        $this->storagePoints = array("");
+        $this->itemContainerSelector = new releaseSelector(array('cn=root'=>''), 'cn=root', 'cn=root');
+
         $this->navigationList= new sortableListing();
         $this->navigationList->setDeleteable(true);
         $this->navigationList->setEditable(true);
@@ -32,7 +39,6 @@ class DeviceConfig extends plugin
         $this->navigationList->setHeight("140px");
         $this->navigationList->setAcl("rwcdm");
         $this->navigationList->sortingEnabled(FALSE);
-
 
         // CREATE Dummy entry 
 
@@ -130,7 +136,105 @@ class DeviceConfig extends plugin
                 );
 
         $this->setCurrentItem('root');
+        $this->rebuildListing();
     }
+
+
+    /*! \brief   Overridden render method of class mangement.
+     *            this allows us to add a release selection box.
+     */
+    function renderList()
+    {
+        $this->rebuildListing();
+        $filter = $this->getFilter();
+        $headpage = $this->getHeadpage();
+        $this->itemContainerSelector->update();
+        $headpage->setBase('test');
+        $headpage->update();
+        $smarty = get_smarty();
+        $smarty->assign("RELEASE", $this->itemContainerSelector->render());
+        $display = $headpage->render();
+        return($this->getHeader().$display);
+    }
+
+
+    function getContainerList($array = NULL, $base = "")
+    {
+        $array = ($array == NULL)?$this->currentItemValues['root']: $array;
+        $ret = array('cn=root' => '');
+        $name = $array['name'];
+        $ret["cn={$name}{$base}"] = $array['type'];
+        if(count($array['children'])){
+            $base = ",cn={$name}{$base}";
+            foreach($array['children'] as $subItem){
+                $ret = array_merge($ret, $this->getContainerList($subItem, $base));
+            }
+        }
+        return($ret);    
+    }
+    
+
+    function rebuildListing()
+    {
+        // Collect item container list to be able to render the fake-base selector
+        $this->itemContainerSelector->setBases($this->getContainerList());
+        $this->itemContainerSelector->update(true);
+
+#        print_a($this->getContainerList());
+
+        // Build filter
+        if (session::global_is_set(get_class($this)."_filter")){
+            $filter= session::global_get(get_class($this)."_filter");
+        } else {
+            $filter = new filter(get_template_path("goto/Config/DeviceConfig-filter.xml", true));
+            $filter->setObjectStorage($this->storagePoints);
+        }
+        $this->setFilter($filter);
+
+
+        // Load service xml file and fill in placeholders
+        $contents =file_get_contents(get_template_path("goto/Config/DeviceConfig-list.xml", true));
+#       $template = "
+#           <action>
+#           <name>instantNew_%s</name>
+#           <type>entry</type>
+#           <label>%s</label>
+#           </action>";
+#       $serviceList = "";
+#
+#       // Sort entries by alphabet
+#       $list = array();
+#       $services = $this->getAllUnusedServices();
+#       foreach($services as $name => $desc){
+#           $list[_($desc).$name] = $name;
+#       }
+#       ksort($list);
+#
+#       // Create menu entries -> create -> services[]
+#       foreach($list as $name){
+#           $desc = $services[$name];
+#           $serviceList.= sprintf($template, $name,_($desc));
+#       }
+#
+#       if(!empty($serviceList)){
+#           $serviceList = "
+#               <action>
+#               <type>sub</type>
+#               <image>images/lists/element.png[new]</image>
+#               <label>Create</label>
+#               {$serviceList}
+#           </action>
+#               ";
+#
+#       }
+#
+#       $contents = preg_replace("/%SERVICES%/",$serviceList, $contents);
+        $headpage = new listing($contents,TRUE);
+        $headpage->setFilter($filter);
+
+        parent::__construct($this->config, $this->ui, "services", $headpage);
+    }
+
 
 
     /*! \brief      Prepares an item list which can then be used in 
@@ -219,10 +323,12 @@ class DeviceConfig extends plugin
     }
 
 
+
+
     /*! \brief  Renders the HTML content for the device-config plugin. 
      *  @return String  The generated HTML code. 
      */
-    function execute()
+    function _execute()
     {
         $smarty = get_smarty();
 
@@ -277,5 +383,22 @@ class DeviceConfig extends plugin
             $this->setCurrentItem($item['name']);
         }
     }
+
+       /*! \brief    Forward plugin acls
+     */
+    function set_acl_base($base)
+    {
+        $this->acl_base = $base;
+    }
+
+
+    /*! \brief    Forward plugin acls
+     */
+    function set_acl_category($category)
+    {
+        $this->acl_category = $category;
+    }
+
+    function save(){}
 }
 ?>
