@@ -148,6 +148,7 @@ class DeviceConfig extends management
      */
     function renderList()
     {
+        session::set('DEVICE_ITEMS', $this->currentItemValues);
         $this->rebuildListing();
         $filter = $this->getFilter();
         $headpage = $this->getHeadpage();

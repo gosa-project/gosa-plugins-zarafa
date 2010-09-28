@@ -14,8 +14,7 @@
     <label>Default filter</label>
     <query>
       <backend>DeviceItems</backend>
-      <filter>-
-      </filter>
+      <filter>$</filter>
     </query>
     <autocomplete>
       <attribute>cn</attribute>

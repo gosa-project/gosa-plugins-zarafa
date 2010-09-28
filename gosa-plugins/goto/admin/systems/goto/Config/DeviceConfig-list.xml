@@ -48,7 +48,7 @@
       <label>Description</label>
       <sortAttribute>description</sortAttribute>
       <sortType>string</sortType>
-      <value>%{filter:link(row,dn,pid,state,description)}</value>
+      <value>%{filter:link(row,dn,"%s",description,pid)}</value>
       <export>true</export>
     </column>
 
