@@ -56,6 +56,12 @@
      <type>sub</type>
      <image>images/lists/element.png[new]</image>
      <label>Create</label>
+    <action>
+      <name>remove</name>
+      <type>entry</type>
+      <image>images/lists/trash.png</image>
+      <label>Blaa</label>
+    </action>
     </action>
 
     <action>

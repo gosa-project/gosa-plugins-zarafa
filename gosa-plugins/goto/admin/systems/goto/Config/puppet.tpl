@@ -25,3 +25,15 @@
     </table>
 
 {/if}
+{if $type == 'PuppetTemplate'}
+    <table>
+        <tr>
+            <td>{$nameName}</td>
+            <td>{$name}</td>
+        </tr>
+        <tr>
+            <td>{$dataName}</td>
+            <td>{$data}</td>
+        </tr>
+    </table>
+{/if}

@@ -55,9 +55,9 @@ class DeviceConfig extends management
         }
         if(!$root){
             echo 'No root found!';
-        $this->rebuildListing();
-            return;
+            $this->rebuildListing();
             $this->is_account = FALSE;
+            return;
         }
 
         $this->is_account = TRUE;
@@ -89,7 +89,7 @@ class DeviceConfig extends management
         $this->setCurrentItem('temp1');
         $this->addItem('PuppetTemplate','tep1',
                 array(
-                    'name' => 'tep1', 
+                    'name' => 'tep1',
                     'data' => 'kekse.tpl')
                 );
 
