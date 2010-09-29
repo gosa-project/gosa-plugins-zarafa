@@ -72,9 +72,10 @@
 
             <table>
                 <tr>
-                    <td><LABEL for="kickstartTimeUTC">{t}UTC Time{/t}</LABEL></td>
                     <td>
-                        <input type='text' name="kickstartTimeUTC" id="kickstartTimeUTC" value="{$kickstartTimeUTC}">
+                        <input type='checkbox' name="kickstartTimeUTC" id="kickstartTimeUTC" 
+                        {if $kickstartTimeUTC} checked {/if}>
+                        <LABEL for="kickstartTimeUTC">{t}Use UTC{/t}</LABEL>
                     </td>
                 </tr>
                 <tr>

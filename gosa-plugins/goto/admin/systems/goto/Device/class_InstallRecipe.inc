@@ -85,6 +85,7 @@ class InstallRecipe extends plugin
         if(isset($_POST['InstallRecipePosted'])){
             plugin::save_object();
             $this->kickstartRootEnabled = isset($_POST['kickstartRootEnabled']);
+            $this->kickstartTimeUTC = isset($_POST['kickstartTimeUTC']);
 
 
             if(isset($_POST['setKickstartRootPasswordHash'])){
@@ -113,6 +114,7 @@ class InstallRecipe extends plugin
         // 
         if(!$this->kickstartRootEnabled) $this->kickstartRootPasswordHash = "";
         $this->kickstartRootEnabled = ($this->kickstartRootEnabled)?'TRUE':'FALSE';
+        $this->kickstartTimeUTC = ($this->kickstartTimeUTC)?'TRUE':'FALSE';
         
 
         plugin::save();
