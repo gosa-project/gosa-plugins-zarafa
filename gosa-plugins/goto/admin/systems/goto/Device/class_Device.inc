@@ -55,6 +55,8 @@ class Device extends plugin
         $this->baseSelector->setSubmitButton(false);
         $this->baseSelector->setHeight(300);
         $this->baseSelector->update(true);
+
+        $this->orig_deviceUUID = $this->deviceUUID;
     }
 
     
@@ -94,7 +96,7 @@ class Device extends plugin
 
         // Assign attribute values 
         foreach($this->attributes as $attr){
-            $smarty->assign($attr, $this->$attr);
+            $smarty->assign($attr, set_post($this->$attr));
         }
         return($smarty->fetch(get_template_path('goto/Device/Device.tpl', TRUE)));
     }
@@ -129,7 +131,7 @@ class Device extends plugin
         }
 
         // Check mac-address
-        if (!empty($this->ipHostNumber) && !tests::is_ip($this->macAddress)){
+        if (!empty($this->macAddress) && !tests::is_mac($this->macAddress)){
             $message[]= msgPool::invalid(_("MAC address"), "", "", "00:0C:7F:31:33:F1");
         }
  
@@ -243,6 +245,7 @@ class Device extends plugin
         $this->cleanup();
         $ldap=$this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
+        $ldap->create_missing_trees(preg_replace("/^[^,]*+,/","",$this->dn));
         $ldap->cd($this->dn);
 
         // Perform action modify/create
