@@ -100,6 +100,7 @@ class DeviceConfig extends management
 
     function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
+        $this->setCurrentItem($target[0]);
         $this->dialogObject = $this->TemplateEngine;
         $this->skipFooter = TRUE;
         $this->dialog = TRUE;
