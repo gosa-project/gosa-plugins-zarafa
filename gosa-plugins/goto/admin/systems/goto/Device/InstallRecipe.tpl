@@ -79,17 +79,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for="kickstartNTPServer">{t}NTP server{/t}</LABEL></td>
-                    <td>
-                        <input type='text' name="kickstartNTPServer" id="kickstartNTPServer" value="{$kickstartNTPServer}">
-                    </td>
-                </tr>
-                <tr>
                     <td><LABEL for="kickstartTimezone">{t}Timezone{/t}</LABEL></td>
                     <td>
                         <select size='1' name="kickstartTimezone" id="kickstartTimezone">
                             {html_options values=$timezones options=$timezones selected=$kickstartTimezone}
                         </select>
+                    </td>
+                </tr>
+                <tr>    
+                    <td colspan=2>
+                        {t}NTP server{/t}
+                        {$kickstartNTPServerList}
+                        <input type='text' name="kickstartNTPServer_Input">
+                        <button name='kickstartNTPServer_Add'>{msgPool type=addButton}</button>
                     </td>
                 </tr>
             </table>

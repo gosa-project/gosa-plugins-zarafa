@@ -7,7 +7,7 @@ class InstallRecipe extends plugin
     public $kickstartSystemLocale = "";
     public $kickstartTimezone = "";
     public $kickstartTimeUTC = "";
-    public $kickstartNTPServer = "";
+    public $kickstartNTPServer = array();
     public $kickstartMirrorDN = "";
     public $kickstartRootEnabled = "";
     public $kickstartRootPasswordHash = "";
@@ -20,6 +20,8 @@ class InstallRecipe extends plugin
             "kickstartRootEnabled","kickstartRootPasswordHash","kickstartKernelPackage","kickstartPartitionTable");
 
     public $setKickstartRootPasswordHash = FALSE;
+
+    private $kickstartNTPServerList = NULL;
 
     function __construct(&$config, $dn)
     {
@@ -54,6 +56,24 @@ class InstallRecipe extends plugin
             $this->hashes[$name] = $name;
         }
         $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
+
+        // Get list of NTP servers
+        $this->kickstartNTPServer = array();
+        if(isset($this->attrs['kickstartNTPServer']['count'])){
+            for($i = 0; $i < $this->attrs['kickstartNTPServer']['count']; $i++){
+                $this->kickstartNTPServer[] = $this->attrs['kickstartNTPServer'][$i];
+            }
+        }
+
+        // Prepare NTP servers list 
+        $this->kickstartNTPServerList= new sortableListing($this->kickstartNTPServer);
+        $this->kickstartNTPServerList->setDeleteable(true);
+        $this->kickstartNTPServerList->setEditable(false);
+        $this->kickstartNTPServerList->setColspecs(array('*'));
+        $this->kickstartNTPServerList->setWidth("100%");
+        $this->kickstartNTPServerList->setHeight("70px");
+
+
     }
 
     function execute()
@@ -68,10 +88,13 @@ class InstallRecipe extends plugin
             return($smarty->fetch(get_template_path('goto/Device/SetPassword.tpl', TRUE)));
         }
 
+        $this->kickstartNTPServerList->setAcl($this->getacl('kickstartNTPServer'));
+        $this->kickstartNTPServerList->update();
 
         plugin::execute();    
         $smarty = get_smarty();
         $smarty->assign('timezones', $this->timezones);
+        $smarty->assign('kickstartNTPServerList', $this->kickstartNTPServerList->render());
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
@@ -91,6 +114,16 @@ class InstallRecipe extends plugin
             if(isset($_POST['setKickstartRootPasswordHash'])){
                 $this->setKickstartRootPasswordHash = true;
             }
+
+            $this->kickstartNTPServerList->save_object();
+            $this->kickstartNTPServer = $this->kickstartNTPServerList->getMaintainedData();
+            if(isset($_POST['kickstartNTPServer_Input']) && isset($_POST['kickstartNTPServer_Add'])){
+                $add = get_post('kickstartNTPServer_Input');
+                if(!in_array($add, $this->kickstartNTPServer) && !empty($add)){
+                    $this->kickstartNTPServer[] = $add;
+                }
+            }
+            $this->kickstartNTPServerList->setListData($this->kickstartNTPServer);
         }
         if(isset($_POST['cancelPassword'])) $this->setKickstartRootPasswordHash =false;
         if(isset($_POST['setPassword'])) {
