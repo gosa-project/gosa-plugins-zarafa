@@ -38,6 +38,7 @@ class DeviceTab extends tabs
         if($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new"){
             $baseobject->update_acls($baseobject->orig_dn,$this->dn);
             $baseobject->move($baseobject->orig_dn,$this->dn);
+            $baseobject->orig_dn = $this->dn;
         }
 
         // Save now
