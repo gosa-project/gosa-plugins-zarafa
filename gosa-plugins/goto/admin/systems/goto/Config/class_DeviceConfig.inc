@@ -109,7 +109,7 @@ class DeviceConfig extends management
 
     function openEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        $this->setCurrentItem($target[0]);
+        $this->base = $this->currentItemValues[$target[0]]['base'];
     }
 
 
@@ -241,6 +241,19 @@ class DeviceConfig extends management
         $current['children'][$name] = &$this->currentItemValues[$name];
     }
 
+    
+    function saveItemChanges()
+    {
+
+        // Save eventually changed values
+        if($this->currentItem){
+            foreach($this->TemplateEngine->getWidgets() as $widget){
+                $this->currentItem['values'][$widget->getName()] = $widget->getValue();
+            }
+        }
+        $this->closeDialogs();
+    }
+    
 
     /*! \brief      Selects an item as active and takes care 
      *               of required post/get handling. 
@@ -249,19 +262,9 @@ class DeviceConfig extends management
      */
     function setCurrentItem($item)
     {
-        // Do nothing if we're already where we wanted to switch to.
-        if($this->currentItemName == $item) return;
-
         if(!isset($this->currentItemValues[$item])){
             echo "Invalid item name {$name}! Skipping selection!";
             return;
-        }
-
-        // Save eventually changed values
-        if($this->currentItem){
-            foreach($this->TemplateEngine->getWidgets() as $widget){
-                $this->currentItem['values'][$widget->getName()] = $widget->getValue();
-            }
         }
 
         // Set the new item info.
@@ -269,8 +272,6 @@ class DeviceConfig extends management
         $this->currentItem = &$this->currentItemValues[$item];
         $this->currentItemType = $this->currentItem['type'];
         $this->currentItemDescriptor =&$this->itemConfig[$this->currentItem['type']];
-
-        $this->base = $this->currentItem['base'];
 
         // Update the template engine to use another type of item and 
         //  some other values.
@@ -305,7 +306,9 @@ class DeviceConfig extends management
      */
     function save_object()
     {
-        $this->TemplateEngine->save_object();
+        if($this->dialogObject){
+            $this->TemplateEngine->save_object();
+        }
 
         // Add sub-module requested.
         if(isset($_POST['addSubModule']) && isset($_POST['subModule'])){
@@ -321,21 +324,12 @@ class DeviceConfig extends management
                 }
                 $name = 'test'.rand(0,99999);
                 $this->addItem($sub,$name,$values);
-                $this->setCurrentItem($name);
             }
         }
 
         // Get selected Items
         $this->itemContainerSelector->update();
         $this->base = $this->itemContainerSelector->getBase();
-        $itemName = ""; 
-        foreach($this->currentItemValues as $item){
-            if($item['base'] == $this->base){
-                $this->setCurrentItem($item['name']);
-                break;
-            }
-        }
-
     }
 
     /*! \brief    Forward plugin acls

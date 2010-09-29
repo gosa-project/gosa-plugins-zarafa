@@ -36,4 +36,5 @@
             <td>{$data}</td>
         </tr>
     </table>
+    <input type='submit'>    
 {/if}
