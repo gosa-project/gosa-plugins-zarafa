@@ -1,20 +1,53 @@
+
+<h3>{t}Installation type{/t}</h3>
+<table style='width:100%;'>
+    <tr>
+        <td style='width:50%; vertical-align: top;'>
+            <h3>{t}Bootstrap settings{/t}</h3>
+    
+            <table>
+            </table>
+        </td>
+        <td style='width:50%; vertical-align: top;padding-left:5px;' class='left-border'>
+            <h3>{t}Login{/t}</h3>
+
+            <table>
+                <tr>
+                    <td>
+                        <input type='checkbox' value='1' {if $kickstartRootEnabled} checked {/if}
+                            onClick="changeState('setKickstartRootPasswordHash');"
+                            name="kickstartRootEnabled" id="kickstartRootEnabled" 
+                           >
+                        <LABEL for="kickstartRootEnabled">{t}Use root-user{/t}</LABEL>&nbsp;
+                        <button name='setKickstartRootPasswordHash'
+                            {if !$kickstartRootEnabled} disabled {/if}
+                            id="setKickstartRootPasswordHash">{t}Set password{/t}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan=2><hr></td>
+    </tr>
+    <tr>
+        <td style='width:50%; vertical-align: top;'>
+            <h3>{t}Locale{/t}</h3>
+
+            <table>
+            </table>
+        </td>
+        <td style='width:50%; vertical-align: top;padding-left:5px;' class='left-border'>
+            <h3>{t}Time{/t}</h3>
+
+            <table>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
 <table>
-    <tr>
-        <td><LABEL for="kickstartRootEnabled">{t}Root enabled{/t}</LABEL></td>
-        <td>
-            <input type='checkbox' value='1' {if $kickstartRootEnabled} checked {/if}
-                onClick="changeState('kickstartRootPasswordHash');"
-                name="kickstartRootEnabled" id="kickstartRootEnabled" 
-               >
-        </td>
-    </tr>
-    <tr>
-        <td><LABEL for="kickstartRootPasswordHash">{t}Root password hash{/t}</LABEL></td>
-        <td>
-            <input type='text' name="kickstartRootPasswordHash" id="kickstartRootPasswordHash"
-                {if !$kickstartRootEnabled} disabled {/if} value="{$kickstartRootPasswordHash}">
-        </td>
-    </tr>
     <tr>
         <td><LABEL for="kickstartTemplateDN">{t}Kickstart template{/t}</LABEL></td>
         <td>
@@ -73,3 +106,4 @@
     </tr>
 </table>
 
+<input type='hidden' name='InstallRecipePosted' value=1>

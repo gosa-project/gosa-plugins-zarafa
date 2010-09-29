@@ -19,6 +19,8 @@ class InstallRecipe extends plugin
             "kickstartTimezone","kickstartTimeUTC","kickstartNTPServer","kickstartMirrorDN",
             "kickstartRootEnabled","kickstartRootPasswordHash","kickstartKernelPackage","kickstartPartitionTable");
 
+    public $setKickstartRootPasswordHash = FALSE;
+
     function __construct(&$config, $dn)
     {
         plugin::plugin($config, $dn);
@@ -44,29 +46,75 @@ class InstallRecipe extends plugin
         }  
         uksort($list, 'strnatcasecmp'); 
         $this->timezones = $list;
+
+        // Get list of password hashes
+        $tmp = passwordMethod::get_available_methods();
+        $this->hashes = array();
+        foreach($tmp['name'] as $name){
+            $this->hashes[$name] = $name;
+        }
+        $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
     }
 
     function execute()
     {
+        
+
+        if($this->setKickstartRootPasswordHash){
+            $this->dialog = TRUE;
+            $smarty = get_smarty();
+            $smarty->assign('hashes', set_post($this->hashes));
+            $smarty->assign('hash', set_post($this->hash));
+            return($smarty->fetch(get_template_path('goto/Device/SetPassword.tpl', TRUE)));
+        }
+
+
         plugin::execute();    
         $smarty = get_smarty();
         $smarty->assign('timezones', $this->timezones);
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
+        $this->dialog = false;
         return($smarty->fetch(get_template_path('goto/Device/InstallRecipe.tpl', TRUE)));
     }
 
-    
+
     function save_object()
     {
-        plugin::save_object();
-        $this->kickstartRootEnabled = isset($_POST['kickstartRootEnabled']);
+        if(isset($_POST['InstallRecipePosted'])){
+            plugin::save_object();
+            $this->kickstartRootEnabled = isset($_POST['kickstartRootEnabled']);
+
+
+            if(isset($_POST['setKickstartRootPasswordHash'])){
+                $this->setKickstartRootPasswordHash = true;
+            }
+        }
+        if(isset($_POST['cancelPassword'])) $this->setKickstartRootPasswordHash =false;
+        if(isset($_POST['setPassword'])) {
+            $this->setKickstartRootPasswordHash =false;
+            $hash = get_post('passwordHash');
+
+            // Not sure, why this is here, but maybe some encryption methods require it.
+            mt_srand((double) microtime()*1000000);
+
+            // Generate the requested hash
+            $methods = new passwordMethod($this->config, $this->dn);
+            $available = $methods->get_available_methods();
+            $test = new $available[$hash]($this->config,$this->dn);
+            $this->kickstartRootPasswordHash = @$test->generate_hash(get_post('rootPassword'));
+        }
     }
 
 
     function save()
     {
+        // 
+        if(!$this->kickstartRootEnabled) $this->kickstartRootPasswordHash = "";
+        $this->kickstartRootEnabled = ($this->kickstartRootEnabled)?'TRUE':'FALSE';
+        
+
         plugin::save();
 
         $this->cleanup();
