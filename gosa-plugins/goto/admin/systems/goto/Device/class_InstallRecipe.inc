@@ -3,15 +3,25 @@
 class InstallRecipe extends plugin
 {
     public $kickstartTemplateDN = "";
+    public $kickstartTemplateDNList = array(
+        'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
+        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System-Tpl');
+
+    public $kickstartMirrorDN = "";
+    public $kickstartMirrorDNList = array(
+        'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
+        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
+    public $kickstartKernelPackage = "";
+    public $kickstartKernelPackageList = array('kernel1','kk1');
     public $kickstartKeyboardlayout = "";
+    public $kickstartKeyboardlayoutList = array("104","105");
     public $kickstartSystemLocale = "";
+    public $kickstartSystemLocaleList = array('de','en_EN.UTF-8');
     public $kickstartTimezone = "";
     public $kickstartTimeUTC = "";
     public $kickstartNTPServer = array();
-    public $kickstartMirrorDN = "";
     public $kickstartRootEnabled = "";
     public $kickstartRootPasswordHash = "";
-    public $kickstartKernelPackage = "";
     public $kickstartPartitionTable = "";
 
     public $objectclasses = array('installRecipe');
@@ -78,7 +88,6 @@ class InstallRecipe extends plugin
 
     function execute()
     {
-        
 
         if($this->setKickstartRootPasswordHash){
             $this->dialog = TRUE;
@@ -94,6 +103,11 @@ class InstallRecipe extends plugin
         plugin::execute();    
         $smarty = get_smarty();
         $smarty->assign('timezones', $this->timezones);
+        $smarty->assign('kickstartKeyboardlayoutList', $this->kickstartKeyboardlayoutList);
+        $smarty->assign('kickstartKernelPackageList', $this->kickstartKernelPackageList);
+        $smarty->assign('kickstartTemplateDNList', $this->kickstartTemplateDNList);
+        $smarty->assign('kickstartMirrorDNList', $this->kickstartMirrorDNList);
+        $smarty->assign('kickstartSystemLocaleList', $this->kickstartSystemLocaleList);
         $smarty->assign('kickstartNTPServerList', $this->kickstartNTPServerList->render());
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);

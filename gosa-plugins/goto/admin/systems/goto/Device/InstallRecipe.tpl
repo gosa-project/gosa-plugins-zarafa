@@ -9,19 +9,28 @@
                 <tr>
                     <td><LABEL for="kickstartMirrorDN">{t}Mirror{/t}</LABEL></td>
                     <td>
-                        <input type='text' name="kickstartMirrorDN" id="kickstartMirrorDN" value="{$kickstartMirrorDN}">
+                        <select name="kickstartMirrorDN" size=1>
+                            {html_options options=$kickstartMirrorDNList 
+                            selected=$kickstartMirrorDN}
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td><LABEL for="kickstartTemplateDN">{t}Kickstart template{/t}</LABEL></td>
                     <td>
-                        <input type='text' name="kickstartTemplateDN" id="kickstartTemplateDN" value="{$kickstartTemplateDN}">
+                        <select name="kickstartTemplateDN" size=1>
+                            {html_options options=$kickstartTemplateDNList 
+                            selected=$kickstartTemplateDN}
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td><LABEL for="kickstartKernelPackage">{t}Kernel package{/t}</LABEL></td>
                     <td>
-                        <input type='text' name="kickstartKernelPackage" id="kickstartKernelPackage" value="{$kickstartKernelPackage}">
+                        <select name="kickstartKernelPackage" size=1>
+                            {html_options values=$kickstartKernelPackageList output=$kickstartKernelPackageList 
+                            selected=$kickstartKernelPackage}
+                        </select>
                     </td>
                 </tr>
             </table>
@@ -56,13 +65,19 @@
                 <tr>
                     <td><LABEL for="kickstartKeyboardlayout">{t}Keyboard layout{/t}</LABEL></td>
                     <td>
-                        <input type='text' name="kickstartKeyboardlayout" id="kickstartKeyboardlayout" value="{$kickstartKeyboardlayout}">
+                        <select name="kickstartKeyboardlayout" size=1>
+                            {html_options values=$kickstartKeyboardlayoutList output=$kickstartKeyboardlayoutList 
+                            selected=$kickstartKeyboardlayout}
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td><LABEL for="kickstartSystemLocale">{t}System locale{/t}</LABEL></td>
                     <td>
-                        <input type='text' name="kickstartSystemLocale" id="kickstartSystemLocale" value="{$kickstartSystemLocale}">
+                        <select name="kickstartSystemLocale" size=1>
+                            {html_options values=$kickstartSystemLocaleList output=$kickstartSystemLocaleList 
+                            selected=$kickstartSystemLocale}
+                        </select>
                     </td>
                 </tr>
             </table>
