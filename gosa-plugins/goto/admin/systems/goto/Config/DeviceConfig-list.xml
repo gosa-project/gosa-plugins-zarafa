@@ -7,7 +7,7 @@
     <baseMode>false</baseMode>
     <multiSelect>true</multiSelect>
     <template>goto/Config/DeviceConfig-list.tpl</template>
-    <label>List of systems</label>
+    <label>List of items</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
@@ -56,14 +56,6 @@
      <type>sub</type>
      <image>images/lists/element.png[new]</image>
      <label>Create</label>
-
-     <action>
-      <name>new_device</name>
-      <type>entry</type>
-      <image>images/lists/edit.png</image>
-      <label>Device</label>
-      <depends>Device</depends>
-     </action>
     </action>
 
     <action>
@@ -81,14 +73,14 @@
       <name>editEntry</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
-      <label>Edit role</label>
+      <label>Edit item</label>
     </action>
 
     <action>
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <label>Remove system</label>
+      <label>Remove item</label>
     </action>
 
   </actiontriggers>
