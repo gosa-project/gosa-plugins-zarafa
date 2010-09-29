@@ -21,6 +21,7 @@ class DeviceConfig extends management
     public $is_account = FALSE;
     public $ignore_account = FALSE;
 
+    private $baseToDN = array();
 
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
@@ -65,6 +66,7 @@ class DeviceConfig extends management
         // Set current item to 'root', this is the minimum to get things running.
         $this->addItem($root,'root',array());
         $this->setCurrentItem('root');
+        $this->setBase($this->baseToDN['root']);
 
         $this->addItem('PuppetModule','test1',
                 array(
@@ -129,7 +131,7 @@ class DeviceConfig extends management
 
     function openEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        $this->base = $this->currentItemValues[$target[0]]['base'];
+        $this->setBase($this->currentItemValues[$target[0]]['base']);
     }
 
 
@@ -243,15 +245,19 @@ class DeviceConfig extends management
         $this->idToName[] = $name;
 
         $base = (isset($current['base']))? ",".$current['base'] : '';
+        $base = "cn={$name}{$base}";
 
         $new = array(
-                'base' => "cn={$name}{$base}",
+                'base' => $base,
                 'children' => array(),
                 'type' => $type, 
                 'name' => $name, 
                 'values' => $values);
         $this->currentItemValues[$name] = $new;
         $current['children'][$name] = &$this->currentItemValues[$name];
+
+        $this->baseToDN[$name] = $base;
+        $this->baseToDN[$base] = $name;
     }
     
 
@@ -329,8 +335,16 @@ class DeviceConfig extends management
 
         // Get selected Items
         $this->itemContainerSelector->update();
-        $this->base = $this->itemContainerSelector->getBase();
+        $this->setBase($this->itemContainerSelector->getBase());
     }
+
+   
+    function setBase($base)
+    {
+        $this->base = $base;
+        $item = $this->currentItemValues[$this->baseToDN[$base]];
+    }
+
 
     /*! \brief    Forward plugin acls
      */
