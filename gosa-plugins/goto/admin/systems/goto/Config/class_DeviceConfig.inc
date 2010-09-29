@@ -107,6 +107,26 @@ class DeviceConfig extends management
     }
 
 
+    function cancelItemEdit()
+    {
+        $this->closeDialogs();
+        $this->dialog = FALSE;
+    }
+    
+    
+    function saveItemChanges()
+    {
+        // Save eventually changed values
+        if($this->currentItem){
+            foreach($this->TemplateEngine->getWidgets() as $widget){
+                $this->currentItem['values'][$widget->getName()] = $widget->getValue();
+            }
+        }
+        $this->closeDialogs();
+        $this->dialog = FALSE;
+    }
+
+
     function openEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
         $this->base = $this->currentItemValues[$target[0]]['base'];
@@ -197,13 +217,6 @@ class DeviceConfig extends management
     }
 
 
-    function cancelItemEdit()
-    {
-        $this->closeDialogs();
-        $this->dialog = FALSE;
-    }
-    
-
     /*! \brief      Add a new child-item to the currently selected one. 
      *               
      *  @param  String  type    The 'type' of the new object, eg. 'KickstartTemplate'
@@ -239,19 +252,6 @@ class DeviceConfig extends management
                 'values' => $values);
         $this->currentItemValues[$name] = $new;
         $current['children'][$name] = &$this->currentItemValues[$name];
-    }
-
-    
-    function saveItemChanges()
-    {
-
-        // Save eventually changed values
-        if($this->currentItem){
-            foreach($this->TemplateEngine->getWidgets() as $widget){
-                $this->currentItem['values'][$widget->getName()] = $widget->getValue();
-            }
-        }
-        $this->closeDialogs();
     }
     
 
