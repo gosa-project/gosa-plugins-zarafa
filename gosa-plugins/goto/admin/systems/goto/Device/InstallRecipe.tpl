@@ -1,5 +1,26 @@
 
 <h3>{t}Installation type{/t}</h3>
+<table>
+    <tr>
+        <td><LABEL for="__missingBoostrap">{t}Bootstrap method{/t}</LABEL></td>
+        <td>
+            <select name="__missingBoostrap" size=1>
+                {html_options options=$__missingBoostrapList 
+                selected=$__missingBoostrap}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><LABEL for="__missingConfigManagement">{t}Config management{/t}</LABEL></td>
+        <td>
+            <select name="__missingConfigManagement" size=1>
+                {html_options options=$__missingConfigManagementList 
+                selected=$__missingConfigManagement}
+            </select>
+        </td>
+    </tr>
+</table>
+<hr>
 <table style='width:100%;'>
     <tr>
         <td style='width:50%; vertical-align: top;'>

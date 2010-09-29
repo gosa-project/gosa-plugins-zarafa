@@ -2,6 +2,13 @@
 
 class InstallRecipe extends plugin
 {
+
+    public $__missingBoostrap = 'debian';
+    public $__missingBoostrapList = array('weißnicht' => 'Irgendwas','debian' => 'debian');
+
+    public $__missingConfigManagement = 'puppet';
+    public $__missingConfigManagementList = array('fai' => 'FAI','puppet' => 'Puppet');
+
     public $kickstartTemplateDN = "";
     public $kickstartTemplateDNList = array(
         'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
@@ -109,6 +116,11 @@ class InstallRecipe extends plugin
         $smarty->assign('kickstartMirrorDNList', $this->kickstartMirrorDNList);
         $smarty->assign('kickstartSystemLocaleList', $this->kickstartSystemLocaleList);
         $smarty->assign('kickstartNTPServerList', $this->kickstartNTPServerList->render());
+
+        $smarty->assign('__missingBoostrap', $this->__missingBoostrap);
+        $smarty->assign('__missingBoostrapList', $this->__missingBoostrapList);
+        $smarty->assign('__missingConfigManagement', $this->__missingConfigManagement);
+        $smarty->assign('__missingConfigManagementList', $this->__missingConfigManagementList);
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
