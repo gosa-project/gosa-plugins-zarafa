@@ -5,9 +5,7 @@
 class DeviceConfig extends management
 {
     private $TemplateEngine = NULL;
-    private $idToName = array();
-    private $currentItemName = "";
-    private $currentItemValues = array();
+    private $allConfiguredItems = array();
     private $currentItem = array();
 
     private $navigationList = NULL;
@@ -21,7 +19,7 @@ class DeviceConfig extends management
     public $is_account = FALSE;
     public $ignore_account = FALSE;
 
-    private $baseToDN = array();
+    private $mappingBaseToID = array();
 
     private $addableContainerItems = array();
 
@@ -68,7 +66,7 @@ class DeviceConfig extends management
         // Set current item to 'root', this is the minimum to get things running.
         $idRoot = $this->addItem($root,'root',array());
         $this->setCurrentItem($idRoot);
-        $this->setBase($this->baseToDN[$idRoot]);
+        $this->setSelectedListItemID($idRoot);
 
         $id = $this->addItem('PuppetModule','test1',
                 array(
@@ -102,6 +100,82 @@ class DeviceConfig extends management
     }
 
 
+    /*! \brief      Add a new child-item to the currently selected one. 
+     *               
+     *  @param  String  type    The 'type' of the new object, eg. 'KickstartTemplate'
+     *  @param  String  name    The 'name' of the new object.
+     *  @param  Array   values  The initial values for this object.
+     *  @return 
+     */
+    function addItem($type,$name, $values = array())
+    {
+        if(!isset($this->itemConfig[$type])){
+            echo "Invalid type {$type}, skipping item!";
+            return;
+        }
+
+        // Add missing values with the item-type defaults.
+        $allValuesSet = TRUE;
+        foreach($this->itemConfig[$type]['options'] as $oName => $oValue){
+            if(!isset($values[$oName])){
+                $values[$oName] = $oValue;
+            }
+        }
+
+        // Get the currently selected entry, its the parent for the newly 
+        //  added one. 
+        $current = &$this->currentItem; 
+
+        // Create a FAKE base to be able to use the management lists
+        //  which are currently ldap and thus dn based.
+        $base = (isset($current['base']))? ",".$current['base'] : '';
+        $base = "{$type}={$name}{$base}";
+
+    
+        // Get next free item slot.
+        $id = count($this->allConfiguredItems);
+        $new = array(
+                'base' => $base,
+                'children' => array(),
+                'id' => $id, 
+                'type' => $type, 
+                'name' => $name, 
+                'values' => $values);
+
+        // Append the entry to the list of all items.
+        $this->allConfiguredItems[$id] = $new;
+
+        // Create a child referenc, this creates some kind of entry tree.
+        $current['children'][$id] = &$this->allConfiguredItems[$id];
+
+        // Add entries to the list of base and id mappings
+        //  this allows us to easily detect the base for an id and vice versa.
+        $this->mappingBaseToID[$id] = $base;
+        $this->mappingBaseToID[$base] = $id;
+        return($id);
+    }
+
+
+    /*! \brief      Selects an item as active.
+     *              All further add and remove actions will be performed
+     *               on the obejcts children.
+     *  @param  String  The 'id' of the item we want to select.
+     *  @return 
+     */
+    function setCurrentItem($item)
+    {
+        if(!isset($this->allConfiguredItems[$item])){
+            echo "Invalid item name {$name}! Skipping selection!";
+            return;
+        }
+
+        // Set the new item info.
+        $this->currentItem = &$this->allConfiguredItems[$item];
+        $this->currentItemType = $this->currentItem['type'];
+        $this->currentItemDescriptor = $this->itemConfig[$this->currentItem['type']];
+    }
+
+
     function editEntry($action="",$target=array(),$all=array(), 
             $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
@@ -109,6 +183,10 @@ class DeviceConfig extends management
         $this->dialogObject = $this->TemplateEngine;
         $this->skipFooter = TRUE;
         $this->dialog = TRUE;
+
+        // Update the template engine to use another type of item and 
+        //  some other values.
+        $this->TemplateEngine->setValues($this->currentItemType,$this->currentItem['values']);
     }
 
 
@@ -127,7 +205,7 @@ class DeviceConfig extends management
     function openEntry($action="",$target=array(),$all=array(), 
             $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        $this->setBase($this->currentItemValues[$target[0]]['base']);
+        $this->setSelectedListItemID($target[0]);
     }
 
 
@@ -148,14 +226,14 @@ class DeviceConfig extends management
             $this->itemContainerSelector = new releaseSelector(
                     $this->getContainerList(), 
                     $this->base, 
-                    $this->currentItemValues[0]['base']);
+                    $this->allConfiguredItems[0]['base']);
         }else{
             $this->itemContainerSelector->setBases($this->getContainerList());
         }
         $this->itemContainerSelector->update(true);
         $this->itemContainerSelector->setBase($this->base);
 
-        session::set('DEVICE_ITEMS', $this->currentItemValues);
+        session::set('DEVICE_ITEMS', $this->allConfiguredItems);
         $this->rebuildListing();
         $filter = $this->getFilter();
         $headpage = $this->getHeadpage();
@@ -172,7 +250,7 @@ class DeviceConfig extends management
      */
     function getContainerList($array = NULL)
     {
-        $array = ($array == NULL)?$this->currentItemValues[0]: $array;
+        $array = ($array == NULL)?$this->allConfiguredItems[0]: $array;
         $ret[$array['base']] = $array['type'];
         if(count($array['children'])){
             foreach($array['children'] as $subItem){
@@ -277,7 +355,7 @@ class DeviceConfig extends management
             $itemCfg = $this->dialogObject->getItemCfg();
             $itemType = $this->dialogObject->getItemType();
 
-            $this->setCurrentItem($this->baseToDN[$this->base]);
+            $this->setCurrentItem($this->mappingBaseToID[$this->base]);
     
             $this->addItem($itemType, $itemName);
             $this->closeDialogs();
@@ -288,75 +366,6 @@ class DeviceConfig extends management
 #           $this->dialog = TRUE;
 
         }
-    }
-
-
-    /*! \brief      Add a new child-item to the currently selected one. 
-     *               
-     *  @param  String  type    The 'type' of the new object, eg. 'KickstartTemplate'
-     *  @param  String  name    The 'name' of the new object.
-     *  @param  Array   values  The initial values for this object.
-     *  @return 
-     */
-    function addItem($type,$name, $values = array())
-    {
-        if(!isset($this->itemConfig[$type])){
-            echo "Invalid type {$type}, skipping item!";
-            return;
-        }
-
-        $allValuesSet = TRUE;
-        foreach($this->itemConfig[$type]['options'] as $oName => $oValue){
-            if(!isset($values[$oName])){
-                $values[$oName] = $oValue;
-            }
-        }
-
-        $current = &$this->currentItem; 
-        $this->idToName[] = $name;
-
-        $base = (isset($current['base']))? ",".$current['base'] : '';
-        $base = "{$type}={$name}{$base}";
-        $id = count($this->currentItemValues);
-
-        $new = array(
-                'base' => $base,
-                'children' => array(),
-                'id' => $id, 
-                'type' => $type, 
-                'name' => $name, 
-                'values' => $values);
-
-        $this->currentItemValues[$id] = $new;
-        $current['children'][$id] = &$this->currentItemValues[$id];
-
-        $this->baseToDN[$id] = $base;
-        $this->baseToDN[$base] = $id;
-        return($id);
-    }
-    
-
-    /*! \brief      Selects an item as active and takes care 
-     *               of required post/get handling. 
-     *  @param  String  The name of the item we want to select.
-     *  @return 
-     */
-    function setCurrentItem($item)
-    {
-        if(!isset($this->currentItemValues[$item])){
-            echo "Invalid item name {$name}! Skipping selection!";
-            return;
-        }
-
-        // Set the new item info.
-        $this->currentItemName = $item;
-        $this->currentItem = &$this->currentItemValues[$item];
-        $this->currentItemType = $this->currentItem['type'];
-        $this->currentItemDescriptor =&$this->itemConfig[$this->currentItem['type']];
-
-        // Update the template engine to use another type of item and 
-        //  some other values.
-        $this->TemplateEngine->setValues($this->currentItemType,$this->currentItem['values']);
     }
 
 
@@ -388,17 +397,18 @@ class DeviceConfig extends management
             }
         }
 
-        // Get selected Items
+        // Get the selected item-id from the item list and populate it.
         $this->itemContainerSelector->update();
-        $this->setBase($this->itemContainerSelector->getBase());
+        $id  = $this->mappingBaseToID[$this->itemContainerSelector->getBase()]; 
+        $this->setSelectedListItemID($id);
     }
 
    
-    function setBase($base)
+    function setSelectedListItemID($id)
     {
-        $this->base = $base;
-        $item = $this->currentItemValues[$this->baseToDN[$base]];
-        $this->addableContainerItems = $this->itemConfig[$item['type']]['container'];
+        $this->base = $this->mappingBaseToID[$id];
+        $type = $this->allConfiguredItems[$id]['type'];
+        $this->addableContainerItems = $this->itemConfig[$type]['container'];
     }
 
 
@@ -419,7 +429,7 @@ class DeviceConfig extends management
 
     function save()
     {
-        foreach($this->currentItemValues as $name => $item){
+        foreach($this->allConfiguredItems as $name => $item){
             foreach($item['values'] as $oName => $oValue){
                 echo "<br>{$name} -- <i>{$item['type']}</i>: <b>{$oName}</b>: {$oValue}";
             }
