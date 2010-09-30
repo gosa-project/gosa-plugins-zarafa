@@ -304,6 +304,22 @@ class DeviceConfig extends management
         // Load service xml file and fill in placeholders
         $contents =file_get_contents(get_template_path("goto/Config/DeviceConfig-list.xml", true));
 
+        // Build up device-list configuration   
+        $types ="";
+        foreach($this->itemConfig as $type => $item){
+            $desc = $item['description'];
+            $img = 'images/lists/trash.png';
+            $types .= 
+                "   <objectType>".
+                "     <label>{$desc}</label>".
+                "     <objectClass>{$type}</objectClass>".
+                "     <category>Device</category>".
+                "     <class>dummy</class>".
+                "     <image>{$img}</image>".
+                "   </objectType>";
+        }
+        $contents = preg_replace("/%TYPES%/", $types, $contents);
+
 
         $items = "";
         foreach($this->addableContainerItems as $item){
