@@ -90,12 +90,28 @@ class InstallRecipe extends plugin
         $this->kickstartNTPServerList->setWidth("100%");
         $this->kickstartNTPServerList->setHeight("70px");
 
-
+        // Load list of bootstrap methods.
+        $this->__missingBoostrapList = $this->getBootstrapMethods();
     }
+
+    
+    function getBootstrapMethods()
+    {
+        $str = file_get_contents('/home/hickert/bootstrap.json');
+        $items = json_decode($str, TRUE);
+        if(is_array($items)){
+            $ret = array();
+            foreach($items as $bst){
+                $ret[$bst['name']]= $bst['title'];
+            }
+            return($ret);
+        }
+        return(NULL);
+    }
+
 
     function execute()
     {
-
         if($this->setKickstartRootPasswordHash){
             $this->dialog = TRUE;
             $smarty = get_smarty();
