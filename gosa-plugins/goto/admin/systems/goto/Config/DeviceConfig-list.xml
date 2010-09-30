@@ -11,11 +11,19 @@
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
-      <label>Device</label>
+      <label>Item</label>
       <objectClass>FAKE_OC_DeviceItem</objectClass>
       <category>Device</category>
-      <class>Device</class>
+      <class>Item</class>
       <image>images/lists/edit.png</image>
+    </objectType>
+
+    <objectType>
+      <label>1Item</label>
+      <objectClass>1FAKE_OC_DeviceItem</objectClass>
+      <category>Device</category>
+      <class>1Item</class>
+      <image>1images/lists/edit.png</image>
     </objectType>
 
   </definition>
@@ -23,9 +31,14 @@
   <table>
     <layout>|20px;c|||170px;r|</layout>
 
+    <department>
+      <value>%{filter:objectType(dn,objectClass)}</value>
+    </department>
+
     <column>
       <value>%{filter:objectType(dn,objectClass)}</value>
     </column>
+
 
     <column>
       <label>Name</label>

@@ -3,11 +3,11 @@
 class InstallRecipe extends plugin
 {
 
-    public $__missingBoostrap = 'debian';
-    public $__missingBoostrapList = array('weißnicht' => 'Irgendwas','debian' => 'debian');
+    public $kickstartBootstrapMethod = 'debian';
+    public $kickstartBootstrapMethodList = NULL;
 
-    public $__missingConfigManagement = 'puppet';
-    public $__missingConfigManagementList = array('fai' => 'FAI','puppet' => 'Puppet');
+    public $kickstartConfigManagement = 'puppet';
+    public $kickstartConfigManagementList = array('fai' => 'FAI','puppet' => 'Puppet');
 
     public $kickstartTemplateDN = "";
     public $kickstartTemplateDNList = array(
@@ -34,7 +34,8 @@ class InstallRecipe extends plugin
     public $objectclasses = array('installRecipe');
     public $attributes = array("kickstartTemplateDN","kickstartKeyboardlayout","kickstartSystemLocale",
             "kickstartTimezone","kickstartTimeUTC","kickstartNTPServer","kickstartMirrorDN",
-            "kickstartRootEnabled","kickstartRootPasswordHash","kickstartKernelPackage","kickstartPartitionTable");
+            "kickstartRootEnabled","kickstartRootPasswordHash","kickstartKernelPackage",
+            "kickstartPartitionTable","kickstartConfigManagement","kickstartBootstrapMethod");
 
     public $setKickstartRootPasswordHash = FALSE;
 
@@ -91,7 +92,7 @@ class InstallRecipe extends plugin
         $this->kickstartNTPServerList->setHeight("70px");
 
         // Load list of bootstrap methods.
-        $this->__missingBoostrapList = $this->getBootstrapMethods();
+        $this->kickstartBootstrapMethodList = $this->getBootstrapMethods();
     }
 
     
@@ -133,10 +134,10 @@ class InstallRecipe extends plugin
         $smarty->assign('kickstartSystemLocaleList', $this->kickstartSystemLocaleList);
         $smarty->assign('kickstartNTPServerList', $this->kickstartNTPServerList->render());
 
-        $smarty->assign('__missingBoostrap', $this->__missingBoostrap);
-        $smarty->assign('__missingBoostrapList', $this->__missingBoostrapList);
-        $smarty->assign('__missingConfigManagement', $this->__missingConfigManagement);
-        $smarty->assign('__missingConfigManagementList', $this->__missingConfigManagementList);
+        $smarty->assign('kickstartBootstrapMethod', $this->kickstartBootstrapMethod);
+        $smarty->assign('kickstartBootstrapMethodList', $this->kickstartBootstrapMethodList);
+        $smarty->assign('kickstartConfigManagement', $this->kickstartConfigManagement);
+        $smarty->assign('kickstartConfigManagementList', $this->kickstartConfigManagementList);
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
@@ -181,6 +182,35 @@ class InstallRecipe extends plugin
             $test = new $available[$hash]($this->config,$this->dn);
             $this->kickstartRootPasswordHash = @$test->generate_hash(get_post('rootPassword'));
         }
+
+        $this->updateRecipeTab();
+    }
+
+
+    function updateRecipeTab()
+    {
+        $mode = $this->kickstartConfigManagement;
+        if(!isset($this->recipeTabs[$mode])){
+            $this->recipeTabs[$mode] = new DeviceConfig($this->config, $this->dn);
+            $this->recipeTabs[$mode]->parent = &$this->parent;
+        }
+
+        // Update the recipe tab to match the selected installation method.
+        if($this->is_account){
+
+            if(isset($this->parent->by_object['DeviceConfig']) && 
+                $this->recipeTabs[$mode] === $this->parent->by_object['DeviceConfig']){
+                return;
+            }
+
+            $this->parent->by_name['DeviceConfig'] = $this->kickstartConfigManagementList[$mode];
+            $this->parent->by_object['DeviceConfig'] = &$this->recipeTabs[$mode];
+        }else{
+            if(isset($this->parent->by_name['DeviceConfig'])){
+                unset($this->parent->by_name['DeviceConfig']);
+                unset($this->parent->by_object['DeviceConfig']);
+            }
+        }
     }
 
 
@@ -220,6 +250,8 @@ class InstallRecipe extends plugin
                     "plProvidedAcls" => array(
                         "member" => _("Member"),
                         "kickstartTemplateDN" => _("Template"),
+                        "kickstartBootstrapMethod" => _("Bootstrap method"),
+                        "kickstartConfigManagement" => _("Config management"),
                         "kickstartKeyboardlayout" => _("Keyboard layout"),
                         "kickstartSystemLocale" => _("System locale"),
                         "kickstartTimezone" => _("Timezone"),

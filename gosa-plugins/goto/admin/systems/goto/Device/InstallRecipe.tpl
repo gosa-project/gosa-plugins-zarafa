@@ -2,20 +2,21 @@
 <h3>{t}Installation type{/t}</h3>
 <table>
     <tr>
-        <td><LABEL for="__missingBoostrap">{t}Bootstrap method{/t}</LABEL></td>
+        <td><LABEL for="kickstartBootstrapMethod">{t}Bootstrap method{/t}</LABEL></td>
         <td>
-            <select name="__missingBoostrap" size=1>
-                {html_options options=$__missingBoostrapList 
-                selected=$__missingBoostrap}
+            <select name="kickstartBootstrapMethod" size=1>
+                {html_options options=$kickstartBootstrapMethodList 
+                selected=$kickstartBootstrapMethod}
             </select>
         </td>
     </tr>
     <tr>
-        <td><LABEL for="__missingConfigManagement">{t}Config management{/t}</LABEL></td>
+        <td><LABEL for="kickstartConfigManagement">{t}Config management{/t}</LABEL></td>
         <td>
-            <select name="__missingConfigManagement" size=1>
-                {html_options options=$__missingConfigManagementList 
-                selected=$__missingConfigManagement}
+            <select name="kickstartConfigManagement" size=1
+                onChange='document.mainform.submit();'>
+                {html_options options=$kickstartConfigManagementList 
+                selected=$kickstartConfigManagement}
             </select>
         </td>
     </tr>
