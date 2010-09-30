@@ -148,6 +148,11 @@ class DeviceConfig extends management
         $base = (isset($current['base']))? ",".$current['base'] : '';
         $base = "{$type}={$name}{$base}";
 
+
+        if(isset($this->mappingBaseToID[$base])){
+            echo "Cannot add entry, dn already in use! {$base}<br>";
+            return(null);
+        }
     
         // Get next free item slot.
         $id = count($this->allConfiguredItems);
@@ -240,7 +245,7 @@ class DeviceConfig extends management
 
         // Collect item container list to be able to render the fake-base selector
         if(!$this->itemContainerSelector){
-            $this->itemContainerSelector = new releaseSelector(
+            $this->itemContainerSelector = new ItemSelector(
                     $this->getContainerList(), 
                     $this->base, 
                     $this->allConfiguredItems[0]['base']);
