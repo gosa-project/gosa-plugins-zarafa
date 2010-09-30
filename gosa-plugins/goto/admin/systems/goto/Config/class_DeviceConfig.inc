@@ -342,7 +342,7 @@ class DeviceConfig extends management
                 "</action>";
         }
 
-        if(!empty($item)){
+        if(!empty($items)){
             $items = 
 
                 "<action>".
