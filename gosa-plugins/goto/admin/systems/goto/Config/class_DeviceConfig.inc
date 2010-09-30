@@ -31,6 +31,9 @@ class DeviceConfig extends management
     //  we've to map this 'base/dn' to the items 'id'.
     private $mappingBaseToID = array();
 
+    private $rootItemID;
+    private $lastItemID = 1;
+
     // Some plugin related memebers which are not member of 
     //  the management class. See class plugin.
     public $is_account = FALSE;
@@ -81,6 +84,7 @@ class DeviceConfig extends management
 
         // Set current item to 'root', this is the minimum to get things running.
         $idRoot = $this->addItem($root,'root',array());
+        $this->rootItemID = $idRoot;
         $this->setCurrentItem($idRoot);
         $this->setSelectedListItemID($idRoot);
 
@@ -155,7 +159,7 @@ class DeviceConfig extends management
         }
     
         // Get next free item slot.
-        $id = count($this->allConfiguredItems);
+        $id = ($this->lastItemID ++);
         $new = array(
                 'base' => $base,
                 'children' => array(),
@@ -248,7 +252,7 @@ class DeviceConfig extends management
             $this->itemContainerSelector = new ItemSelector(
                     $this->getContainerList(), 
                     $this->base, 
-                    $this->allConfiguredItems[0]['base']);
+                    $this->allConfiguredItems[$this->rootItemID]['base']);
         }else{
             $this->itemContainerSelector->setBases($this->getContainerList());
         }
@@ -272,7 +276,7 @@ class DeviceConfig extends management
      */
     function getContainerList($array = NULL)
     {
-        $array = ($array == NULL)?$this->allConfiguredItems[0]: $array;
+        $array = ($array == NULL)?$this->allConfiguredItems[$this->rootItemID]: $array;
         $ret[$array['base']] = $array['type'];
         if(count($array['children'])){
             foreach($array['children'] as $subItem){
@@ -471,7 +475,6 @@ class DeviceConfig extends management
         foreach($target as $id){
             $this->removeItem($id);
         }
-        print_a($this->allConfiguredItems);
     }
 
     
