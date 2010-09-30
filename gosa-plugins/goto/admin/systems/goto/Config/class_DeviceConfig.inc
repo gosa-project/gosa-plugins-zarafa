@@ -127,7 +127,7 @@ class DeviceConfig extends management
     function addItem($type,$name, $values = array())
     {
         if(!isset($this->itemConfig[$type])){
-            echo "Invalid type {$type}, skipping item!";
+            echo "Invalid type {$type}, skipping item!<br>";
             return;
         }
 
@@ -459,7 +459,44 @@ class DeviceConfig extends management
     }
 
 
-      // Inject user actions
+    /*! \brief  Initiates the removal for the given entries
+     *           and displays a confirmation dialog.
+     *
+     *  @param  String  'action'  The name of the action which was the used as trigger.
+     *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+     *  @param  Array   'all'     A combination of both 'action' and 'target'.
+     */
+    protected function removeEntryRequested($action="",$target=array(),$all=array())
+    {
+        foreach($target as $id){
+            $this->removeItem($id);
+        }
+        print_a($this->allConfiguredItems);
+    }
+
+    
+    function removeItem($id, &$data = NULL)
+    {
+        if($data === NULL){
+            $data = &$this->allConfiguredItems;
+        }
+
+        // Remove the item and its children
+        if(isset($data[$id])){
+            foreach($data[$id]['children'] as $cid => $item){
+                $this->removeItem($cid, $data);
+            }
+            unset($data[$id]);
+        }
+    
+        // Remove to current id from sub entries
+        foreach($data as $key => $item){
+            $this->removeItem($id, $data[$key]['children']);
+        }
+    }
+
+
+    // Inject user actions
     function detectPostActions()
     {
         $action = management::detectPostActions();
@@ -467,11 +504,6 @@ class DeviceConfig extends management
         if(isset($_POST['saveItemAdd'])) $action['action'] = "saveItemAdd";
         if(isset($_POST['cancelItemEdit'])) $action['action'] = "cancelItemEdit";
         if(isset($_POST['cancelItemAdd'])) $action['action'] = "cancelItemAdd";
-
-        if($action['action'] == 'remove'){
-             echo "Löschen geht nicht!";
-             $action['action'] = "";
-        }
         return($action);
     }
 
