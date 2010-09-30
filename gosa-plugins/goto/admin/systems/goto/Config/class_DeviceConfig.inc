@@ -306,9 +306,16 @@ class DeviceConfig extends management
 
         // Build up device-list configuration   
         $types ="";
+        $images = array();
+        $images[] = 'images/lists/edit.png';
+        $images[] = 'images/caps.png';
+        $images[] = 'images/lists/trash.png';
+        $images[] = 'images/filter.png';
+        $images[] = 'images/find.png';
+        $i = 0; 
         foreach($this->itemConfig as $type => $item){
             $desc = $item['description'];
-            $img = 'images/lists/trash.png';
+            $img = $images[$i++];
             $types .= 
                 "   <objectType>".
                 "     <label>{$desc}</label>".
@@ -322,13 +329,15 @@ class DeviceConfig extends management
 
 
         $items = "";
+        $i = 0;
         foreach($this->addableContainerItems as $item){
             $desc = $this->itemConfig[$item]['description'];
+            $img = $images[$i++];
             $items .=
                 "<action>".
                 "    <name>add_{$item}</name>".
                 "    <type>entry</type>".
-                "    <image>images/lists/edit.png</image>".
+                "    <image>{$img}</image>".
                 "    <label>{$desc}</label>".
                 "</action>";
         }
