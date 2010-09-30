@@ -66,38 +66,38 @@ class DeviceConfig extends management
         $this->is_account = TRUE;
 
         // Set current item to 'root', this is the minimum to get things running.
-        $this->addItem($root,'root',array());
-        $this->setCurrentItem('root');
-        $this->setBase($this->baseToDN['root']);
+        $idRoot = $this->addItem($root,'root',array());
+        $this->setCurrentItem($idRoot);
+        $this->setBase($this->baseToDN[$idRoot]);
 
-        $this->addItem('PuppetModule','test1',
+        $id = $this->addItem('PuppetModule','test1',
                 array(
                     'dependency' => array('stulle','Wurst'),
                     'version' => '2.4-f',
                     'name'  => 'Thundebird',
                     'description' => 'Mozilla mail client')
                 );
-        $this->addItem('PuppetModule','test2',
+        $id = $this->addItem('PuppetModule','test2',
                 array(
                     'dependency' => array('Leipnitz','Dose'),
                     'version' => 1,
                     'name'  => 'Firefox',
                     'description' => 'Test Module')
                 );
-        $this->setCurrentItem('test1');
-        $this->addItem('PuppetTemplate','temp1',
+        $this->setCurrentItem($id);
+        $id = $this->addItem('PuppetTemplate','temp1',
                 array(
                     'name' => 'temp1', 
                     'data' => 'kekse.tpl')
                 );
-        $this->setCurrentItem('temp1');
-        $this->addItem('PuppetTemplate','tep1',
+        $this->setCurrentItem($id);
+        $id = $this->addItem('PuppetTemplate','tep1',
                 array(
                     'name' => 'tep1',
                     'data' => 'kekse.tpl')
                 );
 
-        $this->setCurrentItem('root');
+        $this->setCurrentItem($idRoot);
         $this->rebuildListing();
     }
 
@@ -148,7 +148,7 @@ class DeviceConfig extends management
             $this->itemContainerSelector = new releaseSelector(
                     $this->getContainerList(), 
                     $this->base, 
-                    $this->currentItemValues['root']['base']);
+                    $this->currentItemValues[0]['base']);
         }else{
             $this->itemContainerSelector->setBases($this->getContainerList());
         }
@@ -172,7 +172,7 @@ class DeviceConfig extends management
      */
     function getContainerList($array = NULL)
     {
-        $array = ($array == NULL)?$this->currentItemValues['root']: $array;
+        $array = ($array == NULL)?$this->currentItemValues[0]: $array;
         $ret[$array['base']] = $array['type'];
         if(count($array['children'])){
             foreach($array['children'] as $subItem){
@@ -317,18 +317,22 @@ class DeviceConfig extends management
 
         $base = (isset($current['base']))? ",".$current['base'] : '';
         $base = "{$type}={$name}{$base}";
+        $id = count($this->currentItemValues);
 
         $new = array(
                 'base' => $base,
                 'children' => array(),
+                'id' => $id, 
                 'type' => $type, 
                 'name' => $name, 
                 'values' => $values);
-        $this->currentItemValues[$name] = $new;
-        $current['children'][$name] = &$this->currentItemValues[$name];
 
-        $this->baseToDN[$name] = $base;
-        $this->baseToDN[$base] = $name;
+        $this->currentItemValues[$id] = $new;
+        $current['children'][$id] = &$this->currentItemValues[$id];
+
+        $this->baseToDN[$id] = $base;
+        $this->baseToDN[$base] = $id;
+        return($id);
     }
     
 

@@ -31,15 +31,17 @@ class filterDeviceItems {
     {
         if(preg_match("/".$filter."/",$item['name'])){
             $entry = array();
-            $entry['dn'] = $item['name'];
+            $entry['dn'] = $item['id'];
             $entry[] = 'dn';
             $entry['cn'] = array($item['name'], 'count' => 1);
             $entry[] = 'cn';
+            $entry['id'] = array($item['id'], 'count' => 1);
+            $entry[] = 'id';
             $entry['description'] = array($item['type'], 'count' => 1);
             $entry[] = 'description';
             $entry['objectClass'] = array('FAKE_OC_DeviceItem','count' => 1);
             $entry[] = 'objectClass';
-            $entry['count'] = 3;
+            $entry['count'] = 4;
             $ret[] = $entry;
         }
 
