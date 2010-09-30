@@ -4,24 +4,40 @@
  */
 class DeviceConfig extends management
 {
-    private $TemplateEngine = NULL;
-    private $allConfiguredItems = array();
-    private $currentItem = array();
 
-    private $navigationList = NULL;
+    // Used to render the item-configuration dialog 
+    private $TemplateEngine = NULL;
+
+    // A list of all configured items for this device.
+    private $allConfiguredItems = array();
+
+    // The currently active item
+    // Add add and remove action will be performed on this item
+    private $currentItem = array();
+    
+    // A baseSelector which will be fed with a simulated 
+    //  department list. All entries will get a fake base
+    //  which can then be used to fill the baseSelector widget.
+    private $itemContainerSelector = NULL;
+
+    // The currently selected base within management list.
+    private $base ;
+
+    // This array contains a list of all item-types we can add 
+    //  to the currently selected item (currentItem) 
+    private $addableContainerItems = array();
+
+    // Due to the fakt that we use a fake 'base/dn' for all items
+    //  we've to map this 'base/dn' to the items 'id'.
+    private $mappingBaseToID = array();
+
+    // Some plugin related memebers which are not member of 
+    //  the management class. See class plugin.
+    public $is_account = FALSE;
+    public $ignore_account = FALSE;
     public $pl_notify;
     public $read_only;
 
-    private $itemContainerSelector = NULL;
-
-    private $base ;
-
-    public $is_account = FALSE;
-    public $ignore_account = FALSE;
-
-    private $mappingBaseToID = array();
-
-    private $addableContainerItems = array();
 
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
@@ -68,6 +84,7 @@ class DeviceConfig extends management
         $this->setCurrentItem($idRoot);
         $this->setSelectedListItemID($idRoot);
 
+        // Add some dummy entries for testing.
         $id = $this->addItem('PuppetModule','test1',
                 array(
                     'dependency' => array('stulle','Wurst'),
