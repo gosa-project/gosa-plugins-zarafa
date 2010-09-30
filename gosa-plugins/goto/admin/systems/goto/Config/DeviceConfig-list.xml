@@ -21,7 +21,7 @@
   </definition>
 
   <table>
-    <layout>|20px;c||80px|170px;r|</layout>
+    <layout>|20px;c|||170px;r|</layout>
 
     <column>
       <value>%{filter:objectType(dn,objectClass)}</value>
@@ -52,17 +52,7 @@
 
   <actionmenu>
 
-    <action>
-     <type>sub</type>
-     <image>images/lists/element.png[new]</image>
-     <label>Create</label>
-    <action>
-      <name>remove</name>
-      <type>entry</type>
-      <image>images/lists/trash.png</image>
-      <label>Blaa</label>
-    </action>
-    </action>
+    %ITEMS%
 
     <action>
       <name>remove</name>

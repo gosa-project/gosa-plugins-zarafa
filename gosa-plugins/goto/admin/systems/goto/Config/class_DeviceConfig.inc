@@ -23,6 +23,8 @@ class DeviceConfig extends management
 
     private $baseToDN = array();
 
+    private $addableContainerItems = array();
+
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
      */
@@ -109,13 +111,6 @@ class DeviceConfig extends management
     }
 
 
-    function cancelItemEdit()
-    {
-        $this->closeDialogs();
-        $this->dialog = FALSE;
-    }
-    
-    
     function saveItemChanges()
     {
         // Save eventually changed values
@@ -125,7 +120,6 @@ class DeviceConfig extends management
             }
         }
         $this->closeDialogs();
-        $this->dialog = FALSE;
     }
 
 
@@ -203,6 +197,33 @@ class DeviceConfig extends management
 
         // Load service xml file and fill in placeholders
         $contents =file_get_contents(get_template_path("goto/Config/DeviceConfig-list.xml", true));
+
+
+        $items = "";
+        foreach($this->addableContainerItems as $item){
+            $desc = $this->itemConfig[$item]['description'];
+            $items .=
+                "<action>".
+                "    <name>add_{$item}</name>".
+                "    <type>entry</type>".
+                "    <image>images/lists/edit.png</image>".
+                "    <label>{$desc}</label>".
+                "</action>";
+        }
+
+        if(!empty($item)){
+            $items = 
+
+                "<action>".
+                " <type>sub</type>".
+                " <image>images/lists/element.png[new]</image>".
+                " <label>Create</label>".
+                " {$items}".
+                "</action>";
+        }
+
+        $contents = preg_replace("/%ITEMS%/", $items, $contents);
+
         $headpage = new listing($contents,TRUE);
         $headpage->setBase($this->base);
         $headpage->setFilter($filter);
@@ -215,7 +236,56 @@ class DeviceConfig extends management
         $this->registerAction("editEntry",  "editEntry");
 
         $this->registerAction("saveItemChanges", "saveItemChanges");
-        $this->registerAction("cancelItemEdit", "cancelItemEdit");
+        $this->registerAction("cancelItemEdit", "closeDialogs");
+        $this->registerAction("cancelItemAdd", "closeDialogs");
+        $this->registerAction("saveItemAdd", "saveItemAdd");
+        foreach($this->itemConfig as $name => $item){
+            $this->registerAction("add_{$name}", "newEntry");
+        }
+    }
+
+
+    /*! \brief  This method intiates the object creation.
+     *
+     *  @param  String  'action'  The name of the action which was the used as trigger.
+     *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+     *  @param  Array   'all'     A combination of both 'action' and 'target'.
+     */
+    function newEntry($action="",$target=array(),$all=array(), 
+            $altTabClass ="", $altTabType = "", $altAclCategory="")
+    {
+        $toAdd = preg_replace("/^add_/", "",$action);
+        $itemToAdd = $this->itemConfig[$toAdd];
+
+        $this->dialogObject = new AddItemDialog($this->config,$toAdd,$itemToAdd);
+        $this->dialog = true;
+    }
+
+    
+    function saveItemAdd()
+    {
+        if(!$this->dialogObject instanceOf AddItemDialog) return;
+
+        $msgs = $this->dialogObject->save_object();
+        $msgs = $this->dialogObject->check();
+        if(count($msgs)){
+            msg_dialog::displayChecks($msgs);
+        }else{
+            $itemName = $this->dialogObject->getName();
+            $itemCfg = $this->dialogObject->getItemCfg();
+            $itemType = $this->dialogObject->getItemType();
+
+            $this->setCurrentItem($this->baseToDN[$this->base]);
+    
+            $this->addItem($itemType, $itemName);
+            $this->closeDialogs();
+
+#           $this->setCurrentItem($itemName);
+#           $this->dialogObject = $this->TemplateEngine;
+#           $this->skipFooter = TRUE;
+#           $this->dialog = TRUE;
+
+        }
     }
 
 
@@ -226,7 +296,7 @@ class DeviceConfig extends management
      *  @param  Array   values  The initial values for this object.
      *  @return 
      */
-    function addItem($type,$name, $values)
+    function addItem($type,$name, $values = array())
     {
         if(!isset($this->itemConfig[$type])){
             echo "Invalid type {$type}, skipping item!";
@@ -234,10 +304,9 @@ class DeviceConfig extends management
         }
 
         $allValuesSet = TRUE;
-        foreach($this->itemConfig[$type]['options'] as $oName => $option){
+        foreach($this->itemConfig[$type]['options'] as $oName => $oValue){
             if(!isset($values[$oName])){
-                echo "Missing value for option {$oName}! Skipping addItem({$type},{$name},array())!<br>";
-                return;
+                $values[$oName] = $oValue;
             }
         }
 
@@ -343,6 +412,7 @@ class DeviceConfig extends management
     {
         $this->base = $base;
         $item = $this->currentItemValues[$this->baseToDN[$base]];
+        $this->addableContainerItems = $this->itemConfig[$item['type']]['container'];
     }
 
 
@@ -376,13 +446,22 @@ class DeviceConfig extends management
     {
         $action = management::detectPostActions();
         if(isset($_POST['saveItemEdit'])) $action['action'] = "saveItemChanges";
+        if(isset($_POST['saveItemAdd'])) $action['action'] = "saveItemAdd";
         if(isset($_POST['cancelItemEdit'])) $action['action'] = "cancelItemEdit";
+        if(isset($_POST['cancelItemAdd'])) $action['action'] = "cancelItemAdd";
 
         if($action['action'] == 'remove'){
              echo "Löschen geht nicht!";
              $action['action'] = "";
         }
         return($action);
+    }
+
+    
+    function closeDialogs()
+    {
+        parent::closeDialogs();
+        $this->dialog = false;
     }
    
  
