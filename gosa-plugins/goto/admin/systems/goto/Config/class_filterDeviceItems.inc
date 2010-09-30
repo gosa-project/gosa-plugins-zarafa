@@ -7,8 +7,11 @@ class filterDeviceItems {
         // Walk through the data array till we reach the correct level, then 
         //  create the list of entries.
         $data = session::get('DEVICE_ITEMS');
-        foreach(array_reverse(preg_split("/[,]*cn=/", $base,0,PREG_SPLIT_NO_EMPTY)) as $name){
-            $data = $data[$name]['children'];            
+        foreach($data as $id => $item){
+            if($item['base'] == $base){
+                $data = $item['children'];
+                break;;
+            }
         }
 
         // Prepare filter, strip out regex regex related chars, except for *

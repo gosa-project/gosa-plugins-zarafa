@@ -316,7 +316,7 @@ class DeviceConfig extends management
         $this->idToName[] = $name;
 
         $base = (isset($current['base']))? ",".$current['base'] : '';
-        $base = "cn={$name}{$base}";
+        $base = "{$type}={$name}{$base}";
 
         $new = array(
                 'base' => $base,
