@@ -102,7 +102,8 @@ class DeviceConfig extends management
     }
 
 
-    function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+    function editEntry($action="",$target=array(),$all=array(), 
+            $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
         $this->setCurrentItem($target[0]);
         $this->dialogObject = $this->TemplateEngine;
@@ -123,7 +124,8 @@ class DeviceConfig extends management
     }
 
 
-    function openEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+    function openEntry($action="",$target=array(),$all=array(), 
+            $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
         $this->setBase($this->currentItemValues[$target[0]]['base']);
     }
@@ -351,26 +353,6 @@ class DeviceConfig extends management
         // Update the template engine to use another type of item and 
         //  some other values.
         $this->TemplateEngine->setValues($this->currentItemType,$this->currentItem['values']);
-    }
-
-
-    /*! \brief  Renders the HTML content for the device-config plugin. 
-     *  @return String  The generated HTML code. 
-     */
-    function _execute()
-    {
-        $smarty = get_smarty();
-
-        // Generate item list
-        $list = $this->getItemList();
-
-        // Assign current item info
-        $smarty->assign('containerName', $this->currentItemDescriptor['name']);
-        $smarty->assign('containerDescription', $this->currentItemDescriptor['description']);
-
-        // Assign the generated HTML of Widgets.
-        $smarty->assign('template',$this->TemplateEngine->render());
-        return($smarty->fetch(get_template_path('goto/Config/DeviceConfig.tpl', TRUE)));
     }
 
 
