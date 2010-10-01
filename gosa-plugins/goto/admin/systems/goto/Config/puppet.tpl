@@ -24,6 +24,8 @@
         </tr>
     </table>
 
+    {$fixedList}
+    {$fixedListName}
 {/if}
 {if $type == 'PuppetTemplate'}
     <table>

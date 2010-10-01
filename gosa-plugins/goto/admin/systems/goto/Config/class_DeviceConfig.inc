@@ -139,7 +139,7 @@ class DeviceConfig extends management
         $allValuesSet = TRUE;
         foreach($this->itemConfig[$type]['options'] as $oName => $oValue){
             if(!isset($values[$oName])){
-                $values[$oName] = $oValue;
+                $values[$oName] = (isset($oValue['default']))?$oValue['default']:"";
             }
         }
 
