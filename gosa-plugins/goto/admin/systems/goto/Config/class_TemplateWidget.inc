@@ -108,6 +108,12 @@ class TemplateWidget
      */
     function check()
     {
+        if($this->required && empty($this->value)){
+            return(array(msgPool::required($this->display)));
+        }
+        if(!empty($this->value) && !empty($this->syntax) && !preg_match("/".$this->syntax."/", $this->value)){
+            return(array(msgPool::invalid($this->display, $this->value, "/".$this->syntax."/")));
+        }
         return(array());
     }
 }
