@@ -1942,7 +1942,8 @@ sub watch_for_delivery_messages {
     my ($kernel, $heap) = @_[KERNEL, HEAP];
 
     # select outgoing messages
-    my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( flag='p' AND direction='out' )";
+    my $timestamp= &get_time();
+    my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( flag='p' AND direction='out' AND delivery_time<$timestamp)";
     #&daemon_log("0 DEBUG: $sql", 7);
     my $res = $messaging_db->exec_statement( $sql_statement );
     
