@@ -220,11 +220,18 @@ class DeviceConfig extends management
     {
         // Save eventually changed values
         if($this->currentItem){
-            foreach($this->TemplateEngine->getWidgets() as $widget){
-                $this->currentItem['values'][$widget->getName()] = $widget->getValue();
+
+            // Check if everything is fine.
+            $msgs = $this->TemplateEngine->check();
+            if(count($msgs)){
+                msg_dialog::displayChecks($msgs);
+            }else{
+                foreach($this->TemplateEngine->getWidgets() as $widget){
+                    $this->currentItem['values'][$widget->getName()] = $widget->getValue();
+                }
+                $this->closeDialogs();
             }
         }
-        $this->closeDialogs();
     }
 
 

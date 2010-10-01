@@ -12,6 +12,7 @@ class TemplateWidget
     protected $required = "";
     protected $type = "";
     protected $display = "";
+    protected $syntax = "";
 
     /*! \brief  Constructs the template widget and sets the default values.
      *  @param  Config  The GOsa configuration object.
@@ -22,7 +23,7 @@ class TemplateWidget
      *  @param  String  The widget type. 
      *  @param  String  A display name for the widget.
      */
-    function __construct(&$config, $name, $value, $description,$required,$type,$display)
+    function __construct(&$config, $name, $value, $description,$syntax,$required,$type,$display)
     {
         $this->config = &$config;
         $this->name = $name;
@@ -42,7 +43,16 @@ class TemplateWidget
      */
     function getDisplayName()
     {
-        return($this->display);
+        $must = ($this->required)?"<span class='required'>*</span>":"";
+        return($this->display.$must);
+    }
+
+
+    /*! \brief  Returns the description for the widget.
+     */
+    function getDescription()
+    {
+        return($this->description);
     }
 
 
@@ -89,6 +99,15 @@ class TemplateWidget
     function setValue($value)
     {
         $this->value = $value;
+    }
+
+
+    /*! \brief  Check the value entry using the provieded syntax.
+     * @return  Array   Returns a list of errors
+     */
+    function check()
+    {
+        return(array());
     }
 }
 ?>

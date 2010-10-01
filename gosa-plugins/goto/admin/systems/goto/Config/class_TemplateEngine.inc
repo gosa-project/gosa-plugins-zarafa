@@ -85,11 +85,13 @@ class TemplateEngine
 
                 // Prepare the value for the widget 
                 $value = $values[$name];
-
+                $syntax = (isset($item['syntax']))? $item['syntax']: "";
+    
                 // Create the new widget.
                 $this->widgets[$name] = new $widgetClassName($this->config, $name, 
                         $value,
                         $item['description'],
+                        $syntax,
                         $item['required'],
                         $item['type'],
                         $item['display']);
@@ -131,6 +133,18 @@ class TemplateEngine
         foreach($this->widgets as $widget){
             $widget->save_object();
         }
+    }
+
+
+    /*! \brief  Check widget values and return a list of errors.
+     */
+    function check()
+    {
+        $msgs = array();
+        foreach($this->widgets as $widget){
+            $msgs = array_merge($msgs, $widget->check());
+        }
+        return($msgs);
     }
 }
 

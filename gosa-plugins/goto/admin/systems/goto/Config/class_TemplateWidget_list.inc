@@ -2,9 +2,9 @@
 
 class TemplateWidget_list extends TemplateWidget
 {
-    function __construct(&$config, $name, $value, $description,$required,$type,$display)
+    function __construct(&$config, $name, $value, $description,$syntax,$required,$type,$display)
     {
-        parent:: __construct($config, $name, $value, $description,$required,$type,$display);
+        parent:: __construct($config, $name, $value, $description,$syntax,$required,$type,$display);
 
         $this->listWidget= new sortableListing($this->value);
         $this->listWidget->setEditable(false);
