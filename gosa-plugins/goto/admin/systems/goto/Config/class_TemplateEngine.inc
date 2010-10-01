@@ -86,6 +86,7 @@ class TemplateEngine
                 // Prepare the value for the widget 
                 $value = $values[$name];
                 $syntax = (isset($item['syntax']))? $item['syntax']: "";
+                $providedValues = (isset($item['values']))? $item['values']: array();
    
                 // Create the new widget.
                 $this->widgets[$name] = new $widgetClassName($this->config, $name, 
@@ -94,7 +95,8 @@ class TemplateEngine
                         $syntax,
                         $item['required'],
                         $item['type'],
-                        $item['display']);
+                        $item['display'],
+                        $providedValues);
             }
         }
     }

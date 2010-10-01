@@ -13,6 +13,7 @@ class TemplateWidget
     protected $type = "";
     protected $display = "";
     protected $syntax = "";
+    protected $values = "";
 
     /*! \brief  Constructs the template widget and sets the default values.
      *  @param  Config  The GOsa configuration object.
@@ -23,7 +24,7 @@ class TemplateWidget
      *  @param  String  The widget type. 
      *  @param  String  A display name for the widget.
      */
-    function __construct(&$config, $name, $value, $description,$syntax,$required,$type,$display)
+    function __construct(&$config, $name, $value, $description,$syntax,$required,$type,$display, $values=array())
     {
         $this->config = &$config;
         $this->name = $name;
@@ -32,6 +33,7 @@ class TemplateWidget
         $this->required = $required;
         $this->type = $type;
         $this->syntax = $syntax;
+        $this->values = $values;
         $this->display = $display;
         $class = get_class();
         $this->postName = "{$class}_{$this->name}";
