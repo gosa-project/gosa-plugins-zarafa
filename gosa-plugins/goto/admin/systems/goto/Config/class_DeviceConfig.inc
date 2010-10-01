@@ -202,6 +202,36 @@ class DeviceConfig extends management
     }
 
 
+    /*! \brief      Removes a given item ID.
+     *  @param  String  The 'id' of the item we want to remove.
+     *  @return 
+     */
+    function removeItem($id, &$data = NULL)
+    {
+        if($data === NULL){
+            $data = &$this->allConfiguredItems;
+        }
+
+        // Remove the item and its children
+        if(isset($data[$id])){
+            foreach($data[$id]['children'] as $cid => $item){
+                $this->removeItem($cid, $data);
+            }
+            unset($data[$id]);
+        }
+    
+        // Remove to current id from sub entries
+        foreach($data as $key => $item){
+            $this->removeItem($id, $data[$key]['children']);
+        }
+    }
+
+
+    /*! \brief      Initiate item edit.
+     *              An action send from the management list.
+     *  @param  See management::editEntry 
+     *  @return 
+     */
     function editEntry($action="",$target=array(),$all=array(), 
             $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
@@ -216,6 +246,8 @@ class DeviceConfig extends management
     }
 
 
+    /*! \brief      Save changes for the currently edited item.
+     */
     function saveItemChanges()
     {
         // Save eventually changed values
@@ -235,6 +267,8 @@ class DeviceConfig extends management
     }
 
 
+    /*! \brief      React on open requests from the management list 
+     */
     function openEntry($action="",$target=array(),$all=array(), 
             $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
@@ -400,6 +434,9 @@ class DeviceConfig extends management
     }
 
     
+    /*! \brief   Saves newly created items and adds them as child to 
+     *            the currently selected item.
+     */
     function saveItemAdd()
     {
         if(!$this->dialogObject instanceOf AddItemDialog) return;
@@ -434,10 +471,6 @@ class DeviceConfig extends management
      */
     function save_object()
     {
-        if($this->dialogObject){
-            $this->TemplateEngine->save_object();
-        }
-
         // Add sub-module requested.
         if(isset($_POST['addSubModule']) && isset($_POST['subModule'])){
             $sub = get_post('subModule');
@@ -461,7 +494,9 @@ class DeviceConfig extends management
         $this->setSelectedListItemID($id);
     }
 
-   
+
+    /* \brief   Updates the currenlty seleted item in the management list
+     */   
     function setSelectedListItemID($id)
     {
         $this->base = $this->mappingBaseToID[$id];
@@ -510,27 +545,6 @@ class DeviceConfig extends management
     }
 
     
-    function removeItem($id, &$data = NULL)
-    {
-        if($data === NULL){
-            $data = &$this->allConfiguredItems;
-        }
-
-        // Remove the item and its children
-        if(isset($data[$id])){
-            foreach($data[$id]['children'] as $cid => $item){
-                $this->removeItem($cid, $data);
-            }
-            unset($data[$id]);
-        }
-    
-        // Remove to current id from sub entries
-        foreach($data as $key => $item){
-            $this->removeItem($id, $data[$key]['children']);
-        }
-    }
-
-
     // Inject user actions
     function detectPostActions()
     {

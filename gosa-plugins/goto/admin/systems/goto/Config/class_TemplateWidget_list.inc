@@ -39,8 +39,24 @@ class TemplateWidget_list extends TemplateWidget
 
         if(isset($_POST["{$this->postName}_Add"]) && isset($_POST["{$this->postName}_Input"])){
             $input = get_post("{$this->postName}_Input");
-            $this->value[] = $input;
+
+            if(!empty($input) && !empty($this->syntax) && !preg_match("/".$this->syntax."/", $input)){
+                msg_dialog::displayChecks(array(msgPool::invalid($this->display, $input, "/".$this->syntax."/")));
+            }elseif(!empty($input)){
+                $this->value[] = $input;
+            }
         }
+    }
+
+    /*! \brief  Check the value entry using the provieded syntax.
+     * @return  Array   Returns a list of errors
+     */
+    function check()
+    {
+        if($this->required && empty($this->value)){
+            return(array(msgPool::required($this->display)));
+        }
+        return(array());
     }
 }
 
