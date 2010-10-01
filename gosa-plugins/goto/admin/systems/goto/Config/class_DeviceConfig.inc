@@ -524,7 +524,10 @@ class DeviceConfig extends management
     {
         foreach($this->allConfiguredItems as $name => $item){
             foreach($item['values'] as $oName => $oValue){
-                echo "<br>{$name} -- <i>{$item['type']}</i>: <b>{$oName}</b>: {$oValue}";
+                if(!is_array($oValue)) $oValue = array($oValue);
+                foreach($oValue as $val){
+                    echo "<br>{$name} -- <i>{$item['type']}</i>: <b>{$oName}</b>: {$val}";
+                }
             }
         }
     }
