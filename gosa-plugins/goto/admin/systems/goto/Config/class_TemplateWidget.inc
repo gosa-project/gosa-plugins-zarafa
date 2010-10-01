@@ -31,6 +31,7 @@ class TemplateWidget
         $this->description = $description;
         $this->required = $required;
         $this->type = $type;
+        $this->syntax = $syntax;
         $this->display = $display;
         $class = get_class();
         $this->postName = "{$class}_{$this->name}";
