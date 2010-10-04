@@ -23,9 +23,11 @@
             </td>
         </tr>
     </table>
+    {$textEditorName}
+    {$textEditor}
 
-    {$fixedList}
     {$fixedListName}
+    {$fixedList}
 {/if}
 {if $type == 'PuppetTemplate'}
     <table>
