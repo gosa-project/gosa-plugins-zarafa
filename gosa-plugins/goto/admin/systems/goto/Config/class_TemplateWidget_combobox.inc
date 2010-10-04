@@ -1,6 +1,6 @@
 <?php
 
-class TemplateWidget_comboBox extends TemplateWidget
+class TemplateWidget_combobox extends TemplateWidget
 {
     function render()
     {
