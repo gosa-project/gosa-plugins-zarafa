@@ -254,6 +254,7 @@ class DeviceConfig extends management
         if($this->currentItem){
 
             // Check if everything is fine.
+            $msgs = $this->TemplateEngine->save_object();
             $msgs = $this->TemplateEngine->check();
             if(count($msgs)){
                 msg_dialog::displayChecks($msgs);
