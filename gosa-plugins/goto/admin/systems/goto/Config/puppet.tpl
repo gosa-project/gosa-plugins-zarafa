@@ -23,10 +23,20 @@
             </td>
         </tr>
     </table>
-    {$textEditorName}
+    <hr>
+    {$checkboxName}
+    {$checkbox}
+
+    <hr>
+    {$comboBoxName}
+    {$comboBox}
+
+    <hr>
+    {$textEditorName}<br>
     {$textEditor}
 
-    {$fixedListName}
+    <hr>
+    {$fixedListName}<br>
     {$fixedList}
 {/if}
 {if $type == 'PuppetTemplate'}
