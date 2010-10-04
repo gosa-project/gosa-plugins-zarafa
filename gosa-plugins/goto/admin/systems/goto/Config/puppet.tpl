@@ -28,8 +28,8 @@
     {$checkbox}
 
     <hr>
-    {$comboBoxName}
-    {$comboBox}
+    {$comboboxName}
+    {$combobox}
 
     <hr>
     {$textEditorName}<br>
