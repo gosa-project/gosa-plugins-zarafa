@@ -74,16 +74,15 @@ class DeviceConfig extends management
     {
         $this->is_account = FALSE;
         if(!isset($this->allItemConfigurations[$str])){
-            trigger_error("Invalid install method '{$str}'!");
             $this->itemConfig = array();
             $this->invalidInstallMethod =TRUE;
             $this->errorMessage = sprintf(_("Invalid installation method selected '%s'!"), $str);
+            msg_dialog::display(_("Setup"), $this->errorMessage, ERROR_DIALOG);
+            return(FALSE);
         }else{
 
             $this->itemConfig = $this->allItemConfigurations[$str]['items'];
             $this->invalidInstallMethod =FALSE;
-
-            // Load the template 
             $this->TemplateEngine->load($this->itemConfig);
 
             // Detect root item, its name is / 
@@ -95,11 +94,11 @@ class DeviceConfig extends management
                 }
             }
             if(!$root){
-                $this->errorMessage = _("No valid install methods returned, missing root object!");
+                $this->errorMessage = sprintf(_("Installation method '%s' is invalid, no root object found!"), $str);
                 msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
                 $this->initFailed = TRUE;
                 $this->itemConfig = array();
-                return;
+                return(FALSE);
             }
 
             // Set current item to 'root', this is the minimum to get things running.
@@ -109,6 +108,7 @@ class DeviceConfig extends management
             $this->setSelectedListItemID($idRoot);
             $this->is_account = TRUE;
             $this->rebuildListing();
+            return(TRUE);
         }
     }
 
