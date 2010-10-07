@@ -34,13 +34,18 @@ class DeviceConfig extends management
     private $rootItemID;
     private $lastItemID = 1;
 
+    private $rpcError = FALSE;
+    private $initFailed = FALSE;
+
     // Some plugin related memebers which are not member of 
     //  the management class. See class plugin.
+    public $initTime;
     public $is_account = FALSE;
     public $ignore_account = FALSE;
     public $pl_notify;
     public $read_only;
 
+    public $allItemConfigurations = NULL;
 
     /*! \brief  Constructs the device configuration plugin 
      *  @param  Config  The GOsa configuration object.
@@ -55,14 +60,47 @@ class DeviceConfig extends management
 
         // Set storage points - We do not have any - We just create a fake list which lists all items
         $this->storagePoints = array("");
+        
+        // Try to initialize
+        $this->init();
+    }
 
-        // CREATE Dummy entry 
-        $str = file_get_contents('/home/hickert/json.txt');
-        $items = json_decode($str, TRUE);
+    
+    function setInstallMethod($str)
+    {
+        if(!isset($this->allItemConfigurations[$str])){
+            trigger_error("Invalid install method '{$str}'!");
+        }else{
+            $this->itemConfig = $this->allItemConfigurations[$str]['items'];
+        }
+    }
 
-        // Load the item-configuration description to populate the 
-        //  the available modules.
-        $this->itemConfig = $items['items'];
+
+    function init()
+    {
+        // Reset erros
+        $this->rpcError = $this->initFailed = FALSE;
+
+        // Load configuration via rpc.
+        $rpc = $this->config->getRpcHandle();
+
+        // Populate install methods on success.
+        $res = $rpc->getSupportedInstallMethods();
+        if(!$rpc->success() ||  TRUE){
+            $this->rpcError = TRUE;
+            return;
+        }       
+        $this->allItemConfigurations = $res;
+        if(!count($this->allItemConfigurations)){
+            msg_dialog::display(_("Setup"), _("No selectable install methods returned!", ERROR_DIALOG));
+            $this->initFailed = TRUE;
+            return;
+        }
+
+        // As default select the first entry
+        $this->setInstallMethod(key($this->allItemConfigurations));
+
+        // Load the template 
         $this->TemplateEngine->load($this->itemConfig);
 
         // Detect root item, its name is / 
@@ -282,6 +320,17 @@ class DeviceConfig extends management
      */
     function renderList()
     {
+
+        echo "<h3>Hier weiter machen, was passiert wenn init oder rpc fehlschlägt.</h3>";
+
+        // In case of an error abort here.
+        if($this->rpcError){
+            $smarty = get_smarty();
+            $smarty->assign('initFailed', $this->initFailed);
+            $smarty->assign('rpcError', $this->rpcError);
+            return($smarty->fetch(get_template_path('goto/Config/failed.tpl', TRUE)));
+        }
+
         // Do we represent a valid account
         if (!$this->is_account){
             $str = "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
@@ -472,6 +521,9 @@ class DeviceConfig extends management
      */
     function save_object()
     {
+        // Do nothing else in case of an error
+        if($this->rpcError || $this->initFailed) return;
+
         // Add sub-module requested.
         if(isset($_POST['addSubModule']) && isset($_POST['subModule'])){
             $sub = get_post('subModule');
@@ -552,6 +604,8 @@ class DeviceConfig extends management
     // Inject user actions
     function detectPostActions()
     {
+        if($this->rpcError || $this->initFailed) return(array('action' => ''));
+
         $action = management::detectPostActions();
         if(isset($_POST['saveItemEdit'])) $action['action'] = "saveItemChanges";
         if(isset($_POST['saveItemAdd'])) $action['action'] = "saveItemAdd";
