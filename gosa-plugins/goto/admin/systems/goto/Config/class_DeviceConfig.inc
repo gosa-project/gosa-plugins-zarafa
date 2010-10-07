@@ -70,6 +70,12 @@ class DeviceConfig extends management
     }
 
     
+    /*! \brief  Sets the installation method to the given method.
+     *          Updates the template engine and adds the initial root 
+     *           object for the selected method.
+     *  @param  The method to use.
+     *  @return TRUE on success else FALSE. 
+     */
     function setInstallMethod($str)
     {
         $this->is_account = FALSE;
@@ -113,6 +119,10 @@ class DeviceConfig extends management
     }
 
 
+    /*! \brief  Intializes this plugin
+     *          All available installation methods will be loaded
+     *           and populated.
+     */
     function init()
     {
         // Reset erros
