@@ -36,6 +36,7 @@ class DeviceConfig extends management
 
     private $rpcError = FALSE;
     private $initFailed = FALSE;
+    private $errorMessage = "";
 
     // Some plugin related memebers which are not member of 
     //  the management class. See class plugin.
@@ -86,13 +87,15 @@ class DeviceConfig extends management
 
         // Populate install methods on success.
         $res = $rpc->getSupportedInstallMethods();
-        if(!$rpc->success() ||  TRUE){
+        if(!$rpc->success()){
             $this->rpcError = TRUE;
+            $this->errorMessage = $rpc->get_error();;
             return;
         }       
         $this->allItemConfigurations = $res;
         if(!count($this->allItemConfigurations)){
-            msg_dialog::display(_("Setup"), _("No selectable install methods returned!", ERROR_DIALOG));
+            $this->errorMessage = _("No selectable install methods returned!");
+            msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
             $this->initFailed = TRUE;
             return;
         }
@@ -112,9 +115,9 @@ class DeviceConfig extends management
             }
         }
         if(!$root){
-            echo 'No root found!';
-            $this->rebuildListing();
-            $this->is_account = FALSE;
+            $this->errorMessage = _("No valid install methods returned, missing root object!");
+            msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
+            $this->initFailed = TRUE;
             return;
         }
 
@@ -320,14 +323,12 @@ class DeviceConfig extends management
      */
     function renderList()
     {
-
-        echo "<h3>Hier weiter machen, was passiert wenn init oder rpc fehlschlägt.</h3>";
-
         // In case of an error abort here.
         if($this->rpcError){
             $smarty = get_smarty();
             $smarty->assign('initFailed', $this->initFailed);
             $smarty->assign('rpcError', $this->rpcError);
+            $smarty->assign('error', $this->errorMessage);
             return($smarty->fetch(get_template_path('goto/Config/failed.tpl', TRUE)));
         }
 
@@ -521,6 +522,11 @@ class DeviceConfig extends management
      */
     function save_object()
     {
+        if(isset($_POST['retryInit'])){
+            $this->init();
+            return;
+        }
+            
         // Do nothing else in case of an error
         if($this->rpcError || $this->initFailed) return;
 
