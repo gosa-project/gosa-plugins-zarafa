@@ -3,11 +3,11 @@
 class InstallRecipe extends plugin
 {
 
-    public $kickstartBootstrapMethod = 'debian';
+    public $kickstartBootstrapMethod = '';
     public $kickstartBootstrapMethodList = NULL;
 
-    public $kickstartConfigManagement = 'puppet';
-    public $kickstartConfigManagementList = array('fai' => 'FAI','puppet' => 'Puppet');
+    public $kickstartConfigManagement = '';
+    public $kickstartConfigManagementList = NULL;
 
     public $kickstartTemplateDN = "";
     public $kickstartTemplateDNList = array(
@@ -92,24 +92,31 @@ class InstallRecipe extends plugin
         $this->kickstartNTPServerList->setHeight("70px");
 
         // Load list of bootstrap methods.
-        $this->kickstartBootstrapMethodList = $this->getBootstrapMethods();
+        $this->loadInstallationMethods();
     }
 
     
-    function getBootstrapMethods()
-    {
-        $str = file_get_contents('/home/hickert/bootstrap.json');
-        $items = json_decode($str, TRUE);
-        if(is_array($items)){
-            $ret = array();
-            foreach($items as $bst){
-                $ret[$bst['name']]= $bst['title'];
+    function loadInstallationMethods()
+    { 
+        $this->kickstartBootstrapMethodList = array();
+        $this->kickstartConfigManagementList = array();
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getSupportedBaseInstallMethods();
+        foreach($res as $name => $method){
+            $this->kickstartBootstrapMethodList[$name] = $method['name'];
+            foreach($method['methods'] as $m){
+                $this->kickstartConfigManagementList[$name][$m] = $m; 
             }
-            return($ret);
         }
-        return(NULL);
+        
+        if(empty($this->kickstartBootstrapMethod)){
+            $this->kickstartBootstrapMethod = key($this->kickstartBootstrapMethodList);
+        }
+        if(empty($this->kickstartConfigManagement)){
+            $this->kickstartConfigManagement = key($this->kickstartConfigManagementList[$this->kickstartBootstrapMethod]);
+        }
     }
-
+    
 
     function execute()
     {
@@ -137,7 +144,9 @@ class InstallRecipe extends plugin
         $smarty->assign('kickstartBootstrapMethod', $this->kickstartBootstrapMethod);
         $smarty->assign('kickstartBootstrapMethodList', $this->kickstartBootstrapMethodList);
         $smarty->assign('kickstartConfigManagement', $this->kickstartConfigManagement);
-        $smarty->assign('kickstartConfigManagementList', $this->kickstartConfigManagementList);
+
+        $cfgList = $this->kickstartConfigManagementList[$this->kickstartBootstrapMethod];
+        $smarty->assign('kickstartConfigManagementList', $cfgList);
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
@@ -249,7 +258,7 @@ class InstallRecipe extends plugin
                 return;
             }
 
-            $this->parent->by_name['DeviceConfig'] = $this->kickstartConfigManagementList[$mode];
+            $this->parent->by_name['DeviceConfig'] = $mode ;
             $this->parent->by_object['DeviceConfig'] = &$this->recipeTabs[$mode];
         }else{
             if(isset($this->parent->by_name['DeviceConfig'])){
