@@ -32,10 +32,12 @@ class DeviceConfig extends management
     private $mappingBaseToID = array();
 
     private $rootItemID;
+    private $itemConfig = array();
     private $lastItemID = 1;
 
     private $rpcError = FALSE;
     private $initFailed = FALSE;
+    private $invalidInstallMethod = FALSE;
     private $errorMessage = "";
 
     // Some plugin related memebers which are not member of 
@@ -64,15 +66,49 @@ class DeviceConfig extends management
         
         // Try to initialize
         $this->init();
+        $this->rebuildListing();
     }
 
     
     function setInstallMethod($str)
     {
+        $this->is_account = FALSE;
         if(!isset($this->allItemConfigurations[$str])){
             trigger_error("Invalid install method '{$str}'!");
+            $this->itemConfig = array();
+            $this->invalidInstallMethod =TRUE;
+            $this->errorMessage = sprintf(_("Invalid installation method selected '%s'!"), $str);
         }else{
+
             $this->itemConfig = $this->allItemConfigurations[$str]['items'];
+            $this->invalidInstallMethod =FALSE;
+
+            // Load the template 
+            $this->TemplateEngine->load($this->itemConfig);
+
+            // Detect root item, its name is / 
+            $root = NULL;
+            foreach($this->itemConfig as $key => $item){
+                if($item['name'] == '/') {
+                    $root = $key;
+                    break;
+                }
+            }
+            if(!$root){
+                $this->errorMessage = _("No valid install methods returned, missing root object!");
+                msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
+                $this->initFailed = TRUE;
+                $this->itemConfig = array();
+                return;
+            }
+
+            // Set current item to 'root', this is the minimum to get things running.
+            $idRoot = $this->addItem($root,'root',array());
+            $this->rootItemID = $idRoot;
+            $this->setCurrentItem($idRoot);
+            $this->setSelectedListItemID($idRoot);
+            $this->is_account = TRUE;
+            $this->rebuildListing();
         }
     }
 
@@ -99,66 +135,6 @@ class DeviceConfig extends management
             $this->initFailed = TRUE;
             return;
         }
-
-        // As default select the first entry
-        $this->setInstallMethod(key($this->allItemConfigurations));
-
-        // Load the template 
-        $this->TemplateEngine->load($this->itemConfig);
-
-        // Detect root item, its name is / 
-        $root = NULL;
-        foreach($this->itemConfig as $key => $item){
-            if($item['name'] == '/') {
-                $root = $key;
-                break;
-            }
-        }
-        if(!$root){
-            $this->errorMessage = _("No valid install methods returned, missing root object!");
-            msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
-            $this->initFailed = TRUE;
-            return;
-        }
-
-        $this->is_account = TRUE;
-
-        // Set current item to 'root', this is the minimum to get things running.
-        $idRoot = $this->addItem($root,'root',array());
-        $this->rootItemID = $idRoot;
-        $this->setCurrentItem($idRoot);
-        $this->setSelectedListItemID($idRoot);
-
-        // Add some dummy entries for testing.
-        $id = $this->addItem('PuppetModule','test1',
-                array(
-                    'dependency' => array('stulle','Wurst'),
-                    'version' => '2.4-f',
-                    'name'  => 'Thundebird',
-                    'description' => 'Mozilla mail client')
-                );
-        $id = $this->addItem('PuppetModule','test2',
-                array(
-                    'dependency' => array('Leipnitz','Dose'),
-                    'version' => 1,
-                    'name'  => 'Firefox',
-                    'description' => 'Test Module')
-                );
-        $this->setCurrentItem($id);
-        $id = $this->addItem('PuppetTemplate','temp1',
-                array(
-                    'name' => 'temp1', 
-                    'data' => 'kekse.tpl')
-                );
-        $this->setCurrentItem($id);
-        $id = $this->addItem('PuppetTemplate','tep1',
-                array(
-                    'name' => 'tep1',
-                    'data' => 'kekse.tpl')
-                );
-
-        $this->setCurrentItem($idRoot);
-        $this->rebuildListing();
     }
 
 
@@ -324,10 +300,11 @@ class DeviceConfig extends management
     function renderList()
     {
         // In case of an error abort here.
-        if($this->rpcError){
+        if($this->rpcError || $this->initFailed || $this->invalidInstallMethod){
             $smarty = get_smarty();
             $smarty->assign('initFailed', $this->initFailed);
             $smarty->assign('rpcError', $this->rpcError);
+            $smarty->assign('invalidInstallMethod', $this->invalidInstallMethod);
             $smarty->assign('error', $this->errorMessage);
             return($smarty->fetch(get_template_path('goto/Config/failed.tpl', TRUE)));
         }
@@ -548,9 +525,11 @@ class DeviceConfig extends management
         }
 
         // Get the selected item-id from the item list and populate it.
-        $this->itemContainerSelector->update();
-        $id  = $this->mappingBaseToID[$this->itemContainerSelector->getBase()]; 
-        $this->setSelectedListItemID($id);
+        if($this->itemContainerSelector){
+            $this->itemContainerSelector->update();
+            $id  = $this->mappingBaseToID[$this->itemContainerSelector->getBase()]; 
+            $this->setSelectedListItemID($id);
+        }
     }
 
 
@@ -631,6 +610,11 @@ class DeviceConfig extends management
     function check()
     {
         return(array());
+    }
+
+    function getRootItemId()
+    {
+        return($this->rootItemID);
     }
 }
 ?>
