@@ -327,7 +327,7 @@ class application extends plugin
       /* Check for picture upload */
       if (isset($_FILES['picture_file']['name']) && $_FILES['picture_file']['name'] != ""){
 
-        if (!is_uploaded_file($_FILES['picture_file']['tmp_name'])) {
+        if (!is_readable($_FILES['picture_file']['tmp_name'])) {
           msg_dialog::display(_("Error"), msgPool::incorrectUpload(), ERROR_DIALOG);
         }
 
