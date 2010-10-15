@@ -3,33 +3,42 @@
 class InstallRecipe extends plugin
 {
 
+    /* This has to be replaced by valid attributes, currently they are just 
+     *  fake variables. #FIXME: I do not know the real attribute names yet.
+     */
     public $installBootstrapMethod = '';
     public $installBootstrapMethodList = NULL;
 
     public $installConfigManagement = '';
     public $installConfigManagementList = NULL;
 
+    /* Plugin attributes
+     */
     public $installTemplateDN = "";
-    public $installTemplateDNList = array(
-        'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
-        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System-Tpl');
+    public $installTemplateDNList = array();
 
     public $installMirrorDN = "";
-    public $installMirrorDNList = array(
-        'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
-        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
+    public $installMirrorDNList = array();
+
     public $installKernelPackage = "";
     public $installKernelPackageList = array('kernel1','kk1');
+
     public $installKeyboardlayout = "";
     public $installKeyboardlayoutList = array("104","105");
+
     public $installSystemLocale = "";
     public $installSystemLocaleList = array('de','en_EN.UTF-8');
+
     public $installTimezone = "";
     public $installTimeUTC = "";
+
     public $installNTPServer = array();
     public $installRootEnabled = "";
     public $installRootPasswordHash = "";
+
+    public $setKickstartRootPasswordHash = FALSE;
     public $installPartitionTable = "";
+    private $installNTPServerList = NULL;
 
     public $objectclasses = array('installRecipe');
     public $attributes = array("installTemplateDN","installKeyboardlayout","installSystemLocale",
@@ -37,17 +46,77 @@ class InstallRecipe extends plugin
             "installRootEnabled","installRootPasswordHash","installKernelPackage",
             "installPartitionTable","installConfigManagement","installBootstrapMethod");
 
-    public $setKickstartRootPasswordHash = FALSE;
 
+    /* Some plugin management related attributes 
+     * See class plugin for details.
+     */
     public $view_logged = FALSE;
-    
     public $ignore_account = FALSE;
 
-    private $installNTPServerList = NULL;
 
+    /*! \brief  Initialize the plugin and its widgets. 
+     *          Finally call init() to load values from the backend.
+     */ 
     function __construct(&$config, $dn)
     {
         plugin::plugin($config, $dn);
+
+        // Set default password hash
+        $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
+
+        // Prepare NTP servers list 
+        $this->installNTPServerList= new sortableListing($this->installNTPServer);
+        $this->installNTPServerList->setDeleteable(true);
+        $this->installNTPServerList->setEditable(false);
+        $this->installNTPServerList->setColspecs(array('*'));
+        $this->installNTPServerList->setWidth("100%");
+        $this->installNTPServerList->setHeight("70px");
+
+        // Init the object values.
+        $this->init();
+    }
+
+   
+    /*! \brief   Load attribute values from the GOsa-backend using jsonRPC 
+     */ 
+    function init()
+    {
+        // Start without error.
+        $this->initFailed = FALSE;
+
+        // Prepare list of timezones
+        $this->timezones = $this->getTimezones();
+
+        // Get list of NTP servers
+        $this->installNTPServer = array();
+        if(isset($this->attrs['installNTPServer']['count'])){
+            for($i = 0; $i < $this->attrs['installNTPServer']['count']; $i++){
+                $this->installNTPServer[] = $this->attrs['installNTPServer'][$i];
+            }
+        }
+
+        // Get list of password hashes
+        $tmp = passwordMethod::get_available_methods();
+        $this->hashes = array();
+        foreach($tmp['name'] as $name){
+            $this->hashes[$name] = $name;
+        }
+
+        // Load list of bootstrap methods.
+        if(!$this->loadInstallationMethods()){
+            $this->initFailed = TRUE;
+            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return;
+        }
+    
+
+        $this->installTemplateDNList = array(
+        'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
+        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System-Tpl');
+
+        $this->installMirrorDNList = array(
+        'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
+        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
 
         // Preset some values for new accounts
         if(!$this->is_account){
@@ -55,9 +124,16 @@ class InstallRecipe extends plugin
             // Preset the device timezone
             $tz = timezone::get_default_timezone();
             $this->installTimezone = $tz['name'];
-        }
 
-        // Prepare list of timezones
+            // Set initial bootstrap and install method.
+            $this->installBootstrapMethod = key($this->installBootstrapMethodList);
+            $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
+        }
+    }
+
+
+    function getTimezones()
+    {
         $tmp = timezone::_get_tz_zones();
         $list = array();
         foreach($tmp['TIMEZONES'] as $name => $offset){
@@ -69,56 +145,36 @@ class InstallRecipe extends plugin
             }
         }  
         uksort($list, 'strnatcasecmp'); 
-        $this->timezones = $list;
-
-        // Get list of password hashes
-        $tmp = passwordMethod::get_available_methods();
-        $this->hashes = array();
-        foreach($tmp['name'] as $name){
-            $this->hashes[$name] = $name;
-        }
-        $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
-
-        // Get list of NTP servers
-        $this->installNTPServer = array();
-        if(isset($this->attrs['installNTPServer']['count'])){
-            for($i = 0; $i < $this->attrs['installNTPServer']['count']; $i++){
-                $this->installNTPServer[] = $this->attrs['installNTPServer'][$i];
-            }
-        }
-
-        // Prepare NTP servers list 
-        $this->installNTPServerList= new sortableListing($this->installNTPServer);
-        $this->installNTPServerList->setDeleteable(true);
-        $this->installNTPServerList->setEditable(false);
-        $this->installNTPServerList->setColspecs(array('*'));
-        $this->installNTPServerList->setWidth("100%");
-        $this->installNTPServerList->setHeight("70px");
-
-        // Load list of bootstrap methods.
-        $this->loadInstallationMethods();
+        return($list);
     }
+   
 
-    
+    /*! \brief  Try to load install and bootstrap methods from the GOsa-backend
+     *          This is done via jsonRPC, if calling the backend method fails,
+     *           this method returns FALSE, in case of success it return TRUE; 
+     */ 
     function loadInstallationMethods()
     { 
         $this->installBootstrapMethodList = array();
         $this->installConfigManagementList = array();
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getSupportedBaseInstallMethods();
+       
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(FALSE);
+        }
+
+        // Walk through result and set bootstrap methods.
         foreach($res as $name => $method){
             $this->installBootstrapMethodList[$name] = $method['name'];
             foreach($method['methods'] as $m){
                 $this->installConfigManagementList[$name][$m] = $m; 
             }
         }
-        
-        if(empty($this->installBootstrapMethod)){
-            $this->installBootstrapMethod = key($this->installBootstrapMethodList);
-        }
-        if(empty($this->installConfigManagement)){
-            $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
-        }
+        return(TRUE);
     }
     
 
