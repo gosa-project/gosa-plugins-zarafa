@@ -129,6 +129,22 @@ class InstallRecipe extends plugin
             $this->installBootstrapMethod = key($this->installBootstrapMethodList);
             $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
         }
+
+        // Check if we've a valid bootstrap and configMangement method selected
+        if(!isset($this->installConfigManagementList[$this->installBootstrapMethod])){
+            $newMethod = key($this->installBootstrapMethodList);
+            msg_dialog::display(_("Error"), 
+                sprintf(_("The selected bootstrap method '%s' is invalid! Using '%s' instead!"),
+                $this->installBootstrapMethod,$newMethod), ERROR_DIALOG);
+            $this->installBootstrapMethod = $newMethod;
+        }
+        if(!isset($this->installConfigManagementList[$this->installBootstrapMethod][$this->installConfigManagement])){
+            $newMethod = key($this->installConfigManagementList[$this->installBootstrapMethod]);
+            msg_dialog::display(_("Error"), 
+                sprintf(_("The selected config management method '%s' is invalid! Using '%s' instead!"),
+                $this->installConfigManagement,$newMethod), ERROR_DIALOG);
+            $this->installConfigManagement = $newMethod;
+        }
     }
 
 
