@@ -616,7 +616,10 @@ class DeviceConfig extends management
         $this->dialog = false;
     }
    
- 
+    function remove_from_parent()
+    {   
+    }
+     
     function check()
     {
         return(array());
