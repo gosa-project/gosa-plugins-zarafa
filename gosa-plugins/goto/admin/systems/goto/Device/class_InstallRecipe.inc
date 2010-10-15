@@ -39,6 +39,10 @@ class InstallRecipe extends plugin
 
     public $setKickstartRootPasswordHash = FALSE;
 
+    public $view_logged = FALSE;
+    
+    public $ignore_account = FALSE;
+
     private $installNTPServerList = NULL;
 
     function __construct(&$config, $dn)
@@ -120,6 +124,42 @@ class InstallRecipe extends plugin
 
     function execute()
     {
+        // Log account access
+        if($this->is_account && !$this->view_logged){
+            $this->view_logged = TRUE;
+            new log("view","Device/".get_class($this),$this->dn);
+        }
+
+        /***************
+          Handle account state
+         ***************/
+
+        // Allow to add or remove the distribution list extension
+        if(isset($_POST['modify_state'])){
+            if($this->is_account && $this->acl_is_removeable()){
+                $this->is_account= FALSE;
+            }elseif(!$this->is_account && $this->acl_is_createable()){
+                $this->is_account= TRUE;
+            }
+        }
+
+        // Show account status-changer
+        $display = "";
+        if ($this->parent !== NULL){
+            if ($this->is_account){
+                $display= $this->show_disable_header(_("Remove instal profile"),
+                        msgPool::featuresEnabled(_("Install profile")));
+            } else {
+                $display= $this->show_enable_header(_("Add install profile"),
+                        msgPool::featuresDisabled(_("Install profile")));
+                return ($display);
+            }
+        }
+
+        /***************
+          Root password hash dialog
+         ***************/
+
         if($this->setKickstartRootPasswordHash){
             $this->dialog = TRUE;
             $smarty = get_smarty();
@@ -127,6 +167,10 @@ class InstallRecipe extends plugin
             $smarty->assign('hash', set_post($this->hash));
             return($smarty->fetch(get_template_path('goto/Device/SetPassword.tpl', TRUE)));
         }
+
+        /***************
+          Generate HTML content
+         ***************/
 
         $this->installNTPServerList->setAcl($this->getacl('installNTPServer'));
         $this->installNTPServerList->update();
@@ -151,7 +195,7 @@ class InstallRecipe extends plugin
             $smarty->assign($attr, $this->$attr);
         }
         $this->dialog = false;
-        return($smarty->fetch(get_template_path('goto/Device/InstallRecipe.tpl', TRUE)));
+        return($display.$smarty->fetch(get_template_path('goto/Device/InstallRecipe.tpl', TRUE)));
     }
 
 
@@ -276,8 +320,11 @@ class InstallRecipe extends plugin
         $this->installRootEnabled = ($this->installRootEnabled)?'TRUE':'FALSE';
         $this->installTimeUTC = ($this->installTimeUTC)?'TRUE':'FALSE';
         
-
         plugin::save();
+
+        unset($this->attrs['installConfigManagement']);
+        unset($this->attrs['installBootstrapMethod']);
+        echo "Skipp saving of 'installConfigManagement' and 'installBootstrapMethod', i've no idea where to store them.";
 
         $this->cleanup();
         $ldap=$this->config->get_ldap_link();
@@ -291,6 +338,28 @@ class InstallRecipe extends plugin
             $this->handle_post_events("modify");
         }
     }
+
+    
+    function remove_from_parent()
+    {
+        plugin::remove_from_parent();
+        unset($this->attrs['installConfigManagement']);
+        unset($this->attrs['installBootstrapMethod']);
+        echo "Skipp saving of 'installConfigManagement' and 'installBootstrapMethod', i've no idea where to store them.";
+
+        $ldap=$this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->cd($this->dn);
+        $ldap->modify($this->attrs);
+        new log("remove","Device/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+        }else{
+            $this->handle_post_events("remove");
+        }
+        
+    }
+    
 
     static function plInfo()
     {

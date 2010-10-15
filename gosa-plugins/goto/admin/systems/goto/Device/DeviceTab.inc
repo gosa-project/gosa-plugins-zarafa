@@ -51,7 +51,7 @@ class DeviceTab extends tabs
         }
 
         // Save now
-        tabs::save(TRUE);
+        tabs::save();
 
         if($moveToUUID){
             $this->dn = (empty($uuid)) ? $dnCn : $dnUuid;
