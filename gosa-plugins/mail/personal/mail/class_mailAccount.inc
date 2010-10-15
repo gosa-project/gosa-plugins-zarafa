@@ -43,6 +43,25 @@ Functions :
 
  */
 
+/*
+
+    FLAG    POSTNAME                DESC
+    ####################################################################################################
+    L  (!)  only_local              Enables: "User is only allowed to send and receive local mails"
+
+                                    <REVERSED> If checked in the ui, the flag is not present in the 
+                                     gosaMailDeliveryMode attribute. If its unchecked in the ui, the 
+                                     character 'L' is added to the delivery flags.
+
+    R       use_mailsize_limit      Enables rule: "Reject mails bigger than [n] MB";
+    S       use_spam_filter         Enables rule: "Move mails tagged with SPAM level greater than [n] 
+                                     to folder [x]"
+    V       use_vacation            Enables: "Vacation message"
+    C       own_script              Enables: "Use custom sieve script (disables all Mail options!)"
+    I       drop_own_mails          Enables: "No delivery to own mailbox."
+
+*/
+
 class mailAccount extends plugin
 {
   /* Definitions */
