@@ -2,21 +2,21 @@
 <h3>{t}Installation type{/t}</h3>
 <table>
     <tr>
-        <td><LABEL for="kickstartBootstrapMethod">{t}Bootstrap method{/t}</LABEL></td>
+        <td><LABEL for="installBootstrapMethod">{t}Bootstrap method{/t}</LABEL></td>
         <td>
-            <select name="kickstartBootstrapMethod" size=1>
-                {html_options options=$kickstartBootstrapMethodList 
-                selected=$kickstartBootstrapMethod}
+            <select name="installBootstrapMethod" size=1>
+                {html_options options=$installBootstrapMethodList 
+                selected=$installBootstrapMethod}
             </select>
         </td>
     </tr>
     <tr>
-        <td><LABEL for="kickstartConfigManagement">{t}Config management{/t}</LABEL></td>
+        <td><LABEL for="installConfigManagement">{t}Config management{/t}</LABEL></td>
         <td>
-            <select name="kickstartConfigManagement" size=1
+            <select name="installConfigManagement" size=1
                 onChange='document.mainform.submit();'>
-                {html_options options=$kickstartConfigManagementList 
-                selected=$kickstartConfigManagement}
+                {html_options options=$installConfigManagementList 
+                selected=$installConfigManagement}
             </select>
         </td>
     </tr>
@@ -29,29 +29,29 @@
     
             <table>
                 <tr>
-                    <td><LABEL for="kickstartMirrorDN">{t}Mirror{/t}</LABEL></td>
+                    <td><LABEL for="installMirrorDN">{t}Mirror{/t}</LABEL></td>
                     <td>
-                        <select name="kickstartMirrorDN" size=1>
-                            {html_options options=$kickstartMirrorDNList 
-                            selected=$kickstartMirrorDN}
+                        <select name="installMirrorDN" size=1>
+                            {html_options options=$installMirrorDNList 
+                            selected=$installMirrorDN}
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for="kickstartTemplateDN">{t}Kickstart template{/t}</LABEL></td>
+                    <td><LABEL for="installTemplateDN">{t}Kickstart template{/t}</LABEL></td>
                     <td>
-                        <select name="kickstartTemplateDN" size=1>
-                            {html_options options=$kickstartTemplateDNList 
-                            selected=$kickstartTemplateDN}
+                        <select name="installTemplateDN" size=1>
+                            {html_options options=$installTemplateDNList 
+                            selected=$installTemplateDN}
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for="kickstartKernelPackage">{t}Kernel package{/t}</LABEL></td>
+                    <td><LABEL for="installKernelPackage">{t}Kernel package{/t}</LABEL></td>
                     <td>
-                        <select name="kickstartKernelPackage" size=1>
-                            {html_options values=$kickstartKernelPackageList output=$kickstartKernelPackageList 
-                            selected=$kickstartKernelPackage}
+                        <select name="installKernelPackage" size=1>
+                            {html_options values=$installKernelPackageList output=$installKernelPackageList 
+                            selected=$installKernelPackage}
                         </select>
                     </td>
                 </tr>
@@ -63,13 +63,13 @@
             <table>
                 <tr>
                     <td>
-                        <input type='checkbox' value='1' {if $kickstartRootEnabled} checked {/if}
+                        <input type='checkbox' value='1' {if $installRootEnabled} checked {/if}
                             onClick="changeState('setKickstartRootPasswordHash');"
-                            name="kickstartRootEnabled" id="kickstartRootEnabled" 
+                            name="installRootEnabled" id="installRootEnabled" 
                            >
-                        <LABEL for="kickstartRootEnabled">{t}Use root-user{/t}</LABEL>&nbsp;
+                        <LABEL for="installRootEnabled">{t}Use root-user{/t}</LABEL>&nbsp;
                         <button name='setKickstartRootPasswordHash'
-                            {if !$kickstartRootEnabled} disabled {/if}
+                            {if !$installRootEnabled} disabled {/if}
                             id="setKickstartRootPasswordHash">{t}Set password{/t}</button>
                     </td>
                 </tr>
@@ -85,20 +85,20 @@
 
             <table>
                 <tr>
-                    <td><LABEL for="kickstartKeyboardlayout">{t}Keyboard layout{/t}</LABEL></td>
+                    <td><LABEL for="installKeyboardlayout">{t}Keyboard layout{/t}</LABEL></td>
                     <td>
-                        <select name="kickstartKeyboardlayout" size=1>
-                            {html_options values=$kickstartKeyboardlayoutList output=$kickstartKeyboardlayoutList 
-                            selected=$kickstartKeyboardlayout}
+                        <select name="installKeyboardlayout" size=1>
+                            {html_options values=$installKeyboardlayoutList output=$installKeyboardlayoutList 
+                            selected=$installKeyboardlayout}
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for="kickstartSystemLocale">{t}System locale{/t}</LABEL></td>
+                    <td><LABEL for="installSystemLocale">{t}System locale{/t}</LABEL></td>
                     <td>
-                        <select name="kickstartSystemLocale" size=1>
-                            {html_options values=$kickstartSystemLocaleList output=$kickstartSystemLocaleList 
-                            selected=$kickstartSystemLocale}
+                        <select name="installSystemLocale" size=1>
+                            {html_options values=$installSystemLocaleList output=$installSystemLocaleList 
+                            selected=$installSystemLocale}
                         </select>
                     </td>
                 </tr>
@@ -110,25 +110,25 @@
             <table>
                 <tr>
                     <td>
-                        <input type='checkbox' name="kickstartTimeUTC" id="kickstartTimeUTC" 
-                        {if $kickstartTimeUTC} checked {/if}>
-                        <LABEL for="kickstartTimeUTC">{t}Use UTC{/t}</LABEL>
+                        <input type='checkbox' name="installTimeUTC" id="installTimeUTC" 
+                        {if $installTimeUTC} checked {/if}>
+                        <LABEL for="installTimeUTC">{t}Use UTC{/t}</LABEL>
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for="kickstartTimezone">{t}Timezone{/t}</LABEL></td>
+                    <td><LABEL for="installTimezone">{t}Timezone{/t}</LABEL></td>
                     <td>
-                        <select size='1' name="kickstartTimezone" id="kickstartTimezone">
-                            {html_options values=$timezones options=$timezones selected=$kickstartTimezone}
+                        <select size='1' name="installTimezone" id="installTimezone">
+                            {html_options values=$timezones options=$timezones selected=$installTimezone}
                         </select>
                     </td>
                 </tr>
                 <tr>    
                     <td colspan=2>
                         {t}NTP server{/t}
-                        {$kickstartNTPServerList}
-                        <input type='text' name="kickstartNTPServer_Input">
-                        <button name='kickstartNTPServer_Add'>{msgPool type=addButton}</button>
+                        {$installNTPServerList}
+                        <input type='text' name="installNTPServer_Input">
+                        <button name='installNTPServer_Add'>{msgPool type=addButton}</button>
                     </td>
                 </tr>
             </table>
@@ -140,9 +140,9 @@
 <h3>{t}Partition table{/t}</h3>
 <table>
     <tr>
-        <td><LABEL for="kickstartPartitionTable">{t}Partition table{/t}</LABEL></td>
+        <td><LABEL for="installPartitionTable">{t}Partition table{/t}</LABEL></td>
         <td>
-            <input type='text' name="kickstartPartitionTable" id="kickstartPartitionTable" value="{$kickstartPartitionTable}">
+            <input type='text' name="installPartitionTable" id="installPartitionTable" value="{$installPartitionTable}">
         </td>
     </tr>
 </table>

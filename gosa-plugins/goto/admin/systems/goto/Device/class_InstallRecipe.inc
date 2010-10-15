@@ -3,43 +3,43 @@
 class InstallRecipe extends plugin
 {
 
-    public $kickstartBootstrapMethod = '';
-    public $kickstartBootstrapMethodList = NULL;
+    public $installBootstrapMethod = '';
+    public $installBootstrapMethodList = NULL;
 
-    public $kickstartConfigManagement = '';
-    public $kickstartConfigManagementList = NULL;
+    public $installConfigManagement = '';
+    public $installConfigManagementList = NULL;
 
-    public $kickstartTemplateDN = "";
-    public $kickstartTemplateDNList = array(
+    public $installTemplateDN = "";
+    public $installTemplateDNList = array(
         'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
         'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System-Tpl');
 
-    public $kickstartMirrorDN = "";
-    public $kickstartMirrorDNList = array(
+    public $installMirrorDN = "";
+    public $installMirrorDNList = array(
         'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
         'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
-    public $kickstartKernelPackage = "";
-    public $kickstartKernelPackageList = array('kernel1','kk1');
-    public $kickstartKeyboardlayout = "";
-    public $kickstartKeyboardlayoutList = array("104","105");
-    public $kickstartSystemLocale = "";
-    public $kickstartSystemLocaleList = array('de','en_EN.UTF-8');
-    public $kickstartTimezone = "";
-    public $kickstartTimeUTC = "";
-    public $kickstartNTPServer = array();
-    public $kickstartRootEnabled = "";
-    public $kickstartRootPasswordHash = "";
-    public $kickstartPartitionTable = "";
+    public $installKernelPackage = "";
+    public $installKernelPackageList = array('kernel1','kk1');
+    public $installKeyboardlayout = "";
+    public $installKeyboardlayoutList = array("104","105");
+    public $installSystemLocale = "";
+    public $installSystemLocaleList = array('de','en_EN.UTF-8');
+    public $installTimezone = "";
+    public $installTimeUTC = "";
+    public $installNTPServer = array();
+    public $installRootEnabled = "";
+    public $installRootPasswordHash = "";
+    public $installPartitionTable = "";
 
     public $objectclasses = array('installRecipe');
-    public $attributes = array("kickstartTemplateDN","kickstartKeyboardlayout","kickstartSystemLocale",
-            "kickstartTimezone","kickstartTimeUTC","kickstartNTPServer","kickstartMirrorDN",
-            "kickstartRootEnabled","kickstartRootPasswordHash","kickstartKernelPackage",
-            "kickstartPartitionTable","kickstartConfigManagement","kickstartBootstrapMethod");
+    public $attributes = array("installTemplateDN","installKeyboardlayout","installSystemLocale",
+            "installTimezone","installTimeUTC","installNTPServer","installMirrorDN",
+            "installRootEnabled","installRootPasswordHash","installKernelPackage",
+            "installPartitionTable","installConfigManagement","installBootstrapMethod");
 
     public $setKickstartRootPasswordHash = FALSE;
 
-    private $kickstartNTPServerList = NULL;
+    private $installNTPServerList = NULL;
 
     function __construct(&$config, $dn)
     {
@@ -50,7 +50,7 @@ class InstallRecipe extends plugin
 
             // Preset the device timezone
             $tz = timezone::get_default_timezone();
-            $this->kickstartTimezone = $tz['name'];
+            $this->installTimezone = $tz['name'];
         }
 
         // Prepare list of timezones
@@ -76,20 +76,20 @@ class InstallRecipe extends plugin
         $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
 
         // Get list of NTP servers
-        $this->kickstartNTPServer = array();
-        if(isset($this->attrs['kickstartNTPServer']['count'])){
-            for($i = 0; $i < $this->attrs['kickstartNTPServer']['count']; $i++){
-                $this->kickstartNTPServer[] = $this->attrs['kickstartNTPServer'][$i];
+        $this->installNTPServer = array();
+        if(isset($this->attrs['installNTPServer']['count'])){
+            for($i = 0; $i < $this->attrs['installNTPServer']['count']; $i++){
+                $this->installNTPServer[] = $this->attrs['installNTPServer'][$i];
             }
         }
 
         // Prepare NTP servers list 
-        $this->kickstartNTPServerList= new sortableListing($this->kickstartNTPServer);
-        $this->kickstartNTPServerList->setDeleteable(true);
-        $this->kickstartNTPServerList->setEditable(false);
-        $this->kickstartNTPServerList->setColspecs(array('*'));
-        $this->kickstartNTPServerList->setWidth("100%");
-        $this->kickstartNTPServerList->setHeight("70px");
+        $this->installNTPServerList= new sortableListing($this->installNTPServer);
+        $this->installNTPServerList->setDeleteable(true);
+        $this->installNTPServerList->setEditable(false);
+        $this->installNTPServerList->setColspecs(array('*'));
+        $this->installNTPServerList->setWidth("100%");
+        $this->installNTPServerList->setHeight("70px");
 
         // Load list of bootstrap methods.
         $this->loadInstallationMethods();
@@ -98,22 +98,22 @@ class InstallRecipe extends plugin
     
     function loadInstallationMethods()
     { 
-        $this->kickstartBootstrapMethodList = array();
-        $this->kickstartConfigManagementList = array();
+        $this->installBootstrapMethodList = array();
+        $this->installConfigManagementList = array();
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getSupportedBaseInstallMethods();
         foreach($res as $name => $method){
-            $this->kickstartBootstrapMethodList[$name] = $method['name'];
+            $this->installBootstrapMethodList[$name] = $method['name'];
             foreach($method['methods'] as $m){
-                $this->kickstartConfigManagementList[$name][$m] = $m; 
+                $this->installConfigManagementList[$name][$m] = $m; 
             }
         }
         
-        if(empty($this->kickstartBootstrapMethod)){
-            $this->kickstartBootstrapMethod = key($this->kickstartBootstrapMethodList);
+        if(empty($this->installBootstrapMethod)){
+            $this->installBootstrapMethod = key($this->installBootstrapMethodList);
         }
-        if(empty($this->kickstartConfigManagement)){
-            $this->kickstartConfigManagement = key($this->kickstartConfigManagementList[$this->kickstartBootstrapMethod]);
+        if(empty($this->installConfigManagement)){
+            $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
         }
     }
     
@@ -128,25 +128,25 @@ class InstallRecipe extends plugin
             return($smarty->fetch(get_template_path('goto/Device/SetPassword.tpl', TRUE)));
         }
 
-        $this->kickstartNTPServerList->setAcl($this->getacl('kickstartNTPServer'));
-        $this->kickstartNTPServerList->update();
+        $this->installNTPServerList->setAcl($this->getacl('installNTPServer'));
+        $this->installNTPServerList->update();
 
         plugin::execute();    
         $smarty = get_smarty();
         $smarty->assign('timezones', $this->timezones);
-        $smarty->assign('kickstartKeyboardlayoutList', $this->kickstartKeyboardlayoutList);
-        $smarty->assign('kickstartKernelPackageList', $this->kickstartKernelPackageList);
-        $smarty->assign('kickstartTemplateDNList', $this->kickstartTemplateDNList);
-        $smarty->assign('kickstartMirrorDNList', $this->kickstartMirrorDNList);
-        $smarty->assign('kickstartSystemLocaleList', $this->kickstartSystemLocaleList);
-        $smarty->assign('kickstartNTPServerList', $this->kickstartNTPServerList->render());
+        $smarty->assign('installKeyboardlayoutList', $this->installKeyboardlayoutList);
+        $smarty->assign('installKernelPackageList', $this->installKernelPackageList);
+        $smarty->assign('installTemplateDNList', $this->installTemplateDNList);
+        $smarty->assign('installMirrorDNList', $this->installMirrorDNList);
+        $smarty->assign('installSystemLocaleList', $this->installSystemLocaleList);
+        $smarty->assign('installNTPServerList', $this->installNTPServerList->render());
 
-        $smarty->assign('kickstartBootstrapMethod', $this->kickstartBootstrapMethod);
-        $smarty->assign('kickstartBootstrapMethodList', $this->kickstartBootstrapMethodList);
-        $smarty->assign('kickstartConfigManagement', $this->kickstartConfigManagement);
+        $smarty->assign('installBootstrapMethod', $this->installBootstrapMethod);
+        $smarty->assign('installBootstrapMethodList', $this->installBootstrapMethodList);
+        $smarty->assign('installConfigManagement', $this->installConfigManagement);
 
-        $cfgList = $this->kickstartConfigManagementList[$this->kickstartBootstrapMethod];
-        $smarty->assign('kickstartConfigManagementList', $cfgList);
+        $cfgList = $this->installConfigManagementList[$this->installBootstrapMethod];
+        $smarty->assign('installConfigManagementList', $cfgList);
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
@@ -161,27 +161,27 @@ class InstallRecipe extends plugin
         
         if(isset($_POST['InstallRecipePosted'])){
 
-            $currentInstallMethod = $this->kickstartConfigManagement;
+            $currentInstallMethod = $this->installConfigManagement;
             plugin::save_object();
-            $this->kickstartRootEnabled = isset($_POST['kickstartRootEnabled']);
-            $this->kickstartTimeUTC = isset($_POST['kickstartTimeUTC']);
+            $this->installRootEnabled = isset($_POST['installRootEnabled']);
+            $this->installTimeUTC = isset($_POST['installTimeUTC']);
 
 
             if(isset($_POST['setKickstartRootPasswordHash'])){
                 $this->setKickstartRootPasswordHash = true;
             }
 
-            $this->kickstartNTPServerList->save_object();
-            $this->kickstartNTPServer = $this->kickstartNTPServerList->getMaintainedData();
-            if(isset($_POST['kickstartNTPServer_Input']) && isset($_POST['kickstartNTPServer_Add'])){
-                $add = get_post('kickstartNTPServer_Input');
-                if(!in_array($add, $this->kickstartNTPServer) && !empty($add)){
-                    $this->kickstartNTPServer[] = $add;
+            $this->installNTPServerList->save_object();
+            $this->installNTPServer = $this->installNTPServerList->getMaintainedData();
+            if(isset($_POST['installNTPServer_Input']) && isset($_POST['installNTPServer_Add'])){
+                $add = get_post('installNTPServer_Input');
+                if(!in_array($add, $this->installNTPServer) && !empty($add)){
+                    $this->installNTPServer[] = $add;
                 }
             }
-            $this->kickstartNTPServerList->setListData($this->kickstartNTPServer);
+            $this->installNTPServerList->setListData($this->installNTPServer);
 
-            if($currentInstallMethod != $this->kickstartConfigManagement){
+            if($currentInstallMethod != $this->installConfigManagement){
                 $this->updateRecipeTab();
             }
         }
@@ -197,7 +197,7 @@ class InstallRecipe extends plugin
             $methods = new passwordMethod($this->config, $this->dn);
             $available = $methods->get_available_methods();
             $test = new $available[$hash]($this->config,$this->dn);
-            $this->kickstartRootPasswordHash = @$test->generate_hash(get_post('rootPassword'));
+            $this->installRootPasswordHash = @$test->generate_hash(get_post('rootPassword'));
         }
 
     }
@@ -205,7 +205,7 @@ class InstallRecipe extends plugin
 
     function updateRecipeTab()
     {
-        $mode = $this->kickstartConfigManagement;
+        $mode = $this->installConfigManagement;
         if(!isset($this->recipeTabs[$mode])){
             $this->recipeTabs[$mode] = new DeviceConfig($this->config, $this->dn);
             $this->recipeTabs[$mode]->parent = &$this->parent;
@@ -272,9 +272,9 @@ class InstallRecipe extends plugin
     function save()
     {
         // 
-        if(!$this->kickstartRootEnabled) $this->kickstartRootPasswordHash = "";
-        $this->kickstartRootEnabled = ($this->kickstartRootEnabled)?'TRUE':'FALSE';
-        $this->kickstartTimeUTC = ($this->kickstartTimeUTC)?'TRUE':'FALSE';
+        if(!$this->installRootEnabled) $this->installRootPasswordHash = "";
+        $this->installRootEnabled = ($this->installRootEnabled)?'TRUE':'FALSE';
+        $this->installTimeUTC = ($this->installTimeUTC)?'TRUE':'FALSE';
         
 
         plugin::save();
@@ -304,19 +304,19 @@ class InstallRecipe extends plugin
                     "plCategory"    => array("Device"),
                     "plProvidedAcls" => array(
                         "member" => _("Member"),
-                        "kickstartTemplateDN" => _("Template"),
-                        "kickstartBootstrapMethod" => _("Bootstrap method"),
-                        "kickstartConfigManagement" => _("Config management"),
-                        "kickstartKeyboardlayout" => _("Keyboard layout"),
-                        "kickstartSystemLocale" => _("System locale"),
-                        "kickstartTimezone" => _("Timezone"),
-                        "kickstartTimeUTC" => _("Time"),
-                        "kickstartNTPServer" => _("NTP-Server"),
-                        "kickstartMirrorDN" => _("Kickstart mirror"),
-                        "kickstartRootEnabled" => _("Root login enabled"),
-                        "kickstartRootPasswordHash" => _("Root password hash"),
-                        "kickstartKernelPackage" => _("Kernal package"),
-                        "kickstartPartitionTable" => _("Partition table")
+                        "installTemplateDN" => _("Template"),
+                        "installBootstrapMethod" => _("Bootstrap method"),
+                        "installConfigManagement" => _("Config management"),
+                        "installKeyboardlayout" => _("Keyboard layout"),
+                        "installSystemLocale" => _("System locale"),
+                        "installTimezone" => _("Timezone"),
+                        "installTimeUTC" => _("Time"),
+                        "installNTPServer" => _("NTP-Server"),
+                        "installMirrorDN" => _("Kickstart mirror"),
+                        "installRootEnabled" => _("Root login enabled"),
+                        "installRootPasswordHash" => _("Root password hash"),
+                        "installKernelPackage" => _("Kernal package"),
+                        "installPartitionTable" => _("Partition table")
                         )
                         )
                         );
