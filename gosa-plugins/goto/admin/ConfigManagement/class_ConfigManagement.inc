@@ -43,7 +43,6 @@ class ConfigManagement extends management
     // Some plugin related memebers which are not member of 
     //  the management class. See class plugin.
     public $initTime;
-    public $is_account = FALSE;
     public $ignore_account = FALSE;
     public $pl_notify;
     public $read_only;
@@ -78,7 +77,6 @@ class ConfigManagement extends management
      */
     function setInstallMethod($str)
     {
-        $this->is_account = FALSE;
         if(!isset($this->allItemConfigurations[$str])){
             $this->itemConfig = array();
             $this->invalidInstallMethod =TRUE;
@@ -112,7 +110,6 @@ class ConfigManagement extends management
             $this->rootItemID = $idRoot;
             $this->setCurrentItem($idRoot);
             $this->setSelectedListItemID($idRoot);
-            $this->is_account = TRUE;
             $this->rebuildListing();
             return(TRUE);
         }
@@ -316,14 +313,7 @@ class ConfigManagement extends management
             $smarty->assign('rpcError', $this->rpcError);
             $smarty->assign('invalidInstallMethod', $this->invalidInstallMethod);
             $smarty->assign('error', $this->errorMessage);
-            return($smarty->fetch(get_template_path('goto/Config/failed.tpl', TRUE)));
-        }
-
-        // Do we represent a valid account
-        if (!$this->is_account){
-            $str = "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
-                msgPool::noValidExtension("GOsa")."</b>";
-            return($str);
+            return($smarty->fetch(get_template_path('failed.tpl', TRUE)));
         }
 
         // Collect item container list to be able to render the fake-base selector
@@ -375,13 +365,13 @@ class ConfigManagement extends management
         if (session::global_is_set(get_class($this)."_filter")){
             $filter= session::global_get(get_class($this)."_filter");
         } else {
-            $filter = new filter(get_template_path("goto/Config/DeviceConfig-filter.xml", true));
+            $filter = new filter(get_template_path("DeviceConfig-filter.xml", true));
             $filter->setObjectStorage($this->storagePoints);
         }
         $this->setFilter($filter);
 
         // Load service xml file and fill in placeholders
-        $contents =file_get_contents(get_template_path("goto/Config/DeviceConfig-list.xml", true));
+        $contents =file_get_contents(get_template_path("DeviceConfig-list.xml", true));
 
         // Build up device-list configuration   
         $types ="";

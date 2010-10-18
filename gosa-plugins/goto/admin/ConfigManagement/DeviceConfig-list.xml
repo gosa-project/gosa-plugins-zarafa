@@ -6,7 +6,7 @@
     <departmentRootVisible>false</departmentRootVisible>
     <baseMode>false</baseMode>
     <multiSelect>true</multiSelect>
-    <template>goto/Config/DeviceConfig-list.tpl</template>
+    <template>DeviceConfig-list.tpl</template>
     <label>List of items</label>
     <defaultSortColumn>1</defaultSortColumn>
 
