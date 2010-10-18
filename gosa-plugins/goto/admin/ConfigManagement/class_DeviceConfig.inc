@@ -2,7 +2,7 @@
 
 /*! \brief  A GOsa plugin which generates a device configuration dialog  
  */
-class DeviceConfig extends management
+class ConfigManagement extends management
 {
 
     // Used to render the item-configuration dialog 
@@ -625,6 +625,23 @@ class DeviceConfig extends management
     function getRootItemId()
     {
         return($this->rootItemID);
+    }
+
+
+    public static function plInfo()
+    {
+        return (array(
+                    "plShortName"   => _("Config management"),
+                    "plDescription" => _("Config management"),
+                    "plSelfModify"  => FALSE,
+                    "plDepends"     => array(),
+                    "plPriority"    => 0,
+                    "plSection"     => array("administration"),
+                    "plCategory"    => array(
+                        "ConfigManagement" => array("description"  => _("Config management"),
+                            "objectClass"  => "FAKE_OC_ConfigManagement")),
+                    "plProvidedAcls"=> array()
+                    ));
     }
 }
 ?>
