@@ -46,6 +46,7 @@ class InstallRecipe extends plugin
             "installRootEnabled","installRootPasswordHash","installKernelPackage",
             "installPartitionTable","installConfigManagement","installBootstrapMethod");
 
+    private $map = array('puppet' => array('objectClass' => 'puppetClient', 'type' => 'puppet', 'bootstrap' => 'preseed'));
 
     /* Some plugin management related attributes 
      * See class plugin for details.
@@ -81,8 +82,19 @@ class InstallRecipe extends plugin
      */ 
     function init()
     {
+        // Detect account status by checking the used objectClasses
+        $this->is_account = FALSE;
+        foreach($this->map as $type){
+            if(in_array($type['objectClass'], $this->attrs['objectClass'])){
+                $this->installBootstrapMethod = $type['bootstrap'];
+                $this->installConfigManagement = $type['type'];
+                $this->is_account = TRUE;
+            }
+        }
+
         // Start without error.
         $this->initFailed = FALSE;
+
 
         // Prepare list of timezones
         $this->timezones = $this->getTimezones();
@@ -273,8 +285,6 @@ class InstallRecipe extends plugin
 
     function save_object()
     {
-
-        
         if(isset($_POST['InstallRecipePosted'])){
 
             $currentInstallMethod = $this->installConfigManagement;
@@ -327,6 +337,15 @@ class InstallRecipe extends plugin
         unset($this->attrs['installConfigManagement']);
         unset($this->attrs['installBootstrapMethod']);
         echo "Skipp saving of 'installConfigManagement' and 'installBootstrapMethod', i've no idea where to store them.";
+
+        // Remove all objectClasses which belongs to a bootstrap method, 
+        //  and then add the selected one.
+        foreach($this->map as $type){
+            $this->attrs['objectClass'] = array_remove_entries_ics(array($type['objectClass']), $this->attrs['objectClass']);
+        }
+        $this->attrs['objectClass'][] = $this->map[$this->installConfigManagement]['objectClass'];
+        
+        print_a($this->attrs);
 
         $this->cleanup();
         $ldap=$this->config->get_ldap_link();
