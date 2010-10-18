@@ -296,10 +296,6 @@ class InstallRecipe extends plugin
                 }
             }
             $this->installNTPServerList->setListData($this->installNTPServer);
-
-            if($currentInstallMethod != $this->installConfigManagement){
-                $this->updateRecipeTab();
-            }
         }
         if(isset($_POST['cancelPassword'])) $this->setKickstartRootPasswordHash =false;
         if(isset($_POST['setPassword'])) {
@@ -316,72 +312,6 @@ class InstallRecipe extends plugin
             $this->installRootPasswordHash = @$test->generate_hash(get_post('rootPassword'));
         }
 
-    }
-
-
-    function updateRecipeTab()
-    {
-        $mode = $this->installConfigManagement;
-        if(!isset($this->recipeTabs[$mode])){
-            $this->recipeTabs[$mode] = new DeviceConfig($this->config, $this->dn);
-            $this->recipeTabs[$mode]->parent = &$this->parent;
-
-            if($this->recipeTabs[$mode]->setInstallMethod($mode)){
-
-                $class= &$this->recipeTabs[$mode];
-
-                // Add some dummy entries for testing.
-                if($mode == 'puppet'){ 
-                    $id = $class->addItem('PuppetModule','test1',
-                            array(
-                                'dependency' => array('stulle','Wurst'),
-                                'version' => '2.4-f',
-                                'name'  => 'Thundebird',
-                                'description' => 'Mozilla mail client')
-                            );
-                    $id = $class->addItem('PuppetModule','test2',
-                            array(
-                                'dependency' => array('Leipnitz','Dose'),
-                                'version' => 1,
-                                'name'  => 'Firefox',
-                                'description' => 'Test Module')
-                            );
-                    $class->setCurrentItem($id);
-                    $id = $class->addItem('PuppetTemplate','temp1',
-                            array(
-                                'name' => 'temp1',
-                                'data' => 'kekse.tpl')
-                            );
-                    $class->setCurrentItem($id);
-                    $id = $class->addItem('PuppetTemplate','tep1',
-                            array(
-                                'name' => 'tep1',
-                                'data' => 'kekse.tpl')
-                            );
-
-                    $class->setCurrentItem($class->getRootItemID());
-                }
-            }else{
-                unset($this->recipeTabs[$mode]);
-            }
-        }
-
-        // Update the recipe tab to match the selected installation method.
-        if($this->is_account && isset($this->recipeTabs[$mode])){
-
-            if(isset($this->parent->by_object['DeviceConfig']) && 
-                    $this->recipeTabs[$mode] === $this->parent->by_object['DeviceConfig']){
-                return;
-            }
-
-            $this->parent->by_name['DeviceConfig'] = $mode ;
-            $this->parent->by_object['DeviceConfig'] = &$this->recipeTabs[$mode];
-        }else{
-            if(isset($this->parent->by_name['DeviceConfig'])){
-                unset($this->parent->by_name['DeviceConfig']);
-                unset($this->parent->by_object['DeviceConfig']);
-            }
-        }
     }
 
 

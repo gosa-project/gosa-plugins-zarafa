@@ -2,15 +2,6 @@
 
 class DeviceTab extends tabs
 {
-
-    function __construct(&$config, $data, $dn, $acl_category= "", $hide_refs = FALSE, $hide_acls = FALSE)
-    {
-        tabs::tabs($config, $data, $dn, $acl_category, $hide_refs, $hide_acls);
-        if(isset($this->by_object['InstallRecipe'])){
-            $this->by_object['InstallRecipe']->updateRecipeTab();
-        }
-    }
-
     function save($ignore_account= FALSE)
     {
         // Prepare object DN
