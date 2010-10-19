@@ -21,13 +21,13 @@ class InstallRecipe extends plugin
     public $installMirrorDNList = array();
 
     public $installKernelPackage = "";
-    public $installKernelPackageList = array('kernel1','kk1');
+    public $installKernelPackageList = array();
 
     public $installKeyboardlayout = "";
-    public $installKeyboardlayoutList = array("104","105");
+    public $installKeyboardlayoutList = array();
 
     public $installSystemLocale = "";
-    public $installSystemLocaleList = array('de','en_EN.UTF-8');
+    public $installSystemLocaleList = array();
 
     public $installTimezone = "";
     public $installTimeUTC = "";
@@ -95,7 +95,6 @@ class InstallRecipe extends plugin
         // Start without error.
         $this->initFailed = FALSE;
 
-
         // Prepare list of timezones
         $this->timezones = $this->getTimezones();
 
@@ -115,20 +114,63 @@ class InstallRecipe extends plugin
         }
 
         // Load list of bootstrap methods.
-        if(!$this->loadInstallationMethods()){
+        $res = $this->loadInstallationMethods();
+        if($res == NULL){
             $this->initFailed = TRUE;
             msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
             return;
         }
-    
+        $this->installBootstrapMethodList = $res['installBootstrapMethodList'];
+        $this->installConfigManagementList = $res['installConfigManagementList'];
 
-        $this->installTemplateDNList = array(
-        'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
-        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System-Tpl');
+        // Load system locales 
+        $locales = $this->getSystemLocales();
+        if($locales == NULL){
+            $this->initFailed = TRUE;
+            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return;
+        }
+        $this->installSystemLocaleList = $locales;
 
-        $this->installMirrorDNList = array(
-        'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
-        'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
+        // Load installation templates
+        $res = $this->loadInstallationTemplates();
+        if($res == NULL){
+            $this->initFailed = TRUE;
+            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return;
+        }
+        $this->installTemplateDNList = $res;
+
+
+        // Load installation keyboard layouts
+        $res = $this->loadInstallationKeyboardLayouts();
+        if($res == NULL){
+            $this->initFailed = TRUE;
+            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return;
+        }
+        $this->installKeyboardlayoutList = $res;
+
+
+        // Load kernel package list
+        $res = $this->loadInstallationKernelPackages();
+        if($res == NULL){
+            $this->initFailed = TRUE;
+            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return;
+        }
+        $this->installKernelPackageList = $res;
+
+
+        // Load installation mirrors
+        $res = $this->loadInstallationMirrors();
+        if($res == NULL){
+            $this->initFailed = TRUE;
+            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return;
+        }
+        $this->installMirrorDNList = $res;
+
 
         // Preset some values for new accounts
         if(!$this->is_account){
@@ -141,6 +183,7 @@ class InstallRecipe extends plugin
             $this->installBootstrapMethod = key($this->installBootstrapMethodList);
             $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
         }
+
 
         // Check if we've a valid bootstrap and configMangement method selected
         if(!isset($this->installConfigManagementList[$this->installBootstrapMethod])){
@@ -175,7 +218,44 @@ class InstallRecipe extends plugin
         uksort($list, 'strnatcasecmp'); 
         return($list);
     }
-   
+ 
+    
+    function loadInstallationKernelPackages()
+    {
+        return(array('kernel1','kk1'));
+    }
+    
+
+    function loadInstallationMirrors()
+    {
+        $res = array(
+                'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
+                'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
+        return($res);
+    }
+
+    function loadInstallationTemplates()
+    {
+        $res = array(
+                'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
+                'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System-Tpl');
+        return($res);
+    } 
+
+    function loadInstallationKeyboardLayouts()
+    {
+        return(array('104','105'));
+    } 
+
+    function getSystemLocales()
+    {
+        $locales = json_decode('{"hu_HU.UTF-8": "Hungarian", 
+                "es_DO.UTF-8": "Spanish (Dominican Republic)", 
+                "es_CL.UTF-8": "Spanish (Chile)"}');
+
+        return($locales);
+    }
+ 
 
     /*! \brief  Try to load install and bootstrap methods from the GOsa-backend
      *          This is done via jsonRPC, if calling the backend method fails,
@@ -183,8 +263,6 @@ class InstallRecipe extends plugin
      */ 
     function loadInstallationMethods()
     { 
-        $this->installBootstrapMethodList = array();
-        $this->installConfigManagementList = array();
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getSupportedBaseInstallMethods();
        
@@ -192,17 +270,17 @@ class InstallRecipe extends plugin
         $this->rpcError = !$rpc->success();
         if(!$rpc->success()){
             $this->rpcErrorMessage = $rpc->get_error();
-            return(FALSE);
+            return(NULL);
         }
 
         // Walk through result and set bootstrap methods.
         foreach($res as $name => $method){
-            $this->installBootstrapMethodList[$name] = $method['name'];
+            $res['installBootstrapMethodList'][$name] = $method['name'];
             foreach($method['methods'] as $m){
-                $this->installConfigManagementList[$name][$m] = $m; 
+                $res['installConfigManagementList'][$name][$m] = $m; 
             }
         }
-        return(TRUE);
+        return($res);
     }
     
 
