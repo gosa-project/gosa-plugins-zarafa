@@ -65,6 +65,16 @@ class InstallRecipe extends plugin
         // Set default password hash
         $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
 
+        // Prepare list of timezones
+        $this->timezones = $this->getTimezones();
+
+        // Get list of password hashes
+        $tmp = passwordMethod::get_available_methods();
+        $this->hashes = array();
+        foreach($tmp['name'] as $name){
+            $this->hashes[$name] = $name;
+        }
+
         // Prepare NTP servers list 
         $this->installNTPServerList= new sortableListing($this->installNTPServer);
         $this->installNTPServerList->setDeleteable(true);
@@ -95,22 +105,12 @@ class InstallRecipe extends plugin
         // Start without error.
         $this->initFailed = FALSE;
 
-        // Prepare list of timezones
-        $this->timezones = $this->getTimezones();
-
         // Get list of NTP servers
         $this->installNTPServer = array();
         if(isset($this->attrs['installNTPServer']['count'])){
             for($i = 0; $i < $this->attrs['installNTPServer']['count']; $i++){
                 $this->installNTPServer[] = $this->attrs['installNTPServer'][$i];
             }
-        }
-
-        // Get list of password hashes
-        $tmp = passwordMethod::get_available_methods();
-        $this->hashes = array();
-        foreach($tmp['name'] as $name){
-            $this->hashes[$name] = $name;
         }
 
         // Load list of bootstrap methods.
@@ -123,6 +123,7 @@ class InstallRecipe extends plugin
         $this->installBootstrapMethodList = $res['installBootstrapMethodList'];
         $this->installConfigManagementList = $res['installConfigManagementList'];
 
+
         // Load system locales 
         $locales = $this->getSystemLocales();
         if($locales == NULL){
@@ -131,6 +132,7 @@ class InstallRecipe extends plugin
             return;
         }
         $this->installSystemLocaleList = $locales;
+
 
         // Load installation templates
         $res = $this->loadInstallationTemplates();
