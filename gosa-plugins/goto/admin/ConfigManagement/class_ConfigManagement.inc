@@ -318,7 +318,7 @@ class ConfigManagement extends management
 
         // Collect item container list to be able to render the fake-base selector
         if(!$this->itemContainerSelector){
-            $this->itemContainerSelector = new ItemSelector(
+            $this->itemContainerSelector = new releaseSelector(
                     $this->getContainerList(), 
                     $this->base, 
                     $this->allConfiguredItems[$this->rootItemID]['base']);
