@@ -864,7 +864,7 @@ class addressbook extends plugin
           "plCategory"    => array("addressbook" => array("objectClass" => "inetOrgPerson", "description" => _("Addressbook"))),
 
           "plProvidedAcls"    => array(
-            "sn"                        => _("Surename"),         
+            "sn"                        => _("Surname"),         
             "givenName"                 => _("Given name"), 
             "telephoneNumber"           => _("Telefon number"), 
             "facsimileTelephoneNumber"  => _("Fax number"), 
