@@ -94,7 +94,7 @@ class roleGeneric extends plugin {
         $this->memberList->setEditable(false);
         $this->memberList->setWidth("100%");
         $this->memberList->setHeight("300px");
-        $this->memberList->setHeader(array('~',_("Given name"),_("Surename"),_("UID")));
+        $this->memberList->setHeader(array('~',_("Given name"),_("Surname"),_("UID")));
         $this->memberList->setColspecs(array('20px','*','*','*','20px'));
         $this->memberList->setDefaultSortColumn(1);
     }
