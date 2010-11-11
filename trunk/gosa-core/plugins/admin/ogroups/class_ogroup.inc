@@ -930,8 +930,8 @@ class ogroup extends plugin
       $message[]= msgPool::required(_("Name"));
     }
 
-    if (preg_match('/[=,+<>#;]/', $this->cn)) {
-      $message[] = msgPool::invalid(_("Name"), $this->cn, "/[^=+,<>#;]/");
+    if (preg_match('/[\\\\=\",+<>#;]/', $this->cn)) {
+      $message[] = msgPool::invalid(_("Name"), $this->cn, "/[^\\\\=\"+,<>#;]/");
     }
 
     /* To many different object types? */
