@@ -41,7 +41,7 @@ class TemplateWidget_textEditor extends TemplateWidget
             }elseif(($_FILES['ImportFile']['size']==0)){
                 msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
             }else{
-                $str = file_get_contents($_FILES['ImportFile']['tmp_name']);
+                $str = file_get_contents(gosa_file_name($_FILES['ImportFile']['tmp_name']));
                 $this->value = $str;
 
                 // Check encoding again
