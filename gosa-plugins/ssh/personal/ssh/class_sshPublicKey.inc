@@ -122,7 +122,7 @@ class sshPublicKey extends plugin
         msg_dialog::display(_("Upload error"), _("Error uploading the key!")." (".$_FILES['key']['error'].")", ERROR_DIALOG);
       } else {
 
-        $lines= file($_FILES['key']['tmp_name']);
+        $lines= gosa_file($_FILES['key']['tmp_name']);
         foreach ($lines as $line) {
           if (preg_match('/^(ssh-(dss|rsa))\s+([a-zA-Z0-9+\/.=]+)\s+([[:print:]]+)$/', $line, $match)) {
             $fingerprint= $this->fingerprint(base64_decode($match[3]));
