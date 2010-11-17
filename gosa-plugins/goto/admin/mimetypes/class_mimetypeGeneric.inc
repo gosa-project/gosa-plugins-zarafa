@@ -210,7 +210,7 @@ class mimetype extends plugin
 
             /* Set a new icon was requested */
             if(isset($_POST['update_icon']) && (isset($_FILES['picture_file']['name']))){
-                $this->set_new_picture($_FILES['picture_file']['tmp_name']);		
+                $this->set_new_picture(gosa_file_name($_FILES['picture_file']['tmp_name']));		
             }
 
             /* Add gotoMimeFilePattern */
