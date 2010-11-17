@@ -45,8 +45,9 @@ class logonManagementDialog extends plugin
     $display= "";
 
     if((isset($_POST['StartImport']))&&(isset($_FILES['importFile']))){
-      $this->LogonData = file_get_contents($_FILES['importFile']['tmp_name']);
-      @unlink($_FILES['importFile']['tmp_name']);
+      $filename = gosa_file_name($_FILES['importFile']['tmp_name']);
+      $this->LogonData = file_get_contents($filename);
+      @unlink($filename);
     }
 
     foreach($this->attributes as $attr){
