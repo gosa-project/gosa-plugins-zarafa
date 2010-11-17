@@ -25,7 +25,7 @@ class TemplateWidget_file extends TemplateWidget
     function save_object()
     {
         if(isset($_POST["{$this->postName}_Upload"]) && isset($_FILES[$this->postName]['tmp_name'])){
-            $this->value = file_get_contents($_FILES[$this->postName]['tmp_name']);
+            $this->value = file_get_contents(gosa_file_name($_FILES[$this->postName]['tmp_name']));
         }
         if(isset($_POST["{$this->postName}_Remove"])) $this->value ="";
     }
