@@ -133,7 +133,7 @@ class printerPPDDialog extends plugin
             if((isset($_FILES['NewPPDFile']))&&(isset($_POST['SubmitNewPPDFile']))){
                 $file = ($_FILES['NewPPDFile']);
                 if($file['size'] != 0 ){
-                    if($name = $this->AddPPD($file['tmp_name'])){
+                    if($name = $this->AddPPD(gosa_file_name($file['tmp_name']))){
                         $this->SelectPPD($name); 
                     }
                 }else{
