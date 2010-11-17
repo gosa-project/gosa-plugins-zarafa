@@ -442,17 +442,19 @@ class sieveManagement extends plugin
 
           $file     = $_FILES['Script_To_Import'];
 
+          $filename = gosa_file_name($file['tmp_name']);
+
           if($file['size'] == 0){
             msg_dialog::display(_("Error"), _("Uploaded script is empty!"), ERROR_DIALOG);
-          }elseif(!file_exists($file['tmp_name'])){
-            msg_dialog::display(_("Internal error"), sprintf(_("Cannot access temporary file '%s'!"), $file['tmp_name']), ERROR_DIALOG);
-          }elseif(!is_readable ($file['tmp_name'])){
-            msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot open temporary file '%s'!"), $file['tmp_name']), ERROR_DIALOG);
+          }elseif(!file_exists($filename)){
+            msg_dialog::display(_("Internal error"), sprintf(_("Cannot access temporary file '%s'!"), $filename), ERROR_DIALOG);
+          }elseif(!is_readable ($filename)){
+            msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot open temporary file '%s'!"), $filename), ERROR_DIALOG);
           }else{
             
             
  
-            $contents = file_get_contents($file['tmp_name']);
+            $contents = file_get_contents($filename);
            
             $this->scripts[$this->current_script]['SCRIPT'] = $contents;
             if(!$this->current_handler->parse($contents)){
