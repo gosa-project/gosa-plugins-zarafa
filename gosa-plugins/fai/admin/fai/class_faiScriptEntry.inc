@@ -74,7 +74,7 @@ class faiScriptEntry extends plugin
                 if(($_FILES['ImportFile']['size']==0)){
                     msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
                 }else{
-                    $str = file_get_contents($_FILES['ImportFile']['tmp_name']);
+                    $str = file_get_contents(gosa_file_name($_FILES['ImportFile']['tmp_name']));
                     $this->FAIscript = $str;
 
                     // Check encoding again 
