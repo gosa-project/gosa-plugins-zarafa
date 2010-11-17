@@ -909,7 +909,7 @@ class appgroup extends plugin
 
         if(isset($_FILES['folder_image']) && isset($_POST['folder_image_upload'])){
             if($_FILES['folder_image']['error'] == 0 && $_FILES['folder_image']['size'] > 0){
-                $this->edit_entry['ICON'] = file_get_contents($_FILES['folder_image']['tmp_name']);
+                $this->edit_entry['ICON'] = file_get_contents(gosa_file_name($_FILES['folder_image']['tmp_name']));
             }
         }
 
