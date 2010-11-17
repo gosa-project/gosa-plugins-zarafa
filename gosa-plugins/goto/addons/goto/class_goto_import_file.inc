@@ -65,7 +65,8 @@ class goto_import_file extends plugin
          */
         if(isset($_POST['import']) && isset($_FILES['file'])) {
             if(isset($_FILES['file']['tmp_name'])){
-                $str = file_get_contents($_FILES['file']['tmp_name']);
+                $filename = $_FILES['file']['tmp_name'];
+                $str = file_get_contents(gosa_file_name($filename));
                 $this->parse_csv($str);
             }
         }
