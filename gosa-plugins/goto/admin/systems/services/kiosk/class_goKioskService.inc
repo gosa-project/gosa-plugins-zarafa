@@ -121,12 +121,13 @@ class goKioskService extends goService{
         if((isset($_POST['profileAdd']))&&(isset($_FILES['newProfile'])) && $this->acl_is_writeable("")){
             $file = $_FILES['newProfile'];
             if(!file_exists($this->baseDir.$file['name'])){
+                $filename = gosa_file_name($file['tmp_name']);
                 $tmp = array(
                         'url'     => "" ,
                         'name'    => $file['name'] ,
                         'initial' => FALSE,
-                        'tmp_name'=> $file['tmp_name'],
-                        'content' => file_get_contents($file['tmp_name']),
+                        'tmp_name'=> $filename,
+                        'content' => file_get_contents($filename),
                         'exists'  => TRUE);
 
 
