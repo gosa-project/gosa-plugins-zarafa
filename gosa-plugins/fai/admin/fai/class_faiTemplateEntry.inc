@@ -68,7 +68,7 @@ class faiTemplateEntry extends plugin
     $display = "";
 
     if(isset($_POST['TmpFileUpload']) && $this->acl_is_writeable("FAItemplateFile")){
-      if($str=file_get_contents($_FILES['FAItemplateFile']['tmp_name'])){
+      if($str=file_get_contents(gosa_file_name($_FILES['FAItemplateFile']['tmp_name']))){
         $this->FAItemplateFile = $str;
 
         /* If we don't have a filename set it from upload filename. */
