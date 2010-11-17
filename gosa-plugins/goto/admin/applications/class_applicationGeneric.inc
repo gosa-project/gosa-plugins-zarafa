@@ -159,7 +159,7 @@ class application extends plugin
     $this->gotoLogonScript= $this->generateTemplate().preg_replace('/.*### END HEADER ###/s', '', $this->gotoLogonScript);
 
     if((isset($_POST['upLoad']))&&(isset($_FILES['ScriptFile'])) && !preg_match("/freeze/i",$this->FAIstate)){
-      $str = file_get_contents($_FILES['ScriptFile']['tmp_name']);
+      $str = file_get_contents(gosa_file_name($_FILES['ScriptFile']['tmp_name']));
       $this->gotoLogonScript = $str;
     }
 
@@ -327,7 +327,8 @@ class application extends plugin
       /* Check for picture upload */
       if (isset($_FILES['picture_file']['name']) && $_FILES['picture_file']['name'] != ""){
 
-        if (!is_readable($_FILES['picture_file']['tmp_name'])) {
+        $filename = gosa_file_name($_FILES['picture_file']['tmp_name']);
+        if (!is_readable($filename)) {
           msg_dialog::display(_("Error"), msgPool::incorrectUpload(), ERROR_DIALOG);
         }
 
@@ -337,7 +338,7 @@ class application extends plugin
 
           /* Open file and write out photoData */
           $fp = fopen ($fname, "w");
-          fwrite ($fp, $_FILES['picture_file']['tmp_name']);
+          fwrite ($fp, $filename);
           fclose ($fp);
 
           /* Build conversation query. Filename is generated automatically, so
@@ -359,7 +360,7 @@ class application extends plugin
         } else {
 
           /* Load the new uploaded Photo */
-          if(!$handle  =  imagick_ReadImage($_FILES['picture_file']['tmp_name'])){
+          if(!$handle  =  imagick_ReadImage($filename)){
             msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("no read permission")), ERROR_DIALOG);
           }
 
@@ -373,15 +374,15 @@ class application extends plugin
             msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("cannot convert image")), ERROR_DIALOG);
           }
 
-          if(!imagick_writeimage($handle,$_FILES['picture_file']['tmp_name'])){
-            msg_dialog::display(_("Error"), msgPool::incorrectUpload(sprintf(_("cannot save image to '%s'"), $_FILES['picture_file']['tmp_name'])), ERROR_DIALOG);
+          if(!imagick_writeimage($handle,$filename)){
+            msg_dialog::display(_("Error"), msgPool::incorrectUpload(sprintf(_("cannot save image to '%s'"), $filename)), ERROR_DIALOG);
           }
 
           imagick_free($handle);
         }
 
         /* Activate new picture */
-        $this->set_picture($_FILES['picture_file']['tmp_name']);
+        $this->set_picture($filename);
       }	
     }
   }
