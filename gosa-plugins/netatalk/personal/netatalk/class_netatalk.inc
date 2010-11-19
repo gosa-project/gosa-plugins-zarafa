@@ -114,14 +114,7 @@ class netatalk extends plugin {
     /* Get netatalk shares */
     $this->shares = array();
     $ldap = $this->config->get_ldap_link();
-
-    if($this->dn === "new" || $this->dn === NULL) {
-      $base  = session::get('CurrentMainBase');
-    } else {
-      $base = preg_replace("/^[^,]+,".preg_quote(get_people_ou(), '/')."/i","",$this->dn);
-    }
-
-    $ldap->cd($base);
+    $ldap->cd($this->config->current['BASE']);
     $ldap->search ("(&(objectClass=mount)(|(mountType=url)(mountType=nfs))(cn=*))");
 
     while ($attrs = $ldap->fetch()){
@@ -251,7 +244,7 @@ class netatalk extends plugin {
       if($mountType=="url") {
         $this->apple_user_homeurl_xml = '<home_dir><url>afp://'.$host.$dir . '</url><path>'.
           $this->apple_user_homepath_raw.'</path></home_dir>';
-        $this->apple_user_homeurl = base64_encode($this->apple_user_homeurl_xml);
+        $this->apple_user_homeurl = $this->apple_user_homeurl_xml;
       } else {
         $this->apple_user_homeurl = "";
       }
