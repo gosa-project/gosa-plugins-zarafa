@@ -177,7 +177,7 @@ class opengwAccount extends plugin
 
 				/* Check if we are successfully connected to db */
 				if(!$this->handle->connected){
-          msg_dialog::display(_("Configuration error"), msgPool::dbconnect(_("Open Groupware")), ERROR_DIALOG);
+          msg_dialog::display(_("Configuration error"), msgPool::dbconnect(_("OpenGroupware")), ERROR_DIALOG);
 				}else{
 
 					/* Assign LocationTeams */

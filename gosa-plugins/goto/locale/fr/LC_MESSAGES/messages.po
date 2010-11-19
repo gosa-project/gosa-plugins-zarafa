@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-01 15:16+0100\n"
-"PO-Revision-Date: 2010-08-06 11:34+0200\n"
+"PO-Revision-Date: 2010-11-19 17:46+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -763,7 +763,7 @@ msgstr "Information du périphérique"
 
 #: admin/devices/class_deviceGeneric.inc:264
 msgid "Hotplug"
-msgstr ""
+msgstr "Enfichable à chaud"
 
 #: admin/devices/class_deviceGeneric.inc:275
 #: admin/systems/services/shares/class_goShareServer.inc:425
