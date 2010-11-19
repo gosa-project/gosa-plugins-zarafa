@@ -289,6 +289,8 @@ warn timestamp, $index - $cache{STRING_NUMBER}, " new lines processed.\n";
 $cache{STRING_NUMBER} = $index;
 
 $LDAP->unbind;
+undef @lines;
 untie @lines;
+undef %cache;
 untie %cache;
 
