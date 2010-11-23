@@ -104,7 +104,8 @@ class printgeneric extends plugin
         } else {
 
             /* Set base and check if the extracted base exists */
-            if(preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i",$this->dn)){
+            if(class_available("ArpNewDevice") &&
+                preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i",$this->dn)){
                 $this->base= preg_replace("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i","",dn2base($this->dn));
             }else{
                 $this->base= preg_replace("/".preg_quote(get_ou("printgeneric", "printerRDN"), '/')."/i","",dn2base($this->dn));
@@ -921,7 +922,8 @@ class printgeneric extends plugin
         }
 
         /* Ensure to create a new object */
-        if(preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i",$this->orig_dn)){
+        if(class_available("ArpNewDevice") &&
+                preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i",$this->orig_dn)){
             $this->orig_dn = "new";
         }
 
