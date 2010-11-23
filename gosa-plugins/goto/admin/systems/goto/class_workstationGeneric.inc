@@ -141,7 +141,8 @@ class workgeneric extends plugin
         if ($this->dn == "new"){
             $ui= get_userinfo();
             $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
-        } elseif(preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", $this->dn)){
+        } elseif(class_available("ArpNewDevice") &&
+                preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", $this->dn)){
             $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", "", $this->dn);
         }else{
             $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("workgeneric", "workstationRDN"), '/')."/i", "", $this->dn);
@@ -463,7 +464,14 @@ class workgeneric extends plugin
             }
             if ($ldap->count() != 0){
                 while ($attrs= $ldap->fetch()){
-                    if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", $ldap->getDN())){
+
+                    $matchArp = FALSE;
+                    if(class_available("ArpNewDevice") &&
+                            preg_match ("/,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", $ldap->getDN())){
+                        $matchArp = TRUE;
+                    } 
+
+                    if (preg_match("/cn=dhcp,/",$attrs['dn']) || $matchArp){
                         continue;
                     } else {
                         if ($attrs['dn'] != $this->orig_dn){
