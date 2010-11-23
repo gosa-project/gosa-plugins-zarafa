@@ -20,7 +20,7 @@
  <tr>
   <td>{t}Key{/t}{$must}</td>
   <td>
-   <input  type='text' name='dhcpKeySecret' size='30' maxlength='30' value='{$dhcpKeySecret}'>
+   <input  type='text' name='dhcpKeySecret' size='30' maxlength='80' value='{$dhcpKeySecret}'>
   </td>
  </tr>
 </table>
