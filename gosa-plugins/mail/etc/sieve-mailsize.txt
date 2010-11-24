@@ -12,6 +12,6 @@ Thank you,
  the mailserver
 .
         ;
-        discard;
+        stop;
 }
 
