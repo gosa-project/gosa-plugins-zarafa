@@ -862,10 +862,12 @@ class faiManagement extends management
           }
         }
       }else{
-        trigger_error("Unknown class DaemonEvent / gosaSupportDaemon");
-        msg_dialog::display(_("Fatal error"),
-            "Daemon events called but classes where not accessible, DaemonEvent gosaSupportDaemon",
-            FATAL_ERROR_DIALOG);
+          if($this->config->boolValueIsTrue("core","developmentMode")){
+              trigger_error("Unknown class DaemonEvent / gosaSupportDaemon");
+              msg_dialog::display(_("Fatal error"),
+                      "Daemon events called but classes where not accessible, DaemonEvent gosaSupportDaemon",
+                      FATAL_ERROR_DIALOG);
+          }
       }
     
       // Update list and release selector to point to the newly created release 
