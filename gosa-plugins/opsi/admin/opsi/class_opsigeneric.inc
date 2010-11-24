@@ -200,7 +200,7 @@ class opsiGeneric extends plugin
       $this->netConfigDNS->set_acl_category("opsi");
       $this->netConfigDNS->set_acl_base($this->config->current['BASE']);
       $this->netConfigDNS->IPisMust = FALSE;
-      $this->netConfigDNS->MACisMust = FALSE;
+      $this->netConfigDNS->MACisMust = TRUE;
     }
   }
 
