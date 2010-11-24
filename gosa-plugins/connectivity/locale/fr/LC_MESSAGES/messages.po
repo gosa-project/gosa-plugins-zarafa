@@ -1,13 +1,13 @@
-# translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-14 09:08-0400\n"
-"PO-Revision-Date: 2008-06-04 09:19+0200\n"
+"PO-Revision-Date: 2010-11-24 22:58+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,17 +31,14 @@ msgstr "Mon Compte"
 
 #: personal/connectivity/class_connectivity.inc:281
 #: personal/connectivity/class_intranetAccount.inc:217
-#, fuzzy
 msgid "Connectivity add-on"
 msgstr "Extension Connectivité"
 
 #: personal/connectivity/intranet.tpl:4
-#, fuzzy
 msgid "Intra net account"
 msgstr "Compte Intranet"
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#, fuzzy
 msgid "Intra net"
 msgstr "Intranet"
 
@@ -51,11 +48,10 @@ msgid "LDAP error"
 msgstr "Erreur LDAP"
 
 #: personal/connectivity/class_intranetAccount.inc:205
-#, fuzzy
 msgid "Intra-net"
 msgstr "Intranet"
 
 #: personal/connectivity/class_intranetAccount.inc:217
-#, fuzzy
 msgid "Intra-net account settings"
 msgstr "Paramètres du compte Intranet"
+

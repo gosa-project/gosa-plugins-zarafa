@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-15 01:42-0400\n"
-"PO-Revision-Date: 2010-01-30 11:40+0100\n"
+"PO-Revision-Date: 2010-11-24 23:10+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,12 +51,11 @@ msgstr ""
 "dans une simple liste."
 
 #: admin/systems/services/dns/servDNSeditZoneEntries.tpl:7
-#, fuzzy
 msgid ""
 "This dialog can't be used until the currently edited zone was saved or the "
 "zone entry exists in the LDAP directory."
 msgstr ""
-"Cette boite de dialogue ne peut pas être tant que la zone n'a pas été sauvée "
+"Cette boite de dialogue ne peut pas être utilisée tant que la zone n'a pas été sauvée "
 "ou que l'enregistrement existe dans la base de données ldap."
 
 #: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
@@ -112,12 +111,11 @@ msgstr "Informations"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:4
 msgid "DNS zone"
-msgstr ""
+msgstr "Zone DNS"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:7
-#, fuzzy
 msgid "Generic settings"
-msgstr "Paramètres par défaut des utilisateurs"
+msgstr "Paramètres par défaut"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:9
 #: admin/systems/services/dns/class_servDNS.inc:555
@@ -134,14 +132,12 @@ msgid "Network address"
 msgstr "Adresse réseau"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:29
-#, fuzzy
 msgid "Net mask"
 msgstr "Masque réseau"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:42
 msgid "Zone is in use, network settings can't be modified."
-msgstr ""
-"La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
+msgstr "La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
 
 #: admin/systems/services/dns/servdnseditzone.tpl:49
 #: admin/systems/services/dns/servdnseditzone.tpl:51
@@ -164,12 +160,10 @@ msgid "SOA record"
 msgstr "Enregistrement SOA"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:70
-#, fuzzy
 msgid "Zone settings"
-msgstr "Préférences utilisateur"
+msgstr "Préférences de la zone"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:76
-#, fuzzy
 msgid "Primary DNS server for this zone"
 msgstr "Serveur dns primaire pour cette zone"
 
@@ -207,7 +201,6 @@ msgid "TTL"
 msgstr "TTL"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:154
-#, fuzzy
 msgid "Mx record"
 msgstr "Enregistrements MX"
 
@@ -229,9 +222,8 @@ msgid "DNS service"
 msgstr "Service DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:59
-#, fuzzy
 msgid "Zone"
-msgstr "Zones"
+msgstr ""
 
 #: admin/systems/services/dns/class_servDNS.inc:59
 #: admin/systems/services/dns/class_servDNS.inc:556
@@ -246,8 +238,7 @@ msgstr "Classe"
 #: admin/systems/services/dns/class_servDNS.inc:161
 #, php-format
 msgid "You are going to migrate the DNS setup from server '%s'."
-msgstr ""
-"Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
+msgstr "Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
 
 #: admin/systems/services/dns/class_servDNS.inc:162
 msgid ""
@@ -260,8 +251,7 @@ msgstr ""
 #: admin/systems/services/dns/class_servDNS.inc:308
 #, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
-msgstr ""
-"Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
+msgstr "Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
 
 #: admin/systems/services/dns/class_servDNS.inc:543
 msgid "Services"
@@ -289,7 +279,6 @@ msgid "Zone entry editor"
 msgstr "Editeur de zone"
 
 #: admin/systems/services/dns/class_servDNS.inc:559
-#, fuzzy
 msgid "Primary DNS server"
 msgstr "Serveur dns primaire"
 
@@ -300,19 +289,17 @@ msgstr "Série"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:146
 msgid "Priority"
-msgstr ""
+msgstr "Priorité"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:146
-#, fuzzy
 msgid "Record"
-msgstr "Enregistrements mx"
+msgstr "Enregistrement"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:239
 msgid "Warning"
 msgstr "Avertissement"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:239
-#, fuzzy
 msgid "MxRecord"
 msgstr "Enregistrements mx"
 
@@ -329,10 +316,8 @@ msgstr "Temps de vie"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:402
 #: admin/systems/services/dns/class_servDNSeditZone.inc:408
 #, php-format
-msgid ""
-"The specified network address and the network class (%s/%s) do not match!"
-msgstr ""
-"L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
+msgid "The specified network address and the network class (%s/%s) do not match!"
+msgstr "L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:505
 msgid "Delete"
@@ -375,14 +360,12 @@ msgstr "Les enregistrements '%s' ne peuvent pas être utilisés plus d'une fois.
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:315
 #, php-format
 msgid "Please fix the empty %s record for entry '%s'."
-msgstr ""
-"Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
+msgstr "Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:323
 #, php-format
 msgid "Please fix the duplicate %s record for entry '%s'."
-msgstr ""
-"Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
+msgstr "Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:461
 msgid "Remove"
@@ -452,11 +435,3 @@ msgstr "La valeur 4 (cible) doit être un nom DNS."
 msgid "Value should be composed of 'priority weight port target'."
 msgstr "Les valeurs doivent être composée de 'priorité poids port et cible'."
 
-#~ msgid "MxRecords"
-#~ msgstr "Enregistrements mx"
-
-#~ msgid "Up"
-#~ msgstr "Au dessus"
-
-#~ msgid "Down"
-#~ msgstr "En bas"

@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Benoit Mortier <benoit.mortier@opensides.be>, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-14 08:51-0400\n"
-"PO-Revision-Date: 2009-06-30 10:43+0200\n"
+"PO-Revision-Date: 2010-11-24 22:57+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,9 +47,8 @@ msgid "Virtual hosts"
 msgstr "Hôtes virtuels"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:300
-#, fuzzy
 msgid "Server name"
-msgstr "Serveur"
+msgstr "Nom du serveur"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:301
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:11
@@ -63,9 +62,8 @@ msgid "Server alias"
 msgstr "Alias serveur"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:303
-#, fuzzy
 msgid "Server admin"
-msgstr "Alias serveur"
+msgstr "Administrateur du serveur"
 
 #: admin/systems/services/apache2/class_servApacheVhost.inc:304
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:242
@@ -77,7 +75,6 @@ msgid "Generic"
 msgstr "Informations"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:3
-#, fuzzy
 msgid "Apache Virutal Host"
 msgstr "Hôtes virtuels Apache"
 
@@ -88,14 +85,12 @@ msgstr "Nom de l'hôte de virtuel"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:17
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:223
-#, fuzzy
 msgid "Administrator mail address"
 msgstr "Adresse de messagerie de l'administrateur"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:26
-#, fuzzy
 msgid "Server settings"
-msgstr "Préférences utilisateur"
+msgstr "Préférences du serveur"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:30
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:33
@@ -138,19 +133,18 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: admin/systems/services/apache2/class_apacheUtils.inc:194
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Undefined virtual host name '%s'. Virtual host name must be a valid, fully "
 "qualified domain name like 'www.example.com' or 'example.com'."
 msgstr ""
 "Nom d'hôte virtuel inconnu '%s'. Le nom d'hôte virtuel doit être comme ceci "
-"'www.exemple.com ou exemple.com'"
+"'www.exemple.com' ou 'exemple.com'."
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
-#, fuzzy
 msgid "Alias"
-msgstr "Alias URL"
+msgstr "Alias"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:85
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:96
@@ -159,26 +153,13 @@ msgstr "Répertoire"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
 msgid "Only lowercase strings are allowed as Virtual Host Name."
-msgstr ""
-"Seul les chaînes en miniscule sont permises dans les noms d'hôtes virtuels."
+msgstr "Seul les chaînes en miniscule sont permises dans les noms d'hôtes virtuels."
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:211
 msgid "e.g. example.com"
 msgstr "ex: exemple.com"
 
 #: admin/systems/services/apache2/servApacheVhost.tpl:1
-#, fuzzy
 msgid "Apache virtual hosts"
 msgstr "Service de nom d'hôte virtuel apache"
 
-#~ msgid "Apache VHosts"
-#~ msgstr "Hôtes virtuels Apache"
-
-#~ msgid "Up"
-#~ msgstr "En haut"
-
-#~ msgid "Down"
-#~ msgstr "En Bas"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
