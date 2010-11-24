@@ -269,8 +269,9 @@ class gotomasses extends management
         }
     }
 
-    function removeEntryConfirmed($action="",$target=array(),$all=array(),$altTabClass="",
-            $altTabType="",$altAclCategory="", $aclPlugin="")
+
+    function removeEntryConfirmed($action="",$target=array(),$all=array(),
+            $altTabClass="",$altTabType="",  $altAclCategory="",$altAclPlugin="")
     {
         if($this->acl_is_removeable("")){
             timezone::get_default_timezone();
