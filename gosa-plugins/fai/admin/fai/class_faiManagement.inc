@@ -760,14 +760,28 @@ class faiManagement extends management
 
       $targetReleaseDN = "ou=".$name.",".$baseToUse;
 
-      $appsrc = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("application", "applicationRDN"),$baseToUse);
-      $appdst = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("application", "applicationRDN"),"ou=".$name.",".$baseToUse) ;
+      $appsEnabled = class_available("application");
+      $mimeEnabled = class_available("mimetype");
+      if($appsEnabled){
+          $appsrc = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",
+                  get_ou("application", "applicationRDN"),$baseToUse);
+          $appdst = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",
+                  get_ou("application", "applicationRDN"),"ou=".$name.",".$baseToUse) ;
+      }
+      if($mimeEnabled){
+          $mimesrc = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",
+                  get_ou("mimetype", "mimetypeRDN"),$baseToUse);
+          $mimedst = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",
+                  get_ou("mimetype", "mimetypeRDN"),"ou=".$name.",".$baseToUse) ;
+      }
 
-      $mimesrc = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("mimetype", "mimetypeRDN"),$baseToUse);
-      $mimedst = preg_replace("/".preg_quote(get_ou("faiManagement", "faiBaseRDN"), '/')."/i",get_ou("mimetype", "mimetypeRDN"),"ou=".$name.",".$baseToUse) ;
+      $useBases = array();
+      $useBases[] = $baseToUse;
+      if($appsEnabled) $useBases[] = $appsrc;
+      if($mimeEnabled) $useBases[] = $mimesrc;
 
       /* Check if source depeartments exist */
-      foreach(array($baseToUse,$appsrc,$mimesrc) as $dep){
+      foreach($useBases as $dep){
         $ldap->cd($this->config->current['BASE']);
         $ldap->cat($dep);
         if(!$ldap->count()){
@@ -794,20 +808,24 @@ class faiManagement extends management
 
       /* Duplicate applications
        */
-      $ldap->cat($appsrc,array("dn")) ;
-      if($ldap->count()){
-        $ldap->cd ($appdst);
-        $ldap->recursive_remove();
-        FAI::copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
+      if($appsEnabled){
+          $ldap->cat($appsrc,array("dn")) ;
+          if($ldap->count()){
+              $ldap->cd ($appdst);
+              $ldap->recursive_remove();
+              FAI::copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
+          }
       }
 
       /* Duplicate mime types
        */
-      $ldap->cat($mimesrc,array("dn")) ;
-      if($ldap->count()){
-        $ldap->cd ($mimedst);
-        $ldap->recursive_remove();
-        FAI::copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
+      if($mimeEnabled){
+          $ldap->cat($mimesrc,array("dn")) ;
+          if($ldap->count()){
+              $ldap->cd ($mimedst);
+              $ldap->recursive_remove();
+              FAI::copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
+          }
       }
 
       $attr = array();
