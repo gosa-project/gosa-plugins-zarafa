@@ -48,7 +48,7 @@
   </td>
   <td>
 
-   <table summary="{t}Profile and scirpt path settings{/t}">
+   <table summary="{t}Profile and script path settings{/t}">
     <tr>
      <td><label for="">{t}Script path{/t}</label></td>
      <td>

@@ -1,13 +1,13 @@
-# translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 04:59-0400\n"
-"PO-Revision-Date: 2008-06-08 15:51+0200\n"
+"PO-Revision-Date: 2010-11-25 23:30+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,7 +68,6 @@ msgid "Proxy account"
 msgstr "Compte Proxy"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:331
-#, fuzzy
 msgid "Connectivity add-on"
 msgstr "Connectivité"
 
@@ -94,9 +93,8 @@ msgid "Restrict proxy usage by quota"
 msgstr "Restreindre la quantité de données téléchargeables par quota"
 
 #: personal/connectivity/squid/proxy.tpl:39
-#, fuzzy
 msgid "Proxy configuration"
-msgstr "Configuration de PHP"
+msgstr "Configuration du proxy"
 
 #: personal/connectivity/squid/proxy.tpl:45
 msgid "Filter unwanted content (i.e. pornographic or violence related)"
@@ -107,15 +105,14 @@ msgid "Limit proxy access to working time"
 msgstr "Accès au proxy autorisé durant la plage horaire suivante"
 
 #: personal/connectivity/squid/proxy.tpl:58
-#, fuzzy
 msgid "Worktime restrictions"
-msgstr "Restrictions pour les mot de passe"
+msgstr "Restrictions horaires"
 
 #: personal/connectivity/squid/proxy.tpl:99
-#, fuzzy
 msgid "Quota configuration"
-msgstr "Télécharger la configuration"
+msgstr "Configuration du quota"
 
 #: personal/connectivity/squid/proxy.tpl:112
 msgid "per"
 msgstr "par"
+

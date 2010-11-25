@@ -1,11 +1,11 @@
 # translation of messages.po to
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 04:47-0400\n"
-"PO-Revision-Date: 2009-10-02 18:11+0200\n"
+"PO-Revision-Date: 2010-11-25 23:39+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,18 +15,16 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: personal/samba/samba3.tpl:1
-#, fuzzy
 msgid "Samba configuration"
-msgstr "Configuration de PHP"
+msgstr "Configuration de Samba"
 
 #: personal/samba/samba3.tpl:8
 msgid "Generic"
 msgstr "Informations"
 
 #: personal/samba/samba3.tpl:14
-#, fuzzy
 msgid "Path configuration"
-msgstr "Configuration de PHP"
+msgstr "Configuration du répertoire"
 
 #: personal/samba/samba3.tpl:16 personal/samba/samba3.tpl:116
 #: personal/samba/class_sambaAccount.inc:864
@@ -61,9 +59,8 @@ msgid "Terminal Server"
 msgstr "Serveur de terminaux"
 
 #: personal/samba/samba3.tpl:77
-#, fuzzy
 msgid "Terminal server settings"
-msgstr "Serveur de terminaux"
+msgstr "Paramètres terminal serveur"
 
 #: personal/samba/samba3.tpl:113 personal/samba/class_sambaAccount.inc:1170
 msgid "Allow login on terminal server"
@@ -71,17 +68,15 @@ msgstr "Permet la connexion sur un serveur de terminaux"
 
 #: personal/samba/samba3.tpl:114
 msgid "Terminal server connection settings"
-msgstr ""
+msgstr "Paramètres de connexion terminal serveur"
 
 #: personal/samba/samba3.tpl:152 personal/samba/class_sambaAccount.inc:1171
-#, fuzzy
 msgid "Inherit client configuration"
 msgstr "Hérite de la configuration du client"
 
 #: personal/samba/samba3.tpl:153
-#, fuzzy
 msgid "Client configuration"
-msgstr "Configuration de PHP"
+msgstr "Configuration du client"
 
 #: personal/samba/samba3.tpl:155
 msgid "Initial program"
@@ -92,9 +87,8 @@ msgid "Working directory"
 msgstr "Répertoire de travail"
 
 #: personal/samba/samba3.tpl:177 personal/samba/samba3.tpl:183
-#, fuzzy
 msgid "Connection timeout settings"
-msgstr "Informations de connexions"
+msgstr ""
 
 #: personal/samba/samba3.tpl:182
 msgid "Timeout settings (in minutes)"
@@ -120,12 +114,10 @@ msgid "Client devices"
 msgstr "Périphériques clients"
 
 #: personal/samba/samba3.tpl:251
-#, fuzzy
 msgid "Connect client drives at log on"
 msgstr "Connecter les lecteurs clients à l'identification"
 
 #: personal/samba/samba3.tpl:259
-#, fuzzy
 msgid "Connect client printers at log on"
 msgstr "Connecter les imprimantes clients à l'identification"
 
@@ -154,7 +146,6 @@ msgid "Access options"
 msgstr "Options d'accès"
 
 #: personal/samba/samba3.tpl:339 personal/samba/class_sambaAccount.inc:1173
-#, fuzzy
 msgid "Enforce password change"
 msgstr "Forcer le changement de mot de passe"
 
@@ -164,20 +155,17 @@ msgstr "Le mot de passe n'expire jamais"
 
 #: personal/samba/samba3.tpl:361 personal/samba/class_sambaAccount.inc:1175
 msgid "Login from windows client requires no password"
-msgstr ""
-"L'identification sur une station windows ne nécessite pas de mot de passe"
+msgstr "L'identification sur une station windows ne nécessite pas de mot de passe"
 
 #: personal/samba/samba3.tpl:372 personal/samba/class_sambaAccount.inc:1177
 msgid "Lock samba account"
 msgstr "Verrouiller le compte Samba"
 
 #: personal/samba/samba3.tpl:383
-#, fuzzy
 msgid "Cannot change password"
-msgstr "Modifier le mot de passe"
+msgstr "Impossible de modifier le mot de passe"
 
 #: personal/samba/samba3.tpl:402
-#, fuzzy
 msgid "Samba log on times"
 msgstr "Heures d'accès à Samba"
 
@@ -237,7 +225,6 @@ msgid "input off, notify on"
 msgstr "entrée désactivée, notification activée"
 
 #: personal/samba/class_sambaAccount.inc:410
-#, fuzzy
 msgid "input off, notify off"
 msgstr "entrée désactivée, notification désactivée"
 
@@ -260,14 +247,12 @@ msgstr "du client précédent seulement"
 #: personal/samba/class_sambaAccount.inc:515
 #, php-format
 msgid "The password is outdated since %s, by domain policy."
-msgstr ""
-"Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
+msgstr "Le mot de passe est trop vieux depuis %s selon à la politique du domaine."
 
 #: personal/samba/class_sambaAccount.inc:518
-#, fuzzy, php-format
+#, php-format
 msgid "The password is valid till %s."
-msgstr ""
-"Le mot de passe est valide jusqu'au %s, suivant la politique utilisateur."
+msgstr "Le mot de passe est valide jusqu'au %s."
 
 #: personal/samba/class_sambaAccount.inc:631
 #: personal/samba/class_sambaAccount.inc:637
@@ -392,26 +377,22 @@ msgid "Last failed login"
 msgstr "Dernière connexion ayant échouée"
 
 #: personal/samba/class_sambaAccount.inc:784
-#, fuzzy
 msgid "Log on attempts"
-msgstr "Nombre de tentative de connexion"
+msgstr "Nombre de tentatives de connexion"
 
 #: personal/samba/class_sambaAccount.inc:785
 msgid "Last password update"
 msgstr "Dernière mise à jour du mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:786
-#, fuzzy
 msgid "Last log on"
-msgstr "Dernière connexion"
+msgstr "Dernière connexion le"
 
 #: personal/samba/class_sambaAccount.inc:787
-#, fuzzy
 msgid "Last log off"
-msgstr "Dernière déconnexion"
+msgstr "Dernière déconnexion le"
 
 #: personal/samba/class_sambaAccount.inc:788
-#, fuzzy
 msgid "Automatic log off"
 msgstr "Déconnexion Automatique"
 
@@ -427,8 +408,7 @@ msgstr "Non"
 #: personal/samba/class_sambaAccount.inc:793
 #, php-format
 msgid "The password would expire on %s, but the password expiry is disabled."
-msgstr ""
-"Le mot de passe devrait expirer le %s, mais l'expiration est désactivée."
+msgstr "Le mot de passe devrait expirer le %s, mais l'expiration est désactivée."
 
 #: personal/samba/class_sambaAccount.inc:799
 msgid "Password change available"
@@ -450,11 +430,8 @@ msgid "Home path"
 msgstr "Chemin du répertoire personnel"
 
 #: personal/samba/class_sambaAccount.inc:883
-#, fuzzy
 msgid "The windows user manager allows eight clients at maximum!"
-msgstr ""
-"Le gestionnaire d'utilisateurs windows accepte seulement huit clients. Vous "
-"en avez spécifiés plus de huit."
+msgstr "Le gestionnaire d'utilisateurs windows accepte seulement huit clients !"
 
 #: personal/samba/class_sambaAccount.inc:902
 msgid "Information"
@@ -467,12 +444,10 @@ msgstr "Avertissement"
 
 #: personal/samba/class_sambaAccount.inc:1030
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr ""
-"Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
+msgstr "Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
 
 #: personal/samba/class_sambaAccount.inc:1055
-msgid ""
-"Cannot convert primary group to samba group: group cannot be identified!"
+msgid "Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 "Impossible de convertir le groupe primaire en un groupe primaire samba : le "
 "groupe ne peut être identifié !"
@@ -502,16 +477,14 @@ msgid "Generic profile path"
 msgstr "Chemin par défaut du profil"
 
 #: personal/samba/class_sambaAccount.inc:1174
-#, fuzzy
 msgid "Disallow password change"
-msgstr "Forcer le changement de mot de passe"
+msgstr "Interdire le changement de mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:1176
 msgid "Password never expires"
 msgstr "Le mot de passe n'expire jamais"
 
 #: personal/samba/class_sambaAccount.inc:1179
-#, fuzzy
 msgid "Log on hours"
 msgstr "Heure de connexions"
 
@@ -532,7 +505,6 @@ msgid "Specify the hours this user is allowed to log in"
 msgstr "Indiquez les heures auquel l'utilisateur est autorisé à se connecter"
 
 #: personal/samba/sambaLogonHours.tpl:24
-#, fuzzy
 msgid "Samba logon hours"
 msgstr "Heures d'accès à Samba"
 
@@ -541,14 +513,12 @@ msgid "Hour"
 msgstr "Heure"
 
 #: admin/systems/samba/wingeneric.tpl:1
-#, fuzzy
 msgid "Windows workstation"
-msgstr "groupes de stations windows"
+msgstr "Station windows"
 
 #: admin/systems/samba/wingeneric.tpl:5
-#, fuzzy
 msgid "Generic settings"
-msgstr "Paramètres par défaut des utilisateurs"
+msgstr "Paramètres par défaut"
 
 #: admin/systems/samba/wingeneric.tpl:7
 msgid "Machine name"
@@ -595,59 +565,3 @@ msgid ""
 "windows workstations will be created. The default is 'ou=winstation,'."
 msgstr ""
 
-#~ msgid "Choose subtree to place group in"
-#~ msgstr "Sélectionnez la branche où sera placée le groupe"
-
-#~ msgid "Select a base"
-#~ msgstr "Sélectionnez une base"
-
-#~ msgid "Allow user to change password from client"
-#~ msgstr ""
-#~ "Autoriser les utilisateurs à changer de mot de passe à partir d'une "
-#~ "station cliente"
-
-#~ msgid "Password expires on"
-#~ msgstr "Le mot de passe expirera le"
-
-#~ msgid "Account expires after"
-#~ msgstr "Le compte expire après"
-
-#~ msgid "The password is valid till %s, by domain policy."
-#~ msgstr ""
-#~ "Le mot de passe est valide jusqu'au %s, selon la politique du domaine."
-
-#~ msgid "Allow user to change password"
-#~ msgstr "Autoriser les utilisateurs à changer de mot de passe"
-
-#~ msgid "Account expires"
-#~ msgstr "Le compte expire"
-
-#~ msgid "Limit Logon Time"
-#~ msgstr "Limiter les temps d'accès"
-
-#~ msgid "Limit Logoff Time"
-#~ msgstr "Limiter les heures de déconnections"
-
-#~ msgid "Select workstations to add"
-#~ msgstr "Sélectionner les stations à ajouter"
-
-#~ msgid "Filters"
-#~ msgstr "Filtres"
-
-#~ msgid "Display workstations of department"
-#~ msgstr "Afficher les stations d'un département"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Sélectionner le département où sera effectuée la recherche"
-
-#~ msgid "Regular expression for matching addresses"
-#~ msgstr "Expression régulière pour sélectionner les adresses correspondantes"
-
-#~ msgid "Please select an entry!"
-#~ msgstr "Veuillez sélectionner une entrée !"
-
-#~ msgid "Samba home"
-#~ msgstr "Répertoire de l'utilisateur samba"
-
-#~ msgid "Temporary disable samba account"
-#~ msgstr "Désactiver temporairement le compte Samba"

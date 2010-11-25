@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 05:01-0400\n"
-"PO-Revision-Date: 2010-01-18 23:20+0100\n"
+"PO-Revision-Date: 2010-11-25 23:28+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,14 +17,12 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: admin/sudo/sudo-filter.xml:22
-#, fuzzy
 msgid "Default filter"
-msgstr "Imprimante"
+msgstr "Filtre par défaut"
 
 #: admin/sudo/sudo-filter.xml:36
-#, fuzzy
 msgid "By member"
-msgstr "Aucun membres"
+msgstr "Par membre"
 
 #: admin/sudo/class_sudoGeneric.inc:108
 msgid "Type"
@@ -36,14 +34,12 @@ msgstr "Membres"
 
 #: admin/sudo/class_sudoGeneric.inc:108 admin/sudo/class_sudoGeneric.inc:111
 #: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:115
-#, fuzzy
 msgid "Option"
-msgstr "Applications"
+msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:111
-#, fuzzy
 msgid "System"
-msgstr "Systèmes"
+msgstr "Système"
 
 #: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:544
 msgid "Command"
@@ -113,13 +109,12 @@ msgid "Access control list"
 msgstr "Contrôle d'accès (ACL)"
 
 #: admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
 msgid "Sudo rules"
 msgstr "Rôle sudo"
 
 #: admin/sudo/class_sudoManagement.inc:26
 msgid "Manage all aspects of system wide sudoers definitions"
-msgstr ""
+msgstr "Gère tout les aspects de sudo sur tout les systèmes"
 
 #: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
 #: admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
@@ -133,9 +128,8 @@ msgid "global defaults"
 msgstr "Paramètres globaux par défaut"
 
 #: admin/sudo/paste_generic.tpl:2
-#, fuzzy
 msgid "Paste sudo entry"
-msgstr "Coller"
+msgstr "Coller un entrée sudo"
 
 #: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
 #: admin/sudo/class_sudoOption.inc:546
@@ -151,16 +145,14 @@ msgid "Value"
 msgstr "Valeur"
 
 #: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:538
-#, fuzzy
 msgid "Options"
-msgstr "Applications"
+msgstr ""
 
 #: admin/sudo/options.tpl:89
 msgid "Available options"
 msgstr "Options disponibles"
 
 #: admin/sudo/sudo-list.xml:11
-#, fuzzy
 msgid "List of Sudo roles"
 msgstr "Liste des rôles sudo"
 
@@ -185,12 +177,10 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: admin/sudo/sudo-list.xml:117
-#, fuzzy
 msgid "Edit Sudo role"
 msgstr "Editer le rôle sudo"
 
 #: admin/sudo/sudo-list.xml:130
-#, fuzzy
 msgid "Remove Sudo role"
 msgstr "Supprimer le rôle sudo"
 
@@ -209,7 +199,6 @@ msgstr "chaîne"
 
 #: admin/sudo/class_sudoOption.inc:284 admin/sudo/class_sudoOption.inc:285
 #: admin/sudo/class_sudoOption.inc:286
-#, fuzzy
 msgid "boolean"
 msgstr "booléen"
 
@@ -241,130 +230,3 @@ msgstr "Commandes"
 msgid "Run as"
 msgstr "Exécuter comme"
 
-#~ msgid "Filter"
-#~ msgstr "Filtre"
-
-#~ msgid "Warning"
-#~ msgstr "Avertissement"
-
-#~ msgid ""
-#~ "Please double check if you really want to do this since there is no way "
-#~ "for GOsa to get your data back."
-#~ msgstr ""
-#~ "Veuillez vérifier que vous voulez effectuer cette action. Toutes les "
-#~ "données seront perdues étant donné qu'il est impossible pour GOsa de "
-#~ "récupérer vos données."
-
-#~ msgid ""
-#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou "
-#~ "sur 'Annuler' pour abandonner."
-
-#~ msgid "disabled"
-#~ msgstr "désactivé"
-
-#~ msgid "full access"
-#~ msgstr "accès complet"
-
-#~ msgid "allow access to these hosts"
-#~ msgstr "permettre l'accès a ces hôtes"
-
-#~ msgid "Trust mode"
-#~ msgstr "Mode de confiance"
-
-#~ msgid "Sudo management"
-#~ msgstr "Gestion sudo"
-
-#, fuzzy
-#~ msgid "List of users and groups"
-#~ msgstr "Utilisateurs et groupes"
-
-#, fuzzy
-#~ msgid "Description name"
-#~ msgstr "Nom de l'option"
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Update"
-#~ msgstr "Mise à jour"
-
-#~ msgid "Submit"
-#~ msgstr "Soumettre"
-
-#~ msgid "Select systems to add"
-#~ msgstr "Sélectionner les systèmes à ajouter"
-
-#~ msgid "Display systems of department"
-#~ msgstr "Afficher les systèmes du département"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Sélectionner le département où sera effectuée la recherche"
-
-#~ msgid "Display systems matching"
-#~ msgstr "Afficher les systèmes correspondant"
-
-#~ msgid "Regular expression for matching addresses"
-#~ msgstr "Expression régulière pour sélectionner les adresses correspondantes"
-
-#, fuzzy
-#~ msgid "List of systems"
-#~ msgstr "Liste des utilisateurs"
-
-#~ msgid "Server"
-#~ msgstr "Serveur"
-
-#~ msgid "Workstation"
-#~ msgstr "Stations de travail"
-
-#~ msgid "Show users"
-#~ msgstr "Montrer les utilisateurs"
-
-#~ msgid "Show groups"
-#~ msgstr "Montrer les groupes"
-
-#~ msgid "Show servers"
-#~ msgstr "Montrer les serveurs"
-
-#~ msgid "Show workstations"
-#~ msgstr "Montrer les stations de travail"
-
-#~ msgid "Show terminals"
-#~ msgstr "Montrer les terminaux"
-
-#~ msgid "Select the target objects for your scheduled action."
-#~ msgstr "Sélectionnez les objets cibles pour votre action programmée."
-
-#~ msgid "Available systems"
-#~ msgstr "Systèmes disponibles"
-
-#~ msgid "Object name"
-#~ msgstr "Nom de l'objet"
-
-#~ msgid "Select to see terminals"
-#~ msgstr "Voir les terminaux"
-
-#~ msgid "Select to see servers"
-#~ msgstr "Sélectionnez pour voir les serveurs"
-
-#~ msgid "Select to see workstations"
-#~ msgstr "Voir les stations de travail"
-
-#~ msgid "Regular expression for matching group names"
-#~ msgstr "Expression régulière correspondant à des noms de groupe"
-
-#~ msgid "Select the target objects"
-#~ msgstr "Sélectionner les objets cible"
-
-#~ msgid "Available members"
-#~ msgstr "Membres disponibles"
-
-#~ msgid "Select to see users"
-#~ msgstr "Voir les utilisateurs"
-
-#~ msgid "Select to see groups"
-#~ msgstr "Voir les groupes"
-
-#~ msgid "Apply"
-#~ msgstr "Appliquer"

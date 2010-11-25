@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 04:46-0400\n"
-"PO-Revision-Date: 2010-01-22 21:15+0100\n"
+"PO-Revision-Date: 2010-11-25 23:41+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -68,14 +68,12 @@ msgid "Syslog logging"
 msgstr "Journaux systèmes Syslog"
 
 #: admin/systems/services/rsyslog/rSyslogServer.tpl:7
-#, fuzzy
 msgid "Server provides a Syslog MySQL database"
-msgstr "Le serveur fournit une base de données mysql pour syslog"
+msgstr "Le serveur fournit une base de données MySQL pour Syslog"
 
 #: admin/systems/services/rsyslog/rSyslogServer.tpl:9
-#, fuzzy
 msgid "rSyslog database settings"
-msgstr "Préférences utilisateur"
+msgstr "Préférences de la base de données rSyslog"
 
 #: admin/systems/services/rsyslog/rSyslogServer.tpl:20
 msgid "Database user"
@@ -118,14 +116,12 @@ msgid "Error"
 msgstr "Erreur"
 
 #: addons/rsyslog/rSyslog.tpl:84
-#, fuzzy
 msgid "Entry list"
-msgstr "Exporter la liste"
+msgstr "Liste des entrées"
 
 #: addons/rsyslog/rSyslog.tpl:88
-#, fuzzy
 msgid "Date"
-msgstr "Coller"
+msgstr ""
 
 #: addons/rsyslog/rSyslog.tpl:98
 msgid "Source"
@@ -258,5 +254,3 @@ msgstr ""
 msgid "Clock"
 msgstr "Heure"
 
-#~ msgid "View system logs"
-#~ msgstr "Voir les journaux systèmes"
