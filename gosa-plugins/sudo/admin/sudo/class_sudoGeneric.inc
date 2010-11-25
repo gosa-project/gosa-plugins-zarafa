@@ -439,7 +439,7 @@ class sudo extends plugin
             $ldap->add($this->attrs);
 
             /* Send signal to the world that we've done */
-            $this->handle_post_events("create");
+            $this->handle_post_events("add");
         }else{
             $ldap->cd($this->dn);
             $ldap->modify($this->attrs);;
