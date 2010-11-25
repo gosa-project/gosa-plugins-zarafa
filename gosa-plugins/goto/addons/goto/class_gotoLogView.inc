@@ -29,6 +29,8 @@ class gotoLogView extends plugin
     {
         $this->config = $config;
         $this->parent = $parent;
+    
+        $this->initTime = microtime(TRUE);
 
         /* Try to fetch logs for the given event (mac)
          */
