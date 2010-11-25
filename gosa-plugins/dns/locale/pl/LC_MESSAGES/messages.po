@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-10-29 19:37+0200\n"
 "PO-Revision-Date: 2009-09-05 15:27+0100\n"
 "Last-Translator: Piort Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -42,7 +43,7 @@ msgstr "Przejęcie"
 msgid "Zones"
 msgstr "Strefy"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:249
+#: admin/systems/services/dns/class_servDNSeditZone.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:174
 #: admin/systems/services/dns/class_servDNS.inc:335
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:220
@@ -52,85 +53,86 @@ msgstr "Strefy"
 msgid "Error"
 msgstr "Błąd"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:347
-msgid "Up"
-msgstr "Góra"
+#: admin/systems/services/dns/class_servDNSeditZone.inc:238
+msgid "Warning"
+msgstr "Ostrzeżenie"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:348
-msgid "Down"
-msgstr "W dół"
+#: admin/systems/services/dns/class_servDNSeditZone.inc:238
+#, fuzzy
+msgid "MxRecord"
+msgstr "Rekordy MX"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:350
-#: admin/systems/services/dns/class_servDNSeditZone.inc:588
+#: admin/systems/services/dns/class_servDNSeditZone.inc:270
+#: admin/systems/services/dns/class_servDNSeditZone.inc:505
 msgid "Delete"
 msgstr "Usuń"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:412
-#: admin/systems/services/dns/class_servDNSeditZone.inc:417
-#: admin/systems/services/dns/class_servDNSeditZone.inc:425
+#: admin/systems/services/dns/class_servDNSeditZone.inc:331
+#: admin/systems/services/dns/class_servDNSeditZone.inc:336
+#: admin/systems/services/dns/class_servDNSeditZone.inc:344
 #: admin/systems/services/dns/class_servDNS.inc:582
 #: admin/systems/services/dns/servdnseditzone.tpl:7
 msgid "Zone name"
 msgstr "Nazwa strefy"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:421
+#: admin/systems/services/dns/class_servDNSeditZone.inc:340
 #: admin/systems/services/dns/class_servDNS.inc:269
 #: admin/systems/services/dns/class_servDNS.inc:583
 msgid "Reverse zone"
 msgstr "Strefa odwrotna"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:425
-#: admin/systems/services/dns/class_servDNSeditZone.inc:451
+#: admin/systems/services/dns/class_servDNSeditZone.inc:344
+#: admin/systems/services/dns/class_servDNSeditZone.inc:370
 msgid "Only lowercase allowed"
 msgstr "Tylko małe liter są dozwolone"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:429
+#: admin/systems/services/dns/class_servDNSeditZone.inc:348
 #: admin/systems/services/dns/class_servDNS.inc:588
 msgid "Serial"
 msgstr "Szeregowy"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:433
+#: admin/systems/services/dns/class_servDNSeditZone.inc:352
 #: admin/systems/services/dns/class_servDNS.inc:589
 #: admin/systems/services/dns/servdnseditzone.tpl:102
 msgid "Refresh"
 msgstr "Odśwież"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:437
+#: admin/systems/services/dns/class_servDNSeditZone.inc:356
 msgid "Time to life"
 msgstr "Czas życia"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:441
+#: admin/systems/services/dns/class_servDNSeditZone.inc:360
 #: admin/systems/services/dns/class_servDNS.inc:591
 #: admin/systems/services/dns/servdnseditzone.tpl:120
 msgid "Expire"
 msgstr "Wygasa"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:445
+#: admin/systems/services/dns/class_servDNSeditZone.inc:364
 #: admin/systems/services/dns/class_servDNS.inc:590
 #: admin/systems/services/dns/servdnseditzone.tpl:111
 msgid "Retry"
 msgstr "Ponawia"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:460
-#: admin/systems/services/dns/class_servDNSeditZone.inc:474
+#: admin/systems/services/dns/class_servDNSeditZone.inc:379
+#: admin/systems/services/dns/class_servDNSeditZone.inc:393
 #: admin/systems/services/dns/servdnseditzone.tpl:16
 msgid "Network address"
 msgstr "Adres sieciowy"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:482
-#: admin/systems/services/dns/class_servDNSeditZone.inc:488
-#: admin/systems/services/dns/class_servDNSeditZone.inc:494
+#: admin/systems/services/dns/class_servDNSeditZone.inc:401
+#: admin/systems/services/dns/class_servDNSeditZone.inc:407
+#: admin/systems/services/dns/class_servDNSeditZone.inc:413
 #, php-format
 msgid ""
 "The specified network address and the network class (%s/%s) do not match!"
 msgstr "Podany adres sieciowe i klasa sieciowa (%s/%s) nie zgadzają się!"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:498
+#: admin/systems/services/dns/class_servDNSeditZone.inc:417
 #: admin/systems/services/dns/class_servDNS.inc:584
 msgid "Network class"
 msgstr "Klasa sieciowa"
 
-#: admin/systems/services/dns/class_servDNSeditZone.inc:594
+#: admin/systems/services/dns/class_servDNSeditZone.inc:511
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:455
 msgid "Add"
 msgstr "Dodaj"
@@ -405,6 +407,12 @@ msgstr "Rekordy MX"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "Globalne rekordy strefy"
+
+#~ msgid "Up"
+#~ msgstr "Góra"
+
+#~ msgid "Down"
+#~ msgstr "W dół"
 
 #~ msgid "Remove DNS service"
 #~ msgstr "Usuń usługę DNS"

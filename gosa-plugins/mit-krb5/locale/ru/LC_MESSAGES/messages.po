@@ -5,10 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -186,8 +187,8 @@ msgstr ""
 #: admin/systems/services/kerberos/class_krb5_policy.inc:150
 #, php-format
 msgid ""
-"The value specified for '%s' must be smaller than the value specified for '%"
-"s'!"
+"The value specified for '%s' must be smaller than the value specified for "
+"'%s'!"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:233
@@ -351,7 +352,7 @@ msgid "Prohibit renewable tickets"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:217
-msgid "Prohibit postdated tickets"
+msgid "Pohibit postdated tickets"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:219

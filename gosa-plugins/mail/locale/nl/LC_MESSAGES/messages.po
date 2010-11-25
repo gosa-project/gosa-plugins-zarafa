@@ -11,10 +11,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,10 +48,10 @@ msgstr "E-mail account aanmaken"
 #: personal/mail/class_mailAccount.inc:366
 #: personal/mail/class_mailAccount.inc:371
 #: personal/mail/class_mailAccount.inc:384
-#: personal/mail/class_mailAccount.inc:1000
-#: personal/mail/class_mailAccount.inc:1004
-#: personal/mail/class_mailAccount.inc:1022
-#: personal/mail/class_mailAccount.inc:1385
+#: personal/mail/class_mailAccount.inc:1014
+#: personal/mail/class_mailAccount.inc:1018
+#: personal/mail/class_mailAccount.inc:1036
+#: personal/mail/class_mailAccount.inc:1429
 #: personal/mail/mailAddressSelect/selectMailAddress-list.xml:56
 msgid "Mail address"
 msgstr "E-mail adres"
@@ -67,8 +68,8 @@ msgstr ""
 #: admin/systems/services/mail/class_goMailServer.inc:582
 #: admin/systems/services/virus/class_goVirusServer.inc:154
 #: admin/systems/services/spam/class_goSpamServer.inc:277
-#: personal/mail/class_mailAccount.inc:817
-#: personal/mail/class_mailAccount.inc:890
+#: personal/mail/class_mailAccount.inc:831
+#: personal/mail/class_mailAccount.inc:904
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP fout:"
@@ -89,9 +90,9 @@ msgstr "LDAP fout:"
 #: personal/mail/class_mailAccount.inc:242
 #: personal/mail/class_mailAccount.inc:247
 #: personal/mail/class_mailAccount.inc:249
-#: personal/mail/class_mailAccount.inc:984
-#: personal/mail/class_mailAccount.inc:1209
-#: personal/mail/class_mailAccount.inc:1375
+#: personal/mail/class_mailAccount.inc:998
+#: personal/mail/class_mailAccount.inc:1253
+#: personal/mail/class_mailAccount.inc:1419
 msgid "Mail"
 msgstr "E-mail"
 
@@ -106,7 +107,7 @@ msgstr "Mail distributielijst"
 
 #: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:860
 #: admin/groups/mail/mail.tpl:7 admin/groups/mail/paste_mail.tpl:8
-#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:996
+#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:1010
 #: personal/mail/copypaste.tpl:7
 msgid "Primary address"
 msgstr "Primair adres"
@@ -137,11 +138,11 @@ msgstr "Geef a.u.b. een geldige naam op"
 #: personal/mail/class_mailAccount.inc:153
 #: personal/mail/class_mailAccount.inc:158
 #: personal/mail/class_mailAccount.inc:161
-#: personal/mail/class_mailAccount.inc:826
-#: personal/mail/class_mailAccount.inc:830
-#: personal/mail/class_mailAccount.inc:904
-#: personal/mail/class_mailAccount.inc:908
-#: personal/mail/class_mailAccount.inc:912
+#: personal/mail/class_mailAccount.inc:840
+#: personal/mail/class_mailAccount.inc:844
+#: personal/mail/class_mailAccount.inc:918
+#: personal/mail/class_mailAccount.inc:922
+#: personal/mail/class_mailAccount.inc:926
 #, fuzzy
 msgid "Mail error"
 msgstr "Mail server"
@@ -172,8 +173,8 @@ msgstr "IMAP gedeelde mappen"
 #: admin/groups/mail/class_groupMail.inc:565
 #: admin/groups/mail/class_groupMail.inc:795
 #: personal/mail/class_mailAccount.inc:158
-#: personal/mail/class_mailAccount.inc:826
-#: personal/mail/class_mailAccount.inc:904
+#: personal/mail/class_mailAccount.inc:840
+#: personal/mail/class_mailAccount.inc:918
 #, php-format
 msgid "Mail method cannot connect: %s"
 msgstr ""
@@ -236,7 +237,7 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:424
 #: personal/mail/class_mailAccount.inc:380
-#: personal/mail/class_mailAccount.inc:1018
+#: personal/mail/class_mailAccount.inc:1032
 #, fuzzy, php-format
 msgid "Address is already in use by group '%s'."
 msgstr ""
@@ -244,14 +245,14 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:426
 #: personal/mail/class_mailAccount.inc:382
-#: personal/mail/class_mailAccount.inc:1020
+#: personal/mail/class_mailAccount.inc:1034
 #, fuzzy, php-format
 msgid "Address is already in use by user '%s'."
 msgstr ""
 "Het adres dat u probeert toe te voegen wordt al gebruikt door gebruiker"
 
 #: admin/groups/mail/class_groupMail.inc:569
-#: personal/mail/class_mailAccount.inc:830
+#: personal/mail/class_mailAccount.inc:844
 #, fuzzy, php-format
 msgid "Cannot remove mailbox: %s"
 msgstr "Kan de IMAP mailbox niet verwijderen. De server meldt: '%s'."
@@ -268,13 +269,13 @@ msgid "New"
 msgstr "Gebruiker toevoegen"
 
 #: admin/groups/mail/class_groupMail.inc:799
-#: personal/mail/class_mailAccount.inc:908
+#: personal/mail/class_mailAccount.inc:922
 #, fuzzy, php-format
 msgid "Cannot update mailbox: %s"
 msgstr "Kan de IMAP mailbox niet aanmaken. De IMAP server meldt: '%s'."
 
 #: admin/groups/mail/class_groupMail.inc:803
-#: personal/mail/class_mailAccount.inc:912
+#: personal/mail/class_mailAccount.inc:926
 #, fuzzy, php-format
 msgid "Cannot write quota settings: %s"
 msgstr "Kan bestand '%s' niet aanmaken."
@@ -288,14 +289,14 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:869
 #: admin/groups/mail/class_groupMail.inc:1004 admin/groups/mail/mail.tpl:60
-#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1030
-#: personal/mail/class_mailAccount.inc:1215
-#: personal/mail/class_mailAccount.inc:1387
+#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1044
+#: personal/mail/class_mailAccount.inc:1259
+#: personal/mail/class_mailAccount.inc:1431
 msgid "Quota size"
 msgstr "Quota grootte"
 
 #: admin/groups/mail/class_groupMail.inc:888
-#: personal/mail/class_mailAccount.inc:1399
+#: personal/mail/class_mailAccount.inc:1443
 #, fuzzy
 msgid "Mail max size"
 msgstr "E-mail grootte"
@@ -308,7 +309,7 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:900
 #: admin/groups/mail/class_groupMail.inc:1005
-#: personal/mail/class_mailAccount.inc:1386
+#: personal/mail/class_mailAccount.inc:1430
 msgid "Mail server"
 msgstr "Mail server"
 
@@ -369,12 +370,12 @@ msgid "Reload"
 msgstr "Lezen"
 
 #: admin/groups/mail/mail.tpl:102 admin/groups/mail/paste_mail.tpl:23
-#: personal/mail/generic.tpl:73 personal/mail/copypaste.tpl:25
+#: personal/mail/generic.tpl:73 personal/mail/copypaste.tpl:38
 msgid "Alternative addresses"
 msgstr "Alternatieve adressen"
 
 #: admin/groups/mail/mail.tpl:107 admin/groups/mail/paste_mail.tpl:24
-#: personal/mail/generic.tpl:76 personal/mail/copypaste.tpl:55
+#: personal/mail/generic.tpl:76 personal/mail/copypaste.tpl:68
 msgid "List of alternative mail addresses"
 msgstr "Lijst met alternatieve E-mail adressen"
 
@@ -429,7 +430,7 @@ msgid "Not used in all groups"
 msgstr "Toon functionele groepen"
 
 #: admin/groups/mail/mail.tpl:234 admin/groups/mail/paste_mail.tpl:42
-#: personal/mail/generic.tpl:269 personal/mail/copypaste.tpl:44
+#: personal/mail/generic.tpl:269 personal/mail/copypaste.tpl:57
 msgid "Add local"
 msgstr "Lokaal toevoegen"
 
@@ -477,7 +478,7 @@ msgstr "Selecteer een specifieke afdeling"
 msgid "Choose"
 msgstr "Kies"
 
-#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1376
+#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1420
 #: personal/mail/copypaste.tpl:1
 msgid "Mail settings"
 msgstr "E-mail instellingen"
@@ -967,6 +968,7 @@ msgid "Enabled bayes auto learning"
 msgstr ""
 
 #: admin/systems/services/spam/goSpamServerRule.tpl:6
+#: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:22
 #: personal/mail/mailAddressSelect/selectMailAddress-list.xml:48
 msgid "Name"
 msgstr "Naam"
@@ -1196,7 +1198,7 @@ msgstr "header"
 msgid "Display header of this message"
 msgstr "Toon de header van dit bericht"
 
-#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1407
+#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1451
 msgid "Use custom sieve script"
 msgstr "Gebruik een eigen sieve script"
 
@@ -1228,8 +1230,8 @@ msgstr ""
 msgid "Activate vacation message"
 msgstr "Activeer afwezigheidsbericht"
 
-#: personal/mail/generic.tpl:160 personal/mail/class_mailAccount.inc:1059
-#: personal/mail/class_mailAccount.inc:1239
+#: personal/mail/generic.tpl:160 personal/mail/class_mailAccount.inc:1073
+#: personal/mail/class_mailAccount.inc:1283
 #, fuzzy
 msgid "from"
 msgstr "willekeurig"
@@ -1268,7 +1270,7 @@ msgstr "MB"
 #: personal/mail/sieve/templates/element_vacation.tpl:44
 #: personal/mail/sieve/class_sieveManagement.inc:502
 #: personal/mail/sieve/class_sieveManagement.inc:720
-#: personal/mail/class_mailAccount.inc:1390
+#: personal/mail/class_mailAccount.inc:1434
 msgid "Vacation message"
 msgstr "Afwezigheidsbericht"
 
@@ -1278,7 +1280,7 @@ msgstr "Afwezigheidsbericht"
 msgid "Import"
 msgstr "Importeren"
 
-#: personal/mail/generic.tpl:246 personal/mail/copypaste.tpl:13
+#: personal/mail/generic.tpl:246 personal/mail/copypaste.tpl:26
 msgid "Forward messages to"
 msgstr "Stuur berichten door naar"
 
@@ -2296,8 +2298,8 @@ msgid "User mail settings"
 msgstr "Gebruikers E-mail instellingen"
 
 #: personal/mail/class_mailAccount.inc:618
-#: personal/mail/class_mail-methods.inc:140
-#: personal/mail/class_mail-methods.inc:485
+#: personal/mail/class_mail-methods.inc:141
+#: personal/mail/class_mail-methods.inc:486
 #, fuzzy
 msgid "Configuration error"
 msgstr "Configuratie bestand"
@@ -2329,86 +2331,86 @@ msgstr "U heeft geen toestemming om deze afdeling te verwijderen."
 msgid "unknown"
 msgstr "Onbekend"
 
-#: personal/mail/class_mailAccount.inc:926
+#: personal/mail/class_mailAccount.inc:940
 #, fuzzy
 msgid "Mail error saving sieve settings"
 msgstr "Gebruik een eigen sieve script"
 
-#: personal/mail/class_mailAccount.inc:1039
-#: personal/mail/class_mailAccount.inc:1047
-#: personal/mail/class_mailAccount.inc:1224
+#: personal/mail/class_mailAccount.inc:1053
+#: personal/mail/class_mailAccount.inc:1061
+#: personal/mail/class_mailAccount.inc:1268
 #, fuzzy
 msgid "Mail reject size"
 msgstr "E-mail grootte"
 
-#: personal/mail/class_mailAccount.inc:1051
-#: personal/mail/class_mailAccount.inc:1231
+#: personal/mail/class_mailAccount.inc:1065
+#: personal/mail/class_mailAccount.inc:1275
 #, fuzzy
 msgid "Spam folder"
 msgstr "naar map"
 
-#: personal/mail/class_mailAccount.inc:1063
-#: personal/mail/class_mailAccount.inc:1243
+#: personal/mail/class_mailAccount.inc:1077
+#: personal/mail/class_mailAccount.inc:1287
 #, fuzzy
 msgid "to"
 msgstr "Stop"
 
-#: personal/mail/class_mailAccount.inc:1074
-#: personal/mail/class_mailAccount.inc:1254
+#: personal/mail/class_mailAccount.inc:1088
+#: personal/mail/class_mailAccount.inc:1298
 #, fuzzy
 msgid "Vacation interval"
 msgstr "Afwezigheidsbericht"
 
-#: personal/mail/class_mailAccount.inc:1380
+#: personal/mail/class_mailAccount.inc:1424
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/mail/class_mailAccount.inc:1389
+#: personal/mail/class_mailAccount.inc:1433
 #, fuzzy
 msgid "Add vacation information"
 msgstr "Organisatie informatie"
 
-#: personal/mail/class_mailAccount.inc:1392
+#: personal/mail/class_mailAccount.inc:1436
 msgid "Use spam filter"
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1393
+#: personal/mail/class_mailAccount.inc:1437
 #, fuzzy
 msgid "Spam level"
 msgstr "Log prioriteit"
 
-#: personal/mail/class_mailAccount.inc:1394
+#: personal/mail/class_mailAccount.inc:1438
 #, fuzzy
 msgid "Spam mail box"
 msgstr "E-mail grootte"
 
-#: personal/mail/class_mailAccount.inc:1396
+#: personal/mail/class_mailAccount.inc:1440
 #, fuzzy
 msgid "Sieve management"
 msgstr "Beheer"
 
-#: personal/mail/class_mailAccount.inc:1398
+#: personal/mail/class_mailAccount.inc:1442
 #, fuzzy
 msgid "Reject due to mailsize"
 msgstr "Wijs E-mail af indien groter dan"
 
-#: personal/mail/class_mailAccount.inc:1401
-#: personal/mail/class_mailAccount.inc:1406
+#: personal/mail/class_mailAccount.inc:1445
+#: personal/mail/class_mailAccount.inc:1450
 #, fuzzy
 msgid "Forwarding address"
 msgstr "Primair adres"
 
-#: personal/mail/class_mailAccount.inc:1402
+#: personal/mail/class_mailAccount.inc:1446
 #, fuzzy
 msgid "Local delivery"
 msgstr "Laatste levering"
 
-#: personal/mail/class_mailAccount.inc:1403
+#: personal/mail/class_mailAccount.inc:1447
 #, fuzzy
 msgid "No delivery to own mailbox "
 msgstr "Geen aflevering in eigen mailbox"
 
-#: personal/mail/class_mailAccount.inc:1404
+#: personal/mail/class_mailAccount.inc:1448
 #, fuzzy
 msgid "Mail alternative addresses"
 msgstr "Alternatieve adressen"
@@ -2445,27 +2447,27 @@ msgstr "Gebruiker"
 msgid "Group"
 msgstr "Groep"
 
-#: personal/mail/class_mail-methods.inc:141
+#: personal/mail/class_mail-methods.inc:142
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:486
+#: personal/mail/class_mail-methods.inc:487
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr ""
 
-#: personal/mail/class_mail-methods.inc:712
 #: personal/mail/class_mail-methods.inc:713
+#: personal/mail/class_mail-methods.inc:714
 #, fuzzy
 msgid "None"
 msgstr "geen"
 
-#: personal/mail/class_mail-methods.inc:802
+#: personal/mail/class_mail-methods.inc:803
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: personal/mail/class_mail-methods.inc:804
+#: personal/mail/class_mail-methods.inc:805
 #, fuzzy
 msgid "Unlimited"
 msgstr "geen limiet"

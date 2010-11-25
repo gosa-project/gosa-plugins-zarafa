@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-09 20:41+0200\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,8 +37,8 @@ msgstr ""
 
 #: admin/systems/samba/class_winGeneric.inc:148
 #: admin/systems/samba/class_winGeneric.inc:296
-#: personal/samba/class_sambaAccount.inc:908
-#: personal/samba/class_sambaAccount.inc:1267
+#: personal/samba/class_sambaAccount.inc:841
+#: personal/samba/class_sambaAccount.inc:1089
 msgid "LDAP error"
 msgstr ""
 
@@ -67,12 +68,12 @@ msgid "Generic"
 msgstr ""
 
 #: personal/samba/samba3.tpl:13 personal/samba/samba3.tpl:109
-#: personal/samba/class_sambaAccount.inc:931
-#: personal/samba/class_sambaAccount.inc:1423
+#: personal/samba/class_sambaAccount.inc:864
+#: personal/samba/class_sambaAccount.inc:1216
 msgid "Home directory"
 msgstr ""
 
-#: personal/samba/samba3.tpl:26 personal/samba/class_sambaAccount.inc:1375
+#: personal/samba/samba3.tpl:26 personal/samba/class_sambaAccount.inc:1166
 msgid "Domain"
 msgstr ""
 
@@ -85,8 +86,8 @@ msgid "Script path"
 msgstr ""
 
 #: personal/samba/samba3.tpl:55 personal/samba/samba3.tpl:122
-#: personal/samba/class_sambaAccount.inc:932
-#: personal/samba/class_sambaAccount.inc:1424
+#: personal/samba/class_sambaAccount.inc:865
+#: personal/samba/class_sambaAccount.inc:1217
 msgid "Profile path"
 msgstr ""
 
@@ -94,11 +95,11 @@ msgstr ""
 msgid "Terminal Server"
 msgstr ""
 
-#: personal/samba/samba3.tpl:106 personal/samba/class_sambaAccount.inc:1378
+#: personal/samba/samba3.tpl:106 personal/samba/class_sambaAccount.inc:1169
 msgid "Allow login on terminal server"
 msgstr ""
 
-#: personal/samba/samba3.tpl:143 personal/samba/class_sambaAccount.inc:1379
+#: personal/samba/samba3.tpl:143 personal/samba/class_sambaAccount.inc:1170
 msgid "Inherit client config"
 msgstr ""
 
@@ -114,18 +115,18 @@ msgstr ""
 msgid "Timeout settings (in minutes)"
 msgstr ""
 
-#: personal/samba/samba3.tpl:187 personal/samba/class_sambaAccount.inc:939
-#: personal/samba/class_sambaAccount.inc:1431
+#: personal/samba/samba3.tpl:187 personal/samba/class_sambaAccount.inc:872
+#: personal/samba/class_sambaAccount.inc:1224
 msgid "Connection"
 msgstr ""
 
-#: personal/samba/samba3.tpl:201 personal/samba/class_sambaAccount.inc:940
-#: personal/samba/class_sambaAccount.inc:1432
+#: personal/samba/samba3.tpl:201 personal/samba/class_sambaAccount.inc:873
+#: personal/samba/class_sambaAccount.inc:1225
 msgid "Disconnection"
 msgstr ""
 
-#: personal/samba/samba3.tpl:215 personal/samba/class_sambaAccount.inc:941
-#: personal/samba/class_sambaAccount.inc:1433
+#: personal/samba/samba3.tpl:215 personal/samba/class_sambaAccount.inc:874
+#: personal/samba/class_sambaAccount.inc:1226
 msgid "IDLE"
 msgstr ""
 
@@ -165,43 +166,43 @@ msgstr ""
 msgid "Access options"
 msgstr ""
 
-#: personal/samba/samba3.tpl:324 personal/samba/class_sambaAccount.inc:1385
+#: personal/samba/samba3.tpl:325 personal/samba/class_sambaAccount.inc:1172
 msgid "Enforce password change"
 msgstr ""
 
-#: personal/samba/samba3.tpl:334
+#: personal/samba/samba3.tpl:336
 msgid "The password never expires"
 msgstr ""
 
-#: personal/samba/samba3.tpl:344 personal/samba/class_sambaAccount.inc:1381
+#: personal/samba/samba3.tpl:347 personal/samba/class_sambaAccount.inc:1174
 msgid "Login from windows client requires no password"
 msgstr ""
 
-#: personal/samba/samba3.tpl:354 personal/samba/class_sambaAccount.inc:1383
+#: personal/samba/samba3.tpl:358 personal/samba/class_sambaAccount.inc:1176
 msgid "Lock samba account"
 msgstr ""
 
-#: personal/samba/samba3.tpl:365 personal/samba/class_sambaAccount.inc:1386
+#: personal/samba/samba3.tpl:369
 msgid "Cannot change password"
 msgstr ""
 
-#: personal/samba/samba3.tpl:382
+#: personal/samba/samba3.tpl:386
 msgid "Samba logon times"
 msgstr ""
 
-#: personal/samba/samba3.tpl:382
+#: personal/samba/samba3.tpl:386
 msgid "Edit settings..."
 msgstr ""
 
-#: personal/samba/samba3.tpl:391
+#: personal/samba/samba3.tpl:395
 msgid "Allow connection from these workstations only"
 msgstr ""
 
-#: personal/samba/samba3.tpl:402
+#: personal/samba/samba3.tpl:406
 msgid "Used by all users"
 msgstr ""
 
-#: personal/samba/samba3.tpl:405
+#: personal/samba/samba3.tpl:409
 msgid "Used by some users"
 msgstr ""
 
@@ -214,14 +215,14 @@ msgid "Hour"
 msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:24
-#: personal/samba/class_sambaAccount.inc:210
-#: personal/samba/class_sambaAccount.inc:222
-#: personal/samba/class_sambaAccount.inc:223
-#: personal/samba/class_sambaAccount.inc:232
-#: personal/samba/class_sambaAccount.inc:233
 #: personal/samba/class_sambaAccount.inc:235
-#: personal/samba/class_sambaAccount.inc:236
-#: personal/samba/class_sambaAccount.inc:1362
+#: personal/samba/class_sambaAccount.inc:247
+#: personal/samba/class_sambaAccount.inc:248
+#: personal/samba/class_sambaAccount.inc:255
+#: personal/samba/class_sambaAccount.inc:256
+#: personal/samba/class_sambaAccount.inc:258
+#: personal/samba/class_sambaAccount.inc:259
+#: personal/samba/class_sambaAccount.inc:1153
 msgid "Samba"
 msgstr ""
 
@@ -229,304 +230,290 @@ msgstr ""
 msgid "This does something"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:236
+#: personal/samba/class_sambaAccount.inc:259
 msgid "POSIX"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:399
-#: personal/samba/class_sambaAccount.inc:718
-#: personal/samba/class_sambaAccount.inc:726
-#: personal/samba/class_sambaAccount.inc:744
+#: personal/samba/class_sambaAccount.inc:406
+#: personal/samba/class_sambaAccount.inc:651
+#: personal/samba/class_sambaAccount.inc:659
+#: personal/samba/class_sambaAccount.inc:677
 msgid "disabled"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:400
+#: personal/samba/class_sambaAccount.inc:407
 msgid "input on, notify on"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:401
+#: personal/samba/class_sambaAccount.inc:408
 msgid "input on, notify off"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:402
+#: personal/samba/class_sambaAccount.inc:409
 msgid "input off, notify on"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:403
+#: personal/samba/class_sambaAccount.inc:410
 msgid "input off, nofify off"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:405
+#: personal/samba/class_sambaAccount.inc:412
 msgid "disconnect"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:406
+#: personal/samba/class_sambaAccount.inc:413
 msgid "reset"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:408
+#: personal/samba/class_sambaAccount.inc:414
 msgid "from any client"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:409
+#: personal/samba/class_sambaAccount.inc:415
 msgid "from previous client only"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:570
+#: personal/samba/class_sambaAccount.inc:515
 #, php-format
 msgid "The password is outdated since %s, by domain policy."
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:574
+#: personal/samba/class_sambaAccount.inc:518
 #, php-format
-msgid "The password is valid till %s, by user policy."
+msgid "The password is valid till %s."
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:577
-#, php-format
-msgid "The password is valid till %s, by domain policy."
-msgstr ""
-
-#: personal/samba/class_sambaAccount.inc:698
-#: personal/samba/class_sambaAccount.inc:704
-#: personal/samba/class_sambaAccount.inc:710
-#: personal/samba/class_sambaAccount.inc:718
-#: personal/samba/class_sambaAccount.inc:726
-#: personal/samba/class_sambaAccount.inc:734
-#: personal/samba/class_sambaAccount.inc:744
-#: personal/samba/class_sambaAccount.inc:750
-#: personal/samba/class_sambaAccount.inc:758
+#: personal/samba/class_sambaAccount.inc:631
+#: personal/samba/class_sambaAccount.inc:637
+#: personal/samba/class_sambaAccount.inc:643
+#: personal/samba/class_sambaAccount.inc:651
+#: personal/samba/class_sambaAccount.inc:659
+#: personal/samba/class_sambaAccount.inc:667
+#: personal/samba/class_sambaAccount.inc:677
+#: personal/samba/class_sambaAccount.inc:683
+#: personal/samba/class_sambaAccount.inc:691
 msgid "default"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:704
-#: personal/samba/class_sambaAccount.inc:710
+#: personal/samba/class_sambaAccount.inc:637
+#: personal/samba/class_sambaAccount.inc:643
 msgid "Off"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:712
+#: personal/samba/class_sambaAccount.inc:645
 msgid "On"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:720
-#: personal/samba/class_sambaAccount.inc:728
+#: personal/samba/class_sambaAccount.inc:653
+#: personal/samba/class_sambaAccount.inc:661
 msgid "seconds"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:734
-#: personal/samba/class_sambaAccount.inc:738
-#: personal/samba/class_sambaAccount.inc:830
+#: personal/samba/class_sambaAccount.inc:667
+#: personal/samba/class_sambaAccount.inc:671
+#: personal/samba/class_sambaAccount.inc:763
 msgid "minutes"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:736
+#: personal/samba/class_sambaAccount.inc:669
 msgid "forever"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:750
-#: personal/samba/class_sambaAccount.inc:758
+#: personal/samba/class_sambaAccount.inc:683
+#: personal/samba/class_sambaAccount.inc:691
 msgid "off"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:752
-#: personal/samba/class_sambaAccount.inc:760
+#: personal/samba/class_sambaAccount.inc:685
+#: personal/samba/class_sambaAccount.inc:693
 msgid "on"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:768
-#: personal/samba/class_sambaAccount.inc:776
-#: personal/samba/class_sambaAccount.inc:784
-#: personal/samba/class_sambaAccount.inc:792
-#: personal/samba/class_sambaAccount.inc:800
-#: personal/samba/class_sambaAccount.inc:808
-#: personal/samba/class_sambaAccount.inc:814
-#: personal/samba/class_sambaAccount.inc:820
+#: personal/samba/class_sambaAccount.inc:701
+#: personal/samba/class_sambaAccount.inc:709
+#: personal/samba/class_sambaAccount.inc:717
+#: personal/samba/class_sambaAccount.inc:725
+#: personal/samba/class_sambaAccount.inc:733
+#: personal/samba/class_sambaAccount.inc:741
+#: personal/samba/class_sambaAccount.inc:747
+#: personal/samba/class_sambaAccount.inc:753
 msgid "unset"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:822
+#: personal/samba/class_sambaAccount.inc:755
 msgid "immediately"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:828
+#: personal/samba/class_sambaAccount.inc:761
 msgid "days"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:829
+#: personal/samba/class_sambaAccount.inc:762
 msgid "hours"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:836
+#: personal/samba/class_sambaAccount.inc:769
 msgid "Domain attributes"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:837
-#: personal/samba/class_sambaAccount.inc:838
+#: personal/samba/class_sambaAccount.inc:770
+#: personal/samba/class_sambaAccount.inc:771
 msgid "Min password length"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:839
+#: personal/samba/class_sambaAccount.inc:772
 msgid "Password history"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:840
+#: personal/samba/class_sambaAccount.inc:773
 msgid "Force password change"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:841
+#: personal/samba/class_sambaAccount.inc:774
 msgid "Maximum password age"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:842
+#: personal/samba/class_sambaAccount.inc:775
 msgid "Minimum password age"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:843
+#: personal/samba/class_sambaAccount.inc:776
 msgid "Lockout duration"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:844
+#: personal/samba/class_sambaAccount.inc:777
 msgid "Bad lockout attempt"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:845
+#: personal/samba/class_sambaAccount.inc:778
 msgid "Disconnect time"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:846
+#: personal/samba/class_sambaAccount.inc:779
 msgid "Refuse machine password change"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:848
+#: personal/samba/class_sambaAccount.inc:781
 msgid "User attributes"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:849
+#: personal/samba/class_sambaAccount.inc:782
 msgid "SID"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:850
+#: personal/samba/class_sambaAccount.inc:783
 msgid "Last failed login"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:851
+#: personal/samba/class_sambaAccount.inc:784
 msgid "Logon attempts"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:852
+#: personal/samba/class_sambaAccount.inc:785
 msgid "Last password update"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:853
+#: personal/samba/class_sambaAccount.inc:786
 msgid "Last logon"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:854
+#: personal/samba/class_sambaAccount.inc:787
 msgid "Last logoff"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:855
+#: personal/samba/class_sambaAccount.inc:788
 msgid "Automatic logoff"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:858
-#: personal/samba/class_sambaAccount.inc:863
-#: personal/samba/class_sambaAccount.inc:1384
+#: personal/samba/class_sambaAccount.inc:791
+#: personal/samba/class_sambaAccount.inc:796
 msgid "Password expires"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:858
+#: personal/samba/class_sambaAccount.inc:791
 msgid "No"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:860
+#: personal/samba/class_sambaAccount.inc:793
 #, php-format
 msgid "The password would expire on %s, but the password expiry is disabled."
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:866
+#: personal/samba/class_sambaAccount.inc:799
 msgid "Password change available"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:924
+#: personal/samba/class_sambaAccount.inc:857
 msgid "Home drive"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:927
+#: personal/samba/class_sambaAccount.inc:860
 msgid "Home path"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:950
-msgid "Account expires after"
-msgstr ""
-
-#: personal/samba/class_sambaAccount.inc:953
-msgid "Password expires on"
-msgstr ""
-
-#: personal/samba/class_sambaAccount.inc:958
+#: personal/samba/class_sambaAccount.inc:883
 msgid "The windows usermanager allows eight clients at maximum!"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:979
+#: personal/samba/class_sambaAccount.inc:902
 msgid "Information"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1167
-#: personal/samba/class_sambaAccount.inc:1191
+#: personal/samba/class_sambaAccount.inc:1030
+#: personal/samba/class_sambaAccount.inc:1054
 msgid "Warning"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1167
+#: personal/samba/class_sambaAccount.inc:1030
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1191
+#: personal/samba/class_sambaAccount.inc:1055
 msgid ""
 "Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1363 personal/samba/main.inc:136
+#: personal/samba/class_sambaAccount.inc:1154 personal/samba/main.inc:136
 msgid "Samba settings"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1367
+#: personal/samba/class_sambaAccount.inc:1158
 msgid "My account"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1373
+#: personal/samba/class_sambaAccount.inc:1164
 msgid "Generic home directory"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1374
+#: personal/samba/class_sambaAccount.inc:1165
 msgid "Generic samba home drive"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1376
+#: personal/samba/class_sambaAccount.inc:1167
 msgid "Generic script path"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1377
+#: personal/samba/class_sambaAccount.inc:1168
 msgid "Generic profile path"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1380
-msgid "Allow user to change password"
+#: personal/samba/class_sambaAccount.inc:1173
+msgid "Disallow password change"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1382
+#: personal/samba/class_sambaAccount.inc:1175
 msgid "Password never expires"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1387
+#: personal/samba/class_sambaAccount.inc:1178
 msgid "Logon hours"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1388
+#: personal/samba/class_sambaAccount.inc:1179
 msgid "Allow connection from"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1443
+#: personal/samba/class_sambaAccount.inc:1236
 msgid ""
 "The windows user manager only allows eight clients. You've specified more "
 "than eight."

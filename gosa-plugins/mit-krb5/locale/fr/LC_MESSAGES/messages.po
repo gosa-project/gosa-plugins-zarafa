@@ -4,10 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2010-01-30 11:35+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -44,7 +45,8 @@ msgid "Realm"
 msgstr "Domaine"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:182
-msgid "Cannot apply policy changes! The defined kerberos server has no mac address."
+msgid ""
+"Cannot apply policy changes! The defined kerberos server has no mac address."
 msgstr ""
 "Impossible d'appliquer les changement de polices de sécurité ! Le serveur "
 "Kerberos défini n'a pas d'adresse MAC."
@@ -174,8 +176,8 @@ msgstr "Cette politique de sécurité est référencée %d fois."
 #: admin/systems/services/kerberos/class_krb5_policy.inc:150
 #, php-format
 msgid ""
-"The value specified for '%s' must be smaller than the value specified for '%"
-"s'!"
+"The value specified for '%s' must be smaller than the value specified for "
+"'%s'!"
 msgstr ""
 "La valeur spécifiée pour '%s' doit être plus petite que la valeur spécifiée "
 "pour '%s' !"
@@ -322,7 +324,8 @@ msgid "Prohibit renewable tickets"
 msgstr "Interdire les tickets renouvelables"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:217
-msgid "Prohibit postdated tickets"
+#, fuzzy
+msgid "Pohibit postdated tickets"
 msgstr "Interdire les tickets ayant une date dans le futur"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:219
@@ -356,4 +359,3 @@ msgstr "Interdire l'emission de tickets"
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:241
 msgid "Save"
 msgstr "Enregistrer"
-

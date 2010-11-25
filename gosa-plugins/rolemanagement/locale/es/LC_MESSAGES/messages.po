@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2010-01-28 23:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/class_roleGeneric.inc:427
 msgid "Roles"
 msgstr "Roles"
 
@@ -45,55 +46,60 @@ msgstr ""
 "Entonces, si esta seguro, presione <i>Eliminar</i> para continuar o "
 "<i>Cancelar</i> para Abortar."
 
-#: admin/roleManagement/class_roleGeneric.inc:225
-#: admin/roleManagement/class_roleGeneric.inc:234
-#: admin/roleManagement/class_roleGeneric.inc:409
+#: admin/roleManagement/class_roleGeneric.inc:238
+#: admin/roleManagement/class_roleGeneric.inc:247
+#: admin/roleManagement/class_roleGeneric.inc:430
 #: admin/roleManagement/role-list.xml:41
+#: admin/roleManagement/role-filter.tpl:17
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Nombre"
 
-#: admin/roleManagement/class_roleGeneric.inc:255
+#: admin/roleManagement/class_roleGeneric.inc:268
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: admin/roleManagement/class_roleGeneric.inc:273
-#: admin/roleManagement/class_roleGeneric.inc:315
+#: admin/roleManagement/class_roleGeneric.inc:286
+#: admin/roleManagement/class_roleGeneric.inc:328
 msgid "LDAP error"
 msgstr "Error LDAP"
 
-#: admin/roleManagement/class_roleGeneric.inc:400
+#: admin/roleManagement/class_roleGeneric.inc:371
+msgid "Error"
+msgstr "Error"
+
+#: admin/roleManagement/class_roleGeneric.inc:421
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Genérico"
 
-#: admin/roleManagement/class_roleGeneric.inc:401
+#: admin/roleManagement/class_roleGeneric.inc:422
 msgid "Role generic"
 msgstr "Rol genérico"
 
-#: admin/roleManagement/class_roleGeneric.inc:410
+#: admin/roleManagement/class_roleGeneric.inc:431
 #: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Descripción"
 
-#: admin/roleManagement/class_roleGeneric.inc:411
+#: admin/roleManagement/class_roleGeneric.inc:432
 #: admin/roleManagement/role-list.tpl:13
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Base"
 
-#: admin/roleManagement/class_roleGeneric.inc:412
+#: admin/roleManagement/class_roleGeneric.inc:433
 msgid "Telefon number"
 msgstr "Número de teléfono"
 
-#: admin/roleManagement/class_roleGeneric.inc:413
-#: admin/roleManagement/roleGeneric.tpl:56
+#: admin/roleManagement/class_roleGeneric.inc:434
+#: admin/roleManagement/roleGeneric.tpl:50
 msgid "Fax number"
 msgstr "Número de Fax"
 
-#: admin/roleManagement/class_roleGeneric.inc:414
-#: admin/roleManagement/roleGeneric.tpl:68
+#: admin/roleManagement/class_roleGeneric.inc:435
+#: admin/roleManagement/roleGeneric.tpl:62
 msgid "Occupants"
 msgstr "Ocupantes"
 
@@ -141,17 +147,15 @@ msgstr "Por favor introduzca un nuevo objeto nombre de rol"
 msgid "Filter"
 msgstr "Filtro"
 
-#: admin/roleManagement/roleGeneric.tpl:34
-msgid "Choose subtree to place user in"
-msgstr "Elija el subárbol donde colocar al usuario"
-
-#: admin/roleManagement/roleGeneric.tpl:40
-msgid "Select a base"
-msgstr "Seleccione una base"
-
-#: admin/roleManagement/roleGeneric.tpl:48
+#: admin/roleManagement/roleGeneric.tpl:42
 msgid "Phone number"
 msgstr "Número de teléfono"
+
+#~ msgid "Choose subtree to place user in"
+#~ msgstr "Elija el subárbol donde colocar al usuario"
+
+#~ msgid "Select a base"
+#~ msgstr "Seleccione una base"
 
 #~ msgid "Update"
 #~ msgstr "Actualizar"

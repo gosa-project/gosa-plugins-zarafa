@@ -13,10 +13,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2009-09-30 12:47+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: de <kde-i18n-de@kde.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,6 +48,7 @@ msgstr "Wiederholen"
 #: admin/opsi/generic.tpl:18 admin/opsi/generic.tpl:37
 #: admin/opsi/class_opsigeneric.inc:224 admin/opsi/class_opsigeneric.inc:229
 #: admin/opsi/class_opsigeneric.inc:232 admin/opsi/class_opsigeneric.inc:746
+#: admin/opsiLicenses/opsiLicense-filter.tpl:13
 #: admin/opsiLicenses/class_licenseGeneric.inc:232
 #: admin/opsiLicenses/class_licenseGeneric.inc:278
 #: admin/opsiLicenses/opsiLicense-list.xml:41
@@ -234,7 +236,6 @@ msgid "License usage"
 msgstr "Lizenznutzung"
 
 #: admin/opsiLicenses/opsiLicense-filter.tpl:3
-#, fuzzy
 msgid "Filter"
 msgstr "Filter"
 
@@ -269,14 +270,12 @@ msgid "License generic"
 msgstr "Allgemein"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:244
-#, fuzzy
 msgid "Usage by host"
-msgstr "Benutzt von"
+msgstr "Nutzung pro Host"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:245
-#, fuzzy
 msgid "License usage by host"
-msgstr "Lizenznutzung"
+msgstr "Lizenznutzung pro Host"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:252
 #: admin/opsiLicenses/licenseGeneric.tpl:237
@@ -314,28 +313,24 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: admin/opsiLicenses/opsiLicense-list.xml:108
-#, fuzzy
 msgid "Edit license"
-msgstr "Benutzer bearbeiten"
+msgstr "Lizenz bearbeiten"
 
 #: admin/opsiLicenses/opsiLicense-list.xml:116
-#, fuzzy
 msgid "Remove license"
-msgstr "Benutzer entfernen"
+msgstr "Lizenz entfernen"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:262
 msgid "unlimited"
 msgstr "unbegrenzt"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:269
-#, fuzzy, php-format
 msgid "Volume license (#%s)"
-msgstr "Volumenlizenz %s"
+msgstr "Volumenlizenz (#%s)"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:272
-#, fuzzy
 msgid "Concurrent"
-msgstr "Aktuell"
+msgstr "Konkurrierend"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:519
 msgid "Pool generic"
@@ -403,44 +398,9 @@ msgid "none"
 msgstr "keine"
 
 #: admin/opsiLicenses/class_licenseByProduct.inc:136
-#, fuzzy
 msgid "Usage by product"
-msgstr "Installierte Produkte"
+msgstr "Nutzung pro Produkt"
 
 #: admin/opsiLicenses/class_licenseByProduct.inc:137
-#, fuzzy
 msgid "License usage by product"
-msgstr "Lizenznutzung"
-
-#~ msgid "Select all"
-#~ msgstr "Alle auswählen"
-
-#~ msgid "License pools"
-#~ msgstr "Lizenzpools"
-
-#~ msgid "Regular expression for matching license pools"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Lizenzpools"
-
-#~ msgid "edit"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "Edit this entry"
-#~ msgstr "Diesen Eintrag bearbeiten"
-
-#~ msgid "delete"
-#~ msgstr "Entfernen"
-
-#~ msgid "Delete this entry"
-#~ msgstr "Diesen Eintrag entfernen"
-
-#~ msgid "Number of listed license pools"
-#~ msgstr "Anzahl der angezeigten Lizenzpools"
-
-#~ msgid "Permission"
-#~ msgstr "Berechtigung"
-
-#~ msgid "Permission error"
-#~ msgstr "Berechtigungsfehler"
-
-#~ msgid "Usage"
-#~ msgstr "Nutzung"
+msgstr "Lizenznutzung pro Produkt"

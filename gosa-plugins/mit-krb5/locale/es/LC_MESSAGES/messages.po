@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2010-01-28 23:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -82,15 +83,18 @@ msgstr "Servicios"
 msgid "Policies"
 msgstr "Políticas"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:235, php-format
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:235
+#, php-format
 msgid "Cannot load principal '%s', from server '%s'!"
 msgstr "¡No se ha podido cargar el principal '%s' desde el servidor '%s'!"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:291, php-format
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:291
+#, php-format
 msgid "Cannot load principals from server '%s'!"
 msgstr "¡No se ha podido cargar principales desde el servidor '%s'!"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:319, php-format
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:319
+#, php-format
 msgid "Cannot load policies from server '%s'!"
 msgstr "¡No se ha podido cargar políticas desde el servidor '%s'!"
 
@@ -173,10 +177,11 @@ msgid "This policy is referenced %d times."
 msgstr "Se hace referencia a esta política %d veces."
 
 #: admin/systems/services/kerberos/class_krb5_policy.inc:133
-#: admin/systems/services/kerberos/class_krb5_policy.inc:150, php-format
+#: admin/systems/services/kerberos/class_krb5_policy.inc:150
+#, php-format
 msgid ""
-"The value specified for '%s' must be smaller than the value specified for '%"
-"s'!"
+"The value specified for '%s' must be smaller than the value specified for "
+"'%s'!"
 msgstr ""
 "¡El valor especificado para '%s' debe ser menor que el valor especificado "
 "para '%s'!"
@@ -323,7 +328,8 @@ msgid "Prohibit renewable tickets"
 msgstr "Prohibir tickets renovables"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:217
-msgid "Prohibit postdated tickets"
+#, fuzzy
+msgid "Pohibit postdated tickets"
 msgstr "Prohibir tickes caducados"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:219

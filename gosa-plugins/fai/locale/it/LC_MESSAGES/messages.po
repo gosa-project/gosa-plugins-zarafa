@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-10-29 19:37+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -150,7 +151,7 @@ msgstr "statico"
 #: admin/fai/class_faiHook.inc:239 admin/fai/class_faiDiskEntry.inc:427
 #: admin/fai/tabsPartition.inc:34 admin/fai/class_filterFAI.inc:125
 #: admin/fai/class_faiManagement.inc:255 admin/fai/class_faiManagement.inc:329
-#: admin/fai/class_faiManagement.inc:853 admin/fai/class_faiManagement.inc:859
+#: admin/fai/class_faiManagement.inc:854 admin/fai/class_faiManagement.inc:860
 #: admin/fai/class_faiTemplate.inc:212 admin/fai/tabsVariable.inc:33
 #: admin/fai/tabsPackage.inc:33 admin/fai/class_faiScript.inc:229
 #: admin/fai/class_FAI.inc:556 admin/fai/class_faiScriptEntry.inc:59
@@ -160,9 +161,6 @@ msgstr "statico"
 #: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
 #: admin/fai/class_faiVariable.inc:142 admin/fai/class_faiSummaryTab.inc:94
 #: admin/fai/tabsProfile.inc:33
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:219
 #: admin/systems/services/repository/class_servRepository.inc:159
 #: admin/systems/services/repository/class_servRepository.inc:214
 #: admin/systems/services/repository/class_servRepository.inc:219
@@ -183,7 +181,7 @@ msgid ""
 "The file encodig has changed from '%s' to '%s'. Do you really want to save?"
 msgstr ""
 
-#: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:561
+#: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:562
 #: admin/fai/remove_branch.tpl:2
 msgid "Warning"
 msgstr "Attenzione"
@@ -217,19 +215,21 @@ msgstr "Dispositivi"
 #: admin/fai/class_faiDiskEntry.inc:680 admin/fai/class_faiDiskEntry.inc:683
 #: admin/fai/class_faiDiskEntry.inc:738 admin/fai/faiProfile.tpl:9
 #: admin/fai/faiScriptEntry.tpl:9 admin/fai/faiScript.tpl:9
-#: admin/fai/faiPackage.tpl:9 admin/fai/classSelect/selectClass-list.xml:28
-#: admin/fai/faiHook.tpl:9 admin/fai/class_faiProfile.inc:390
-#: admin/fai/class_faiProfile.inc:400 admin/fai/class_faiProfile.inc:473
-#: admin/fai/faiPartitionTableEntry.tpl:6 admin/fai/faiHookEntry.tpl:9
-#: admin/fai/class_faiManagement.inc:853 admin/fai/class_faiManagement.inc:859
+#: admin/fai/faiPackage.tpl:9 admin/fai/classSelect/selectClass-filter.tpl:13
+#: admin/fai/classSelect/selectClass-list.xml:28 admin/fai/faiHook.tpl:9
+#: admin/fai/class_faiProfile.inc:390 admin/fai/class_faiProfile.inc:400
+#: admin/fai/class_faiProfile.inc:473 admin/fai/faiPartitionTableEntry.tpl:6
+#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiManagement.inc:854
+#: admin/fai/class_faiManagement.inc:860
 #: admin/fai/class_faiVariableEntry.inc:90
 #: admin/fai/class_faiVariableEntry.inc:99
 #: admin/fai/class_faiVariableEntry.inc:102
 #: admin/fai/class_faiVariableEntry.inc:137
 #: admin/fai/class_faiTemplate.inc:421 admin/fai/class_faiTemplate.inc:544
 #: admin/fai/class_askClassName.inc:142 admin/fai/class_askClassName.inc:146
-#: admin/fai/class_askClassName.inc:150
+#: admin/fai/class_askClassName.inc:150 admin/fai/class_askClassName.inc:154
 #: admin/fai/packageSelect/selectPackage-list.xml:40
+#: admin/fai/packageSelect/selectPackage-filter.tpl:18
 #: admin/fai/class_faiScript.inc:327 admin/fai/class_faiScript.inc:483
 #: admin/fai/class_faiScript.inc:645 admin/fai/class_faiScriptEntry.inc:137
 #: admin/fai/class_faiScriptEntry.inc:142
@@ -240,11 +240,11 @@ msgstr "Dispositivi"
 #: admin/fai/class_faiHookEntry.inc:145 admin/fai/class_faiHookEntry.inc:150
 #: admin/fai/class_faiHookEntry.inc:153 admin/fai/class_faiHookEntry.inc:196
 #: admin/fai/class_faiVariable.inc:296 admin/fai/class_faiVariable.inc:397
-#: admin/fai/faiPartition.tpl:7 admin/fai/class_faiPackage.inc:544
-#: admin/fai/class_faiPackage.inc:669 admin/fai/class_faiTemplateEntry.inc:233
+#: admin/fai/faiPartition.tpl:7 admin/fai/fai-filter.tpl:59
+#: admin/fai/class_faiPackage.inc:544 admin/fai/class_faiPackage.inc:669
+#: admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:299
 #: admin/fai/class_faiSummaryTab.inc:348 admin/fai/faiPartitionTable.tpl:9
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:214
 #: admin/systems/services/repository/class_servRepository.inc:214
 msgid "Name"
 msgstr "Cognome"
@@ -601,7 +601,6 @@ msgid "List of scripts"
 msgstr "Lista degli utenti"
 
 #: admin/fai/faiPackage.tpl:33
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:402
 #: admin/systems/services/repository/servRepositorySetup.tpl:1
 #: admin/systems/services/repository/class_servRepository.inc:402
 #, fuzzy
@@ -658,7 +657,7 @@ msgid "Please select the desired entries"
 msgstr "Lingua preferita"
 
 #: admin/fai/classSelect/selectClass-list.xml:15
-#: admin/fai/class_faiManagement.inc:1142
+#: admin/fai/class_faiManagement.inc:1143
 #: admin/fai/packageSelect/selectPackage-list.xml:14 admin/fai/fai-list.xml:15
 #, fuzzy
 msgid "FAI"
@@ -699,7 +698,7 @@ msgid "Package bundle"
 msgstr "Pacchetti"
 
 #: admin/fai/classSelect/class_classSelect.inc:58
-#: admin/fai/class_faiProfile.inc:292 admin/fai/class_faiManagement.inc:1018
+#: admin/fai/class_faiProfile.inc:292 admin/fai/class_faiManagement.inc:1019
 #: admin/fai/class_askClassName.inc:79 admin/fai/class_faiGroupHandle.inc:100
 #: admin/fai/fai-list.xml:94 admin/fai/class_faiProfileEntry.inc:143
 #: admin/fai/class_faiPartitionTable.inc:784
@@ -709,7 +708,6 @@ msgid "Partition table"
 msgstr "Partizioni"
 
 #: admin/fai/classSelect/selectClass-list.tpl:13
-#: admin/fai/packageSelect/selectPackage-list.tpl:13
 msgid "Base"
 msgstr "Base"
 
@@ -749,7 +747,7 @@ msgstr "Dominio"
 msgid "No class specified for this profile!"
 msgstr ""
 
-#: admin/fai/class_faiProfile.inc:465 admin/fai/class_faiManagement.inc:1028
+#: admin/fai/class_faiProfile.inc:465 admin/fai/class_faiManagement.inc:1029
 #: admin/fai/class_askClassName.inc:84 admin/fai/class_faiGroupHandle.inc:110
 #: admin/fai/fai-list.xml:58
 #, fuzzy
@@ -780,7 +778,7 @@ msgid "Software deployment"
 msgstr "Dipartimento"
 
 #: admin/fai/class_faiManagement.inc:26
-msgid "Manage software packages and deployment reciepes"
+msgid "Manage software packages and deployment recipes"
 msgstr ""
 
 #: admin/fai/class_faiManagement.inc:204
@@ -815,8 +813,8 @@ msgstr "Liste di blocco"
 
 #: admin/fai/class_faiManagement.inc:226 admin/fai/class_faiManagement.inc:241
 #: admin/fai/class_faiManagement.inc:396 admin/fai/class_faiManagement.inc:456
-#: admin/fai/class_faiManagement.inc:545 admin/fai/class_faiManagement.inc:640
-#: admin/fai/class_faiManagement.inc:663 admin/fai/class_faiManagement.inc:684
+#: admin/fai/class_faiManagement.inc:546 admin/fai/class_faiManagement.inc:641
+#: admin/fai/class_faiManagement.inc:664 admin/fai/class_faiManagement.inc:685
 #, fuzzy
 msgid "Permission error"
 msgstr "Permessi"
@@ -846,93 +844,92 @@ msgstr ""
 msgid "FAI object"
 msgstr "Gruppo di oggetti"
 
-#: admin/fai/class_faiManagement.inc:542
+#: admin/fai/class_faiManagement.inc:543
 msgid "FAI branch/freeze"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:545
+#: admin/fai/class_faiManagement.inc:546
 #, fuzzy
 msgid "You have no permission to delete this release!"
 msgstr "Non hai il permesso di cambiare la tua password."
 
-#: admin/fai/class_faiManagement.inc:561
+#: admin/fai/class_faiManagement.inc:562
 msgid "Release remove aborted because the release name check failed!"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:638 admin/fai/class_faiManagement.inc:661
+#: admin/fai/class_faiManagement.inc:639 admin/fai/class_faiManagement.inc:662
 #, fuzzy
 msgid "Configuration"
 msgstr "File di configurazione"
 
-#: admin/fai/class_faiManagement.inc:640 admin/fai/class_faiManagement.inc:663
-#: admin/fai/class_faiManagement.inc:684
+#: admin/fai/class_faiManagement.inc:641 admin/fai/class_faiManagement.inc:664
+#: admin/fai/class_faiManagement.inc:685
 #, fuzzy
 msgid "Branch"
 msgstr "Annulla"
 
-#: admin/fai/class_faiManagement.inc:790 admin/fai/askClassName.tpl:68
+#: admin/fai/class_faiManagement.inc:791 admin/fai/askClassName.tpl:68
 msgid "Continue"
 msgstr "Continua"
 
-#: admin/fai/class_faiManagement.inc:820
-#: admin/fai/packageSelect/class_filterFAIPackages.inc:14
+#: admin/fai/class_faiManagement.inc:821
+#: admin/fai/packageSelect/class_filterFAIPackages.inc:15
 #: admin/fai/class_FAI.inc:574 admin/fai/class_faiPackageConfiguration.inc:35
 #: admin/fai/class_faiPackage.inc:260 admin/fai/class_faiPackage.inc:566
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:357
 #: admin/systems/services/repository/class_servRepository.inc:357
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Seleziona per mostrare le applicazioni"
 
-#: admin/fai/class_faiManagement.inc:825 admin/fai/class_FAI.inc:1178
+#: admin/fai/class_faiManagement.inc:826 admin/fai/class_FAI.inc:1178
 #, fuzzy
 msgid "Fatal error"
 msgstr "Terminal Server"
 
-#: admin/fai/class_faiManagement.inc:1020
+#: admin/fai/class_faiManagement.inc:1021
 #: admin/fai/class_faiGroupHandle.inc:102 admin/fai/fai-list.xml:88
 #: admin/fai/class_faiSummaryTab.inc:49
 #, fuzzy
 msgid "Package list"
 msgstr "Pacchetti"
 
-#: admin/fai/class_faiManagement.inc:1022
+#: admin/fai/class_faiManagement.inc:1023
 #: admin/fai/class_faiGroupHandle.inc:104 admin/fai/class_faiSummaryTab.inc:44
 #, fuzzy
 msgid "Scripts"
 msgstr "Script path"
 
-#: admin/fai/class_faiManagement.inc:1024
+#: admin/fai/class_faiManagement.inc:1025
 #: admin/fai/class_faiGroupHandle.inc:106 admin/fai/class_faiSummaryTab.inc:46
 msgid "Variables"
 msgstr "Variabili"
 
-#: admin/fai/class_faiManagement.inc:1026
+#: admin/fai/class_faiManagement.inc:1027
 #: admin/fai/class_faiGroupHandle.inc:108 admin/fai/class_faiSummaryTab.inc:45
 msgid "Hooks"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:1030
+#: admin/fai/class_faiManagement.inc:1031
 #: admin/fai/class_faiGroupHandle.inc:112 admin/fai/class_faiSummaryTab.inc:47
 msgid "Templates"
 msgstr "Template"
 
-#: admin/fai/class_faiManagement.inc:1032
+#: admin/fai/class_faiManagement.inc:1033
 #: admin/fai/class_faiGroupHandle.inc:114
 msgid "OPSI netboot product"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:1034
+#: admin/fai/class_faiManagement.inc:1035
 #, fuzzy
 msgid "OPSI localboot product"
 msgstr "Gruppi di oggetti"
 
-#: admin/fai/class_faiManagement.inc:1136
+#: admin/fai/class_faiManagement.inc:1137
 #, fuzzy
 msgid "FAI releases"
 msgstr "Scegli il tuo numero di telefono personale"
 
-#: admin/fai/class_faiManagement.inc:1137
+#: admin/fai/class_faiManagement.inc:1138
 #, fuzzy
 msgid "FAI release management"
 msgstr "Riferimenti"
@@ -1365,7 +1362,6 @@ msgid "FAI partition table"
 msgstr "Stampante"
 
 #: admin/fai/branch_selector.tpl:2
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:417
 #: admin/systems/services/repository/class_servRepository.inc:417
 #, fuzzy
 msgid "Releases"
@@ -1696,7 +1692,6 @@ msgid "Unknown FAI information source!"
 msgstr "Informazioni personali"
 
 #: admin/fai/class_faiSummaryTab.inc:183
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:201
 #: admin/systems/services/repository/class_servRepository.inc:201
 msgid "You can't use this plugin until FAI is activated."
 msgstr ""
@@ -1771,17 +1766,24 @@ msgid "Service"
 msgstr "Servizi"
 
 #: admin/systems/services/repository/repository-list.xml:35
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:419
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
 #: admin/systems/services/repository/class_servRepository.inc:419
 #, fuzzy
 msgid "Sections"
 msgstr "Azione"
 
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:27
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:339
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:383
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
+#: admin/systems/services/repository/servRepositorySetup.tpl:8
+#: admin/systems/services/repository/class_servRepository.inc:416
+#, fuzzy
+msgid "Parent server"
+msgstr "server"
+
+#: admin/systems/services/repository/servRepositorySetup.tpl:28
+#: admin/systems/services/repository/class_servRepository.inc:418
+#: admin/systems/services/repository/class_servRepositorySetup.inc:157
+msgid "URL"
+msgstr ""
+
 #: admin/systems/services/repository/class_servRepository.inc:27
 #: admin/systems/services/repository/class_servRepository.inc:339
 #: admin/systems/services/repository/class_servRepository.inc:383
@@ -1791,30 +1793,14 @@ msgstr "Azione"
 msgid "Repository service"
 msgstr "Riprova"
 
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:159
 #: admin/systems/services/repository/class_servRepository.inc:159
 #, fuzzy
 msgid "FAI release"
 msgstr "Scegli il tuo numero di telefono personale"
 
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:403
 #: admin/systems/services/repository/class_servRepository.inc:403
 msgid "Services"
 msgstr "Servizi"
-
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:416
-#: admin/systems/services/repository/servRepositorySetup.tpl:8
-#: admin/systems/services/repository/class_servRepository.inc:416
-#, fuzzy
-msgid "Parent server"
-msgstr "server"
-
-#: admin/systems/services/repository/.svn/tmp/tempfile.3.tmp:418
-#: admin/systems/services/repository/servRepositorySetup.tpl:28
-#: admin/systems/services/repository/class_servRepository.inc:418
-#: admin/systems/services/repository/class_servRepositorySetup.inc:157
-msgid "URL"
-msgstr ""
 
 #, fuzzy
 #~ msgid "List of available packages"

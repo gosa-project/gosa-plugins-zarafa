@@ -4,10 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2010-01-28 22:26+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -41,10 +42,10 @@ msgstr "Créer un compte de messagerie"
 #: personal/mail/class_mailAccount.inc:366
 #: personal/mail/class_mailAccount.inc:371
 #: personal/mail/class_mailAccount.inc:384
-#: personal/mail/class_mailAccount.inc:1000
-#: personal/mail/class_mailAccount.inc:1004
-#: personal/mail/class_mailAccount.inc:1022
-#: personal/mail/class_mailAccount.inc:1385
+#: personal/mail/class_mailAccount.inc:1014
+#: personal/mail/class_mailAccount.inc:1018
+#: personal/mail/class_mailAccount.inc:1036
+#: personal/mail/class_mailAccount.inc:1429
 #: personal/mail/mailAddressSelect/selectMailAddress-list.xml:56
 msgid "Mail address"
 msgstr "Adresse de messagerie"
@@ -61,8 +62,8 @@ msgstr "votre-nom@votre-domaine.com"
 #: admin/systems/services/mail/class_goMailServer.inc:582
 #: admin/systems/services/virus/class_goVirusServer.inc:154
 #: admin/systems/services/spam/class_goSpamServer.inc:277
-#: personal/mail/class_mailAccount.inc:817
-#: personal/mail/class_mailAccount.inc:890
+#: personal/mail/class_mailAccount.inc:831
+#: personal/mail/class_mailAccount.inc:904
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
@@ -82,9 +83,9 @@ msgstr "Erreur LDAP"
 #: personal/mail/class_mailAccount.inc:242
 #: personal/mail/class_mailAccount.inc:247
 #: personal/mail/class_mailAccount.inc:249
-#: personal/mail/class_mailAccount.inc:984
-#: personal/mail/class_mailAccount.inc:1209
-#: personal/mail/class_mailAccount.inc:1375
+#: personal/mail/class_mailAccount.inc:998
+#: personal/mail/class_mailAccount.inc:1253
+#: personal/mail/class_mailAccount.inc:1419
 msgid "Mail"
 msgstr "Messagerie"
 
@@ -98,7 +99,7 @@ msgstr "Liste de distribution"
 
 #: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/class_groupMail.inc:860
 #: admin/groups/mail/mail.tpl:7 admin/groups/mail/paste_mail.tpl:8
-#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:996
+#: personal/mail/generic.tpl:9 personal/mail/class_mailAccount.inc:1010
 #: personal/mail/copypaste.tpl:7
 msgid "Primary address"
 msgstr "Adresse principale"
@@ -128,11 +129,11 @@ msgstr "Veuillez entrer une adresse de messagerie"
 #: personal/mail/class_mailAccount.inc:153
 #: personal/mail/class_mailAccount.inc:158
 #: personal/mail/class_mailAccount.inc:161
-#: personal/mail/class_mailAccount.inc:826
-#: personal/mail/class_mailAccount.inc:830
-#: personal/mail/class_mailAccount.inc:904
-#: personal/mail/class_mailAccount.inc:908
-#: personal/mail/class_mailAccount.inc:912
+#: personal/mail/class_mailAccount.inc:840
+#: personal/mail/class_mailAccount.inc:844
+#: personal/mail/class_mailAccount.inc:918
+#: personal/mail/class_mailAccount.inc:922
+#: personal/mail/class_mailAccount.inc:926
 msgid "Mail error"
 msgstr "Erreur du serveur de messagerie"
 
@@ -162,8 +163,8 @@ msgstr "Impossible d'obtenir les permissions du dossier : %s"
 #: admin/groups/mail/class_groupMail.inc:565
 #: admin/groups/mail/class_groupMail.inc:795
 #: personal/mail/class_mailAccount.inc:158
-#: personal/mail/class_mailAccount.inc:826
-#: personal/mail/class_mailAccount.inc:904
+#: personal/mail/class_mailAccount.inc:840
+#: personal/mail/class_mailAccount.inc:918
 #, php-format
 msgid "Mail method cannot connect: %s"
 msgstr "Le méthode mail ne peut pas se connecter : %s"
@@ -172,7 +173,8 @@ msgstr "Le méthode mail ne peut pas se connecter : %s"
 #: personal/mail/class_mailAccount.inc:161
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
-msgstr "Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
+msgstr ""
+"Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:306
 msgid ""
@@ -228,20 +230,20 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:424
 #: personal/mail/class_mailAccount.inc:380
-#: personal/mail/class_mailAccount.inc:1018
+#: personal/mail/class_mailAccount.inc:1032
 #, php-format
 msgid "Address is already in use by group '%s'."
 msgstr "L'adresse entrée est déjà utilisée par le groupe '%s'."
 
 #: admin/groups/mail/class_groupMail.inc:426
 #: personal/mail/class_mailAccount.inc:382
-#: personal/mail/class_mailAccount.inc:1020
+#: personal/mail/class_mailAccount.inc:1034
 #, php-format
 msgid "Address is already in use by user '%s'."
 msgstr "L'adresse entrée est déjà utilisée par l'utilisateur '%s'."
 
 #: admin/groups/mail/class_groupMail.inc:569
-#: personal/mail/class_mailAccount.inc:830
+#: personal/mail/class_mailAccount.inc:844
 #, php-format
 msgid "Cannot remove mailbox: %s"
 msgstr "Impossible de supprimer le compte de messagerie : %s"
@@ -257,13 +259,13 @@ msgid "New"
 msgstr "Nouveau"
 
 #: admin/groups/mail/class_groupMail.inc:799
-#: personal/mail/class_mailAccount.inc:908
+#: personal/mail/class_mailAccount.inc:922
 #, php-format
 msgid "Cannot update mailbox: %s"
 msgstr "Impossible de mettre à jour le compte de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:803
-#: personal/mail/class_mailAccount.inc:912
+#: personal/mail/class_mailAccount.inc:926
 #, php-format
 msgid "Cannot write quota settings: %s"
 msgstr "Impossible d'écrire les quotas : %s"
@@ -279,14 +281,14 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:869
 #: admin/groups/mail/class_groupMail.inc:1004 admin/groups/mail/mail.tpl:60
-#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1030
-#: personal/mail/class_mailAccount.inc:1215
-#: personal/mail/class_mailAccount.inc:1387
+#: personal/mail/generic.tpl:57 personal/mail/class_mailAccount.inc:1044
+#: personal/mail/class_mailAccount.inc:1259
+#: personal/mail/class_mailAccount.inc:1431
 msgid "Quota size"
 msgstr "Taille du Quota"
 
 #: admin/groups/mail/class_groupMail.inc:888
-#: personal/mail/class_mailAccount.inc:1399
+#: personal/mail/class_mailAccount.inc:1443
 msgid "Mail max size"
 msgstr "Taille maximale du message"
 
@@ -298,7 +300,7 @@ msgstr ""
 
 #: admin/groups/mail/class_groupMail.inc:900
 #: admin/groups/mail/class_groupMail.inc:1005
-#: personal/mail/class_mailAccount.inc:1386
+#: personal/mail/class_mailAccount.inc:1430
 msgid "Mail server"
 msgstr "Serveur de messagerie"
 
@@ -353,12 +355,12 @@ msgid "Reload"
 msgstr "Recharger"
 
 #: admin/groups/mail/mail.tpl:102 admin/groups/mail/paste_mail.tpl:23
-#: personal/mail/generic.tpl:73 personal/mail/copypaste.tpl:25
+#: personal/mail/generic.tpl:73 personal/mail/copypaste.tpl:38
 msgid "Alternative addresses"
 msgstr "Adresses alternatives"
 
 #: admin/groups/mail/mail.tpl:107 admin/groups/mail/paste_mail.tpl:24
-#: personal/mail/generic.tpl:76 personal/mail/copypaste.tpl:55
+#: personal/mail/generic.tpl:76 personal/mail/copypaste.tpl:68
 msgid "List of alternative mail addresses"
 msgstr "Liste des adresses de messagerie alternatives"
 
@@ -411,7 +413,7 @@ msgid "Not used in all groups"
 msgstr "Pas utilisé dans tout les groupes"
 
 #: admin/groups/mail/mail.tpl:234 admin/groups/mail/paste_mail.tpl:42
-#: personal/mail/generic.tpl:269 personal/mail/copypaste.tpl:44
+#: personal/mail/generic.tpl:269 personal/mail/copypaste.tpl:57
 msgid "Add local"
 msgstr "Ajouter en local"
 
@@ -459,7 +461,7 @@ msgstr "Sélectionner un département"
 msgid "Choose"
 msgstr "Choisir"
 
-#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1376
+#: admin/groups/mail/paste_mail.tpl:1 personal/mail/class_mailAccount.inc:1420
 #: personal/mail/copypaste.tpl:1
 msgid "Mail settings"
 msgstr "Paramètres de messagerie"
@@ -854,7 +856,8 @@ msgstr "Score requis"
 
 #: admin/systems/services/spam/goSpamServer.tpl:22
 msgid "Select required score to tag mail as spam"
-msgstr "Sélectionner le score requis pour marquer ce message comme étant un spam"
+msgstr ""
+"Sélectionner le score requis pour marquer ce message comme étant un spam"
 
 #: admin/systems/services/spam/goSpamServer.tpl:69
 #: admin/systems/services/spam/class_goSpamServer.inc:334
@@ -913,6 +916,7 @@ msgid "Enabled bayes auto learning"
 msgstr "Activer l'apprentissage automatique pour la méthode bayesienne"
 
 #: admin/systems/services/spam/goSpamServerRule.tpl:6
+#: personal/mail/mailAddressSelect/selectMailAddress-filter.tpl:22
 #: personal/mail/mailAddressSelect/selectMailAddress-list.xml:48
 msgid "Name"
 msgstr "Nom"
@@ -1132,7 +1136,7 @@ msgstr "entête"
 msgid "Display header of this message"
 msgstr "Afficher l'entête de ce message"
 
-#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1407
+#: personal/mail/generic.tpl:115 personal/mail/class_mailAccount.inc:1451
 msgid "Use custom sieve script"
 msgstr "Utiliser des scripts sieve personnalisés"
 
@@ -1155,7 +1159,8 @@ msgid "No delivery to own mailbox"
 msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 
 #: personal/mail/generic.tpl:151
-msgid "Select to automatically response with the vacation message defined below"
+msgid ""
+"Select to automatically response with the vacation message defined below"
 msgstr ""
 "Indiquez la réponse automatique en remplissant le message d'absence ci-"
 "dessous"
@@ -1164,8 +1169,8 @@ msgstr ""
 msgid "Activate vacation message"
 msgstr "Activer la notification d'absence"
 
-#: personal/mail/generic.tpl:160 personal/mail/class_mailAccount.inc:1059
-#: personal/mail/class_mailAccount.inc:1239
+#: personal/mail/generic.tpl:160 personal/mail/class_mailAccount.inc:1073
+#: personal/mail/class_mailAccount.inc:1283
 msgid "from"
 msgstr "de"
 
@@ -1204,7 +1209,7 @@ msgstr "MB"
 #: personal/mail/sieve/templates/element_vacation.tpl:44
 #: personal/mail/sieve/class_sieveManagement.inc:502
 #: personal/mail/sieve/class_sieveManagement.inc:720
-#: personal/mail/class_mailAccount.inc:1390
+#: personal/mail/class_mailAccount.inc:1434
 msgid "Vacation message"
 msgstr "Message d'absence"
 
@@ -1214,7 +1219,7 @@ msgstr "Message d'absence"
 msgid "Import"
 msgstr "Importer"
 
-#: personal/mail/generic.tpl:246 personal/mail/copypaste.tpl:13
+#: personal/mail/generic.tpl:246 personal/mail/copypaste.tpl:26
 msgid "Forward messages to"
 msgstr "Transférer les messages vers"
 
@@ -1729,7 +1734,8 @@ msgstr ""
 "d'authentification est vide."
 
 #: personal/mail/sieve/templates/management.tpl:6
-msgid "Please verify that the attributes uid and mail are not empty and try again."
+msgid ""
+"Please verify that the attributes uid and mail are not empty and try again."
 msgstr ""
 "Veuillez vérifier que les attributs uid et mail ne sont pas vide et "
 "réessayer."
@@ -1939,11 +1945,14 @@ msgid "Please specify a valid operator."
 msgstr "Veuillez spécifier un opérateur valide."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:654
-msgid "Invalid character found in address attribute. Quotes are not allowed here."
-msgstr "Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
+msgid ""
+"Invalid character found in address attribute. Quotes are not allowed here."
+msgstr ""
+"Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:669
-msgid "Invalid character found in value attribute. Quotes are not allowed here."
+msgid ""
+"Invalid character found in value attribute. Quotes are not allowed here."
 msgstr ""
 "Caractère non valide trouvé dans l'attribut. Les guillemets ne sont pas "
 "permis ici."
@@ -2027,7 +2036,8 @@ msgstr "L'analyse à réussi"
 
 #: personal/mail/sieve/class_sieveManagement.inc:156
 #, php-format
-msgid "The specified mail server '%s' does not exist within the GOsa configuration."
+msgid ""
+"The specified mail server '%s' does not exist within the GOsa configuration."
 msgstr ""
 "Le serveur de messagerie spécifié '%s' n'existe pas dans la configuration de "
 "GOsa."
@@ -2042,7 +2052,8 @@ msgstr "Veuillez seulement utiliser des nom de script en miniscules !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:212
 msgid "Please use only alphabetical characters in script names!"
-msgstr "Seul des caractères alphabétiques sont permis dans le nom des scripts !"
+msgstr ""
+"Seul des caractères alphabétiques sont permis dans le nom des scripts !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:218
 msgid "Script name already in use!"
@@ -2147,8 +2158,8 @@ msgid "User mail settings"
 msgstr "Configuration du compte de messagerie de l'utilisateur"
 
 #: personal/mail/class_mailAccount.inc:618
-#: personal/mail/class_mail-methods.inc:140
-#: personal/mail/class_mail-methods.inc:485
+#: personal/mail/class_mail-methods.inc:141
+#: personal/mail/class_mail-methods.inc:486
 msgid "Configuration error"
 msgstr "Erreur de configuration"
 
@@ -2176,73 +2187,73 @@ msgstr "Vous n'avez pas les droits nécessaires pour modifier ces adresses !"
 msgid "unknown"
 msgstr "inconnu"
 
-#: personal/mail/class_mailAccount.inc:926
+#: personal/mail/class_mailAccount.inc:940
 msgid "Mail error saving sieve settings"
 msgstr "Erreur de messagerie lors de la sauvegarde du script sieve"
 
-#: personal/mail/class_mailAccount.inc:1039
-#: personal/mail/class_mailAccount.inc:1047
-#: personal/mail/class_mailAccount.inc:1224
+#: personal/mail/class_mailAccount.inc:1053
+#: personal/mail/class_mailAccount.inc:1061
+#: personal/mail/class_mailAccount.inc:1268
 msgid "Mail reject size"
 msgstr "Taille maximale autorisée du message"
 
-#: personal/mail/class_mailAccount.inc:1051
-#: personal/mail/class_mailAccount.inc:1231
+#: personal/mail/class_mailAccount.inc:1065
+#: personal/mail/class_mailAccount.inc:1275
 msgid "Spam folder"
 msgstr "Dossier spam"
 
-#: personal/mail/class_mailAccount.inc:1063
-#: personal/mail/class_mailAccount.inc:1243
+#: personal/mail/class_mailAccount.inc:1077
+#: personal/mail/class_mailAccount.inc:1287
 msgid "to"
 msgstr "vers"
 
-#: personal/mail/class_mailAccount.inc:1074
-#: personal/mail/class_mailAccount.inc:1254
+#: personal/mail/class_mailAccount.inc:1088
+#: personal/mail/class_mailAccount.inc:1298
 msgid "Vacation interval"
 msgstr "Intervalle du message d'absence"
 
-#: personal/mail/class_mailAccount.inc:1380
+#: personal/mail/class_mailAccount.inc:1424
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/mail/class_mailAccount.inc:1389
+#: personal/mail/class_mailAccount.inc:1433
 msgid "Add vacation information"
 msgstr "Ajouter un message d'absence"
 
-#: personal/mail/class_mailAccount.inc:1392
+#: personal/mail/class_mailAccount.inc:1436
 msgid "Use spam filter"
 msgstr "Utiliser le filtre antispam"
 
-#: personal/mail/class_mailAccount.inc:1393
+#: personal/mail/class_mailAccount.inc:1437
 msgid "Spam level"
 msgstr "Niveau de spam"
 
-#: personal/mail/class_mailAccount.inc:1394
+#: personal/mail/class_mailAccount.inc:1438
 msgid "Spam mail box"
 msgstr "Boite spam de votre messagerie"
 
-#: personal/mail/class_mailAccount.inc:1396
+#: personal/mail/class_mailAccount.inc:1440
 msgid "Sieve management"
 msgstr "Gestion de Sieve"
 
-#: personal/mail/class_mailAccount.inc:1398
+#: personal/mail/class_mailAccount.inc:1442
 msgid "Reject due to mailsize"
 msgstr "Rejeter a cause de la taille"
 
-#: personal/mail/class_mailAccount.inc:1401
-#: personal/mail/class_mailAccount.inc:1406
+#: personal/mail/class_mailAccount.inc:1445
+#: personal/mail/class_mailAccount.inc:1450
 msgid "Forwarding address"
 msgstr "Adresse de renvoi"
 
-#: personal/mail/class_mailAccount.inc:1402
+#: personal/mail/class_mailAccount.inc:1446
 msgid "Local delivery"
 msgstr "Distribution locale"
 
-#: personal/mail/class_mailAccount.inc:1403
+#: personal/mail/class_mailAccount.inc:1447
 msgid "No delivery to own mailbox "
 msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 
-#: personal/mail/class_mailAccount.inc:1404
+#: personal/mail/class_mailAccount.inc:1448
 msgid "Mail alternative addresses"
 msgstr "Adresses alternatives"
 
@@ -2274,30 +2285,29 @@ msgstr "Utilisateur"
 msgid "Group"
 msgstr "Groupes"
 
-#: personal/mail/class_mail-methods.inc:141
+#: personal/mail/class_mail-methods.inc:142
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
 msgstr "L'attribut de messagerie '%s' n'est pas supporté !"
 
-#: personal/mail/class_mail-methods.inc:486
+#: personal/mail/class_mail-methods.inc:487
 #, php-format
 msgid "Mail method '%s' is unknown!"
 msgstr "Le méthode de messagerie '%s' est inconnue !"
 
-#: personal/mail/class_mail-methods.inc:712
 #: personal/mail/class_mail-methods.inc:713
+#: personal/mail/class_mail-methods.inc:714
 msgid "None"
 msgstr "Aucun"
 
-#: personal/mail/class_mail-methods.inc:802
+#: personal/mail/class_mail-methods.inc:803
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: personal/mail/class_mail-methods.inc:804
+#: personal/mail/class_mail-methods.inc:805
 msgid "Unlimited"
 msgstr "Illimités"
 
 #: personal/mail/mail_locals.tpl:35
 msgid "Select department"
 msgstr "Sélectionner un département"
-

@@ -12,10 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:29+0100\n"
+"POT-Creation-Date: 2010-10-29 19:37+0200\n"
 "PO-Revision-Date: 2008-07-28 08:45+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -152,7 +153,8 @@ msgstr "Dies tut etwas"
 #: gofax/faxreports/class_faxreport.inc:135
 #: gofax/faxreports/class_faxreport.inc:158
 #: gofax/faxreports/class_faxreport.inc:304
-#: gofax/blocklists/class_blocklistGeneric.inc:132
+#: gofax/blocklists/class_blocklistGeneric.inc:104
+#: gofax/blocklists/class_blocklistGeneric.inc:154
 #: gofax/faxaccount/class_gofaxAccount.inc:258
 msgid "Error"
 msgstr "Fehler"
@@ -264,7 +266,7 @@ msgstr ""
 "'Abbrechen' zum Abbruch."
 
 #: gofax/blocklists/blocklist-list.tpl:13 gofax/blocklists/generic.tpl:17
-#: gofax/blocklists/class_blocklistGeneric.inc:387
+#: gofax/blocklists/class_blocklistGeneric.inc:369
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.tpl:13
 msgid "Base"
 msgstr "Basis"
@@ -282,40 +284,32 @@ msgstr "Listenname"
 msgid "Name of blocklist"
 msgstr "Name der Sperrliste"
 
-#: gofax/blocklists/generic.tpl:20
-msgid "Choose subtree to place group in"
-msgstr "Wählen Sie den Teilbaum, in den die Gruppe eingepflegt werden soll"
-
-#: gofax/blocklists/generic.tpl:26
-msgid "Select a base"
-msgstr "Wählen Sie eine Basis"
-
-#: gofax/blocklists/generic.tpl:40
+#: gofax/blocklists/generic.tpl:34
 msgid "Type"
 msgstr "Typ"
 
-#: gofax/blocklists/generic.tpl:43
+#: gofax/blocklists/generic.tpl:37
 msgid "Select wether to filter incoming or outgoing calls"
 msgstr "Wählen Sie, ob ein- oder abgehende Rufe gefiltert werden sollen"
 
-#: gofax/blocklists/generic.tpl:51 gofax/blocklists/blocklist-list.xml:57
-#: gofax/blocklists/class_blocklistGeneric.inc:386
+#: gofax/blocklists/generic.tpl:45 gofax/blocklists/blocklist-list.xml:57
+#: gofax/blocklists/class_blocklistGeneric.inc:368
 msgid "Description"
 msgstr "Beschreibung"
 
-#: gofax/blocklists/generic.tpl:54
+#: gofax/blocklists/generic.tpl:48
 msgid "Descriptive text for this blocklist"
 msgstr "Beschreibender Text zu dieser Sperrliste"
 
-#: gofax/blocklists/generic.tpl:68
+#: gofax/blocklists/generic.tpl:62
 msgid "Blocked numbers"
 msgstr "Gesperrte Nummern"
 
-#: gofax/blocklists/generic.tpl:90
+#: gofax/blocklists/generic.tpl:84
 msgid "Information"
 msgstr "Information"
 
-#: gofax/blocklists/generic.tpl:92
+#: gofax/blocklists/generic.tpl:86
 msgid "Numbers can also contain wild cards."
 msgstr "Nummern können auch Platzhalter enthalten."
 
@@ -324,20 +318,22 @@ msgid "List of blocklists"
 msgstr "Liste der Sperrlisten"
 
 #: gofax/blocklists/blocklist-list.xml:15
-#: gofax/faxaccount/class_gofaxAccount.inc:835
+#: gofax/faxaccount/class_gofaxAccount.inc:834
 msgid "Send blocklist"
 msgstr "Sende-Sperrliste"
 
 #: gofax/blocklists/blocklist-list.xml:23
-#: gofax/faxaccount/class_gofaxAccount.inc:834
+#: gofax/faxaccount/class_gofaxAccount.inc:833
 msgid "Receive blocklist"
 msgstr "Emfangs-Sperrliste"
 
 #: gofax/blocklists/blocklist-list.xml:49
-#: gofax/blocklists/class_blocklistGeneric.inc:219
-#: gofax/blocklists/class_blocklistGeneric.inc:222
-#: gofax/blocklists/class_blocklistGeneric.inc:229
-#: gofax/blocklists/class_blocklistGeneric.inc:385
+#: gofax/blocklists/blocklist-filter.tpl:17
+#: gofax/blocklists/class_blocklistGeneric.inc:196
+#: gofax/blocklists/class_blocklistGeneric.inc:199
+#: gofax/blocklists/class_blocklistGeneric.inc:206
+#: gofax/blocklists/class_blocklistGeneric.inc:367
+#: gofax/faxaccount/faxNumberSelect/faxNumberSelect-filter.tpl:17
 msgid "Name"
 msgstr "Name"
 
@@ -350,7 +346,7 @@ msgid "Create"
 msgstr "Anlegen"
 
 #: gofax/blocklists/blocklist-list.xml:82
-#: gofax/blocklists/class_blocklistGeneric.inc:388
+#: gofax/blocklists/class_blocklistGeneric.inc:370
 msgid "Blocklist"
 msgstr "Sperrliste"
 
@@ -375,40 +371,40 @@ msgid "Blocklist management"
 msgstr "Sperrlistenverwaltung"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:9
-#: gofax/blocklists/class_blocklistGeneric.inc:376
-#: gofax/blocklists/class_blocklistGeneric.inc:381
-#: gofax/blocklists/class_blocklistGeneric.inc:382
+#: gofax/blocklists/class_blocklistGeneric.inc:358
+#: gofax/blocklists/class_blocklistGeneric.inc:363
+#: gofax/blocklists/class_blocklistGeneric.inc:364
 msgid "Fax blocklists"
 msgstr "Fax-Sperrlisten"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:132
+#: gofax/blocklists/class_blocklistGeneric.inc:104
 #: gofax/faxaccount/class_gofaxAccount.inc:258
 msgid "Phone number"
 msgstr "Telefonnummer"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:164
+#: gofax/blocklists/class_blocklistGeneric.inc:136
 msgid "send"
 msgstr "senden"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:164
+#: gofax/blocklists/class_blocklistGeneric.inc:136
 msgid "receive"
 msgstr "empfangen"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:205
-#: gofax/blocklists/class_blocklistGeneric.inc:286
+#: gofax/blocklists/class_blocklistGeneric.inc:182
+#: gofax/blocklists/class_blocklistGeneric.inc:268
 #: gofax/faxaccount/class_gofaxAccount.inc:613
-#: gofax/faxaccount/class_gofaxAccount.inc:742
+#: gofax/faxaccount/class_gofaxAccount.inc:741
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:375
+#: gofax/blocklists/class_blocklistGeneric.inc:357
 #: gofax/faxaccount/generic.tpl:10 gofax/faxaccount/paste_generic.tpl:8
-#: gofax/faxaccount/class_gofaxAccount.inc:817
+#: gofax/faxaccount/class_gofaxAccount.inc:816
 #: gofax/faxaccount/faxNumberSelect/faxNumberSelect-list.xml:56
 msgid "Fax"
 msgstr "Fax"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:389
+#: gofax/blocklists/class_blocklistGeneric.inc:371
 msgid "Blocklist type"
 msgstr "Typ der Sperrliste"
 
@@ -452,7 +448,7 @@ msgstr "Mehrfaches Bearbeiten"
 msgid "Fax number for GOfax to trigger on"
 msgstr "Fax-Nummer, auf die GOfax ansprechen soll"
 
-#: gofax/faxaccount/generic.tpl:24 gofax/faxaccount/class_gofaxAccount.inc:828
+#: gofax/faxaccount/generic.tpl:24 gofax/faxaccount/class_gofaxAccount.inc:827
 msgid "Language"
 msgstr "Sprache"
 
@@ -460,7 +456,7 @@ msgstr "Sprache"
 msgid "Specify the GOfax communication language for fax to mail gateway"
 msgstr "Geben Sie die Kommunikations-Sprache für das Fax to Mail-Gateway an"
 
-#: gofax/faxaccount/generic.tpl:37 gofax/faxaccount/class_gofaxAccount.inc:829
+#: gofax/faxaccount/generic.tpl:37 gofax/faxaccount/class_gofaxAccount.inc:828
 msgid "Delivery format"
 msgstr "Auslieferungsformat"
 
@@ -480,11 +476,11 @@ msgstr "Temporäres Abschalten der Fax-Benutzung"
 msgid "Deliver fax as mail to"
 msgstr "Fax als Mail ausliefern an"
 
-#: gofax/faxaccount/generic.tpl:73 gofax/faxaccount/class_gofaxAccount.inc:832
+#: gofax/faxaccount/generic.tpl:73 gofax/faxaccount/class_gofaxAccount.inc:831
 msgid "Deliver fax as mail"
 msgstr "Als Mail ausliefern"
 
-#: gofax/faxaccount/generic.tpl:80 gofax/faxaccount/class_gofaxAccount.inc:833
+#: gofax/faxaccount/generic.tpl:80 gofax/faxaccount/class_gofaxAccount.inc:832
 msgid "Deliver fax to printer"
 msgstr "Fax an Drucker weiterleiten"
 
@@ -543,35 +539,35 @@ msgstr "zurück"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:629
 #: gofax/faxaccount/class_gofaxAccount.inc:633
-#: gofax/faxaccount/class_gofaxAccount.inc:827
+#: gofax/faxaccount/class_gofaxAccount.inc:826
 msgid "Fax number"
 msgstr "Faxnummer"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:641
+#: gofax/faxaccount/class_gofaxAccount.inc:640
 msgid "Mail delivery is requested without target address!"
 msgstr "Die Mailzustellung wurde ohne Zieladresse angefordert!"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:643
+#: gofax/faxaccount/class_gofaxAccount.inc:642
 msgid "Mail address"
 msgstr "Mail-Adresse"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:643
+#: gofax/faxaccount/class_gofaxAccount.inc:642
 msgid "your-name@your-domain.com"
 msgstr "ihr-name@ihre-domain.com"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:649
+#: gofax/faxaccount/class_gofaxAccount.inc:648
 msgid "Printing is requested without a target printer!"
 msgstr "Ausdruck wurden ohne Zieldrucker angefordert!"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:818
+#: gofax/faxaccount/class_gofaxAccount.inc:817
 msgid "Fax account settings"
 msgstr "Fax-Konto-Einstellungen"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:830
+#: gofax/faxaccount/class_gofaxAccount.inc:829
 msgid "Alternate fax number"
 msgstr "Alternative Fax-Nummer"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:831
+#: gofax/faxaccount/class_gofaxAccount.inc:830
 msgid "Enable/Disable fax"
 msgstr "FAX aktivieren/deaktivieren"
 
@@ -633,89 +629,3 @@ msgstr "Informationen der Fax-Datenbank"
 #: admin/systems/services/gofax/goFaxServer.tpl:4
 msgid "FAX DB user"
 msgstr "Fax-DB Benutzer"
-
-#~ msgid "Update"
-#~ msgstr "Aktualisieren"
-
-#~ msgid "Submit"
-#~ msgstr "Übertragen"
-
-#~ msgid ""
-#~ "Please double check if your really want to do this since there is no way "
-#~ "for GOsa to get your data back."
-#~ msgstr ""
-#~ "Bitte überprüfen Sie genau, was Sie tun. GOsa hat keine Möglichkeit, die "
-#~ "Daten wiederherzustellen."
-
-#~ msgid "Select all"
-#~ msgstr "Alle auswählen"
-
-#~ msgid "Department"
-#~ msgstr "Abteilung"
-
-#~ msgid "Show send blocklists"
-#~ msgstr "Zeige Sperrlisten für abgehende Rufe"
-
-#~ msgid "Show receive blocklists"
-#~ msgstr "Zeige eingehende Sperrlisten"
-
-#~ msgid "Regular expression for matching list names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Sperrlisten-Namen"
-
-#~ msgid "Submit department"
-#~ msgstr "Aktualisieren"
-
-#~ msgid "edit"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "Edit user"
-#~ msgstr "Benutzer bearbeiten"
-
-#~ msgid "delete"
-#~ msgstr "Entfernen"
-
-#~ msgid "Delete user"
-#~ msgstr "Benutzer entfernen"
-
-#~ msgid "Number of listed '%s'"
-#~ msgstr "Anzahl der angezeigen '%s'"
-
-#~ msgid "blocklists"
-#~ msgstr "Sperrlisten"
-
-#~ msgid "departments"
-#~ msgstr "Abteilungen"
-
-#~ msgid "FAX blocklists"
-#~ msgstr "Fax-Sperrlisten"
-
-#~ msgid "Permission"
-#~ msgstr "Berechtigung"
-
-#~ msgid "blocklist"
-#~ msgstr "Sperrliste"
-
-#~ msgid "Copy"
-#~ msgstr "Kopieren"
-
-#~ msgid "Cut"
-#~ msgstr "Ausschneiden"
-
-#~ msgid "Paste"
-#~ msgstr "Einfügen"
-
-#~ msgid "cut"
-#~ msgstr "Ausschneiden"
-
-#~ msgid "Cut this entry"
-#~ msgstr "Diesen Eintrag ausschneiden"
-
-#~ msgid "copy"
-#~ msgstr "Kopieren"
-
-#~ msgid "Copy this entry"
-#~ msgstr "Diesen Eintrag kopieren"
-
-#, fuzzy
-#~ msgid "Faxi number"
-#~ msgstr "Faxnummer"

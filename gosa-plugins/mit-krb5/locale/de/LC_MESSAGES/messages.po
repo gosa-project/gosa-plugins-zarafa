@@ -12,10 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:30+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2008-12-03 15:12+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -182,8 +183,8 @@ msgstr "Diese Richtlinie wird %d mal verwendet."
 #: admin/systems/services/kerberos/class_krb5_policy.inc:150
 #, php-format
 msgid ""
-"The value specified for '%s' must be smaller than the value specified for '%"
-"s'!"
+"The value specified for '%s' must be smaller than the value specified for "
+"'%s'!"
 msgstr "Der für '%s' angegebene Wert muss kleiner als der für '%s' sein!"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:233
@@ -328,7 +329,7 @@ msgid "Prohibit renewable tickets"
 msgstr "Erneuerbare Tickets verbieten"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:217
-msgid "Prohibit postdated tickets"
+msgid "Pohibit postdated tickets"
 msgstr "Zurückdatierte Tickets verbieten"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:219

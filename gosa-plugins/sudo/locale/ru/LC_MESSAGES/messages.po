@@ -5,10 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-10-29 19:39+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,15 +20,15 @@ msgstr ""
 msgid "Filter"
 msgstr "Фильтры"
 
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:580
-#: admin/sudo/class_sudoGeneric.inc:585 admin/sudo/class_sudoGeneric.inc:590
-#: admin/sudo/class_sudoGeneric.inc:599 admin/sudo/class_sudoGeneric.inc:638
+#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:582
+#: admin/sudo/class_sudoGeneric.inc:587 admin/sudo/class_sudoGeneric.inc:592
+#: admin/sudo/class_sudoGeneric.inc:601 admin/sudo/class_sudoGeneric.inc:640
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
 #: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
 msgid "Name"
 msgstr "Фамилия"
 
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:421
+#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:423
 msgid "User"
 msgstr "Пользователь"
 
@@ -50,65 +51,65 @@ msgstr ""
 "Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
 "нажмите <i>Отмена</i>."
 
-#: admin/sudo/class_sudoGeneric.inc:332
+#: admin/sudo/class_sudoGeneric.inc:334
 msgid "Error"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:374
+#: admin/sudo/class_sudoGeneric.inc:376
 msgid "disabled"
 msgstr "отключен"
 
-#: admin/sudo/class_sudoGeneric.inc:375
+#: admin/sudo/class_sudoGeneric.inc:377
 msgid "full access"
 msgstr "полный доступ"
 
-#: admin/sudo/class_sudoGeneric.inc:376
+#: admin/sudo/class_sudoGeneric.inc:378
 msgid "allow access to these hosts"
 msgstr "разрешить доступ только на эти хосты"
 
-#: admin/sudo/class_sudoGeneric.inc:422
+#: admin/sudo/class_sudoGeneric.inc:424
 msgid "Group"
 msgstr "Группа"
 
-#: admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:568
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
 
-#: admin/sudo/class_sudoGeneric.inc:629 admin/sudo/class_sudoManagement.inc:25
+#: admin/sudo/class_sudoGeneric.inc:631 admin/sudo/class_sudoManagement.inc:25
 #, fuzzy
 msgid "Sudo"
 msgstr "Имя сервера"
 
-#: admin/sudo/class_sudoGeneric.inc:630 admin/sudo/class_sudoGeneric.inc:635
+#: admin/sudo/class_sudoGeneric.inc:632 admin/sudo/class_sudoGeneric.inc:637
 #, fuzzy
 msgid "Sudo role"
 msgstr "состояние неизвестно"
 
-#: admin/sudo/class_sudoGeneric.inc:639 admin/sudo/generic.tpl:15
+#: admin/sudo/class_sudoGeneric.inc:641 admin/sudo/generic.tpl:15
 #: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr "Описание"
 
-#: admin/sudo/class_sudoGeneric.inc:640
+#: admin/sudo/class_sudoGeneric.inc:642
 msgid "Users"
 msgstr "Пользователи"
 
-#: admin/sudo/class_sudoGeneric.inc:641
+#: admin/sudo/class_sudoGeneric.inc:643
 msgid "Host"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:642
+#: admin/sudo/class_sudoGeneric.inc:644
 #, fuzzy
 msgid "Command"
 msgstr "и"
 
-#: admin/sudo/class_sudoGeneric.inc:643
+#: admin/sudo/class_sudoGeneric.inc:645
 #, fuzzy
 msgid "Run as user"
 msgstr "Пользователи домена"
 
-#: admin/sudo/class_sudoGeneric.inc:644
+#: admin/sudo/class_sudoGeneric.inc:646
 #, fuzzy
 msgid "Access control list"
 msgstr "Параметры доступа"

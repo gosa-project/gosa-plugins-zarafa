@@ -6,17 +6,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-10-29 19:38+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
 #: admin/roleManagement/class_roleManagement.inc:25
-#: admin/roleManagement/class_roleGeneric.inc:406
+#: admin/roleManagement/class_roleGeneric.inc:427
 #, fuzzy
 msgid "Roles"
 msgstr "Ruolo"
@@ -43,59 +44,64 @@ msgstr ""
 "Quindi - Se sei sicuro - premi <i>Rimuovi</i> per continuare o <i>Annulla</"
 "i> per abortire."
 
-#: admin/roleManagement/class_roleGeneric.inc:225
-#: admin/roleManagement/class_roleGeneric.inc:234
-#: admin/roleManagement/class_roleGeneric.inc:409
+#: admin/roleManagement/class_roleGeneric.inc:238
+#: admin/roleManagement/class_roleGeneric.inc:247
+#: admin/roleManagement/class_roleGeneric.inc:430
 #: admin/roleManagement/role-list.xml:41
+#: admin/roleManagement/role-filter.tpl:17
 #: admin/roleManagement/roleGeneric.tpl:11
 msgid "Name"
 msgstr "Cognome"
 
-#: admin/roleManagement/class_roleGeneric.inc:255
+#: admin/roleManagement/class_roleGeneric.inc:268
 msgid "Unknown"
 msgstr ""
 
-#: admin/roleManagement/class_roleGeneric.inc:273
-#: admin/roleManagement/class_roleGeneric.inc:315
+#: admin/roleManagement/class_roleGeneric.inc:286
+#: admin/roleManagement/class_roleGeneric.inc:328
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
 
-#: admin/roleManagement/class_roleGeneric.inc:400
+#: admin/roleManagement/class_roleGeneric.inc:371
+msgid "Error"
+msgstr ""
+
+#: admin/roleManagement/class_roleGeneric.inc:421
 #: admin/roleManagement/roleGeneric.tpl:6
 msgid "Generic"
 msgstr "Generale"
 
-#: admin/roleManagement/class_roleGeneric.inc:401
+#: admin/roleManagement/class_roleGeneric.inc:422
 #, fuzzy
 msgid "Role generic"
 msgstr "Cognome"
 
-#: admin/roleManagement/class_roleGeneric.inc:410
+#: admin/roleManagement/class_roleGeneric.inc:431
 #: admin/roleManagement/role-list.xml:49
 #: admin/roleManagement/roleGeneric.tpl:19
 msgid "Description"
 msgstr "Descrizione"
 
-#: admin/roleManagement/class_roleGeneric.inc:411
+#: admin/roleManagement/class_roleGeneric.inc:432
 #: admin/roleManagement/role-list.tpl:13
 #: admin/roleManagement/roleGeneric.tpl:29
 msgid "Base"
 msgstr "Base"
 
-#: admin/roleManagement/class_roleGeneric.inc:412
+#: admin/roleManagement/class_roleGeneric.inc:433
 #, fuzzy
 msgid "Telefon number"
 msgstr "Numero di telefono"
 
-#: admin/roleManagement/class_roleGeneric.inc:413
-#: admin/roleManagement/roleGeneric.tpl:56
+#: admin/roleManagement/class_roleGeneric.inc:434
+#: admin/roleManagement/roleGeneric.tpl:50
 #, fuzzy
 msgid "Fax number"
 msgstr "Numero di telefono"
 
-#: admin/roleManagement/class_roleGeneric.inc:414
-#: admin/roleManagement/roleGeneric.tpl:68
+#: admin/roleManagement/class_roleGeneric.inc:435
+#: admin/roleManagement/roleGeneric.tpl:62
 msgid "Occupants"
 msgstr ""
 
@@ -149,18 +155,16 @@ msgstr "Inserisci la URI del server LDAP"
 msgid "Filter"
 msgstr "Filtri"
 
-#: admin/roleManagement/roleGeneric.tpl:34
-msgid "Choose subtree to place user in"
-msgstr "Scegli il subtree per l'utente"
-
-#: admin/roleManagement/roleGeneric.tpl:40
-#, fuzzy
-msgid "Select a base"
-msgstr "Rimuovi"
-
-#: admin/roleManagement/roleGeneric.tpl:48
+#: admin/roleManagement/roleGeneric.tpl:42
 msgid "Phone number"
 msgstr "Numero di telefono"
+
+#~ msgid "Choose subtree to place user in"
+#~ msgstr "Scegli il subtree per l'utente"
+
+#, fuzzy
+#~ msgid "Select a base"
+#~ msgstr "Rimuovi"
 
 #~ msgid "Filters"
 #~ msgstr "Filtri"

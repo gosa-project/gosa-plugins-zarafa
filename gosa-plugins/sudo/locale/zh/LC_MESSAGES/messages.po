@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-10-29 19:39+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,15 +22,15 @@ msgstr ""
 msgid "Filter"
 msgstr "过滤器"
 
-#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:580
-#: admin/sudo/class_sudoGeneric.inc:585 admin/sudo/class_sudoGeneric.inc:590
-#: admin/sudo/class_sudoGeneric.inc:599 admin/sudo/class_sudoGeneric.inc:638
+#: admin/sudo/sudo-filter.tpl:13 admin/sudo/class_sudoGeneric.inc:582
+#: admin/sudo/class_sudoGeneric.inc:587 admin/sudo/class_sudoGeneric.inc:592
+#: admin/sudo/class_sudoGeneric.inc:601 admin/sudo/class_sudoGeneric.inc:640
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
 #: admin/sudo/sudo-list.xml:32 admin/sudo/paste_generic.tpl:5
 msgid "Name"
 msgstr "名称"
 
-#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:421
+#: admin/sudo/sudo-filter.tpl:23 admin/sudo/class_sudoGeneric.inc:423
 msgid "User"
 msgstr "用户"
 
@@ -47,66 +48,66 @@ msgstr "请再次检查您是否要这么做，因为 GOsa 没有办法将您的
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
-#: admin/sudo/class_sudoGeneric.inc:332
+#: admin/sudo/class_sudoGeneric.inc:334
 msgid "Error"
 msgstr "错误"
 
-#: admin/sudo/class_sudoGeneric.inc:374
+#: admin/sudo/class_sudoGeneric.inc:376
 msgid "disabled"
 msgstr "禁用"
 
-#: admin/sudo/class_sudoGeneric.inc:375
+#: admin/sudo/class_sudoGeneric.inc:377
 msgid "full access"
 msgstr "完全访问权限"
 
-#: admin/sudo/class_sudoGeneric.inc:376
+#: admin/sudo/class_sudoGeneric.inc:378
 msgid "allow access to these hosts"
 msgstr "允许访问这些主机"
 
-#: admin/sudo/class_sudoGeneric.inc:422
+#: admin/sudo/class_sudoGeneric.inc:424
 msgid "Group"
 msgstr "组"
 
-#: admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:568
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP 错误:"
 
-#: admin/sudo/class_sudoGeneric.inc:629 admin/sudo/class_sudoManagement.inc:25
+#: admin/sudo/class_sudoGeneric.inc:631 admin/sudo/class_sudoManagement.inc:25
 #, fuzzy
 msgid "Sudo"
 msgstr "姓"
 
-#: admin/sudo/class_sudoGeneric.inc:630 admin/sudo/class_sudoGeneric.inc:635
+#: admin/sudo/class_sudoGeneric.inc:632 admin/sudo/class_sudoGeneric.inc:637
 #, fuzzy
 msgid "Sudo role"
 msgstr "! 未知 id"
 
-#: admin/sudo/class_sudoGeneric.inc:639 admin/sudo/generic.tpl:15
+#: admin/sudo/class_sudoGeneric.inc:641 admin/sudo/generic.tpl:15
 #: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr "描述"
 
-#: admin/sudo/class_sudoGeneric.inc:640
+#: admin/sudo/class_sudoGeneric.inc:642
 msgid "Users"
 msgstr "用户"
 
-#: admin/sudo/class_sudoGeneric.inc:641
+#: admin/sudo/class_sudoGeneric.inc:643
 #, fuzzy
 msgid "Host"
 msgstr "钩子"
 
-#: admin/sudo/class_sudoGeneric.inc:642
+#: admin/sudo/class_sudoGeneric.inc:644
 #, fuzzy
 msgid "Command"
 msgstr "和"
 
-#: admin/sudo/class_sudoGeneric.inc:643
+#: admin/sudo/class_sudoGeneric.inc:645
 #, fuzzy
 msgid "Run as user"
 msgstr "域用户"
 
-#: admin/sudo/class_sudoGeneric.inc:644
+#: admin/sudo/class_sudoGeneric.inc:646
 #, fuzzy
 msgid "Access control list"
 msgstr "访问选项"
