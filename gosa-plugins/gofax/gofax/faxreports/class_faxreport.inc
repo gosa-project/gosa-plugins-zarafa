@@ -135,7 +135,7 @@ class faxreport extends plugin
             $link 	= @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
             if ($link === FALSE){
                 msg_dialog::display(_("Error"), sprintf(
-                    _("Cannot connect to %s database!"), "GOfax"), ERROR_DIALOG);
+                    _("Cannot connect to %s database!"), "<b>".$cfg['SERVER'].":"."GOfax"."</b>"), ERROR_DIALOG);
                 return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
             }
             if (! @mysql_select_db("gofax")){
