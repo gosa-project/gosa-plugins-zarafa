@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 04:16-0400\n"
-"PO-Revision-Date: 2010-01-18 23:05+0100\n"
+"PO-Revision-Date: 2010-11-26 23:36+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -78,9 +78,8 @@ msgid "This OPSI product has no options."
 msgstr "Ce produit OPSI n'a pas d'options."
 
 #: admin/opsi/properties.tpl:9 admin/opsi/generic.tpl:84
-#, fuzzy
 msgid "Package settings"
-msgstr "Configuration Samba"
+msgstr "Configuration du paquet"
 
 #: admin/opsi/class_opsigeneric.inc:91 admin/opsi/class_opsigeneric.inc:102
 #: admin/opsi/class_opsigeneric.inc:251 admin/opsi/class_opsigeneric.inc:256
@@ -159,14 +158,12 @@ msgid "Note"
 msgstr ""
 
 #: admin/opsi/class_opsigeneric.inc:760 admin/opsi/generic.tpl:39
-#, fuzzy
 msgid "Net boot product"
 msgstr "Produit Netboot"
 
 #: admin/opsi/class_opsigeneric.inc:761
-#, fuzzy
 msgid "Local boot product"
-msgstr "Produit local"
+msgstr "Produit localboot"
 
 #: admin/opsi/class_opsigeneric.inc:762 admin/opsi/generic.tpl:105
 msgid "Action"
@@ -225,15 +222,13 @@ msgid "License"
 msgstr "licence"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:13
-#, fuzzy
 msgid "License settings"
-msgstr "Préférences utilisateur"
+msgstr "Configuration des licences"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:18
 #: admin/opsiLicenses/licensePoolGeneric.tpl:18
-#, fuzzy
 msgid "Generic settings"
-msgstr "Paramètres par défaut des utilisateurs"
+msgstr "Paramètres par défaut"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:35
 #: admin/opsiLicenses/class_licenseGeneric.inc:289
@@ -246,9 +241,8 @@ msgid "License model"
 msgstr "Modèle de licence"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:75
-#, fuzzy
 msgid "Additional settings"
-msgstr "Paramètres supplémentaire de GOsa"
+msgstr "Paramètres supplémentaire"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:78
 #: admin/opsiLicenses/class_licenseGeneric.inc:297
@@ -271,9 +265,8 @@ msgstr "Date de notification"
 #: admin/opsiLicenses/licenseGeneric.tpl:158
 #: admin/opsiLicenses/licenseGeneric.tpl:160
 #: admin/opsiLicenses/licenseGeneric.tpl:163
-#, fuzzy
 msgid "License key settings"
-msgstr "Réservation de licence"
+msgstr "Paramètres de la clef de licence"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:166
 #: admin/opsiLicenses/class_licenseGeneric.inc:246
@@ -301,32 +294,30 @@ msgid "Used by"
 msgstr "Utilisé par"
 
 #: admin/opsiLicenses/opsiLicense-filter.xml:18
-#, fuzzy
 msgid "Default filter"
-msgstr "Imprimante"
+msgstr "Filtre par défaut"
 
 #: admin/opsiLicenses/opsiLicense-filter.xml:33
-#, fuzzy
 msgid "By product"
-msgstr "Produit local"
+msgstr "Par produit"
 
 #: admin/opsiLicenses/class_licenseUsage.inc:56
 #: admin/opsiLicenses/class_licenseByProduct.inc:58
 msgid "Host"
-msgstr ""
+msgstr "Hôte"
 
 #: admin/opsiLicenses/class_licenseUsage.inc:56
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:69
 #: admin/opsiLicenses/class_licenseByProduct.inc:58
 msgid "Key"
-msgstr ""
+msgstr "Clef"
 
 #: admin/opsiLicenses/class_licenseUsage.inc:56
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:59
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:69
 #: admin/opsiLicenses/class_licenseByProduct.inc:58
 msgid "Pool"
-msgstr ""
+msgstr "Réservoir"
 
 #: admin/opsiLicenses/class_licenseUsage.inc:160
 #: admin/opsiLicenses/class_licenseUsage.inc:161
@@ -341,9 +332,8 @@ msgid "Licenses used"
 msgstr "Licences utilisées"
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:92
-#, fuzzy
 msgid "Section"
-msgstr "fonction"
+msgstr ""
 
 #: admin/opsiLicenses/class_licensePoolGeneric.inc:271
 msgid "unlimited"
@@ -400,18 +390,16 @@ msgid "License generic"
 msgstr "Licence par défaut"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:292
-#, fuzzy
 msgid "License pool id"
-msgstr "Réservoir de licences par défaut"
+msgstr "Réservoir de licences"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:294
-#, fuzzy
 msgid "Reserved for host"
-msgstr "Réservé pour"
+msgstr "Réservé pour l'hôte"
 
 #: admin/opsiLicenses/class_licenseGeneric.inc:295
 msgid "Usage"
-msgstr ""
+msgstr "Utilisation"
 
 #: admin/opsiLicenses/opsiLicense-list.xml:11
 msgid "List of license pools"
@@ -447,18 +435,16 @@ msgstr "Licences logicielles"
 
 #: admin/opsiLicenses/class_opsiLicenses.inc:26
 msgid "Manage software licenses for Windows system deployments"
-msgstr ""
+msgstr "Gère les licences pour les déploiement Windows"
 
 #: admin/opsiLicenses/licensePoolGeneric.tpl:12
-#, fuzzy
 msgid "Lincense settings"
-msgstr "Préférences utilisateur"
+msgstr "Configuration des licences"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:59
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:69
-#, fuzzy
 msgid "License ID"
-msgstr "licence"
+msgstr "Numéro de licence"
 
 #: admin/opsiLicenses/class_licenseUsageByHost.inc:259
 msgid "Usage by host"
@@ -480,25 +466,3 @@ msgstr "Utilisation par produit"
 msgid "License usage by product"
 msgstr "Utilisation des licences par produit"
 
-#~ msgid "Warning"
-#~ msgstr "Avertissement"
-
-#~ msgid ""
-#~ "Please double check if you really want to do this since there is no way "
-#~ "for GOsa to get your data back."
-#~ msgstr ""
-#~ "Veuillez vérifier que vous voulez effectuer cette action. Toutes les "
-#~ "données seront perdues étant donné qu'il est impossible pour GOsa de "
-#~ "récupérer vos données."
-
-#~ msgid ""
-#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou "
-#~ "sur 'Annuler' pour abandonner."
-
-#~ msgid "Filter"
-#~ msgstr "Filtre"
-
-#~ msgid "Model"
-#~ msgstr "Modèle"

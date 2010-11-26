@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 04:36-0400\n"
-"PO-Revision-Date: 2010-01-22 21:13+0100\n"
+"PO-Revision-Date: 2010-11-26 23:30+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,6 @@ msgid "Given name"
 msgstr "Prénom"
 
 #: admin/roleManagement/class_roleGeneric.inc:97
-#, fuzzy
 msgid "Surename"
 msgstr "Nom de famille"
 
@@ -82,12 +81,10 @@ msgid "Base"
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:473
-#, fuzzy
 msgid "Telephone number"
 msgstr "Numéro de téléphone"
 
 #: admin/roleManagement/class_roleGeneric.inc:474
-#, fuzzy
 msgid "FAX number"
 msgstr "Numéro de fax"
 
@@ -102,9 +99,8 @@ msgid "Edit role"
 msgstr "Editer le rôle"
 
 #: admin/roleManagement/roleGeneric.tpl:10
-#, fuzzy
 msgid "Generic settings"
-msgstr "Paramètres par défaut des utilisateurs"
+msgstr "Paramètres par défaut"
 
 #: admin/roleManagement/roleGeneric.tpl:43
 msgid "Phone number"
@@ -143,14 +139,12 @@ msgid "Remove role"
 msgstr "Suppression du rôle"
 
 #: admin/roleManagement/role-filter.xml:17
-#, fuzzy
 msgid "Default filter"
-msgstr "Imprimante"
+msgstr "Filtre par défaut"
 
 #: admin/roleManagement/paste_generic.tpl:1
-#, fuzzy
 msgid "Paste role"
-msgstr "Coller"
+msgstr "Coller le rôle"
 
 #: admin/roleManagement/paste_generic.tpl:4
 msgid "Role name"
@@ -162,70 +156,5 @@ msgstr "Veuillez entrer un nouveau nom pour le rôle"
 
 #: admin/roleManagement/class_roleManagement.inc:26
 msgid "Assign and manage organizational roles"
-msgstr ""
+msgstr "Assigne et gère des rôles organisationels"
 
-#~ msgid "Telefon number"
-#~ msgstr "Numéro de téléphone"
-
-#, fuzzy
-#~ msgid "Defailt filter"
-#~ msgstr "Imprimante"
-
-#~ msgid "Role management"
-#~ msgstr "Gestion des rôles"
-
-#~ msgid "Warning"
-#~ msgstr "Avertissement"
-
-#~ msgid ""
-#~ "Please double check if you really want to do this since there is no way "
-#~ "for GOsa to get your data back."
-#~ msgstr ""
-#~ "Veuillez vérifier que vous voulez effectuer cette action. Toutes les "
-#~ "données seront perdues étant donné qu'il est impossible pour GOsa de "
-#~ "récupérer vos données."
-
-#~ msgid ""
-#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou "
-#~ "sur 'Annuler' pour abandonner."
-
-#~ msgid "Filter"
-#~ msgstr "Filtre"
-
-#~ msgid "Choose subtree to place user in"
-#~ msgstr "Sélectionnez la branche où sera enregistrée l'utilisateur"
-
-#~ msgid "Select a base"
-#~ msgstr "Sélectionnez une base"
-
-#~ msgid "Update"
-#~ msgstr "Mise à jour"
-
-#~ msgid "Submit"
-#~ msgstr "Soumettre"
-
-#~ msgid "Select objects to add"
-#~ msgstr "Sélectionnez les objets à ajouter"
-
-#~ msgid "Filters"
-#~ msgstr "Filtres"
-
-#~ msgid "Select to search within subtrees"
-#~ msgstr "Sélectionner pour chercher dans le sous arbre"
-
-#~ msgid "Search in subtrees"
-#~ msgstr "Chercher dans les sous arbre"
-
-#~ msgid "Display objects of department"
-#~ msgstr "Afficher les objets du département"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Sélectionner le département où sera effectuée la recherche"
-
-#~ msgid "Display objects matching"
-#~ msgstr "Afficher les objets correspondants"
-
-#~ msgid "Regular expression for matching object names"
-#~ msgstr "Expression régulière pour trouver les objets correspondants"

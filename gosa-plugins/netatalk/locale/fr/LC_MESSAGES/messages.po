@@ -1,13 +1,13 @@
-# translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 03:32-0400\n"
-"PO-Revision-Date: 2008-06-08 15:34+0200\n"
+"PO-Revision-Date: 2010-11-26 23:40+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,7 +29,6 @@ msgid "Netatalk"
 msgstr ""
 
 #: personal/netatalk/class_netatalk.inc:37
-#, fuzzy
 msgid "Manage Netatalk account"
 msgstr "Gèrer un compte Netatalk"
 
@@ -38,7 +37,6 @@ msgid "POSIX"
 msgstr "UNIX"
 
 #: personal/netatalk/class_netatalk.inc:194
-#, fuzzy
 msgid "Netatalk or NFS share"
 msgstr "Partage netatalk ou NFS"
 
@@ -61,13 +59,10 @@ msgid "User home path"
 msgstr "Chemin du répertoire personnel"
 
 #: personal/netatalk/netatalk.tpl:1
-#, fuzzy
 msgid "Netatalk configuration"
-msgstr "Configuration de PHP"
+msgstr "Configuration de Netatalk"
 
 #: personal/netatalk/netatalk.tpl:16
 msgid "Path"
 msgstr "Chemin"
 
-#~ msgid "Netatalk settings"
-#~ msgstr "Configuration Netatalk"

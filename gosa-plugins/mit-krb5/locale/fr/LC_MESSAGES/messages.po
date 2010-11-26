@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 03:29-0400\n"
-"PO-Revision-Date: 2010-01-30 11:35+0100\n"
+"PO-Revision-Date: 2010-11-26 23:42+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -141,12 +141,10 @@ msgid "Prohibit issuance of service tickets"
 msgstr "Interdire l'emission de tickets de services"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:200
-#, fuzzy
 msgid "Prohibit forward able tickets"
 msgstr "Interdire les tickets transférables"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:203
-#, fuzzy
 msgid "Disallow proxable tickets"
 msgstr "Interdire les tickets proxiables"
 
@@ -155,7 +153,6 @@ msgid "Prohibit renewable tickets"
 msgstr "Interdire les tickets renouvelables"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:209
-#, fuzzy
 msgid "Pohibit postdated tickets"
 msgstr "Interdire les tickets ayant une date dans le futur"
 
@@ -168,7 +165,6 @@ msgid "Password change service"
 msgstr "Service de changement de mot de passe"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:218
-#, fuzzy
 msgid "Pre-authentication required"
 msgstr "Pré authentification requise"
 
@@ -177,12 +173,10 @@ msgid "Force a password change"
 msgstr "Forcer un changement de mot de passe"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:224
-#, fuzzy
 msgid "Hardware pre-authentication"
 msgstr "Pré authentification hardware"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:227
-#, fuzzy
 msgid "Disallow user to user authentication"
 msgstr "Interdire l'authentification utilisateur à utilisateur"
 
@@ -195,9 +189,8 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:90
-#, fuzzy
 msgid "Principle"
-msgstr "Imprimante"
+msgstr ""
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:244
 msgid "updated to"
@@ -350,9 +343,7 @@ msgid "Kerberos service (kadmin access informations)"
 msgstr "Service Kerberos ( accès information kadmin )"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:189
-#, fuzzy
-msgid ""
-"Cannot apply policy changes! The defined Kerberos server has no MAC address."
+msgid "Cannot apply policy changes! The defined Kerberos server has no MAC address."
 msgstr ""
 "Impossible d'appliquer les changement de polices de sécurité ! Le serveur "
 "Kerberos défini n'a pas d'adresse MAC."
@@ -370,18 +361,16 @@ msgid "Services"
 msgstr "Service"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:395
-#, fuzzy
 msgid "Start"
 msgstr "Démarrage"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:396
 msgid "Stop"
-msgstr ""
+msgstr "Arrêt"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:397
-#, fuzzy
 msgid "Restart"
-msgstr "Restaurer"
+msgstr "Redémarrage"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:398
 #: admin/systems/services/kerberos/goKrbServer.tpl:9
@@ -399,11 +388,11 @@ msgstr "Realm Kerberos"
 #: admin/systems/services/kerberos/krb5_policy.tpl:3
 #: admin/systems/services/kerberos/krb5_policy.tpl:7
 #: admin/systems/services/kerberos/krb5_policy.tpl:29
-#, fuzzy
 msgid "Kerberos policy"
-msgstr "Clé Kerberos"
+msgstr "Politique Kerberos"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:33
 #: admin/systems/services/kerberos/krb5_policy.tpl:37
 msgid "seconds"
 msgstr "secondes"
+

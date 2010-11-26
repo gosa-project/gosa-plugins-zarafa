@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 02:47-0400\n"
-"PO-Revision-Date: 2010-01-28 22:26+0100\n"
+"PO-Revision-Date: 2010-11-26 23:47+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,14 +19,12 @@ msgid "Base"
 msgstr ""
 
 #: personal/mail/mailAddressSelect/class_mailAddressSelect.inc:29
-#, fuzzy
 msgid "Mail address selection"
-msgstr "Adresse de messagerie"
+msgstr "Sélection de l'adresse de messagerie"
 
 #: personal/mail/mailAddressSelect/selectMailAddress-filter.xml:22
-#, fuzzy
 msgid "Default filter"
-msgstr "Imprimante"
+msgstr "Filtre par défaut"
 
 #: personal/mail/mailAddressSelect/selectMailAddress-list.xml:10
 msgid "Please select the desired entries"
@@ -76,9 +74,8 @@ msgid "Mail settings"
 msgstr "Paramètres de messagerie"
 
 #: personal/mail/copypaste.tpl:4
-#, fuzzy
 msgid "Address configuration"
-msgstr "Télécharger la configuration"
+msgstr "Configuration de l'adresse de messagerie"
 
 #: personal/mail/copypaste.tpl:6 personal/mail/class_mailAccount.inc:1009
 #: personal/mail/generic.tpl:10 admin/ogroups/mail/mail.tpl:12
@@ -159,14 +156,13 @@ msgid "Mail info"
 msgstr ""
 
 #: personal/mail/class_mail-methods-cyrus.inc:299
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "LDAP entry has been removed but Cyrus mailbox (%s) is kept.\n"
 "Please delete it manually!"
 msgstr ""
-"L'entrée LDAP à été supprimée mais le compte de messagerie (%s) est toujours "
-"présent dans cyrus.\n"
-"Veuillez l'effacer manuellement ! "
+"L'entrée LDAP à été supprimée mais le compte de messagerie (%s) est toujours présent dans cyrus.\n"
+"Veuillez l'effacer manuellement !"
 
 #: personal/mail/class_mail-methods-cyrus.inc:383
 #: personal/mail/class_mail-methods-cyrus.inc:420
@@ -281,8 +277,7 @@ msgstr "Le méthode mail ne peut pas se connecter : %s"
 #: admin/groups/mail/class_groupMail.inc:148
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
-msgstr ""
-"Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
+msgstr "Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
 
 #: personal/mail/class_mailAccount.inc:306
 #: personal/mail/class_mailAccount.inc:330
@@ -465,17 +460,14 @@ msgid "Vacation message"
 msgstr "Message d'absence"
 
 #: personal/mail/class_mailAccount.inc:1476
-#, fuzzy
 msgid "Use SPAM filter"
 msgstr "Utiliser le filtre antispam"
 
 #: personal/mail/class_mailAccount.inc:1477
-#, fuzzy
 msgid "SPAM level"
 msgstr "Niveau de spam"
 
 #: personal/mail/class_mailAccount.inc:1478
-#, fuzzy
 msgid "SPAM mail box"
 msgstr "Boite spam de votre messagerie"
 
@@ -484,7 +476,6 @@ msgid "Sieve management"
 msgstr "Gestion de Sieve"
 
 #: personal/mail/class_mailAccount.inc:1482
-#, fuzzy
 msgid "Reject due to mail size"
 msgstr "Rejeter a cause de la taille"
 
@@ -521,9 +512,8 @@ msgid "Generic"
 msgstr "Informations"
 
 #: personal/mail/generic.tpl:7
-#, fuzzy
 msgid "Mail address configuration"
-msgstr "Télécharger la configuration"
+msgstr "Configuration de l'adresse de messagerie"
 
 #: personal/mail/generic.tpl:31 admin/groups/mail/mail.tpl:37
 #: addons/mailqueue/contents.tpl:77
@@ -539,9 +529,8 @@ msgid "Quota usage"
 msgstr "Utilisation des Quota"
 
 #: personal/mail/generic.tpl:102
-#, fuzzy
 msgid "Mail account configration flags"
-msgstr "Création du fichier de configuration"
+msgstr ""
 
 #: personal/mail/generic.tpl:120
 msgid "disables all Mail options!"
@@ -552,9 +541,8 @@ msgid "Sieve Management"
 msgstr "Gestion de Sieve"
 
 #: personal/mail/generic.tpl:145 personal/mail/generic.tpl:182
-#, fuzzy
 msgid "Spam filter configuration"
-msgstr "Ecrire le fichier de configuration"
+msgstr "Paramètres du filtre antispam"
 
 #: personal/mail/generic.tpl:155
 msgid "Select if you want to forward mails without getting own copies of them"
@@ -567,8 +555,7 @@ msgid "No delivery to own mailbox"
 msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 
 #: personal/mail/generic.tpl:170
-msgid ""
-"Select to automatically response with the vacation message defined below"
+msgid "Select to automatically response with the vacation message defined below"
 msgstr ""
 "Indiquez la réponse automatique en remplissant le message d'absence ci-"
 "dessous"
@@ -582,21 +569,16 @@ msgid "till"
 msgstr "jusqu'au"
 
 #: personal/mail/generic.tpl:222
-#, fuzzy
 msgid "Select if you want to filter this mails through Spamassassin"
 msgstr "Sélectionner ceci si vous voulez que spamassassin filtre les mails"
 
 #: personal/mail/generic.tpl:226
-#, fuzzy
 msgid "Move mails tagged with SPAM level greater than"
 msgstr "Déplacer les messages ayant un niveau de spam supérieur à"
 
 #: personal/mail/generic.tpl:229
-#, fuzzy
 msgid "Choose SPAM level - smaller values are more sensitive"
-msgstr ""
-"Sélectionnez le niveau de spam - une valeur basse implique une plus grande "
-"sélectivité"
+msgstr "Sélectionnez le niveau de spam - une valeur basse implique une plus grande sélectivité"
 
 #: personal/mail/generic.tpl:233
 msgid "to folder"
@@ -622,9 +604,8 @@ msgid "Advanced mail options"
 msgstr "Options de messagerie avancées"
 
 #: personal/mail/generic.tpl:331
-#, fuzzy
 msgid "Delivery settings"
-msgstr "Préférences utilisateur"
+msgstr ""
 
 #: personal/mail/generic.tpl:336 admin/groups/mail/mail.tpl:206
 msgid "Select if user can only send and receive inside his own domain"
@@ -639,9 +620,8 @@ msgstr ""
 "locaux"
 
 #: personal/mail/sieve/templates/element_fileinto.tpl:1
-#, fuzzy
 msgid "Sieve: File into"
-msgstr "Classer dans"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_fileinto.tpl:4
 msgid "Move mail into folder"
@@ -721,16 +701,14 @@ msgid "Require"
 msgstr "Requis"
 
 #: personal/mail/sieve/templates/element_reject.tpl:1
-#, fuzzy
 msgid "Sieve: reject"
-msgstr "Gestion de Sieve"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_reject.tpl:14
 msgid "Reject mail"
 msgstr "Rejeter les messages"
 
 #: personal/mail/sieve/templates/element_reject.tpl:17
-#, fuzzy
 msgid "This is a multi-line text element"
 msgstr "C'est un élément de texte multiligne"
 
@@ -758,9 +736,8 @@ msgstr "Enlever un objet"
 #: personal/mail/sieve/templates/element_envelope.tpl:92
 #: personal/mail/sieve/templates/element_envelope.tpl:100
 #: personal/mail/sieve/templates/element_else.tpl:1
-#, fuzzy
 msgid "Sieve envelope"
-msgstr "Enveloppe"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_envelope.tpl:16
 #: personal/mail/sieve/templates/element_envelope.tpl:111
@@ -792,9 +769,8 @@ msgstr "Vue normale"
 #: personal/mail/sieve/templates/element_header.tpl:93
 #: personal/mail/sieve/templates/element_header.tpl:103
 #: personal/mail/sieve/templates/block_indent_start.tpl:2
-#, fuzzy
 msgid "Sieve element"
-msgstr "Supprimer cet élément"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_envelope.tpl:28
 #: personal/mail/sieve/templates/element_address.tpl:27
@@ -888,9 +864,8 @@ msgid "Script to import"
 msgstr "Script à importer"
 
 #: personal/mail/sieve/templates/element_stop.tpl:1
-#, fuzzy
 msgid "Sieve element stop"
-msgstr "Supprimer cet élément"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_stop.tpl:4
 #: personal/mail/sieve/templates/object_container.tpl:28
@@ -937,9 +912,8 @@ msgid "Script name"
 msgstr "Nom du script"
 
 #: personal/mail/sieve/templates/object_container_clear.tpl:1
-#, fuzzy
 msgid "Sieve element clear"
-msgstr "Supprimer cet élément"
+msgstr ""
 
 #: personal/mail/sieve/templates/object_container_clear.tpl:8
 #: personal/mail/sieve/templates/object_container.tpl:8
@@ -952,9 +926,8 @@ msgid "Move object down one position"
 msgstr "Bouger l'objet d'une position vers le bas"
 
 #: personal/mail/sieve/templates/element_keep.tpl:1
-#, fuzzy
 msgid "Sieve element keep"
-msgstr "Supprimer cet élément"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_keep.tpl:4
 #: personal/mail/sieve/templates/object_container.tpl:20
@@ -971,9 +944,8 @@ msgid "Keep message"
 msgstr "Garder le message"
 
 #: personal/mail/sieve/templates/element_redirect.tpl:1
-#, fuzzy
 msgid "Sieve element redirect"
-msgstr "Supprimer cet élément"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_redirect.tpl:13
 #: personal/mail/sieve/templates/object_container.tpl:25
@@ -987,9 +959,8 @@ msgid "Redirect mail to following recipients"
 msgstr "Rediriger les messages vers les personnes suivantes"
 
 #: personal/mail/sieve/templates/element_discard.tpl:1
-#, fuzzy
 msgid "Sieve element discard"
-msgstr "Supprimer cet élément"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_discard.tpl:4
 #: personal/mail/sieve/templates/object_container.tpl:24
@@ -1025,9 +996,8 @@ msgstr ""
 #: personal/mail/sieve/templates/element_anyof.tpl:1
 #: personal/mail/sieve/templates/element_exists.tpl:1
 #: personal/mail/sieve/templates/element_if.tpl:1
-#, fuzzy
 msgid "Sieve filter"
-msgstr "Imprimante"
+msgstr "Filtre sieve"
 
 #: personal/mail/sieve/templates/element_allof.tpl:12
 #: personal/mail/sieve/class_sieveManagement.inc:610
@@ -1048,9 +1018,8 @@ msgid "Else"
 msgstr "Alors"
 
 #: personal/mail/sieve/templates/element_comment.tpl:1
-#, fuzzy
 msgid "Sieve comment"
-msgstr "Gestion de Sieve"
+msgstr ""
 
 #: personal/mail/sieve/templates/element_comment.tpl:4
 #: personal/mail/sieve/templates/object_container.tpl:21
@@ -1126,21 +1095,14 @@ msgid "List of sieve scripts"
 msgstr "Liste des scripts sieve"
 
 #: personal/mail/sieve/templates/management.tpl:5
-#, fuzzy
 msgid ""
 "Connection to the sieve server could not be established, the authentication "
 "attribute is empty."
-msgstr ""
-"La connexion au serveur sieve n'a pas pu être établie, l'attribut "
-"d'authentification est vide."
+msgstr "La connexion au serveur sieve n'a pas pu être établie, l'attribut d'authentification est vide."
 
 #: personal/mail/sieve/templates/management.tpl:6
-#, fuzzy
-msgid ""
-"Please verify that the attributes UID and mail are not empty and try again."
-msgstr ""
-"Veuillez vérifier que les attributs uid et mail ne sont pas vide et "
-"réessayer."
+msgid "Please verify that the attributes UID and mail are not empty and try again."
+msgstr "Veuillez vérifier que les attributs uid et mail ne sont pas vide et réessayer."
 
 #: personal/mail/sieve/templates/management.tpl:12
 msgid "Connection to the sieve server could not be established."
@@ -1185,9 +1147,8 @@ msgid "Alternative sender addresses"
 msgstr "Adresses alternatives pour l'envoi"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:2
-#, fuzzy
 msgid "Sieve editor"
-msgstr "Erreur de Filtre"
+msgstr "Erreur de Filtre Sieve"
 
 #: personal/mail/sieve/templates/edit_frame_base.tpl:6
 msgid "Export"
@@ -1202,19 +1163,16 @@ msgid "View source"
 msgstr "Voir la source"
 
 #: personal/mail/sieve/templates/element_boolean.tpl:4
-#, fuzzy
 msgid "Boolean"
 msgstr "Booléen"
 
 #: personal/mail/sieve/templates/element_boolean.tpl:8
-#, fuzzy
 msgid "Update"
-msgstr "mise à Jour"
+msgstr "Mise à Jour"
 
 #: personal/mail/sieve/templates/element_header.tpl:3
-#, fuzzy
 msgid "Sieve header"
-msgstr "Récrire l'entête"
+msgstr "Entête Sieve"
 
 #: personal/mail/sieve/templates/element_header.tpl:16
 #: personal/mail/sieve/templates/element_header.tpl:112
@@ -1347,14 +1305,11 @@ msgid "Please specify a valid operator."
 msgstr "Veuillez spécifier un opérateur valide."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:654
-msgid ""
-"Invalid character found in address attribute. Quotes are not allowed here."
-msgstr ""
-"Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
+msgid "Invalid character found in address attribute. Quotes are not allowed here."
+msgstr "Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:669
-msgid ""
-"Invalid character found in value attribute. Quotes are not allowed here."
+msgid "Invalid character found in value attribute. Quotes are not allowed here."
 msgstr ""
 "Caractère non valide trouvé dans l'attribut. Les guillemets ne sont pas "
 "permis ici."
@@ -1413,9 +1368,8 @@ msgid "Click here to add a new test"
 msgstr "Cliquez ici pour vous ajouter un nouveau test"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:1176
-#, fuzzy
 msgid "Unknown switch type"
-msgstr "Type de switch non pris en charge"
+msgstr "Type de switch inconnu"
 
 #: personal/mail/sieve/class_sieveElement_Reject.inc:21
 msgid "Invalid character found, quotes are not allowed in a reject message."
@@ -1453,9 +1407,8 @@ msgid "Information"
 msgstr "Information"
 
 #: personal/mail/sieve/class_sieveManagement.inc:86
-#, fuzzy
 msgid "Length"
-msgstr "Sécurité"
+msgstr "Longueur"
 
 #: personal/mail/sieve/class_sieveManagement.inc:132
 #: personal/mail/sieve/class_sieveManagement.inc:262
@@ -1469,8 +1422,7 @@ msgstr "L'analyse à réussi"
 
 #: personal/mail/sieve/class_sieveManagement.inc:175
 #, php-format
-msgid ""
-"The specified mail server '%s' does not exist within the GOsa configuration."
+msgid "The specified mail server '%s' does not exist within the GOsa configuration."
 msgstr ""
 "Le serveur de messagerie spécifié '%s' n'existe pas dans la configuration de "
 "GOsa."
@@ -1485,8 +1437,7 @@ msgstr "Veuillez seulement utiliser des nom de script en miniscules !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:232
 msgid "Please use only alphabetical characters in script names!"
-msgstr ""
-"Seul des caractères alphabétiques sont permis dans le nom des scripts !"
+msgstr "Seul des caractères alphabétiques sont permis dans le nom des scripts !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:238
 msgid "Script name already in use!"
@@ -1566,9 +1517,8 @@ msgid "Failed to save sieve script"
 msgstr "Impossible de sauver le script sieve"
 
 #: admin/ogroups/mail/paste_mail.tpl:1
-#, fuzzy
 msgid "Paste group mail settings"
-msgstr "Préférences des groupes"
+msgstr ""
 
 #: admin/ogroups/mail/paste_mail.tpl:7
 msgid "Please enter a mail address"
@@ -1850,8 +1800,7 @@ msgstr ""
 #: admin/systems/services/spam/goSpamServer.tpl:19
 #, fuzzy
 msgid "Select required score to tag mail as SPAM"
-msgstr ""
-"Sélectionner le score requis pour marquer ce message comme étant un spam"
+msgstr "Sélectionner le score requis pour marquer ce message comme étant un spam"
 
 #: admin/systems/services/spam/goSpamServer.tpl:31
 #: admin/systems/services/mail/goMailServer.tpl:59
@@ -2483,137 +2432,3 @@ msgstr "Afficher l'entête de ce message"
 msgid "Page selector"
 msgstr "Préférences des groupes"
 
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "      Maximum threads"
-#~ msgstr "Nombre de processus maximum"
-
-#~ msgid "Admin user"
-#~ msgstr "Administrateur"
-
-#~ msgid "Admin password"
-#~ msgstr "Mot de passe administrateur"
-
-#~ msgid "Un hold"
-#~ msgstr "Enlever de la file d'attente"
-
-#~ msgid "Unhold all messages"
-#~ msgstr "Enlever tout les messages de la file d'attente"
-
-#~ msgid "Unhold message"
-#~ msgstr "Enlever le message de la file d'attente"
-
-#~ msgid "Fileinto"
-#~ msgstr "Classer dans"
-
-#~ msgid "emtpy"
-#~ msgstr "vide"
-
-#~ msgid "Reload"
-#~ msgstr "Recharger"
-
-#~ msgid "Select addresses to add"
-#~ msgstr "Sélectionner les adresses à ajouter"
-
-#~ msgid "Filters"
-#~ msgstr "Filtres"
-
-#~ msgid "Display addresses of department"
-#~ msgstr "Afficher les adresses du département"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Sélectionner le département où sera effectuée la recherche"
-
-#~ msgid "Display addresses matching"
-#~ msgstr "Afficher les adresses correspondantes"
-
-#~ msgid "Regular expression for matching addresses"
-#~ msgstr "Expression régulière pour sélectionner les adresses correspondantes"
-
-#~ msgid "Display addresses of user"
-#~ msgstr "Afficher les adresses de l'utilisateur"
-
-#~ msgid "User name of which addresses are shown"
-#~ msgstr "Utilisateur dont on montre les adresses"
-
-#~ msgid "Folder administrators"
-#~ msgstr "Administrateurs du dossier"
-
-#~ msgid "Select a specific department"
-#~ msgstr "Sélectionner un département"
-
-#~ msgid "Choose"
-#~ msgstr "Choisir"
-
-#~ msgid "Please enter a search string here."
-#~ msgstr "Veuillez indiquer une chaîne de caractères a rechercher."
-
-#~ msgid "with status"
-#~ msgstr "avec les statuts"
-
-#~ msgid "delete"
-#~ msgstr "supprimer"
-
-#~ msgid "unhold"
-#~ msgstr "enlever de la file d'attente"
-
-#~ msgid "hold"
-#~ msgstr "mettre dans la file d'attente"
-
-#~ msgid "requeue"
-#~ msgstr "remettre dans la queue"
-
-#~ msgid "header"
-#~ msgstr "entête"
-
-#~ msgid "Up"
-#~ msgstr "Au dessus"
-
-#~ msgid "Move up"
-#~ msgstr "En haut"
-
-#~ msgid "Down"
-#~ msgstr "En bas"
-
-#~ msgid "Move down"
-#~ msgstr "En bas"
-
-#~ msgid "Add new"
-#~ msgstr "Ajouter un nouveau"
-
-#~ msgid "Add element above"
-#~ msgstr "Ajouter un élément au dessus"
-
-#~ msgid "Add element below"
-#~ msgstr "Ajouter un élément en dessous"
-
-#~ msgid "Move this object up one position"
-#~ msgstr "Monter cet objet d'une position"
-
-#~ msgid "Move this object down one position"
-#~ msgstr "Descendre cet objet d'une position"
-
-#~ msgid "Remove this object"
-#~ msgstr "Supprimer cet objet"
-
-#~ msgid "Create new script"
-#~ msgstr "Création d'un nouveau script"
-
-#~ msgid "Script length"
-#~ msgstr "Longueur du script"
-
-#~ msgid "Remove script"
-#~ msgstr "Effacer un script"
-
-#~ msgid "Edit script"
-#~ msgstr "Éditer un script"
-
-#~ msgid "Show users"
-#~ msgstr "Montrer les utilisateurs"
-
-#~ msgid "Show groups"
-#~ msgstr "Montrer les groupes"
-
-#~ msgid "Select department"
-#~ msgstr "Sélectionner un département"
