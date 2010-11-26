@@ -86,10 +86,11 @@
    <button type='submit' name='add_sudoHost'>{msgPool type=addButton}</button>
 
    {/render}
+   {if $systemEnabled}
    {render acl=$sudoHostACL}
    <button type='submit' name='list_sudoHost'>{t}Add from list{/t}</button>
-
    {/render}
+   {/if}
   </td>
  </tr> 
  <tr><td style="width:100%;"colspan="2"><hr></td></tr>

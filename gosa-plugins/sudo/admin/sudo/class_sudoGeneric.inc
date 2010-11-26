@@ -42,7 +42,9 @@ class sudo extends plugin
 
     public $ignore_account = TRUE;
 
+	
     public $orig_dn;
+    private $systemEnabled = FALSE;
 
     /*! \brief  Returns to the base department for sudo roles.
       This department is then used to store new roles.
@@ -62,6 +64,8 @@ class sudo extends plugin
     function sudo(&$config, $dn= NULL)
     {
         plugin::plugin ($config, $dn);
+
+	$this->systemEnabled = class_available("systemSelect");
 
         $this->trustModeDialog = new trustModeDialog($this->config, $this->dn,NULL);
         $this->trustModeDialog->setAcl('sudo/sudo');
@@ -138,7 +142,7 @@ class sudo extends plugin
             return($trustModeDialog);
 
         }
-        $this->dialog = FALSE;
+##        $this->dialog = FALSE;
 
         /*********************
           Add users 
@@ -318,6 +322,7 @@ class sudo extends plugin
          *********************/
 
         $smarty = get_smarty();
+        $smarty->assign("systemEnabled", $this->systemEnabled);
         $smarty->assign("trustModeDialog" , $trustModeDialog);
         $smarty->assign("is_default",$this->is_default);
         foreach($this->attributes as $attr){
