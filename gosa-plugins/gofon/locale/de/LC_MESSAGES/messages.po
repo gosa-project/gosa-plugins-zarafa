@@ -972,7 +972,7 @@ msgstr "Telefon-Berichte"
 
 #: gofon/fonreports/class_fonreport.inc:7
 msgid "View the phone report for incoming and outgoing calls"
-msgstr "Betrachte die Telefon-Berichte für eingehende und ausgehende Anrufe"
+msgstr "Telefon-Berichte für eingehende und ausgehende Anrufe betrachten"
 
 #: gofon/fonreports/class_fonreport.inc:237
 msgid "Insufficient permissions"
@@ -1088,7 +1088,7 @@ msgstr "Telefon-Makro"
 
 #: gofon/macro/class_gofonMacroManagement.inc:26
 msgid "Manage phone macros for setups using the Asterisk VoIP service"
-msgstr "Verwalte die Telefon-Makros für Asterisk VoIP-Service gestütze Infrastrukturen"
+msgstr "Verwalten von Telefon-Makros für Asterisk VoIP-Service gestütze Infrastrukturen"
 
 #: gofon/macro/paste_generic.tpl:1
 msgid "Paste macro"
@@ -1394,7 +1394,7 @@ msgstr "Telefon-Konferenzen"
 
 #: gofon/conference/class_phoneConferenceManagment.inc:26
 msgid "Manage phone conference rooms in setups using the Asterisk VoIP service"
-msgstr "Verwalte Telefon-Konferenzen in Asterisk VoIP-Service gestützten Infrastrukturen"
+msgstr "Verwalten von Telefon-Konferenzen in Asterisk VoIP-Service gestützten Infrastrukturen"
 
 #: gofon/conference/generic.tpl:1
 msgid "Properties"

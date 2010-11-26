@@ -143,7 +143,7 @@ msgstr "Fax-Berichte"
 
 #: gofax/faxreports/class_faxreport.inc:7
 msgid "View the FAX report or single documents that have been received"
-msgstr "Betrachte den Fax-Report oder einzelne empfange Dokumente"
+msgstr "Betrachten von Fax-Reports oder einzelne empfangen Dokumente"
 
 #: gofax/faxreports/class_faxreport.inc:126
 #: gofax/faxreports/class_faxreport.inc:137
@@ -605,7 +605,7 @@ msgstr "Fax-Sperrlisten"
 
 #: gofax/blocklists/class_blocklistManagement.inc:26
 msgid "Manage FAX number blocklists for incoming and outgoing FAX calls"
-msgstr "Verwalte Fax-Nummer Blocklisten für eingehende und ausgehende Fax Übertragungen"
+msgstr "Fax-Nummer Blocklisten für eingehende und ausgehende Fax Übertragungen verwalten"
 
 #: gofax/blocklists/paste_generic.tpl:1
 msgid "Paste blacklist"

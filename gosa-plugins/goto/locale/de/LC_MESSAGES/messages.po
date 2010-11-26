@@ -3448,7 +3448,7 @@ msgstr "Verteilungs-Status"
 #: addons/goto/class_gotomasses.inc:27
 msgid "Monitor and schedule system deployment and update processes"
 msgstr ""
-"Überwachung und planung von Systemverteilungs- und Aktualisierungsprozessen"
+"Überwachung und Planung von Systemverteilungs- und Aktualisierungsprozessen"
 
 #: addons/goto/class_gotomasses.inc:159
 msgid "immediately"
