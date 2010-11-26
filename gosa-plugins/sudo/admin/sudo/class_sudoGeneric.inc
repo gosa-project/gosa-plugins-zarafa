@@ -142,7 +142,10 @@ class sudo extends plugin
             return($trustModeDialog);
 
         }
-##        $this->dialog = FALSE;
+
+        if(!is_object($this->dialog)){
+            $this->dialog = FALSE;
+        }
 
         /*********************
           Add users 
