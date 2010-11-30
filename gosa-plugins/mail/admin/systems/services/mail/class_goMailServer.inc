@@ -590,7 +590,7 @@ class goMailServer extends goService{
                             "name"          => "postfixProtocols",
                             "type"          => "file",
                             "default"       => "",
-                            "description"   => _("The 'postfixProtocols' statement defines a file to include for the postfix module in order to display user defined protocols.")."
+                            "description"   => _("File containing user defined protocols.")."
 
                             File syntax:
                             name1:Description1
@@ -604,7 +604,7 @@ class goMailServer extends goService{
                             "name"          => "postfixRestrictionFilters",
                             "type"          => "file",
                             "default"       => "",
-                            "description"   => _("The 'postfixRestrictionFilters' statement defines a file to include for the postfix module in order to display user defined restriction filters.")."
+                            "description"   => _("File containing user defined restriction filters.")."
 
                             File syntax:
                             name1:Description1
