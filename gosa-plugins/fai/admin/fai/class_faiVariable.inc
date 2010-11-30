@@ -396,7 +396,7 @@ class faiVariable extends plugin
                   "name"          => "faiVariableRDN",
                   "type"          => "rdn",
                   "default"       => "ou=variables,",
-                  "description"   => _("The 'faiVariableRDN' statement defines the location where new fai-variables will be created. The default is 'ou=variables,'."),
+                  "description"   => _("RDN for FAI variable storage."),
                   "check"         => "gosaProperty::isRdn",
                   "migrate"       => "migrate_faiVariableRDN",
                   "group"         => "plugin",
