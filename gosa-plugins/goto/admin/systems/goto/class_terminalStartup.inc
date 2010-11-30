@@ -518,7 +518,7 @@ class termstartup extends plugin
                             "name"          => "systemKernelsHook",
                             "type"          => "command",
                             "default"       => "",
-                            "description"   => _("For the workstations and terminals, you can define the 'systemKernelsHook' keyword. It can load additional kernels that are not retrieveable by standard GOsa/FAI mechanisms."),
+                            "description"   => _("Script to check for available kernels"),
                             "check"         => "gosaProperty::isCommand",
                             "migrate"       => "",
                             "group"         => "system",
