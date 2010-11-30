@@ -508,7 +508,7 @@ class phoneGeneric extends plugin
                             "name"          => "phoneRDN",
                             "type"          => "rdn",
                             "default"       => "ou=phones,ou=systems,",
-                            "description"   => _("The 'phoneRDN' statement defines the location where new phones will be created. The default is 'ou=phones,ou=systems,'."),
+                            "description"   => _("RDN for phone storage."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_phoneRDN",
                             "group"         => "plugin",
