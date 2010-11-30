@@ -688,7 +688,7 @@ another location! */
                             "name"          => "terminalRDN",
                             "type"          => "rdn",
                             "default"       => "ou=terminals,ou=systems,",
-                            "description"   => _("The 'terminalRDN' statement defines the location where new terminals will be created. The default is 'ou=terminals,ou=systems,'."),
+                            "description"   => _("RDN for terminal storage."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_terminalRDN",
                             "group"         => "plugin",
