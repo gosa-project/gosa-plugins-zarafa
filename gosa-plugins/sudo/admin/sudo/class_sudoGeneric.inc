@@ -536,7 +536,7 @@ class sudo extends plugin
                             "name"          => "sudoRDN",
                             "type"          => "rdn",
                             "default"       => "ou=sudoers,",
-                            "description"   => _("The 'sudoRDN' statement defines the location where new sudo-roles will be created. The default is 'ou=sudoers,'."),
+                            "description"   => _("RDN for sudo rule storage."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_sudoRDN",
                             "group"         => "plugin",
