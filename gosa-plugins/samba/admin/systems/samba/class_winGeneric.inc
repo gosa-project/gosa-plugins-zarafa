@@ -345,7 +345,7 @@ class wingeneric extends plugin
                           "name"          => "sambaMachineAccountRDN",
                           "type"          => "rdn",
                           "default"       => "ou=winstations,ou=systems,",
-                          "description"   => _("The 'sambaMachineAccountRDN' statement defines the location where new windows workstations will be created. The default is 'ou=winstation,'."),
+                          "description"   => _("RDN for samba machine account storage."),
                           "check"         => "gosaProperty::isRdn",
                           "migrate"       => "migrate_sambaMachineAccountRDN",
                           "group"         => "plugin",
