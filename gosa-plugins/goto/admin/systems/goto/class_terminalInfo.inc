@@ -259,7 +259,7 @@ class terminfo extends plugin
                             "name"          => "snmpCommunity",
                             "type"          => "string",
                             "default"       => "",
-                            "description"   => _("In order to make use of SNMP information, you can set the 'snmpCommunity'."),
+                            "description"   => _("Name of GOto SNMP community."),
                             "check"         => "gosaProperty::isString",
                             "migrate"       => "",
                             "group"         => "plugin",
