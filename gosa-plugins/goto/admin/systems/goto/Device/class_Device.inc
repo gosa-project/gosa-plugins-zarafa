@@ -308,7 +308,7 @@ class Device extends plugin
                             "name"          => "DeviceRDN",
                             "type"          => "rdn",
                             "default"       => "ou=devices,ou=systems,",
-                            "description"   => _("The 'deviceRDN' statement defines the location where new devices will be created. The   default is 'ou=device,ou=systems,'."),
+                            "description"   => _("RDN for device storage."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_deviceRDN",
                             "group"         => "plugin",
