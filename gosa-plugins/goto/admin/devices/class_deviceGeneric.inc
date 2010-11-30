@@ -284,7 +284,7 @@ class deviceGeneric extends plugin
                             "name"          => "deviceRDN",
                             "type"          => "rdn",
                             "default"       => "ou=devices,",
-                            "description"   => _("The 'deviceRDN' statement defines the location where new devices will be created. The default is 'ou=devices,'."),
+                            "description"   => _("RDN for device storage."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_deviceRDN",
                             "group"         => "plugin",
