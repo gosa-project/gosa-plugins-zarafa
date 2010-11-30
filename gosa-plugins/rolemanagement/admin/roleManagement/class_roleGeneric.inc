@@ -459,7 +459,7 @@ class roleGeneric extends plugin {
                             "name"          => "roleRDN",
                             "type"          => "rdn",
                             "default"       => "ou=roles,",
-                            "description"   => _("The 'roleRDN' statement defines the location where new roles will be created. The default is 'ou=roles,'."),
+                            "description"   => _("RDN for role storage."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_roleRDN",
                             "group"         => "plugin",
