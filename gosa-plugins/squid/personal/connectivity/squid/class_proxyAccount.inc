@@ -3,7 +3,7 @@ class proxyAccount extends plugin
 {
   /* Definitions */
   var $plHeadline   = "Proxy";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage Proxy user settings";
 
   /* Proxy attributes */
   var $gosaProxyAcctFlags   = "[N    ]";
