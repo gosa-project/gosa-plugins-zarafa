@@ -15,7 +15,7 @@ class intranetAccount extends plugin
   /*! Definitions */
   var $plHeadline= "Intra net";
   /*! Definitions */
-  var $plDescription= "This does something";
+  var $plDescription= "Manage user properties of that belong to the internal network";
 
   /* attribute list for save action */
   var $attributes= array();
