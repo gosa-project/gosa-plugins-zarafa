@@ -22,7 +22,7 @@ class sambaAccount extends plugin
 {
     /* Definitions */
     var $plHeadline= "Samba";
-    var $plDescription= "This does something";
+    var $plDescription= "Manage personal Samba settings";
     var $view_logged = FALSE;
 
     // Domaind information, gid, sid, rid
