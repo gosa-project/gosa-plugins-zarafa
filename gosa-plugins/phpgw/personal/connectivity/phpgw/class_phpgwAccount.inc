@@ -3,7 +3,7 @@ class phpgwAccount extends plugin
 {
   /* Definitions */
   var $plHeadline= "PHPGroupware";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage PHPGroupware user settings";
 
   /* GW attributes */
   var $phpgwAccountExpires= "-1";
