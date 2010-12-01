@@ -80,7 +80,7 @@ class ConfigManagement extends management
         if(!isset($this->allItemConfigurations[$str])){
             $this->itemConfig = array();
             $this->invalidInstallMethod =TRUE;
-            $this->errorMessage = sprintf(_("Invalid installation method selected '%s'!"), $str);
+            $this->errorMessage = sprintf(_("Invalid installation method %s selected!"), bold($str));
             msg_dialog::display(_("Setup"), $this->errorMessage, ERROR_DIALOG);
             return(FALSE);
         }else{
@@ -98,7 +98,7 @@ class ConfigManagement extends management
                 }
             }
             if(!$root){
-                $this->errorMessage = sprintf(_("Installation method '%s' is invalid, no root object found!"), $str);
+                $this->errorMessage = sprintf(_("Installation method %s is invalid: no root object found!"), bold($str));
                 msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
                 $this->initFailed = TRUE;
                 $this->itemConfig = array();
@@ -137,7 +137,7 @@ class ConfigManagement extends management
         }       
         $this->allItemConfigurations = $res;
         if(!count($this->allItemConfigurations)){
-            $this->errorMessage = _("No selectable install methods returned!");
+            $this->errorMessage = _("No selectable install methods available!");
             msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
             $this->initFailed = TRUE;
             return;

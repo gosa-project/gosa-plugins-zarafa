@@ -1,5 +1,5 @@
 {if $write_protect}
-  {t}The text is write protected, due to its encoding. Editing may break it!{/t}
+  {t}The text is write protected due to its encoding. Editing may break it!{/t}
   <br>
   <button type='submit' name='editAnyway'>{t}Edit anyway{/t}</button>
 {/if}

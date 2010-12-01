@@ -64,8 +64,8 @@ class TemplateWidget_textEditor extends TemplateWidget
     {
         $msgs = TemplateWidget::check();
         if($this->mb_extension && !$this->write_protect && $this->enc_after_edit !== $this->enc_before_edit ){
-            $msg = sprintf(_("The text encodig has changed from '%s' to '%s'. Do you really want to save?"),
-                    "<i>".$this->enc_before_edit."</i>","<i>".$this->enc_after_edit."</i>");
+            $msg = sprintf(_("The text encodig has changed from %s to %s. Do you really want to save?"),
+                    bold($this->enc_before_edit),bold($this->enc_after_edit));
             $msgs[] = $msg;
             $this->enc_before_edit = $this->enc_after_edit;
         }

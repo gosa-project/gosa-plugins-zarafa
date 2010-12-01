@@ -1,7 +1,7 @@
 
 <h3>{t}Add item{/t}</h3>
 
-{t}Please specify a name for the item to add, this name has to be uniq within the item configuration.{/t}
+{t}Please specify a name for the item to add. This name has to be unique within the item configuration.{/t}
 <br>
 
 <hr>
