@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 19:59+0200\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -41,7 +42,7 @@ msgid "Opengroupware account"
 msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:7
-msgid "This does something"
+msgid "Manage Opengroupware user settings"
 msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:169
@@ -71,17 +72,17 @@ msgid "My account"
 msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:355
-msgid "The server/hostname to use for OpenGroupware.org connections."
+msgid "Server name used for OpenGroupware.org connections."
 msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:364
-msgid "The password to use for OpenGroupware.org connections."
+msgid "Password used OpenGroupware.org connections."
 msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:373
-msgid "The username to use for OpenGroupware.org connections."
+msgid "Username used for OpenGroupware.org connections."
 msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:382
-msgid "The database name to use for OpenGroupware.org connections."
+msgid "Name of the database used for OpenGroupware.org connections."
 msgstr ""

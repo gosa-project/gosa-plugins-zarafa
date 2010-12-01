@@ -4,14 +4,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-17 04:33-0400\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: 2010-11-26 23:32+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
@@ -21,8 +21,9 @@ msgid "PPTP"
 msgstr "Compte PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:27
-msgid "This does something"
-msgstr "Ceci fait quelque chose"
+#, fuzzy
+msgid "Manage PPTP user settings"
+msgstr "Paramètres par défaut des utilisateurs"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:102
 #: personal/connectivity/pptp/class_pptpAccount.inc:157
@@ -42,3 +43,5 @@ msgstr "Connectivité"
 msgid "My account"
 msgstr "Mon Compte"
 
+#~ msgid "This does something"
+#~ msgstr "Ceci fait quelque chose"

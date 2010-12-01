@@ -4,10 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 19:59+0200\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: 2010-11-26 23:40+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -39,8 +40,9 @@ msgid "Opengroupware account"
 msgstr "Compte Opengroupware"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:7
-msgid "This does something"
-msgstr "Ceci fait quelque chose"
+#, fuzzy
+msgid "Manage Opengroupware user settings"
+msgstr "Préférences du compte Opengroupware"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:169
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:175
@@ -69,18 +71,31 @@ msgid "My account"
 msgstr "Mon Compte"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:355
-msgid "The server/hostname to use for OpenGroupware.org connections."
-msgstr "Le serveur / nom de l'hôte à utiliser pour les connexions OpenGroupware.org."
+#, fuzzy
+msgid "Server name used for OpenGroupware.org connections."
+msgstr "Le nom d'utilisateur à utiliser pour les connexions OpenGroupware.org."
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:364
-msgid "The password to use for OpenGroupware.org connections."
+#, fuzzy
+msgid "Password used OpenGroupware.org connections."
 msgstr "Le mot de passe à utiliser pour les connections OpenGroupware.org."
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:373
-msgid "The username to use for OpenGroupware.org connections."
+#, fuzzy
+msgid "Username used for OpenGroupware.org connections."
 msgstr "Le nom d'utilisateur à utiliser pour les connexions OpenGroupware.org."
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:382
-msgid "The database name to use for OpenGroupware.org connections."
-msgstr "La nom de la base de données à utiliser pour les connexions à OpenGroupware.org."
+#, fuzzy
+msgid "Name of the database used for OpenGroupware.org connections."
+msgstr ""
+"La nom de la base de données à utiliser pour les connexions à OpenGroupware."
+"org."
 
+#~ msgid "This does something"
+#~ msgstr "Ceci fait quelque chose"
+
+#~ msgid "The server/hostname to use for OpenGroupware.org connections."
+#~ msgstr ""
+#~ "Le serveur / nom de l'hôte à utiliser pour les connexions OpenGroupware."
+#~ "org."

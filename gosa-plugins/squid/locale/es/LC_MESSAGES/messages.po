@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-17 04:59-0400\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: 2010-01-20 00:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -25,8 +25,9 @@ msgid "Proxy"
 msgstr "Proxy"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:6
-msgid "This does something"
-msgstr "Esto hace algo"
+#, fuzzy
+msgid "Manage Proxy user settings"
+msgstr "Parámetros genéricos del usuario"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:92
 msgid "KB"
@@ -123,6 +124,9 @@ msgstr "Descargar configuración"
 #: personal/connectivity/squid/proxy.tpl:112
 msgid "per"
 msgstr "por"
+
+#~ msgid "This does something"
+#~ msgstr "Esto hace algo"
 
 #~ msgid "Removing of user/proxy account with dn '%s' failed."
 #~ msgstr "Se ha fallado al eliminar la cuenta de usuario/Proxy con dn '%s'."

@@ -1,9 +1,18 @@
+#: admin/roleManagement/class_roleManagement.inc:25
+#: admin/roleManagement/class_roleGeneric.inc:453
+msgid "Roles"
+msgstr ""
+
+#: admin/roleManagement/class_roleManagement.inc:26
+msgid "Assign and manage organizational roles"
+msgstr ""
+
 #: admin/roleManagement/class_roleGeneric.inc:97
 msgid "Given name"
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:97
-msgid "Surename"
+msgid "Surname"
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:97
@@ -18,8 +27,8 @@ msgstr ""
 #: admin/roleManagement/class_roleGeneric.inc:282
 #: admin/roleManagement/class_roleGeneric.inc:291
 #: admin/roleManagement/class_roleGeneric.inc:470
-#: admin/roleManagement/roleGeneric.tpl:12
 #: admin/roleManagement/role-list.xml:41
+#: admin/roleManagement/roleGeneric.tpl:12
 msgid "Name"
 msgstr ""
 
@@ -41,26 +50,19 @@ msgstr ""
 msgid "Role generic"
 msgstr ""
 
-#: admin/roleManagement/class_roleGeneric.inc:453
-#: admin/roleManagement/class_roleManagement.inc:25
-msgid "Roles"
-msgstr ""
-
 #: admin/roleManagement/class_roleGeneric.inc:462
-msgid ""
-"The 'roleRDN' statement defines the location where new roles will be "
-"created. The default is 'ou=roles,'."
+msgid "RDN for role storage."
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:471
-#: admin/roleManagement/roleGeneric.tpl:20
 #: admin/roleManagement/role-list.xml:49
+#: admin/roleManagement/roleGeneric.tpl:20
 msgid "Description"
 msgstr ""
 
 #: admin/roleManagement/class_roleGeneric.inc:472
-#: admin/roleManagement/roleGeneric.tpl:30
 #: admin/roleManagement/role-list.tpl:12
+#: admin/roleManagement/roleGeneric.tpl:30
 msgid "Base"
 msgstr ""
 
@@ -75,23 +77,6 @@ msgstr ""
 #: admin/roleManagement/class_roleGeneric.inc:475
 #: admin/roleManagement/roleGeneric.tpl:64
 msgid "Occupants"
-msgstr ""
-
-#: admin/roleManagement/roleGeneric.tpl:1
-#: admin/roleManagement/role-list.xml:125
-msgid "Edit role"
-msgstr ""
-
-#: admin/roleManagement/roleGeneric.tpl:10
-msgid "Generic settings"
-msgstr ""
-
-#: admin/roleManagement/roleGeneric.tpl:43
-msgid "Phone number"
-msgstr ""
-
-#: admin/roleManagement/roleGeneric.tpl:51
-msgid "Fax number"
 msgstr ""
 
 #: admin/roleManagement/role-list.xml:11
@@ -118,12 +103,13 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: admin/roleManagement/role-list.xml:138
-msgid "Remove role"
+#: admin/roleManagement/role-list.xml:125
+#: admin/roleManagement/roleGeneric.tpl:1
+msgid "Edit role"
 msgstr ""
 
-#: admin/roleManagement/role-filter.xml:17
-msgid "Default filter"
+#: admin/roleManagement/role-list.xml:138
+msgid "Remove role"
 msgstr ""
 
 #: admin/roleManagement/paste_generic.tpl:1
@@ -138,6 +124,18 @@ msgstr ""
 msgid "Please enter the new object role name"
 msgstr ""
 
-#: admin/roleManagement/class_roleManagement.inc:26
-msgid "Assign and manage organizational roles"
+#: admin/roleManagement/role-filter.xml:17
+msgid "Default filter"
+msgstr ""
+
+#: admin/roleManagement/roleGeneric.tpl:10
+msgid "Generic settings"
+msgstr ""
+
+#: admin/roleManagement/roleGeneric.tpl:43
+msgid "Phone number"
+msgstr ""
+
+#: admin/roleManagement/roleGeneric.tpl:51
+msgid "Fax number"
 msgstr ""

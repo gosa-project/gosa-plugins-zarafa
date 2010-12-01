@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-17 04:47-0400\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,6 +14,71 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
+
+#: admin/systems/samba/wingeneric.tpl:1
+#, fuzzy
+msgid "Windows workstation"
+msgstr "Pokaż stacje robocze"
+
+#: admin/systems/samba/wingeneric.tpl:5
+#, fuzzy
+msgid "Generic settings"
+msgstr "Ogólne ustawienia użytkownika"
+
+#: admin/systems/samba/wingeneric.tpl:7
+msgid "Machine name"
+msgstr "Nazwa maszyny"
+
+#: admin/systems/samba/wingeneric.tpl:18
+#: admin/systems/samba/class_winGeneric.inc:358
+msgid "Base"
+msgstr "Kontener"
+
+#: admin/systems/samba/wingeneric.tpl:29
+#: admin/systems/samba/class_winGeneric.inc:359
+msgid "Description"
+msgstr "Opis"
+
+#: admin/systems/samba/class_winGeneric.inc:112
+#, fuzzy
+msgid "network"
+msgstr "Dodaj inwentarz"
+
+#: admin/systems/samba/class_winGeneric.inc:148
+#: admin/systems/samba/class_winGeneric.inc:297
+#: personal/samba/class_sambaAccount.inc:841
+#: personal/samba/class_sambaAccount.inc:1089
+#, fuzzy
+msgid "LDAP error"
+msgstr "błąd LDAP:"
+
+#: admin/systems/samba/class_winGeneric.inc:178
+msgid "Error"
+msgstr "Błąd"
+
+#: admin/systems/samba/class_winGeneric.inc:211
+#: admin/systems/samba/class_winGeneric.inc:357
+msgid "Name"
+msgstr "Imię"
+
+#: admin/systems/samba/class_winGeneric.inc:319
+#, fuzzy
+msgid "Win generic"
+msgstr "Usługa drukowania"
+
+#: admin/systems/samba/class_winGeneric.inc:320
+#, fuzzy
+msgid "Windows workstation generic"
+msgstr "Nazwa stacji roboczej"
+
+#: admin/systems/samba/class_winGeneric.inc:325
+#, fuzzy
+msgid "Win workstation"
+msgstr "Stacja robocza Windows"
+
+#: admin/systems/samba/class_winGeneric.inc:348
+msgid "RDN for samba machine account storage."
+msgstr ""
 
 #: personal/samba/samba3.tpl:1
 #, fuzzy
@@ -44,7 +110,7 @@ msgid "Show information"
 msgstr "Informacje osobiste"
 
 #: personal/samba/samba3.tpl:51
-msgid "Profile and scirpt path settings"
+msgid "Profile and script path settings"
 msgstr ""
 
 #: personal/samba/samba3.tpl:53
@@ -200,6 +266,21 @@ msgstr "ACL jest prawidłowy dla wszystkich użytkowników"
 msgid "Used by some users"
 msgstr ""
 
+#: personal/samba/sambaLogonHours.tpl:22
+#, fuzzy
+msgid "Specify the hours this user is allowed to log in"
+msgstr "Wybierz serwer poczty który będzie przechowywał skrzynkę użytkownika"
+
+#: personal/samba/sambaLogonHours.tpl:24
+#, fuzzy
+msgid "Samba logon hours"
+msgstr "Typ grupy Samba"
+
+#: personal/samba/sambaLogonHours.tpl:28
+#, fuzzy
+msgid "Hour"
+msgstr "godzina"
+
 #: personal/samba/class_sambaAccount.inc:24
 #: personal/samba/class_sambaAccount.inc:235
 #: personal/samba/class_sambaAccount.inc:247
@@ -213,8 +294,9 @@ msgid "Samba"
 msgstr "Samba"
 
 #: personal/samba/class_sambaAccount.inc:25
-msgid "This does something"
-msgstr "To robi coś"
+#, fuzzy
+msgid "Manage personal Samba settings"
+msgstr "Ustawienia Posix"
 
 #: personal/samba/class_sambaAccount.inc:259
 msgid "POSIX"
@@ -458,14 +540,6 @@ msgstr "Hasło które podano jako 'Nowe hasło' jest puste."
 msgid "Password change available"
 msgstr "Brak uprawnień do zmiay hasła"
 
-#: personal/samba/class_sambaAccount.inc:841
-#: personal/samba/class_sambaAccount.inc:1089
-#: admin/systems/samba/class_winGeneric.inc:147
-#: admin/systems/samba/class_winGeneric.inc:296
-#, fuzzy
-msgid "LDAP error"
-msgstr "błąd LDAP:"
-
 #: personal/samba/class_sambaAccount.inc:857
 #, fuzzy
 msgid "Home drive"
@@ -550,79 +624,8 @@ msgid ""
 msgstr ""
 "User manager w windows zezwala tylko na 8 klientów. Podano więcej niż 8."
 
-#: personal/samba/sambaLogonHours.tpl:22
-#, fuzzy
-msgid "Specify the hours this user is allowed to log in"
-msgstr "Wybierz serwer poczty który będzie przechowywał skrzynkę użytkownika"
-
-#: personal/samba/sambaLogonHours.tpl:24
-#, fuzzy
-msgid "Samba logon hours"
-msgstr "Typ grupy Samba"
-
-#: personal/samba/sambaLogonHours.tpl:28
-#, fuzzy
-msgid "Hour"
-msgstr "godzina"
-
-#: admin/systems/samba/wingeneric.tpl:1
-#, fuzzy
-msgid "Windows workstation"
-msgstr "Pokaż stacje robocze"
-
-#: admin/systems/samba/wingeneric.tpl:5
-#, fuzzy
-msgid "Generic settings"
-msgstr "Ogólne ustawienia użytkownika"
-
-#: admin/systems/samba/wingeneric.tpl:7
-msgid "Machine name"
-msgstr "Nazwa maszyny"
-
-#: admin/systems/samba/wingeneric.tpl:18
-#: admin/systems/samba/class_winGeneric.inc:357
-msgid "Base"
-msgstr "Kontener"
-
-#: admin/systems/samba/wingeneric.tpl:29
-#: admin/systems/samba/class_winGeneric.inc:358
-msgid "Description"
-msgstr "Opis"
-
-#: admin/systems/samba/class_winGeneric.inc:111
-#, fuzzy
-msgid "network"
-msgstr "Dodaj inwentarz"
-
-#: admin/systems/samba/class_winGeneric.inc:177
-msgid "Error"
-msgstr "Błąd"
-
-#: admin/systems/samba/class_winGeneric.inc:210
-#: admin/systems/samba/class_winGeneric.inc:356
-msgid "Name"
-msgstr "Imię"
-
-#: admin/systems/samba/class_winGeneric.inc:318
-#, fuzzy
-msgid "Win generic"
-msgstr "Usługa drukowania"
-
-#: admin/systems/samba/class_winGeneric.inc:319
-#, fuzzy
-msgid "Windows workstation generic"
-msgstr "Nazwa stacji roboczej"
-
-#: admin/systems/samba/class_winGeneric.inc:324
-#, fuzzy
-msgid "Win workstation"
-msgstr "Stacja robocza Windows"
-
-#: admin/systems/samba/class_winGeneric.inc:347
-msgid ""
-"The 'sambaMachineAccountRDN' statement defines the location where new "
-"windows workstations will be created. The default is 'ou=winstation,'."
-msgstr ""
+#~ msgid "This does something"
+#~ msgstr "To robi coś"
 
 #~ msgid "Choose subtree to place group in"
 #~ msgstr "Wybierz poddrzewo do umieszczenia grupy"

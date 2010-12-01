@@ -6,142 +6,107 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-17 05:01-0400\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: admin/sudo/sudo-filter.xml:22
-#, fuzzy
-msgid "Default filter"
-msgstr "Parametro"
-
-#: admin/sudo/sudo-filter.xml:36
-#, fuzzy
-msgid "By member"
-msgstr "Membri del gruppo"
-
-#: admin/sudo/class_sudoGeneric.inc:108
+#: admin/sudo/class_sudoGeneric.inc:112
 msgid "Type"
 msgstr "Tipo"
 
-#: admin/sudo/class_sudoGeneric.inc:108
+#: admin/sudo/class_sudoGeneric.inc:112
 #, fuzzy
 msgid "Member"
 msgstr "Membri"
 
-#: admin/sudo/class_sudoGeneric.inc:108 admin/sudo/class_sudoGeneric.inc:111
-#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:115
+#: admin/sudo/class_sudoGeneric.inc:112 admin/sudo/class_sudoGeneric.inc:115
+#: admin/sudo/class_sudoGeneric.inc:117 admin/sudo/class_sudoGeneric.inc:119
 #, fuzzy
 msgid "Option"
 msgstr "Opzioni"
 
-#: admin/sudo/class_sudoGeneric.inc:111
+#: admin/sudo/class_sudoGeneric.inc:115
 #, fuzzy
 msgid "System"
 msgstr "Sistemi"
 
-#: admin/sudo/class_sudoGeneric.inc:113 admin/sudo/class_sudoGeneric.inc:544
+#: admin/sudo/class_sudoGeneric.inc:117 admin/sudo/class_sudoGeneric.inc:552
 #, fuzzy
 msgid "Command"
 msgstr "e"
 
-#: admin/sudo/class_sudoGeneric.inc:115 admin/sudo/class_sudoGeneric.inc:358
+#: admin/sudo/class_sudoGeneric.inc:119 admin/sudo/class_sudoGeneric.inc:366
 msgid "User"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:301
+#: admin/sudo/class_sudoGeneric.inc:308
 msgid "Error"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:359
+#: admin/sudo/class_sudoGeneric.inc:367
 msgid "Group"
 msgstr "Gruppo"
 
-#: admin/sudo/class_sudoGeneric.inc:454
+#: admin/sudo/class_sudoGeneric.inc:462
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
 
-#: admin/sudo/class_sudoGeneric.inc:468 admin/sudo/class_sudoGeneric.inc:473
-#: admin/sudo/class_sudoGeneric.inc:478 admin/sudo/class_sudoGeneric.inc:487
-#: admin/sudo/class_sudoGeneric.inc:540 admin/sudo/paste_generic.tpl:5
-#: admin/sudo/sudo-list.xml:32 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34
+#: admin/sudo/class_sudoGeneric.inc:476 admin/sudo/class_sudoGeneric.inc:481
+#: admin/sudo/class_sudoGeneric.inc:486 admin/sudo/class_sudoGeneric.inc:495
+#: admin/sudo/class_sudoGeneric.inc:548 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34 admin/sudo/sudo-list.xml:32
+#: admin/sudo/paste_generic.tpl:5
 msgid "Name"
 msgstr "Cognome"
 
-#: admin/sudo/class_sudoGeneric.inc:517
+#: admin/sudo/class_sudoGeneric.inc:525
 #, fuzzy
 msgid "Sudo"
 msgstr "Cognome"
 
-#: admin/sudo/class_sudoGeneric.inc:518 admin/sudo/class_sudoGeneric.inc:523
+#: admin/sudo/class_sudoGeneric.inc:526 admin/sudo/class_sudoGeneric.inc:531
 #, fuzzy
 msgid "Sudo role"
 msgstr "Cognome"
 
-#: admin/sudo/class_sudoGeneric.inc:531
-msgid ""
-"The 'sudoRDN' statement defines the location where new sudo-roles will be "
-"created. The default is 'ou=sudoers,'."
-msgstr ""
-
 #: admin/sudo/class_sudoGeneric.inc:539
+#, fuzzy
+msgid "RDN for sudo rule storage."
+msgstr "Opzioni di posta dell'identità"
+
+#: admin/sudo/class_sudoGeneric.inc:547
 msgid "System trust"
 msgstr "Accesso ai sistemi"
 
-#: admin/sudo/class_sudoGeneric.inc:541 admin/sudo/sudo-list.xml:40
-#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
+#: admin/sudo/class_sudoGeneric.inc:549 admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44 admin/sudo/sudo-list.xml:40
 msgid "Description"
 msgstr "Descrizione"
 
-#: admin/sudo/class_sudoGeneric.inc:542
+#: admin/sudo/class_sudoGeneric.inc:550
 msgid "Users"
 msgstr "Utenti"
 
-#: admin/sudo/class_sudoGeneric.inc:543
+#: admin/sudo/class_sudoGeneric.inc:551
 msgid "Host"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:545
+#: admin/sudo/class_sudoGeneric.inc:553
 #, fuzzy
 msgid "Run as user"
 msgstr "Utenti di Dominio"
 
-#: admin/sudo/class_sudoGeneric.inc:546
+#: admin/sudo/class_sudoGeneric.inc:554
 #, fuzzy
 msgid "Access control list"
 msgstr "Opzioni di accesso"
-
-#: admin/sudo/class_sudoManagement.inc:25
-#, fuzzy
-msgid "Sudo rules"
-msgstr "Utenti di Dominio"
-
-#: admin/sudo/class_sudoManagement.inc:26
-msgid "Manage all aspects of system wide sudoers definitions"
-msgstr ""
-
-#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
-#: admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
-#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
-msgid "Generic"
-msgstr "Generale"
-
-#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
-#: admin/sudo/generic.tpl:4
-msgid "global defaults"
-msgstr ""
-
-#: admin/sudo/paste_generic.tpl:2
-#, fuzzy
-msgid "Paste sudo entry"
-msgstr "Data"
 
 #: admin/sudo/options.tpl:3 admin/sudo/class_sudoOption.inc:539
 #: admin/sudo/class_sudoOption.inc:546
@@ -167,6 +132,41 @@ msgstr "Opzioni"
 #, fuzzy
 msgid "Available options"
 msgstr "Applicazioni disponibili"
+
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4 admin/sudo/generic.tpl:27
+#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:31
+#: admin/sudo/paste_generic.tpl:1
+msgid "Generic"
+msgstr "Generale"
+
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:4
+#: admin/sudo/paste_generic.tpl:1
+msgid "global defaults"
+msgstr ""
+
+#: admin/sudo/generic.tpl:61
+#, fuzzy
+msgid "Users and groups"
+msgstr "gruppi"
+
+#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:91
+msgid "Add from list"
+msgstr ""
+
+#: admin/sudo/generic.tpl:78
+#, fuzzy
+msgid "Systems"
+msgstr "Sistemi"
+
+#: admin/sudo/generic.tpl:99
+#, fuzzy
+msgid "Commands"
+msgstr "e"
+
+#: admin/sudo/generic.tpl:112
+#, fuzzy
+msgid "Run as"
+msgstr "Utenti di Dominio"
 
 #: admin/sudo/sudo-list.xml:11
 #, fuzzy
@@ -204,6 +204,11 @@ msgstr "Lista degli utenti"
 msgid "Remove Sudo role"
 msgstr "Utenti di Dominio"
 
+#: admin/sudo/paste_generic.tpl:2
+#, fuzzy
+msgid "Paste sudo entry"
+msgstr "Data"
+
 #: admin/sudo/class_sudoOption.inc:154
 #, fuzzy
 msgid "Unknown option"
@@ -234,29 +239,24 @@ msgstr "stampanti"
 msgid "list"
 msgstr "classe"
 
-#: admin/sudo/generic.tpl:61
+#: admin/sudo/sudo-filter.xml:22
 #, fuzzy
-msgid "Users and groups"
-msgstr "gruppi"
+msgid "Default filter"
+msgstr "Parametro"
 
-#: admin/sudo/generic.tpl:73 admin/sudo/generic.tpl:90
-msgid "Add from list"
-msgstr ""
-
-#: admin/sudo/generic.tpl:78
+#: admin/sudo/sudo-filter.xml:36
 #, fuzzy
-msgid "Systems"
-msgstr "Sistemi"
+msgid "By member"
+msgstr "Membri del gruppo"
 
-#: admin/sudo/generic.tpl:98
+#: admin/sudo/class_sudoManagement.inc:25
 #, fuzzy
-msgid "Commands"
-msgstr "e"
-
-#: admin/sudo/generic.tpl:111
-#, fuzzy
-msgid "Run as"
+msgid "Sudo rules"
 msgstr "Utenti di Dominio"
+
+#: admin/sudo/class_sudoManagement.inc:26
+msgid "Manage all aspects of system wide sudoers definitions"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Filter"

@@ -8,13 +8,72 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-17 04:47-0400\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: admin/systems/samba/wingeneric.tpl:1
+msgid "Windows workstation"
+msgstr ""
+
+#: admin/systems/samba/wingeneric.tpl:5
+msgid "Generic settings"
+msgstr ""
+
+#: admin/systems/samba/wingeneric.tpl:7
+msgid "Machine name"
+msgstr ""
+
+#: admin/systems/samba/wingeneric.tpl:18
+#: admin/systems/samba/class_winGeneric.inc:358
+msgid "Base"
+msgstr ""
+
+#: admin/systems/samba/wingeneric.tpl:29
+#: admin/systems/samba/class_winGeneric.inc:359
+msgid "Description"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:112
+msgid "network"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:148
+#: admin/systems/samba/class_winGeneric.inc:297
+#: personal/samba/class_sambaAccount.inc:841
+#: personal/samba/class_sambaAccount.inc:1089
+msgid "LDAP error"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:178
+msgid "Error"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:211
+#: admin/systems/samba/class_winGeneric.inc:357
+msgid "Name"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:319
+msgid "Win generic"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:320
+msgid "Windows workstation generic"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:325
+msgid "Win workstation"
+msgstr ""
+
+#: admin/systems/samba/class_winGeneric.inc:348
+msgid "RDN for samba machine account storage."
+msgstr ""
 
 #: personal/samba/samba3.tpl:1
 msgid "Samba configuration"
@@ -43,7 +102,7 @@ msgid "Show information"
 msgstr ""
 
 #: personal/samba/samba3.tpl:51
-msgid "Profile and scirpt path settings"
+msgid "Profile and script path settings"
 msgstr ""
 
 #: personal/samba/samba3.tpl:53
@@ -187,6 +246,18 @@ msgstr ""
 msgid "Used by some users"
 msgstr ""
 
+#: personal/samba/sambaLogonHours.tpl:22
+msgid "Specify the hours this user is allowed to log in"
+msgstr ""
+
+#: personal/samba/sambaLogonHours.tpl:24
+msgid "Samba logon hours"
+msgstr ""
+
+#: personal/samba/sambaLogonHours.tpl:28
+msgid "Hour"
+msgstr ""
+
 #: personal/samba/class_sambaAccount.inc:24
 #: personal/samba/class_sambaAccount.inc:235
 #: personal/samba/class_sambaAccount.inc:247
@@ -200,7 +271,7 @@ msgid "Samba"
 msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:25
-msgid "This does something"
+msgid "Manage personal Samba settings"
 msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:259
@@ -416,13 +487,6 @@ msgstr ""
 msgid "Password change available"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:841
-#: personal/samba/class_sambaAccount.inc:1089
-#: admin/systems/samba/class_winGeneric.inc:147
-#: admin/systems/samba/class_winGeneric.inc:296
-msgid "LDAP error"
-msgstr ""
-
 #: personal/samba/class_sambaAccount.inc:857
 msgid "Home drive"
 msgstr ""
@@ -497,69 +561,4 @@ msgstr ""
 msgid ""
 "The windows user manager only allows eight clients. You've specified more "
 "than eight."
-msgstr ""
-
-#: personal/samba/sambaLogonHours.tpl:22
-msgid "Specify the hours this user is allowed to log in"
-msgstr ""
-
-#: personal/samba/sambaLogonHours.tpl:24
-msgid "Samba logon hours"
-msgstr ""
-
-#: personal/samba/sambaLogonHours.tpl:28
-msgid "Hour"
-msgstr ""
-
-#: admin/systems/samba/wingeneric.tpl:1
-msgid "Windows workstation"
-msgstr ""
-
-#: admin/systems/samba/wingeneric.tpl:5
-msgid "Generic settings"
-msgstr ""
-
-#: admin/systems/samba/wingeneric.tpl:7
-msgid "Machine name"
-msgstr ""
-
-#: admin/systems/samba/wingeneric.tpl:18
-#: admin/systems/samba/class_winGeneric.inc:357
-msgid "Base"
-msgstr ""
-
-#: admin/systems/samba/wingeneric.tpl:29
-#: admin/systems/samba/class_winGeneric.inc:358
-msgid "Description"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:111
-msgid "network"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:177
-msgid "Error"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:210
-#: admin/systems/samba/class_winGeneric.inc:356
-msgid "Name"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:318
-msgid "Win generic"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:319
-msgid "Windows workstation generic"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:324
-msgid "Win workstation"
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:347
-msgid ""
-"The 'sambaMachineAccountRDN' statement defines the location where new "
-"windows workstations will be created. The default is 'ou=winstation,'."
 msgstr ""

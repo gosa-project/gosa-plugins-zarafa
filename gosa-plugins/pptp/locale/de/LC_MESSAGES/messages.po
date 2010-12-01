@@ -12,14 +12,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-17 04:33-0400\n"
+"POT-Creation-Date: 2010-11-04 15:24+0100\n"
 "PO-Revision-Date: 2010-09-17 10:35+0100\n"
 "Last-Translator: Fabian Hickert <Fabian.Hickert@GONICUS.DE>\n"
 "Language-Team: Deutsch <de@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
@@ -28,8 +28,9 @@ msgid "PPTP"
 msgstr "PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:27
-msgid "This does something"
-msgstr "Dies tut etwas"
+#, fuzzy
+msgid "Manage PPTP user settings"
+msgstr "Allgemeine Benutzereinstellungen"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:102
 #: personal/connectivity/pptp/class_pptpAccount.inc:157
@@ -49,3 +50,5 @@ msgstr "Konnektivitäts-Erweiterung"
 msgid "My account"
 msgstr "Mein Konto"
 
+#~ msgid "This does something"
+#~ msgstr "Dies tut etwas"
