@@ -4,7 +4,7 @@ class opengwAccount extends plugin
 {
     /* Definitions */
     var $plHeadline       = "Opengroupware account";
-    var $plDescription    = "This does something";
+    var $plDescription    = "Manage Opengroupware user settings";
 
     /* attribute list for save action */
     var $attributes       = array();
