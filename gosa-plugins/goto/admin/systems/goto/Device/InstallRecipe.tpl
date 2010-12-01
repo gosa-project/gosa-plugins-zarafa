@@ -67,7 +67,7 @@
                             onClick="changeState('setKickstartRootPasswordHash');"
                             name="installRootEnabled" id="installRootEnabled" 
                            >
-                        <LABEL for="installRootEnabled">{t}Use root-user{/t}</LABEL>&nbsp;
+                        <LABEL for="installRootEnabled">{t}Use root user{/t}</LABEL>&nbsp;
                         <button name='setKickstartRootPasswordHash'
                             {if !$installRootEnabled} disabled {/if}
                             id="setKickstartRootPasswordHash">{t}Set password{/t}</button>

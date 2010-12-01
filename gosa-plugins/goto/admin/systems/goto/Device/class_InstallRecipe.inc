@@ -191,15 +191,15 @@ class InstallRecipe extends plugin
         if(!isset($this->installConfigManagementList[$this->installBootstrapMethod])){
             $newMethod = key($this->installBootstrapMethodList);
             msg_dialog::display(_("Error"), 
-                sprintf(_("The selected bootstrap method '%s' is invalid! Using '%s' instead!"),
-                $this->installBootstrapMethod,$newMethod), ERROR_DIALOG);
+                sprintf(_("The selected bootstrap method %s is invalid. Using %s instead!"),
+                bold($this->installBootstrapMethod), bold($newMethod)), ERROR_DIALOG);
             $this->installBootstrapMethod = $newMethod;
         }
         if(!isset($this->installConfigManagementList[$this->installBootstrapMethod][$this->installConfigManagement])){
             $newMethod = key($this->installConfigManagementList[$this->installBootstrapMethod]);
             msg_dialog::display(_("Error"), 
-                sprintf(_("The selected config management method '%s' is invalid! Using '%s' instead!"),
-                $this->installConfigManagement,$newMethod), ERROR_DIALOG);
+                sprintf(_("The selected config management method %s is invalid. Using %s instead!"),
+                bold($this->installConfigManagement),bold($newMethod)), ERROR_DIALOG);
             $this->installConfigManagement = $newMethod;
         }
     }
@@ -311,7 +311,7 @@ class InstallRecipe extends plugin
         $display = "";
         if ($this->parent !== NULL){
             if ($this->is_account){
-                $display= $this->show_disable_header(_("Remove instal profile"),
+                $display= $this->show_disable_header(_("Remove install profile"),
                         msgPool::featuresEnabled(_("Install profile")));
             } else {
                 $display= $this->show_enable_header(_("Add install profile"),
@@ -485,7 +485,7 @@ class InstallRecipe extends plugin
                         "installMirrorDN" => _("Kickstart mirror"),
                         "installRootEnabled" => _("Root login enabled"),
                         "installRootPasswordHash" => _("Root password hash"),
-                        "installKernelPackage" => _("Kernal package"),
+                        "installKernelPackage" => _("Kernel package"),
                         "installPartitionTable" => _("Partition table")
                         )
                         )

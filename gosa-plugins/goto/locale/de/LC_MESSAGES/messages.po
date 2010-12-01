@@ -984,9 +984,8 @@ msgid "Config management"
 msgstr "Konfigurationsverwaltung"
 
 #: admin/ConfigManagement/AddItemDialog.tpl:2
-#, fuzzy
 msgid "Add item"
-msgstr "Item bearbeiten"
+msgstr "Item hinzufüfgen"
 
 #: admin/ConfigManagement/AddItemDialog.tpl:4
 msgid ""
@@ -997,37 +996,32 @@ msgstr ""
 "innerhalb der Item-Konfiguration eindeutig sein."
 
 #: admin/ConfigManagement/failed.tpl:4 admin/ConfigManagement/failed.tpl:8
-#, fuzzy
 msgid "Retry"
-msgstr "nochmals versuchen"
+msgstr "Wiederholen"
 
 #: admin/ConfigManagement/failed.tpl:6
-#, fuzzy
 msgid "Communication failed"
-msgstr "LDAP-Operation fehlgeschlagen"
+msgstr "Kommunikation fehlgeschlagen"
 
 #: admin/ConfigManagement/failed.tpl:10
-#, fuzzy
-msgid "Configuration error "
+msgid "Configuration error"
 msgstr "Konfigurationsfehler"
 
 #: admin/ConfigManagement/class_TemplateWidget_file.inc:9
 msgid "No file uploaded yet"
-msgstr "
+msgstr "Bisher wurde keine Datei hochgeladen"
 
 #: admin/ConfigManagement/class_TemplateWidget_file.inc:19
-#, fuzzy
 msgid "File uploaded"
-msgstr "Datei-Muster"
+msgstr "Datei wurde hochgeladen"
 
 #: admin/ConfigManagement/class_TemplateWidget_file.inc:19
 msgid "Bytes"
-msgstr ""
+msgstr "Bytes"
 
 #: admin/ConfigManagement/DeviceConfig.tpl:1
-#, fuzzy
 msgid "Device Config"
-msgstr "Gerätename"
+msgstr "Gerätekonfiguration"
 
 #: admin/applications/class_applicationParameters.inc:50
 msgid "Remove options"
@@ -1250,9 +1244,8 @@ msgid "Application generic"
 msgstr "Anwendung (Allgemein)"
 
 #: admin/applications/class_applicationGeneric.inc:600
-#, fuzzy
 msgid "RDN for application storage."
-msgstr "Anwendungsbild bearbeiten"
+msgstr "RDN für die Ablage von Anwendungen"
 
 #: admin/applications/class_applicationGeneric.inc:613
 msgid "Script content"
@@ -1388,7 +1381,7 @@ msgstr "MIME-Typ (Allgemein)"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:619
 msgid "RDN for mime type storage."
-msgstr ""
+msgstr "RDN für die Ablage von Mime-Typen"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:627
 msgid "Mime group"
@@ -1740,53 +1733,45 @@ msgid "bit/s"
 msgstr "bits/s"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:2
-#, fuzzy
 msgid "Installation type"
-msgstr "Installationsprüfung"
+msgstr "Installationstyp"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:5
 #: admin/systems/goto/Device/class_InstallRecipe.inc:478
-#, fuzzy
 msgid "Bootstrap method"
-msgstr "Boot-Modus"
+msgstr "Methode zum Bootstrapping"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:28
-#, fuzzy
 msgid "Bootstrap settings"
-msgstr "GOto-Einstellungen"
+msgstr "Bootstrap-Einstellungen"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:32
-#, fuzzy
 msgid "Mirror"
-msgstr "Fehler"
+msgstr "Spiegel"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:41
-#, fuzzy
 msgid "Kickstart template"
-msgstr "Vorlage für Arbeitsstation"
+msgstr "Kickstart-Vorlage"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:50
-#, fuzzy
 msgid "Kernel package"
-msgstr "Kernel-Parameter"
+msgstr "Kernel-Paket"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:61
 msgid "Login"
 msgstr "Kennung"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:70
-#, fuzzy
-msgid "Use root-user"
-msgstr "Vorschlag verwenden"
+msgid "Use root user"
+msgstr "Root-Benutzer verwenden"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:73
 msgid "Set password"
 msgstr "Passwort setzen"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:84
-#, fuzzy
 msgid "Locale"
-msgstr "Standort"
+msgstr "Lokalisierung"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:88
 #: admin/systems/goto/Device/class_InstallRecipe.inc:480
@@ -1797,41 +1782,36 @@ msgstr "Tastatur-Layout"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:97
 #: admin/systems/goto/Device/class_InstallRecipe.inc:481
-#, fuzzy
 msgid "System locale"
-msgstr "Systemliste"
+msgstr "System-Lokalisierung"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:108
 #: admin/systems/goto/Device/class_InstallRecipe.inc:483
 msgid "Time"
-msgstr ""
+msgstr "Zeit"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:115
-#, fuzzy
 msgid "Use UTC"
-msgstr "Verwende DDC"
+msgstr "Verwende UTC"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:119
 #: admin/systems/goto/Device/class_InstallRecipe.inc:482
 msgid "Timezone"
-msgstr ""
+msgstr "Zeitzone"
 
 #: admin/systems/goto/Device/InstallRecipe.tpl:140
 #: admin/systems/goto/Device/InstallRecipe.tpl:143
 #: admin/systems/goto/Device/class_InstallRecipe.inc:489
-#, fuzzy
 msgid "Partition table"
-msgstr "Variable"
+msgstr "Partitionstabelle"
 
 #: admin/systems/goto/Device/Device.tpl:40
-#, fuzzy
 msgid "Registration"
-msgstr "GOsa Registrierung"
+msgstr "Registrierung"
 
 #: admin/systems/goto/Device/Device.tpl:52
-#, fuzzy
 msgid "Device UUID"
-msgstr "Geräte-ID"
+msgstr "Geräte-UUID"
 
 #: admin/systems/goto/Device/Device.tpl:63
 #: admin/systems/goto/Device/class_Device.inc:300
@@ -1855,30 +1835,18 @@ msgid "Status"
 msgstr "Status"
 
 #: admin/systems/goto/Device/Device.tpl:75
-#, fuzzy
 msgid "Orgaizational data"
-msgstr "Organisationseinheit"
-
-#: admin/systems/goto/Device/Device.tpl:78
-#: admin/systems/goto/Device/class_Device.inc:294
-#, fuzzy
-msgid "Organizational unit"
-msgstr "Organisationseinheit"
-
-#: admin/systems/goto/Device/Device.tpl:86
-#, fuzzy
-msgid "Organizaton"
-msgstr "Organisation"
+msgstr "Organisationsdaten"
 
 #: admin/systems/goto/Device/Device.tpl:111
 #: admin/systems/goto/Device/class_Device.inc:292
 msgid "See also"
-msgstr ""
+msgstr "Siehe auch"
 
 #: admin/systems/goto/Device/Device.tpl:121
 #: admin/systems/goto/Device/class_Device.inc:293
 msgid "Owner"
-msgstr ""
+msgstr "Eigentümer"
 
 #: admin/systems/goto/Device/Device.tpl:137
 #: admin/systems/goto/Device/class_Device.inc:298
@@ -1886,29 +1854,27 @@ msgid "Manager"
 msgstr "Verwalter"
 
 #: admin/systems/goto/Device/Device.tpl:157
-#, fuzzy
 msgid "Network settings"
-msgstr "GOto-Einstellungen"
+msgstr "Netzwerk-Einstellungen"
 
 #: admin/systems/goto/Device/Device.tpl:160
-#, fuzzy
-msgid "IP-address"
+msgid "IP address"
 msgstr "IP-Adresse"
 
 #: admin/systems/goto/Device/Device.tpl:169 addons/goto/goto_import_file.tpl:5
-msgid "MAC-address"
+msgid "MAC address"
 msgstr "MAC-Adresse"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:194
 #, php-format
-msgid "The selected bootstrap method '%s' is invalid! Using '%s' instead!"
-msgstr ""
+msgid "The selected bootstrap method %s is invalid. Using %s instead!"
+msgstr "Die ausgewählte Bootstrap-Methode %s ist ungültig. Verwende %s stattdessen!"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:201
 #, php-format
 msgid ""
-"The selected config management method '%s' is invalid! Using '%s' instead!"
-msgstr ""
+"The selected config management method %s is invalid. Using %s instead!"
+msgstr "Dis ausgewählte Verwaltungsmethode %s ist ungültig. Verwende %s stattdessen!"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:214
 #: admin/systems/goto/Device/class_InstallRecipe.inc:217
@@ -1916,25 +1882,21 @@ msgid "hours"
 msgstr "Stunden"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:314
-#, fuzzy
-msgid "Remove instal profile"
-msgstr "Bild entfernen"
+msgid "Remove install profile"
+msgstr "Installations-Profil entfernen"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:315
 #: admin/systems/goto/Device/class_InstallRecipe.inc:318
-#, fuzzy
 msgid "Install profile"
-msgstr "Kiosk-Profil"
+msgstr "Installations-Profil"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:317
-#, fuzzy
 msgid "Add install profile"
-msgstr "Kiosk-Profil"
+msgstr "Installations-Profil hinzufügen"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:469
-#, fuzzy
 msgid "Registered device"
-msgstr "Gerät einfügen"
+msgstr "Registriertes Gerät"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:476
 msgid "Member"
@@ -1945,29 +1907,20 @@ msgid "Template"
 msgstr "Vorlage"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:484
-#, fuzzy
 msgid "NTP-Server"
-msgstr "Zeit-Server"
+msgstr "NTP-Server"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:485
-#, fuzzy
 msgid "Kickstart mirror"
-msgstr "Debian Spiegelserver"
+msgstr "Kickstart Spiegelserver"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:486
-#, fuzzy
 msgid "Root login enabled"
-msgstr "Drucker aktiviert"
+msgstr "Root-Anmeldung aktiv"
 
 #: admin/systems/goto/Device/class_InstallRecipe.inc:487
-#, fuzzy
 msgid "Root password hash"
-msgstr "Passwort zurücksetzen"
-
-#: admin/systems/goto/Device/class_InstallRecipe.inc:488
-#, fuzzy
-msgid "Kernal package"
-msgstr "Kernel-Parameter"
+msgstr "Root-Passwort-Hash"
 
 #: admin/systems/goto/Device/class_Device.inc:125
 #: admin/systems/goto/Device/class_Device.inc:303
@@ -1977,7 +1930,6 @@ msgstr "IP-Adresse"
 
 #: admin/systems/goto/Device/class_Device.inc:135
 #: admin/systems/goto/Device/class_Device.inc:302
-#, fuzzy
 msgid "MAC address"
 msgstr "MAC-Adresse"
 
@@ -1993,13 +1945,12 @@ msgid "Organization"
 msgstr "Organisation"
 
 #: admin/systems/goto/Device/class_Device.inc:299
-msgid "Uuid"
-msgstr ""
+msgid "UUID"
+msgstr "UUID"
 
 #: admin/systems/goto/Device/SetPassword.tpl:1
-#, fuzzy
 msgid "Set root-user password"
-msgstr "Neues Passwort setzen"
+msgstr "Root-Passwort setzen"
 
 #: admin/systems/goto/Device/SetPassword.tpl:6
 msgid "Password"
@@ -2193,7 +2144,7 @@ msgstr "Drucker"
 
 #: admin/systems/goto/class_printGeneric.inc:1014
 msgid "RDN for printer storage."
-msgstr ""
+msgstr "RDN für die Ablage von Druckern."
 
 #: admin/systems/goto/class_printGeneric.inc:1027
 msgid "Labeled URI"
@@ -2278,7 +2229,7 @@ msgstr "Terminal-Start"
 
 #: admin/systems/goto/class_terminalStartup.inc:521
 msgid "Script to check for available kernels"
-msgstr ""
+msgstr "Skript zum Beziehen der verfügbaren Kernel"
 
 #: admin/systems/goto/class_terminalStartup.inc:531
 #: admin/systems/goto/class_workstationStartup.inc:929
@@ -2346,7 +2297,7 @@ msgstr "System-Informationen"
 
 #: admin/systems/goto/class_terminalInfo.inc:262
 msgid "Name of GOto SNMP community."
-msgstr ""
+msgstr "Name der GOto SNMP Community."
 
 #: admin/systems/goto/class_ArpNewDevice.inc:38
 #: admin/systems/goto/class_workstationGeneric.inc:707
@@ -2376,7 +2327,7 @@ msgstr "Unbekannte eingehende Objekte"
 
 #: admin/systems/goto/class_ArpNewDevice.inc:152
 msgid "RDN for storing new devices."
-msgstr ""
+msgstr "RDN zur Ablage von neuen Geräten."
 
 #: admin/systems/goto/class_ArpNewDevice.inc:158
 msgid "Incoming"
@@ -4320,393 +4271,3 @@ msgstr "Letztes Skript"
 #: personal/environment/logonManagement.tpl:46
 msgid "Script can be replaced by user"
 msgstr "Skript kann vom Benutzer ausgetauscht werden"
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid ""
-#~ "The 'resolutions' variable defines a plain text file which contains "
-#~ "additional resolutions to be shown in the environment and system plugins."
-#~ msgstr ""
-#~ "Die 'resolutions' Variable enthält einen Pfad zu einer Datei, welche "
-#~ "weitere Auflösungen für die Umgebungs-Erweiterung enthält."
-
-#~ msgid ""
-#~ "In order to make full use of the environment plugin, you may want to "
-#~ "define the location where kiosk profiles will be stored on the servers "
-#~ "harddisk. This is done by the 'kioskPath' keyword"
-#~ msgstr ""
-#~ "Um die Umgebungs-Erweiterung voll nutzen zu können, können Sie angeben, "
-#~ "wo Kiosk-Profile auf der Server-Festplatte abegelegt werden sollen. Dies "
-#~ "wird über das 'kioskPath' Schlüsselwort erzielt."
-
-#~ msgid ""
-#~ "The 'deviceRDN' statement defines the location where new devices will be "
-#~ "created. The default is 'ou=devices,'."
-#~ msgstr ""
-#~ "Die deviceRDN' Option legt fest, an welcher Position neue Hotplug-Geräte "
-#~ "im LDAP erstellt werden. Der Standard-Wert ist 'ou=devices,'."
-
-#~ msgid ""
-#~ "The 'mimetypeRDN' statement defines the location where new mimetypes will "
-#~ "be created. The default is 'ou=mime,'."
-#~ msgstr ""
-#~ "Die 'mimetypeRDN' Option legt fest, an welcher Position neue MIME-Typ "
-#~ "Objekte im LDAP erstellt werden. Der Standard-Wert ist 'ou=mime,'."
-
-#~ msgid ""
-#~ "The 'applicationRDN' statement defines the location where new "
-#~ "applications will be created. The default is 'ou=apps,'."
-#~ msgstr ""
-#~ "Die 'applicationRDN' Option legt fest, an welcher Position neue "
-#~ "Anwendungen im LDAP erstellt werden. Der Standard-Wert ist 'ou=apps,'."
-
-#~ msgid ""
-#~ "The 'workstationRDN' statement defines the location where new "
-#~ "workstations will be created. The default is 'ou=workstations,"
-#~ "ou=systems,'."
-#~ msgstr ""
-#~ "Die 'workstationRDN' Option legt fest, an welcher Position neue "
-#~ "Arbeitsstationen LDAP erstellt werden. Der Standard-Wert ist "
-#~ "'ou=workstations,ou=systems,'."
-
-#~ msgid ""
-#~ "To enable the burn CD image function, you can specify the "
-#~ "'systemIsoHook'. You will get a CD symbol in the systems list - which "
-#~ "calls the hook if pressed."
-#~ msgstr ""
-#~ "Um die 'CD-Image brennen' Funktion zu aktivieren, können Sie die "
-#~ "'systemIsoHook' Option verweden. Sie erhalten dann ein CD Symbol in der "
-#~ "System-Liste, welches dann das angegebenen Skript aufruft."
-
-#~ msgid ""
-#~ "The 'systemIncomingRDN' statement defines the location where incoming "
-#~ "systems are stored. The default is 'ou=incoming,'."
-#~ msgstr ""
-#~ "Die 'systemIncomingRDN' Option legt fest, an welcher Position Eingehende "
-#~ "Systeme im LDAP erstellt werden. Der Standard-Wert ist 'ou=incoming,'."
-
-#~ msgid ""
-#~ "The 'terminalRDN' statement defines the location where new terminals will "
-#~ "be created. The default is 'ou=terminals,ou=systems,'."
-#~ msgstr ""
-#~ "Die 'terminalDN' Option legt fest, an welcher Position neue Terminals im "
-#~ "LDAP erstellt werden. Der Standard-Wert ist 'ou=terminals,ou=systems,'."
-
-#~ msgid ""
-#~ "The 'printerRDN' statement defines the location where new printers will "
-#~ "be created. The default is 'ou=printers,ou=systems,'."
-#~ msgstr ""
-#~ "Die 'printerRDN' Option legt fest, an welcher Position neue Drucker im "
-#~ "LDAP erstellt werden. Der Standard-Wert ist 'ou=printers,ou=systems,'."
-
-#~ msgid ""
-#~ "For the workstations and terminals, you can define the "
-#~ "'systemKernelsHook' keyword. It can load additional kernels that are not "
-#~ "retrieveable by standard GOsa/FAI mechanisms."
-#~ msgstr ""
-#~ "Für Arbeitsstationen und Terminal können Sie das 'systemKernelsHook' "
-#~ "Schlüsselwort verwenden. Dieser Hook kann dann zusätzliche Kernel "
-#~ "bereitstellen, die nicht über den Standard GOsa/FAI Mechanismus "
-#~ "bereitgestellen werden können."
-
-#~ msgid ""
-#~ "In order to make use of SNMP information, you can set the 'snmpCommunity'."
-#~ msgstr ""
-#~ "Um die SNMP Infromationen nutzen zu können, müssen Sie die Option "
-#~ "'snmpCommunity' gesetzt haben."
-
-#~ msgid "Vertical synchronisation range"
-#~ msgstr "Bereich der Vertikalen-Synchronisation"
-
-#~ msgid "Horizontal Synchronization"
-#~ msgstr "Horizontale-Synchronisation"
-
-#~ msgid "Vertical Synchronization"
-#~ msgstr "Vertikale-Synchronisation"
-
-#~ msgid "Gfx driver"
-#~ msgstr "Grafiktreiber"
-
-#~ msgid "Gfx resolution"
-#~ msgstr "Auflösung"
-
-#~ msgid "Gfx color depth"
-#~ msgstr "Farbtiefe"
-
-#~ msgid "Ntp server"
-#~ msgstr "NTP-Dienst"
-
-#~ msgid "fill-in-your-servers-dns-name"
-#~ msgstr "tragen-sie-den-dns-namen-des-servers-ein"
-
-#~ msgid "Ldap"
-#~ msgstr "LDAP"
-
-#~ msgid "Ldap base"
-#~ msgstr "LDAP-Basis"
-
-#~ msgid "Gneric settings"
-#~ msgstr "Allgemeine Einstellungen"
-
-#~ msgid "LabeledURL"
-#~ msgstr "Benannte URL"
-
-#~ msgid "Ldap server"
-#~ msgstr "LDAP-Server"
-
-#~ msgid "VSync range"
-#~ msgstr "VSync-Bereich"
-
-#~ msgid "HSync range"
-#~ msgstr "HSync-Bereich"
-
-#~ msgid "HSync"
-#~ msgstr "HSync"
-
-#~ msgid "VSync"
-#~ msgstr "VSync"
-
-#~ msgid "Mountpoint"
-#~ msgstr "Mount-Pfad"
-
-#~ msgid "Admins"
-#~ msgstr "Administratoren"
-
-#~ msgid "Job intervall"
-#~ msgstr "Aufstrags-Intervall"
-
-#~ msgid "Shedule options"
-#~ msgstr "Planungsoptionen"
-
-#~ msgid "Profil quota"
-#~ msgstr "Profil-Kontingent"
-
-#~ msgid "Environment"
-#~ msgstr "Umgebung"
-
-#~ msgid "Environment settings"
-#~ msgstr "Umgebungs-Einstellungen"
-
-#~ msgid "Select printer to add"
-#~ msgstr "Wählen Sie den hinzuzufügenden Drucker"
-
-#~ msgid "Select entries to add"
-#~ msgstr "Wählen Sie die hinzuzufügenden Einträge"
-
-#~ msgid "Filters"
-#~ msgstr "Filter"
-
-#~ msgid "Filter options"
-#~ msgstr "Filteroptionen"
-
-#~ msgid "Select to search within subtrees"
-#~ msgstr "Wählen Sie diese Option um auch in Teilbäumen zu suchen"
-
-#~ msgid "Search in subtrees"
-#~ msgstr "Suche in Teilbäumen"
-
-#~ msgid "Display members of department"
-#~ msgstr "Zeige die Mitglieder der Abteilung"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Wählen Sie die Abteilung, auf die die Suchfunktion angewandt wird"
-
-#~ msgid "Display members matching"
-#~ msgstr "Zeige die Mitglieder, auf die Folgendes passt"
-
-#~ msgid "Regular expression for matching member names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Mitgliedsnamen"
-
-#~ msgid "Reload"
-#~ msgstr "Neu laden"
-
-#~ msgid "Please select a printer or press cancel."
-#~ msgstr "Bitte wählen Sie einen Drucker oder 'Abbrechen'."
-
-#~ msgid "List of running and planed goto actions"
-#~ msgstr "Liste von laufenden und geplanten GOto-Aktionen"
-
-#~ msgid "System deployment status"
-#~ msgstr "Systemverteilungs-Status"
-
-#~ msgid "department"
-#~ msgstr "Abteilung"
-
-#~ msgid "Folder"
-#~ msgstr "Verzeichnis"
-
-#~ msgid "Entry"
-#~ msgstr "Eintrag"
-
-#~ msgid ""
-#~ "Please double check if you really want to do this since there is no way "
-#~ "for GOsa to get your data back."
-#~ msgstr ""
-#~ "Bitte überprüfen Sie genau was Sie tun, weil GOsa keine Möglichkeit hat, "
-#~ "die Daten wiederherzustellen."
-
-#~ msgid "Filter"
-#~ msgstr "Filter"
-
-#~ msgid "Hotplug device management"
-#~ msgstr "Verwaltung der Hotplug-Geräte"
-
-#~ msgid "Current release"
-#~ msgstr "Momentanes Release"
-
-#~ msgid "Choose subtree to place application in"
-#~ msgstr "Wählen Sie den Teilbaum, in den die Anwendung plaziert werden soll."
-
-#~ msgid "Select a base"
-#~ msgstr "Wählen Sie eine Basis"
-
-#~ msgid "Application management"
-#~ msgstr "Anwendungsverwaltung"
-
-#~ msgid "Manage mime types"
-#~ msgstr "MIME-Typen verwalten"
-
-#~ msgid "set"
-#~ msgstr "setzen"
-
-#~ msgid "Choose the kind of system component you want to create"
-#~ msgstr "Wählen Sie die Art der System-Komponente, die Sie anlegen möchten"
-
-#~ msgid ""
-#~ "Linux terminals and workstations are autocreated on bootup. For this "
-#~ "reason you're only be able to create templates for a specific tree. "
-#~ "Servers are normally automatically added too, but in some special cases "
-#~ "you may need to create a faked server entry to provide GOsa with some "
-#~ "informations. Other network components may be used for Nagios setups to "
-#~ "create component dependencies."
-#~ msgstr ""
-#~ "Linux Terminals und Arbeitsstationen werden beim Systemstart automatisch "
-#~ "hinzugefügt. Aus diesem Grund können Sie für diese Systemtypen nur "
-#~ "Vorlagen für einen Teilbaum anlegen. Server werden ebenfalls automatisch "
-#~ "hinzugefügt, in einigen Fällen benötigen Sie Pseudo-Einträge um GOsa mit "
-#~ "benötigten Informationen zu versorgen. Weitere Netzwerk-Komponenten "
-#~ "können z.B. für Nagios Umgebungen genutzt werden um die Abhängigkeiten "
-#~ "aufzulösen."
-
-#~ msgid "Linux thin client template"
-#~ msgstr "Linux Thin-Client Vorlage"
-
-#~ msgid "Linux workstation template"
-#~ msgstr "Linux Arbeitsstations-Vorlage"
-
-#~ msgid "Linux Server"
-#~ msgstr "Linux Server"
-
-#~ msgid "Network printer"
-#~ msgstr "Netzwerk-Drucker"
-
-#~ msgid "Phone"
-#~ msgstr "Telefon"
-
-#~ msgid "Other network component"
-#~ msgstr "Andere Netzwerk-Komponente"
-
-#~ msgid "Display objects matching"
-#~ msgstr "Zeige die Objekte, auf die Folgendes passt"
-
-#~ msgid "Regular expression for matching object names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Objekt-Namen"
-
-#~ msgid "Cannot locate vendor '%s' in available PPDs!"
-#~ msgstr "Kann Hersteller '%s' nicht in den verfügbaren PPDs finden!"
-
-#~ msgid "delete"
-#~ msgstr "Entfernen"
-
-#~ msgid "Show servers"
-#~ msgstr "Zeige Server"
-
-#~ msgid "Show terminals"
-#~ msgstr "Zeige Terminals"
-
-#~ msgid "Filter by IP address range"
-#~ msgstr "IP-Bereichsfilter"
-
-#~ msgid "Show groups"
-#~ msgstr "Zeige Gruppen"
-
-#~ msgid "Show users"
-#~ msgstr "Zeige Benutzer"
-
-#~ msgid "Delete share entry"
-#~ msgstr "Diesen Freigabe-Eintrag entfernen"
-
-#~ msgid "The environment extension is currently disabled."
-#~ msgstr "Die Umgebungs-Erweiterung ist zur Zeit deaktiviert."
-
-#~ msgid "Choose subtree to place group in"
-#~ msgstr "Wählen Sie den Teilbaum, in den die Gruppe eingepflegt werden soll"
-
-#~ msgid "Choose subtree to place user in"
-#~ msgstr ""
-#~ "Wählen Sie den Teilbaum, in den der Benutzer eingepflegt werden soll"
-
-#~ msgid "Choose subtree to place terminal in"
-#~ msgstr ""
-#~ "Wählen Sie den Teilbaum, in den das Terminal eingepflegt werden soll"
-
-#~ msgid ""
-#~ "This menu allows you to remove and change the properties of GOsa tasks."
-#~ msgstr ""
-#~ "Dieses Menü erlaubt es Ihnen, GOsa-Aufgaben zu entfernen oder die "
-#~ "Eigenschaften zu verändern."
-
-#~ msgid "Pause job"
-#~ msgstr "Vorgang pausieren"
-
-#~ msgid "Resume job"
-#~ msgstr "Vorgang fortsetzen"
-
-#~ msgid "Execute now"
-#~ msgstr "Sofort ausführen"
-
-#~ msgid "Abort job"
-#~ msgstr "Vorgang abbrechen"
-
-#~ msgid "Submit"
-#~ msgstr "Übertragen"
-
-#~ msgid "Add user"
-#~ msgstr "Benutzer hinzufügen"
-
-#~ msgid "Add group"
-#~ msgstr "Gruppe hinzufügen"
-
-#~ msgid "Please select a printer!"
-#~ msgstr "Bitte wählen Sie einen Drucker!"
-
-#~ msgid "Please select a hotplug device!"
-#~ msgstr "Bitte wählen Sie ein Hotplug-Gerät!"
-
-#~ msgid "Add printer devices"
-#~ msgstr "Drucker hinzufügen"
-
-#~ msgid "Display printers matching"
-#~ msgstr "Zeige die Drucker, auf die Folgendes passt"
-
-#~ msgid "Regular expression for matching printer names"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Druckernamen"
-
-#~ msgid "Add hotplug devices"
-#~ msgstr "Hotplug-Geräte hinzufügen"
-
-#~ msgid "Hotplug management"
-#~ msgstr "Verwaltung der Hotplug-Geräte"
-
-#~ msgid "Select hotplug device to add"
-#~ msgstr "Auswahl des hinzuzufügenden Hotplug-Gerätes"
-
-#~ msgid "Choose the department the search will be based    on"
-#~ msgstr "Wählen Sie die Abteilung, auf die die Suchfunktion angewandt wird"
-
-#~ msgid "Display users matching"
-#~ msgstr "Zeige die Benutzer, auf die Folgendes passt"
-
-#~ msgid "Regular expression for        matching hotplugs"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Hotplug-Geräten"

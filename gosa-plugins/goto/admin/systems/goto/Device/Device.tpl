@@ -75,7 +75,7 @@
             <h3>{t}Orgaizational data{/t}</h3>
             <table>
                 <tr>
-                    <td><LABEL for='ou'>{t}Organizational unit{/t}</LABEL></td>
+                    <td><LABEL for='ou'>{t}Organizational Unit{/t}</LABEL></td>
                     <td>
                         {render acl=$ouACL}
                             <input type="text" name="ou" value="{$ou}" id="ou" value="{$ou}">
@@ -83,7 +83,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for='o'>{t}Organizaton{/t}</LABEL></td>
+                    <td><LABEL for='o'>{t}Organization{/t}</LABEL></td>
                     <td>
                         {render acl=$oACL}
                             <input type="text" name="o" value="{$o}" id="o" value="{$o}">
@@ -157,7 +157,7 @@
             <h3>{t}Network settings{/t}</h3>
             <table>
                 <tr>
-                    <td><LABEL for='ipHostNumber'>{t}IP-address{/t}</LABEL>
+                    <td><LABEL for='ipHostNumber'>{t}IP address{/t}</LABEL>
                     </td>
                     <td>
                         {render acl=$ipHostNumberACL}
@@ -166,7 +166,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for='macAddress'>{t}MAC-address{/t}</LABEL>
+                    <td><LABEL for='macAddress'>{t}MAC address{/t}</LABEL>
                     </td>
                     <td>
                         {render acl=$macAddressACL}

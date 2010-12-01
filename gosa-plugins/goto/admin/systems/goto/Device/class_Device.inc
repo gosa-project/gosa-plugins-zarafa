@@ -296,7 +296,7 @@ class Device extends plugin
                         "l" => _("Location"),
                         "description" => _("Description"),
                         "manager" => _("Manager"),
-                        "deviceUUID" => _("Uuid"),
+                        "deviceUUID" => _("UUID"),
                         "deviceStatus" => _("Status"),
                         "deviceType" => _("Type"),
                         "macAddress" => _("MAC address"),
