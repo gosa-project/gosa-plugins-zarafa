@@ -4,7 +4,7 @@ class pureftpdAccount extends plugin
 {
   /* Definitions */
   var $plHeadline= "FTP";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage FTP user settings";
 
   /* FTP attributes */
   var $FTPQuotaFiles = "";
