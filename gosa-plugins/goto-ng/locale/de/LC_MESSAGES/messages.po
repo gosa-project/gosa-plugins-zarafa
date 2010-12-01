@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-01 16:17+0100\n"
+"POT-Creation-Date: 2010-12-01 16:20+0100\n"
 "PO-Revision-Date: 2010-11-24 16:25+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -76,12 +76,12 @@ msgstr "Fehler"
 #: admin/newConfigManagement/class_newConfigManagement.inc:42
 #: admin/newConfigManagement/class_newConfigManagement.inc:95
 #, php-format
-msgid "Failed to load distributions, error was '%s'!"
-msgstr ""
+msgid "Failed to load distributions: %s"
+msgstr "Fehler beim Laden der Distributionen: %s"
 
 #: admin/newConfigManagement/class_newConfigManagement.inc:262
 msgid "No selectable install methods returned!"
-msgstr ""
+msgstr "Keine auswählbare Installationsmethode verfügbar!"
 
 #: admin/newConfigManagement/class_newConfigManagement.inc:263
 msgid "Setup"

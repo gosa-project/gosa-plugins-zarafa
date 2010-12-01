@@ -39,7 +39,7 @@ class newConfigManagement extends plugin
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getDistributions();
         if(!$rpc->success()){
-            msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions, error was '%s'!"), $rpc->get_error()),ERROR_DIALOG);
+            msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
         }
         foreach($res as $dist){
@@ -92,7 +92,7 @@ class newConfigManagement extends plugin
                 $res = $rpc->listConfigItems($data['name']);
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), 
-                            sprintf(_("Failed to load distributions, error was '%s'!"), 
+                            sprintf(_("Failed to load distributions: %s"), 
                                 $rpc->get_error()),ERROR_DIALOG);
                 }else{
                     $rpc = $this->config->getRpcHandle();

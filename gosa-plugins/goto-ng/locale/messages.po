@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-01 16:17+0100\n"
+"POT-Creation-Date: 2010-12-01 16:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 #: admin/newConfigManagement/class_newConfigManagement.inc:42
 #: admin/newConfigManagement/class_newConfigManagement.inc:95
 #, php-format
-msgid "Failed to load distributions, error was '%s'!"
+msgid "Failed to load distributions: %s"
 msgstr ""
 
 #: admin/newConfigManagement/class_newConfigManagement.inc:262

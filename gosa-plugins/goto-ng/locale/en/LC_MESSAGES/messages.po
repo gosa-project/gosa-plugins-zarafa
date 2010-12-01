@@ -50,7 +50,7 @@ msgstr ""
 #: admin/newConfigManagement/class_newConfigManagement.inc:42
 #: admin/newConfigManagement/class_newConfigManagement.inc:95
 #, php-format
-msgid "Failed to load distributions, error was '%s'!"
+msgid "Failed to load distributions: %s"
 msgstr ""
 
 #: admin/newConfigManagement/class_newConfigManagement.inc:262
