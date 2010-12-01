@@ -16,7 +16,7 @@ class nagiosAccount extends plugin
 {
   /* Definitions */
   var $plHeadline= "Nagios";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage personal Nagios settings";
 
   /* plugin specific values */
   var $NagiosAlias  = "";
