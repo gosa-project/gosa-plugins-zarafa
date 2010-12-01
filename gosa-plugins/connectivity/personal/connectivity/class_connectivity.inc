@@ -13,7 +13,7 @@ class connectivity extends plugin
 {
   /* Definitions */
   var $plHeadline= "Connectivity";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage connectivity user settings";
   var $plIcon = "plugins/connectivity/images/plugin.png";
 
   /* attribute list for save action */
