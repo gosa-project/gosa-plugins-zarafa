@@ -22,7 +22,7 @@ class oxchangeAccount extends plugin
 {
   /* Definitions */
   var $plHeadline= "Open-Xchange";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage Open-Xchange user settings";
 
   /* GW attributes */
   var $OXAppointmentDays="500";
