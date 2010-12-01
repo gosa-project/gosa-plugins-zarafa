@@ -66,7 +66,7 @@ class mailAccount extends plugin
 {
   /* Definitions */
   var $plHeadline     = "Mail";
-  var $plDescription  = "This does something";
+  var $plDescription  = "Manage personal mail settings";
   var $view_logged    = FALSE;
   var $is_account     = FALSE;
   var $initially_was_account = FALSE;
