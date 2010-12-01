@@ -28,9 +28,8 @@ msgid "WebDAV"
 msgstr "WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:7
-#, fuzzy
 msgid "Manage WebDAV user settings"
-msgstr "Allgemeine Benutzereinstellungen"
+msgstr "Persönliche WebDAV-Einstellungen verwalten"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:91
 #: personal/connectivity/webdav/class_webdavAccount.inc:146

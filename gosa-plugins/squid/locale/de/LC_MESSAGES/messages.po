@@ -28,9 +28,8 @@ msgid "Proxy"
 msgstr "Proxy"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:6
-#, fuzzy
 msgid "Manage Proxy user settings"
-msgstr "Allgemeine Benutzereinstellungen"
+msgstr "Persönliche Proxy-Einstellungen verwalten"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:92
 msgid "KB"

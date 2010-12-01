@@ -28,9 +28,8 @@ msgid "PPTP"
 msgstr "PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:27
-#, fuzzy
 msgid "Manage PPTP user settings"
-msgstr "Allgemeine Benutzereinstellungen"
+msgstr "Persönliche PPTP-Einstellungen verwalten"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:102
 #: personal/connectivity/pptp/class_pptpAccount.inc:157

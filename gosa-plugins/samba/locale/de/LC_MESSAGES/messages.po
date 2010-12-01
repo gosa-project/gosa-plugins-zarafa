@@ -77,7 +77,7 @@ msgstr "Windows Arbeitsstation"
 
 #: admin/systems/samba/class_winGeneric.inc:348
 msgid "RDN for samba machine account storage."
-msgstr ""
+msgstr "RDN zur Ablage von Samba-Maschinen-Konten."
 
 #: personal/samba/samba3.tpl:1
 msgid "Samba configuration"
@@ -106,7 +106,6 @@ msgid "Show information"
 msgstr "Zeige Information"
 
 #: personal/samba/samba3.tpl:51
-#, fuzzy
 msgid "Profile and script path settings"
 msgstr "Profil- und Skript-Pfad Einstellungen"
 
@@ -276,9 +275,8 @@ msgid "Samba"
 msgstr "Samba"
 
 #: personal/samba/class_sambaAccount.inc:25
-#, fuzzy
 msgid "Manage personal Samba settings"
-msgstr "Persönliche Filtereinstellungen bearbeiten"
+msgstr "Persönliche Samba-Einstellungen verwalten"
 
 #: personal/samba/class_sambaAccount.inc:259
 msgid "POSIX"

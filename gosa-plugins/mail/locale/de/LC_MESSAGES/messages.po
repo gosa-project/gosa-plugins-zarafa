@@ -651,11 +651,11 @@ msgstr "Mail-SMTP - Postfix"
 
 #: admin/systems/services/mail/class_goMailServer.inc:593
 msgid "File containing user defined protocols."
-msgstr ""
+msgstr "Datei mit benutzerdefinierten Protokollen"
 
 #: admin/systems/services/mail/class_goMailServer.inc:607
 msgid "File containing user defined restriction filters."
-msgstr ""
+msgstr "Datei mit benutzerdefinierten Restriction-Filtern."
 
 #: admin/systems/services/mail/class_goMailServer.inc:623
 #: admin/systems/services/mail/goMailServer.tpl:9
@@ -2239,9 +2239,8 @@ msgid "Your comment here"
 msgstr "Hier folgt Ihr Kommentar"
 
 #: personal/mail/class_mailAccount.inc:69
-#, fuzzy
 msgid "Manage personal mail settings"
-msgstr "Persönliche Filtereinstellungen bearbeiten"
+msgstr "Persönliche Mail-Einstellungen verwalten"
 
 #: personal/mail/class_mailAccount.inc:636
 #: personal/mail/class_mail-methods.inc:141
@@ -2306,11 +2305,13 @@ msgstr "Mein Konto"
 msgid ""
 "Remove mail boxes from the IMAP storage after they their user gets removed."
 msgstr ""
+"Postfächer auf dem IMAP-Server löschen, nachdem der dazugehörige Benutzer entfernt wurde."
 
 #: personal/mail/class_mailAccount.inc:1478
 msgid ""
 "Comma separated list of folders to be automatically created on user creation."
 msgstr ""
+"Komma-separierte Liste von Ordnern die automatisch bei der Benutzeranlage erzeugt werden sollen."
 
 #: personal/mail/class_mailAccount.inc:1492
 msgid "Add vacation information"
@@ -2403,178 +2404,3 @@ msgstr "Ohne Beschränkung"
 #: personal/mail/copypaste.tpl:4
 msgid "Address configuration"
 msgstr "Adress-Konfiguration"
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid ""
-#~ "The 'cyrusDeleteMailbox' statement determines if GOsa should remove the "
-#~ "mailbox from your IMAP server  or keep it after the account is deleted in "
-#~ "LDAP."
-#~ msgstr ""
-#~ "Die 'cyrusDeleteMailbox' Option legt fest, ob GOsa eine Mailbox von Ihrem "
-#~ "IMAP Server entfernen soll oder diese nach dem löschen eines Accounts "
-#~ "behalten soll."
-
-#~ msgid ""
-#~ "The 'cyrusAutocreateFolders' statement contains a comma seperated list of "
-#~ "personal IMAP folders that should be created along initial account "
-#~ "creation."
-#~ msgstr ""
-#~ "Die 'cyrusAutocreateFolders' Option enthält eine Komma separierte Liste "
-#~ "mit persönlichen IMAP Verzeichnissen, welche beim Anlegen des Accounts "
-#~ "mit angelegt werden sollen."
-
-#~ msgid ""
-#~ "The 'postfixProtocols' statement defines a file to include for the "
-#~ "postfix module in order to display user defined protocols."
-#~ msgstr ""
-#~ "Die 'postfixProtocols' Option beschreibt eine Datei, die im Postfix "
-#~ "Module verwendet wird, um eine Liste der verfügbaren Protokolle "
-#~ "anzuzeigen."
-
-#~ msgid ""
-#~ "The 'postfixRestrictionFilters' statement defines a file to include for "
-#~ "the postfix module in order to display user defined restriction filters."
-#~ msgstr ""
-#~ "Die 'postfixRestrictionFilters' Option beschreibt eine Datei, welche im "
-#~ "Postfix Module verwendet wird, um eine Liste mit Benutzer definierten "
-#~ "Filter Beschränkungen anzuzeigen."
-
-#~ msgid ""
-#~ "\n"
-#~ "      Maximum threads"
-#~ msgstr ""
-#~ "\n"
-#~ "Maximale Prozesszahl"
-
-#~ msgid "Admin user"
-#~ msgstr "Administrator"
-
-#~ msgid "Admin password"
-#~ msgstr "Administrator-Passwort:"
-
-#~ msgid "Un hold"
-#~ msgstr "Vorhalten aufheben"
-
-#~ msgid "Unhold all messages"
-#~ msgstr "Alle Nachrichten aus der Warteschleife durchstellen"
-
-#~ msgid "Unhold message"
-#~ msgstr "Nachricht aus der Warteschleife durchstellen"
-
-#~ msgid "Fileinto"
-#~ msgstr "Ablegen unter"
-
-#~ msgid "emtpy"
-#~ msgstr "leer"
-
-#~ msgid "Reload"
-#~ msgstr "Aktualisieren"
-
-#~ msgid "Select addresses to add"
-#~ msgstr "Wählen Sie die hinzuzufügenden Adressen"
-
-#~ msgid "Filters"
-#~ msgstr "Filter"
-
-#~ msgid "Display addresses of department"
-#~ msgstr "Zeige die Adressen der Abteilung"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Wählen Sie die Abteilung, auf die die Suchfunktion angewandt wird"
-
-#~ msgid "Display addresses matching"
-#~ msgstr "Zeige die Adressen, auf die das Folgende passt"
-
-#~ msgid "Regular expression for matching addresses"
-#~ msgstr "Regulärer Ausdruck zum Erkennen von Mail-Adressen"
-
-#~ msgid "Display addresses of user"
-#~ msgstr "Zeige Adressen des Benutzers"
-
-#~ msgid "User name of which addresses are shown"
-#~ msgstr "Benutzername, dessen Adressen angezeigt werden"
-
-#~ msgid "Folder administrators"
-#~ msgstr "Ordner-Administratoren"
-
-#~ msgid "Select a specific department"
-#~ msgstr "Wählen Sie eine bestimmte Abteilung"
-
-#~ msgid "Choose"
-#~ msgstr "Wählen"
-
-#~ msgid "Please enter a search string here."
-#~ msgstr "Bitte geben Sie einen Such-String ein."
-
-#~ msgid "with status"
-#~ msgstr "mit Status"
-
-#~ msgid "delete"
-#~ msgstr "Entfernen"
-
-#~ msgid "unhold"
-#~ msgstr "Vorhalten aufheben"
-
-#~ msgid "hold"
-#~ msgstr "vorhalten"
-
-#~ msgid "requeue"
-#~ msgstr "wieder einreihen"
-
-#~ msgid "header"
-#~ msgstr "Kopfzeilen"
-
-#~ msgid "Up"
-#~ msgstr "Auf"
-
-#~ msgid "Move up"
-#~ msgstr "Nach oben bewegen"
-
-#~ msgid "Down"
-#~ msgstr "Ab"
-
-#~ msgid "Move down"
-#~ msgstr "Nach unten bewegen"
-
-#~ msgid "Add new"
-#~ msgstr "Neu hinzufügen"
-
-#~ msgid "Add element above"
-#~ msgstr "Füge Element oberhalb ein"
-
-#~ msgid "Add element below"
-#~ msgstr "Füge Element unterhalb ein"
-
-#~ msgid "Move this object up one position"
-#~ msgstr "Verschiebe dieses Objekt um eine Position nach oben"
-
-#~ msgid "Move this object down one position"
-#~ msgstr "Verschiebe dieses Objekt um eine Position nach unten"
-
-#~ msgid "Remove this object"
-#~ msgstr "Dieses Objekt entfernen"
-
-#~ msgid "Create new script"
-#~ msgstr "Neues Skript erstellen"
-
-#~ msgid "Script length"
-#~ msgstr "Skript-Länge"
-
-#~ msgid "Remove script"
-#~ msgstr "Skript entfernen"
-
-#~ msgid "Edit script"
-#~ msgstr "Skript bearbeiten"
-
-#, fuzzy
-#~ msgid "Show users"
-#~ msgstr "Zeige Mail Benutzer"
-
-#, fuzzy
-#~ msgid "Show groups"
-#~ msgstr "Zeige Mail Gruppen"
-
-#~ msgid "Select department"
-#~ msgstr "Wählen Sie die Abteilung"

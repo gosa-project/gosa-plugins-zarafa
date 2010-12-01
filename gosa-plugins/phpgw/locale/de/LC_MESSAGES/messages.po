@@ -25,12 +25,11 @@ msgstr ""
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHPGroupware"
-msgstr "phpGroupware"
+msgstr "PHPGroupware"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:6
-#, fuzzy
 msgid "Manage PHPGroupware user settings"
-msgstr "phpGroupware-Konto Einstellungen"
+msgstr "Persönliche PHPGroupware-Konto Einstellungen verwalten"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:85
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:141
@@ -39,7 +38,7 @@ msgstr "LDAP-Fehler"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "PHPGroupware account settings"
-msgstr "phpGroupware-Konto Einstellungen"
+msgstr "PHPGroupware-Konto Einstellungen"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "Connectivity add-on"
@@ -51,7 +50,7 @@ msgstr "Mein Konto"
 
 #: personal/connectivity/phpgw/phpgw.tpl:5
 msgid "PHPGroupware account"
-msgstr "phpGroupware-Konto"
+msgstr "PHPGroupware-Konto"
 
 #~ msgid "This does something"
 #~ msgstr "Dies tut etwas"

@@ -193,9 +193,8 @@ msgid "SCALIX"
 msgstr "SCALIX"
 
 #: personal/scalix/class_scalixAccount.inc:17
-#, fuzzy
 msgid "Manage personal SCALIX settings"
-msgstr "Persönliche Filtereinstellungen bearbeiten"
+msgstr "Persönliche SCALIX-Einstellungen verwalten"
 
 #: personal/scalix/class_scalixAccount.inc:126
 msgid "This account has no SCALIX extensions."
@@ -280,36 +279,3 @@ msgstr "Mein Konto"
 #: personal/scalix/paste_generic.tpl:1
 msgid "SCALIX paste"
 msgstr "Scalix einfügen"
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid "List of scalix email addresses"
-#~ msgstr "Liste alternativer Scalix Email-Adressen"
-
-#, fuzzy
-#~ msgid "Scalix paste"
-#~ msgstr "Scalix-Konto"
-
-#~ msgid "Scalix email addresses"
-#~ msgstr "Scalix Email-Adressen"
-
-#~ msgid "Scalix account"
-#~ msgstr "Scalix-Konto"
-
-#~ msgid "Scalix settings"
-#~ msgstr "Scalix-Einstellungen"
-
-#~ msgid "Scalix server language"
-#~ msgstr "Scalix Serversprache"
-
-#~ msgid "Scalix Administrator"
-#~ msgstr "Scalix Administrator"
-
-#~ msgid "Scalix"
-#~ msgstr "Scalix"
-
-#~ msgid "Click the 'Edit' button below to change informations in this dialog"
-#~ msgstr ""
-#~ "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
-#~ "Dialog zu ändern"

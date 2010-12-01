@@ -28,9 +28,8 @@ msgid "FTP"
 msgstr "FTP"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:7
-#, fuzzy
 msgid "Manage FTP user settings"
-msgstr "Allgemeine Benutzereinstellungen"
+msgstr "Persönliche FTP-Einstellungen verwalten"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:140
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:236

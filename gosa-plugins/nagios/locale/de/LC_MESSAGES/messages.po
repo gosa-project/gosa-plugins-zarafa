@@ -31,9 +31,8 @@ msgid "Nagios"
 msgstr "Nagios"
 
 #: personal/nagios/class_nagiosAccount.inc:19
-#, fuzzy
 msgid "Manage personal Nagios settings"
-msgstr "Persönliche Filtereinstellungen bearbeiten"
+msgstr "Persönliche Nagios-Einstellungen verwalten"
 
 #: personal/nagios/class_nagiosAccount.inc:172
 #: personal/nagios/class_nagiosAccount.inc:257

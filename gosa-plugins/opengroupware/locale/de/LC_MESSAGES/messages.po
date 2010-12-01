@@ -47,9 +47,8 @@ msgid "Opengroupware account"
 msgstr "Opengroupware-Konto"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:7
-#, fuzzy
 msgid "Manage Opengroupware user settings"
-msgstr "Opengroupware Konto-Einstellungen"
+msgstr "Persönliche Opengroupware Konto-Einstellungen verwalten"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:169
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:175
@@ -58,20 +57,18 @@ msgid "Configuration error"
 msgstr "Konfigurations-Fehler"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:175
-msgid "Open Groupware database"
+msgid "Opengroupware database"
 msgstr "Opengroupware-Datenbank"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:183
-msgid "Open Groupware"
-msgstr "Open Groupware"
+msgid "Opengroupware"
+msgstr "Opengroupware"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:342
-#, fuzzy
 msgid "OpenGroupware.org account settings"
-msgstr "Opengroupware Konto-Einstellungen"
+msgstr "OpenGroupware.org Konto-Einstellungen"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:342
-#, fuzzy
 msgid "Connectivity add-on"
 msgstr "Konnektivitäts-Erweiterung"
 
@@ -80,26 +77,17 @@ msgid "My account"
 msgstr "Mein Konto"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:355
-#, fuzzy
 msgid "Server name used for OpenGroupware.org connections."
-msgstr "Opengroupware Konto-Einstellungen"
+msgstr "Opengroupware.org Server-Name"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:364
-#, fuzzy
 msgid "Password used OpenGroupware.org connections."
-msgstr "Opengroupware Konto-Einstellungen"
+msgstr "Passwort für die Verwendung von OpenGroupware.org"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:373
-#, fuzzy
 msgid "Username used for OpenGroupware.org connections."
-msgstr "Opengroupware Konto-Einstellungen"
+msgstr "Benutzername für die Verwendung von OpenGroupware.org"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:382
 msgid "Name of the database used for OpenGroupware.org connections."
-msgstr ""
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid "Opengroupware"
-#~ msgstr "Opengroupware"
+msgstr "Datenbankname für die Verwendung von OpenGroupware.org."

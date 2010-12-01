@@ -72,7 +72,7 @@ msgstr "Sudo-Rolle"
 
 #: admin/sudo/class_sudoGeneric.inc:539
 msgid "RDN for sudo rule storage."
-msgstr ""
+msgstr "RDN zur Ablage von Sudo-Regeln."
 
 #: admin/sudo/class_sudoGeneric.inc:547
 msgid "System trust"

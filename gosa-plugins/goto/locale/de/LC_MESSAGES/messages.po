@@ -1003,10 +1003,6 @@ msgstr "Wiederholen"
 msgid "Communication failed"
 msgstr "Kommunikation fehlgeschlagen"
 
-#: admin/ConfigManagement/failed.tpl:10
-msgid "Configuration error"
-msgstr "Konfigurationsfehler"
-
 #: admin/ConfigManagement/class_TemplateWidget_file.inc:9
 msgid "No file uploaded yet"
 msgstr "Bisher wurde keine Datei hochgeladen"
@@ -2664,13 +2660,12 @@ msgid "Workstation generic"
 msgstr "Arbeitsstation (Allgemein)"
 
 #: admin/systems/goto/class_workstationGeneric.inc:715
-#, fuzzy
 msgid "RDN for workstation storage."
-msgstr "Zeige Arbeitsstationen"
+msgstr "RDN für die Ablage von Arbeitsstationen."
 
 #: admin/systems/goto/class_workstationGeneric.inc:725
 msgid "Script to create system ISO images."
-msgstr ""
+msgstr "Skript zum Erzeugen von System-ISO-Abbildern."
 
 #: admin/systems/goto/class_workstationGeneric.inc:738
 msgid "Goto mode"
@@ -3095,9 +3090,8 @@ msgid "Terminal generic"
 msgstr "Terminal (Allgemein)"
 
 #: admin/systems/goto/class_terminalGeneric.inc:691
-#, fuzzy
 msgid "RDN for terminal storage."
-msgstr "Dieser 'DN' hat keine Terminal-Erweiterungen."
+msgstr "RDN für die Ablage von Thin-Clients."
 
 #: admin/systems/goto/class_terminalGeneric.inc:705
 msgid "Syslog server enabled"
@@ -4000,9 +3994,8 @@ msgid "Desktop"
 msgstr "Schreibtisch"
 
 #: personal/environment/class_environment.inc:10
-#, fuzzy
 msgid "Manage desktop settings"
-msgstr "Desktop-Einstellungen"
+msgstr "Desktop-Einstellungen verwalten"
 
 #: personal/environment/class_environment.inc:141
 #, php-format
@@ -4129,10 +4122,11 @@ msgstr "Befehl um die Liste der möglichen Auflösungen zu erweitern"
 msgid ""
 "File containing additional resolutions for workstations and thin clients."
 msgstr ""
+"Datei mit zusätzlichen Auflösungen für Arbeitsstationen und Thin-Clients."
 
 #: personal/environment/class_environment.inc:1796
 msgid "Directory to store KDE kiosk profiles."
-msgstr ""
+msgstr "Verzeichnis zur Ablage von KDE-Kiosk-Profilen."
 
 #: personal/environment/class_environment.inc:1808
 msgid "Profile server"

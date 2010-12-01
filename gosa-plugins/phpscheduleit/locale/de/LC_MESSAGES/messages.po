@@ -24,17 +24,16 @@ msgstr ""
 
 #: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
 msgid "phpScheduleIt account"
-msgstr "PHPscheduleit-Konto"
+msgstr "phpScheduleIt-Konto"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:165
 msgid "phpScheduleIt"
-msgstr "PHP Schedule It"
+msgstr "phpScheduleIt"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:28
-#, fuzzy
 msgid "Manage phpScheduleIt user settings"
-msgstr "PHP Schedule It Einstellungen"
+msgstr "Persönliche phpScheduleIt Einstellungen verwalten"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:88
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:145
@@ -43,7 +42,7 @@ msgstr "LDAP-Fehler"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:166
 msgid "phpScheduleIt settings"
-msgstr "PHP Schedule It Einstellungen"
+msgstr "phpScheduleIt Einstellungen"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:166
 msgid "Connectivity add-on"
@@ -52,9 +51,3 @@ msgstr "Konnektivitäts-Erweiterung"
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:170
 msgid "My account"
 msgstr "Mein Konto"
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid "PHPscheduleit"
-#~ msgstr "PHPscheduleit"

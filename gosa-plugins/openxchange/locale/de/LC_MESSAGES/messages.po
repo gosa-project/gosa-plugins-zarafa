@@ -30,9 +30,8 @@ msgid "Open-Xchange"
 msgstr "Open-Xchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
-#, fuzzy
 msgid "Manage Open-Xchange user settings"
-msgstr "Open-Xchange Konto-Einstellungen"
+msgstr "Persönliche Open-Xchange Einstellungen verwalten"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:188
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:192

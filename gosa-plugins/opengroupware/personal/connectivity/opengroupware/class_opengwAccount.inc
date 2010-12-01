@@ -172,7 +172,7 @@ class opengwAccount extends plugin
                 /* Check if config exists */
                 $tmp2 = $this->config->get_cfg_value("opengwAccount", 'database');
                 if(empty($tmp2)){
-                    msg_dialog::display(_("Configuration error"), msgPool::noserver(_("Open Groupware database")), ERROR_DIALOG);
+                    msg_dialog::display(_("Configuration error"), msgPool::noserver(_("Opengroupware database")), ERROR_DIALOG);
                 }else{
 
                     /* Create handle */
@@ -180,7 +180,7 @@ class opengwAccount extends plugin
 
                     /* Check if we are successfully connected to db */
                     if(!$this->handle->connected){
-                        msg_dialog::display(_("Configuration error"), msgPool::dbconnect(_("Open Groupware")), ERROR_DIALOG);
+                        msg_dialog::display(_("Configuration error"), msgPool::dbconnect(_("Opengroupware")), ERROR_DIALOG);
                     }else{
 
                         /* Assign LocationTeams */
