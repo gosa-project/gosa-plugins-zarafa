@@ -291,7 +291,7 @@ class Device extends plugin
                         "serialNumber" => _("Serial number"),
                         "seeAlso" => _("See also"),
                         "owner" => _("Owner"),
-                        "ou" => _("Organizational unit"),
+                        "ou" => _("Organizational Unit"),
                         "o" => _("Organization"),
                         "l" => _("Location"),
                         "description" => _("Description"),
