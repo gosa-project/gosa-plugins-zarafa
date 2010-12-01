@@ -25,7 +25,7 @@ class phpscheduleitAccount extends plugin
 {
   /* Definitions */
   var $plHeadline= "phpScheduleIt";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage phpScheduleIt user settings";
 
   /* attribute list for save action */
   var $attributes= array();
