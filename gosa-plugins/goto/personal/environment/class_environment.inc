@@ -7,7 +7,7 @@ class environment extends plugin
   /* attribute list for save action */
   var $ignore_account       = FALSE;
   var $plHeadline           = "Desktop";
-  var $plDescription        = "This does something";
+  var $plDescription        = "Manage desktop settings";
   var $dialog               = false;    // Indicates that we are currently editing in an seperate dialog
   
   var $in_dialog            = false;
