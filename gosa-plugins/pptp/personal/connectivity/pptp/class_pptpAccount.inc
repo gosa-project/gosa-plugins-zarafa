@@ -24,7 +24,7 @@ class pptpAccount extends plugin
 {
   /* Definitions */
   var $plHeadline= "PPTP";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage PPTP user settings";
 
   /* attribute list for save action */
   var $attributes= array();
