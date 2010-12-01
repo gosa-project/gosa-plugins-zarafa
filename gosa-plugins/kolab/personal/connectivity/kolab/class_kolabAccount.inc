@@ -3,7 +3,7 @@ class kolabAccount extends plugin
 {
   /* Definitions */
   var $plHeadline       = "Kolab";
-  var $plDescription    = "This does something";
+  var $plDescription    = "Manage Kolab user settings";
 
   /* Kolab attributes */
   var $kolabInvitationPolicy  = array();
