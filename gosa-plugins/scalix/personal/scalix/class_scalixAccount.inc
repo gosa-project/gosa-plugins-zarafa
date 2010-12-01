@@ -14,7 +14,7 @@ class scalixAccount extends plugin
 {
   /* Definitions */
   var $plHeadline   = "SCALIX";
-  var $plDescription= "This does something";
+  var $plDescription= "Manage personal SCALIX settings";
 
   /* plugin specific values - scalixUserClass */
   /* MUST */
