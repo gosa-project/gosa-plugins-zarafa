@@ -517,7 +517,7 @@ class workservice extends plugin
       $ldap->cd($this->config->current['BASE']);
       $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
     }
-      if ($ldap->count() == 1){
+      if ($ldap->count() >= 1){
         $this->member_of_ogroup = TRUE;
         $attrs= $ldap->fetch();
         $map= array("gotoXResolution", "gotoXColordepth", "gotoXKbModel", "gotoXKbLayout",
