@@ -162,7 +162,7 @@ class ogroup extends plugin
     $this->used_workstations = array();
     foreach($res as $og){
       if($og['dn'] == $this->dn) continue;
-      $test = array_intersect($ws_dns,$og['member']);
+      $test = array_intersect($ws_dns,LDAP::convert($og['member']));
       if(($og['gosaGroupObjects'][0] == "[W]" || $og['gosaGroupObjects'][0] == "[T]") && count($test)){
         $this->used_workstations = array_merge($this->used_workstations,$test);
       }
