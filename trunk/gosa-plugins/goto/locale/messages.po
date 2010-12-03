@@ -1860,6 +1860,13 @@ msgstr ""
 msgid "Mouse port"
 msgstr ""
 
+#: admin/systems/goto/class_workstationStartup.inc:94
+#, php-format
+msgid ""
+"This system is member of more than one object group, object group "
+"inheritence will not work!"
+msgstr ""
+
 #: admin/systems/goto/class_workstationStartup.inc:232
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
