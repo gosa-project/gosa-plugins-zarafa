@@ -1,3 +1,14 @@
+gosa (2.6.11-3) unstable; urgency=low
+
+  * Don't install gosa-core/contrib/desktoprc to /etc/gosa/desktoprc of
+    gosa-desktop package, as it is rewritten during configuration anyway
+    (Closes: #603426)
+  * Remove acl debug code (Closes: #603421)
+  * Correct typo error in contentcsv.tpl (Closes: #604745)
+  * Correct gosa 2.6 & assigned acl role to group
+
+ -- Benoit Mortier <benoit.mortier@opensides.be>  Sun, 05 Dec 2010 13:01:13 +0100
+
 gosa (2.6.11-2) unstable; urgency=low
 
   * Corrected wrong dirs on gosa-plugin-mail 
