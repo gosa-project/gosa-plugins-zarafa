@@ -62,6 +62,7 @@ class faiScriptEntry extends plugin
         msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       }else{
         $str = utf8_encode(addslashes(file_get_contents($_FILES['ImportFile']['tmp_name'])));
+        $str = preg_replace("/[\r]/","",$str);
         $this->FAIscript = $str;
       }
     }
