@@ -647,9 +647,9 @@ class mailgroup extends plugin
             if(isset($_POST['mail_acls_posted'])){
                 $new_acls = array();
                 foreach(array("__anyone__","__member__") as $attr){
-
-                    if(isset($_POST['acl_value_'.$attr])){ 
-                        $new_acls[$attr] = get_post('acl_value_'.$attr);
+                    $id = (isset($this->aclPostToId[$attr])) ? $this->aclPostToId[$attr] : -1;
+                    if(isset($_POST['acl_value_'.$id])){ 
+                        $new_acls[$attr] = get_post('acl_value_'.$id);
                     }else{
                         $new_acls[$attr] = $this->folder_acls[$attr];
                     }
