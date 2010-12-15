@@ -96,12 +96,11 @@ class mailgroup extends plugin
     $ldap = $this->config->get_ldap_link();
     if(isset($this->attrs['acl'])){
       for($i = 0; $i < $this->attrs['acl']['count'] ; $i++){
-        $str = trim($this->attrs['acl'][$i]);
 
         /* Be carefull here, since kolab22 uses spaces in the acls (herbert read anon/post)
          */
-        $name = trim(preg_replace("/^([^\s]*).*$/","\\1",$str));
-        $acl  = trim(preg_replace("/^[^\s]*+\s/","",$str));
+        $str = $this->attrs['acl'][$i];
+        list($name, $acl) = preg_split("/[ ]{1}/", $str, 2);
         if($name == "anyone") $name = "__anyone__";
         $this->folder_acls[$name] = $acl;
       }
