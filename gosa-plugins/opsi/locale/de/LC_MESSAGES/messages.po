@@ -424,7 +424,7 @@ msgstr "Softwarelizenzen"
 
 #: admin/opsiLicenses/class_opsiLicenses.inc:26
 msgid "Manage software licenses for Windows system deployments"
-msgstr "Verwalte Software-Lizenzen for Windows basierte Installationen"
+msgstr "Software-Lizenzen for Windows basierte Installationen verwalten"
 
 #: admin/opsiLicenses/licenseGeneric.tpl:13
 msgid "License settings"
