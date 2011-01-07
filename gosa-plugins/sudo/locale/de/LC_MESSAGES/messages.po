@@ -227,7 +227,7 @@ msgstr "Sudo-Rolle"
 
 #: admin/sudo/class_sudoManagement.inc:26
 msgid "Manage all aspects of system wide sudoers definitions"
-msgstr "Verwalte alle Aspekte der systemweiten Sudoers Definitionen"
+msgstr "Aspekte der systemweiten Sudoers Definitionen verwalten"
 
 #~ msgid ""
 #~ "The 'sudoRDN' statement defines the location where new sudo-roles will be "
