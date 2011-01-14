@@ -1910,7 +1910,7 @@ msgid ""
 "This system is member of more than one object group, object group "
 "inheritence will not work!"
 msgstr "Dieses System is Mitglied von mehr als einer Objektgruppe, "
-"Vererbung ist nicht möglich!"
+"Vererbung ist nicht mÃ¶glich!"
 
 #: admin/systems/goto/class_workstationStartup.inc:232
 #, php-format
