@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-11-05 13:24+0100\n"
-"PO-Revision-Date: 2011-02-21 00:27+0100\n"
+"PO-Revision-Date: 2011-03-01 00:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -2976,6 +2976,9 @@ msgid ""
 "Show messages that may assist plugin development. Be aware that this option "
 "may produce some ACL related false error messages!"
 msgstr ""
+"Mostrar los mensajes que pueden ayudar en el desarrollo de extensiones. "
+"¡Cuidado,"
+"esta opción puede producir mensajes de error falsos relacionados con ACL!"
 
 #: include/class_core.inc:340
 msgid ""
@@ -2983,27 +2986,32 @@ msgid ""
 "'On' because it enables efficient methods to create missing subtrees in the "
 "LDAP."
 msgstr ""
+"Activar verificación de esquema LDAP durante inicio de sesión. El paŕametro "
+"recomendado es 'Activo' porque permite crear subárboles no existentes en "
+"LDAP."
 
 #: include/class_core.inc:350
 msgid "Enable copy and paste for most objects managed by GOsa."
-msgstr ""
+msgstr "Permitir copiar y pegar para los objetos gestionados por GOsa."
 
 #: include/class_core.inc:360
 msgid "Enable PHP security checks for disabled register_global settings."
 msgstr ""
+"Activar comprobaciones de seguridad PHP para desactivar la configuración "
+"\"register globals\"."
 
 #: include/class_core.inc:370
 msgid "Enable automatic redirection to HTTPS based administration."
 msgstr ""
+"Permitir la redirección automática a la administración basada en HTTPS."
 
 #: include/class_core.inc:380
 msgid "Enable logging of detailed information of LDAP operations."
-msgstr ""
+msgstr "Permitir registrar información detallada sobre las operaciones LDAP."
 
 #: include/class_core.inc:390
-#, fuzzy
 msgid "Enable LDAP referral chasing."
-msgstr "Activar extensión DHCP"
+msgstr "Activar LDAP referral chasing."
 
 #: include/class_core.inc:400
 msgid ""
@@ -3012,73 +3020,86 @@ msgid ""
 "to produce problems on some LDAP servers (i.e. Sun DS) and needs to be "
 "lowered or disabled."
 msgstr ""
+"Indicar límite en el filtro de elementos LDAP. Si el límite no es 0. GOsa"
+"acelerará agrupando consultas en una consulta única. Se sabe que"
+"produce problemas en algunos servidores LDAP (p.e. Sun DS) y necesita"
+"ser rebajado o desactivado."
 
 #: include/class_core.inc:410
 msgid ""
 "Specify the maximum number of entries GOsa will request from an LDAP server. "
 "A warning is displayed if this limit is exceeded."
 msgstr ""
+"Especifica el número máximo de entradas GOsa que serán pedidas al servidor "
+"LDAP."
+"Un aviso será mostrado si el límite es sobrepasado."
 
 #: include/class_core.inc:420
 msgid "Disable checks for LDAP size limits."
-msgstr ""
+msgstr "Desactivar comprobaciones para limite tamaño de LDAP."
 
 #: include/class_core.inc:430
-#, fuzzy
 msgid "Enable warnings for non encrypted connections."
-msgstr "Forzar conexiones seguras"
+msgstr "Activar avisos para conexiones sin codificar."
 
 #: include/class_core.inc:440
 msgid "Enable compression for PPD files."
-msgstr ""
+msgstr "Activar compresión para ficheros PPD."
 
 #: include/class_core.inc:451
 msgid ""
 "DN of user with ACL checks disabled. This should only be used to restore "
 "lost administrative ACLs."
 msgstr ""
+"Desactivar la comprobación de ACL para el usuario con DN. Esto debería de"
+"ser usado para recuperar derechos administrativos y ACLs."
 
 #: include/class_core.inc:462
 msgid "Storage path for PPD files."
-msgstr ""
+msgstr "Ruta de almacenamiento de ficheros PPD."
 
 #: include/class_core.inc:472
 msgid ""
 "Number of seconds a LDAP query is allowed to take until GOsa aborts the "
 "request."
 msgstr ""
+"Número de segundos que durará una consulta LDAP hasta que GOsa cancele"
+"la consulta."
 
 #: include/class_core.inc:482
 msgid "Enables storing of user filters in browser cookies."
-msgstr ""
+msgstr "Activar almacenamiento de filtros de usuarios en cookies de navegador."
 
 #: include/class_core.inc:492
 msgid "Enables sending of compressed web page content."
-msgstr ""
+msgstr "Activar envío comprimido de contenido web."
 
 #: include/class_core.inc:503
 msgid "LDAP attribute which is used to detect changes."
-msgstr ""
+msgstr "Atributo LDAP que será usado para detectar cambios."
 
 #: include/class_core.inc:514
 msgid ""
 "ISO language code which is used to override the automatic language detection."
 msgstr ""
+"El código de lenguaje ISO que será usado para anular la detección automática "
+"de lenguaje."
 
 #: include/class_core.inc:525
 msgid "CSS and template theme to be used."
-msgstr ""
+msgstr "Tema para CSS y plantillas que será usado."
 
 #: include/class_core.inc:535
 msgid ""
 "Number of seconds after an inactive session expires. This may be overridden "
 "by some systems php.ini/crontab mechanism."
 msgstr ""
+"Número de segundos de inactividad para que una sesión expire. Puede ser"
+"anulado en algunos sistemas por un mecanismo php.ini/crontab."
 
 #: include/class_core.inc:545
-#, fuzzy
 msgid "Template engine compile directory."
-msgstr "Directorio de compilación Smarty"
+msgstr "Directorio de compilación sistema de plantillas."
 
 #: include/class_core.inc:555
 #, php-format
@@ -3086,235 +3107,290 @@ msgid ""
 "Logical AND of the integer values below that controls the debug output on "
 "every page load: %s"
 msgstr ""
+"AND lógico y valores enteros siguientes controlan la salida de depuración en"
+"la carga de cada página: %s"
 
 #: include/class_core.inc:576
 msgid ""
 "Command to create Samba NT/LM hashes. Required for password synchronization "
 "if you don't use supplementary services."
 msgstr ""
+"Comando para crear claves Samba NT/LM. Se necesita para sincronizar "
+"contraseñas"
+"si no se usan servicios suplementarios."
 
 #: include/class_core.inc:587
 msgid "Default hash to be used for newly created user passwords."
 msgstr ""
+"El método de codificación predeterminado que será usado para nuevas "
+"contraseñas de usuario."
 
 #: include/class_core.inc:596
 msgid ""
 "Enable checking for the presence of problematic unicode characters in "
 "passwords."
 msgstr ""
+"Activar la comprobación de la presencia de caracteres unicode problemáticos"
+"en contraseñas."
 
 #: include/class_core.inc:607
 msgid ""
 "Specify whether 'cn' or 'uid' style user DNs are generated. For more "
 "sophisticated control use the 'accountRDN' setting."
 msgstr ""
+"Indicar si se generarán DN tipo 'cn' o 'uid'. Para un control mas"
+"sofisticado use el parámetro 'accountRDN'."
 
 #: include/class_core.inc:617
 msgid "Location component for user storage inside of departments."
 msgstr ""
+"Componente de localización para almacenamiento de usuarios dentro de "
+"departamentos."
 
 #: include/class_core.inc:627
 msgid "Location component for group storage inside of departments."
 msgstr ""
+"Componente de localización para almacenamiento de grupos dentro de "
+"departamentos."
 
 #: include/class_core.inc:637
 msgid ""
 "Count base for group IDs. For dynamic ID assignment use the 'nextIdHook' "
 "setting."
 msgstr ""
+"Cuenta base para ID de grupos. Para asignación dinámica de ID use el"
+"parámetro 'nextIdHook'."
 
 #: include/class_core.inc:647
 msgid ""
 "Count base for user IDs. For dynamic ID assignment use the 'nextIdHook' "
 "setting."
 msgstr ""
+"Cuenta base para ID de usuarios. Para asignación dinámica de ID use el"
+"parámetro 'nextIdHook'."
 
 #: include/class_core.inc:657
 msgid ""
 "Lowest assignable group ID for use with the idAllocationMethod set to 'pool'."
 msgstr ""
+"El menor ID asignable de grupo para usarse con idAllocationMethod activado "
+"en 'reserva'."
 
 #: include/class_core.inc:667
 msgid ""
 "Highest assignable group ID for use with the idAllocationMethod set to "
 "'pool'."
 msgstr ""
+"El mayor ID asignable de grupo para usarse con idAllocationMethod activado "
+"en 'reserva'."
 
 #: include/class_core.inc:677
 msgid ""
 "Lowest assignable user ID for use with the idAllocationMethod set to 'pool'."
 msgstr ""
+"El menor ID asignable de usuario para usarse con idAllocationMethod activado "
+"en 'reserva'."
 
 #: include/class_core.inc:687
 msgid ""
 "Highest assignable user ID for use with the idAllocationMethod set to 'pool'."
 msgstr ""
+"El mayor ID asignable de usuario para usarse con idAllocationMethod activado "
+"en 'reserva'."
 
 #: include/class_core.inc:697
 msgid ""
 "Count base for user IDs. For dynamic ID assignment use the 'baseIdHook' "
 "setting."
 msgstr ""
+"Cuenta base para ID de usuarios. Para asignación dinámica de ID use el"
+"parámetro 'baseIdHook'."
 
 #: include/class_core.inc:707
-#, fuzzy
 msgid "Connection URL for use with the gosa-ng service."
-msgstr "¡Ha fallado la comunciación con el servicio de infraestructura!"
+msgstr "Dirección de conexión para usarse con el servicio gosa-ng."
 
 #: include/class_core.inc:717
 msgid "User name used to connect to the 'gosaRpcServer'."
-msgstr ""
+msgstr "Nombre de usuario necesario para conectarse con 'gosaRpcServer'."
 
 #: include/class_core.inc:727
 msgid "Password used to connect to the 'gosaRpcServer'."
-msgstr ""
+msgstr "Contraseña necesaria para conectarse con 'gosaRpcServer'."
 
 #: include/class_core.inc:737
-#, fuzzy
 msgid "Connection URI for use with the gosa-si service (obsolete)."
-msgstr "Ha fallado la comunciación con el servicio de infraestructura: %s"
+msgstr "Dirección de conexión para usarse con el servicio gosa-si (obsoleto)."
 
 #: include/class_core.inc:747
 msgid "Number of seconds after a gosa-si connection is considered 'dead'."
 msgstr ""
+"Número de segundos después que una conexión gosa-si sea considerada 'muerta'."
 
 #: include/class_core.inc:758
 msgid "User attribute which is used for log in."
-msgstr ""
+msgstr "Atributo de usuario que será usado para inicio de sesión."
 
 #: include/class_core.inc:769
-#, fuzzy
 msgid "Local time zone."
-msgstr "Localización"
+msgstr "Zona horaria local."
 
 #: include/class_core.inc:779
 msgid ""
 "Enable tagging of administrative units. This can be used in conjunction with "
 "ACLs (obsolete)."
 msgstr ""
+"Activar marcado de unidades administrativas. Se puede usar en conjunción con"
+"ACLs (obsoleto)."
 
 #: include/class_core.inc:789
 msgid "Enable the use of {sasl} instead of {kerberos} for user realms."
 msgstr ""
+"Activar el uso de [sasl] en lugar de {kerberos} para dominio de usuario."
 
 #: include/class_core.inc:799
 msgid ""
 "Enable RFC 2307bis style groups. This combines the use of 'member' and "
 "'memberUid' attributes."
 msgstr ""
+"Activar grupos tipo 2307bis. Esto permite combinar el uso de atributos"
+"'miembros' y 'memberUid'."
 
 #: include/class_core.inc:809
 msgid ""
 "Adjusts the user DN generation to include the users personal title (only in "
 "conjunction with accountPrimaryAttribute)."
 msgstr ""
+"Ajustar la generación del DN de usuario para incluir el título personal del"
+"usuario (solo en conjunto con accountPrimaryAttribute)."
 
 #: include/class_core.inc:819
 msgid "Script to be called for finding the next free id for groups or users."
 msgstr ""
+"Script que será llamado para encontrar el siguiente id libre para grupos y "
+"usuarios."
 
 #: include/class_core.inc:828
 msgid ""
 "Descriptive string for the automatic ID generator. Please read the FAQ file "
 "for more information."
 msgstr ""
+"Cadena descriptiva para el generador de ID automáticos. Por favor lea el"
+"fichero FAQ para mas información."
 
 #: include/class_core.inc:838
 msgid "Enable strict checking for user IDs and group names."
-msgstr ""
+msgstr "Activar comprobación estricta para ID de usuario y nombres de grupos."
 
 #: include/class_core.inc:848
 msgid ""
 "Lowest assignable user or group ID. Only active if idAllocationMethod is set "
 "to 'traditional'."
 msgstr ""
+"El menor ID asignable para usuarios o grupos. Activar solo si "
+"idAllocationMethod"
+"está configurado en 'tradicional'."
 
 #: include/class_core.inc:859
 msgid "Attribute to be used for primary mail addresses."
-msgstr ""
+msgstr "Atributo para ser usado como dirección de correo primaria."
 
 #: include/class_core.inc:869
 msgid "Namespace used for shared folders."
-msgstr ""
+msgstr "Espacio de nombres usada para carpetas compartidas."
 
 #: include/class_core.inc:879
 msgid ""
 "Namespace rule to create user folders. Please read the FAQ file for more "
 "information."
 msgstr ""
+"Espacio de nombres para crear carpetas de usuarios. Por favor lea el fichero "
+"FAQ"
+"para mayor información."
 
 #: include/class_core.inc:889
 msgid ""
 "Namespace rule to create folders. Please read the FAQ file for more "
 "information."
 msgstr ""
+"Espacio de nombres para crear carpetas.  Por favor lea el fichero FAQ"
+"para mayor información."
 
 #: include/class_core.inc:899
 msgid "Seconds after an IMAP connection is considered dead."
-msgstr ""
+msgstr "Segundos transcurridos para que una conexión IMAP se considere muerta."
 
 #: include/class_core.inc:910
 msgid "Class name of the mail method to be used."
-msgstr ""
+msgstr "Nombre de clase del método de correo que será usado."
 
 #: include/class_core.inc:920
 msgid ""
 "Enable slashes instead of dots as a name space separator for Cyrus IMAP."
 msgstr ""
+"Permitir barras en lugar de puntos como separador del espacio de nombres "
+"para IMAP Cyrus."
 
 #: include/class_core.inc:930
 msgid ""
 "Directory to store vacation templates. Please read the FAQ file for more "
 "information."
 msgstr ""
+"Directorio para guardar plantillas de vacaciones. Por favor lea el fichero "
+"FAQ"
+"para mayor información."
 
 #: include/class_core.inc:940
-#, fuzzy
 msgid "Enable TLS for LDAP connections."
-msgstr "Conexión LDAP"
+msgstr "Activar TLS para conexiones LDAP."
 
 #: include/class_core.inc:950
 msgid "Enable IVBB used by german authorities."
-msgstr ""
+msgstr "Activar IVBB, usado por las autoridades alemanas."
 
 #: include/class_core.inc:960
 msgid ""
 "Maintain sambaIdmapEntry objects to improve performance on some Samba "
 "versions."
 msgstr ""
+"Mantener los objetos sambaIdmapEntry para mejorar el rendimiento en algunas"
+"versiones de Samba."
 
 #: include/class_core.inc:970
 msgid "Enable checks to determine whether an account is expired or not."
 msgstr ""
+"Activar comprobaciones para determinar cuando una cuenta ha caducado o no."
 
 #: include/class_core.inc:980
 msgid ""
 "String containing the SID for Samba setups without the Domain object in LDAP."
 msgstr ""
+"Cadena que tiene el SID de dominio Samba sin que exista el objeto Dominio en "
+"LDAP."
 
 #: include/class_core.inc:990
 msgid ""
 "String containing the RID base for Samba setups without the Domain object in "
 "LDAP."
 msgstr ""
+"Cadena que tiene el RID de dominio Samba sin que exista el objeto Dominio en "
+"LDAP."
 
 #: include/class_core.inc:1000
-#, fuzzy
 msgid "Enable manual object snapshots."
-msgstr "Creando instantaneas de objetos"
+msgstr "Activar instantáneas de objetos manuales."
 
 #: include/class_core.inc:1010
 msgid "Base DN for snapshot storage."
-msgstr ""
+msgstr "DN Base para almacenamiento de instantáneas."
 
 #: include/class_core.inc:1020
-#, fuzzy
 msgid "DN of the snapshot administrator."
-msgstr "Administradores del dominio"
+msgstr "DN del administrador de instantáneas"
 
 #: include/class_core.inc:1030
 msgid "Password of the snapshot administrator."
-msgstr ""
+msgstr "Contraseña del administrador de instantáneas"
 
 #: include/class_core.inc:1041
 msgid ""
@@ -3327,19 +3403,18 @@ msgid "URI of server to be used for snapshots."
 msgstr ""
 
 #: include/class_pluglist.inc:147
-#, fuzzy
 msgid "The configuration format has changed: please run the setup again!"
 msgstr ""
-"¡El formato de la configuración ha cambiado. Por favor use el asistente de "
+"¡El formato de la configuración ha cambiado. Por favor vuela a usar el "
+"asistente de "
 "configuración!"
 
 #: include/class_pluglist.inc:304
-#, fuzzy
 msgid ""
 "You are currently editing a database entry. Do you want to discard the "
 "changes?"
 msgstr ""
-"Esta actualmente editando una entrada de base de datos.¿Quiere desestimar "
+"Esta actualmente editando una entrada de base de datos.¿Quiere descartar"
 "los cambios?"
 
 #: include/class_pluglist.inc:479 plugins/generic/references/contents.tpl:18
@@ -5976,9 +6051,8 @@ msgid "Edit personal settings"
 msgstr "Editar parametros de usuarios POSIX"
 
 #: plugins/personal/myaccount/nochange.tpl:5
-#, fuzzy
 msgid "Your password hash method will not be changed!"
-msgstr "Su contraseña se ha cambiado correctamente."
+msgstr ""
 
 #: setup/class_setupStep_Feedback.inc:94
 msgid "UNIX accounts/groups"
