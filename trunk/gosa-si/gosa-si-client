@@ -76,6 +76,8 @@ our $client_force_hostname;
 our $server_key;
 our $opts_dnslookup;
 
+our $FIFO_FD = undef;
+
 # default variables
 our $REGISTERED = 0;
 our $REGISTRATION_IN_PROGRESS = 0;
@@ -822,8 +824,16 @@ sub trigger_logged_in_users_report {
 			@logged_in_user_list = split(/\s/, $result);
 		}
 		
-        system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si-client.socket"); 
+       $FIFO_FD = undef
+           if (! defined $FIFO_FD && ! defined open($FIFO_FD, '>', $gosa_si_client_fifo));
+       if (! defined $FIFO_FD) {
+           daemon_log("ERROR: unable to open fifo for writing: $!", 1);
+           $kernel->delay_set('trigger_logged_in_users_report', 30);
+       }
+       else {
+           print($FIFO_FD 'CURRENTLY_LOGGED_IN ' . join(" ", @logged_in_user_list));
         $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
+       }
     } else {
         # try it in 10 sec again
         $kernel->delay_set('trigger_logged_in_users_report', 10);
@@ -881,9 +891,8 @@ sub trigger_seen_messages {
             my $send_error = &send_msg_to_target($confirm_msg, $server_address, $server_key);
 
             # Delete file
-            if (not $send_error) {
-                system("rm $goto_dir/$goto_file");
-            }
+            unlink("$goto_dir/$goto_file")
+                if (! $send_error);
         }
     }
 
@@ -1031,6 +1040,7 @@ sub _stop {
     $kernel->alias_remove($heap->{alias});
     $kernel->alarm_remove_all();
     $kernel->post($heap->{child_session}, '_stop');
+    close( $FIFO_FD ) if( defined $FIFO_FD );
 }
 
 
@@ -1263,6 +1273,19 @@ daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 
 # delete old DBsqlite lock files
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 
+# (re-)create FIFO
+if (-e $gosa_si_client_fifo) {
+    daemon_log("INFO: $gosa_si_client_fifo exists - deleting", 5);
+    if (1 != unlink($gosa_si_client_fifo)) {
+        daemon_log("ERROR: unable to delete '$gosa_si_client_fifo': $!", 1);
+        exit( 1 );
+    }
+}
+if (! defined POSIX::mkfifo($gosa_si_client_fifo, "0600")) {
+    daemon_log("ERROR: failed creating fifo: $!", 1);
+    exit( 1 );
+}
+
 # Just fork, if we are not in foreground mode
 if( ! $foreground ) {
     if (! chdir('/')) {
@@ -1339,10 +1362,6 @@ $default_server_key = $server_key;
 
 # Find servers from config and DNS
 &find_servers;
-
-# open fifo for non-gosa-si-client-msgs to gosa-si-server
-POSIX::mkfifo("$gosa_si_client_fifo", "0600");
-
 
 POE::Session->create(
 	inline_states => {
