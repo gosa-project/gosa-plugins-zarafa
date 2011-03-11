@@ -1235,33 +1235,6 @@ GetOptions("h|help" => \&usage,
 &read_configfile($cfg_file, %cfg_defaults);
 &check_pid;
 
-# forward error messages to logfile
-if ( ! $foreground ) {
-  open( STDIN,  '+>/dev/null' );
-  open( STDOUT, '+>&STDIN'    );
-  open( STDERR, '+>&STDIN'    );
-}
-
-# Just fork, if we are not in foreground mode
-if( ! $foreground ) { 
-    chdir '/'                 or die "Can't chdir to /: $!";
-    $pid = fork;
-    setsid                    or die "Can't start a new session: $!";
-    umask 0;
-} else { 
-    $pid = $$; 
-}
-
-# Do something useful - put our PID into the pid_file
-if( 0 != $pid ) {
-    open( LOCK_FILE, ">$pid_file" );
-    print LOCK_FILE "$pid\n";
-    close( LOCK_FILE );
-    if( !$foreground ) { 
-        exit( 0 ) 
-    };
-}
-
 # parse head url and revision from svn
 my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
 $client_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
@@ -1289,6 +1262,39 @@ daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 
 
 # delete old DBsqlite lock files
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
+
+# Just fork, if we are not in foreground mode
+if( ! $foreground ) {
+    if (! chdir('/')) {
+        daemon_log("ERROR: Can't chdir to /: $!");
+        exit( 1 );
+    }
+    umask( 0 );
+    $pid = fork;
+} else { 
+    $pid = $$; 
+}
+
+if( 0 != $pid ) {
+    # Parent: put our PID into the $pid_file
+    open( LOCK_FILE, ">$pid_file" );
+    print LOCK_FILE "$pid\n";
+    close( LOCK_FILE );
+    if( !$foreground ) {
+        exit( 0 );
+    }
+}
+else {
+    # Child
+    open( STDIN,  '+>/dev/null' );
+    open( STDOUT, '+>&STDIN'    );
+    open( STDERR, '+>&STDIN'    );
+    if (! POSIX::setsid()) {
+        deamon_log("ERROR: Can't start a new session: $!", 1);
+        exit( 1 );
+    }
+    $poe_kernel->has_forked() if ($poe_kernel->can('has_forked'));
+}
 
 # detect ip and mac address and complete host address
 $client_address = $client_ip.":".$client_port;
