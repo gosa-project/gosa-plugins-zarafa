@@ -510,27 +510,42 @@ sub password_check {
 
 }
 
-
-#===  FUNCTION  ================================================================
-#         NAME:  sig_int_handler
-#   PARAMETERS:  signal - string - signal arose from system
-#      RETURNS:  nothing
-#  DESCRIPTION:  handels tasks to be done befor signal becomes active
-#===============================================================================
-sub sig_int_handler {
-    my ($signal) = @_;
-
-#	if (defined($ldap_handle)) {
-#		$ldap_handle->disconnect;
-#	}
-    # TODO alle verbliebenden ldap verbindungen aus allen heaps beenden
-    
-
-    daemon_log("shutting down gosa-si-server", 1);
-    system("kill `ps -C gosa-si-server -o pid=`");
+sub clean_shutdown
+{
+    unlink($pid_file) if (-w $pid_file);
+    unlink($packages_list_under_construction) if (-w $packages_list_under_construction);
 }
-$SIG{INT} = \&sig_int_handler;
 
+sub sig_int_or_term_handler
+{
+    my ($signal) = @_;
+    daemon_log("Got SIG${signal} - shutting down gosa-si-server", 1);
+    clean_shutdown();
+    POE::Kernel->signal('gosa-si_server_session', 'KILL');
+    POE::Kernel->signal('TCP_SERVER', 'KILL');
+    return 1;
+}
+
+sub sig_warn_handler
+{
+    my @loc = caller(0);
+    daemon_log( "SIGWARN line " . $loc[2] . ": " . $_[0], 1 );
+    return 1;
+}
+
+sub sig_die_handler
+{
+    my @loc = caller(0);
+    daemon_log( "SIGDIE line " . $loc[2] . ": " . $_[0], 1 );
+    clean_shutdown();
+    return 1;
+}
+
+$SIG{'INT'} = \&sig_int_or_term_handler;
+$SIG{'TERM'} = \&sig_int_or_term_handler;
+$SIG{'__WARN__'} = \&sig_warn_handler;
+$SIG{'__DIE__'} = \&sig_die_handler;
+$SIG{'USR1'} = 'IGNORE';
 
 sub check_key_and_xml_validity {
     my ($crypted_msg, $module_key, $session_id) = @_;
@@ -1056,14 +1071,6 @@ sub reactivate_job_with_delay {
 }
 
 
-sub sig_handler {
-	my ($kernel, $signal) = @_[KERNEL, ARG0] ;
-	daemon_log("0 INFO got signal '$signal'", 1); 
-	$kernel->sig_handled();
-	return;
-}
-
-
 sub msg_to_decrypt {
 	my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
 	my $session_id = $session->ID;
@@ -1564,12 +1571,12 @@ sub process_task {
 
 sub session_start {
     my ($kernel) = $_[KERNEL];
+    $kernel->alias_set('gosa-si_server_session');
     $global_kernel = $kernel;
     $kernel->yield('register_at_foreign_servers');
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
     $kernel->yield('watch_for_next_tasks');
-	$kernel->sig(USR1 => "sig_handler");
 	$kernel->sig(USR2 => "recreate_packages_db");
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
@@ -1583,9 +1590,14 @@ sub session_start {
     if ($opsi_enabled eq "true") {
         $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay); 
     }
-
 }
 
+sub session_stop {
+    my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
+    $kernel->alias_remove($heap->{alias});
+    $kernel->alarm_remove_all();
+    $kernel->post($heap->{child_session}, '_stop');
+}
 
 sub watch_for_done_jobs {
 	#CHECK: $heap for what?
@@ -3498,8 +3510,8 @@ daemon_log("0 INFO: start socket for incoming xml messages at port '$server_port
 POE::Session->create(
 	inline_states => {
 		_start => \&session_start,
+        _stop => \&session_stop,
         register_at_foreign_servers => \&register_at_foreign_servers,
-        sig_handler => \&sig_handler,
         next_task => \&next_task,
         task_result => \&handle_task_result,
         task_done   => \&handle_task_done,
