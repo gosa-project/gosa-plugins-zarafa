@@ -3231,32 +3231,39 @@ $adm_gid = getgrnam('adm');
 
 $SIG{CHLD} = 'IGNORE';
 
-# forward error messages to logfile
-if( ! $foreground ) {
-  open( STDIN,  '+>/dev/null' );
-  open( STDOUT, '+>&STDIN'    );
-  open( STDERR, '+>&STDIN'    );
-}
-
 # Just fork, if we are not in foreground mode
 if( ! $foreground ) { 
-    chdir '/'                 or die "Can't chdir to /: $!";
+    if (! chdir('/')) {
+        daemon_log("Can't chdir to /: $!", 1);
+        exit( 1 );
+    }
+    umask( 0 );
     $pid = fork;
-    setsid                    or die "Can't start a new session: $!";
-    umask 0;
 } else { 
     $pid = $$; 
 }
 
-# Do something useful - put our PID into the pid_file
 if( 0 != $pid ) {
+    # Parent: put PID into the $pid_file
     open( LOCK_FILE, ">$pid_file" );
     print LOCK_FILE "$pid\n";
     close( LOCK_FILE );
     if( !$foreground ) { 
-        exit( 0 ) 
-    };
+        exit( 0 );
 }
+}
+else {
+    # Child
+    open( STDIN,  '+>/dev/null' );
+    open( STDOUT, '+>&STDIN'    );
+    open( STDERR, '+>&STDIN'    );
+    if (! POSIX::setsid()) {
+        daemon_log("Can't start a new session: $!");
+        exit( 1 );
+    }
+    $poe_kernel->has_forked() if ($poe_kernel->can('has_forked'));
+}
+
 
 # parse head url and revision from svn
 my $server_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
