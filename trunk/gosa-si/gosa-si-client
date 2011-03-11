@@ -221,15 +221,43 @@ sub check_pid {
     }
 }
 
-
-sub sig_int_handler {
-    my ($signal) = @_;
-	
-    daemon_log("shutting down gosa-si-client", 1);
-    system("kill `ps -C gosa-si-client -o pid=`");
+sub clean_shutdown
+{
+    unlink($pid_file) if (-w $pid_file);
+    unlink($gosa_si_client_fifo) if (-S $gosa_si_client_fifo);
 }
-$SIG{INT} = \&sig_int_handler;
 
+sub sig_int_or_term_handler
+{
+    my ($signal) = @_;
+    daemon_log("Got SIG${signal} - shutting down gosa-si-client", 1);
+    clean_shutdown();
+    POE::Kernel->signal('client_session', 'KILL');
+    POE::Kernel->signal('gosa-si-client', 'KILL');
+    return 1;
+}
+
+sub sig_warn_handler
+{
+    my @loc = caller(0);
+    daemon_log( "SIGWARN line " . $loc[2] . ": " . $_[0], 1 );
+    return 1;
+}
+	
+sub sig_die_handler
+{
+    my @loc = caller(0);
+    daemon_log( "SIGDIE line " . $loc[2] . ": " . $_[0], 1 );
+    clean_shutdown();
+    return 1;
+}
+
+$SIG{'INT'} = \&sig_int_or_term_handler;
+$SIG{'TERM'} = \&sig_int_or_term_handler;
+$SIG{'__WARN__'} = \&sig_warn_handler;
+$SIG{'__DIE__'} = \&sig_die_handler;
+$SIG{'USR1'} = 'IGNORE';
+$SIG{'USR2'} = 'IGNORE';
 
 #===  FUNCTION  ================================================================
 #         NAME:  logging
@@ -630,10 +658,8 @@ sub register_at_gosa_si_server {
                 last;
 
 	  		# delivery of registration msg failed	
-			} else {
-        		# wait 1 sec until trying to register again
-				sleep(1);
-				next;
+			} elsif($REGISTRATION_TRIES >= scalar(@servers)) {
+				last;
 			}
 
     } # end of while
@@ -970,21 +996,11 @@ sub save_fai_log {
 }
 
 
-sub sig_handler {
-	my ($kernel, $signal) = @_[KERNEL, ARG0] ;
-	daemon_log("0 INFO got signal '$signal'", 1); 
-	$kernel->sig_handled();
-	return;
-}
-
-
 sub _start {
     my ($kernel, $heap) = @_[KERNEL, HEAP];
     $kernel->alias_set('client_session');
     $global_kernel = $kernel;       # this is used to throw events at each point of the skript
  
-    $kernel->sig(USR1 => "sig_handler");
-
     # force a registration at a gosa-si-server
     $kernel->yield('register_at_gosa_si_server');
     
@@ -1005,6 +1021,16 @@ sub _start {
     }
     $kernel->yield('trigger_logged_in_users_report'); 
     $kernel->yield('trigger_seen_messages');
+}
+
+
+sub _stop {
+    my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
+    delete $heap->{'services'};
+    delete $heap->{'watchers'};
+    $kernel->alias_remove($heap->{alias});
+    $kernel->alarm_remove_all();
+    $kernel->post($heap->{child_session}, '_stop');
 }
 
 
@@ -1315,8 +1341,8 @@ POSIX::mkfifo("$gosa_si_client_fifo", "0600");
 POE::Session->create(
 	inline_states => {
 		_start => \&_start, 
+        _stop => \&_stop,
         _default => \&_default,
-        sig_handler => \&sig_handler,
         register_at_gosa_si_server => \&register_at_gosa_si_server,
 
         # trigger periodical tasks
