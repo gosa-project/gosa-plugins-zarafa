@@ -154,7 +154,7 @@ class mailAccount extends plugin
 
     /* Initialize configured values 
      */ 
-    if($this->is_account){
+    if($this->is_account && !$this->is_template){
 
       if($this->mailMethod->connect() && $this->mailMethod->account_exists()){
 
@@ -497,7 +497,7 @@ class mailAccount extends plugin
      */
     $smarty->assign("spamlevel", $this->SpamLevels);
     $smarty->assign("spambox"  , $this->MailBoxes);
-
+    $smarty->assign("is_template", $this->is_template);
     $smarty->assign("multiple_support",$this->multiple_support_active);  
     return($display.$smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
   }
@@ -514,11 +514,11 @@ class mailAccount extends plugin
       $server = $this->gosaMailServer;
       plugin::save_object();
 
-      if(!$this->mailMethod->isModifyableServer() && $this->initially_was_account){
+      if(!$this->mailMethod->isModifyableServer() && $this->initially_was_account && !$this->is_template){
         $this->gosaMailServer = $server;
       }
 
-      if(!$this->mailMethod->isModifyableMail() && $this->initially_was_account){
+      if(!$this->mailMethod->isModifyableMail() && $this->initially_was_account && !$this->is_template){
         $this->mail = $mail;
       }else{
 
