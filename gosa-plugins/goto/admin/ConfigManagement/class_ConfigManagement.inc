@@ -65,7 +65,6 @@ class ConfigManagement extends management
         
         // Try to initialize
         $this->init();
-        $this->setInstallMethod('puppet');
         $this->rebuildListing();
     }
 
