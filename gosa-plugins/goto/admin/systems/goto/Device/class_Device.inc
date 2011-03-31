@@ -33,6 +33,8 @@ class Device extends plugin
     
     private $resolvedNamesCache = array();
 
+    public $ignore_account = TRUE;
+
 
     /*! \brief  Constructs the device object and keep some 
      *           initial values.
@@ -229,6 +231,9 @@ class Device extends plugin
      */ 
     function save()
     {
+
+        
+
         plugin::save();
 
         // Append and remove dynmic object classes
