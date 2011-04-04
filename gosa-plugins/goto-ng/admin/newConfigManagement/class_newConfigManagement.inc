@@ -75,7 +75,14 @@ class newConfigManagement extends plugin
         if(isset($_POST['ROOT'])){
             $this->setCurrentContainer('/root');
         }elseif(isset($_POST['BACK'])){
-            $this->setCurrentContainer('/root');
+
+            $path = $this->selectedContainer;
+            if($this->dataModel->itemExistsByPath($path)){
+                $data = $this->dataModel->getItemByPath($path);
+                if($data['parentPath']){
+                    $this->setCurrentContainer($data['parentPath']);
+                }
+            }
         }else{
             $this->setCurrentContainer($cont);
         }
