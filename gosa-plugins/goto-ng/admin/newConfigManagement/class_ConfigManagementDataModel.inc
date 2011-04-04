@@ -2,9 +2,9 @@
 
 class ConfigManagementDataModel
 {
-    private $data = array();
-    private $typeToPath = array();
-    private $idToPath = array();
+    public $data = array();
+    public $typeToPath = array();
+    public $idToPath = array();
 
     function __construct()
     {
@@ -18,8 +18,6 @@ class ConfigManagementDataModel
     {
         return($this->data);
     }
-
-    
 
 
     function addItem($type, $path, $name, $values = array(), $status = "")
@@ -66,6 +64,16 @@ class ConfigManagementDataModel
     function pathToDn($path)
     {
         
+    }
+
+    function hasChildren($path)
+    {
+        if( $this->itemExistsByPath($path) && 
+            $this->data['linear'][$path]['children'] && 
+            count($this->data['linear'][$path]['children'] )){
+                return(TRUE);
+        }
+        return(FALSE);
     }
 
     function itemExistsByPath($path)

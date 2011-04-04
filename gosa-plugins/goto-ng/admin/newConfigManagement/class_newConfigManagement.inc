@@ -37,6 +37,7 @@ class newConfigManagement extends plugin
         // Load distributions 
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getDistributions();
+
         if(!$rpc->success()){
             msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
@@ -47,10 +48,10 @@ class newConfigManagement extends plugin
                     $distPath = "/root/{$dist['name']}";
                     $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
 
-                    foreach($dist['components'] as $component){
-                        $comPath = "{$distPath}/{$release['name']}";
-                        $this->dataModel->addItem('Component',$comPath, $component['name'], $component);
-                    }
+                   # foreach($dist['components'] as $component){
+                   #     $comPath = "{$distPath}/{$release['name']}";
+                   #     $this->dataModel->addItem('Component',$comPath, $component['name'], $component);
+                   # }
                 }
             }
         }
@@ -94,16 +95,32 @@ class newConfigManagement extends plugin
                             sprintf(_("Failed to load distributions: %s"), 
                                 $rpc->get_error()),ERROR_DIALOG);
                 }else{
-                    $rpc = $this->config->getRpcHandle();
-                    $res = $rpc->getPackages($data['name']);
 
-                    return;
+                    // Sort entries by path length 
+                    $sLen = array();
                     foreach($res as $itemPath => $type){
+                        $sLen[strlen($itemPath)."_".$itemPath] = $itemPath;
+                    }
+                    uksort($sLen, "strnatcasecmp");   
 
-                        // Make names dataModel conform
-                        $itemPath = $path.'/'.preg_replace("/^\//","/root", $itemPath);
-                        $name = preg_replace("/^.*\//","",$itemPath);   
-                        $itemPath = preg_replace("/\/[^\/]*$/","", $itemPath);
+                    // Walk through each entry and then try to add it to the model
+                    foreach($sLen as $unused => $itemPath){
+
+                        $type = $res[$itemPath];
+                
+                        // Root installation objects do not have a name, so we use 'root' here.
+                        $itemPath = trim($path."/root/".$itemPath);
+
+                        // Remove trailing and duplicated slashes
+                        $itemPath = rtrim($itemPath, '/');
+                        $itemPath = preg_replace("/\/\/*/","/", $itemPath);
+
+                        // Extract the items name
+                        $name = preg_replace("/^.*\//","", $itemPath);
+    
+                        // Cleanup the path and then add the item.
+                        $itemPath = preg_replace("/[^\/]*$/","", $itemPath);
+                        $itemPath = rtrim($itemPath,'/');
                         $this->dataModel->addItem($type, $itemPath, $name); 
                     }
                     $this->dataModel->setItemStatus($path, 'fetched');
@@ -122,14 +139,12 @@ class newConfigManagement extends plugin
     {
         $this->selectedContainer = $cont;
 
-        // Get a list of all available container and items.
-        $releaseList = $this->getItemList();
-
         // Update list of items within the selected container. 
         $this->updateItemList($this->selectedContainer);
 
         // Transfer checked values back to the listing class.
         $this->listing->setContainers($this->getContainerList());
+        $this->listing->setContainer($cont);
     }
 
 
@@ -162,27 +177,6 @@ class newConfigManagement extends plugin
     }
 
 
-    /*! \brief  Returns a simply list of all releases of the CURRENT distribution.
-     *          This list will then be used to generate the entries of the 
-     *           ItemSelectors in the listing class.
-     */
-    function getItemList()
-    {
-        $data = $this->dataModel->getItemByPath($this->selectedContainer);
-        $res = array();
-        $res[""] = array("name" => "/", "desc" => "");
-        $res = array_merge($res,$this->__recurseItem($data, array('Component')));
-        return($res);
-
-
-        if($data['type'] != 'Release'){
-        }else{
-            $res = array_merge($res,$this->__recurseItem($data, array('Component'),$this->selectedContainer));
-        }
-        return($res);
-    }
-
-
     /*! \brief  Returns a simply list of all distributions.
      *          This list will then be used to generate the entries of the 
      *           ItemSelectors in the listing class.
@@ -193,8 +187,6 @@ class newConfigManagement extends plugin
         $res = array();
         $res["/root"] = array("name" => "/", "desc" => "");
         $res = array_merge($res,$this->__recurseItem($data, array('Distribution','Release')));
-
-        print_a($res);
         return($res);
     }
 
@@ -209,7 +201,7 @@ class newConfigManagement extends plugin
     function __recurseItem($item, $types, $parent = "")
     {
         $res = array();
-        if(in_array($item['type'], $types)){
+        if(1 ||  in_array($item['type'], $types)){
             $path = preg_replace("/".preg_quote($parent,'/')."/","",$item['path']);
             $res[$path] = array('name' => $item['name'],'desc'=>$item['type']);
         }
@@ -313,16 +305,8 @@ class newConfigManagement extends plugin
     {
         $id = $ids[0];
         $item = $this->dataModel->getItemById($id);
-        if($item){
-            if(in_array($item['type'], array('Distribution', 'Release'))){
-                $this->setCurrentContainer($item['path']);
-            }elseif(in_array($item['type'], array('Component'))){
-                $next = preg_replace("/".preg_quote($this->selectedContainer,'/')."/","", $item['path']);
-                $this->setCurrentContainer($this->selectedContainer, $next);
-            }else{
-                $this->editEntry(array($id));
-            }
-        }
+        $this->setCurrentContainer($item['path']);
+        return; 
     }
 
 
