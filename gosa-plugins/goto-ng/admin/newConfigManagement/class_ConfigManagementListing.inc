@@ -13,9 +13,7 @@ class ConfigManagementListing extends management
         // Set storage points - We do not have any - We just create a fake list which lists all items
         $this->storagePoints = array("");
         $this->rebuildListing();
-
         $this->containerSelector = new ItemSelector(array(),'/root','/root');
-
         $this->parent = &$parent;
     }
 

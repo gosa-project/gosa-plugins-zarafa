@@ -145,8 +145,6 @@ class newConfigManagement extends plugin
      */
     function setCurrentContainer($cont)
     {
-        echo $cont."<br>";
-
         $this->selectedContainer = $cont;
 
         // Update list of items within the selected container. 
