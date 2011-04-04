@@ -9,7 +9,6 @@ class newConfigManagement extends plugin
     var $plDescription = "Config management";
 
     var $selectedContainer;
-    var $selectedItem;
 
     var $dataModel = NULL;
     var $listing = NULL;
@@ -41,16 +40,17 @@ class newConfigManagement extends plugin
         if(!$rpc->success()){
             msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
-        }
-        foreach($res as $dist){
-            $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
-            foreach($dist['releases'] as $release){
-                $distPath = "/root/{$dist['name']}";
-                $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
+        }else{
+            foreach($res as $dist){
+                $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
+                foreach($dist['releases'] as $release){
+                    $distPath = "/root/{$dist['name']}";
+                    $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
 
-                foreach($dist['components'] as $component){
-                    $comPath = "{$distPath}/{$release['name']}";
-                    $this->dataModel->addItem('Component',$comPath, $component['name'], $component);
+                    foreach($dist['components'] as $component){
+                        $comPath = "{$distPath}/{$release['name']}";
+                        $this->dataModel->addItem('Component',$comPath, $component['name'], $component);
+                    }
                 }
             }
         }
@@ -69,8 +69,7 @@ class newConfigManagement extends plugin
 
         // Get the selected distribution and release from the listing widget.
         $cont = $this->listing->getSelectedContainer();
-        $item = $this->listing->getSelectedItem();
-        $this->setCurrentContainer($cont, $item);
+        $this->setCurrentContainer($cont);
     }
 
 
@@ -119,34 +118,18 @@ class newConfigManagement extends plugin
      *  @param  String  The path of the item to set.
      *  @return 
      */
-    function setCurrentContainer($cont, $item)
+    function setCurrentContainer($cont)
     {
         $this->selectedContainer = $cont;
-        $this->selectedItem = $item;
 
         // Get a list of all available container and items.
-        $distList = $this->getContainerList();
         $releaseList = $this->getItemList();
-
-        // Ensure that we've valid values selected.
-        if(!isset($releaseList[$this->selectedItem])){
-            if(count($releaseList)){
-                echo "Fallback";
-                $this->selectedItem = key($releaseList);
-            }else{
-                echo "Fallback 2";
-                $this->selectedItem = "";
-            }
-        }
 
         // Update list of items within the selected container. 
         $this->updateItemList($this->selectedContainer);
 
         // Transfer checked values back to the listing class.
-        $this->listing->setContainer($this->selectedContainer);
-        $this->listing->setItem($this->selectedItem);
         $this->listing->setContainers($this->getContainerList());
-        $this->listing->setItems($this->getItemList());
     }
 
 
@@ -173,7 +156,7 @@ class newConfigManagement extends plugin
     function getItemsToBeDisplayed()
     {
 
-        $path = $this->selectedContainer.$this->selectedItem;
+        $path = $this->selectedContainer;
         $item = $this->dataModel->getItemByPath($path);
         return($item);
     }
@@ -332,7 +315,7 @@ class newConfigManagement extends plugin
         $item = $this->dataModel->getItemById($id);
         if($item){
             if(in_array($item['type'], array('Distribution', 'Release'))){
-                $this->setCurrentContainer($item['path'], $this->selectedItem);
+                $this->setCurrentContainer($item['path']);
             }elseif(in_array($item['type'], array('Component'))){
                 $next = preg_replace("/".preg_quote($this->selectedContainer,'/')."/","", $item['path']);
                 $this->setCurrentContainer($this->selectedContainer, $next);

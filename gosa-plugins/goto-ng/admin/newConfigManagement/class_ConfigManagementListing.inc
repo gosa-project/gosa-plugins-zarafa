@@ -6,7 +6,6 @@ class ConfigManagementListing extends management
     private $base = "";
 
     private $containerSelector = NULL;
-    private $itemSelector = NULL;
     private $objectTypeStr = "";
 
     function __construct($config, $ui, $parent)
@@ -16,7 +15,6 @@ class ConfigManagementListing extends management
         $this->rebuildListing();
 
         $this->containerSelector = new ItemSelector(array(),'/root','/root');
-        $this->itemSelector = new ItemSelector(array(),'','');
 
         $this->parent = &$parent;
     }
@@ -24,7 +22,6 @@ class ConfigManagementListing extends management
     function save_object()
     {
         $this->containerSelector->update();    
-        $this->itemSelector->update();    
     }
 
     function getSelectedContainer()
@@ -37,29 +34,11 @@ class ConfigManagementListing extends management
         return($this->containerSelector->setBase($dist));
     }
 
-    function setItem($rel)
-    {
-        return($this->itemSelector->setBase($rel));
-    }
-
-    function getSelectedItem()
-    {
-        return($this->itemSelector->getBase());
-    }
-
-
     function setContainers($containers) 
     {
         $this->containerSelector->setBases($containers);
         $this->containerSelector->update(TRUE);
     }
-
-    function setItems($items) 
-    {
-        $this->itemSelector->setBases($items);
-        $this->itemSelector->update(TRUE);
-    }
-
 
     function renderList()
     {
@@ -67,7 +46,6 @@ class ConfigManagementListing extends management
         $headpage->update();
         $smarty = get_smarty();
         $smarty->assign("CONTAINER", $this->containerSelector->render());
-        $smarty->assign("ITEM", $this->itemSelector->render());
         $display = $headpage->render();
         return($this->getHeader().$display);
     }
