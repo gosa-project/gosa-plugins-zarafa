@@ -16,6 +16,20 @@ class filterConfigManagement {
 
         // Add entries 
         $ret = array();
+        if($data['path'] != "/root"){
+            $back = array(); 
+            $back['dn'] = $data['id'];
+            $back[] = 'dn';
+            $back['cn'] = array('.', 'count' => 1);
+            $back[] = 'cn';
+            $back['description'] = array('.', 'count' => 1);
+            $back[] = 'description';
+            $back['objectClass'] = array('Back', 'count' => 1);
+            $back[] = 'objectClass';
+            $back['count'] = 3;
+            $ret[] = $back;
+        }
+
         foreach($data['children'] as $item){
             filterDeviceItems::addEntry($ret, $item, $scope == 'sub', $filter);
         }
