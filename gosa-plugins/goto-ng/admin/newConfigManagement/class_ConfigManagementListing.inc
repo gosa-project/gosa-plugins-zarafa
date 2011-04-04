@@ -187,22 +187,6 @@ class ConfigManagementListing extends management
     {
         $this->parent->editEntry($target);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
 } 
 
 ?>
