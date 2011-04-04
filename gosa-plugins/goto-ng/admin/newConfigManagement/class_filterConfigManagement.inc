@@ -24,7 +24,7 @@ class filterConfigManagement {
             $back[] = 'cn';
             $back['description'] = array($data['type'], 'count' => 1);
             $back[] = 'description';
-            $back['objectClass'] = array('Back', 'count' => 1);
+            $back['objectClass'] = array($data['type'], 'count' => 1);
             $back[] = 'objectClass';
             $back['count'] = 3;
             $ret[] = $back;

@@ -22,7 +22,9 @@ class newConfigManagement extends plugin
         $this->listing = new ConfigManagementListing($this->config, get_userinfo(), $this);
 
         // Request an update of the data model
+        $this->loadInstallationMethods();
         $this->updateDataModel();
+        $this->listing->setListingTypes($this->getListingTypes());
     }
 
 
@@ -70,7 +72,13 @@ class newConfigManagement extends plugin
 
         // Get the selected distribution and release from the listing widget.
         $cont = $this->listing->getSelectedContainer();
-        $this->setCurrentContainer($cont);
+        if(isset($_POST['ROOT'])){
+            $this->setCurrentContainer('/root');
+        }elseif(isset($_POST['BACK'])){
+            $this->setCurrentContainer('/root');
+        }else{
+            $this->setCurrentContainer($cont);
+        }
     }
 
 
@@ -137,6 +145,8 @@ class newConfigManagement extends plugin
      */
     function setCurrentContainer($cont)
     {
+        echo $cont."<br>";
+
         $this->selectedContainer = $cont;
 
         // Update list of items within the selected container. 
@@ -266,6 +276,17 @@ class newConfigManagement extends plugin
         $types['Component']['image'] = 'plugins/users/images/select_user.png';
         $types['Component']['category'] = 'Device';
         $types['Component']['class'] = 'Device';
+
+        foreach($this->installationMethods as $method => $items){
+            foreach($items['items'] as $itemName => $item){
+                $types[$itemName]['objectClass'] = $itemName;
+                $types[$itemName]['label'] = $item['name'];
+                $types[$itemName]['image'] = 'plugins/fai/images/fai_script.png';
+                $types[$itemName]['category'] = 'Device';
+                $types[$itemName]['class'] = 'Device';
+            }
+        }
+
         return($types);
     }
 
