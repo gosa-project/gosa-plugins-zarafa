@@ -22,7 +22,7 @@ class filterConfigManagement {
             $back[] = 'dn';
             $back['cn'] = array('.', 'count' => 1);
             $back[] = 'cn';
-            $back['description'] = array('.', 'count' => 1);
+            $back['description'] = array($data['type'], 'count' => 1);
             $back[] = 'description';
             $back['objectClass'] = array('Back', 'count' => 1);
             $back[] = 'objectClass';
