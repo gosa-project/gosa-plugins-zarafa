@@ -63,6 +63,20 @@ class ConfigManagementListing extends management
         $this->objectTypeStr = $str;
     }
 
+    
+    // Inject user actions
+    function detectPostActions()
+    {
+        $action = management::detectPostActions();
+        if(isset($_POST['saveItemEdit'])) $action['action'] = "saveItemChanges";
+        if(isset($_POST['saveItemAdd'])) $action['action'] = "saveItemAdd";
+        if(isset($_POST['cancelItemEdit'])) $action['action'] = "cancelItemEdit";
+        if(isset($_POST['cancelItemAdd'])) $action['action'] = "cancelItemAdd";
+        return($action);
+    }
+
+
+
 
     function execute()
     {
@@ -171,6 +185,9 @@ class ConfigManagementListing extends management
         $this->registerAction("saveFilter","saveFilter");
         $this->registerAction("cancelFilter","cancelFilter");
 
+        $this->registerAction("cancelItemEdit", "closeDialogs");
+        $this->registerAction("cancelItemAdd", "closeDialogs");
+        $this->registerAction("saveItemAdd", "saveItemAdd");
     }
 
     function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
@@ -185,7 +202,10 @@ class ConfigManagementListing extends management
 
     function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        $this->parent->editEntry($target);
+        $this->dialogObject = $this->parent->TemplateEngine;
+        $this->skipFooter = TRUE;
+        $this->dialog = TRUE;
+
     }
 } 
 

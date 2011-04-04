@@ -21,10 +21,54 @@ class newConfigManagement extends plugin
         $this->config = &$config;
         $this->listing = new ConfigManagementListing($this->config, get_userinfo(), $this);
 
+        // Load the template engine and tell her what template
+        //  to use for the HTML it produces.
+        $this->TemplateEngine = new TemplateEngine($config);
+        $this->TemplateEngine->setTemplate('puppet.tpl');
+
         // Request an update of the data model
         $this->loadInstallationMethods();
         $this->updateDataModel();
         $this->listing->setListingTypes($this->getListingTypes());
+    }
+
+
+    /*! \brief  Sets the installation method to the given method.
+     *          Updates the template engine and adds the initial root
+     *           object for the selected method.
+     *  @param  The method to use.
+     *  @return TRUE on success else FALSE.
+     */
+    function setInstallMethod($str)
+    {
+        if(!isset($this->installationMethods[$str])){
+            $this->itemConfig = array();
+            $this->invalidInstallMethod =TRUE;
+            $this->errorMessage = sprintf(_("Invalid installation method %s selected!"), bold($str));
+            msg_dialog::display(_("Setup"), $this->errorMessage, ERROR_DIALOG);
+            return(FALSE);
+        }else{
+
+            $this->itemConfig = $this->installationMethods[$str]['items'];
+            $this->invalidInstallMethod =FALSE;
+            $this->TemplateEngine->load($this->itemConfig);
+
+            // Detect root item, its name is /
+            $root = NULL;
+            foreach($this->itemConfig as $key => $item){
+                if($item['name'] == '/') {
+                    $root = $key;
+                    break;
+                }
+            }
+            if(!$root){
+                $this->errorMessage = sprintf(_("Installation method %s is invalid: no root object found!"), bold($str));
+                msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
+                $this->initFailed = TRUE;
+                $this->itemConfig = array();
+                return(FALSE);
+            }
+        }
     }
 
 
@@ -160,6 +204,9 @@ class newConfigManagement extends plugin
         // Transfer checked values back to the listing class.
         $this->listing->setContainers($this->getContainerList());
         $this->listing->setContainer($cont);
+
+        $this->setInstallMethod('puppet');
+
     }
 
 
@@ -303,36 +350,9 @@ class newConfigManagement extends plugin
      */
     function editEntry($ids)
     {
-        foreach($ids as $id){
-            echo "<br>Edit {$id}";
-        }
-    }
-
-
-    /*! \brief  Acts on remove requests.
-     *          (This action is received from the ConfigManagementListing class.)
-     *  @param  Array   The items ids. (May contain multiple ids)
-     *  @return  
-     */
-    function removeEntry($ids)
-    {
-        foreach($ids as $id){
-            echo "<br>Remove {$id}";
-        }
-    }
-
-
-    /*! \brief  Acts on open requests.
-     *          (This action is received from the ConfigManagementListing class.)
-     *  @param  Array   The items ids. (May contain multiple ids)
-     *  @return  
-     */
-    function openEntry($ids)
-    {
-        $id = $ids[0];
-        $item = $this->dataModel->getItemById($id);
-        $this->setCurrentContainer($item['path']);
-        return; 
+        // Update the template engine to use another type of item and
+        //  some other values.
+        $this->TemplateEngine->setValues('PuppetTemplate',array('data' => array()));
     }
 
 
@@ -354,6 +374,21 @@ class newConfigManagement extends plugin
                     "plProvidedAcls"=> array()
                     ));
     }
+
+
+    /*! \brief  Acts on open requests.
+     *          (This action is received from the ConfigManagementListing class.)
+     *  @param  Array   The items ids. (May contain multiple ids)
+     *  @return
+     */
+    function openEntry($ids)
+    {
+        $id = $ids[0];
+        $item = $this->dataModel->getItemById($id);
+        $this->setCurrentContainer($item['path']);
+        return;
+    }
+
 
 
     /*! \brief   
