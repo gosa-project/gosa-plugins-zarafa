@@ -31,7 +31,7 @@ class filterConfigManagement {
         }
 
         foreach($data['children'] as $item){
-            filterDeviceItems::addEntry($ret, $item, $scope == 'sub', $filter);
+            filterConfigManagement::addEntry($ret, $item, $scope == 'sub', $filter);
         }
         return($ret);
     }
@@ -51,6 +51,16 @@ class filterConfigManagement {
             $entry['objectClass'] = array($item['type'],'count' => 1);
             $entry[] = 'objectClass';
             $entry['count'] = 5;
+
+            if(isset($item['values']['__editable']) && ($item['values']['__editable'])){
+                $entry['objectClass'][] = 'editable';
+                $entry['objectClass']['count'] ++;
+            }
+            if(isset($item['values']['__removeable']) && ($item['values']['__removeable'])){
+                $entry['objectClass'][] = 'removeable';
+                $entry['objectClass']['count'] ++;
+            }
+
             $ret[] = $entry;
         }
 

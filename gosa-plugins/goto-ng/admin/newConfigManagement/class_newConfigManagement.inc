@@ -92,10 +92,12 @@ class newConfigManagement extends plugin
         }else{
             $this->cfgTypeMap = array();
             foreach($res as $dist){
+                $dist['__removeable'] = TRUE;
                 $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
                 $this->cfgTypeMap['/root/'.$dist['name']] = $dist['installation_method'];
                 foreach($dist['releases'] as $release){
                     $distPath = "/root/{$dist['name']}";
+                    $release['__removeable'] = TRUE;
                     $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
                 }
             }
@@ -181,6 +183,8 @@ class newConfigManagement extends plugin
                         $targetPath = rtrim($targetPath,'/');
                         $this->dataModel->addItem($type, $targetPath, $name, 
                                 array(    
+                                        '__editable' => TRUE,
+                                        '__removeable' => TRUE,
                                         '__path' => $itemPath,
                                         '__release' => $path
                                     ),'-' ); 
