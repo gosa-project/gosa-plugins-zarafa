@@ -202,10 +202,13 @@ class ConfigManagementListing extends management
 
     function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
+        // Update the template engine to use another type of item and
+        //  some other values.
+        $item = $this->parent->dataModel->getItemById($target[0]);
+        $this->parent->TemplateEngine->setValues($item['type'],array('data' => array()));
         $this->dialogObject = $this->parent->TemplateEngine;
         $this->skipFooter = TRUE;
         $this->dialog = TRUE;
-
     }
 } 
 

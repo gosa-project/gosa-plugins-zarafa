@@ -13,6 +13,7 @@ class newConfigManagement extends plugin
     var $dataModel = NULL;
     var $listing = NULL;
 
+    var $cfgTypeMap = NULL;
 
     /*! \brief  Initialize the plugin and finally update the data model.
      */
@@ -205,8 +206,12 @@ class newConfigManagement extends plugin
         $this->listing->setContainers($this->getContainerList());
         $this->listing->setContainer($cont);
 
-        $this->setInstallMethod('puppet');
-
+        // Set the correct installation method for the selected item
+        $item = $this->dataModel->getItemByPath($cont);
+        if($this->cfgTypeMap[$item['type']]){
+            $method = $this->cfgTypeMap[$item['type']];
+            $this->setInstallMethod($method);
+        }
     }
 
 
@@ -220,7 +225,6 @@ class newConfigManagement extends plugin
         //  packages and items.
         $res = $this->listing->execute();
         $this->listing->setListingTypes($this->getListingTypes());
-
         return($res);
     }
 
@@ -300,6 +304,15 @@ class newConfigManagement extends plugin
             msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
             $this->initFailed = TRUE;
             return;
+        }else{
+            
+            $this->cfgTypeMap = array();
+            foreach($this->installationMethods as $methodName => $data){
+                foreach($data['items'] as $itemName => $itemData){
+                    $this->cfgTypeMap[$itemName] = $methodName;
+                }
+            }
+
         }
     }
 
@@ -340,19 +353,6 @@ class newConfigManagement extends plugin
         }
 
         return($types);
-    }
-
-
-    /*! \brief  Acts on edit requests and opens an edit dialog for the received item-id.
-     *          (This action is received from the ConfigManagementListing class.)
-     *  @param  Array   The items ids. (May contain multiple ids)
-     *  @return  
-     */
-    function editEntry($ids)
-    {
-        // Update the template engine to use another type of item and
-        //  some other values.
-        $this->TemplateEngine->setValues('PuppetTemplate',array('data' => array()));
     }
 
 
