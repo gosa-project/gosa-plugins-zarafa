@@ -160,7 +160,42 @@ class ConfigManagementListing extends management
         // Load service xml file and fill in placeholders
         $contents = file_get_contents(get_template_path("DeviceConfig-list.xml", true));
         $contents = preg_replace("/%TYPES%/", $this->objectTypeStr, $contents);
-        $contents = preg_replace("/%ITEMS%/", "", $contents);
+
+        // A list of dummy images
+        $images = array();
+        $images[] = 'images/lists/edit.png';
+        $images[] = 'images/caps.png';
+        $images[] = 'images/lists/trash.png';
+        $images[] = 'images/filter.png';
+        $images[] = 'images/find.png';
+
+
+        $items = "";
+        $i = 0;
+        foreach($this->parent->addableContainerItems as $item){
+            $desc = $this->parent->itemConfig[$item]['description'];
+            $img = $images[$i++];
+            $items .=
+                "<action>".
+                "    <name>add_{$item}</name>".
+                "    <type>entry</type>".
+                "    <image>{$img}</image>".
+                "    <label>{$desc}</label>".
+                "</action>";
+        }
+
+        if(!empty($items)){
+            $items =
+
+                "<action>".
+                " <type>sub</type>".
+                " <image>images/lists/element.png[new]</image>".
+                " <label>Create</label>".
+                " {$items}".
+                "</action>";
+        }
+
+        $contents = preg_replace("/%ITEMS%/", $items, $contents);
 
         $headpage = new listing($contents,TRUE);
         $headpage->setBase($this->base);

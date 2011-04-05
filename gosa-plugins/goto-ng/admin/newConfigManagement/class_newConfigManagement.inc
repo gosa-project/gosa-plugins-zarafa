@@ -203,6 +203,7 @@ class newConfigManagement extends plugin
      */
     function setCurrentContainer($cont)
     {
+
         $this->selectedContainer = $cont;
 
         // Update list of items within the selected container. 
@@ -216,6 +217,14 @@ class newConfigManagement extends plugin
         if(isset($this->cfgTypeMap[$cont])){
             $method = $this->cfgTypeMap[$cont];
             $this->setInstallMethod($method);
+        }
+
+        // Update the list of addable sub objects
+        $item = $this->dataModel->getItemByPath($cont);
+        if(isset($this->itemConfig[$item['type']]['container'])){
+            $this->addableContainerItems = $this->itemConfig[$item['type']]['container'];
+        }else{
+            $this->addableContainerItems = array();
         }
     }
 
