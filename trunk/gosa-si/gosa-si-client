@@ -246,18 +246,9 @@ sub sig_warn_handler
     return 1;
 }
 	
-sub sig_die_handler
-{
-    my @loc = caller(0);
-    daemon_log( "SIGDIE line " . $loc[2] . ": " . $_[0], 1 );
-    clean_shutdown();
-    return 1;
-}
-
 $SIG{'INT'} = \&sig_int_or_term_handler;
 $SIG{'TERM'} = \&sig_int_or_term_handler;
 $SIG{'__WARN__'} = \&sig_warn_handler;
-$SIG{'__DIE__'} = \&sig_die_handler;
 $SIG{'USR1'} = 'IGNORE';
 $SIG{'USR2'} = 'IGNORE';
 
@@ -691,6 +682,9 @@ sub check_key_and_xml_validity {
     my $msg_hash;
     eval{
         $msg = &decrypt_msg($crypted_msg, $module_key);
+        if ($msg  !~ /^<xml>/i ) {
+            die 'could not decrypt message';
+        }
         &main::daemon_log("decrypted_msg: \n$msg", 9);
 
         $msg_hash = $xml->XMLin($msg, ForceArray=>1);
@@ -1055,12 +1049,18 @@ sub server_input {
     my $remote_ip = $heap->{'remote_ip'},
     my $error = 0;
     my $answer;
+    my $msg;
+    my $msg_hash;    
     
 
     daemon_log("INFO: Incoming msg from '$remote_ip'", 5);
     daemon_log("DEBUG: Incoming msg:\n$input\n", 9);
 
-    my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
+    if (not "$remote_ip" eq "$server_ip") {
+        daemon_log("INFO: Incoming msg not from server, ignoring", 5);
+        $error++;
+    } else {
+        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
     if( (!$msg) || (!$msg_hash) ) {
         daemon_log("WARNING: Deciphering of incoming msg failed", 3);
         if($server_address =~ /$remote_ip/) {
@@ -1087,7 +1087,7 @@ sub server_input {
         }
         $error++;
     }
-
+    }
 
     ######################
     # process incoming msg

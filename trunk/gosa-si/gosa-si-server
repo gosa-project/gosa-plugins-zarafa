@@ -533,18 +533,9 @@ sub sig_warn_handler
     return 1;
 }
 
-sub sig_die_handler
-{
-    my @loc = caller(0);
-    daemon_log( "SIGDIE line " . $loc[2] . ": " . $_[0], 1 );
-    clean_shutdown();
-    return 1;
-}
-
 $SIG{'INT'} = \&sig_int_or_term_handler;
 $SIG{'TERM'} = \&sig_int_or_term_handler;
 $SIG{'__WARN__'} = \&sig_warn_handler;
-$SIG{'__DIE__'} = \&sig_die_handler;
 $SIG{'USR1'} = 'IGNORE';
 
 sub check_key_and_xml_validity {
