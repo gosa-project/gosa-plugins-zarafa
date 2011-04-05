@@ -98,6 +98,15 @@ class ConfigManagementDataModel
         }
     }
 
+    function setItemValues($path, $values)
+    {
+        if(!$this->itemExistsByPath($path)){
+            trigger_error("Invalid item path '{$path}'!");
+        }else{
+            $this->data['linear'][$path]['values'] = $values;
+        }
+    }
+
     function getItemsByType($types)
     {
         $res = array();

@@ -206,8 +206,8 @@ class ConfigManagementListing extends management
     function setDialogObject($o)
     {
         $this->dialogObject = &$o;
-        $this->listing->skipFooter = TRUE;
-        $this->listing->dialog = TRUE;
+        $this->skipFooter = TRUE;
+        $this->dialog = TRUE;
 
     }
 } 

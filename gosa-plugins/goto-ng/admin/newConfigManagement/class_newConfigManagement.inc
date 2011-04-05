@@ -25,9 +25,9 @@ class newConfigManagement extends plugin
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
         $this->TemplateEngine = new TemplateEngine($config);
-        $this->TemplateEngine->setTemplate('puppet.tpl');
 
         // Request an update of the data model
+        $this->cfgTypeMap = array();
         $this->loadInstallationMethods();
         $this->updateDataModel();
         $this->listing->setListingTypes($this->getListingTypes());
@@ -49,7 +49,8 @@ class newConfigManagement extends plugin
             msg_dialog::display(_("Setup"), $this->errorMessage, ERROR_DIALOG);
             return(FALSE);
         }else{
-
+    
+            $this->TemplateEngine->setTemplate($str.".tpl");
             $this->itemConfig = $this->installationMethods[$str]['items'];
             $this->invalidInstallMethod =FALSE;
             $this->TemplateEngine->load($this->itemConfig);
@@ -89,7 +90,6 @@ class newConfigManagement extends plugin
             msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
         }else{
-            $this->cfgTypeMap = array();
             foreach($res as $dist){
                 $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
                 $this->cfgTypeMap['/root/'.$dist['name']] = $dist['installation_method'];
@@ -304,6 +304,12 @@ class newConfigManagement extends plugin
             msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
             $this->initFailed = TRUE;
             return;
+        }else{
+            foreach($this->installationMethods as $method => $items){
+                foreach($items['items'] as $itemName => $item){
+                    $this->cfgTypeMap[$itemName] = $method;
+                }
+            }
         }
     }
 
@@ -396,20 +402,21 @@ class newConfigManagement extends plugin
         // Update the template engine to use another type of item and
         //  some other values.
         $item = $this->dataModel->getItemById($ids[0]);
+        $release = preg_replace("/^.*\//","",$item['values']['__release']);
+        $path = $item['values']['__path'];
+
+        // Load item values on demand
         if($item['status'] == '-'){
-            $release = preg_replace("/^.*\//","",$item['values']['__release']);
-            $path = $item['values']['__path'];
- 
-            //$rpc = $this->config->getRpcHandle();
-            //$res = $rpc->getConfigItem();
-            $item['values']['distribution'] = 'debian';
-            $item['values']['dependency'] = array('debian');
-            $item['values']['version'] = '10.0.0';
-            $item['values']['name'] = $item['name'];
-            $item['values']['description'] = 'bla';
+            $rpc = $this->config->getRpcHandle();
+            $item['values']['itemValues'] = $rpc->getConfigItem($release, $path);
+            $this->dataModel->setItemStatus($item['path'], 'fetched');
+            $this->dataModel->setItemValues($item['path'], $item['values']);
         }
 
-        $this->TemplateEngine->setValues($item['type'],$item['values']);
+        $method = $this->cfgTypeMap[$item['type']];
+        $this->setInstallMethod($method);
+        echo $method;
+        $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
         $this->listing->setDialogObject($this->TemplateEngine);
     }
 
