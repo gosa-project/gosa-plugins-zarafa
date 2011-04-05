@@ -16,6 +16,10 @@ class newConfigManagement extends plugin
     var $cfgTypeMap = NULL;
     var $cfgItemMap = NULL;
 
+    var $addableContainerItems = array();
+    var $currentObject = NULL;
+
+
     /*! \brief  Initialize the plugin and finally update the data model.
      */
     function __construct($config, $dn)
@@ -434,9 +438,19 @@ class newConfigManagement extends plugin
             $this->setInstallMethod($method);
             $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
             $this->listing->setDialogObject($this->TemplateEngine);
+            $this->currentObject = $item;
         }
     }
 
-
+    function saveItemChanges()
+    {
+        $this->listing->clearDialogObject();
+        $item = $this->currentObject;
+        $this->TemplateEngine->save_object();
+        foreach($this->TemplateEngine->getWidgets() as $w){
+            $item['values']['itemValues'][$w->getName()] = $w->getValue();
+        }
+        $this->dataModel->setItemValues($item['path'], $item['values']);
+    }
 }
 ?>

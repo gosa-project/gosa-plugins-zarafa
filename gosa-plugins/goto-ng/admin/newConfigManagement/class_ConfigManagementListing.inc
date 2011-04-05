@@ -8,6 +8,8 @@ class ConfigManagementListing extends management
     private $containerSelector = NULL;
     private $objectTypeStr = "";
 
+    public $parent;
+
     function __construct($config, $ui, $parent)
     {
         // Set storage points - We do not have any - We just create a fake list which lists all items
@@ -172,18 +174,19 @@ class ConfigManagementListing extends management
 
         $items = "";
         $i = 0;
-        foreach($this->parent->addableContainerItems as $item){
-            $desc = $this->parent->itemConfig[$item]['description'];
-            $img = $images[$i++];
-            $items .=
-                "<action>".
-                "    <name>add_{$item}</name>".
-                "    <type>entry</type>".
-                "    <image>{$img}</image>".
-                "    <label>{$desc}</label>".
-                "</action>";
+        if($this->parent){
+            foreach($this->parent->addableContainerItems as $item){
+                $desc = $this->parent->itemConfig[$item]['description'];
+                $img = $images[$i++];
+                $items .=
+                    "<action>".
+                    "    <name>add_{$item}</name>".
+                    "    <type>entry</type>".
+                    "    <image>{$img}</image>".
+                    "    <label>{$desc}</label>".
+                    "</action>";
+            }
         }
-
         if(!empty($items)){
             $items =
 
@@ -220,7 +223,12 @@ class ConfigManagementListing extends management
 
         $this->registerAction("cancelItemEdit", "closeDialogs");
         $this->registerAction("cancelItemAdd", "closeDialogs");
-        $this->registerAction("saveItemAdd", "saveItemAdd");
+        $this->registerAction("saveItemChanges", "saveItemChanges");
+    }
+
+    function saveItemChanges()
+    {
+        $this->parent->saveItemChanges();
     }
 
     function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
@@ -244,6 +252,10 @@ class ConfigManagementListing extends management
         $this->skipFooter = TRUE;
         $this->dialog = TRUE;
 
+    }
+    function clearDialogObject()
+    {
+        $this->closeDialogs();
     }
 } 
 
