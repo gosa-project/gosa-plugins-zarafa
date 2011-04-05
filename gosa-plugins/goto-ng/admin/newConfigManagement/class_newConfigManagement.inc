@@ -89,8 +89,10 @@ class newConfigManagement extends plugin
             msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
         }else{
+            $this->cfgTypeMap = array();
             foreach($res as $dist){
                 $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
+                $this->cfgTypeMap['/root/'.$dist['name']] = $dist['installation_method'];
                 foreach($dist['releases'] as $release){
                     $distPath = "/root/{$dist['name']}";
                     $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
@@ -207,9 +209,8 @@ class newConfigManagement extends plugin
         $this->listing->setContainer($cont);
 
         // Set the correct installation method for the selected item
-        $item = $this->dataModel->getItemByPath($cont);
-        if($this->cfgTypeMap[$item['type']]){
-            $method = $this->cfgTypeMap[$item['type']];
+        if(isset($this->cfgTypeMap[$cont])){
+            $method = $this->cfgTypeMap[$cont];
             $this->setInstallMethod($method);
         }
     }
@@ -304,15 +305,6 @@ class newConfigManagement extends plugin
             msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
             $this->initFailed = TRUE;
             return;
-        }else{
-            
-            $this->cfgTypeMap = array();
-            foreach($this->installationMethods as $methodName => $data){
-                foreach($data['items'] as $itemName => $itemData){
-                    $this->cfgTypeMap[$itemName] = $methodName;
-                }
-            }
-
         }
     }
 
