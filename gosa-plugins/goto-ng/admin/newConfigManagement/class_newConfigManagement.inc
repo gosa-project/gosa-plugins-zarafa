@@ -14,6 +14,7 @@ class newConfigManagement extends plugin
     var $listing = NULL;
 
     var $cfgTypeMap = NULL;
+    var $cfgItemMap = NULL;
 
     /*! \brief  Initialize the plugin and finally update the data model.
      */
@@ -27,7 +28,6 @@ class newConfigManagement extends plugin
         $this->TemplateEngine = new TemplateEngine($config);
 
         // Request an update of the data model
-        $this->cfgTypeMap = array();
         $this->loadInstallationMethods();
         $this->updateDataModel();
         $this->listing->setListingTypes($this->getListingTypes());
@@ -90,6 +90,7 @@ class newConfigManagement extends plugin
             msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
         }else{
+            $this->cfgTypeMap = array();
             foreach($res as $dist){
                 $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
                 $this->cfgTypeMap['/root/'.$dist['name']] = $dist['installation_method'];
@@ -305,9 +306,10 @@ class newConfigManagement extends plugin
             $this->initFailed = TRUE;
             return;
         }else{
+            $this->cfgItemMap = array();
             foreach($this->installationMethods as $method => $items){
                 foreach($items['items'] as $itemName => $item){
-                    $this->cfgTypeMap[$itemName] = $method;
+                    $this->cfgItemMap[$itemName] = $method;
                 }
             }
         }
@@ -402,22 +404,24 @@ class newConfigManagement extends plugin
         // Update the template engine to use another type of item and
         //  some other values.
         $item = $this->dataModel->getItemById($ids[0]);
-        $release = preg_replace("/^.*\//","",$item['values']['__release']);
-        $path = $item['values']['__path'];
 
-        // Load item values on demand
-        if($item['status'] == '-'){
-            $rpc = $this->config->getRpcHandle();
-            $item['values']['itemValues'] = $rpc->getConfigItem($release, $path);
-            $this->dataModel->setItemStatus($item['path'], 'fetched');
-            $this->dataModel->setItemValues($item['path'], $item['values']);
+        if(isset($this->cfgItemMap[$item['type']])){
+            $release = preg_replace("/^.*\//","",$item['values']['__release']);
+            $path = $item['values']['__path'];
+            $method = $this->cfgItemMap[$item['type']];
+
+            // Load item values on demand
+            if($item['status'] == '-'){
+                $rpc = $this->config->getRpcHandle();
+                $item['values']['itemValues'] = $rpc->getConfigItem($release, $path);
+                $this->dataModel->setItemStatus($item['path'], 'fetched');
+                $this->dataModel->setItemValues($item['path'], $item['values']);
+            }
+
+            $this->setInstallMethod($method);
+            $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
+            $this->listing->setDialogObject($this->TemplateEngine);
         }
-
-        $method = $this->cfgTypeMap[$item['type']];
-        $this->setInstallMethod($method);
-        echo $method;
-        $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
-        $this->listing->setDialogObject($this->TemplateEngine);
     }
 
 
