@@ -96,11 +96,6 @@ class newConfigManagement extends plugin
                 foreach($dist['releases'] as $release){
                     $distPath = "/root/{$dist['name']}";
                     $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
-
-                   # foreach($dist['components'] as $component){
-                   #     $comPath = "{$distPath}/{$release['name']}";
-                   #     $this->dataModel->addItem('Component',$comPath, $component['name'], $component);
-                   # }
                 }
             }
         }
@@ -171,19 +166,23 @@ class newConfigManagement extends plugin
                         $type = $res[$itemPath];
                 
                         // Root installation objects do not have a name, so we use 'root' here.
-                        $itemPath = trim($path."/root/".$itemPath);
+                        $targetPath = trim($path."/root/".$itemPath);
 
                         // Remove trailing and duplicated slashes
-                        $itemPath = rtrim($itemPath, '/');
-                        $itemPath = preg_replace("/\/\/*/","/", $itemPath);
+                        $targetPath = rtrim($targetPath, '/');
+                        $targetPath = preg_replace("/\/\/*/","/", $targetPath);
 
                         // Extract the items name
-                        $name = preg_replace("/^.*\//","", $itemPath);
+                        $name = preg_replace("/^.*\//","", $targetPath);
     
                         // Cleanup the path and then add the item.
-                        $itemPath = preg_replace("/[^\/]*$/","", $itemPath);
-                        $itemPath = rtrim($itemPath,'/');
-                        $this->dataModel->addItem($type, $itemPath, $name); 
+                        $targetPath = preg_replace("/[^\/]*$/","", $targetPath);
+                        $targetPath = rtrim($targetPath,'/');
+                        $this->dataModel->addItem($type, $targetPath, $name, 
+                                array(    
+                                        '__path' => $itemPath,
+                                        '__release' => $path
+                                    ),'-' ); 
                     }
                     $this->dataModel->setItemStatus($path, 'fetched');
                 }
@@ -389,6 +388,29 @@ class newConfigManagement extends plugin
      */
     function remove_lock()
     {
+    }
+
+
+    function editEntry($ids)
+    {
+        // Update the template engine to use another type of item and
+        //  some other values.
+        $item = $this->dataModel->getItemById($ids[0]);
+        if($item['status'] == '-'){
+            $release = preg_replace("/^.*\//","",$item['values']['__release']);
+            $path = $item['values']['__path'];
+ 
+            //$rpc = $this->config->getRpcHandle();
+            //$res = $rpc->getConfigItem();
+            $item['values']['distribution'] = 'debian';
+            $item['values']['dependency'] = array('debian');
+            $item['values']['version'] = '10.0.0';
+            $item['values']['name'] = $item['name'];
+            $item['values']['description'] = 'bla';
+        }
+
+        $this->TemplateEngine->setValues($item['type'],$item['values']);
+        $this->listing->setDialogObject($this->TemplateEngine);
     }
 
 

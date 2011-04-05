@@ -76,8 +76,6 @@ class ConfigManagementListing extends management
     }
 
 
-
-
     function execute()
     {
         // Ensure that html posts and gets are kept even if we see a 'Entry islocked' dialog.
@@ -192,7 +190,7 @@ class ConfigManagementListing extends management
 
     function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        $this->parent->removeEntry($target);
+//        $this->parent->removeEntry($target);
     }
 
     function openEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
@@ -202,13 +200,15 @@ class ConfigManagementListing extends management
 
     function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        // Update the template engine to use another type of item and
-        //  some other values.
-        $item = $this->parent->dataModel->getItemById($target[0]);
-        $this->parent->TemplateEngine->setValues($item['type'],array('data' => array()));
-        $this->dialogObject = $this->parent->TemplateEngine;
-        $this->skipFooter = TRUE;
-        $this->dialog = TRUE;
+        $this->parent->editEntry($target);
+    }
+
+    function setDialogObject($o)
+    {
+        $this->dialogObject = &$o;
+        $this->listing->skipFooter = TRUE;
+        $this->listing->dialog = TRUE;
+
     }
 } 
 
