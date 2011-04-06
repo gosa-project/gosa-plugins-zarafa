@@ -444,13 +444,26 @@ class newConfigManagement extends plugin
 
     function saveItemChanges()
     {
-        $this->listing->clearDialogObject();
         $item = $this->currentObject;
+        $this->listing->clearDialogObject();
         $this->TemplateEngine->save_object();
+        $values = array();
         foreach($this->TemplateEngine->getWidgets() as $w){
-            $item['values']['itemValues'][$w->getName()] = $w->getValue();
+            $values[$w->getName()] = $w->getValue();
         }
-        $this->dataModel->setItemValues($item['path'], $item['values']);
+        $release = preg_replace("/^.*\//","",$item['values']['__release']);
+        $path = $item['values']['__path'];
+        $method = $this->cfgItemMap[$item['type']];
+
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->setConfigItem($release, $path, $item['type'], $values);
+        if(!$rpc->success()){
+            msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
+            return(NULL);
+        }else{
+            $item['values']['itemValues'] = $values;
+            $this->dataModel->setItemValues($item['path'], $item['values']);
+        }
     }
 }
 ?>
