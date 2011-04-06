@@ -170,10 +170,13 @@ class newConfigManagement extends plugin
                     // Walk through each entry and then try to add it to the model
                     foreach($sLen as $unused => $itemPath){
 
+                        // Do not add the root element '/'
+                        if($itemPath == "/") continue;
+
                         $type = $res[$itemPath];
                 
                         // Root installation objects do not have a name, so we use 'root' here.
-                        $targetPath = trim($path."/root/".$itemPath);
+                        $targetPath = trim($path."/".$itemPath);
 
                         // Remove trailing and duplicated slashes
                         $targetPath = rtrim($targetPath, '/');
@@ -207,7 +210,6 @@ class newConfigManagement extends plugin
      */
     function setCurrentContainer($cont)
     {
-
         $this->selectedContainer = $cont;
 
         // Update list of items within the selected container. 
@@ -317,6 +319,7 @@ class newConfigManagement extends plugin
             return;
         }
         $this->installationMethods = $res;
+
         if(!count($this->installationMethods)){
             $this->errorMessage = _("No selectable install methods returned!");
             msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
@@ -327,6 +330,13 @@ class newConfigManagement extends plugin
             foreach($this->installationMethods as $method => $items){
                 foreach($items['items'] as $itemName => $item){
                     $this->cfgItemMap[$itemName] = $method;
+        
+                    // This enables us to create the first level of config items when 
+                    //  a release is selected.
+                    if($item['name'] == "/"){
+                        $this->installationMethods[$method]['items']['Release'] = 
+                            &$this->installationMethods[$method]['items'][$itemName];
+                    }
                 }
             }
         }
