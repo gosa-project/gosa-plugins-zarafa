@@ -52,6 +52,11 @@ class TemplateEngine
         return($this->widgets);
     }     
 
+    function getItemType()
+    {
+        return($this->itemType);
+    }
+    
 
     /*! \brief  Sets the current item type we want to render
      *          E.g.  'KickstartTemplate' and the corresponding values.
