@@ -84,6 +84,8 @@ class TemplateEngine
                 }
 
                 // Prepare the value for the widget 
+                if(!isset($values[$name])) $values[$name] = $item['default'];
+
                 $value = $values[$name];
                 $syntax = (isset($item['syntax']))? $item['syntax']: "";
                 $providedValues = (isset($item['values']))? $item['values']: array();
