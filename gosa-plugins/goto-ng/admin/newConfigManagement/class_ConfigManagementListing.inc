@@ -180,7 +180,7 @@ class ConfigManagementListing extends management
                 $img = $images[$i++];
                 $items .=
                     "<action>".
-                    "    <name>add_{$item}</name>".
+                    "    <name>new_{$item}</name>".
                     "    <type>entry</type>".
                     "    <image>{$img}</image>".
                     "    <label>{$desc}</label>".
@@ -224,6 +224,13 @@ class ConfigManagementListing extends management
         $this->registerAction("cancelItemEdit", "closeDialogs");
         $this->registerAction("cancelItemAdd", "closeDialogs");
         $this->registerAction("saveItemChanges", "saveItemChanges");
+
+        if($this->parent){
+            foreach($this->parent->addableContainerItems as $item){
+                $this->registerAction("new_{$item}",    "newEntry");
+            }
+        }
+
     }
 
     function saveItemChanges()
@@ -234,6 +241,11 @@ class ConfigManagementListing extends management
     function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
 //        $this->parent->removeEntry($target);
+    }
+
+    function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+    {
+        $this->parent->newEntry(preg_replace("/^new_/", "", $action));
     }
 
     function openEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")

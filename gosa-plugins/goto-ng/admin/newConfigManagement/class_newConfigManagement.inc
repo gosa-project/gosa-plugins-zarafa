@@ -452,27 +452,60 @@ class newConfigManagement extends plugin
         }
     }
 
+    function newEntry($type)
+    {
+        $method = $this->cfgItemMap[$type];
+        $this->setInstallMethod($method);
+        $this->TemplateEngine->setValues($type,array());
+        $this->listing->setDialogObject($this->TemplateEngine);
+        $this->currentObject = NULL;
+    }
+
     function saveItemChanges()
     {
         $item = $this->currentObject;
-        $this->listing->clearDialogObject();
-        $this->TemplateEngine->save_object();
-        $values = array();
-        foreach($this->TemplateEngine->getWidgets() as $w){
-            $values[$w->getName()] = $w->getValue();
-        }
-        $release = preg_replace("/^.*\//","",$item['values']['__release']);
-        $path = $item['values']['__path'];
-        $method = $this->cfgItemMap[$item['type']];
 
-        $rpc = $this->config->getRpcHandle();
-        $res = $rpc->setConfigItem($release, $path, $item['type'], $values);
-        if(!$rpc->success()){
-            msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
-            return(NULL);
+        if($item == NULL){
+            $this->TemplateEngine->save_object();
+            $release = preg_replace("/^.*\//","",$this->selectedContainer);
+            $type = $this->TemplateEngine->getItemType();
+            $values = array();
+            foreach($this->TemplateEngine->getWidgets() as $w){
+                $values[$w->getName()] = $w->getValue();
+            }
+            $path = "/".$values['name'];
+            $rpc = $this->config->getRpcHandle();
+            $res = $rpc->setConfigItem($release, $path, $type, $values);
+            if(!$rpc->success()){
+                msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
+                return(NULL);
+            }else{
+                //$item['values']['itemValues'] = $values;
+                //$this->dataModel->setItemValues($item['path'], $item['values']);
+                $this->listing->clearDialogObject();
+            }
+            print_a(array($release, $path, $type, $values));
         }else{
-            $item['values']['itemValues'] = $values;
-            $this->dataModel->setItemValues($item['path'], $item['values']);
+            $this->TemplateEngine->save_object();
+            $values = array();
+            foreach($this->TemplateEngine->getWidgets() as $w){
+                $values[$w->getName()] = $w->getValue();
+            }
+            $release = preg_replace("/^.*\//","",$item['values']['__release']);
+            $path = $item['values']['__path'];
+            $method = $this->cfgItemMap[$item['type']];
+
+            $rpc = $this->config->getRpcHandle();
+            $res = $rpc->setConfigItem($release, $path, $item['type'], $values);
+            print_a(array($release, $path, $item['type'], $values));
+            if(!$rpc->success()){
+                msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
+                return(NULL);
+            }else{
+                $item['values']['itemValues'] = $values;
+                $this->dataModel->setItemValues($item['path'], $item['values']);
+                $this->listing->clearDialogObject();
+            }
         }
     }
 }
