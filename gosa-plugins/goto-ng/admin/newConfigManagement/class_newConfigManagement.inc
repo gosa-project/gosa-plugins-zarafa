@@ -428,7 +428,6 @@ class newConfigManagement extends plugin
     function removeEntry($ids)
     {
         $item = $this->dataModel->getItemById($ids[0]);
-
         $release = preg_replace("/^.*\//","",$item['values']['__release']);
         $path = $item['values']['__path'];
         $rpc = $this->config->getRpcHandle();
@@ -475,30 +474,62 @@ class newConfigManagement extends plugin
         $this->currentObject = NULL;
     }
 
+
+    function getItemPath($fullPath)
+    {
+        $fPath = $fullPath.'/';
+        while(preg_match("/\//", $fPath)){
+            $fPath = preg_replace("/\/[^\/]*$/","", $fPath);
+            $item = $this->dataModel->getItemByPath($fPath);
+            if(isset($this->cfgItemMap[$item['type']])){
+                return(preg_replace("/".preg_quote($item['parentPath'],'/')."/", "", $fullPath));
+            }
+        }
+        return(NULL);
+    }
+
+    function getReleasePath($fullPath)
+    {
+        $fullPath.='/';
+        while(preg_match("/\//", $fullPath)){
+            $fullPath = preg_replace("/\/[^\/]*$/","", $fullPath);
+            $item = $this->dataModel->getItemByPath($fullPath);
+            if($item['type'] == 'Release'){
+                return($fullPath);
+            }
+        }
+        return(NULL);
+    }
+    
     function saveItemChanges()
     {
         $item = $this->currentObject;
-
+        
         if($item == NULL){
             $this->TemplateEngine->save_object();
-            $release = preg_replace("/^.*\//","",$this->selectedContainer);
+            $release = preg_replace("/^.*\//","", $this->getReleasePath($this->selectedContainer));
             $type = $this->TemplateEngine->getItemType();
             $values = array();
             foreach($this->TemplateEngine->getWidgets() as $w){
                 $values[$w->getName()] = $w->getValue();
             }
-            $path = "/".$values['name'];
+            
+            $path = $this->getItemPath($this->selectedContainer)."/".$values['name'];
             $rpc = $this->config->getRpcHandle();
             $res = $rpc->setConfigItem($release, $path, $type, $values);
             if(!$rpc->success()){
                 msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
                 return(NULL);
             }else{
-                //$item['values']['itemValues'] = $values;
-                //$this->dataModel->setItemValues($item['path'], $item['values']);
+                $this->dataModel->addItem($type, $this->selectedContainer, $values['name'], 
+                        array(    
+                            '__editable' => TRUE,
+                            '__removeable' => TRUE,
+                            '__path' => $path,
+                            '__release' => $this->getReleasePath($this->selectedContainer)
+                            ), '-' ); 
                 $this->listing->clearDialogObject();
             }
-            print_a(array($release, $path, $type, $values));
         }else{
             $this->TemplateEngine->save_object();
             $values = array();
@@ -511,7 +542,6 @@ class newConfigManagement extends plugin
 
             $rpc = $this->config->getRpcHandle();
             $res = $rpc->setConfigItem($release, $path, $item['type'], $values);
-            print_a(array($release, $path, $item['type'], $values));
             if(!$rpc->success()){
                 msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
                 return(NULL);
@@ -523,4 +553,6 @@ class newConfigManagement extends plugin
         }
     }
 }
+
+
 ?>
