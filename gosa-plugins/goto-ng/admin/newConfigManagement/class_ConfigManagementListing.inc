@@ -240,7 +240,7 @@ class ConfigManagementListing extends management
 
     function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-//        $this->parent->removeEntry($target);
+        $this->parent->removeEntry($target);
     }
 
     function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")

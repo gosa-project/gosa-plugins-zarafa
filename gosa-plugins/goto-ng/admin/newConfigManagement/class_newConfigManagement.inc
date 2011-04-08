@@ -425,6 +425,20 @@ class newConfigManagement extends plugin
     {
     }
 
+    function removeEntry($ids)
+    {
+        $item = $this->dataModel->getItemById($ids[0]);
+
+        $release = preg_replace("/^.*\//","",$item['values']['__release']);
+        $path = $item['values']['__path'];
+        $rpc = $this->config->getRpcHandle();
+        $rpc->removeConfigItem($release, $path);
+
+        if(!$rpc->success()){
+            msg_dialog::display(_("Error"), sprintf(_("Failed to remove: %s"), $rpc->get_error()),ERROR_DIALOG);
+            return(NULL);
+        }
+    }
 
     function editEntry($ids)
     {
