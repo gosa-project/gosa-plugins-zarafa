@@ -465,6 +465,9 @@ class newConfigManagement extends plugin
         }
     }
 
+
+    /*! \brief  Initiates the creation of a new item
+     */
     function newEntry($type)
     {
         $method = $this->cfgItemMap[$type];
@@ -475,6 +478,9 @@ class newConfigManagement extends plugin
     }
 
 
+    /*! \brief  Extracts the item-path out of a path.
+     *          e.g. /debian/squeeze/test/module -> /test/module
+     */
     function getItemPath($fullPath)
     {
         $fPath = $fullPath.'/';
@@ -488,6 +494,10 @@ class newConfigManagement extends plugin
         return(NULL);
     }
 
+
+    /*! \brief  Extracts the releaes path out of a path.
+     *          e.g. /debian/squeeze/test/module -> /debian/squeeze
+     */
     function getReleasePath($fullPath)
     {
         $fullPath.='/';
@@ -500,7 +510,8 @@ class newConfigManagement extends plugin
         }
         return(NULL);
     }
-    
+   
+ 
     function saveItemChanges()
     {
         $item = $this->currentObject;
