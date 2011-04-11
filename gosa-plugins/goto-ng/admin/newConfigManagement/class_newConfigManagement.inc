@@ -432,10 +432,11 @@ class newConfigManagement extends plugin
         $path = $item['values']['__path'];
         $rpc = $this->config->getRpcHandle();
         $rpc->removeConfigItem($release, $path);
-
         if(!$rpc->success()){
             msg_dialog::display(_("Error"), sprintf(_("Failed to remove: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
+        }else{
+            $this->dataModel->removeItem($item['path']);
         }
     }
 

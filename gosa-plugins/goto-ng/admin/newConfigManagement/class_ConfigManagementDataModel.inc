@@ -19,6 +19,13 @@ class ConfigManagementDataModel
         return($this->data);
     }
 
+    function removeItem($path)
+    {
+        $item = &$this->data['linear'][$path];
+        $parent = &$this->data['linear'][$item['parentPath']];
+        unset($parent['children'][$path]);
+        unset($this->data['linear'][$path]);
+    }
 
     function addItem($type, $path, $name, $values = array(), $status = "")
     {
