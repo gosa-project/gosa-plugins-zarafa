@@ -1,4 +1,4 @@
-<h3>Bla</h3>
+<h3>Module name</h3>
 
 {$template}
 
