@@ -131,7 +131,7 @@ class TemplateEngine
         $template = $smarty->fetch(get_template_path("goto/Config/{$this->template}", TRUE));
 
         $smarty->assign('template', $template);
-        return($smarty->fetch(get_template_path("goto/Config/TemplateEngine.tpl", TRUE)));
+        return($smarty->fetch(get_template_path("TemplateEngine/TemplateEngine.tpl", TRUE)));
     }
 
 
