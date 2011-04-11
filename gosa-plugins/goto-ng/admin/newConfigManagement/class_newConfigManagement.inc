@@ -417,35 +417,38 @@ class newConfigManagement extends plugin
 
 
 
-    /*! \brief   
-     *  @param  
-     *  @return 
+    /*! \brief  Removes an entry from the listing.
      */
-    function remove_lock()
-    {
-    }
-
     function removeEntry($ids)
     {
+
         $item = $this->dataModel->getItemById($ids[0]);
-        $release = preg_replace("/^.*\//","",$item['values']['__release']);
-        $path = $item['values']['__path'];
-        $rpc = $this->config->getRpcHandle();
-        $rpc->removeConfigItem($release, $path);
-        if(!$rpc->success()){
-            msg_dialog::display(_("Error"), sprintf(_("Failed to remove: %s"), $rpc->get_error()),ERROR_DIALOG);
-            return(NULL);
+
+        // Is an config item.
+        if(isset($this->cfgItemMap[$item['type']])){
+            $release = preg_replace("/^.*\//","",$item['values']['__release']);
+            $path = $item['values']['__path'];
+            $rpc = $this->config->getRpcHandle();
+            $rpc->removeConfigItem($release, $path);
+            if(!$rpc->success()){
+                msg_dialog::display(_("Error"), sprintf(_("Failed to remove: %s"), $rpc->get_error()),ERROR_DIALOG);
+                return(NULL);
+            }else{
+                $this->dataModel->removeItem($item['path']);
+            }
         }else{
-            $this->dataModel->removeItem($item['path']);
+            echo $item['type']." - are not handled yet!";
         }
     }
 
+
+    /*! \brief      Edits a selected list item.
+     */
     function editEntry($ids)
     {
         // Update the template engine to use another type of item and
         //  some other values.
         $item = $this->dataModel->getItemById($ids[0]);
-
         if(isset($this->cfgItemMap[$item['type']])){
             $release = preg_replace("/^.*\//","",$item['values']['__release']);
             $path = $item['values']['__path'];
@@ -582,6 +585,7 @@ class newConfigManagement extends plugin
             }
         }
     }
+    function remove_lock() {}
 }
 
 
