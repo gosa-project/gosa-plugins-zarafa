@@ -489,6 +489,7 @@ sub send_msg_to_target {
         if ($REGISTERED == 1) {
             $REGISTERED = 0;        # if server is not available, cause reregistering
             daemon_log("INFO: cause reregistering at gosa-si-server", 5); 
+            sleep(2);
             $global_kernel->post('client_session', 'register_at_gosa_si_server');
 
         }
@@ -588,6 +589,7 @@ sub register_at_gosa_si_server {
             # append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
             # a registration never occured
             my $server = shift(@servers);
+            &main::daemon_log("INFO: Trying to register with server $server", 3);
             push(@servers, $server);
             ($server_ip = $server) =~ s/:.*$//;
             $server_address = $server;
@@ -640,8 +642,6 @@ sub register_at_gosa_si_server {
 
 	  		# if delivery of registration msg succeed
 			if(defined($res) and $res eq "0") {
-        		# reset try_to_register
-				$REGISTRATION_TRIES = 0;
 
         		# Set fixed client address and mac address
 				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
@@ -658,8 +658,11 @@ sub register_at_gosa_si_server {
     } # end of while
 	# one circle through all servers finished and no registration succeed
 	if ( $REGISTRATION_TRIES >= (scalar(@servers)) )  {
+			$REGISTRATION_TRIES = 0;
 			&write_to_file("gosa-si-no-server-available", $fai_logpath);
-			$kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+			daemon_log("WARNING: Could not register with any of the servers, waiting $delay_set_time seconds",3);
+			sleep($delay_set_time);
+			$kernel->post('client_session', 'register_at_gosa_si_server');
 	
 	# delivery of registraion msg succeed, waiting for server response
 	} else {
@@ -1082,6 +1085,7 @@ sub server_input {
                 }
                 $FAILED_CRYPTO++;
 				$REGISTERED = 0;
+				sleep(2);
 				$kernel->post('client_session', 'register_at_gosa_si_server');
 			}
         }
