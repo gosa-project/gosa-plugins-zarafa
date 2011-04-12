@@ -79,11 +79,10 @@ my ($xml);
 my $sources_list;
 my $max_clients;
 my %repo_files=();
-my $repo_path;
 my %repo_dirs=();
 
 # Variables declared in config file are always set to 'our'
-our (%cfg_defaults, $log_file, $pid_file, 
+our (%cfg_defaults, $log_file, $pid_file, $repo_basepath,
     $server_ip, $server_port, $ClientPackages_key, $dns_lookup,
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_timeout,
@@ -228,8 +227,9 @@ our $logged_in_user_date_of_expiry = 600;
 
 %cfg_defaults = (
 "general" => {
-    "log-file" => [\$log_file, "/var/run/".$prg.".log"],
-    "pid-file" => [\$pid_file, "/var/run/".$prg.".pid"],
+    "log-file"      => [\$log_file, "/var/run/".$prg.".log"],
+    "pid-file"      => [\$pid_file, "/var/run/".$prg.".pid"],
+    "repo-basepath" => [\$repo_basepath, "/srv/www"],
     },
 "server" => {
     "ip"                    => [\$server_ip, "0.0.0.0"],
@@ -244,7 +244,6 @@ our $logged_in_user_date_of_expiry = 600;
     "messaging"             => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
     "foreign-clients"       => [\$foreign_clients_file_name, '/var/lib/gosa-si/foreign_clients.db'],
     "source-list"           => [\$sources_list, '/etc/apt/sources.list'],
-    "repo-path"             => [\$repo_path, '/srv/www/repository'],
     "ldap-uri"              => [\$ldap_uri, ""],
     "ldap-base"             => [\$ldap_base, ""],
     "ldap-admin-dn"         => [\$ldap_admin_dn, ""],
@@ -2777,7 +2776,10 @@ sub run_create_packages_list_db {
 
 sub create_packages_list_db {
 	my ($ldap_handle, $sources_file, $session_id) = @_;
-	
+
+	# Cleanup repo basepath
+	$repo_basepath = File::Spec->canonpath($repo_basepath);
+
 	# it should not be possible to trigger a recreation of packages_list_db
 	# while packages_list_db is under construction, so set flag packages_list_under_construction
 	# which is tested befor recreation can be started
@@ -2997,7 +2999,10 @@ sub parse_package_info {
     my ($baseurl, $dist, $section, $session_id)= @_;
     my ($package);
     if (not defined $session_id) { $session_id = 0; }
-    my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
+    my ($path) = ($baseurl =~ m%://[^/]*/(.*)$%);
+
+    my $repo_path = File::Spec->join($repo_basepath, $path);
+
     $repo_dirs{ "${repo_path}/pool" } = 1;
 
     foreach $package ("Packages.gz"){
@@ -3091,6 +3096,8 @@ sub parse_package {
         # Trigger for filename
         if ($line =~ /^Filename:\s/){
             my ($filename) = ($line =~ /^Filename: (.*)$/);
+            # Construct real path
+            my $repo_path = File::Spec->join($repo_basepath, $srv_path);
             store_fileinfo( $package, $filename, $dist, $srv_path, $version, $repo_path );
             next;
         }
