@@ -280,7 +280,7 @@ class gosaSupportDaemon
   }
 
 
-  public function FAI_get_packages($release,$attrs,$package,$from=-1,$to=-1)
+  public function FAI_get_packages($release,$attrs,$package,$from=-1,$to=-1, $exclude_sections=array())
   {
     $ret = array();
 
@@ -305,6 +305,18 @@ class gosaSupportDaemon
     /* If no package is given, search for all */
     if(!count($package)) $package = array("%");
 
+    /* If no section is given, search for all */
+    $section_filter = "";
+    if(count($exclude_sections)) {
+      $section_filter = '<clause><connector>AND</connector>';
+          foreach ($exclude_sections as $section => $value) {
+            $section_filter .= "<phrase><operator>ne</operator><section>"
+              .$section
+              ."</section></phrase>";
+          }
+        $section_filter .= "</clause>";
+    }
+
     /* Create limit tag */
     if($from == -1){
       $limit =""; 
@@ -325,6 +337,7 @@ class gosaSupportDaemon
       <clause><connector>OR</connector>
       ".$pkgs."
       </clause>
+      ".$section_filter."
       </where>".
       $limit.
       "</xml>";

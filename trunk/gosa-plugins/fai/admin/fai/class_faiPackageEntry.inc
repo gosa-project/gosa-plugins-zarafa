@@ -79,18 +79,21 @@ class faiPackageEntry extends plugin
             <input type='hidden' value='chkchange' name='chkchange'><table summary=''><tr>";
     $i = 0;
     foreach($this->package_sections as $cat => $selected){
+      $Section_boxes .= "<input type='hidden' value=1 name='CAT$cat'>";
+
       if($i == 2){
         $Section_boxes .="</tr><tr>";
         $i = 0;
       }
       if($selected){
-        $Section_boxes .="<td><input type='checkbox' value='1' name='CAT".$cat."' checked ".
+        $Section_boxes .="<td><input type='checkbox' value='1' name='useCAT".$cat."' checked ".
           "onclick='document.mainform.submit()'>&nbsp;".$cat."&nbsp;</td>";
       }else{
-        $Section_boxes .="<td><input type='checkbox' value='1' name='CAT".$cat."' ".
+        $Section_boxes .="<td><input type='checkbox' value='1' name='useCAT".$cat."' ".
           "onclick='document.mainform.submit()'>&nbsp;".$cat."&nbsp;</td>";
       }
       $i ++ ;
+
     }
     $Section_boxes .= "</tr></table></div>";
 
@@ -129,7 +132,6 @@ class faiPackageEntry extends plugin
             array("string"=>htmlentities($desc), 
               "attach" => "style='border-right:0px;text-align:left;'")));
     }
-
     $smarty->assign("Section_boxes"          , $Section_boxes);
     $smarty->assign("searchStrPKG"  , $this->searchStrPKG);
     $smarty->assign("faihead"       , "");
@@ -163,6 +165,15 @@ class faiPackageEntry extends plugin
         }
 
       }
+      if(preg_match("/^CAT/i", $name)) {
+        $key = "use$name";
+        $section = preg_replace("/^CAT/i", "", $name);
+          if (isset($_POST[$key])) {
+            $this->package_sections[$section] = TRUE;
+          }else {
+            $this->package_sections[$section] = FALSE;
+          }
+      }
     }
 
     /* Get Posted search filter 
@@ -187,8 +198,13 @@ class faiPackageEntry extends plugin
     $this->pkgs = array(); 
     $q          = new gosaSupportDaemon();
     $filter     = preg_replace("/\*/","%",array($this->searchStrPKG));
+
+    /* Determine filter sections */
+    $cb = create_function('$a', 'return $a != TRUE;');
+    $exclude_sections = array_filter($this->package_sections, $cb);
+    
     $attrs      = array("distribution", "package","version", "section", "description", "timestamp");
-    $ret        = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$filter,0,200);
+    $ret        = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$filter,0,200, $exclude_sections);
     if($q->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
     }else{
