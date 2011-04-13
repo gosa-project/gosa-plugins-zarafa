@@ -491,6 +491,7 @@ class newConfigManagement extends plugin
                 $this->dataModel->setItemValues($item['path'], $item['values']);
             }
 
+            $this->TemplateEngine->load($this->itemConfig);
             $this->TemplateEngine->setTemplate($method.".tpl");
             $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
             $this->listing->setDialogObject($this->TemplateEngine);
@@ -504,6 +505,7 @@ class newConfigManagement extends plugin
     function newEntry($type)
     {
         // We've to add a config item
+        $this->TemplateEngine->load($this->itemConfig);
         if(isset($this->cfgItemMap[$type])){
             $method = $this->cfgItemMap[$type];
             $this->TemplateEngine->setTemplate($method.".tpl");
