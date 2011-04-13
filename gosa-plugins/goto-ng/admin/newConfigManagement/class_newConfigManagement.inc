@@ -179,7 +179,7 @@ class newConfigManagement extends plugin
 
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->listConfigItems($data['name']);
-                if(!$rpc->success() || !$res){
+                if(!$rpc->success()){
                     msg_dialog::display(_("Error"), 
                             sprintf(_("Failed to load distributions: %s"), 
                                 $rpc->get_error()),ERROR_DIALOG);
@@ -251,10 +251,6 @@ class newConfigManagement extends plugin
         }else{
             $this->addableContainerItems = array();
         }
-        #print_a($this->installationMethods);
-        #print_a($this->itemConfig);
-        #echo $item['type'];
-        #print_a($this->addableContainerItems);
     }
 
 
@@ -529,8 +525,8 @@ class newConfigManagement extends plugin
         while(preg_match("/\//", $fPath)){
             $fPath = preg_replace("/\/[^\/]*$/","", $fPath);
             $item = $this->dataModel->getItemByPath($fPath);
-            if(isset($this->cfgItemMap[$item['type']])){
-                return(preg_replace("/".preg_quote($item['parentPath'],'/')."/", "", $fullPath));
+            if(in_array($item['type'], array('Release', 'Distribution', 'root'))){
+                return(preg_replace("/".preg_quote($item['path'],'/')."/", "", $fullPath));
             }
         }
         return(NULL);
