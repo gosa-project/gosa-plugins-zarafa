@@ -88,22 +88,25 @@ class newConfigManagement extends plugin
 
         // Load configuration via rpc.
         $rpc = $this->config->getRpcHandle();
-
-        // Populate install methods on success.
         $res = $rpc->getSupportedInstallMethods();
         if(!$rpc->success()){
             $this->rpcError = TRUE;
             $this->errorMessage = $rpc->get_error();;
             return;
         }
+
+        // Populate install methods on success.
         if(!count($res)){
             $this->errorMessage = _("No selectable install methods returned!");
             msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
             $this->initFailed = TRUE;
             return;
         }else{
+
+            // Merge result with hard coded methods
             $this->installationMethods = array_merge($this->installationMethods, $res);
 
+            // Walk through entries and create useful mappings.
             $this->cfgItemMap = array();
             $this->itemConfig = array();
             $this->itemsPerMethod = array();
@@ -114,17 +117,18 @@ class newConfigManagement extends plugin
                     $this->cfgItemMap[$itemName] = $method;
                     $this->itemConfig[$itemName] = &$this->installationMethods[$method]['items'][$itemName];
  
-                    foreach($item['container'] as $cont){
-                        if($cont == "__CFG_ITEMS__"){
-                            $this->installationMethods[$method]['items'][$itemName]['container'] = &$rootElements; 
-                        }
-                    }
-                
                     // This enables us to create the first level of config items when 
                     //  a release is selected.
                     if($item['name'] == "/" && $itemName != 'root'){
                         $rootElements = array_merge($rootElements, $item['container']);
                     }
+                }
+            }
+
+            // Merge in root elements to releases.
+            foreach($this->itemConfig as $item => $data){
+                if(in_array('__CFG_ITEMS__', $data['container'])){
+                    $this->itemConfig[$item]['container'] = array_merge($this->itemConfig[$item]['container'], $rootElements );
                 }
             }
         }
@@ -142,7 +146,6 @@ class newConfigManagement extends plugin
         // Load distributions 
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getDistributions();
-
         if(!$rpc->success()){
             msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
             return(NULL);
@@ -177,7 +180,6 @@ class newConfigManagement extends plugin
         if(isset($_POST['ROOT'])){
             $this->setCurrentContainer('/root');
         }elseif(isset($_POST['BACK'])){
-
             $path = $this->selectedContainer;
             if($this->dataModel->itemExistsByPath($path)){
                 $data = $this->dataModel->getItemByPath($path);
@@ -205,12 +207,12 @@ class newConfigManagement extends plugin
             // Only releases can contain config-items.
             if($data['type'] == 'Release' && $data['status'] != "fetched"){
 
+
+                // Request all config items for the selected release via rpc.
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->listConfigItems($data['name']);
                 if(!$rpc->success()){
-                    msg_dialog::display(_("Error"), 
-                            sprintf(_("Failed to load distributions: %s"), 
-                                $rpc->get_error()),ERROR_DIALOG);
+                    msg_dialog::display(_("Error"),sprintf(_("Failed to load distributions: %s"),$rpc->get_error()),ERROR_DIALOG);
                 }else{
 
                     // Sort entries by path length 
@@ -228,7 +230,8 @@ class newConfigManagement extends plugin
 
                         $type = $res[$itemPath];
                 
-                        // Root installation objects do not have a name, so we use 'root' here.
+                        // Append the items-path to the current path to create the 
+                        //  effective item path in the data model.
                         $targetPath = trim($path."/".$itemPath);
 
                         // Remove trailing and duplicated slashes
@@ -343,7 +346,7 @@ class newConfigManagement extends plugin
         $data = $this->dataModel->getItemByPath('/root');
         $res = array();
         $res["/root"] = array("name" => "/", "desc" => "");
-        $res = array_merge($res,$this->__recurseItem($data, array('Distribution','Release')));
+        $res = array_merge($res,$this->__recurseItem($data));
         return($res);
     }
 
@@ -355,16 +358,14 @@ class newConfigManagement extends plugin
      *  @param  String  The parent path prefix which should be removed.
      *  @return Array   An array containing Array[path] = name
      */
-    function __recurseItem($item, $types, $parent = "")
+    function __recurseItem($item, $parent = "")
     {
         $res = array();
-        if(1 ||  in_array($item['type'], $types)){
-            $path = preg_replace("/".preg_quote($parent,'/')."/","",$item['path']);
-            $res[$path] = array('name' => $item['name'],'desc'=>$item['type']);
-        }
+        $path = preg_replace("/".preg_quote($parent,'/')."/","",$item['path']);
+        $res[$path] = array('name' => $item['name'],'desc'=>$item['type']);
         if(count($item['children'])){
             foreach($item['children'] as $child){
-                $res = array_merge($res, $this->__recurseItem($child, $types, $parent));
+                $res = array_merge($res, $this->__recurseItem($child, $parent));
             }
         }
         return($res);
