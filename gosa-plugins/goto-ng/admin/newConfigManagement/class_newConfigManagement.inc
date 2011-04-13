@@ -17,7 +17,7 @@ class newConfigManagement extends plugin
 
     var $addableContainerItems = array();
     var $currentObject = NULL;
-
+    var $itemsPerMethod = NULL;
 
     /*! \brief  Initialize the plugin and finally update the data model.
      */
@@ -75,30 +75,58 @@ class newConfigManagement extends plugin
         $this->loadInstallationMethods();
         $this->updateDataModel();
         $this->listing->setListingTypes($this->getListingTypes());
-
-        $this->setInstallMethod('root');
-
     }
 
 
-    /*! \brief  Sets the installation method to the given method.
-     *          Updates the template engine and adds the initial root
-     *           object for the selected method.
-     *  @param  The method to use.
-     *  @return TRUE on success else FALSE.
+    /*! \brief  Intializes this plugin
+     *          All available installation methods will be loaded
      */
-    function setInstallMethod($str)
+    function loadInstallationMethods()
     {
-        if(!isset($this->installationMethods[$str])){
-            $this->invalidInstallMethod =TRUE;
-            $this->errorMessage = sprintf(_("Invalid installation method %s selected!"), bold($str));
-            msg_dialog::display(_("Setup"), $this->errorMessage, ERROR_DIALOG);
-            return(FALSE);
+        // Reset erros
+        $this->rpcError = $this->initFailed = FALSE;
+
+        // Load configuration via rpc.
+        $rpc = $this->config->getRpcHandle();
+
+        // Populate install methods on success.
+        $res = $rpc->getSupportedInstallMethods();
+        if(!$rpc->success()){
+            $this->rpcError = TRUE;
+            $this->errorMessage = $rpc->get_error();;
+            return;
+        }
+        if(!count($res)){
+            $this->errorMessage = _("No selectable install methods returned!");
+            msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
+            $this->initFailed = TRUE;
+            return;
         }else{
-   
-            $this->TemplateEngine->setTemplate($str.".tpl");
-            $this->invalidInstallMethod =FALSE;
-            $this->TemplateEngine->load($this->itemConfig);
+            $this->installationMethods = array_merge($this->installationMethods, $res);
+
+            $this->cfgItemMap = array();
+            $this->itemConfig = array();
+            $this->itemsPerMethod = array();
+            $rootElements = array();
+            foreach($this->installationMethods as $method => $items){
+                foreach($items['items'] as $itemName => $item){
+                    $this->itemsPerMethod[$method][] = $itemName;
+                    $this->cfgItemMap[$itemName] = $method;
+                    $this->itemConfig[$itemName] = &$this->installationMethods[$method]['items'][$itemName];
+ 
+                    foreach($item['container'] as $cont){
+                        if($cont == "__CFG_ITEMS__"){
+                            $this->installationMethods[$method]['items'][$itemName]['container'] = &$rootElements; 
+                        }
+                    }
+                
+                    // This enables us to create the first level of config items when 
+                    //  a release is selected.
+                    if($item['name'] == "/" && $itemName != 'root'){
+                        $rootElements = array_merge($rootElements, $item['container']);
+                    }
+                }
+            }
         }
     }
 
@@ -245,12 +273,37 @@ class newConfigManagement extends plugin
         $this->listing->setContainer($cont);
 
         // Update the list of addable sub objects
-        $item = $this->dataModel->getItemByPath($cont);
-        if(isset($this->itemConfig[$item['type']]['container'])){
-            $this->addableContainerItems = $this->itemConfig[$item['type']]['container'];
-        }else{
-            $this->addableContainerItems = array();
+        $this->addableContainerItems = $this->getAddableContainersPerPath($cont);
+    }
+
+
+    function getAddableContainersPerPath($path)
+    {
+        $currentItem = $this->dataModel->getItemByPath($path);
+        $method = $this->getInstallationMethodPerPath($path);
+
+        // Get allowed items for the currently selected method 
+        //  merge in root elements, they are allowed everywhere.
+        $allowedItems = $this->itemsPerMethod[$method];
+        $allowedItems = array_merge($allowedItems, $this->itemsPerMethod['root']);
+
+        // Get addable items
+        $possibleItems = $this->itemConfig[$currentItem['type']]['container'];
+        return(array_unique(array_intersect($allowedItems, $possibleItems)));
+    }
+
+    
+    function getInstallationMethodPerPath($path)
+    {
+        $path .= '/';
+        while(preg_match("/\//", $path)){
+            $path = preg_replace("/\/[^\/]*$/","",$path);
+            $item = $this->dataModel->getItemByPath($path);
+            if(isset($item['values']['installation_method'])){
+                return($item['values']['installation_method']);
+            }
         }
+        return('root'); 
     }
 
 
@@ -315,56 +368,6 @@ class newConfigManagement extends plugin
             }
         }
         return($res);
-    }
-
-
-    /*! \brief  Intializes this plugin
-     *          All available installation methods will be loaded
-     */
-    function loadInstallationMethods()
-    {
-        // Reset erros
-        $this->rpcError = $this->initFailed = FALSE;
-
-        // Load configuration via rpc.
-        $rpc = $this->config->getRpcHandle();
-
-        // Populate install methods on success.
-        $res = $rpc->getSupportedInstallMethods();
-        if(!$rpc->success()){
-            $this->rpcError = TRUE;
-            $this->errorMessage = $rpc->get_error();;
-            return;
-        }
-        if(!count($res)){
-            $this->errorMessage = _("No selectable install methods returned!");
-            msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
-            $this->initFailed = TRUE;
-            return;
-        }else{
-            $this->installationMethods = array_merge($this->installationMethods, $res);
-            $this->cfgItemMap = array();
-            $this->itemConfig = array();
-            $rootElements = array();
-            foreach($this->installationMethods as $method => $items){
-                foreach($items['items'] as $itemName => $item){
-                    $this->cfgItemMap[$itemName] = $method;
-                    $this->itemConfig[$itemName] = &$this->installationMethods[$method]['items'][$itemName];
- 
-                    foreach($item['container'] as $cont){
-                        if($cont == "__CFG_ITEMS__"){
-                            $this->installationMethods[$method]['items'][$itemName]['container'] = &$rootElements; 
-                        }
-                    }
-                
-                    // This enables us to create the first level of config items when 
-                    //  a release is selected.
-                    if($item['name'] == "/" && $itemName != 'root'){
-                        $rootElements = array_merge($rootElements, $item['container']);
-                    }
-                }
-            }
-        }
     }
 
 
@@ -487,7 +490,7 @@ class newConfigManagement extends plugin
                 $this->dataModel->setItemValues($item['path'], $item['values']);
             }
 
-            $this->setInstallMethod($method);
+            $this->TemplateEngine->setTemplate($method.".tpl");
             $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = $item;
@@ -502,12 +505,12 @@ class newConfigManagement extends plugin
         // We've to add a config item
         if(isset($this->cfgItemMap[$type])){
             $method = $this->cfgItemMap[$type];
-            $this->setInstallMethod($method);
+            $this->TemplateEngine->setTemplate($method.".tpl");
             $this->TemplateEngine->setValues($type,array());
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
         }elseif($type == 'Distribution'){
-            $this->setInstallMethod('Distribution');
+            $this->TemplateEngine->setTemplate("root.tpl");
             $this->TemplateEngine->setValues($type,array());
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
