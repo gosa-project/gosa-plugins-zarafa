@@ -497,18 +497,17 @@ class newConfigManagement extends plugin
     {
         // We've to add a config item
         $this->TemplateEngine->load($this->itemConfig);
-        if(isset($this->cfgItemMap[$type])){
+        if($this->cfgItemMap[$item['type']] != 'root'){
             $method = $this->cfgItemMap[$type];
             $this->TemplateEngine->setTemplate($method.".tpl");
             $this->TemplateEngine->setValues($type,array());
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
-        }elseif($type == 'Distribution'){
+        }else{
             $this->TemplateEngine->setTemplate("root.tpl");
             $this->TemplateEngine->setValues($type,array());
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
-        }elseif($type == 'Release'){
         }
     }
 
@@ -550,6 +549,12 @@ class newConfigManagement extends plugin
     function saveItemChanges()
     {
         $item = $this->currentObject;
+        $type = $this->TemplateEngine->getItemType();
+        if($this->cfgItemMap[$item['type']] == 'root'){
+            echo "{$type} Cannot be saved yet";
+            $this->listing->clearDialogObject();
+            return;
+        }
 
         // Null means a new  object has to be added.        
         if($item == NULL){
@@ -557,7 +562,6 @@ class newConfigManagement extends plugin
             // Save template engine modifications
             $this->TemplateEngine->save_object();
             $release = preg_replace("/^.*\//","", $this->getReleasePath($this->selectedContainer));
-            $type = $this->TemplateEngine->getItemType();
 
             // Collect modified values
             $values = array();
