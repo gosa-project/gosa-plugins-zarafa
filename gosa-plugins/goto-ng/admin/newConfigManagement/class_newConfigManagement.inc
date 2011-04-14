@@ -559,6 +559,36 @@ class newConfigManagement extends plugin
  
     function saveItemChanges()
     {
+        // Save template engine modifications and validate values.
+        $this->TemplateEngine->save_object();
+        $msgs = $this->TemplateEngine->check();
+
+        // Get values to be saved
+        $values = array();
+        foreach($this->TemplateEngine->getWidgets() as $w){
+            $values[$w->getName()] = $w->getValue();
+        }
+           
+        // No input error were found, now check that we do not use the same name twice.
+        if(!count($msgs)){
+            $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
+
+            // Allow the item to keep its name.
+            if($this->currentObject != NULL && isset($this->currentObject['values']['name'])){
+                $usedNames = array_remove_entries(array($this->currentObject['values']['name']), $usedNames);
+            }
+            if(in_array($values['name'],$usedNames)){
+                $msgs[] = msgPool::duplicated(_("Name"));
+            }
+        }
+
+        // Display errors
+        if(count($msgs)){
+            msg_dialog::displayChecks($msgs);
+            return;
+        }
+
+        // Get the item type to be saved
         $item = $this->currentObject;
         $type = $this->TemplateEngine->getItemType();
         if($this->cfgItemMap[$type] == 'root'){
@@ -567,21 +597,11 @@ class newConfigManagement extends plugin
             return;
         }
 
-
-
+        // Save a CONFIG-ITEM object.
         if($this->cfgItemMap[$type] != 'root'){
 
-            // Save template engine modifications
-            $this->TemplateEngine->save_object();
-            $release = preg_replace("/^.*\//","", $this->getReleasePath($this->selectedContainer));
-
-            // Get values to be saved
-            $values = array();
-            foreach($this->TemplateEngine->getWidgets() as $w){
-                $values[$w->getName()] = $w->getValue();
-            }
-           
             // Get paths 
+            $release = preg_replace("/^.*\//","", $this->getReleasePath($this->selectedContainer));
             $newPath = $this->selectedContainer."/".$values['name'];
             $newItemPath = $this->getItemPath($this->selectedContainer)."/".$values['name'];
             if($item){
@@ -591,13 +611,6 @@ class newConfigManagement extends plugin
 
             // If this is a new item, then create it now.
             if($item == NULL){
-
-                // Validate item name 
-                $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
-                if(in_array($values['name'],$usedNames)){
-                    echo 'The name is used';
-                    return;
-                }
 
                 // Add the new item
                 $rpc = $this->config->getRpcHandle();
@@ -614,15 +627,6 @@ class newConfigManagement extends plugin
                     $this->listing->clearDialogObject();
                 }
             }else{
-
-                // Validate item name 
-                if($item['name'] != $values['name']){
-                    $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
-                    if(in_array($values['name'],$usedNames)){
-                        echo 'The name is used';
-                        return;
-                    }
-                }
 
                 // Write the modifications back to the server.
                 $rpc = $this->config->getRpcHandle();

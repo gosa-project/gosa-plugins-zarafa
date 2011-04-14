@@ -42,7 +42,7 @@ class TemplateEngine
         $this->template = $tmpl;
     }
 
-
+    
     /*! \brief  Returns the list of widgets which are currently used 
      *           by the template engine to render the plugin.
      *  @return Array  A list of widgets.
