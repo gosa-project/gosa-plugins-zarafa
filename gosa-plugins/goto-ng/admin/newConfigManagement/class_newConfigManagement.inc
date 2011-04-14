@@ -464,6 +464,16 @@ class newConfigManagement extends plugin
         }
     }
 
+    function getUsedNamesForPath($path)
+    {
+        $item = $this->dataModel->getItemByPath($path);
+        $names = array();
+        foreach($item['children'] as $path => $data){
+            $names[] = $data['name'];
+        }
+        return($names);
+    }
+
 
     /*! \brief      Edits a selected list item.
      */
@@ -557,6 +567,8 @@ class newConfigManagement extends plugin
             return;
         }
 
+
+
         if($this->cfgItemMap[$type] != 'root'){
 
             // Save template engine modifications
@@ -580,6 +592,13 @@ class newConfigManagement extends plugin
             // If this is a new item, then create it now.
             if($item == NULL){
 
+                // Validate item name 
+                $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
+                if(in_array($values['name'],$usedNames)){
+                    echo 'The name is used';
+                    return;
+                }
+
                 // Add the new item
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->setConfigItem($release, $newItemPath, $type, $values);
@@ -595,6 +614,15 @@ class newConfigManagement extends plugin
                     $this->listing->clearDialogObject();
                 }
             }else{
+
+                // Validate item name 
+                if($item['name'] != $values['name']){
+                    $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
+                    if(in_array($values['name'],$usedNames)){
+                        echo 'The name is used';
+                        return;
+                    }
+                }
 
                 // Write the modifications back to the server.
                 $rpc = $this->config->getRpcHandle();
