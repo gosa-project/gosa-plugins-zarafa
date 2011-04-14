@@ -446,7 +446,7 @@ class newConfigManagement extends plugin
         $item = $this->dataModel->getItemById($ids[0]);
 
         // Is an config item.
-        if(isset($this->cfgItemMap[$item['type']])){
+        if($this->cfgItemMap[$item['type']] != 'root'){
             $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
             $path = $this->getItemPath($item['path']);
 
@@ -477,7 +477,7 @@ class newConfigManagement extends plugin
         if($this->cfgItemMap[$item['type']] != 'root'){
             if($item['status'] == '-'){
                 $rpc = $this->config->getRpcHandle();
-                $item['values']['itemValues'] = $rpc->getConfigItem($release, $path);
+                $item['values'] = $rpc->getConfigItem($release, $path);
                 $this->dataModel->setItemStatus($item['path'], 'fetched');
                 $this->dataModel->setItemValues($item['path'], $item['values']);
             }
@@ -485,7 +485,7 @@ class newConfigManagement extends plugin
 
         $this->TemplateEngine->load($this->itemConfig);
         $this->TemplateEngine->setTemplate($method.".tpl");
-        $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
+        $this->TemplateEngine->setValues($item['type'],$item['values']);
         $this->listing->setDialogObject($this->TemplateEngine);
         $this->currentObject = $item;
     }
@@ -604,7 +604,7 @@ class newConfigManagement extends plugin
             }else{
         
                 // Update the data model
-                $item['values']['itemValues'] = $values;
+                $item['values'] = $values;
                 $this->dataModel->setItemValues($item['path'], $item['values']);
                 $this->listing->clearDialogObject();
             }
