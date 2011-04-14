@@ -442,24 +442,25 @@ class newConfigManagement extends plugin
      */
     function removeEntry($ids)
     {
+        foreach($ids as $id){
+            $item = $this->dataModel->getItemById($id);
 
-        $item = $this->dataModel->getItemById($ids[0]);
+            // Is an config item.
+            if($this->cfgItemMap[$item['type']] != 'root'){
+                $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
+                $path = $this->getItemPath($item['path']);
 
-        // Is an config item.
-        if($this->cfgItemMap[$item['type']] != 'root'){
-            $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
-            $path = $this->getItemPath($item['path']);
-
-            $rpc = $this->config->getRpcHandle();
-            $rpc->removeConfigItem($release, $path);
-            if(!$rpc->success()){
-                msg_dialog::display(_("Error"), sprintf(_("Failed to remove: %s"), $rpc->get_error()),ERROR_DIALOG);
-                return(NULL);
+                $rpc = $this->config->getRpcHandle();
+                $rpc->removeConfigItem($release, $path);
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to remove: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    return(NULL);
+                }else{
+                    $this->dataModel->removeItem($item['path']);
+                }
             }else{
-                $this->dataModel->removeItem($item['path']);
+                echo $item['type']." - are not handled yet!";
             }
-        }else{
-            echo $item['type']." - are not handled yet!";
         }
     }
 
@@ -497,7 +498,7 @@ class newConfigManagement extends plugin
     {
         // We've to add a config item
         $this->TemplateEngine->load($this->itemConfig);
-        if($this->cfgItemMap[$item['type']] != 'root'){
+        if($this->cfgItemMap[$type] != 'root'){
             $method = $this->cfgItemMap[$type];
             $this->TemplateEngine->setTemplate($method.".tpl");
             $this->TemplateEngine->setValues($type,array());
@@ -550,7 +551,7 @@ class newConfigManagement extends plugin
     {
         $item = $this->currentObject;
         $type = $this->TemplateEngine->getItemType();
-        if($this->cfgItemMap[$item['type']] == 'root'){
+        if($this->cfgItemMap[$type] == 'root'){
             echo "{$type} Cannot be saved yet";
             $this->listing->clearDialogObject();
             return;

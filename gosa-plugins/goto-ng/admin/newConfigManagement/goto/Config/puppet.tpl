@@ -24,6 +24,30 @@
         </tr>
     </table>
 {/if}
+{if $type == 'PuppetManifest'}
+    <table>
+        <tr>
+            <td>{$nameName}</td>
+            <td>{$name}</td>
+        </tr>
+        <tr>
+            <td>{$dataName}</td>
+            <td>{$data}</td>
+        </tr>
+    </table>
+{/if}
+{if $type == 'PuppetFile'}
+    <table>
+        <tr>
+            <td>{$nameName}</td>
+            <td>{$name}</td>
+        </tr>
+        <tr>
+            <td>{$dataName}</td>
+            <td>{$data}</td>
+        </tr>
+    </table>
+{/if}
 {if $type == 'PuppetTemplate'}
     <table>
         <tr>
@@ -35,5 +59,4 @@
             <td>{$data}</td>
         </tr>
     </table>
-    <input type='submit'>    
 {/if}
