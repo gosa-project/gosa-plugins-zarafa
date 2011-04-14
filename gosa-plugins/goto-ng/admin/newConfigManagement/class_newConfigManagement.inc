@@ -595,7 +595,7 @@ class newConfigManagement extends plugin
                     $this->listing->clearDialogObject();
                 }
             }else{
-    
+
                 // Write the modifications back to the server.
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->setConfigItem($release, $oldItemPath, $type, $values);
@@ -605,9 +605,10 @@ class newConfigManagement extends plugin
                 }else{
             
                     // Update the data model
-                    $item['values'] = $values;
-                    $this->dataModel->setItemValues($item['path'], $item['values']);
-                    $this->dataModel->moveItem($oldPath, $newPath);
+                    $this->dataModel->setItemValues($oldPath, $values);
+                    if($oldPath != $newPath){
+                        $this->dataModel->moveItem($oldPath, $newPath);
+                    }
                     $this->listing->clearDialogObject();
                 }
             }
