@@ -45,13 +45,13 @@ class newConfigManagement extends plugin
         $items['Distribution']['options']['name']['required'] = true;
         $items['Distribution']['options']['name']['type'] = 'string';
         $items['Distribution']['options']['name']['display'] = _('Name');
-        $items['Distribution']['options']['type']['description'] = _("Distribution type");
-        $items['Distribution']['options']['type']['default'] = "deb";
-        $items['Distribution']['options']['type']['value'] = "deb";
-        $items['Distribution']['options']['type']['values'] = array("deb" => 'deb', "rpm" => 'rpm');
-        $items['Distribution']['options']['type']['required'] = true;
-        $items['Distribution']['options']['type']['type'] = 'combobox';
-        $items['Distribution']['options']['type']['display'] = _('Distribution type');
+        $items['Distribution']['options']['installation_method']['description'] = _("Distribution type");
+        $items['Distribution']['options']['installation_method']['default'] = "deb";
+        $items['Distribution']['options']['installation_method']['value'] = "deb";
+        $items['Distribution']['options']['installation_method']['values'] = array("deb" => 'deb', "rpm" => 'rpm');
+        $items['Distribution']['options']['installation_method']['required'] = true;
+        $items['Distribution']['options']['installation_method']['type'] = 'combobox';
+        $items['Distribution']['options']['installation_method']['display'] = _('Distribution type');
 
         $items['Release']['container'] = array('Release', '__CFG_ITEMS__');
         $items['Release']['name'] = 'Release';

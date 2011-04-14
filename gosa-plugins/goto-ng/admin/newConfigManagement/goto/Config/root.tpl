@@ -5,8 +5,8 @@
         <td>{$name}</td>
     </tr>
     <tr>
-        <td>{$typeName}</td>
-        <td>{$type}</td>
+        <td>{$installation_methodName}</td>
+        <td>{$installation_method}</td>
     </tr>
 </table>
 {else if $type == 'Release'}
