@@ -43,6 +43,11 @@ class ConfigManagementDataModel
 
         // Append the linear entry.
         $this->data['linear'][$to] = &$parentTo['children'][$to];
+
+        // Update id->Path mapping
+        $id = $this->data['linear'][$to]['id'];
+        $this->idToPath[$id] = $to;
+
     }
 
     function removeItem($path)

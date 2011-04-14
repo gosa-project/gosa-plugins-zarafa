@@ -609,6 +609,9 @@ class newConfigManagement extends plugin
                     
                     $this->dataModel->setItemValues($item['path'], $item['values']);
                     $this->dataModel->moveItem($oldPath, $newPath);
+
+                    print_a($this);
+
                     $this->listing->clearDialogObject();
                 }
             }
