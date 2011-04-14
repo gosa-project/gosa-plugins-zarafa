@@ -52,15 +52,6 @@ class filterConfigManagement {
             $entry[] = 'objectClass';
             $entry['count'] = 5;
 
-            if(isset($item['values']['__editable']) && ($item['values']['__editable'])){
-                $entry['objectClass'][] = 'editable';
-                $entry['objectClass']['count'] ++;
-            }
-            if(isset($item['values']['__removeable']) && ($item['values']['__removeable'])){
-                $entry['objectClass'][] = 'removeable';
-                $entry['objectClass']['count'] ++;
-            }
-
             $ret[] = $entry;
         }
 

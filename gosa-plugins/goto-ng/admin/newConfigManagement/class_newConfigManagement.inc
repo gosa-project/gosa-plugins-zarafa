@@ -151,12 +151,10 @@ class newConfigManagement extends plugin
             return(NULL);
         }else{
             foreach($res as $dist){
-                $dist['__removeable'] = TRUE;
                 $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
                 if(isset($dist['releases'])){
                     foreach($dist['releases'] as $release){
                         $distPath = "/root/{$dist['name']}";
-                        $release['__removeable'] = TRUE;
                         $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
                     }
                 }
@@ -244,13 +242,7 @@ class newConfigManagement extends plugin
                         // Cleanup the path and then add the item.
                         $targetPath = preg_replace("/[^\/]*$/","", $targetPath);
                         $targetPath = rtrim($targetPath,'/');
-                        $this->dataModel->addItem($type, $targetPath, $name, 
-                                array(    
-                                        '__editable' => TRUE,
-                                        '__removeable' => TRUE,
-                                        '__path' => $itemPath,
-                                        '__release' => $path
-                                    ),'-' ); 
+                        $this->dataModel->addItem($type, $targetPath, $name,array(),'-' ); 
                     }
                     $this->dataModel->setItemStatus($path, 'fetched');
                 }
@@ -455,8 +447,9 @@ class newConfigManagement extends plugin
 
         // Is an config item.
         if(isset($this->cfgItemMap[$item['type']])){
-            $release = preg_replace("/^.*\//","",$item['values']['__release']);
-            $path = $item['values']['__path'];
+            $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
+            $path = $this->getItemPath($item['path']);
+
             $rpc = $this->config->getRpcHandle();
             $rpc->removeConfigItem($release, $path);
             if(!$rpc->success()){
@@ -475,28 +468,26 @@ class newConfigManagement extends plugin
      */
     function editEntry($ids)
     {
-        // Update the template engine to use another type of item and
-        //  some other values.
         $item = $this->dataModel->getItemById($ids[0]);
-        if(isset($this->cfgItemMap[$item['type']])){
-            $release = preg_replace("/^.*\//","",$item['values']['__release']);
-            $path = $item['values']['__path'];
-            $method = $this->cfgItemMap[$item['type']];
+        $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
+        $path = $this->getItemPath($item['path']);
+        $method = $this->cfgItemMap[$item['type']];
 
-            // Load item values on demand
+        // Load item values on demand
+        if($this->cfgItemMap[$item['type']] != 'root'){
             if($item['status'] == '-'){
                 $rpc = $this->config->getRpcHandle();
                 $item['values']['itemValues'] = $rpc->getConfigItem($release, $path);
                 $this->dataModel->setItemStatus($item['path'], 'fetched');
                 $this->dataModel->setItemValues($item['path'], $item['values']);
             }
-
-            $this->TemplateEngine->load($this->itemConfig);
-            $this->TemplateEngine->setTemplate($method.".tpl");
-            $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
-            $this->listing->setDialogObject($this->TemplateEngine);
-            $this->currentObject = $item;
         }
+
+        $this->TemplateEngine->load($this->itemConfig);
+        $this->TemplateEngine->setTemplate($method.".tpl");
+        $this->TemplateEngine->setValues($item['type'],$item['values']['itemValues']);
+        $this->listing->setDialogObject($this->TemplateEngine);
+        $this->currentObject = $item;
     }
 
 
@@ -586,13 +577,7 @@ class newConfigManagement extends plugin
             }else{
 
                 // We've successfully added the item, now add it to the tree.
-                $this->dataModel->addItem($type, $this->selectedContainer, $values['name'], 
-                        array(    
-                            '__editable' => TRUE,
-                            '__removeable' => TRUE,
-                            '__path' => $path,
-                            '__release' => $this->getReleasePath($this->selectedContainer)
-                            ), '-' );
+                $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
 
                 // Finally - close the dialog. 
                 $this->listing->clearDialogObject();
@@ -607,8 +592,8 @@ class newConfigManagement extends plugin
             }
 
             // Get the items release & path info
-            $release = preg_replace("/^.*\//","",$item['values']['__release']);
-            $path = $item['values']['__path'];
+            $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
+            $path = $this->getItemPath($item['path']);
     
             // Write the modifications back to the server.
             $rpc = $this->config->getRpcHandle();

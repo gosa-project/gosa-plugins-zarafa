@@ -71,7 +71,6 @@
     <action>
       <name>editEntry</name>
       <type>entry</type>
-      <objectclass>editable</objectclass>
       <image>images/lists/edit.png</image>
       <label>Edit item</label>
     </action>
@@ -80,7 +79,6 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <objectclass>removeable</objectclass>
       <label>Remove item</label>
     </action>
 
