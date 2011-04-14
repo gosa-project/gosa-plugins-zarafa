@@ -2,6 +2,31 @@
 
 class TemplateWidget_file extends TemplateWidget
 {
+    /*! \brief  Constructs the template widget and sets the default values.
+     *  @param  Config  The GOsa configuration object.
+     *  @param  String  A name for the widget.
+     *  @param  String  The initial value.
+     *  @param  String  A description.
+     *  @param  String  True/False  Must-Value/Optional-Value.
+     *  @param  String  The widget type.
+     *  @param  String  A display name for the widget.
+     */
+    function __construct(&$config, $name, $value, $description,$syntax,$required,$type,$display, $values=array())
+    {
+        $value = base64_decode($value);
+        TemplateWidget::__construct($config, $name, $value, $description,$syntax,$required,$type,$display, $values);
+    }
+
+
+    /*! \brief  Returns the current value.
+     *  @return  Mixed  The widgets value.
+     */
+    function getValue()
+    {
+        return(base64_encode($this->value));
+    }
+
+
     function render()
     {
         $title = set_post($this->description);
