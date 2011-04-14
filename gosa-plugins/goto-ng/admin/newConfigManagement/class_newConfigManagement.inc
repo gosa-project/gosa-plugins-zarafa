@@ -557,61 +557,60 @@ class newConfigManagement extends plugin
             return;
         }
 
-        // Null means a new  object has to be added.        
-        if($item == NULL){
+        if($this->cfgItemMap[$type] != 'root'){
 
             // Save template engine modifications
             $this->TemplateEngine->save_object();
             $release = preg_replace("/^.*\//","", $this->getReleasePath($this->selectedContainer));
 
-            // Collect modified values
+            // Get values to be saved
             $values = array();
             foreach($this->TemplateEngine->getWidgets() as $w){
                 $values[$w->getName()] = $w->getValue();
             }
            
-            // Create the elements target path  
-            $path = $this->getItemPath($this->selectedContainer)."/".$values['name'];
+            // Get paths 
+            $newPath = $this->selectedContainer."/".$values['name'];
+            $newItemPath = $this->getItemPath($this->selectedContainer)."/".$values['name'];
+            if($item){
+                $oldPath = $item['path'];
+                $oldItemPath = $this->getItemPath($item['path']);
+            }
 
-            // Add the new item
-            $rpc = $this->config->getRpcHandle();
-            $res = $rpc->setConfigItem($release, $path, $type, $values);
-            if(!$rpc->success()){
-                msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
-                return(NULL);
+            // If this is a new item, then create it now.
+            if($item == NULL){
+
+                // Add the new item
+                $rpc = $this->config->getRpcHandle();
+                $res = $rpc->setConfigItem($release, $newItemPath, $type, $values);
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    return(NULL);
+                }else{
+
+                    // We've successfully added the item, now add it to the tree.
+                    $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
+
+                    // Finally - close the dialog. 
+                    $this->listing->clearDialogObject();
+                }
             }else{
-
-                // We've successfully added the item, now add it to the tree.
-                $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
-
-                // Finally - close the dialog. 
-                $this->listing->clearDialogObject();
-            }
-        }else{
-
-            // Collect modified values.
-            $this->TemplateEngine->save_object();
-            $values = array();
-            foreach($this->TemplateEngine->getWidgets() as $w){
-                $values[$w->getName()] = $w->getValue();
-            }
-
-            // Get the items release & path info
-            $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
-            $path = $this->getItemPath($item['path']);
     
-            // Write the modifications back to the server.
-            $rpc = $this->config->getRpcHandle();
-            $res = $rpc->setConfigItem($release, $path, $item['type'], $values);
-            if(!$rpc->success()){
-                msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
-                return(NULL);
-            }else{
-        
-                // Update the data model
-                $item['values'] = $values;
-                $this->dataModel->setItemValues($item['path'], $item['values']);
-                $this->listing->clearDialogObject();
+                // Write the modifications back to the server.
+                $rpc = $this->config->getRpcHandle();
+                $res = $rpc->setConfigItem($release, $oldItemPath, $type, $values);
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    return(NULL);
+                }else{
+            
+                    // Update the data model
+                    $item['values'] = $values;
+                    
+                    $this->dataModel->setItemValues($item['path'], $item['values']);
+                    $this->dataModel->moveItem($oldPath, $newPath);
+                    $this->listing->clearDialogObject();
+                }
             }
         }
     }

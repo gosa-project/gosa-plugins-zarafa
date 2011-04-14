@@ -19,6 +19,32 @@ class ConfigManagementDataModel
         return($this->data);
     }
 
+    function moveItem($from, $to)
+    {
+        // Get source entries
+        $itemFrom = &$this->data['linear'][$from];
+        $parentFrom = &$this->data['linear'][$itemFrom['parentPath']];
+
+        // Extract 'to' informations out of the path. 
+        $name = preg_replace("/^.*\//","", $to);
+        $toParentPath = preg_replace("/\/[^\/]*$/","", $to);
+        $parentTo = &$this->data['linear'][$toParentPath];
+        $parentToDn = $parentTo['dn'];
+
+        // Append the 'from' entry to the 'to' parent children. 
+        $parentTo['children'][$to] = $parentFrom['children'][$from];
+        $parentTo['children'][$to]['path']= $to;
+        $parentTo['children'][$to]['name']= $name;
+        $parentTo['children'][$to]['dn']= rtrim("cn={$name},{$parentToDn}",',');
+
+        // Unset the source path
+        unset($parentFrom['children'][$from]);
+        unset($this->data['linear'][$from]);
+
+        // Append the linear entry.
+        $this->data['linear'][$to] = &$parentTo['children'][$to];
+    }
+
     function removeItem($path)
     {
         $item = &$this->data['linear'][$path];
