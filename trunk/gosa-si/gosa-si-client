@@ -651,13 +651,13 @@ sub register_at_gosa_si_server {
                 last;
 
 	  		# delivery of registration msg failed	
-			} elsif($REGISTRATION_TRIES >= scalar(@servers)) {
+			} elsif($REGISTRATION_TRIES > scalar(@servers)) {
 				last;
 			}
 
     } # end of while
 	# one circle through all servers finished and no registration succeed
-	if ( $REGISTRATION_TRIES >= (scalar(@servers)) )  {
+	if ( $REGISTRATION_TRIES > (scalar(@servers)) )  {
 			$REGISTRATION_TRIES = 0;
 			&write_to_file("gosa-si-no-server-available", $fai_logpath);
 			daemon_log("WARNING: Could not register with any of the servers, waiting $delay_set_time seconds",3);
@@ -1056,11 +1056,11 @@ sub server_input {
     my $msg_hash;    
     
 
-    daemon_log("INFO: Incoming msg from '$remote_ip'", 5);
+    daemon_log("INFO: Incoming msg from '$remote_ip', server_ip: $server_ip", 5);
     daemon_log("DEBUG: Incoming msg:\n$input\n", 9);
 
-    if (not "$remote_ip" eq "$server_ip") {
-        daemon_log("INFO: Incoming msg not from server, ignoring", 5);
+    if (not "$remote_ip" eq "$server_ip" and "$server_ip" ne "127.0.0.1") {
+        daemon_log("INFO: Incoming msg not from server ($server_ip), ignoring", 5);
         $error++;
     } else {
         ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
@@ -1129,6 +1129,10 @@ sub server_input {
                 # set registered flag to true to stop sending further registered msgs
                 $REGISTERED = 1;
                 $REGISTRATION_IN_PROGRESS = 0;
+				if( $server_ip eq "127.0.0.1") {
+					$server_ip = $remote_ip;
+					daemon_log("INFO: Registered at localhost, setting server_ip to $server_ip",3);
+				}
             } 
             else {
                 $answer =~ /<header>(\S+)<\/header>/;
