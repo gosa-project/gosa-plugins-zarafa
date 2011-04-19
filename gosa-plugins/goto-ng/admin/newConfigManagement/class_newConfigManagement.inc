@@ -87,6 +87,7 @@ class newConfigManagement extends plugin
         if($success){
             $this->initialized = TRUE;
             $this->listing->setListingTypes($this->getListingTypes());
+            $this->setCurrentContainer('/root');
         }
     }
 
