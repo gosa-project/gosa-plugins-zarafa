@@ -171,11 +171,7 @@ class newConfigManagement extends plugin
                         $distPath = "/root/{$dist['name']}";
                         foreach($names as $rName){
                             $rPath .= '/'.$rName;
-                            
-                            
                             $this->dataModel->addItem('Release',$distPath, $rName, $release);
-    
-                            print_a(array('Release',$distPath, $rName, $release));
                             $distPath .= $rPath;
                         }
                     }
@@ -624,11 +620,9 @@ class newConfigManagement extends plugin
                 $imethod = $values['installation_method'];
                 $mirror = $values['mirror'];
 
+                // Initiate the rpc request.
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->createDistribution($name, $itype, array('mirror'=>$mirror, 'install_method' => $imethod));
-
-                print_a(array($name, $itype, array('mirror'=>$mirror, 'install_method' => $imethod)));
-    
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
                     return(NULL);
