@@ -121,6 +121,7 @@ class TemplateEngine
     {
         $smarty = get_smarty();
         $smarty->assign("type", $this->itemType);
+        $smarty->assign("typeData", $this->data[$this->itemType]);
 
         // Tell smarty the HTML-content for each widget and the name that should be
         //  displayed.

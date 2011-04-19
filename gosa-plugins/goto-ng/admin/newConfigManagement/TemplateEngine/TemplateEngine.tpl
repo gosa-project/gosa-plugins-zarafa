@@ -1,4 +1,6 @@
-<h3>Module name</h3>
+<h3>{$typeData.description}</h3>
+
+<hr>
 
 {$template}
 

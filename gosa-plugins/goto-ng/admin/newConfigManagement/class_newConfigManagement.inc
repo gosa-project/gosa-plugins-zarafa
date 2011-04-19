@@ -616,9 +616,40 @@ class newConfigManagement extends plugin
         $item = $this->currentObject;
         $type = $this->TemplateEngine->getItemType();
         if($this->cfgItemMap[$type] == 'root'){
-            echo "{$type} Cannot be saved yet";
-            $this->listing->clearDialogObject();
-            return;
+
+            // We've to create a new distribution
+            if($type == 'Distribution'){
+                $name = $values['name'];
+                $itype = $values['installation_type'];
+                $imethod = $values['installation_method'];
+                $mirror = $values['mirror'];
+
+                $rpc = $this->config->getRpcHandle();
+                $res = $rpc->createDistribution($name, $itype, array('mirror'=>$mirror, 'install_method' => $imethod));
+
+                print_a(array($name, $itype, array('mirror'=>$mirror, 'install_method' => $imethod)));
+    
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    return(NULL);
+                }else{
+
+                    // We've successfully added the item, now add it to the tree.
+                    $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
+
+                    // Finally - close the dialog. 
+                    $this->listing->clearDialogObject();
+                }
+                
+
+                $this->listing->clearDialogObject();
+
+            }else{
+
+                echo "{$type} Cannot be saved yet";
+                $this->listing->clearDialogObject();
+                return;
+            }
         }
 
         // Save a CONFIG-ITEM object.
