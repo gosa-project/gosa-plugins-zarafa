@@ -165,15 +165,11 @@ class newConfigManagement extends plugin
                     // Append release tags
                     foreach($sort as $id){
                         $release = $dist['releases'][$id];
-                        $names = preg_split("/\//", $release['name']);
-    
-                        $rPath = "";
-                        $distPath = "/root/{$dist['name']}";
-                        foreach($names as $rName){
-                            $rPath .= '/'.$rName;
-                            $this->dataModel->addItem('Release',$distPath, $rName, $release);
-                            $distPath .= $rPath;
-                        }
+                        $rPath = $release['name'];
+                        $rPath = "/root/{$dist['name']}/$rPath";
+                        $rName = preg_replace("/^.*\//","", $rPath);
+                        $rPath = preg_replace("/\/[^\/]*$/","", $rPath);
+                        $this->dataModel->addItem('Release',$rPath, $rName, $release);
                     }
                 }
             }
