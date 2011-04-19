@@ -19,6 +19,11 @@ class newConfigManagement extends plugin
     var $currentObject = NULL;
     var $itemsPerMethod = NULL;
 
+
+    var $initFailed = TRUE;
+    var $initialized = FALSE;
+    var $errorMessage = "";
+
     /*! \brief  Initialize the plugin and finally update the data model.
      */
     function __construct($config, $dn)
@@ -70,11 +75,19 @@ class newConfigManagement extends plugin
         $this->installationMethods['root']['items']['Distribution'] = &$items['Distribution'];
         $this->installationMethods['root']['items']['Release'] = &$items['Release'];
         $this->installationMethods['root']['items']['root'] = &$items['root'];
+    }
 
-        // Request an update of the data model
-        $this->loadInstallationMethods();
-        $this->updateDataModel();
-        $this->listing->setListingTypes($this->getListingTypes());
+    
+    function init()
+    {
+        $success = TRUE;
+        $success &= $this->loadInstallationMethods();
+        $success &= $this->updateDataModel();
+        $this->initFailed = !$success;
+        if($success){
+            $this->initialized = TRUE;
+            $this->listing->setListingTypes($this->getListingTypes());
+        }
     }
 
 
@@ -83,24 +96,18 @@ class newConfigManagement extends plugin
      */
     function loadInstallationMethods()
     {
-        // Reset erros
-        $this->rpcError = $this->initFailed = FALSE;
-
         // Load configuration via rpc.
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getSupportedInstallMethods();
         if(!$rpc->success()){
-            $this->rpcError = TRUE;
             $this->errorMessage = $rpc->get_error();;
-            return;
+            return(FALSE);
         }
 
         // Populate install methods on success.
         if(!count($res)){
             $this->errorMessage = _("No selectable install methods returned!");
-            msg_dialog::display(_("Setup"), $this->errorMessage , ERROR_DIALOG);
-            $this->initFailed = TRUE;
-            return;
+            return(FALSE);
         }else{
 
             // Merge result with hard coded methods
@@ -132,6 +139,7 @@ class newConfigManagement extends plugin
                 }
             }
         }
+        return(TRUE);
     }
 
 
@@ -147,8 +155,8 @@ class newConfigManagement extends plugin
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getDistributions();
         if(!$rpc->success()){
-            msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
-            return(NULL);
+            $this->errorMessage = sprintf(_("Failed to load distributions: %s"), $rpc->get_error());
+            return(FALSE);
         }else{
             foreach($res as $dist){
                 $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
@@ -174,6 +182,7 @@ class newConfigManagement extends plugin
                 }
             }
         }
+        return(TRUE);
     }
 
 
@@ -219,13 +228,13 @@ class newConfigManagement extends plugin
             // Only releases can contain config-items.
             if($data['type'] == 'Release' && $data['status'] != "fetched"){
 
-
                 // Request all config items for the selected release via rpc.
                 $rpc = $this->config->getRpcHandle();
                 $releasePath = $this->getReleasePart($path);
                 $res = $rpc->listConfigItems($releasePath);
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"),sprintf(_("Failed to load distributions: %s"),$rpc->get_error()),ERROR_DIALOG);
+                    return;
                 }else{
             
                     if(!$res) return;
@@ -275,6 +284,9 @@ class newConfigManagement extends plugin
      */
     function setCurrentContainer($cont)
     {
+        // Do nothing while the service wasn't initialized.
+        if(!$this->initialized) return;
+
         $this->selectedContainer = $cont;
 
         // Update list of items within the selected container. 
@@ -324,12 +336,25 @@ class newConfigManagement extends plugin
      */
     function execute()
     {
-        // Get the selected release and store it in a session variable
-        //  to allow the configFilter to access it and display the
-        //  packages and items.
-        $res = $this->listing->execute();
-        $this->listing->setListingTypes($this->getListingTypes());
-        return($res);
+        // Request an update of the data model
+        if(!$this->initialized){
+            $this->init();
+        }
+
+        // Act on init fails
+        if($this->initFailed){
+            $smarty = get_smarty();
+            $smarty->assign('error', $this->errorMessage);
+            return($smarty->fetch(get_template_path('rpcError.tpl', TRUE)));
+        }else{
+
+            // Get the selected release and store it in a session variable
+            //  to allow the configFilter to access it and display the
+            //  packages and items.
+            $res = $this->listing->execute();
+            $this->listing->setListingTypes($this->getListingTypes());
+            return($res);
+        }
     }
 
 
