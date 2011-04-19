@@ -226,7 +226,11 @@ class newConfigManagement extends plugin
 
                 // Request all config items for the selected release via rpc.
                 $rpc = $this->config->getRpcHandle();
-                $res = $rpc->listConfigItems($data['name']);
+
+                $rPath = $this->getReleasePath($path);
+                $dPath = $this->getDistributionPath($path);
+                $releasePath = preg_replace("/^".preg_quote($dPath, '/')."\/?/", "", $rPath);
+                $res = $rpc->listConfigItems($releasePath);
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"),sprintf(_("Failed to load distributions: %s"),$rpc->get_error()),ERROR_DIALOG);
                 }else{
@@ -575,7 +579,24 @@ class newConfigManagement extends plugin
         }
         return(NULL);
     }
-   
+  
+    
+    /*! \brief  Extracts the distribution path out of a path.
+     *          e.g. /root/debian/squeeze/test/module -> /root/debian
+     */
+    function getDistributionPath($fullPath)
+    {
+        $fullPath.='/';
+        while(preg_match("/\//", $fullPath)){
+            $fullPath = preg_replace("/\/[^\/]*$/","", $fullPath);
+            $item = $this->dataModel->getItemByPath($fullPath);
+            if($item['type'] == 'Distribution'){
+                return($fullPath);
+            }
+        }
+        return(NULL);
+    }
+ 
  
     function saveItemChanges()
     {
