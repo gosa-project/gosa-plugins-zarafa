@@ -36,32 +36,32 @@ class newConfigManagement extends plugin
         $items['root']['name'] = '/';
         $items['root']['description'] = _('Root');
 
+        // Define distribution paramters.
+        $dOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
+                'type' => 'string', 'display' => _('Name'));
+        $dOpt2 = array('description' => _('Distribution type'), 'default' => 'deb', 'value' => 'deb', 'required' => true,
+                'type' => 'combobox', 'display' => _('Distribution type'), 'values' => array("deb" => 'deb', "rpm" => 'rpm'));
+        $dOpt3 = array('description' => _('Mirror Url'), 'default' => '', 'value' => '', 'required' => false,
+                'type' => 'string', 'display' => _('Mirror Url'));
+        $dOpt4 = array('description' => _('Method'), 'default' => 'puppet', 'value' => 'puppet', 'required' => false,
+                'type' => 'combobox', 'display' => _('Installation method'), 'values'=>array('puppet'=>_('Puppet')));
+
+        // Define release parameters
+        $rOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
+                'type' => 'string', 'display' => _('Name'));
+
         $items['Distribution']['container'] = array('Release');
         $items['Distribution']['name'] = 'Distribution';
         $items['Distribution']['description'] = _('Distribution');
-        $items['Distribution']['options']['name']['description'] = _("Name");
-        $items['Distribution']['options']['name']['default'] = "";
-        $items['Distribution']['options']['name']['value'] = "";
-        $items['Distribution']['options']['name']['required'] = true;
-        $items['Distribution']['options']['name']['type'] = 'string';
-        $items['Distribution']['options']['name']['display'] = _('Name');
-        $items['Distribution']['options']['installation_method']['description'] = _("Distribution type");
-        $items['Distribution']['options']['installation_method']['default'] = "deb";
-        $items['Distribution']['options']['installation_method']['value'] = "deb";
-        $items['Distribution']['options']['installation_method']['values'] = array("deb" => 'deb', "rpm" => 'rpm');
-        $items['Distribution']['options']['installation_method']['required'] = true;
-        $items['Distribution']['options']['installation_method']['type'] = 'combobox';
-        $items['Distribution']['options']['installation_method']['display'] = _('Distribution type');
+        $items['Distribution']['options']['name'] = $dOpt1;
+        $items['Distribution']['options']['mirror'] = $dOpt3;
+        $items['Distribution']['options']['installation_type'] = $dOpt2;
+        $items['Distribution']['options']['installation_method'] = $dOpt4;
 
         $items['Release']['container'] = array('Release', '__CFG_ITEMS__');
         $items['Release']['name'] = 'Release';
         $items['Release']['description'] = _('Release');
-        $items['Release']['options']['name']['description'] = _("Name");
-        $items['Release']['options']['name']['default'] = "";
-        $items['Release']['options']['name']['value'] = "";
-        $items['Release']['options']['name']['required'] = true;
-        $items['Release']['options']['name']['type'] = 'string';
-        $items['Release']['options']['name']['display'] = _('Name');
+        $items['Release']['options']['name'] = $rOpt1;
 
         $this->installationMethods = array();
         $this->installationMethods['root']['description'] = _('root');
@@ -152,10 +152,32 @@ class newConfigManagement extends plugin
         }else{
             foreach($res as $dist){
                 $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
+
                 if(isset($dist['releases'])){
-                    foreach($dist['releases'] as $release){
+
+                    // Sort releases by name length
+                    $sort = array();
+                    foreach($dist['releases'] as $id => $release){
+                        $sort[strlen($release['name']) . $release['name']]  = $id;
+                    }
+                    uksort($sort, "strnatcasecmp");   
+
+                    // Append release tags
+                    foreach($sort as $id){
+                        $release = $dist['releases'][$id];
+                        $names = preg_split("/\//", $release['name']);
+    
+                        $rPath = "";
                         $distPath = "/root/{$dist['name']}";
-                        $this->dataModel->addItem('Release',$distPath, $release['name'], $release);
+                        foreach($names as $rName){
+                            $rPath .= '/'.$rName;
+                            
+                            
+                            $this->dataModel->addItem('Release',$distPath, $rName, $release);
+    
+                            print_a(array('Release',$distPath, $rName, $release));
+                            $distPath .= $rPath;
+                        }
                     }
                 }
             }
@@ -212,6 +234,8 @@ class newConfigManagement extends plugin
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"),sprintf(_("Failed to load distributions: %s"),$rpc->get_error()),ERROR_DIALOG);
                 }else{
+            
+                    if(!$res) return;
 
                     // Sort entries by path length 
                     $sLen = array();
