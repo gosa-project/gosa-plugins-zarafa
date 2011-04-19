@@ -667,6 +667,35 @@ class newConfigManagement extends plugin
 
                 $this->listing->clearDialogObject();
 
+            }elseif($type == 'Release'){
+            
+                // We've to create a new release 
+
+                // Build up the new release path.
+                $name = $values['name'];
+                $rPath = $this->getReleasePart($this->selectedContainer);
+                $newPath = trim($rPath."/".$name, '/');
+    
+                // Detect the parent distribution
+                $dist = $this->getDistributionPath($this->selectedContainer);
+                $dist = preg_replace("#^/root/#", "", $dist);
+
+                // Initiate the rpc request.
+                $rpc = $this->config->getRpcHandle();
+                $res = $rpc->createRelease($dist, $newPath);
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to save release: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    return(NULL);
+                }else{
+
+                    // We've successfully added the item, now add it to the tree.
+                    $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
+
+                    // Finally - close the dialog. 
+                    $this->listing->clearDialogObject();
+                }
+                
+                $this->listing->clearDialogObject();
             }else{
 
                 echo "{$type} Cannot be saved yet";
