@@ -165,6 +165,7 @@ class newConfigManagement extends plugin
         // Load distributions 
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getDistributions();
+        print_a($res);
         if(!$rpc->success()){
             $this->errorMessage = sprintf(_("Failed to load distributions: %s"), $rpc->get_error());
             return(FALSE);
@@ -699,6 +700,12 @@ class newConfigManagement extends plugin
 
             // We've to create a new distribution
             if($type == 'Distribution'){
+                
+                // Distributions cannot be renamed!
+                if(isset($item['name']) && $item['name'] != $values['name']){
+                    msg_dialog::displayChecks(array("Distributions cannot be renamed!"));
+                    return;
+                }
                 $name = $values['name'];
                 $itype = $values['installation_type'];
                 $imethod = $values['installation_method'];
@@ -707,13 +714,27 @@ class newConfigManagement extends plugin
                 // Initiate the rpc request.
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->createDistribution($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod));
+                print_a(array($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod)));
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
                     return(NULL);
                 }else{
 
+                    // Set mirror properties
+                    $data = array();
+                    $data['distribution'] = $name;
+                    $data['arch'] = $values['architectures'];
+                    $data['component'] = $values['components'];
+                    $data['mirror_sources'] = $values['mirror_sources'];
+                    $rpc->addMirrorProperty($data);
+                    if(!$rpc->success()){
+                        msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), 
+                                    $rpc->get_error()),ERROR_DIALOG);
+                        return(NULL);
+                    }
+
                     // We've successfully added the item, now add it to the tree.
-                    $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
+                    $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],$values, '-' );
 
                     // Finally - close the dialog. 
                     $this->listing->clearDialogObject();
@@ -735,6 +756,11 @@ class newConfigManagement extends plugin
                 $dist = $this->getDistributionPath($this->selectedContainer);
                 $dist = preg_replace("#^/root/#", "", $dist);
 
+                if(isset($item['name']) && $item['name'] != $values['name']){
+                    echo "Implement rename for releases";
+                    return;
+                }
+    
                 // Initiate the rpc request.
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->createRelease($dist, $newPath);

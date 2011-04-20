@@ -1,12 +1,16 @@
 {if $type == 'Distribution'}
 
-<table>
+<table width="100%">
     <tr>
         <td style='width: 50%'>
             <table>
                 <tr>
                     <td>{$nameName}</td>
                     <td>{$name}</td>
+                </tr>
+                <tr>
+                    <td>{$originName}</td>
+                    <td>{$origin}</td>
                 </tr>
                 <tr>
                     <td>{$installation_typeName}</td>
@@ -17,12 +21,13 @@
                     <td>{$installation_method}</td>
                 </tr>
                 <tr>
-                    <td>{$originName}</td>
-                    <td>{$origin}</td>
+                    <td>{$mirror_sourcesName}</td>
+                    <td>{$mirror_sources}</td>
                 </tr>
             </table>
         </td>
-        <td>
+        <td class="left-border">
+        </td><td>
             <table>
                 <tr>
                     <td>{$architecturesName}</td>
@@ -31,10 +36,6 @@
                 <tr>
                     <td>{$componentsName}</td>
                     <td>{$components}</td>
-                </tr>
-                <tr>
-                    <td>{$mirror_sourcesName}</td>
-                    <td>{$mirror_sources}</td>
                 </tr>
             </table>
         </td>
