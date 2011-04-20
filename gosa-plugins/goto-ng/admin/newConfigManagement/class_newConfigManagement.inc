@@ -43,9 +43,10 @@ class newConfigManagement extends plugin
 
         // Define distribution paramters.
         $dOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
-                'type' => 'string', 'display' => _('Name'));
+                'type' => 'string', 'display' => _('Name'), 'initiallyEditableOnly' => TRUE);
         $dOpt2 = array('description' => _('Distribution type'), 'default' => 'deb', 'value' => 'deb', 'required' => true,
-                'type' => 'combobox', 'display' => _('Distribution type'), 'values' => array("deb" => 'deb', "rpm" => 'rpm'));
+                'type' => 'combobox', 'display' => _('Distribution type'), 
+                'values' => array("deb" => 'deb', "rpm" => 'rpm'), 'initiallyEditableOnly' => TRUE);
         $dOpt3 = array('description' => _('Mirror Url'), 'default' => '', 'value' => '', 'required' => false,
                 'type' => 'string', 'display' => _('Mirror Url'));
         $dOpt4 = array('description' => _('Method'), 'default' => 'puppet', 'value' => 'puppet', 'required' => false,
@@ -53,7 +54,7 @@ class newConfigManagement extends plugin
         $dOpt5 = array('description' => _('Architecture'), 'default' => '', 'value' => '', 'required' => false,
                 'type' => 'list', 'display' => _('Architecture'));
         $dOpt6 = array('description' => _('Component'), 'default' => '', 'value' => '', 'required' => false,
-                'type' => 'list', 'display' => _('Component'));
+                'type' => 'list', 'display' => _('Component'), 'initiallyEditableOnly' => TRUE);
         $dOpt7 = array('description' => _('Mirror sources'), 'default' => '', 'value' => '', 'required' => false,
                 'type' => 'checkbox', 'display' => _('Mirror sources'));
 
@@ -573,7 +574,7 @@ class newConfigManagement extends plugin
 
         $this->TemplateEngine->load($this->itemConfig);
         $this->TemplateEngine->setTemplate($method.".tpl");
-        $this->TemplateEngine->setValues($item['type'],$item['values']);
+        $this->TemplateEngine->editItem($item['type'],$item['values']);
         $this->listing->setDialogObject($this->TemplateEngine);
         $this->currentObject = $item;
     }
@@ -588,12 +589,12 @@ class newConfigManagement extends plugin
         if($this->cfgItemMap[$type] != 'root'){
             $method = $this->cfgItemMap[$type];
             $this->TemplateEngine->setTemplate($method.".tpl");
-            $this->TemplateEngine->setValues($type,array());
+            $this->TemplateEngine->createItem($type,array());
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
         }else{
             $this->TemplateEngine->setTemplate("root.tpl");
-            $this->TemplateEngine->setValues($type,array());
+            $this->TemplateEngine->createItem($type,array());
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
         }
