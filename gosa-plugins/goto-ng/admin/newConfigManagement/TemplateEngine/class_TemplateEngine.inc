@@ -161,7 +161,9 @@ class TemplateEngine
     function save_object()
     {
         foreach($this->widgets as $widget){
-            $widget->save_object();
+            if($widget->isEnabled()){
+                $widget->save_object();
+            }
         }
     }
 

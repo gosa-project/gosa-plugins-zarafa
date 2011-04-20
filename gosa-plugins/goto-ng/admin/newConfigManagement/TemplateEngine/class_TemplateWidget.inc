@@ -48,6 +48,14 @@ class TemplateWidget
         $this->enabled = $bool;
     }
 
+    
+    /*! \brief  Returns the enable status.
+     */
+    function isEnabled()
+    {
+        return($this->enabled);
+    }
+
 
     /*! \brief  Returns the display-name for the current widget.
      *  @return  String     The display-name for the widget, this 

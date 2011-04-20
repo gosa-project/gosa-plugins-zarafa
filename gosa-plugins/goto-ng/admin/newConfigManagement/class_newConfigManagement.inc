@@ -48,13 +48,15 @@ class newConfigManagement extends plugin
                 'type' => 'combobox', 'display' => _('Distribution type'), 
                 'values' => array("deb" => 'deb', "rpm" => 'rpm'), 'initiallyEditableOnly' => TRUE);
         $dOpt3 = array('description' => _('Mirror Url'), 'default' => '', 'value' => '', 'required' => false,
-                'type' => 'string', 'display' => _('Mirror Url'));
+                'type' => 'string', 'display' => _('Mirror Url'),
+                'initiallyEditableOnly' => TRUE);
         $dOpt4 = array('description' => _('Method'), 'default' => 'puppet', 'value' => 'puppet', 'required' => false,
-                'type' => 'combobox', 'display' => _('Installation method'), 'values'=>array('puppet'=>_('Puppet')));
+                'type' => 'combobox', 'display' => _('Installation method'), 'values'=>array('puppet'=>_('Puppet')),
+                'initiallyEditableOnly' => TRUE);
         $dOpt5 = array('description' => _('Architecture'), 'default' => '', 'value' => '', 'required' => false,
                 'type' => 'list', 'display' => _('Architecture'));
         $dOpt6 = array('description' => _('Component'), 'default' => '', 'value' => '', 'required' => false,
-                'type' => 'list', 'display' => _('Component'), 'initiallyEditableOnly' => TRUE);
+                'type' => 'list', 'display' => _('Component'));
         $dOpt7 = array('description' => _('Mirror sources'), 'default' => '', 'value' => '', 'required' => false,
                 'type' => 'checkbox', 'display' => _('Mirror sources'));
 
@@ -166,7 +168,6 @@ class newConfigManagement extends plugin
         // Load distributions 
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getDistributions();
-        print_a($res);
         if(!$rpc->success()){
             $this->errorMessage = sprintf(_("Failed to load distributions: %s"), $rpc->get_error());
             return(FALSE);
