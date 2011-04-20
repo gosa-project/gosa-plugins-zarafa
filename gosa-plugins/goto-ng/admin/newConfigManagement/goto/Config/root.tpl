@@ -13,8 +13,8 @@
         <td>{$installation_method}</td>
     </tr>
     <tr>
-        <td>{$mirrorName}</td>
-        <td>{$mirror}</td>
+        <td>{$originName}</td>
+        <td>{$origin}</td>
     </tr>
 </table>
 {else if $type == 'Release'}

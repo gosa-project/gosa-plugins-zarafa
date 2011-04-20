@@ -59,7 +59,7 @@ class newConfigManagement extends plugin
         $items['Distribution']['name'] = 'Distribution';
         $items['Distribution']['description'] = _('Distribution');
         $items['Distribution']['options']['name'] = $dOpt1;
-        $items['Distribution']['options']['mirror'] = $dOpt3;
+        $items['Distribution']['options']['origin'] = $dOpt3;
         $items['Distribution']['options']['installation_type'] = $dOpt2;
         $items['Distribution']['options']['installation_method'] = $dOpt4;
 
@@ -160,7 +160,30 @@ class newConfigManagement extends plugin
             return(FALSE);
         }else{
             foreach($res as $dist){
-                $this->dataModel->addItem('Distribution','/root', $dist['name'], $dist);
+       
+                // Simple strings 
+                $values = array();
+                foreach(array('origin','installation_method', 'installation_method','debian_security',
+                        'debian_volatile', 'name', 'mirror_sources', 'managed', 'path') as $attr){
+                    $values[$attr] = $dist[$attr];
+                }
+
+                // Boxed strings
+                foreach(array('type') as $attr){
+                    $values[$attr] = $dist[$attr]['name'];
+                }
+
+                // Arrays
+                foreach(array('releases', 'architectures', 'components', 'sections') as $attr){
+                    $values[$attr] = array();
+                    if(is_array($dist[$attr])){
+                        foreach($dist[$attr] as $aEntry){
+                            $values[$attr][] = $aEntry['name'];
+                        }
+                    }
+                }
+    
+                $this->dataModel->addItem('Distribution','/root', $dist['name'], $values);
 
                 if(isset($dist['releases'])){
 
@@ -669,11 +692,11 @@ class newConfigManagement extends plugin
                 $name = $values['name'];
                 $itype = $values['installation_type'];
                 $imethod = $values['installation_method'];
-                $mirror = $values['mirror'];
+                $origin = $values['origin'];
 
                 // Initiate the rpc request.
                 $rpc = $this->config->getRpcHandle();
-                $res = $rpc->createDistribution($name, $itype, array('mirror'=>$mirror, 'install_method' => $imethod));
+                $res = $rpc->createDistribution($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod));
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
                     return(NULL);
