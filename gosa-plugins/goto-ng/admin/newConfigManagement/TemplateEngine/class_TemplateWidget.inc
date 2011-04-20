@@ -14,6 +14,7 @@ class TemplateWidget
     protected $display = "";
     protected $syntax = "";
     protected $values = "";
+    protected $enabled = TRUE;
 
     /*! \brief  Constructs the template widget and sets the default values.
      *  @param  Config  The GOsa configuration object.
@@ -37,6 +38,14 @@ class TemplateWidget
         $this->display = $display;
         $class = get_class();
         $this->postName = "{$class}_{$this->name}";
+    }
+
+
+    /*! \brief  Enabled or disabled the widget.
+     */    
+    function setEnabled($bool = TRUE)
+    {
+        $this->enabled = $bool;
     }
 
 

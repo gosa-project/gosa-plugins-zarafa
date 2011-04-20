@@ -56,7 +56,21 @@ class TemplateEngine
     {
         return($this->itemType);
     }
+   
     
+    function editItem($type, $values)
+    {
+        $this->is_new = FALSE;
+        $this->setValues($type, $values);
+    }
+ 
+
+    function createItem($type, $values)
+    {
+        $this->is_new = TRUE;
+        $this->setValues($type, $values);
+    }
+ 
 
     /*! \brief  Sets the current item type we want to render
      *          E.g.  'KickstartTemplate' and the corresponding values.
@@ -104,6 +118,12 @@ class TemplateEngine
                         $item['type'],
                         $item['display'],
                         $providedValues);
+               
+                // Check if we've to disable this item.
+                if(isset($item['disable']) && $item['disable'] || 
+                        isset($item['initiallyEditableOnly']) && $item['initiallyEditableOnly']){
+                    $this->widgets[$name]->setEnabled(FALSE);
+                }
             }
         }
     }

@@ -20,11 +20,14 @@ class TemplateWidget_list extends TemplateWidget
     function render()
     {
         $str = "";
+        $this->listWidget->setDeleteable($this->enabled);
         $this->listWidget->setListData($this->value);
         $this->listWidget->update();
         $str .= $this->listWidget->render();
-        $str .= "<input type='text' name='{$this->postName}_Input'>";
-        $str .= "<button name='{$this->postName}_Add'>".msgPool::addButton()."</button>";
+        $disabled = (!$this->enabled)? "disabled" : "";
+
+        $str .= "<input type='text' name='{$this->postName}_Input' {$disabled}>";
+        $str .= "<button name='{$this->postName}_Add' {$disabled}>".msgPool::addButton()."</button>";
         return($str);
     }
 

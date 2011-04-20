@@ -29,20 +29,22 @@ class TemplateWidget_file extends TemplateWidget
 
     function render()
     {
-        $title = set_post($this->description);
+        $title = set_post($this->description);  
+        $disabled = (!$this->enabled) ? 'disalbed' : '';
         if(mb_strlen($this->value) == 0){   
             $ret = "<i>"._("No file uploaded yet")."</i>";
             $ret.= "<br> <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"2000000\">
                 <input id=\"{$this->postName}\" 
                 name=\"{$this->postName}\" 
+                {$disabled}
                 type=\"file\" 
                 size=\"20\" 
                 maxlength=\"255\" 
                 accept=\"*.*\">&nbsp;";
-            $ret.= "<button name='{$this->postName}_Upload'>"._("Upload")."</button>";
+            $ret.= "<button {$disabled} name='{$this->postName}_Upload'>"._("Upload")."</button>";
         }else{
             $ret = "<i>"._("File uploaded").": ".mb_strlen($this->value)." "._("Bytes");
-            $ret.= "&nbsp;<button name='{$this->postName}_Remove'>".msgPool::delButton()."</button>";
+            $ret.= "&nbsp;<button {$disabled} name='{$this->postName}_Remove'>".msgPool::delButton()."</button>";
         }
         return($ret);
     }

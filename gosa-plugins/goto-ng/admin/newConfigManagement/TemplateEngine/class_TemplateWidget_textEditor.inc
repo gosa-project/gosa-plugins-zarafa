@@ -26,6 +26,7 @@ class TemplateWidget_textEditor extends TemplateWidget
         $smarty->assign("postName", set_post($this->postName));
         $smarty->assign("write_protect", set_post($this->write_protect));
         $smarty->assign("value", set_post($this->value));
+        $smarty->assign("enabled", set_post($this->enabled));
         return($smarty->fetch(get_template_path("TemplateWidget_textEditor.tpl", TRUE, dirname(__FILE__))));
     }
 
