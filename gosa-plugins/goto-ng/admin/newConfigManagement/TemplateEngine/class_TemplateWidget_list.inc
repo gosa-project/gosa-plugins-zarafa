@@ -4,6 +4,7 @@ class TemplateWidget_list extends TemplateWidget
 {
     function __construct(&$config, $name, $value, $description,$syntax,$required,$type,$display,$values)
     {
+        if(!$value) $value =array();
         parent:: __construct($config, $name, $value, $description,$syntax,$required,$type,$display,$values);
 
         $this->listWidget= new sortableListing($this->value);
