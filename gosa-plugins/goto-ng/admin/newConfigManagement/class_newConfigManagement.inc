@@ -50,6 +50,12 @@ class newConfigManagement extends plugin
                 'type' => 'string', 'display' => _('Mirror Url'));
         $dOpt4 = array('description' => _('Method'), 'default' => 'puppet', 'value' => 'puppet', 'required' => false,
                 'type' => 'combobox', 'display' => _('Installation method'), 'values'=>array('puppet'=>_('Puppet')));
+        $dOpt5 = array('description' => _('Architecture'), 'default' => '', 'value' => '', 'required' => false,
+                'type' => 'list', 'display' => _('Architecture'));
+        $dOpt6 = array('description' => _('Component'), 'default' => '', 'value' => '', 'required' => false,
+                'type' => 'list', 'display' => _('Component'));
+        $dOpt7 = array('description' => _('Mirror sources'), 'default' => '', 'value' => '', 'required' => false,
+                'type' => 'checkbox', 'display' => _('Mirror sources'));
 
         // Define release parameters
         $rOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
@@ -62,6 +68,10 @@ class newConfigManagement extends plugin
         $items['Distribution']['options']['origin'] = $dOpt3;
         $items['Distribution']['options']['installation_type'] = $dOpt2;
         $items['Distribution']['options']['installation_method'] = $dOpt4;
+
+        $items['Distribution']['options']['architectures'] = $dOpt5;
+        $items['Distribution']['options']['components'] = $dOpt6;
+        $items['Distribution']['options']['mirror_sources'] = $dOpt7;
 
         $items['Release']['container'] = array('Release', '__CFG_ITEMS__');
         $items['Release']['name'] = 'Release';
