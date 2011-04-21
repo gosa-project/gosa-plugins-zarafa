@@ -526,9 +526,8 @@ class newConfigManagement extends plugin
 
             // Is an config item.
             if($this->cfgItemMap[$item['type']] != 'root'){
-                $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
+                $release = $this->getReleasePart($item['path']);
                 $path = $this->getItemPath($item['path']);
-
                 $rpc = $this->config->getRpcHandle();
                 $rpc->removeConfigItem($release, $path);
                 if(!$rpc->success()){
@@ -538,7 +537,39 @@ class newConfigManagement extends plugin
                     $this->dataModel->removeItem($item['path']);
                 }
             }else{
-                echo $item['type']." - are not handled yet!";
+
+                // Remove distribution
+                if($item['type'] == 'Distribution'){
+
+                    $dist = $this->getDistributionPart($item['path']);
+                    $rpc = $this->config->getRpcHandle();
+                    $rpc->removeDistribution($dist, array('recursive' => TRUE));
+                    echo "Removing distribution '{$dist}'";
+                    if(!$rpc->success()){
+                        msg_dialog::display(_("Error"), sprintf(_("Failed to remove the distribution: %s. Error was: %s"), 
+                                    $dist, $rpc->get_error()), ERROR_DIALOG);
+                        return(NULL);
+                    }else{
+                        $this->dataModel->removeItem($item['path']);
+                    }
+                }elseif($item['type'] == 'Release'){
+
+                    // Remove release
+                    $release = preg_replace("/^.*\//","", $this->getReleasePart($item['path']));
+                    $rpc = $this->config->getRpcHandle();
+                    $rpc->removeRelease($release, TRUE);
+                    echo "Removing release '{$release}'";
+                    if(!$rpc->success()){
+                        msg_dialog::display(_("Error"), sprintf(_("Failed to remove the release: %s. Error was: %s"), 
+                                    $release, $rpc->get_error()),ERROR_DIALOG);
+                        return(NULL);
+                    }else{
+                        $this->dataModel->removeItem($item['path']);
+                    }
+
+                }else{
+                    echo $item['type']." - are not handled yet!";
+                }
             }
         }
     }
@@ -652,6 +683,15 @@ class newConfigManagement extends plugin
         return(NULL);
     }
 
+
+    /*! \brief  Extracts the distribution-part out of a path.
+     *          e.g. /root/debian/squeeze/test/module -> debian
+     */
+    function getDistributionPart($fullPath)
+    {
+        return(trim(preg_replace("#^/root/#","", $this->getDistributionPath($fullPath)), '/'));
+    }
+    
     
     /*! \brief  Extracts the release-part out of a path.
      *          e.g. /root/debian/squeeze/test/module -> squeeze/test
