@@ -582,7 +582,7 @@ class newConfigManagement extends plugin
         foreach($item['children'] as $path => $data){
             $names[] = $data['name'];
         }
-        Echo "Fix getUsedNamesForPath it should depend on the type, edit/create and the edited item!";
+        echo "Fix getUsedNamesForPath it should depend on the type, edit/create and the edited item!";
         return($names);
     }
 
