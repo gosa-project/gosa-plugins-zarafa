@@ -577,10 +577,12 @@ class newConfigManagement extends plugin
     function getUsedNamesForPath($path)
     {
         $item = $this->dataModel->getItemByPath($path);
+
         $names = array();
         foreach($item['children'] as $path => $data){
             $names[] = $data['name'];
         }
+        Echo "Fix getUsedNamesForPath it should depend on the type, edit/create and the edited item!";
         return($names);
     }
 
