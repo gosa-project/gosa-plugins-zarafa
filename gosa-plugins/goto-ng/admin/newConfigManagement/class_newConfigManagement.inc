@@ -557,7 +557,7 @@ class newConfigManagement extends plugin
                     // Remove release
                     $release = preg_replace("/^.*\//","", $this->getReleasePart($item['path']));
                     $rpc = $this->config->getRpcHandle();
-                    $rpc->removeRelease($release, TRUE);
+                    $rpc->removeRelease($release, array('recursive' => TRUE));
                     echo "Removing release '{$release}'";
                     if(!$rpc->success()){
                         msg_dialog::display(_("Error"), sprintf(_("Failed to remove the release: %s. Error was: %s"), 
