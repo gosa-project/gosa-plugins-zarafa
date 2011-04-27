@@ -10,4 +10,3 @@
     <button name='saveItemEdit'>{msgPool type=okButton}</button>
     <button name='cancelItemEdit'>{msgPool type=cancelButton}</button>
 </div>
-
