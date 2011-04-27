@@ -214,7 +214,9 @@ class newConfigManagement extends plugin
                         $rPath = "/root/{$dist['name']}/$rPath";
                         $rName = preg_replace("/^.*\//","", $rPath);
                         $rPath = preg_replace("/\/[^\/]*$/","", $rPath);
-                        $this->dataModel->addItem('Release',$rPath, $rName, $release);
+
+                        $values = array('name' => $rName);
+                        $this->dataModel->addItem('Release',$rPath, $rName, $values);
                     }
                 }
             }
@@ -803,8 +805,9 @@ class newConfigManagement extends plugin
                             msg_dialog::display(_("Error"), sprintf(_("Failed to save release: %s"), $rpc->get_error()),ERROR_DIALOG);
                             return(NULL);
                         }else{
-                            $this->dataModel->moveItem($item['path'], $item['parentPath'].'/'.$values['name']);
-                            $this->dataModel->setItemValues($item['path'], $values);
+                            $nP = $item['parentPath'].'/'.$values['name'];
+                            $this->dataModel->moveItem($item['path'], $nP);
+                            $this->dataModel->setItemValues($nP, $values);
                             $this->listing->clearDialogObject();
                         }
                     }
