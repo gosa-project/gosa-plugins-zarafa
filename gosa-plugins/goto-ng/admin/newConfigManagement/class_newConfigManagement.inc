@@ -576,15 +576,16 @@ class newConfigManagement extends plugin
         }
     }
 
+
+    /*! \brief  Returns a list of used item names for a given path.
+     */
     function getUsedNamesForPath($path)
     {
         $item = $this->dataModel->getItemByPath($path);
-
         $names = array();
         foreach($item['children'] as $path => $data){
             $names[] = $data['name'];
         }
-        echo "Fix getUsedNamesForPath it should depend on the type, edit/create and the edited item!";
         return($names);
     }
 
@@ -726,8 +727,12 @@ class newConfigManagement extends plugin
 
             // Get used item names for the current path
             if($this->currentObject){
+    
+                // Get used item names in the parent path.
                 $usedNames = $this->getUsedNamesForPath($this->currentObject['parentPath']);
             }else{
+
+                // Get used items for the selected path.
                 $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
             }
 
