@@ -788,41 +788,52 @@ class newConfigManagement extends plugin
                 $this->listing->clearDialogObject();
 
             }elseif($type == 'Release'){
-            
-                // We've to create a new release 
+           
+                // We've to update a release. 
+                if($item){
 
-                // Build up the new release path.
-                $name = $values['name'];
-                $rPath = $this->getReleasePart($this->selectedContainer);
-                $newPath = trim($rPath."/".$name, '/');
-    
-                // Detect the parent distribution
-                $dist = $this->getDistributionPath($this->selectedContainer);
-                $dist = preg_replace("#^/root/#", "", $dist);
-
-                if(isset($item['name']) && $item['name'] != $values['name']){
-                    echo "Implement rename for releases";
-                    return;
-                }
-    
-                // Initiate the rpc request.
-                $rpc = $this->config->getRpcHandle();
-                $res = $rpc->createRelease($dist, $newPath);
-                if(!$rpc->success()){
-                    msg_dialog::display(_("Error"), sprintf(_("Failed to save release: %s"), $rpc->get_error()),ERROR_DIALOG);
-                    return(NULL);
+                    // Check if we've to rename the item.
+                    $path = $this->getReleasePart($item['parentPath']);
+                    $curPath = $this->getReleasePart($item['path']);
+                    $newPath = trim($path."/".$values['name'], '/');
+                    if($curPath != $newPath){
+                        $rpc = $this->config->getRpcHandle();
+                        $res = $rpc->renameRelease($curPath, $newPath);
+                        if(!$rpc->success()){
+                            msg_dialog::display(_("Error"), sprintf(_("Failed to save release: %s"), $rpc->get_error()),ERROR_DIALOG);
+                            return(NULL);
+                        }else{
+                            $this->dataModel->moveItem($item['path'], $item['parentPath'].'/'.$values['name']);
+                            $this->dataModel->setItemValues($item['path'], $values);
+                            $this->listing->clearDialogObject();
+                        }
+                    }
+                
+ 
                 }else{
 
-                    // We've successfully added the item, now add it to the tree.
-                    $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
+                    // Build up the new release path.
+                    $name = $values['name'];
+                    $rPath = $this->getReleasePart($this->selectedContainer);
+                    $newPath = trim($rPath."/".$name, '/');
 
-                    // Finally - close the dialog. 
-                    $this->listing->clearDialogObject();
+                    // Detect the parent distribution
+                    $dist = $this->getDistributionPart($this->selectedContainer);
+
+                    // Initiate the rpc request.
+                    $rpc = $this->config->getRpcHandle();
+                    $res = $rpc->createRelease($dist, $newPath);
+                    if(!$rpc->success()){
+                        msg_dialog::display(_("Error"), sprintf(_("Failed to save release: %s"), $rpc->get_error()),ERROR_DIALOG);
+                        return(NULL);
+                    }else{
+
+                        // We've successfully added/saved the item, now add it to the tree.
+                        $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
+                        $this->listing->clearDialogObject();
+                    }
                 }
-                
-                $this->listing->clearDialogObject();
             }else{
-
                 echo "{$type} Cannot be saved yet";
                 $this->listing->clearDialogObject();
                 return;
