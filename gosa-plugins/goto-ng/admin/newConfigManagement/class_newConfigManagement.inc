@@ -720,9 +720,16 @@ class newConfigManagement extends plugin
             $values[$w->getName()] = $w->getValue();
         }
            
-        // No input error were found, now check that we do not use the same name twice.
+        // No input error were found, now check that we do not use the same name twice
+        //  and that it is valid.
         if(!count($msgs)){
-            $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
+
+            // Get used item names for the current path
+            if($this->currentObject){
+                $usedNames = $this->getUsedNamesForPath($this->currentObject['parentPath']);
+            }else{
+                $usedNames = $this->getUsedNamesForPath($this->selectedContainer);
+            }
 
             // Allow the item to keep its name.
             if($this->currentObject != NULL && isset($this->currentObject['values']['name'])){
@@ -762,7 +769,9 @@ class newConfigManagement extends plugin
                 // Initiate the rpc request.
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->createDistribution($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod));
+
                 print_a(array($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod)));
+
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
                     return(NULL);
