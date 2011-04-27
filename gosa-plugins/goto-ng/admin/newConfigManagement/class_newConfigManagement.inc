@@ -214,9 +214,13 @@ class newConfigManagement extends plugin
                         $rPath = "/root/{$dist['name']}/$rPath";
                         $rName = preg_replace("/^.*\//","", $rPath);
                         $rPath = preg_replace("/\/[^\/]*$/","", $rPath);
-
                         $values = array('name' => $rName);
-                        $this->dataModel->addItem('Release',$rPath, $rName, $values);
+
+                        if(!$this->dataModel->itemExistsByPath($rPath)){
+                            trigger_error("Invalid release name '{$rName}' in path '{$rPath}' received! Skipping entry!");
+                        }else{
+                            $id = $this->dataModel->addItem('Release',$rPath, $rName, $values);
+                        }
                     }
                 }
             }
@@ -546,7 +550,6 @@ class newConfigManagement extends plugin
                     $dist = $this->getDistributionPart($item['path']);
                     $rpc = $this->config->getRpcHandle();
                     $rpc->removeDistribution($dist, array('recursive' => TRUE));
-                    echo "Removing distribution '{$dist}'";
                     if(!$rpc->success()){
                         msg_dialog::display(_("Error"), sprintf(_("Failed to remove the distribution: %s. Error was: %s"), 
                                     $dist, $rpc->get_error()), ERROR_DIALOG);
@@ -560,7 +563,6 @@ class newConfigManagement extends plugin
                     $release = preg_replace("/^.*\//","", $this->getReleasePart($item['path']));
                     $rpc = $this->config->getRpcHandle();
                     $rpc->removeRelease($release, array('recursive' => TRUE));
-                    echo "Removing release '{$release}'";
                     if(!$rpc->success()){
                         msg_dialog::display(_("Error"), sprintf(_("Failed to remove the release: %s. Error was: %s"), 
                                     $release, $rpc->get_error()),ERROR_DIALOG);
@@ -570,7 +572,7 @@ class newConfigManagement extends plugin
                     }
 
                 }else{
-                    echo $item['type']." - are not handled yet!";
+                    trigger_error($item['type']." - are not handled yet!");
                 }
             }
         }
@@ -827,6 +829,8 @@ class newConfigManagement extends plugin
                             $this->dataModel->setItemValues($nP, $values);
                             $this->listing->clearDialogObject();
                         }
+                    }else{
+                        $this->listing->clearDialogObject();
                     }
                 
  
@@ -849,7 +853,7 @@ class newConfigManagement extends plugin
                     }else{
 
                         // We've successfully added/saved the item, now add it to the tree.
-                        $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],array(), '-' );
+                        $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],$values, '-' );
                         $this->listing->clearDialogObject();
                     }
                 }

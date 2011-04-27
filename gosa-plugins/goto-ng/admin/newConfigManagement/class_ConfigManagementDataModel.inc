@@ -69,7 +69,7 @@ class ConfigManagementDataModel
             $parentId = $this->data['linear'][$path]['id'];
             $parentDn = $this->data['linear'][$path]['dn'];
         }else{
-            echo "No parent";
+            trigger_error("Parent item ({$path}) does not exists!");
             return(FALSE);
         }
 
