@@ -737,7 +737,7 @@ class newConfigManagement extends plugin
             }
             if(in_array($values['name'],$usedNames)){
                 $msgs[] = msgPool::duplicated(_("Name"));
-            }elseif(preg_match("/[^a-z0-9]/",$values['name'])){
+            }elseif(preg_match("/[^a-z0-9]/i",$values['name'])){
                 $msgs[] = msgPool::invalid(_("Name"), $values['name'], '/[a-z0-9]/');
             }
         }
@@ -761,43 +761,44 @@ class newConfigManagement extends plugin
                     msg_dialog::displayChecks(array("Distributions cannot be renamed!"));
                     return;
                 }
-                $name = $values['name'];
-                $itype = $values['installation_type'];
-                $imethod = $values['installation_method'];
-                $origin = $values['origin'];
 
-                // Initiate the rpc request.
-                $rpc = $this->config->getRpcHandle();
-                $res = $rpc->createDistribution($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod));
+                // Create a new distribution 
+                if(!$item){
+                    $name = $values['name'];
+                    $itype = $values['installation_type'];
+                    $imethod = $values['installation_method'];
+                    $origin = $values['origin'];
 
-                print_a(array($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod)));
-
-                if(!$rpc->success()){
-                    msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
-                    return(NULL);
-                }else{
-
-                    // Set mirror properties
-                    $data = array();
-                    $data['distribution'] = $name;
-                    $data['arch'] = $values['architectures'];
-                    $data['component'] = $values['components'];
-                    $data['mirror_sources'] = $values['mirror_sources'];
-                    $rpc->addMirrorProperty($data);
+                    // Initiate the rpc request.
+                    $rpc = $this->config->getRpcHandle();
+                    $res = $rpc->createDistribution($name, $itype, array('mirror'=>$origin, 'install_method' => $imethod));
                     if(!$rpc->success()){
                         msg_dialog::display(_("Error"), sprintf(_("Failed to save distributions: %s"), 
-                                    $rpc->get_error()),ERROR_DIALOG);
+                            $rpc->get_error()),ERROR_DIALOG);
                         return(NULL);
                     }
-
-                    // We've successfully added the item, now add it to the tree.
-                    $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],$values, '-' );
-
-                    // Finally - close the dialog. 
-                    $this->listing->clearDialogObject();
                 }
-                
 
+                // Collect distribution properties
+                $data = array();
+                $data['distribution'] = $values['name'];
+                $data['arch'] = $values['architectures'];
+                $data['component'] = $values['components'];
+                $data['mirror_sources'] = $values['mirror_sources'];
+
+                // Set distribution properties
+                $rpc = $this->config->getRpcHandle();
+                $rpc->setDistribution($data);
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to save distribution properties: %s"), 
+                                $rpc->get_error()),ERROR_DIALOG);
+                    return(NULL);
+                }
+
+                // We've successfully added the item, now add it to the tree.
+                $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],$values, '-' );
+
+                // Finally - close the dialog. 
                 $this->listing->clearDialogObject();
 
             }elseif($type == 'Release'){
