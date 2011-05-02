@@ -506,7 +506,7 @@ sub TASKSKIP {
 
 
 ## @method TASKBEGIN()
-# @details Message reports a starting FAI task. If the task is equal to 'finish', 'faiend' or 'savelog', job at job_queue_db is being set to status 'done' and FAI state is being set to 'localboot'. If task is equal to 'chboot', 'test' or 'confdir', just do nothing. In all other cases, job at job_queue_db is going to be updated or created if not exists. 
+# @details Message reports a starting FAI task. If the task is equal to 'finish', 'faiend' or 'savelog', job at job_queue_db is being set to status 'done' and FAI state is being set to 'localboot'. If task is equal to 'chboot', 'tests' or 'confdir', just do nothing. In all other cases, job at job_queue_db is going to be updated or created if not exists. 
 # @param msg - STRING - xml message with tag 'macaddress'.
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
@@ -541,7 +541,7 @@ sub TASKBEGIN {
 
 	# TASKBEGIN eq chboot
 	} elsif (($content eq 'chboot')
-		|| ($content eq 'test')
+		|| ($content eq 'tests')
 		|| ($content eq 'confdir')
 		) {
 		# just ignor this client message
@@ -553,6 +553,7 @@ sub TASKBEGIN {
 		# TASKBEGIN msgs do only occour during a softupdate or a reinstallation 
 		# of a host. Set all waiting update- or reinstall-jobs for host to 
 		# processing so they can be handled correctly by the rest of the function. 
+		&main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5);
 		my $waiting_sql = "UPDATE $main::job_queue_tn SET status='processing' WHERE status='waiting' AND macaddress LIKE '$macaddress' AND (headertag='trigger_action_update' OR headertag='trigger_action_reinstall')";  
 		&main::daemon_log("$session_id DEBUB: $waiting_sql", 7); 
 		my $waiting_res = $main::job_db->update_dbentry($waiting_sql); 
