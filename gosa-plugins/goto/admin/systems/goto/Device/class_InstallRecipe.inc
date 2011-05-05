@@ -95,7 +95,7 @@ class InstallRecipe extends plugin
         // Detect account status by checking the used objectClasses
         $this->is_account = FALSE;
         foreach($this->map as $type){
-            if(in_array($type['objectClass'], $this->attrs['objectClass'])){
+            if(isset($this->attrs['objectClass']) && in_array($type['objectClass'], $this->attrs['objectClass'])){
                 $this->installBootstrapMethod = $type['bootstrap'];
                 $this->installConfigManagement = $type['type'];
                 $this->is_account = TRUE;
