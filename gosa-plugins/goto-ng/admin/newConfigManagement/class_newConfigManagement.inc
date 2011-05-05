@@ -172,54 +172,57 @@ class newConfigManagement extends plugin
             $this->errorMessage = sprintf(_("Failed to load distributions: %s"), $rpc->get_error());
             return(FALSE);
         }else{
-            foreach($res as $dist){
-       
-                // Simple strings 
-                $values = array();
-                foreach(array('origin','installation_method', 'installation_method','debian_security',
-                        'debian_volatile', 'name', 'mirror_sources', 'managed', 'path') as $attr){
-                    $values[$attr] = $dist[$attr];
-                }
+            if(is_array($res)){
 
-                // Boxed strings
-                foreach(array('type') as $attr){
-                    $values[$attr] = $dist[$attr]['name'];
-                }
+                foreach($res as $dist){
+           
+                    // Simple strings 
+                    $values = array();
+                    foreach(array('origin','installation_method', 'installation_method','debian_security',
+                            'debian_volatile', 'name', 'mirror_sources', 'managed', 'path') as $attr){
+                        $values[$attr] = $dist[$attr];
+                    }
 
-                // Arrays
-                foreach(array('releases', 'architectures', 'components', 'sections') as $attr){
-                    $values[$attr] = array();
-                    if(is_array($dist[$attr])){
-                        foreach($dist[$attr] as $aEntry){
-                            $values[$attr][] = $aEntry['name'];
+                    // Boxed strings
+                    foreach(array('type') as $attr){
+                        $values[$attr] = $dist[$attr]['name'];
+                    }
+
+                    // Arrays
+                    foreach(array('releases', 'architectures', 'components', 'sections') as $attr){
+                        $values[$attr] = array();
+                        if(is_array($dist[$attr])){
+                            foreach($dist[$attr] as $aEntry){
+                                $values[$attr][] = $aEntry['name'];
+                            }
                         }
                     }
-                }
-    
-                $this->dataModel->addItem('Distribution','/root', $dist['name'], $values);
+        
+                    $this->dataModel->addItem('Distribution','/root', $dist['name'], $values);
 
-                if(isset($dist['releases'])){
+                    if(isset($dist['releases'])){
 
-                    // Sort releases by name length
-                    $sort = array();
-                    foreach($dist['releases'] as $id => $release){
-                        $sort[strlen($release['name']) . $release['name']]  = $id;
-                    }
-                    uksort($sort, "strnatcasecmp");   
+                        // Sort releases by name length
+                        $sort = array();
+                        foreach($dist['releases'] as $id => $release){
+                            $sort[strlen($release['name']) . $release['name']]  = $id;
+                        }
+                        uksort($sort, "strnatcasecmp");   
 
-                    // Append release tags
-                    foreach($sort as $id){
-                        $release = $dist['releases'][$id];
-                        $rPath = $release['name'];
-                        $rPath = "/root/{$dist['name']}/$rPath";
-                        $rName = preg_replace("/^.*\//","", $rPath);
-                        $rPath = preg_replace("/\/[^\/]*$/","", $rPath);
-                        $values = array('name' => $rName);
+                        // Append release tags
+                        foreach($sort as $id){
+                            $release = $dist['releases'][$id];
+                            $rPath = $release['name'];
+                            $rPath = "/root/{$dist['name']}/$rPath";
+                            $rName = preg_replace("/^.*\//","", $rPath);
+                            $rPath = preg_replace("/\/[^\/]*$/","", $rPath);
+                            $values = array('name' => $rName);
 
-                        if(!$this->dataModel->itemExistsByPath($rPath)){
-                            trigger_error("Invalid release name '{$rName}' in path '{$rPath}' received! Skipping entry!");
-                        }else{
-                            $id = $this->dataModel->addItem('Release',$rPath, $rName, $values);
+                            if(!$this->dataModel->itemExistsByPath($rPath)){
+                                trigger_error("Invalid release name '{$rName}' in path '{$rPath}' received! Skipping entry!");
+                            }else{
+                                $id = $this->dataModel->addItem('Release',$rPath, $rName, $values);
+                            }
                         }
                     }
                 }

@@ -121,7 +121,7 @@ class TemplateEngine
                
                 // Check if we've to disable this item.
                 if(isset($item['disable']) && $item['disable'] || 
-                        isset($item['initiallyEditableOnly']) && $item['initiallyEditableOnly']){
+                        (isset($item['initiallyEditableOnly']) && $item['initiallyEditableOnly'] && !$this->is_new)){
                     $this->widgets[$name]->setEnabled(FALSE);
                 }
             }
