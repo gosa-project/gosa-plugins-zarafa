@@ -34,12 +34,12 @@ class InstallRecipe extends plugin
     public $installKeyboardlayout = "";
     public $installKeyboardlayoutList = array();
 
-    public $installMirrorDN = "";
-    public $installMirrorDNList = array();
+    public $installMirror = "";
+    public $installMirrorList = array();
 
     public $objectclasses = array();
     public $attributes = array("installRelease", "installTemplate","installKeyboardlayout","installSystemLocale",
-            "installTimezone","installTimeUTC","installNTPServer","installMirrorDN",
+            "installTimezone","installTimeUTC","installNTPServer","installMirror",
             "installRootEnabled","installRootPasswordHash","installKernelPackage",
             "installPartitionTable","installConfigManagement","installBootstrapMethod");
 
@@ -256,7 +256,7 @@ class InstallRecipe extends plugin
         $smarty->assign('timezones', $this->timezones);
         $smarty->assign('installKeyboardlayoutList', $this->installKeyboardlayoutList);
         $smarty->assign('installKernelPackageList', $this->installKernelPackageList);
-        $smarty->assign('installMirrorDNList', $this->installMirrorDNList);
+        $smarty->assign('installMirrorList', $this->installMirrorList);
         $smarty->assign('installSystemLocaleList', $this->installSystemLocaleList);
         $smarty->assign('installNTPServerList', $this->installNTPServerList->render());
 
@@ -431,7 +431,7 @@ class InstallRecipe extends plugin
         $res = array(
                 'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
                 'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
-        $this->installMirrorDNList =$res;
+        $this->installMirrorList =$res;
     }
 
 
@@ -544,7 +544,7 @@ class InstallRecipe extends plugin
                         "installTimezone" => _("Timezone"),
                         "installTimeUTC" => _("Time"),
                         "installNTPServer" => _("NTP-Server"),
-                        "installMirrorDN" => _("Mirror"),
+                        "installMirror" => _("Mirror"),
                         "installRootEnabled" => _("Root login enabled"),
                         "installRootPasswordHash" => _("Root password hash"),
                         "installKernelPackage" => _("Kernel package"),

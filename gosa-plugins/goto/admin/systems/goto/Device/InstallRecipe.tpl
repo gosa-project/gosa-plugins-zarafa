@@ -37,11 +37,11 @@
     
             <table>
                 <tr>
-                    <td><LABEL for="installMirrorDN">{t}Mirror{/t}</LABEL></td>
+                    <td><LABEL for="installMirror">{t}Mirror{/t}</LABEL></td>
                     <td>
-                        <select name="installMirrorDN" size=1>
-                            {html_options options=$installMirrorDNList 
-                            selected=$installMirrorDN}
+                        <select name="installMirror" size=1>
+                            {html_options options=$installMirrorList 
+                            selected=$installMirror}
                         </select>
                     </td>
                 </tr>
