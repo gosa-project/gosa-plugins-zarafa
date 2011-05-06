@@ -4,6 +4,7 @@ class InstallRecipe extends plugin
 {
 
     public $rpcErrorMessage = "";
+    public $uuid = "";
 
     // Template options
     public $installTemplate = "";
@@ -84,6 +85,9 @@ class InstallRecipe extends plugin
         foreach($tmp['name'] as $name){
             $this->hashes[$name] = $name;
         }
+        
+        print "Hard coded uuid!";
+        $this->uuid = "a0d17918-cfb2-11df-acbd-5452005f1250";
 
         // Init the object values.
         $this->init_static_info();
@@ -102,30 +106,47 @@ class InstallRecipe extends plugin
             $this->installTemplate = key($this->installationTemplates);
             $this->installRelease = key($this->templateToRelease[$this->installTemplate]);
         }else{
+
             if(!isset($this->installationTemplates[$this->installTemplate])){
-                print "<br>Invalid template selected {$this->installTemplate}";
-                $this->installTemplate = key($this->installationTemplates);
+
+                // The selected template is no longer available, select the next selectable template.
+                $new = key($this->installationTemplates);
+                $message = sprintf(_("The selected template '%s' is no longer available. Selecting '%s' as replacement!"), 
+                        $this->installTemplate, $new);
+                msg_dialog::display(_("Warning"), $message, WARNING_DIALOG);
+                $this->installTemplate = $new;
+                $installRelease = key($this->templateToRelease[$this->installTemplate]); 
+
             }elseif(!isset($this->installationTemplates[$this->installTemplate]['method'])){
-                print "<br>No bootstrap method found!";
-                
+
+                // Not necessary to warn the user here, the input fields will be empty and thus
+                //  avoid saving.
+
             }elseif(!in_array($this->installRelease, $this->templateToRelease[$this->installTemplate])){
-                print "<br>Invalid release selected {$this->installRelease}";
-                $this->installRelease = key($this->templateToRelease[$this->installTemplate]);
+
+                // The selected release is no longer available for the current template
+                // Warn the user and select the next selectable release.
+                $new = key($this->templateToRelease[$this->installTemplate]); 
+                $message = sprintf(_("The selected release '%s' is no longer available. Selecting '%s' as replacement!"),
+                        $this->installRelease, $new);
+                $this->installRelease = $new;
+                msg_dialog::display(_("Warning"), $message, WARNING_DIALOG);
             }
         } 
+
+        // Update selectable items like kernels and mirrors depending on the current setup (relase)
         $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
         $this->reloadInstallationKernelPackages();
         $this->reloadInstallationMirrors();
     }
 
    
-    /*! \brief   Load attribute values from the GOsa-backend using jsonRPC 
+    /*! \brief   Loads client-information values from the GOsa-backend using jsonRPC 
      */ 
     function init_client_info()
     {
-        $uuid = "a0d17918-cfb2-11df-acbd-5452005f1250";
         $rpc = $this->config->getRpcHandle();
-        $res = $rpc->systemGetBaseInstallParameters($uuid);
+        $res = $rpc->systemGetBaseInstallParameters($this->uuid);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
@@ -350,15 +371,11 @@ class InstallRecipe extends plugin
     function save()
     {
         if(!$this->installRootEnabled) $this->installRootPasswordHash = "";
-        
-        $uuid = "a0d17918-cfb2-11df-acbd-5452005f1250";
+       
+        print "Save missing";
+        return; 
         $rpc = $this->config->getRpcHandle();
-
-        $data = array();
         $res = $rpc->systemSetBaseInstallParameters($uuid, $data);
-
-        
-
        
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
