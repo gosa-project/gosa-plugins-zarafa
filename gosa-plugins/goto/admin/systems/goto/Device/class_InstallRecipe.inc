@@ -3,50 +3,46 @@
 class InstallRecipe extends plugin
 {
 
-    /* This has to be replaced by valid attributes, currently they are just 
-     *  fake variables. #FIXME: I do not know the real attribute names yet.
-     */
-    public $installBootstrapMethod = '';
-    public $installBootstrapMethodList = NULL;
-
-    public $installConfigManagement = '';
-    public $installConfigManagementList = NULL;
+    public $rpcErrorMessage = "";
 
     /* Plugin attributes
      */
-    public $installTemplateDN = "";
-    public $installTemplateDNList = array();
-
-    public $installMirrorDN = "";
-    public $installMirrorDNList = array();
+    public $installTemplate = "";
+    public $installRelease = "";
+    public $installConfigManagement = '';
+    public $installConfigManagementList = NULL;
+    public $installBootstrapMethod = '';
+    public $installBootstrapMethodList = NULL;
+    public $installTimezone = "";
+    public $installTimeUTC = "";
 
     public $installKernelPackage = "";
     public $installKernelPackageList = array();
 
-    public $installKeyboardlayout = "";
-    public $installKeyboardlayoutList = array();
-
     public $installSystemLocale = "";
     public $installSystemLocaleList = array();
 
-    public $installTimezone = "";
-    public $installTimeUTC = "";
-
     public $installNTPServer = array();
-    public $installRootEnabled = "";
-    public $installRootPasswordHash = "";
-
-    public $setKickstartRootPasswordHash = FALSE;
-    public $installPartitionTable = "";
     private $installNTPServerList = NULL;
 
-    public $objectclasses = array('installRecipe');
-    public $attributes = array("installTemplateDN","installKeyboardlayout","installSystemLocale",
+    public $installRootEnabled = "";
+    public $installRootPasswordHash = "";
+    public $setPasswordHash = FALSE;
+
+    public $installPartitionTable = "";
+
+    public $installKeyboardlayout = "";
+    public $installKeyboardlayoutList = array();
+
+    public $installMirrorDN = "";
+    public $installMirrorDNList = array();
+
+    public $objectclasses = array();
+    public $attributes = array("installRelease", "installTemplate","installKeyboardlayout","installSystemLocale",
             "installTimezone","installTimeUTC","installNTPServer","installMirrorDN",
             "installRootEnabled","installRootPasswordHash","installKernelPackage",
             "installPartitionTable","installConfigManagement","installBootstrapMethod");
 
-    private $map = array('puppet' => array('objectClass' => 'puppetClient', 'type' => 'puppet', 'bootstrap' => 'preseed'));
 
     /* Some plugin management related attributes 
      * See class plugin for details.
@@ -65,15 +61,16 @@ class InstallRecipe extends plugin
         // Set default password hash
         $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
 
-        // Prepare list of timezones
-        $this->timezones = $this->getTimezones();
-
         // Get list of password hashes
         $tmp = passwordMethod::get_available_methods();
         $this->hashes = array();
         foreach($tmp['name'] as $name){
             $this->hashes[$name] = $name;
         }
+
+        // Init the object values.
+        $this->init_static_info();
+        $this->init_client_info();
 
         // Prepare NTP servers list 
         $this->installNTPServerList= new sortableListing($this->installNTPServer);
@@ -83,190 +80,35 @@ class InstallRecipe extends plugin
         $this->installNTPServerList->setWidth("100%");
         $this->installNTPServerList->setHeight("70px");
 
-        // Init the object values.
-        $this->init();
+        // Preset values for new devices
+        if(!$this->is_account){
+            $this->installTemplate = key($this->installationTemplates);
+            $this->installRelease = key($this->templateToRelease[$this->installTemplate]);
+        }else{
+            if(!isset($this->installationTemplates[$this->installTemplate])){
+                print "<br>Invalid template selected {$this->installTemplate}";
+                $this->installTemplate = key($this->installationTemplates);
+            }elseif(!isset($this->installationTemplates[$this->installTemplate]['method'])){
+                print "<br>No bootstrap method found!";
+                
+            }elseif(!in_array($this->installRelease, $this->templateToRelease[$this->installTemplate])){
+                print "<br>Invalid release selected {$this->installRelease}";
+                $this->installRelease = key($this->templateToRelease[$this->installTemplate]);
+            }
+        } 
+        $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
+        $this->reloadInstallationKernelPackages();
+        $this->reloadInstallationMirrors();
     }
 
    
     /*! \brief   Load attribute values from the GOsa-backend using jsonRPC 
      */ 
-    function init()
+    function init_client_info()
     {
-        // Detect account status by checking the used objectClasses
-        $this->is_account = FALSE;
-        foreach($this->map as $type){
-            if(isset($this->attrs['objectClass']) && in_array($type['objectClass'], $this->attrs['objectClass'])){
-                $this->installBootstrapMethod = $type['bootstrap'];
-                $this->installConfigManagement = $type['type'];
-                $this->is_account = TRUE;
-            }
-        }
-
-        // Start without error.
-        $this->initFailed = FALSE;
-
-        // Get list of NTP servers
-        $this->installNTPServer = array();
-        if(isset($this->attrs['installNTPServer']['count'])){
-            for($i = 0; $i < $this->attrs['installNTPServer']['count']; $i++){
-                $this->installNTPServer[] = $this->attrs['installNTPServer'][$i];
-            }
-        }
-
-        // Load list of bootstrap methods.
-        $res = $this->loadInstallationMethods();
-        if($res == NULL){
-            $this->initFailed = TRUE;
-            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return;
-        }
-        $this->installBootstrapMethodList = $res['installBootstrapMethodList'];
-        $this->installConfigManagementList = $res['installConfigManagementList'];
-
-
-        // Load system locales 
-        $locales = $this->getSystemLocales();
-        if($locales == NULL){
-            $this->initFailed = TRUE;
-            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return;
-        }
-        $this->installSystemLocaleList = $locales;
-
-
-        // Load installation templates
-        $res = $this->loadInstallationTemplates();
-        if($res == NULL){
-            $this->initFailed = TRUE;
-            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return;
-        }
-        $this->installTemplateDNList = $res;
-
-
-        // Load installation keyboard layouts
-        $res = $this->loadInstallationKeyboardLayouts();
-        if($res == NULL){
-            $this->initFailed = TRUE;
-            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return;
-        }
-        $this->installKeyboardlayoutList = $res;
-
-
-        // Load kernel package list
-        $res = $this->loadInstallationKernelPackages();
-        if($res == NULL){
-            $this->initFailed = TRUE;
-            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return;
-        }
-        $this->installKernelPackageList = $res;
-
-
-        // Load installation mirrors
-        $res = $this->loadInstallationMirrors();
-        if($res == NULL){
-            $this->initFailed = TRUE;
-            msg_dialog(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return;
-        }
-        $this->installMirrorDNList = $res;
-
-
-        // Preset some values for new accounts
-        if(!$this->is_account){
-
-            // Preset the device timezone
-            $tz = timezone::get_default_timezone();
-            $this->installTimezone = $tz['name'];
-
-            // Set initial bootstrap and install method.
-            $this->installBootstrapMethod = key($this->installBootstrapMethodList);
-            $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
-        }
-
-
-        // Check if we've a valid bootstrap and configMangement method selected
-        if(!isset($this->installConfigManagementList[$this->installBootstrapMethod])){
-            $newMethod = key($this->installBootstrapMethodList);
-            msg_dialog::display(_("Error"), 
-                sprintf(_("The selected bootstrap method %s is invalid. Using %s instead!"),
-                bold($this->installBootstrapMethod), bold($newMethod)), ERROR_DIALOG);
-            $this->installBootstrapMethod = $newMethod;
-        }
-        if(!isset($this->installConfigManagementList[$this->installBootstrapMethod][$this->installConfigManagement])){
-            $newMethod = key($this->installConfigManagementList[$this->installBootstrapMethod]);
-            msg_dialog::display(_("Error"), 
-                sprintf(_("The selected config management method %s is invalid. Using %s instead!"),
-                bold($this->installConfigManagement),bold($newMethod)), ERROR_DIALOG);
-            $this->installConfigManagement = $newMethod;
-        }
-    }
-
-
-    function getTimezones()
-    {
-        $tmp = timezone::_get_tz_zones();
-        $list = array();
-        foreach($tmp['TIMEZONES'] as $name => $offset){
-            if($offset >= 0){
-                $list[$name] = $name." ( + ".sprintf("%0.2f",$offset/(60*60))." "._("hours").")";
-            }else{
-                $offset = $offset * -1;
-                $list[$name] = $name." ( - ".sprintf("%0.2f",($offset/(60*60)))." "._("hours").")";
-            }
-        }  
-        uksort($list, 'strnatcasecmp'); 
-        return($list);
-    }
- 
-    
-    function loadInstallationKernelPackages()
-    {
-        return(array('kernel1','kk1'));
-    }
-    
-
-    function loadInstallationMirrors()
-    {
-        $res = array(
-                'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
-                'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
-        return($res);
-    }
-
-    function loadInstallationTemplates()
-    {
-        $res = array(
-                'dc=intranet,dc=gonicus,dc=de' => 'Intranet-Tpl',
-                'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System-Tpl');
-        return($res);
-    } 
-
-    function loadInstallationKeyboardLayouts()
-    {
-        return(array('104','105'));
-    } 
-
-    function getSystemLocales()
-    {
-        $locales = json_decode('{"hu_HU.UTF-8": "Hungarian", 
-                "es_DO.UTF-8": "Spanish (Dominican Republic)", 
-                "es_CL.UTF-8": "Spanish (Chile)"}');
-
-        return($locales);
-    }
- 
-
-    /*! \brief  Try to load install and bootstrap methods from the GOsa-backend
-     *          This is done via jsonRPC, if calling the backend method fails,
-     *           this method returns FALSE, in case of success it return TRUE; 
-     */ 
-    function loadInstallationMethods()
-    { 
+        $uuid = "a0d17918-cfb2-11df-acbd-5452005f1250";
         $rpc = $this->config->getRpcHandle();
-        $res = $rpc->getSupportedBaseInstallMethods();
+        $res = $rpc->systemGetBaseInstallParameters($uuid);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
@@ -275,17 +117,83 @@ class InstallRecipe extends plugin
             return(NULL);
         }
 
-        // Walk through result and set bootstrap methods.
-        foreach($res as $name => $method){
-            $res['installBootstrapMethodList'][$name] = $method['name'];
-            foreach($method['methods'] as $m){
-                $res['installConfigManagementList'][$name][$m] = $m; 
+        // Apply received options
+        $this->is_account = $res == True;
+        if($this->is_account){
+            $this->installNTPServer = $res['ntp-servers'];
+            $this->installTemplate = $res['template'];
+            $this->installRelease = $res['release'][0];
+            $this->installTimezone = array_search($res['timezone'][0], $this->timezones);
+            $this->installTimeUTC = $res['utc'][0];
+            $this->installKernelPackage = $res['kernel'][0];;
+            $this->installSystemLocale = $res['system-locale'][0];
+            $this->installRootEnabled = $res['root-user'][0];
+            $this->installRootPasswordHash = $res['root-hash'][0];
+            $this->installPartitionTable = $res['disk-setup'][0];
+            $this->installKeyboardlayout = $res['keyboard-layout'];
+        }
+
+        return;
+    }
+
+
+    function init_static_info()
+    { 
+        // Load static values.
+        foreach(array(
+                "timeozones" => "getTimezones",
+                "distributions" => "loadDistributions",
+                "keyboardLayouts" => "loadInstallationKeyboardLayouts",
+                "installationTemplates" => "loadInstallationTemplates",
+                "installationMethods" => "loadInstallationMethods",
+                "locales" => "getSystemLocales"    ) as $target => $func){
+            $$target = $this->$func();
+            if($$target == NULL){
+                $this->initFailed = TRUE;
+                msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+                return;
             }
         }
-        return($res);
-    }
-    
 
+        // Assign fetchted values
+        $this->timezones = $timeozones;
+        $this->installBootstrapMethodList = $installationMethods['installBootstrapMethodList'];
+        $this->installConfigManagementList = $installationMethods['installConfigManagementList'];
+        $this->installSystemLocaleList = $locales;
+        $this->installKeyboardlayoutList = $keyboardLayouts;
+        $this->distributions = $distributions;
+
+        # Create template to relase map
+        $this->templateToRelease = array();
+
+        // Walk through installation templates and use the 'repositories' attribute
+        // to supported releases.
+        foreach($installationTemplates as $name => $tdata){
+            
+            $mName = isset($this->installBootstrapMethodList[$tdata['method']]) ? 
+                $this->installBootstrapMethodList[$tdata['method']]: $tdata['method'];
+
+            $this->installationTemplateNames[$name] = $tdata['description']." (".$mName.")";
+            $this->installationTemplates[$name] = $tdata;
+            $this->templateToRelease[$name] = array();
+
+            // Check if the 'repository'-category of the template can be found in any 
+            // received release list.
+            if(isset($installationMethods[$tdata['method']]['repositories'])){
+                $repos = $installationMethods[$tdata['method']]['repositories'];
+                foreach($distributions as $dist){
+                    if(in_array($dist['type']['name'],$repos) && isset($dist['releases'])){
+                        foreach($dist['releases'] as $release){
+                            $rname = $dist['name'].'/'.$release['name'];
+                            $this->templateToRelease[$name][$rname] = $rname;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
     function execute()
     {
         // Log account access
@@ -324,7 +232,7 @@ class InstallRecipe extends plugin
           Root password hash dialog
          ***************/
 
-        if($this->setKickstartRootPasswordHash){
+        if($this->setPasswordHash){
             $this->dialog = TRUE;
             $smarty = get_smarty();
             $smarty->assign('hashes', set_post($this->hashes));
@@ -341,10 +249,13 @@ class InstallRecipe extends plugin
 
         plugin::execute();    
         $smarty = get_smarty();
+        $smarty->assign('installTemplateList', $this->installationTemplateNames);
+        $smarty->assign('installReleaseList', $this->templateToRelease[$this->installTemplate]);
+
+
         $smarty->assign('timezones', $this->timezones);
         $smarty->assign('installKeyboardlayoutList', $this->installKeyboardlayoutList);
         $smarty->assign('installKernelPackageList', $this->installKernelPackageList);
-        $smarty->assign('installTemplateDNList', $this->installTemplateDNList);
         $smarty->assign('installMirrorDNList', $this->installMirrorDNList);
         $smarty->assign('installSystemLocaleList', $this->installSystemLocaleList);
         $smarty->assign('installNTPServerList', $this->installNTPServerList->render());
@@ -353,8 +264,13 @@ class InstallRecipe extends plugin
         $smarty->assign('installBootstrapMethodList', $this->installBootstrapMethodList);
         $smarty->assign('installConfigManagement', $this->installConfigManagement);
 
-        $cfgList = $this->installConfigManagementList[$this->installBootstrapMethod];
-        $smarty->assign('installConfigManagementList', $cfgList);
+        // Assign list of available config-management types.
+        if(isset($this->installConfigManagementList[$this->installBootstrapMethod])){ 
+            $smarty->assign('installConfigManagementList', $this->installConfigManagementList[$this->installBootstrapMethod]);
+        }else{
+            $smarty->assign('installConfigManagementList', array());
+        }
+
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
@@ -368,13 +284,15 @@ class InstallRecipe extends plugin
         if(isset($_POST['InstallRecipePosted'])){
 
             $currentInstallMethod = $this->installConfigManagement;
+
+            $oldRelease = $this->installRelease;
             plugin::save_object();
             $this->installRootEnabled = isset($_POST['installRootEnabled']);
             $this->installTimeUTC = isset($_POST['installTimeUTC']);
 
 
-            if(isset($_POST['setKickstartRootPasswordHash'])){
-                $this->setKickstartRootPasswordHash = true;
+            if(isset($_POST['setPasswordHash'])){
+                $this->setPasswordHash = true;
             }
 
             $this->installNTPServerList->save_object();
@@ -386,10 +304,18 @@ class InstallRecipe extends plugin
                 }
             }
             $this->installNTPServerList->setListData($this->installNTPServer);
+            $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
+
+            // Reload list of kernel packages and mirrors
+            if($oldRelease != $this->installRelease){
+                $this->reloadInstallationKernelPackages();
+                $this->reloadInstallationMirrors();
+            }
         }
-        if(isset($_POST['cancelPassword'])) $this->setKickstartRootPasswordHash =false;
+
+        if(isset($_POST['cancelPassword'])) $this->setPasswordHash =false;
         if(isset($_POST['setPassword'])) {
-            $this->setKickstartRootPasswordHash =false;
+            $this->setPasswordHash =false;
             $hash = get_post('passwordHash');
 
             // Not sure, why this is here, but maybe some encryption methods require it.
@@ -401,64 +327,198 @@ class InstallRecipe extends plugin
             $test = new $available[$hash]($this->config,$this->dn);
             $this->installRootPasswordHash = @$test->generate_hash(get_post('rootPassword'));
         }
-
     }
 
 
     function save()
     {
-        // 
         if(!$this->installRootEnabled) $this->installRootPasswordHash = "";
-        $this->installRootEnabled = ($this->installRootEnabled)?'TRUE':'FALSE';
-        $this->installTimeUTC = ($this->installTimeUTC)?'TRUE':'FALSE';
         
-        plugin::save();
+        $uuid = "a0d17918-cfb2-11df-acbd-5452005f1250";
+        $rpc = $this->config->getRpcHandle();
 
-        unset($this->attrs['installConfigManagement']);
-        unset($this->attrs['installBootstrapMethod']);
-        echo "Skipp saving of 'installConfigManagement' and 'installBootstrapMethod', i've no idea where to store them.";
+        $data = array();
+        $res = $rpc->systemSetBaseInstallParameters($uuid, $data);
 
-        // Remove all objectClasses which belongs to a bootstrap method, 
-        //  and then add the selected one.
-        foreach($this->map as $type){
-            $this->attrs['objectClass'] = array_remove_entries_ics(array($type['objectClass']), $this->attrs['objectClass']);
-        }
-        $this->attrs['objectClass'][] = $this->map[$this->installConfigManagement]['objectClass'];
         
-        print_a($this->attrs);
 
-        $this->cleanup();
-        $ldap=$this->config->get_ldap_link();
-        $ldap->cd($this->config->current['BASE']);
-        $ldap->cd($this->dn);
-        $ldap->modify($this->attrs);
-        new log("modify","Device/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-        if (!$ldap->success()){
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
-        }else{
-            $this->handle_post_events("modify");
+       
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(NULL);
         }
+        return($res);
+
     }
 
     
     function remove_from_parent()
     {
-        plugin::remove_from_parent();
-        unset($this->attrs['installConfigManagement']);
-        unset($this->attrs['installBootstrapMethod']);
-        echo "Skipp saving of 'installConfigManagement' and 'installBootstrapMethod', i've no idea where to store them.";
-
-        $ldap=$this->config->get_ldap_link();
-        $ldap->cd($this->config->current['BASE']);
-        $ldap->cd($this->dn);
-        $ldap->modify($this->attrs);
-        new log("remove","Device/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-        if (!$ldap->success()){
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+       print "Missing"; 
+    }
+ 
+    
+    /*! \brief  Refreshes the list of selectable kernel packages.
+     */
+    function reloadInstallationKernelPackages()
+    {
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getKernelPackages($this->installRelease);
+      
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
         }else{
-            $this->handle_post_events("remove");
+            $this->installKernelPackageList = array();
+            foreach($res as $name){
+                $this->installKernelPackageList[$name] = $name;
+            }
+
+            if(!isset($this->installKernelPackageList[$this->installKernelPackage])){
+                $new = key($this->installKernelPackageList);
+                msg_dialog::display(_("Warning"), sprintf(_("The selected kernel package '%s' is no longer available! The kernel package '%s' was selected as replacement!"), $this->installKernelPackage, $new), WARNING_DIALOG);
+                $this->installKernelPackage = $new;
+            }
         }
-        
+    }
+
+
+    /*! \brief  Returns a list of distributions on success.
+     *          In case of an error, it returns NULL.
+     */
+    function loadDistributions()
+    {
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getDistributions();
+       
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(NULL);
+        }
+        return($res);
+    }
+
+
+    /*! \brief  Returns a list of timezones on success.
+     *          In case of an error, it returns NULL.
+     */
+    function getTimezones()
+    {
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getTimezones();
+       
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(NULL);
+        }
+        return($res);
+    }
+    
+
+    /*! \brief  Returns a list of installation mirrors on success.
+     *          In case of an error, it returns NULL.
+     */
+    function reloadInstallationMirrors()
+    {
+        $res = array(
+                'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
+                'ou=systems,dc=intranet,dc=gonicus,dc=de' => 'System');
+        $this->installMirrorDNList =$res;
+    }
+
+
+    /*! \brief  Returns a list of installation templates on success.
+     *          In case of an error, it returns NULL.
+     */
+    function loadInstallationTemplates()
+    {
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->installListTemplates();
+       
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(NULL);
+        }
+        return($res);
+    } 
+
+
+    /*! \brief  Returns a list of keyboard layouts on success.
+     *          In case of an error, it returns NULL.
+     */
+    function loadInstallationKeyboardLayouts()
+    {
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getKeyboardModels();
+       
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(NULL);
+        }
+        $lay = array();
+        foreach($res as $key => $data){
+            $lay[$key] = "{$data[0]} - {$data[2]}";
+        }
+        asort($lay);
+        return($lay);
+    } 
+
+    
+    /*! \brief  Returns a list of system locales on success.
+     *          In case of an error, it returns NULL.
+     */
+    function getSystemLocales()
+    {
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getSystemLocales();
+      
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(NULL);
+        }
+
+        return($res);
+    }
+ 
+
+    /*! \brief  Try to load install and bootstrap methods from the GOsa-backend
+     *          This is done via jsonRPC, if calling the backend method fails,
+     *           this method returns FALSE, in case of success it return TRUE; 
+     */ 
+    function loadInstallationMethods()
+    { 
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getSupportedBaseInstallMethods();
+      
+        // Failed to load backend values, keep reported error and return with FALSE; 
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            return(NULL);
+        }
+
+        // Walk through result and set bootstrap methods.
+        foreach($res as $name => $method){
+            $res['installBootstrapMethodList'][$name] = $method['name'];
+            foreach($method['methods'] as $m){
+                $res['installConfigManagementList'][$name][$m] = $m; 
+            }
+        }
+        return($res);
     }
     
 
@@ -474,7 +534,9 @@ class InstallRecipe extends plugin
                     "plCategory"    => array("Device"),
                     "plProvidedAcls" => array(
                         "member" => _("Member"),
-                        "installTemplateDN" => _("Template"),
+                        "installTemplate" => _("Installation template"),
+                        "installRelease" => _("Installation release"),
+
                         "installBootstrapMethod" => _("Bootstrap method"),
                         "installConfigManagement" => _("Config management"),
                         "installKeyboardlayout" => _("Keyboard layout"),
@@ -482,7 +544,7 @@ class InstallRecipe extends plugin
                         "installTimezone" => _("Timezone"),
                         "installTimeUTC" => _("Time"),
                         "installNTPServer" => _("NTP-Server"),
-                        "installMirrorDN" => _("Kickstart mirror"),
+                        "installMirrorDN" => _("Mirror"),
                         "installRootEnabled" => _("Root login enabled"),
                         "installRootPasswordHash" => _("Root password hash"),
                         "installKernelPackage" => _("Kernel package"),
@@ -492,5 +554,4 @@ class InstallRecipe extends plugin
                         );
     }
 }
-
 ?>

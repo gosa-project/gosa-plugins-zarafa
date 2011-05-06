@@ -231,9 +231,6 @@ class Device extends plugin
      */ 
     function save()
     {
-
-        
-
         plugin::save();
 
         // Append and remove dynmic object classes

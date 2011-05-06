@@ -2,19 +2,27 @@
 <h3>{t}Installation type{/t}</h3>
 <table>
     <tr>
-        <td><LABEL for="installBootstrapMethod">{t}Bootstrap method{/t}</LABEL></td>
+        <td><LABEL for="installTemplate">{t}Template{/t}</LABEL></td>
         <td>
-            <select name="installBootstrapMethod" size=1>
-                {html_options options=$installBootstrapMethodList 
-                selected=$installBootstrapMethod}
+            <select name="installTemplate" size=1 onChange="document.mainform.submit();">
+                {html_options options=$installTemplateList 
+                selected=$installTemplate}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><LABEL for="installRelease">{t}Release{/t}</LABEL></td>
+        <td>
+            <select name="installRelease" size=1 onChange="document.mainform.submit();">
+                {html_options options=$installReleaseList 
+                selected=$installRelease}
             </select>
         </td>
     </tr>
     <tr>
         <td><LABEL for="installConfigManagement">{t}Config management{/t}</LABEL></td>
         <td>
-            <select name="installConfigManagement" size=1
-                onChange='document.mainform.submit();'>
+            <select nme="installConfigManagement" size=1 onChange='document.mainform.submit();'>
                 {html_options options=$installConfigManagementList 
                 selected=$installConfigManagement}
             </select>
@@ -38,15 +46,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for="installTemplateDN">{t}Kickstart template{/t}</LABEL></td>
-                    <td>
-                        <select name="installTemplateDN" size=1>
-                            {html_options options=$installTemplateDNList 
-                            selected=$installTemplateDN}
-                        </select>
-                    </td>
-                </tr>
-                <tr>
                     <td><LABEL for="installKernelPackage">{t}Kernel package{/t}</LABEL></td>
                     <td>
                         <select name="installKernelPackage" size=1>
@@ -64,13 +63,13 @@
                 <tr>
                     <td>
                         <input type='checkbox' value='1' {if $installRootEnabled} checked {/if}
-                            onClick="changeState('setKickstartRootPasswordHash');"
+                            onClick="changeState('setPasswordHash');"
                             name="installRootEnabled" id="installRootEnabled" 
                            >
                         <LABEL for="installRootEnabled">{t}Use root user{/t}</LABEL>&nbsp;
-                        <button name='setKickstartRootPasswordHash'
+                        <button name='setPasswordHash'
                             {if !$installRootEnabled} disabled {/if}
-                            id="setKickstartRootPasswordHash">{t}Set password{/t}</button>
+                            id="setPasswordHash">{t}Set password{/t}</button>
                     </td>
                 </tr>
             </table>
@@ -88,7 +87,7 @@
                     <td><LABEL for="installKeyboardlayout">{t}Keyboard layout{/t}</LABEL></td>
                     <td>
                         <select name="installKeyboardlayout" size=1>
-                            {html_options values=$installKeyboardlayoutList output=$installKeyboardlayoutList 
+                            {html_options options=$installKeyboardlayoutList
                             selected=$installKeyboardlayout}
                         </select>
                     </td>
@@ -97,7 +96,7 @@
                     <td><LABEL for="installSystemLocale">{t}System locale{/t}</LABEL></td>
                     <td>
                         <select name="installSystemLocale" size=1>
-                            {html_options values=$installSystemLocaleList output=$installSystemLocaleList 
+                            {html_options options=$installSystemLocaleList 
                             selected=$installSystemLocale}
                         </select>
                     </td>
