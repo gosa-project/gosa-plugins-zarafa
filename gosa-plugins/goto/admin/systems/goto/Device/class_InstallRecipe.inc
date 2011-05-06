@@ -5,35 +5,52 @@ class InstallRecipe extends plugin
 
     public $rpcErrorMessage = "";
 
-    /* Plugin attributes
-     */
+    // Template options
     public $installTemplate = "";
+    public $installationTemplateNames = array();
+    public $templateToRelease = array();
+    public $installationTemplates = array();
+    
+    // The selected installation release
     public $installRelease = "";
+
+    // Selected config management variant
     public $installConfigManagement = '';
-    public $installConfigManagementList = NULL;
+    public $installConfigManagementList = array();
+
+    // Bootstrap method
     public $installBootstrapMethod = '';
-    public $installBootstrapMethodList = NULL;
+    public $installBootstrapMethodList = array();
+
+    // Timezone settings
     public $installTimezone = "";
     public $installTimeUTC = "";
 
+    // Kernel packages
     public $installKernelPackage = "";
     public $installKernelPackageList = array();
 
+    // System Locale
     public $installSystemLocale = "";
     public $installSystemLocaleList = array();
 
+    // Selected NTP Server
     public $installNTPServer = array();
-    private $installNTPServerList = NULL;
+    public $installNTPServerList = NULL;
 
+    // Root password
     public $installRootEnabled = "";
     public $installRootPasswordHash = "";
     public $setPasswordHash = FALSE;
 
+    // Partition table variables
     public $installPartitionTable = "";
 
+    // Keyboard-layout attribute
     public $installKeyboardlayout = "";
     public $installKeyboardlayoutList = array();
 
+    // Mirror related attribute
     public $installMirror = "";
     public $installMirrorList = array();
 
