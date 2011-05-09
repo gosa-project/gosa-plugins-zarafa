@@ -19,10 +19,10 @@ class newConfigManagement extends plugin
     var $currentObject = NULL;
     var $itemsPerMethod = NULL;
 
-
     var $initFailed = TRUE;
     var $initialized = FALSE;
     var $errorMessage = "";
+
 
     /*! \brief  Initialize the plugin and finally update the data model.
      */
@@ -600,7 +600,7 @@ class newConfigManagement extends plugin
     function editEntry($ids)
     {
         $item = $this->dataModel->getItemById($ids[0]);
-        $release = preg_replace("/^.*\//","", $this->getReleasePath($item['path']));
+        $release = $this->getReleasePart($item['path']);
         $path = $this->getItemPath($item['path']);
         $method = $this->cfgItemMap[$item['type']];
 
@@ -608,9 +608,16 @@ class newConfigManagement extends plugin
         if($this->cfgItemMap[$item['type']] != 'root'){
             if($item['status'] == '-'){
                 $rpc = $this->config->getRpcHandle();
-                $item['values'] = $rpc->getConfigItem($release, $path);
-                $this->dataModel->setItemStatus($item['path'], 'fetched');
-                $this->dataModel->setItemValues($item['path'], $item['values']);
+                echo $release;
+                $res = $rpc->getConfigItem($release, $path);
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to load config item details: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    return;
+                }else{
+                    $item['values'] = $res;
+                    $this->dataModel->setItemStatus($item['path'], 'fetched');
+                    $this->dataModel->setItemValues($item['path'], $item['values']);
+                }
             }
         }
 
@@ -747,8 +754,8 @@ class newConfigManagement extends plugin
             }
             if(in_array($values['name'],$usedNames)){
                 $msgs[] = msgPool::duplicated(_("Name"));
-            }elseif(preg_match("/[^a-z0-9]/i",$values['name'])){
-                $msgs[] = msgPool::invalid(_("Name"), $values['name'], '/[a-z0-9]/');
+            }elseif(preg_match("/[^a-z0-9\.]/i",$values['name'])){
+                $msgs[] = msgPool::invalid(_("Name"), $values['name'], '/[a-z0-9\.]/');
             }
         }
 
