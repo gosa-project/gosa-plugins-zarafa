@@ -4,7 +4,7 @@ class InstallRecipe extends plugin
 {
 
     public $rpcErrorMessage = "";
-    public $uuid = "";
+    public $deviceUUID = "";
 
     // Template options
     public $installTemplate = "";
@@ -67,14 +67,17 @@ class InstallRecipe extends plugin
      */
     public $view_logged = FALSE;
     public $ignore_account = FALSE;
-
+    public $parent = NULL;
 
     /*! \brief  Initialize the plugin and its widgets. 
      *          Finally call init() to load values from the backend.
      */ 
-    function __construct(&$config, $dn)
+    function __construct(&$config, $dn, $parent)
     {
         plugin::plugin($config, $dn);
+
+        $this->_device = &$parent;
+        $this->deviceUUID = $parent->deviceUUID;
 
         // Set default password hash
         $this->hash = $this->config->get_cfg_value("core","passwordDefaultHash"); 
@@ -85,12 +88,15 @@ class InstallRecipe extends plugin
         foreach($tmp['name'] as $name){
             $this->hashes[$name] = $name;
         }
-        
-        print "Hard coded uuid!";
-        $this->uuid = "a0d17918-cfb2-11df-acbd-5452005f1250";
 
-        // Init the object values.
+        // Initialize plugin
         $this->init_static_info();
+        $this->init($initially = TRUE); 
+    }
+
+    function init($initially = FALSE)
+    {
+        // Init the object values.
         $this->init_client_info();
 
         // Prepare NTP servers list 
@@ -111,9 +117,12 @@ class InstallRecipe extends plugin
 
                 // The selected template is no longer available, select the next selectable template.
                 $new = key($this->installationTemplates);
-                $message = sprintf(_("The selected template '%s' is no longer available. Selecting '%s' as replacement!"), 
-                        $this->installTemplate, $new);
-                msg_dialog::display(_("Warning"), $message, WARNING_DIALOG);
+
+                if($initially){
+                    $message = sprintf(_("The selected template '%s' is no longer available. Selecting '%s' as replacement!"), 
+                            $this->installTemplate, $new);
+                    msg_dialog::display(_("Warning"), $message, WARNING_DIALOG);
+                }
                 $this->installTemplate = $new;
                 $installRelease = key($this->templateToRelease[$this->installTemplate]); 
 
@@ -127,8 +136,10 @@ class InstallRecipe extends plugin
                 // The selected release is no longer available for the current template
                 // Warn the user and select the next selectable release.
                 $new = key($this->templateToRelease[$this->installTemplate]); 
-                $message = sprintf(_("The selected release '%s' is no longer available. Selecting '%s' as replacement!"),
-                        $this->installRelease, $new);
+                if($initially){
+                    $message = sprintf(_("The selected release '%s' is no longer available. Selecting '%s' as replacement!"),
+                            $this->installRelease, $new);
+                }
                 $this->installRelease = $new;
                 msg_dialog::display(_("Warning"), $message, WARNING_DIALOG);
             }
@@ -136,8 +147,8 @@ class InstallRecipe extends plugin
 
         // Update selectable items like kernels and mirrors depending on the current setup (relase)
         $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
-        $this->reloadInstallationKernelPackages();
-        $this->reloadInstallationMirrors();
+        $this->reloadInstallationKernelPackages($initially);
+        $this->reloadInstallationMirrors($initially);
     }
 
    
@@ -145,8 +156,12 @@ class InstallRecipe extends plugin
      */ 
     function init_client_info()
     {
+        if(empty($this->deviceUUID)){
+            return;
+        }
+
         $rpc = $this->config->getRpcHandle();
-        $res = $rpc->systemGetBaseInstallParameters($this->uuid);
+        $res = $rpc->systemGetBaseInstallParameters($this->deviceUUID);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
@@ -231,6 +246,16 @@ class InstallRecipe extends plugin
         }
     }
 
+
+    function check()
+    {
+            // Check if the parents deviceUUID has changed
+            if($this->deviceUUID != $this->_device->deviceUUID){
+                $this->deviceUUID = $this->_device->deviceUUID;
+                print "The device uuid has changed.";
+            }
+    }
+    
     
     function execute()
     {
@@ -370,12 +395,31 @@ class InstallRecipe extends plugin
 
     function save()
     {
+
         if(!$this->installRootEnabled) $this->installRootPasswordHash = "";
-       
-        print "Save missing";
+      
+        $map = array(
+            "installNTPServer"=>'ntp-servers',
+            "installTemplate"=>'template',
+            "installRelease"=>'release',
+            "installTimezone"=>'timezone',
+            "installTimeUTC"=>'utc',
+            "installKernelPackage"=>'kernel',
+            "installSystemLocale"=>'system-locale',
+            "installRootEnabled"=>'root-user',
+            "installRootPasswordHash"=>'root-hash',
+            "installPartitionTable"=>'disk-setup',
+            "installKeyboardlayout"=>'keyboard-layout');
+
+        $data = array();
+        foreach($map as $source => $dest){
+            $data[$dest] = $this->$source;
+        } 
+
+        print_a($data);
         return; 
         $rpc = $this->config->getRpcHandle();
-        $res = $rpc->systemSetBaseInstallParameters($uuid, $data);
+        $res = $rpc->systemSetBaseInstallParameters($deviceUUID, $data);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
@@ -396,8 +440,14 @@ class InstallRecipe extends plugin
     
     /*! \brief  Refreshes the list of selectable kernel packages.
      */
-    function reloadInstallationKernelPackages()
+    function reloadInstallationKernelPackages($initially = FALSE)
     {
+        // Do nothing if no release is given.
+        if(empty($this->installRelease)){
+            $this->installKernelPackageList = array();
+            return;
+        }
+
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getKernelPackages($this->installRelease);
       
@@ -414,7 +464,9 @@ class InstallRecipe extends plugin
 
             if(!isset($this->installKernelPackageList[$this->installKernelPackage])){
                 $new = key($this->installKernelPackageList);
-                msg_dialog::display(_("Warning"), sprintf(_("The selected kernel package '%s' is no longer available! The kernel package '%s' was selected as replacement!"), $this->installKernelPackage, $new), WARNING_DIALOG);
+                if($initially){
+                    msg_dialog::display(_("Warning"), sprintf(_("The selected kernel package '%s' is no longer available! The kernel package '%s' was selected as replacement!"), $this->installKernelPackage, $new), WARNING_DIALOG);
+                }
                 $this->installKernelPackage = $new;
             }
         }
@@ -460,7 +512,7 @@ class InstallRecipe extends plugin
     /*! \brief  Returns a list of installation mirrors on success.
      *          In case of an error, it returns NULL.
      */
-    function reloadInstallationMirrors()
+    function reloadInstallationMirrors($initially = FALSE)
     {
         $res = array(
                 'dc=intranet,dc=gonicus,dc=de' => 'Intranet',
