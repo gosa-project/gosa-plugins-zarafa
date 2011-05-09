@@ -608,7 +608,6 @@ class newConfigManagement extends plugin
         if($this->cfgItemMap[$item['type']] != 'root'){
             if($item['status'] == '-'){
                 $rpc = $this->config->getRpcHandle();
-                echo $release;
                 $res = $rpc->getConfigItem($release, $path);
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), sprintf(_("Failed to load config item details: %s"), $rpc->get_error()),ERROR_DIALOG);
