@@ -32,7 +32,7 @@ class InstallRecipe extends plugin
     public $installKernelPackageList = array();
 
     // System Locale
-    public $installSystemLocale = "";
+    public $installSystemLocale = "de_DE.UTF-8";
     public $installSystemLocaleList = array();
 
     // Selected NTP Server
@@ -48,7 +48,7 @@ class InstallRecipe extends plugin
     public $installPartitionTable = "";
 
     // Keyboard-layout attribute
-    public $installKeyboardlayout = "";
+    public $installKeyboardlayout = "de";
     public $installKeyboardlayoutList = array();
 
     // Mirror related attribute
@@ -371,6 +371,11 @@ class InstallRecipe extends plugin
             }
             $this->installNTPServerList->setListData($this->installNTPServer);
             $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
+
+            // The selected release is no longer available for the current template
+            if(!in_array($this->installRelease, $this->templateToRelease[$this->installTemplate])){
+                $this->installRelease = key($this->templateToRelease[$this->installTemplate]);
+            }
 
             // Reload list of kernel packages and mirrors
             if($oldRelease != $this->installRelease){
