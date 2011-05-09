@@ -118,7 +118,8 @@
                     <td><LABEL for="installTimezone">{t}Timezone{/t}</LABEL></td>
                     <td>
                         <select size='1' name="installTimezone" id="installTimezone">
-                            {html_options values=$timezones options=$timezones selected=$installTimezone}
+                            {html_options output=$timezones values=$timezones 
+                            selected=$installTimezone}
                         </select>
                     </td>
                 </tr>

@@ -32,7 +32,7 @@ class InstallRecipe extends plugin
     public $installKernelPackageList = array();
 
     // System Locale
-    public $installSystemLocale = "de_DE.UTF-8";
+    public $installSystemLocale = "";
     public $installSystemLocaleList = array();
 
     // Selected NTP Server
@@ -48,7 +48,7 @@ class InstallRecipe extends plugin
     public $installPartitionTable = "";
 
     // Keyboard-layout attribute
-    public $installKeyboardlayout = "de";
+    public $installKeyboardlayout = "";
     public $installKeyboardlayoutList = array();
 
     // Mirror related attribute
@@ -172,21 +172,44 @@ class InstallRecipe extends plugin
             msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
             return(NULL);
         }
-
+    
         // Apply received options
         $this->is_account = $res == True;
         if($this->is_account){
-            $this->installNTPServer = $res['ntp-servers'];
-            $this->installTemplate = $res['template'];
-            $this->installRelease = $res['release'][0];
-            $this->installTimezone = array_search($res['timezone'][0], $this->timezones);
-            $this->installTimeUTC = $res['utc'][0];
-            $this->installKernelPackage = $res['kernel'][0];;
-            $this->installSystemLocale = $res['system-locale'][0];
-            $this->installRootEnabled = $res['root-user'][0];
-            $this->installRootPasswordHash = $res['root-hash'][0];
-            $this->installPartitionTable = $res['disk-setup'][0];
-            $this->installKeyboardlayout = $res['keyboard-layout'];
+
+            $map = array(
+                    'ntp-servers' => "installNTPServer", 
+                    'template' => "installTemplate", 
+                    'keyboard-layout' => "installKeyboardlayout");
+
+            // We receive an array for these attributes, but require a string instead
+            //  we just use the first element of the array.
+            $mapArray = array(
+                    'release' => "installRelease", 
+                    'timezone' => "installTimezone", 
+                    'utc' => "installTimeUTC", 
+                    'kernel' => "installKernelPackage", 
+                    'system-locale' => "installSystemLocale", 
+                    'root-user' => "installRootEnabled", 
+                    'root-hash' => "installRootPasswordHash", 
+                    'disk-setup' => "installPartitionTable");
+ 
+            foreach($res as $name => $data){
+                if(isset($map[$name])){
+                    $target = $map[$name];
+                    $value = $res[$name];
+                }elseif(isset($mapArray[$name])){
+                    $target = $mapArray[$name];
+                    $value = $res[$name][0];
+                }
+                $this->$target = $value;
+            }
+
+            // Convert Bool values to Bool.
+            $boolean = array("installRootEnabled", "installTimeUTC");
+            foreach($boolean as $attr){
+                $this->$attr = ($this->$attr != FALSE);
+            }
         }
 
         return;
@@ -403,9 +426,8 @@ class InstallRecipe extends plugin
 
     function save()
     {
-
         if(!$this->installRootEnabled) $this->installRootPasswordHash = "";
-      
+
         $map = array(
             "installNTPServer"=>'ntp-servers',
             "installTemplate"=>'template',
@@ -417,25 +439,36 @@ class InstallRecipe extends plugin
             "installRootEnabled"=>'root-user',
             "installRootPasswordHash"=>'root-hash',
             "installPartitionTable"=>'disk-setup',
-            "installKeyboardlayout"=>'keyboard-layout');
+            "installKeyboardlayout"=>'keyboard-layout',
+            );
 
+        // Collect values to be saved.
         $data = array();
         foreach($map as $source => $dest){
-            $data[$dest] = $this->$source;
+            if(!empty($this->$source)){
+                $data[$dest] = $this->$source;
+             }
         } 
 
-        print_a($data);
-        return; 
+        // Enforce an array for ntp-servers
+        $data['ntp-servers'] = array_values($data['ntp-servers']);
+
+        // Save Boolean like a String 
+        $boolean = array("root-user", "utc");
+        foreach($boolean as $attr){
+            $data[$attr] = ($data[$attr]) ? $data[$attr] = TRUE : $data[$attr] = FALSE;
+        }
+
         $rpc = $this->config->getRpcHandle();
-        $res = $rpc->systemSetBaseInstallParameters($deviceUUID, $data);
+        $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $data);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
         if(!$rpc->success()){
             $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
             return(NULL);
         }
-        return($res);
 
     }
 
@@ -582,6 +615,7 @@ class InstallRecipe extends plugin
         $this->rpcError = !$rpc->success();
         if(!$rpc->success()){
             $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
             return(NULL);
         }
 
