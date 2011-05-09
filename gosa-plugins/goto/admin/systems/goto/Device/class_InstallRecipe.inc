@@ -76,6 +76,8 @@ class InstallRecipe extends plugin
     {
         plugin::plugin($config, $dn);
 
+        $this->is_account = $this->initially_was_account = FALSE;
+
         $this->_device = &$parent;
         $this->deviceUUID = $parent->deviceUUID;
 
@@ -167,6 +169,7 @@ class InstallRecipe extends plugin
         $this->rpcError = !$rpc->success();
         if(!$rpc->success()){
             $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
             return(NULL);
         }
 
