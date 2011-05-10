@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-29 19:38+0200\n"
+"POT-Creation-Date: 2011-05-10 08:43+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -17,167 +17,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/groups/scalix/class_scalixGroup.inc:15
-#: personal/scalix/class_scalixAccount.inc:456
-#, fuzzy
-msgid "Scalix account"
-msgstr "我的账号"
-
-#: admin/groups/scalix/class_scalixGroup.inc:25
-#: personal/scalix/class_scalixAccount.inc:466
-msgid "Scalix Mail node"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:26
-#: personal/scalix/class_scalixAccount.inc:467
-#, fuzzy
-msgid "Mailbox class"
-msgstr "邮件地址"
-
-#: admin/groups/scalix/class_scalixGroup.inc:27
-#: personal/scalix/class_scalixAccount.inc:468
-#, fuzzy
-msgid "Server language"
-msgstr "服务器名称"
-
-#: admin/groups/scalix/class_scalixGroup.inc:28
-#: personal/scalix/class_scalixAccount.inc:469
-msgid "Administrator"
-msgstr "管理员"
-
-#: admin/groups/scalix/class_scalixGroup.inc:29
-#: personal/scalix/class_scalixAccount.inc:470
-#, fuzzy
-msgid "Mailbox administrator"
-msgstr "目录管理员"
-
-#: admin/groups/scalix/class_scalixGroup.inc:30
-#: personal/scalix/class_scalixAccount.inc:471
-msgid "Hide user entry in Scalix"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:31
-#: personal/scalix/class_scalixAccount.inc:472
-#, fuzzy
-msgid "Mailbox size limitations"
-msgstr "邮件传递列表"
-
-#: admin/groups/scalix/class_scalixGroup.inc:32
-#: personal/scalix/class_scalixAccount.inc:473
-#, fuzzy
-msgid "Limit outbound"
-msgstr "限制登录时间"
-
-#: admin/groups/scalix/class_scalixGroup.inc:33
-#: personal/scalix/class_scalixAccount.inc:474
-msgid "Limit inbound"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:34
-#: personal/scalix/class_scalixAccount.inc:475
-#, fuzzy
-msgid "Notify user"
-msgstr "计算机"
-
-#: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
 #: personal/scalix/paste_generic.tpl:4
+#: personal/scalix/class_scalixAccount.inc:476 personal/scalix/generic.tpl:105
+#: admin/groups/scalix/class_scalixGroup.inc:35
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "邮件地址"
 
-#: personal/scalix/generic.tpl:4
-msgid "Generic"
-msgstr "通用配置"
-
-#: personal/scalix/generic.tpl:8
-msgid "Scalix mailnode"
-msgstr ""
-
-#: personal/scalix/generic.tpl:17
-#, fuzzy
-msgid "Salix mailbox class"
-msgstr "邮件大小"
-
-#: personal/scalix/generic.tpl:21
-msgid ""
-"Limited users can not make use of the group calendar functionality in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:30
-#, fuzzy
-msgid "Scalix server language"
-msgstr "Profile 服务器管理"
-
-#: personal/scalix/generic.tpl:34
-msgid "Message catalog language for client."
-msgstr ""
-
-#: personal/scalix/generic.tpl:51
-#, fuzzy
-msgid "Select for admin capability."
-msgstr "选择模板"
-
-#: personal/scalix/generic.tpl:51
-#, fuzzy
-msgid "Scalix Administrator"
-msgstr "管理员"
-
-#: personal/scalix/generic.tpl:56
-msgid "Select for mailbox admin capability."
-msgstr ""
-
-#: personal/scalix/generic.tpl:56
-#, fuzzy
-msgid "Scalix Mailbox Administrator"
-msgstr "管理员"
-
-#: personal/scalix/generic.tpl:61
-#, fuzzy
-msgid "Hide user entry from addressbook."
-msgstr "请输入一个邮件地址"
-
-#: personal/scalix/generic.tpl:61
-msgid "Hide this user entry in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:70
-#, fuzzy
-msgid "Limit mailbox size"
-msgstr "邮件大小"
-
-#: personal/scalix/generic.tpl:73
-msgid "MB"
-msgstr "MB"
-
-#: personal/scalix/generic.tpl:81
-msgid "As sanction on mailbox quota overuse, stop user from sending mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:81
-msgid "Limit Outbound Mail"
-msgstr ""
-
-#: personal/scalix/generic.tpl:86
-msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:86
-msgid "Limit Inbound Mail"
-msgstr ""
-
-#: personal/scalix/generic.tpl:91
-msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:91
-msgid "Notify User"
-msgstr ""
-
-#: personal/scalix/generic.tpl:108 personal/scalix/paste_generic.tpl:6
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:108
 #, fuzzy
 msgid "List of scalix email addresses"
 msgstr "替代邮件地址列表"
+
+#: personal/scalix/main.inc:126
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
+
+#: personal/scalix/main.inc:139
+#, fuzzy
+msgid "Scalix settings"
+msgstr "邮件选项"
 
 #: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
@@ -271,18 +130,159 @@ msgstr "邮件地址"
 msgid "Limit Mailbox"
 msgstr "邮件大小"
 
+#: personal/scalix/class_scalixAccount.inc:456
+#: admin/groups/scalix/class_scalixGroup.inc:15
+#, fuzzy
+msgid "Scalix account"
+msgstr "我的账号"
+
 #: personal/scalix/class_scalixAccount.inc:460
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/scalix/main.inc:126
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
+#: personal/scalix/class_scalixAccount.inc:466
+#: admin/groups/scalix/class_scalixGroup.inc:25
+msgid "Scalix Mail node"
+msgstr ""
 
-#: personal/scalix/main.inc:139
+#: personal/scalix/class_scalixAccount.inc:467
+#: admin/groups/scalix/class_scalixGroup.inc:26
 #, fuzzy
-msgid "Scalix settings"
-msgstr "邮件选项"
+msgid "Mailbox class"
+msgstr "邮件地址"
+
+#: personal/scalix/class_scalixAccount.inc:468
+#: admin/groups/scalix/class_scalixGroup.inc:27
+#, fuzzy
+msgid "Server language"
+msgstr "服务器名称"
+
+#: personal/scalix/class_scalixAccount.inc:469
+#: admin/groups/scalix/class_scalixGroup.inc:28
+msgid "Administrator"
+msgstr "管理员"
+
+#: personal/scalix/class_scalixAccount.inc:470
+#: admin/groups/scalix/class_scalixGroup.inc:29
+#, fuzzy
+msgid "Mailbox administrator"
+msgstr "目录管理员"
+
+#: personal/scalix/class_scalixAccount.inc:471
+#: admin/groups/scalix/class_scalixGroup.inc:30
+msgid "Hide user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:472
+#: admin/groups/scalix/class_scalixGroup.inc:31
+#, fuzzy
+msgid "Mailbox size limitations"
+msgstr "邮件传递列表"
+
+#: personal/scalix/class_scalixAccount.inc:473
+#: admin/groups/scalix/class_scalixGroup.inc:32
+#, fuzzy
+msgid "Limit outbound"
+msgstr "限制登录时间"
+
+#: personal/scalix/class_scalixAccount.inc:474
+#: admin/groups/scalix/class_scalixGroup.inc:33
+msgid "Limit inbound"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:475
+#: admin/groups/scalix/class_scalixGroup.inc:34
+#, fuzzy
+msgid "Notify user"
+msgstr "计算机"
+
+#: personal/scalix/generic.tpl:4
+msgid "Generic"
+msgstr "通用配置"
+
+#: personal/scalix/generic.tpl:8
+msgid "Scalix mailnode"
+msgstr ""
+
+#: personal/scalix/generic.tpl:17
+#, fuzzy
+msgid "Scalix mailbox class"
+msgstr "邮件大小"
+
+#: personal/scalix/generic.tpl:21
+msgid ""
+"Limited users can not make use of the group calendar functionality in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:30
+#, fuzzy
+msgid "Scalix server language"
+msgstr "Profile 服务器管理"
+
+#: personal/scalix/generic.tpl:34
+msgid "Message catalog language for client."
+msgstr ""
+
+#: personal/scalix/generic.tpl:51
+#, fuzzy
+msgid "Select for admin capability."
+msgstr "选择模板"
+
+#: personal/scalix/generic.tpl:51
+#, fuzzy
+msgid "Scalix Administrator"
+msgstr "管理员"
+
+#: personal/scalix/generic.tpl:56
+msgid "Select for mailbox admin capability."
+msgstr ""
+
+#: personal/scalix/generic.tpl:56
+#, fuzzy
+msgid "Scalix Mailbox Administrator"
+msgstr "管理员"
+
+#: personal/scalix/generic.tpl:61
+#, fuzzy
+msgid "Hide user entry from addressbook."
+msgstr "请输入一个邮件地址"
+
+#: personal/scalix/generic.tpl:61
+msgid "Hide this user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:70
+#, fuzzy
+msgid "Limit mailbox size"
+msgstr "邮件大小"
+
+#: personal/scalix/generic.tpl:73
+msgid "MB"
+msgstr "MB"
+
+#: personal/scalix/generic.tpl:81
+msgid "As sanction on mailbox quota overuse, stop user from sending mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:81
+msgid "Limit Outbound Mail"
+msgstr ""
+
+#: personal/scalix/generic.tpl:86
+msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:86
+msgid "Limit Inbound Mail"
+msgstr ""
+
+#: personal/scalix/generic.tpl:91
+msgid "As sanction on mailbox quota overuse, notify the user by eMail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:91
+msgid "Notify User"
+msgstr ""
 
 #~ msgid "Add"
 #~ msgstr "添加"

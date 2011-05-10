@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-29 19:38+0200\n"
+"POT-Creation-Date: 2011-05-10 08:43+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -20,168 +20,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/groups/scalix/class_scalixGroup.inc:15
-#: personal/scalix/class_scalixAccount.inc:456
-#, fuzzy
-msgid "Scalix account"
-msgstr "Mijn account"
-
-#: admin/groups/scalix/class_scalixGroup.inc:25
-#: personal/scalix/class_scalixAccount.inc:466
-msgid "Scalix Mail node"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:26
-#: personal/scalix/class_scalixAccount.inc:467
-#, fuzzy
-msgid "Mailbox class"
-msgstr "E-mail adres"
-
-#: admin/groups/scalix/class_scalixGroup.inc:27
-#: personal/scalix/class_scalixAccount.inc:468
-#, fuzzy
-msgid "Server language"
-msgstr "Servernaam"
-
-#: admin/groups/scalix/class_scalixGroup.inc:28
-#: personal/scalix/class_scalixAccount.inc:469
-msgid "Administrator"
-msgstr "Beheerder"
-
-#: admin/groups/scalix/class_scalixGroup.inc:29
-#: personal/scalix/class_scalixAccount.inc:470
-#, fuzzy
-msgid "Mailbox administrator"
-msgstr "Map beheerders"
-
-#: admin/groups/scalix/class_scalixGroup.inc:30
-#: personal/scalix/class_scalixAccount.inc:471
-msgid "Hide user entry in Scalix"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:31
-#: personal/scalix/class_scalixAccount.inc:472
-#, fuzzy
-msgid "Mailbox size limitations"
-msgstr "Mail distributielijst"
-
-#: admin/groups/scalix/class_scalixGroup.inc:32
-#: personal/scalix/class_scalixAccount.inc:473
-#, fuzzy
-msgid "Limit outbound"
-msgstr "Profiel quota"
-
-#: admin/groups/scalix/class_scalixGroup.inc:33
-#: personal/scalix/class_scalixAccount.inc:474
-msgid "Limit inbound"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:34
-#: personal/scalix/class_scalixAccount.inc:475
-#, fuzzy
-msgid "Notify user"
-msgstr "Tel het aantal gebruikers"
-
-#: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
 #: personal/scalix/paste_generic.tpl:4
+#: personal/scalix/class_scalixAccount.inc:476 personal/scalix/generic.tpl:105
+#: admin/groups/scalix/class_scalixGroup.inc:35
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "E-mail adres"
 
-#: personal/scalix/generic.tpl:4
-msgid "Generic"
-msgstr "Algemeen"
-
-#: personal/scalix/generic.tpl:8
-msgid "Scalix mailnode"
-msgstr ""
-
-#: personal/scalix/generic.tpl:17
-#, fuzzy
-msgid "Salix mailbox class"
-msgstr "E-mail grootte"
-
-#: personal/scalix/generic.tpl:21
-msgid ""
-"Limited users can not make use of the group calendar functionality in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:30
-#, fuzzy
-msgid "Scalix server language"
-msgstr "Het opslaan van de server is mislukt"
-
-#: personal/scalix/generic.tpl:34
-msgid "Message catalog language for client."
-msgstr ""
-
-#: personal/scalix/generic.tpl:51
-#, fuzzy
-msgid "Select for admin capability."
-msgstr "Selecteer sjabloon"
-
-#: personal/scalix/generic.tpl:51
-#, fuzzy
-msgid "Scalix Administrator"
-msgstr "Beheerder"
-
-#: personal/scalix/generic.tpl:56
-msgid "Select for mailbox admin capability."
-msgstr ""
-
-#: personal/scalix/generic.tpl:56
-#, fuzzy
-msgid "Scalix Mailbox Administrator"
-msgstr "Beheerder"
-
-#: personal/scalix/generic.tpl:61
-#, fuzzy
-msgid "Hide user entry from addressbook."
-msgstr "Geef a.u.b. een geldige naam op"
-
-#: personal/scalix/generic.tpl:61
-msgid "Hide this user entry in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:70
-#, fuzzy
-msgid "Limit mailbox size"
-msgstr "E-mail grootte"
-
-#: personal/scalix/generic.tpl:73
-msgid "MB"
-msgstr "MB"
-
-#: personal/scalix/generic.tpl:81
-msgid "As sanction on mailbox quota overuse, stop user from sending mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:81
-#, fuzzy
-msgid "Limit Outbound Mail"
-msgstr "Profiel quota"
-
-#: personal/scalix/generic.tpl:86
-msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:86
-msgid "Limit Inbound Mail"
-msgstr ""
-
-#: personal/scalix/generic.tpl:91
-msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:91
-msgid "Notify User"
-msgstr ""
-
-#: personal/scalix/generic.tpl:108 personal/scalix/paste_generic.tpl:6
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:108
 #, fuzzy
 msgid "List of scalix email addresses"
 msgstr "Lijst met alternatieve E-mail adressen"
+
+#: personal/scalix/main.inc:126
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Gebruik de 'Bewerk' knop hieronder om de informatie in deze dialoog te "
+"veranderen"
+
+#: personal/scalix/main.inc:139
+#, fuzzy
+msgid "Scalix settings"
+msgstr "E-mail instellingen"
 
 #: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
@@ -279,20 +139,160 @@ msgstr "E-mail adres"
 msgid "Limit Mailbox"
 msgstr "E-mail grootte"
 
+#: personal/scalix/class_scalixAccount.inc:456
+#: admin/groups/scalix/class_scalixGroup.inc:15
+#, fuzzy
+msgid "Scalix account"
+msgstr "Mijn account"
+
 #: personal/scalix/class_scalixAccount.inc:460
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/scalix/main.inc:126
-msgid "Click the 'Edit' button below to change informations in this dialog"
+#: personal/scalix/class_scalixAccount.inc:466
+#: admin/groups/scalix/class_scalixGroup.inc:25
+msgid "Scalix Mail node"
 msgstr ""
-"Gebruik de 'Bewerk' knop hieronder om de informatie in deze dialoog te "
-"veranderen"
 
-#: personal/scalix/main.inc:139
+#: personal/scalix/class_scalixAccount.inc:467
+#: admin/groups/scalix/class_scalixGroup.inc:26
 #, fuzzy
-msgid "Scalix settings"
-msgstr "E-mail instellingen"
+msgid "Mailbox class"
+msgstr "E-mail adres"
+
+#: personal/scalix/class_scalixAccount.inc:468
+#: admin/groups/scalix/class_scalixGroup.inc:27
+#, fuzzy
+msgid "Server language"
+msgstr "Servernaam"
+
+#: personal/scalix/class_scalixAccount.inc:469
+#: admin/groups/scalix/class_scalixGroup.inc:28
+msgid "Administrator"
+msgstr "Beheerder"
+
+#: personal/scalix/class_scalixAccount.inc:470
+#: admin/groups/scalix/class_scalixGroup.inc:29
+#, fuzzy
+msgid "Mailbox administrator"
+msgstr "Map beheerders"
+
+#: personal/scalix/class_scalixAccount.inc:471
+#: admin/groups/scalix/class_scalixGroup.inc:30
+msgid "Hide user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:472
+#: admin/groups/scalix/class_scalixGroup.inc:31
+#, fuzzy
+msgid "Mailbox size limitations"
+msgstr "Mail distributielijst"
+
+#: personal/scalix/class_scalixAccount.inc:473
+#: admin/groups/scalix/class_scalixGroup.inc:32
+#, fuzzy
+msgid "Limit outbound"
+msgstr "Profiel quota"
+
+#: personal/scalix/class_scalixAccount.inc:474
+#: admin/groups/scalix/class_scalixGroup.inc:33
+msgid "Limit inbound"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:475
+#: admin/groups/scalix/class_scalixGroup.inc:34
+#, fuzzy
+msgid "Notify user"
+msgstr "Tel het aantal gebruikers"
+
+#: personal/scalix/generic.tpl:4
+msgid "Generic"
+msgstr "Algemeen"
+
+#: personal/scalix/generic.tpl:8
+msgid "Scalix mailnode"
+msgstr ""
+
+#: personal/scalix/generic.tpl:17
+#, fuzzy
+msgid "Scalix mailbox class"
+msgstr "E-mail grootte"
+
+#: personal/scalix/generic.tpl:21
+msgid ""
+"Limited users can not make use of the group calendar functionality in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:30
+#, fuzzy
+msgid "Scalix server language"
+msgstr "Het opslaan van de server is mislukt"
+
+#: personal/scalix/generic.tpl:34
+msgid "Message catalog language for client."
+msgstr ""
+
+#: personal/scalix/generic.tpl:51
+#, fuzzy
+msgid "Select for admin capability."
+msgstr "Selecteer sjabloon"
+
+#: personal/scalix/generic.tpl:51
+#, fuzzy
+msgid "Scalix Administrator"
+msgstr "Beheerder"
+
+#: personal/scalix/generic.tpl:56
+msgid "Select for mailbox admin capability."
+msgstr ""
+
+#: personal/scalix/generic.tpl:56
+#, fuzzy
+msgid "Scalix Mailbox Administrator"
+msgstr "Beheerder"
+
+#: personal/scalix/generic.tpl:61
+#, fuzzy
+msgid "Hide user entry from addressbook."
+msgstr "Geef a.u.b. een geldige naam op"
+
+#: personal/scalix/generic.tpl:61
+msgid "Hide this user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:70
+#, fuzzy
+msgid "Limit mailbox size"
+msgstr "E-mail grootte"
+
+#: personal/scalix/generic.tpl:73
+msgid "MB"
+msgstr "MB"
+
+#: personal/scalix/generic.tpl:81
+msgid "As sanction on mailbox quota overuse, stop user from sending mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:81
+#, fuzzy
+msgid "Limit Outbound Mail"
+msgstr "Profiel quota"
+
+#: personal/scalix/generic.tpl:86
+msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:86
+msgid "Limit Inbound Mail"
+msgstr ""
+
+#: personal/scalix/generic.tpl:91
+msgid "As sanction on mailbox quota overuse, notify the user by eMail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:91
+msgid "Notify User"
+msgstr ""
 
 #~ msgid "Add"
 #~ msgstr "Toevoegen"

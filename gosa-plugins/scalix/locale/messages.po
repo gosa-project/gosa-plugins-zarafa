@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-29 19:38+0200\n"
+"POT-Creation-Date: 2011-05-10 08:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,150 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/groups/scalix/class_scalixGroup.inc:15
-#: personal/scalix/class_scalixAccount.inc:456
-msgid "Scalix account"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:25
-#: personal/scalix/class_scalixAccount.inc:466
-msgid "Scalix Mail node"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:26
-#: personal/scalix/class_scalixAccount.inc:467
-msgid "Mailbox class"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:27
-#: personal/scalix/class_scalixAccount.inc:468
-msgid "Server language"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:28
-#: personal/scalix/class_scalixAccount.inc:469
-msgid "Administrator"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:29
-#: personal/scalix/class_scalixAccount.inc:470
-msgid "Mailbox administrator"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:30
-#: personal/scalix/class_scalixAccount.inc:471
-msgid "Hide user entry in Scalix"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:31
-#: personal/scalix/class_scalixAccount.inc:472
-msgid "Mailbox size limitations"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:32
-#: personal/scalix/class_scalixAccount.inc:473
-msgid "Limit outbound"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:33
-#: personal/scalix/class_scalixAccount.inc:474
-msgid "Limit inbound"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:34
-#: personal/scalix/class_scalixAccount.inc:475
-msgid "Notify user"
-msgstr ""
-
-#: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
 #: personal/scalix/paste_generic.tpl:4
+#: personal/scalix/class_scalixAccount.inc:476 personal/scalix/generic.tpl:105
+#: admin/groups/scalix/class_scalixGroup.inc:35
 msgid "Scalix email addresses"
 msgstr ""
 
-#: personal/scalix/generic.tpl:4
-msgid "Generic"
-msgstr ""
-
-#: personal/scalix/generic.tpl:8
-msgid "Scalix mailnode"
-msgstr ""
-
-#: personal/scalix/generic.tpl:17
-msgid "Salix mailbox class"
-msgstr ""
-
-#: personal/scalix/generic.tpl:21
-msgid ""
-"Limited users can not make use of the group calendar functionality in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:30
-msgid "Scalix server language"
-msgstr ""
-
-#: personal/scalix/generic.tpl:34
-msgid "Message catalog language for client."
-msgstr ""
-
-#: personal/scalix/generic.tpl:51
-msgid "Select for admin capability."
-msgstr ""
-
-#: personal/scalix/generic.tpl:51
-msgid "Scalix Administrator"
-msgstr ""
-
-#: personal/scalix/generic.tpl:56
-msgid "Select for mailbox admin capability."
-msgstr ""
-
-#: personal/scalix/generic.tpl:56
-msgid "Scalix Mailbox Administrator"
-msgstr ""
-
-#: personal/scalix/generic.tpl:61
-msgid "Hide user entry from addressbook."
-msgstr ""
-
-#: personal/scalix/generic.tpl:61
-msgid "Hide this user entry in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:70
-msgid "Limit mailbox size"
-msgstr ""
-
-#: personal/scalix/generic.tpl:73
-msgid "MB"
-msgstr ""
-
-#: personal/scalix/generic.tpl:81
-msgid "As sanction on mailbox quota overuse, stop user from sending mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:81
-msgid "Limit Outbound Mail"
-msgstr ""
-
-#: personal/scalix/generic.tpl:86
-msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:86
-msgid "Limit Inbound Mail"
-msgstr ""
-
-#: personal/scalix/generic.tpl:91
-msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:91
-msgid "Notify User"
-msgstr ""
-
-#: personal/scalix/generic.tpl:108 personal/scalix/paste_generic.tpl:6
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:108
 msgid "List of scalix email addresses"
+msgstr ""
+
+#: personal/scalix/main.inc:126
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+
+#: personal/scalix/main.inc:139
+msgid "Scalix settings"
 msgstr ""
 
 #: personal/scalix/class_scalixAccount.inc:16
@@ -241,14 +113,142 @@ msgstr ""
 msgid "Limit Mailbox"
 msgstr ""
 
+#: personal/scalix/class_scalixAccount.inc:456
+#: admin/groups/scalix/class_scalixGroup.inc:15
+msgid "Scalix account"
+msgstr ""
+
 #: personal/scalix/class_scalixAccount.inc:460
 msgid "My account"
 msgstr ""
 
-#: personal/scalix/main.inc:126
-msgid "Click the 'Edit' button below to change informations in this dialog"
+#: personal/scalix/class_scalixAccount.inc:466
+#: admin/groups/scalix/class_scalixGroup.inc:25
+msgid "Scalix Mail node"
 msgstr ""
 
-#: personal/scalix/main.inc:139
-msgid "Scalix settings"
+#: personal/scalix/class_scalixAccount.inc:467
+#: admin/groups/scalix/class_scalixGroup.inc:26
+msgid "Mailbox class"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:468
+#: admin/groups/scalix/class_scalixGroup.inc:27
+msgid "Server language"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:469
+#: admin/groups/scalix/class_scalixGroup.inc:28
+msgid "Administrator"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:470
+#: admin/groups/scalix/class_scalixGroup.inc:29
+msgid "Mailbox administrator"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:471
+#: admin/groups/scalix/class_scalixGroup.inc:30
+msgid "Hide user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:472
+#: admin/groups/scalix/class_scalixGroup.inc:31
+msgid "Mailbox size limitations"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:473
+#: admin/groups/scalix/class_scalixGroup.inc:32
+msgid "Limit outbound"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:474
+#: admin/groups/scalix/class_scalixGroup.inc:33
+msgid "Limit inbound"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:475
+#: admin/groups/scalix/class_scalixGroup.inc:34
+msgid "Notify user"
+msgstr ""
+
+#: personal/scalix/generic.tpl:4
+msgid "Generic"
+msgstr ""
+
+#: personal/scalix/generic.tpl:8
+msgid "Scalix mailnode"
+msgstr ""
+
+#: personal/scalix/generic.tpl:17
+msgid "Scalix mailbox class"
+msgstr ""
+
+#: personal/scalix/generic.tpl:21
+msgid ""
+"Limited users can not make use of the group calendar functionality in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:30
+msgid "Scalix server language"
+msgstr ""
+
+#: personal/scalix/generic.tpl:34
+msgid "Message catalog language for client."
+msgstr ""
+
+#: personal/scalix/generic.tpl:51
+msgid "Select for admin capability."
+msgstr ""
+
+#: personal/scalix/generic.tpl:51
+msgid "Scalix Administrator"
+msgstr ""
+
+#: personal/scalix/generic.tpl:56
+msgid "Select for mailbox admin capability."
+msgstr ""
+
+#: personal/scalix/generic.tpl:56
+msgid "Scalix Mailbox Administrator"
+msgstr ""
+
+#: personal/scalix/generic.tpl:61
+msgid "Hide user entry from addressbook."
+msgstr ""
+
+#: personal/scalix/generic.tpl:61
+msgid "Hide this user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:70
+msgid "Limit mailbox size"
+msgstr ""
+
+#: personal/scalix/generic.tpl:73
+msgid "MB"
+msgstr ""
+
+#: personal/scalix/generic.tpl:81
+msgid "As sanction on mailbox quota overuse, stop user from sending mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:81
+msgid "Limit Outbound Mail"
+msgstr ""
+
+#: personal/scalix/generic.tpl:86
+msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:86
+msgid "Limit Inbound Mail"
+msgstr ""
+
+#: personal/scalix/generic.tpl:91
+msgid "As sanction on mailbox quota overuse, notify the user by eMail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:91
+msgid "Notify User"
 msgstr ""
