@@ -331,11 +331,20 @@ class InstallRecipe extends plugin
             return($smarty->fetch(get_template_path('goto/Device/SetPassword.tpl', TRUE)));
         }
 
-    
+        /***************
+          Partition dialog
+         ***************/
+
+        if(isset($_POST['partition_finish']) && $this->partitionEdit){
+            $this->installPartitionTable = $this->partitionEdit->save();
+            $this->partitionEdit = NULL;
+        }
+        if(isset($_POST['partition_cancel']) && $this->partitionEdit){
+            $this->partitionEdit = NULL;
+        }
         if(isset($_POST['edit_installPartitionTable'])){
             $this->partitionEdit = new DevicePartition($this->config, $this->installPartitionTable);
         }
-    
         if($this->partitionEdit){
             $this->partitionEdit->save_object();
             $this->dialog = TRUE;

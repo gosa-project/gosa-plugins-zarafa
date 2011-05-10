@@ -223,12 +223,22 @@ class DevicePartition
     function execute()
     {
         $this->init();
-        return($this->entryList->render());
+
+
+        $smarty = get_smarty();
+        $smarty->assign('list', $this->entryList->render());
+
+        return($smarty->fetch(get_template_path('goto/Device/DevicePartition.tpl', TRUE)));
     }
 
     function save_object()
     {
 
+    }
+
+    function save()
+    {
+        return("");
     }
 
     function __convertPartSize($size)
