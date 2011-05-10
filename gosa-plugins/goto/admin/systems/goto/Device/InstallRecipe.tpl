@@ -142,7 +142,7 @@
     <tr>
         <td><LABEL for="installPartitionTable">{t}Partition table{/t}</LABEL></td>
         <td>
-            <input type='text' name="installPartitionTable" id="installPartitionTable" value="{$installPartitionTable}">
+            <input type='submit' name="edit_installPartitionTable" id="edit_installPartitionTable" value="{t}Edit partition table{/t}">
         </td>
     </tr>
 </table>

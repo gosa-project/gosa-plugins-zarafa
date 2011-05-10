@@ -46,6 +46,7 @@ class InstallRecipe extends plugin
 
     // Partition table variables
     public $installPartitionTable = "";
+    private $partitionEdit = NULL;
 
     // Keyboard-layout attribute
     public $installKeyboardlayout = "";
@@ -172,7 +173,7 @@ class InstallRecipe extends plugin
             msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
             return(NULL);
         }
-    
+   
         // Apply received options
         $this->is_account = $res == True;
         if($this->is_account){
@@ -208,7 +209,7 @@ class InstallRecipe extends plugin
             // Convert Bool values to Bool.
             $boolean = array("installRootEnabled", "installTimeUTC");
             foreach($boolean as $attr){
-                $this->$attr = ($this->$attr != FALSE);
+                $this->$attr = ($this->$attr != FALSE && !preg_match("/false/i", $this->$attr));
             }
         }
 
@@ -321,6 +322,7 @@ class InstallRecipe extends plugin
           Root password hash dialog
          ***************/
 
+        $this->dialog = FALSE;
         if($this->setPasswordHash){
             $this->dialog = TRUE;
             $smarty = get_smarty();
@@ -328,6 +330,19 @@ class InstallRecipe extends plugin
             $smarty->assign('hash', set_post($this->hash));
             return($smarty->fetch(get_template_path('goto/Device/SetPassword.tpl', TRUE)));
         }
+
+    
+        if(isset($_POST['edit_installPartitionTable'])){
+            $this->partitionEdit = new DevicePartition($this->config, $this->installPartitionTable);
+        }
+    
+        if($this->partitionEdit){
+            $this->partitionEdit->save_object();
+            $this->dialog = TRUE;
+            return($this->partitionEdit->execute());
+        }
+
+
 
         /***************
           Generate HTML content
@@ -454,10 +469,12 @@ class InstallRecipe extends plugin
         $data['ntp-servers'] = array_values($data['ntp-servers']);
 
         // Save Boolean like a String 
-        $boolean = array("root-user", "utc");
-        foreach($boolean as $attr){
-            $data[$attr] = ($data[$attr]) ? $data[$attr] = TRUE : $data[$attr] = FALSE;
+        $boolean = array("root-user" => "installRootEnabled", "utc" => "installTimeUTC");
+        foreach($boolean as $attr => $source){
+            $data[$attr] = ($this->$source) ? $data[$attr] = "TRUE" : $data[$attr] = "FALSE";
         }
+
+        print_a($data);
 
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $data);
