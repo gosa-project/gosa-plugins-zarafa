@@ -13,6 +13,7 @@ class DevicePartition
     {
         $this->config = &$config;
         $this->partitionString = $partitionString;
+        $this->init();
     }
 
     function init()
@@ -21,6 +22,8 @@ class DevicePartition
         $this->object = $rpc->openObject('libinst.preseed.diskdefinition', '');
 
         $this->object->addDisk('sda');
+        $this->object->addDisk('sdb');
+        $this->object->addDisk('sdc');
         $this->object->addPartition('/kekse', 2333, NULL, FALSE, TRUE, FALSE, FALSE, 'ext3','ro,user,nosuid' , FALSE, NULL, 'sda');
         $this->object->addPartition('/wurst', 2000, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
         $this->object->addPartition('raid.00', 2000, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
@@ -41,6 +44,28 @@ class DevicePartition
         $this->entryList->setAcl('rwcdm');
         $this->entryList->setReorderable(FALSE);
         $this->entryList->sortingEnabled(FALSE);
+    }
+
+    function execute()
+    {
+        if(isset($_POST['create_partition'])){
+            $this->addDialog = new AddPartitionDialog($this->config, $this->object); 
+        }
+        if(isset($_POST['cancel_partition_add'])){
+            $this->addDialog = NULL;
+        }
+        if(isset($_POST['save_partition_add'])){
+            $this->addDialog->save_object();
+            if($this->addDialog->save()){
+                $this->addDialog = NULL;
+            }
+        }
+        if($this->addDialog){
+            $this->addDialog->save_object();
+            return($this->addDialog->execute());
+        }
+
+
 
         // Receive list informations
         $disks = $this->object->getDisks();
@@ -215,36 +240,11 @@ class DevicePartition
                 $lData[$id]['data'][] = '';
             }
         }
-
         $this->entryList->setListData($lData, $lData);
         $this->entryList->update();
 
-
-    }
-
-    function execute()
-    {
-        if(isset($_POST['create_partition'])){
-            $this->addDialog = new AddPartitionDialog($this->config, $this->object); 
-        }
-        if(isset($_POST['cancel_partition_add'])){
-            $this->addDialog = NULL;
-        }
-        if(isset($_POST['save_partition_add'])){
-            $this->addDialog = NULL;
-        }
-        if($this->addDialog){
-            $this->addDialog->save_object();
-            return($this->addDialog->execute());
-        }
-
-
-        $this->init();
-
-
         $smarty = get_smarty();
         $smarty->assign('list', $this->entryList->render());
-
         return($smarty->fetch(get_template_path('goto/Device/DevicePartition.tpl', TRUE)));
     }
 
