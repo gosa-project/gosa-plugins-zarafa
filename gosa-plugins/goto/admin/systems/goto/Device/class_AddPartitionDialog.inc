@@ -15,18 +15,19 @@ class AddPartitionDialog
     public $selected_type = PARTITION;
 
     // Partition properties
-    public $size = 1000;
-    public $fsType = 'ext3';
-    public $mountPoint = '';
-    public $used_disk = array();
-    public $forcePrimary = FALSE;
-    public $encrypt = FALSE;
-    public $size_max_value = 1000;
-    public $size_options = 0;
+    public $p_size = 1000;
+    public $p_fsType = 'ext3';
+    public $p_mountPoint = '';
+    public $p_used_disk = array();
+    public $p_forcePrimary = FALSE;
+    public $p_encrypt = FALSE;
+    public $p_size_max_value = 1000;
+    public $p_size_options = 0;
     
     // Attributes managed by this plugin.
-    public $attributes = array("selected_type", "size", "fsType", "mountPoint", "forcePrimary", "encrypt", 
-            "size_options", "size_max_value", "used_disk");
+    public $attributes = array("selected_type");
+    public $p_attributes = array("p_size", "p_fsType", "p_mountPoint", "p_forcePrimary", "p_encrypt", 
+            "p_size_options", "p_size_max_value", "p_used_disk");
 
     /*! \brief  Constructs the Dialog and loads all required informations
      *          to be able to add partitions, raid devices, volumes groups ...
@@ -57,7 +58,7 @@ class AddPartitionDialog
         }
     
         // Select first disk as default.    
-        $this->used_disk = key($this->disks);
+        $this->p_used_disk = key($this->disks);
     }
     
 
@@ -67,14 +68,30 @@ class AddPartitionDialog
     function execute()
     {
         $smarty = get_smarty();
+        
+        // Assign base attributes 
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
-        foreach(array("forcePrimary", "encrypt") as $attr){
+
+        // Assign partition attributes.
+        $attrs = $bool_attrs = array();
+        switch($this->selected_type){
+            case PARTITION: {
+                    $attrs = $this->p_attributes;
+                    $bool_attrs = array("p_forcePrimary", "p_encrypt");
+                    break;
+                }
+        }
+
+        // Assign properties to smarty.
+        foreach($attrs as $attr){
+            $smarty->assign($attr, $this->$attr);
+        }
+        foreach($bool_attrs as $attr){
             $smarty->assign("{$attr}_selected", $this->$attr != FALSE);
         }
         $smarty->assign('fsTypes', $this->fsTypes);
-        $smarty->assign('size', $this->size);
         $smarty->assign('disks', $this->disks);
         return($smarty->fetch(get_template_path("goto/Device/AddPartitionDialog.tpl", TRUE)));
     }
@@ -84,15 +101,26 @@ class AddPartitionDialog
      */
     function save_object()
     {
+        // Assign partition attributes.
+        $attrs = $bool_attrs = array();
+        switch($this->selected_type){
+            case PARTITION: {
+                    $attrs = $this->p_attributes;
+                    $bool_attrs = array("p_forcePrimary", "p_encrypt");
+                    break;
+                }
+        }
+
         // Get posted string values 
-        foreach($this->attributes as $attr){
+        $attrs = array_merge($attrs, $this->attributes);
+        foreach($attrs as $attr){
             if(isset($_POST[$attr])){
                 $this->$attr = get_post($attr);
             }
         }
     
         // Get boolean values
-        foreach(array("forcePrimary", "encrypt") as $attr){
+        foreach($bool_attrs as $attr){
             $this->$attr = isset($_POST[$attr]);
         }
     }
@@ -115,23 +143,23 @@ class AddPartitionDialog
         }
 
         // Collect options
-        $size = $this->size;
+        $size = $this->p_size;
         $maxSize = NULL;
-        if($this->size_options == 2){
-            $maxSize = $this->size_max_value;
+        if($this->p_size_options == 2){
+            $maxSize = $this->p_size_max_value;
         }
-        $grow = $this->size_options == 1;
+        $grow = $this->p_size_options == 1;
         $format = FALSE;
         $boot = FALSE;
-        $primary = $this->forcePrimary;
-        $fsType = $this->fsType;
+        $primary = $this->p_forcePrimary;
+        $fsType = $this->p_fsType;
         $fsOptions = "";
-        $encrypt = $this->encrypt;
+        $encrypt = $this->p_encrypt;
         $passphrase = "";
-        $disk = $this->used_disk;
+        $disk = $this->p_used_disk;
 
         // We've to create a raid disk
-        if($this->fsType == "raid"){
+        if($this->p_fsType == "raid"){
             $target="raid.";
             $id = 0;
             while($id < 100 && in_array($target.str_pad($id, 2, '0', STR_PAD_LEFT)  , $usedTargets)){
@@ -142,7 +170,7 @@ class AddPartitionDialog
         }else
 
         // We've to create a raid disk
-        if($this->fsType == "pv"){
+        if($this->p_fsType == "pv"){
             $target="pv.";
             $id = 0;
             while($id < 100 && in_array($target.str_pad($id, 2, '0', STR_PAD_LEFT)  , $usedTargets)){
