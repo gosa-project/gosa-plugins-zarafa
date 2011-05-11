@@ -5,6 +5,7 @@ class AddPartitionDialog
     public $partitionObject;
     public $disks = array();
 
+    // Partition properties
     public $size = 1000;
     public $fsType = 'ext3';
     public $mountPoint = '';
@@ -14,10 +15,16 @@ class AddPartitionDialog
     public $size_max_value = 1000;
     public $size_options = 0;
     
-
+    // Attributes managed by this plugin.
     public $attributes = array("size", "fsType", "mountPoint", "forcePrimary", "encrypt", 
             "size_options", "size_max_value");
 
+
+    /*! \brief  Constructs the Dialog and loads all required informations
+     *          to be able to add partitions, raid devices, volumes groups ...
+     *  @param  Config          The GOsa configuration object.
+     *  @param  remoteObject    The remote partition object.
+     */
     function __construct($config, $partitionObject)
     {
         $this->partitionObject = &$partitionObject;
@@ -43,9 +50,12 @@ class AddPartitionDialog
         if(!count($this->usedDisks)){
             $this->usedDisks[] = key($this->disks);
         }
-
     }
     
+
+    /*! \brief     Generates the HTML output for this plugin. 
+     *  @return    String   HTML content of the plugin. 
+     */
     function execute()
     {
         $smarty = get_smarty();
@@ -57,17 +67,18 @@ class AddPartitionDialog
             $used[$disk] = in_array($disk, $this->usedDisks);
         }
         $smarty->assign("disk_selected", $used);
-
         foreach(array("forcePrimary", "encrypt") as $attr){
             $smarty->assign("{$attr}_selected", $this->$attr != FALSE);
         }
         $smarty->assign('fsTypes', $this->fsTypes);
         $smarty->assign('size', $this->size);
         $smarty->assign('disks', $this->disks);
-
         return($smarty->fetch(get_template_path("goto/Device/AddPartitionDialog.tpl", TRUE)));
     }
 
+
+    /*! \brief     Saves posted values. 
+     */
     function save_object()
     {
         // Get posted string values 
@@ -91,6 +102,10 @@ class AddPartitionDialog
         }
     }
 
+
+    /*! \brief     Stores the changes back to the remote table model. 
+     *  @return    TRUE on success else false.
+     */
     function save()
     {
         // Get all currently used partitions
@@ -104,6 +119,22 @@ class AddPartitionDialog
             $usedTargets[] = $part['target'];
         }
 
+        // Collect options
+        $size = $this->size;
+        $maxSize = NULL;
+        if($this->size_options == 2){
+            $maxSize = $this->size_max_value;
+        }
+        $grow = $this->size_options == 1;
+        $format = FALSE;
+        $boot = FALSE;
+        $primary = $this->forcePrimary;
+        $fsType = $this->fsType;
+        $fsOptions = "";
+        $encrypt = $this->encrypt;
+        $passphrase = "";
+        $disk = array_shift($this->usedDisks);
+
         // We've to create a raid disk
         if($this->fsType == "raid"){
             $target="raid.";
@@ -112,12 +143,7 @@ class AddPartitionDialog
                 $id ++;
             }
             $target = $target.str_pad($id, 2, '0', STR_PAD_LEFT);
-            
-            // Get first selected disk
-            $disk = array_shift($this->usedDisks);
-            $this->partitionObject->addPartition($target,$this->size +0, NULL, FALSE, TRUE, FALSE, FALSE, 
-                    NULL, NULL , FALSE, NULL, $disk);  
-            return($this->partitionObject->success());
+            $fsType = $fsOptions = NULL;
         }else
 
         // We've to create a raid disk
@@ -128,21 +154,20 @@ class AddPartitionDialog
                 $id ++;
             }
             $target = $target.str_pad($id, 2, '0', STR_PAD_LEFT);
-            
-            // Get first selected disk
-            $disk = array_shift($this->usedDisks);
-            $this->partitionObject->addPartition($target,$this->size +0, NULL, FALSE, TRUE, FALSE, FALSE, 
-                    NULL, NULL , FALSE, NULL, $disk);  
-            return($this->partitionObject->success());
+            $fsType = $fsOptions = NULL;
         }else{
         
             // Add normal-physical partition
             $target = $this->mountPoint;
-            $disk = array_shift($this->usedDisks);
-            $this->partitionObject->addPartition($target,$this->size +0, NULL, FALSE, TRUE, FALSE, FALSE, 
-                    NULL, NULL , FALSE, NULL, $disk);  
-            return($this->partitionObject->success());
+            if($fsType == "swap"){
+                $target = "swap";
+            }
         }
+
+        // Add partition to remote model
+        $this->partitionObject->addPartition($target,$size, $maxSize, $grow, $format, $boot, $primary,
+                $fsType, $fsOptions , $encrypt, $passphrase, $disk);
+        return($this->partitionObject->success());
     }
 }
 ?>

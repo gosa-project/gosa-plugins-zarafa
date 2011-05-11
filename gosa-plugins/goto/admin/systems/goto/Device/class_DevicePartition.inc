@@ -48,6 +48,9 @@ class DevicePartition
 
     function execute()
     {
+        /*****
+         * Handle add-partition dialog
+         *****/
         if(isset($_POST['create_partition'])){
             $this->addDialog = new AddPartitionDialog($this->config, $this->object); 
         }
@@ -66,6 +69,9 @@ class DevicePartition
         }
 
 
+        /*****
+         * Fill listing
+         *****/
 
         // Receive list informations
         $disks = $this->object->getDisks();
@@ -255,7 +261,7 @@ class DevicePartition
 
     function save()
     {
-        return("");
+        return($this->object->dump());
     }
 
     function __convertPartSize($size)
