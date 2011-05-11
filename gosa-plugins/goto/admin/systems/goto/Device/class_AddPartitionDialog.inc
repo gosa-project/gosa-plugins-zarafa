@@ -15,6 +15,16 @@ class AddPartitionDialog
     public $paritions = array();
     public $selected_type = PARTITION;
 
+    // LVM Volume group properties
+    public $vg_name = "";
+    public $vg_extend = 32;
+    public $vg_partitions = array();
+    public $physicalExtendList = array();
+    public $volumeGroups = array();
+    public $lvmPartitions = array();
+    public $usedLvmPartitions = array();
+    public $freeLvmPartitions = array();
+
     // Raid device properties
     public $r_fsType = 'ext3';
     public $r_fsOptions = '';
@@ -50,6 +60,9 @@ class AddPartitionDialog
     public $r_attributes = array("r_fsType", "r_mountPoint", "r_raidLevel", "r_partitions", 
             "r_spares","r_encrypt", "r_fsOptions");
 
+    // Volume group attributes
+    public $vg_attributes = array("vg_name", "vg_partitions", "vg_extend");
+
     /*! \brief  Constructs the Dialog and loads all required informations
      *          to be able to add partitions, raid devices, volumes groups ...
      *  @param  Config          The GOsa configuration object.
@@ -77,6 +90,13 @@ class AddPartitionDialog
             $this->raidLevelList[$lvl] = sprintf(_("Raid %s"), $lvl);
         }
 
+        // Create physical extend list for LVM Volume Groups
+        $this->physicalExtendList=array();
+        for($i=0; $i<8; $i++){
+            $number = pow(2, $i);
+            $this->physicalExtendList[$number] = $number;
+        }
+
         // Load selectable disks
         $disks = $this->partitionObject->getDisks();
         $this->disks = array();
@@ -87,18 +107,26 @@ class AddPartitionDialog
         // Get Free and used Raid Partitions
         $this->partitions = $this->partitionObject->getPartitions();
         $this->raidDevices = $this->partitionObject->getRaidDevices();
+        $this->volumeGroups = $this->partitionObject->getVolumeGroups();
         $this->usedRaidPartitions = array();
         $this->freeRaidPartitions = array();
         $this->raidPartitions = array();
         foreach($this->raidDevices as $dev){
             $this->usedRaidPartitions = array_merge($dev['devices'], $this->usedRaidPartitions);
         }
+        foreach($this->volumeGroups as $vg){
+            $this->usedLvmPartitions = array_merge($vg['partitions'], $this->usedLvmPartitions);
+        }
         foreach($this->partitions as $part){
             if(preg_match("/^raid\./", $part['target'])){
                 $this->raidPartitions[] = $part['target'];
             }
+            if(preg_match("/^pv\./", $part['target'])){
+                $this->lvmPartitions[] = $part['target'];
+            }
         }  
         $this->freeRaidPartitions = array_remove_entries_ics($this->usedRaidPartitions, $this->raidPartitions);
+        $this->freeLvmPartitions = array_remove_entries_ics($this->usedLvmPartitions, $this->lvmPartitions);
  
         // Select first disk as default.    
         $this->p_used_disk = key($this->disks);
@@ -134,6 +162,10 @@ class AddPartitionDialog
                     $bool_attrs = array("r_encrypt");
                     break;
                 }
+            case VOLUME_GROUP: {
+                    $attrs = $this->vg_attributes;
+                    break;
+                }
         }
 
         // Assign properties to smarty.
@@ -147,6 +179,8 @@ class AddPartitionDialog
         $smarty->assign('raidLevelList', $this->raidLevelList);
         $smarty->assign('freeRaidPartitions', $this->freeRaidPartitions);
         $smarty->assign('disks', $this->disks);
+        $smarty->assign('physicalExtendList', $this->physicalExtendList);
+        $smarty->assign('freeLvmPartitions', $this->freeLvmPartitions);
         return($smarty->fetch(get_template_path("goto/Device/AddPartitionDialog.tpl", TRUE)));
     }
 
@@ -171,6 +205,16 @@ class AddPartitionDialog
                     foreach($this->freeRaidPartitions as $key => $part){
                         if(isset($_POST['r_partition_'.$key])){
                             $this->r_partitions[] = $part;
+                        }
+                    }
+                    break;
+                }
+            case VOLUME_GROUP: {
+                    $attrs = $this->vg_attributes;
+                    $this->vg_partitions = array();
+                    foreach($this->freeLvmPartitions as $key => $part){
+                        if(isset($_POST['vg_partition_'.$key])){
+                            $this->vg_partitions[] = $part;
                         }
                     }
                     break;

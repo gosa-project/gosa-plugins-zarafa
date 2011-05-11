@@ -3,18 +3,51 @@
 
 <input {if $selected_type==1} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="1" name="selected_type">{t}Physical partition{/t}<br>
-<input  {if !count($freeRaidPartitions)} disabled {/if}
+<input  {if count($freeRaidPartitions) != 2} disabled {/if}
         {if $selected_type==2} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="2" name="selected_type">{t}Raid device{/t}<br>
-<input {if $selected_type==3} checked {/if} onClick="document.mainform.submit();"
+<input  {if !count($freeLvmPartitions)} disabled {/if}
+        {if $selected_type==3} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="3" name="selected_type">{t}LVM Valume group{/t}<br>
 <input {if $selected_type==4} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="4" name="selected_type">{t}LVM Valume{/t}<br>
 
 <hr>
 
+{if $selected_type==4}
+    
+    <h3>{t}LVM Volume{/t}</h3>
 
-{if $selected_type==2}
+{elseif $selected_type==3}
+    
+    <h3>{t}LVM Volume group{/t}</h3>
+    <table>
+        <tr>
+            <td>{t}Volume group name{/t}</td>
+            <td>
+                <input type="text" name="vg_name" value="{$vg_name}">
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Physical extent{/t}</td>
+            <td>
+                <select name="vg_extend">
+                    {html_options options=$physicalExtendList selected=$vg_extend}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Use LVM partitions{/t}</td>
+            <td>
+                {foreach from=$freeLvmPartitions item=item key=key}
+                    <input type="checkbox" name="vg_partition_{$key}" 
+                        {if in_array($item, $vg_partitions)} checked {/if}>&nbsp;{$item}<br>
+                {/foreach}
+            </td>
+        </tr>
+    </table>
+
+{elseif $selected_type==2}
     <h3>{t}Add raid device{/t}</h3>
 
     <table>

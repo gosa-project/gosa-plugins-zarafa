@@ -29,8 +29,10 @@ class DevicePartition
         $this->object->addPartition('raid.00', 2000, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
         $this->object->addPartition('raid.01', 2000, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
         $this->object->addPartition('pv.00', 2333, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
+        $this->object->addPartition('pv.01', 2333, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
+        $this->object->addPartition('pv.02', 2333, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
         #$this->object->addRaidDevice('pv.01', 'md0', '0','0', NULL, NULL, TRUE, FALSE, array('raid.00', 'raid.01'));
-        #$this->object->addVolumeGroup('garnele', array('pv.00', 'pv.01'));
+        $this->object->addVolumeGroup('garnele', array('pv.00', 'pv.01'));
         #$this->object->addVolume('/home', 'garnele_home', 'garnele', 2000);
 
         // Prepare lists
