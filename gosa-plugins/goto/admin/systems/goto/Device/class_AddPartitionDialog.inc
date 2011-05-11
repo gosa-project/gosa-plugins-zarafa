@@ -1,24 +1,32 @@
 <?php
 
+
+define('PARTITION' , 1);
+define('RAID_DEVICE' , 2);
+define('VOLUME_GROUP' , 3);
+define('VOLUME' , 4);
+
+
+
 class AddPartitionDialog
 {
     public $partitionObject;
     public $disks = array();
+    public $selected_type = PARTITION;
 
     // Partition properties
     public $size = 1000;
     public $fsType = 'ext3';
     public $mountPoint = '';
-    public $usedDisks = array();
+    public $used_disk = array();
     public $forcePrimary = FALSE;
     public $encrypt = FALSE;
     public $size_max_value = 1000;
     public $size_options = 0;
     
     // Attributes managed by this plugin.
-    public $attributes = array("size", "fsType", "mountPoint", "forcePrimary", "encrypt", 
-            "size_options", "size_max_value");
-
+    public $attributes = array("selected_type", "size", "fsType", "mountPoint", "forcePrimary", "encrypt", 
+            "size_options", "size_max_value", "used_disk");
 
     /*! \brief  Constructs the Dialog and loads all required informations
      *          to be able to add partitions, raid devices, volumes groups ...
@@ -47,9 +55,9 @@ class AddPartitionDialog
         foreach($disks as $disk){
             $this->disks[$disk['device']] = $disk['device'];
         }
-        if(!count($this->usedDisks)){
-            $this->usedDisks[] = key($this->disks);
-        }
+    
+        // Select first disk as default.    
+        $this->used_disk = key($this->disks);
     }
     
 
@@ -62,11 +70,6 @@ class AddPartitionDialog
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
         }
-        $used = array();
-        foreach($this->disks as $disk){
-            $used[$disk] = in_array($disk, $this->usedDisks);
-        }
-        $smarty->assign("disk_selected", $used);
         foreach(array("forcePrimary", "encrypt") as $attr){
             $smarty->assign("{$attr}_selected", $this->$attr != FALSE);
         }
@@ -91,14 +94,6 @@ class AddPartitionDialog
         // Get boolean values
         foreach(array("forcePrimary", "encrypt") as $attr){
             $this->$attr = isset($_POST[$attr]);
-        }
-
-        // Get selected disks
-        $this->usedDisks = array();
-        foreach($this->disks as $disk){
-            if(isset($_POST['disk_selected_'.$disk])){
-                $this->usedDisks[] = $disk;
-            }
         }
     }
 
@@ -133,7 +128,7 @@ class AddPartitionDialog
         $fsOptions = "";
         $encrypt = $this->encrypt;
         $passphrase = "";
-        $disk = array_shift($this->usedDisks);
+        $disk = $this->used_disk;
 
         // We've to create a raid disk
         if($this->fsType == "raid"){
