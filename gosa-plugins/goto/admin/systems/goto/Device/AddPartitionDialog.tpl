@@ -8,9 +8,9 @@
         type="radio" value="2" name="selected_type">{t}Raid device{/t}<br>
 <input  {if !count($freeLvmPartitions)} disabled {/if}
         {if $selected_type==3} checked {/if} onClick="document.mainform.submit();"
-        type="radio" value="3" name="selected_type">{t}LVM Valume group{/t}<br>
+        type="radio" value="3" name="selected_type">{t}LVM Volume group{/t}<br>
 <input {if $selected_type==4} checked {/if} onClick="document.mainform.submit();"
-        type="radio" value="4" name="selected_type">{t}LVM Valume{/t}<br>
+        type="radio" value="4" name="selected_type">{t}LVM Volume{/t}<br>
 
 <hr>
 

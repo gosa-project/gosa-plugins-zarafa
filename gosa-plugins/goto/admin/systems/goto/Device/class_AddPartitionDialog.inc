@@ -6,15 +6,12 @@ define('RAID_DEVICE' , 2);
 define('VOLUME_GROUP' , 3);
 define('VOLUME' , 4);
 
-
-
 class AddPartitionDialog
 {
     public $partitionObject;
     public $disks = array();
     public $paritions = array();
     public $selected_type = PARTITION;
-
 
     // LVM Volume group properties
     public $vg_name = "";
