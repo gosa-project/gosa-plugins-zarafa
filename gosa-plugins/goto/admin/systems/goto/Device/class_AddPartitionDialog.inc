@@ -241,7 +241,16 @@ class AddPartitionDialog
      */
     function save()
     {
-        if($this->selected_type == RAID_DEVICE){
+        if($this->selected_type == VOLUME_GROUP){
+            
+            // Get raid device properties
+            $devices = $this->vg_partitions;
+            $extend = $this->vg_extend;
+            $name = $this->vg_name;
+            $this->partitionObject->addVolumeGroup($name, $devices, $format=TRUE, $use_existing=FALSE, $extend);
+            return($this->partitionObject->success());
+
+        }elseif($this->selected_type == RAID_DEVICE){
 
             // Get raid device properties
             $devices = $this->r_partitions;
