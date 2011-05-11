@@ -7,6 +7,8 @@ class DevicePartition
     public $object =NULL;
     public $partitionString =NULL;
 
+    public $addDialog = NULL;
+
     function __construct($config, $partitionString)
     {
         $this->config = &$config;
@@ -222,6 +224,21 @@ class DevicePartition
 
     function execute()
     {
+        if(isset($_POST['create_partition'])){
+            $this->addDialog = new AddPartitionDialog($this->config, $this->object); 
+        }
+        if(isset($_POST['cancel_partition_add'])){
+            $this->addDialog = NULL;
+        }
+        if(isset($_POST['save_partition_add'])){
+            $this->addDialog = NULL;
+        }
+        if($this->addDialog){
+            $this->addDialog->save_object();
+            return($this->addDialog->execute());
+        }
+
+
         $this->init();
 
 
