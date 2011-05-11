@@ -17,6 +17,50 @@
 {if $selected_type==4}
     
     <h3>{t}LVM Volume{/t}</h3>
+    <table>
+        <tr>
+            <td>{t}Volume name{/t}</td>
+            <td>
+                <input type="text" name="v_name" value="{$v_name}">
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Volume group{/t}</td>
+            <td>
+                <select name="v_group">
+                    {html_options options=$volumeGroupList selected=$v_group}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Mount point{/t}</td>
+            <td>
+                {if $v_fsType == "swap"}
+                    <input disabled type="text" name="v_mountPoint" value=" - ">
+                {else}
+                    <input type="text" name="v_mountPoint" value="{$v_mountPoint}">
+                {/if}
+            </td>
+        </tr>
+        <tr>
+            <td>{t}File system type{/t}</td>
+            <td>
+                <select name="v_fsType" onChange="document.mainform.submit();">
+                    {html_options options=$fsTypes selected=$v_fsType}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Size{/t}</td>
+            <td>
+                <input name="v_size" value="{$v_size}">
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Encrypt{/t}</td>
+            <td><input type="checkbox" name="v_encrypt" {if $v_encrypt_selected} checked {/if}></td>
+        </tr>
+    </table>
 
 {elseif $selected_type==3}
     

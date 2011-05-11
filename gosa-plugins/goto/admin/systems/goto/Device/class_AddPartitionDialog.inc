@@ -15,6 +15,7 @@ class AddPartitionDialog
     public $paritions = array();
     public $selected_type = PARTITION;
 
+
     // LVM Volume group properties
     public $vg_name = "";
     public $vg_extend = 32;
@@ -24,6 +25,16 @@ class AddPartitionDialog
     public $lvmPartitions = array();
     public $usedLvmPartitions = array();
     public $freeLvmPartitions = array();
+
+    // Volume properties 
+    public $v_name = "";
+    public $v_group = "";
+    public $v_mountPoint = "";
+    public $v_fsType = "ext3";
+    public $v_fsOptions = "";
+    public $v_size = 1000;
+    public $v_encrypt = FALSE;
+    public $volumeGroupList = array();
 
     // Raid device properties
     public $r_fsType = 'ext3';
@@ -62,6 +73,10 @@ class AddPartitionDialog
 
     // Volume group attributes
     public $vg_attributes = array("vg_name", "vg_partitions", "vg_extend");
+
+    // Volume  attributes
+    public $v_attributes = array("v_name", "v_group", "v_mountPoint", "v_fsType", 
+            "v_size", "v_encrypt", "v_fsOptions");
 
     /*! \brief  Constructs the Dialog and loads all required informations
      *          to be able to add partitions, raid devices, volumes groups ...
@@ -115,6 +130,7 @@ class AddPartitionDialog
             $this->usedRaidPartitions = array_merge($dev['devices'], $this->usedRaidPartitions);
         }
         foreach($this->volumeGroups as $vg){
+            $this->volumeGroupList[$vg['name']] = $vg['name'];
             $this->usedLvmPartitions = array_merge($vg['partitions'], $this->usedLvmPartitions);
         }
         foreach($this->partitions as $part){
@@ -166,6 +182,13 @@ class AddPartitionDialog
                     $attrs = $this->vg_attributes;
                     break;
                 }
+            case VOLUME: {
+                    $attrs = $this->v_attributes;
+                    unset($fsTypes['raid']);
+                    unset($fsTypes['pv']);
+                    $bool_attrs = array("v_encrypt");
+                    break;
+                }
         }
 
         // Assign properties to smarty.
@@ -180,6 +203,7 @@ class AddPartitionDialog
         $smarty->assign('freeRaidPartitions', $this->freeRaidPartitions);
         $smarty->assign('disks', $this->disks);
         $smarty->assign('physicalExtendList', $this->physicalExtendList);
+        $smarty->assign('volumeGroupList', $this->volumeGroupList);
         $smarty->assign('freeLvmPartitions', $this->freeLvmPartitions);
         return($smarty->fetch(get_template_path("goto/Device/AddPartitionDialog.tpl", TRUE)));
     }
@@ -200,7 +224,6 @@ class AddPartitionDialog
             case RAID_DEVICE: {
                     $attrs = $this->r_attributes;
                     $bool_attrs = array("r_encrypt");
-    
                     $this->r_partitions = array();
                     foreach($this->freeRaidPartitions as $key => $part){
                         if(isset($_POST['r_partition_'.$key])){
@@ -217,6 +240,11 @@ class AddPartitionDialog
                             $this->vg_partitions[] = $part;
                         }
                     }
+                    break;
+                }
+            case VOLUME: {
+                    $attrs = $this->v_attributes;
+                    $bool_attrs = array("v_encrypt");
                     break;
                 }
         }
@@ -243,11 +271,36 @@ class AddPartitionDialog
     {
         if($this->selected_type == VOLUME_GROUP){
             
-            // Get raid device properties
+            // Get volume group properties
             $devices = $this->vg_partitions;
             $extend = $this->vg_extend;
             $name = $this->vg_name;
             $this->partitionObject->addVolumeGroup($name, $devices, $format=TRUE, $use_existing=FALSE, $extend);
+            return($this->partitionObject->success());
+
+        }elseif($this->selected_type == VOLUME){
+            
+            // Get volume properties
+            $name = $this->v_name;
+            $fsType = $this->v_fsType;
+            $fsOptions = $this->v_fsOptions;
+            $group = $this->v_group;
+            $target = $this->v_mountPoint;
+            $size = $this->v_size;
+            $encrypt = $this->v_encrypt;
+            
+            $maxSize = NULL;
+            $grow = FALSE;
+            $format = TRUE;
+            $use_existing = FALSE;
+
+            if($fsType == "swap"){
+                $target = "swap";
+            }
+      
+            $this->partitionObject->addVolume($target, $name, $group, $size, $maxSize,
+                $grow, $format, $use_existing, $fsType, $fsOptions);
+
             return($this->partitionObject->success());
 
         }elseif($this->selected_type == RAID_DEVICE){
