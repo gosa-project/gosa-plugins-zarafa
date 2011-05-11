@@ -3,7 +3,8 @@
 
 <input {if $selected_type==1} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="1" name="selected_type">{t}Physical partition{/t}<br>
-<input {if $selected_type==2} checked {/if} onClick="document.mainform.submit();"
+<input  {if !count($freeRaidPartitions)} disabled {/if}
+        {if $selected_type==2} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="2" name="selected_type">{t}Raid device{/t}<br>
 <input {if $selected_type==3} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="3" name="selected_type">{t}LVM Valume group{/t}<br>
@@ -13,7 +14,59 @@
 <hr>
 
 
-{if $selected_type==1}
+{if $selected_type==2}
+    <h3>{t}Add raid device{/t}</h3>
+
+    <table>
+        <tr>
+            <td>{t}Mount point{/t}</td>
+            <td>
+                {if $r_fsType == "swap" || $r_fsType == "pv"}
+                    <input disabled type="text" name="r_mountPoint" value=" - ">
+                {else}
+                    <input type="text" name="r_mountPoint" value="{$r_mountPoint}">
+                {/if}
+            </td>
+        </tr>
+        <tr>
+            <td>{t}File system type{/t}</td>
+            <td>
+                <select name="r_fsType" onChange="document.mainform.submit();">
+                    {html_options options=$fsTypes selected=$r_fsType}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Raid level{/t}</td>
+            <td>
+                <select name="r_raidLevel">
+                    {html_options options=$raidLevelList selected=$r_raidLevel}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Use raid partitions{/t}</td>
+            <td>
+                {foreach from=$freeRaidPartitions item=item key=key}
+                    <input type="checkbox" name="r_partition_{$key}" 
+                        {if in_array($item, $r_partitions)} checked {/if}>&nbsp;{$item}<br>
+                {/foreach}
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Number of spares{/t}</td>
+            <td>
+                <input type="text" value="{$r_spares}" name="r_spares">
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Encrypt{/t}</td>
+            <td><input type="checkbox" name="r_encrypt" {if $r_encrypt_selected} checked {/if}></td>
+        </tr>
+    </table>
+
+{elseif $selected_type==1}
+
     <h3>{t}Add Partition{/t}</h3>
 
     <table>
@@ -51,12 +104,12 @@
             </td>
         </tr>
         <tr>
-            <td><input type="checkbox" name="p_forcePrimary" {if $p_forcePrimary_selected} checked {/if}></td>
             <td>{t}Force to be primary partition{/t}</td>
+            <td><input type="checkbox" name="p_forcePrimary" {if $p_forcePrimary_selected} checked {/if}></td>
         </tr>
         <tr>
-            <td><input type="checkbox" name="p_encrypt" {if $p_encrypt_selected} checked {/if}></td>
             <td>{t}Encrypt{/t}</td>
+            <td><input type="checkbox" name="p_encrypt" {if $p_encrypt_selected} checked {/if}></td>
         </tr>
     </table>
 
