@@ -304,23 +304,7 @@ class AddPartitionDialog
             $spares = $this->r_spares;
             $encrypt = $this->r_encrypt;
 
-            // Get used raid-device names and then calculate the next free name
-            $usedNames = array();
-            foreach($this->raidDevices as $raid){
-                $usedNames[] = $raid['name'];
-            } 
-            $name = "md";
-            $id = 0; 
-            while($id <= 16 && in_array($name.$id, $usedNames)){
-                $id ++;
-            }
-            $name = $name.$id;
-
-            // No free space for a raid device
-            if($id == 16){
-                echo "No more raid device ids";
-                return(FALSE);
-            }
+            $name = $this->partitionObject->getNextRaidDevice();
 
             // Check selected target 
             $partitions = $this->partitions;
@@ -333,12 +317,7 @@ class AddPartitionDialog
                 $usedTargets[] = $part['target'];
             }
             if($fsType == "pv"){
-                $target="pv.";
-                $id = 0;
-                while($id < 100 && in_array($target.str_pad($id, 2, '0', STR_PAD_LEFT)  , $usedTargets)){
-                    $id ++;
-                }
-                $target = $target.str_pad($id, 2, '0', STR_PAD_LEFT);
+                $target = $this->partitionObject->getNextPhysicalVolumeName();
                 $fsType = $fsOptions = NULL;
             }else{
                 $target = $this->r_mountPoint;
@@ -385,24 +364,14 @@ class AddPartitionDialog
 
             // We've to create a raid disk
             if($this->p_fsType == "raid"){
-                $target="raid.";
-                $id = 0;
-                while($id < 100 && in_array($target.str_pad($id, 2, '0', STR_PAD_LEFT)  , $usedTargets)){
-                    $id ++;
-                }
-                $target = $target.str_pad($id, 2, '0', STR_PAD_LEFT);
+                $target = $this->partitionObject->getNextRaidName();
                 $fsType = $fsOptions = NULL;
                 $encrypt = $format = FALSE;
             }else
 
             // We've to create a raid disk
             if($this->p_fsType == "pv"){
-                $target="pv.";
-                $id = 0;
-                while($id < 100 && in_array($target.str_pad($id, 2, '0', STR_PAD_LEFT)  , $usedTargets)){
-                    $id ++;
-                }
-                $target = $target.str_pad($id, 2, '0', STR_PAD_LEFT);
+                $target = $this->partitionObject->getNextPhysicalVolumeName();
                 $fsType = $fsOptions = NULL;
                 $encrypt = $format = FALSE;
             }else{
