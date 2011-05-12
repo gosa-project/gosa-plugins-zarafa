@@ -1,7 +1,10 @@
 
 <h3>{t}Type{/t}</h3>
 
+<input {if $selected_type==0} checked {/if} onClick="document.mainform.submit();"
+        type="radio" value="0" name="selected_type">{t}Disk{/t}<br>
 <input {if $selected_type==1} checked {/if} onClick="document.mainform.submit();"
+        {if !count($disks)} disabled {/if}
         type="radio" value="1" name="selected_type">{t}Physical partition{/t}<br>
 <input  {if count($freeRaidPartitions) != 2} disabled {/if}
         {if $selected_type==2} checked {/if} onClick="document.mainform.submit();"
@@ -10,6 +13,7 @@
         {if $selected_type==3} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="3" name="selected_type">{t}LVM Volume group{/t}<br>
 <input {if $selected_type==4} checked {/if} onClick="document.mainform.submit();"
+        {if !count($volumeGroupList)} disabled {/if}
         type="radio" value="4" name="selected_type">{t}LVM Volume{/t}<br>
 
 <hr>
@@ -136,77 +140,92 @@
 
 {elseif $selected_type==1}
 
-    <h3>{t}Add Partition{/t}</h3>
+    <table width="100%">
+        <tr>
+            <td style="width:50%">
+                <h3>{t}Add Partition{/t}</h3>
+                <table>
+                    <tr>
+                        <td>{t}Mount point{/t}</td>
+                        <td>
+                            {if $p_fsType == "raid" || $p_fsType == "swap" || $p_fsType == "pv"}
+                                <input disabled type="text" name="p_mountPoint" value=" - ">
+                            {else}
+                                <input type="text" name="p_mountPoint" value="{$p_mountPoint}">
+                            {/if}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{t}File system type{/t}</td>
+                        <td>
+                            <select name="p_fsType" onChange="document.mainform.submit();">
+                                {html_options options=$fsTypes selected=$p_fsType}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{t}Allowable drives{/t}</td>
+                        <td>
+                            <select name="p_used_disk">
+                                {html_options options=$disks selected=$p_used_disk}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{t}Size{/t}</td>
+                        <td>
+                            <input name="p_size" value="{$p_size}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{t}Force to be primary partition{/t}</td>
+                        <td><input type="checkbox" name="p_forcePrimary" {if $p_forcePrimary_selected} checked {/if}></td>
+                    </tr>
+                    <tr>
+                        <td>{t}Encrypt{/t}</td>
+                        <td><input type="checkbox" name="p_encrypt" {if $p_encrypt_selected} checked {/if}></td>
+                    </tr>
+                </table>
+            </td>
+            <td class="left-border"></td>
+            <td>
 
-    <table>
-        <tr>
-            <td>{t}Mount point{/t}</td>
-            <td>
-                {if $p_fsType == "raid" || $p_fsType == "swap" || $p_fsType == "pv"}
-                    <input disabled type="text" name="p_mountPoint" value=" - ">
-                {else}
-                    <input type="text" name="p_mountPoint" value="{$p_mountPoint}">
-                {/if}
+                <h3>{t}Additional size options{/t}</h3>
+                <table>
+                    <tr>
+                        <td><input type="radio" name="p_size_options" value="0" 
+                                onClick="document.mainform.submit();"
+                                {if $p_size_options==0} checked {/if}></td>
+                        <td>{t}Fixed size{/t}</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="p_size_options" value="2" 
+                                onClick="document.mainform.submit();"
+                                {if $p_size_options==2} checked {/if}></td>
+                        <td>{t}Fill to maximum allowable size{/t}</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="p_size_options" value="1" 
+                                onClick="document.mainform.submit();"
+                                {if $p_size_options==1} checked {/if}></td>
+                        <td>{t}Fill all space up to{/t} 
+                            <input {if $p_size_options != 1} disabled {/if}
+                                    id="size_max_value"
+                                    type="text" value="{$p_size_max_value}">&nbsp;{t}MB{/t}
+                        </td>
+                    </tr>
+                </table>
             </td>
-        </tr>
-        <tr>
-            <td>{t}File system type{/t}</td>
-            <td>
-                <select name="p_fsType" onChange="document.mainform.submit();">
-                    {html_options options=$fsTypes selected=$p_fsType}
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>{t}Allowable drives{/t}</td>
-            <td>
-                {foreach from=$disks item=item key=key}
-                    <input type="radio" {if $p_used_disk == $item} checked {/if} 
-                        name="p_used_disk" value="{$item}">{$item}
-                {/foreach}
-            </td>
-        </tr>
-        <tr>
-            <td>{t}Size{/t}</td>
-            <td>
-                <input name="p_size" value="{$p_size}">
-            </td>
-        </tr>
-        <tr>
-            <td>{t}Force to be primary partition{/t}</td>
-            <td><input type="checkbox" name="p_forcePrimary" {if $p_forcePrimary_selected} checked {/if}></td>
-        </tr>
-        <tr>
-            <td>{t}Encrypt{/t}</td>
-            <td><input type="checkbox" name="p_encrypt" {if $p_encrypt_selected} checked {/if}></td>
         </tr>
     </table>
-
-    <hr>
-
-    <h3>{t}Additional size options{/t}</h3>
+{elseif $selected_type==0}
+    <h3>{t}Add disk{/t}</h3>
     <table>
         <tr>
-            <td><input type="radio" name="p_size_options" value="0" 
-                    onClick="document.mainform.submit();"
-                    {if $p_size_options==0} checked {/if}></td>
-            <td>{t}Fixed size{/t}</td>
-        </tr>
-        <tr>
-            <td><input type="radio" name="p_size_options" value="1" 
-                    onClick="document.mainform.submit();"
-                    {if $p_size_options==1} checked {/if}></td>
-            <td>{t}Fill all space up to{/t} 
-                <input {if $p_size_options != 1} disabled {/if}
-                        id="size_max_value"
-                        type="text" value="{$p_size_max_value}">&nbsp;{t}MB{/t}
+            <td>{t}Disk name{/t}</td>
+            <td>
+                <input type="text" name="d_name" value="{$d_name}">
             </td>
-        </tr>
-        <tr>
-            <td><input type="radio" name="p_size_options" value="2" 
-                    onClick="document.mainform.submit();"
-                    {if $p_size_options==2} checked {/if}></td>
-            <td>{t}Fill to maximum allowable size{/t}</td>
         </tr>
     </table>
 {/if}

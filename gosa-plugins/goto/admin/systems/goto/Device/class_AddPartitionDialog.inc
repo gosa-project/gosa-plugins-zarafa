@@ -1,6 +1,7 @@
 <?php
 
 
+define('DISK' , 0);
 define('PARTITION' , 1);
 define('RAID_DEVICE' , 2);
 define('VOLUME_GROUP' , 3);
@@ -12,7 +13,10 @@ class AddPartitionDialog
     public $disk = array();
     public $diskList = array();
     public $paritions = array();
-    public $selected_type = PARTITION;
+    public $selected_type = DISK;
+
+    // Disk properties
+    public $d_name = "";
 
     // LVM Volume group properties
     public $vg_name = "";
@@ -70,6 +74,9 @@ class AddPartitionDialog
     public $v_attributes = array("v_name", "v_group", "v_mountPoint", "v_fsType", 
             "v_size", "v_encrypt", "v_fsOptions");
 
+    // Disk  attributes
+    public $d_attributes = array("d_name");
+
     /*! \brief  Constructs the Dialog and loads all required informations
      *          to be able to add partitions, raid devices, volumes groups ...
      *  @param  Config          The GOsa configuration object.
@@ -111,6 +118,11 @@ class AddPartitionDialog
  
         // Select first disk as default.    
         $this->p_used_disk = key($this->diskList);
+
+        // Preselect partition creation if we've already created a disk 
+        if(count($this->disks)){
+            $this->selected_type = PARTITION;
+        }
     }
     
 
@@ -152,6 +164,10 @@ class AddPartitionDialog
                     unset($fsTypes['raid']);
                     unset($fsTypes['pv']);
                     $bool_attrs = array("v_encrypt");
+                    break;
+                }
+            case DISK: {
+                    $attrs = $this->d_attributes;
                     break;
                 }
         }
@@ -211,6 +227,10 @@ class AddPartitionDialog
                     $bool_attrs = array("v_encrypt");
                     break;
                 }
+            case DISK: {
+                    $attrs = $this->d_attributes;
+                    break;
+                }
         }
 
         // Get posted string values 
@@ -233,7 +253,14 @@ class AddPartitionDialog
      */
     function save()
     {
-        if($this->selected_type == VOLUME_GROUP){
+        if($this->selected_type == DISK){
+            
+            // Get volume group properties
+            $name = $this->d_name;
+            $this->partitionObject->addDisk($name);
+            return($this->partitionObject->success());
+
+        }elseif($this->selected_type == VOLUME_GROUP){
             
             // Get volume group properties
             $devices = $this->vg_partitions;
@@ -377,7 +404,7 @@ class AddPartitionDialog
             }else{
             
                 // Add normal-physical partition
-                $target = $this->mountPoint;
+                $target = $this->p_mountPoint;
                 if($fsType == "swap"){
                     $target = "swap";
                 }
