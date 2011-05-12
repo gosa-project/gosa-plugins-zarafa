@@ -19,7 +19,7 @@ class DevicePartition
     function init()
     {
         $rpc = $this->config->getRpcHandle();
-        $this->object = $rpc->openObject('libinst.preseed.diskdefinition', '');
+        $this->object = $rpc->openObject('libinst.preseed.diskdefinition', $this->partitionString);
 
         #$this->object->addDisk('sda');
         #$this->object->addDisk('sdb');
@@ -138,12 +138,15 @@ class DevicePartition
                     $target = $volumeGroupImg."&nbsp;".$target;
                 }
 
+                $fsType = (isset($raid['fsType'])) ? $raid['fsType'] :"";
+                $fsOptions = (isset($raid['fsOptions'])) ? $raid['fsOptions'] :"";
+
                 $lData[] = array("data" => array($str, 
                     $target,
                     '',
                     $devsStr,
-                    $raid['fsType'],
-                    $raid['fsOptions']
+                    $fsType,
+                    $fsOptions
                     ));
             }
         }
