@@ -49,6 +49,7 @@ class AddPartitionDialog
     // Partition properties
     public $p_size = 1000;
     public $p_format = FALSE;
+    public $p_bootable = FALSE;
     public $p_fsType = 'ext3';
     public $p_mountPoint = '';
     public $p_used_disk = array();
@@ -62,7 +63,7 @@ class AddPartitionDialog
 
     // Partitions attributes
     public $p_attributes = array("p_size", "p_fsType", "p_mountPoint", "p_forcePrimary", "p_encrypt", 
-            "p_size_options", "p_size_max_value", "p_used_disk", "p_format");
+            "p_size_options", "p_size_max_value", "p_used_disk", "p_format", "p_bootable");
 
     // Raid device attributes
     public $r_attributes = array("r_fsType", "r_mountPoint", "r_raidLevel", "r_partitions", 
@@ -145,7 +146,7 @@ class AddPartitionDialog
         switch($this->selected_type){
             case PARTITION: {
                     $attrs = $this->p_attributes;
-                    $bool_attrs = array("p_forcePrimary", "p_encrypt", "p_format");
+                    $bool_attrs = array("p_forcePrimary", "p_encrypt", "p_format", "p_bootable");
                     break;
                 }
             case RAID_DEVICE: {
@@ -199,7 +200,7 @@ class AddPartitionDialog
         switch($this->selected_type){
             case PARTITION: {
                     $attrs = $this->p_attributes;
-                    $bool_attrs = array("p_forcePrimary", "p_encrypt", "p_format");
+                    $bool_attrs = array("p_forcePrimary", "p_encrypt", "p_format", "p_bootable");
                     break;
                 }
             case RAID_DEVICE: {
@@ -374,7 +375,7 @@ class AddPartitionDialog
             }
             $grow = $this->p_size_options == 1;
             $format = $this->p_format == 1;
-            $boot = FALSE;
+            $boot = $this->p_bootable == 1;
             $primary = $this->p_forcePrimary;
             $fsType = $this->p_fsType;
             $fsOptions = "";

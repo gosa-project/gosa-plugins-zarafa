@@ -182,6 +182,10 @@
                         <td><input type="checkbox" name="p_forcePrimary" {if $p_forcePrimary_selected} checked {/if}></td>
                     </tr>
                     <tr>
+                        <td>{t}Bootable{/t}</td>
+                        <td><input type="checkbox" name="p_bootable" {if $p_bootable_selected} checked {/if}></td>
+                    </tr>
+                    <tr>
                         <td>{t}Encrypt{/t}</td>
                         {if $p_fsType == "raid" || $p_fsType == "swap" || $p_fsType == "pv"}
                             <td><input disabled type="checkbox" name="p_encrypt"></td>
