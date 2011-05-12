@@ -183,7 +183,19 @@
                     </tr>
                     <tr>
                         <td>{t}Encrypt{/t}</td>
-                        <td><input type="checkbox" name="p_encrypt" {if $p_encrypt_selected} checked {/if}></td>
+                        {if $p_fsType == "raid" || $p_fsType == "swap" || $p_fsType == "pv"}
+                            <td><input disabled type="checkbox" name="p_encrypt"></td>
+                        {else}
+                            <td><input type="checkbox" name="p_encrypt" {if $p_encrypt_selected} checked {/if}></td>
+                        {/if}
+                    </tr>
+                    <tr>
+                        <td>{t}Format{/t}</td>
+                        {if $p_fsType == "raid" || $p_fsType == "swap" || $p_fsType == "pv"}
+                            <td><input disabled type="checkbox" name="p_format"></td>
+                        {else}
+                            <td><input type="checkbox" name="p_format" {if $p_format_selected} checked {/if}></td>
+                        {/if}
                     </tr>
                 </table>
             </td>

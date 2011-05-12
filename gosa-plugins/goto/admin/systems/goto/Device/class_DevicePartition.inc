@@ -41,7 +41,8 @@ class DevicePartition
         $this->entryList->setEditable(false);
         $this->entryList->setWidth("100%");
         $this->entryList->setHeight("400px");
-        $this->entryList->setHeader(array(_("Type"),_("Target"),_("Size"),_("Uses device")." / "._("Used by"),_("Filesystem"), _("Options")));
+        $this->entryList->setHeader(array(_("Type"),_("Target"),_("Size"),_("Uses device")." / "._("Used by"),
+                    _("Filesystem"), _("Options"), _("Format"), "-"));
         $this->entryList->setColspecs(array('*','*','*', '*'));
         $this->entryList->setAcl('rwcdm');
         $this->entryList->setReorderable(FALSE);
@@ -231,6 +232,8 @@ class DevicePartition
                             $fsType = trim($fsType); 
                         }
 
+                        $formatImg = ($part['format']) ? image('images/true.png') : "";
+
                         // Add entry to the listing
                         $lData[] = array("data" => array(
                                     $str, 
@@ -238,14 +241,15 @@ class DevicePartition
                                     $this->__convertPartSize($part['size']),
                                     $device,
                                     $fsType,
-                                    $part['fsOptions']));
+                                    $part['fsOptions'],
+                                    $formatImg));
                     }
                 }
             }
         }
 
         // Updated columns length for all entries to avoid render errors.
-        $length = 6;
+        $length = 8;
         foreach($lData as $id => $entry){
             while(count($lData[$id]['data']) < $length){
                 $lData[$id]['data'][] = '';
