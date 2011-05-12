@@ -125,6 +125,7 @@ class DevicePartition
             // Add raids
             foreach($raids as $id =>  $raid){
                 $str = "{$seps[1]}{$raidImg}&nbsp;{$raid['name']} ({$raid['level']})";
+                $delImg = image('images/lists/trash.png', "delete_raid_{$id}", _("Remove raid device"));
 
                 $devsStr = "";
                 foreach($raid['devices'] as $devName){
@@ -145,7 +146,9 @@ class DevicePartition
                     '',
                     $devsStr,
                     $fsType,
-                    $fsOptions
+                    $fsOptions,
+                    '',
+                    $delImg
                     ));
             }
         }
@@ -159,6 +162,7 @@ class DevicePartition
             // Add volume groups
             foreach($volumeGroups as $id =>  $vg){
                 $str = "{$seps[1]}{$volumeGroupImg}&nbsp;{$vg['name']}";
+                $delImg = image('images/lists/trash.png', "delete_vg_{$id}", _("Remove volume group"));
 
                 // Build up a list of all used partitions
                 $partStr = "";
@@ -173,10 +177,11 @@ class DevicePartition
                 $partStr = rtrim($partStr, ", ");
 
                 // Add entry to the list.
-                $lData[] = array("data" => array($str, '', '', $partStr));
+                $lData[] = array("data" => array($str, '', '', $partStr, '', '','',$delImg));
 
                 // Add volumes 
-                foreach($volumes as $volume){
+                foreach($volumes as $vid => $volume){
+                    $delImg = image('images/lists/trash.png', "delete_v_{$vid}", _("Remove volume"));
                     if($volume['volGroup'] == $vg['name']){
                         $str = "{$seps[2]}{$volumeImg}&nbsp;{$volume['name']}";
                         $lData[] = array("data" => array(
@@ -185,7 +190,9 @@ class DevicePartition
                                     $this->__convertPartSize($volume['size']),
                                     '',
                                     $volume['fsType'],
-                                    $volume['fsOptions']
+                                    $volume['fsOptions'],
+                                    '',
+                                    $delImg
                                     ));
 
                         
@@ -274,25 +281,27 @@ class DevicePartition
 
     function save_object()
     {
-        foreach($_POST as $name => $value){
+        // Create a map whcih points to the correct remove method for each device.
+        $map = array();
+        $map['part'] = array('func' => 'delPartition', 'name' => _("Partition"));
+        $map['raid'] = array('func' => 'delRaidDevice', 'name' => _("Raid device"));
+        $map['disk'] = array('func' => 'delDisk', 'name' => _("Disk"));
+        $map['vg'] = array('func' => 'delVolumeGroup', 'name' => _("Volume group"));
+        $map['v'] = array('func' => 'delVolume', 'name' => _("Volume"));
 
-            // Remove paritions
-            if(preg_match("/^delete_part_[0-9]*$/", $name)){
-                $id = preg_replace("/^delete_part_/i", "", $name) + 0;
-                @$this->object->delPartition($id);
-                if(!$this->object->success()){
-                    $msg = sprintf(_("Failed to remove partition: %s"), $this->object->getError());
-                    msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
-                }
-            }
-            
-            // Remove disks
-            if(preg_match("/^delete_disk_[0-9]*$/", $name)){
-                $id = preg_replace("/^delete_disk_/i", "", $name) + 0;
-                @$this->object->delDisk($id);
-                if(!$this->object->success()){
-                    $msg = sprintf(_("Failed to remove disk: %s"), $this->object->getError());
-                    msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+        // Walk through posts and search for remove requests.
+        foreach($_POST as $name => $value){
+            foreach($map as $type => $data){
+
+                // Remove paritions
+                if(preg_match("/^delete_{$type}_[0-9]*$/", $name)){
+                    $id = preg_replace("/^delete_{$type}_/i", "", $name) + 0;
+                    $func = $data['func'];
+                    @$this->object->$func($id);
+                    if(!$this->object->success()){
+                        $msg = sprintf(_("Failed to remove '%s': %s"), $data['name'], $this->object->getError());
+                        msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+                    }
                 }
             }
         }
