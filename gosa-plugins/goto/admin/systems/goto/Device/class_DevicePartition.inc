@@ -1,7 +1,5 @@
 <?php
 
-
-
 class DevicePartition 
 {
     public $object =NULL;
@@ -42,7 +40,7 @@ class DevicePartition
         $this->entryList->setWidth("100%");
         $this->entryList->setHeight("400px");
         $this->entryList->setHeader(array(_("Type"),_("Target"),_("Size"),_("Uses device")." / "._("Used by"),
-                    _("Filesystem"), _("Options"), _("Format"), "-"));
+                    _("Filesystem"), _("Options"), _("Details"), "-"));
         $this->entryList->setColspecs(array('*','*','*', '*'));
         $this->entryList->setAcl('rwcdm');
         $this->entryList->setReorderable(FALSE);
@@ -204,7 +202,10 @@ class DevicePartition
             $lData[] = array("data" => array("<b>"._("Disks")."</b>"));
             foreach($disks as $id =>  $disk){
                 $str = "{$seps[1]}{$diskImg}&nbsp;{$disk['device']}";
-                $lData[] = array("data" => array($str));
+
+                // Create remove icon
+                $delImg = image('images/lists/trash.png', "delete_disk_{$id}", _("Remove disk"));
+                $lData[] = array("data" => array($str,"","","","","","", $delImg));
 
                 // Add partitions
                 foreach($partitions as $pid => $part){
@@ -232,7 +233,14 @@ class DevicePartition
                             $fsType = trim($fsType); 
                         }
 
-                        $formatImg = ($part['format']) ? image('images/true.png') : "";
+                        // Create property icons
+                        $emptyImage = image("images/empty.png");
+                        $formatImg = ($part['format']) ? image('plugins/goto/images/formatDisk.png','',_("Format partition")) : $emptyImage;
+                        $primaryImg = ($part['primary']) ? image('plugins/goto/images/primary.png','',_("Primary partition")) : $emptyImage;
+                        $encryptImg = ($part['encrypted']) ? image('images/lists/locked.png','',_("Encrypted")) : $emptyImage;
+
+                        // Create remove icon
+                        $delImg = image('images/lists/trash.png', "delete_part_{$pid}", _("Remove partition"));
 
                         // Add entry to the listing
                         $lData[] = array("data" => array(
@@ -242,7 +250,8 @@ class DevicePartition
                                     $device,
                                     $fsType,
                                     $part['fsOptions'],
-                                    $formatImg));
+                                    $primaryImg.$formatImg.$encryptImg, 
+                                    $delImg));
                     }
                 }
             }
@@ -265,7 +274,28 @@ class DevicePartition
 
     function save_object()
     {
+        foreach($_POST as $name => $value){
 
+            // Remove paritions
+            if(preg_match("/^delete_part_[0-9]*$/", $name)){
+                $id = preg_replace("/^delete_part_/i", "", $name) + 0;
+                @$this->object->delPartition($id);
+                if(!$this->object->success()){
+                    $msg = sprintf(_("Failed to remove partition: %s"), $this->object->getError());
+                    msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+                }
+            }
+            
+            // Remove disks
+            if(preg_match("/^delete_disk_[0-9]*$/", $name)){
+                $id = preg_replace("/^delete_disk_/i", "", $name) + 0;
+                @$this->object->delDisk($id);
+                if(!$this->object->success()){
+                    $msg = sprintf(_("Failed to remove disk: %s"), $this->object->getError());
+                    msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+                }
+            }
+        }
     }
 
     function save()
