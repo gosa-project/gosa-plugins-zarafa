@@ -73,14 +73,6 @@
             </td>
         </tr>
         <tr>
-            <td>{t}Physical extent{/t}</td>
-            <td>
-                <select name="vg_extend">
-                    {html_options options=$physicalExtendList selected=$vg_extend}
-                </select>
-            </td>
-        </tr>
-        <tr>
             <td>{t}Use LVM partitions{/t}</td>
             <td>
                 {foreach from=$freeLvmPartitions item=item key=key}

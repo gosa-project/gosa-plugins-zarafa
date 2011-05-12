@@ -9,18 +9,15 @@ define('VOLUME' , 4);
 class AddPartitionDialog
 {
     public $partitionObject;
-    public $disks = array();
+    public $disk = array();
+    public $diskList = array();
     public $paritions = array();
     public $selected_type = PARTITION;
 
     // LVM Volume group properties
     public $vg_name = "";
-    public $vg_extend = 32;
     public $vg_partitions = array();
-    public $physicalExtendList = array();
     public $volumeGroups = array();
-    public $lvmPartitions = array();
-    public $usedLvmPartitions = array();
     public $freeLvmPartitions = array();
 
     // Volume properties 
@@ -40,8 +37,6 @@ class AddPartitionDialog
     public $r_raidLevel = 0;
     public $raidLevelList = array();
     public $raidDevices = array();
-    public $usedRaidPartitions = array();
-    public $raidPartitions = array();
     public $freeRaidPartitions = array();
     public $r_partitions = array();
     public $r_spares = 0;
@@ -69,7 +64,7 @@ class AddPartitionDialog
             "r_spares","r_encrypt", "r_fsOptions");
 
     // Volume group attributes
-    public $vg_attributes = array("vg_name", "vg_partitions", "vg_extend");
+    public $vg_attributes = array("vg_name", "vg_partitions");
 
     // Volume  attributes
     public $v_attributes = array("v_name", "v_group", "v_mountPoint", "v_fsType", 
@@ -87,62 +82,35 @@ class AddPartitionDialog
 
         // Prepare filesystem types
         $this->fsTypes = array();
-        $this->fsTypes['ext2'] = 'ext2';
-        $this->fsTypes['ext3'] = 'ext3';
-        $this->fsTypes['ext4'] = 'ext4';
-        $this->fsTypes['swap'] = _("Swap");
-        $this->fsTypes['vfat'] = "vfat";
-        $this->fsTypes['cfs'] = "xfs";
+        foreach($this->partitionObject->getFsTypes() as $type){
+            $this->fsTypes[$type] = $type;
+        }
         $this->fsTypes['pv'] = _('Physical volume (LVM)');
         $this->fsTypes['raid'] = _('Software raid');
 
         // Prepare list of available raid level
         $this->raidLevelList = array();
-        foreach(array(0,1,4,5,6,10) as $lvl){
+        foreach($this->partitionObject->getRaidLevels() as $lvl){
             $this->raidLevelList[$lvl] = sprintf(_("Raid %s"), $lvl);
         }
 
-        // Create physical extend list for LVM Volume Groups
-        $this->physicalExtendList=array();
-        for($i=0; $i<8; $i++){
-            $number = pow(2, $i);
-            $this->physicalExtendList[$number] = $number;
-        }
-
-        // Load selectable disks
-        $disks = $this->partitionObject->getDisks();
-        $this->disks = array();
-        foreach($disks as $disk){
-            $this->disks[$disk['device']] = $disk['device'];
-        }
-   
-        // Get Free and used Raid Partitions
+        // Load values from backend
+        $this->disks = $this->partitionObject->getDisks();
         $this->partitions = $this->partitionObject->getPartitions();
         $this->raidDevices = $this->partitionObject->getRaidDevices();
         $this->volumeGroups = $this->partitionObject->getVolumeGroups();
-        $this->usedRaidPartitions = array();
-        $this->freeRaidPartitions = array();
-        $this->raidPartitions = array();
-        foreach($this->raidDevices as $dev){
-            $this->usedRaidPartitions = array_merge($dev['devices'], $this->usedRaidPartitions);
-        }
+        $this->freeLvmPartitions = $this->partitionObject->getUnassignedPhysicalVolumes();
+        $this->freeRaidPartitions = $this->partitionObject->getUnassignedRaidPartitions();
         foreach($this->volumeGroups as $vg){
             $this->volumeGroupList[$vg['name']] = $vg['name'];
-            $this->usedLvmPartitions = array_merge($vg['partitions'], $this->usedLvmPartitions);
         }
-        foreach($this->partitions as $part){
-            if(preg_match("/^raid\./", $part['target'])){
-                $this->raidPartitions[] = $part['target'];
-            }
-            if(preg_match("/^pv\./", $part['target'])){
-                $this->lvmPartitions[] = $part['target'];
-            }
-        }  
-        $this->freeRaidPartitions = array_remove_entries_ics($this->usedRaidPartitions, $this->raidPartitions);
-        $this->freeLvmPartitions = array_remove_entries_ics($this->usedLvmPartitions, $this->lvmPartitions);
+        $this->diskList = array();
+        foreach($this->disks as $disk){
+            $this->diskList[$disk['device']] = $disk['device'];
+        }
  
         // Select first disk as default.    
-        $this->p_used_disk = key($this->disks);
+        $this->p_used_disk = key($this->diskList);
     }
     
 
@@ -152,7 +120,7 @@ class AddPartitionDialog
     function execute()
     {
         $smarty = get_smarty();
-        
+       
         // Assign base attributes 
         foreach($this->attributes as $attr){
             $smarty->assign($attr, $this->$attr);
@@ -198,8 +166,7 @@ class AddPartitionDialog
         $smarty->assign('fsTypes', $fsTypes);
         $smarty->assign('raidLevelList', $this->raidLevelList);
         $smarty->assign('freeRaidPartitions', $this->freeRaidPartitions);
-        $smarty->assign('disks', $this->disks);
-        $smarty->assign('physicalExtendList', $this->physicalExtendList);
+        $smarty->assign('disks', $this->diskList);
         $smarty->assign('volumeGroupList', $this->volumeGroupList);
         $smarty->assign('freeLvmPartitions', $this->freeLvmPartitions);
         return($smarty->fetch(get_template_path("goto/Device/AddPartitionDialog.tpl", TRUE)));
@@ -270,9 +237,8 @@ class AddPartitionDialog
             
             // Get volume group properties
             $devices = $this->vg_partitions;
-            $extend = $this->vg_extend;
             $name = $this->vg_name;
-            $this->partitionObject->addVolumeGroup($name, $devices, $format=TRUE, $use_existing=FALSE, $extend);
+            $this->partitionObject->addVolumeGroup($name, $devices, $format=TRUE, $use_existing=FALSE, NULL);
             return($this->partitionObject->success());
 
         }elseif($this->selected_type == VOLUME){
