@@ -106,7 +106,7 @@ class AddPartitionDialog
                 "freeLvmPartitions" => "getUnassignedPhysicalVolumes",
                 "freeRaidPartitions" => "getUnassignedRaidPartitions");
         foreach($map as $target => $func){
-            $this->$target = @$this->partitionObject->$func('causes an error');
+            $this->$target = @$this->partitionObject->$func();
             if(!$this->partitionObject->success()){
                 $this->errorMsg = $this->partitionObject->getError();
                 return;

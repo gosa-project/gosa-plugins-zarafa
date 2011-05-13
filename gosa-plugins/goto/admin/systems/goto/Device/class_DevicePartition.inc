@@ -178,7 +178,7 @@ class DevicePartition
 
                 $size = "";
                 if(isset($deviceUsage['raid'][$raid['target']])){
-                    $size = "<i>".$deviceUsage['raid'][$raid['target']]['size']."</i>";
+                    $size = "<i>".$this->__convertPartSize($deviceUsage['raid'][$raid['target']]['size'])."</i>";
                 }
 
                 $lData[] = array("data" => array($str, 
@@ -218,7 +218,7 @@ class DevicePartition
 
                 $size = "";
                 if(isset($deviceUsage['vg'][$vg['name']])){
-                    $size = "<b>".$deviceUsage['vg'][$vg['name']]['size']."</b>";
+                    $size = "<b>".$this->__convertPartSize($deviceUsage['vg'][$vg['name']]['size'])."</b>";
                 }
 
                 // Add entry to the list.
@@ -263,7 +263,7 @@ class DevicePartition
 
                 $size = "";
                 if(isset($deviceUsage['disk'][$disk['device']])){
-                    $size = "<b>".$deviceUsage['disk'][$disk['device']]['size']."</b>";
+                    $size = "<b>".$this->__convertPartSize($deviceUsage['disk'][$disk['device']]['size'])."</b>";
                 }
 
                 // Create remove icon
