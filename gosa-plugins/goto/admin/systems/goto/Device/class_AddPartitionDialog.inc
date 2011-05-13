@@ -14,6 +14,7 @@ class AddPartitionDialog
     public $diskList = array();
     public $paritions = array();
     public $selected_type = DISK;
+    public $errorMsg;
 
     // Disk properties
     public $d_name = "";
@@ -79,6 +80,8 @@ class AddPartitionDialog
     // Disk  attributes
     public $d_attributes = array("d_name");
 
+    public $initialized = FALSE;
+
     /*! \brief  Constructs the Dialog and loads all required informations
      *          to be able to add partitions, raid devices, volumes groups ...
      *  @param  Config          The GOsa configuration object.
@@ -88,31 +91,49 @@ class AddPartitionDialog
     {
         $this->partitionObject = &$partitionObject;
         $this->config = &$config;
+    }
 
-        // Prepare filesystem types
-        $this->fsTypes = array();
-        foreach($this->partitionObject->getFsTypes() as $type){
-            $this->fsTypes[$type] = $type;
+    function init()
+    {
+        // Load remote partition information
+        $map = array(
+                "fsTypes" => "getFsTypes",
+                "raidLevel" => "getRaidLevels",
+                "disks" => "getDisks",
+                "partitions" => "getPartitions",
+                "raidDevices" => "getRaidDevices",
+                "volumeGroups" => "getVolumeGroups",
+                "freeLvmPartitions" => "getUnassignedPhysicalVolumes",
+                "freeRaidPartitions" => "getUnassignedRaidPartitions");
+        foreach($map as $target => $func){
+            $this->$target = @$this->partitionObject->$func('causes an error');
+            if(!$this->partitionObject->success()){
+                $this->errorMsg = $this->partitionObject->getError();
+                return;
+            }
         }
-        $this->fsTypes['pv'] = _('Physical volume (LVM)');
-        $this->fsTypes['raid'] = _('Software raid');
+
+        // Prepare list of filesystem types
+        $this->fsTypeList = array();
+        foreach($this->partitionObject->getFsTypes() as $type){
+            $this->fsTypeList[$type] = $type;
+        }
+        $this->fsTypeList['pv'] = _('Physical volume (LVM)');
+        $this->fsTypeList['raid'] = _('Software raid');
 
         // Prepare list of available raid level
         $this->raidLevelList = array();
-        foreach($this->partitionObject->getRaidLevels() as $lvl){
+        foreach($this->raidLevel as $lvl){
             $this->raidLevelList[$lvl] = sprintf(_("Raid %s"), $lvl);
         }
 
-        // Load values from backend
-        $this->disks = $this->partitionObject->getDisks();
-        $this->partitions = $this->partitionObject->getPartitions();
-        $this->raidDevices = $this->partitionObject->getRaidDevices();
-        $this->volumeGroups = $this->partitionObject->getVolumeGroups();
-        $this->freeLvmPartitions = $this->partitionObject->getUnassignedPhysicalVolumes();
-        $this->freeRaidPartitions = $this->partitionObject->getUnassignedRaidPartitions();
+        // Prepare list of volume groups
+        $this->volumeGroups = array();
         foreach($this->volumeGroups as $vg){
             $this->volumeGroupList[$vg['name']] = $vg['name'];
         }
+
+        // Prepare list of disks
         $this->diskList = array();
         foreach($this->disks as $disk){
             $this->diskList[$disk['device']] = $disk['device'];
@@ -125,6 +146,8 @@ class AddPartitionDialog
         if(count($this->disks)){
             $this->selected_type = PARTITION;
         }
+
+        $this->initialized = TRUE;
     }
     
 
@@ -134,6 +157,15 @@ class AddPartitionDialog
     function execute()
     {
         $smarty = get_smarty();
+
+        if(!$this->initialized){
+            $this->init();
+            if(!$this->initialized){
+                $smarty->assign("error", TRUE);        
+                $smarty->assign("errorMsg", $this->errorMsg);
+                return($smarty->fetch(get_template_path("goto/Device/AddPartitionDialog.tpl", TRUE)));
+            }
+        }
        
         // Assign base attributes 
         foreach($this->attributes as $attr){
@@ -141,7 +173,7 @@ class AddPartitionDialog
         }
 
         // Assign partition attributes.
-        $fsTypes = $this->fsTypes;
+        $fsTypes = $this->fsTypeList;
         $attrs = $bool_attrs = array();
         switch($this->selected_type){
             case PARTITION: {
@@ -189,6 +221,7 @@ class AddPartitionDialog
         $smarty->assign('disks', $this->diskList);
         $smarty->assign('volumeGroupList', $this->volumeGroupList);
         $smarty->assign('freeLvmPartitions', $this->freeLvmPartitions);
+        $smarty->assign("error", FALSE);
         return($smarty->fetch(get_template_path("goto/Device/AddPartitionDialog.tpl", TRUE)));
     }
 
@@ -261,7 +294,7 @@ class AddPartitionDialog
             
             // Get volume group properties
             $name = $this->d_name;
-            $this->partitionObject->addDisk($name);
+            @$this->partitionObject->addDisk($name);
 
             // Display potential errors
             if(!$this->partitionObject->success()){
@@ -275,7 +308,7 @@ class AddPartitionDialog
             // Get volume group properties
             $devices = $this->vg_partitions;
             $name = $this->vg_name;
-            $this->partitionObject->addVolumeGroup($name, $devices, $format=TRUE, $use_existing=FALSE, NULL);
+            @$this->partitionObject->addVolumeGroup($name, $devices, $format=TRUE, $use_existing=FALSE, NULL);
 
             // Display potential errors
             if(!$this->partitionObject->success()){
@@ -304,7 +337,7 @@ class AddPartitionDialog
                 $target = "swap";
             }
       
-            $this->partitionObject->addVolume($target, $name, $group, $size, $maxSize,
+            @$this->partitionObject->addVolume($target, $name, $group, $size, $maxSize,
                 $grow, $format, $use_existing, $fsType, $fsOptions);
 
             // Display potential errors
@@ -319,7 +352,7 @@ class AddPartitionDialog
             // Get raid device properties
             $devices = $this->r_partitions;
             $fsType = $this->r_fsType;
-            $raidLevel = $this->r_raidLevel;
+            $raidLevel = intval($this->r_raidLevel);
             $spares = $this->r_spares;
             $encrypt = $this->r_encrypt;
 
@@ -347,7 +380,7 @@ class AddPartitionDialog
                 $target = "swap";
             }
        
-            $this->partitionObject->addRaidDevice($target, $name, $raidLevel, $spares, $fsType,$fsOptions, 
+            @$this->partitionObject->addRaidDevice($target, $name, $raidLevel, $spares, $fsType,$fsOptions, 
                 TRUE, FALSE, $devices);
 
             // Display potential errors
@@ -409,7 +442,7 @@ class AddPartitionDialog
             }
 
             // Add partition to remote model
-            $this->partitionObject->addPartition($target,$size, $maxSize, $grow, $format, $boot, $primary,
+            @$this->partitionObject->addPartition($target,$size, $maxSize, $grow, $format, $boot, $primary,
                     $fsType, $fsOptions , $encrypt, $passphrase, $disk);
 
             // Display potential errors

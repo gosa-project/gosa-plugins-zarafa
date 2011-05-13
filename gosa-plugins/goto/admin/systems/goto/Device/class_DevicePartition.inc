@@ -159,7 +159,7 @@ class DevicePartition
     
             // Add raids
             foreach($raids as $id =>  $raid){
-                $str = "{$seps[1]}{$raidImg}&nbsp;{$raid['name']} ({$raid['level']})";
+                $str = "{$seps[1]}{$raidImg}&nbsp;{$raid['name']} ("._("Raid")."{$raid['level']})";
                 $delImg = image('images/lists/trash.png', "delete_raid_{$id}", _("Remove raid device"));
 
                 $devsStr = "";
