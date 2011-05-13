@@ -262,6 +262,12 @@ class AddPartitionDialog
             // Get volume group properties
             $name = $this->d_name;
             $this->partitionObject->addDisk($name);
+
+            // Display potential errors
+            if(!$this->partitionObject->success()){
+                $msg = sprintf(_("Failed to add '%s': %s"), _("Disk"), $this->partitionObject->getError());
+                msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+            }
             return($this->partitionObject->success());
 
         }elseif($this->selected_type == VOLUME_GROUP){
@@ -270,6 +276,12 @@ class AddPartitionDialog
             $devices = $this->vg_partitions;
             $name = $this->vg_name;
             $this->partitionObject->addVolumeGroup($name, $devices, $format=TRUE, $use_existing=FALSE, NULL);
+
+            // Display potential errors
+            if(!$this->partitionObject->success()){
+                $msg = sprintf(_("Failed to add '%s': %s"), _("Volume group"), $this->partitionObject->getError());
+                msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+            }
             return($this->partitionObject->success());
 
         }elseif($this->selected_type == VOLUME){
@@ -295,6 +307,11 @@ class AddPartitionDialog
             $this->partitionObject->addVolume($target, $name, $group, $size, $maxSize,
                 $grow, $format, $use_existing, $fsType, $fsOptions);
 
+            // Display potential errors
+            if(!$this->partitionObject->success()){
+                $msg = sprintf(_("Failed to add '%s': %s"), _("Volume"), $this->partitionObject->getError());
+                msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+            }
             return($this->partitionObject->success());
 
         }elseif($this->selected_type == RAID_DEVICE){
@@ -333,6 +350,11 @@ class AddPartitionDialog
             $this->partitionObject->addRaidDevice($target, $name, $raidLevel, $spares, $fsType,$fsOptions, 
                 TRUE, FALSE, $devices);
 
+            // Display potential errors
+            if(!$this->partitionObject->success()){
+                $msg = sprintf(_("Failed to add '%s': %s"), _("Raid device"), $this->partitionObject->getError());
+                msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+            }
             return($this->partitionObject->success());
 
         }elseif($this->selected_type == PARTITION){
@@ -389,6 +411,12 @@ class AddPartitionDialog
             // Add partition to remote model
             $this->partitionObject->addPartition($target,$size, $maxSize, $grow, $format, $boot, $primary,
                     $fsType, $fsOptions , $encrypt, $passphrase, $disk);
+
+            // Display potential errors
+            if(!$this->partitionObject->success()){
+                $msg = sprintf(_("Failed to add '%s': %s"), _("Partition"), $this->partitionObject->getError());
+                msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+            }
             return($this->partitionObject->success());
         }
     }
