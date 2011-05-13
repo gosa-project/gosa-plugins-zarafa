@@ -1,34 +1,53 @@
 
-<h3>{t}Installation type{/t}</h3>
-<table>
+<table width="100%">
     <tr>
-        <td><LABEL for="installTemplate">{t}Template{/t}</LABEL></td>
-        <td>
-            <select name="installTemplate" size=1 onChange="document.mainform.submit();">
-                {html_options options=$installTemplateList 
-                selected=$installTemplate}
-            </select>
+        <td style="width:50%">
+            <h3>{t}Installation type{/t}</h3>
+            <table>
+                <tr>
+                    <td><LABEL for="installTemplate">{t}Template{/t}</LABEL></td>
+                    <td>
+                        <select name="installTemplate" size=1 onChange="document.mainform.submit();">
+                            {html_options options=$installTemplateList 
+                            selected=$installTemplate}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><LABEL for="installRelease">{t}Release{/t}</LABEL></td>
+                    <td>
+                        <select name="installRelease" size=1 onChange="document.mainform.submit();">
+                            {html_options options=$installReleaseList 
+                            selected=$installRelease}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><LABEL for="installConfigManagement">{t}Config management{/t}</LABEL></td>
+                    <td>
+                        <select nme="installConfigManagement" size=1 onChange='document.mainform.submit();'>
+                            {html_options options=$installConfigManagementList 
+                            selected=$installConfigManagement}
+                        </select>
+                    </td>
+                </tr>
+            </table>
         </td>
-    </tr>
-    <tr>
-        <td><LABEL for="installRelease">{t}Release{/t}</LABEL></td>
-        <td>
-            <select name="installRelease" size=1 onChange="document.mainform.submit();">
-                {html_options options=$installReleaseList 
-                selected=$installRelease}
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td><LABEL for="installConfigManagement">{t}Config management{/t}</LABEL></td>
-        <td>
-            <select nme="installConfigManagement" size=1 onChange='document.mainform.submit();'>
-                {html_options options=$installConfigManagementList 
-                selected=$installConfigManagement}
-            </select>
+        <td style='width:50%; vertical-align: top;padding-left:5px;' class='left-border'>
+            <h3>{t}Partition table{/t}</h3>
+            <table>
+                <tr>
+                    <td><LABEL for="installPartitionTable">{t}Partition table{/t}</LABEL></td>
+                    <td>
+                        <input type='submit' name="edit_installPartitionTable" id="edit_installPartitionTable" 
+                            value="{t}Edit partition table{/t}">
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
+
 <hr>
 <table style='width:100%;'>
     <tr>
@@ -132,17 +151,6 @@
                     </td>
                 </tr>
             </table>
-        </td>
-    </tr>
-</table>
-
-<hr>
-<h3>{t}Partition table{/t}</h3>
-<table>
-    <tr>
-        <td><LABEL for="installPartitionTable">{t}Partition table{/t}</LABEL></td>
-        <td>
-            <input type='submit' name="edit_installPartitionTable" id="edit_installPartitionTable" value="{t}Edit partition table{/t}">
         </td>
     </tr>
 </table>
