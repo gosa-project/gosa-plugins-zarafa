@@ -13,6 +13,20 @@ class DevicePartition
         $this->config = &$config;
         $this->partitionString = $partitionString;
 
+       #$this->partitionString = "disk sda --initlabel --none;
+       #        part /boot --size 1000 --format --fstype ext3 --ondisk sda;
+       #        part /test --size 1000 --fstype ext3 --ondisk sda;
+       #        part pv.00 --size 10 --bootable --ondisk sda;
+       #        part raid.00 --size 5000 --bootable --ondisk sda;
+       #        part pv.01 --size 10009 --ondisk sda;
+       #        part raid.01 --size 1000 --bootable --ondisk sda;
+       #        part pv.03 --size 1000 --bootable --ondisk sda;
+       #        part raid.02 --size 981 --bootable --ondisk sda;
+       #        raid pv.02 --level 0 --name md0 --format raid.01 raid.00;
+       #        volgroup garnele --format pv.01 pv.00 pv.02;
+       #        logvol /homejj --size 8978 --format --fstype ext3 --name garnele_home --vgname garnele;
+       #        logvol /opt --size 7041 --format --fstype ext3 --name garnele_opt --vgname garnele;";
+
         // Prepare lists
         $this->entryList = new sortableListing();
         $this->entryList->setDeleteable(false);
@@ -33,18 +47,25 @@ class DevicePartition
          * Handle add-partition dialog
          *****/
 
+        // Create button was pressed, show dialog to add new partitions
         if(isset($_POST['create_partition'])){
             $this->addDialog = new AddPartitionDialog($this->config, $this->object); 
         }
+
+        // Abort partition add
         if(isset($_POST['cancel_partition_add'])){
             $this->addDialog = NULL;
         }
+
+        // Save created partitions
         if(isset($_POST['save_partition_add'])){
             $this->addDialog->save_object();
             if($this->addDialog->save()){
                 $this->addDialog = NULL;
             }
         }
+
+        // Show partition dialog 
         if($this->addDialog){
             $this->addDialog->save_object();
             return($this->addDialog->execute());
@@ -55,6 +76,7 @@ class DevicePartition
          * Open partition object on demand
          *****/
 
+        // Open remote parition object
         if(!$this->initialized){
             $rpc = $this->config->getRpcHandle();
             $this->object = $rpc->openObject('libinst.preseed.diskdefinition', $this->partitionString);
@@ -225,6 +247,12 @@ class DevicePartition
             }
         }
 
+        // Collect all disk devices names
+        $diskNames = array();
+        foreach($disks as $disk){
+            $diskNames[] = $disk['device'];
+        }
+
         // Add physical disks to the listing.
         if(count($disks)){
         
@@ -244,6 +272,12 @@ class DevicePartition
 
                 // Add partitions
                 foreach($partitions as $pid => $part){
+
+                    if(!in_array($part['onDisk'], $diskNames)){
+                        
+                        echo "Cannot display '{$part['target']}' the given disk '{$part['onDisk']}' does not exists!<br>";
+                        continue;
+                    }
 
                     if($part['onDisk'] == $disk['device']){
                     
