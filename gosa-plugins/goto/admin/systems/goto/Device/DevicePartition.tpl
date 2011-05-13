@@ -1,12 +1,23 @@
-{$list}
+<h3>{t}Device partition{/t}</h3>
 
-<button name="create_partition">{msgPool type=addButton}</button>
+{if $error}
 
-<hr>
+    <p>
+    {$errorMsg}
+    </p>
+    <button type='submit' name='retry'>{t}Retry{/t}</button>
 
-<div class="clear"></div>
-<div class="plugin-actions">
-  <button type='submit' name='partition_finish'>{msgPool type=applyButton}</button>
-  <button type='submit' name='partition_cancel'>{msgPool type=cancelButton}</button>
-</div>
+{else}
 
+    {$list}
+
+    <button name="create_partition">{msgPool type=addButton}</button>
+
+    <hr>
+
+    <div class="clear"></div>
+    <div class="plugin-actions">
+      <button type='submit' name='partition_finish'>{msgPool type=applyButton}</button>
+      <button type='submit' name='partition_cancel'>{msgPool type=cancelButton}</button>
+    </div>
+{/if}

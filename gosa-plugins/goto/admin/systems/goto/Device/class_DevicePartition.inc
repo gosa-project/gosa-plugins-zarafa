@@ -6,32 +6,12 @@ class DevicePartition
     public $partitionString =NULL;
 
     public $addDialog = NULL;
+    public $initialized = FALSE;
 
     function __construct($config, $partitionString)
     {
         $this->config = &$config;
         $this->partitionString = $partitionString;
-        $this->init();
-    }
-
-    function init()
-    {
-        $rpc = $this->config->getRpcHandle();
-        $this->object = $rpc->openObject('libinst.preseed.diskdefinition', $this->partitionString);
-
-        #$this->object->addDisk('sda');
-        #$this->object->addDisk('sdb');
-        #$this->object->addDisk('sdc');
-        #$this->object->addPartition('/kekse', 2333, NULL, FALSE, TRUE, FALSE, FALSE, 'ext3','ro,user,nosuid' , FALSE, NULL, 'sda');
-        #$this->object->addPartition('/wurst', 2000, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
-        #$this->object->addPartition('raid.00', 2000, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
-        #$this->object->addPartition('raid.01', 2000, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
-        #$this->object->addPartition('pv.00', 2333, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
-        #$this->object->addPartition('pv.01', 2333, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
-        #$this->object->addPartition('pv.02', 2333, NULL, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'sda');
-        #$this->object->addRaidDevice('pv.01', 'md0', '0','0', NULL, NULL, TRUE, FALSE, array('raid.00', 'raid.01'));
-        #$this->object->addVolumeGroup('garnele', array('pv.00', 'pv.01'));
-        #$this->object->addVolume('/home', 'garnele_home', 'garnele', 2000);
 
         // Prepare lists
         $this->entryList = new sortableListing();
@@ -53,10 +33,6 @@ class DevicePartition
          * Handle add-partition dialog
          *****/
 
-
-        #echo "a = gosa.openObject('libinst.preseed.diskdefinition', '".$this->object->dump()."')<br>";
-        #echo "a.addPartition('pv.00', 10, None, False, False, True, True, False, '', False, None, 'sda')";
-
         if(isset($_POST['create_partition'])){
             $this->addDialog = new AddPartitionDialog($this->config, $this->object); 
         }
@@ -76,15 +52,47 @@ class DevicePartition
 
 
         /*****
+         * Open partition object on demand
+         *****/
+
+        if(!$this->initialized){
+            $rpc = $this->config->getRpcHandle();
+            $this->object = $rpc->openObject('libinst.preseed.diskdefinition', $this->partitionString);
+            if(!$rpc->success()){
+                $message = _("An error occured while loading partition information.");
+                $message = sprintf(_("An error occured while loading partition information, error was: '%s'."), $rpc->get_error());
+                $smarty = get_smarty();
+                $smarty->assign('error', TRUE);
+                $smarty->assign('errorMsg', $message);
+                return($smarty->fetch(get_template_path('goto/Device/DevicePartition.tpl', TRUE)));
+            }else{
+                $this->initialized = TRUE;
+            }
+        }
+
+
+        /*****
          * Fill listing
          *****/
 
         // Receive list informations
-        $disks = $this->object->getDisks();
-        $partitions = $this->object->getPartitions();
-        $raids = $this->object->getRaidDevices();
-        $volumeGroups = $this->object->getVolumeGroups();
-        $volumes = $this->object->getVolumes();
+        $map = array();
+        $map['disks'] = 'getDisks';
+        $map['partitions'] = 'getPartitions';
+        $map['raids'] = 'getRaidDevices';
+        $map['volumeGroups'] = 'getVolumeGroups';
+        $map['volumes'] = 'getVolumes';
+        $map['deviceUsage'] = 'getDeviceUsage';
+        foreach($map as $target => $func){
+            $$target = @$this->object->$func();
+            if(!$this->object->success()){
+                $message = sprintf(_("An error occured while loading partition information, error was: '%s'."), $this->object->getError());
+                $smarty = get_smarty();
+                $smarty->assign('error', TRUE);
+                $smarty->assign('errorMsg', $message);
+                return($smarty->fetch(get_template_path('goto/Device/DevicePartition.tpl', TRUE)));
+            }
+        }
 
         // Create a mapping that show which partitions was used for which raid.
         $map_partToRaid = array();
@@ -114,11 +122,11 @@ class DevicePartition
         $seps[2] = str_pad("", 36, "&nbsp;");
 
         // Prepare images
-        $partitionImg = image('plugins/goto/images/partition.png');
-        $diskImg = image('plugins/goto/images/disk.png');
-        $raidImg = image('plugins/goto/images/raid.png');
-        $volumeGroupImg = image('plugins/goto/images/volumeGroups.png');
-        $volumeImg = image('plugins/goto/images/volume.png');
+        $partitionImg = image('plugins/goto/images/partition.png','',_("Partition"));
+        $diskImg = image('plugins/goto/images/disk.png','',_("Disk"));
+        $raidImg = image('plugins/goto/images/raid.png', '', _('Raid'));
+        $volumeGroupImg = image('plugins/goto/images/volumeGroups.png', '', _('Volume group'));
+        $volumeImg = image('plugins/goto/images/volume.png','',_('Volume'));
 
         // Add raid devices
         $lData = array();
@@ -146,9 +154,14 @@ class DevicePartition
                 $fsType = (isset($raid['fsType'])) ? $raid['fsType'] :"";
                 $fsOptions = (isset($raid['fsOptions'])) ? $raid['fsOptions'] :"";
 
+                $size = "";
+                if(isset($deviceUsage['raid'][$raid['target']])){
+                    $size = "<i>".$deviceUsage['raid'][$raid['target']]['size']."</i>";
+                }
+
                 $lData[] = array("data" => array($str, 
                     $target,
-                    '',
+                    $size,
                     $devsStr,
                     $fsType,
                     $fsOptions,
@@ -181,8 +194,13 @@ class DevicePartition
                 }
                 $partStr = rtrim($partStr, ", ");
 
+                $size = "";
+                if(isset($deviceUsage['vg'][$vg['name']])){
+                    $size = "<b>".$deviceUsage['vg'][$vg['name']]['size']."</b>";
+                }
+
                 // Add entry to the list.
-                $lData[] = array("data" => array($str, '', '', $partStr, '', '','',$delImg));
+                $lData[] = array("data" => array($str, '', $size, $partStr, '', '','',$delImg));
 
                 // Add volumes 
                 foreach($volumes as $vid => $volume){
@@ -215,9 +233,14 @@ class DevicePartition
             foreach($disks as $id =>  $disk){
                 $str = "{$seps[1]}{$diskImg}&nbsp;{$disk['device']}";
 
+                $size = "";
+                if(isset($deviceUsage['disk'][$disk['device']])){
+                    $size = "<b>".$deviceUsage['disk'][$disk['device']]['size']."</b>";
+                }
+
                 // Create remove icon
                 $delImg = image('images/lists/trash.png', "delete_disk_{$id}", _("Remove disk"));
-                $lData[] = array("data" => array($str,"","","","","","", $delImg));
+                $lData[] = array("data" => array($str,"",$size,"","","","", $delImg));
 
                 // Add partitions
                 foreach($partitions as $pid => $part){
@@ -280,7 +303,7 @@ class DevicePartition
         $this->entryList->update();
 
         $smarty = get_smarty();
-        $smarty->assign("deviceUsage", $this->object->getDeviceUsage());
+        $smarty->assign('error', FALSE);
         $smarty->assign('list', $this->entryList->render());
         return($smarty->fetch(get_template_path('goto/Device/DevicePartition.tpl', TRUE)));
     }
