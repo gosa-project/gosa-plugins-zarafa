@@ -342,6 +342,9 @@ class DevicePartition
         return($smarty->fetch(get_template_path('goto/Device/DevicePartition.tpl', TRUE)));
     }
 
+
+    /*! \brief  Keep posted HTML values and acts on remove requests.
+     */
     function save_object()
     {
         // Create a map whcih points to the correct remove method for each device.
@@ -370,14 +373,26 @@ class DevicePartition
         }
     }
 
+
+    /*! \brief  Returns to created partition table string, which can then be
+     *          saved back to the server.
+     */
     function save()
     {
         return($this->object->dump());
     }
 
+
+    /*! \brief  Convert a given size value to a human readable format.
+     */
     function __convertPartSize($size)
     {
-        return($size." MB");
+        $label = _("MB");
+        if($size%1024 == 0){
+            $size = $size/1024;
+            $label = _("GB");
+        }
+        return($size."".$label);
     }
 }
 
