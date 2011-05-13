@@ -52,6 +52,11 @@ class DevicePartition
         /*****
          * Handle add-partition dialog
          *****/
+
+
+        #echo "a = gosa.openObject('libinst.preseed.diskdefinition', '".$this->object->dump()."')<br>";
+        #echo "a.addPartition('pv.00', 10, None, False, False, True, True, False, '', False, None, 'sda')";
+
         if(isset($_POST['create_partition'])){
             $this->addDialog = new AddPartitionDialog($this->config, $this->object); 
         }
@@ -275,6 +280,7 @@ class DevicePartition
         $this->entryList->update();
 
         $smarty = get_smarty();
+        $smarty->assign("deviceUsage", $this->object->getDeviceUsage());
         $smarty->assign('list', $this->entryList->render());
         return($smarty->fetch(get_template_path('goto/Device/DevicePartition.tpl', TRUE)));
     }

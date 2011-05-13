@@ -6,7 +6,7 @@
 <input {if $selected_type==1} checked {/if} onClick="document.mainform.submit();"
         {if !count($disks)} disabled {/if}
         type="radio" value="1" name="selected_type">{t}Physical partition{/t}<br>
-<input  {if count($freeRaidPartitions) != 2} disabled {/if}
+<input  {if count($freeRaidPartitions) < 1} disabled {/if}
         {if $selected_type==2} checked {/if} onClick="document.mainform.submit();"
         type="radio" value="2" name="selected_type">{t}Raid device{/t}<br>
 <input  {if !count($freeLvmPartitions)} disabled {/if}
@@ -32,7 +32,11 @@
             <td>{t}Volume group{/t}</td>
             <td>
                 <select name="v_group">
-                    {html_options options=$volumeGroupList selected=$v_group}
+                    {foreach from=$volumeGroupList item=item}
+                        <option value="{$item}"
+                            {if $item==$v_group} selected {/if}
+                            >{$item} {if isset($deviceUsage.vg[$item])} - ({$deviceUsage.vg[$item].size - $deviceUsage.vg[$item].usage} {t}MB{/t} {t}free{/t}){/if}</option>
+                    {/foreach}
                 </select>
             </td>
         </tr>
@@ -81,7 +85,10 @@
             <td>
                 {foreach from=$freeLvmPartitions item=item key=key}
                     <input type="checkbox" name="vg_partition_{$key}" 
-                        {if in_array($item, $vg_partitions)} checked {/if}>&nbsp;{$item}<br>
+                        {if in_array($item, $vg_partitions)} checked {/if}>&nbsp;{$item}
+                        {if isset($deviceUsage.part[$item])} &nbsp;&nbsp; {$deviceUsage.part[$item].size} {t}MB{/t}
+                        {elseif isset($deviceUsage.raid[$item])} &nbsp;&nbsp; {$deviceUsage.raid[$item].size} {t}MB{/t}{/if}    
+                        <br>
                 {/foreach}
             </td>
         </tr>
@@ -122,7 +129,10 @@
             <td>
                 {foreach from=$freeRaidPartitions item=item key=key}
                     <input type="checkbox" name="r_partition_{$key}" 
-                        {if in_array($item, $r_partitions)} checked {/if}>&nbsp;{$item}<br>
+                        {if in_array($item, $r_partitions)} checked {/if}>&nbsp;{$item}
+                        {if isset($deviceUsage.part[$item])} &nbsp;&nbsp;{$deviceUsage.part[$item].size} {t}MB{/t}
+                        {elseif isset($deviceUsage.raid[$item])} &nbsp;&nbsp;{$deviceUsage.raid[$item].size} {t}MB{/t}{/if}    
+                        <br>
                 {/foreach}
             </td>
         </tr>
@@ -166,8 +176,12 @@
                     <tr>
                         <td>{t}Allowable drives{/t}</td>
                         <td>
-                            <select name="p_used_disk">
-                                {html_options options=$disks selected=$p_used_disk}
+                            <select name="p_used_disk" onChange="document.mainform.submit();">
+                            {foreach from=$disks item=disk}
+                                <option value="{$disk}"
+                                    {if $disk==$p_used_disk} selected {/if}
+                                    >{$disk} {if isset($deviceUsage.disk[$p_used_disk])} - ({$deviceUsage.disk[$p_used_disk].size - $deviceUsage.disk[$p_used_disk].usage} {t}MB{/t} {t}free{/t}){/if}</option>
+                            {/foreach}
                             </select>
                         </td>
                     </tr>

@@ -181,6 +181,8 @@ class AddPartitionDialog
         foreach($bool_attrs as $attr){
             $smarty->assign("{$attr}_selected", $this->$attr != FALSE);
         }
+        
+        $smarty->assign("deviceUsage", $this->partitionObject->getDeviceUsage());
         $smarty->assign('fsTypes', $fsTypes);
         $smarty->assign('raidLevelList', $this->raidLevelList);
         $smarty->assign('freeRaidPartitions', $this->freeRaidPartitions);
@@ -278,7 +280,7 @@ class AddPartitionDialog
             $fsOptions = $this->v_fsOptions;
             $group = $this->v_group;
             $target = $this->v_mountPoint;
-            $size = $this->v_size;
+            $size = intval($this->v_size);
             $encrypt = $this->v_encrypt;
             
             $maxSize = NULL;
@@ -347,7 +349,7 @@ class AddPartitionDialog
             }
 
             // Collect options
-            $size = $this->p_size;
+            $size = intval($this->p_size);
             $maxSize = NULL;
             if($this->p_size_options == 2){
                 $maxSize = $this->p_size_max_value;
