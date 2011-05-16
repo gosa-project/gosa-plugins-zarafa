@@ -284,6 +284,30 @@ class AddPartitionDialog
         }
     }
 
+   
+    /*! \brief  Converts a given size string to its size-value in MB.
+     *              E.g.        '200TB' => '209715200' MB
+     */ 
+    function convertSize($size)
+    {
+        $map = array();
+        $map['/mb/i'] = 1;
+        $map['/m/i'] = 1;
+        $map['/gb/i'] = 1024;
+        $map['/g/i'] = 1024;
+        $map['/tb/i'] = 1024;
+        $map['/t/i'] = 1024;
+        $map['/pb/i'] = 1024;
+        $map['/p/i'] = 1024;
+        foreach($map as $key => $multiplicator){
+            if(preg_match($key, $size)){
+                $size = intval(preg_replace("/[^0-9]/", "", $size));
+                return($size * $multiplicator);
+            }
+        }
+        return(intval(preg_replace("/[^0-9]/", $size)));
+    }
+
 
     /*! \brief     Stores the changes back to the remote table model. 
      *  @return    TRUE on success else false.
@@ -325,7 +349,7 @@ class AddPartitionDialog
             $fsOptions = $this->v_fsOptions;
             $group = $this->v_group;
             $target = $this->v_mountPoint;
-            $size = intval($this->v_size);
+            $size = $this->convertSize($this->v_size);
             $encrypt = $this->v_encrypt;
             
             $maxSize = NULL;
@@ -404,7 +428,7 @@ class AddPartitionDialog
             }
 
             // Collect options
-            $size = intval($this->p_size);
+            $size = $this->convertSize($this->p_size);
             $maxSize = NULL;
             if($this->p_size_options == 2){
                 $maxSize = $this->p_size_max_value;

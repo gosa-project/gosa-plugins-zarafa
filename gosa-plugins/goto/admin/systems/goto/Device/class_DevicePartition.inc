@@ -388,11 +388,7 @@ class DevicePartition
     function __convertPartSize($size)
     {
         $label = _("MB");
-        if($size%1024 == 0){
-            $size = $size/1024;
-            $label = _("GB");
-        }
-        return($size."".$label);
+        return($size." ".$label);
     }
 }
 
