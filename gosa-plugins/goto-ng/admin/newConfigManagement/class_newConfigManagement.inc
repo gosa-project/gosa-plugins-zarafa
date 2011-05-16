@@ -878,11 +878,15 @@ class newConfigManagement extends plugin
 
             // Get paths 
             $release =  $this->getReleasePart($this->selectedContainer);
-            $newPath = $this->selectedContainer."/".$values['name'];
-            $newItemPath = $this->getItemPath($this->selectedContainer)."/".$values['name'];
+
             if($item){
                 $oldPath = $item['path'];
                 $oldItemPath = $this->getItemPath($item['path']);
+                $newPath = $item['parentPath']."/".$values['name'];
+                $newItemPath = $this->getItemPath($newPath);
+            }else{
+                $newPath = $this->selectedContainer."/".$values['name'];
+                $newItemPath = $this->getItemPath($this->selectedContainer)."/".$values['name'];
             }
 
             // If this is a new item, then create it now.
