@@ -309,11 +309,11 @@ class InstallRecipe extends plugin
         $display = "";
         if ($this->parent !== NULL){
             if ($this->is_account){
-                $display= $this->show_disable_header(_("Remove install profile"),
-                        msgPool::featuresEnabled(_("Install profile")));
+                $display= $this->show_disable_header(_("Remove base installation"),
+                        msgPool::featuresEnabled(_("Base installation")));
             } else {
-                $display= $this->show_enable_header(_("Add install profile"),
-                        msgPool::featuresDisabled(_("Install profile")));
+                $display= $this->show_enable_header(_("Add base installation"),
+                        msgPool::featuresDisabled(_("Base installation")));
                 return ($display);
             }
         }
