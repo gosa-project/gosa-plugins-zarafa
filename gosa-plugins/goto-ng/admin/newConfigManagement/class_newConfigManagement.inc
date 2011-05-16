@@ -890,7 +890,6 @@ class newConfigManagement extends plugin
 
                 // Add the new item
                 $rpc = $this->config->getRpcHandle();
-                print_a(array($release, $newItemPath, $type, $values));
                 $res = $rpc->setConfigItem($release, $newItemPath, $type, $values);
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), sprintf(_("Failed to save %s: %s"),$type, $rpc->get_error()),ERROR_DIALOG);
@@ -909,7 +908,7 @@ class newConfigManagement extends plugin
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->setConfigItem($release, $oldItemPath, $type, $values);
                 if(!$rpc->success()){
-                    msg_dialog::display(_("Error"), sprintf(_("Failed to load distributions: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to svae config item: %s"), $rpc->get_error()),ERROR_DIALOG);
                     return(NULL);
                 }else{
             
