@@ -306,6 +306,7 @@ class DevicePartition
                         $emptyImage = image("images/empty.png");
                         $formatImg = ($part['format']) ? image('plugins/goto/images/formatDisk.png','',_("Format partition")) : $emptyImage;
                         $primaryImg = ($part['primary']) ? image('plugins/goto/images/primary.png','',_("Primary partition")) : $emptyImage;
+                        $bootImg = ($part['bootable']) ? image('images/true.png','',_("Bootable")) : $emptyImage;
                         $encryptImg = ($part['encrypted']) ? image('images/lists/locked.png','',_("Encrypted")) : $emptyImage;
 
                         // Create remove icon
@@ -319,7 +320,7 @@ class DevicePartition
                                     $device,
                                     $fsType,
                                     $part['fsOptions'],
-                                    $primaryImg.$formatImg.$encryptImg, 
+                                    "{$primaryImg} {$formatImg} {$bootImg} {$encryptImg}",
                                     $delImg));
                     }
                 }
