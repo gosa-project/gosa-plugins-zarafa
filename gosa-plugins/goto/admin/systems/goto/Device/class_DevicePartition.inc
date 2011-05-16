@@ -315,7 +315,7 @@ class DevicePartition
                         $lData[] = array("data" => array(
                                     $str, 
                                     $target, 
-                                    $this->__convertPartSize($part['size']),
+                                    $this->__convertPartSize($part['size'], $part['grow'], $part['maxSize']),
                                     $device,
                                     $fsType,
                                     $part['fsOptions'],
@@ -385,10 +385,16 @@ class DevicePartition
 
     /*! \brief  Convert a given size value to a human readable format.
      */
-    function __convertPartSize($size)
+    function __convertPartSize($size, $grow = False, $maxSize = NULL)
     {
-        $label = _("MB");
-        return($size." ".$label);
+        $str = $size." "._("MB");
+
+        if($maxSize != NULL){
+            $str .= " - ".$this->__convertPartSize($maxSize);
+        }elseif($grow){
+            $str .= " - ...  <i>("._("growing").")</i>";
+        }
+        return($str);
     }
 }
 

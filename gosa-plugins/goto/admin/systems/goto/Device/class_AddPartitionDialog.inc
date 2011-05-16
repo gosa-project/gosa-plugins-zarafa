@@ -470,9 +470,6 @@ class AddPartitionDialog
             @$this->partitionObject->addPartition($target,$size, $maxSize, $grow, $format, $boot, $primary,
                     $fsType, $fsOptions , $encrypt, $passphrase, $disk);
 
-            print_a(array($target,$size, $maxSize, $grow, $format, $boot, $primary,
-                    $fsType, $fsOptions , $encrypt, $passphrase, $disk));
-
             // Display potential errors
             if(!$this->partitionObject->success()){
                 $msg = sprintf(_("Failed to add '%s': %s"), _("Partition"), $this->partitionObject->getError());
