@@ -483,8 +483,6 @@ class InstallRecipe extends plugin
             $data[$attr] = ($this->$source) ? $data[$attr] = "TRUE" : $data[$attr] = "FALSE";
         }
 
-        print_a($data);
-
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $data);
        
