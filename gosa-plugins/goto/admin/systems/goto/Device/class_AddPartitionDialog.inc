@@ -128,7 +128,7 @@ class AddPartitionDialog
         }
 
         // Prepare list of volume groups
-        $this->volumeGroups = array();
+        $this->volumeGroupList = array();
         foreach($this->volumeGroups as $vg){
             $this->volumeGroupList[$vg['name']] = $vg['name'];
         }
