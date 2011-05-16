@@ -912,7 +912,7 @@ class newConfigManagement extends plugin
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->setConfigItem($release, $oldItemPath, $type, $values);
                 if(!$rpc->success()){
-                    msg_dialog::display(_("Error"), sprintf(_("Failed to svae config item: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to save config item: %s"), $rpc->get_error()),ERROR_DIALOG);
                     return(NULL);
                 }else{
             
