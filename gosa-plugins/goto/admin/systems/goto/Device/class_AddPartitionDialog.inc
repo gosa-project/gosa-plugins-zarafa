@@ -305,7 +305,7 @@ class AddPartitionDialog
                 return($size * $multiplicator);
             }
         }
-        return(intval(preg_replace("/[^0-9]/", $size)));
+        return(intval(preg_replace("/[^0-9]/", "", $size)));
     }
 
 
@@ -430,10 +430,11 @@ class AddPartitionDialog
             // Collect options
             $size = $this->convertSize($this->p_size);
             $maxSize = NULL;
-            if($this->p_size_options == 2){
+            if($this->p_size_options == 1){
                 $maxSize = $this->p_size_max_value;
             }
-            $grow = $this->p_size_options == 1;
+            $grow = $this->p_size_options == 2;
+
             $format = $this->p_format == 1;
             $boot = $this->p_bootable == 1;
             $primary = $this->p_forcePrimary;
@@ -468,6 +469,9 @@ class AddPartitionDialog
             // Add partition to remote model
             @$this->partitionObject->addPartition($target,$size, $maxSize, $grow, $format, $boot, $primary,
                     $fsType, $fsOptions , $encrypt, $passphrase, $disk);
+
+            print_a(array($target,$size, $maxSize, $grow, $format, $boot, $primary,
+                    $fsType, $fsOptions , $encrypt, $passphrase, $disk));
 
             // Display potential errors
             if(!$this->partitionObject->success()){
