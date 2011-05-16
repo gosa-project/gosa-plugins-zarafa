@@ -255,7 +255,8 @@
                                     {if $p_size_options==1} checked {/if}></td>
                             <td>{t}Fill all space up to{/t} 
                                 <input {if $p_size_options != 1} disabled {/if}
-                                        id="size_max_value"
+                                        id="p_size_max_value"
+                                        name="p_size_max_value"
                                         type="text" value="{$p_size_max_value}">&nbsp;{t}MB{/t}
                             </td>
                         </tr>
