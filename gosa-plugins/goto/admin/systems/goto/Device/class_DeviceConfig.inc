@@ -39,7 +39,7 @@ class DeviceConfig extends plugin
         $this->assignableElementsList->setEditable(TRUE);
         $this->assignableElementsList->setWidth("100%");
         $this->assignableElementsList->setHeight("200px");
-        $this->assignableElementsList->setHeader(array(_("Name")));
+        $this->assignableElementsList->setHeader(array(_("Name"),_("Description"),_("Add")));
         $this->assignableElementsList->setColspecs(array('*','*','20'));
         $this->assignableElementsList->setAcl('rwcdm');
 
@@ -50,7 +50,7 @@ class DeviceConfig extends plugin
         $this->usedElementsList->setEditable(FALSE);
         $this->usedElementsList->setWidth("100%");
         $this->usedElementsList->setHeight("200px");
-        $this->usedElementsList->setHeader(array(_("Name")));
+        $this->usedElementsList->setHeader(array(_("Name"), _("Description"), _("Remove")));
         $this->usedElementsList->setColspecs(array('*','*','20'));
         $this->usedElementsList->setAcl('rwcdm');
 
@@ -251,13 +251,25 @@ class DeviceConfig extends plugin
      */
     function save()
     {
+        // Load assignable elements.
+        $rpc = $this->config->getRpcHandle();
+        $release = $this->parent->by_object['InstallRecipe']->installRelease;
+        $release = preg_replace("/^[^\/]+\//","", $release);
+        $assignableElements = $rpc->listAssignableElements($release);
+        if(!$rpc->success()){
+            msg_dialog::display(_("Error"), msgPool::rpcError($rpc->get_error()), ERROR_DIALOG);
+            return(NULL);
+        }else{
+            $this->assignableElements = $assignableElements;
+        }
+
         // Collect paramter list.
         $params = array();
         foreach($this->usedElements as $name){
             if(isset($this->assignableElements[$name]['parameter'])){
-                $params = array_merge($this->assignableElements[$name]['parameter']);
+                $params = array_merge($params, $this->assignableElements[$name]['parameter']);
             }
-        }    
+        }  
 
         // Decide whoch parameter has to be saved and which has to be removed.
         $save = array();
