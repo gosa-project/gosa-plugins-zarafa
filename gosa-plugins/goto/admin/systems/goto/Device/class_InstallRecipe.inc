@@ -152,6 +152,11 @@ class InstallRecipe extends plugin
         $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
         $this->reloadInstallationKernelPackages($initially);
         $this->reloadInstallationMirrors($initially);
+
+        // Preset the config management method.
+        if(!isset($this->installConfigManagementList[$this->installBootstrapMethod][$this->installConfigManagement])){
+            $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
+        }
     }
 
    

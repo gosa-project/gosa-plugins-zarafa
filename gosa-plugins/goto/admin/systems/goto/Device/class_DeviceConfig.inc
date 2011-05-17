@@ -89,9 +89,11 @@ class DeviceConfig extends plugin
                 $smarty->assign("errorMsg", msgPool::rpcError($this->rpcErrorMessage));
                 return($display.$smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
             }
-            
+           
+ 
             // Load assignable elements.
-            $assignableElements = $rpc->listAssignableElements('squeeze/1.0');
+            $release = $this->parent->by_object['InstallRecipe']->installRelease;
+            $assignableElements = $rpc->listAssignableElements($release);
             if(!$rpc->success()){
                 $smarty = get_smarty();
                 $smarty->assign("error", TRUE);
@@ -265,7 +267,9 @@ class DeviceConfig extends plugin
 
         // Save changes back to server.
         $rpc = $this->config->getRpcHandle();
-        $rpc->systemSetConfigParameters($this->deviceUUID, array('method' => 'puppet', 'var' => $save, 'item' => $this->usedElements));
+        $installConfigManagement = $this->parent->by_object['InstallRecipe']->installConfigManagement;
+        $rpc->systemSetConfigParameters($this->deviceUUID, array('method' => $installConfigManagement, 
+                    'var' => $save, 'item' => $this->usedElements));
         if(!$rpc->success()){
             $this->rpcErrorMessage = $rpc->get_error();
             msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);

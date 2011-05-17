@@ -25,7 +25,7 @@
                 <tr>
                     <td><LABEL for="installConfigManagement">{t}Config management{/t}</LABEL></td>
                     <td>
-                        <select nme="installConfigManagement" size=1 onChange='document.mainform.submit();'>
+                        <select name="installConfigManagement" size=1 onChange='document.mainform.submit();'>
                             {html_options options=$installConfigManagementList 
                             selected=$installConfigManagement}
                         </select>
