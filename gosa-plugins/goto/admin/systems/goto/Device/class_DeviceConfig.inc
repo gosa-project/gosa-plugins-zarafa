@@ -88,18 +88,6 @@ class DeviceConfig extends plugin
                 $smarty->assign("error", TRUE);
                 $smarty->assign("errorMsg", msgPool::rpcError($rpc->get_error()));
                 return($smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
-            }
-           
- 
-            // Load assignable elements.
-            $release = $this->parent->by_object['InstallRecipe']->installRelease;
-            $release = preg_replace("/^[^\/]+\//","", $release);
-            $assignableElements = $rpc->listAssignableElements($release);
-            if(!$rpc->success()){
-                $smarty = get_smarty();
-                $smarty->assign("error", TRUE);
-                $smarty->assign("errorMsg", msgPool::rpcError($rpc->get_error()));
-                return($smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
             }else{
 
                 // Initialization completed.
@@ -107,8 +95,21 @@ class DeviceConfig extends plugin
                 $this->is_account = $this->initially_was_account = isset($res['item']);
                 if(isset($res['var']))     $this->parameterValues = $res['var'];
                 if(isset($res['item']))      $this->usedElements = $res['item'];
-                $this->assignableElements = $assignableElements;
             }
+        }
+
+        // Load assignable elements.
+        $rpc = $this->config->getRpcHandle();
+        $release = $this->parent->by_object['InstallRecipe']->installRelease;
+        $release = preg_replace("/^[^\/]+\//","", $release);
+        $assignableElements = $rpc->listAssignableElements($release);
+        if(!$rpc->success()){
+            $smarty = get_smarty();
+            $smarty->assign("error", TRUE);
+            $smarty->assign("errorMsg", msgPool::rpcError($rpc->get_error()));
+            return($smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
+        }else{
+            $this->assignableElements = $assignableElements;
         }
 
         // Log account access
