@@ -40,7 +40,7 @@ class DeviceConfig extends plugin
         $this->assignableElementsList->setWidth("100%");
         $this->assignableElementsList->setHeight("200px");
         $this->assignableElementsList->setHeader(array(_("Name")));
-        $this->assignableElementsList->setColspecs(array('*'));
+        $this->assignableElementsList->setColspecs(array('*','*','20'));
         $this->assignableElementsList->setAcl('rwcdm');
 
         // Create used Elements list.
@@ -51,7 +51,7 @@ class DeviceConfig extends plugin
         $this->usedElementsList->setWidth("100%");
         $this->usedElementsList->setHeight("200px");
         $this->usedElementsList->setHeader(array(_("Name")));
-        $this->usedElementsList->setColspecs(array('*'));
+        $this->usedElementsList->setColspecs(array('*','*','20'));
         $this->usedElementsList->setAcl('rwcdm');
 
         // Create parameter Elements list.
@@ -61,8 +61,8 @@ class DeviceConfig extends plugin
         $this->parameterList->setEditable(FALSE);
         $this->parameterList->setWidth("100%");
         $this->parameterList->setHeight("200px");
-        $this->parameterList->setHeader(array(_("Type")));
-        $this->parameterList->setColspecs(array('*'));
+        $this->parameterList->setHeader(array(_("Name"), _("Description"), _("Value")));
+        $this->parameterList->setColspecs(array('*','*','350px'));
         $this->parameterList->setAcl('rwcdm');
     }
 
@@ -198,7 +198,7 @@ class DeviceConfig extends plugin
 
                 // Create template widget on demand.
                 if(!isset($this->parameterWidgets[$param])){
-                    $this->parameterWidgets[$param] = new TemplateWidget_string($this->config, $param, $value, 
+                    $this->parameterWidgets[$param] = new TemplateWidget_stringLong($this->config, $param, $value, 
                             $desc, '', FALSE, 'string', $param);
                 }
                 $w = $this->parameterWidgets[$param];
