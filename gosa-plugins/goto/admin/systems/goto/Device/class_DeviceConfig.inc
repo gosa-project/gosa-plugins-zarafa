@@ -21,15 +21,15 @@ class DeviceConfig extends plugin
 
     public $initialized = FALSE;
 
+
     /*! \brief  Initialize the plugin and its widgets. 
-     *          Finally call init() to load values from the backend.
      */ 
     function __construct(&$config, $dn, $parent)
     {
         plugin::plugin($config, $dn);
 
+        // Get the account information from the generic class.
         $this->is_account = $this->initially_was_account = FALSE;
-
         $this->_device = &$parent;
         $this->deviceUUID = $parent->deviceUUID;
 
@@ -66,11 +66,14 @@ class DeviceConfig extends plugin
         $this->parameterList->setAcl('rwcdm');
     }
 
+
     function check()
     {
     }
     
-    
+   
+    /*! \brief  Generates the HTML output for the plugin
+     */ 
     function execute()
     {
 
@@ -91,7 +94,6 @@ class DeviceConfig extends plugin
                 if(isset($res['item']))      $this->usedElements = $res['item'];
             }
         }
-
 
         // Log account access
         if($this->is_account && !$this->view_logged){
@@ -125,13 +127,21 @@ class DeviceConfig extends plugin
             }
         }
 
+        /***************
+          Create the HTML content with its lists
+         ***************/
+
         // Fill list of assignable elements
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->listAssignableElements('squeeze/1.0');
         $this->assignableElements = $res;
         $data = $lData = array();;
         foreach($this->assignableElements as $name => $element){
+
+            // skip already assigned elements
             if(in_array($name, $this->usedElements)) continue;
+
+            // Create the list elements.
             $data[$name] = $element;
             $desc = (isset($element['description'])) ? $element['description'] : '';
             $lData[$name] = array('data' => array($name, $desc));
@@ -142,6 +152,8 @@ class DeviceConfig extends plugin
         // Build list of assigned Elements
         $data = $lData = array();;
         foreach($this->usedElements as $name){
+
+            // check if the assgined element is still available, if not mark it in red.
             if(isset($this->assignableElements[$name])){
                 $element = $this->assignableElements[$name];
                 $data[$name] = $element;
@@ -150,7 +162,6 @@ class DeviceConfig extends plugin
                 $element = NULL;
                 $data[$name] = $element;
                 $desc = "<font color='red'>"._("Unknown config item")."</font>";
-
             }
             $lData[$name] = array('data' => array($name, $desc));
         }
@@ -160,23 +171,27 @@ class DeviceConfig extends plugin
         $data = $lData = array();;
         foreach($this->usedElements as $name){
 
+            // Skip parameters for not existent items.
             if(!isset($this->assignableElements[$name]['parameter'])) continue;
 
+            // Build up the parameter list using the 'TemplateWidget_string' class.
             $parameter = $this->assignableElements[$name]['parameter'];
             foreach($parameter as $param => $desc){
                 $data[$param] = NULL;
                 $value = (isset($this->parameterValues[$param])) ? $this->parameterValues[$param] : "";
 
+                // Create template widget on demand.
                 if(!isset($this->parameterWidgets[$param])){
                     $this->parameterWidgets[$param] = new TemplateWidget_string($this->config, $param, $value, 
                             $desc, '', FALSE, 'string', $param);
                 }
                 $w = $this->parameterWidgets[$param];
-                $lData[$param] = array('data' => array($w->getDisplayName(), $w->render()));
+                $lData[$param] = array('data' => array($w->getDisplayName(),$desc, $w->render()));
             }
         }
         $this->parameterList->setListData($data, $lData);
 
+        // Build up smarty template.
         $smarty = get_smarty();
         $smarty->assign("error", FALSE);
         $smarty->assign("assignableElementsList", $this->assignableElementsList->render());
@@ -186,9 +201,11 @@ class DeviceConfig extends plugin
     }
 
 
+    /*! \brief  Act on posted values.
+     *          And keep track of posted values.
+     */
     function save_object()
     {
-
         // Get posted parameter values
         foreach($this->parameterWidgets as $name => $w){
             $w->save_object();
@@ -213,9 +230,10 @@ class DeviceConfig extends plugin
     }
 
 
+    /*! \brief  Save changes back to the GOsa-ng server.
+     */
     function save()
     {
-        
         // Collect paramter list.
         $params = array();
         foreach($this->usedElements as $name){
@@ -243,6 +261,8 @@ class DeviceConfig extends plugin
     }
 
     
+    /*! \brief  Removes the account from the device.
+     */
     function remove_from_parent()
     {
         // Save changes back to server.
@@ -259,8 +279,8 @@ class DeviceConfig extends plugin
     static function plInfo()
     {
         return (array(
-                    "plShortName"   => _("Device"),
-                    "plDescription" => _("Registered device"),
+                    "plShortName"   => _("Device config"),
+                    "plDescription" => _("Device config"),
                     "plSelfModify"  => FALSE,
                     "plDepends"     => array(),
                     "plPriority"    => 1,
