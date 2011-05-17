@@ -1,10 +1,10 @@
 <table width='100%'>
     <tr>
         <td>
-            {$assignableItemsList}
+            {$assignableElementsList}
         </td>
         <td style='width:50%; vertical-align: top;padding-left:5px;' class='left-border'>
-            {$usedItemsList}
+            {$usedElementsList}
         </td>
     </tr>
     <tr>

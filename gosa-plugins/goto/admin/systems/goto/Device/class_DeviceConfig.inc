@@ -11,9 +11,11 @@ class DeviceConfig extends plugin
     public $parent = NULL;
 
     public $parameterList = NULL;
-    public $usedItemsList = NULL;
-    public $assignableItemsList = NULL;
+    public $usedElementsList = NULL;
+    public $assignableElementsList = NULL;
 
+    public $usedElements = array();
+    public $assignableElements = array();
 
     /*! \brief  Initialize the plugin and its widgets. 
      *          Finally call init() to load values from the backend.
@@ -27,29 +29,31 @@ class DeviceConfig extends plugin
         $this->_device = &$parent;
         $this->deviceUUID = $parent->deviceUUID;
 
-        // Create assignable items list.
-        $this->assignableItemsList = new sortableListing();
-        $this->assignableItemsList->setDeleteable(FALSE);
-        $this->assignableItemsList->setEditable(TRUE);
-        $this->assignableItemsList->setWidth("100%");
-        $this->assignableItemsList->setHeight("200px");
-        $this->assignableItemsList->setHeader(array(_("Type")));
-        $this->assignableItemsList->setColspecs(array('*'));
-        $this->assignableItemsList->setAcl('rwcdm');
+        // Create assignable Elements list.
+        $this->assignableElementsList = new sortableListing();
+        $this->assignableElementsList->setDeleteable(FALSE);
+        $this->assignableElementsList->setEditable(TRUE);
+        $this->assignableElementsList->setWidth("100%");
+        $this->assignableElementsList->setHeight("200px");
+        $this->assignableElementsList->setHeader(array(_("Name")));
+        $this->assignableElementsList->setColspecs(array('*'));
+        $this->assignableElementsList->setAcl('rwcdm');
 
-        // Create used items list.
-        $this->usedItemsList = new sortableListing();
-        $this->usedItemsList->setDeleteable(FALSE);
-        $this->usedItemsList->setEditable(TRUE);
-        $this->usedItemsList->setWidth("100%");
-        $this->usedItemsList->setHeight("200px");
-        $this->usedItemsList->setHeader(array(_("Type")));
-        $this->usedItemsList->setColspecs(array('*'));
-        $this->usedItemsList->setAcl('rwcdm');
+        // Create used Elements list.
+        $this->usedElementsList = new sortableListing();
+        $this->usedElementsList->setDeleteable(TRUE);
+        $this->usedElementsList->setInstantDelete(FALSE);
+        $this->usedElementsList->setEditable(FALSE);
+        $this->usedElementsList->setWidth("100%");
+        $this->usedElementsList->setHeight("200px");
+        $this->usedElementsList->setHeader(array(_("Name")));
+        $this->usedElementsList->setColspecs(array('*'));
+        $this->usedElementsList->setAcl('rwcdm');
 
-        // Create parameter items list.
+        // Create parameter Elements list.
         $this->parameterList = new sortableListing();
-        $this->parameterList->setDeleteable(FALSE);
+        $this->parameterList->setDeleteable(TRUE);
+        $this->parameterList->setInstantDelete(FALSE);
         $this->parameterList->setEditable(TRUE);
         $this->parameterList->setWidth("100%");
         $this->parameterList->setHeight("200px");
@@ -65,6 +69,7 @@ class DeviceConfig extends plugin
     
     function execute()
     {
+
         // Log account access
         if($this->is_account && !$this->view_logged){
             $this->view_logged = TRUE;
@@ -97,9 +102,48 @@ class DeviceConfig extends plugin
             }
         }
 
+        // Fill list of assignable elements
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->listAssignableElements('squeeze/1.0');
+        $this->assignableElements = $res;
+        $data = $lData = array();;
+        foreach($this->assignableElements as $name => $element){
+            if(in_array($name, $this->usedElements)) continue;
+            $data[$name] = $element;
+            $desc = (isset($element['description'])) ? $element['description'] : '';
+            $lData[$name] = array('data' => array($name, $desc));
+            
+        }
+        $this->assignableElementsList->setListData($data, $lData);
+
+        // Build list of assigned Elements
+        $data = $lData = array();;
+        foreach($this->usedElements as $name){
+            $element = $this->assignableElements[$name];
+            $data[$name] = $element;
+            $desc = (isset($element['description'])) ? $element['description'] : '';
+            $lData[$name] = array('data' => array($name, $desc));
+        }
+        $this->usedElementsList->setListData($data, $lData);
+        
+        // Build up parameter list
+        $data = $lData = array();;
+        foreach($this->usedElements as $name){
+            $parameter = $this->assignableElements[$name]['parameter'];
+            foreach($parameter as $name => $desc){
+                $data[$name] = NULL;
+                $lData[$name] = array('data' => array($desc));
+            }
+            $value = (isset($this->parameterValues[$name])) ? $this->parameterValues[$name] : "<i>"._('unset')."</i>";
+            $lData[$name] = array('data' => array($name, $value));
+        }
+        $this->parameterList->setListData($data, $lData);
+        
+
+
         $smarty = get_smarty();
-        $smarty->assign("assignableItemsList", $this->assignableItemsList->render());
-        $smarty->assign("usedItemsList", $this->usedItemsList->render());
+        $smarty->assign("assignableElementsList", $this->assignableElementsList->render());
+        $smarty->assign("usedElementsList", $this->usedElementsList->render());
         $smarty->assign("parameterList", $this->parameterList->render());
         return($display.$smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
     }
@@ -107,6 +151,22 @@ class DeviceConfig extends plugin
 
     function save_object()
     {
+
+        // Act on Add-Element actions
+        $this->assignableElementsList->save_object();
+        $action = $this->assignableElementsList->getAction();
+        if($action['action'] == 'edit'){
+            $this->usedElements[] = $this->assignableElementsList->getKey($action['targets'][0]);
+            $this->usedElements = array_unique($this->usedElements);
+        }
+
+        // Act on Remove-Item actions
+        $this->usedElementsList->save_object();
+        $action = $this->usedElementsList->getAction();
+        if($action['action'] == 'delete'){
+            $name = $this->usedElementsList->getKey($action['targets'][0]);
+            $this->usedElements = array_remove_entries_ics(array($name), $this->usedElements);
+        }
     }
 
 
