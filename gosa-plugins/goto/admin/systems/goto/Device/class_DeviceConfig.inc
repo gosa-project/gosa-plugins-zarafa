@@ -56,7 +56,7 @@ class DeviceConfig extends plugin
 
         // Create parameter Elements list.
         $this->parameterList = new sortableListing();
-        $this->parameterList->setDeleteable(TRUE);
+        $this->parameterList->setDeleteable(FALSE);
         $this->parameterList->setInstantDelete(FALSE);
         $this->parameterList->setEditable(FALSE);
         $this->parameterList->setWidth("100%");
