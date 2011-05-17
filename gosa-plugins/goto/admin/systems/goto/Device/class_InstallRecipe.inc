@@ -155,7 +155,10 @@ class InstallRecipe extends plugin
 
         // Preset the config management method.
         if(!isset($this->installConfigManagementList[$this->installBootstrapMethod][$this->installConfigManagement])){
-            $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
+            if(isset($this->installConfigManagementList[$this->installBootstrapMethod]) && 
+                count($this->installConfigManagementList[$this->installBootstrapMethod])){
+                $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
+            }
         }
     }
 

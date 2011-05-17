@@ -86,19 +86,20 @@ class DeviceConfig extends plugin
             if(!$rpc->success()){
                 $smarty = get_smarty();
                 $smarty->assign("error", TRUE);
-                $smarty->assign("errorMsg", msgPool::rpcError($this->rpcErrorMessage));
-                return($display.$smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
+                $smarty->assign("errorMsg", msgPool::rpcError($rpc->get_error()));
+                return($smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
             }
            
  
             // Load assignable elements.
             $release = $this->parent->by_object['InstallRecipe']->installRelease;
+            $release = preg_replace("/^[^\/]+\//","", $release);
             $assignableElements = $rpc->listAssignableElements($release);
             if(!$rpc->success()){
                 $smarty = get_smarty();
                 $smarty->assign("error", TRUE);
-                $smarty->assign("errorMsg", msgPool::rpcError($this->rpcErrorMessage));
-                return($display.$smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
+                $smarty->assign("errorMsg", msgPool::rpcError($rpc->get_error()));
+                return($smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
             }else{
 
                 // Initialization completed.
@@ -271,8 +272,7 @@ class DeviceConfig extends plugin
         $rpc->systemSetConfigParameters($this->deviceUUID, array('method' => $installConfigManagement, 
                     'var' => $save, 'item' => $this->usedElements));
         if(!$rpc->success()){
-            $this->rpcErrorMessage = $rpc->get_error();
-            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::rpcError($rpc->get_error()), ERROR_DIALOG);
             return(NULL);
         }
     }
@@ -286,8 +286,7 @@ class DeviceConfig extends plugin
         $rpc = $this->config->getRpcHandle();
         $rpc->removeConfigParameters($this->deviceUUID);
         if(!$rpc->success()){
-            $this->rpcErrorMessage = $rpc->get_error();
-            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::rpcError($rpc->get_error()), ERROR_DIALOG);
             return(NULL);
         }
     }
