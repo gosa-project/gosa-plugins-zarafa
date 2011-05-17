@@ -16,6 +16,10 @@ class DeviceConfig extends plugin
 
     public $usedElements = array();
     public $assignableElements = array();
+    public $parameterValues = array();
+    public $parameterWidgets = array();
+
+    public $initialized = FALSE;
 
     /*! \brief  Initialize the plugin and its widgets. 
      *          Finally call init() to load values from the backend.
@@ -54,7 +58,7 @@ class DeviceConfig extends plugin
         $this->parameterList = new sortableListing();
         $this->parameterList->setDeleteable(TRUE);
         $this->parameterList->setInstantDelete(FALSE);
-        $this->parameterList->setEditable(TRUE);
+        $this->parameterList->setEditable(FALSE);
         $this->parameterList->setWidth("100%");
         $this->parameterList->setHeight("200px");
         $this->parameterList->setHeader(array(_("Type")));
@@ -69,6 +73,25 @@ class DeviceConfig extends plugin
     
     function execute()
     {
+
+        // Initialize to plugin
+        if(!$this->initialized){
+            $rpc = $this->config->getRpcHandle();
+            $res = $rpc->systemGetConfigParameters($this->deviceUUID);
+            if(!$rpc->success()){
+                $smarty = get_smarty();
+                $smarty->assign("error", TRUE);
+                $smarty->assign("errorMsg", msgPool::rpcError($this->rpcErrorMessage));
+                return($display.$smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
+            }else{
+                $this->initialized = TRUE;
+                $this->is_account = $this->initially_was_account = isset($res['item']);
+            
+                if(isset($res['var']))     $this->parameterValues = $res['var'];
+                if(isset($res['item']))      $this->usedElements = $res['item'];
+            }
+        }
+
 
         // Log account access
         if($this->is_account && !$this->view_logged){
@@ -133,14 +156,19 @@ class DeviceConfig extends plugin
             foreach($parameter as $param => $desc){
                 $data[$param] = NULL;
             }
-            $value = (isset($this->parameterValues[$param])) ? $this->parameterValues[$param] : "<i>"._('unset')."</i>";
-            $lData[$param] = array('data' => array($name, $param, $value));
+            $value = (isset($this->parameterValues[$param])) ? $this->parameterValues[$param] : "";
+
+            if(!isset($this->parameterWidgets[$param])){
+                $this->parameterWidgets[$param] = new TemplateWidget_string($this->config, $param, $value, 
+                        $desc, '', FALSE, 'string', $param);
+            }
+            $w = $this->parameterWidgets[$param];
+            $lData[$param] = array('data' => array($w->getDisplayName(), $w->render()));
         }
         $this->parameterList->setListData($data, $lData);
-        
-
 
         $smarty = get_smarty();
+        $smarty->assign("error", FALSE);
         $smarty->assign("assignableElementsList", $this->assignableElementsList->render());
         $smarty->assign("usedElementsList", $this->usedElementsList->render());
         $smarty->assign("parameterList", $this->parameterList->render());
@@ -150,6 +178,12 @@ class DeviceConfig extends plugin
 
     function save_object()
     {
+
+        // Get posted parameter values
+        foreach($this->parameterWidgets as $name => $w){
+            $w->save_object();
+            $this->parameterValues[$name] = $w->getValue();
+        }
 
         // Act on Add-Element actions
         $this->assignableElementsList->save_object();
@@ -171,11 +205,42 @@ class DeviceConfig extends plugin
 
     function save()
     {
+        
+        // Collect paramter list.
+        $params = array();
+        foreach($this->usedElements as $name){
+            $params = array_merge($this->assignableElements[$name]['parameter']);
+        }    
+
+        // Decide whoch parameter has to be saved and which has to be removed.
+        $save = array();
+        foreach($this->parameterValues as $name => $value){
+            if(isset($params[$name])){
+                $save[$name] = $value;
+            }
+        }
+
+        // Save changes back to server.
+        $rpc = $this->config->getRpcHandle();
+        $rpc->systemSetConfigParameters($this->deviceUUID, array('method' => 'puppet', 'var' => $save, 'item' => $this->usedElements));
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return(NULL);
+        }
     }
 
     
     function remove_from_parent()
     {
+        // Save changes back to server.
+        $rpc = $this->config->getRpcHandle();
+        $rpc->removeConfigParameters($this->deviceUUID);
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return(NULL);
+        }
     }
  
     
