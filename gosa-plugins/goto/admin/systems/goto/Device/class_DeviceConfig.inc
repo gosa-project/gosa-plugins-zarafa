@@ -79,6 +79,8 @@ class DeviceConfig extends plugin
 
         // Initialize to plugin
         if(!$this->initialized){
+
+            // Load config settings for the current device.
             $rpc = $this->config->getRpcHandle();
             $res = $rpc->systemGetConfigParameters($this->deviceUUID);
             if(!$rpc->success()){
@@ -86,12 +88,23 @@ class DeviceConfig extends plugin
                 $smarty->assign("error", TRUE);
                 $smarty->assign("errorMsg", msgPool::rpcError($this->rpcErrorMessage));
                 return($display.$smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
+            }
+            
+            // Load assignable elements.
+            $assignableElements = $rpc->listAssignableElements('squeeze/1.0');
+            if(!$rpc->success()){
+                $smarty = get_smarty();
+                $smarty->assign("error", TRUE);
+                $smarty->assign("errorMsg", msgPool::rpcError($this->rpcErrorMessage));
+                return($display.$smarty->fetch(get_template_path('goto/Device/DeviceConfig.tpl', TRUE)));
             }else{
+
+                // Initialization completed.
                 $this->initialized = TRUE;
                 $this->is_account = $this->initially_was_account = isset($res['item']);
-            
                 if(isset($res['var']))     $this->parameterValues = $res['var'];
                 if(isset($res['item']))      $this->usedElements = $res['item'];
+                $this->assignableElements = $assignableElements;
             }
         }
 
@@ -132,9 +145,6 @@ class DeviceConfig extends plugin
          ***************/
 
         // Fill list of assignable elements
-        $rpc = $this->config->getRpcHandle();
-        $res = $rpc->listAssignableElements('squeeze/1.0');
-        $this->assignableElements = $res;
         $data = $lData = array();;
         foreach($this->assignableElements as $name => $element){
 
@@ -148,6 +158,7 @@ class DeviceConfig extends plugin
             
         }
         $this->assignableElementsList->setListData($data, $lData);
+        $this->assignableElementsList->update();
 
         // Build list of assigned Elements
         $data = $lData = array();;
@@ -166,6 +177,7 @@ class DeviceConfig extends plugin
             $lData[$name] = array('data' => array($name, $desc));
         }
         $this->usedElementsList->setListData($data, $lData);
+        $this->usedElementsList->update();
         
         // Build up parameter list
         $data = $lData = array();;
@@ -190,6 +202,7 @@ class DeviceConfig extends plugin
             }
         }
         $this->parameterList->setListData($data, $lData);
+        $this->parameterList->update();
 
         // Build up smarty template.
         $smarty = get_smarty();
