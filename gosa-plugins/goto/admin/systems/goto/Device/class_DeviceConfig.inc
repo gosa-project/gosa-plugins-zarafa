@@ -142,9 +142,16 @@ class DeviceConfig extends plugin
         // Build list of assigned Elements
         $data = $lData = array();;
         foreach($this->usedElements as $name){
-            $element = $this->assignableElements[$name];
-            $data[$name] = $element;
-            $desc = (isset($element['description'])) ? $element['description'] : '';
+            if(isset($this->assignableElements[$name])){
+                $element = $this->assignableElements[$name];
+                $data[$name] = $element;
+                $desc = (isset($element['description'])) ? $element['description'] : '';
+            }else{
+                $element = NULL;
+                $data[$name] = $element;
+                $desc = "<font color='red'>"._("Unknown config item")."</font>";
+
+            }
             $lData[$name] = array('data' => array($name, $desc));
         }
         $this->usedElementsList->setListData($data, $lData);
@@ -152,18 +159,21 @@ class DeviceConfig extends plugin
         // Build up parameter list
         $data = $lData = array();;
         foreach($this->usedElements as $name){
+
+            if(!isset($this->assignableElements[$name]['parameter'])) continue;
+
             $parameter = $this->assignableElements[$name]['parameter'];
             foreach($parameter as $param => $desc){
                 $data[$param] = NULL;
-            }
-            $value = (isset($this->parameterValues[$param])) ? $this->parameterValues[$param] : "";
+                $value = (isset($this->parameterValues[$param])) ? $this->parameterValues[$param] : "";
 
-            if(!isset($this->parameterWidgets[$param])){
-                $this->parameterWidgets[$param] = new TemplateWidget_string($this->config, $param, $value, 
-                        $desc, '', FALSE, 'string', $param);
+                if(!isset($this->parameterWidgets[$param])){
+                    $this->parameterWidgets[$param] = new TemplateWidget_string($this->config, $param, $value, 
+                            $desc, '', FALSE, 'string', $param);
+                }
+                $w = $this->parameterWidgets[$param];
+                $lData[$param] = array('data' => array($w->getDisplayName(), $w->render()));
             }
-            $w = $this->parameterWidgets[$param];
-            $lData[$param] = array('data' => array($w->getDisplayName(), $w->render()));
         }
         $this->parameterList->setListData($data, $lData);
 
@@ -209,7 +219,9 @@ class DeviceConfig extends plugin
         // Collect paramter list.
         $params = array();
         foreach($this->usedElements as $name){
-            $params = array_merge($this->assignableElements[$name]['parameter']);
+            if(isset($this->assignableElements[$name]['parameter'])){
+                $params = array_merge($this->assignableElements[$name]['parameter']);
+            }
         }    
 
         // Decide whoch parameter has to be saved and which has to be removed.
