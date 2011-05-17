@@ -130,12 +130,11 @@ class DeviceConfig extends plugin
         $data = $lData = array();;
         foreach($this->usedElements as $name){
             $parameter = $this->assignableElements[$name]['parameter'];
-            foreach($parameter as $name => $desc){
-                $data[$name] = NULL;
-                $lData[$name] = array('data' => array($desc));
+            foreach($parameter as $param => $desc){
+                $data[$param] = NULL;
             }
-            $value = (isset($this->parameterValues[$name])) ? $this->parameterValues[$name] : "<i>"._('unset')."</i>";
-            $lData[$name] = array('data' => array($name, $value));
+            $value = (isset($this->parameterValues[$param])) ? $this->parameterValues[$param] : "<i>"._('unset')."</i>";
+            $lData[$param] = array('data' => array($name, $param, $value));
         }
         $this->parameterList->setListData($data, $lData);
         
