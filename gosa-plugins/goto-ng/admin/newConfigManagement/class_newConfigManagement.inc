@@ -727,8 +727,6 @@ class newConfigManagement extends plugin
             }
             if(in_array($values['name'],$usedNames)){
                 $msgs[] = msgPool::duplicated(_("Name"));
-            #}elseif(preg_match("/[^a-z0-9\.]/i",$values['name'])){
-            #    $msgs[] = msgPool::invalid(_("Name"), $values['name'], '/[a-z0-9\.]/');
             }
         }
 
@@ -840,6 +838,29 @@ class newConfigManagement extends plugin
                         $this->listing->clearDialogObject();
                     }
                 }
+            }elseif($type == "Template"){
+
+                    // Initiate the rpc request.
+                    $rpc = $this->config->getRpcHandle();
+                    $res = $rpc->installSetTemplate($values['name'], $values);
+                    if(!$rpc->success()){
+                        msg_dialog::display(_("Error"), sprintf(_("Failed to save template: %s"), $rpc->get_error()),ERROR_DIALOG);
+                        return(NULL);
+                    }else{
+                        
+                        // We've successfully added/saved the item, now add it to the tree.
+                        if(!$item){
+                            $this->dataModel->addItem($type, $this->selectedContainer, $values['name'],$values, '-' );
+                            $this->listing->clearDialogObject();
+                        }else{
+
+                            // Update the model and clear the dialogs 
+                            $path = $item['path'];
+                            $this->dataModel->setItemValues($path, $values);
+                            $this->listing->clearDialogObject();
+                        }
+                    }
+                
             }else{
                 echo "{$type} Cannot be saved yet";
                 $this->listing->clearDialogObject();

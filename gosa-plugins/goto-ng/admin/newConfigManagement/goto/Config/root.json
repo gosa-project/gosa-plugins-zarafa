@@ -92,7 +92,7 @@
                     "name": {
                         "description": "Name",
                         "default": "",
-                        "syntax": "/^[a-z0-9\-\.]*$/i",
+                        "syntax": "/^[a-z0-9\\-\\.]*$/i",
                         "value": "",
                         "required": true,
                         "type": "string",
@@ -119,6 +119,7 @@
                         "value": "",
                         "syntax": "/^[a-z0-9\\-]*$/i",
                         "required": true,
+                        "initiallyEditableOnly": true,
                         "type": "string",
                         "display": "Name"
                     },

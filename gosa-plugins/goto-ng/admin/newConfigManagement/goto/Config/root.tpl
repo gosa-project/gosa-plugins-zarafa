@@ -28,7 +28,7 @@
         </td>
         <td class="left-border">
         </td><td>
-            <table>
+            <table width="100%">
                 <tr>
                     <td>{$architecturesName}</td>
                     <td>{$architectures}</td>
