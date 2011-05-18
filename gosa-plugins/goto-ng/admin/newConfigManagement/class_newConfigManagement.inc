@@ -102,11 +102,14 @@ class newConfigManagement extends plugin
         $map['%INSTALLATION_METHODS'] = array('puppet' => 'puppet');
         $map['%TEMPLATE_METHODS'] = array('preseed' => 'preseed');
         $this->itemConfig = $this->__fillPlaceholder($this->itemConfig, $map);
-
         return(TRUE);
     }
 
 
+    /*! \brief  Fill in replacements in the itemConfig
+     *          Some values are dynamic and cannot be hardcoded, a placeholder is
+     *           used in this case in the deinition file root.json. 
+     */
     function __fillPlaceholder($data, $placeholder)
     {
         foreach($data as $name => $sData){
@@ -114,10 +117,8 @@ class newConfigManagement extends plugin
                 $data[$name] = $this->__fillPlaceholder($data[$name], $placeholder);
             }elseif(is_string($sData) && isset($placeholder[$sData])){
                 $data[$name] = &$placeholder[$sData];
-                echo "Jep {$name}";
             }
         }
- 
         return($data);
     }
 
