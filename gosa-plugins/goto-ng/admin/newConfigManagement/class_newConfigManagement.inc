@@ -727,8 +727,8 @@ class newConfigManagement extends plugin
             }
             if(in_array($values['name'],$usedNames)){
                 $msgs[] = msgPool::duplicated(_("Name"));
-            }elseif(preg_match("/[^a-z0-9\.]/i",$values['name'])){
-                $msgs[] = msgPool::invalid(_("Name"), $values['name'], '/[a-z0-9\.]/');
+            #}elseif(preg_match("/[^a-z0-9\.]/i",$values['name'])){
+            #    $msgs[] = msgPool::invalid(_("Name"), $values['name'], '/[a-z0-9\.]/');
             }
         }
 
