@@ -31,6 +31,7 @@ class newConfigManagement extends plugin
         $this->config = &$config;
         $this->listing = new ConfigManagementListing($this->config, get_userinfo(), $this);
 
+
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
         $this->TemplateEngine = new TemplateEngine($config);
@@ -61,6 +62,24 @@ class newConfigManagement extends plugin
 
         // Load configuration via rpc.
         $rpc = $this->config->getRpcHandle();
+
+        // Load some base install parameters
+        $res = $rpc->getSupportedBaseInstallMethods();
+        $baseInstTypes = $installationTypes = $installationMethods = array();
+        foreach($res as $type => $data){
+            $baseInstTypes[$type] = $type;
+            if(isset($data['repositories'])){
+                foreach($data['repositories'] as $m){
+                    $installationTypes[$m] = $m;
+                }
+            }
+            if(isset($data['methods'])){
+                foreach($data['methods'] as $m){
+                    $installationMethods[$m] =$m;
+                }
+            }
+        }
+
         $res = $rpc->getSupportedInstallMethods();
         if(!$rpc->success()){
             $this->errorMessage = $rpc->get_error();;
@@ -100,7 +119,7 @@ class newConfigManagement extends plugin
         $map['%ROOT_CFG_ITEMS'] = &$rootElements;
         $map['%INSTALLATION_TYPES'] = array('dep' => 'dep', 'rpm' => 'rpm');
         $map['%INSTALLATION_METHODS'] = array('puppet' => 'puppet');
-        $map['%TEMPLATE_METHODS'] = array('preseed' => 'preseed');
+        $map['%BASE_INSTALLATION_METHODS'] = array('preseed' => 'preseed');
         $this->itemConfig = $this->__fillPlaceholder($this->itemConfig, $map);
         return(TRUE);
     }

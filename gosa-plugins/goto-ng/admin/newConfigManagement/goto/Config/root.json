@@ -130,7 +130,7 @@
                         "required": true,
                         "type": "combobox",
                         "display": "Method",
-                        "values": "%TEMPLATE_METHODS",
+                        "values": "%BASE_INSTALLATION_METHODS",
                         "initiallyEditableOnly": true
                     },
                     "data": {
