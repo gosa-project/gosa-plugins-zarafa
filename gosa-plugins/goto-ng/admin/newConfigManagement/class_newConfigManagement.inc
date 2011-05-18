@@ -34,7 +34,6 @@ class newConfigManagement extends plugin
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
         $this->TemplateEngine = new TemplateEngine($config);
-        $this->installationMethods = json_decode(file_get_contents(get_template_path('goto/Config/root.json', TRUE)), TRUE);
     }
 
     
@@ -57,6 +56,9 @@ class newConfigManagement extends plugin
      */
     function loadInstallationMethods()
     {
+        // Get static installation methods.
+        $this->installationMethods = json_decode(file_get_contents(get_template_path('goto/Config/root.json', TRUE)), TRUE);
+
         // Load configuration via rpc.
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getSupportedInstallMethods();
@@ -78,7 +80,7 @@ class newConfigManagement extends plugin
             $this->cfgItemMap = array();
             $this->itemConfig = array();
             $this->itemsPerMethod = array();
-            $rootElements = array();
+            $rootElements = array('Release');
             foreach($this->installationMethods as $method => $items){
                 foreach($items['items'] as $itemName => $item){
                     $this->itemsPerMethod[$method][] = $itemName;
@@ -92,15 +94,31 @@ class newConfigManagement extends plugin
                     }
                 }
             }
+        }
 
-            // Merge in root elements to releases.
-            foreach($this->itemConfig as $item => $data){
-                if(in_array('__CFG_ITEMS__', $data['container'])){
-                    $this->itemConfig[$item]['container'] = array_merge($this->itemConfig[$item]['container'], $rootElements );
-                }
+        // Fill replacements
+        $map['%ROOT_CFG_ITEMS'] = &$rootElements;
+        $map['%INSTALLATION_TYPES'] = array('dep' => 'dep', 'rpm' => 'rpm');
+        $map['%INSTALLATION_METHODS'] = array('puppet' => 'puppet');
+        $map['%TEMPLATE_METHODS'] = array('preseed' => 'preseed');
+        $this->itemConfig = $this->__fillPlaceholder($this->itemConfig, $map);
+
+        return(TRUE);
+    }
+
+
+    function __fillPlaceholder($data, $placeholder)
+    {
+        foreach($data as $name => $sData){
+            if(is_array($sData)){
+                $data[$name] = $this->__fillPlaceholder($data[$name], $placeholder);
+            }elseif(is_string($sData) && isset($placeholder[$sData])){
+                $data[$name] = &$placeholder[$sData];
+                echo "Jep {$name}";
             }
         }
-        return(TRUE);
+ 
+        return($data);
     }
 
 

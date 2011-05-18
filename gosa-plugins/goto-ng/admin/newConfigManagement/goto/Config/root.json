@@ -37,10 +37,7 @@
                         "required": true,
                         "type": "combobox",
                         "display": "Distribution type",
-                        "values": {
-                            "deb": "deb",
-                            "rpm": "rpm"
-                        },
+                        "values": "%INSTALLATION_TYPES",
                         "initiallyEditableOnly": true
                     },
                     "installation_method": {
@@ -50,9 +47,7 @@
                         "required": false,
                         "type": "combobox",
                         "display": "Installation method",
-                        "values": {
-                            "puppet": "Puppet"
-                        },
+                        "values": "%INSTALLATION_METHODS",
                         "initiallyEditableOnly": true
                     },
                     "architectures": {
@@ -82,10 +77,7 @@
                 }
             },
             "Release": {
-                "container": [
-                    "Release",
-                    "__CFG_ITEMS__"
-                ],
+                "container": "%ROOT_CFG_ITEMS",
                 "name": "Release",
                 "description": "Release",
                 "options": {
@@ -136,8 +128,10 @@
                         "default": "",
                         "value": "",
                         "required": true,
-                        "type": "string",
-                        "display": "Methode"
+                        "type": "combobox",
+                        "display": "Method",
+                        "values": "%TEMPLATE_METHODS",
+                        "initiallyEditableOnly": true
                     },
                     "data": {
                         "description": "Data",
