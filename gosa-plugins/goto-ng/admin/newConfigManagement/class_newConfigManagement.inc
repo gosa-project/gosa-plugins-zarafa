@@ -535,6 +535,18 @@ class newConfigManagement extends plugin
                         $this->dataModel->removeItem($item['path']);
                     }
 
+                }elseif($item['type'] == 'Template'){
+
+                    // Remove Template
+                    $rpc = $this->config->getRpcHandle();
+                    $rpc->installRemoveTemplate($item['name']);
+                    if(!$rpc->success()){
+                        msg_dialog::display(_("Error"), sprintf(_("Failed to remove the template: %s. Error was: %s"), 
+                                    $release, $rpc->get_error()),ERROR_DIALOG);
+                        return(NULL);
+                    }else{
+                        $this->dataModel->removeItem($item['path']);
+                    }
                 }else{
                     trigger_error($item['type']." - are not handled yet!");
                 }
