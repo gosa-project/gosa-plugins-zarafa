@@ -34,70 +34,7 @@ class newConfigManagement extends plugin
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
         $this->TemplateEngine = new TemplateEngine($config);
-
-        // Preset item config - with Distribution and Release objects.
-        $items = array();
-        $items['root']['container'] = array('Distribution', 'Template');
-        $items['root']['name'] = '/';
-        $items['root']['description'] = _('Root');
-
-        // Define distribution paramters.
-        $dOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
-                'type' => 'string', 'display' => _('Name'), 'initiallyEditableOnly' => TRUE);
-        $dOpt2 = array('description' => _('Distribution type'), 'default' => 'deb', 'value' => 'deb', 'required' => true,
-                'type' => 'combobox', 'display' => _('Distribution type'), 
-                'values' => array("deb" => 'deb', "rpm" => 'rpm'), 'initiallyEditableOnly' => TRUE);
-        $dOpt3 = array('description' => _('Mirror Url'), 'default' => '', 'value' => '', 'required' => false,
-                'type' => 'string', 'display' => _('Mirror Url'),
-                'initiallyEditableOnly' => TRUE);
-        $dOpt4 = array('description' => _('Method'), 'default' => 'puppet', 'value' => 'puppet', 'required' => false,
-                'type' => 'combobox', 'display' => _('Installation method'), 'values'=>array('puppet'=>_('Puppet')),
-                'initiallyEditableOnly' => TRUE);
-        $dOpt5 = array('description' => _('Architecture'), 'default' => '', 'value' => '', 'required' => false,
-                'type' => 'list', 'display' => _('Architecture'));
-        $dOpt6 = array('description' => _('Component'), 'default' => '', 'value' => '', 'required' => false,
-                'type' => 'list', 'display' => _('Component'));
-        $dOpt7 = array('description' => _('Mirror sources'), 'default' => '', 'value' => '', 'required' => false,
-                'type' => 'checkbox', 'display' => _('Mirror sources'));
-
-        // Define release parameters
-        $rOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
-                'type' => 'string', 'display' => _('Name'));
-
-        // Define template parameters
-        $tOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
-                'type' => 'string', 'display' => _('Name'));
-
-        $items['Distribution']['container'] = array('Release');
-        $items['Distribution']['name'] = 'Distribution';
-        $items['Distribution']['description'] = _('Distribution');
-        $items['Distribution']['options']['name'] = $dOpt1;
-        $items['Distribution']['options']['origin'] = $dOpt3;
-        $items['Distribution']['options']['installation_type'] = $dOpt2;
-        $items['Distribution']['options']['installation_method'] = $dOpt4;
-
-        $items['Distribution']['options']['architectures'] = $dOpt5;
-        $items['Distribution']['options']['components'] = $dOpt6;
-        $items['Distribution']['options']['mirror_sources'] = $dOpt7;
-
-        $items['Release']['container'] = array('Release', '__CFG_ITEMS__');
-        $items['Release']['name'] = 'Release';
-        $items['Release']['description'] = _('Release');
-        $items['Release']['options']['name'] = $rOpt1;
-
-        $items['Template']['container'] = array();
-        $items['Template']['name'] = 'Template';
-        $items['Template']['description'] = _('Template');
-        $items['Template']['options']['name'] = $tOpt1;
-
-        $this->installationMethods = array();
-        $this->installationMethods['root']['description'] = _('root');
-        $this->installationMethods['root']['name'] = 'root';
-        $this->installationMethods['root']['title'] = _('root');
-        $this->installationMethods['root']['items']['Distribution'] = &$items['Distribution'];
-        $this->installationMethods['root']['items']['Release'] = &$items['Release'];
-        $this->installationMethods['root']['items']['root'] = &$items['root'];
-        $this->installationMethods['root']['items']['Template'] = &$items['Template'];
+        $this->installationMethods = json_decode(file_get_contents(get_template_path('goto/Config/root.xml', TRUE)), TRUE);
     }
 
     
@@ -185,7 +122,7 @@ class newConfigManagement extends plugin
         } 
         foreach($res as $tName => $tData){
             $tData['name'] = $tName;
-            $this->dataModel->addItem('Template','/root', $tName, $tData);
+            $this->dataModel->addItem('Template','/root', $tName, $tData, '-');
         }
 
 
@@ -635,6 +572,19 @@ class newConfigManagement extends plugin
                 $res = $rpc->getConfigItem($release, $path);
                 if(!$rpc->success()){
                     msg_dialog::display(_("Error"), sprintf(_("Failed to load config item details: %s"), $rpc->get_error()),ERROR_DIALOG);
+                    return;
+                }else{
+                    $item['values'] = $res;
+                    $this->dataModel->setItemStatus($item['path'], 'fetched');
+                    $this->dataModel->setItemValues($item['path'], $item['values']);
+                }
+            }
+        }elseif($item['type'] == 'Template'){
+            if($item['status'] == '-'){
+                $rpc = $this->config->getRpcHandle();
+                $res = $rpc->installGetTemplate($item['name']);
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), sprintf(_("Failed to load template details: %s"), $rpc->get_error()),ERROR_DIALOG);
                     return;
                 }else{
                     $item['values'] = $res;

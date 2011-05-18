@@ -54,5 +54,17 @@
         <td>{$nameName}</td>
         <td>{$name}</td>
     </tr>
+    <tr>
+        <td>{$descriptionName}</td>
+        <td>{$description}</td>
+    </tr>
+    <tr>
+        <td>{$methodName}</td>
+        <td>{$method}</td>
+    </tr>
+    <tr>
+        <td>{$dataName}</td>
+        <td>{$data}</td>
+    </tr>
 </table>
 {/if}
