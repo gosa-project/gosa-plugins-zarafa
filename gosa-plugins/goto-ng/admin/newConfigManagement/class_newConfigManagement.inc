@@ -34,7 +34,7 @@ class newConfigManagement extends plugin
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
         $this->TemplateEngine = new TemplateEngine($config);
-        $this->installationMethods = json_decode(file_get_contents(get_template_path('goto/Config/root.xml', TRUE)), TRUE);
+        $this->installationMethods = json_decode(file_get_contents(get_template_path('goto/Config/root.json', TRUE)), TRUE);
     }
 
     
