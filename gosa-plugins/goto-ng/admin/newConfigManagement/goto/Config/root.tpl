@@ -48,4 +48,11 @@
         <td>{$name}</td>
     </tr>
 </table>
+{else if $type == 'Template'}
+<table>
+    <tr>
+        <td>{$nameName}</td>
+        <td>{$name}</td>
+    </tr>
+</table>
 {/if}

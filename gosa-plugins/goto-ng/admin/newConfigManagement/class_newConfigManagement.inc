@@ -37,7 +37,7 @@ class newConfigManagement extends plugin
 
         // Preset item config - with Distribution and Release objects.
         $items = array();
-        $items['root']['container'] = array('Distribution');
+        $items['root']['container'] = array('Distribution', 'Template');
         $items['root']['name'] = '/';
         $items['root']['description'] = _('Root');
 
@@ -64,6 +64,10 @@ class newConfigManagement extends plugin
         $rOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
                 'type' => 'string', 'display' => _('Name'));
 
+        // Define template parameters
+        $tOpt1 = array('description' => _('Name'), 'default' => '', 'value' => '', 'required' => true,
+                'type' => 'string', 'display' => _('Name'));
+
         $items['Distribution']['container'] = array('Release');
         $items['Distribution']['name'] = 'Distribution';
         $items['Distribution']['description'] = _('Distribution');
@@ -81,6 +85,11 @@ class newConfigManagement extends plugin
         $items['Release']['description'] = _('Release');
         $items['Release']['options']['name'] = $rOpt1;
 
+        $items['Template']['container'] = array();
+        $items['Template']['name'] = 'Template';
+        $items['Template']['description'] = _('Template');
+        $items['Template']['options']['name'] = $tOpt1;
+
         $this->installationMethods = array();
         $this->installationMethods['root']['description'] = _('root');
         $this->installationMethods['root']['name'] = 'root';
@@ -88,6 +97,7 @@ class newConfigManagement extends plugin
         $this->installationMethods['root']['items']['Distribution'] = &$items['Distribution'];
         $this->installationMethods['root']['items']['Release'] = &$items['Release'];
         $this->installationMethods['root']['items']['root'] = &$items['root'];
+        $this->installationMethods['root']['items']['Template'] = &$items['Template'];
     }
 
     
@@ -164,6 +174,20 @@ class newConfigManagement extends plugin
     {
         // Recreate the data model, to have a clean and fresh instance.
         $this->dataModel = new ConfigManagementDataModel();
+
+
+        // Load templates from the backend and append them on the base 
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->installListTemplates();
+        if(!$rpc->success()){
+            $this->errorMessage = sprintf(_("Failed to load templates: %s"), $rpc->get_error());
+            return(FALSE);
+        } 
+        foreach($res as $tName => $tData){
+            $tData['name'] = $tName;
+            $this->dataModel->addItem('Template','/root', $tName, $tData);
+        }
+
 
         // Load distributions 
         $rpc = $this->config->getRpcHandle();
