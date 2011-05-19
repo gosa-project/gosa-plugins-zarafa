@@ -6,9 +6,11 @@ class ConfigManagementDataModel
     public $typeToPath = array();
     public $idToPath = array();
     public $dnToPath = array();
+    public $config = NULL;
 
-    function __construct()
+    function __construct($config)
     {
+        $this->config = &$config;
         $this->data = array();
         $this->data['linear'] = array();
         $this->data['recursive'] = array();
@@ -66,7 +68,7 @@ class ConfigManagementDataModel
         if($path == ""){
             $parentItem = &$this->data['recursive'];
             $parentId = NULL;
-            $parentDn = "";
+            $parentDn = $this->config->current['BASE'];
         }elseif(isset($this->data['linear'][$path])){
             $parentItem = &$this->data['linear'][$path]['children'];
             $parentId = $this->data['linear'][$path]['id'];
@@ -97,7 +99,8 @@ class ConfigManagementDataModel
         $this->data['linear'][$entryPath] = &$parentItem[$entryPath];
 
         $this->idToPath[$entryId] = $entryPath;
-        $this->idToPath[$entryDn] = $entryPath;
+        $this->dnToPath[$entryDn] = $entryPath;
+
         $this->typeToPath[$type][$name] = $entryPath;
     
         return($entryId);

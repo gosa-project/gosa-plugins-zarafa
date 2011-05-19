@@ -148,8 +148,7 @@ class ConfigManagement extends plugin
     function updateDataModel()
     {
         // Recreate the data model, to have a clean and fresh instance.
-        $this->dataModel = new ConfigManagementDataModel();
-
+        $this->dataModel = new ConfigManagementDataModel($this->config);
 
         // Load templates from the backend and append them on the base 
         $rpc = $this->config->getRpcHandle();
@@ -613,8 +612,6 @@ class ConfigManagement extends plugin
     function editEntry($ids)
     {
         $item = $this->dataModel->getItemByDn($ids[0]);
-
-        if(!$item) return;
 
         $release = $this->getReleasePart($item['path']);
         $path = $this->getItemPath($item['path']);
