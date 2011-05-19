@@ -1,6 +1,6 @@
 <?php
 
-class cfgMgmtMangement extends management
+class cfgMgmtManagement extends management
 {
 
     private $base = "";

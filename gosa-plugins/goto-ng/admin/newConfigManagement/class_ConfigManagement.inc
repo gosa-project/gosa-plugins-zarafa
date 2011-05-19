@@ -30,7 +30,7 @@ class ConfigManagement extends plugin
     function __construct($config, $dn)
     {
         $this->config = &$config;
-        $this->listing = new cfgMgmtMangement($this->config, get_userinfo(), $this);
+        $this->listing = new cfgMgmtManagement($this->config, get_userinfo(), $this);
 
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
@@ -512,7 +512,7 @@ class ConfigManagement extends plugin
 
 
     /*! \brief  Acts on open requests.
-     *          (This action is received from the cfgMgmtMangement class.)
+     *          (This action is received from the cfgMgmtManagement class.)
      *  @param  Array   The items ids. (May contain multiple ids)
      *  @return
      */
@@ -530,12 +530,22 @@ class ConfigManagement extends plugin
      */
     function removeEntry($ids)
     {
-        $this->ids = $ids;
-       
+        $this->ids = array();
         $names = array();
+        $ui = get_userinfo();
         foreach($ids as $id){
             $item = $this->dataModel->getItemByDn($id);
-            $names["({$item['type']}) {$item['path']})"] = $item['name'];
+            $dn = $item['dn'];
+            $acl = $ui->get_permissions($dn, "ConfigManagement/ConfigManagement", "cfgItem");
+
+            // Check permissions, are we allowed to remove this object?
+            if(preg_match("/d/",$acl)){
+                $names["({$item['type']}) {$item['path']})"] = $item['name'];
+                $this->ids[] = $id;
+            } else {
+                msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
+                new log("security","ConfigManagement/".get_class($this),$dn,array(),"Tried to trick deletion.");
+            }
         }
 
         $smarty = get_smarty();
