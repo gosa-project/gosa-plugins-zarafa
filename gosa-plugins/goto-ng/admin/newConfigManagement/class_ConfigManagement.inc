@@ -30,7 +30,7 @@ class ConfigManagement extends plugin
     function __construct($config, $dn)
     {
         $this->config = &$config;
-        $this->listing = new ConfigManagementListing($this->config, get_userinfo(), $this);
+        $this->listing = new cfgMgmtMangement($this->config, get_userinfo(), $this);
 
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
@@ -512,7 +512,7 @@ class ConfigManagement extends plugin
 
 
     /*! \brief  Acts on open requests.
-     *          (This action is received from the ConfigManagementListing class.)
+     *          (This action is received from the cfgMgmtMangement class.)
      *  @param  Array   The items ids. (May contain multiple ids)
      *  @return
      */

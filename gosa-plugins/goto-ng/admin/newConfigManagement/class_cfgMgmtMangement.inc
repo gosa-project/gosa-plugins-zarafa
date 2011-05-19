@@ -1,6 +1,6 @@
 <?php
 
-class ConfigManagementListing extends management
+class cfgMgmtMangement extends management
 {
 
     private $base = "";
@@ -200,7 +200,7 @@ class ConfigManagementListing extends management
 
         $contents = preg_replace("/%ITEMS%/", $items, $contents);
 
-        $headpage = new listing($contents,TRUE);
+        $headpage = new cfgMgmtListing($contents,TRUE);
         $headpage->setBase($this->base);
         $headpage->setFilter($filter);
 
