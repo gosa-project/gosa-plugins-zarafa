@@ -2,7 +2,7 @@
 
 /*! \brief  This class allows to manage backend config items and packages.
  */
-class newConfigManagement extends plugin
+class ConfigManagement extends plugin
 {
     var $initTime;
     var $plHeadline = "Config management";

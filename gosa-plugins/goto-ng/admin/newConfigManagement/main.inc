@@ -1,7 +1,7 @@
 <?php
 if ($remove_lock){
-    if(session::is_set('newConfigManagement')){
-        $macl = session::get('newConfigManagement');
+    if(session::is_set('ConfigManagement')){
+        $macl = session::get('ConfigManagement');
         $macl->remove_lock();
     }
 }
@@ -9,25 +9,25 @@ if ($remove_lock){
 /* Remove this plugin from session
  */
 if ( $cleanup ){
-    session::un_set('newConfigManagement');
+    session::un_set('ConfigManagement');
 }else{
 
-    /* Create newConfigManagement object on demand */
-    if (!session::is_set('newConfigManagement')){
-        $newConfigManagement= new newConfigManagement ($config, $ui);
-        session::set('newConfigManagement',$newConfigManagement);
+    /* Create ConfigManagement object on demand */
+    if (!session::is_set('ConfigManagement')){
+        $ConfigManagement= new ConfigManagement ($config, $ui);
+        session::set('ConfigManagement',$ConfigManagement);
     }
-    $newConfigManagement = session::get('newConfigManagement');
-    $display= $newConfigManagement->save_object();
-    $display= $newConfigManagement->execute();
+    $ConfigManagement = session::get('ConfigManagement');
+    $display= $ConfigManagement->save_object();
+    $display= $ConfigManagement->execute();
 
     /* Reset requested? */
     if (isset($_GET['reset']) && $_GET['reset'] == 1){
-        session::un_set ('newConfigManagement');
+        session::un_set ('ConfigManagement');
     }
 
     /* Show and save dialog */
-    session::set('newConfigManagement',$newConfigManagement);
+    session::set('ConfigManagement',$ConfigManagement);
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
