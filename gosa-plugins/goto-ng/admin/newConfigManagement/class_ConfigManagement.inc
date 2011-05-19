@@ -674,10 +674,20 @@ class ConfigManagement extends plugin
                 }
             }
         }
+        
+        // Collect property acls. The is only one ACL defined which controls all widgets.
+        $ui = get_userinfo();
+        $acls = array();
+        $acl = $ui->get_permissions($item['dn'], "ConfigManagement/ConfigManagement","cfgItem");
+        foreach(array_keys($this->itemConfig[$item['type']]['options']) as $attr){
+            $acls[$attr] = $acl;
+        }
 
+        // Update the template engine and set the item-config, values and the acls to use.
         $this->TemplateEngine->load($this->itemConfig);
         $this->TemplateEngine->setTemplate($method.".tpl");
-        $this->TemplateEngine->editItem($item['type'],$item['values']);
+        $this->TemplateEngine->editItem($item['type'],$item['values'], $acls);
+
         $this->listing->setDialogObject($this->TemplateEngine);
         $this->currentObject = $item;
     }
@@ -687,17 +697,27 @@ class ConfigManagement extends plugin
      */
     function newEntry($type)
     {
+        $item = $this->dataModel->getItemByPath($this->selectedContainer);
+            
+        // Collect property acls. The is only one ACL defined which controls all widgets.
+        $ui = get_userinfo();
+        $acls = array();
+        $acl = $ui->get_permissions($item['dn'], "ConfigManagement/ConfigManagement","cfgItem");
+        foreach(array_keys($this->itemConfig[$type]['options']) as $attr){
+            $acls[$attr] = $acl;
+        }
+
         // We've to add a config item
         $this->TemplateEngine->load($this->itemConfig);
         if($this->cfgItemMap[$type] != 'root'){
             $method = $this->cfgItemMap[$type];
             $this->TemplateEngine->setTemplate($method.".tpl");
-            $this->TemplateEngine->createItem($type,array());
+            $this->TemplateEngine->createItem($type, array(), $acls);
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
         }else{
             $this->TemplateEngine->setTemplate("root.tpl");
-            $this->TemplateEngine->createItem($type,array());
+            $this->TemplateEngine->createItem($type, array(), $acls);
             $this->listing->setDialogObject($this->TemplateEngine);
             $this->currentObject = NULL;
         }

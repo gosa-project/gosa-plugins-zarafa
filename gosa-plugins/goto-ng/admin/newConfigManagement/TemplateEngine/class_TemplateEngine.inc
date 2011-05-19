@@ -58,17 +58,25 @@ class TemplateEngine
     }
    
     
-    function editItem($type, $values)
+    function editItem($type, $values, $acls = array())
     {
         $this->is_new = FALSE;
+        $this->setAcls($acls);
         $this->setValues($type, $values);
     }
  
 
-    function createItem($type, $values)
+    function createItem($type, $values, $acls = array())
     {
         $this->is_new = TRUE;
+        $this->setAcls($acls);
         $this->setValues($type, $values);
+    }
+
+    
+    function setAcls($acls)
+    {
+        $this->acls = $acls;
     }
  
 
@@ -109,6 +117,14 @@ class TemplateEngine
                 $syntax = (isset($item['syntax']))? $item['syntax']: "";
                 $providedValues = (isset($item['values']))? $item['values']: array();
    
+                // Get acl definition
+                if(isset($this->acls[$name])) {
+                    $acl = $this->acls[$name];
+                }else{
+                    print "<br> No ACL definition for '{$name}'.";
+                    $acl = "";
+                }
+
                 // Create the new widget.
                 $this->widgets[$name] = new $widgetClassName($this->config, $name, 
                         $value,
@@ -117,13 +133,21 @@ class TemplateEngine
                         $item['required'],
                         $item['type'],
                         $item['display'],
-                        $providedValues);
+                        $providedValues); 
                
+                // Get Permissions 
+                $writeable = preg_match("/w/", $acl);            
+                $readable = preg_match("/w/", $acl);            
+
                 // Check if we've to disable this item.
                 if(isset($item['disable']) && $item['disable'] || 
                         (isset($item['initiallyEditableOnly']) && $item['initiallyEditableOnly'] && !$this->is_new)){
-                    $this->widgets[$name]->setEnabled(FALSE);
+                    $writeable = FALSE;
                 }
+
+                // Set ACls 
+                $this->widgets[$name]->setWriteable($writeable);
+                $this->widgets[$name]->setReadable($readable);
             }
         }
     }
@@ -161,7 +185,7 @@ class TemplateEngine
     function save_object()
     {
         foreach($this->widgets as $widget){
-            if($widget->isEnabled()){
+            if($widget->isEnabled() && $widget->isWriteable()){
                 $widget->save_object();
             }
         }

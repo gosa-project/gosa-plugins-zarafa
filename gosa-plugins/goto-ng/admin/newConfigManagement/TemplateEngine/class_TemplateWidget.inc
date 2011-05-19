@@ -48,12 +48,44 @@ class TemplateWidget
         $this->enabled = $bool;
     }
 
+
+    /*! \brief  Sets the writeable status for a widget
+     */    
+    function setWriteable($bool = TRUE)
+    {
+        $this->writeable = $bool;
+    }
+    
+
+    /*! \brief  Sets the readable status for a widget
+     */    
+    function setReadable($bool = TRUE)
+    {
+        $this->readable = $bool;
+    }
+
     
     /*! \brief  Returns the enable status.
      */
     function isEnabled()
     {
         return($this->enabled);
+    }
+
+
+    /*! \brief  Returns the writeable status.
+     */
+    function isWriteable()
+    {
+        return($this->writeable);
+    }
+
+
+    /*! \brief  Returns the readable status.
+     */
+    function isReadable()
+    {
+        return($this->readable);
     }
 
 
