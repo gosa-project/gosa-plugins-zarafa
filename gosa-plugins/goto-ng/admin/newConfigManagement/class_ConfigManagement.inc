@@ -539,7 +539,7 @@ class ConfigManagement extends plugin
             $acl = $ui->get_permissions($dn, "ConfigManagement/ConfigManagement", "cfgItem");
 
             // Check permissions, are we allowed to remove this object?
-            if(preg_match("/d/",$acl)){
+            if(preg_match("/w/",$acl)){
                 $names["({$item['type']}) {$item['path']})"] = $item['name'];
                 $this->ids[] = $id;
             } else {
@@ -558,9 +558,6 @@ class ConfigManagement extends plugin
 
     function remove_confirmed()
     {
-        echo 'timmay';
-        return;
-
         $ids = $this->ids;
         foreach($ids as $id){
             $item = $this->dataModel->getItemByDn($id);
