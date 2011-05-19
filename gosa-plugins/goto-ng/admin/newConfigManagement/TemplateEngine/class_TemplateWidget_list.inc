@@ -48,7 +48,7 @@ class TemplateWidget_list extends TemplateWidget
             }
         }
 
-        $this->value = $this->listWidget->getMaintainedData();
+        $this->value = array_values($this->listWidget->getMaintainedData());
     }
 
     /*! \brief  Check the value entry using the provieded syntax.
