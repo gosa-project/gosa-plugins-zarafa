@@ -11,11 +11,13 @@ class TemplateWidget_combobox extends TemplateWidget
         $name = (!$this->enabled || !$this->writeable)? "dummy".rand(0,10000) : $this->postName;
 
         $str .= "<select size='1' name='{$name}' {$disabled}>";
-        foreach($this->values as $option => $value){
-            if($option == $this->value){
-                $str .= "<option selected value=\"{$option}\">{$value}</option>\n";
-            }else{
-                $str .= "<option value=\"{$option}\">{$value}</option>\n";
+        if($this->readable){
+            foreach($this->values as $option => $value){
+                if($option == $this->value){
+                    $str .= "<option selected value=\"{$option}\">{$value}</option>\n";
+                }else{
+                    $str .= "<option value=\"{$option}\">{$value}</option>\n";
+                }
             }
         }
         $str .= "</select>";

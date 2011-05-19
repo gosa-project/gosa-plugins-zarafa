@@ -45,8 +45,10 @@ class TemplateWidget_fixedList extends TemplateWidget
         $this->listWidget->update();
         $str .= $this->listWidget->render();
         $str .= "<select size='1' name='{$name}_Input' {$disabled}>";
-        foreach($this->getAvailableOptions() as $name => $value){
-            $str .= "<option value=\"{$name}\">{$value}</option>\n";
+        if($this->readable){
+            foreach($this->getAvailableOptions() as $name => $value){
+                $str .= "<option value=\"{$name}\">{$value}</option>\n";
+            }
         }
         $str .= "</select>";
         $str .= "<button name='{$name}_Add' {$disabled}>".msgPool::addButton()."</button>";

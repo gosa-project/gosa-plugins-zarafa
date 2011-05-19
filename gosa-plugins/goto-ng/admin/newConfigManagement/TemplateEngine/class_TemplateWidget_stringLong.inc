@@ -5,7 +5,7 @@ class TemplateWidget_stringLong extends TemplateWidget
     function render()
     {
         $desc = set_post($this->description);
-        $value = set_post($this->value);
+        $value = ($this->readable) ? set_post($this->value) : "";
         
         $name = " name=\"{$this->postName}\" ";
         $value = " value=\"{$value}\" ";

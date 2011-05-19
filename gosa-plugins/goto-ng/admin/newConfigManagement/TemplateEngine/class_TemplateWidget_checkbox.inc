@@ -9,7 +9,7 @@ class TemplateWidget_checkbox extends TemplateWidget
 
         $str = "";
         $str .= "<input type='checkbox' value='1' name='{$name}' {$disabled}";
-        if($this->value) $str .= " checked ";
+        if($this->value && $this->readable) $str .= " checked ";
         $str .= ">";
 
         $str .= "<input type='hidden' name='{$name}_posted' value='1'>";
