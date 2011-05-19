@@ -79,7 +79,7 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>ConfigManagement/cfgItem[w]</acl>
+      <acl>ConfigManagement/ConfigManagement[createFAICD:w]</acl>
       <label>Remove item</label>
     </action>
 

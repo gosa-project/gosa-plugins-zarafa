@@ -5,6 +5,7 @@ class ConfigManagementDataModel
     public $data = array();
     public $typeToPath = array();
     public $idToPath = array();
+    public $dnToPath = array();
 
     function __construct()
     {
@@ -30,12 +31,13 @@ class ConfigManagementDataModel
         $toParentPath = preg_replace("/\/[^\/]*$/","", $to);
         $parentTo = &$this->data['linear'][$toParentPath];
         $parentToDn = $parentTo['dn'];
+        $dn = rtrim("cn={$name},{$parentToDn}",',');
 
         // Append the 'from' entry to the 'to' parent children. 
         $parentTo['children'][$to] = $parentFrom['children'][$from];
         $parentTo['children'][$to]['path']= $to;
         $parentTo['children'][$to]['name']= $name;
-        $parentTo['children'][$to]['dn']= rtrim("cn={$name},{$parentToDn}",',');
+        $parentTo['children'][$to]['dn']= $dn;
 
         // Unset the source path
         unset($parentFrom['children'][$from]);
@@ -47,6 +49,7 @@ class ConfigManagementDataModel
         // Update id->Path mapping
         $id = $this->data['linear'][$to]['id'];
         $this->idToPath[$id] = $to;
+        $this->dnToPath[$dn] = $to;
 
     }
 
@@ -94,6 +97,7 @@ class ConfigManagementDataModel
         $this->data['linear'][$entryPath] = &$parentItem[$entryPath];
 
         $this->idToPath[$entryId] = $entryPath;
+        $this->idToPath[$entryDn] = $entryPath;
         $this->typeToPath[$type][$name] = $entryPath;
     
         return($entryId);
@@ -160,6 +164,20 @@ class ConfigManagementDataModel
         $path = NULL;
         if(isset($this->idToPath[$id])){
             $path = $this->idToPath[$id];
+        }else{
+            return(NULL);
+        }
+        if(isset($this->data['linear'][$path])){
+            return($this->data['linear'][$path]);
+        }
+        return(NULL);
+    }
+
+    function getItemByDn($dn)
+    {
+        $path = NULL;
+        if(isset($this->dnToPath[$dn])){
+            $path = $this->dnToPath[$dn];
         }else{
             return(NULL);
         }

@@ -18,7 +18,7 @@ class filterConfigManagement {
         $ret = array();
         if($data['path'] != "/root"){
             $back = array(); 
-            $back['dn'] = $data['id'];
+            $back['dn'] = $data['dn'];
             $back[] = 'dn';
             $back['cn'] = array('.', 'count' => 1);
             $back[] = 'cn';
@@ -40,7 +40,7 @@ class filterConfigManagement {
     {
         if(preg_match("/".$filter."/",$item['name'])){
             $entry = array();
-            $entry['dn'] = $item['id'];
+            $entry['dn'] = $item['dn'];
             $entry[] = 'dn';
             $entry['cn'] = array($item['name'], 'count' => 1);
             $entry[] = 'cn';

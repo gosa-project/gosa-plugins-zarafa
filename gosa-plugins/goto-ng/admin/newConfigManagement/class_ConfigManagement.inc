@@ -520,7 +520,7 @@ class ConfigManagement extends plugin
     function openEntry($ids)
     {
         $id = $ids[0];
-        $item = $this->dataModel->getItemById($id);
+        $item = $this->dataModel->getItemByDn($id);
         $this->setCurrentContainer($item['path']);
         return;
     }
@@ -532,7 +532,7 @@ class ConfigManagement extends plugin
     function removeEntry($ids)
     {
         foreach($ids as $id){
-            $item = $this->dataModel->getItemById($id);
+            $item = $this->dataModel->getItemByDn($id);
 
             // Is an config item.
             if($this->cfgItemMap[$item['type']] != 'root'){
@@ -612,7 +612,10 @@ class ConfigManagement extends plugin
      */
     function editEntry($ids)
     {
-        $item = $this->dataModel->getItemById($ids[0]);
+        $item = $this->dataModel->getItemByDn($ids[0]);
+
+        if(!$item) return;
+
         $release = $this->getReleasePart($item['path']);
         $path = $this->getItemPath($item['path']);
         $method = $this->cfgItemMap[$item['type']];
