@@ -7,6 +7,7 @@ class newConfigManagement extends plugin
     var $initTime;
     var $plHeadline = "Config management";
     var $plDescription = "Config management";
+    var $plIcon = "plugins/goto/images/ConfigManagement.png";
 
     var $selectedContainer;
 
@@ -30,7 +31,6 @@ class newConfigManagement extends plugin
     {
         $this->config = &$config;
         $this->listing = new ConfigManagementListing($this->config, get_userinfo(), $this);
-
 
         // Load the template engine and tell her what template
         //  to use for the HTML it produces.
@@ -505,7 +505,9 @@ class newConfigManagement extends plugin
                     "plCategory"    => array(
                         "newConfigManagement" => array("description"  => _("Config management"),
                             "objectClass"  => "FAKE_OC_newConfigManagement")),
-                    "plProvidedAcls"=> array()
+                    "plProvidedAcls"=> array(
+                            "cfgItem" => _("Config item")
+                        )
                     ));
     }
 
