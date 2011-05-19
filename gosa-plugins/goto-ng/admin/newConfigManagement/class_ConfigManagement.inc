@@ -530,6 +530,28 @@ class ConfigManagement extends plugin
      */
     function removeEntry($ids)
     {
+        $this->ids = $ids;
+       
+        $names = array();
+        foreach($ids as $id){
+            $item = $this->dataModel->getItemByDn($id);
+            $names["({$item['type']}) {$item['path']})"] = $item['name'];
+        }
+
+        $smarty = get_smarty();
+        $smarty = get_smarty();
+        $smarty->assign("info", msgPool::deleteInfo($names));
+        $smarty->assign("multiple", true);
+
+        return($smarty->fetch(get_template_path('removeEntries.tpl')));
+    }
+
+    function remove_confirmed()
+    {
+        echo 'timmay';
+        return;
+
+        $ids = $this->ids;
         foreach($ids as $id){
             $item = $this->dataModel->getItemByDn($id);
 

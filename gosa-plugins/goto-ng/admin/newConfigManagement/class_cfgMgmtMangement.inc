@@ -233,6 +233,12 @@ class cfgMgmtMangement extends management
 
     }
 
+    function removeEntryConfirmed($action="",$target=array(),$all=array(),
+            $altTabClass="",$altTabType="",  $altAclCategory="",$altAclPlugin="")
+    {
+        return($this->parent->remove_confirmed());
+    }
+
     function saveItemChanges()
     {
         $this->parent->saveItemChanges();
@@ -240,7 +246,7 @@ class cfgMgmtMangement extends management
 
     function removeEntryRequested($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
     {
-        $this->parent->removeEntry($target);
+        return($this->parent->removeEntry($target));
     }
 
     function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
