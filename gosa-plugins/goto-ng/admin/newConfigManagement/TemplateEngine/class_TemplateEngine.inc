@@ -10,7 +10,7 @@ class TemplateEngine
     private $template = "";
     private $itemType = '';
     private $widgets = array();
-
+    private $hasWriteAcls = FALSE;
 
     /*! \brief  Constructs the template engine. 
      *  @param  Config  The GOsa configuration object.
@@ -77,6 +77,7 @@ class TemplateEngine
     function setAcls($acls)
     {
         $this->acls = $acls;
+        $this->hasWriteAcls = preg_match("/w/", implode($acls));
     }
  
 
@@ -165,6 +166,7 @@ class TemplateEngine
     {
         $smarty = get_smarty();
         $smarty->assign("type", $this->itemType);
+        $smarty->assign("hasWriteAcls", $this->hasWriteAcls);
         $smarty->assign("typeData", $this->data[$this->itemType]);
 
         // Tell smarty the HTML-content for each widget and the name that should be
