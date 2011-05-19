@@ -136,8 +136,8 @@ class TemplateEngine
                         $providedValues); 
                
                 // Get Permissions 
-                $writeable = preg_match("/w/", $acl);            
-                $readable = preg_match("/w/", $acl);            
+                $writeable = preg_match("/w/", $acl);
+                $readable = preg_match("/r/", $acl);
 
                 // Check if we've to disable this item.
                 if(isset($item['disable']) && $item['disable'] || 
