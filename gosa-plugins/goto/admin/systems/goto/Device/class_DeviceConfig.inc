@@ -41,7 +41,7 @@ class DeviceConfig extends plugin
         $this->assignableElementsList->setHeight("200px");
         $this->assignableElementsList->setHeader(array(_("Name"),_("Description"),_("Add")));
         $this->assignableElementsList->setColspecs(array('*','*','20'));
-        $this->assignableElementsList->setAcl('rwcdm');
+        $this->assignableElementsList->setAcl($this->getacl(''));
 
         // Create used Elements list.
         $this->usedElementsList = new sortableListing();
@@ -52,7 +52,7 @@ class DeviceConfig extends plugin
         $this->usedElementsList->setHeight("200px");
         $this->usedElementsList->setHeader(array(_("Name"), _("Description"), _("Remove")));
         $this->usedElementsList->setColspecs(array('*','*','20'));
-        $this->usedElementsList->setAcl('rwcdm');
+        $this->usedElementsList->setAcl($this->getacl(''));
 
         // Create parameter Elements list.
         $this->parameterList = new sortableListing();
@@ -63,7 +63,7 @@ class DeviceConfig extends plugin
         $this->parameterList->setHeight("200px");
         $this->parameterList->setHeader(array(_("Name"), _("Description"), _("Value")));
         $this->parameterList->setColspecs(array('*','*','350px'));
-        $this->parameterList->setAcl('rwcdm');
+        $this->parameterList->setAcl($this->getacl(''));
     }
 
 
@@ -76,7 +76,6 @@ class DeviceConfig extends plugin
      */ 
     function execute()
     {
-
         // Initialize to plugin
         if(!$this->initialized){
 
@@ -200,6 +199,9 @@ class DeviceConfig extends plugin
                 if(!isset($this->parameterWidgets[$param])){
                     $this->parameterWidgets[$param] = new TemplateWidget_stringLong($this->config, $param, $value, 
                             $desc, '', FALSE, 'string', $param);
+
+                    $this->parameterWidgets[$param]->setWriteable(preg_match("/w/",$this->getacl('')));
+                    $this->parameterWidgets[$param]->setReadable(preg_match("/r/",$this->getacl('')));
                 }
                 $w = $this->parameterWidgets[$param];
                 $lData[$param] = array('data' => array($w->getDisplayName(),$desc, $w->render()));
@@ -225,24 +227,29 @@ class DeviceConfig extends plugin
     {
         // Get posted parameter values
         foreach($this->parameterWidgets as $name => $w){
-            $w->save_object();
-            $this->parameterValues[$name] = $w->getValue();
+            if($w->isWriteable()){
+                $w->save_object();
+                $this->parameterValues[$name] = $w->getValue();
+            }
         }
 
-        // Act on Add-Element actions
-        $this->assignableElementsList->save_object();
-        $action = $this->assignableElementsList->getAction();
-        if($action['action'] == 'edit'){
-            $this->usedElements[] = $this->assignableElementsList->getKey($action['targets'][0]);
-            $this->usedElements = array_unique($this->usedElements);
-        }
+        if(preg_match("/w/", $this->getacl(''))){
 
-        // Act on Remove-Item actions
-        $this->usedElementsList->save_object();
-        $action = $this->usedElementsList->getAction();
-        if($action['action'] == 'delete'){
-            $name = $this->usedElementsList->getKey($action['targets'][0]);
-            $this->usedElements = array_remove_entries_ics(array($name), $this->usedElements);
+            // Act on Add-Element actions
+            $this->assignableElementsList->save_object();
+            $action = $this->assignableElementsList->getAction();
+            if($action['action'] == 'edit'){
+                $this->usedElements[] = $this->assignableElementsList->getKey($action['targets'][0]);
+                $this->usedElements = array_unique($this->usedElements);
+            }
+
+            // Act on Remove-Item actions
+            $this->usedElementsList->save_object();
+            $action = $this->usedElementsList->getAction();
+            if($action['action'] == 'delete'){
+                $name = $this->usedElementsList->getKey($action['targets'][0]);
+                $this->usedElements = array_remove_entries_ics(array($name), $this->usedElements);
+            }
         }
     }
 

@@ -370,10 +370,14 @@ class InstallRecipe extends plugin
 
         plugin::execute();    
         $smarty = get_smarty();
+
+        // Assign ACLs
+        foreach($this->attributes as $attr){
+            $smarty->assign("{$attr}ACL", $this->getacl($attr));
+        }
+
         $smarty->assign('installTemplateList', $this->installationTemplateNames);
         $smarty->assign('installReleaseList', $this->templateToRelease[$this->installTemplate]);
-
-
         $smarty->assign('timezones', $this->timezones);
         $smarty->assign('installKeyboardlayoutList', $this->installKeyboardlayoutList);
         $smarty->assign('installKernelPackageList', $this->installKernelPackageList);
@@ -693,21 +697,20 @@ class InstallRecipe extends plugin
                     "plSection"     => array("administration"),
                     "plCategory"    => array("Device"),
                     "plProvidedAcls" => array(
-                        "member" => _("Member"),
-                        "installTemplate" => _("Installation template"),
-                        "installRelease" => _("Installation release"),
 
-                        "installBootstrapMethod" => _("Bootstrap method"),
-                        "installConfigManagement" => _("Config management"),
+                        "installRelease" => _("Release"),
+                        "installTemplate" => _("Template"),
                         "installKeyboardlayout" => _("Keyboard layout"),
-                        "installSystemLocale" => _("System locale"),
+                        "installSystemLocale" => _("Locale"),
                         "installTimezone" => _("Timezone"),
-                        "installTimeUTC" => _("Time"),
-                        "installNTPServer" => _("NTP-Server"),
+                        "installTimeUTC" => _("Utc"),
+                        "installNTPServer" => _("Ntp server"),
                         "installMirror" => _("Mirror"),
                         "installRootEnabled" => _("Root login enabled"),
                         "installRootPasswordHash" => _("Root password hash"),
                         "installKernelPackage" => _("Kernel package"),
+                        "installConfigManagement" => _("Config mangement"),
+                        "installBootstrapMethod" => _("Bootstrap method"),
                         "installPartitionTable" => _("Partition table")
                         )
                         )
