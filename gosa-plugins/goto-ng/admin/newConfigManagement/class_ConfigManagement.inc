@@ -503,8 +503,8 @@ class newConfigManagement extends plugin
                     "plPriority"    => 0,
                     "plSection"     => array("administration"),
                     "plCategory"    => array(
-                        "newConfigManagement" => array("description"  => _("Config management"),
-                            "objectClass"  => "FAKE_OC_newConfigManagement")),
+                        "ConfigManagement" => array("description"  => _("Config management"),
+                            "objectClass"  => "FAKE_OC_ConfigManagement")),
                     "plProvidedAcls"=> array(
                             "cfgItem" => _("Config item")
                         )
