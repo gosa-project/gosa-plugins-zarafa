@@ -11,7 +11,8 @@ class TemplateWidget_stringLong extends TemplateWidget
         $value = " value=\"{$value}\" ";
         $title = (empty($this->description))?"": " title=\"{$desc}\"";
         
-        $disabled = (!$this->enabled)? "disabled" : "";
+        $disabled = (!$this->enabled || !$this->writeable)? "disabled" : "";
+        $name = (!$this->enabled || !$this->writeable)? "dummy".rand(0,10000) : $name;
         return("<input type='text' style='width:100%;' {$title} {$name} {$value} {$disabled}>");
     }
 }

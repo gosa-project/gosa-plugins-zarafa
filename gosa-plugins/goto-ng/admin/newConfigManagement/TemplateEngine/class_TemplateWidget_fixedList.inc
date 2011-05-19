@@ -34,7 +34,9 @@ class TemplateWidget_fixedList extends TemplateWidget
 
         // Build up list data
         $this->listWidget->setDeleteable($this->enabled);
-        $disabled = (!$this->enabled)? "disabled" : "";
+        $disabled = (!$this->enabled || !$this->writeable)? "disabled" : "";
+        $name = (!$this->enabled || !$this->writeable)? "dummy".rand(0,10000) : $this->postName;
+
         $data = $this->value;
         foreach($this->value as $key => $name){
             $lData[$key] = array('data' => array($this->values[$name]));
@@ -42,12 +44,12 @@ class TemplateWidget_fixedList extends TemplateWidget
         $this->listWidget->setListData($data, $lData);
         $this->listWidget->update();
         $str .= $this->listWidget->render();
-        $str .= "<select size='1' name='{$this->postName}_Input' {$disabled}>";
+        $str .= "<select size='1' name='{$name}_Input' {$disabled}>";
         foreach($this->getAvailableOptions() as $name => $value){
             $str .= "<option value=\"{$name}\">{$value}</option>\n";
         }
         $str .= "</select>";
-        $str .= "<button name='{$this->postName}_Add' {$disabled}>".msgPool::addButton()."</button>";
+        $str .= "<button name='{$name}_Add' {$disabled}>".msgPool::addButton()."</button>";
         return($str);
     }
 

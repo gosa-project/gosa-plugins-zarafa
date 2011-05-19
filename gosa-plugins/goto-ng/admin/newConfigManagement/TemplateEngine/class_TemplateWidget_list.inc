@@ -13,7 +13,7 @@ class TemplateWidget_list extends TemplateWidget
         $this->listWidget->setColspecs(array('*'));
         $this->listWidget->setWidth("100%");
         $this->listWidget->setHeight("70px");
-        $this->listWidget->setAcl("rwcdm");
+        $this->listWidget->setAcl("");
     }
 
 
@@ -24,10 +24,16 @@ class TemplateWidget_list extends TemplateWidget
         $this->listWidget->setListData($this->value);
         $this->listWidget->update();
         $str .= $this->listWidget->render();
-        $disabled = (!$this->enabled)? "disabled" : "";
+        $disabled = (!$this->enabled || !$this->writeable)? "disabled" : "";
+        $name = (!$this->enabled || !$this->writeable)? "dummy".rand(0,10000) : $this->postName;
 
-        $str .= "<input type='text' name='{$this->postName}_Input' {$disabled}>";
-        $str .= "<button name='{$this->postName}_Add' {$disabled}>".msgPool::addButton()."</button>";
+        $acls = "";
+        $acls.= ($this->writeable && $this->enabled) ? 'w' : '';
+        $acls.= ($this->readable) ? 'r' : '';
+        $this->listWidget->setAcl($acls);
+
+        $str .= "<input type='text' name='{$name}_Input' {$disabled}>";
+        $str .= "<button name='{$name}_Add' {$disabled}>".msgPool::addButton()."</button>";
         return($str);
     }
 

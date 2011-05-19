@@ -7,13 +7,15 @@ class TemplateWidget_combobox extends TemplateWidget
         $str = "";
 
         // Build up list data
-        $disabled = (!$this->enabled)? "disabled" : "";
-        $str .= "<select size='1' name='{$this->postName}' {$disabled}>";
-        foreach($this->values as $name => $value){
-            if($name == $this->value){
-                $str .= "<option selected value=\"{$name}\">{$value}</option>\n";
+        $disabled = (!$this->enabled || !$this->writeable)? "disabled" : "";
+        $name = (!$this->enabled || !$this->writeable)? "dummy".rand(0,10000) : $this->postName;
+
+        $str .= "<select size='1' name='{$name}' {$disabled}>";
+        foreach($this->values as $option => $value){
+            if($option == $this->value){
+                $str .= "<option selected value=\"{$option}\">{$value}</option>\n";
             }else{
-                $str .= "<option value=\"{$name}\">{$value}</option>\n";
+                $str .= "<option value=\"{$option}\">{$value}</option>\n";
             }
         }
         $str .= "</select>";

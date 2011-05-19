@@ -4,15 +4,15 @@ class TemplateWidget_checkbox extends TemplateWidget
 {
     function render()
     {
+        $disabled = (!$this->enabled || !$this->writeable)? "disabled" : "";
+        $name = (!$this->enabled || !$this->writeable)? "dummy".rand(0,10000) : $this->postName;
+
         $str = "";
-        $disabled = (!$this->enabled)? "disabled" : "";
-        $str .= "<input type='checkbox' value='1' name='{$this->postName}' {$disabled}";
-
+        $str .= "<input type='checkbox' value='1' name='{$name}' {$disabled}";
         if($this->value) $str .= " checked ";
-
         $str .= ">";
 
-        $str .= "<input type='hidden' name='{$this->postName}_posted' value='1'>";
+        $str .= "<input type='hidden' name='{$name}_posted' value='1'>";
         return($str);
     }
 
