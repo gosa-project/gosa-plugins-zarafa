@@ -15,6 +15,8 @@ class TemplateWidget
     protected $syntax = "";
     protected $values = "";
     protected $enabled = TRUE;
+    protected $readable = TRUE;
+    protected $writeable = TRUE;
 
     /*! \brief  Constructs the template widget and sets the default values.
      *  @param  Config  The GOsa configuration object.
