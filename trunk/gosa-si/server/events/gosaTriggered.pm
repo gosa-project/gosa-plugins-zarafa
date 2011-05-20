@@ -162,12 +162,14 @@ sub recreate_fai_server_db {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    $main::fai_server_db->create_table("new_fai_server", \@main::fai_server_col_names);
+    my $res = $main::fai_server_db->create_table("new_fai_server", \@main::fai_server_col_names);
+    if ($res) {
+        return ( $out_msg );
+    }
     &main::create_fai_server_db("new_fai_server",undef,"dont", $session_id);
     $main::fai_server_db->move_table("new_fai_server", $main::fai_server_tn);
-    
-    my @out_msg_l = ( $out_msg );
-    return @out_msg_l;
+
+    return ( $out_msg );
 }
 
 
@@ -182,12 +184,14 @@ sub recreate_fai_release_db {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    $main::fai_release_db->create_table("new_fai_release", \@main::fai_release_col_names);
+    my $res = $main::fai_release_db->create_table("new_fai_release", \@main::fai_release_col_names);
+    if ($res) {
+        return ( $out_msg );
+    }
     &main::create_fai_release_db("new_fai_release", $session_id);
     $main::fai_release_db->move_table("new_fai_release", $main::fai_release_tn);
 
-    my @out_msg_l = ( $out_msg );
-    return @out_msg_l;
+    return ( $out_msg );
 }
 
 
