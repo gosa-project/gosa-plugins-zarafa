@@ -527,7 +527,7 @@ class InstallRecipe extends plugin
 
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getKernelPackages($this->installRelease);
-      
+     
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
         if(!$rpc->success()){
@@ -535,7 +535,8 @@ class InstallRecipe extends plugin
             msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
         }else{
             $this->installKernelPackageList = array();
-            foreach($res as $name){
+            foreach($res as $data){
+                $name = $data['name'];
                 $this->installKernelPackageList[$name] = $name;
             }
 
