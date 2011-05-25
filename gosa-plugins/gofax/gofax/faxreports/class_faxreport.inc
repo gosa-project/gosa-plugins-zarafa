@@ -208,8 +208,10 @@ class faxreport extends plugin
             }
             $format= _("Y-M-D");
             $queuing_time= $line['queuing_time'];
-            $smarty->assign("plug", "?plug=".get_post('plug'));
-            $smarty->assign("detail", set_post(get_post($detail)));
+
+            $plug = (isset($_GET['plug'])) ? '?plug='.$_GET['plug'] : '';
+            $smarty->assign("plug", $plug);
+            $smarty->assign("detail", set_post($detail));
             $date= preg_replace("/Y/", substr($queuing_time,0,4), $format);
             $date= preg_replace("/M/", substr($queuing_time,4,2), $date);
             $date= preg_replace("/D/", substr($queuing_time,6,2), $date);
@@ -455,6 +457,7 @@ class viewFaxEntries extends plugin {
             "plProvidedAcls" => array(
                 "detailedView"   => _("Detailed view and download"),
                 "id"             => _("Fax ID"),
+                "uid"            => _("The username"),
                 "queuingtime"    => _("Date")."&nbsp;/&nbsp;"._("Time"),
                 "status"         => _("Status"),
                 "senderid"       => _("Sender ID"),
