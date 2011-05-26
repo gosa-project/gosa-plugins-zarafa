@@ -165,7 +165,7 @@ class faxreport extends plugin
             // Query for the requested fay entry 
             $query = "SELECT id,uid,date_format(queuing_time, '%Y%m%d%H%i%s') ".
                 "as queuing_time,status,sender_id,sender_msn,receiver_id,".
-                "receiver_msn,pages,status_message,transfer_time FROM faxlog WHERE id=".$detail.";";
+                "receiver_msn,pages,status_message,transfer_time FROM faxlog WHERE id='".$detail."';";
 
             $cfg= $this->config->data['SERVERS']['FAX'];
             $result = @mysql_query($query);
