@@ -525,8 +525,9 @@ class InstallRecipe extends plugin
             return;
         }
 
+        $release = preg_replace("/^[^\/]*\//","", $this->installRelease);
         $rpc = $this->config->getRpcHandle();
-        $res = $rpc->getKernelPackages($this->installRelease);
+        $res = $rpc->getKernelPackages($release);
      
         // Failed to load backend values, keep reported error and return with FALSE; 
         $this->rpcError = !$rpc->success();
