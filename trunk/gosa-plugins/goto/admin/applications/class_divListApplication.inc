@@ -110,7 +110,7 @@ class divListApplication extends MultiSelectWindow
     $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
     if(preg_match("/c/",$acl)) {
-      $s.= "...|<input class='center' type='image' src='images/list_new_app' alt=''>".
+      $s.= "...|<input class='center' type='image' src='plugins/goto/images/list_new_app.png' alt=''>".
         "&nbsp;"._("Application")."|appl_new|\n";
     }
 
