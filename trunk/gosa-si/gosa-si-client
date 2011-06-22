@@ -828,8 +828,11 @@ sub trigger_logged_in_users_report {
            $kernel->delay_set('trigger_logged_in_users_report', 30);
        }
        else {
-           print($FIFO_FD 'CURRENTLY_LOGGED_IN ' . join(" ", @logged_in_user_list));
-        $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
+           print($FIFO_FD 'CURRENTLY_LOGGED_IN ' . join(" ", @logged_in_user_list)."\n");
+           close($FIFO_FD);
+           my $userlist = join(" ", @logged_in_user_list);
+           daemon_log("DEBUG: Sent logged in user list to server: $userlist", 5);
+           $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
        }
     } else {
         # try it in 10 sec again
