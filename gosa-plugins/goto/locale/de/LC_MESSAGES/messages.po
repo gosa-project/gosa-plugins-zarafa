@@ -2124,7 +2124,7 @@ msgstr "Aufwecken"
 
 #: admin/systems/goto/class_workstationGeneric.inc:488
 msgid "A valid LDAP server assignement is missing!"
-msgstr "Es fehlt eine gültige LDAP-Server-Zusweisung!"
+msgstr "Es fehlt eine gültige LDAP-Server-Zuweisung!"
 
 #: admin/systems/goto/class_workstationGeneric.inc:498
 msgid "Software deployment"
