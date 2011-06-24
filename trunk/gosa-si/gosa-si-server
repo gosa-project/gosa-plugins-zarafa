@@ -90,7 +90,7 @@ our (%cfg_defaults, $log_file, $pid_file, $repo_basepath,
     $wake_on_lan_passwd, $job_synchronization, $modified_jobs_loop_delay,
     $arp_enabled, $arp_interface,
     $opsi_enabled, $opsi_server, $opsi_admin, $opsi_password,
-		$new_systems_ou,
+    $new_systems_ou, $logged_in_users_delay,
 );
 
 # additional variable which should be globaly accessable
@@ -275,6 +275,7 @@ our $logged_in_user_date_of_expiry = 600;
     "key-lifetime" => [\$foreign_servers_register_delay, 120],
     "job-synchronization-enabled" => [\$job_synchronization, "true"],
     "synchronization-loop" => [\$modified_jobs_loop_delay, 5],
+    "report-logged-in-users" => [\$logged_in_users_delay, 600],
     },
 "ArpHandler" => {
     "enabled"   => [\$arp_enabled, "true"],
@@ -1575,6 +1576,7 @@ sub session_start {
     $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
+    $kernel->delay_set('watch_for_logged_in_users', $logged_in_users_delay);
 
     # Start opsi check
     if ($opsi_enabled eq "true") {
@@ -2131,6 +2133,31 @@ sub watch_for_next_tasks {
     $kernel->delay_set('watch_for_next_tasks', 1); 
 }
 
+sub watch_for_logged_in_users {
+    my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+    # Get list of currently logged in users
+    my $sql = "SELECT * FROM $login_users_tn WHERE regserver='localhost'";
+    my $res = $main::login_users_db->select_dbentry($sql);
+    my $msg_hash = &create_xml_hash("information_sharing", $server_address, "KNOWN_SERVER");
+    while (my ($hit_id, $hit) = each(%$res)) {
+        &add_content2xml_hash($msg_hash, 'user_db', $hit->{'client'}.";".$hit->{'user'});
+    }
+    my $msg = &create_xml_string($msg_hash);
+
+    # Inform all other server which users are logged in at clients registered at local server
+    my $sql_statement= "SELECT * FROM $known_server_tn";
+    my $query_res = $known_server_db->select_dbentry( $sql_statement );
+    while( my ($hit_num, $hit) = each %{ $query_res } ) {
+        my $host_name = $hit->{hostname};
+        my $host_key = $hit->{hostkey};
+        $msg =~ s/<target>\S+<\/target>/<target>$host_name<\/target>/g;
+	# TODO: get session_id
+        my $error = &send_msg_to_target($msg, $host_name, $host_key, "information_sharing", 0);
+    }
+
+    $kernel->delay_set('watch_for_logged_in_users', $logged_in_users_delay); 
+}
 
 sub get_ldap_handle {
 	my ($session_id) = @_;
@@ -3530,6 +3557,7 @@ POE::Session->create(
         watch_for_done_jobs => \&watch_for_done_jobs,
         watch_for_opsi_jobs => \&watch_for_opsi_jobs,
         watch_for_old_known_clients => \&watch_for_old_known_clients,
+        watch_for_logged_in_users => \&watch_for_logged_in_users,
         create_packages_list_db => \&run_create_packages_list_db,
         create_fai_server_db => \&run_create_fai_server_db,
         create_fai_release_db => \&run_create_fai_release_db,
