@@ -76,8 +76,6 @@ our $client_force_hostname;
 our $server_key;
 our $opts_dnslookup;
 
-our $FIFO_FD = undef;
-
 # default variables
 our $REGISTERED = 0;
 our $REGISTRATION_IN_PROGRESS = 0;
@@ -821,17 +819,13 @@ sub trigger_logged_in_users_report {
 			@logged_in_user_list = split(/\s/, $result);
 		}
 		
-       $FIFO_FD = undef
-           if (! defined $FIFO_FD && ! defined open($FIFO_FD, '>', $gosa_si_client_fifo));
-       if (! defined $FIFO_FD) {
+       if (!open(FIFO_FD, '>', $gosa_si_client_fifo)) {
            daemon_log("ERROR: unable to open fifo for writing: $!", 1);
            $kernel->delay_set('trigger_logged_in_users_report', 30);
        }
        else {
-           print($FIFO_FD 'CURRENTLY_LOGGED_IN ' . join(" ", @logged_in_user_list)."\n");
-           close($FIFO_FD);
-           my $userlist = join(" ", @logged_in_user_list);
-           daemon_log("DEBUG: Sent logged in user list to server: $userlist", 5);
+           printf(FIFO_FD "CURRENTLY_LOGGED_IN %s\n", join(" ", @logged_in_user_list));
+           close(FIFO_FD);
            $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
        }
     } else {
@@ -920,7 +914,7 @@ sub fifo_got_record {
     my $file_record = $_[ARG0];
     my $header;
     my $content = "";
-    daemon_log("DEBUG: fifo got record: $file_record", 7); 
+    daemon_log("INFO: fifo got record: $file_record", 3); 
 
     $file_record =~ /^(\S+)[ ]?([\s\S]+)?$/;
     if( defined $1 ) {
@@ -1040,7 +1034,6 @@ sub _stop {
     $kernel->alias_remove($heap->{alias});
     $kernel->alarm_remove_all();
     $kernel->post($heap->{child_session}, '_stop');
-    close( $FIFO_FD ) if( defined $FIFO_FD );
 }
 
 
