@@ -166,7 +166,7 @@ class TemplateWidget
         }
         if(!empty($this->value) && 
             !empty($this->syntax) &&
-            !empty($this->syntax) && !preg_match($this->syntax, $this->value)){
+            !empty($this->syntax) && !preg_match('/'.$this->syntax.'/', $this->value)){
             return(array(msgPool::invalid($this->display, $this->value, $this->syntax)));
         }
         return(array());
