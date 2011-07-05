@@ -13,7 +13,7 @@
                 "options": {
                     "name": {
                         "description": "Name",
-                        "syntax": "/^[a-z0-9]*$/i",
+                        "syntax": "^[a-zA-Z0-9]*$",
                         "default": "",
                         "value": "",
                         "required": true,
@@ -84,7 +84,7 @@
                     "name": {
                         "description": "Name",
                         "default": "",
-                        "syntax": "/^[a-z0-9\\-\\.]*$/i",
+                        "syntax": "^[a-zA-Z0-9\\-\\.]*$",
                         "value": "",
                         "required": true,
                         "type": "string",
@@ -109,7 +109,7 @@
                         "description": "Name",
                         "default": "",
                         "value": "",
-                        "syntax": "/^[a-z0-9\\-]*$/i",
+                        "syntax": "^[a-zA-Z0-9\\-]*$",
                         "required": true,
                         "initiallyEditableOnly": true,
                         "type": "string",
