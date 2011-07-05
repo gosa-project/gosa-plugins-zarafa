@@ -49,7 +49,7 @@ class Device extends plugin
             $ui= get_userinfo();
             $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
         } else {
-            $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("Device", "DeviceRDN"), '/')."/i", "", $this->dn);
+            $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("Device", "GOsaDeviceRDN"), '/')."/i", "", $this->dn);
         }
 
         // Prepare the base selector
@@ -307,12 +307,12 @@ class Device extends plugin
             "plProperties" =>
                 array(
                         array(
-                            "name"          => "DeviceRDN",
+                            "name"          => "GOsaDeviceRDN",
                             "type"          => "rdn",
                             "default"       => "ou=devices,ou=systems,",
                             "description"   => _("RDN for device storage."),
                             "check"         => "gosaProperty::isRdn",
-                            "migrate"       => "migrate_deviceRDN",
+                            "migrate"       => "migrate_GOsaDeviceRDN",
                             "group"         => "plugin",
                             "mandatory"     => FALSE
                             ),

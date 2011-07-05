@@ -10,7 +10,7 @@ class DeviceTab extends tabs
         $orig_uuid = $baseobject->orig_deviceUUID;
 
 
-        $rdn = get_ou('Device','DeviceRDN');
+        $rdn = get_ou('Device','GOsaDeviceRDN');
         $cn      = preg_replace('/,/', '\,', $baseobject->cn);
         $cn      = preg_replace('/"/', '\"', $cn);
 
