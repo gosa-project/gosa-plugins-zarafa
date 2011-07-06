@@ -20,8 +20,8 @@ class InstallRecipe extends plugin
     public $installConfigManagementList = array();
 
     // Bootstrap method
-    public $installBootstrapMethod = '';
-    public $installBootstrapMethodList = array();
+    public $installBaseMethod = '';
+    public $installBaseMethodList = array();
 
     // Timezone settings
     public $installTimezone = "";
@@ -60,7 +60,7 @@ class InstallRecipe extends plugin
     public $attributes = array("installRelease", "installTemplate","installKeyboardlayout","installSystemLocale",
             "installTimezone","installTimeUTC","installNTPServer","installMirror",
             "installRootEnabled","installRootPasswordHash","installKernelPackage",
-            "installPartitionTable","installConfigManagement","installBootstrapMethod");
+            "installPartitionTable","installConfigManagement","installBaseMethod");
 
 
     /* Some plugin management related attributes 
@@ -150,15 +150,15 @@ class InstallRecipe extends plugin
 
         
         // Update selectable items like kernels and mirrors depending on the current setup (relase)
-        $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
+        #$this->installBaseMethod = $this->installationTemplates[$this->installTemplate]['method'];
         $this->reloadInstallationKernelPackages($initially);
         $this->reloadInstallationMirrors($initially);
 
         // Preset the config management method.
-        if(!isset($this->installConfigManagementList[$this->installBootstrapMethod][$this->installConfigManagement])){
-            if(isset($this->installConfigManagementList[$this->installBootstrapMethod]) && 
-                count($this->installConfigManagementList[$this->installBootstrapMethod])){
-                $this->installConfigManagement = key($this->installConfigManagementList[$this->installBootstrapMethod]);
+        if(!isset($this->installConfigManagementList[$this->installBaseMethod][$this->installConfigManagement])){
+            if(isset($this->installConfigManagementList[$this->installBaseMethod]) && 
+                count($this->installConfigManagementList[$this->installBaseMethod])){
+                $this->installConfigManagement = key($this->installConfigManagementList[$this->installBaseMethod]);
             }
         }
     }
@@ -174,6 +174,21 @@ class InstallRecipe extends plugin
 
         // Load base install Method
         $rpc = $this->config->getRpcHandle();
+        $bMethod = $rpc->systemGetBaseInstallMethod($this->deviceUUID);
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return(NULL);
+        }
+
+        // Do nothing while no install method is defined.
+        if(!$bMethod){
+            return;
+        }        
+
+        // Set the bootstrap method.
+        $this->installBaseMethod = $bMethod;
+
         $res = $rpc->systemGetBaseInstallParameters($this->deviceUUID);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
@@ -247,7 +262,7 @@ class InstallRecipe extends plugin
 
         // Assign fetchted values
         $this->timezones = $timeozones;
-        $this->installBootstrapMethodList = $installationMethods['installBootstrapMethodList'];
+        $this->installBaseMethodList = $installationMethods['installBaseMethodList'];
         $this->installConfigManagementList = $installationMethods['installConfigManagementList'];
         $this->installSystemLocaleList = $locales;
         $this->installKeyboardlayoutList = $keyboardLayouts;
@@ -260,8 +275,8 @@ class InstallRecipe extends plugin
         // to supported releases.
         foreach($installationTemplates as $name => $tdata){
             
-            $mName = isset($this->installBootstrapMethodList[$tdata['method']]) ? 
-                $this->installBootstrapMethodList[$tdata['method']]: $tdata['method'];
+            $mName = isset($this->installBaseMethodList[$tdata['method']]) ? 
+                $this->installBaseMethodList[$tdata['method']]: $tdata['method'];
 
             $this->installationTemplateNames[$name] = $tdata['description']." (".$mName.")";
             $this->installationTemplates[$name] = $tdata;
@@ -296,6 +311,8 @@ class InstallRecipe extends plugin
     
     function execute()
     {
+        print_a($this);
+
         // Log account access
         if($this->is_account && !$this->view_logged){
             $this->view_logged = TRUE;
@@ -387,13 +404,13 @@ class InstallRecipe extends plugin
         $smarty->assign('installSystemLocaleList', $this->installSystemLocaleList);
         $smarty->assign('installNTPServerList', $this->installNTPServerList->render());
 
-        $smarty->assign('installBootstrapMethod', $this->installBootstrapMethod);
-        $smarty->assign('installBootstrapMethodList', $this->installBootstrapMethodList);
+        $smarty->assign('installBaseMethod', $this->installBaseMethod);
+        $smarty->assign('installBaseMethodList', $this->installBaseMethodList);
         $smarty->assign('installConfigManagement', $this->installConfigManagement);
 
         // Assign list of available config-management types.
-        if(isset($this->installConfigManagementList[$this->installBootstrapMethod])){ 
-            $smarty->assign('installConfigManagementList', $this->installConfigManagementList[$this->installBootstrapMethod]);
+        if(isset($this->installConfigManagementList[$this->installBaseMethod])){ 
+            $smarty->assign('installConfigManagementList', $this->installConfigManagementList[$this->installBaseMethod]);
         }else{
             $smarty->assign('installConfigManagementList', array());
         }
@@ -431,7 +448,7 @@ class InstallRecipe extends plugin
                 }
             }
             $this->installNTPServerList->setListData($this->installNTPServer);
-            $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
+            $this->installBaseMethod = $this->installationTemplates[$this->installTemplate]['method'];
 
             // The selected release is no longer available for the current template
             if(!in_array($this->installRelease, $this->templateToRelease[$this->installTemplate])){
@@ -477,7 +494,7 @@ class InstallRecipe extends plugin
             "installRootPasswordHash"=>'root-hash',
             "installPartitionTable"=>'disk-setup',
             "installKeyboardlayout"=>'keyboard-layout',
-            "installBootstrapMethod"=>'method',
+            "installBaseMethod"=>'method',
             );
 
         // Collect values to be saved.
@@ -683,7 +700,7 @@ class InstallRecipe extends plugin
 
         // Walk through result and set bootstrap methods.
         foreach($res as $name => $method){
-            $res['installBootstrapMethodList'][$name] = $method['name'];
+            $res['installBaseMethodList'][$name] = $method['name'];
             foreach($method['methods'] as $m){
                 $res['installConfigManagementList'][$name][$m] = $m; 
             }
@@ -716,7 +733,7 @@ class InstallRecipe extends plugin
                         "installRootPasswordHash" => _("Root password hash"),
                         "installKernelPackage" => _("Kernel package"),
                         "installConfigManagement" => _("Config mangement"),
-                        "installBootstrapMethod" => _("Bootstrap method"),
+                        "installBaseMethod" => _("Bootstrap method"),
                         "installPartitionTable" => _("Partition table")
                         )
                         )
