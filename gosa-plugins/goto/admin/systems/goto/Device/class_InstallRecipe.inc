@@ -311,8 +311,6 @@ class InstallRecipe extends plugin
     
     function execute()
     {
-        print_a($this);
-
         // Log account access
         if($this->is_account && !$this->view_logged){
             $this->view_logged = TRUE;
