@@ -174,20 +174,6 @@ class InstallRecipe extends plugin
 
         // Load base install Method
         $rpc = $this->config->getRpcHandle();
-        $bMethod = $rpc->systemGetBaseInstallMethod($this->deviceUUID);
-        if(FALSE && !$rpc->success()){
-            $this->rpcErrorMessage = $rpc->get_error();
-            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return(NULL);
-        }
-
-        // Do nothing while no install method is defined.
-        if(!$bMethod){
-            return;
-        }        
- 
-        echo $bMethod;
-
         $res = $rpc->systemGetBaseInstallParameters($this->deviceUUID);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
@@ -481,8 +467,7 @@ class InstallRecipe extends plugin
         if(!$this->installRootEnabled) $this->installRootPasswordHash = "";
 
         $map = array(
-            "installNTPServer"=>'ntp-servers',
-            //"installTemplate"=>'template',
+            "installTemplate"=>'template',
             "installRelease"=>'release',
             "installTimezone"=>'timezone',
             "installTimeUTC"=>'utc',
@@ -492,6 +477,7 @@ class InstallRecipe extends plugin
             "installRootPasswordHash"=>'root-hash',
             "installPartitionTable"=>'disk-setup',
             "installKeyboardlayout"=>'keyboard-layout',
+            "installBootstrapMethod"=>'method',
             );
 
         // Collect values to be saved.
@@ -503,7 +489,9 @@ class InstallRecipe extends plugin
         } 
 
         // Enforce an array for ntp-servers
-        $data['ntp-servers'] = array_values($data['ntp-servers']);
+        if(!empty($this->installNTPServer)){
+            $data['ntp-servers'] = array_values($this->installNTPServer);
+        }
 
         // Save Boolean like a String 
         $boolean = array("root-user" => "installRootEnabled", "utc" => "installTimeUTC");
@@ -513,15 +501,15 @@ class InstallRecipe extends plugin
 
         // Set the installation template first.
         $rpc = $this->config->getRpcHandle();
-        $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $this->installTemplate);
-       
-        // Handle errors
-        $this->rpcError = !$rpc->success();
-        if(!$rpc->success()){
-            $this->rpcErrorMessage = $rpc->get_error();
-            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-            return(NULL);
-        }
+       #$res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $this->installTemplate);
+       #
+       #// Handle errors
+       #$this->rpcError = !$rpc->success();
+       #if(!$rpc->success()){
+       #    $this->rpcErrorMessage = $rpc->get_error();
+       #    msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+       #    return(NULL);
+       #}
 
         // Set the base installation parameters
         $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $data);
@@ -533,7 +521,6 @@ class InstallRecipe extends plugin
             msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
             return(NULL);
         }
-
     }
 
     
