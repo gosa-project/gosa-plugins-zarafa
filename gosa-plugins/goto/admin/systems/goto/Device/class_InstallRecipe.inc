@@ -148,6 +148,7 @@ class InstallRecipe extends plugin
             }
         } 
 
+        
         // Update selectable items like kernels and mirrors depending on the current setup (relase)
         $this->installBootstrapMethod = $this->installationTemplates[$this->installTemplate]['method'];
         $this->reloadInstallationKernelPackages($initially);
@@ -171,7 +172,22 @@ class InstallRecipe extends plugin
             return;
         }
 
+        // Load base install Method
         $rpc = $this->config->getRpcHandle();
+        $bMethod = $rpc->systemGetBaseInstallMethod($this->deviceUUID);
+        if(FALSE && !$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return(NULL);
+        }
+
+        // Do nothing while no install method is defined.
+        if(!$bMethod){
+            return;
+        }        
+ 
+        echo $bMethod;
+
         $res = $rpc->systemGetBaseInstallParameters($this->deviceUUID);
        
         // Failed to load backend values, keep reported error and return with FALSE; 
@@ -466,7 +482,7 @@ class InstallRecipe extends plugin
 
         $map = array(
             "installNTPServer"=>'ntp-servers',
-            "installTemplate"=>'template',
+            //"installTemplate"=>'template',
             "installRelease"=>'release',
             "installTimezone"=>'timezone',
             "installTimeUTC"=>'utc',
@@ -495,10 +511,22 @@ class InstallRecipe extends plugin
             $data[$attr] = ($this->$source) ? $data[$attr] = "TRUE" : $data[$attr] = "FALSE";
         }
 
+        // Set the installation template first.
         $rpc = $this->config->getRpcHandle();
+        $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $this->installTemplate);
+       
+        // Handle errors
+        $this->rpcError = !$rpc->success();
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return(NULL);
+        }
+
+        // Set the base installation parameters
         $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $data);
        
-        // Failed to load backend values, keep reported error and return with FALSE; 
+        // Handle errors
         $this->rpcError = !$rpc->success();
         if(!$rpc->success()){
             $this->rpcErrorMessage = $rpc->get_error();
@@ -543,7 +571,7 @@ class InstallRecipe extends plugin
 
             if(!isset($this->installKernelPackageList[$this->installKernelPackage])){
                 $new = key($this->installKernelPackageList);
-                if($initially){
+                if($initially && $this->is_account){
                     msg_dialog::display(_("Warning"), sprintf(_("The selected kernel package '%s' is no longer available! The kernel package '%s' was selected as replacement!"), $this->installKernelPackage, $new), WARNING_DIALOG);
                 }
                 $this->installKernelPackage = $new;
