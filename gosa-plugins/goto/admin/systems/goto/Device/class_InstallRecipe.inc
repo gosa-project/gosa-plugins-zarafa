@@ -499,19 +499,8 @@ class InstallRecipe extends plugin
             $data[$attr] = ($this->$source) ? $data[$attr] = "TRUE" : $data[$attr] = "FALSE";
         }
 
-        // Set the installation template first.
-        $rpc = $this->config->getRpcHandle();
-       #$res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $this->installTemplate);
-       #
-       #// Handle errors
-       #$this->rpcError = !$rpc->success();
-       #if(!$rpc->success()){
-       #    $this->rpcErrorMessage = $rpc->get_error();
-       #    msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-       #    return(NULL);
-       #}
-
         // Set the base installation parameters
+        $rpc = $this->config->getRpcHandle();
         $res = $rpc->systemSetBaseInstallParameters($this->deviceUUID, $data);
        
         // Handle errors
