@@ -290,7 +290,7 @@ class DeviceConfig extends plugin
         $rpc = $this->config->getRpcHandle();
         $installConfigManagement = $this->parent->by_object['InstallRecipe']->installConfigManagement;
         $rpc->systemSetConfigParameters($this->deviceUUID, array('method' => $installConfigManagement, 
-                    'var' => $save, 'item' => $this->usedElements));
+                    'var' => $save, 'item' => array_values($this->usedElements)));
         if(!$rpc->success()){
             msg_dialog::display(_("Error"), msgPool::rpcError($rpc->get_error()), ERROR_DIALOG);
             return(NULL);

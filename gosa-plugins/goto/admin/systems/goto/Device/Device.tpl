@@ -1,5 +1,3 @@
-
-
 <table width="100%">
     <tr>
         <td style='width:50%;'>
@@ -35,43 +33,8 @@
                     </td>
                 </tr>
             </table>
-
-            <hr>
-            <h3>{t}Registration{/t}</h3>
-            <table>
-                <tr>
-                    <td><LABEL for='deviceType'>{t}Type{/t}</LABEL>
-                    </td>
-                    <td>
-                        {render acl=$deviceTypeACL}
-                            <input type="text" name="deviceType" value="{$deviceType}" id="deviceType" value="{$deviceType}">
-                        {/render}
-                    </td>
-                </tr>
-                <tr>
-                    <td><LABEL for='deviceUUID'>{t}Device UUID{/t}</LABEL></td>
-                    <td> 
-                        {render acl=$deviceUUIDACL}
-                            <input type="text" name="deviceUUID" value="{$deviceUUID}" id="deviceUUID" value="{$deviceUUID}">
-                        {/render}
-                        {render acl=$deviceUUIDACL}
-                            {image path="images/lists/reload.png" action="reloadUUID"}
-                        {/render}
-                    </td>
-                </tr>
-                <tr>
-                    <td><LABEL for='deviceStatus'>{t}Status{/t}</LABEL>
-                    </td>
-                    <td>
-                        {render acl=$deviceStatusACL}
-                            <input type="text" name="deviceStatus" value="{$deviceStatus}" id="deviceStatus" value="{$deviceStatus}">
-                        {/render}
-                    </td>
-                </tr>
-            </table>
         </td>
-        <td class='left-border' style='padding-left:5px;' rowspan=2>
-
+        <td class='left-border' style='padding-left:5px;'>
             <h3>{t}Orgaizational data{/t}</h3>
             <table>
                 <tr>
@@ -133,6 +96,51 @@
                  </td>
                 </tr>
 -->
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr>
+        </td>
+    </tr>
+    <tr>    
+        <td style='width:50%;'>
+            <h3>{t}Registration{/t}</h3>
+            <table>
+                <tr>
+                    <td><LABEL for='deviceUUID'>{t}Device UUID{/t}</LABEL></td>
+                    <td> 
+                        {render acl=$deviceUUIDACL}
+                            <input type="text" name="deviceUUID" value="{$deviceUUID}" id="deviceUUID" value="{$deviceUUID}">
+                        {/render}
+                        {render acl=$deviceUUIDACL}
+                            {image path="images/lists/reload.png" action="reloadUUID"}
+                        {/render}
+                    </td>
+                </tr>
+                <tr>
+                    <td><LABEL for='deviceType'>{t}Type{/t}</LABEL>
+                    </td>
+                    <td>
+                        {render acl=$deviceTypeACL}
+                            <input type="text" name="deviceType" value="{$deviceType}" id="deviceType" value="{$deviceType}">
+                        {/render}
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td class='left-border' style='padding-left:5px; padding-top:10px;'>
+            <table>
+                <tr>
+                    <td><LABEL for='deviceStatus'>{t}Status{/t}</LABEL>
+                    </td>
+                    <td>
+                        {render acl=$deviceStatusACL}
+                            <input type="text" name="deviceStatus" value="{$deviceStatus}" id="deviceStatus" value="{$deviceStatus}">
+                        {/render}
+                    </td>
+                </tr>
                 <tr>
                     <td><LABEL for='manager'>{t}Manager{/t}</LABEL>
                     </td>
