@@ -57,7 +57,7 @@ class filterConfigManagement {
 
         if($recursive && isset($item['children']) && count($item['children'])){
             foreach($item['children'] as $item){
-                filterDeviceItems::addEntry($ret, $item, $recursive,$filter);
+                filterConfigManagement::addEntry($ret, $item, $recursive,$filter);
             }
         }
 
