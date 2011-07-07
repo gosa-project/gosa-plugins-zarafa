@@ -100,6 +100,10 @@ class Device extends plugin
         foreach($this->attributes as $attr){
             $smarty->assign($attr, set_post($this->$attr));
         }
+
+        // If one attribute of the registered device is given, all others are required too.
+        $str = $this->manager.$this->deviceUUID.$this->deviceStatus;
+        $smarty->assign("registeredRequired", !empty($str));
         return($smarty->fetch(get_template_path('goto/Device/Device.tpl', TRUE)));
     }
 
@@ -114,11 +118,14 @@ class Device extends plugin
         //  the others have to be set too.
         $str = $this->manager.$this->deviceUUID.$this->deviceStatus;
         if(!empty($str)){        
-            foreach($this->dynClasses['registeredDevice'] as $attr){
-                if(empty($this->$attr)){
-                    $message[] = "Please set all values for 'registered device' or leave all blank! {$attr}";
-                    break;
-                }
+            if(empty($this->deviceStatus)){
+                $message[] = msgPool::required(_("Status"));
+            }
+            if(empty($this->manager)){
+                $message[] = msgPool::required(_("Manager"));
+            }
+            if(empty($this->deviceUUID)){
+                $message[] = msgPool::required(_("Device UUID"));
             }
         }
 

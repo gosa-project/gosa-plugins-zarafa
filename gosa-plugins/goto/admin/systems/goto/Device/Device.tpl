@@ -5,7 +5,7 @@
             <h3>{t}Device{/t}</h3>
             <table>
                 <tr>
-                    <td><LABEL for='name'>{t}Name{/t}</LABEL></td>
+                    <td><LABEL for='name'>{t}Name{/t}</LABEL>{if $registeredRequired}{$must}{/if}</td>
                     <td>
                         {render acl=$cnACL}
                             <input type="text" name="cn" value="{$cn}" id="cn" value="{$cn}">
@@ -109,7 +109,7 @@
             <h3>{t}Registration{/t}</h3>
             <table>
                 <tr>
-                    <td><LABEL for='deviceUUID'>{t}Device UUID{/t}</LABEL></td>
+                    <td><LABEL for='deviceUUID'>{t}Device UUID{/t}{if $registeredRequired}{$must}{/if}</LABEL></td>
                     <td> 
                         {render acl=$deviceUUIDACL}
                             <input type="text" name="deviceUUID" value="{$deviceUUID}" id="deviceUUID" value="{$deviceUUID}">
@@ -133,7 +133,7 @@
         <td class='left-border' style='padding-left:5px; padding-top:10px;'>
             <table>
                 <tr>
-                    <td><LABEL for='deviceStatus'>{t}Status{/t}</LABEL>
+                    <td><LABEL for='deviceStatus'>{t}Status{/t}{if $registeredRequired}{$must}{/if}</LABEL>
                     </td>
                     <td>
                         {render acl=$deviceStatusACL}
@@ -142,7 +142,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><LABEL for='manager'>{t}Manager{/t}</LABEL>
+                    <td><LABEL for='manager'>{t}Manager{/t}{if $registeredRequired}{$must}{/if}</LABEL>
                     </td>
                     <td>
                         {render acl=$managerACL}
