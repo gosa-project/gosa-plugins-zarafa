@@ -530,7 +530,14 @@ class InstallRecipe extends plugin
     
     function remove_from_parent()
     {
-       print "Missing"; 
+        // Try to remove the base install extension.
+        $rpc = $this->config->getRpcHandle();
+        $bMethod = $rpc->removeBaseInstallParameters($this->deviceUUID);
+        if(!$rpc->success()){
+            $this->rpcErrorMessage = $rpc->get_error();
+            msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+            return(NULL);
+        }
     }
  
     
