@@ -148,9 +148,8 @@ class InstallRecipe extends plugin
             }
         } 
 
-        
         // Update selectable items like kernels and mirrors depending on the current setup (relase)
-        #$this->installBaseMethod = $this->installationTemplates[$this->installTemplate]['method'];
+        $this->installBaseMethod = $this->installationTemplates[$this->installTemplate]['method'];
         $this->reloadInstallationKernelPackages($initially);
         $this->reloadInstallationMirrors($initially);
 
