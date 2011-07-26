@@ -251,12 +251,18 @@ class InstallRecipe extends plugin
                 "installationTemplates" => "loadInstallationTemplates",
                 "installationMethods" => "loadInstallationMethods",
                 "locales" => "getSystemLocales"    ) as $target => $func){
-            $$target = $this->$func();
-            if($$target == NULL){
-                $this->initFailed = TRUE;
-                msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
-                return;
+
+            if(!session::is_set("InstallRecipe::{$func}")){
+                $tmp = $this->$func();
+                if($tmp == NULL){
+                    $this->initFailed = TRUE;
+                    msg_dialog::display(_("Error"), msgPool::rpcError($this->rpcErrorMessage), ERROR_DIALOG);
+                    return;
+                }else{
+                    session::set("InstallRecipe::{$func}", $tmp);
+                }
             }
+            $$target = session::get("InstallRecipe::{$func}");
         }
 
         // Assign fetchted values
