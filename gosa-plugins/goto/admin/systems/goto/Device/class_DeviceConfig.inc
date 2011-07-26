@@ -258,6 +258,12 @@ class DeviceConfig extends plugin
      */
     function save()
     {
+        // If no items are assinged we've to remove the extension.
+        if(!count($this->usedElements)) {
+            $this->remove_from_parent();
+            return;
+        }
+
         // Load assignable elements.
         $rpc = $this->config->getRpcHandle();
         $release = $this->parent->by_object['InstallRecipe']->installRelease;
