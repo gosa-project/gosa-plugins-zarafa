@@ -77,7 +77,7 @@ class EventAddSystemDialog extends management
       if(isset($entry['macAddress'][0])){
         $macs[] = $entry['macAddress'][0];
       }
-      if(in_array("gosaGroupOfNames", $entry['objectClass'])){
+      if(in_array_strict("gosaGroupOfNames", $entry['objectClass'])){
         $ldap->cat($entry['dn']);
         if($ldap->count()){
           $attrs = $ldap->fetch();

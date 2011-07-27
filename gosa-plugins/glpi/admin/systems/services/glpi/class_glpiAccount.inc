@@ -308,7 +308,7 @@ class glpiAccount extends plugin
      */
     if((isset($_POST['add_type']))&&(!empty($_POST['type_string'])) && $this->acl_is_writeable("type")){
       $attr = $this->handle->getSystemTypes();
-      if(in_array(trim($_POST['type_string']),$attr)){
+      if(in_array_strict(trim($_POST['type_string']),$attr)){
         print_red(_("Adding new sytem type failed, this system type name is already used.")) ;
       }else{
         $this->handle->addSystemType(trim($_POST['type_string']));  
@@ -339,7 +339,7 @@ class glpiAccount extends plugin
      */
     if(isset($_POST['Rename_type_OK'])){
       $attr = $this->handle->getSystemTypes();
-      if(in_array(trim($_POST['string']),$attr)){
+      if(in_array_strict(trim($_POST['string']),$attr)){
         print_red(_("Rename failed, this system type name is already used.")) ;
       }else{
         $this->renameTypeDialog = false;
@@ -395,7 +395,7 @@ class glpiAccount extends plugin
      */
     if((isset($_POST['add_os']))&&(!empty($_POST['is_string']))  && $this->acl_is_writeable("os")){
       $attr = $this->handle->getOSTypes();
-      if(in_array(trim($_POST['is_string']),$attr)){
+      if(in_array_strict(trim($_POST['is_string']),$attr)){
         print_red(_("Adding new operating system failed, specifed name is already used.")) ;
       }else{
         $this->handle->addOS(trim($_POST['is_string']));  
@@ -429,7 +429,7 @@ class glpiAccount extends plugin
      */
     if(isset($_POST['Rename_os_OK'])  && $this->acl_is_writeable("os")){
       $attr = $this->handle->getOSTypes();
-      if(in_array(trim($_POST['string']),$attr)){
+      if(in_array_strict(trim($_POST['string']),$attr)){
         print_red(_("Updating operating system failed, specifed name is already used.")) ;
       }else{
         $this->handle->updateOS($_POST['string'],$this->select_type);
@@ -518,7 +518,7 @@ class glpiAccount extends plugin
       $id = base64_decode($_GET['id']);
 
       /* Check if user is already created in glpi database */
-      if(!in_array($id,$users)){
+      if(!in_array_strict($id,$users)){
 
         /* If this user doesn't exists in glpi db, we must create him */
         $ldap->cat($id, array('cn', 'mail', 'telephoneNumber'));
@@ -767,7 +767,7 @@ class glpiAccount extends plugin
     $atts =$this->handle->getAttachments();
     $ret = array();
     foreach($atts as $entry){
-      if(in_array($entry['ID'],$this->usedAttachments)){
+      if(in_array_strict($entry['ID'],$this->usedAttachments)){
         if($divlist){
           $ret[$entry['ID']] = $entry;
         }else{

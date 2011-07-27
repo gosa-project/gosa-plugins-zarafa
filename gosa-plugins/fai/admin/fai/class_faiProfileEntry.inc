@@ -41,9 +41,9 @@ class faiProfileEntry extends plugin
       $attrs = $ldap->fetch();
 
       /* Only use objects which have cn set */
-      if((isset($attrs['cn'][0]))&&(!in_array($attrs['cn'][0],$used))){
+      if((isset($attrs['cn'][0]))&&(!in_array_strict($attrs['cn'][0],$used))){
         foreach($categories as $cat => $acl){
-          if(in_array($cat,$attrs['objectClass'])){
+          if(in_array_strict($cat,$attrs['objectClass'])){
 
             $acl =  $this->ui->get_permissions($attrs['dn'],"fai/".$acl); 
 

@@ -306,10 +306,10 @@ class kolabAccount extends plugin
   
     $smarty->assign("multiple_support",$this->multiple_support_active);
     foreach($this->attributes as $attr){
-      $smarty->assign("use_".$attr,in_array($attr,$this->multi_boxes));
+      $smarty->assign("use_".$attr,in_array_strict($attr,$this->multi_boxes));
     }
     foreach(array("kolabState") as $attr){
-      $smarty->assign("use_".$attr,in_array($attr,$this->multi_boxes));
+      $smarty->assign("use_".$attr,in_array_strict($attr,$this->multi_boxes));
     }
 
     if($this->multiple_support_active){
@@ -329,7 +329,7 @@ class kolabAccount extends plugin
     /* Optionally execute a command after we're done */
     plugin::remove_from_parent();
     
-    if(!in_array("kolabInetOrgPerson",$this->attrs['objectClass'])){
+    if(!in_array_strict("kolabInetOrgPerson",$this->attrs['objectClass'])){
       $this->attrs['objectClass'][] = "kolabInetOrgPerson";
     }
 
@@ -568,7 +568,7 @@ class kolabAccount extends plugin
   public function get_multi_edit_values()
   {
     $ret = plugin::get_multi_edit_values();
-    if(in_array("kolabState",$this->multi_boxes)){
+    if(in_array_strict("kolabState",$this->multi_boxes)){
       $ret['is_account'] = $this->is_account;
     }
     return($ret);
@@ -596,7 +596,7 @@ class kolabAccount extends plugin
   public function init_multiple_support($attrs,$all)
   {
     plugin::init_multiple_support($attrs,$all);
-    if(isset($attrs['objectClass']) && in_array("kolabInetOrgPerson",$attrs['objectClass'])){
+    if(isset($attrs['objectClass']) && in_array_strict("kolabInetOrgPerson",$attrs['objectClass'])){
       $this->is_account = TRUE;
     }
 
@@ -623,14 +623,14 @@ class kolabAccount extends plugin
     plugin::adapt_from_template($dn, $skip);
 
     /* Setting uid to default */
-    if(isset($this->attrs['uid'][0]) && !in_array("uid", $skip)){
+    if(isset($this->attrs['uid'][0]) && !in_array_strict("uid", $skip)){
       $this->uid = $this->attrs['uid'][0];
     }
 
     /* Pull arrays */
     foreach(array("kolabDelegate", "kolabInvitationPolicy") as $attr){
 
-      if (in_array($attr, $skip)){
+      if (in_array_strict($attr, $skip)){
         continue;
       }
 

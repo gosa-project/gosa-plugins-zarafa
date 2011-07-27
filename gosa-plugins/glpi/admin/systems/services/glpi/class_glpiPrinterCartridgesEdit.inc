@@ -155,7 +155,7 @@ class glpiPrinterCartridgesEdit extends plugin
       $id = base64_decode($_GET['id']);
 
       /* Check if user is already created in glpi database */
-      if(!in_array($id,$users)){
+      if(!in_array_strict($id,$users)){
 
         /* If this user doesn't exists in glpi db, we must create him */
         $ldap->cat($id, array('cn', 'mail', 'telephoneNumber'));

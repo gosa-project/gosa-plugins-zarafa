@@ -128,7 +128,7 @@ class nagiosAccount extends plugin
     /* Assign attributes an ACL to smarty */
     foreach($this->attributes as $val) { 
       $smarty->assign("$val", $this->$val);
-      if(in_array($val,$this->is_chk_box)){
+      if(in_array_strict($val,$this->is_chk_box)){
         if($this->$val == "checked"){
           $smarty->assign($val."CHK", " checked ");
         }else{

@@ -80,7 +80,7 @@ class dakkeyring extends plugin
     $tmp = DAK::list_keys($this->Servers[$this->selected_Server]['MAC']);
     $this->list = array();
     foreach($tmp as $entry){
-      if(isset($entry['ATTRIBUTES']['UID']) && in_array($entry['ATTRIBUTES']['UID'],$details)){
+      if(isset($entry['ATTRIBUTES']['UID']) && in_array_strict($entry['ATTRIBUTES']['UID'],$details)){
         $entry['DETAILS'] = TRUE;
       }
       $this->list[] = $entry;

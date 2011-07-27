@@ -35,7 +35,7 @@ class filterFAIClass {
       /* Only use objects which have cn set */
       if(isset($attrs['cn'][0]) && preg_match("/".preg_quote($filter,'/')."/i", $attrs['cn'][0])){
         foreach($categories as $cat => $acl){
-          if(in_array($cat,$attrs['objectClass'])){
+          if(in_array_strict($cat,$attrs['objectClass'])){
             $acl =  $ui->get_permissions($attrs['dn'],"fai/".$acl);
             if(!isset($FAIAllclasses[$attrs['cn'][0]])){
               $FAIAllclasses[$attrs['cn'][0]] = $attrs ;
@@ -60,7 +60,7 @@ class filterFAIClass {
             if(isset($entry[$attr_name])){
               $test = $entry[$attr_name];
               if(!is_array($test)) $test = array($test);
-              if(in_array($match, $test)) unset($entries[$id]);
+              if(in_array_strict($match, $test)) unset($entries[$id]);
             }
           }
         }

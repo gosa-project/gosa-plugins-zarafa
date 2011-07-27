@@ -84,7 +84,7 @@ class glpiDeviceManagement extends plugin
 
         /* Check if type is allowed, and create empty entry */
         $tmp = array();
-        if((!isset($this->DeviceAttrs[$deviceType]))||((!in_array($deviceType,$this->AllowedDevices)))){
+        if((!isset($this->DeviceAttrs[$deviceType]))||((!in_array_strict($deviceType,$this->AllowedDevices)))){
           print_red(sprintf(_("Internal Error can't create device of type '%s'"),$deviceType));
         }else{
           foreach($this->DeviceAttrs[$deviceType] as $attr){

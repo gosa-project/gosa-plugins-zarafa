@@ -59,7 +59,7 @@ class classSelect extends management
 
     $str = "";
     foreach($objTypes as $class => $img){
-      if(in_array($class, $classes)){
+      if(in_array_strict($class, $classes)){
         $str .= $img;
       }else{
         $str .= "<img src='images/empty.png'>&nbsp;";

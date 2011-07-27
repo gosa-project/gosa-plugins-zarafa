@@ -230,7 +230,7 @@ class mimetype extends plugin
           if(isset($_POST['NewApplication']) && !empty($_POST['NewApplication'])){
             $str = trim(get_post("NewApplication"));
           }
-          if($str != "" && !in_array($str,$this->use_gotoMimeApplication)){
+          if($str != "" && !in_array_strict($str,$this->use_gotoMimeApplication)){
             $this->use_gotoMimeApplication[] = $str;
           }
         }
@@ -249,7 +249,7 @@ class mimetype extends plugin
           if(isset($_POST['NewEmbeddedApplication']) && !empty($_POST['NewEmbeddedApplication'])){
             $str = trim(get_post('NewEmbeddedApplication'));
           }
-          if($str != "" && !in_array($str,$this->use_gotoMimeEmbeddedApplication)){
+          if($str != "" && !in_array_strict($str,$this->use_gotoMimeEmbeddedApplication)){
             $this->use_gotoMimeEmbeddedApplication[] = $str;
           }
         }

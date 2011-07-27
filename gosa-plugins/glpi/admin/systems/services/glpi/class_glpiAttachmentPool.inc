@@ -234,7 +234,7 @@ class glpiAttachmentPool extends plugin
       $chkbox = "<input type='hidden' name='wasOnPage_%s'>".
         "<input type='checkbox' name='useMe_%s' value='%s' %CHECKED%>";
 
-      if(in_array($entry['ID'],$this->Selected)){
+      if(in_array_strict($entry['ID'],$this->Selected)){
         $chkbox = preg_replace("/%CHECKED%/"," checked ",$chkbox);
       }else {
         $chkbox = preg_replace("/%CHECKED%/"," ",$chkbox);

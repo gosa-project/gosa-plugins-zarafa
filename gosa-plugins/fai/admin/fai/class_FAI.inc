@@ -846,7 +846,7 @@ class FAI
       }
 
       /* Get sub release departments of this department */
-      if(in_array("FAIbranch",$attr['objectClass'])) {
+      if(in_array_strict("FAIbranch",$attr['objectClass'])) {
         if($flat){
           $tmp = FAI::                       get_sub_releases_of_this_release($attr['dn'],$flat);
           foreach($tmp as $dn => $value){
@@ -878,7 +878,7 @@ class FAI
         $ou = $attrs['ou'][0];	
       }
 
-      if((in_array("FAIbranch",$attrs['objectClass'])) || ($ou == "fai")){
+      if((in_array_strict("FAIbranch",$attrs['objectClass'])) || ($ou == "fai")){
         return($attrs['dn']);
       }
     }
@@ -1101,7 +1101,7 @@ class FAI
       /* The current object we want to create is an department.
        * Create the department and add the FAIbranch tag.
        */
-      if(in_array("organizationalUnit",$attr['objectClass'])){
+      if(in_array_strict("organizationalUnit",$attr['objectClass'])){
         $attr['dn'] = LDAP::convert($destinationdn);
         $ldap->cd($basedn);
         $ldap->create_missing_trees($destinationdn);
@@ -1140,7 +1140,7 @@ class FAI
          */
         foreach($attr as $key => $value){
 
-          if(in_array($key ,array("gotoLogonScript", "gosaApplicationIcon","gotoMimeIcon"))){
+          if(in_array_strict($key ,array("gotoLogonScript", "gosaApplicationIcon","gotoMimeIcon"))){
             $sr= ldap_read($ldap->cid, LDAP::fix($sourcedn), "$key=*", array($key));
             $ei= ldap_first_entry($ldap->cid, $sr);
             if ($tmp= @ldap_get_values_len($ldap->cid, $ei,$key)){
@@ -1157,7 +1157,7 @@ class FAI
         }
         unset($attr['count']);
         unset($attr['dn']);
-        if(!in_array("FAIobject",$attr['objectClass'])){
+        if(!in_array_strict("FAIobject",$attr['objectClass'])){
           $attr['objectClass'][] = "FAIobject";
         }
         $attr['FAIstate'] = $type;
@@ -1201,7 +1201,7 @@ class FAI
       if($dn != $destinationdn){
         $ldap->cd($basedn);
         $item = $ldap->fetch($ldap->cat($dn));
-        if(!in_array("FAIbranch",$item['objectClass'])){
+        if(!in_array_strict("FAIbranch",$item['objectClass'])){
           FAI::copy_FAI_resource_recursive($dn,str_replace($sourcedn,$destinationdn,$dn),$destinationName,$type,false,$depth);
         }
       }

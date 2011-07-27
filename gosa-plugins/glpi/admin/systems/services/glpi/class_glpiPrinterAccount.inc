@@ -403,7 +403,7 @@ class glpiPrinterAccount extends plugin
       $id = base64_decode($_GET['id']);
 
       /* Check if user is already created in glpi database */
-      if(!in_array($id,$users)){
+      if(!in_array_strict($id,$users)){
 
         /* If this user doesn't exists in glpi db, we must create him */
         $ldap->cat($id, array('cn', 'mail', 'telephoneNumber'));
@@ -755,7 +755,7 @@ class glpiPrinterAccount extends plugin
     $atts =$this->handle->getAttachments();
     $ret = array();
     foreach($atts as $entry){
-      if(in_array($entry['ID'],$this->usedAttachments)){
+      if(in_array_strict($entry['ID'],$this->usedAttachments)){
         if($divlist){
           $ret[$entry['ID']] = $entry;
         }else{

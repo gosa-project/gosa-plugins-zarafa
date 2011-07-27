@@ -211,7 +211,7 @@ class phoneGeneric extends plugin
 
     /* deativate all fields that are not used by the specified type */
     foreach($this->attributes as $att){
-      if((!in_array($att,$this->usedattrs[$this->selected_categorie]))){
+      if((!in_array_strict($att,$this->usedattrs[$this->selected_categorie]))){
         $smarty->assign($att."USED", "disabled" );
         $smarty->assign($att, "");
       }else{
@@ -375,7 +375,7 @@ class phoneGeneric extends plugin
     foreach($this->attributes as $att){
       
       /* Check all attributes, if they are needed for this type of phone */
-      if(!in_array($att,$this->usedattrs[$mode])){
+      if(!in_array_strict($att,$this->usedattrs[$mode])){
         $this->attrs[$att] = array();
       }
     }

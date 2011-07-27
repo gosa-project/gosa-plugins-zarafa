@@ -1326,7 +1326,7 @@ class phoneAccount extends plugin
 
 
     foreach($this->attributes as $attr){
-      if(in_array($attr,$this->multi_boxes)){
+      if(in_array_strict($attr,$this->multi_boxes)){
         $smarty->assign("use_".$attr,TRUE);
       }else{
         $smarty->assign("use_".$attr,FALSE);
@@ -1334,7 +1334,7 @@ class phoneAccount extends plugin
     }
 
     foreach(array("goFonVoiceMailContext","goFonContext") as $attr){
-      if(in_array($attr,$this->multi_boxes)){
+      if(in_array_strict($attr,$this->multi_boxes)){
         $smarty->assign("use_".$attr,TRUE);
       }else{
         $smarty->assign("use_".$attr,FALSE);
@@ -1600,7 +1600,7 @@ class phoneAccount extends plugin
     plugin::adapt_from_template($dn, $skip);
 
     /* Assemble phone numbers */
-    if (isset($this->attrs['telephoneNumber']) && !in_array("telephoneNumber", $skip)){
+    if (isset($this->attrs['telephoneNumber']) && !in_array_strict("telephoneNumber", $skip)){
       for ($i= 0; $i<$this->attrs['telephoneNumber']['count']; $i++){
         $number= $this->attrs['telephoneNumber'][$i];
         $this->phoneNumbers[$number]= $number;
@@ -1736,7 +1736,7 @@ class phoneAccount extends plugin
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=goFonQueue)(member=*))", array("member"));
     while($attr = $ldap->fetch()){
-      if(in_array($this->dn,$attr['member'])){
+      if(in_array_strict($this->dn,$attr['member'])){
         $new =new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'],$attr['dn']);
         unset($new->by_object['ogroup']->memberList[$this->dn]);
         unset($new->by_object['ogroup']->member[$this->dn]);
@@ -1934,30 +1934,30 @@ class phoneAccount extends plugin
   {
     $message = plugin::multiple_check();
 
-    if(!count($this->goFonHomeServers) && in_array("goFonHomeServers",$this->multi_boxes)){
+    if(!count($this->goFonHomeServers) && in_array_strict("goFonHomeServers",$this->multi_boxes)){
       $message[] = _("There is currently no asterisk server defined!");
     }
 
-    if(empty($this->goFonHomeServer) && in_array("goFonHomeServers",$this->multi_boxes)){
+    if(empty($this->goFonHomeServer) && in_array_strict("goFonHomeServers",$this->multi_boxes)){
       $message[] = _("Asterisk server is invalid!");
     }
 
-    if(in_array("goFonVoicemailPIN",$this->multi_boxes) && 
+    if(in_array_strict("goFonVoicemailPIN",$this->multi_boxes) && 
         ( (strlen($this->goFonVoicemailPIN)==0)||
           (strlen($this->goFonVoicemailPIN)>4))){
       $message[]=(_("Voicemail PIN must be 4 characters long!"));
     }else{
-      if(preg_match("/[^0-9]/",$this->goFonVoicemailPIN) && in_array("goFonVoicemailPIN",$this->multi_boxes) ){
+      if(preg_match("/[^0-9]/",$this->goFonVoicemailPIN) && in_array_strict("goFonVoicemailPIN",$this->multi_boxes) ){
         $message[]=(_("Voicemail PIN contains invalid characters!"));
       }
     }
 
-    if(preg_match("/[^0-9a-z]/i",$this->goFonPIN) && in_array("goFonPIN",$this->multi_boxes)){
+    if(preg_match("/[^0-9a-z]/i",$this->goFonPIN) && in_array_strict("goFonPIN",$this->multi_boxes)){
       $message[]=(_("Phone pin contains invalid characters!"));
     }
 
     /* check for ! in any parameter setting*/
-    if(isset($this->macroarray[$this->macro]) && in_array("macro",$this->multi_boxes)){
+    if(isset($this->macroarray[$this->macro]) && in_array_strict("macro",$this->multi_boxes)){
       foreach($this->macroarray[$this->macro] as $val){
         if((strstr($val['choosen'],"!"))||(strstr($val['choosen'],"#"))){
           $message[] = sprintf(_("The parameter %s contains invalid char. '!,#' is used as delimiter"),$val['name']);
@@ -1971,7 +1971,7 @@ class phoneAccount extends plugin
   function get_multi_edit_values()
   {
     $ret = plugin::get_multi_edit_values();
-    if(in_array("macro",$this->multi_boxes)){
+    if(in_array_strict("macro",$this->multi_boxes)){
       $ret['macro'] = $this->macro;
       $ret['macroarray'] = $this->macroarray;
       $ret['macros'] = $this->macros;

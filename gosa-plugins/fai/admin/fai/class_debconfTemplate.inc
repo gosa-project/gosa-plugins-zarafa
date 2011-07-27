@@ -261,7 +261,7 @@ class debconf
         
       $defs = explode(", ",$data['Default']);
       foreach($choices as $value){
-        if(in_array($value,$defs)){
+        if(in_array_strict($value,$defs)){
           $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".htmlentities($value)."' checked>".$value."<br>";
         }else{
           $result.="\n<input name='".$post_name."-multi-".$value."' type='checkbox' value='".htmlentities($value)."'>".$value."<br>";

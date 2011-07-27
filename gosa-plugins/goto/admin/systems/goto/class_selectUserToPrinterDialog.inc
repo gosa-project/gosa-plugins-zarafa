@@ -181,7 +181,7 @@ class selectUserToPrinterDialog extends plugin
     foreach($res as $printer){
 
       /* Skip already used entries */
-      if(in_array($printer['dn'],$this->dns_used)) {
+      if(in_array_strict($printer['dn'],$this->dns_used)) {
         continue;
       }
 
