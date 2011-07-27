@@ -134,7 +134,7 @@ class InstallRecipe extends plugin
                 // Not necessary to warn the user here, the input fields will be empty and thus
                 //  avoid saving.
 
-            }elseif(!in_array($this->installRelease, $this->templateToRelease[$this->installTemplate])){
+            }elseif(!in_array_strict($this->installRelease, $this->templateToRelease[$this->installTemplate])){
 
                 // The selected release is no longer available for the current template
                 // Warn the user and select the next selectable release.
@@ -292,7 +292,7 @@ class InstallRecipe extends plugin
             if(isset($installationMethods[$tdata['method']]['repositories'])){
                 $repos = $installationMethods[$tdata['method']]['repositories'];
                 foreach($distributions as $dist){
-                    if(in_array($dist['type']['name'],$repos) && isset($dist['releases'])){
+                    if(in_array_strict($dist['type']['name'],$repos) && isset($dist['releases'])){
                         foreach($dist['releases'] as $release){
                             $rname = $dist['name'].'/'.$release['name'];
                             $this->templateToRelease[$name][$rname] = $rname;
@@ -446,7 +446,7 @@ class InstallRecipe extends plugin
             $this->installNTPServer = $this->installNTPServerList->getMaintainedData();
             if(isset($_POST['installNTPServer_Input']) && isset($_POST['installNTPServer_Add'])){
                 $add = get_post('installNTPServer_Input');
-                if(!in_array($add, $this->installNTPServer) && !empty($add)){
+                if(!in_array_strict($add, $this->installNTPServer) && !empty($add)){
                     $this->installNTPServer[] = $add;
                 }
             }
@@ -454,7 +454,7 @@ class InstallRecipe extends plugin
             $this->installBaseMethod = $this->installationTemplates[$this->installTemplate]['method'];
 
             // The selected release is no longer available for the current template
-            if(!in_array($this->installRelease, $this->templateToRelease[$this->installTemplate])){
+            if(!in_array_strict($this->installRelease, $this->templateToRelease[$this->installTemplate])){
                 $this->installRelease = key($this->templateToRelease[$this->installTemplate]);
             }
 

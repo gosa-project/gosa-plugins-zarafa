@@ -207,7 +207,7 @@ class DevicePartition
                 // Build up a list of all used partitions
                 $partStr = "";
                 foreach($vg['partitions'] as $partName){
-                    if(in_array($partName, $raidTargets)){
+                    if(in_array_strict($partName, $raidTargets)){
                         $img = $raidImg;
                     }else{
                         $img = $partitionImg;
@@ -273,7 +273,7 @@ class DevicePartition
                 // Add partitions
                 foreach($partitions as $pid => $part){
 
-                    if(!in_array($part['onDisk'], $diskNames)){
+                    if(!in_array_strict($part['onDisk'], $diskNames)){
                         
                         echo "Cannot display '{$part['target']}' the given disk '{$part['onDisk']}' does not exists!<br>";
                         continue;

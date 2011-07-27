@@ -733,7 +733,7 @@ class ConfigManagement extends plugin
         while(preg_match("/\//", $fPath)){
             $fPath = preg_replace("/\/[^\/]*$/","", $fPath);
             $item = $this->dataModel->getItemByPath($fPath);
-            if(in_array($item['type'], array('Release', 'Distribution', 'root'))){
+            if(in_array_strict($item['type'], array('Release', 'Distribution', 'root'))){
                 return(preg_replace("/".preg_quote($item['path'],'/')."/", "", $fullPath));
             }
         }
@@ -826,7 +826,7 @@ class ConfigManagement extends plugin
             if($this->currentObject != NULL && isset($this->currentObject['values']['name'])){
                 $usedNames = array_remove_entries(array($this->currentObject['values']['name']), $usedNames);
             }
-            if(in_array($values['name'],$usedNames)){
+            if(in_array_strict($values['name'],$usedNames)){
                 $msgs[] = msgPool::duplicated(_("Name"));
             }
         }

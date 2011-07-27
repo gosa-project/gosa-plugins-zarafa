@@ -152,7 +152,7 @@ class DeviceConfig extends plugin
         foreach($this->assignableElements as $name => $element){
 
             // skip already assigned elements
-            if(in_array($name, $this->usedElements)) continue;
+            if(in_array_strict($name, $this->usedElements)) continue;
 
             // Create the list elements.
             $data[$name] = $element;
