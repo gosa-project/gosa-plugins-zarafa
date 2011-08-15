@@ -221,7 +221,6 @@ class mailMethodKolab extends mailMethodCyrus
     }
   }
 
-
   public function setQuota($number)
   {
     mailMethod::setQuota($number);
@@ -253,7 +252,6 @@ class mailMethodKolab extends mailMethodCyrus
       "<b>Setting Quota</b>");
     return(TRUE);
   }
-
 
   public function allow_remove(&$reason)
   {
