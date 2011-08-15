@@ -2,6 +2,8 @@
 
 class mailMethodKolabNoImap extends mailMethodKolab
 {
+    protected $enableSieveManager   = FALSE;
+
     public function connect()
     {
         return(mailMethod::connect());
