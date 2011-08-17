@@ -337,8 +337,8 @@ class mailAccount extends plugin
       return($this->mailAddressSelect->execute());
     }
 
-    if (isset($_POST['add_forwarder'])){
-      if ($_POST['forward_address'] != ""){
+    if (isset($_POST['add_forwarder']) && isset($_POST['forward_address'])){
+      if (!empty($_POST['forward_address'])){
         $address= get_post('forward_address');
         $valid= FALSE;
         if (!tests::is_email($address)){
@@ -364,7 +364,7 @@ class mailAccount extends plugin
         }
       }
     }
-    if (isset($_POST['delete_forwarder'])){
+    if (isset($_POST['delete_forwarder']) && isset($_POST['forwarder_list'])){
       $this->delForwarder ($_POST['forwarder_list']);
     }
     if ($this->mailAddressSelect instanceOf mailAddressSelect){
