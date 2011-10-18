@@ -377,6 +377,14 @@
                 {render acl=$cannotChangePasswordACL  checkbox=$multiple_support checked=$use_cannotChangePassword}
                  <input type='checkbox' value='1' name='flag_cannotChangePassword'
                     {if $flag_cannotChangePassword} checked {/if} id='flag_cannotChangePassword'>
+                {/render}
+            </td>
+            <td>
+                <label for="flag_cannotChangePassword">{t}Cannot change password{/t}</label>
+            </td>
+        </tr>
+
+
     </table>
     <table>
       <tr>
@@ -405,14 +413,6 @@
             {/render}
           </td>
        </tr>
-                {/render}
-            </td>
-            <td>
-                <label for="flag_cannotChangePassword">{t}Cannot change password{/t}</label>
-            </td>
-        </tr>
-
-
         <tr>
             <td>
             </td>
