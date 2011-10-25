@@ -65,6 +65,10 @@ class ConfigManagement extends plugin
 
         // Load some base install parameters
         $res = $rpc->getSupportedBaseInstallMethods();
+        if(!$rpc->success()){
+            $this->errorMessage = $rpc->get_error();;
+            return(FALSE);
+        }
         $baseInstTypes = $installationTypes = $installationMethods = array();
         foreach($res as $type => $data){
             $baseInstTypes[$type] = $type;
