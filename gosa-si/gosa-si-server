@@ -165,7 +165,6 @@ our $server_mac_address;
 our $gosa_address;
 our $no_arp;
 our $forground;
-our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn, $ldap_version, $ldap_retry_sec);
 our ($mysql_username, $mysql_password, $mysql_database, $mysql_host);
 our $known_modules;
@@ -176,7 +175,7 @@ our $verbose= 0;
 our $global_kernel;
 
 # where is the config stored by default and his name
-our $config = '/etc/gosa-si/server.conf';
+our $cfg_file = '/etc/gosa-si/server.conf';
 
 # by default dumping of config is undefined
 our $dump_config = undef;
@@ -3603,7 +3602,7 @@ sub create_pid {
 Getopt::Long::Configure( 'bundling' );
 GetOptions( 'v|verbose+' => \$verbose,
             'h|help' => \&usage,
-            'c|config=s' => \$config,
+            'c|config=s' => \$cfg_file,
             'x|dump-config=i' => \$dump_config,
             'f|foreground' => \$foreground,
 						'd=s' => \$debug_parts)
@@ -3620,7 +3619,7 @@ if( defined $dump_config ) {
 }
 
 #  read and set config parameters
-&read_configfile($config, %cfg_defaults);
+&read_configfile($cfg_file, %cfg_defaults);
 
 # daemonize the program
 &start_daemon($pid, $foreground);

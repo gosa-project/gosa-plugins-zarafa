@@ -167,6 +167,7 @@ $main::server_address = $server_address;
       scope  => 'one',
       filter => "(&(ou=incoming)(objectClass=organizationalUnit))"
     );
+    print "---->".$ldap_base."\n";
     if(not defined($mesg->count) or $mesg->count == 0) {
             my $incomingou = Net::LDAP::Entry->new();
             $incomingou->dn('ou=incoming,'.$ldap_base);
