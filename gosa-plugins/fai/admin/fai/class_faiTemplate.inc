@@ -69,6 +69,7 @@ class faiTemplate extends plugin
 
     // Prepare lists
     $this->templateList = new sortableListing();
+    $this->templateList->setInstantDelete(false);
     $this->templateList->setDeleteable(true);
     $this->templateList->setEditable(true);
     $this->templateList->setWidth("100%");
@@ -76,7 +77,6 @@ class faiTemplate extends plugin
     $this->templateList->setColspecs(array('*','18px'));
     $this->templateList->setHeader(array(_("Name"),""));
     $this->templateList->setDefaultSortColumn(0);
-
   }
 
 
