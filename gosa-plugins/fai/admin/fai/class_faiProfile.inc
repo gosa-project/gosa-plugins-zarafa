@@ -99,6 +99,7 @@ class faiProfile extends plugin
         // Prepare lists
         $this->classList = new sortableListing(array(),array(), TRUE);
         $this->classList->setDeleteable(true);
+        $this->classList->setInstantDelete(false);
         $this->classList->setEditable(false);
         $this->classList->setWidth("100%");
         $this->classList->setHeight("200px");
@@ -141,10 +142,10 @@ class faiProfile extends plugin
         $sort_once = false;
         if(!preg_match("/freeze/",$this->FAIstate)){
 
-        if(isset($_POST['AddClass']) && $this->acl_is_writeable("FAIclass")){
+            if(isset($_POST['AddClass']) && $this->acl_is_writeable("FAIclass")){
                 $this->classSelect = new classSelect($this->config, get_userinfo());
                 $this->dialog  =true;
-        }
+            }
 
 
             /* Save Dialog */
