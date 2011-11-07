@@ -1,6 +1,10 @@
 GOsa2 changelog
 ===============
 
+* gosa 2.7.3
+  - Fixed error when removing templates.
+  - Fixed error when changing from the system plugin back to itself.
+
 * gosa 2.7.2
   - Updated bundeled smarty to 3.1.4.
   - Introduced sortable listing to ACL and posix dialogs.
