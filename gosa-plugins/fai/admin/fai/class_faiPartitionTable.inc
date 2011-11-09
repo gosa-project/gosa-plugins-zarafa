@@ -108,6 +108,7 @@ class faiPartitionTable extends plugin
     // Prepare lists
     $this->diskList = new sortableListing();
     $this->diskList->setDeleteable(true);
+    $this->diskList->setInstantDelete(false);
     $this->diskList->setEditable(true);
     $this->diskList->setWidth("100%");
     $this->diskList->setHeight("400px");
