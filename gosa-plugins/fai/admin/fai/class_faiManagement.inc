@@ -553,6 +553,14 @@ class faiManagement extends management
     foreach($to_del as $dn){
       $ldap->rmdir_recursive($dn);
     }
+
+    // Reload entryCSN values for the plugins - To avoid the warning:
+    // "The current object has been altered while beeing edited..."
+    foreach($this->tabObject->by_object as $key => &$obj){
+      if($obj->CSN_check_active){
+        $obj->entryCSN = getEntryCSN($this->dn);
+      }
+    }
   }
 
 
