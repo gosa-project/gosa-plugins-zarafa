@@ -9,6 +9,7 @@
     <template>deploy-list.tpl</template>
     <label>List of queued jobs</label>
     <defaultSortColumn>3</defaultSortColumn>
+    <noAclChecks>true</noAclChecks> 
 
     <objectType>
       <label>Event</label>
