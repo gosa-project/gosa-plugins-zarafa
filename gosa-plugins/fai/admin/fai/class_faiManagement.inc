@@ -127,6 +127,14 @@ class faiManagement extends management
     $this->registerAction("PerformBranch","PerformBranch");
 
     $releases = $this->getReleaseStates($this->config,$this->fai_base);
+
+    if(session::is_set('faiManagement::fai_release')){
+        $r = session::get('faiManagement::fai_release');
+        if(isset($releases[$r])){
+            $this->fai_release = $r;
+        }
+    }
+
     $this->releaseSelector = new releaseSelector($releases, $this->fai_release, $this->fai_base);
     parent::__construct($config, $ui, "FAI object", $headpage);
   }
@@ -1189,6 +1197,9 @@ class faiManagement extends management
     $headpage = $this->getHeadpage();
     $this->releaseSelector->update();
     $this->fai_release = $this->releaseSelector->getBase();
+
+    session::set('faiManagement::fai_release', $this->fai_release);
+
     $headpage->setBase($this->fai_release);
     $headpage->update();
     $smarty = get_smarty();
