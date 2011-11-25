@@ -1139,6 +1139,8 @@ class faiManagement extends management
    */
   static function filterProperties($row, $classes)
   {
+    global $fai_inst;
+
     $objects = array(
         "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png",
           "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
@@ -1160,9 +1162,15 @@ class faiManagement extends management
           "NAME"=>_("OPSI local boot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
 
     $icon_list = "";
+
+    $otc = &$fai_inst->getHeadpage()->objectTypeCount;
     foreach($objects as $type => $type_data){
       if(in_array_strict($type, $classes)){
         $icon_list .= image($type_data['IMG'],'edit_'.$row.'_'.$type,$type_data['NAME']);
+        if (!isset($otc[$type])) {
+            $otc[$type]= 0;
+        }
+        $otc[$type]++;
       }else{
         $icon_list .= image('images/empty.png');
       }
