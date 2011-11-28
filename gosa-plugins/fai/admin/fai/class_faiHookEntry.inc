@@ -212,12 +212,6 @@ class faiHookEntry extends plugin
     /* Strip out dos newlines */
     $tmp['FAIscript']= strtr($this->FAIscript, array("\x0D" => ""));
 
-    /* Ensure that the script is terminated correctly with a newline
-     */
-    if($tmp['FAIscript'][strlen($tmp['FAIscript'])-1] != "\n"){
-        $tmp['FAIscript'].="\n";
-    }
-
     if(($this->orig_cn)&&($tmp['cn']!=$this->orig_cn)){
       $tmp['remove']['from']  = $this->orig_cn;
       $tmp['remove']['to']    = $tmp['cn'];
