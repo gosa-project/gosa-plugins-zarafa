@@ -2907,15 +2907,12 @@ function change_password ($dn, $password, $mode=FALSE, $hash= "", $old_password 
         $attrs= array();
         if (!$mode && !empty($tmp)){
             $attrs= generate_smb_nt_hash($password);
-            $shadow = (isset($attrs["shadowLastChange"][0]))?(int)(date("U") / 86400):0;
-            if ($shadow != 0){
-                $attrs['shadowLastChange']= $shadow;
-            }
         }
 
         // Write back the new password hash 
         $ldap->cd($dn);
         $attrs['userPassword']= $newpass;
+        $attrs['shadowLastChange'] = (int)(date("U") / 86400);
 
         // Prepare a special attribute list, which will be used for event hook calls
         $attrsEvent = array();
