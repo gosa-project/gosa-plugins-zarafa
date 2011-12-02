@@ -67,7 +67,9 @@ class faiTemplateEdit extends plugin
 
   function save()
   {
-    return($this->value);
+      /* Strip out dos newlines */
+      $value = strtr($this->value, array("\x0D" => ""));
+      return($value);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
