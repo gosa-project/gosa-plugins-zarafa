@@ -79,7 +79,7 @@ sub show_log_by_date {
         if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
 
         # read install dates directory
-        my $mac_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+        my $mac_dir = File::Spec->catdir($main::client_fai_log_dir, lc $avail_mac);
         opendir(DIR, $mac_dir);
         my @avail_dates = readdir(DIR);
         closedir(DIR);
@@ -142,7 +142,7 @@ sub show_log_by_mac {
             if (not $avail_mac =~ /$mac/i) { next; }
             
             # read install dates directory
-            my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+            my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, lc $avail_mac);
             if (not -d $act_log_dir) { next; }
             opendir(DIR, $act_log_dir); 
             my @avail_dates = readdir(DIR);
@@ -202,7 +202,7 @@ sub show_log_by_date_and_mac {
         # check mac address
         if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
         if (not $avail_mac =~ /$mac/i) { next; }
-        my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+        my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, lc $avail_mac);
     
         # read install date directory
         opendir(DIR, $act_log_dir); 
@@ -245,7 +245,7 @@ sub show_log_files_by_date_and_mac {
     my $mac = @{$msg_hash->{mac}}[0];
     $header =~ s/gosa_//;
 
-    my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $mac, $date);
+    my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, lc $mac, $date);
     if (not -d $act_log_dir) {
         my $error_string = "client fai log directory '$act_log_dir' do not exist";
         &main::daemon_log("$session_id ERROR: $error_string", 1); 
@@ -296,7 +296,7 @@ sub get_log_file_by_date_and_mac {
     $header =~ s/gosa_//;
  
     # sanity check
-    my $act_log_file = File::Spec->catfile($main::client_fai_log_dir, $mac, $date, $log_file);
+    my $act_log_file = File::Spec->catfile($main::client_fai_log_dir, lc $mac, $date, $log_file);
     if (not -f $act_log_file) {
         my $error_string = "client fai log file '$act_log_file' do not exist or could not be read"; 
         &main::daemon_log("$session_id ERROR: $error_string", 1); 
@@ -369,7 +369,7 @@ sub get_recent_log_by_mac {
     foreach my $avail_mac (@avail_macs) { 
         if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
         if (not $avail_mac =~ /$mac/i) { next; }
-        $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+        $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, lc $avail_mac);
         $act_mac = $avail_mac;
     }
     if (not defined $act_log_dir) {
@@ -391,7 +391,7 @@ sub get_recent_log_by_mac {
     my $out_hash = &create_xml_hash($header, $target, $source);
 
     # read latest log directory
-    my $latest_log_dir = File::Spec->catdir($main::client_fai_log_dir, $act_mac, $latest_log);
+    my $latest_log_dir = File::Spec->catdir($main::client_fai_log_dir, lc $act_mac, $latest_log);
     opendir(DIR, $latest_log_dir); 
     my @log_files = readdir(DIR);
     closedir(DIR);   
@@ -455,7 +455,7 @@ sub delete_log_by_date_and_mac {
         # check mac address
         if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
         if (not $avail_mac =~ /$mac/i) { next; }
-        my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+        my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, lc $avail_mac);
     
         # read install date directory
         opendir(DIR, $act_log_dir); 
