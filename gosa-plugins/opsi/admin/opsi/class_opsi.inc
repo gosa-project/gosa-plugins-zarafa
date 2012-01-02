@@ -341,9 +341,14 @@ class opsi extends gosaSupportDaemon
                 }
 
 
-                $e["installed"] = FALSE;
-                if(isset($entry['ACTIONREQUEST'])){
+		$e["installed"] = FALSE;
+                if(isset($entry['INSTALLATIONSTATUS']) && $entry['INSTALLATIONSTATUS']['0']['VALUE'] == 'installed'){
                     $e["installed"] = TRUE;
+                }
+
+		$e["request"] = "";
+                if(isset($entry['ACTIONREQUEST'])){
+                    $e["request"] = $entry['ACTIONREQUEST']['0']['VALUE'];
                 }
 
                 $e["requires_licence"] = FALSE;

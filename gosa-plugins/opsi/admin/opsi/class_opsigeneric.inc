@@ -169,7 +169,7 @@ class opsiGeneric extends plugin
                 } 
 
                 if($entry['data']['TYPE'] == "localboot"){
-                    if(!$entry['installed']){
+                    if(!$entry['installed'] || $entry['request'] == "uninstall"){
                         $this->a_availableLocalProducts[$key] = $tmp;
                     }else{
                         $this->a_selectedLocalProducts[$key] = $tmp;
