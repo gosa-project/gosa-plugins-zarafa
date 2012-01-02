@@ -370,9 +370,9 @@ class opsiGeneric extends plugin
 
         /* Check if netboot product is configurable 
          */
-        $cfg_able =FALSE;
-        if(isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
-            $cfg_able = count($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG']);
+	$cfg_able =FALSE;
+	if(isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
+            $cfg_able = count($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG']) != 0;
             $cfg_able &= $this->acl_is_readable("netbootProduct");
         }
 
