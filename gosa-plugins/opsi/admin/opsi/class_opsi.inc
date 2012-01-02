@@ -340,16 +340,16 @@ class opsi extends gosaSupportDaemon
                     $e["data"]['PROPERTIES'] = $p_data;
                 }
 
-
-		$e["installed"] = FALSE;
-                if(isset($entry['INSTALLATIONSTATUS']) && $entry['INSTALLATIONSTATUS']['0']['VALUE'] == 'installed'){
-                    $e["installed"] = TRUE;
-                }
-
 		$e["request"] = "";
                 if(isset($entry['ACTIONREQUEST'])){
                     $e["request"] = $entry['ACTIONREQUEST']['0']['VALUE'];
                 }
+
+		$e["installed"] = FALSE;
+                if(($e['request'] == "setup") || (isset($entry['INSTALLATIONSTATUS']) && $entry['INSTALLATIONSTATUS']['0']['VALUE'] == 'installed')){
+                    $e["installed"] = TRUE;
+                }
+
 
                 $e["requires_licence"] = FALSE;
                 if(isset($e['data']['LICENSEREQUIRED']) && preg_match("/true/i",$e['data']['LICENSEREQUIRED'])){
