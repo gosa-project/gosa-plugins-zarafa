@@ -119,7 +119,7 @@
 {/if}
 <hr>
 
-{if $fai_activated}
+{if $fai_activated && $si_activated}
   <h3>{t}Action{/t}</h3>
   {render acl=$FAIstateACL}
      <select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
