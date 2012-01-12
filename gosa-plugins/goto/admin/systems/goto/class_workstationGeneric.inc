@@ -297,6 +297,9 @@ class workgeneric extends plugin
     $smarty->assign("syslogservers", $this->gotoSyslogServers);
     $smarty->assign("fai_activated",$this->fai_activated);
 
+    $si_url = $this->config->get_cfg_value("gosaSupportURI");
+    $smarty->assign("si_activated",!empty($si_url));
+
     $ntpser = array();
     foreach($this->gotoNtpServers as $server){
       if(!in_array_strict($server,$this->gotoNtpServer)){

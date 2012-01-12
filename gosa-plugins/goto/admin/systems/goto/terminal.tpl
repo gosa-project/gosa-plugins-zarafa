@@ -146,7 +146,7 @@
 <table width="100%">
 	<tr>
 		<td style="width:50%; border-right:1px solid #AAA">
-		{if $fai_activated}
+		{if $fai_activated && $si_activated}
 			<h2><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h2>
 				<table summary="">
 				 	<tr>

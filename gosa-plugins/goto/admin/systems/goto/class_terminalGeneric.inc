@@ -294,6 +294,9 @@ class termgeneric extends plugin
     $smarty->assign("ntpservers",     $tmp);
     $smarty->assign("fai_activated",$this->fai_activated);
 
+    $si_url = $this->config->get_cfg_value("gosaSupportURI");
+    $smarty->assign("si_activated",!empty($si_url));
+
     /* Variables */
     foreach(array("gotoMode", "gotoTerminalPath", "gotoSwapServer","gotoSyslogServer", "gotoNtpServer") as $val){
       $smarty->assign($val."_select", $this->$val);
