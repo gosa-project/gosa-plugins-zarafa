@@ -429,8 +429,15 @@ class termgeneric extends plugin
         }
 
         /* Check if given name is a valid host/dns name */
-        if(!tests::is_dns_name($this->cn) ){
-            $message[] = msgPool::invalid(_("Name"));
+        $regex = $reason = "";
+        if(!tests::is_dns_name($this->cn, $reason, $regex)){
+            if($reason == 1){
+                $message[]= sprintf(_("The full qualified domain name is too long!"));
+            }elseif($reason == 2){
+                $message[]= sprintf(_("The hostname name is too long!"));
+            }else{
+                $message[]= msgPool::invalid(_("Name"), $this->cn, "/{$regex}/i");
+            }
         }
 
         if ($this->orig_dn == 'new'){
