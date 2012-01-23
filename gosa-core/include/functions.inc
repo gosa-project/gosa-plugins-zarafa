@@ -2861,7 +2861,7 @@ function change_password ($dn, $password, $mode=FALSE, $hash= "", $old_password 
     // Fetch the current object data, to be able to detect the current hashing method
     //  and to be able to rollback changes once has an error occured.
     $ldap = $config->get_ldap_link();
-    $ldap->cat ($dn, array("shadowLastChange", "userPassword","sambaNTPassword","sambaLMPassword", "uid"));
+    $ldap->cat ($dn, array("shadowLastChange", "userPassword","sambaNTPassword","sambaLMPassword", "uid", "objectClass"));
     $attrs = $ldap->fetch ();
     $initialAttrs = $attrs;
 
@@ -2879,7 +2879,9 @@ function change_password ($dn, $password, $mode=FALSE, $hash= "", $old_password 
         // If we've still no valid hashing method detected, then try to extract if from the userPassword attribute.
         elseif(isset($attrs['userPassword'][0]) && preg_match ("/^{([^}]+)}(.+)/", $attrs['userPassword'][0], $matches)){
             $test = passwordMethod::get_method($attrs['userPassword'][0],$dn);
-            $hash = $test->get_hash_name();
+            if($test){
+                $hash = $test->get_hash_name();
+            }
         }
 
         // No current password was found and no hash is enforced, so we've to use the config default here.
@@ -2910,17 +2912,17 @@ function change_password ($dn, $password, $mode=FALSE, $hash= "", $old_password 
             if(!count($attrs) || !is_array($attrs)){
                 msg_dialog::display(_("Error"),_("Cannot generate SAMBA hash!"),ERROR_DIALOG);
                 return(FALSE);    
-            }else{
-                $shadow = (isset($attrs["shadowLastChange"][0]))?(int)(date("U") / 86400):0;
-                if ($shadow != 0){
-                    $attrs['shadowLastChange']= $shadow;
-                }
             }
         }
 
         // Write back the new password hash 
         $ldap->cd($dn);
         $attrs['userPassword']= $newpass;
+
+        // For posixUsers - Set the last changed value.
+        if(in_array_strict("shadowAccount", $initialAttrs['objectClass'])){
+            $attrs['shadowLastChange'] = (int)(date("U") / 86400);
+        }
 
         // Prepare a special attribute list, which will be used for event hook calls
         $attrsEvent = array();
@@ -3086,12 +3088,15 @@ function generate_smb_nt_hash($password)
       return ("");
     }
   } else {
+      $password = addcslashes($password, '$'); // <- Escape $ twice for transport from PHP to console-process.
+      $password = addcslashes($password, '$'); 
+      $password = addcslashes($password, '$'); // <- And again once, to be able to use it as parameter for the perl script.
 	  $tmp = $config->get_cfg_value("core",'sambaHashHook');
       $tmp = preg_replace("/%userPassword/", escapeshellarg($password), $tmp);
       $tmp = preg_replace("/%password/", escapeshellarg($password), $tmp);
 	  @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__, $tmp, "Execute");
 
-	  exec($tmp, $ar);
+ 	  exec($tmp, $ar);
 	  flush();
 	  reset($ar);
 	  $hash= current($ar);
@@ -3763,7 +3768,7 @@ function fillReplacements($str, $attrs, $shellArg = FALSE, $default = "")
         $value  = substr($attrs[$name], $start, $end);
 
         // Use values which are valid for shell execution?
-        if($shellArg) $value = escapeshellarg($value);
+        if($shellArg) $value = escapeshellcmd($value);
 
         // Replace the placeholder within the string.
         $str = preg_replace("/".preg_quote($match[0],'/')."/", $value, $str);

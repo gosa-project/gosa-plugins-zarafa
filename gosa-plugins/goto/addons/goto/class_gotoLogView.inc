@@ -11,6 +11,7 @@ class gotoLogView extends plugin
     var $o_queue;  
 
     var $selected_date;
+    var $selected_date_str;
     var $selected_file = 0;
 
     var $attributes = array("macAddress");
@@ -88,7 +89,7 @@ class gotoLogView extends plugin
         $this->logSelector->setEditable(true);
         $this->logSelector->setAcl("rwcdm");
         $this->logSelector->setWidth("100%");
-        $this->logSelector->setHeight("120px");
+        $this->logSelector->setHeight("220px");
         $this->logSelector->setHeader(array(_("Date"),_("Filename")));
         $this->logSelector->setColspecs(array('80px', '100px', '200px', '120px','150px'));
     }
@@ -122,6 +123,7 @@ class gotoLogView extends plugin
             $entry = $this->logs[$id];
             $this->selected_file = $entry['FILE'];
             $this->selected_date = $entry['DATE'];
+            $this->selected_date_str = $entry['DATE_STR'];
         }
 
 
@@ -131,7 +133,7 @@ class gotoLogView extends plugin
         $smarty->assign("mac",             set_post($this->mac));
         $smarty->assign("selected_file",   set_post($this->selected_file));
         $smarty->assign("selected_date",   set_post($this->selected_date));
-        $smarty->assign("log_file",        $this->get_log($this->mac,$this->selected_date,$this->selected_file));        
+        $smarty->assign("log_file",        $this->get_log($this->mac,$this->selected_date_str,$this->selected_file));        
         $smarty->assign("standalone",      $this->standalone);
         if (isset($this->logs[$this->mac])){
             $date = date("d.m.Y H:i:s",$this->logs[$this->mac][$this->selected_date]['REAL_DATE']);

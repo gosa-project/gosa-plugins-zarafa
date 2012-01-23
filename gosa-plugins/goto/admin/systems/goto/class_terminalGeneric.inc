@@ -284,6 +284,9 @@ class termgeneric extends plugin
         $smarty->assign("ntpservers",     set_post($tmp));
         $smarty->assign("fai_activated",$this->fai_activated);
 
+        $si_url = $this->config->get_cfg_value("core","gosaSupportURI");
+        $smarty->assign("si_activated",!empty($si_url));
+
         /* Variables */
         foreach(array("gotoMode", "gotoTerminalPath", "gotoSwapServer","gotoSyslogServer", "gotoNtpServer") as $val){
             $smarty->assign($val."_select", set_post($this->$val));
@@ -426,8 +429,15 @@ class termgeneric extends plugin
         }
 
         /* Check if given name is a valid host/dns name */
-        if(!tests::is_dns_name($this->cn) ){
-            $message[] = msgPool::invalid(_("Name"));
+        $regex = $reason = "";
+        if(!tests::is_dns_name($this->cn, $reason, $regex)){
+            if($reason == 1){
+                $message[]= sprintf(_("The full qualified domain name is too long!"));
+            }elseif($reason == 2){
+                $message[]= sprintf(_("The hostname name is too long!"));
+            }else{
+                $message[]= msgPool::invalid(_("Name"), $this->cn, "/{$regex}/i");
+            }
         }
 
         if ($this->orig_dn == 'new'){

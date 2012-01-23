@@ -192,6 +192,9 @@ class faiScriptEntry extends plugin
             $tmp[$attrs] = $this->$attrs;
         }
 
+        /* Strip out dos newlines */
+        $tmp['FAIscript']= strtr($this->FAIscript, array("\x0D" => ""));
+
         if(($this->orig_cn)&&($tmp['cn']!=$this->orig_cn)){
             $tmp['remove']['from']  = $this->orig_cn;
             $tmp['remove']['to']    = $tmp['cn'];

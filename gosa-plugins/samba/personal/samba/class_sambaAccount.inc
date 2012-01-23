@@ -510,7 +510,7 @@ class sambaAccount extends plugin
         $additional_info_PwdMustChange = "";
 
         // Calculate effective max Password Age 
-        //  This can only be calculated if sambaPwdLastSet ist set. 
+        //  This can only be calculated if sambaPwdLastSet is set. 
         if(isset($this->attrs['sambaPwdLastSet'][0])){
             $last = $this->attrs['sambaPwdLastSet'][0];
             $sid = $this->get_domain_info();

@@ -12,11 +12,53 @@
     <defaultSortColumn>0</defaultSortColumn>
 
     <objectType>
-      <label>FAI</label>
-      <objectClass>FAIclass</objectClass>
+      <label>Partition table</label>
+      <objectClass>FAIpartitionTable</objectClass>
       <category>fai</category>
       <class>fai</class>
-      <image>plugins/fai/images/script.png</image>
+      <image>plugins/fai/images/fai_partitionTable.png</image>
+    </objectType>
+    <objectType>
+      <label>Package list</label>
+      <objectClass>FAIpackageList</objectClass>
+      <category>fai</category>
+      <class>fai</class>
+      <image>plugins/fai/images/fai_packages.png</image>
+    </objectType>
+    <objectType>
+      <label>Script</label>
+      <objectClass>FAIscript</objectClass>
+      <category>fai</category>
+      <class>fai</class>
+      <image>plugins/fai/images/fai_script.png</image>
+    </objectType>
+    <objectType>
+      <label>Variable</label>
+      <objectClass>FAIvariable</objectClass>
+      <category>fai</category>
+      <class>fai</class>
+      <image>plugins/fai/images/fai_variable.png</image>
+    </objectType>
+    <objectType>
+      <label>Hook</label>
+      <objectClass>FAIhook</objectClass>
+      <category>fai</category>
+      <class>fai</class>
+      <image>plugins/fai/images/fai_hook.png</image>
+    </objectType>
+    <objectType>
+      <label>Profile</label>
+      <objectClass>FAIprofile</objectClass>
+      <category>fai</category>
+      <class>fai</class>
+      <image>plugins/fai/images/fai_profile.png</image>
+    </objectType>
+    <objectType>
+      <label>Template</label>
+      <objectClass>FAItemplate</objectClass>
+      <category>fai</category>
+      <class>fai</class>
+      <image>plugins/fai/images/fai_template.png</image>
     </objectType>
 
   </definition>

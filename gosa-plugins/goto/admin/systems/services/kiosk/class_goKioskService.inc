@@ -55,7 +55,7 @@ class goKioskService extends goService{
         // Prepare lists
         $this->kioskList = new sortableListing();
         $this->kioskList->setDeleteable(true);
-        $this->kioskList->setInstantDelete(true);
+        $this->kioskList->setInstantDelete(false);
         $this->kioskList->setEditable(true);
         $this->kioskList->setWidth("100%");
         $this->kioskList->setHeight("200px");
@@ -180,6 +180,8 @@ class goKioskService extends goService{
                             msg_dialog::display(_("Error"), msgPool::fileDoesNotExist($filename), ERROR_DIALOG);
                         }
                     }
+                    unset($this->gotoKioskProfiles[$id]);
+                }else{
                     unset($this->gotoKioskProfiles[$id]);
                 }
             }

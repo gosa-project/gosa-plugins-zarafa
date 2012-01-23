@@ -8,7 +8,7 @@
 	  <td><LABEL for="cn">{t}Server name{/t}</LABEL>{$must}</td>
 	  <td>
 {render acl=$cnACL}
-	   <input type='text' name="cn" id="cn" size=20 maxlength=60 value="{$cn}">
+	   <input type='text' name="cn" id="cn" size=20 value="{$cn}">
 {/render}
 	  </td>
 	 </tr>
@@ -53,7 +53,7 @@
 
 {$netconfig}
 
-{if $fai_activated}
+{if $fai_activated && $si_activated}
   <hr>
 
   <h3>{t}Action{/t}</h3>

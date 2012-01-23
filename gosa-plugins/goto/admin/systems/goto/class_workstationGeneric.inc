@@ -301,6 +301,9 @@ class workgeneric extends plugin
         $smarty->assign("syslogservers",set_post($this->gotoSyslogServers));
         $smarty->assign("fai_activated",set_post($this->fai_activated));
 
+        $si_url = $this->config->get_cfg_value("core","gosaSupportURI");
+        $smarty->assign("si_activated",!empty($si_url));
+
         $ntpser = array();
         foreach($this->gotoNtpServers as $server){
             if(!in_array_strict($server,$this->gotoNtpServer)){
@@ -444,8 +447,15 @@ class workgeneric extends plugin
         }
 
         /* Check if given name is a valid host/dns name */
-        if(!tests::is_dns_name($this->cn)){
-            $message[] = msgPool::invalid(_("Name"));
+        $regex = $reason = "";
+        if(!tests::is_dns_name($this->cn, $reason, $regex)){
+            if($reason == 1){
+                $message[]= sprintf(_("The full qualified domain name is too long!"));
+            }elseif($reason == 2){
+                $message[]= sprintf(_("The hostname name is too long!"));
+            }else{
+                $message[]= msgPool::invalid(_("Name"), $this->cn, "/{$regex}/i");
+            }
         }
 
         // Check if a wrong base was supplied

@@ -11,7 +11,7 @@
      <td><LABEL for="cn">{t}Workstation name{/t}</LABEL>{$must}</td>
      <td>
 {render acl=$cnACL}
-      <input type='text' name="cn" id="cn" size=18 maxlength=60 value="{$cn}">
+      <input type='text' name="cn" id="cn" size=18 value="{$cn}">
 {/render}
      </td>
 {/if}
@@ -119,7 +119,7 @@
 {/if}
 <hr>
 
-{if $fai_activated}
+{if $fai_activated && $si_activated}
   <h3>{t}Action{/t}</h3>
   {render acl=$FAIstateACL}
      <select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">

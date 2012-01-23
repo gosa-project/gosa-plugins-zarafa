@@ -41,6 +41,7 @@ if ( $cleanup ){
         session::set('faiManagement',$faiManagement);
     }
     $faiManagement = session::get('faiManagement');
+    $fai_inst = &$faiManagement;
     $display= $faiManagement->execute();
 
     /* Reset requested? */

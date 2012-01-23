@@ -118,6 +118,7 @@ class faiManagement extends management
     $this->registerAction("newClassNameSelected","newClassNameSelected");
     $this->registerAction("saveOpsiProperties","saveOpsiProperties");
     $this->registerAction("editByGroup","editByGroup");
+    $this->registerAction("editByItem","editByItem");
     $this->registerAction("createBranch","createBranch");
     $this->registerAction("createFreeze","createFreeze");
     $this->registerAction("removeBranch","removeBranch");
@@ -126,6 +127,14 @@ class faiManagement extends management
     $this->registerAction("PerformBranch","PerformBranch");
 
     $releases = $this->getReleaseStates($this->config,$this->fai_base);
+
+    if(session::is_set('faiManagement::fai_release')){
+        $r = session::get('faiManagement::fai_release');
+        if(isset($releases[$r])){
+            $this->fai_release = $r;
+        }
+    }
+
     $this->releaseSelector = new releaseSelector($releases, $this->fai_release, $this->fai_base);
     parent::__construct($config, $ui, "FAI object", $headpage);
   }
@@ -442,50 +451,70 @@ class faiManagement extends management
   function removeEntryConfirmed($action="",$target=array(),$all=array(),
       $altTabClass="",$altTabType="",$altAclCategory="", $altAclPlugin="")
   {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']); 
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']); 
 
-    $disallowed = array();
-    foreach($this->dns as $key => $dn){
-      $ldap->cat($dn);
-      if($ldap->count()){
-        $attrs = $ldap->fetch();
-        $type= $this->get_type($attrs);
-        $acl  = $this->ui->get_permissions($dn,"fai/".$type[1]);
-        if(preg_match("/d/",$acl)){
+      $disallowed = array();
+      foreach($this->dns as $key => $dn){
+          $ldap->cat($dn);
+          if($ldap->count()){
+              $attrs = $ldap->fetch();
+              $type= $this->get_type($attrs);
+              $acl  = $this->ui->get_permissions($dn,"fai/".$type[1]);
+              if(preg_match("/d/",$acl)){
 
-          // Delete the object
-          $this->dn = $dn;
-          $tabClass = $type[0];
-          $this->tabObject= new $tabClass($this->config,$this->config->data['TABS'][$type[2]], 
-              $this->dn, "fai", true, true);
-          $this->tabObject->set_acl_base($this->dn);
-          $this->tabObject->parent = &$this;
-          $this->tabObject->by_object[$type[1]]->remove_from_parent ();
+                  // Delete the object
+                  $this->dn = $dn;
+                  $tabClass = $type[0];
+                  $this->tabObject= new $tabClass($this->config,$this->config->data['TABS'][$type[2]], 
+                          $this->dn, "fai", true, true);
+                  $this->tabObject->set_acl_base($this->dn);
+                  $this->tabObject->parent = &$this;
+                  $this->tabObject->by_object[$type[1]]->remove_from_parent ();
 
-          FAI::save_release_changes_now();
-          $to_del = FAI::clean_up_releases($dn);
-          foreach($to_del as $dn){
-            $ldap->rmdir_recursive($dn);
+                  FAI::save_release_changes_now();
+                  $to_del = FAI::clean_up_releases($dn);
+                  foreach($to_del as $dn){
+                      $ldap->rmdir_recursive($dn);
+                  }
+
+              } else {
+                  $disallowed[] = $dn;
+                  new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
+              }
           }
-
-        } else {
-          $disallowed[] = $dn;
-          new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
-        }
       }
-    }
-   
-    $this->remove_lock();
-    $this->closeDialogs();
 
-    /* Normally this shouldn't be reached, send some extra
-       logs to notify the administrator */
-    if(count($disallowed)){ 
-      msg_dialog::display(_("Permission error"), msgPool::permDelete($disallowed), ERROR_DIALOG);
-    }
+      $this->remove_lock();
+      $this->closeDialogs();
+
+      /* Normally this shouldn't be reached, send some extra
+         logs to notify the administrator */
+      if(count($disallowed)){ 
+          msg_dialog::display(_("Permission error"), msgPool::permDelete($disallowed), ERROR_DIALOG);
+      }
   }
 
+
+  function editByItem($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+      $id = $target[0];
+      $tab = $target[1];
+      $headpage = $this->getHeadpage();
+      $entry = $headpage->entries[$id];
+
+      if(in_array_strict('FAKE_OC_FAI', $entry['objectClass'])){
+          if(isset($headpage->entries[$id]['GROUPS'][$tab])){
+              $data =$headpage->entries[$id]['GROUPS'][$tab];
+              $type = $this->get_type($data);
+              $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],"fai"); 
+              if($str) return($str);
+          } 
+      }else{
+          $str = $this->editEntry('editEntry',array($entry['dn'])); 
+          if($str) return($str);
+      }
+  }
 
   /*! \brief   Someone clicked on edit/remove for a grouped FAI object.
    *           We are now going to display a dialog to let the user select the entry 
@@ -496,11 +525,11 @@ class faiManagement extends management
     if($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "edit"){
       $this->dialogObject->save_object();
       $entry = $this->dialogObject->get_selected();
-      $this->closeDialogs();
       $data = array_pop($entry);
       $type = $this->get_type($data);
       $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],'fai');
       if($str) return($str);
+      $this->closeDialogs();
       $this->tabObject->by_object[$type[1]]->FAIstate = $data['FAIstate'];
       $this->tabObject->read_only = preg_match("/freeze/i", $data['FAIstate']);
     }elseif($this->dialogObject instanceOf faiGroupHandle && $this->dialogObject->get_mode() == "remove"){
@@ -552,6 +581,14 @@ class faiManagement extends management
     $to_del = FAI::clean_up_releases($this->dn);
     foreach($to_del as $dn){
       $ldap->rmdir_recursive($dn);
+    }
+
+    // Reload entryCSN values for the plugins - To avoid the warning:
+    // "The current object has been altered while beeing edited..."
+    foreach($this->tabObject->by_object as $key => &$obj){
+      if($obj->CSN_check_active){
+        $obj->entryCSN = getEntryCSN($this->dn);
+      }
     }
   }
 
@@ -1110,6 +1147,8 @@ class faiManagement extends management
    */
   static function filterProperties($row, $classes)
   {
+    global $fai_inst;
+
     $objects = array(
         "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png",
           "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
@@ -1131,9 +1170,15 @@ class faiManagement extends management
           "NAME"=>_("OPSI local boot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
 
     $icon_list = "";
+
+    $otc = &$fai_inst->getHeadpage()->objectTypeCount;
     foreach($objects as $type => $type_data){
       if(in_array_strict($type, $classes)){
         $icon_list .= image($type_data['IMG'],'edit_'.$row.'_'.$type,$type_data['NAME']);
+        if (!isset($otc[$type])) {
+            $otc[$type]= 0;
+        }
+        $otc[$type]++;
       }else{
         $icon_list .= image('images/empty.png');
       }
@@ -1152,6 +1197,9 @@ class faiManagement extends management
     $headpage = $this->getHeadpage();
     $this->releaseSelector->update();
     $this->fai_release = $this->releaseSelector->getBase();
+
+    session::set('faiManagement::fai_release', $this->fai_release);
+
     $headpage->setBase($this->fai_release);
     $headpage->update();
     $smarty = get_smarty();
@@ -1169,6 +1217,9 @@ class faiManagement extends management
    */
   function detectPostActions()
   {
+    $vars = array('/^act$/','/^listing/','/^PID$/','/^FILTER_PID$/', '/^edit/');
+    session::set('LOCK_VARS_TO_USE',$vars);
+
     $action = management::detectPostActions();
     if(isset($_POST['remove_multiple'])) $action['action'] = "remove";
     if(isset($_POST['new_profile'])) $action['action'] = "new_profile";
@@ -1196,27 +1247,12 @@ class faiManagement extends management
     if(isset($_GET['act']) && $_GET['act'] == "remove_branch")  $action['action'] = "removeBranch";
 
     foreach($_POST as $name => $value){
-      if(preg_match("/^edit_([0-9]*)_([a-z_]*)/i", $name)){
-        $id = preg_replace("/^edit_([0-9]*)_([a-z_]*)/i","\\1", $name);
-        $tab = preg_replace("/^edit_([0-9]*)_([a-z_]*)/i","\\2", $name);
-
-        $headpage = $this->getHeadpage();
-        $entry = $headpage->entries[$id];
-
-        if(in_array_strict('FAKE_OC_FAI', $entry['objectClass'])){
-          unset($_POST[$name]);
-          if(isset($headpage->entries[$id]['GROUPS'][$tab])){
-            $data =$headpage->entries[$id]['GROUPS'][$tab];
-            $type = $this->get_type($data);
-            $str = management::editEntry('editEntry',array($data['dn']),array(),$type[0],$type[2],"fai"); 
-            if($str) return($str);
-          } 
-        }else{
-          $str = $this->editEntry('editEntry',array($entry['dn'])); 
-          if($str) return($str);
+        if(preg_match("/^edit_([0-9]*)_([a-z_]*)/i", $name)){
+            $id = preg_replace("/^edit_([0-9]*)_([a-z_]*)/i","\\1", $name);
+            $tab = preg_replace("/^edit_([0-9]*)_([a-z_]*)/i","\\2", $name);
+            $action['action'] = "editByItem";
+            $action['targets'] = array($id, $tab);
         }
-        break;
-      }
     }
     return($action);
   }

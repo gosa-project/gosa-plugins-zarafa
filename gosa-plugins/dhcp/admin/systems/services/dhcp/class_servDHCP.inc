@@ -609,7 +609,6 @@ class servdhcp extends goService
     function reload()
     {
         /* Init LDAP and load list */
-        $ldap= $this->config->get_ldap_link();
         $ui= get_userinfo();
         $me= $this->dn;
 
@@ -627,18 +626,17 @@ class servdhcp extends goService
 
             $final[$value['dn']]= $tmp."!"._("Global options");
 
-            /* Read all sub entries to place here */
-            $ldap->cd($value['dn']);
-            $ldap->search("(|(objectClass=dhcpService)(objectClass=dhcpLog)(objectClass=dhcpClass)(objectClass=dhcpSubClass)(objectClass=dhcpHost)(objectClass=dhcpGroup)(objectClass=dhcpPool)(objectClass=dhcpSubnet)(objectClass=dhcpSharedNetwork)(objectClass=dhcpOptions)(objectClass=dhcpTSigKey)(objectClass=dhcpDnsZone)(objectClass=dhcpFailOverPeer))", array());
-            $this->serviceDN= $value['dn'];
+            $filter = "(|(objectClass=dhcpService)(objectClass=dhcpLog)(objectClass=dhcpClass)(objectClass=dhcpSubClass)(objectClass=dhcpHost)(objectClass=dhcpGroup)(objectClass=dhcpPool)(objectClass=dhcpSubnet)(objectClass=dhcpSharedNetwork)(objectClass=dhcpOptions)(objectClass=dhcpTSigKey)(objectClass=dhcpDnsZone)(objectClass=dhcpFailOverPeer))";
 
-            while ($attrs= $ldap->fetch()){
+            $sublist= get_list($filter, array("server"), $value['dn'], array("*"),GL_SIZELIMIT | GL_SUBSEARCH);
+            foreach($sublist as $attrs){
+                $entry_dn = $attrs['dn'];
                 $sattrs= array();
                 for ($i= 0; $i<$attrs['count']; $i++){
                     $sattrs[$attrs[$i]]= $attrs[$attrs[$i]];
                     unset($sattrs[$attrs[$i]]['count']);
                 }
-                $sattrs['dn']= $ldap->getDN();
+                $sattrs['dn']= $entry_dn;
 
                 foreach($sattrs as $name => $values){
                     if($name == "dhcpOption"){
@@ -654,8 +652,8 @@ class servdhcp extends goService
                     }
                 }
 
-                $this->dhcpObjectCache[$ldap->getDN()]= $sattrs;
-                $tmp= preg_replace("/".$this->serviceDN."/", "", $ldap->getDN());
+                $this->dhcpObjectCache[$entry_dn]= $sattrs;
+                $tmp= preg_replace("/".$this->serviceDN."/", "", $entry_dn);
                 $indent= substr_count($tmp, ",");
                 $spaces= "";
                 for ($i= 0; $i<$indent; $i++){
@@ -670,10 +668,10 @@ class servdhcp extends goService
                 }
 
                 /* Prepare for sorting... */
-                $sortpart= explode(",", $ldap->getDN());
+                $sortpart= explode(",", $entry_dn);
                 $sortpart= array_reverse($sortpart);
                 $tmp= implode(",", $sortpart);
-                $final[$ldap->getDN()]= $tmp."!".$spaces.$type." '".$attrs['cn'][0]."'";
+                $final[$entry_dn]= $tmp."!".$spaces.$type." '".$attrs['cn'][0]."'";
             }
         }
 
