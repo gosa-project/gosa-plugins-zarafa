@@ -535,6 +535,44 @@ sub here_i_am {
     if ($syslog_config_out) {
         push(@out_msg_l, $syslog_config_out);
     }
+	
+    # Backported from GOsa SI 2.7: update ldap entry if exists
+    my $ldap_handle = &main::get_ldap_handle($session_id);
+    if( not defined $ldap_handle ) {
+        &main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
+        return;
+    }  
+
+    my $ldap_res= $ldap_handle->search(
+                base   => $ldap_base,
+                scope  => 'sub',
+                #attrs => ['ipHostNumber'],
+                filter => "(&(objectClass=GOhard)(macAddress=$mac_address))");
+    if($ldap_res->code) {
+            &main::daemon_log("$session_id ERROR: LDAP Entry for client with mac address $mac_address not found: ".$ldap_res->error, 1);
+    } elsif ($ldap_res->count != 1) {
+            &main::daemon_log("$session_id WARNING: client with mac address $mac_address not found/unique/active - not updating ldap entry".
+                            "\n\tbase: $ldap_base".
+                            "\n\tscope: sub".
+                            "\n\tattrs: ipHostNumber".
+                            "\n\tfilter: (&(objectClass=GOhard)(macaddress=$mac_address))", 1);
+    } else {
+            my $entry= $ldap_res->pop_entry();
+            my $ip_address= $entry->get_value('ipHostNumber');
+            my $source_ip= ($1) if $source =~ /^([0-9\.]*?):[0-9]*$/;
+            if(not defined($ip_address) and defined($source_ip)) {
+                $entry->add( 'ipHostNumber' => $source_ip );
+                my $mesg= $entry->update($ldap_handle);
+                $mesg->code && &main::daemon_log("$session_id ERROR: Updating IP Address for client with mac address $mac_address failed with '".$mesg->mesg()."'", 1);
+            } elsif(defined($source_ip) and not ($source_ip eq $ip_address)) {
+                $entry->replace( 'ipHostNumber' => $source_ip );
+                my $mesg= $entry->update($ldap_handle);
+                $mesg->code && &main::daemon_log("$session_id ERROR: Updating IP Address for client with mac address $mac_address failed with '".$mesg->mesg()."'", 1);
+            } elsif (not defined($source_ip)) {
+                &main::daemon_log("ERROR: Could not parse source value '$source' perhaps not an ip address?", 1);
+            }
+    }
+	
 
     # notify registered client to all other server
     my %mydata = ( 'client' => $source, 'macaddress' => $mac_address);
