@@ -7,9 +7,6 @@ class mailMethodCyrus extends mailMethod{
   protected $imap_handle = NULL;
   protected $quota_loaded = FALSE;
    
-  /* Allow modification of account_ids for existing mail accounts */
-  protected $modifyableMail   = FALSE;
-
   /* Allow modification of the mail server attribute existing mail accounts */
   protected $modifyableServer = FALSE;
 
@@ -611,6 +608,16 @@ class mailMethodCyrus extends mailMethod{
 
     $sieve->sieve_logout();
   }
+
+  /*
+   * When using the Cyrus IMAP server we must not change the primary
+   * mail address if it is used as key into the Cyrus mailbox.
+   */
+  public function isModifyableMail()
+  {
+    return ($this->getUAttrib() != "mail");
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
