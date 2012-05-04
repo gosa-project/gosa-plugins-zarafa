@@ -7,6 +7,8 @@ class phoneAccount extends plugin
     var $plDescription= "Manage personal phone settings";
     var $plIcon       = "plugins/gofon/images/phoneAccount.png";
 
+    var $delimiter = "|";
+
     /* Attributes */
     var $telephoneNumber        = array();
     var $goFonHardware          = "automatic";
@@ -56,6 +58,8 @@ class phoneAccount extends plugin
     function phoneAccount (&$config, $dn= NULL, $parent= NULL)
     {
         plugin::plugin ($config, $dn, $parent);
+
+        $this->delimiter = $this->config->get_cfg_value("phoneAccount","delimiter");
 
         /* Assemble phone numbers */
         if (isset($this->attrs['telephoneNumber'])){
@@ -926,9 +930,9 @@ class phoneAccount extends plugin
             // Get selected Macro Parameter and create parameter entry 
             if(isset($this->macroarray[$this->macro])){
                 foreach($this->macroarray[$this->macro] as $key => $val ){
-                    $s_parameter .= $val['choosen']."|";
+                    $s_parameter .= $val['choosen'].$this->delimiter;
                 }
-                $s_parameter = preg_replace("/\|$/","",$s_parameter);
+                $s_parameter = rtrim($s_parameter, $this->delimiter);
             }
 
             $i = 0; 
@@ -938,7 +942,7 @@ class phoneAccount extends plugin
                 $EXT[$i]['exten']   = $this->uid;
                 $EXT[$i]['priority']= 1;
                 $EXT[$i]['app']     = "Goto";
-                $EXT[$i]['appdata'] = $newnums[$i_new_key]."|1";
+                $EXT[$i]['appdata'] = $newnums[$i_new_key].$this->delimiter."1";
                 $i ++;
             }
 
@@ -964,10 +968,10 @@ class phoneAccount extends plugin
                     $macroname = preg_replace("/,.*$/","",$this->macro);        
                     $macroname = preg_replace("/^.*=/","",$macroname);        
                     $s_app = "Macro";$macroname;
-                    $s_par = $macroname."|".$s_parameter; 
+                    $s_par = $macroname.$this->delimiter.$s_parameter; 
                 }else{
                     $s_app = "Dial";
-                    $s_par = 'SIP/'.$this->uid."|20|r";
+                    $s_par = 'SIP/'.$this->uid.$this->delimiter."20".$this->delimiter."r";
                 }
 
                 $EXT[$i]['context'] = 'GOsa';
@@ -1859,7 +1863,18 @@ class phoneAccount extends plugin
                         'ldapSchema' => array('goFonAccount' => '>=2.7'),
                         'onFailureDisablePlugin' => array(get_class(),'phoneAccount','phoneConferenceManagment','goFonMacro')
                         ),
-
+                    "plProperties"=> array(
+                      array(
+                          "name"          => "delimiter",
+                          "type"          => "string",
+                          "default"       => "|",
+                          "description"   => _("The delimiter to use for realtime-extension parameters, default is |, but never version of asterisk require ,"),
+                          "check"         => "",
+                          "migrate"       => "",
+                          "group"         => "asterisk",
+                          "mandatory"     => TRUE
+                      ),
+                    ),
                     "plProvidedAcls"  => array(
                         "telephoneNumber"     => _("Telephone number"),
                         "goFonMacro"          => _("Macro settings"),
