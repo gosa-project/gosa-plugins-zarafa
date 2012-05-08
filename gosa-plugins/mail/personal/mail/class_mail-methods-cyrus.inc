@@ -318,10 +318,18 @@ class mailMethodCyrus extends mailMethod{
        And prepare replacements 
      */ 
     if(preg_match("/\@/",$this->account_id)){
-      $search = preg_replace("/\@/","/*@",$this->account_id);
+      if($this->cyrusUseSlashes){
+        $search = preg_replace("/\@/","/*@",$this->account_id);
+      }else{
+        $search = preg_replace("/\@/",".*@",$this->account_id);
+      }
       $with_domain = TRUE;
     }else{
-      $search = $this->account_id."/*";
+      if($this->cyrusUseSlashes){
+        $search = $this->account_id."/*";
+      }else{
+        $search = $this->account_id.".*";
+      }
       $with_domain = FALSE;
     }
     $folder = $this->account_id;
