@@ -2204,12 +2204,12 @@ sub change_fai_state {
     $session_id = 0 if not defined $session_id;
     # Set FAI state to localboot
     my %mapActions= (
-        reboot    => '',
+        reboot    => 'localboot',
         update    => 'softupdate',
         localboot => 'localboot',
         reinstall => 'install',
-        rescan    => '',
-        wake      => '',
+        rescan    => 'localboot',
+        wake      => 'localboot',
         memcheck  => 'memcheck',
         sysinfo   => 'sysinfo',
         install   => 'install',
