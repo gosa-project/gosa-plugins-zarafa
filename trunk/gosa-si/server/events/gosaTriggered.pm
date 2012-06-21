@@ -645,6 +645,7 @@ sub trigger_action_reinstall {
     $msg =~ s/<header>gosa_trigger_action_reinstall<\/header>/<header>trigger_action_reinstall<\/header>/;
 
     &main::change_fai_state('reinstall', \@{$msg_hash->{macaddress}}, $session_id);
+    &main::change_goto_state('active', \@{$msg_hash->{macaddress}}, $session_id);
 
     my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
