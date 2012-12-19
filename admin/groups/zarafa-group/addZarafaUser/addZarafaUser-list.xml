@@ -15,7 +15,7 @@
       <objectClass>zarafa-user</objectClass>
       <category>users</category>
       <class>user</class>
-      <image>html/images/zarafa_user_small.png</image>
+      <image>plugins/zarafa/images/zarafa_user_small.png</image>
     </objectType>
 
   </definition>
