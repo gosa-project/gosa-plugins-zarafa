@@ -56,6 +56,7 @@ class zarafaAccount extends plugin
 
     var $zarafaEnabledFeatures     = array();
     var $zarafaDisabledFeatures    = array();
+    var $zarafaUserArchiveServers  = "";
 
     /* The methods defaults */
     var $sendAsSelect      = FALSE;
@@ -71,7 +72,7 @@ class zarafaAccount extends plugin
             "zarafaSendAsPrivilege","zarafaQuotaHard",
             "zarafaQuotaSoft","zarafaQuotaWarn",
             "zarafaQuotaOverride", "zarafaEnabledFeatures",
-            "zarafaDisabledFeatures");
+            "zarafaDisabledFeatures", "zarafaUserArchiveServers");
 
     /* Used ldap object classes be sure to use only zarafa classes
      * and in this case we may only need the zarafa-user

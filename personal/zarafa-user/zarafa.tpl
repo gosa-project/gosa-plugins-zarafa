@@ -21,6 +21,14 @@
                 <input disabled type='text' id="dummy2" name="dummy2" value="{$gosaMailServer}">
               </td>
             </tr>
+            <tr>
+              <td>
+                <label for="zarafaUserArchiveServers">{t}Archive server{/t}</label>
+              </td>
+              <td>
+                <input type='text' id="zarafaUserArchiveServers" name="zarafaUserArchiveServers" value="{$zarafaUserArchiveServers}">
+              </td>
+            </tr>
           </tbody>
         </table>
       </td>
