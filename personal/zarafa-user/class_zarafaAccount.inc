@@ -596,7 +596,7 @@ class zarafaAccount extends plugin
 
     function allow_remove()
     {
-        return true;
+        return "";
     }
 
     /*! \brief  ACL settings
