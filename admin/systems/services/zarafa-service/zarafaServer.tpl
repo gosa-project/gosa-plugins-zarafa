@@ -12,6 +12,9 @@
             {assign var="publicStoreText"
             value="Enable public store on this server (On a multi - server configuration keep in mind only one node is allowed to enable this feature)"}
             <input type="checkbox" name="zarafaContainsPublic" id="zarafaContainsPublic" value="1" {$zarafaContainsPublic} title="{t}{$publicStoreText}{/t}"> {t}Enable public store{/t}
+            <br/>
+            <input type="checkbox" name="goZarafaArchiveServer" id="goZarafaAchriveServer" value="1" {$goZarafaArchiveServer}
+            title="{t}Make this server a Zarafa-archive-server{/t}"> {t}Set archive server{/t}
         </td>
         <td class="left-border">&nbsp;</td>
         <td>

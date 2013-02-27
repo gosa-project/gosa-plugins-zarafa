@@ -82,7 +82,7 @@ class zarafaAccount extends plugin
     /* Used ldap object classes be sure to use only zarafa classes
      * and in this case we may only need the zarafa-user
      */
-    var $objectclasses= array("zarafa-user", "goZarafaAddons");
+    var $objectclasses= array("goZarafaAddons", "zarafa-user");
     var $multiple_support = FALSE;
     var $cn  = "";
     var $sn  = "";

@@ -8,10 +8,10 @@ class zarafaServer extends goService
 {
     //needed ldap attributes
     var $attributes = array("zarafaAccount", "zarafaHidden", "zarafaHttpPort", "zarafaSslPort", "zarafaFilePath",
-                            "zarafaContainsPublic");
+                            "zarafaContainsPublic", "goZarafaArchiveServer");
 
     //needed ldap object classes
-    var $objectclasses = array("zarafa-server");
+    var $objectclasses = array("zarafa-server", "goZarafaAddons");
 
     //various other member
     var $plHeadline = "Zarafa server plugin";
@@ -22,6 +22,7 @@ class zarafaServer extends goService
     var $zarafaAccount = 0;
     var $zarafaHidden = 0;
     var $zarafaContainsPublic = 0;
+    var $goZarafaArchiveServer = 0;
     //integer attributes
     var $zarafaHttpPort = 80;
     var $zarafaSslPort = 443;
@@ -52,6 +53,7 @@ class zarafaServer extends goService
         $smarty->assign("zarafaSslPort", $this->zarafaSslPort);
         $smarty->assign("zarafaContainsPublic", ($this->zarafaContainsPublic)?"checked":"");
         $smarty->assign("zarafaFilePath", $this->zarafaFilePath);
+        $smarty->assign("goZarafaArchiveServer", ($this->goZarafaArchiveServer)?"checked":"");
 
         return($smarty->fetch(get_template_path('zarafaServer.tpl', TRUE, dirname(__FILE__))));
     }
@@ -77,7 +79,7 @@ class zarafaServer extends goService
         goService::save_object();
 
         //transform checkboxes to 1 or 0
-        foreach(array("zarafaAccount", "zarafaHidden", "zarafaContainsPublic") as $val)
+        foreach(array("zarafaAccount", "zarafaHidden", "zarafaContainsPublic", "goZarafaArchiveServer") as $val)
         {
             if(isset($_POST[$val]))
             {
@@ -123,15 +125,16 @@ class zarafaServer extends goService
                     "plCategory"    => array("server"),
 
                     "plProvidedAcls"=> array(
-                            "start"                => _("Start"),
-                            "stop"                 => _("Stop"),
-                            "restart"              => _("Restart"),
-                            "zarafaAccount"        => _("Zarafa server"),
-                            "zarafaHidden"         => _("Zarafa hidden"),
-                            "zarafaHttpPort"       => _("Zarafa HTTP port"),
-                            "zarafaSslPort"        => _("Zarafa SSL port"),
-                            "zarafaConatinsPublic" => _("Zarafa node contains public store"),
-                            "zarafaFilePath"       => _("Zarafa file path"),
+                            "start"                 => _("Start"),
+                            "stop"                  => _("Stop"),
+                            "restart"               => _("Restart"),
+                            "zarafaAccount"         => _("Zarafa server"),
+                            "zarafaHidden"          => _("Zarafa hidden"),
+                            "zarafaHttpPort"        => _("Zarafa HTTP port"),
+                            "zarafaSslPort"         => _("Zarafa SSL port"),
+                            "zarafaConatinsPublic"  => _("Zarafa node contains public store"),
+                            "zarafaFilePath"        => _("Zarafa file path"),
+                            "goZarafaArchiveServer" => _("Zarafa Archvie Server"),
                         )
                     ));
     }

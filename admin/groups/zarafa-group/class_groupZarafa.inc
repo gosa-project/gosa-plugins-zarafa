@@ -224,6 +224,7 @@ class zarafagroup extends plugin
      */
     function execute()
     {
+
         /* Call parent execute */
         plugin::execute();
 
