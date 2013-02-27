@@ -57,10 +57,14 @@ class zarafaAccount extends plugin
     var $zarafaEnabledFeatures     = array();
     var $zarafaDisabledFeatures    = array();
     var $zarafaUserArchiveServers  = "";
+    var $goZarafaDisplayName       = "";
 
     /* The methods defaults */
-    var $sendAsSelect      = FALSE;
-    var $initial_uid       = "";
+    var $sendAsSelect              = FALSE;
+    var $initial_uid               = "";
+
+    var $goZarafaPostalCode        = "";
+    var $goZarafaLocation          = "";
 
     /* Used LDAP attributes && classes
      * It is important to use only zarafa attributes here
@@ -72,14 +76,18 @@ class zarafaAccount extends plugin
             "zarafaSendAsPrivilege","zarafaQuotaHard",
             "zarafaQuotaSoft","zarafaQuotaWarn",
             "zarafaQuotaOverride", "zarafaEnabledFeatures",
-            "zarafaDisabledFeatures", "zarafaUserArchiveServers");
+            "zarafaDisabledFeatures", "zarafaUserArchiveServers", 
+            "goZarafaPostalCode", "goZarafaLocation", "goZarafaDisplayName");
 
     /* Used ldap object classes be sure to use only zarafa classes
      * and in this case we may only need the zarafa-user
      */
-    var $objectclasses= array("zarafa-user");
+    var $objectclasses= array("zarafa-user", "goZarafaAddons");
     var $multiple_support = FALSE;
     var $cn  = "";
+    var $sn  = "";
+    var $givenName  = "";
+
 
 
     /*! \brief  Initialize the mailAccount
@@ -98,7 +106,7 @@ class zarafaAccount extends plugin
         {
             /* Get attributes from parent object
              */
-            foreach(array("uid","cn") as $attr)
+            foreach(array("uid","cn","sn","givenName") as $attr)
                 $this->$attr = $this->attrs[$attr][0];
 
             /* Load attributes containing arrays */
@@ -297,6 +305,21 @@ class zarafaAccount extends plugin
               else
                 $this->$val = 0;
           }
+          /* $this->goZarafaDisplayName = $this->sn . ", " . $this->givenName; */
+          $this->goZarafaDisplayName = $this->attrs["sn"][0] . ", " . $this->attrs["givenName"][0];
+        }
+
+      $tMatchArray = array();
+      $this->goZarafaLocation = "";
+
+      if(preg_match('/[0-9]{5}/', $this->parent->by_object['user']->l, $tArray)){
+        $this->goZarafaPostalCode = $tArray[0];
+        foreach(preg_split('/[0-9]{5}/', $this->parent->by_object['user']->l) as $addressSubstring){
+            $this->goZarafaLocation .= $addressSubstring;
+        }
+
+        $this->goZarafaLocation = trim($this->goZarafaLocation);
+        $this->goZarafaLocation = preg_replace('!\s+!', ' ', $this->goZarafaLocation);
       }
 
       /*process zarafa features*/
@@ -393,6 +416,7 @@ class zarafaAccount extends plugin
     $this->attrs['zarafaSendAsPrivilege']     = $this->zarafaSendAsPrivilege;
     $this->attrs['zarafaEnabledFeatures']     = $this->zarafaEnabledFeatures;
     $this->attrs['zarafaDisabledFeatures']    = $this->zarafaDisabledFeatures;
+    $this->attrs['goZarafaDisplayName']       = $this->goZarafaDisplayName;
 
     /* Call parents save to prepare $this->attrs */
     plugin::save();
@@ -626,7 +650,9 @@ class zarafaAccount extends plugin
               "zarafaResource"            =>  _("Zarafa resource"),
               "zarafaEnabledFeatures"     =>  _("Zarafa enabled features"),
               "zarafaResourceCapacity"    =>  _("Zarafa resource capacity"),
-              "zarafaDisabledFeatures"    =>  _("Zarafa disabled features"))
+              "zarafaDisabledFeatures"    =>  _("Zarafa disabled features"),
+              "goZarafaPostalCode"        =>  _("The useres Postal code"),
+              "goZarafaLocation"          =>  _("Users location"))
           ));
     }
 
