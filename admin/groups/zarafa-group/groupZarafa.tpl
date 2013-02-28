@@ -96,7 +96,7 @@
   </tr>
 </table>
 
-<input type="hidden" name='mailedit' value='1'>
+<input type="hidden" name='zarafaedit' value='1'>
     
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

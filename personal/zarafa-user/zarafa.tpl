@@ -21,14 +21,6 @@
                 <input disabled type='text' id="dummy2" name="dummy2" value="{$gosaMailServer}">
               </td>
             </tr>
-            <tr>
-              <td>
-                <label for="zarafaUserArchiveServers">{t}Archive server{/t}</label>
-              </td>
-              <td>
-                <input type='text' id="zarafaUserArchiveServers" name="zarafaUserArchiveServers" value="{$zarafaUserArchiveServers}">
-              </td>
-            </tr>
           </tbody>
         </table>
       </td>
@@ -157,12 +149,12 @@
           <option disabled>&nbsp;</option>
            </select>
         {/render}
-          <br>
+          <br/>
         {render acl=$zarafaSendAsPrivilegeACL}
-          <input id='add_local_sendas' type="submit" value="{t}Add local{/t}" name="add_local_sendas" {if !$zarafaAccount} disabled {/if}>&nbsp;
+          <input id='add_local_sendas' type="submit" value="{t}Add local{/t}" name="add_local_sendas" {if !$zarafaAccount} disabled {/if} />&nbsp;
         {/render}
         {render acl=$zarafaSendAsPrivilegeACL}
-          <input id='delete_sendas' type="submit" value="{msgPool type=delButton}" name="delete_sendas" {if !$zarafaAccount} disabled {/if}>
+          <input id='delete_sendas' type="submit" value="{msgPool type=delButton}" name="delete_sendas" {if !$zarafaAccount} disabled {/if} />
         {/render}
       </td>
     </tr>
@@ -192,6 +184,21 @@
             </td>
           </tr>
         </table>
+      </td>
+      <td class="left-border">&nbsp;</td>
+      <td>
+        <label for="choosenArchiveServer">{t}Archive server{/t}</label>
+        <select style="width: 20200" size="1" id="choosenArchiveServer" name="choosenArchiveServer" {if !$zarafaAccount} disabled {/if}>
+          {html_options options=$availableArchiveServer selected=$choosenArchiveServer}
+        </select>
+        <input id='add_archive' type="submit" value="{t}Add archive server{/t}" name="add_archive" />
+        <br/>
+        <select id="archiveServerList" style="width:100%; height:100px;" name="archive_server_list[]" size=15 multiple>
+          {html_options values=$zarafaUserArchiveServers output=$zarafaUserArchiveServers}
+          <option disabled>&nbsp;</option>
+        </select>
+        <br/>
+        <input id='delete_archive' type="submit" value="{msgPool type=delButton}" name="delete_archive"/>
       </td>
     </tr>
   </tbody>

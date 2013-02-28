@@ -476,128 +476,24 @@ class zarafagroup extends plugin
     /* Save data to object */
     function save_object()
     {
-        /* Save ldap attributes */
-        plugin::save_object();
 
-        if(!$this->dialog)
+      if(!isset($_POST["zarafaedit"])){
+        return;
+      }
+
+      /* Save ldap attributes */
+      plugin::save_object();
+
+      if(!$this->dialog)
+      {
+        foreach(array("zarafaSecurityGroup", "zarafaHidden", "zarafaAccount") as $val)
         {
-            foreach(array("zarafaSecurityGroup", "zarafaHidden", "zarafaAccount") as $val)
-            {
-                if(isset($_POST[$val]))
-                    $this->$val = 1;
-                else
-                    $this->$val = 0;
-            }
+          if(isset($_POST[$val]))
+            $this->$val = 1;
+          else
+            $this->$val = 0;
         }
-
-        //         if (isset($_POST['mailedit']))
-            //         {
-            //             if(isset($_POST['show_effective_memeber']))
-                //             {
-                //                 $this->show_effective_memeber = !$this->show_effective_memeber;
-                //             }
-
-                //             $mail = $this->mail;
-                //             $server = $this->gosaMailServer;
-                //             plugin::save_object();
-
-                //             if($this->initially_was_account)
-                    //             {
-                    //                 $this->gosaMailServer = $server;
-                    //             }
-                    //             if($this->initially_was_account)
-                        //             {
-                        //                 $this->mail = $mail;
-                        //             }
-
-                            /* Handle posted ACL changes.
-                             Add/del member acls.
-                            */
-                        //             if(isset($_POST['mail_acls_posted']))
-                            //             {
-                            //                 $new_acls = array();
-                            //                 foreach(array("__anyone__","__member__") as $attr){
-                            //                     $pname = base64_encode($attr);
-                            //                     if(get_post('acl_value_'.$pname)){
-                            //                         $new_acls[$attr] = get_post('acl_value_'.$pname);
-                            //                     }else{
-                            //                         $new_acls[$attr] = $this->folder_acls[$attr];
-                            //                     }
-                            //                 }
-
-                            //                 foreach($this->folder_acls as $user => $acl){
-                            //                     $pname = base64_encode($user);
-                            //                     if($user == "__member__" || $user == "__anyone__") continue;
-                            //                     if(isset($_POST['remove_acl_user_'.$pname])){
-                            //                     }elseif(isset($_POST['acl_user_'.$pname])){
-                            //                         if($user != get_post('acl_user_'.$pname)){
-                            //                             $new_acls[get_post('acl_user_'.$pname)] = get_post('acl_value_'.$pname);
-                            //                         }else{
-                            //                             $new_acls[$user] = get_post('acl_value_'.$pname);
-                            //                         }
-                            //                     }else{
-                            //                         $new_acls[$user] = $acl;
-                            //                     }
-                            //                 }
-                            //                 if(isset($_POST['add_acl_user'])){
-                            //                     $new_acls[_('New')] = $this->folder_acls['__anyone__'];
-                            //                 }
-                            //                 $this->folder_acls = $new_acls;
-                            //             }
-
-                            /* Handle GOsa mail delivery flags.
-                             */
-
-                            /* Assemble mail delivery mode
-                             The mode field in ldap consists of values between braces, this must
-                            be called when 'mail' is set, because checkboxes may not be set when
-                            we're in some other dialog.
-
-                            Example for gosaMailDeliveryMode [LR        ]
-                            L - Local delivery
-                            R - Reject when exceeding mailsize limit
-                            S - Use spam filter
-                            V - Use vacation message
-                            C - Use custom sieve script
-                            I - Only insider delivery */
-                            //             $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
-                            //             if($this->acl_is_writeable("gosaMailDeliveryModeL")){
-                            //                 if(!preg_match("/L/",$tmp) && !isset($_POST['drop_own_mails'])){
-                            //                     $tmp.="L";
-                            //                 }elseif(preg_match("/L/",$tmp) && isset($_POST['drop_own_mails'])){
-                            //                     $tmp = preg_replace("/L/","",$tmp);
-                            //                 }
-                            //             }
-
-                            //             $opts = array(
-                            //                     "R"   => "use_mailsize_limit",
-                            //                     "S"   => "use_spam_filter",
-                            //                     "V"   => "use_vacation",
-                            //                     "C"   => "own_script",
-                            //                     "I"   => "only_local");
-
-                            //             foreach($opts as $flag => $post)
-                                //             {
-                                //                 if($this->acl_is_writeable("gosaMailDeliveryMode".$flag))
-                                    //                 {
-                                    //                     if(!preg_match("/".$flag."/",$tmp) && isset($_POST[$post]))
-                                        //                     {
-                                        //                         $tmp.= $flag;
-                                        //                     }
-                                        //                     elseif(preg_match("/".$flag."/",$tmp) && !isset($_POST[$post]))
-                                        //                     {
-                                        //                         $tmp = preg_replace("/".$flag."/","",$tmp);
-                                        //                     }
-                                        //                 }
-                                        //             }
-
-                                        //             $tmp= "[$tmp]";
-                                        //             if ($this->gosaMailDeliveryMode != $tmp)
-                                            //             {
-                                            //                 $this->is_modified= TRUE;
-                                            //             }
-                                            //             $this->gosaMailDeliveryMode= $tmp;
-                                            //        }
+      }
     }
 
 

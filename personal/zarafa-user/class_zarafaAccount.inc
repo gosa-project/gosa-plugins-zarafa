@@ -56,7 +56,7 @@ class zarafaAccount extends plugin
 
     var $zarafaEnabledFeatures     = array();
     var $zarafaDisabledFeatures    = array();
-    var $zarafaUserArchiveServers  = "";
+    var $zarafaUserArchiveServers  = array();
     var $goZarafaDisplayName       = "";
 
     /* The methods defaults */
@@ -65,6 +65,10 @@ class zarafaAccount extends plugin
 
     var $goZarafaPostalCode        = "";
     var $goZarafaLocation          = "";
+
+    /* List of available zarafa archive servers */
+    var $availableArchiveServer  = array();
+    var $choosenArchiveServer    = "";
 
     /* Used LDAP attributes && classes
      * It is important to use only zarafa attributes here
@@ -110,7 +114,7 @@ class zarafaAccount extends plugin
                 $this->$attr = $this->attrs[$attr][0];
 
             /* Load attributes containing arrays */
-            foreach (array("zarafaSendAsPrivilege", "zarafaEnabledFeatures", "zarafaDisabledFeatures") as $val)
+            foreach (array("zarafaSendAsPrivilege", "zarafaEnabledFeatures", "zarafaDisabledFeatures", "zarafaUserArchiveServers") as $val)
             {
                 $this->$val= array();
                 if (isset($this->attrs["$val"]["count"]))
@@ -121,7 +125,22 @@ class zarafaAccount extends plugin
                     }
                 }
             }
+
+            $this->refreshArchiveServer();
         }
+    }
+
+    /* Method to read the available archive server from ldap */
+    function refreshArchiveServer(){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->search("(&(objectClass=goZarafaAddons)(goZarafaArchiveServer=1))", array("cn"));
+
+      $this->availableArchiveServer = array();
+      while($attrs= $ldap->fetch()){
+        if(isset($attrs["cn"][0]) && !in_array($attrs["cn"][0], $this->zarafaUserArchiveServers)){
+          $this->availableArchiveServer[] = $attrs["cn"][0];
+        }
+      }
     }
 
     function execute()
@@ -174,6 +193,15 @@ class zarafaAccount extends plugin
                     return ($display);
                 }
             }
+        }
+
+        if(isset($_POST['add_archive']) && isset($_POST['choosenArchiveServer'])){
+          $this->zarafaUserArchiveServers[] = $this->availableArchiveServer[$_POST['choosenArchiveServer']];
+          $this->refreshArchiveServer();
+        }
+
+        if(isset($_POST['delete_archive'])){
+          $this->delArchive($_POST['archive_server_list']);
         }
 
         /****************
@@ -268,6 +296,9 @@ class zarafaAccount extends plugin
     $smarty->assign("zarafaHidden", $this->zarafaHidden?"checked":"");
     $smarty->assign("zarafaEnabledFeatures", $this->zarafaEnabledFeatures);
     $smarty->assign("zarafaDisabledFeatures", $this->zarafaDisabledFeatures);
+    $smarty->assign("zarafaUserArchiveServers", $this->zarafaUserArchiveServers);
+    $smarty->assign("availableArchiveServer", $this->availableArchiveServer);
+    $smarty->assign("choosenArchiveServer", $this->choosenArchiveServer);
     $smarty->assign("gosaMailServer", $this->parent->by_object['mailAccount']->gosaMailServer);
     $smarty->assign("gosaMailAlternateAddress", $this->parent->by_object['mailAccount']->gosaMailAlternateAddress);
     $smarty->assign("gosaMailForwardingAddress", $this->parent->by_object['mailAccount']->gosaMailForwardingAddress);
@@ -307,20 +338,20 @@ class zarafaAccount extends plugin
           }
           /* $this->goZarafaDisplayName = $this->sn . ", " . $this->givenName; */
           $this->goZarafaDisplayName = $this->attrs["sn"][0] . ", " . $this->attrs["givenName"][0];
+
+          $tMatchArray = array();
+          $this->goZarafaLocation = "";
+
+          if(preg_match('/[0-9]{5}/', $this->parent->by_object['user']->l, $tArray)){
+            $this->goZarafaPostalCode = $tArray[0];
+            foreach(preg_split('/[0-9]{5}/', $this->parent->by_object['user']->l) as $addressSubstring){
+                $this->goZarafaLocation .= $addressSubstring;
+            }
+
+            $this->goZarafaLocation = trim($this->goZarafaLocation);
+            $this->goZarafaLocation = preg_replace('!\s+!', ' ', $this->goZarafaLocation);
+          }
         }
-
-      $tMatchArray = array();
-      $this->goZarafaLocation = "";
-
-      if(preg_match('/[0-9]{5}/', $this->parent->by_object['user']->l, $tArray)){
-        $this->goZarafaPostalCode = $tArray[0];
-        foreach(preg_split('/[0-9]{5}/', $this->parent->by_object['user']->l) as $addressSubstring){
-            $this->goZarafaLocation .= $addressSubstring;
-        }
-
-        $this->goZarafaLocation = trim($this->goZarafaLocation);
-        $this->goZarafaLocation = preg_replace('!\s+!', ' ', $this->goZarafaLocation);
-      }
 
       /*process zarafa features*/
       switch($_POST['pop3'])
@@ -396,6 +427,17 @@ class zarafaAccount extends plugin
     }
   }
 
+  function delArchive($addresses)
+  {
+    if($this->acl_is_writeable("zarafaUserArchiveServers")){
+      $this->zarafaUserArchiveServers= array_remove_entries ($addresses, $this->zarafaUserArchiveServers);
+      $this->is_modified= TRUE;
+      $this->refreshArchiveServer();
+    }else{
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
+    }
+  }
+
   function delSendas($addresses)
   {
     if($this->acl_is_writeable("zarafaSendAsPrivilege")){
@@ -417,6 +459,7 @@ class zarafaAccount extends plugin
     $this->attrs['zarafaEnabledFeatures']     = $this->zarafaEnabledFeatures;
     $this->attrs['zarafaDisabledFeatures']    = $this->zarafaDisabledFeatures;
     $this->attrs['goZarafaDisplayName']       = $this->goZarafaDisplayName;
+    $this->attrs['zarafaUserArchiveServers']  = $this->zarafaUserArchiveServers;
 
     /* Call parents save to prepare $this->attrs */
     plugin::save();
@@ -473,7 +516,7 @@ class zarafaAccount extends plugin
   {
     plugin::adapt_from_template($dn, $skip);
 
-    foreach (array("zarafaSendAsPrivilege", "zarafaEnabledFeatures", "zarafaDisabledFeatures" ) as $val)
+    foreach (array("zarafaSendAsPrivilege", "zarafaEnabledFeatures", "zarafaDisabledFeatures", "zarafaUserArchiveServers") as $val)
     {
       if(in_array($val, $skip))
         continue;
@@ -564,9 +607,10 @@ class zarafaAccount extends plugin
       plugin::remove_from_parent();
 
       /* Zero arrays */
-      $this->attrs['zarafaSendAsPrivilege']= array();
-      $this->attrs['zarafaEnabledFeatures']= array();
-      $this->attrs['zarafaDisabledFeatures']= array();
+      $this->attrs['zarafaSendAsPrivilege']    = array();
+      $this->attrs['zarafaEnabledFeatures']    = array();
+      $this->attrs['zarafaDisabledFeatures']   = array();
+      $this->attrs['zarafaUserArchiveServers'] = array();
 
       $this->cleanup();
 
@@ -651,6 +695,7 @@ class zarafaAccount extends plugin
               "zarafaEnabledFeatures"     =>  _("Zarafa enabled features"),
               "zarafaResourceCapacity"    =>  _("Zarafa resource capacity"),
               "zarafaDisabledFeatures"    =>  _("Zarafa disabled features"),
+              "zarafaUserArchiveServers"  =>  _("Zarafa archive server"),
               "goZarafaPostalCode"        =>  _("The useres Postal code"),
               "goZarafaLocation"          =>  _("Users location"))
           ));
