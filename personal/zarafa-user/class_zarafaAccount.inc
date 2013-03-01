@@ -341,16 +341,20 @@ class zarafaAccount extends plugin
 
           $tMatchArray = array();
           $this->goZarafaLocation = "";
+          $this->goZarafaPostalCode = "";
 
           if(preg_match('/[0-9]{5}/', $this->parent->by_object['user']->l, $tArray)){
             $this->goZarafaPostalCode = $tArray[0];
             foreach(preg_split('/[0-9]{5}/', $this->parent->by_object['user']->l) as $addressSubstring){
                 $this->goZarafaLocation .= $addressSubstring;
             }
-
-            $this->goZarafaLocation = trim($this->goZarafaLocation);
-            $this->goZarafaLocation = preg_replace('!\s+!', ' ', $this->goZarafaLocation);
+          }else{
+            $this->goZarafaLocation = $this->parent->by_object['user']->l;
           }
+
+          $this->goZarafaLocation = trim($this->goZarafaLocation);
+          $this->goZarafaLocation = preg_replace('!\s+!', ' ', $this->goZarafaLocation);
+
         }
 
       /*process zarafa features*/
