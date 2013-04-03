@@ -53,6 +53,9 @@ class zarafaAccount extends plugin
     var $zarafaAccount             = "0";
     var $zarafaResourceCapacity    = "0";
     var $zarafaResourceType        = "";
+    //zarafaContact account
+    var $zarafaContactAccount      = "0";
+    var $initialContactAccount     = FALSE;
 
     var $zarafaEnabledFeatures     = array();
     var $zarafaDisabledFeatures    = array();
@@ -75,39 +78,77 @@ class zarafaAccount extends plugin
      * Access to attributes from the mail plugin and so on
      * is provided by the parent of this plugin
      */
-    var $attributes= array("zarafaResourceType","zarafaResourceCapacity","zarafaAccount",
-            "zarafaAdmin","zarafaHidden","zarafaSharedStoreOnly",
-            "zarafaSendAsPrivilege","zarafaQuotaHard",
-            "zarafaQuotaSoft","zarafaQuotaWarn",
-            "zarafaQuotaOverride", "zarafaEnabledFeatures",
-            "zarafaDisabledFeatures", "zarafaUserArchiveServers", 
-            "goZarafaPostalCode", "goZarafaLocation", "goZarafaDisplayName");
+    var $zarafaUserAttributes = array("zarafaResourceType","zarafaResourceCapacity","zarafaAccount",
+      "zarafaAdmin","zarafaHidden","zarafaSharedStoreOnly",
+      "zarafaSendAsPrivilege","zarafaQuotaHard",
+      "zarafaQuotaSoft","zarafaQuotaWarn",
+      "zarafaQuotaOverride", "zarafaEnabledFeatures",
+      "zarafaDisabledFeatures", "zarafaUserArchiveServers");
+
+    var $zarafaAddonAttributes = array("goZarafaDisplayName", "goZarafaPostalCode", "goZarafaLocation");
+    var $zarafaContactAttributes = array("zarafaSendAsPrivilege", "zarafaHidden", "zarafaAccount");
+
+    var $attributes = array();
+    var $usedAttributes = array();
 
     /* Used ldap object classes be sure to use only zarafa classes
      * and in this case we may only need the zarafa-user
      */
-    var $objectclasses= array("goZarafaAddons", "zarafa-user");
+    var $objectclasses= array("goZarafaAddons", "zarafa-user", "zarafa-contact");
     var $multiple_support = FALSE;
     var $cn  = "";
     var $sn  = "";
     var $givenName  = "";
 
 
-
-    /*! \brief  Initialize the mailAccount
+    /*! \brief Constructor for the zarafa-user plugin
+     * the base class constructor will only be called to
+     * get sure that all necessary steps have been made
+     * to create an object out of this class.
+     * While we have two alternative object-classes
+     * we have to procced in different ways.
      */
     function __construct (&$config, $dn= NULL)
     {
+        //merge all attributes together
+        $this->attributes = array_unique(array_merge(array_merge($this->zarafaUserAttributes, $this->zarafaAddonAttributes), $this->zarafaContactAttributes));
+
         plugin::plugin($config,$dn);
 
-        /* Remember account status
-         */
-        $this->initially_was_account = $this->is_account;
+        /* Is Account? */
+        if(isset($this->attrs['objectClass']) && (in_array_ics("zarafa-user", $this->attrs['objectClass']) ||
+           in_array_ics("zarafa-contact", $this->attrs['objectClass'])) &&
+           in_array_ics("goZarafaAddons", $this->attrs['objectClass'])){
+          $this->is_account= TRUE;
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+            "found", "Object check");
+
+          //check what kind of account we have and remember it 
+          if(in_array_ics ("zarafa-contact", $this->attrs['objectClass'])){
+            $this->usedAttributes= array_unique(array_merge($this->zarafaContactAttributes, $this->zarafaAddonAttributes));
+            $this->zarafaContactAccount = TRUE;
+            $this->initialContactAccount = TRUE;
+          } else if(in_array_ics ("zarafa-user", $this->attrs['objectClass'])){
+            $this->usedAttributes= array_unique(array_merge($this->zarafaUserAttributes, $this->zarafaAddonAttributes));
+          }
+
+          $this->initially_was_account = TRUE;
+        }
 
         /* Initialize configured values
          */
         if($this->is_account)
         {
+            foreach($this->attributes as $attrs){
+              if(isset($this->attrs[$attrs])){
+                if(isset($this->attrs[$attrs]["count"])){
+                  $this->$attrs = $this->attrs[$attrs][0];
+                }else{
+                  $this->$attrs = $this->attrs[$attrs];
+                }
+              }
+            }
+
             /* Get attributes from parent object
              */
             foreach(array("uid","cn","sn","givenName") as $attr)
@@ -170,28 +211,28 @@ class zarafaAccount extends plugin
 
             if($this->parent !== NULL)
             {
-                if($this->is_account)
+              if($this->is_account)
+              {
+                $reason = "";
+                $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")));
+              }
+              else
+              {
+                $posixAccount = $this->parent->by_object['posixAccount'];
+                $mailAccount = $this->parent->by_object['mailAccount'];
+                $reason = "";
+
+                if(!$posixAccount->is_account || !$mailAccount->is_account)
                 {
-                    $reason = "";
-                    $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")));
+                  $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),$reason ,TRUE,TRUE);
                 }
                 else
-              {
-                    $posixAccount = $this->parent->by_object['posixAccount'];
-                    $mailAccount = $this->parent->by_object['mailAccount'];
-                    $reason = "";
-
-                    if(!$posixAccount->is_account || !$mailAccount->is_account)
-                    {
-                        $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),$reason ,TRUE,TRUE);
-                    }
-                    else
-                 {
-                        $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::featuresDisabled(_("Zarafa")));
-                    }
-
-                    return ($display);
+                {
+                  $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::featuresDisabled(_("Zarafa")));
                 }
+
+                return ($display);
+              }
             }
         }
 
@@ -283,8 +324,8 @@ class zarafaAccount extends plugin
 
     $smarty->assign("initially_was_account", $this->initially_was_account);
 
-    $resourcetype = array(0 => "&nbsp;", "user" => _("User"), "room" => _("Room"), "equipment" => _("Equipment"));
-    $smarty->assign("zarafaResourceType_list", $resourcetype);
+    $resourcetypes = array(0 => "&nbsp;", "user" => _("User"), "room" => _("Room"), "equipment" => _("Equipment"));
+    $smarty->assign("zarafaResourceType_list", $resourcetypes);
     $smarty->assign("mail", $this->parent->by_object['mailAccount']->mail);
     $smarty->assign("zarafaQuotaHard",       $this->zarafaQuotaHard);
     $smarty->assign("zarafaQuotaSoft",       $this->zarafaQuotaSoft);
@@ -294,6 +335,7 @@ class zarafaAccount extends plugin
     $smarty->assign("zarafaAdmin", $this->zarafaAdmin?"checked":"");
     $smarty->assign("zarafaAccount", $this->zarafaAccount?"checked":"");
     $smarty->assign("zarafaHidden", $this->zarafaHidden?"checked":"");
+    $smarty->assign("zarafaContactAccount", $this->zarafaContactAccount?"checked":"");
     $smarty->assign("zarafaEnabledFeatures", $this->zarafaEnabledFeatures);
     $smarty->assign("zarafaDisabledFeatures", $this->zarafaDisabledFeatures);
     $smarty->assign("zarafaUserArchiveServers", $this->zarafaUserArchiveServers);
@@ -327,86 +369,86 @@ class zarafaAccount extends plugin
       /* Save ldap attributes */
       plugin::save_object();
 
-      if(isset($_POST['zarafaTab']))
-      {
-          foreach(array("zarafaHidden", "zarafaAccount", "zarafaAdmin", "zarafaSharedStoreOnly", "zarafaQuotaOverride") as $val)
-          {
-              if(isset($_POST[$val]))
-                  $this->$val = 1;
-              else
-                $this->$val = 0;
-          }
-          /* $this->goZarafaDisplayName = $this->sn . ", " . $this->givenName; */
-          $this->goZarafaDisplayName = $this->attrs["sn"][0] . ", " . $this->attrs["givenName"][0];
-
-          $tMatchArray = array();
-          $this->goZarafaLocation = "";
-          $this->goZarafaPostalCode = "";
-
-          if(preg_match('/[0-9]{5}/', $this->parent->by_object['user']->l, $tArray)){
-            $this->goZarafaPostalCode = $tArray[0];
-            foreach(preg_split('/[0-9]{5}/', $this->parent->by_object['user']->l) as $addressSubstring){
-                $this->goZarafaLocation .= $addressSubstring;
-            }
-          }else{
-            $this->goZarafaLocation = $this->parent->by_object['user']->l;
-          }
-
-          $this->goZarafaLocation = trim($this->goZarafaLocation);
-          $this->goZarafaLocation = preg_replace('!\s+!', ' ', $this->goZarafaLocation);
-
+        foreach(array("zarafaHidden", "zarafaAccount", "zarafaAdmin", "zarafaSharedStoreOnly", "zarafaQuotaOverride", "zarafaContactAccount") as $val)
+        {
+            if(isset($_POST[$val]))
+              $this->$val = 1;
+            else
+              $this->$val = 0;
         }
-
-      /*process zarafa features*/
-      switch($_POST['pop3'])
-      {
-          case ZARAFA_POP_FEATURE_ON:
-              $this->zarafaEnabledFeatures[] = 'pop3';
-
-              if(($key = array_search('pop3', $this->zarafaDisabledFeatures, true)) !== false)
-                  unset($this->zarafaDisabledFeatures[$key]);
-              break;
-          case ZARAFA_POP_FEATURE_OFF:
-              $this->zarafaDisabledFeatures[] = 'pop3';
-
-              if(($key = array_search('pop3', $this->zarafaEnabledFeatures, true)) !== false)
-                  unset($this->zarafaEnabledFeatures[$key]);
-              break;
-          case ZARAFA_POP_FEATURE_DEFAULT:
-              if(($key = array_search('pop3', $this->zarafaEnabledFeatures, true)) !== false)
-                  unset($this->zarafaEnabledFeatures[$key]);
-
-              if(($key = array_search('pop3', $this->zarafaDisabledFeatures, true)) !== false)
-                  unset($this->zarafaDisabledFeatures[$key]);
-              break;
-      }
-
-      switch($_POST['imap'])
-      {
-          case ZARAFA_IMAP_FEATURE_ON:
-              $this->zarafaEnabledFeatures[] = 'imap';
-
-              if(($key = array_search('imap', $this->zarafaDisabledFeatures, true)) !== false)
-                  unset($this->zarafaDisabledFeatures[$key]);
-              break;
-          case ZARAFA_IMAP_FEATURE_OFF:
-              $this->zarafaDisabledFeatures[] = 'imap';
-
-              if(($key = array_search('imap', $this->zarafaEnabledFeatures, true)) !== false)
-                  unset($this->zarafaEnabledFeatures[$key]);
-              break;
-          case ZARAFA_IMAP_FEATURE_DEFAULT:
-              if(($key = array_search('imap', $this->zarafaEnabledFeatures, true)) !== false)
-                  unset($this->zarafaEnabledFeatures[$key]);
-
-              if(($key = array_search('imap', $this->zarafaDisabledFeatures, true)) !== false)
-                  unset($this->zarafaDisabledFeatures[$key]);
-
-              break;
-      }
-
-      $this->zarafaEnabledFeatures = array_unique($this->zarafaEnabledFeatures);
-      $this->zarafaDisabledFeatures= array_unique($this->zarafaDisabledFeatures);
+        /* $this->goZarafaDisplayName = $this->sn . ", " . $this->givenName; */
+        $this->goZarafaDisplayName = $this->attrs["sn"][0] . ", " . $this->attrs["givenName"][0];
+  
+        $tMatchArray = array();
+        $this->goZarafaLocation = "";
+        $this->goZarafaPostalCode = "";
+  
+        if(preg_match('/[0-9]{5}/', $this->parent->by_object['user']->l, $tArray)){
+          $this->goZarafaPostalCode = $tArray[0];
+          foreach(preg_split('/[0-9]{5}/', $this->parent->by_object['user']->l) as $addressSubstring){
+              $this->goZarafaLocation .= $addressSubstring;
+          }
+        }else{
+          $this->goZarafaLocation = $this->parent->by_object['user']->l;
+        }
+  
+        $this->goZarafaLocation = trim($this->goZarafaLocation);
+        $this->goZarafaLocation = preg_replace('!\s+!', ' ', $this->goZarafaLocation);
+  
+        /*process zarafa features*/
+        if(isset($_POST['pop3'])){
+          switch($_POST['pop3'])
+          {
+              case ZARAFA_POP_FEATURE_ON:
+                  $this->zarafaEnabledFeatures[] = 'pop3';
+    
+                  if(($key = array_search('pop3', $this->zarafaDisabledFeatures, true)) !== false)
+                      unset($this->zarafaDisabledFeatures[$key]);
+                  break;
+              case ZARAFA_POP_FEATURE_OFF:
+                  $this->zarafaDisabledFeatures[] = 'pop3';
+    
+                  if(($key = array_search('pop3', $this->zarafaEnabledFeatures, true)) !== false)
+                      unset($this->zarafaEnabledFeatures[$key]);
+                  break;
+              case ZARAFA_POP_FEATURE_DEFAULT:
+                  if(($key = array_search('pop3', $this->zarafaEnabledFeatures, true)) !== false)
+                      unset($this->zarafaEnabledFeatures[$key]);
+    
+                  if(($key = array_search('pop3', $this->zarafaDisabledFeatures, true)) !== false)
+                      unset($this->zarafaDisabledFeatures[$key]);
+                  break;
+          }
+        }
+  
+        if(isset($_POST['imap'])){
+          switch($_POST['imap'])
+          {
+              case ZARAFA_IMAP_FEATURE_ON:
+                  $this->zarafaEnabledFeatures[] = 'imap';
+    
+                  if(($key = array_search('imap', $this->zarafaDisabledFeatures, true)) !== false)
+                      unset($this->zarafaDisabledFeatures[$key]);
+                  break;
+              case ZARAFA_IMAP_FEATURE_OFF:
+                  $this->zarafaDisabledFeatures[] = 'imap';
+    
+                  if(($key = array_search('imap', $this->zarafaEnabledFeatures, true)) !== false)
+                      unset($this->zarafaEnabledFeatures[$key]);
+                  break;
+              case ZARAFA_IMAP_FEATURE_DEFAULT:
+                  if(($key = array_search('imap', $this->zarafaEnabledFeatures, true)) !== false)
+                      unset($this->zarafaEnabledFeatures[$key]);
+    
+                  if(($key = array_search('imap', $this->zarafaDisabledFeatures, true)) !== false)
+                      unset($this->zarafaDisabledFeatures[$key]);
+    
+                  break;
+          }
+        }
+  
+        $this->zarafaEnabledFeatures = array_unique($this->zarafaEnabledFeatures);
+        $this->zarafaDisabledFeatures= array_unique($this->zarafaDisabledFeatures);
     }
   }
 
@@ -468,6 +510,20 @@ class zarafaAccount extends plugin
     /* Call parents save to prepare $this->attrs */
     plugin::save();
 
+    /* Remove unused attributes and object classes */
+    if($this->zarafaContactAccount){
+      if(in_array("zarafa-user", $this->attrs['objectClass'])){
+        unset($this->attrs['objectClass'][array_search("zarafa-user", $this->attrs['objectClass'])]);
+      }
+    } else {
+      if(in_array("zarafa-contact", $this->attrs['objectClass'])){
+        unset($this->attrs['objectClass'][array_search("zarafa-contact", $this->attrs['objectClass'])]);
+      }
+    }
+
+    /* remember to have only numeric incremental indices in your array */
+    $this->attrs['objectClass'] = array_values($this->attrs['objectClass']);
+
     /* Save data to LDAP */
     $ldap->cd($this->dn);
     $this->cleanup();
@@ -478,9 +534,9 @@ class zarafaAccount extends plugin
 
     /* Log last action */
     if($this->initially_was_account)
-        new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     else
-       new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     if($this->initially_was_account == $this->is_account)
@@ -491,6 +547,73 @@ class zarafaAccount extends plugin
     else
     {
         $this->handle_post_events("add", array("uid" => $this->uid));
+    }
+  }
+
+  /*
+   * Use this method for the "special"
+   * needs of cleanups to do in this plugin
+   */
+  function cleanup(){
+    foreach ($this->attrs as $index => $value){
+      if($this->initialContactAccount && !$this->zarafaContactAccount){
+        if(in_array($index, $this->zarafaContactAttributes) &&
+          !in_array($index, $this->zarafaUserAttributes)){
+            $this->attrs[$index] = array();
+            continue;
+        }
+      }else if(!$this->initialContactAccount && $this->zarafaContactAccount){
+        if(!in_array($index, $this->zarafaContactAttributes) && 
+          in_array($index, $this->zarafaUserAttributes)){
+            $this->attrs[$index] = array();
+            continue;
+          }
+      }
+
+      /* Convert arrays with one element to non arrays, if the saved
+       *          attributes are no array, too */
+      if (is_array($this->attrs[$index]) &&
+        count ($this->attrs[$index]) == 1 &&
+        isset($this->saved_attributes[$index]) &&
+        !is_array($this->saved_attributes[$index])){
+
+          $tmp= $this->attrs[$index][0];
+          $this->attrs[$index]= $tmp;
+        }
+
+      /* Remove emtpy arrays if they do not differ */
+      if (is_array($this->attrs[$index]) &&
+        count($this->attrs[$index]) == 0 &&
+        !isset($this->saved_attributes[$index])){
+
+          unset ($this->attrs[$index]);
+          continue;
+        }
+
+      /* Remove single attributes that do not differ */
+      if (!is_array($this->attrs[$index]) &&
+        isset($this->saved_attributes[$index]) &&
+        !is_array($this->saved_attributes[$index]) &&
+        $this->attrs[$index] == $this->saved_attributes[$index]){
+
+          unset ($this->attrs[$index]);
+          continue;
+        }
+      /* Remove arrays that do not differ */
+      if (is_array($this->attrs[$index]) &&
+        isset($this->saved_attributes[$index]) &&
+        is_array($this->saved_attributes[$index])){
+
+          if (!array_differs($this->attrs[$index],$this->saved_attributes[$index])){
+            unset ($this->attrs[$index]);
+            continue;
+          }
+        }
+    }
+
+    /* Update saved attributes and ensure that next cleanups will be successful too */
+    foreach($this->attrs as $name => $value){
+      $this->saved_attributes[$name] = $value;
     }
   }
 
@@ -615,7 +738,7 @@ class zarafaAccount extends plugin
       $this->attrs['zarafaEnabledFeatures']    = array();
       $this->attrs['zarafaDisabledFeatures']   = array();
       $this->attrs['zarafaUserArchiveServers'] = array();
-
+      
       $this->cleanup();
 
       @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,$this->attributes, "Save");
