@@ -561,7 +561,7 @@ class zarafaAccount extends plugin
             $this->attrs[$index] = array();
             continue;
         }
-      }else if(!$this->initialContactAccount && $this->zarafaContactAccount){
+      }else if($this->zarafaContactAccount){
         if(!in_array($index, $this->zarafaContactAttributes) && 
           in_array($index, $this->zarafaUserAttributes)){
             $this->attrs[$index] = array();
