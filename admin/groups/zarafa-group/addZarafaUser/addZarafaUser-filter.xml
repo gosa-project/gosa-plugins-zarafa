@@ -22,7 +22,8 @@
     <label>Default filter</label>
     <query>
       <backend>LDAPBlacklist</backend>
-      <filter>(&amp;(objectClass=zarafa-user)(cn=$))</filter>
+      <filter>(|(&amp;(objectClass=zarafa-user)(cn=$))
+                (&amp;(objectClass=zarafa-contact)))</filter>
     </query>
     <autocomplete>
       <attribute>cn</attribute>

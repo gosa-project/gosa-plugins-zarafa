@@ -10,9 +10,17 @@
     <label>Please select the desired entries</label>
     <defaultSortColumn>1</defaultSortColumn>
 
-    <objectType>
+     <objectType>
       <label>User</label>
       <objectClass>zarafa-user</objectClass>
+      <category>users</category>
+      <class>user</class>
+      <image>plugins/zarafa/images/zarafa_user_small.png</image>
+    </objectType>
+
+   <objectType>
+      <label>User</label>
+      <objectClass>zarafa-contact</objectClass>
       <category>users</category>
       <class>user</class>
       <image>plugins/zarafa/images/zarafa_user_small.png</image>
