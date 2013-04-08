@@ -116,9 +116,8 @@ class zarafaAccount extends plugin
         plugin::plugin($config,$dn);
 
         /* Is Account? */
-        if(isset($this->attrs['objectClass']) && (in_array_ics("zarafa-user", $this->attrs['objectClass']) ||
-           in_array_ics("zarafa-contact", $this->attrs['objectClass'])) &&
-           in_array_ics("goZarafaAddons", $this->attrs['objectClass'])){
+        if(isset($this->attrs['objectClass']) && in_array_ics("zarafa-user", $this->attrs['objectClass']) ||
+           in_array_ics("zarafa-contact", $this->attrs['objectClass'])){
           $this->is_account= TRUE;
           @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
             "found", "Object check");

@@ -192,7 +192,9 @@
       <td>
         <label for="choosenArchiveServer">{t}Archive server{/t}</label>
         <select style="width: 20200" size="1" id="choosenArchiveServer" name="choosenArchiveServer" {if !$zarafaAccount} disabled {/if}>
-          {html_options options=$availableArchiveServer selected=$choosenArchiveServerdentifier}
+          {* A selected archive server is not neede simply select the first one *}
+          {* {html_options options=$availableArchiveServer selected=$choosenArchiveServerIdentifier} *}
+          {html_options options=$availableArchiveServer selected=0}
         </select>
         <input id='add_archive' type="submit" value="{t}Add archive server{/t}" name="add_archive" />
         <br/>
