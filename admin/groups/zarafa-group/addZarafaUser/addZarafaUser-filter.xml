@@ -23,7 +23,7 @@
     <query>
       <backend>LDAPBlacklist</backend>
       <filter>(|(&amp;(objectClass=zarafa-user)(cn=$))
-                (&amp;(objectClass=zarafa-contact)))</filter>
+                (&amp;(objectClass=zarafa-contact)(cn=$)))</filter>
     </query>
     <autocomplete>
       <attribute>cn</attribute>
