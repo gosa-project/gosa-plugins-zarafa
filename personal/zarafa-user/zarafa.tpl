@@ -47,9 +47,6 @@
         {render acl=$zarafaAccountACL checked=$use_zarafaAccount}
         <input class="center" id='zarafaAccount'
         type="checkbox" name="zarafaAccount" value="1" {$zarafaAccount} 
-        onclick="changeState('zarafaAdmin', 'zarafaSharedStoreOnly',
-                             'zarafaResourceCapacity','zarafaSendAsPrivilege','zarafaResourceType', 'zarafaQuotaHard',
-                             'zarafaQuotaSoft', 'zarafaQuotaWarn', 'zarafaQuotaOverride', 'add_local_sendas','delete_sendas');"
         title="{t}Enable Zarafa Account for this user{/t}"> {t}Enable Zarafa{/t}
         {/render}
         <br/>
