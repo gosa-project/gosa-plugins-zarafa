@@ -450,7 +450,7 @@ class zarafagroup extends plugin
         $data = $lData = array();
         foreach($this->parent->by_object['group']->members as $uid => $member)
         {
-            $ldap->search("(&(objectClass=zarafa-user)(uid=" . $uid . "))", array("zarafa-user"));
+            $ldap->search("(&(|(objectClass=zarafa-user)(objectClass=zrafa-contact))(uid=" . $uid . "))", array("zarafa-user"));
             if($ldap->count() != 1)
                 continue;
 
