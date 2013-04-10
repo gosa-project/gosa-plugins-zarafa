@@ -67,7 +67,7 @@
         {/render}
         <br>
         {render acl=$zarafaQuotaOverrideACL checked=$use_zarafaQuotaOverride}
-        <input type="checkbox" name="zarafaQuotaOverride" id="zarafaQuotaOverride" value="1" {$zarafaQuotaOverride} onChange="toogleQuotaRules()" {if !$zarafaAccount} disabled {/if}
+        <input type="checkbox" name="zarafaQuotaOverride" id="zarafaQuotaOverride" value="1" {$zarafaQuotaOverride} onChange="toogleQuotaRules()"
         title="{t}Override default quota settings{/t}"> {t}Override default quota{/t}</input>
         {/render}
         <br/>
@@ -122,7 +122,7 @@
             <td><label for="zarafaResourceType">{t}Resource type{/t}</label></td>
             <td>
               {render acl=$zarafaResourceACL}
-                <select size="1" id="zarafaResourceType" name="zarafaResourceType" {if !$zarafaAccount} disabled {/if}>
+                <select size="1" id="zarafaResourceType" name="zarafaResourceType">
                   {html_options options=$zarafaResourceType_list selected=$zarafaResourceType}
                 </select>
               {/render}
@@ -132,7 +132,7 @@
             <td><label for="zarafaResourceCapacity">{t}Resource capacity{/t}</label></td>
             <td>
               {render acl=$zarafaResourceACL}
-                <input type="text" id='zarafaResourceCapacity' {if !$zarafaAccount} disabled {/if}
+                <input type="text" id='zarafaResourceCapacity'
                 name="zarafaResourceCapacity" value="{$zarafaResourceCapacity}">
               {/render}
             </td>
@@ -143,7 +143,7 @@
       <td>
         <h3><label for="sendas_list">{t}Send as privileges{/t}</label></h3>
         {render acl=$zarafaSendAsPrivilegeACL}
-           <select {if $use_zarafaSendAsPrivilege} checked {/if} {if !$zarafaAccount} disabled {/if}
+           <select {if $use_zarafaSendAsPrivilege} checked {/if}
           id="zarafaSendAsPrivilege" style="width:100%; height:100px;" name="sendas_list[]" size=15 multiple>
           {html_options values=$zarafaSendAsPrivilege output=$zarafaSendAsPrivilege}
           <option disabled>&nbsp;</option>
@@ -151,10 +151,10 @@
         {/render}
           <br/>
         {render acl=$zarafaSendAsPrivilegeACL}
-          <input id='add_local_sendas' type="submit" value="{t}Add local{/t}" name="add_local_sendas" {if !$zarafaAccount} disabled {/if} />&nbsp;
+          <input id='add_local_sendas' type="submit" value="{t}Add local{/t}" name="add_local_sendas"/>&nbsp;
         {/render}
         {render acl=$zarafaSendAsPrivilegeACL}
-          <input id='delete_sendas' type="submit" value="{msgPool type=delButton}" name="delete_sendas" {if !$zarafaAccount} disabled {/if} />
+          <input id='delete_sendas' type="submit" value="{msgPool type=delButton}" name="delete_sendas"/>
         {/render}
       </td>
     </tr>
@@ -188,7 +188,7 @@
       <td class="left-border">&nbsp;</td>
       <td>
         <label for="choosenArchiveServer">{t}Archive server{/t}</label>
-        <select style="width: 20200" size="1" id="choosenArchiveServer" name="choosenArchiveServer" {if !$zarafaAccount} disabled {/if}>
+        <select style="width: 20200" size="1" id="choosenArchiveServer" name="choosenArchiveServer">
           {* A selected archive server is not neede simply select the first one *}
           {* {html_options options=$availableArchiveServer selected=$choosenArchiveServerIdentifier} *}
           {html_options options=$availableArchiveServer selected=0}
