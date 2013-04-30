@@ -9,12 +9,12 @@
       {render acl=$zarafaSecurityGroupACL}
         <input class="center" id='zarafaSecurityGroup'
         type=checkbox name="zarafaSecurityGroup" value="1"
-        {if !$zarafaAccount} disabled {/if} {$zarafaSecurityGroup} onClick='changeState("zarafaHidden")';
+        {$zarafaSecurityGroup} onClick='changeState("zarafaHidden")';
         title="{t}Make this group a Zarafa Securitygroup{/t}"> {t}Zarafa Securitygroup{/t}
       {/render}
          <br>
       {render acl=$zarafaHiddenACL}
-         <input class="center" id='zarafaHidden' {if !$zarafaSecurityGroup || !$zarafaAccount} disabled {/if}
+        <input class="center" id='zarafaHidden' 
         type=checkbox name="zarafaHidden" value="1" {$zarafaHidden}
         title="{t}Hide from Zarafa addressbook{/t}"> {t}Hide from addressbook{/t}
       {/render}
@@ -40,18 +40,17 @@
     <td>
       <h3>{t}Send as privileges{/t}</h3>
       {render acl=$zarafaSendAsPrivilegeACL}
-         <select {if !$zarafaAccount} disabled {/if}
-         id="zarafaSendAsPrivilege" name="sendas_list[]" style="width:100%;height:100px;" multiple>
-         {html_options values=$zarafaSendAsPrivilege output=$zarafaSendAsPrivilege}
-         <option disabled>&nbsp;</option>
+         <select id="zarafaSendAsPrivilege" name="sendas_list[]" style="width:100%;height:100px;" multiple>
+           {html_options values=$zarafaSendAsPrivilege output=$zarafaSendAsPrivilege}
+           <option disabled>&nbsp;</option>
          </select>
       {/render}
       <br/>
       {render acl=$zarafaSendAsPrivilegeACL}
-        <input id='add_local_sendas' type="submit" value="{t}Add local{/t}" name="add_local_sendas" {if !$zarafaAccount} disabled {/if}>&nbsp;
+        <input id='add_local_sendas' type="submit" value="{t}Add local{/t}" name="add_local_sendas" >&nbsp;
       {/render}
       {render acl=$zarafaSendAsPrivilegeACL}
-        <input id='delete_sendas' type="submit" value="{msgPool type=delButton}" name="delete_sendas" {if !$zarafaAccount} disabled {/if}>
+        <input id='delete_sendas' type="submit" value="{msgPool type=delButton}" name="delete_sendas" >
       {/render}
     </td>
     <td class="left-border">&nbsp;</td>
@@ -77,8 +76,7 @@
     <td>
       <h3>{t}Zarafa group members{/t}</h3>
       {* {render acl=$zarafaSendAsPrivilegeACL}
-        <select {if !$zarafaAccount} disabled {/if}
-        id="memberUid" name="group_member_list[]" style="width:100%;height:100px;" multiple>
+        <select id="memberUid" name="group_member_list[]" style="width:100%;height:100px;" multiple>
         {html_options values=$memberUid output=$memberUid}
         <option disabled>&nbsp;</option>
         </select>
@@ -86,10 +84,10 @@
       {$memberList}
       {* <br/> *}
       {render acl=$zarafaSendAsPrivilegeACL}
-        <input id='add_zarafa_member' type="submit" value="{t}Add{/t}" name="add_zarafa_member" {if !$zarafaAccount} disabled {/if}>&nbsp;
+        <input id='add_zarafa_member' type="submit" value="{t}Add{/t}" name="add_zarafa_member" >&nbsp;
       {/render}
       {*{render acl=$zarafaSendAsPrivilegeACL}
-        <input id='delete_zarafa_member' type="submit" value="{msgPool type=delButton}" name="delete_zarafa_member" {if !$zarafaAccount} disabled {/if}>
+        <input id='delete_zarafa_member' type="submit" value="{msgPool type=delButton}" name="delete_zarafa_member" >
       {/render}*}
     </td>
     <td class="left-border">&nbsp;</td>
