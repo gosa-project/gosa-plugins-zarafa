@@ -9,8 +9,7 @@
       {render acl=$zarafaSecurityGroupACL}
         <input class="center" id='zarafaSecurityGroup'
         type=checkbox name="zarafaSecurityGroup" value="1"
-        {$zarafaSecurityGroup} onClick='changeState("zarafaHidden")';
-        title="{t}Make this group a Zarafa Securitygroup{/t}"> {t}Zarafa Securitygroup{/t}
+        {$zarafaSecurityGroup} title="{t}Make this group a Zarafa Securitygroup{/t}"> {t}Zarafa Securitygroup{/t}
       {/render}
          <br>
       {render acl=$zarafaHiddenACL}
