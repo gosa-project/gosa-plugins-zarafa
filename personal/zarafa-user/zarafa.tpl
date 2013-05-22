@@ -183,6 +183,15 @@
               <input type="radio" name="imap" id="imapC" value="off" {if in_array("imap", $zarafaDisabledFeatures)} checked {/if}>{t}Off{/t}</input>
             </td>
           </tr>
+          {if $zpushControl eq 'true'}
+          <tr>
+            <td>
+              {t}Z-Push:{/t}
+              <input type="radio" name="zpush" id="zpushA" value="on" {if in_array("zpush", $zarafaEnabledFeatures)} checked {/if}>{t}On{/t}</input>
+              <input type="radio" name="zpush" id="zpushB" value="off" {if in_array("zpush", $zarafaDisabledFeatures)} checked {/if}>{t}Off{/t}</input>
+            </td>
+          </tr>
+          {/if}
         </table>
       </td>
       <td class="left-border">&nbsp;</td>

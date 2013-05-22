@@ -30,6 +30,10 @@ define("ZARAFA_IMAP_FEATURE_ON", "on");
 define("ZARAFA_IMAP_FEATURE_OFF", "off");
 define("ZARAFA_IMAP_FEATURE_DEFAULT", "default");
 
+define("ZARAFA_ZPUSH_FEATURE_ON", "on");
+define("ZARAFA_ZPUSH_FEATURE_OFF", "off");
+define("ZARAFA_ZPUSH_FEATURE_DEFAULT", "default");
+
 
 class zarafaAccount extends plugin
 {
@@ -56,6 +60,8 @@ class zarafaAccount extends plugin
     //zarafaContact account
     var $zarafaContactAccount      = "0";
     var $initialContactAccount     = FALSE;
+
+    var $zpushControl              = FALSE;
 
     var $zarafaEnabledFeatures     = array();
     var $zarafaDisabledFeatures    = array();
@@ -114,6 +120,9 @@ class zarafaAccount extends plugin
         $this->attributes = array_unique(array_merge(array_merge($this->zarafaUserAttributes, $this->zarafaAddonAttributes), $this->zarafaContactAttributes));
 
         plugin::plugin($config,$dn);
+
+        //Extra zpush config value 
+        $this->zpushControl= $this->config->get_cfg_value("zarafaAccount", "zpushControl");
 
         /* Is Account? */
         if(isset($this->attrs['objectClass']) && in_array_ics("zarafa-user", $this->attrs['objectClass']) ||
@@ -329,6 +338,7 @@ class zarafaAccount extends plugin
     $smarty->assign("zarafaQuotaHard",       $this->zarafaQuotaHard);
     $smarty->assign("zarafaQuotaSoft",       $this->zarafaQuotaSoft);
     $smarty->assign("zarafaQuotaWarn",       $this->zarafaQuotaWarn);
+    $smarty->assign("zpushControl", $this->zpushControl);
     $smarty->assign("zarafaQuotaOverride",   $this->zarafaQuotaOverride?"checked":"");
     $smarty->assign("zarafaSharedStoreOnly", $this->zarafaSharedStoreOnly?"checked":"");
     $smarty->assign("zarafaAdmin", $this->zarafaAdmin?"checked":"");
@@ -443,6 +453,34 @@ class zarafaAccount extends plugin
                       unset($this->zarafaDisabledFeatures[$key]);
     
                   break;
+          }
+        }
+
+        if ($this->zpushControl == true){
+          if(isset($_POST['zpush'])){
+            switch($_POST['zpush'])
+            {
+            case ZARAFA_ZPUSH_FEATURE_ON:
+              $this->zarafaEnabledFeatures[] = 'zpush';
+
+              if(($key = array_search('zpush', $this->zarafaDisabledFeatures, true)) !== false)
+                unset($this->zarafaDisabledFeatures[$key]);
+              break;
+            case ZARAFA_ZPUSH_FEATURE_OFF:
+              $this->zarafaDisabledFeatures[] = 'zpush';
+
+              if(($key = array_search('zpush', $this->zarafaEnabledFeatures, true)) !== false)
+                unset($this->zarafaEnabledFeatures[$key]);
+              break;
+            case ZARAFA_ZPUSH_FEATURE_DEFAULT:
+              if(($key = array_search('zpush', $this->zarafaEnabledFeatures, true)) !== false)
+                unset($this->zarafaEnabledFeatures[$key]);
+
+              if(($key = array_search('zpush', $this->zarafaDisabledFeatures, true)) !== false)
+                unset($this->zarafaDisabledFeatures[$key]);
+
+              break;
+            }
           }
         }
   
@@ -806,6 +844,18 @@ class zarafaAccount extends plugin
           "plSection"     => array("personal" => _("My account")),
           "plCategory"    => array("users"),
           "plOptions"     => array(),
+
+          "plProperties"  => array(
+
+            array(
+              "name"          => "zpushControl",
+              "type"          => "bool",
+              "default"       => "FALSE",
+              "description"   => _("Enable extra control mechanism for z-push access. Adds an additional value for zarafaEnabledFeatures attribute (zpush)."),
+              "check"         => "gosaProperty::isBool",
+              "migrate"       => "",
+              "group"         => "zarafa",
+              "mandatory"     => FALSE)),
 
           "plProvidedAcls"  => array(
               "gosaMailAlternateAddress"  =>  _("Alternate mail addresses"),
