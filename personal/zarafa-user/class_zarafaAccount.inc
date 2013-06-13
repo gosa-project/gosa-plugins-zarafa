@@ -205,43 +205,40 @@ class zarafaAccount extends plugin
         }
 
         if(isset($_POST['modify_state']))
-            $this->is_account= !$this->is_account;
+          $this->is_account= !$this->is_account;
 
-        if(!$this->multiple_support_active)
+        if(!$this->is_account && $this->parent === NULL)
         {
-            if(!$this->is_account && $this->parent === NULL)
+          $display= "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
+            msgPool::noValidExtension(_("Mail"))."</b>";
+          $display.= back_to_main();
+          return ($display);
+        }
+
+        if($this->parent !== NULL)
+        {
+          if($this->is_account)
+          {
+            $reason = "";
+            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")));
+          }
+          else
+          {
+            $posixAccount = $this->parent->by_object['posixAccount'];
+            $mailAccount = $this->parent->by_object['mailAccount'];
+            $reason = "";
+
+            if(!$posixAccount->is_account || !$mailAccount->is_account)
             {
-                $display= "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
-                msgPool::noValidExtension(_("Mail"))."</b>";
-                $display.= back_to_main();
-                return ($display);
+              $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Zarafa")),"The mail and posix plugin must be activ in order to use this plugin",TRUE,TRUE);
+            }
+            else
+            {
+              $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::featuresDisabled(_("Zarafa")));
             }
 
-            if($this->parent !== NULL)
-            {
-              if($this->is_account)
-              {
-                $reason = "";
-                $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")));
-              }
-              else
-              {
-                $posixAccount = $this->parent->by_object['posixAccount'];
-                $mailAccount = $this->parent->by_object['mailAccount'];
-                $reason = "";
-
-                if(!$posixAccount->is_account || !$mailAccount->is_account)
-                {
-                  $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),$reason ,TRUE,TRUE);
-                }
-                else
-                {
-                  $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::featuresDisabled(_("Zarafa")));
-                }
-
-                return ($display);
-              }
-            }
+            return ($display);
+          }
         }
 
         if(isset($_POST['add_archive']) && isset($_POST['choosenArchiveServer'])){
@@ -366,7 +363,6 @@ class zarafaAccount extends plugin
       $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
     }
 
-    $smarty->assign("multiple_support",$this->multiple_support_active);
     return($display.$smarty->fetch(get_template_path("zarafa.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -658,6 +654,7 @@ class zarafaAccount extends plugin
    */
   function check()
   {
+      print_a("check function");
       $messages = array();
       /* Call common method to give check the hook */
       $messages = plugin::check();
