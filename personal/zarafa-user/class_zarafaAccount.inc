@@ -654,7 +654,6 @@ class zarafaAccount extends plugin
    */
   function check()
   {
-      print_a("check function");
       $messages = array();
       /* Call common method to give check the hook */
       $messages = plugin::check();
