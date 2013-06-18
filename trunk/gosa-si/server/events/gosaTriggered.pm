@@ -646,13 +646,15 @@ sub trigger_action_reinstall {
 
     &main::change_fai_state('reinstall', \@{$msg_hash->{macaddress}}, $session_id);
     &main::change_goto_state('active', \@{$msg_hash->{macaddress}}, $session_id);
+    my @out_msg_l = &set_activated_for_installation($msg, $msg_hash, $session_id);
 
     my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     # invoke trigger wake for this gosa-si-server
     &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
 
-    my @out_msg_l = ($wake_msg, $msg);  
+    push(@out_msg_l, $wake_msg);
+    push(@out_msg_l, $msg);
     return @out_msg_l;
 }
 
