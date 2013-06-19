@@ -382,7 +382,8 @@ class zarafaAccount extends plugin
               $this->$val = 0;
         }
         /* $this->goZarafaDisplayName = $this->sn . ", " . $this->givenName; */
-        $this->goZarafaDisplayName = $this->attrs["sn"][0] . ", " . $this->attrs["givenName"][0];
+        //Get the most up to date name from the user 
+        $this->goZarafaDisplayName = $this->parent->by_object['user']->sn.', '.$this->parent->by_object['user']->givenName;
   
         $tMatchArray = array();
         $this->goZarafaLocation = "";
