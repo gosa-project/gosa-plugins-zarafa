@@ -44,29 +44,29 @@
     <tr>
       <td>
         <h3>&nbsp;{t}Zarafa specific settings{/t}</h3>
-        {render acl=$zarafaAccountACL checked=$use_zarafaAccount}
+        {render acl=$zarafaAccountACL }
         <input class="center" id='zarafaAccount'
-        type="checkbox" name="zarafaAccount" value="1" {$zarafaAccount} 
+        type="checkbox" name="zarafaAccount_posted" value="1" {$zarafaAccount} 
         title="{t}Enable Zarafa Account for this user{/t}"> {t}Enable Zarafa{/t}
         {/render}
         <br/>
-        {render acl=$zarafaAdminACL checked=$use_zarafaAdmin}
+        {render acl=$zarafaAdminACL }
         <input type="checkbox" name="zarafaAdmin" id="zarafaAdmin" value="1" {$zarafaAdmin} onChange="toogleAdminStore()"
         title="{t}Decide if the current user is an Administrator{/t}"> {t}Zarafa Administrator{/t}</input>
         {/render}
         <br/>
-        {render acl=$zarafaSharedStoreOnlyACL checked=$use_zarafaSharedStoreOnly}
+        {render acl=$zarafaSharedStoreOnlyACL }
         <input type="checkbox" name="zarafaSharedStoreOnly" id="zarafaSharedStoreOnly" value="1" {$zarafaSharedStoreOnly}  onChange="toogleAdminStore()"
         title="{t}User is only a shared store{/t}"> {t}Zarafa shared store{/t}</input>
         {/render}
         <br/>
-        {render acl=$zarafaHiddenACL checked=$use_zarafaHidden}
+        {render acl=$zarafaHiddenACL }
         <input id='zarafaHidden'
         type="checkbox" name="zarafaHidden" value="1" {$zarafaHidden}
         title="{t}Hide from Zarafa addressbook{/t}"> {t}Hide from addressbook{/t}
         {/render}
         <br>
-        {render acl=$zarafaQuotaOverrideACL checked=$use_zarafaQuotaOverride}
+        {render acl=$zarafaQuotaOverrideACL }
         <input type="checkbox" name="zarafaQuotaOverride" id="zarafaQuotaOverride" value="1" {$zarafaQuotaOverride} onChange="toogleQuotaRules()"
         title="{t}Override default quota settings{/t}"> {t}Override default quota{/t}</input>
         {/render}
@@ -143,7 +143,7 @@
       <td>
         <h3><label for="sendas_list">{t}Send as privileges{/t}</label></h3>
         {render acl=$zarafaSendAsPrivilegeACL}
-           <select {if $use_zarafaSendAsPrivilege} checked {/if}
+           <select 
           id="zarafaSendAsPrivilege" style="width:100%; height:100px;" name="sendas_list[]" size=15 multiple>
           {html_options values=$zarafaSendAsPrivilege output=$zarafaSendAsPrivilege}
           <option disabled>&nbsp;</option>
@@ -197,7 +197,7 @@
       <td class="left-border">&nbsp;</td>
       <td>
         <label for="choosenArchiveServer">{t}Archive server{/t}</label>
-        <select style="width: 20200" size="1" id="choosenArchiveServer" name="choosenArchiveServer">
+        <select style="width: 200px" size="1" id="choosenArchiveServer" name="choosenArchiveServer">
           {* A selected archive server is not neede simply select the first one *}
           {* {html_options options=$availableArchiveServer selected=$choosenArchiveServerIdentifier} *}
           {html_options options=$availableArchiveServer selected=0}

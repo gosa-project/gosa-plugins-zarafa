@@ -352,16 +352,16 @@ class zarafaAccount extends plugin
     $smarty->assign("gosaMailForwardingAddress", $this->parent->by_object['mailAccount']->gosaMailForwardingAddress);
 
     /* _Multiple users vars_ */
-    foreach($this->attributes as $attr)
-    {
-      $u_attr = "use_".$attr;
-      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
-    }
-    foreach(array("zarafaAccount", "zarafaHidden", "zarafaAdmin", "zarafaSharedStoreOnly", "zarafaQuotaOverride") as $attr)
-    {
-      $u_attr = "use_".$attr;
-      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
-    }
+//    foreach($this->attributes as $attr)
+//    {
+//      $u_attr = "use_".$attr;
+//      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
+//    }
+//    foreach(array("zarafaAccount", "zarafaHidden", "zarafaAdmin", "zarafaSharedStoreOnly", "zarafaQuotaOverride") as $attr)
+//    {
+//      $u_attr = "use_".$attr;
+//      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
+//    }
 
     return($display.$smarty->fetch(get_template_path("zarafa.tpl",TRUE,dirname(__FILE__))));
   }
@@ -374,13 +374,16 @@ class zarafaAccount extends plugin
       /* Save ldap attributes */
       plugin::save_object();
 
-        foreach(array("zarafaHidden", "zarafaAccount", "zarafaAdmin", "zarafaSharedStoreOnly", "zarafaQuotaOverride", "zarafaContactAccount") as $val)
+        foreach(array("zarafaHidden", "zarafaAdmin", "zarafaSharedStoreOnly", "zarafaQuotaOverride", "zarafaContactAccount") as $val)
         {
             if(isset($_POST[$val]))
               $this->$val = 1;
             else
               $this->$val = 0;
         }
+
+        $this->zarafaAccount = (isset($_POST["zarafaAccount_posted"])) ? 1 : 0;
+
         /* $this->goZarafaDisplayName = $this->sn . ", " . $this->givenName; */
         //Get the most up to date name from the user 
         $this->goZarafaDisplayName = $this->parent->by_object['user']->sn.', '.$this->parent->by_object['user']->givenName;
