@@ -486,13 +486,15 @@ class zarafagroup extends plugin
 
       if(!$this->dialog)
       {
-        foreach(array("zarafaSecurityGroup", "zarafaHidden", "zarafaAccount") as $val)
+        foreach(array("zarafaSecurityGroup", "zarafaHidden") as $val)
         {
           if(isset($_POST[$val]))
             $this->$val = 1;
           else
             $this->$val = 0;
         }
+
+        $this->zarafaAccount = (isset($_POST["zarafaAccount_posted"])) ? 1 : 0;
       }
     }
 

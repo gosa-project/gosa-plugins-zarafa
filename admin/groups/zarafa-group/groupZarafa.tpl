@@ -3,7 +3,7 @@
     <td style="width:50%;">
       <h3>{t}Zarafa Settings{/t}</h3>
         <input class="center" id='zarafaAccount'
-        type=checkbox name="zarafaAccount" value="1" {$zarafaAccount} 
+        type=checkbox name="zarafaAccount_posted" value="1" {$zarafaAccount} 
         title="{t}Enable Zarafa Account for this group{/t}"> {t}Enable Zarafa{/t}
       <br>   
       {render acl=$zarafaSecurityGroupACL}
