@@ -54,7 +54,6 @@
     </td>
     <td class="left-border">&nbsp;</td>
     <td>
-      {if !$multiple_support}
       <h3><label for="forwarding_list"> {t}Forwarding addresses{/t}</label></h3>
       {render acl=$gosaMailAlternateAddressACL}
       <select id="forwarding_list" name="dummyForwarding" style="width:100%;height:100px;" multiple
@@ -63,7 +62,6 @@
       <option disabled>&nbsp;</option>
       {/render}
       </select>
-      {/if}
     </td>
   </tr>
   <tr>
@@ -74,33 +72,20 @@
   <tr>
     <td>
       <h3>{t}Zarafa group members{/t}</h3>
-      {* {render acl=$zarafaSendAsPrivilegeACL}
-        <select id="memberUid" name="group_member_list[]" style="width:100%;height:100px;" multiple>
-        {html_options values=$memberUid output=$memberUid}
-        <option disabled>&nbsp;</option>
-        </select>
-      {/render} *}
       {$memberList}
-      {* <br/> *}
       {render acl=$zarafaSendAsPrivilegeACL}
         <input id='add_zarafa_member' type="submit" value="{t}Add{/t}" name="add_zarafa_member" >&nbsp;
       {/render}
-      {*{render acl=$zarafaSendAsPrivilegeACL}
-        <input id='delete_zarafa_member' type="submit" value="{msgPool type=delButton}" name="delete_zarafa_member" >
-      {/render}*}
     </td>
     <td class="left-border">&nbsp;</td>
   </tr>
 </table>
 
-<input type="hidden" name='zarafaedit' value='1'>
-    
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
 	focus_field('mail');
   -->
-
     function changeStates()
     {
       if($('zarafaSecurityGroup').checked) {
@@ -111,6 +96,3 @@
     changeStates();
 
 </script>
-{if $multiple_support}
-	<input type="hidden" name="multiple_mail_group_posted" value="1">
-{/if}
