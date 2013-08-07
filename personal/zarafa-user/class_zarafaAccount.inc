@@ -850,7 +850,7 @@ class zarafaAccount extends plugin
             array(
               "name"          => "zpushControl",
               "type"          => "bool",
-              "default"       => "FALSE",
+              "default"       => "false",
               "description"   => _("Enable extra control mechanism for z-push access. Adds an additional value for zarafaEnabledFeatures attribute (zpush)."),
               "check"         => "gosaProperty::isBool",
               "migrate"       => "",
