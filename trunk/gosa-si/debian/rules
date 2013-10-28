@@ -68,6 +68,7 @@ binary-indep: install
 	#dh_installdebconf
 	# Don't start gosa-si via init-system/upstart. We start gosa-si in goto-get-config since BC 5.0
 	#dh_installinit --init-script=gosa-si -- start 00 2 3 4 5 . stop 29 1 .
+	dh_installinit --init-script=gosa-si -- remove 
 
 	chmod 640 debian/gosa-si-server/etc/gosa-si/server.conf debian/gosa-si-client/etc/gosa-si/client.conf
 
