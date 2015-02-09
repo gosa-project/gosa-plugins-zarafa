@@ -29,9 +29,9 @@ class zarafagroup extends plugin
 
   /* Zarafa variables */
   var $zarafaSendAsPrivilege      = array(); // where is the group privileged to
-  var $zarafaSecurityGroup        = "";      // is THIS a security group
-  var $zarafaHidden               = "";      // hide THIS group from addressbook
-  var $zarafaAccount              = "0";     // enable zarafa account
+  var $zarafaSecurityGroup        = 0;      // is THIS a security group
+  var $zarafaHidden               = 0;      // hide THIS group from addressbook
+  var $zarafaAccount              = 0;     // enable zarafa account
 
   /* Dialogs */
   var $sendAsSelect               = FALSE;   // select new user for privileged send mail
@@ -162,6 +162,11 @@ class zarafagroup extends plugin
       }
     }
 
+    // flags are processed as int (don't think this is mandatory)
+    $this->zarafaAccount = (int) $this->zarafaAccount;
+    $this->zarafaHidden = (int) $this->zarafaHidden;
+    $this->zarafaSecurityGroup = (int) $this->zarafaSecurityGroup;
+
     // Prepare list where zarafa user will be shown
     $this->memberList = new sortableListing();
     $this->memberList->setDeleteable(true);
@@ -172,6 +177,7 @@ class zarafagroup extends plugin
     $this->memberList->setHeader(array('~',_("Given name"),_("Surname"),_("UID")));
     $this->memberList->setColspecs(array('20px','*','*','*','20px'));
     $this->memberList->setDefaultSortColumn(1);
+
   }
 
     /*! \brief  Returns all group members once with 'dn' and once with 'mail'.
@@ -230,7 +236,6 @@ class zarafagroup extends plugin
    */
   function execute()
   {
-
     /* Call parent execute */
     plugin::execute();
 
@@ -288,41 +293,39 @@ class zarafagroup extends plugin
     if(isset($_POST['delete_zarafa_member']) && isset($_POST['group_member_list']))
       $this->delMember($_POST['group_member_list']);
 
-        /****************
-         Account status
-        ****************/
-    if(!$this->multiple_support_active)
+    /****************
+     Account status
+    ****************/
+
+    if(isset($_POST['modify_state']))
     {
-      if(isset($_POST['modify_state']))
-      {
-        if($this->is_account && $this->acl_is_removeable())
-          $this->is_account= FALSE;
-        elseif(!$this->is_account && $this->acl_is_createable())
-          $this->is_account= TRUE;
-      }
+      if($this->is_account && $this->acl_is_removeable())
+        $this->is_account= FALSE;
+      elseif(!$this->is_account && $this->acl_is_createable())
+        $this->is_account= TRUE;
+    }
 
-      if($this->is_account)
-      {
-        $reason = "";
-        $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")));
-      }
-      else
-      {
-        $mailGroup = $this->parent->by_object['mailgroup'];
-        $reason = "";
+    if($this->is_account)
+    {
+      $reason = "";
+      $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")));
+    }
+    else
+    {
+      $mailGroup = $this->parent->by_object['mailgroup'];
+      $reason = "";
 
-        //                 if(!$mailGroup->is_account)
-        //                 {
-        //                     $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")), $reason, TRUE, TRUE);
-        //                 }
-        //                 else
-        //               {
-        $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::
-          featuresDisabled(_("Zarafa")));
-        //                 }
+      //                 if(!$mailGroup->is_account)
+      //                 {
+      //                     $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")), $reason, TRUE, TRUE);
+      //                 }
+      //                 else
+      //               {
+      $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::
+        featuresDisabled(_("Zarafa")));
+      //                 }
 
-        return ($display);
-      }
+      return ($display);
     }
 
     // Act on list events
@@ -416,21 +419,9 @@ class zarafagroup extends plugin
     foreach($this->attributes as $name){
       $smarty->assign($name,$this->$name);
     }
-
+    
     $smarty->assign("only_local", "");
 
-        /*******************
-         Multi edit support
-        *******************/
-    //         foreach($this->attributes as $attr)
-    //         {
-    //             if(in_array($attr,$this->multi_boxes))
-    //                 $smarty->assign("use_".$attr,TRUE);
-    //             else
-    //                 $smarty->assign("use_".$attr,FALSE);
-    //         }
-
-    $smarty->assign("multiple_support",$this->multiple_support_active);
     $smarty->assign("zarafaSecurityGroup", $this->zarafaSecurityGroup?"checked":"");
     $smarty->assign("zarafaHidden", $this->zarafaHidden?"checked":"");
     $smarty->assign("zarafaAccount", $this->zarafaAccount?"checked":"");
@@ -483,23 +474,18 @@ class zarafagroup extends plugin
   /* Save data to object */
   function save_object()
   {
-    if(!isset($_POST["zarafaAccount_posted"]))
-      return;
+    if(isset($_POST['zarafaedit'])){
+      // call super class implementation 
+      plugin::save_object();
 
-    // call super class implementation 
-    plugin::save_object();
-
-    if(!$this->dialog)
-    {
-      foreach(array("zarafaSecurityGroup", "zarafaHidden") as $val)
+      // checkbox handling
+      if(!$this->dialog)
       {
-        if(isset($_POST[$val]))
-          $this->$val = 1;
-        else
-          $this->$val = 0;
+        foreach(array("zarafaSecurityGroup", "zarafaHidden", "zarafaAccount") as $val)
+        {
+          $this->$val = isset($_POST[$val]) ? 1 : 0;
+        }
       }
-
-      $this->zarafaAccount = (isset($_POST["zarafaAccount_posted"])) ? 1 : 0;
     }
   }
 
@@ -509,24 +495,9 @@ class zarafagroup extends plugin
   {
     $ldap= $this->config->get_ldap_link();
 
-    /* Create acls */
-    //         $this->acl = array("anyone ".$this->folder_acls['__anyone__']);
-    //         $member = $this->get_member();
-    //         $new_folder_acls = array("anyone" => $this->folder_acls['__anyone__']);
-
-    //         foreach($this->folder_acls as $user => $acls)
-    //         {
-    //             if(preg_match("/^__/",$user)) continue;
-    //             $this->acl[] = $user." ".$acls;
-    //             $new_folder_acls[$user]=$acls;
-    //         }
-
-    //         $this->folder_acls = $new_folder_acls;
-    //         $this->acl = array_unique($this->acl);
-
     /* Call parents save to prepare $this->attrs */
     plugin::save();
-
+    
     /* Save data to LDAP */
     $ldap->cd($this->dn);
     $this->cleanup();

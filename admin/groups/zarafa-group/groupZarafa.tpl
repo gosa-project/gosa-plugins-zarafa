@@ -1,20 +1,21 @@
+<input type="hidden" name='zarafaedit' value='1'>
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
   <tr>
     <td style="width:50%;">
       <h3>{t}Zarafa Settings{/t}</h3>
         <input class="center" id='zarafaAccount'
-        type=checkbox name="zarafaAccount_posted" value="1" {$zarafaAccount} 
+        type=checkbox name="zarafaAccount" {$zarafaAccount}
         title="{t}Enable Zarafa Account for this group{/t}"> {t}Enable Zarafa{/t}
       <br>   
       {render acl=$zarafaSecurityGroupACL}
         <input class="center" id='zarafaSecurityGroup'
-        type=checkbox name="zarafaSecurityGroup" value="1"
-        {$zarafaSecurityGroup} title="{t}Make this group a Zarafa Securitygroup{/t}"> {t}Zarafa Securitygroup{/t}
+        type=checkbox name="zarafaSecurityGroup" {$zarafaSecurityGroup}
+        title="{t}Make this group a Zarafa Securitygroup{/t}"> {t}Zarafa Securitygroup{/t}
       {/render}
          <br>
       {render acl=$zarafaHiddenACL}
         <input class="center" id='zarafaHidden' 
-        type=checkbox name="zarafaHidden" value="1" {$zarafaHidden}
+        type=checkbox name="zarafaHidden" {$zarafaHidden}
         title="{t}Hide from Zarafa addressbook{/t}"> {t}Hide from addressbook{/t}
       {/render}
     </td>
