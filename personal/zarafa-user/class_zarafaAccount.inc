@@ -220,7 +220,7 @@ class zarafaAccount extends plugin
           if($this->is_account)
           {
             $reason = "";
-            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")));
+            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Zarafa")),msgPool::featuresEnabled(_("Zarafa")), !$this->acl_is_writeable("zarafa-user"));
           }
           else
           {
@@ -234,7 +234,7 @@ class zarafaAccount extends plugin
             }
             else
             {
-              $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::featuresDisabled(_("Zarafa")));
+              $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Zarafa")),msgPool::featuresDisabled(_("Zarafa")), !$this->acl_is_writeable("zarafa-user"));
             }
 
             return ($display);
