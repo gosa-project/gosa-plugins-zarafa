@@ -37,7 +37,7 @@ class zarafaServer extends goService
      */
     public function __construct(&$config, $dn = NULL)
     {
-        goService::goService($config, $dn);
+        goService::__construct($config, $dn);
         $this->config = $config;
         $this->DisplayName = _("Zarafa server");
     }

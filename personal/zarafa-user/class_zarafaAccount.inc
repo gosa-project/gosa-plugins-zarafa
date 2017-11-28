@@ -119,7 +119,7 @@ class zarafaAccount extends plugin
         //merge all attributes together
         $this->attributes = array_unique(array_merge(array_merge($this->zarafaUserAttributes, $this->zarafaAddonAttributes), $this->zarafaContactAttributes));
 
-        plugin::plugin($config,$dn);
+        plugin::__construct($config,$dn);
 
         //Extra zpush config value 
         $this->zpushControl= $this->config->get_cfg_value("zarafaAccount", "zpushControl");
@@ -797,7 +797,7 @@ class zarafaAccount extends plugin
    */
 //   function init_multiple_support($attrs,$all)
 //   {
-//     plugin::init_multiple_support($attrs,$all);
+//     plugin::__constructit_multiple_support($attrs,$all);
 //   }
 
     /*! \brief
