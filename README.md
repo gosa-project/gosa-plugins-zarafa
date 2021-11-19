@@ -4,4 +4,4 @@ To properly reflect the current name change from zarafa to kopano, in this plugi
 
 The current plugin to kopano can be found here:
 
-[gosa-plugin-kopano](../gosa-plugins-zarafa)
+[gosa-plugin-kopano](../../../gosa-plugins-zarafa)
