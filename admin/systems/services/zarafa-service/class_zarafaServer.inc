@@ -109,7 +109,7 @@ class zarafaServer extends goService
         $ldap->modify($this->attrs);
 
         if(!$ldap->success())
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
     }
 
     /* Return plugin informations for acl handling */

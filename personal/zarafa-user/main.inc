@@ -157,5 +157,5 @@ else
     $display= print_header(get_template_path('plugins/zarafa/images/zarafa.png'), _("User zarafa settings"), $info).$display;
 }
 
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+
 ?>

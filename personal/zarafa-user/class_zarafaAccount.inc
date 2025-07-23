@@ -567,7 +567,7 @@ class zarafaAccount extends plugin
     $ldap->modify($this->attrs);
 
     if(!$ldap->success())
-        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
 
     /* Log last action */
     if($this->initially_was_account)
@@ -786,7 +786,7 @@ class zarafaAccount extends plugin
       /* Add "view" to logging class */
       new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       if (!$ldap->success()){
-          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
       }
 
       /* Optionally execute a command after we're done */
@@ -879,5 +879,5 @@ class zarafaAccount extends plugin
 
 }
 
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+
 ?>
